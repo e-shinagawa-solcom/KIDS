@@ -1,0 +1,59 @@
+<!--
+
+
+function ChgEtoJ( dlCount )
+{
+
+	if ( dlCount == 0 )
+	{
+		/* DETAIL LIST E */
+
+		ExStrDL02.innerText = 'Products';
+		ExStrDL01.innerText = 'Goods set code';
+		ExStrDL03.innerText = 'Price';
+		ExStrDL04.innerText = 'Unit';
+		ExStrDL05.innerText = 'Quantity';
+		ExStrDL06.innerText = 'Amt Bfr tax';
+		ExStrDL07.innerText = 'Delivery date';
+		ExStrDL08.innerText = 'Remark';
+
+		if( typeof( ExStrDL09 ) != 'undefined' )
+		{
+			ExStrDL09.innerText = 'Target';
+		}
+
+		if( typeof( ExStrDL10 ) != 'undefined' )
+		{
+			ExStrDL10.innerText = 'Org Quantity';
+		}
+	}
+	else if ( dlCount == 1 )
+	{
+		/* DETAIL LIST J */
+
+		ExStrDL02.innerText = 'À½ÉÊ';
+		ExStrDL01.innerText = 'Çä¾å¶èÊ¬';
+		ExStrDL03.innerText = 'Ã±²Á';
+		ExStrDL04.innerText = 'Ã±°Ì';
+		ExStrDL05.innerText = '¿ôÎÌ';
+		ExStrDL06.innerText = 'ÀÇÈ´¶â³Û';
+		ExStrDL07.innerText = 'Ç¼ÉÊÆü';
+		ExStrDL08.innerText = 'È÷¹Í';
+
+		if( typeof( ExStrDL09 ) != 'undefined' )
+		{
+			ExStrDL09.innerText = 'ÂÐ¾Ý';
+		}
+
+		if( typeof( ExStrDL10 ) != 'undefined' )
+		{
+			ExStrDL10.innerText = '¸µ¿ôÎÌ';
+		}
+	}
+
+	return false;
+
+}
+
+
+//-->

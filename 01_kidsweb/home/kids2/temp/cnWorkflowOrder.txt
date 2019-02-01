@@ -1,0 +1,16 @@
+ SELECT u.lngUserCode, u.strUserDisplayName || ':' || ag.strAuthorityGroupName FROM m_User u, m_GroupRelation gr, m_AuthorityGroup ag WHERE gr.lngGroupCode = 28 AND ag.lngAuthorityLevel >= 100 AND u.bytInvalidFlag = FALSE AND u.lngUserCode = gr.lngUserCode AND u.lngAuthorityGroupCode = ag.lngAuthorityGroupCode ORDER BY u.lngAuthorityGroupCode 
+ SELECT u.lngUserCode, u.strUserDisplayName || ':' || ag.strAuthorityGroupName FROM m_User u, m_GroupRelation gr, m_AuthorityGroup ag WHERE gr.lngGroupCode = 28 AND ag.lngAuthorityLevel >= 100 AND u.bytInvalidFlag = FALSE AND u.lngUserCode = gr.lngUserCode AND u.lngAuthorityGroupCode = ag.lngAuthorityGroupCode ORDER BY u.lngAuthorityGroupCode 
+id	name1
+50	竹田（TAKEDA）:ディレクター
+13	山崎　朗:ディレクター
+319	矢寺　健一:マネージャー
+204	小林　貴也:マネージャー
+345	孫　豫:ユーザー
+348	飛鳥井　峻:ユーザー
+308	佐野　実:ユーザー
+355	郡司　安沙子:ユーザー
+12	田中　経義:ユーザー
+357	明間 貴文:ユーザー
+15	谷中　理恵:ユーザー
+283	陳　静:ユーザー
+330	服部　圭介:ユーザー

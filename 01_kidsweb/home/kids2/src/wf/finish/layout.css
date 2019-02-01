@@ -1,0 +1,133 @@
+<!--
+
+#Backs
+{
+	background-color : #d6d0b1 ;
+}
+
+
+#ProductInfo
+{
+	position : absolute ;
+	left : 23px ;
+	top : 330px ;
+	border-width: 0px ;
+	border-style: none ;
+	z-index : 3 ;
+	background : transparent ;
+
+}
+
+#Borders
+{
+	font-family : Arial , £Í£Ó £Ð¥´¥·¥Ã¥¯, Osaka ;
+	font-weight : bold ;
+	position : absolute ;
+	left : 0px ;
+	top : 0px ;
+	width : 621px ;
+	height : 77px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color : #798787 ;
+	background : transparent ; /* e8f0f1 */
+}
+
+#Column0
+{
+	font-family : Arial , £Í£Ó £Ð¥´¥·¥Ã¥¯, Osaka ;
+	font-weight : normal ;
+	position : absolute ;
+	left : 10px ;
+	top : 10px ;
+	width : 600px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	background : #e8f0f1 ; /* e8f0f1 */
+	border-color : #798787 ;
+	padding : 8px 0px 0px 8px ;
+	text-align : left ;
+}
+
+#Column1
+{
+	font-family : Arial , £Í£Ó £Ð¥´¥·¥Ã¥¯, Osaka ;
+	font-weight : normal ;
+	position : absolute ;
+	left : 10px ;
+	top : 40px ;
+	width : 600px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	background : #e8f0f1 ; /* e8f0f1 */
+	border-color : #798787 ;
+	padding : 8px 0px 0px 8px ;
+	text-align : left ;
+}
+
+
+
+
+
+
+#CompleteSet
+{
+	position : absolute ;
+	left : 180px ;
+	top : 250px ;
+	border-width: 0px ;
+	border-style: none ;
+	z-index : 3 ;
+	background : transparent ;
+
+}
+
+#FinishRegist
+{
+	font-family : Arial , £Í£Ó £Ð¥´¥·¥Ã¥¯, Osaka ;
+	font-weight : bold ;
+	position : absolute ;
+	left : 0px ;
+	top : 0px ;
+	width : 220px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	background : #f1f1f1 ; /* e8f0f1 */
+	border-color : #798787 #d6d0b1 #798787 #798787 ;
+	padding : 8px 0px 0px 8px ;
+	text-align : left ;
+}
+
+#BackSpace
+{
+	font-weight : bold ;
+	position : absolute ;
+	left : 215px ;
+	top : 0px ;
+	width : 100px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	background : d6d0b1 ; /* e8f0f1 */
+	border-color : #798787 #798787 #798787 #798787 ;
+	padding : 8px 0px 0px 8px ;
+	text-align : left ;
+}
+
+#CloseBt
+{
+	position : absolute ;
+	left : 229px ;
+	top : 3px ;
+	border-width: 0px ;
+	border-style: none ;
+	background : transparent ;
+}
+
+
+
+
+-->

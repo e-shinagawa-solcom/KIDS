@@ -1,0 +1,366 @@
+phpinfo()
+PHP Version => 4.4.2
+
+System => Linux web 2.4.20-28.9smp #1 SMP Thu Dec 18 13:37:36 EST 2003 i686
+Build Date => Jun 10 2006 13:21:39
+Configure Command =>  './configure' '--with-pgsql' '--with-apxs=/usr/local/apache/bin/apxs' '--enable-versioning' '--enable-mbstring' '--enable-mbregex' '--enable-mbstr-enc-trans' '--with-xml' '--with-zlib' '--with-iconv'
+Server API => Command Line Interface
+Virtual Directory Support => disabled
+Configuration File (php.ini) Path => /usr/local/Zend/etc/php.ini
+PHP API => 20020918
+PHP Extension => 20020429
+Zend Extension => 20050606
+Debug Build => no
+Zend Memory Manager => enabled
+Thread Safety => disabled
+Registered PHP Streams => php, http, ftp, compress.zlib  
+
+
+This program makes use of the Zend Scripting Language Engine:
+Zend Engine v1.3.0, Copyright (c) 1998-2004 Zend Technologies
+    with Zend Extension Manager v1.0.9, Copyright (c) 2003-2006, by Zend Technologies
+    with Zend Optimizer v2.6.2, Copyright (c) 1998-2006, by Zend Technologies
+
+
+ _______________________________________________________________________
+
+
+Configuration
+
+PHP Core
+
+Directive => Local Value => Master Value
+allow_call_time_pass_reference => On => On
+allow_url_fopen => On => On
+always_populate_raw_post_data => Off => Off
+arg_separator.input => & => &
+arg_separator.output => & => &
+asp_tags => Off => Off
+auto_append_file => no value => no value
+auto_prepend_file => no value => no value
+browscap => no value => no value
+default_charset => no value => no value
+default_mimetype => text/html => text/html
+define_syslog_variables => Off => Off
+disable_classes => no value => no value
+disable_functions => no value => no value
+display_errors => On => On
+display_startup_errors => Off => Off
+doc_root => no value => no value
+docref_ext => no value => no value
+docref_root => no value => no value
+enable_dl => On => On
+error_append_string => no value => no value
+error_log => no value => no value
+error_prepend_string => no value => no value
+error_reporting => 2039 => 2039
+expose_php => On => On
+extension_dir => ./ => ./
+file_uploads => On => On
+gpc_order => GPC => GPC
+highlight.bg => #FFFFFF => #FFFFFF
+highlight.comment => #FF8000 => #FF8000
+highlight.default => #0000BB => #0000BB
+highlight.html => #000000 => #000000
+highlight.keyword => #007700 => #007700
+highlight.string => #DD0000 => #DD0000
+html_errors => Off => On
+ignore_repeated_errors => Off => Off
+ignore_repeated_source => Off => Off
+ignore_user_abort => Off => Off
+implicit_flush => On => Off
+include_path => .:/php/includes => .:/php/includes
+log_errors => Off => Off
+log_errors_max_len => 1024 => 1024
+magic_quotes_gpc => On => On
+magic_quotes_runtime => Off => Off
+magic_quotes_sybase => Off => Off
+max_execution_time => 0 => 30
+max_input_time => 60 => 60
+open_basedir => no value => no value
+output_buffering => 0 => no value
+output_handler => no value => no value
+post_max_size => 8M => 8M
+precision => 12 => 12
+register_argc_argv => On => On
+register_globals => Off => Off
+report_memleaks => On => On
+safe_mode => Off => Off
+safe_mode_exec_dir => no value => no value
+safe_mode_gid => Off => Off
+safe_mode_include_dir => no value => no value
+sendmail_from => no value => no value
+sendmail_path => /usr/sbin/sendmail -t -i  => /usr/sbin/sendmail -t -i 
+serialize_precision => 100 => 100
+short_open_tag => On => On
+SMTP => localhost => localhost
+smtp_port => 25 => 25
+sql.safe_mode => Off => Off
+track_errors => Off => Off
+unserialize_callback_func => no value => no value
+upload_max_filesize => 2M => 2M
+upload_tmp_dir => no value => no value
+user_dir => no value => no value
+variables_order => EGPCS => EGPCS
+xmlrpc_error_number => 0 => 0
+xmlrpc_errors => Off => Off
+y2k_compliance => On => On
+
+Zend Optimizer
+
+Optimization Pass 1 => enabled
+Optimization Pass 2 => enabled
+Optimization Pass 3 => enabled
+Optimization Pass 4 => enabled
+Optimization Pass 9 => enabled
+Zend Loader => enabled
+License Path =>  
+
+ctype
+
+ctype functions => enabled
+
+iconv
+
+iconv support => enabled
+iconv implementation => glibc
+iconv library version => 2.3.2
+
+Directive => Local Value => Master Value
+iconv.input_encoding => ISO-8859-1 => ISO-8859-1
+iconv.internal_encoding => ISO-8859-1 => ISO-8859-1
+iconv.output_encoding => ISO-8859-1 => ISO-8859-1
+
+mbstring
+
+Multibyte Support => enabled
+Japanese support => enabled
+Simplified chinese support => enabled
+Traditional chinese support => enabled
+Korean support => enabled
+Russian support => enabled
+Multibyte (japanese) regex support => enabled
+
+                                        mbstring extension makes use of "streamable kanji code filter and converter", which is distributed under the GNU Lesser General Public License version 2.1.                                        
+
+Directive => Local Value => Master Value
+mbstring.detect_order => no value => no value
+mbstring.encoding_translation => Off => Off
+mbstring.func_overload => 0 => 0
+mbstring.http_input => pass => pass
+mbstring.http_output => pass => pass
+mbstring.internal_encoding => ISO-8859-1 => no value
+mbstring.language => neutral => neutral
+mbstring.substitute_character => no value => no value
+
+mysql
+
+MySQL Support => enabled
+Active Persistent Links => 0
+Active Links => 0
+Client API version => 3.23.49
+MYSQL_MODULE_TYPE => builtin
+MYSQL_SOCKET => /tmp/mysql.sock
+MYSQL_INCLUDE =>  
+MYSQL_LIBS =>  
+
+Directive => Local Value => Master Value
+mysql.allow_persistent => On => On
+mysql.connect_timeout => 60 => 60
+mysql.default_host => no value => no value
+mysql.default_password => no value => no value
+mysql.default_port => no value => no value
+mysql.default_socket => no value => no value
+mysql.default_user => no value => no value
+mysql.max_links => Unlimited => Unlimited
+mysql.max_persistent => Unlimited => Unlimited
+mysql.trace_mode => Off => Off
+
+overload
+
+User-Space Object Overloading Support => enabled
+
+pcre
+
+PCRE (Perl Compatible Regular Expressions) Support => enabled
+PCRE Library Version => 6.2 01-Aug-2005
+
+pgsql
+
+PostgreSQL Support => enabled
+PostgreSQL(libpq) Version => 7.4.1
+Multibyte character support => enabled
+SSL support => disabled
+Active Persistent Links => 0
+Active Links => 0
+
+Directive => Local Value => Master Value
+pgsql.allow_persistent => On => On
+pgsql.auto_reset_persistent => Off => Off
+pgsql.ignore_notice => Off => Off
+pgsql.log_notice => Off => Off
+pgsql.max_links => Unlimited => Unlimited
+pgsql.max_persistent => Unlimited => Unlimited
+
+posix
+
+Revision => $Revision: 1.51.2.4.2.1 $
+
+session
+
+Session Support => enabled
+Registered save handlers => files user 
+
+Directive => Local Value => Master Value
+session.auto_start => Off => Off
+session.bug_compat_42 => On => On
+session.bug_compat_warn => On => On
+session.cache_expire => 180 => 180
+session.cache_limiter => nocache => nocache
+session.cookie_domain => no value => no value
+session.cookie_lifetime => 0 => 0
+session.cookie_path => / => /
+session.cookie_secure => Off => Off
+session.entropy_file => no value => no value
+session.entropy_length => 0 => 0
+session.gc_divisor => 100 => 100
+session.gc_maxlifetime => 1440 => 1440
+session.gc_probability => 100 => 100
+session.name => PHPSESSID => PHPSESSID
+session.referer_check => no value => no value
+session.save_handler => files => files
+session.save_path => /tmp => /tmp
+session.serialize_handler => php => php
+session.use_cookies => On => On
+session.use_only_cookies => Off => Off
+session.use_trans_sid => Off => Off
+
+standard
+
+Regex Library => Bundled library enabled
+Dynamic Library Support => enabled
+Path to sendmail => /usr/sbin/sendmail -t -i 
+
+Directive => Local Value => Master Value
+assert.active => 1 => 1
+assert.bail => 0 => 0
+assert.callback => no value => no value
+assert.quiet_eval => 0 => 0
+assert.warning => 1 => 1
+auto_detect_line_endings => 0 => 0
+default_socket_timeout => 60 => 60
+safe_mode_allowed_env_vars => PHP_ => PHP_
+safe_mode_protected_env_vars => LD_LIBRARY_PATH => LD_LIBRARY_PATH
+url_rewriter.tags => a=href,area=href,frame=src,input=src,form=,fieldset= => a=href,area=href,frame=src,input=src,form=,fieldset=
+user_agent => no value => no value
+
+tokenizer
+
+Tokenizer Support => enabled
+
+xml
+
+XML Support => active
+XML Namespace Support => active
+EXPAT Version => 1.95.6
+
+zlib
+
+ZLib Support => enabled
+Compiled Version => 1.1.4
+Linked Version => 1.1.4
+
+Directive => Local Value => Master Value
+zlib.output_compression => Off => Off
+zlib.output_compression_level => -1 => -1
+zlib.output_handler => no value => no value
+
+Additional Modules
+
+Module Name
+
+Environment
+
+Variable => Value
+HOSTNAME => web
+SHELL => /bin/bash
+TERM => xterm
+HISTSIZE => 1000
+USER => kids2
+LS_COLORS => no=00:fi=00:di=00;34:ln=00;36:pi=40;33:so=00;35:bd=40;33;01:cd=40;33;01:or=01;05;37;41:mi=01;05;37;41:ex=00;32:*.cmd=00;32:*.exe=00;32:*.com=00;32:*.btm=00;32:*.bat=00;32:*.sh=00;32:*.csh=00;32:*.tar=00;31:*.tgz=00;31:*.arj=00;31:*.taz=00;31:*.lzh=00;31:*.zip=00;31:*.z=00;31:*.Z=00;31:*.gz=00;31:*.bz2=00;31:*.bz=00;31:*.tz=00;31:*.rpm=00;31:*.cpio=00;31:*.jpg=00;35:*.gif=00;35:*.bmp=00;35:*.xbm=00;35:*.xpm=00;35:*.png=00;35:*.tif=00;35:
+MAIL => /var/spool/mail/kids2
+PATH => /bin:/usr/bin:/usr/local/bin:/usr/bin/X11:/usr/X11R6/bin:/home/kids2/bin
+INPUTRC => /etc/inputrc
+PWD => /home/kids2/src
+LANG => ja_JP.eucJP
+SHLVL => 1
+HOME => /home/kids2
+LOGNAME => kids2
+LESSOPEN => |/usr/bin/lesspipe.sh %s
+G_BROKEN_FILENAMES => 1
+_ => /usr/local/bin/php
+OLDPWD => /home/kids2
+
+PHP Variables
+
+Variable => Value
+_SERVER["HOSTNAME"] => web
+_SERVER["SHELL"] => /bin/bash
+_SERVER["TERM"] => xterm
+_SERVER["HISTSIZE"] => 1000
+_SERVER["USER"] => kids2
+_SERVER["LS_COLORS"] => no=00:fi=00:di=00;34:ln=00;36:pi=40;33:so=00;35:bd=40;33;01:cd=40;33;01:or=01;05;37;41:mi=01;05;37;41:ex=00;32:*.cmd=00;32:*.exe=00;32:*.com=00;32:*.btm=00;32:*.bat=00;32:*.sh=00;32:*.csh=00;32:*.tar=00;31:*.tgz=00;31:*.arj=00;31:*.taz=00;31:*.lzh=00;31:*.zip=00;31:*.z=00;31:*.Z=00;31:*.gz=00;31:*.bz2=00;31:*.bz=00;31:*.tz=00;31:*.rpm=00;31:*.cpio=00;31:*.jpg=00;35:*.gif=00;35:*.bmp=00;35:*.xbm=00;35:*.xpm=00;35:*.png=00;35:*.tif=00;35:
+_SERVER["MAIL"] => /var/spool/mail/kids2
+_SERVER["PATH"] => /bin:/usr/bin:/usr/local/bin:/usr/bin/X11:/usr/X11R6/bin:/home/kids2/bin
+_SERVER["INPUTRC"] => /etc/inputrc
+_SERVER["PWD"] => /home/kids2/src
+_SERVER["LANG"] => ja_JP.eucJP
+_SERVER["SHLVL"] => 1
+_SERVER["HOME"] => /home/kids2
+_SERVER["LOGNAME"] => kids2
+_SERVER["LESSOPEN"] => |/usr/bin/lesspipe.sh %s
+_SERVER["G_BROKEN_FILENAMES"] => 1
+_SERVER["_"] => /usr/local/bin/php
+_SERVER["OLDPWD"] => /home/kids2
+_SERVER["PHP_SELF"] => /home/kids2/src/phpinfo.php
+_SERVER["SCRIPT_NAME"] => /home/kids2/src/phpinfo.php
+_SERVER["SCRIPT_FILENAME"] => /home/kids2/src/phpinfo.php
+_SERVER["PATH_TRANSLATED"] => /home/kids2/src/phpinfo.php
+_SERVER["DOCUMENT_ROOT"] => 
+_SERVER["argv"] => Array
+(
+    [0] =&gt; /home/kids2/src/phpinfo.php
+)
+
+_SERVER["argc"] => 1
+_ENV["HOSTNAME"] => web
+_ENV["SHELL"] => /bin/bash
+_ENV["TERM"] => xterm
+_ENV["HISTSIZE"] => 1000
+_ENV["USER"] => kids2
+_ENV["LS_COLORS"] => no=00:fi=00:di=00;34:ln=00;36:pi=40;33:so=00;35:bd=40;33;01:cd=40;33;01:or=01;05;37;41:mi=01;05;37;41:ex=00;32:*.cmd=00;32:*.exe=00;32:*.com=00;32:*.btm=00;32:*.bat=00;32:*.sh=00;32:*.csh=00;32:*.tar=00;31:*.tgz=00;31:*.arj=00;31:*.taz=00;31:*.lzh=00;31:*.zip=00;31:*.z=00;31:*.Z=00;31:*.gz=00;31:*.bz2=00;31:*.bz=00;31:*.tz=00;31:*.rpm=00;31:*.cpio=00;31:*.jpg=00;35:*.gif=00;35:*.bmp=00;35:*.xbm=00;35:*.xpm=00;35:*.png=00;35:*.tif=00;35:
+_ENV["MAIL"] => /var/spool/mail/kids2
+_ENV["PATH"] => /bin:/usr/bin:/usr/local/bin:/usr/bin/X11:/usr/X11R6/bin:/home/kids2/bin
+_ENV["INPUTRC"] => /etc/inputrc
+_ENV["PWD"] => /home/kids2/src
+_ENV["LANG"] => ja_JP.eucJP
+_ENV["SHLVL"] => 1
+_ENV["HOME"] => /home/kids2
+_ENV["LOGNAME"] => kids2
+_ENV["LESSOPEN"] => |/usr/bin/lesspipe.sh %s
+_ENV["G_BROKEN_FILENAMES"] => 1
+_ENV["_"] => /usr/local/bin/php
+_ENV["OLDPWD"] => /home/kids2
+
+PHP License
+This program is free software; you can redistribute it and/or modify
+it under the terms of the PHP License as published by the PHP Group
+and included in the distribution in the file:  LICENSE
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+If you did not receive a copy of the PHP license, or have any
+questions about PHP licensing, please contact license@php.net.
+1

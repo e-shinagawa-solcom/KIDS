@@ -1,0 +1,62 @@
+<!--
+
+
+function ChgEtoJ( dlCount )
+{
+
+	if ( dlCount == 0 )
+	{
+		/* DETAIL LIST E */
+
+		ExStrDL01.innerText = 'Products';
+		ExStrDL02.innerText = 'Goods set';
+		ExStrDL03.innerText = 'Goods parts';
+		ExStrDL04.innerText = 'Price';
+		ExStrDL05.innerText = 'Unit';
+		ExStrDL06.innerText = 'Quantity';
+		ExStrDL07.innerText = 'Amt Bfr tax';
+		ExStrDL08.innerText = 'Delivery date';
+		ExStrDL09.innerText = 'Remark';
+
+		if( typeof( ExStrDL10 ) != 'undefined' )
+		{
+			ExStrDL10.innerText = 'Target';
+		}
+
+		if( typeof( ExStrDL11 ) != 'undefined' )
+		{
+			ExStrDL11.innerText = 'Org Quantity';
+		}
+	}
+
+	else if ( dlCount == 1 )
+	{
+		/* DETAIL LIST J */
+
+		ExStrDL01.innerText = 'À½ÉÊ';
+		ExStrDL02.innerText = '»ÅÆþ²ÊÌÜ';
+		ExStrDL03.innerText = '»ÅÆþÉôÉÊ';
+		ExStrDL04.innerText = 'Ã±²Á';
+		ExStrDL05.innerText = 'Ã±°Ì';
+		ExStrDL06.innerText = '¿ôÎÌ';
+		ExStrDL07.innerText = 'ÀÇÈ´¶â³Û';
+		ExStrDL08.innerText = 'Ç¼´ü';
+		ExStrDL09.innerText = 'È÷¹Í';
+
+		if( typeof( ExStrDL10 ) != 'undefined' )
+		{
+			ExStrDL10.innerText = 'ÂÐ¾Ý';
+		}
+
+		if( typeof( ExStrDL11 ) != 'undefined' )
+		{
+			ExStrDL11.innerText = '¸µ¿ôÎÌ';
+		}
+	}
+
+	return false;
+
+}
+
+
+//-->

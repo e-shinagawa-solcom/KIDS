@@ -1,0 +1,59 @@
+/* 印刷レイアウトズレ対応 */
+body
+{
+    margin: 0;
+}
+
+/* 帳票表示切り替えパネル */
+div#report-control-panel
+{
+    z-index: 1;
+    position: fixed;
+    background-color: #cccccc;
+    text-align: center;
+    opacity: 0.5;
+}
+
+div#report-control-panel:hover
+{
+    -ms-transition: opacity 0.3s ease-in;
+    opacity: 1.0;
+}
+
+div#report-control-panel *
+{
+    margin: 3px 5px;
+    vertical-align: middle;
+}
+
+/* 金型帳票 1ページ相当 */
+div.mold-report-page
+{
+    display: none;
+}
+
+/* 表示ページ */
+div.show-page
+{
+    -ms-transition: display 0.3s ease-in;
+    display: block;
+}
+
+/* COPY オーバーレイ */
+div.copy-overlay
+{
+    display: none;
+    position: absolute;;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+div.copy-overlay img.copy
+{
+    position: relative;
+    top: 50%;
+    height: 70%;
+    width: 70%;
+    opacity: 0.4;
+}

@@ -1,0 +1,21 @@
+
+/* フォーム ボタン */
+.form-buttons
+{
+    position: relative;
+    top: -30px;
+    left: 21px;
+
+    width: 927px;
+}
+
+/* クリアボタン */
+.form-buttons__clear
+{
+}
+
+/* 登録ボタン */
+.form-buttons__regist
+{
+    float: right;
+}

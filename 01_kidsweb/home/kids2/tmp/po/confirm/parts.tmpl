@@ -1,0 +1,203 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html lang="ja">
+<head>
+<title>K.I.D.S.</title>
+<meta http-equiv="content-type" content="text/html; charset=euc-jp">
+
+
+
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/images.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
+
+<link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
+<link rel="stylesheet" type="text/css" media="screen" href="/result/cmn/layout.css">
+
+<script type="text/javascript" language="javascript" src="/cmn/processing_module.js"></script>
+<script type="text/javascript" language="javascript" src="/po/cmn/resultexstr.js"></script>
+
+<script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
+
+</head>
+<body oncontextmenu="return false;" onload="fncChgEtoJ( '_%strMode%_' ); _%strOnloadfnc%_ "> 
+<p id="ConfirmOverFlowBox">
+
+
+<table cellpadding="5" cellspacing="0" border="0" bgcolor="#6f8180" align="center">
+	<tr class="SegColumn">
+		<td id="ControlTitle"></td>
+	</tr>
+</table>
+
+<br>
+
+<table cellpadding="5" cellspacing="0" border="0" bgcolor="#f1f1f1" align="center">
+	<tr>
+		<td>
+<!--日本語 -->
+			<form name="form1" action="_%strAction%_" method="POST">
+				<span id="objQuery"></span>
+				<input type="hidden" name="strSessionID" value="_%strSessionID%_">
+				<input type="hidden" name="strSubmit" value="true">
+				<input type="hidden" name="strProcMode" value="_%strProcMode%_">
+				
+				<input type="hidden" name="dtmOrderAppDate" value="_%dtmOrderAppDate%_"><!-- 計上日 -->
+				<input type="hidden" name="lngStockCode" value="_%lngStockCode%_"><!-- 仕入ＮＯ． -->
+				<input type="hidden" name="strOrderCode" value="_%strOrderCode%_"><!-- 発注ＮＯ． -->
+				<input type="hidden" name="strReviseCode" value="_%strReviseCode%_"><!-- リビジョン番号 -->
+				<input type="hidden" name="strSlipCode" value="_%strSlipCode%_"><!-- 伝票コード -->
+				<input type="hidden" name="lngCustomerCode" value="_%lngCustomerCode%_"><!-- 仕入先  -->
+				<input type="hidden" name="lngInChargeGroupCode" value="_%lngInChargeGroupCode%_"><!-- 部門コード -->
+				<input type="hidden" name="lngInChargeUserCode" value="_%lngInChargeUserCode%_"><!-- 担当者 -->
+				<input type="hidden" name="lngLocationCode" value="_%lngLocationCode%_"><!-- 納品場所 -->
+				<input type="hidden" name="dtmExpirationDate" value="_%dtmExpirationDate%_"><!-- 発注有効期限日 -->
+				<input type="hidden"  name="strNote" value="_%strNote%_"><!-- 備考 -->
+				<input type="hidden" name="lngOrderStatusCode" value="_%lngOrderStatusCode%_"><!-- 状態 -->
+				<input type="hidden" name="lngMonetaryUnitCode" value="_%lngMonetaryUnitCode%_"><!-- 通貨 -->
+				<input type="hidden" name="lngMonetaryRateCode" value="_%lngMonetaryRateCode%_"><!-- レートタイプ -->
+				<input type="hidden" name="curConversionRate" value="_%curConversionRate%_"><!-- 換算レート -->
+				<input type="hidden" name="lngPayConditionCode" value="_%lngPayConditionCode%_"><!-- 支払条件 -->
+
+				<input type="hidden" name="strReviseCode" value="_%strReviseCode%_"><!-- リビジョン番号 -->
+				<input type="hidden" name="lngRevisionNo" value="_%lngRevisionNo%_"><!-- リバイス番号 -->
+				<input type="hidden"  name="curAllTotalPrice" value="_%curAllTotalPrice%_"><!-- 合計金額 -->
+				<input type="hidden"  name="lngWorkflowOrderCode" value="_%lngWorkflowOrderCode%_"><!-- ワークフロー順序 -->
+
+				<input type="hidden"  name="strWorkflowMessage" value="_%strWorkflowMessage%_"><!-- ワークフローメッセージ -->
+				
+				_%strDetailHidden%_
+			</form>
+
+		</td>
+	</tr>
+</table>
+
+<br>
+
+<table cellpadding="5" cellspacing="0" border="0" bgcolor="#f1f1f1" align="center">
+	<tr>
+		<td>
+
+
+			<!-- メッセージ -->
+			<div style="display:_%strWorkflowMessage_visibility%_">
+				<table width="100%" cellpadding="0" cellspacing="1" border="0" bgcolor="#6f8180" align="center">
+					<tr>
+						<td id="WFMessage" class="SegColumn2" width="25%">
+							メッセージ
+						</td>
+						<td class="Segs">
+							<textarea class="txtArea100P" rows="3" name="**" onchange="fncSetWFMessage( this , document.all.strWorkflowMessage );"></textarea>
+						</td>
+					</tr>
+				</table>
+				<br>
+			</div>
+			<!-- メッセージ // -->
+
+			<table width="100%" cellpadding="0" cellspacing="1" border="0" bgcolor="#6f8180" align="center">
+				<tr> 
+					<td id="CreationDate" class="SegColumn">_%CNdtmInsertDate%_</td>
+					<td class="Segs">_%dtminsertdate%_</td>
+				</tr>
+				<tr> 
+					<td id="OrderAppDate" class="SegColumn" width="25%">_%CNdtmOrderAppDate%_</td>
+					<td class="Segs">_%dtmorderappdate%_</td>
+				</tr>
+				<tr> 
+					<td id="POrderCode" class="SegColumn">_%CNstrOrderCode%_</td>
+					<td class="Segs">_%strordercode%_</td>
+				</tr>
+				<tr> 
+					<td id="InputUser" class="SegColumn">_%CNlngInputUserCode%_</td>
+					<td class="Segs">_%lngInputUserCode_DISCODE%_ _%strInputUserName%_</td>
+				</tr>
+				<tr> 
+					<td id="Customer" class="SegColumn">_%CNlngCustomerCode%_</td>
+					<td class="Segs">_%lngCustomerCode_DISCODE%_ _%strCustomerName%_</td>
+				</tr>
+
+
+				<tr> 
+					<td id="InChargeGroup" class="SegColumn">_%CNlngInChargeGroupCode%_</td>
+					<td class="Segs">_%strInChargeGroup%_</td>
+				</tr>
+				<tr> 
+					<td id="InChargeUser" class="SegColumn">_%CNlngInChargeUserCode%_</td>
+					<td class="Segs">_%strInChargeUser%_</td>
+				</tr>
+
+<!--
+				<tr> 
+					<td id="InChargeGroup" class="SegColumn">_%CNlngInChargeGroupCode%_</td>
+					<td class="Segs">_%lngInChargeGroupCode_DISCODE%_ _%strInChargeGroupName%_</td>
+				</tr>
+				<tr> 
+					<td id="InChargeUser" class="SegColumn">_%CNlngInChargeUserCode%_</td>
+					<td class="Segs">_%lngInChargeUserCode_DISCODE%_ _%strInChargeUserName%_</td>
+				</tr>
+-->
+				<tr> 
+					<td id="DeliveryPlace" class="SegColumn">_%CNlngDeliveryPlaceCode%_</td>
+					<td class="Segs">_%lngLocationCode_DISCODE%_ _%strLocationName%_</td>
+				</tr>
+				<tr> 
+					<td id="MonetaryUnit" class="SegColumn">_%CNlngMOnetaryUnitCode%_</td>
+					<td class="Segs">_%strmonetaryunitname%_</td>
+				</tr>
+				<tr> 
+					<td id="MonetaryRate" class="SegColumn">_%CNlngMonetaryRateCode%_</td>
+					<td class="Segs">_%strmonetaryratename%_</td>
+				</tr>
+				<tr> 
+					<td id="ConversionRate" class="SegColumn">_%CNcurConversionRate%_</td>
+					<td class="Segs">_%curconversionrate_DIS%_</td>
+				</tr>
+				<tr> 
+					<td id="OrderStatus" class="SegColumn">_%CNlngOrderStatusCode%_</td>
+					<td class="Segs">_%strorderstatusname%_</td>
+				</tr>
+				
+<!--				<tr> 
+					<td id="PayCondition" class="SegColumn">_%CNlngPayConditionCode%_</td>
+					<td class="Segs">_%strpayconditionname%_</td>
+				</tr>
+-->
+				_%strPayConditionTable%_ 
+
+				<tr> 
+					<td id="ExpirationDate" class="SegColumn">_%CNdtmExpirationDate%_</td>
+					<td class="Segs">_%dtmexpirationdate%_</td>
+				</tr>
+				<tr> 
+					<td id="Remark" class="SegColumn">_%CNstrNote%_</td>
+					<td class="Segs">_%strnote%_</td>
+				</tr>
+				<tr> 
+					<td id="TotalPrice" class="SegColumn">_%CNcurTotalPrice%_</td>
+					<td class="Segs">_%strMonetaryrate%_ _%curalltotalprice_DIS%_</td>
+				</tr>
+				<tr> 
+					<td class="SegColumn">_%lngPayConditionCodeMatch%_　_%CNlngWorkflowOrderCode%_</td>
+					<td class="Segs">_%strworkflowordername%_</td>
+				</tr>
+			</table>
+
+
+			<br>
+
+_%strDetailTable%_
+
+
+			<br>
+
+
+		</td>
+	</tr>
+</table>
+
+
+</p>
+
+
+</body>
+</html>

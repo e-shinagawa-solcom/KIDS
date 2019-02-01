@@ -1,0 +1,29 @@
+// SigmaGrid用カラムセット
+[
+	{id: 'dtmappropriationdate',	header: "仕入計上日",		width :80 },
+	{id: 'strstockcode',		header: "仕入No",		width :60 },
+	{id: 'strordercode',		header: "発注No" ,		width :60 },
+	{id: 'strcompanydisplaycode',	header: "仕CD",		width :20 },
+	{id: 'strcompanydisplayname',	header: "仕入先名称" ,		width :180 },
+	{id: 'strgroupdisplaycode',	header: "部CD" ,		width :10 },
+	{id: 'strgroupdisplayname',	header: "部門名称" ,		width :70 },
+	{id: 'strcategoryname',		header: "カテゴリ" ,		width :60 },
+	{id: 'strslipcode',		header: "伝票CD" , 		width :90 },
+	{id: 'lngstocksubjectcode',	header: "科CD",	width :20 },
+	{id: 'strstocksubjectname',	header: "仕入科目" ,	width :60 },
+	{id: 'lngstockitemcode',	header: "部CD" ,	width :10 },
+	{id: 'strstockitemname',	header: "仕入部品" ,	width :70 },
+	{id: 'strproductcode',		header: "製CD" ,		width :20},
+	{id: 'strproductname',		header: "製品名称" ,		width :140},
+	{id: 'strgoodscode',		header: "顧客品番" ,		width :50},
+	{id: 'curproductprice',		header: "単価" ,		width :130, align :'right'},
+	{id: 'productunit',		header: "単位" ,		width :10, align :'right'},
+	{id: 'lngproductquantity',	header: "数量" ,		width :80, align :'right'},
+	{id: 'strtaxclassname',		header: "税区分" ,		width :40, align :'right'},
+	{id: 'strmonetaryunitname',	header: "通貨名称" ,		width :50 },
+	{id: 'cursubtotalprice',	header: "税抜金額" ,		width :110, align :'right'},
+	{id: 'curtaxprice',		header: "税額" ,		width :90, align :'right'},
+	{id: 'curtotalprice',		header: "合計金額" ,		width :110, align :'right'},
+	{id: 'curtotalpricettm',	header: "合計金額TTM" ,		width :110, align :'right'}
+
+]

@@ -1,0 +1,261 @@
+<!--
+
+
+#strWelcomeMessage
+{
+	font-weight : bold ;
+	color : #ffffff ;
+	position : absolute ;
+	top : 147px ;
+	left : 30px ;
+	width : 938px ;
+	height : 27px ;
+	text-align : center ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color : #cdcdcd ;
+	padding : 7px 0px 0px 8px ;
+	background-color: transparent ; /* #4b6486 */
+}
+
+
+#ColumnAdminMessage
+{
+	font-weight : bold ;
+	color : #ffffff ;
+	position : absolute ;
+	top : 173px ;
+	left : 30px ;
+	width : 160px ;
+	height : 80px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color : #cdcdcd ;
+	padding : 34px 0px 0px 8px ;
+	background-color: #666666 ;
+}
+
+#strAdminMessageTitle
+{
+	font-weight : normal ;
+	color : #ffffff ;
+	position : absolute ;
+	top : 173px ;
+	left : 189px ;
+	width : 779px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color : #cdcdcd ;
+	padding : 7px 0px 0px 8px ;
+	background-color: #4b6486 ;
+}
+
+#strAdminMessageComment
+{
+	font-weight : normal ;
+	color : #ffffff ;
+	position : absolute ;
+	top : 199px ;
+	left : 189px ;
+	width : 779px ;
+	height : 54px ;
+	line-height : 14px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color : #cdcdcd ;
+	padding : 7px 0px 0px 8px ;
+	background-color: transparent ;
+}
+
+
+
+#MenuBacks
+{
+	position : absolute ;
+	top : 293px ;
+	left : 10px ;
+	width : 980px ;
+	height : 170px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color : #cdcdcd ;
+	background-color: transparent ;
+}
+
+#MenuBacksImg
+{
+	position : absolute ;
+	top : 293px ;
+	left : 11px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+
+
+#Navi1
+{
+	position : absolute ;
+	z-index : 7 ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+#ESnavi
+{
+	position : absolute ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+#Pnavi
+{
+	position : absolute ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+#SOnavi
+{
+	position : absolute ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+#POnavi
+{
+	position : absolute ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+#PCnavi
+{
+	position : absolute ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+#SCnavi
+{
+	position : absolute ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+#WFnavi
+{
+	position : absolute ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+#Navi2
+{
+	position : absolute ;
+	z-index : 7 ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+#LISTnavi
+{
+	position : absolute ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+#DATAEXnavi
+{
+	position : absolute ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+#UPLOADnavi
+{
+	position : absolute ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+#MMnavi
+{
+	position : absolute ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+#MRnavi
+{
+    position : absolute ;
+    border-width: 0px ;
+    border-style: none ;
+    background-color: transparent ;
+}
+
+#SystemSet
+{
+	position : absolute ;
+	top : 610px;
+	left : 306px;
+	width : 400px ;
+	border : 0px solid #ff0000 ;
+	background-color: transparent ;
+	text-align : center ;
+}
+
+
+
+#UCnavi
+{
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+#Mnavi
+{
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+
+#SYSnavi
+{
+	/* top : 0px; */ /* 610 */
+	/* left : 0px;*/ /* 510 */
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+#DATACLOSEDnavi
+{
+	/* top : 0px; */ /* 610 */
+	/* left : 433px; */ /* 433 */
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+
+
+
+-->

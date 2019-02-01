@@ -1,0 +1,45 @@
+ SELECT mc.strcompanydisplaycode,(mc.strcompanydisplaycode || ' ' || mc.strcompanydisplayname) AS strcompanydisplaycodename, mc.strcompanydisplayname FROM m_company mc, m_attribute ma, m_attributerelation mar WHERE mc.lngcompanycode = mar.lngcompanycode  AND mar.lngattributecode = ma.lngattributecode  AND mar.lngattributecode = 5  AND mc.bytcompanydisplayflag = true     ORDER BY mc.strcompanydisplaycode 
+ SELECT mc.strcompanydisplaycode,(mc.strcompanydisplaycode || ' ' || mc.strcompanydisplayname) AS strcompanydisplaycodename, mc.strcompanydisplayname FROM m_company mc, m_attribute ma, m_attributerelation mar WHERE mc.lngcompanycode = mar.lngcompanycode  AND mar.lngattributecode = ma.lngattributecode  AND mar.lngattributecode = 5  AND mc.bytcompanydisplayflag = true     ORDER BY mc.strcompanydisplaycode 
+id	name1	name2
+1000	1000 ¡Ê³ô¡Ë¥¯¥ï¥¬¥¿(KUWAGATA)	¡Ê³ô¡Ë¥¯¥ï¥¬¥¿(KUWAGATA)
+1214	1214 ÀÐÀî´á¶ñ ³ô¼°²ñ¼Ò	ÀÐÀî´á¶ñ ³ô¼°²ñ¼Ò
+1407	1407 ¥¨¥¤¥Ù¥Ã¥¯¥¹Ž¥¥Þ¡¼¥±¥Æ¥£¥ó¥°(³ô)	¥¨¥¤¥Ù¥Ã¥¯¥¹Ž¥¥Þ¡¼¥±¥Æ¥£¥ó¥°(³ô)
+2101	2101 ¥«¥¿¥ª¥«¥×¥é¥»¥¹(³ô)	¥«¥¿¥ª¥«¥×¥é¥»¥¹(³ô)
+2109	2109 Japan¤Î¥¯¥ï¥¬¥¿»ØÄê¾ì½ê	Japan¤Î¥¯¥ï¥¬¥¿»ØÄê¾ì½ê
+2404	2404 (³ô)¥±¡¼¥ï¥¤¥±¡¼	(³ô)¥±¡¼¥ï¥¤¥±¡¼
+3104	3104 (³ô)¥µ¥ó¥È¥à	(³ô)¥µ¥ó¥È¥à
+3208	3208 (³ô)¥·¡¼¥º	(³ô)¥·¡¼¥º
+3227	3227 (³ô)¥¸¥ã¥ì¡¼¥É	(³ô)¥¸¥ã¥ì¡¼¥É
+3901	3901 ¡Ê³ô¡Ë¥½¥ë¡¦¥¤¥ó¥¿¡¼¥Ê¥·¥ç¥Ê¥ë	¡Ê³ô¡Ë¥½¥ë¡¦¥¤¥ó¥¿¡¼¥Ê¥·¥ç¥Ê¥ë
+3902	3902 CHINA Others	CHINA Others
+4901	4901 JAPAN	JAPAN
+5901	5901 BNG¥Ñ¡¼¥Ä¥»¥ó¥¿¡¼	BNG¥Ñ¡¼¥Ä¥»¥ó¥¿¡¼
+6101	6101 (³ô)¥Ð¥ó¥À¥¤(BANDAI)	(³ô)¥Ð¥ó¥À¥¤(BANDAI)
+6102	6102 (³ô)¥Ð¥ó¥×¥ì¥¹¥È	(³ô)¥Ð¥ó¥×¥ì¥¹¥È
+6135	6135 ¥Ð¥ó¥À¥¤¥Ê¥à¥³¥¨¥ó¥¿¡¼¥Æ¥¤¥ó¥á¥ó¥È	¥Ð¥ó¥À¥¤¥Ê¥à¥³¥¨¥ó¥¿¡¼¥Æ¥¤¥ó¥á¥ó¥È
+6142	6142 BANDAI SPIRITS	BANDAI SPIRITS
+6308	6308 BNG»ØÄêÁÒ¸Ë	BNG»ØÄêÁÒ¸Ë
+6318	6318 FUJI TOY(H.K.)CO.,LTD	FUJI TOY(H.K.)CO.,LTD
+6319	6319 (³ô)¥×¥ì¥¸¥ã¡¼¥­¥ã¥¹¥È	(³ô)¥×¥ì¥¸¥ã¡¼¥­¥ã¥¹¥È
+6903	6903 B¼Ò»ØÄêÁÒ¸Ë(JP)	B¼Ò»ØÄêÁÒ¸Ë(JP)
+6904	6904 BP»ØÄêÁÒ¸Ë(JP)	BP»ØÄêÁÒ¸Ë(JP)
+6905	6905 Á¥¶¶µþµÁÁÒ¸Ë	Á¥¶¶µþµÁÁÒ¸Ë
+6907	6907 BLP¥·¥ó¥»¥óÁÒ¸Ë¡ÊBLP Shenzhen Warehouse¡Ë	BLP¥·¥ó¥»¥óÁÒ¸Ë¡ÊBLP Shenzhen Warehouse¡Ë
+6908	6908 BLP °ñÌÚ¡¡¡ÊBLP IBARAKI¡Ë	BLP °ñÌÚ¡¡¡ÊBLP IBARAKI¡Ë
+6909	6909 HONGKONG Others	HONGKONG Others
+6910	6910 BLP¹á¹ÁÁÒ¸Ë	BLP¹á¹ÁÁÒ¸Ë
+7108	7108 (³ô)¥¨¥à¥¢¥¤¥·¡¼¡ÊMIC¡Ë	(³ô)¥¨¥à¥¢¥¤¥·¡¼¡ÊMIC¡Ë
+8203	8203 ­ë¥æ¥Ï¥é¡¦¥¤¥ó¥¿¡¼¥Ê¥·¥ç¥Ê¥ë	­ë¥æ¥Ï¥é¡¦¥¤¥ó¥¿¡¼¥Ê¥·¥ç¥Ê¥ë
+9105	9105 (³ô)¥é¥¤¥Æ¥Ã¥¯	(³ô)¥é¥¤¥Æ¥Ã¥¯
+9901	9901 ¥í¥¸¥Ñ¥ë»Í¥ÄÌÚ	¥í¥¸¥Ñ¥ë»Í¥ÄÌÚ
+9902	9902 ¥í¥¸¥Ñ¥ë¤ªÂæ¾ì(BANDAI LOGIPAL ODAIBA)	¥í¥¸¥Ñ¥ë¤ªÂæ¾ì(BANDAI LOGIPAL ODAIBA)
+9903	9903 ¥í¥¸¥Ñ¥ëÁ¥¶¶(BANDAI LOGIPAL FUNABASHI)	¥í¥¸¥Ñ¥ëÁ¥¶¶(BANDAI LOGIPAL FUNABASHI)
+9905	9905 ¥í¥¸¥Ñ¥ëÆÊÌÚ	¥í¥¸¥Ñ¥ëÆÊÌÚ
+9906	9906 ¥í¥¸¥Ñ¥ë¿À¸Í	¥í¥¸¥Ñ¥ë¿À¸Í
+9907	9907 ¥í¥¸¥Ñ¥ëÀîºê	¥í¥¸¥Ñ¥ëÀîºê
+9908	9908 ÀÐÀî´á¶ñ±ÛÃ«ÁÒ¸Ë	ÀÐÀî´á¶ñ±ÛÃ«ÁÒ¸Ë
+9909	9909 ¥í¥¸¥Ñ¥ë¾¡Åç	¥í¥¸¥Ñ¥ë¾¡Åç
+9910	9910 ¥í¥¸¥Ñ¥ëÊ¿ÏÂÅç	¥í¥¸¥Ñ¥ëÊ¿ÏÂÅç
+9911	9911 ¥í¥¸¥Ñ¥ë²£ÉÍ	¥í¥¸¥Ñ¥ë²£ÉÍ
+9996	9996 Japan¤ÎÈ÷¹Í»²¾È(Remarks column)	Japan¤ÎÈ÷¹Í»²¾È(Remarks column)
+9999	9999 China¤ÎÈ÷¹Í»²¾È(Remarks column)	China¤ÎÈ÷¹Í»²¾È(Remarks column)

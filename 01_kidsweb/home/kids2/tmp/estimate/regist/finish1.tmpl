@@ -1,0 +1,112 @@
+<config>
+<header1>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/images.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutbase.js"></script>
+</header1>
+
+
+<header2>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/uc/cmn/images.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/uc/finish/initlayout.js"></script>
+</header2>
+
+
+<header3>
+<link rel="stylesheet" type="text/css" media="screen" href="/uc/regist/layout.css">
+<link rel="stylesheet" type="text/css" media="screen" href="/uc/finish/layout1.css">
+<script type="text/javascript" language="javascript" src="/uc/finish/exstr1.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
+</header3>
+
+
+<bodyonload>
+initLayoutBase();initLayout();GetlngLanguageCode( _%lngLanguageCode%_ );Loading();
+</bodyonload>
+</config>
+
+
+
+<p id="Preload">
+	<iframe id="PreloadFrm" name="PreloadWin" frameborder="0" src="/preload/index.html" onload="fncObjectResize( this , 0 , 0 );"></iframe>
+</p>
+
+
+
+
+
+
+
+<!-- ////////////////////////////////// START MAIN TITLE ////////////////////////////////// -->
+<span id="MainTitle" style="visibility:_%strBaseVisibilityName%_;"></span>
+<!-- /////////////////////////////////// END MAIN TITLE /////////////////////////////////// -->
+
+
+
+
+
+
+
+
+
+<!-- /////////////////////////////////// START NAVIGAION /////////////////////////////////// -->
+<span id="NaviButton" style="visibility:_%strBaseVisibilityName%_;"></span>
+
+<p id="Navigations" onmouseout="NavigationOFF( Navigations , NaviButton );">
+<span id="Navi">
+	<iframe id="NaviIfrm" name="NAVIwin" frameborder="0" scrolling="no" src="/navi/index.php?strSessionID=_%strSessionID%_&strNaviCode=_%strNaviCode%_"></iframe>
+</span>
+</p>
+<!-- //////////////////////////////////// END NAVIGAION //////////////////////////////////// -->
+
+
+
+
+
+
+
+<!-- /////////////////////////////////// START INPUT A SEGMENTS /////////////////////////////////// -->
+<p id="InputA">
+
+<!-- BODYS -->
+<span id="SegABodys"></span>
+
+<!-- HEADER -->
+<span id="SegAHeader"></span>
+
+<!-- BOTTOM -->
+<span id="SegABottom"></span>
+
+
+
+
+<span id="FinishRegist">瓚狤敦弇</span>
+<span id="BackSpace"></span>
+
+<!-- 枑月示正件 -->
+<span id="CloseBt" onclick="location.href='_%strAction%_';return false;"></span>
+
+</p>
+<!-- //////////////////////////////////// END INPUT A SEGMENTS //////////////////////////////////// -->
+
+
+
+
+
+
+
+
+<!-- /////////////////////////////////// START E TO J /////////////////////////////////// -->
+<span id="EtoJ" style="visibility:_%strBaseVisibilityName%_;"></span>
+<!-- //////////////////////////////////// END E TO J //////////////////////////////////// -->
+
+
+
+
+
+<!-- ERROR MESSAGE -->
+<span id="ErrorMessageFrame">
+	<iframe id="ErrorMessage" name="errorWin" frameborder="0" scrolling="no" src="/error/error.html"></iframe>
+</span>
+
+
+<span id="OverLayer"></span>

@@ -1,0 +1,200 @@
+
+/* 全体背景 */
+.confirm-background
+{
+    background-color: #f1f1f1;
+
+    overflow-y: scroll;
+}
+
+/* タイトル */
+.confirm-title
+{
+    height: 22px;
+
+    color: #ffffff;
+    line-height: 22px;
+    text-align: center;
+
+    background-color: #799797;
+}
+
+/* 閉じる/登録 選択BOX */
+.confirm-box
+{
+    margin: 20px 5px;
+
+    border: 1px solid black;
+}
+
+/* 閉じる/登録 選択BOX div */
+.confirm-box div
+{
+    margin-bottom: 5px;
+}
+
+/* 閉じる/登録 選択BOX ラベル */
+.confirm-box__header
+{
+    color: #ffffff;
+    line-height: 22px;
+    text-align: center;
+
+    background-color: #799797;
+}
+
+/* 閉じる/登録 選択BOX ボタン */
+.confirm-box__buttons
+{
+    text-align: center;
+}
+
+/* データ部 */
+.confirm-data
+{
+    margin: 20px 5px;
+}
+
+/* データ部 セクション */
+.confirm-data__section
+{
+    margin: 15px 0px;
+}
+
+/* データ部 レコード */
+.confirm-data__section__record
+{
+    height: 18px;
+
+    border: 1px solid #999999;
+}
+
+/* データ部 レコード ラベル/値　共通 */
+.confirm-data__section__record span,
+.confirm-data__section__record div
+{
+    height: 100%;
+    line-height: 18px;
+}
+
+/* データ部 レコード ボーダー重なり対応 */
+.confirm-data__section__record~.confirm-data__section__record
+{
+    border-top-style: none;
+}
+
+/* データ部 ラベル */
+.confirm-data__section__record span
+{
+    width: 25%;
+
+    color: #ffffff;
+    text-align: center;
+
+    border-right: 1px solid #999999;
+
+    background-color: #799797;
+
+    float: left;
+
+    margin-right: 3px;
+}
+
+/* データ部 値 */
+.confirm-data__section__record div
+{
+    white-space: pre;
+    background-color: #ffffff;
+}
+
+/* 欄外備考 */
+.confirm-data__section__record--mrgnote
+{
+    display: inline-block;
+    width: 100%;
+    background-color: #ffffff;
+    border: 1px solid #999999;
+}
+.confirm-data__section__record--mrgnote span
+{
+    width: 25%;
+    height: 100px;
+
+    line-height: 100px;
+
+    color: #ffffff;
+    text-align: center;
+
+    border-right: 1px solid #999999;
+
+    background-color: #799797;
+
+    float: left;
+
+    margin-right: 3px;
+
+}
+.confirm-data__section__record--mrgnote div
+{
+    white-space: pre;
+    background-color: #ffffff;
+
+    height: 100px;
+    overflow: auto;
+    word-wrap: break-word;
+}
+
+.confirm-data__section__record--note div,
+.confirm-data__section__record--mrgnote div
+{
+    line-height: 18px;
+}
+
+/* テーブル */
+table.confirm-table
+{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* テーブル ヘッダ セル*/
+table.confirm-table th,
+table.confirm-table td
+{
+    border: 1px solid #A9A9A9;
+}
+
+/* テーブル ヘッダ セル*/
+table.confirm-table>thead>tr>th
+{
+    color: #ffffff;
+    background-color: #799797;
+}
+
+/* テーブル データ セル*/
+table.confirm-table>tbody>tr>td
+{
+    background-color: #ffffff;
+}
+
+/* テーブル 項番カラム */
+table.confirm-table>thead>tr>th:nth-of-type(1),
+table.confirm-table>tbody>tr>td:nth-of-type(1)
+{
+    width: 5%;
+    text-align: center;
+}
+
+/* テーブル 金型NOカラム */
+table.confirm-table>thead>tr>th:nth-of-type(2),
+table.confirm-table>tbody>tr>td:nth-of-type(2)
+{
+    width: 10%;
+    text-align: center;
+}
+
+/* テーブル 金型説明カラム */
+table.confirm-table>thead>tr>th:nth-of-type(3),
+table.confirm-table>tbody>tr>td:nth-of-type(3)
+{
+}

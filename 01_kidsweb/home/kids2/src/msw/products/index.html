@@ -1,0 +1,161 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html lang="ja">
+<head>
+<title>MASTER SERCH WINDOW - [PRODUCTS]</title>
+<meta http-equiv="content-type" content="text/html; charset=euc-jp">
+
+
+<!-- START COMMON LAYOUT FILES -->
+<script type="text/javascript" language="javascript" src="/layout/type01/msw/cmn/images.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/type01/msw/cmn/initlayoutbase.js"></script>
+<!-- END COMMON LAYOUT FILES -->
+
+
+<!-- START COMMON FILES -->
+<link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
+<link rel="stylesheet" type="text/css" media="screen" href="/msw/cmn/styles.css">
+<script type="text/javascript" language="javascript" src="/msw/cmn/functions.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/masterlib.js"></script>
+<!-- END COMMON FILES -->
+
+
+
+<!-- START EXCLUSIVE USE FILES -->
+<script type="text/javascript" language="javascript" src="exstr.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/type01/msw/cmn/initlayoutquery.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="layout.css">
+<!-- END EXCLUSIVE USE FILES -->
+
+
+<script type="text/javascript" language="javascript">
+
+	// 入力者コード取得処理
+	function fncGetInputUserCode()
+	{
+		var lngUserCode = '';
+
+		if( typeof( window.parent.document.all.lngInputUserCode ) != 'undefined' )
+		{
+			lngUserCode = window.parent.document.all.lngInputUserCode.value;
+		}
+		else
+		{
+			lngUserCode = "";
+		}
+
+		document.all.lngInputUserCode.value = lngUserCode;
+
+
+		if( typeof( window.parent.document.all.HSO ) != 'undefined' )
+		{
+			// 受注・発注・見積原価管理の場合
+			if( typeof(window.parent.document.all.HSO.SOFlg) == "object" || 
+				typeof(window.parent.document.all.HSO.POFlg) == "object" ||
+				typeof(window.parent.document.all.HSO.ESFlg) == "object" )
+			{
+				document.all.strSqlFileName.value = 'swProductAuth';
+			}
+			else
+			{
+				document.all.strSqlFileName.value = 'swProduct';
+			}
+		}
+	}
+
+</script>
+
+</head>
+<body id="BaseBack" onContextmenu="return false;" onload="initLayoutBase();initLayoutDragbar(); initLayoutQuery(); fncGetInputUserCode();" onclick="parent.Zchange( parent.MiFrame03 );">
+
+
+<!-- データバインド用オブジェクト -->
+<OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting" WIDTH="0" HEIGHT="0"></OBJECT>
+<Script for="objDataSourceSetting" event="ondatasetcomplete">
+	subLoadMasterSetting(this.recordset,0);
+	document.all.lngSearchResultCount.value=this.recordset.recordcount;
+	document.all.lngCounterParentHidden.value = this.recordset.recordcount;
+	if( this.recordset.recordcount > 0 ) document.all.objProductName.focus();
+</Script>
+
+
+<form name="" action="" method="post">
+
+
+
+<span id="ProductsDrag"></span>
+<span id="MswCloseBt"></span>
+
+
+
+
+<p id="InputA">
+<span id="SegABodys"></span>
+<span id="SegABottom02"></span>
+
+<span id="SearchHeader02"></span>
+
+
+<span id="SegA01_1">製品コード</span>
+<span id="SegA01_2">製品名称</span>
+
+
+
+<span id="VarsA01_1">
+	<input class="TxtMSW05L" type="text" name="strProductCode" maxlength="10" onfocus="setIME(this.name);chColorOn(this);fncInvalidKey();" onblur="chColorOff(this);fncEffectiveKey();" tabindex="1">
+</span>
+<span id="VarsA01_2">
+	<input class="TxtMSW07L" type="text" name="strProductName" maxlength="40" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="2">
+</span>
+
+
+<span id="SearchButton01" onclick="subLoadMasterOption( document.all.strSqlFileName.value, strProductCode , objProductName , Array( strProductCode.value, strProductName.value, document.all.lngInputUserCode.value ) , objDataSourceSetting, 0 );return false;"></span>
+
+
+
+<span id="SegBBodys"></span>
+<span id="SegBBottom02"></span>
+
+<span id="ResultHeader02"></span>
+
+
+<span id="VarsB01">
+	<select class="SlctMSW02" size="10" name="objProductName" onchange="fncViewMasterDataParent( this.value , strProductCode , strProductName );return false;" ondblclick="fncSetMasterDataParent( 'products' , this.value );return false;" disabled tabindex="4">
+	</select>
+</span>
+
+
+
+
+
+
+
+</p>
+<span id="ApplyButton" 
+	onclick="fncSetMasterData( 'products' , objProductName , strProductCode , strProductName );return false;" 
+	onfocus="fncApplyBtCharModeOn( document.all.AppBt );" onblur="fncApplyBtCharModeOff( document.all.AppBt );fncSubmasterTabindex( 'products' , parent.MiFrame03 , document.all.strProductCode );return false;" tabindex="5"></span>
+
+<span id="ClearButton" onclick="fncClearValue( objProductName , strProductCode , strProductName );return false;"></span>
+
+<span id="Counter"></span>
+<span id="SearchResultCount"><input class="TxtCounter" type="text" name="lngSearchResultCount" value="" disabled></span>
+
+
+
+<!-- 適用データ格納 -->
+<input type="hidden" name="lngCodeParentHidden" value="">
+<input type="hidden" name="strNameParentHidden" value="">
+
+<!-- カウンター値格納 -->
+<input type="hidden" name="lngCounterParentHidden" value="">
+
+<!-- サブウィンドウタイプ識別 -->
+<input type="hidden" name="strSubMasterWindowType" value="products">
+
+<!-- 入力者コード -->
+<input type="hidden" name="lngInputUserCode" value="">
+
+<!-- SQLファイル名 -->
+<input type="hidden" name="strSqlFileName" value="">
+</form>
+</body>
+</html>

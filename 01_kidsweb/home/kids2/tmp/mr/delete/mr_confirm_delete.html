@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <!-- 互換表示OFFを強制させる -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    php domパース用メタ要素 コメントアウトしていてもphpのdomElement->loadHTMLで認識される
+    -->
+    <meta charset="euc-jp">
+
+    <title>K.I.D.S.</title>
+    <!-- jQuery -->
+    <script src="/cmn/jquery/jquery-3.1.0.js"></script>
+    <script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
+
+    <!-- スタイル初期化 & 各種コントロールスタイル -->
+    <link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
+
+    <!-- 確認画面共通  CSS -->
+    <link rel="stylesheet" href="/mold/cmn/confirm/css/confirm.css">
+
+    <!-- ボタン画像の共通の振る舞い CSS -->
+    <link rel="stylesheet" href="/mold/cmn/button/css/button-behaivior.css">
+
+    <!-- 閉じる/登録 ボタンの挙動 -->
+    <script src="./js/form-action.js" defer></script>
+</head>
+<body class="confirm-background">
+    <div class="confirm-title">
+        削除確認
+    </div>
+    <div class="confirm-box">
+        <div class="confirm-box__header">
+            下記の金型帳票を削除します。
+        </div>
+        <div class="confirm-box__buttons">
+            <img class="close-action button" src="/img/type01/cmn/seg/close_off_ja_bt.gif" alt="close">
+            <img id="delete-button" class="delete-action button" src="/img/type01/cmn/seg/delete_off_ja_bt.gif" alt="delete">
+        </div>
+    </div>
+    <div class="confirm-data">
+        <div class="confirm-data__section">
+            <div class="confirm-data__section__record">
+                <span>金型帳票ID</span>
+                <div>_%MoldReportId%_</div>
+            </div>
+            <div class="confirm-data__section__record">
+                <span>リビジョン</span>
+                <div>_%Revision%_</div>
+            </div>
+            <div class="confirm-data__section__record">
+                <span>依頼日</span>
+                <div>_%RequestDate%_</div>
+            </div>
+            <div class="confirm-data__section__record">
+                <span>帳票区分</span>
+                <div>_%ReportCategoryDesc%_</div>
+            </div>
+            <div class="confirm-data__section__record">
+                <span>TO</span>
+                <div>[_%SendTo%_]_%SendToName%_</div>
+            </div>
+            <div class="confirm-data__section__record">
+                <span>依頼区分</span>
+                <div>_%RequestCategoryDesc%_</div>
+            </div>
+        </div>
+        <div class="confirm-data__section">
+            <div class="confirm-data__section__record">
+                <span>製品コード</span>
+                <div>_%ProductCode%_</div>
+            </div>
+            <div class="confirm-data__section__record">
+                <span>製品名称(日本語)</span>
+                <div>_%ProductName%_</div>
+            </div>
+            <div class="confirm-data__section__record">
+                <span>顧客品番</span>
+                <div>_%GoodsCode%_</div>
+            </div>
+            <div class="confirm-data__section__record">
+                <span>希望日</span>
+                <div>_%ActionRequestDate%_</div>
+            </div>
+            <div class="confirm-data__section__record">
+                <span>移動方法</span>
+                <div>_%TransferMethodDesc%_</div>
+            </div>
+            <div class="confirm-data__section__record">
+                <span>保管工場</span>
+                <div>[_%SourceFactory%_]&nbsp;_%SourceFactoryName%_</div>
+            </div>
+            <div class="confirm-data__section__record">
+                <span>移動先工場</span>
+                <div>[_%DestinationFactory%_]&nbsp;_%DestinationFactoryName%_</div>
+            </div>
+            <div class="confirm-data__section__record">
+                <span>指示区分</span>
+                <div>_%InstructionCategoryDesc%_</div>
+            </div>
+            <div class="confirm-data__section__record">
+                <span>事業部(顧客)</span>
+                <div>[_%CustomerCode%_]&nbsp;_%CustomerName%_</div>
+            </div>
+            <div class="confirm-data__section__record">
+                <span>KWG担当部署</span>
+                <div>[_%KuwagataGroupCode%_]&nbsp;_%KuwagataGroupName%_</div>
+            </div>
+            <div class="confirm-data__section__record">
+                <span>KWG担当者</span>
+                <div>[_%KuwagataUserCode%_]&nbsp;_%KuwagataUserName%_</div>
+            </div>
+            <div class="confirm-data__section__record">
+                <span>生産後の処理</span>
+                <div>_%FinalKeepDesc%_</div>
+            </div>
+            <div class="confirm-data__section__record">
+                <span>返却予定日</span>
+                <div>_%ReturnSchedule%_</div>
+            </div>
+            <div class="confirm-data__section__record">
+                <span>その他</span>
+                <div>_%Note%_</div>
+            </div>
+        </div>
+        <div class="confirm-data__section">
+            <table id="MoldTable" class="confirm-table">
+                <thead>
+                    <tr>
+                        <th>項番</th>
+                        <th>金型NO</th>
+                        <th>金型説明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+        <div class="confirm-data__section">
+            <div class="confirm-data__section__record">
+                <span>欄外備考</span>
+                <div>_%MarginalNote%_</div>
+            </div>
+        </div>
+        <div class="confirm-data__section">
+            <div class="confirm-data__section__record">
+                <span>作成日時</span>
+                <div>_%Created%_</div>
+            </div>
+            <div class="confirm-data__section__record">
+                <span>作成者</span>
+                <div>[_%CreateBy%_]&nbsp;_%CreateByName%_</div>
+            </div>
+            <div class="confirm-data__section__record">
+                <span>更新日時</span>
+                <div>_%Updated%_</div>
+            </div>
+            <div class="confirm-data__section__record">
+                <span>更新者</span>
+                <div>[_%UpdateBy%_]&nbsp;_%UpdateByName%_</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

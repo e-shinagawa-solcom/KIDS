@@ -1,0 +1,4 @@
+ SELECT mu.struserdisplaycode, mu.struserdisplayname FROM m_group mg, m_grouprelation mgr, m_user mu, m_attributerelation mar WHERE mu.lngcompanycode = mar.lngcompanycode AND mu.lngusercode = mgr.lngusercode AND mg.lnggroupcode = mgr.lnggroupcode AND mar.lngattributecode = 1 AND mg.bytgroupdisplayflag = true AND mu.bytuserdisplayflag = true AND mu.struserdisplaycode = '217' AND mg.strgroupdisplaycode = '31' 
+ SELECT mu.struserdisplaycode, mu.struserdisplayname FROM m_group mg, m_grouprelation mgr, m_user mu, m_attributerelation mar WHERE mu.lngcompanycode = mar.lngcompanycode AND mu.lngusercode = mgr.lngusercode AND mg.lnggroupcode = mgr.lnggroupcode AND mar.lngattributecode = 1 AND mg.bytgroupdisplayflag = true AND mu.bytuserdisplayflag = true AND mu.struserdisplaycode = '217' AND mg.strgroupdisplaycode = '31' 
+id	name1
+217	ÀÆÆ£¡¡²ÂÇ·

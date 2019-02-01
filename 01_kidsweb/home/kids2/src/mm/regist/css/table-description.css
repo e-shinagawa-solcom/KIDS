@@ -1,0 +1,104 @@
+/* 入力フォーム 金型説明テーブル */
+.table-description
+{
+    table-layout: fixed;
+
+    border-collapse: collapse;
+}
+
+/* 入力フォーム 金型説明テーブル thead */
+.table-description thead
+{
+    color: #ffffff;
+}
+
+/* 入力フォーム 金型説明テーブル thead > tr */
+.table-description thead > tr
+{
+    display: block;
+    height: 100%;
+
+    background-color: #799797;
+}
+
+/* 入力フォーム 金型説明テーブル tbody */
+.table-description tbody
+{
+    display: block;
+
+    height: 160px;
+
+    border-style: solid;
+    border-width: 1px;
+    border-color: #798787;
+
+    overflow-y: scroll;
+
+    background-color: #f1f1f1;
+}
+
+/* 入力フォーム 金型説明テーブル tbody > tr */
+.table-description tbody > tr
+{
+    height: 20px;
+}
+
+/* 入力フォーム 金型説明テーブル 項番カラム */
+.table-description th:nth-of-type(1),
+.table-description td:nth-of-type(1)
+{
+    width: 31px;
+
+    border-style: solid;
+    border-width: 1px;
+    border-color: #798787;
+}
+
+/* 入力フォーム 金型説明テーブル 金型番号カラム */
+.table-description th:nth-of-type(2),
+.table-description td:nth-of-type(2)
+{
+    width: 70px;
+
+    border-style: solid;
+    border-width: 1px;
+    border-color: #798787;
+}
+
+/* 入力フォーム 金型説明テーブル 説明カラム */
+.table-description th:nth-of-type(3),
+.table-description td:nth-of-type(3)
+{
+    width: 850px;
+
+    border-style: solid;
+    border-width: 1px;
+    border-color: #798787;
+}
+
+/* 入力フォーム 金型説明テーブル td */
+.table-description th,td
+{
+    text-align: center;
+}
+
+/* 入力フォーム 金型説明テーブル td(金型番号) > input */
+.table-description tbody td:nth-of-type(2) > input
+{
+    width: 65px;
+    padding: 0px;
+    margin: 0px;
+
+    text-align: center;
+
+    border-style: none;
+
+    background-color: transparent;
+}
+
+/* 入力フォーム 金型説明テーブル td(金型説明) > input */
+.table-description tbody td:nth-of-type(3) > input
+{
+    width: 99%;
+    margin: 0px 2px;
+}

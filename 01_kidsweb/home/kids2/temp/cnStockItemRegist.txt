@@ -1,0 +1,15 @@
+ SELECT ms.lngstockitemcode, ms.lngstockitemcode || ' ' || ms.strstockitemname AS lngstockitemcodename FROM m_stockitem ms WHERE ms.lngstocksubjectcode = 433 AND ms.bytdisplayflag = TRUE AND ms.bytinvalidflag = FALSE ORDER BY ms.lngstockitemcode 
+ SELECT ms.lngstockitemcode, ms.lngstockitemcode || ' ' || ms.strstockitemname AS lngstockitemcodename FROM m_stockitem ms WHERE ms.lngstocksubjectcode = 433 AND ms.bytdisplayflag = TRUE AND ms.bytinvalidflag = FALSE ORDER BY ms.lngstockitemcode 
+id	name1
+0	0
+1	1 Injection Mold
+2	2 Spray Mask Mold
+3	3 Prot type
+4	4 Separation Charge
+5	5 Tooling Sample
+6	6 Duplicate Sample
+7	7 ToolingMaster
+8	8 PKG¹»Àµ
+9	9 InjectionMold½¤ÀµÈñÍÑ
+10	10 The Printing Plate Fee
+99	99 ¡Ý

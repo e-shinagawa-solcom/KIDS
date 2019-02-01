@@ -1,0 +1,237 @@
+<!--
+
+
+#Vendor01Drag {
+	position : absolute ;
+	left : 0px ;
+	top : 0px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+#MswCloseBt {
+	position : absolute ;
+	left : 668px ;
+	top : 0px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+
+/********************* SEARCH SET *********************/
+#InputA {
+	position : absolute ;
+	left : 0px ;
+	top : 0px ;
+	width : 689px ;
+	height :381px ;
+	z-index : 0 ;
+	visibility : visible ;
+	border-width: 1px ;
+	border-style: solid ;
+	background-color: transparent ;
+}
+
+
+
+/********************* SEARCH HEADER *********************/
+#SearchHeader02 {
+	position : absolute ;
+	left : 5px ;
+	top : 22px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+
+
+/********************* SEARCH SEGMENTS *********************/
+#SegA01_1 {
+	font-weight : bold ;
+	position : absolute ;
+	left : 17px ;
+	top : 57px ;
+	width : 120px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #ffffff #798787 #798787 ;
+	background-color: #ffffff ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#SegA01_2 {
+	font-weight : bold ;
+	position : absolute ;
+	left : 17px ;
+	top : 87px ;
+	width : 120px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #ffffff #798787 #798787 ;
+	background-color: #ffffff ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#SegABottom02 {
+	position : absolute ;
+	left : 5px ;
+	top : 141px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+#SegABodys {
+	position : absolute ;
+	left : 5px ;
+	top : 46px ;
+	width : 677px ;
+	height : 100px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color : #cdcdcd ;
+	background-color: #ffffff ;
+}
+
+
+
+/********************* SEARCH BUTTON *********************/
+#SearchButton01 {
+	position : absolute ;
+	left : 305px ;
+	top : 121px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+
+
+
+
+
+/********************* SEARCH VARS *********************/
+#VarsA01_1 {
+	position : absolute ;
+	left : 127px ;
+	top : 57px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #798787 #798787 #ffffff ;
+	background-color: #ffffff ;
+	padding : 3px 0px 0px 8px ;
+}
+
+#VarsA01_2 {
+	position : absolute ;
+	left : 127px ;
+	top : 87px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #798787 #798787 #ffffff ;
+	background-color: #ffffff ;
+	padding : 3px 0px 0px 8px ;
+}
+
+
+
+
+
+/********************* RESULT HEADER *********************/
+#ResultHeader02 {
+	position : absolute ;
+	left : 5px ;
+	top : 152px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+
+
+/********************* RESULT SEGMENTS *********************/
+#SegBBottom02 {
+	position : absolute ;
+	left : 5px ;
+	top : 364px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+#SegBBodys {
+	position : absolute ;
+	left : 5px ;
+	top : 176px ;
+	width : 677px ;
+	height : 195px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color : #cdcdcd ;
+	background-color: #ffffff ;
+}
+
+
+
+/********************* RESULT BUTTON *********************/
+#ApplyButton {
+	position : absolute ;
+	left : 347px ;
+	top : 342px ;
+	z-index : 2 ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+#ClearButton {
+	position : absolute ;
+	left : 274px ;
+	top : 342px ;
+	z-index : 2 ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+#Counter {
+	position : absolute ;
+	left : 570px ;
+	top : 342px ;
+	z-index : 2 ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+#SearchResultCount
+{
+	position : absolute ;
+	left : 593px ;
+	top : 344px ;
+	z-index : 2 ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+/********************* RESULT VARS *********************/
+#VarsB01 {
+	position : absolute ;
+	left : 17px ;
+	top :187px ;
+	height : 27px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: #ffffff ;
+}
+
+
+-->

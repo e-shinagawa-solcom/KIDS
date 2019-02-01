@@ -1,0 +1,453 @@
+<!--
+
+
+
+#TimeLimt
+{
+	position   : absolute;
+	left       : 130px;
+	top        : 643px; /* 648 */
+	width      : 270px;
+	height     : 15px;
+	z-index    : 4;
+
+	visibility : hidden;
+}
+#TimeIFrm
+{
+	width  : 270px;
+	height : 15px;
+}
+
+
+
+/* β版表記用 */
+#Beta 
+{
+	position : absolute ;
+	top : 6px ;
+	left : 844px ;
+	z-index : 2 ;
+	color : #ffffff ;
+	width : 50px ;
+	font-weight : bold ;
+	border-width: 0px ;
+	border-style: none ;
+	padding : 10px 0px 0px 0px;
+	background-color: transparent ;
+	text-align : right ;
+	visibility : visible ;
+}
+
+
+/* ディスプレイサイズエラー */
+#MessageDisp
+{
+	font-family : Arial , ＭＳ Ｐゴシック ;
+	font-weight : normal ;
+	font-size : 12px ;
+	color : #eeeeee ;
+	line-height : 14px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #cdcdcd ;
+	background-color: #666666 ;
+	display : none ;
+	padding : 10px 5px 8px 10px ;
+}
+
+
+/* ERROR COMMENTS */
+#Comments
+{
+	position : absolute ;
+	font-family : ＭＳ Ｐゴシック, Osaka ;
+	font-style : normal ;
+	font-weight : normal ;
+	color : #666666 ;
+	font-size : 10px;
+	line-height : 10px ;
+	z-index : 77 ;
+	visibility : hidden ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color : #e75700 ;
+	background-color: #ffefe5 ;
+	padding : 4px 5px 3px 5px ;
+}
+
+
+
+
+#SystemVersion
+{
+	position     : absolute ;
+	left         : 861px ; /* 222px */
+	top          : 151px  ; /* 25px */
+	font-family  : Arial ;
+	font-size    : 8px ;
+	font-style   : normal ;
+	font-weight  : bold ;
+	color        : #dfa385 ;/*d1a893*/
+	font-size    : 11px ;
+	width        : 100px ;
+	z-index      : 4 ;
+	padding      : 4px 2px 0px 2px;
+	text-align   : right ;
+	border-width : 0px ;
+	border-style : none ;
+}
+
+
+
+
+
+#strLoginUser
+{
+	position : absolute ;
+	left : 285px ; /* 285px */
+	top : 16px ; /* 35px */
+	font-family : monospace ;
+	font-style : normal ;
+	font-weight : normal ;
+	color : #deb6a2 ;/*d1a893*/
+	font-size : 10px;
+	line-height : 11px ;
+	letter-spacing : -0.5px ;
+	z-index : 4 ;
+	padding : 4px 2px 0px 2px;
+	text-align : right ;
+	width : 600px ;
+	height : 18px ;
+	border-width : 0px ;
+	border-style : none ;
+	border-color : #ffffff ;
+	/*text-decoration : underline ;*/
+}
+
+
+
+
+
+
+#PictSpaceBase
+{
+	position : absolute ;
+	left : 900px ;
+	top : 10px ;
+	z-index : 4 ;
+	border-width : 0px ;
+	border-style : none ;
+}
+
+#UserPictBase
+{
+	position : absolute ;
+	left : 908px ;
+	top : 18px ;
+	z-index : 4 ;
+	border-width : 0px ;
+	border-style : none ;
+}
+
+
+#SpecialBt
+{
+	position : absolute ;
+	top : 5px ; /* 8 */
+	left : 889px ; /* 877px */
+	visibility : hidden ;
+	z-index : 4 ;
+	border-width : 0px ;
+	border-style : none ;
+}
+
+
+
+
+#SpecialCharFrame
+{
+	position : absolute ;
+	top : 4px ;
+	left : 20px ; /* 270 */
+	z-index : 8 ;
+	visibility: hidden ;
+	border : 1px none #ff0000;
+	background-color: transparent ;
+}
+
+
+#SpecialChar
+{
+	position : absolute ;
+	width : 860px ; /* 610 */
+	height : 22px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+	filter:progid:DXImageTransform.Microsoft.Alpha(opacity=100);
+}
+
+
+
+
+
+
+#HelpBt
+{
+	position : absolute ;
+	top : 643px ; /* 8 */
+	left : 940px ; /* 877px */
+	z-index : 4 ;
+	border-width : 0px ;
+	border-style : none ;
+}
+
+
+
+
+/* PRELOAD */
+#Preload
+{
+	position     : absolute ;
+	left         : 0px ;
+	top          : 0px ;
+	border-width : 0px ;
+	border-style : none ;
+	z-index      : 20 ;
+	display      : block ;
+	background   : transparent ;
+}
+
+#PreloadFrm
+{
+	border-width : 0px ;
+	border-style : none ;
+	width        : 0px ;
+	height       : 0px ;
+}
+
+
+#OverLayer
+{	
+	position     : absolute ;
+	left         : 0px ;
+	top          : 0px ;
+	border-width : 0px ;
+	border-style : none ;
+	z-index      : 19 ;
+	width        : 996px ;
+	height       : 689px ;
+	background   : #72828b ;
+	display      : block ;
+}
+
+
+/********************* MAIN TITLE *********************/
+#MainTitle {
+	position : absolute ;
+	left : 44px ;
+	top : 53px ;
+	z-index : 2 ;
+	visibility : visible ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+
+
+/********************* MARGINS *********************/
+#Margins {
+	position : absolute ;
+	top : 10px ;
+	left : 10px ;
+	z-index : 0 ;
+	visibility : visible ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+
+
+/********************* HEADER *********************/
+#Header {
+	position : absolute ;
+	top : 0px ;
+	left : 0px ;
+	z-index : 1 ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+
+
+/********************* LOGOUT BUTTON *********************/
+#LogOutBt {
+	position : absolute ;
+	top : 641px ; /* 8 */
+	left : 847px ; /* 877px */
+	z-index : 2 ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+
+
+
+/********************* ENGLISH-JAPANESE BUTTON *********************/
+#EtoJ {
+	position : absolute ;
+	left : 770px ; /* 800px */
+	top : 651px ; /* 651px */
+	z-index : 2 ;
+	visibility : visible ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+
+
+
+/********************* BODYS *********************/
+#Bodys {
+	position : absolute ;
+	top : 76px ;
+	left : 0px ;
+	width : 980px ;
+	height : 580px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #cdcdcd ;
+	background-color: transparent ;
+}
+
+
+
+/********************* NAVIGATIONS *********************/
+#NaviButton
+{
+	position : absolute ;
+	left : 11px ;
+	top : 96px ;
+	border-width: 0px ;
+	border-style: none ;
+	z-index : 4 ;
+	background-color: transparent ;
+}
+
+
+
+#Navigations
+{
+	position : absolute ;
+	z-index : 7 ;
+	visibility : hidden ;
+	top : 95px ;
+	left : 28px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+#NaviIfrm /* I FRAME SIZE */
+{
+	position : absolute ;
+	width : 169px ;
+	height : 552px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+	filter:progid:DXImageTransform.Microsoft.Alpha(opacity=90);
+}
+
+
+#MainMenuButton 
+{
+	position : absolute ;
+	top : 641px ;
+	left : 21px ;
+	z-index : 2 ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+#Menus {
+	position : absolute ;
+	top : 95px ;
+	left : 10px ;
+	width : 170px ;
+	height : 552px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #cdcdcd ;
+	background-color: transparent ;
+}
+
+
+
+
+
+
+
+
+/********************* FOOTER *********************/
+#Footer {
+	position : absolute ;
+	top : 636px ;
+	left : 0px ;
+	z-index : 1 ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+
+
+
+
+
+
+
+
+
+/********************* WARNING *********************/
+#Warning { 
+	position : absolute ;
+	left : 0px ;
+	top : 0px ;
+	z-index : 10 ;
+	visibility : hidden ;
+	background-color: transparent ;
+}
+
+#WiFrm { 
+	width : 0 ;
+	height : 0 ;
+	background-color: transparent ;
+	filter:progid:DXImageTransform.Microsoft.Alpha(opacity=70);
+}
+
+
+#LayoutGrid
+{
+	position : absolute ;
+	left : 0px ;
+	top : 0px ;
+	width : 996 ;
+	height : 689 ;
+	visibility : hidden ;
+	border-width : 0px ;
+	border-style : none ;
+	background-color : transparent ;
+	filter : alpha(opacity=15) ;
+}
+
+
+
+-->

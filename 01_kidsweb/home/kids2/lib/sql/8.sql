@@ -1,0 +1,2 @@
+// No8: 顧客コード				→ 一致する「コード＋名称」一覧(共通SubWindow：saito)
+SELECT c.strcompanydisplaycode,(c.strcompanydisplaycode || ' ' || c.strcompanydisplayname) AS strcompanydisplayname FROM m_company c, m_attribute a, m_attributerelation al WHERE c.lngcompanycode = al.lngcompanycode AND al.lngattributecode = a.lngattributecode AND al.lngattributecode = 2 AND strcompanydisplaycode LIKE '%_%strFormValue0%_%' ORDER BY c.strcompanydisplaycode

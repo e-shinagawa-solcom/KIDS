@@ -1,0 +1,30 @@
+_%PAGE_HEADER%_
+
+<p>発注状態チェックリスト【キャンディチーム用】 </p>
+<form name="form1" method="post" action="chklist.php">
+<input type="hidden" name="conf" value="po.candy.00.conf">
+<input type="hidden" name="template" value="_%PAGE_TEMPLATENAME%_">
+
+<table width="80%" border="1">
+  <tr> 
+    <td>部門</td>
+    <td>担当者</td>
+    <td>期間</td>
+    <td>発注状態</td>
+    <td rowspan="2">
+        <input type="submit" name="submit" value="見る">
+    </td>
+  </tr>
+  <tr> 
+    <td>_%M_GROUP%_</td>
+    <td>_%M_USER%_</td>
+    <td>_%DATE_FROM%_ 〜 _%DATE_TO%_</td>
+    <td>_%M_ORDERSTATUS%_</td>
+  </tr>
+</table>
+</form>
+
+<span style="color: #999999">このページを“お気に入り”に追加しておく事で同じ選択状態が復元出来ます。</span>
+
+
+_%PAGE_FOOTER%_

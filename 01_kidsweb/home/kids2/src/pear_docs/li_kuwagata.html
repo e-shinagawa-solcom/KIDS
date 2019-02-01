@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+   <html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title></title>
+  <link rel="stylesheet" href="media/stylesheet.css" />
+  <script src="media/lib/classTree.js"></script>
+<link id="webfx-tab-style-sheet" type="text/css" rel="stylesheet" href="media/lib/tab.webfx.css" />
+<script type="text/javascript" src="media/lib/tabpane.js"></script>
+  <meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+  <script language="javascript" type="text/javascript" src="media/lib/ua.js"></script>
+<script language="javascript" type="text/javascript">
+	var imgPlus = new Image();
+	var imgMinus = new Image();
+	imgPlus.src = "media/images/plus.gif";
+	imgMinus.src = "media/images/minus.gif";
+	
+	function showNode(Node){
+        switch(navigator.family){
+        	case 'nn4':
+        		// Nav 4.x code fork...
+				var oTable = document.layers["span" + Node];
+				var oImg = document.layers["img" + Node];
+        		break;
+        	case 'ie4':
+        		// IE 4/5 code fork...
+				var oTable = document.all["span" + Node];
+				var oImg = document.all["img" + Node];
+        		break;
+        	case 'gecko':
+        		// Standards Compliant code fork...
+				var oTable = document.getElementById("span" + Node);
+				var oImg = document.getElementById("img" + Node);
+        		break;
+        }
+		oImg.src = imgMinus.src;
+		oTable.style.display = "block";
+	}
+	
+	function hideNode(Node){
+        switch(navigator.family){
+        	case 'nn4':
+        		// Nav 4.x code fork...
+				var oTable = document.layers["span" + Node];
+				var oImg = document.layers["img" + Node];
+        		break;
+        	case 'ie4':
+        		// IE 4/5 code fork...
+				var oTable = document.all["span" + Node];
+				var oImg = document.all["img" + Node];
+        		break;
+        	case 'gecko':
+        		// Standards Compliant code fork...
+				var oTable = document.getElementById("span" + Node);
+				var oImg = document.getElementById("img" + Node);
+        		break;
+        }
+		oImg.src = imgPlus.src;
+		oTable.style.display = "none";
+	}
+	
+	function nodeIsVisible(Node){
+        switch(navigator.family){
+        	case 'nn4':
+        		// Nav 4.x code fork...
+				var oTable = document.layers["span" + Node];
+        		break;
+        	case 'ie4':
+        		// IE 4/5 code fork...
+				var oTable = document.all["span" + Node];
+        		break;
+        	case 'gecko':
+        		// Standards Compliant code fork...
+				var oTable = document.getElementById("span" + Node);
+        		break;
+        }
+		return (oTable && oTable.style.display == "block");
+	}
+	
+	function toggleNodeVisibility(Node){
+		if (nodeIsVisible(Node)){
+			hideNode(Node);
+		}else{
+			showNode(Node);
+		}
+	}
+</script>
+<!-- template designed by Julien Damon based on PHPEdit's generated templates, and tweaked by Greg Beaver -->
+<body bgcolor="#ffffff"  topmargin="3" leftmargin="3" rightmargin="2" bottommargin="3"><h3>Navigation: kuwagata</h3>
+<script language="Javascript">
+if (document.getElementById) {
+  var tree = new WebFXTree('Help : kuwagata', 'blank.html');
+  tree.setBehavior('classic');
+  tree.openIcon = 'media/images/Disk.gif';
+  tree.icon = 'media/images/Disk.gif';
+
+    var elements = new WebFXTreeItem('Index of elements', 'elementindex_kuwagata.html');
+    elements.openIcon = 'media/images/file.png';
+    elements.icon = 'media/images/file.png';
+	tree.add(elements);
+
+    var tree_function = new WebFXTreeItem('Function(s)', '');
+    tree_function.openIcon = 'media/images/Functions.gif';
+    tree_function.icon = 'media/images/Functions.gif';
+    	var fic = new WebFXTreeItem('fncAllCheck', 'kuwagata/_lib_php.html#functionfncAllCheck');
+	fic.openIcon = 'media/images/PublicMethod.gif';
+	fic.icon = 'media/images/PublicMethod.gif';
+	tree_function.add(fic);
+		var fic = new WebFXTreeItem('fncCheckAuthority', 'kuwagata/_lib_php.html#functionfncCheckAuthority');
+	fic.openIcon = 'media/images/PublicMethod.gif';
+	fic.icon = 'media/images/PublicMethod.gif';
+	tree_function.add(fic);
+		var fic = new WebFXTreeItem('fncCheckString', 'kuwagata/_lib_php.html#functionfncCheckString');
+	fic.openIcon = 'media/images/PublicMethod.gif';
+	fic.icon = 'media/images/PublicMethod.gif';
+	tree_function.add(fic);
+		var fic = new WebFXTreeItem('fncCheckStringLength', 'kuwagata/_lib_php.html#functionfncCheckStringLength');
+	fic.openIcon = 'media/images/PublicMethod.gif';
+	fic.icon = 'media/images/PublicMethod.gif';
+	tree_function.add(fic);
+		var fic = new WebFXTreeItem('fncError', 'kuwagata/_lib_php.html#functionfncError');
+	fic.openIcon = 'media/images/PublicMethod.gif';
+	fic.icon = 'media/images/PublicMethod.gif';
+	tree_function.add(fic);
+		var fic = new WebFXTreeItem('fncGetAdminFunction', 'kuwagata/_lib_php.html#functionfncGetAdminFunction');
+	fic.openIcon = 'media/images/PublicMethod.gif';
+	fic.icon = 'media/images/PublicMethod.gif';
+	tree_function.add(fic);
+		var fic = new WebFXTreeItem('fncGetCommonFunction', 'kuwagata/_lib_php.html#functionfncGetCommonFunction');
+	fic.openIcon = 'media/images/PublicMethod.gif';
+	fic.icon = 'media/images/PublicMethod.gif';
+	tree_function.add(fic);
+		var fic = new WebFXTreeItem('fncGetDateSequence', 'kuwagata/_lib_php.html#functionfncGetDateSequence');
+	fic.openIcon = 'media/images/PublicMethod.gif';
+	fic.icon = 'media/images/PublicMethod.gif';
+	tree_function.add(fic);
+		var fic = new WebFXTreeItem('fncGetMailMessage', 'kuwagata/_lib_php.html#functionfncGetMailMessage');
+	fic.openIcon = 'media/images/PublicMethod.gif';
+	fic.icon = 'media/images/PublicMethod.gif';
+	tree_function.add(fic);
+		var fic = new WebFXTreeItem('fncGetMasterValue', 'kuwagata/_lib_php.html#functionfncGetMasterValue');
+	fic.openIcon = 'media/images/PublicMethod.gif';
+	fic.icon = 'media/images/PublicMethod.gif';
+	tree_function.add(fic);
+		var fic = new WebFXTreeItem('fncGetPulldown', 'kuwagata/_lib_php.html#functionfncGetPulldown');
+	fic.openIcon = 'media/images/PublicMethod.gif';
+	fic.icon = 'media/images/PublicMethod.gif';
+	tree_function.add(fic);
+		var fic = new WebFXTreeItem('fncGetReplacedHtml', 'kuwagata/_lib_php.html#functionfncGetReplacedHtml');
+	fic.openIcon = 'media/images/PublicMethod.gif';
+	fic.icon = 'media/images/PublicMethod.gif';
+	tree_function.add(fic);
+		var fic = new WebFXTreeItem('fncGetSequence', 'kuwagata/_lib_php.html#functionfncGetSequence');
+	fic.openIcon = 'media/images/PublicMethod.gif';
+	fic.icon = 'media/images/PublicMethod.gif';
+	tree_function.add(fic);
+		var fic = new WebFXTreeItem('fncIsSequence', 'kuwagata/_lib_php.html#functionfncIsSequence');
+	fic.openIcon = 'media/images/PublicMethod.gif';
+	fic.icon = 'media/images/PublicMethod.gif';
+	tree_function.add(fic);
+		var fic = new WebFXTreeItem('fncIsSession', 'kuwagata/_lib_php.html#functionfncIsSession');
+	fic.openIcon = 'media/images/PublicMethod.gif';
+	fic.icon = 'media/images/PublicMethod.gif';
+	tree_function.add(fic);
+		var fic = new WebFXTreeItem('fncLogin', 'kuwagata/_lib_php.html#functionfncLogin');
+	fic.openIcon = 'media/images/PublicMethod.gif';
+	fic.icon = 'media/images/PublicMethod.gif';
+	tree_function.add(fic);
+		var fic = new WebFXTreeItem('fncLogout', 'kuwagata/_lib_php.html#functionfncLogout');
+	fic.openIcon = 'media/images/PublicMethod.gif';
+	fic.icon = 'media/images/PublicMethod.gif';
+	tree_function.add(fic);
+		var fic = new WebFXTreeItem('fncOutputError', 'kuwagata/_lib_php.html#functionfncOutputError');
+	fic.openIcon = 'media/images/PublicMethod.gif';
+	fic.icon = 'media/images/PublicMethod.gif';
+	tree_function.add(fic);
+		var fic = new WebFXTreeItem('fncPutStringCheckError', 'kuwagata/_lib_php.html#functionfncPutStringCheckError');
+	fic.openIcon = 'media/images/PublicMethod.gif';
+	fic.icon = 'media/images/PublicMethod.gif';
+	tree_function.add(fic);
+		var fic = new WebFXTreeItem('fncQuery', 'kuwagata/_lib_php.html#functionfncQuery');
+	fic.openIcon = 'media/images/PublicMethod.gif';
+	fic.icon = 'media/images/PublicMethod.gif';
+	tree_function.add(fic);
+		var fic = new WebFXTreeItem('fncStringToArray', 'kuwagata/_lib_php.html#functionfncStringToArray');
+	fic.openIcon = 'media/images/PublicMethod.gif';
+	fic.icon = 'media/images/PublicMethod.gif';
+	tree_function.add(fic);
+		var fic = new WebFXTreeItem('fncToHTMLString', 'kuwagata/_lib_php.html#functionfncToHTMLString');
+	fic.openIcon = 'media/images/PublicMethod.gif';
+	fic.icon = 'media/images/PublicMethod.gif';
+	tree_function.add(fic);
+		var fic = new WebFXTreeItem('getArrayErrorVisibility', 'kuwagata/_lib_php.html#functiongetArrayErrorVisibility');
+	fic.openIcon = 'media/images/PublicMethod.gif';
+	fic.icon = 'media/images/PublicMethod.gif';
+	tree_function.add(fic);
+		var fic = new WebFXTreeItem('getArrayTable', 'kuwagata/_lib_php.html#functiongetArrayTable');
+	fic.openIcon = 'media/images/PublicMethod.gif';
+	fic.icon = 'media/images/PublicMethod.gif';
+	tree_function.add(fic);
+		tree.add(tree_function);
+	
+    var tree_classe = new WebFXTreeItem('Class(es)', 'classtrees_kuwagata.html');
+    tree_classe.openIcon = 'media/images/classFolder.gif';
+    tree_classe.icon = 'media/images/classFolder.gif';
+    	tree.add(tree_classe);
+
+    var tree_file = new WebFXTreeItem('File(s)', '');
+    tree_file.openIcon = 'media/images/FolderOpened.gif';
+    tree_file.icon = 'media/images/foldericon.png';
+    	  var file = new WebFXTreeItem('lib.php', 'kuwagata/_lib_php.html');
+      file.openIcon = 'media/images/file.png';
+      file.icon = 'media/images/file.png';
+      tree_file.add(file);
+    	tree.add(tree_file);
+  document.write(tree);
+}
+</script>
+<br />
+</div>
+<br />
+<span CLASS="small"><a href="http://www.phpdoc.org" target="_blank">phpDocumentor v <b>1.2.3</b></a><br />
+<br />
+<i>HTML layout inspired by </i><a href="http://www.phpedit.com" target="right">PHPEdit</a></span>
+</body>
+</html>

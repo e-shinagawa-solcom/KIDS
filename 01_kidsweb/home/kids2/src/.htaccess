@@ -1,0 +1,22 @@
+AddType application/x-httpd-php .html
+
+php_value include_path /Users/solcom/Desktop/Git/kuwagata/webresource/01_kidsweb/home/kids2/lib
+
+# Added by k.saito
+php_value default_charset EUC-JP
+php_value mbstring.internal_encoding EUC-JP
+php_value mbstring.http_input EUC-JP
+#php_value mbstring.http_input UCS-2LE
+php_value mbstring.http_output EUC-JP
+
+#php_value iconv.input_encoding UCS-2LE
+#php_value iconv.internal_encoding UCS-2LE
+
+
+AuthGroupFile	/dev/null
+AuthName 	"Password Input"
+AuthType 	Basic
+<Files .htaccess>
+order deny,allow
+deny from all
+</Files>

@@ -1,0 +1,58 @@
+
+<config>
+<header1>
+
+</header1>
+
+
+<header2>
+<script type="text/javascript" language="javascript" src="/layout/type01/cmn/images.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/type01/cmn/initlayoutbase.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/type01/wf/cmn/images.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/type01/wf/initlayout.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/type01/navi/wf/images.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/type01/navi/cmn/images.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/type01/navi/wf/initlayout.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/type01/navi/cmn/initlayoutnavi.js"></script>
+</header2>
+
+
+<header3>
+<script type="text/javascript" language="javascript" src="exstr.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="layout.css">
+<script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
+</header3>
+
+<bodyonload>
+initLayoutBase();initLayoutWF();initLayoutNavigation();GetlngLanguageCode( _%lngLanguageCode%_ );Loading();
+</bodyonload>
+</config>
+
+
+<p id="Preload">
+	<iframe id="PreloadFrm" name="PreloadWin" frameborder="0" src="/preload/index.html" onload="fncObjectResize( this , 0 , 0 );"></iframe>
+</p>
+
+
+
+<!-- ////////////////////////////////// START MAIN TITLE ////////////////////////////////// -->
+<span id="MainTitle"></span>
+<!-- /////////////////////////////////// END MAIN TITLE /////////////////////////////////// -->
+
+<span id="strSelectFunctions"></span>
+<span id="MenuBackBorder"></span>
+<span id="MenuBack"></span>
+
+<p id="TopNavi">
+<span id="RegistNaviBt1" onClick="javascript:location='_%strListURL%_';"></span>
+<span id="SearchNaviBt1" onClick="javascript:location='_%strSearchURL%_';"></span>
+</p>
+
+
+<!-- /////////////////////////////////// START E TO J /////////////////////////////////// -->
+<span id="EtoJ"></span>
+<!-- //////////////////////////////////// END E TO J //////////////////////////////////// -->
+
+
+
+<span id="OverLayer"></span>

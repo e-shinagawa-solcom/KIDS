@@ -1,0 +1,4 @@
+ SELECT mp.lngproductno, CASE WHEN mp.strproductname IS NULL THEN '（製品名称が空です）'  ELSE mp.strproductname END FROM m_product mp WHERE mp.bytinvalidflag = false AND mp.strproductcode = '00006' and ( mp.lngproductstatuscode = 0 or mp.lngproductstatuscode is null)  
+ SELECT mp.lngproductno, CASE WHEN mp.strproductname IS NULL THEN '（製品名称が空です）'  ELSE mp.strproductname END FROM m_product mp WHERE mp.bytinvalidflag = false AND mp.strproductcode = '00006' and ( mp.lngproductstatuscode = 0 or mp.lngproductstatuscode is null)  
+id	name1
+6	営業第二 特別注文

@@ -1,0 +1,4 @@
+  SELECT COUNT(*),  CASE WHEN COUNT(*) >= 1 THEN '入力された計上月「'|| to_char( date_trunc( 'month', to_date('2019/01/18', 'YYYY/MM') ), 'YYYY/MM') ||'」は既に締め処理済みの為入力出来ません。経理部門に相談して下さい。'   ELSE ''  END as alert FROM  m_Receive WHERE  lngReceiveStatusCode =99  AND bytInvalidFlag = FALSE  AND to_char( date_trunc( 'month', dtmAppropriationDate ), 'YYYY/MM') = to_char( date_trunc( 'month', to_date('2019/01/18', 'YYYY/MM') ), 'YYYY/MM') 
+  SELECT COUNT(*),  CASE WHEN COUNT(*) >= 1 THEN '入力された計上月「'|| to_char( date_trunc( 'month', to_date('2019/01/18', 'YYYY/MM') ), 'YYYY/MM') ||'」は既に締め処理済みの為入力出来ません。経理部門に相談して下さい。'   ELSE ''  END as alert FROM  m_Receive WHERE  lngReceiveStatusCode =99  AND bytInvalidFlag = FALSE  AND to_char( date_trunc( 'month', dtmAppropriationDate ), 'YYYY/MM') = to_char( date_trunc( 'month', to_date('2019/01/18', 'YYYY/MM') ), 'YYYY/MM') 
+id	name1
+0	

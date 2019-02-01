@@ -1,0 +1,86 @@
+<!--
+
+
+/* START SEGMENTS */
+#NaviBodys
+{
+	position : absolute ;
+	left : 0px ;
+	top : 0px ;
+	width : 169px ;
+	height : 552px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color : #cdcdcd ;
+	background-color: #72828b ;
+}
+
+
+/* END SEGMENTS */
+/************************************** END INPUT C **************************************/
+
+
+
+
+
+
+
+
+
+
+/********************* START NAVIGATION *********************/
+
+#UserInfoNaviBt1 {
+	position : absolute ;
+	left : 9px ;
+	top : 20px ;
+	z-index : 2 ;
+	border-width: 1px ;
+	background-color: #ffffff ;
+}
+#UserInfoNaviBt3 {
+	position : absolute ;
+	left : 9px ;
+	top : 20px ;
+	z-index : 2 ;
+	border-width: 1px ;
+	background-color: #ffffff ;
+}
+
+
+#RegistNaviBt1 {
+	position : absolute ;
+	left : 9px ;
+	top : 60px ;
+	z-index : 2 ;
+	border-width: 1px ;
+	background-color: #ffffff ;
+}
+#RegistNaviBt3 {
+	position : absolute ;
+	left : 9px ;
+	top : 60px ;
+	z-index : 2 ;
+	border-width: 1px ;
+	background-color: #ffffff ;
+}
+
+#SearchNaviBt1 {
+	position : absolute ;
+	left : 9px ;
+	top : 100px ;
+	z-index : 2 ;
+	border-width: 1px ;
+	background-color: #ffffff ;
+}
+#SearchNaviBt3 {
+	position : absolute ;
+	left : 9px ;
+	top : 100px ;
+	z-index : 2 ;
+	border-width: 1px ;
+	background-color: #ffffff ;
+}
+
+
+-->

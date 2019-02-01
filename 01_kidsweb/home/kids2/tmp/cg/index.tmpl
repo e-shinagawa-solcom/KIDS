@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html lang="ja">
+<head>
+<title>K.I.D.S.</title>
+<meta http-equiv="content-type" content="text/html; charset=euc-jp">
+
+<!-- START COMMON LAYOUT FILES -->
+
+<!-- END COMMON LAYOUT FILES -->
+
+
+<!-- START COMMON FILES -->
+<script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/query.js"></script>
+<script type="text/vbscript" Language="vbscript" src="/cmn/vbsclass.js"></script>
+<script type="text/vbscript" Language="vbscript" src="/cmn/vbscript.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/lngcheck.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/masterlib.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="/cmn/layout.css">
+<link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
+<!-- END COMMON FILES -->
+
+
+<!-- START EXCLUSIVE USE LAYOUT FILES -->
+<script type="text/javascript" language="javascript" src="/uc/cmn/functions.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/type01/cg/images.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/type01/cg/initlayout.js"></script>
+<!-- END EXCLUSIVE USE LAYOUT FILES -->
+
+
+<!-- START EXCLUSIVE USE FILES -->
+<link rel="stylesheet" type="text/css" media="screen" href="layout.css">
+<!-- END EXCLUSIVE USE FILES -->
+
+</head>
+<body id="CompanyGroupBody" onload="initLayoutCG();">
+
+
+<!-- データバインド用オブジェクト -->
+<OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting" WIDTH="0" HEIGHT="0"></OBJECT>
+<Script for="objDataSourceSetting" event="ondatasetcomplete">
+	subLoadMasterSetting(this.recordset,0);
+
+	// もし元の企業名が選択された場合、もとのグループを選択状態にもどす処理
+	setDefaultGroup(parent.document.forms[0].lngCompanyCodeOriginal, parent.document.forms[0].lngGroupCodeOriginal, document.forms[0].slctCompany, document.forms[0].slctGroup2, document.forms[0].slctGroup1);
+</script>
+<OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting2" WIDTH="0" HEIGHT="0"></OBJECT>
+<Script for="objDataSourceSetting2" event="ondatasetcomplete">subLoadMasterSetting(this.recordset,1);
+</script>
+
+<form>
+
+<!-- ///////// Company & Group Select Window ////////// -->
+<p id="CompanyGroupSet">
+
+<span id="CompanyGroupHeader"></span>
+<span id="CompanyGroupFooter"></span>
+
+<span id="CompanyGroupLine"></span>
+
+<span id="CompanyGroupStrSelectCompany"></span>
+<span id="CompanyGroupStrSelectGroup"></span>
+<span id="CompanyGroupStrGroup"></span>
+
+
+<span id="AddDelBack"></span>
+<span id="UpDownBack"></span>
+
+
+
+
+<!-- 会社選択プルダウン -->
+<span id="selectCompany">
+	<select class="Slt50" name="slctCompany" tabindex="" onChange="
+		// 選択肢、選択グループ一覧削除
+		fncSelectOptionDel(slctGroup1);
+		fncSelectOptionDel(slctGroup2);
+
+		// グループ選択肢読み込み
+		subLoadMasterOption( 15, this, slctGroup2, Array(this.value), objDataSourceSetting, 0 );
+
+		// ウィンドウ呼び出しもとのフォームに企業名を反映
+		SetCompany( parent.document.forms[0].lngCompanyCode, parent.document.forms[0].strCompanyName, this );
+
+		// ウィンドウ呼び出しもとのフォームのグループ名を削除
+		parent.document.forms[0].lngGroupCode.value='';
+		parent.document.forms[0].strGroupName.value='';
+
+		// 選択企業が[顧客]かどうかのフラグを取得、設定
+		index = this.selectedIndex;
+		subLoadMasterText(19, this.options[index], parent.document.forms[0].lngAttributeCode, Array ( this.options[index].value ), objDataSourceSetting2, 1);
+		return false;
+	">
+		<option value="0"></option>
+		_%slctCompany%_
+	</select>
+</span>
+
+
+
+<!-- 選択グループ反映先リストボックス -->
+<span id="selectGroup1">
+	<select class="Slt50" size="10" name="slctGroup1" tabindex="" multiple>
+
+	</select>
+</span>
+
+<!-- 選択グループリストボックス -->
+<span id="selectGroup2">
+	<select class="Slt50" size="10" name="slctGroup2" tabindex="" multiple>
+		_%slctGroup2%_
+	</select>
+</span>
+
+
+<!-- リスト項目アップ・ダウンボタン -->
+<span id="ListUpBt" onclick="
+	ListMove( slctGroup1, 'UP' );
+	SetGroup( parent.document.forms[0].lngGroupCode, parent.document.forms[0].strGroupName,slctGroup1 );
+	return false;
+	"></span>
+<span id="ListDownBt" onclick="
+	ListMove( slctGroup1, 'DOWN' );
+	SetGroup( parent.document.forms[0].lngGroupCode, parent.document.forms[0].strGroupName,slctGroup1 );
+	return false;
+"></span>
+
+<!-- リスト項目追加・削除ボタン -->
+<span id="ListAddBt" onclick="
+	fncSelectList(slctGroup2, slctGroup1);
+	SetGroup( parent.document.forms[0].lngGroupCode, parent.document.forms[0].strGroupName,slctGroup1 );
+	return false;
+"></span>
+<span id="ListDelBt" onclick="
+	fncSelectList(slctGroup1, slctGroup2);
+	SetGroup( parent.document.forms[0].lngGroupCode, parent.document.forms[0].strGroupName,slctGroup1 );
+	//fncSelectListDEL(slctGroup1, parent.document.forms[0].strGroupName);
+	return false;
+"></span>
+
+
+</form>
+
+
+
+</body>
+</html>

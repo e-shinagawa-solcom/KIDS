@@ -1,0 +1,56 @@
+<config>
+<header1>
+
+</header1>
+
+
+<header2>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/images.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutbase.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/pc/cmn/images.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/pc/initlayout.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/navi/pc/images.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/navi/cmn/images.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/navi/pc/initlayout.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/navi/cmn/initlayoutnavi.js"></script>
+</header2>
+
+
+<header3>
+<script type="text/javascript" language="javascript" src="/pc/exstr.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="/pc/layout.css">
+<script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
+</header3>
+
+
+<bodyonload>
+initLayoutBase();initLayoutPC();initLayoutNavigation();GetlngLanguageCode( _%lngLanguageCode%_ );Loading();
+</bodyonload>
+</config>
+
+<p id="Preload">
+	<iframe id="PreloadFrm" name="PreloadWin" frameborder="0" src="/preload/index.html" onload="fncObjectResize( this , 0 , 0 );"></iframe>
+</p>
+
+<!-- ¥Ø¥Ã¥À -->
+<!-- ////////////////////////////////// START MAIN TITLE ////////////////////////////////// -->
+<span id="MainTitle"></span>
+<!-- /////////////////////////////////// END MAIN TITLE /////////////////////////////////// -->
+
+<span id="strSelectFunctions"></span>
+<span id="MenuBackBorder"></span>
+<span id="MenuBack"></span>
+
+<p id="TopNavi">
+<span id="RegistNaviBt1" onClick="javascript:location='regist/index.php?strSessionID=_%strSessionID%_';" style="visibility:_%registview%_"></span>
+<span id="SearchNaviBt1" onClick="javascript:location='search/index.php?strSessionID=_%strSessionID%_';"></span>
+</p>
+
+
+<!-- /////////////////////////////////// START E TO J /////////////////////////////////// -->
+<span id="EtoJ"></span>
+<!-- //////////////////////////////////// END E TO J //////////////////////////////////// -->
+
+
+
+<span id="OverLayer"></span>

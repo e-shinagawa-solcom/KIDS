@@ -1,0 +1,145 @@
+<!--
+
+
+#LoginButton
+{
+	position : absolute ;
+	left : 462px ;
+	top : 372px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+#CloseButton
+{
+	position : absolute ;
+	left : 469px ;
+	top : 650px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+
+#KidsLogo
+{
+	position : absolute ;
+	left : 410px ;
+	top : 240px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+
+#LoginSet
+{
+	position : absolute ;
+	left : 350px ;
+	top : 270px ;
+	z-index : 0 ;
+	visibility : visible ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+
+#strReminder
+{
+	font-family : Arial ;
+	font-weight : normal ;
+	color : #ffffff ;
+	position : absolute ;
+	left : 372px ;
+	top : 580px ;
+	width : 250px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #cdcdcd ;
+	background-color: transparent ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#rAllowButton
+{
+	position : absolute ;
+	left : 583px ;
+	top : 580px ;
+	width : 50 ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #cdcdcd ;
+	text-align : center ;
+	background-color: transparent ;
+	padding : 3px 0px 0px 0px ;
+}
+
+
+#sUID
+{
+	font-family : Arial ;
+	font-weight : bold ;
+	color : #ffffff ;
+	position : absolute ;
+	left : 20px ;
+	top : 20px ;
+	width : 120px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #ffffff #798787 #798787 ;
+	background-color: #ffffff ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#sPASSWD
+{
+	font-family : Arial ; /* £Í£Ó £Ð¥´¥·¥Ã¥¯, Osaka */
+	font-weight : bold ;
+	color : #ffffff ;
+	position : absolute ;
+	left : 20px ;
+	top : 53px ;
+	width : 120px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #ffffff #798787 #798787 ;
+	background-color: #ffffff ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#sUIDVars
+{
+	position : absolute ;
+	left : 139px ;
+	top : 20px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #ffffff #798787 #798787 ;
+	background-color: #ffffff ;
+	padding : 3px 0px 2px 0px ;
+}
+
+#sPASSWDVars
+{
+	position : absolute ;
+	left : 139px ;
+	top : 53px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #ffffff #798787 #798787 ;
+	background-color: #ffffff ;
+	padding : 3px 0px 2px 0px ;
+}
+
+
+
+
+
+
+-->

@@ -1,0 +1,532 @@
+<!--
+
+
+/********************* MSW IFRAME SIZE *********************/
+#Mdata01
+{
+	position : absolute ;
+	width : 505px ;
+	height : 381px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+
+}
+
+#Mdata01_2
+{
+	position : absolute ;
+	width : 505px ;
+	height : 381px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+
+}
+
+#Mdata01_3
+{
+	position : absolute ;
+	width : 505px ;
+	height : 381px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+
+}
+
+#Mdata02
+{
+	position : absolute ;
+	width : 524px ;
+	height : 381px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+
+}
+
+#Mdata03
+{
+	position : absolute ;
+	width : 689px ;
+	height : 381px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+
+}
+
+#Mdata04
+{
+	position : absolute ;
+	width : 505px ;
+	height : 381px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+
+}
+
+#Mdata05
+{
+	position : absolute ;
+	width : 505px ;
+	height : 381px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+
+}
+
+#Mdata06
+{
+	position : absolute ;
+	width : 505px ;
+	height : 381px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+
+}
+
+#Mdata07
+{
+	position : absolute ;
+	width : 524px ;
+	height : 381px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+
+}
+
+
+#Mdata08
+{
+	position : absolute ;
+	width : 505px ;
+	height : 381px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+
+}
+
+
+#Mdata09
+{
+	position : absolute ;
+	width : 505px ;
+	height : 381px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+
+}
+
+
+
+#Mdata10
+{
+	position : absolute ;
+	width : 355px ;
+	height : 245px ; /* 245 */
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+
+}
+
+
+#Mdata10_2
+{
+	position : absolute ;
+	width : 355px ;
+	height : 245px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+
+}
+
+
+#Mdata10_3
+{
+	position : absolute ;
+	width : 355px ;
+	height : 245px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+
+}
+
+/* filter:progid:DXImageTransform.Microsoft.Alpha(opacity=93); */
+/********************* MSW DUMMY DRAG & CLOSE *********************/
+#DummyDrag01
+{
+	position : absolute ;
+	left : 0px ;
+	top : 0px ;
+	width : 484px ;
+	height : 18px;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+	filter : alpha(opacity=0) ;
+	-moz-opacity : 0.5 ;
+}
+
+#DummyClose01
+{
+	position : absolute ;
+	left : 482px ;
+	top : 0px ;
+	width : 21px ;
+	height : 18px;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+	filter : alpha(opacity=0) ;
+	-moz-opacity : 0.5 ;
+}
+
+#DummyDrag01_2
+{
+	position : absolute ;
+	left : 0px ;
+	top : 0px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+	filter : alpha(opacity=0) ;
+	-moz-opacity : 0.5 ;
+}
+
+#DummyClose01_2
+{
+	position : absolute ;
+	left : 482px ;
+	top : 0px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+	filter : alpha(opacity=0) ;
+	-moz-opacity : 0.5 ;
+}
+
+
+
+#DummyDrag01_3
+{
+	position : absolute ;
+	left : 0px ;
+	top : 0px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+	filter : alpha(opacity=0) ;
+	-moz-opacity : 0.5 ;
+}
+
+#DummyClose01_3
+{
+	position : absolute ;
+	left : 482px ;
+	top : 0px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+	filter : alpha(opacity=0) ;
+	-moz-opacity : 0.5 ;
+}
+
+#DummyDrag02
+{
+	position : absolute ;
+	left : 0px ;
+	top : 0px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+	filter : alpha(opacity=0) ;
+	-moz-opacity : 0.5 ;
+}
+
+#DummyClose02
+{
+	position : absolute ;
+	left : 503px ;
+	top : 0px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+	filter : alpha(opacity=0) ;
+	-moz-opacity : 0.5 ;
+}
+
+#DummyDrag03
+{
+	position : absolute ;
+	left : 0px ;
+	top : 0px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+	filter : alpha(opacity=0) ;
+	-moz-opacity : 0.5 ;
+}
+
+#DummyClose03
+{
+	position : absolute ;
+	left : 668px ;
+	top : 0px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+	filter : alpha(opacity=0) ;
+	-moz-opacity : 0.5 ;
+}
+
+#DummyDrag04
+{
+	position : absolute ;
+	left : 0px ;
+	top : 0px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+	filter : alpha(opacity=0) ;
+	-moz-opacity : 0.5 ;
+}
+
+#DummyClose04
+{
+	position : absolute ;
+	left : 482px ;
+	top : 0px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+	filter : alpha(opacity=0) ;
+	-moz-opacity : 0.5 ;
+}
+
+#DummyDrag05
+{
+	position : absolute ;
+	left : 0px ;
+	top : 0px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+	filter : alpha(opacity=0) ;
+	-moz-opacity : 0.5 ;
+}
+
+#DummyClose05
+{
+	position : absolute ;
+	left : 482px ;
+	top : 0px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+	filter : alpha(opacity=0) ;
+	-moz-opacity : 0.5 ;
+}
+
+#DummyDrag06
+{
+	position : absolute ;
+	left : 0px ;
+	top : 0px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+	filter : alpha(opacity=0) ;
+	-moz-opacity : 0.5 ;
+}
+
+#DummyClose06
+{
+	position : absolute ;
+	left : 482px ;
+	top : 0px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+	filter : alpha(opacity=0) ;
+	-moz-opacity : 0.5 ;
+}
+
+#DummyDrag07
+{
+	position : absolute ;
+	left : 0px ;
+	top : 0px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+	filter : alpha(opacity=0) ;
+	-moz-opacity : 0.5 ;
+}
+
+#DummyClose07
+{
+	position : absolute ;
+	left : 503px ;
+	top : 0px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+	filter : alpha(opacity=0) ;
+	-moz-opacity : 0.5 ;
+}
+
+#DummyDrag08
+{
+	position : absolute ;
+	left : 0px ;
+	top : 0px ;
+	width : 484px ;
+	height : 18px;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+	filter : alpha(opacity=0) ;
+	-moz-opacity : 0.5 ;
+}
+#DummyClose08
+{
+	position : absolute ;
+	left : 482px ;
+	top : 0px ;
+	width : 21px ;
+	height : 18px;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+	filter : alpha(opacity=0) ;
+	-moz-opacity : 0.5 ;
+}
+
+
+
+
+
+#DummyDrag09
+{
+	position : absolute ;
+	left : 0px ;
+	top : 0px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+	filter : alpha(opacity=0) ;
+	-moz-opacity : 0.5 ;
+}
+
+#DummyClose09
+{
+	position : absolute ;
+	left : 482px ;
+	top : 0px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+	filter : alpha(opacity=0) ;
+	-moz-opacity : 0.5 ;
+}
+
+
+
+#DummyDrag10
+{
+	position : absolute ;
+	left : 0px ;
+	top : 0px ;
+	width : 334px ;
+	height : 18px;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+	filter : alpha(opacity=0) ;
+	-moz-opacity : 0.5 ;
+}
+
+#DummyClose10
+{
+	position : absolute ;
+	left : 334px ;
+	top : 0px ;
+	width : 21px ;
+	height : 18px;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+	filter : alpha(opacity=0) ;
+	-moz-opacity : 0.5 ;
+}
+
+
+#DummyDrag10_2
+{
+	position : absolute ;
+	left : 0px ;
+	top : 0px ;
+	width : 334px ;
+	height : 18px;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+	filter : alpha(opacity=0) ;
+	-moz-opacity : 0.5 ;
+}
+
+#DummyClose10_2
+{
+	position : absolute ;
+	left : 334px ;
+	top : 0px ;
+	width : 21px ;
+	height : 18px;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+	filter : alpha(opacity=0) ;
+	-moz-opacity : 0.5 ;
+}
+
+
+#DummyDrag10_3
+{
+	position : absolute ;
+	left : 0px ;
+	top : 0px ;
+	width : 334px ;
+	height : 18px;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+	filter : alpha(opacity=0) ;
+	-moz-opacity : 0.5 ;
+}
+
+#DummyClose10_3
+{
+	position : absolute ;
+	left : 334px ;
+	top : 0px ;
+	width : 21px ;
+	height : 18px;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+	filter : alpha(opacity=0) ;
+	-moz-opacity : 0.5 ;
+}
+
+-->

@@ -1,0 +1,187 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html lang="ja">
+<head>
+<title>K.I.D.S.</title>
+<meta http-equiv="content-type" content="text/html; charset=euc-jp">
+<!-- 受注・売上 明細行エリア用テンプレート -->
+
+
+<!-- START COMMON FILES -->
+<script type="text/javascript" language="javascript" src="/cmn/masterlib.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
+<link rel="stylesheet" type="text/css" media="screen" href="/dlist/cmn/styles.css">
+<script type="text/javascript" language="javascript" src="/dlist/cmn/record.js"></script>
+<script type="text/javascript" language="javascript" src="/so/cmn/subloadmastersettings.js"></script>
+<!-- END COMMON FILES -->
+
+
+
+<!-- START SO DETAIL LIST FILES -->
+<script type="text/javascript" language="javascript" src="exstr.js"></script>
+<script type="text/javascript" language="javascript" src="functions.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
+<!-- END SO DETAIL LIST FILES -->
+
+
+
+</head>
+<body id="Backs" onload="GetIfrmlngLanguageCode( window.top.lngLanguageCode );">
+<!-- oncontextmenu="return false;" -->
+
+<form name="DL" action="" method="post">
+
+<OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting" WIDTH="0" HEIGHT="0"></OBJECT>
+<Script for="objDataSourceSetting" event="ondatasetcomplete">subLoadMasterSetting(this.recordset,0);
+</Script>
+
+<OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting1" WIDTH="0" HEIGHT="0"></OBJECT>
+<Script for="objDataSourceSetting1" event="ondatasetcomplete">subLoadMasterSetting(this.recordset,1);
+</Script>
+
+<OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting2" WIDTH="0" HEIGHT="0"></OBJECT>
+<Script for="objDataSourceSetting2" event="ondatasetcomplete">subLoadMasterSetting(this.recordset,2);
+</Script>
+
+<OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting3" WIDTH="0" HEIGHT="0"></OBJECT>
+<Script for="objDataSourceSetting3" event="ondatasetcomplete">subLoadMasterSetting(this.recordset,3);
+</Script>
+
+<!--input 売上区分 output 単価リスト-->
+<OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting11" WIDTH="0" HEIGHT="0"></OBJECT>
+<Script for="objDataSourceSetting11" event="ondatasetcomplete">
+	subLoadMasterSetting(this.recordset,11);
+
+	<!--荷姿単位計上のとき単価リストを選択できないようにする-->
+	if (window.parent.DSO.lngConversionClassCode[1].checked)
+	{
+		window.parent.DSO.lngGoodsPriceCode.disabled = true;
+	}
+
+	<!--単価リストのselectedを、製品単価に反映-->
+	fncDtGoodsPriceToProductPrice();
+</Script>
+
+<!--明細行を選択したときの単価リスト-->
+<OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting12" WIDTH="0" HEIGHT="0"></OBJECT>
+<Script for="objDataSourceSetting12" event="ondatasetcomplete">
+	subLoadMasterSetting(this.recordset,12);
+
+	<!--単価リストのselectedを設定-->
+	window.parent.DSO.lngGoodsPriceCode.value = saveRecord[g_lngSelIndex][1];
+
+	<!--荷姿単位計上のとき単価リストを選択できないようにする-->
+	if (saveRecord[g_lngSelIndex][6] == "ps")
+	{
+		window.parent.DSO.lngGoodsPriceCode.disabled = true;
+	}
+</Script>
+
+<!--明細行を選択したとき、カートン入数を決定し、荷姿単位計上のとき[製品数量]に[カートン数]×[荷姿数量]を反映-->
+<!-- objDataSourceSettingProductInfo に集約した為、コメントアウト
+<OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting13" WIDTH="0" HEIGHT="0"></OBJECT>
+<Script for="objDataSourceSetting13" event="ondatasetcomplete">
+	subLoadMasterSetting(this.recordset,13);
+
+	if( saveRecord[g_lngSelIndex][6] == "ps" )
+	{
+		GoodsQuantity        = fncDelKannma(window.parent.DSO.lngGoodsQuantity_ps.value);
+		var CartonQuantity   = fncDelKannma(window.parent.DSO.lngCartonQuantity.value);
+		var GoodsQuantity_gs = window.parent.fncCheckNumberValue( CartonQuantity * GoodsQuantity , 0 , false );
+		window.parent.DSO.lngGoodsQuantity_gs.value = GoodsQuantity_gs;
+		// [製品単価]に[荷姿単価]÷[カートン入数]をセット
+		fncDtPSProductPrice();
+	}
+</Script>
+-->
+
+<!--カートン入数を決定し、荷姿単位計上のとき[製品数量]に[カートン数]×[荷姿数量]を反映-->
+<OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting15" WIDTH="0" HEIGHT="0"></OBJECT>
+<Script for="objDataSourceSetting15" event="ondatasetcomplete">
+	subLoadMasterSetting(this.recordset,15);
+
+	if( window.parent.DSO.lngConversionClassCode[1].checked )
+	{
+		GoodsQuantity        = fncDelKannma(window.parent.DSO.lngGoodsQuantity_ps.value);
+		var CartonQuantity   = fncDelKannma(window.parent.DSO.lngCartonQuantity.value);
+		var GoodsQuantity_gs = window.parent.fncCheckNumberValue( CartonQuantity * GoodsQuantity , 0 , false );
+		window.parent.DSO.lngGoodsQuantity_gs.value = GoodsQuantity_gs;
+	}
+</Script>
+
+<!--detailタブを押したときの処理(仕入管理,売上管理のみ)-->
+<OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting14" WIDTH="0" HEIGHT="0"></OBJECT>
+<Script for="objDataSourceSetting14" event="ondatasetcomplete">
+	subLoadMasterSetting(this.recordset,14);
+
+	// <!--仕入管理,売上管理の場合の処理-->
+	fncDtHtmlForPC();
+</Script>
+
+<!-- 商品情報取得用 -->
+<OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSettingProductInfo" WIDTH="0" HEIGHT="0"></OBJECT>
+<Script for="objDataSourceSettingProductInfo" event="ondatasetcomplete">
+	subLoadMasterSettings(this.recordset,1, window.parent.DSO);
+
+	// <!--明細行を選択したとき、カートン入数を決定し、荷姿単位計上のとき[製品数量]に[カートン数]×[荷姿数量]を反映-->
+	if( saveRecord[g_lngSelIndex][6] == "ps" )
+	{
+		GoodsQuantity        = fncDelKannma(window.parent.DSO.lngGoodsQuantity_ps.value);
+		var CartonQuantity   = fncDelKannma(window.parent.DSO.lngCartonQuantity.value);
+		var GoodsQuantity_gs = window.parent.fncCheckNumberValue( CartonQuantity * GoodsQuantity , 0 , false );
+		window.parent.DSO.lngGoodsQuantity_gs.value = GoodsQuantity_gs;
+		// [製品単価]に[荷姿単価]÷[カートン入数]をセット
+		fncDtPSProductPrice();
+	}
+</Script>
+
+
+<!-- 受注に対する売上数を取得 -->
+<OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSettingSalesInReceiveAll" WIDTH="0" HEIGHT="0"></OBJECT>
+<Script for="objDataSourceSettingSalesInReceiveAll" event="ondatasetcomplete">
+	subLoadMasterSetting(this.recordset,10);
+
+	// 処理前の選択行を指定
+	lngSelIndex = parseFloat(document.all.check_value_salesproductquantity_selindex.value);
+
+
+	// レコードがあった場合
+	// 受注に対する売上が存在する、と判断する
+	if( this.recordset.recordcount)
+	{
+		saveRecord[lngSelIndex][22] = '1';
+		// 最新の売上数量を保持（lib/sql/caCheckSalesProductQuantityAll.sql を参照のこと）
+		saveRecord[lngSelIndex][23] = parseFloat(this.recordset.Fields('name1').value);
+	}
+	// 受注に対する売上データ存在無し、と判断する
+	else
+	{
+		saveRecord[lngSelIndex][22] = '';	// record.js:fncDtNewAryForReturn()、fncDtNewAry() 内でセットした値をクリア
+		saveRecord[lngSelIndex][23] = 0;	// 受注に対する売上数は0
+	}
+
+</Script>
+
+
+<span id = "DetailList">
+<table width="910" cellpadding="0" cellspacing="1" border="0" bgcolor="#6f818">
+	<tr class="TrSegs">
+		<td>&nbsp;</td>
+		<td id="ExStrDL02">製品</td>
+		<td id="ExStrDL01">売上区分</td>
+		<td id="ExStrDL03">単価</td>
+		<td id="ExStrDL04">単位</td>
+		<td id="ExStrDL05">数量</td>
+		<td id="ExStrDL06">税抜金額</td>
+		<td id="ExStrDL07">納期</td>
+		<td id="ExStrDL08">備考</td>
+	</tr>
+</table>
+</span>
+
+
+<input type="hidden" name="check_alert_salesproductquantity" value="">
+<input type="hidden" name="check_value_salesproductquantity_selindex" value="">
+
+</form>
+</body>
+</html>

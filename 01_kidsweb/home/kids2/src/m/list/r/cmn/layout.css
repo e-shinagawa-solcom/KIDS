@@ -1,0 +1,100 @@
+<!--
+
+#Backs
+{
+	background : #f1f1f1;
+}
+
+
+
+table
+{
+	table-layout: auto ; /* inherit */
+	width : 100% ; /* 920px */
+	font-family : £Í£Ó £Ð¥´¥·¥Ã¥¯, Osaka ;
+	font-style : normal ;
+	font-weight : normal ;
+	font-size : 12px ;
+	color : #666666 ;
+	text-align : center ;
+	border-collapse: collapse;
+	padding : 4px 3px 1px 3px ;
+}
+
+#SegTitleStop
+{
+	position : absolute ;
+	left : 0px ;
+	top : 0 px ;
+	font-weight : bold ;
+	color : #ffffff ;
+	padding : 5px ;
+	background-color : #dddddd ; /* 799797 */
+}
+
+
+#SegTitle
+{
+	position : absolute ;
+	color : #ffffff ;
+	background-color : #799797 ; /* 6d8aab */
+}
+
+
+#DummyTR
+{
+	font-size : 12px ;
+	color : #799797 ;
+	text-align : center ;
+	background-color : #799797 ;
+	padding : 4px 3px 1px 3px ;
+	word-break : keep-all ;
+}
+
+.SegColumn
+{
+	color : #ffffff ;
+	background-color : #799797 ;
+	word-break : keep-all ;
+}
+
+.Segs
+{
+	font-family : monospace ;
+	color : #666666 ;
+	background-color : #ffffff ;
+	word-break : keep-all ;
+	padding : 4px 6px 3px 6px ;
+}
+
+
+
+
+#SelectMaster
+{
+	position : absolute ;
+	top : 60px ;
+	left : 235px ;
+	border-width : 0px ;
+	border-style : none ;
+}
+
+
+
+#MasterTitle
+{
+	position : absolute ;
+	font-family : £Í£Ó £Ð¥´¥·¥Ã¥¯, Osaka ;
+	font-style : normal ;
+	font-weight : bold ;
+	font-size : 12px ;
+	color : #ffffff ;
+	top : 2px ;
+	left : 200px ;
+	border-width : 0px ;
+	border-style : none ;
+	padding : 5px ;
+}
+
+
+-->

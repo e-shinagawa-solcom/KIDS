@@ -1,0 +1,27 @@
+<tr bgcolor="_%tr_bgcolor%_">
+	<td nowrap>《_%strproductcode%_》_%strproductname%_　</td>
+	<td nowrap>_%dtminsertdate%_　</td>
+	<td nowrap>_%s431i1%_　</td>
+	<td nowrap>_%s431i2%_　</td>
+	<td nowrap>_%s431i3%_　</td>
+	<td nowrap>_%s431i4%_　</td>
+	<td nowrap>_%s403i1%_　</td>
+	<td nowrap>_%s403i2%_　</td>
+	<td nowrap>_%s403i3%_　</td>
+	<td nowrap>_%s431i7%_　</td>
+	<td nowrap>_%s433i4%_　</td>
+	<td nowrap>_%s431i8%_　</td>
+	<td nowrap>_%s433i1%_　</td>
+	<td nowrap>_%s433i2%_　</td>
+	<td nowrap>_%s401i7%_　</td>
+	<td nowrap>_%s402i1%_　</td>
+	<td nowrap>_%s402i10%_　</td>
+	<td nowrap>_%s420i1%_　</td>
+	<td nowrap>_%s401i3%_　</td>
+	<td nowrap>_%s401i10%_　</td>
+	<td nowrap>_%s401i11%_　</td>
+	<td nowrap>_%s401i12%_　</td>
+	<td nowrap>_%s401i6%_　</td>
+	<td nowrap>_%s401i1%_　</td>
+	<td nowrap>_%siother%_ </td>
+</tr>

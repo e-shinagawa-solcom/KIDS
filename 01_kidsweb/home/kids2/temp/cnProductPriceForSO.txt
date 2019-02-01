@@ -1,0 +1,5 @@
+ SELECT mpp.lngProductPriceCode, mpp.curProductPrice FROM m_productprice mpp JOIN m_monetaryunit mmu ON mpp.lngmonetaryunitcode = mmu.lngmonetaryunitcode JOIN m_product mp ON mp.lngProductNo = mpp.lngProductNo WHERE mp.strProductCode = '07705'  AND mpp.lngsalesclasscode = '99'  AND mmu.strmonetaryunitsign = '\\' ORDER BY mpp.lngProductPriceCode DESC 
+ SELECT mpp.lngProductPriceCode, mpp.curProductPrice FROM m_productprice mpp JOIN m_monetaryunit mmu ON mpp.lngmonetaryunitcode = mmu.lngmonetaryunitcode JOIN m_product mp ON mp.lngProductNo = mpp.lngProductNo WHERE mp.strProductCode = '07705'  AND mpp.lngsalesclasscode = '99'  AND mmu.strmonetaryunitsign = '\\' ORDER BY mpp.lngProductPriceCode DESC 
+id	name1
+104493	260000.0000
+104320	100000.0000

@@ -1,0 +1,4 @@
+ SELECT COUNT(*), COUNT(*) AS datacount FROM m_product mp, m_group mg WHERE mp.lnginchargegroupcode = mg.lnggroupcode AND mp.bytinvalidflag = false AND mg.bytgroupdisplayflag = true AND UPPER(mp.strproductenglishname) = UPPER('OEM Buttobasoul TV -Kun April Special ') AND mg.strgroupdisplaycode = '31' 
+ SELECT COUNT(*), COUNT(*) AS datacount FROM m_product mp, m_group mg WHERE mp.lnginchargegroupcode = mg.lnggroupcode AND mp.bytinvalidflag = false AND mg.bytgroupdisplayflag = true AND UPPER(mp.strproductenglishname) = UPPER('OEM Buttobasoul TV -Kun April Special ') AND mg.strgroupdisplaycode = '31' 
+id	name1
+0	0

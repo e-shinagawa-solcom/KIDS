@@ -1,0 +1,71 @@
+ SELECT mu.strUserDisplayCode, mu.strUserDisplayCode || ' ' || mu.strUserDisplayName AS strUserDisplayCodeName, mu.strUserDisplayName FROM m_user mu WHERE mu.lngCompanyCode = 1 AND mu.bytInvalidFlag = false AND mu.bytUserDisplayFlag = true   ORDER BY mu.strUserDisplayCode 
+ SELECT mu.strUserDisplayCode, mu.strUserDisplayCode || ' ' || mu.strUserDisplayName AS strUserDisplayCodeName, mu.strUserDisplayName FROM m_user mu WHERE mu.lngCompanyCode = 1 AND mu.bytInvalidFlag = false AND mu.bytUserDisplayFlag = true   ORDER BY mu.strUserDisplayCode 
+id	name1	name2
+000	000 竹田（TAKEDA）	竹田（TAKEDA）
+004	004 社長	社長
+049	049 竹田　宏	竹田　宏
+050	050 市川　実	市川　実
+053	053 新妻　康子	新妻　康子
+055	055 鈴木　裕一	鈴木　裕一
+091	091 木藤　幹裕	木藤　幹裕
+096	096 早川　裕太	早川　裕太
+103	103 田中　経義	田中　経義
+112	112 山崎　朗	山崎　朗
+118	118 谷中　理恵	谷中　理恵
+119	119 山崎　一己	山崎　一己
+141	141 正　直彦	正　直彦
+150	150 片桐　健太郎	片桐　健太郎
+163	163 吉澤　武実	吉澤　武実
+196	196 菊永　慧	菊永　慧
+201	201 小林　貴也	小林　貴也
+204	204 荻島　一敏	荻島　一敏
+207	207 武居　学	武居　学
+209	209 笹生	笹生
+211	211 川田　浩	川田　浩
+212	212 斎藤　由紀子	斎藤　由紀子
+214	214 清水　みどり	清水　みどり
+215	215 穆　静	穆　静
+216	216 陳　静	陳　静
+217	217 斉藤　佳之	斉藤　佳之
+220	220 鈴木　竜也	鈴木　竜也
+223	223 邱 少龍(Alon)	邱 少龍(Alon)
+229	229 阿部　真之	阿部　真之
+230	230 柳原　幸一	柳原　幸一
+231	231 織立　廣司	織立　廣司
+237	237 Hilda	Hilda
+238	238 矢寺　健一	矢寺　健一
+243	243 瓦井 まち子	瓦井 まち子
+246	246 服部　圭介	服部　圭介
+248	248 孫　豫	孫　豫
+249	249 櫻井　駿	櫻井　駿
+250	250 上島　和信	上島　和信
+251	251 飛鳥井　峻	飛鳥井　峻
+252	252 樊　超	樊　超
+253	253 泉瀧 新	泉瀧 新
+254	254 染谷　志穂	染谷　志穂
+255	255 今泉　大輔	今泉　大輔
+904	904 森　剛久	森　剛久
+907	907 経理サブ承認	経理サブ承認
+909	909 田尻　一生	田尻　一生
+916	916 胡　玉栄	胡　玉栄
+918	918 山崎 徳明	山崎 徳明
+923	923 稲垣　恵美	稲垣　恵美
+k05	k05 許　嘉佑(Kenny)	許　嘉佑(Kenny)
+s20	s20 黄 勝泳(Wiseng)	黄 勝泳(Wiseng)
+s22	s22 李 志偉(Spring)	李 志偉(Spring)
+s23	s23 劉 桂英(Sharon)	劉 桂英(Sharon)
+s24	s24 陳 素娟(Suki)	陳 素娟(Suki)
+s25	s25 彭　洪(Hans)	彭　洪(Hans)
+s26	s26 劉　橋(Sky)	劉　橋(Sky)
+s28	s28 中西　正博	中西　正博
+s29	s29 邱 &#33395;莉(Tia)	邱 &#33395;莉(Tia)
+s30	s30 雷 明平（Ray)	雷 明平（Ray)
+s31	s31 &#40858; &#20029;娜（Lina)	&#40858; &#20029;娜（Lina)
+s32	s32 李 梦思（Brenna)	李 梦思（Brenna)
+z05	z05 劉　錦興(Sunny)	劉　錦興(Sunny)
+z34	z34 胡　衛萍(nancy)	胡　衛萍(nancy)
+z44	z44 劉 小紅(Lucy Liu)	劉 小紅(Lucy Liu)
+z48	z48 Annie(陳芳)	Annie(陳芳)
+z49	z49 Jackie(陳&#20262;忠)	Jackie(陳&#20262;忠)
+z51	z51 Jason(&#26472;&#20975;)	Jason(&#26472;&#20975;)
+z55	z55 封 梅芳(helen)	封 梅芳(helen)

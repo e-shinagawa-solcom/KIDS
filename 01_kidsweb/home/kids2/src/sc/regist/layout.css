@@ -1,0 +1,1841 @@
+<!--
+
+
+
+	/************************** v2 tomita update **************************/
+	#CRCList
+	{
+		position   : absolute;
+		left       : 10px;
+		top        : 280px;
+		width      : 905px;
+		height     : 210px;
+		border     : 1px solid #cdcdcd;
+		background : #f1f1f1; /* 72828b */
+		overflow-x : hidden;
+		overflow-y : auto;
+	}
+	#CRCTable
+	{
+		font-size   : 12px;
+		background  : #cdcdcd;
+	}
+	#CRCHeader
+	{
+		font-family : Arial, ‚l‚r ‚oƒSƒVƒbƒN;
+		font-weight : bold;
+		font-size   : 12px;
+		color       : #ffffff;
+		background  : #6d8aab;
+	}
+	#CRCColumn
+	{
+		font-family : Arial, ‚l‚r ‚oƒSƒVƒbƒN;
+		font-size   : 12px;
+		color       : #ffffff;
+		background  : #a9a9a9;
+	}
+	#CRCData
+	{
+		font-family : monospace;
+		font-size   : 12px;
+		background  : #ffffff;
+	}
+	#CRCTable a
+	{
+		color           : #0000ff;
+		text-decoration : none;
+	}
+	#CRCTable a:hover
+	{
+		text-decoration : underline;
+	}
+
+
+
+	#SegCRC
+	{
+		font-weight  : bold ;
+		position     : absolute ;
+		top          : 40px ;  /* 70 */
+		left         : 258px ; /* 10 */
+		width        : 120px ;
+		height       : 27px ;
+		border-width : 1px ;
+		border-style : solid ;
+		padding      : 8px 0px 0px 8px ;
+	}
+	#VarsCRC
+	{
+		position     : absolute ;
+		top          : 40px ;  /* 70 */
+		left         : 377px ; /* 129 */
+		height       : 27px ;
+		border-width : 1px ;
+		border-style : solid ;
+		padding      : 3px 35px 0px 8px ;
+	}
+
+	#SegPC
+	{
+		font-weight  : bold ;
+		position     : absolute ;
+		top          : 70px ;
+		left         : 258px ;
+		width        : 120px ;
+		height       : 27px ;
+		border-width : 1px ;
+		border-style : solid ;
+		padding      : 8px 0px 0px 8px ;
+	}
+	#VarsPC
+	{
+		position     : absolute ;
+		top          : 70px ;
+		left         : 377px ;
+		height       : 27px ;
+		border-width : 1px ;
+		border-style : solid ;
+		padding      : 3px 35px 0px 8px ;
+	}
+
+	/*
+	#SegRC
+	{
+		font-weight  : bold ;
+		position     : absolute ;
+		top          : 70px ;
+		left         : 258px ;
+		width        : 120px ;
+		height       : 27px ;
+		border-width : 1px ;
+		border-style : solid ;
+		padding      : 8px 0px 0px 8px ;
+	}
+	#VarsRC
+	{
+		position     : absolute ;
+		top          : 70px ;
+		left         : 377px ;
+		height       : 27px ;
+		border-width : 1px ;
+		border-style : solid ;
+		padding      : 3px 0px 0px 8px ;
+	}
+	*/
+
+
+	#DataOpenBt
+	{
+		position         : absolute ;
+		top              : 44px ;  /* 74 */
+		left             : 475px ; /* 229 */
+		border-width     : 0px ;
+		border-style     : none ;
+		background-color : transparent ;
+	}
+	#PopenBt
+	{
+		position         : absolute ;
+		top              : 74px ;  /* 44 */
+		left             : 475px ; /* 505 */
+		border-width     : 0px ;
+		border-style     : none ;
+		background-color : transparent ;
+	}
+
+	#SegA02
+	{
+		font-weight  : bold ;
+		position     : absolute ;
+		top          : 100px ;
+		left         : 10px ;
+		width        : 120px ;
+		height       : 27px ;
+		border-width : 1px ;
+		border-style : solid ;
+		padding      : 8px 0px 0px 8px ;
+	}
+
+	#VarsA02
+	{
+		position     : absolute ;
+		top          : 100px ;
+		left         : 129px ;
+		height       : 27px ;
+		border-width : 1px ;
+		border-style : solid ;
+		padding      : 3px 0px 0px 8px ;
+	}
+
+	#SegA03
+	{
+		font-weight  : bold ;
+		position     : absolute ;
+		top          : 130px ;
+		left         : 10px ;
+		width        : 120px ;
+		height       : 27px ;
+		border-width : 1px ;
+		border-style : solid ;
+		padding      : 8px 0px 0px 8px ;
+	}
+	#VarsA03
+	{
+		position     : absolute ;
+		top          : 130px ;
+		left         : 129px ;
+		height       : 27px ;
+		border-width : 1px ;
+		border-style : solid ;
+		padding      : 3px 33px 0px 8px ;
+	}
+
+	#MSWBt01
+	{
+		position         : absolute ;
+		top              : 134px ;
+		left             : 569px ;
+		width            : 19px ;
+		height           : 19px ;
+		border-width     : 0px ;
+		border-style     : none ;
+		background-color : #ffffff ;
+	}
+
+	#SegA12
+	{
+		font-weight  : bold ;
+		position     : absolute ;
+		top          : 100px ;
+		left         : 258px ;
+		width        : 120px ;
+		height       : 27px ;
+		border-width : 1px ;
+		border-style : solid ;
+		padding      : 8px 0px 0px 8px ;
+	}
+
+	#VarsA12
+	{
+		position     : absolute ;
+		top          : 100px ;
+		left         : 376px ;
+		height       : 27px ;
+		border-width : 1px ;
+		border-style : solid ;
+		padding      : 3px 0px 0px 8px ;
+	}
+
+
+
+
+
+	#SegDept
+	{
+		font-weight  : bold ;
+		position     : absolute ;
+		top          : 151px ;
+		left         : 20px ;
+		width        : 170px ;
+		height       : 27px ;
+		border-width : 1px ;
+		border-style : solid ;
+		padding      : 8px 0px 0px 8px ;
+		visibility   : hidden ;
+	}
+
+	#SegIncharge
+	{
+		font-weight  : bold ;
+		position     : absolute ;
+		top          : 181px ;
+		left         : 20px ;
+		width        : 170px ;
+		height       : 27px ;
+		border-width : 1px ;
+		border-style : solid ;
+		padding      : 8px 0px 0px 8px ;
+		visibility   : hidden ;
+	}
+
+	#VarsDept
+	{
+		position     : absolute ;
+		top          : 151px ;
+		left         : 188px ;
+		height       : 27px ;
+		border-width : 1px ;
+		border-style : solid ;
+		padding      : 3px 0px 0px 8px ;
+		visibility   : hidden ;
+	}
+
+
+	#VarsIncharge
+	{
+		position     : absolute ;
+		top          : 181px ;
+		left         : 181px ;
+		height       : 27px ;
+		border-width : 1px ;
+		border-style : solid ;
+		padding      : 3px 0px 0px 8px ;
+		visibility   : hidden ;
+	}
+
+
+	#SegDetailINBtn
+	{
+		position         : absolute ;
+		top              : 141px ; /* 111 */
+		left             : 889px ;
+		border-width     : 0px ;
+		border-style     : none ;
+		background-color : transparent ;
+	}
+
+	#SegDetailIN
+	{
+		position         : absolute ;
+		left             : 10px ;
+		top              : 141px ;
+		width            : 880px;
+		height           : 109px;
+		visibility       : hidden ;
+		border           : 1px solid #798787;
+		background       : #7e888f ;
+		filter:progid:DXImageTransform.Microsoft.Alpha( opacity=90 );
+	}
+
+
+	#WFrootBt
+	{
+		position         : absolute ;
+		top              : 320px ; /* 320 */
+		left             : 545px ;
+		border-width     : 0px ;
+		border-style     : none ;
+		background-color : transparent ;
+	}
+
+	#WFRootFrame
+	{
+		position         : absolute ;
+		left             : 0px ;
+		top              : 0px ;
+		z-index          : 8 ;
+		visibility       : hidden ;
+		border-width     : 0px ;
+		border-style     : none ;
+		background-color : transparent ;
+	}
+
+	#WFroot
+	{
+		position         : absolute ;
+		width            : 927px ;
+		height           : 328px ;
+		border-width     : 0px ;
+		border-style     : none ;
+		background-color : transparent ;
+		filter:progid:DXImageTransform.Microsoft.Alpha(opacity=98);
+	}
+
+
+	#SegBWF
+	{
+		font-weight      : bold ;
+		position         : absolute ;
+		top              : 316px ;  /* 316 */
+		left             : 425px ;
+		width            : 150px ;
+		height           : 27px ;
+		border-width     : 1px ;
+		border-style     : solid ;
+		border-color     : #cdcdcd #ffffff #cdcdcd #cdcdcd ;
+		background-color : transparent ;
+		padding          : 8px 0px 0px 8px ;
+	}
+
+	#VarsBWF
+	{
+		position         : absolute ;
+		top              : 316px ;  /* 316 */
+		left             : 562px ;
+		height           : 27px ;
+		border-width     : 1px ;
+		border-style     : solid ;
+		border-color     : #cdcdcd #cdcdcd #cdcdcd #72828b ;
+		background-color : transparent ;
+		padding          : 3px 94px 0px 8px ;
+	}
+	/**********************************************************************/
+
+
+
+	/***************************** v1 backup ******************************/
+	/*
+	#DataOpenBt
+	{
+		position : absolute ;
+		left : 505px ;
+		top : 44px ;
+		border-width: 0px ;
+		border-style: none ;
+		background-color: transparent ;
+	}
+	#SegA02
+	{
+		font-weight : bold ;
+		color : #666666 ;
+		position : absolute ;
+		left : 10px ;
+		top : 70px ;
+		width : 120px ;
+		height : 27px ;
+		border-width: 1px ;
+		border-style: solid ;
+		border-color: #798787 #ffffff #798787 #798787 ;
+		background-color: #ffffff ;
+		padding : 8px 0px 0px 8px ;
+	}
+	#VarsA02
+	{
+		position : absolute ;
+		left : 129px ;
+		top : 70px ;
+		height : 27px ;
+		border-width: 1px ;
+		border-style: solid ;
+		border-color: #798787 #ffffff #798787 #ffffff ;
+		background-color: #ffffff ;
+		padding : 3px 0px 0px 8px ;
+	}
+	#SegA03
+	{
+		font-weight : bold ;
+		color : #666666 ;
+		position : absolute ;
+		left : 10px ;
+		top : 110px ;
+		width : 120px ;
+		height : 27px ;
+		border-width: 1px ;
+		border-style: solid ;
+		border-color: #798787 #ffffff #798787 #798787 ;
+		background-color: #ffffff ;
+		padding : 8px 0px 0px 8px ;
+	}
+	#VarsA03
+	{
+		position : absolute ;
+		left : 129px ;
+		top : 110px ;
+		height : 27px ;
+		border-width: 1px ;
+		border-style: solid ;
+		border-color: #798787 #ffffff #798787 #ffffff ;
+		background-color: #ffffff ;
+		padding : 3px 33px 0px 8px ;
+	}
+	#MSWBt01
+	{
+		position : absolute ;
+		left : 569px ;
+		top : 114px ;
+		width : 19px ;
+		height : 19px ;
+		border-width : 0px ;
+		border-style : none ;
+		background-color : #ffffff ;
+	}
+	#SegA12
+	{
+		font-weight : bold ;
+		color : #666666 ;
+		position : absolute ;
+		left : 258px ;
+		top : 70px ;
+		width : 120px ;
+		height : 27px ;
+		border-width: 1px ;
+		border-style: solid ;
+		border-color: #798787 #ffffff #798787 #798787 ;
+		background-color: #ffffff ;
+		padding : 8px 0px 0px 8px ;
+	}
+	#VarsA12
+	{
+		position : absolute ;
+		left : 376px ;
+		top : 70px ;
+		height : 27px ;
+		border-width: 1px ;
+		border-style: solid ;
+		border-color: #798787 #ffffff #798787 #ffffff ;
+		background-color: #ffffff ;
+		padding : 3px 0px 0px 8px ;
+	}
+	*/
+	/**********************************************************************/
+
+
+
+
+
+/************************************* START INPUT A *************************************/
+/* START INPUT A SEGMENTS */
+#InputA { 
+	position : absolute ;
+	left : 34px ;
+	top : 111px ;
+	z-index : 0 ;
+	visibility : visible ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+/* END INPUT A SEGMENTS */
+
+
+/* START HEADER */
+#SegAHeader {
+	position : absolute ;
+	left : 0px ;
+	top : 0px ;
+	width : 766px ;
+	height : 30px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+/* END HEADER */
+
+
+/* START BODYS */
+#SegABodys {
+	left : 10px ;
+	top : 31px ;
+	width : 927px ;
+	height : 254px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #cdcdcd ;
+}
+/* END BODYS */
+
+
+/* START BOTTOM */
+#SegABottom {
+	position : absolute ;
+	left : 0px ;
+	top : 246px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: #ffffff ;
+}
+/* END BOTTOM */
+
+
+/* START SEGMENTS */
+#SegA01 {
+	font-weight : bold ;
+	color : #666666 ;
+	position : absolute ;
+	left : 10px ;
+	top : 40px ;
+	width : 120px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #ffffff #798787 #798787 ;
+	background-color: #ffffff ;
+	padding : 8px 0px 0px 8px ;
+}
+
+
+
+#SegA11 {
+	font-weight : bold ;
+	color : #666666 ;
+	position : absolute ;
+	left : 258px ;
+	top : 40px ;
+	width : 120px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #ffffff #798787 #798787 ;
+	background-color: #ffffff ;
+	padding : 8px 0px 0px 8px ;
+}
+
+
+
+
+
+#SegA04 {
+	font-weight : bold ;
+	color : #666666 ;
+	position : absolute ;
+	left : 10px ;
+	top : 144px ;
+	width : 170px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #ffffff #798787 #798787 ;
+	background-color: #ffffff ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#SegA05 {
+	font-weight : bold ;
+	color : #666666 ;
+	position : absolute ;
+	left : 10px ;
+	top : 170px ;
+	width : 170px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #ffffff #798787 #798787 ;
+	background-color: #ffffff ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#SegA0405 {
+	position : absolute ;
+	left : 562px ;
+	top : 144px ;
+	width : 33 ;
+	height : 53px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #798787 #798787 #798787 ;
+	background-color: transparent ;
+}
+
+#SegA06 {
+	font-weight : bold ;
+	position : absolute ;
+	left : 712px ;
+	top : 40px ;
+	width : 100px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #ffffff #798787 #798787 ;
+	background-color: #ffffff ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#SegA07 {
+	font-weight : bold ;
+	position : absolute ;
+	left : 712px ;
+	top : 70px ;
+	width : 100px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #ffffff #798787 #798787 ;
+	background-color: #ffffff ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#SegA08 {
+	font-weight : bold ;
+	position : absolute ;
+	left : 712px ;
+	top : 100px ;
+	width : 100px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #ffffff #798787 #798787 ;
+	background-color: #ffffff ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#SegA09 {
+	font-weight : bold ;
+	position : absolute ;
+	left : 712px ;
+	top : 130px ;
+	width : 100px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #ffffff #798787 #798787 ;
+	background-color: #ffffff ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#SegA10 {
+	font-weight : bold ;
+	position : absolute ;
+	left : 10px ;
+	top : 216px ;
+	width : 120px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #ffffff #798787 #798787 ;
+	background-color: #ffffff ;
+	padding : 8px 0px 0px 8px ;
+}
+/* END SEGMENTS */
+
+
+/* START VARS */
+#VarsA01 {
+	position : absolute ;
+	left : 129px ;
+	top : 40px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #798787 #798787 #ffffff ;
+	background-color: #ffffff ;
+	padding : 3px 35px 0px 8px ;
+}
+
+
+
+#VarsA11 {
+	position : absolute ;
+	left : 376px ;
+	top : 40px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #ffffff #798787 #ffffff ;
+	background-color: #ffffff ;
+	padding : 3px 32px 0px 8px ;
+}
+
+
+
+
+
+
+#VarsA04 {
+	position : absolute ;
+	left : 178px ;
+	top : 144px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #ffffff #798787 #ffffff ;
+	background-color: #ffffff ;
+	padding : 3px 0px 0px 8px ;
+}
+
+
+#VarsA05 {
+	position : absolute ;
+	left : 178px ;
+	top : 170px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #ffffff #798787 #ffffff ;
+	background-color: #ffffff ;
+	padding : 3px 0px 0px 8px ;
+}
+
+#VarsA06 {
+	position : absolute ;
+	left : 811px ;
+	top : 40px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #798787 #798787 #ffffff ;
+	background-color: #ffffff ;
+	padding : 3px 0px 0px 8px ;
+}
+
+#VarsA07 {
+	position : absolute ;
+	left : 811px ;
+	top : 70px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #798787 #798787 #ffffff ;
+	background-color: #ffffff ;
+	padding : 3px 0px 0px 8px ;
+}
+
+#VarsA08 {
+	position : absolute ;
+	left : 811px ;
+	top : 100px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #798787 #798787 #ffffff ;
+	background-color: #ffffff ;
+	padding : 3px 0px 0px 8px ;
+}
+
+#VarsA09 {
+	position : absolute ;
+	left : 811px ;
+	top : 130px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #798787 #798787 #ffffff ;
+	background-color: #ffffff ;
+	padding : 3px 0px 0px 8px ;
+}
+
+#VarsA10 {
+	position : absolute ;
+	left : 129px ;
+	top : 216px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #ffffff #798787 #ffffff ;
+	background-color: #ffffff ;
+	padding : 3px 0px 0px 8px ;
+}
+/* END VARS */
+/************************************** END INPUT A **************************************/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/************************************* START INPUT B *************************************/
+/* START INPUT B SEGMENTS */
+#InputB {
+	position : absolute ;
+	left : 34px ;
+	top : 111px ;
+	z-index : 0 ;
+	visibility : hidden ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+/* END INPUT B SEGMENTS */
+
+
+/* START HEADER */
+#SegBHeader {
+	position : absolute ;
+	left : 0px ;
+	top : 0px ;
+	width : 766px ;
+	height : 30px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+/* END HEADER */
+
+
+/* START BODYS */
+#SegBBodys {
+	left : 10px ;
+	top : 31px ;
+	width : 927px ;
+	height : 310px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #cdcdcd ;
+}
+/* END BODYS */
+
+
+/* START BOTTOM */
+#SegBBottom {
+	position : absolute ;
+	left : 0px ;
+	top : 300px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: #ffffff ;
+}
+/* END BOTTOM */
+
+
+/* START SEGMENTS */
+#SegB01 {
+	font-weight : bold ;
+	position : absolute ;
+	left : 266px ;
+	top : 70px ;
+	width : 120px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #ffffff #798787 #798787 ;
+	background-color: #ffffff ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#SegB02 {
+	font-weight : bold ;
+	position : absolute ;
+	left : 10px ;
+	top : 40px ;
+	width : 120px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #ffffff #798787 #798787 ;
+	background-color: #ffffff ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#SegB03 {
+	font-weight : bold ;
+	position : absolute ;
+	left : 497px ;
+	top : 70px ;
+	width : 170px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #ffffff #798787 #798787 ;
+	background-color: #ffffff ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#SegB04_1 {
+	font-weight : bold ;
+	position : absolute ;
+	left : 39px ;
+	top : 117px ;
+	width : 120px ;
+	height : 27px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+	padding : 3px ;
+}
+
+#SegB04_2 {
+	font-weight : bold ;
+	position : absolute ;
+	left : 10px ;
+	top : 141px ;
+	width : 150px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #ffffff #798787 #798787 ;
+	background-color: #ffffff ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#SegB04_3 {
+	font-weight : bold ;
+	position : absolute ;
+	left : 10px ;
+	top : 167px ;
+	width : 150px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #ffffff #798787 #798787 ;
+	background-color: #ffffff ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#SegB04_4 {
+	font-weight : bold ;
+	position : absolute ;
+	left : 10px ;
+	top : 193px ;
+	width : 150px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #ffffff #798787 #798787 ;
+	background-color: #ffffff ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#SegB04_5 {
+	font-weight : bold ;
+	position : absolute ;
+	left : 10px ;
+	top : 223px ;
+	width : 150px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #ffffff #798787 #798787 ;
+	background-color: #ffffff ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#SegB05_1 {
+	font-weight : bold ;
+	position : absolute ;
+	left : 339px ;
+	top : 117px ;
+	width : 120px ;
+	height : 27px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+	padding : 3px ;
+}
+
+#SegB05_2 {
+	font-weight : bold ;
+	position : absolute ;
+	left : 309px ;
+	top : 141px ;
+	width : 153px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #cdcdcd #ffffff #cdcdcd #cdcdcd ;
+	background-color: #ffffff ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#SegB05_3 {
+	font-weight : bold ;
+	position : absolute ;
+	left : 309px ;
+	top : 167px ;
+	width : 153px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #cdcdcd #ffffff #cdcdcd #cdcdcd ;
+	background-color: #ffffff ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#SegB05_4 {
+	font-weight : bold ;
+	position : absolute ;
+	left : 309px ;
+	top : 193px ;
+	width : 150px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #cdcdcd #ffffff #cdcdcd #cdcdcd ;
+	background-color: #ffffff ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#SegB05_5 {
+	font-weight : bold ;
+	position : absolute ;
+	left : 309px ;
+	top : 223px ;
+	width : 150px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #cdcdcd #ffffff #cdcdcd #cdcdcd ;
+	background-color: #ffffff ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#SegB06 {
+	font-weight : bold ;
+	position : absolute ;
+	left : 610px ;
+	top : 111px ;
+	width : 170px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #ffffff #798787 #798787 ;
+	background-color: #ffffff ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#SegB07 {
+	font-weight : bold ;
+	position : absolute ;
+	left : 10px ;
+	top : 275px ;
+	width : 120px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #ffffff #798787 #798787 ;
+	background-color: #ffffff ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#SegB08 {
+	font-weight : bold ;
+	position : absolute ;
+	left : 10px ;
+	top : 70px ;
+	width : 120px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #ffffff #798787 #798787 ;
+	background-color: #ffffff ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#SegB13 {
+	font-weight : bold ;
+	position : absolute ;
+	left : 610px ;
+	top : 141px ;
+	width : 273px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #ffffff #798787 #798787 ;
+	background-color: #ffffff ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#SegB14 {
+	font-weight : bold ;
+	position : absolute ;
+	left : 610px ;
+	top : 167px ;
+	width : 160px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #ffffff #798787 #798787 ;
+	background-color: #ffffff ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#SegB15 {
+	font-weight : bold ;
+	position : absolute ;
+	left : 610px ;
+	top : 193px ;
+	width : 160px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #ffffff #798787 #798787 ;
+	background-color: #ffffff ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#SegB16 {
+	font-weight : bold ;
+	position : absolute ;
+	left : 610px ;
+	top : 223px ;
+	width : 160px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #ffffff #798787 #798787 ;
+	background-color: #ffffff ;
+	padding : 8px 0px 0px 8px ;
+}
+/* END SEGMENTS */
+
+
+/* START VARS */
+#VarsB01 {
+	position : absolute ;
+	left : 360px ;
+	top : 70px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #798787 #798787 #ffffff ;
+	background-color: #ffffff ;
+	padding : 3px 0px 0px 8px ;
+}
+
+#VarsB02 {
+	position : absolute ;
+	left : 129px ;
+	top : 40px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #ffffff #798787 #ffffff ;
+	background-color: #ffffff ;
+	padding : 3px 34px 0px 8px ;
+}
+
+#VarsB03 {
+	position : absolute ;
+	left : 654px ;
+	top : 70px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #798787 #798787 #ffffff ;
+	background-color: #ffffff ;
+	padding : 3px 0px 0px 8px ;
+}
+
+#VarsB04_1 {
+	position : absolute ;
+	left : 10px ;
+	top : 111px ;
+	width : 304px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #ffffff #798787 #798787 ;
+	background-color: transparent ;
+	padding : 3px 0px 0px 1px ;
+}
+
+#VarsB04_2 {
+	position : absolute ;
+	left : 129px ;
+	top : 141px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #cdcdcd #cdcdcd #cdcdcd #ffffff ;
+	background-color: #ffffff ;
+	padding : 3px 0px 0px 8px ;
+}
+
+#VarsB04_3 {
+	position : absolute ;
+	left : 129px ;
+	top : 167px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #cdcdcd #cdcdcd #cdcdcd #ffffff ;
+	background-color: #ffffff ;
+	padding : 3px 0px 0px 8px ;
+}
+
+#VarsB04_4 {
+	position : absolute ;
+	left : 129px ;
+	top : 193px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #cdcdcd #cdcdcd #cdcdcd #ffffff ;
+	background-color: #ffffff ;
+	padding : 3px 0px 0px 8px ;
+}
+
+#VarsB04_5 {
+	position : absolute ;
+	left : 129px ;
+	top : 223px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #cdcdcd #cdcdcd #cdcdcd #ffffff ;
+	background-color: #ffffff ;
+	padding : 3px 0px 0px 8px ;
+}
+
+#VarsB05_1 {
+	position : absolute ;
+	left : 307px ;
+	top : 111px ;
+	width : 298px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #798787 #798787 #ffffff ;
+	background-color: transparent ;
+	padding : 3px 0px 0px 2px ;
+}
+
+#VarsB05_2 {
+	position : absolute ;
+	left : 428px ;
+	top : 141px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #cdcdcd #cdcdcd #cdcdcd #ffffff ;
+	background-color: #ffffff ;
+	padding : 3px 0px 0px 8px ;
+}
+
+#VarsB05_3 {
+	position : absolute ;
+	left : 428px ;
+	top : 167px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #cdcdcd #cdcdcd #cdcdcd #ffffff ;
+	background-color: #ffffff ;
+	padding : 3px 0px 0px 8px ;
+}
+
+#VarsB05_4 {
+	position : absolute ;
+	left : 428px ;
+	top : 193px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #cdcdcd #cdcdcd #cdcdcd #ffffff ;
+	background-color: #ffffff ;
+	padding : 3px 0px 0px 8px ;
+}
+
+#VarsB05_5 {
+	position : absolute ;
+	left : 428px ;
+	top : 223px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #cdcdcd #cdcdcd #cdcdcd #ffffff ;
+	background-color: #ffffff ;
+	padding : 3px 0px 0px 8px ;
+}
+
+#VarsB06 {
+	position : absolute ;
+	left : 761px ;
+	top : 111px ;
+	height : 27px ;
+	text-align : right ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #798787 #798787 #ffffff ;
+	background-color: #ffffff ;
+	padding : 3px 32px 0px 8px ;
+}
+
+#VarsB07 {
+	position : absolute ;
+	left : 129px ;
+	top : 275px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #798787 #798787 #ffffff ;
+	background-color: #ffffff ;
+	padding : 3px 0px 0px 8px ;
+}
+
+#VarsB08 {
+	position : absolute ;
+	left : 129px ;
+	top : 70px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #798787 #798787 #ffffff ;
+	background-color: #ffffff ;
+	padding : 3px 0px 0px 8px ;
+}
+
+#VarsB13 {
+	position : absolute ;
+	left : 729px ;
+	top : 141px ;
+	height : 27px ;
+	text-align : right ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #798787 #798787 #ffffff ;
+	background-color: #ffffff ;
+	padding : 3px 0px 0px 0px ;
+}
+
+#VarsB14 {
+	position : absolute ;
+	left : 729px ;
+	top : 167px ;
+	height : 27px ;
+	text-align : right ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #798787 #798787 #ffffff ;
+	background-color: #ffffff ;
+	padding : 3px 0px 0px 0px ;
+}
+
+#VarsB15 {
+	position : absolute ;
+	left : 729px ;
+	top : 193px ;
+	height : 27px ;
+	text-align : right ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #798787 #798787 #ffffff ;
+	background-color: #ffffff ;
+	padding : 3px 0px 0px 0px ;
+}
+
+#VarsB16 {
+	position : absolute ;
+	left : 729px ;
+	top : 223px ;
+	height : 27px ;
+	text-align : right ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #798787 #798787 #ffffff ;
+	background-color: #ffffff ;
+	padding : 3px 0px 0px 0px ;
+}
+/* END VARS */
+/************************************** END INPUT B **************************************/
+
+
+
+
+
+
+
+
+
+
+
+/************************************* START INPUT C *************************************/
+/* START INPUT C SEGMENTS */
+#InputC {
+	position : absolute ;
+	left : 34px ;
+	top : 460px ;
+	z-index : 0 ;
+	visibility: hidden ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+/* END INPUT C SEGMENTS */
+
+
+/* START HEADER */
+#SegCHeader {
+	position : absolute ;
+	left : 0px ;
+	top : 0px ;
+	width : 766px ;
+	height : 30px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+/* END HEADER */
+
+
+/* START BODYS */
+#SegCBodys {
+	left : 190px ;
+	top : 500px ;
+	width : 927px ;
+	height : 153px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #cdcdcd ;
+}
+/* END BODYS */
+
+
+/* START BOTTOM */
+#SegCBottom {
+	position : absolute ;
+	left : 0px ;
+	top : 147px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: #ffffff ;
+}
+/* END BOTTOM */
+
+
+/* START SEGMENTS */
+#SegC01 {
+	position : absolute ;
+	left : 8px ;
+	top : 39px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+#SegCIFrm {
+	width : 910 ;
+	height : 110 ;
+}
+/* END SEGMENTS */
+/************************************** END INPUT C **************************************/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/********************* START TAB *********************/
+#TabA {
+	font-weight : normal ;
+	position : absolute ;
+	left : 966px ;
+	top : 98px ;
+	z-index : 3 ;
+	border-width: 0px ;
+	background-color: transparent ;
+}
+
+#TabB {
+	font-weight : normal ;
+	position : absolute ;
+	left : 966px ;
+	top : 372px ;
+	z-index : 3 ;
+	border-width: 0px ;
+	background-color: transparent ;
+}
+/********************** END TAB **********************/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/********************* START QUERY BUTTON *********************/
+/* START ADD ROW BUTTON */
+#AddRowBt {
+	position : absolute ;
+	top : 319px ;
+	left : 18px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+/* END ADD ROW BUTTON */
+
+/* START DEL ROW BUTTON */
+#DelRowBt {
+	position : absolute ;
+	top : 319px ;
+	left : 103px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+/* END DEL ROW BUTTON */
+
+/* START COMMIT BUTTON */
+#CommitBt {
+	position : absolute ;
+	top : 319px ;
+	left : 188px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+/* END COMMIT BUTTON */
+
+/* START REGIST BUTTON */
+#RegistBt {
+	position : absolute ;
+	top : 319px ;
+	left : 830px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+/* END REGIST BUTTON */
+
+/* START CLEAR BUTTON - INPUT A */
+#SegAClearBt {
+	position : absolute ;
+	top : 500px ;
+	left : 830px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+/* END CLEAR BUTTON - INPUT A */
+
+/* START CLEAR BUTTON - INPUT B */
+#SegBClearBt {
+	position : absolute ;
+	top : 319px ;
+	left : 273px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+/* END CLEAR BUTTON - INPUT B */
+/********************** END QUERY BUTTON **********************/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/********************* START DATE BUTTON *********************/
+#DateBtA {
+	position : absolute ;
+	left : 229px ;
+	top : 44px ;
+	border-width : 0px ;
+	border-style : none ;
+	background-color : #ffffff ;
+}
+
+#DateBtC {
+	position : absolute ;
+	left : 855px ;
+	top : 115px ;
+	border-width : 0px ;
+	border-style : none ;
+	background-color : #ffffff ;
+}
+/********************** END DATE BUTTON **********************/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/********************* START PACKING UNIT BUTTON *********************/
+#PunitBt {
+	position : absolute ;
+	top : 115px ;
+	left : 577px ;
+	width : 19px ;
+	height : 19px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+/********************** END PACKING UNIT BUTTON **********************/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/********************* START MSW BUTTON *********************/
+/* START [VENDOR] BUTTON */
+
+/* END [VENDOR] BUTTON */
+
+
+/* START [DEPT & IN CHARGE NAME] BUTTON */
+#MSWBt02 {
+	position : absolute ;
+	left : 569px ;
+	top : 160px ;
+	width : 19px ;
+	height : 19px ;
+	border-width : 0px ;
+	border-style : none ;
+	background-color : #ffffff ;
+}
+/* END [DEPT & IN CHARGE NAME] BUTTON */
+
+
+/* START [GOODS] BUTTON */
+#MSWBt03 {
+	position : absolute ;
+	left : 895px ;
+	top : 44px ;
+	border-width : 0px ;
+	border-style : none ;
+	background-color : #ffffff ;
+}
+/* END [GOODS] BUTTON */
+/********************** END MSW BUTTON **********************/
+
+
+
+
+/********************* START MSW POSITION *********************/
+/* START [VENDOR] */
+#MiFrame01 {
+	position : absolute ;
+	left : 124px ;
+	top : 250px ;
+	z-index : 8 ;
+	visibility: hidden ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+/* END [VENDOR] */
+
+
+/* START [DEPT & IN CHARGE NAME] */
+#MiFrame02 {
+	position : absolute ;
+	left : 105px ;
+	top : 305px ;
+	z-index : 8 ;
+	position : absolute ;
+	visibility: hidden ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+/* END [DEPT & IN CHARGE NAME] */
+
+
+/* START [PRODUCTS] */
+#MiFrame03 {
+	position : absolute ;
+	left : 229px ;
+	top : 180px ;
+	z-index : 8 ;
+	position : absolute ;
+	visibility: hidden ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+/* END [PRODUCTS] */
+
+
+/* START [DATE] */
+#MiFrame10 {
+	position : absolute ;
+	left : 44px ;
+	top : 180px ;
+	z-index : 8 ;
+	position : absolute ;
+	visibility: hidden ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+/* END [DATE] */
+
+
+/* START [DATE3] */
+#MiFrame10_3 {
+	position : absolute ;
+	left : 563px ;
+	top : 251px ;
+	z-index : 8 ;
+	position : absolute ;
+	visibility: hidden ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+/* END [DATE3] */
+/********************** END MSW POSITION **********************/
+
+
+
+
+
+
+
+#ErrorMessageFrame
+{
+	position : absolute ;
+	top : 115px ;
+	left : 11px ;
+	z-index : 11 ;
+	visibility: hidden ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+#ErrorMessage
+{
+	position : absolute ;
+	width : 978px ;
+	height : 34px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+	filter:progid:DXImageTransform.Microsoft.Alpha(opacity=90);
+}
+
+
+-->

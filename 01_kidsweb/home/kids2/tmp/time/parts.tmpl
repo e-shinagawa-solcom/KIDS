@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html lang="ja">
+<head>
+<title>K.I.D.S.</title>
+<meta http-equiv="content-type" content="text/html; charset=euc-jp">
+<script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
+
+<script type="text/javascript" language="javascript">
+
+	function fncTimeLimit()
+	{
+		var lngAlertTime = null;		// タイムアウト警告秒
+		var aryDate      = new Array();	// タイムアウト日付
+		var strDate      = "";
+		var strStatus    = "";
+		var blnConfirm   = true;
+
+		// ログインステータスの取得
+		strStatus = document.all.strLoginStatus.value;
+
+		// タイムリミット日付の取得
+		strDate = trim( document.all.strTimeLimtDate.value );
+		aryDate = strDate.split( "/" );
+
+		// タイムリミット警告秒の取得
+		lngAlertTime = document.all.strTimeLimitRemainSeconds.value;
+
+
+		// ログインステータスの確認
+		if( strStatus != "valid" )
+		{
+			alert( "残り時間5分が過ぎましたので、タイムアウトになりました。" );
+			return false;
+		}
+
+
+		var lngRemainSeconds = 0;
+
+		var dtmYear = aryDate[0];
+		var dtmMon  = aryDate[1];
+		var dtmDay  = aryDate[2];
+		var dtmHour = aryDate[3];
+		var dtmMin  = aryDate[4];
+		var dtmSec  = aryDate[5];
+
+		var d_Now  = new Date();
+		var d_Time = d_Now.getTime();
+
+		var s_Now  = new Date();
+		var s_Time = null;
+
+
+
+		s_Now.setYear( dtmYear );
+		s_Now.setMonth( dtmMon - 1 );
+		s_Now.setDate( dtmDay );
+		s_Now.setHours( dtmHour );
+		s_Now.setMinutes( dtmMin );
+		s_Now.setSeconds( dtmSec );
+
+		s_Time = s_Now.getTime();
+
+		lngRemainSeconds = Math.round( ( s_Time - d_Time ) / 1000 );
+
+		// 警告表示
+		if( lngRemainSeconds == lngAlertTime )
+		{
+			blnConfirm = confirm( "5分後にタイムアウトします。継続しますか？" );
+
+			if( blnConfirm )
+			{
+				// 処理モードの設定
+				document.all.strProcMode.value = 'update';
+
+				// 更新
+				window.frmTime.submit();
+			}
+			else
+			{
+				// 処理モードの設定
+				document.all.strProcMode.value = 'init';
+			}
+		}
+
+		// タイムアウト処理
+		if( lngRemainSeconds == 0 )
+		{
+			//alert( "TimeOut!!" );
+		}
+
+		// カウント
+		if( lngRemainSeconds > 0 )
+		{
+			setTimeout( "fncTimeLimit()", 1000 );
+		}
+
+		document.all.TimeLimt.innerHTML = "Limit：" + dtmYear + "/" + dtmMon + "/" + dtmDay + "  " + dtmHour + ":" + dtmMin + ":" + dtmSec + "まで、あと " + lngRemainSeconds + "秒";
+
+
+		delete aryDate;
+	}
+
+</script>
+
+<style type="text/css">
+	body
+	{
+		margin     : 0;
+		background : #908566;
+	}
+	#TimeLimt
+	{
+		font-family : monospace;
+		color       : #deb6a2;
+		font-size   : 10px;
+		text-align  : left;
+	}
+</style>
+
+</head>
+<body onContextmenu="return true;" onload="fncTimeLimit();">
+
+	<span id="TimeLimt"></span>
+
+
+
+	<input type="hidden" name="strTimeLimtDate" value="_%strTimeLimtDate%_">
+	<input type="hidden" name="strTimeLimitRemainSeconds" value="_%strTimeLimitRemainSeconds%_">
+	<input type="hidden" name="strLoginStatus" value="_%strLoginStatus%_">
+
+	<form name="frmTime" action="" method="post">
+		<input type="hidden" name="strProcMode" value="_%strProcMode%_">
+		<input type="hidden" name="strTimeLimtSessionID" value="_%strSessionID%_">
+	</form>
+
+</body>
+</html>

@@ -1,0 +1,4 @@
+ SELECT strUserDisplayCode, strUserDisplayName FROM m_User WHERE strUserDisplayCode = '096' 
+ SELECT strUserDisplayCode, strUserDisplayName FROM m_User WHERE strUserDisplayCode = '096' 
+id	name1
+096	¡·¿Ó°°Õµ¬¿

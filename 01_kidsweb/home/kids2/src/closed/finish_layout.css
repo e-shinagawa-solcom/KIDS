@@ -1,0 +1,138 @@
+
+
+
+#Backs
+{
+	background : #d6d0b1 ;
+}
+
+
+
+
+
+table
+{
+	width : 100% ;
+	font-family : Arial , £Í£Ó £Ð¥´¥·¥Ã¥¯, Osaka ;
+	font-style : normal ;
+	font-weight : normal ;
+	font-size : 12px ;
+	color : #d6d0b1 ;
+	text-align : center ;
+	padding : 4px 3px 1px 3px ;
+}
+
+
+#SegTitle
+{
+	font-family : Arial , £Í£Ó¡¡£Ð¥´¥·¥Ã¥¯ ;
+	position : absolute ;
+	top : 0px ;
+	color : #ffffff ;
+	background-color : #799797 ;
+	word-break : keep-all ;
+}
+
+.SegColumn
+{
+	font-family : Arial , £Í£Ó¡¡£Ð¥´¥·¥Ã¥¯ ;
+	color : #ffffff ;
+	background-color : #799797 ;
+	word-break : keep-all ;
+}
+
+.SegColumn2
+{
+	font-family : Arial , £Í£Ó¡¡£Ð¥´¥·¥Ã¥¯ ;
+	color : #ffffff ;
+	background-color : #6d8aab ;
+	word-break : keep-all ;
+}
+
+.Segs
+{
+	font-family : monospace ;
+	color : #555555 ;
+	background : #ffffff ;
+	padding : 4px 6px 3px 6px ;
+	text-align : left ;
+}
+
+.SegsUse
+{
+	font-family : Arial , £Í£Ó¡¡£Ð¥´¥·¥Ã¥¯ ;
+	color : #555555 ;
+	background : #ffffff ;
+	padding : 4px 6px 3px 6px ;
+	text-align : center ;
+}
+
+#DummyTR
+{
+	font-size : 12px ;
+	color : #799797 ;
+	text-align : center ;
+	background-color : #799797 ;
+	padding : 4px 3px 1px 3px ;
+	word-break : keep-all ;
+}
+
+#PrevNext
+{
+	position : absolute ;
+	width : 920px ;
+	border-width : 0px ;
+	border-style : none ;
+	border-color : #cdcdcd ;
+	padding : 0px 0px 0px 0px ;
+}
+
+#PrevButton
+{
+	position : absolute ;
+	top : 14px ;
+	left : 365px ;
+	border-width : 0px ;
+	border-style : none ;
+}
+
+#NextButton
+{
+	position : absolute ;
+	top : 14px ;
+	left : 537px ;
+	border-width : 0px ;
+	border-style : none ;
+}
+
+#PageCount
+{
+	position : absolute ;
+	top : 10px ;
+	left : 430px ;
+	border-width : 0px ;
+	border-style : none ;
+}
+
+#PageCountNum
+{
+	position : absolute ;
+	top : 17px ;
+	left : 430px ;
+	font-family : Arial , £Í£Ó £Ð¥´¥·¥Ã¥¯, Osaka ;
+	font-style : normal ;
+	font-weight : normal ;
+	width : 100px ;
+	height : 23px ;
+	border-width : 0px ;
+	border-style : none ;
+	text-align : center ;
+	padding : 0px 0px 0px 0px ;
+	background-color : transparent ;
+}
+
+#W01
+{
+	color : #ea8555 ;
+	background-color : #f1f1f1 ;
+}

@@ -1,0 +1,189 @@
+<!--
+
+
+#schSchButton {
+	position : absolute ;
+	left : 875px ;
+	top : 114px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+#schClrButton {
+	position : absolute ;
+	left : 790px ;
+	top : 114px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+/************************************* START INPUT A *************************************/
+/* START INPUT A SEGMENTS */
+#InputA { 
+	position : absolute ;
+	left : 34px ;
+	top : 111px ;
+	z-index : 0 ;
+	visibility : visible ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+/* END INPUT A SEGMENTS */
+
+
+/* START HEADER */
+#SegAHeader {
+	position : absolute ;
+	left : 0px ;
+	top : 0px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+/* END HEADER */
+
+
+/* START BODYS */
+#SegABodys {
+	left : 190px ;
+	top : 500px ;
+	width : 949px ;
+	height : 514px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #cdcdcd ;
+}
+/* END BODYS */
+
+
+/* START BOTTOM */
+#SegABottom {
+	position : absolute ;
+	left : 0px ;
+	top : 508px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: #ffffff ;
+}
+/* END BOTTOM */
+
+
+
+/* START SEGMENTS */
+#SegA01 {
+	position : absolute ;
+	left : 8px ;
+	top : 39px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+#SegAIFrm {
+	width : 931px ;
+	height : 471px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #799797 ;
+}
+/* END SEGMENTS */
+
+
+
+
+
+
+
+
+
+
+
+/********************* START MSW POSITION *********************/
+/* START [SUPPLIER] */
+#MiFrame08 {
+	position : absolute ;
+	left : 266px ;
+	top : 246px ;
+	z-index : 8 ;
+	visibility: hidden ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+/* END [SUPPLIER] */
+
+
+/* START [DEPT & IN CHARGE NAME] */
+#MiFrame02 {
+	position : absolute ;
+	left : 316px ;
+	top : 280px ;
+	z-index : 8 ;
+	position : absolute ;
+	visibility: hidden ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+/* END [DEPT & IN CHARGE NAME] */
+
+
+/* START [PRODUCTS] */
+#MiFrame03 {
+	position : absolute ;
+	left : 260px ;
+	top : 210px ;
+	z-index : 8 ;
+	position : absolute ;
+	visibility: hidden ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+/* END [PRODUCTS] */
+
+
+/* START [INPUT2] */
+#MiFrame09 {
+	position : absolute ;
+	left : 266px ;
+	top : 246px ;
+	z-index : 8 ;
+	visibility: hidden ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+/* END [INPUT2] */
+/********************** END MSW POSITION **********************/
+
+
+
+#ErrorMessageFrame
+{
+	position : absolute ;
+	top : 115px ;
+	left : 11px ;
+	z-index : 11 ;
+	visibility: hidden ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+#ErrorMessage
+{
+	position : absolute ;
+	width : 978px ;
+	height : 34px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+	filter:progid:DXImageTransform.Microsoft.Alpha(opacity=90);
+}
+
+
+-->

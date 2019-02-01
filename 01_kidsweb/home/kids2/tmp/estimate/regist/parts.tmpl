@@ -1,0 +1,844 @@
+<config>
+<header1>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/images.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutbase.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutcommon.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayouterror.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutnavi.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/estimate/cmn/images.js"></script>
+</header1>
+
+<header2>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/estimate/regist/initlayout.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutquery.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutmsw.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutpunit.js"></script>
+</header2>
+
+<header3>
+<script type="text/javascript" language="javascript" src="function.js"></script>
+<script type="text/javascript" language="javascript" src="exstr.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="_%strCssName%_">
+<link rel="stylesheet" type="text/css" media="screen" href="_%strErrorCssName%_">
+
+<script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
+
+
+<script type="text/javascript" language="javascript">
+
+
+	// path   送信先(confirm.php or action.php)
+	// action 実行処理(confirm確認ボタン or temporary仮保存)
+	// obj    承認ルートコード
+	function fncEstimateSubmit( path, action, obj, wtarget )
+	{
+		document.HSO.strActionName.value = action;
+		document.HSO.action = path;
+
+		document.HSO.target = wtarget;
+
+		fncDtRegistRecord();
+
+		return false;
+/*
+		// 「承認なし」の場合の判定 -> 「承認なし」の場合はボタン押下禁止
+		for( i=0; i < obj.options.length; i++ )
+		{
+			if( obj.options[i].text == '承認なし' && i == 0)
+			{
+				break;
+			}
+			else
+			{
+				document.HSO.strActionName.value = action;
+				document.HSO.action = path;
+
+				document.HSO.target = wtarget;
+
+				fncDtRegistRecord();
+				break;
+			}
+		}
+*/
+	}
+
+	// リダイレクト時にHiddenに明細データを設定する為の処理
+	function fncSetDetailData( lngSetValue )
+	{
+		// リダイレクト設定の場合
+		if( lngSetValue == 1 )
+		{
+			fncDtRegistRecordNoSubmit();
+		}
+	}
+
+	var WinCnt = 0;
+
+	// 承認ルートボタン押下処理
+	function fncOpenWFRoot( obj )
+	{
+		// 「承認なし」の場合の判定 -> 「承認なし」の場合はボタン押下禁止
+		for( i=0; i < obj.options.length; i++ )
+		{
+			if( obj.options[i].text == '承認なし' )
+			{
+				if( i == 0 ) return false;
+			}
+		}
+
+		if( WinCnt == 0 )
+		{
+			WFRootFrame.style.visibility = 'visible';
+			WFrootBt.innerHTML = darkgrayOpenBt3;
+			WinCnt = 1;
+		}
+		else if( WinCnt == 1 )
+		{
+			WFRootFrame.style.visibility = 'hidden';
+			WFrootBt.innerHTML = darkgrayOpenBt1;
+			WinCnt = 0;
+		}
+
+		return false;
+	}
+
+	function fncRedirectOpen( obj )
+	{
+		if( WinCnt == 1 )
+		{
+			fncOpenWFRoot();
+		}
+	}
+
+
+
+	// 製品サブウィンドウ非表示処理
+	function fncProductsClose()
+	{
+		if( flagD == 1 || locationEnterKeyCntDisplay == 1 )
+		{
+			DisplayerM03( '' , document.all.Mdata03 );
+			ExchangeM03( 0 , window.self );
+		}
+	}
+	// 仕入先サブウィンドウ非表示処理
+	function fncSupplierClose()
+	{
+		if( SUPcnt == 1 || supplierEnterKeyCntDisplay == 1 )
+		{
+			DisplayerM08( '', document.all.Mdata08 );
+			ExchangeM08( 0, window.Pwin );
+		}
+	}
+
+
+	var g_esFlag = 0;
+
+	// フォーカス移動処理
+	function fncInitSetFocus()
+	{
+		if( g_esFlag == 0 )
+		{
+			document.all.strProductCode.focus();
+			g_esFlag = 1;
+		}
+		else if( g_esFlag == 1 )
+		{
+			// document.all.lngStockItemCode.focus(); // 遅延対策のため、明細行作成後に記述
+			g_esFlag = 0;
+		}
+	}
+
+// 2004.09.27 suzukaze update start
+	// 製品コードより製品情報取得へのボタン処理
+	function fncProductSubmit()
+	{
+		if( document.HSO.strProductCode.value != "" )
+		{
+			document.HSO.action = "edit.php";
+			document.HSO.strActionName.value = "";
+			document.HSO.strMode.value = "onchange";
+			document.HSO.target = '_self';
+ 			document.HSO.submit();
+		}
+	}
+// 2004.09.27 suzukaze update end
+
+
+
+
+// 2004.09.28 tomita update
+	// 製品コード判定、エラー帯表示処理
+	function fncProductsCodeErrorMessage( strHeaderErrorMessage )
+	{
+		// 自身を参照する場合
+		if( typeof( ErrorMessageFrame ) != 'undefined' )
+		{
+			objWindow1 = window.ErrorMessageFrame;
+			objWindow2 = window.errorWin;
+		}
+		// Iframeから参照する場合
+		else
+		{
+			objWindow1 = parent.ErrorMessageFrame;
+			objWindow2 = parent.errorWin;
+		}
+
+//alert( typeof( objWindow2.ErrMeg ) );
+
+		// デバッグ
+		//alert( 'エラー文字列内容 : "' + strHeaderErrorMessage + '"' );
+
+		if( strHeaderErrorMessage != '' )
+		{
+			// エラーメッセージ表示
+			objWindow1.style.visibility = 'visible';
+			objWindow2.ErrMeg.innerText = strHeaderErrorMessage;
+		}
+		else
+		{
+			// エラーメッセージ非表示
+			objWindow1.style.visibility = 'hidden';
+			objWindow2.ErrMeg.innerText = '';
+		}
+	}
+// 2004.09.28 tomita update end
+
+</script>
+</header3>
+
+<bodyonload>
+initLayoutBase(); initLayoutQuery(); initLayoutMsw(); initLayoutES(); initLayoutNavi(); initLayoutPunit(); fncSetAryList(); initLayoutError1( ErrInputA ); fncSetDetailData( document.all.lngSetValue.value ); fncRegistrationConfirm( window.HSO , '' , '/result/common.html', '/result/regist_ifrm.html', 'ResultIframe', 'YES' , _%lngLanguageCode%_ , document.all.lngRegistConfirm.value, 'ES' ); GetlngLanguageCode( _%lngLanguageCode%_ ); fncProductsCodeErrorMessage( '_%strHeaderErrorMessage%_' ); fncInitSetFocus(); Loading();
+</bodyonload>
+</config>
+
+
+<p id="Preload">
+	<iframe id="PreloadFrm" name="PreloadWin" frameborder="0" src="/preload/index.html" onload="fncObjectResize( this , 0 , 0 );"></iframe>
+</p>
+
+
+
+<span id="objCheckWorkFlowRoot"></span>
+<!-- 確認画面表示フラグ -->
+<input type="hidden" name="lngRegistConfirm" value="_%lngRegistConfirm%_">
+<input type="hidden" name="lngSetValue" value="_%lngSetValue%_">
+
+
+<OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting" WIDTH="0" HEIGHT="0"></OBJECT>
+<Script for="objDataSourceSetting" event="ondatasetcomplete">subLoadMasterSetting(this.recordset,0);
+</Script>
+
+<OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting1" WIDTH="0" HEIGHT="0"></OBJECT>
+<Script for="objDataSourceSetting1" event="ondatasetcomplete">subLoadMasterSetting(this.recordset,1);
+</Script>
+
+<OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting2" WIDTH="0" HEIGHT="0"></OBJECT>
+<Script for="objDataSourceSetting2" event="ondatasetcomplete">subLoadMasterSetting(this.recordset,2);
+</Script>
+
+<!-- 仕入部品専用 明細部を表示したときの遅延対応-->
+<OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting10" WIDTH="0" HEIGHT="0"></OBJECT>
+<Script for="objDataSourceSetting10" event="ondatasetcomplete">subLoadMasterSetting(this.recordset,10);
+	fncDtDisplay( 0 );
+</Script>
+
+
+
+
+
+
+<span id="MainTitle" style="visibility:_%strBaseVisibilityName%_;"></span>
+
+
+
+
+
+<span id="NaviButton" style="visibility:_%strBaseVisibilityName%_;"></span>
+
+
+<p id="Navigations" onmouseout="NavigationOFF( Navigations , NaviButton );">
+	<span id="Navi">
+		<iframe id="NaviIfrm" name="NAVIwin" frameborder="0" scrolling="no" src="/navi/index.php?strSessionID=_%strSessionID%_&strNaviCode=estimate-3111"></iframe>
+	</span>
+</p>
+
+
+
+
+
+
+<!-- 複数フォーム一括サブミット用フォーム -->
+<form name="frmSubmit">
+
+	<!-- ダイアログ上でのクエリ送信先URL -->
+	<input type="hidden" name="ActionScriptName" value="_%strurl%_">
+	<input type="hidden" name="strProcess" value="_%strProcess%_">
+	<input type="hidden" name="strSessionID" value="_%strSessionID%_">
+	<input type="hidden" name="lngFunctionCode" value="1501">
+
+	<input type="hidden" name="strPageCondition" value="_%strPageCondition%_">
+
+	<!-- 複数フォーム一括サブミット用バッファ作成レイヤー -->
+	<span id="bufferRecord"></span>
+
+</form>
+
+
+
+
+
+
+<!-- 修正時に吐き出される配列の元になるhidden群 -->
+<form name="PRE_DSO" >
+
+	_%strDetailData%_
+
+	_%strMonetaryUnitData%_
+
+</form>
+<!-- 修正時に吐き出される配列の元になるhidden群終わり -->
+
+
+
+
+
+
+<p id="InputA">
+
+
+	<span id="SegABodys"></span>
+	<span id="SegAHeader"></span>
+	<span id="SegABottom"></span>
+
+
+	<span id="SegBBodys"></span>
+	<span id="SegBHeader"></span>
+	<span id="SegBBottom"></span>
+
+
+
+	<div id="headerBlock">
+		<form name="HSO" action="" method="post">
+		<input type="hidden" name="ESFlg" value="1">
+
+
+
+		<input type="hidden" name="strSessionID" value="_%strSessionID%_">
+		<input type="hidden" name="lngFunctionCode" value="_%lngFunctionCode%_">
+		<input type="hidden" name="lngEstimateNo" value="_%lngEstimateNo%_">
+
+<!-- 2004.10.06 tomita update start -->
+		<input type="hidden" name="ActionScriptName" value="_%strurl%_">
+		<input type="hidden" name="strProcess" value="_%strProcess%_">
+		<input type="hidden" name="strPageCondition" value="_%strPageCondition%_">
+		<input type="hidden" name="strActionName" value="_%strActionName%_">
+<!-- 2004.10.06 tomita update start -->
+
+<!-- 2004.09.27 suzukaze update start -->
+		<input type="hidden" name="strMode" value="_%strMode%_">
+<!-- 2004.09.27 suzukaze update end -->
+
+
+		_%temp_bytTemporaryFlg%_
+		_%temp_curStandardRate%_
+		_%temp_curConversionRate%_
+
+		_%temp_strProductName%_
+		_%temp_dtmDeliveryLimitDate%_
+		_%temp_strGroupDisplayCode%_
+		_%temp_strUserDiplayCode%_
+		_%temp_strUserDisplayName%_
+		_%temp_curRetailPrice%_
+		_%temp_lngCartonQty%_
+		_%temp_lngPlanCartonProduction%_
+
+		_%temp_curProductPrice%_
+
+		_%temp_lngProductionQuantity_hidden%_
+		_%temp_curProductPrice_hidden%_
+
+		_%temp_strRemark_hidden%_
+
+
+
+
+
+		<span id="colProductsCode"   >製品コード</span>
+		<span id="colProductsName"   >製品名</span>
+		<span id="colDeliveryDate"   >納期</span>
+		<span id="colDeptCode"       >営業部署コード</span>
+		<span id="colInChargeCode"   >開発担当コード</span>
+		<span id="colInChargeName"   >開発担当者</span>
+		<span id="colSellingPrice"   >上代</span>
+		<span id="colCartonQty"      >カートン入数</span>
+		<span id="colPlanQty"        >計画C/t</span>
+		<span id="colRefoundQty"     >生産予定数</span>
+		<span id="colWholesalePrice" >納価</span>
+
+
+
+
+		<!-- 製品コード -->
+		<span id="varProductsCode">
+			<input style="ime-mode:disabled;" type="text" maxlength="4" name="strProductCode" value="_%strProductCode%_" class="Txt04L"
+					onfocus="chColorOn( this );"
+					onblur="chColorOff( this );"
+			 _%strProductCode_Editable%_>
+		</span>
+
+		<!-- 製品コード設定ボタン -->
+		<span id="DataSetBt" onclick="_%ProductSubmit%_return false;"></span>
+
+		<!-- 製品ボタン -->
+		<span id="MSWBt03" onclick="_%btnMSWBt03_Editable%_return false;"></span>
+
+		<!-- 製品名 -->
+		<span id="varProductsName">
+			<input type="text" name="strProductName" value="_%strProductName%_" disabled class="disTxt4xL">
+		</span>
+
+		<!-- 製品マスタ画面へ -->
+		<span id="PunitBt"></span>
+
+		<!-- 納期 -->
+		<span id="varDeliveryDate">
+			<input type="text" name="dtmDeliveryLimitDate" value="_%dtmDeliveryLimitDate%_" disabled class="disTxt10L">
+		</span>
+
+
+		<!-- 部門コード -->
+		<span id="varDeptCode">
+			<input type="text" name="strGroupDisplayCode" value="_%strInchargeGroupDisplayCode%_" disabled class="disTxt03L">
+		</span>
+
+		<!-- 担当コード -->
+		<span id="varInChargeCode">
+			<input type="text" name="strUserDiplayCode" value="_%strInchargeUserDisplayCode%_" disabled class="disTxt03L">
+		</span>
+
+		<!-- 担当者名 -->
+		<span id="varInChargeName">
+			<input type="text" name="strUserDisplayName" value="_%strInchargeUserDisplayName%_" disabled class="disTxt2xL">
+		</span>
+
+		<!-- 上代 -->
+		<span id="varSellingPrice">
+			<input type="text" name="curRetailPrice" value="_%curRetailPrice%_" disabled class="disTxt23RC">
+		</span>
+
+		<!-- カートン入数 -->
+		<span id="varCartonQty">
+			<input type="text" name="lngCartonQuantity" value="_%lngCartonQuantity%_" disabled class="disTxt23R">
+		</span>
+
+		<!-- 計画C/t -->
+		<span id="varPlanQty">
+			<input type="text" name="lngPlanCartonProduction" value="_%lngPlanCartonProduction%_" disabled class="disTxt23R">
+		</span>
+
+		<!-- 納価 -->
+		<span id="varWholesalePrice">
+			<input type="text" name="curProductPrice" value="_%curProductPrice%_" disabled class="disTxt23RC">
+			<input type="hidden" name="curProductPrice_hidden" value="_%curProductPrice_hidden%_">
+		</span>
+
+		<!-- 生産予定数 -->
+		<span id="varRefoundQty">
+			<input type="text" name="lngProductionQuantity" value="_%lngProductionQuantity%_" disabled class="disTxt14RC">
+			<input type="hidden" name="lngProductionQuantity_hidden" value="_%lngProductionQuantity%_" disabled class="disTxt14RC">
+		</span>
+
+
+
+		<span id="tblStock">
+			<table border="0" cellpadding="3" cellspacing="1" class="tables">
+				<tr class="titles" height="22">
+					<td colspan="2" valign="middle" id="colStockSubject"   >仕入科目</td>
+					<td valign="middle" width="50"  id="colInput"          >入力</td>
+					<td valign="middle"             id="colStockItemSample">仕入部品例</td>
+					<td valign="middle"             id="colSubTotal"       >小計</td>
+					<td valign="middle"             id="colPlanQuantity"   >計画個数</td>
+				</tr>
+				<tr class="colm">
+					<td valign="middle"                        class="colnum" width="40">431</td>
+					<td valign="middle" id="colAmortizedValue" class="column" width="180">金型償却高</td>
+					<td align="center" valign="middle" class="inputbt"><a href="#" onclick="fncDtBlockOpen( 0 ); fncInitSetFocus();"><img onmouseover="RenewOn( this );" onmouseout="RenewOff( this );" src="/img/type01/cmn/seg/renew_off_bt.gif" width="15" height="15" border="0"></a></td>
+					<td valign="middle">原型、分割、キャスト、シリコン、金型等</td>
+					<td align="right" valign="middle" class="subtotals"><input type="text" name="g_sub_all_curSubTotalPrice[0]" disabled class="disTxtBorder"></td>
+					<td align="right" valign="middle" class="subtotals"><input type="text" name="g_sub_all_lngProductQuantity[0]" disabled class="disTxtBorder"></td>
+				</tr>
+				<tr class="colm">
+					<td valign="middle"                               class="colnum">433</td>
+					<td valign="middle" id="colOutsideAmortizedValue" class="column">金型海外償却高</td>
+					<td align="center" valign="middle" class="inputbt"><a href="#" onclick="fncDtBlockOpen( 1 ); fncInitSetFocus();"><img onmouseover="RenewOn( this );" onmouseout="RenewOff( this );" src="/img/type01/cmn/seg/renew_off_bt.gif" width="15" height="15" border="0"></a></td>
+					<td valign="middle">Injection Mold、Spray Mask Mold、Prot type等</td>
+					<td align="right" valign="middle" class="subtotals"><input type="text" name="g_sub_all_curSubTotalPrice[1]" disabled class="disTxtBorder"></td>
+					<td align="right" valign="middle" class="subtotals"><input type="text" name="g_sub_all_lngProductQuantity[1]" disabled class="disTxtBorder"></td>
+				</tr>
+				<tr class="colm">
+					<td valign="middle"                                class="colnum">403</td>
+					<td valign="middle" id="colMaterialToolsCostPrice" class="column">材料ツール仕入高</td>
+					<td align="center" valign="middle" class="inputbt"><a href="#" onclick="fncDtBlockOpen( 2 ); fncInitSetFocus();"><img onmouseover="RenewOn( this );" onmouseout="RenewOff( this );" src="/img/type01/cmn/seg/renew_off_bt.gif" width="15" height="15" border="0"></a></td>
+					<td valign="middle">彩色、デザイン、製図等</td>
+					<td align="right" valign="middle" class="subtotals"><input type="text" name="g_sub_all_curSubTotalPrice[2]" disabled class="disTxtBorder"></td>
+					<td align="right" valign="middle" class="subtotals"><input type="text" name="g_sub_all_lngProductQuantity[2]" disabled class="disTxtBorder"></td>
+				</tr>
+				<tr class="totals" height="22">
+					<td colspan="4" align="right" valign="middle" id="colTotalFixedCost">固定費合計</td>
+					<td align="right" valign="middle"><input type="text" name="g_TotalFixedCost" disabled class="disTxtBorder"></td>
+					<td align="right" valign="middle"><input type="text" name="g_TotalFixedQuantity" disabled class="disTxtBorder"></td>
+				</tr>
+				<tr class="colm">
+					<td valign="middle"                              class="colnum">402</td>
+					<td valign="middle" id="colImportPartsCostPrice" class="column">輸入パーツ仕入高</td>
+					<td align="center" valign="middle" class="inputbt"><a href="#" onclick="fncDtBlockOpen( 3 ); fncInitSetFocus();"><img onmouseover="RenewOn( this );" onmouseout="RenewOff( this );" src="/img/type01/cmn/seg/renew_off_bt.gif" width="15" height="15" border="0"></a></td>
+					<td valign="middle">MassProduct、Sample、Inspection、Rework等</td>
+					<td align="right" valign="middle" class="subtotals"><input type="text" name="g_sub_all_curSubTotalPrice[3]" disabled class="disTxtBorder"></td>
+					<td align="right" valign="middle" class="subtotals"><input type="text" name="g_sub_all_lngProductQuantity[3]" disabled class="disTxtBorder"></td>
+				</tr>
+				<tr class="colm">
+					<td valign="middle"                                class="colnum">401</td>
+					<td valign="middle" id="colMaterialPartsCostPrice" class="column">材料パーツ仕入高</td>
+					<td align="center" valign="middle" class="inputbt"><a href="#" onclick="fncDtBlockOpen( 4 ); fncInitSetFocus();"><img onmouseover="RenewOn( this );" onmouseout="RenewOff( this );" src="/img/type01/cmn/seg/renew_off_bt.gif" width="15" height="15" border="0"></a></td>
+					<td valign="middle">証紙、菓子類、ミニブック、印刷物、内箱、カートン等</td>
+					<td align="right" valign="middle" class="subtotals"><input type="text" name="g_sub_all_curSubTotalPrice[4]" disabled class="disTxtBorder"></td>
+					<td align="right" valign="middle" class="subtotals"><input type="text" name="g_sub_all_lngProductQuantity[4]" disabled class="disTxtBorder"></td>
+				</tr>
+				<tr class="colm">
+					<td valign="middle"                                class="colnum">420</td>
+					<td valign="middle" id="colOutsourcingProcessCost" class="column">外注加工費</td>
+					<td align="center" valign="middle" class="inputbt"><a href="#" onclick="fncDtBlockOpen( 5 ); fncInitSetFocus();"><img onmouseover="RenewOn( this );" onmouseout="RenewOff( this );" src="/img/type01/cmn/seg/renew_off_bt.gif" width="15" height="15" border="0"></a></td>
+					<td valign="middle">アッセンブリ代等</td>
+					<td align="right" valign="middle" class="subtotals"><input type="text" name="g_sub_all_curSubTotalPrice[5]" disabled class="disTxtBorder"></td>
+					<td align="right" valign="middle" class="subtotals"><input type="text" name="g_sub_all_lngProductQuantity[5]" disabled class="disTxtBorder"></td>
+				</tr>
+				<tr class="colm">
+					<td valign="middle"                class="colnum">1224</td>
+					<td valign="middle" id="colCharge" class="column">チャージ</td>
+					<td align="center" valign="middle" class="inputbt"><a href="#" onclick="fncDtBlockOpen( 6 ); fncInitSetFocus();"><img onmouseover="RenewOn( this );" onmouseout="RenewOff( this );" src="/img/type01/cmn/seg/renew_off_bt.gif" width="15" height="15" border="0"></a></td>
+					<td valign="middle">関税、通関費用、プレート、インシュアンス等</td>
+					<td align="right" valign="middle" class="subtotals"><input type="text" name="g_sub_all_curSubTotalPrice[6]" disabled class="disTxtBorder"></td>
+					<td align="right" valign="middle" class="subtotals"><input type="text" name="g_sub_all_lngProductQuantity[6]" disabled class="disTxtBorder"></td>
+				</tr>
+				<tr class="colm">
+					<td valign="middle"              class="colnum">1230</td>
+					<td valign="middle" id="colCost" class="column">経費</td>
+					<td align="center" valign="middle" class="inputbt"><a href="#" onclick="fncDtBlockOpen( 7 ); fncInitSetFocus();"><img onmouseover="RenewOn( this );" onmouseout="RenewOff( this );" src="/img/type01/cmn/seg/renew_off_bt.gif" width="15" height="15" border="0"></a></td>
+					<td valign="middle">直接経費、製造経費</td>
+					<td align="right" valign="middle" class="subtotals"><input type="text" name="g_sub_all_curSubTotalPrice[7]" disabled class="disTxtBorder"></td>
+					<td align="right" valign="middle" class="subtotals"><input type="text" name="g_sub_all_lngProductQuantity[7]" disabled class="disTxtBorder"></td>
+				</tr>
+				<tr class="totals" height="22">
+					<td colspan="4" align="right" valign="middle" id="colMemberTotal">部材費合計</td>
+					<td align="right" valign="middle"><input type="text" name="g_TotalMemberCost" disabled class="disTxtBorder"></td>
+					<td align="right" valign="middle"><input type="text" name="g_TotalMemberQuantity" disabled class="disTxtBorder"></td>
+				</tr>
+			</table>
+		</span>
+
+
+
+		<!-- 確認ボタン -->
+		<span id="Confirm1Bt" onclick="fncEstimateSubmit( 'confirm.php', 'confirm', document.HSO.lngWorkflowOrderCode, '_blank' ); return false;"></span>
+		<!-- 仮保存ボタン -->
+		<span id="PreSaveBt" onclick="fncEstimateSubmit( '_%strActionFile%_', 'temporary', document.HSO.lngWorkflowOrderCode, '_self' ); return false;"></span><!-- fncDtRegistRecord(); -->
+
+
+
+		<span id="colWorkflowRoot">承認ルート</span>
+
+		<span id="varWorkflowRoot">
+			<select name="lngWorkflowOrderCode" class="Slt30PO" >
+				_%lngWorkflowOrderCode%_
+			</select>
+		</span>
+
+		<!-- 登録ボタン -->
+		<span id="RegistBt" onclick="fncEstimateSubmit( '_%strActionFile%_', 'regist', document.HSO.lngWorkflowOrderCode, '_self' ); return false;"></span><!-- fncDtRegistRecord(); -->
+
+
+
+		<span id="WFrootBt" onclick="fncOpenWFRoot( document.HSO.lngWorkflowOrderCode ); return false;"></span>
+
+		<span id="WFRootFrame">
+			<iframe id="WFroot" name="WFrootWin" frameborder="0" scrolling="no" src="/po/wf/index.php?strSessionID=_%strSessionID%_"></iframe>
+		</span>
+
+
+		<!-- 明細部の情報をhidden値で吐き出すところ -->
+		<span id="DtHiddenRecord"></span>
+
+		</form>
+	</div>
+
+</p>
+
+
+
+
+
+
+
+<p id="InputB">
+
+
+	<span id="SegCBodys"></span>
+	<span id="SegCHeader"></span>
+	<span id="SegCBottom"></span>
+
+
+	<span id="SegDBodys"></span>
+	<span id="SegDHeader"></span>
+	<span id="SegDBottom"></span>
+
+
+	<div id="detailBlock">
+		<!-- 入力枠 -->
+		<form name="DSO">
+
+			<span id="colDetailStockSubject">仕入科目</span>
+			<span id="colDetailStockItem"   >仕入部品</span>
+			<span id="colDetailAmortized"   >償却対象</span>
+			<span id="colDetailSupplier"    >仕入先</span>
+			<span id="colDetailCurrency"    >通貨</span>
+			<span id="colDetailRate"        >換算レート</span>
+			<span id="colDetailPlanQty"     >計画個数</span>
+			<span id="colDetailPrice"       >単価</span>
+			<span id="colDetailPlanEstimate">計画原価</span>
+			<span id="colDetailInput"       >％入力</span>
+			<span id="colDetailPlanRate"    >計画率</span>
+			<span id="colDetailSubTotal"    >仕入科目小計</span>
+			<span id="colDetailReamrk"      >備考</span>
+
+
+
+			<!-- 仕入科目コード + 仕入科目名 -->
+			<span id="varDetailStockSubject">
+				<input type="text" name="strStockSubjectCodeName" disabled class="disTxt23L">
+			</span>
+			<!-- 仕入部品 -->
+			<span id="varDetailStockItem">
+				<select name="lngStockItemCode" class="Slt16" onChange="fncDtSubTotalPrice();">
+				</select>
+			</span>
+			<!-- 償却対象 -->
+			<span id="varDetailAmortized">
+				<input type="checkbox" name="bytPayOffTargetFlag" class="CheckBox14">
+			</span>
+			<!-- 仕入先コード -->
+			<span id="varDetailSupplierCode">
+				<input style="ime-mode:disabled;" type="text" name="lngCustomerCompanyCode" class="TxtStyle05L"
+						onfocus="chColorOn( this );"
+						onblur ="chColorOff( this ); subLoadMasterCheck( this );"
+						onChange="subLoadMasterText('cnSupplier', this, strCompanyDisplayName, Array(this.value,lngCustomerCompanyCode.value), objDataSourceSetting);"
+				>
+			</span>
+			<!-- 仕入先名 -->
+			<span id="varDetailSupplierName">
+				<input type="text" name="strCompanyDisplayName" disabled class="disTxt46L">
+			</span>
+			<!-- 通貨 -->
+			<span id="varDetailCurrency">
+				<select name="lngMonetaryUnitCode" onchange="fncCheckNumberCurrencySign(this.value);fncDtConversionRate();">
+					<option value="\" selected>日本円</option>
+					<option value="$">USD</option>
+					<option value="HKD">HKD</option>
+				</select>
+			</span>
+			<!-- 換算レート -->
+			<span id="varDetailRate">
+				<input type="text" name="curConversionRate" disabled class="disTxt14R">
+			</span>
+			<!-- 計画個数 -->
+			<span id="varDetailPlanQty">
+				<input style="ime-mode:disabled;" type="text" name="lngProductQuantity" class="Txt23R"
+						onfocus="chColorOn( this );"
+						onblur="chColorOff( this ); fncCheckNumber( this , 0 , false ); fncDtSubTotalPrice();"
+				>
+			</span>
+			<!-- 単価 -->
+			<span id="varDetailPrice">
+				<input style="ime-mode:disabled;" type="text" name="curProductPrice" class="Txt23R"
+						onfocus="chColorOn( this );"
+						onblur="chColorOff( this );fncCheckNumber( this , 4 ); fncDtSubTotalPrice();"
+				>
+
+			</span>
+			<!-- 計画原価 -->
+			<span id="varDetailPlanEstimate">
+				<input type="text" name="curSubTotalPrice" disabled class="disTxt23R">
+			</span>
+			<!-- %入力 -->
+			<span id="varDetailInput">
+				<input type="checkbox" name="bytPercentInputFlag" onclick="fncDtPercentInputFlagChecked();" class="CheckBox14">
+			</span>
+			<!-- 計画率 -->
+			<span id="varDetailPlanRate">
+				<input style="ime-mode:disabled;" type="text" name="curProductRate" disabled class="disTxt10R"
+						onfocus="chColorOn( this );"
+						onblur="chColorOff( this ); fncCheckNumber( this , 2 , false ); fncDtSubTotalPrice();"
+				>％
+			</span>
+			<!-- 仕入科目小計 -->
+			<span id="varDetailSubTotal">
+				<input type="text" name="sub_all_curSubTotalPrice" disabled class="disTxt23R">
+			</span>
+			<!-- 備考 -->
+			<span id="varDetailReamrk">
+				<input type="text" name="strNote" class="Txt100xL"
+						onfocus="chColorOn( this );"
+						onblur ="chColorOff( this );"
+				>
+			</span>
+
+
+
+
+
+			<!-- 行追加ボタン -->
+			<span id="AddRowBt"    onclick="fncDtAddRecord(); return false;"></span>
+			<!-- 行削除ボタン -->
+			<span id="DelRowBt"    onclick="fncDtDelRecord(); return false;"></span>
+			<!-- 行確定ボタン -->
+			<span id="CommitBt"    onclick="fncDtCommitRecord(); return false;"></span>
+			<!-- クリアボタン -->
+			<span id="SegAClearBt" onclick="fncDtClearRecord(); return false;"></span>
+
+
+
+
+			<!-- 日本円で計画原価小計を出すための準備に使用 -->
+			<input type='hidden' name='curSubTotalPriceJP'>
+
+		</form>
+		<!--入力枠終わり-->
+
+
+		<!--明細枠-->
+		<span id="DetailList">
+			<span id="dlinner">
+				<table width="100%" cellpadding="0" cellspacing="1" border="0" bgcolor="#6f8180">
+					<tr class="TrSegs">
+						<td id="dlStockSubject" nowrap>仕入科目</td>
+						<td id="dlStockItem"    nowrap>仕入部品</td>
+						<td id="dlAmortized"    nowrap>償却対象</td>
+						<td id="dlSupplier"     nowrap>仕入先</td>
+						<td id="dlPlanQty"      nowrap>計画個数</td>
+						<td id="dlprice"        nowrap>単価</td>
+						<td id="dlPlanEstimate" nowrap>計画原価</td>
+						<td id="dlRemark"       nowrap>備考</td>
+					</tr>
+				</table>
+			</span>
+		</span>
+		<!--明細枠終わり-->
+
+
+		<!-- 確認ボタン -->
+		<span id="Confirm2Bt" onclick="fncEstimateSubmit( 'confirm.php', 'confirm', document.HSO.lngWorkflowOrderCode, '_blank' ); return false;"></span>
+		<!-- 決定ボタン -->
+		<span id="DecisionBt" onclick="fncHdBlockOpen();
+									   fncSupplierClose();
+									   fncInitSetFocus();
+									   return false;"
+		></span>
+
+
+
+
+
+		<!-- 仕入先ボタン -->
+		<span id="MSWBt08" onclick="fncGetObjectName( window.SUPwin, document.all.lngCustomerCompanyCode, document.all.strCompanyDisplayName );
+									DisplayerM08( '', document.all.Mdata08, window.SUPwin.document.all.strCustomerCode  );
+									ExchangeM08( 0, window.self );fncFocusType( window.SUPwin, 'supplierTop' );
+									return false;"
+		></span>
+	</div>
+
+
+</p>
+
+
+
+
+
+
+
+
+
+<!-- 製品ウィンドウ -->
+<p id="MiFrame03" onclick="Zchange( this );">
+	<iframe id="Mdata03" name="MGwin" frameborder="0" scrolling="no" src="/msw/products/index.html"></iframe>
+
+	<span id="DummyDrag03"
+			onmousedown="pickup03( 'MiFrame03', event );
+						 return false;"
+			onmouseup  ="ShowValue( window.MGwin );
+						 fncMswPositionCheck( document.all.Mdata03, document.all.MiFrame03 );"
+			ondblclick ="fncTitlebar( document.all.Mdata03, document.all.MiFrame03 );"
+	></span>
+
+	<span id="DummyClose03"
+			onclick="DisplayerM03( '', document.all.Mdata03 );
+					 ExchangeM03( 0, window.Pwin );
+					 return false;"
+	></span>
+</p>
+
+<!-- 仕入先ウィンドウ -->
+<p id="MiFrame08" onclick="Zchange( this );">
+	<iframe id="Mdata08" name="SUPwin" frameborder="0" scrolling="no" src="/msw/supplier/index.html"></iframe>
+
+	<span id="DummyDrag08"
+			onmousedown="pickup08( 'MiFrame08', event );
+						 return false;"
+			onmouseup  ="ShowValue( window.SUPwin );
+						 fncMswPositionCheck( document.all.Mdata08, document.all.MiFrame08 );"
+			ondblclick ="fncTitlebar( document.all.Mdata08, document.all.MiFrame08 );"
+	></span>
+
+	<span id="DummyClose08"
+			onclick="DisplayerM08( '', document.all.Mdata08 );
+					 ExchangeM08( 0, window.Pwin );
+					 return false;"
+	></span>
+</p>
+
+
+
+
+
+
+<!-- 入力エラー帯表示 -->
+<span id="ErrorMessageFrame">
+	<iframe id="ErrorMessage" name="errorWin" frameborder="0" scrolling="no" src="/error/error.html"></iframe>
+</span>
+
+<span id="EtoJ" style="visibility:_%strBaseVisibilityName%_;"></span>
+<span id="OverLayer"></span>
+
+
+
+
+
+<!-- エラーマーク表示 -->
+<p id="ErrInputA">
+	<span id="errProductsCode" style="_%strProductCode_Error%_" onmouseover="ShowComment( Comments , '_%strProductCode_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+</p>
+
+<span id="Comments"></span>
+
+
+<!-- 入力者コード -->
+<input type="hidden" name="lngInputUserCode" value="_%lngSelfLoginUserCode%_">
+
+
+
+	<!-- プリロード画面の非表示 -->
+	<script type="text/javascript" language="javascript">
+		if( typeof(parent.Preload) != "undefined" )
+		{
+			parent.Preload.style.visibility = 'hidden';
+		}
+	</script>

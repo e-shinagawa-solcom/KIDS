@@ -1,0 +1,4 @@
+ SELECT COUNT(*),  CASE WHEN COUNT(*) = 1 THEN '指定された仕入科目[433]では通貨を[US$]にする必要があります'   ELSE ''  END as alert WHERE  2 <> (SELECT lngmonetaryunitcode FROM m_monetaryunit mm WHERE mm.strmonetaryunitsign = 'US$')  AND 433 = '433' 
+ SELECT COUNT(*),  CASE WHEN COUNT(*) = 1 THEN '指定された仕入科目[433]では通貨を[US$]にする必要があります'   ELSE ''  END as alert WHERE  2 <> (SELECT lngmonetaryunitcode FROM m_monetaryunit mm WHERE mm.strmonetaryunitsign = 'US$')  AND 433 = '433' 
+id	name1
+0	

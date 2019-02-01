@@ -1,0 +1,301 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html lang="ja">
+<head>
+<title>K.I.D.S.</title>
+<meta http-equiv="content-type" content="text/html; charset=euc-jp">
+
+
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/images.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/list/p/images.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/list/p/initlayoutsearch.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutcommon.js"></script>
+
+
+<script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/query.js"></script>
+<script type="text/vbscript" Language="vbscript" src="/cmn/vbsclass.js"></script>
+<script type="text/vbscript" Language="vbscript" src="/cmn/vbscript.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/lngcheck.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/masterlib.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="/cmn/layout.css">
+<link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
+
+
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutmsw.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="/list/search/p/layout.css">
+<script type="text/javascript" language="javascript" src="/list/search/p/exstr.js"></script>
+<script type="text/javascript" language="javascript" src="/list/search/p/functions.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
+
+</head>
+<body id="Backs" oncontextmenu="return false;" onload="initLayoutSegs( Segs , Vars , Goods , GoodsVars , CheckGoods1 , '' , CheckGoods3 , '' );initLayoutPSearch();fncAutoFocus( document.all.dtmInsertDateFrom );initLayoutMsw();ChgEtoJ( parent.lngLanguageCode );Loading();">
+
+
+<span id="PListSearchObject"></span>
+
+
+<p id="Preload">
+	<iframe id="PreloadFrm" name="PreloadWin" frameborder="0" src="/preload/index.html" onload="fncObjectResize( this , 0 , 0 );"></iframe>
+</p>
+
+
+<OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting" WIDTH="0" HEIGHT="0"></OBJECT>
+<Script for="objDataSourceSetting" event="ondatasetcomplete">subLoadMasterSetting(this.recordset,0);
+</Script>
+
+
+
+<form name="PS" method="post" action="javascript:void(0);">
+<input type="hidden" name="ActionScriptName" value="/list/result/p/index.php">
+<input type="hidden" name="strSessionID" value="_%strSessionID%_">
+
+
+
+<!-- [商品化企画書]カラム -->
+<p id="Goods">
+<span id="CreateDate">作成日</span>
+<span id="ProgressStatus">企画進行状況</span>
+<span id="ReviseDate">改訂日</span>
+</p>
+
+
+
+<!-- DetailSegs      詳細          DetailVars       :                                      -->
+<!-- CreateDate      作成日        CreateDateVars   :  dtmInsertDateFrom / dtmInsertDateTo -->
+<!-- ProgressStatus  企画進行状況  ProgressCodeVars :  lngGoodsPlanProgressName            -->
+<!-- ReviseDate      改訂日        ReviseDateVars   :  dtmRevisionDate                     -->
+
+
+<!-- fncCopyValue( this , document.all.dtmRevisionDateTo ); -->
+
+
+<!-- [商品化企画書]フォーム -->
+<p id="GoodsVars">
+
+<span id="CreateDateVars">
+	FROM&nbsp;<input style="ime-mode:disabled;" class="Txt10L" type="text" name="dtmInsertDateFrom" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate(this);fncCopyValue( this , document.all.dtmInsertDateTo );" tabindex="" maxlength="10">TO&nbsp;<input style="ime-mode:disabled;" class="Txt10L" type="text" name="dtmInsertDateTo" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate(this);" tabindex="" maxlength="10">
+</span>
+
+<span id="ProgressCodeVars">
+	<select class="Slt15" name="lngGoodsPlanProgressCode" tabindex="">
+	_%lngGoodsPlanProgressCode%_
+	</select>
+</span>
+
+<span id="ReviseDateVars">
+	FROM&nbsp;<input style="ime-mode:disabled;" class="Txt10L" type="text" name="dtmRevisionDateFrom" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate(this);fncCopyValue( this , document.all.dtmRevisionDateTo );" tabindex="" maxlength="10">TO&nbsp;<input style="ime-mode:disabled;" class="Txt10L" type="text" name="dtmRevisionDateTo" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate(this);" tabindex="" maxlength="10">
+</span>
+</p>
+
+
+
+
+
+<!-- [商品]カラム -->
+<p id="Segs">
+<span id="SegA01">製品コード</span>
+<span id="SegA05">製品名称(日本語)</span>
+<span id="SegA06">製品名称(英語)</span>
+<span id="InputSegs">入力者</span>
+<span id="SegA03">営業部署</span>
+<span id="SegA04">開発担当者</span>
+</p>
+
+<!--
+<span id="SegB08">顧客</span>
+<span id="SegB09">顧客担当者</span>
+<span id="SegB03">生産工場</span>
+<span id="SegA17">アッセンブリ工場</span>
+<span id="SegB04">納品場所</span>
+-->
+
+<!-- SegA01     製品コード         VarsA01    :  strProductCodeFrom / strProductCodeTo           -->
+<!-- SegA05     製品名称(日本語)   VarsA05    :  strProductName                                  -->
+<!-- SegA06     製品名称(英語)     VarsA06    :  strProductEnglishName                           -->
+<!-- InputSegs  入力者             InputVars  :  lngInputUserCode / strInputUserName             -->
+<!-- SegA03     営業部署           VarsA03    :  lngInChargeGroupCode / strInChargeGroupName     -->
+<!-- SegA04     開発担当者         VarsA04    :  lngInChargeUserCode / strInChargeUserName       -->
+<!-- SegA02     顧客品番           VarsA02    :  strGoodsCode                                    -->
+<!-- SegA07     商品名称           VarsA07    :  strGoodsName                                    -->
+<!-- SegB08     顧客               VarsB08    :  lngCustomerCompanyCode / strCustomerCompanyName -->
+<!-- SegB09     顧客担当者         VarsB09    :  lngCustomerUserCode / strCustomerUserName       -->
+<!-- SegA09     荷姿単位           VarsA09    :                                                  -->
+<!-- SegA08     製品単位           VarsA08    :                                                  -->
+<!-- SegB17     商品形態           VarsB12    :                                                  -->
+<!-- SegA12     内箱(袋)入数       VarsA12    :                                                  -->
+<!-- SegA13     カートン入数       VarsA13    :                                                  -->
+<!-- SegB06     生産予定数         VarsB06    :                                                  -->
+<!-- SegB07     初回納品数         VarsB07    :                                                  -->
+<!-- SegB03     生産工場           VarsB03    :  lngFactoryCode / strFactoryName                 -->
+<!-- SegA17     アッセンブリ工場   VarsA17    :  lngAssemblyFactoryCode / strAssemblyFactoryName -->
+<!-- SegB04     納品場所           VarsB04    :  lngDeliveryPlaceCode / strDeliveryPlaceName     -->
+<!-- SegB05     納期               VarsB05    :                                                  -->
+<!-- SegB02     納価               VarsB02    :                                                  -->
+<!-- SegB01     上代               VarsB01    :                                                  -->
+<!-- SegA11     対象年齢           VarsA11    :                                                  -->
+<!-- SegB11     ロイヤリティ       VarsB11    :                                                  -->
+<!-- SegB16     証紙               VarsB16    :  lngCertificateClassCode                         -->
+<!-- SegB10     版権元             VarsB10    :  lngCopyrightCode                                -->
+<!-- SegB20     版権元備考         VarsB20    :                                                  -->
+<!-- SegB12     版権表示(刻印)     VarsB12    :                                                  -->
+<!-- SegB13     版権元表示(印刷物) VarsB13    :                                                  -->
+<!-- SegA14     製品構成           VarsA14    :                                                  -->
+<!-- SegA15     アッセンブリ内容   VarsA15    :                                                  -->
+<!-- SegB14     仕様詳細           VarsB14    :                                                  -->
+<!-- FixSegs    修正               FixVars    :                                                  -->
+<!-- DeleteSegs 削除               DeleteVars :                                                  -->
+
+
+
+<!-- [商品]フォーム -->
+<p id="Vars">
+<span id="VarsA01">
+	FROM&nbsp;<input style="ime-mode:disabled;" class="Txt10L" type="text" name="strProductCodeFrom" value="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCopyValue( this , document.all.strProductCodeTo );" tabindex="">TO&nbsp;<input style="ime-mode:disabled;" class="Txt10L" type="text" name="strProductCodeTo" value="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="">
+</span>
+<span id="VarsA05">
+	<input class="Txt52L" type="text" name="strProductName" value="" maxlength="80" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this );" tabindex="">
+</span>
+
+<span id="VarsA06">
+	<input class="Txt52L" type="text" name="strProductEnglishName" value="" maxlength="80" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this );" tabindex="" >
+</span>
+
+<span id="InputVars">
+	<input style="ime-mode:disabled;" class="TxtStyle02L" type="text" name="strInputUserDisplayCode" value="" maxlength="3" onfocus="chColorOn(this);" onblur="subLoadMasterCheck(this);chColorOff(this);" tabindex="" onChange="subLoadMasterText('11', this, strInputUserDisplayName, Array(this.value), objDataSourceSetting, 0);">&nbsp;<input class="TxtStyle06L" type="text"  name="strInputUserDisplayName" value="" maxlength="50" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this );" DATASRC="#objInputUserName" DATAFLD="name" tabindex="">
+</span>
+
+<span id="VarsA03">
+	<input style="ime-mode:disabled;" class="TxtStyle02L" type="text" name="strInChargeGroupDisplayCode" value="" maxlength="2" onfocus="chColorOn(this);" onblur="subLoadMasterCheck(this);chColorOff(this);" tabindex="" onChange="subLoadMasterText('cnGroup', this, strInChargeGroupDisplayName, Array(this.value), objDataSourceSetting);">&nbsp;<input class="TxtStyle06L" type="text"  name="strInChargeGroupDisplayName" value="" maxlength="50" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this );" tabindex="" DATASRC="#objInChargeGroupName" DATAFLD="name">
+</span>
+
+<span id="VarsA04">
+	<input style="ime-mode:disabled;" class="TxtStyle02L" type="text" name="strInChargeUserDisplayCode" value="" maxlength="3" onfocus="chColorOn(this);" onblur="subLoadMasterCheck(this);chColorOff(this);" tabindex="" onChange="subLoadMasterText('11', this, strInChargeUserDisplayName, Array(this.value), objDataSourceSetting, 0 );">&nbsp;<input class="TxtStyle06L" type="text"  name="strInChargeUserDisplayName" value="" maxlength="50" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this );fncDefaultTabindex( document.all.dtmInsertDateFrom );" tabindex="" DATASRC="#objInChargeUserName" DATAFLD="name">
+</span>
+</p>
+
+
+
+
+<!--
+<span id="VarsB08">
+	<input class="Txt10L" type="text" name="lngCustomerCompanyCode" value="" maxlength="4" onfocus="setIME( this.name );chColorOn(this);" onblur="chColorOff(this);" tabindex="" onChange="subLoadMasterText('3', this, strCustomerCompanyName, Array(this.value), objDataSourceSetting, 0 );">&nbsp;<input class="TxtStyle06L" type="text" name="strCustomerCompanyName" value="" maxlength="50" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this );" tabindex="" DATASRC="#objCustomerCompanyName" DATAFLD="name">
+</span>
+
+<span id="VarsB09">
+	<input class="Txt10L" type="text" name="lngCustomerUserCode" value="" maxlength="3" onfocus="setIME( this.name );chColorOn(this);" onblur="chColorOff(this);" tabindex="" onChange="subLoadMasterText('11', this, strCustomerUserName, Array(this.value), objDataSourceSetting, 0 );">&nbsp;<input class="TxtStyle06L" type="text" name="strCustomerUserName" value="" maxlength="50" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this );" tabindex="" DATASRC="#" DATAFLD="name">
+</span>
+
+<span id="VarsB03">
+	<input class="Txt10L" type="text" name="lngFactoryCode" value="" maxlength="4" onfocus="setIME( this.name );chColorOn(this);" onblur="chColorOff(this);" tabindex=""  onChange="subLoadMasterText('5', this, strFactoryName, Array(this.value), objDataSourceSetting, 0 );">&nbsp;<input class="TxtStyle06L" type="text"  name="strFactoryName" value="" maxlength="50" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this );" tabindex="" DATASRC="#objFactoryName" DATAFLD="name">
+</span>
+
+<span id="VarsA17">
+	<input class="Txt10L" type="text" name="lngAssemblyFactoryCode" value="" maxlength="4" onfocus="setIME( this.name );chColorOn(this);" onblur="chColorOff(this);" tabindex="" onChange="subLoadMasterText('6', this, strAssemblyFactoryName, Array(this.value), objDataSourceSetting, 0 );">&nbsp;<input class="TxtStyle06L" type="text" name="strAssemblyFactoryName" value="" maxlength="50" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this );" tabindex="" DATASRC="#objAssemblyFactoryName" DATAFLD="name">
+</span>
+
+<span id="VarsB04">
+	<input class="Txt10L" type="text" name="lngDeliveryPlaceCode" value="" maxlength="4" onfocus="setIME( this.name );chColorOn(this);" onblur="chColorOff(this);" tabindex="" onChange="subLoadMasterText('cnLocation', this, strDeliveryPlaceName, Array(this.value), objDataSourceSetting, 0 );">&nbsp;<input class="TxtStyle06L" type="text"  name="strDeliveryPlaceName" value="" maxlength="50" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this );" tabindex=""  DATASRC="#objDeliveryPlaceName" DATAFLD="name">
+</span>
+-->
+
+
+
+
+<span id="SegA0304"></span>
+
+<!--
+<span id="SegB0809"></span>
+-->
+
+
+<!-- 共通サブウィンドウ -->
+
+<!-- START [DEPT & IN CHARGE NAME] BUTTON -->
+<span id="MSWBt02" onclick="window.top.fncGetObjectName( window.top.MDwin , strInChargeGroupDisplayCode , strInChargeGroupDisplayName , strInChargeUserDisplayCode , strInChargeUserDisplayName );window.top.DisplayerM02( '' , window.top.document.all.Mdata02 , window.top.MDwin.document.all.strGroupCode ,  window.top.MDwin.document.all.strUserCode );window.top.ExchangeM02( 0 , window.self );window.top.fncFocusType( window.top.MDwin , 'deptIfrm' );return false;"></span>
+<!-- END [DEPT & IN CHARGE NAME] BUTTON -->
+
+
+<!-- START [INPUT PERSON] BUTTON -->
+<span id="MSWBt09" onclick="window.top.fncGetObjectName( window.top.INPUT2win , strInputUserDisplayCode , strInputUserDisplayName );window.top.DisplayerM09( '' , window.top.document.all.Mdata09 , window.top.INPUT2win.document.all.strInputUserCode );window.top.ExchangeM09( 0 , window.self );window.top.fncFocusType( window.top.INPUT2win , 'inputIfrm' );return false;"></span>
+<!-- END [INPUT PERSON] BUTTON -->
+
+
+
+
+
+
+<!--
+[VENDOR & IN CHARGE NAME] BUTTON
+<span id="MSWBt07" onclick="window.top.fncGetObjectName( window.top.VIwin , lngCustomerCompanyCode , strCustomerCompanyName , lngCustomerUserCode , strCustomerUserName );window.top.DisplayerM07( '' , window.top.document.all.Mdata07 , window.top.VIwin.document.all.strCustomerCode , window.top.VIwin.document.all.strInChargeCode );window.top.ExchangeM07( 0 , window.self );window.top.fncFocusType( window.top.VIwin , 'viIfrm' );return false;"></span>
+
+
+[CREATION FACTORY] BUTTON
+<span id="MSWBt01_2" onclick="window.top.fncGetObjectName( window.top.MVwin_2 , lngFactoryCode , strFactoryName );window.top.DisplayerM01_2( '' , window.top.document.all.Mdata01_2 , window.top.MVwin_2.document.all.strCreationFactoryCode );window.top.ExchangeM01_2( 0 , window.self );window.top.fncFocusType( window.top.MVwin_2 , 'creationIfrm' );return false;"></span>
+
+
+[ASSEMBLY FACTORY] BUTTON
+<span id="MSWBt01_3" onclick="window.top.fncGetObjectName( window.top.MVwin_3 , lngAssemblyFactoryCode , strAssemblyFactoryName );window.top.DisplayerM01_3( '' , window.top.document.all.Mdata01_3 , window.top.MVwin_3.document.all.strFactoryCode );window.top.ExchangeM01_3( 0 , window.self );window.top.fncFocusType( window.top.MVwin_3 , 'assemblyIfrm' );return false;"></span>
+
+
+[LOCATION] BUTTON
+<span id="MSWBt04" onclick="window.top.fncGetObjectName( window.top.MLwin , lngDeliveryPlaceCode , strDeliveryPlaceName );window.top.DisplayerM04( '' , window.top.document.all.Mdata04 , window.top.MLwin.document.all.strLocationCode );window.top.ExchangeM04( 0 , window.self );window.top.fncFocusType( window.top.MLwin , 'locationIfrm' );return false;"></span>
+-->
+
+
+<!-- [商品化企画書]検索チェックボックス -->
+<p id="CheckGoods1">
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="dtmInsertDateConditions" _%dtmInsertDateConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngGoodsPlanProgressCodeConditions" _%lngGoodsPlanProgressCodeConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="dtmRevisionDateConditions" _%dtmRevisionDateConditions%_></span>
+</p>
+
+
+
+
+<!-- [商品]検索チェックボックス -->
+<p id="CheckGoods3">
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="strProductCodeConditions" _%strProductCodeConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="strProductNameConditions" _%strProductNameConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="strProductEnglishNameConditions" _%strProductEnglishNameConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngInputUserCodeConditions" _%lngInputUserCodeConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngInChargeGroupCodeConditions" _%lngInChargeGroupCodeConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngInChargeUserCodeConditions" _%lngInChargeUserCodeConditions%_></span>
+</p>
+
+
+
+<!--
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngCustomerCompanyCodeConditions" _%lngCustomerCompanyCodeConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngCustomerUserCodeConditions" _%lngCustomerUserCodeConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngFactoryCodeConditions" _%lngFactoryCodeConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngAssemblyFactoryCodeConditions" _%lngAssemblyFactoryCodeConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngDeliveryPlaceCodeConditions" _%lngDeliveryPlaceCodeConditions%_></span>
+-->
+
+
+
+
+
+
+<span id="ViewSearch1"></span>
+<span id="ViewSearch2"></span>
+
+
+
+
+
+<!-- 検索チェックボックス全選択用ボタン -->
+<span id="CheckAll1" onclick="fncCheckAll1();"></span>
+
+
+<!-- 終端調整用ダミーレイヤー -->
+<span id="DummySpace"></span>
+
+
+
+
+
+
+</form>
+</body>
+</html>

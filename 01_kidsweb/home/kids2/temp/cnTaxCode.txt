@@ -1,0 +1,4 @@
+ SELECT lngtaxcode, lngtaxcode, MAX(dtmapplystartdate) FROM m_tax WHERE dtmapplystartdate=(SELECT MAX(dtmapplystartdate) FROM m_tax) GROUP BY lngtaxcode UNION SELECT lngtaxcode, lngtaxcode, MAX(dtmapplystartdate) FROM m_tax WHERE dtmapplystartdate <= '2019/01/23' AND dtmapplyenddate >= '2019/01/23' GROUP BY lngtaxcode ORDER BY 3 
+ SELECT lngtaxcode, lngtaxcode, MAX(dtmapplystartdate) FROM m_tax WHERE dtmapplystartdate=(SELECT MAX(dtmapplystartdate) FROM m_tax) GROUP BY lngtaxcode UNION SELECT lngtaxcode, lngtaxcode, MAX(dtmapplystartdate) FROM m_tax WHERE dtmapplystartdate <= '2019/01/23' AND dtmapplyenddate >= '2019/01/23' GROUP BY lngtaxcode ORDER BY 3 
+id	name1	name2
+7	7	2018-04-01

@@ -1,0 +1,151 @@
+
+<config>
+<header1>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/images.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutbase.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/wf/cmn/images.js"></script>
+</header1>
+
+
+<header2>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/wf/search/initlayout.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/type01/cmn/initlayoutmsw.js"></script>
+</header2>
+
+
+<header3>
+<script type="text/javascript" language="javascript" src="/wf/search/functions.js"></script>
+<script type="text/javascript" language="javascript" src="/wf/search/exstr.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="/wf/search/layout.css">
+<script type="text/javascript" language="javascript" src="/wf/cmn/functions.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
+</header3>
+
+
+<bodyonload>
+initLayoutBase();initLayoutWF();initLayoutMsw();GetlngLanguageCode( _%lngLanguageCode%_ );Loading();
+</bodyonload>
+</config>
+
+
+
+<p id="Preload">
+	<iframe id="PreloadFrm" name="PreloadWin" frameborder="0" src="/preload/index.html" onload="fncObjectResize( this , 0 , 0 );"></iframe>
+</p>
+
+
+
+
+<!-- //////////////////////////////////// START MAIN TITLE //////////////////////////////////// -->
+<span id="MainTitle"></span>
+<!-- ///////////////////////////////////// END MAIN TITLE ///////////////////////////////////// -->
+
+
+
+<!-- //////////////////////////////////// START NAVIGATION //////////////////////////////////// -->
+<span id="NaviButton"></span>
+
+
+<p id="Navigations" onmouseout="NavigationOFF( Navigations , NaviButton );">
+<span id="Navi">
+	<iframe id="NaviIfrm" name="NAVIwin" frameborder="0" scrolling="no" src="/navi/index.php?strSessionID=_%strSessionID%_&strNaviCode=wf-13"></iframe>
+</span>
+</p>
+
+
+
+
+<!-- ///////////////////////////////////// END NAVIGATION ///////////////////////////////////// -->
+
+
+<!-- //////////////////////////////////// START INPUT A SEGMENTS //////////////////////////////////// -->
+<p id="InputA">
+
+<!-- START BODYS -->
+<span id="SegABodys"></span>
+<!-- END BODYS -->
+
+<!-- START HEADER -->
+<span id="SegAHeader"></span>
+<!-- END HEADER -->
+
+<!-- START BOTTOM -->
+<span id="SegABottom"></span>
+<!-- END BOTTOM -->
+
+
+<!-- START SEGMENTS -->
+<span id="SegA01">
+	<iframe id="SegAIFrm" name="Pwin" frameborder="0" src="/wf/search/search.php?strSessionID=_%strSessionID%_"></iframe>
+	<!--<iframe id="SegAIFrm" name="Pwin" frameborder="0" src="/wf/search/search.php?strSessionID=_%strSessionID%_&lngSelectFunctionCode=500"></iframe>-->
+</span>
+<!-- END SEGMENTS -->
+
+
+</p>
+<!-- ///////////////////////////////////// END INPUT A SEGMENTS ///////////////////////////////////// -->
+
+
+
+
+
+<span id="schSchButton" onclick="GoResult( window.Pwin.PS , '/result/index.html' , '/result/ifrm.html' , 'ResultIframe' , 'YES' );setCookie( 'WorkflowSearch', window.Pwin.PS );"></span>
+<span id="schClrButton"></span>
+
+
+
+
+
+
+
+<!-- ////////// START E TO J ////////// -->
+<span id="EtoJ"></span>
+<!-- /////////// END E TO J /////////// -->
+
+
+
+
+
+
+
+<!-- START [APPLICANT] -->
+<p id="MiFrame05" onclick="Zchange(this);">
+<iframe id="Mdata05" name="APPwin" frameborder="0" scrolling="no" src="/msw/applicant/index.html"></iframe>
+<span id="DummyDrag05" onmousedown="pickup05('MiFrame05',event);return false;" onmouseup="ShowValue( window.APPwin );" ondblclick="fncTitlebar( document.all.Mdata05 );"></span>
+<span id="DummyClose05" onclick="DisplayerM05( '' , document.all.Mdata05 );ExchangeM05( 0 , window.Pwin );return false;"></span>
+</p>
+<!-- END [APPLICANT] -->
+
+<!-- START [INPUT] -->
+<p id="MiFrame06" onclick="Zchange(this);">
+<iframe id="Mdata06" name="INPUTwin" frameborder="0" scrolling="no" src="/msw/wfinput/index.html"></iframe>
+<span id="DummyDrag06" onmousedown="pickup06('MiFrame06',event);return false;" onmouseup="ShowValue( window.INPUTwin );" ondblclick="fncTitlebar( document.all.Mdata06 );"></span>
+<span id="DummyClose06" onclick="DisplayerM06( '' , document.all.Mdata06 );ExchangeM06( 0 , window.Pwin );return false;"></span>
+</p>
+<!-- END [INPUT] -->
+
+
+
+
+
+
+<!-- DUMMY MSW BUTTON -->
+<!-- START [APPLICANT] BUTTON -->
+<span id="MSWBt05" style="visibility:hidden;"></span>
+<!-- END [APPLICANT] BUTTON -->
+
+<!-- START [INPUT] BUTTON -->
+<span id="MSWBt06" style="visibility:hidden;"></span>
+<!-- END [INPUT] BUTTON -->
+<!-- DUMMY MSW BUTTON -->
+
+
+
+<!-- ERROR MESSAGE -->
+<span id="ErrorMessageFrame">
+	<iframe id="ErrorMessage" name="errorWin" frameborder="0" scrolling="no" src="/error/error.html"></iframe>
+</span>
+
+
+
+<span id="OverLayer"></span>

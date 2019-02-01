@@ -1,0 +1,194 @@
+<!--
+
+
+.strYYYYMM
+{
+	font-family : Arial   ;
+	font-size   : 14px    ;
+	font-weight : bold    ;
+	color       : #ffffff ;
+	text-align  : center  ;
+	background  : #4c75ba ;
+	width       : 355px   ;
+	height      : 18px    ; 
+}
+
+
+#Column0
+{
+	font-family : Arial , £Í£Ó¡¡£Ð¥´¥·¥Ã¥¯ ;
+	font-size   : 12px    ;
+	font-weight : bold    ;
+	color       : #ffffff ;
+	text-align  : center  ;
+	background  : #ea8555 ;
+	width       : 49px    ;
+	height      : 18px    ; 
+}
+
+#Column1
+{
+	font-family : Arial , £Í£Ó¡¡£Ð¥´¥·¥Ã¥¯ ;
+	font-size   : 12px    ;
+	font-weight : bold    ;
+	color       : #ffffff ;
+	text-align  : center  ;
+	background  : #666666 ;
+	width       : 49px    ;
+	height      : 18px    ; 
+}
+
+#Column2
+{
+	font-family : Arial , £Í£Ó¡¡£Ð¥´¥·¥Ã¥¯ ;
+	font-size   : 12px    ;
+	font-weight : bold    ;
+	color       : #ffffff ;
+	text-align  : center  ;
+	background  : #666666 ;
+	width       : 49px    ;
+	height      : 18px    ; 
+}
+
+#Column3
+{
+	font-family : Arial , £Í£Ó¡¡£Ð¥´¥·¥Ã¥¯ ;
+	font-size   : 12px    ;
+	font-weight : bold    ;
+	color       : #ffffff ;
+	text-align  : center  ;
+	background  : #666666 ;
+	width       : 49px    ;
+	height      : 18px    ; 
+}
+
+#Column4
+{
+	font-family : Arial , £Í£Ó¡¡£Ð¥´¥·¥Ã¥¯ ;
+	font-size   : 12px    ;
+	font-weight : bold    ;
+	color       : #ffffff ;
+	text-align  : center  ;
+	background  : #666666 ;
+	width       : 49px    ;
+	height      : 18px    ; 
+}
+
+#Column5
+{
+	font-family : Arial , £Í£Ó¡¡£Ð¥´¥·¥Ã¥¯ ;
+	font-size   : 12px    ;
+	font-weight : bold    ;
+	color       : #ffffff ;
+	text-align  : center  ;
+	background  : #666666 ;
+	width       : 49px    ;
+	height      : 18px    ; 
+}
+
+#Column6
+{
+	font-family : Arial , £Í£Ó¡¡£Ð¥´¥·¥Ã¥¯ ;
+	font-size   : 12px    ;
+	font-weight : bold    ;
+	color       : #ffffff ;
+	text-align  : center  ;
+	background  : #6f80fb ; /* 8694fb */
+	width       : 49px    ;
+	height      : 18px    ; 
+}
+
+.strDateOther
+{
+	font-family : Arial   ;
+	font-size   : 13px    ;
+	font-weight : normal  ;
+	color       : #666666 ;
+	text-align  : left    ;
+	background  : #cccccc ;
+	width       : 49px    ;
+	height      : 18px    ;
+	cursor      : pointer ;
+}
+
+.strDateToday
+{
+	font-family : Arial   ;
+	font-size   : 13px    ;
+	font-weight : normal  ;
+	color       : #666666 ;
+	text-align  : left    ;
+	background  : #ff9999 ;
+	width       : 49px    ;
+	height      : 18px    ;
+	cursor      : pointer ;
+}
+
+
+.strDate
+{
+	font-family : Arial   ;
+	font-size   : 13px    ;
+	font-weight : normal  ;
+	color       : #666666 ;
+	text-align  : left    ;
+	background  : #ffffff ;
+	width       : 49px    ;
+	height      : 18px    ; 
+	cursor      : pointer ;
+}
+
+
+#DateDisplay
+{
+	position : absolute ;
+	left     : 0px      ;
+	top      : 37px     ;
+}
+
+#Borders
+{
+	position     : absolute ;
+	left         : 0px      ;
+	top          : 0px      ;
+	width        : 355px    ;
+	height       : 245px    ;
+	border-width : 1px      ;
+	border-color : #5294c6  ;
+	border-style : solid    ;
+}
+
+#UnderBorders
+{
+	position   : absolute    ;
+	left       : 2px         ;
+	top        : 192px       ;
+	background : transparent ;
+}
+
+
+
+#CalDrag
+{
+	position         : absolute    ;
+	left             : 0px         ;
+	top              : 0px         ;
+	border-width     : 0px         ;
+	border-style     : none        ;
+	background-color : transparent ;
+}
+
+#MswCloseBt
+{
+	position         : absolute    ;
+	left             : 334px       ;
+	top              : 0px         ;
+	border-width     : 0px         ;
+	border-style     : none        ;
+	background-color : transparent ;
+}
+
+
+
+
+-->

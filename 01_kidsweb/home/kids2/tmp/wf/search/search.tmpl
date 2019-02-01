@@ -1,0 +1,193 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html lang="ja">
+<head>
+<title>K.I.D.S.</title>
+<meta http-equiv="content-type" content="text/html; charset=euc-jp">
+
+
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/images.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/wf/search/initlayoutsearch.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutcommon.js"></script>
+
+
+<script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/query.js"></script>
+<script type="text/vbscript" Language="vbscript" src="/cmn/vbsclass.js"></script>
+<script type="text/vbscript" Language="vbscript" src="/cmn/vbscript.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/lngcheck.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/masterlib.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="/cmn/layout.css">
+<link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
+
+
+<script type="text/javascript" language="javascript" src="/layout/type01/cmn/initlayoutmsw.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="/wf/search_ifrm/layout.css">
+<script type="text/javascript" language="javascript" src="/wf/search_ifrm/exstr.js"></script>
+<script type="text/javascript" language="javascript" src="/wf/search_ifrm/functions.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
+
+
+
+
+</head>
+<body id="Backs" oncontextmenu="return true;" onload="initLayoutSegs( Segs , Vars , CheckGoods1 , CheckGoods2 );initLayoutWFSearch();initLayoutMsw();fncAutoFocus( document.all.strProductCodeFrom );GetIfrmlngLanguageCode();">
+
+
+<span id="WFSearchObject"</span>
+
+
+<OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting" WIDTH="0" HEIGHT="0"></OBJECT>
+<Script for="objDataSourceSetting" event="ondatasetcomplete">subLoadMasterSetting(this.recordset,0);
+</Script>
+<OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting2" WIDTH="0" HEIGHT="0"></OBJECT>
+<Script for="objDataSourceSetting2" event="ondatasetcomplete">subLoadMasterSetting(this.recordset,1);
+</Script>
+
+
+<form action="javascript:void(0);" name="PS" method="post">
+<!--form name="PS"-->
+<input type="hidden" name="ActionScriptName" value="/wf/result/index.php">
+_%strHiddenForm%_
+
+<p id="Segs">
+<span id="SegA01">状態</span>
+
+<span id="SegAPCode">製品コード</span>
+
+<span id="SegA02">案件申請者</span>
+<span id="SegA03">案件入力者</span>
+
+
+<span id="SegA04">申請日</span>
+<span id="SegA05">完了日</span>
+
+<span id="SegA06">処理待ち承認者</span>
+
+<span id="SegA07">検索結果表示件数</span>
+<span id="SegA08">種別</span>
+</p>
+
+
+
+<p id="Vars">
+<span id="VarsA01">
+<!--
+	<select class="Slt15" name="lngWorkflowStatusCode" tabindex="">
+-->
+		_%workflowStatusCodeMenu%_
+<!--
+	</select>
+-->
+</span>
+
+<span id="VarsAPCode">
+	FROM&nbsp;<input style="ime-mode:disabled;" class="Txt10L" type="text" name="strProductCodeFrom" value="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCopyValue( this , document.all.strProductCodeTo );" tabindex="">TO&nbsp;<input style="ime-mode:disabled;" class="Txt10L" type="text" name="strProductCodeTo" value="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="">
+</span>
+
+<span id="VarsA02">
+	<input class="TxtStyle05L" type="text" name="lngApplicantUserDisplayCode" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);" onChange="subLoadMasterText('11', this, strApplicantName, Array(this.value), objDataSourceSetting, 0);">&nbsp;<input class="TxtStyle06L" type="text" name="strApplicantName" maxlength="25" onfocus="chColorOn(this);" onblur="chColorOff(this);" readonly>
+	<!--input class="TxtStyle05L" type="text" name="lngApplicantUserDisplayCode" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);" onChange="subLoadMasterText('11', this, strApplicantName, Array(this.value), objDataSourceSetting, 0);subLoadMasterText('12', this, lngApplicantUserCode, Array(this.value), objDataSourceSetting2, 1);">&nbsp;<input class="TxtStyle06L" type="text" name="strApplicantName" maxlength="25" onfocus="chColorOn(this);" onblur="chColorOff(this);" readonly-->
+</span>
+
+<span id="VarsA03">
+	<input class="TxtStyle05L" type="text" name="lngInputUserDisplayCode" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);" onChange="subLoadMasterText('11', this, strInputName, Array(this.value), objDataSourceSetting, 0);">&nbsp;<input class="TxtStyle06L" type="text" name="strInputName" maxlength="25" onfocus="chColorOn(this);" onblur="chColorOff(this);" readonly>
+	<!--input class="TxtStyle05L" type="text" name="lngInputUserDisplayCode" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);" onChange="subLoadMasterText('11', this, strInputName, Array(this.value), objDataSourceSetting, 0);subLoadMasterText('12', this, lngInputUserCode, Array(this.value), objDataSourceSetting2, 1);">&nbsp;<input class="TxtStyle06L" type="text" name="strInputName" maxlength="25" onfocus="chColorOn(this);" onblur="chColorOff(this);" readonly-->
+</span>
+
+<span id="VarsA04">
+	FROM&nbsp;<input style="ime-mode:disabled;" class="TxtStyle05L" type="text" name="dtmStartDateFrom" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate(this);fncCopyValue( this , document.all.dtmStartDateTo );">TO&nbsp;<input style="ime-mode:disabled;" class="TxtStyle05L" type="text" name="dtmStartDateTo" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate(this);">
+</span>
+
+<span id="VarsA05">
+	FROM&nbsp;<input style="ime-mode:disabled;" class="TxtStyle05L" type="text" name="dtmEndDateFrom" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate(this);fncCopyValue( this , document.all.dtmEndDateTo );">TO&nbsp;<input style="ime-mode:disabled;" class="TxtStyle05L" type="text" name="dtmEndDateTo" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate(this);">
+</span>
+
+<span id="VarsA06">
+	<select class="Slt15" name="lngInChargeCode" tabindex="">
+		_%inChargeCodeMenu%_
+	</select>
+</span>
+
+<span id="VarsA07">
+	<select class="Slt15" name="lngDefaultNumBerofList" tabindex="" onblur="fncDefaultTabindex( document.all.lngWorkflowStatusCode );">
+		<option value="10">10</option>
+		<option value="15">15</option>
+		<option value="30">30</option>
+		<option value="50">50</option>
+		<option value="100">100</option>
+		<option value="0">全件</option>
+	</select>
+</span>
+
+<span id="VarsA08">
+	<select class="Slt15" name="lngSelectFunctionCode" tabindex="">
+		_%selectFunctionCodeMenu%_
+	</select>
+</span>
+</p>
+<!-- //////////////////////////////////// END INPUT A SEGMENTS //////////////////////////////////// -->
+
+
+
+
+<!-- START [APPLICANT] BUTTON -->
+<span id="MSWBt05" onclick="window.top.fncGetObjectName( window.top.APPwin , lngApplicantUserDisplayCode ,strApplicantName );window.top.DisplayerM05( '' , window.top.document.all.Mdata05 , window.top.APPwin.document.all.strUserCode  );window.top.ExchangeM05( 0 , window.self );window.top.fncFocusType( window.top.APPwin , 'applicantIfrm' );return false;"></span>
+<!-- END [APPLICANT] BUTTON -->
+
+<!-- START [WFINPUT] BUTTON -->
+<span id="MSWBt06" onclick="window.top.fncGetObjectName( window.top.INPUTwin , lngInputUserDisplayCode ,strInputName );window.top.DisplayerM06( '' , window.top.document.all.Mdata06 , window.top.INPUTwin.document.all.strUserCode  );window.top.ExchangeM06( 0 , window.self );window.top.fncFocusType( window.top.INPUTwin , 'wfinputIfrm' );return false;"></span>
+<!-- END [WFINPUT] BUTTON -->
+
+
+
+
+<p id="CheckGoods1">
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngWorkflowStatusCodeConditions" _%lngWorkflowStatusCodeConditions%_></span>
+
+
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="strProductCodeConditions" _%strProductCodeConditions%_></span>
+
+
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngApplicantUserDisplayCodeConditions" _%lngApplicantUserDisplayCodeConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngInputUserDisplayCodeConditions" _%lngInputUserDisplayCodeConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="dtmStartDateConditions" _%dtmStartDateConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="dtmEndDateConditions" _%dtmEndDateConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngInChargeCodeConditions" _%lngInChargeCodeConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="" disabled></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngSelectFunctionCodeConditions" _%lngSelectFunctionCodeConditions%_></span>
+</p>
+
+
+<p id="CheckGoods2">
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngWorkflowStatusCodeVisible" _%lngWorkflowStatusCodeVisible%_></span>
+
+
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="strProductCodeVisible" checked disabled></span>
+
+
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngApplicantUserDisplayCodeVisible" _%lngApplicantUserDisplayCodeVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngInputUserDisplayCodeVisible" _%lngInputUserDisplayCodeVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="dtmStartDateVisible" _%dtmStartDateVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="dtmEndDateVisible" _%dtmEndDateVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngInChargeCodeVisible" _%lngInChargeCodeVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngSelectFunctionCodeVisible" _%lngSelectFunctionCodeVisible%_></span>
+</p>
+
+<!--
+<input type="text" name="lngApplicantUserCode" value="" style="visibility:hidden;">
+<input type="text" name="lngInputUserCode" value="" style="visibility:hidden;">
+-->
+
+
+<span id="ViewSearch1"></span>
+
+<span id="CheckAll1" onclick="fncCheckAll1();"></span>
+<span id="CheckAll2" onclick="fncCheckAll2();"></span>
+
+
+
+
+</form>
+</body>
+</html>

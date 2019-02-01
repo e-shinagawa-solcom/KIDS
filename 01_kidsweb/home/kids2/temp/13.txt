@@ -1,0 +1,3 @@
+SELECT u.struserdisplaycode,u.struserdisplayname FROM m_user u, m_company c WHERE u.lngcompanycode = c.lngcompanycode AND u.bytuserdisplayflag = true AND u.struserdisplaycode = '036'  
+SELECT u.struserdisplaycode,u.struserdisplayname FROM m_user u, m_company c WHERE u.lngcompanycode = c.lngcompanycode AND u.bytuserdisplayflag = true AND u.struserdisplaycode = '036'  
+id

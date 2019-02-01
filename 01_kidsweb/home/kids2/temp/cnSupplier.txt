@@ -1,0 +1,4 @@
+ SELECT mc.lngcompanycode, mc.strcompanydisplayname , lngcountrycode FROM m_company mc, m_attribute ma, m_attributerelation mar WHERE mc.lngcompanycode = mar.lngcompanycode AND mar.lngattributecode = ma.lngattributecode AND mar.lngattributecode = 3 AND mc.bytcompanydisplayflag = true AND mc.strcompanydisplaycode = '0345' ORDER BY mc.strcompanydisplaycode 
+ SELECT mc.lngcompanycode, mc.strcompanydisplayname , lngcountrycode FROM m_company mc, m_attribute ma, m_attributerelation mar WHERE mc.lngcompanycode = mar.lngcompanycode AND mar.lngattributecode = ma.lngattributecode AND mar.lngattributecode = 3 AND mc.bytcompanydisplayflag = true AND mc.strcompanydisplaycode = '0345' ORDER BY mc.strcompanydisplaycode 
+id	name1	name2
+210	イノベイティブトイ事業部	81

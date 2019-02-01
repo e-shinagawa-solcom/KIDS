@@ -1,0 +1,124 @@
+
+<config>
+<header1>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/images.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutbase.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutcommon.js"></script>
+</header1>
+
+
+<header2>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/uc/cmn/images.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/uc/search/initlayout.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutquery.js"></script>
+</header2>
+
+
+<header3>
+<link rel="stylesheet" type="text/css" media="screen" href="layout.css">
+<script type="text/javascript" language="javascript" src="exstr.js"></script>
+<script type="text/javascript" language="javascript" src="functions.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
+</header3>
+
+
+<bodyonload>
+initLayoutBase();initLayoutUC();GetlngLanguageCode( _%lngLanguageCode%_ );Loading();
+</bodyonload>
+</config>
+
+
+
+<p id="Preload">
+	<iframe id="PreloadFrm" name="PreloadWin" frameborder="0" src="/preload/index.html" onload="fncObjectResize( this , 0 , 0 );"></iframe>
+</p>
+
+<form action="" name="">
+
+
+
+
+
+<!-- ////////////////////////////////// START MAIN TITLE ////////////////////////////////// -->
+<span id="MainTitle"></span>
+<!-- /////////////////////////////////// END MAIN TITLE /////////////////////////////////// -->
+
+
+
+
+
+
+
+
+
+<!-- /////////////////////////////////// START NAVIGAION /////////////////////////////////// -->
+<span id="NaviButton"></span>
+
+<p id="Navigations" onmouseout="NavigationOFF( Navigations , NaviButton );">
+<span id="Navi">
+	<iframe id="NaviIfrm" name="NAVIwin" frameborder="0" scrolling="no" src="/navi/index.php?strSessionID=_%strSessionID%_&strNaviCode=uc-113"></iframe>
+</span>
+</p>
+<!-- //////////////////////////////////// END NAVIGAION //////////////////////////////////// -->
+
+
+
+
+
+
+
+<!-- /////////////////////////////////// START INPUT A SEGMENTS /////////////////////////////////// -->
+<p id="InputA">
+
+
+<!-- START BODYS -->
+<span id="SegABodys"></span>
+<!-- END BODYS -->
+
+<!-- START HEADER -->
+<span id="SegAHeader"></span>
+<!-- END HEADER -->
+
+<!-- START BOTTOM -->
+<span id="SegABottom"></span>
+<!-- END BOTTOM -->
+
+
+
+<span id="SegA01">
+	<iframe id="SegAIFrm" name="Pwin" frameborder="0" src="_%Pwin%_"></iframe>
+</span>
+
+
+
+</p>
+<!-- //////////////////////////////////// END INPUT A SEGMENTS //////////////////////////////////// -->
+
+
+
+<span id="schSchButton" onclick="GoResult( window.Pwin.PS , '/result/index.html' , '/result/ifrm.html' , 'ResultIframe' , 'YES' );setCookie( 'UserSearch', window.Pwin.PS );"></span>
+<span id="schClrButton" onclick="fncClearIfrm( Pwin , Pwin.PS );CheckResetCnt();"></span>
+
+
+
+
+
+
+
+<!-- /////////////////////////////////// START E TO J /////////////////////////////////// -->
+<span id="EtoJ"></span>
+<!-- //////////////////////////////////// END E TO J //////////////////////////////////// -->
+
+
+
+</form>
+
+
+<!-- ERROR MESSAGE -->
+<span id="ErrorMessageFrame">
+	<iframe id="ErrorMessage" name="errorWin" frameborder="0" scrolling="no" src="/error/error.html"></iframe>
+</span>
+
+
+
+<span id="OverLayer"></span>

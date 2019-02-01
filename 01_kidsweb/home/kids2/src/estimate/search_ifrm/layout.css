@@ -1,0 +1,784 @@
+
+#WFStatus
+{
+	font-weight  : bold ;
+	position     : absolute ;
+	left         : 10px ;
+	top          : 226px ;
+	width        : 157px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 8px 0px 0px 8px ;
+}
+#varWFStatus
+{
+	position     : absolute ;
+	left         : 129px ;
+	top          : 70px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 3px 8px 0px 8px ;
+}
+
+
+
+#Backs
+{
+	background : #d6d0b1 ;
+}
+
+
+#DummySpace
+{
+	position     : absolute ;
+	left         : 0px ;
+	top          : 856px ;
+	width        : 10px ;
+	height       : 20px ;
+	border-width : 0px ;
+	border-style : none ;
+	background   : transparent ; /* transparent */
+}
+
+
+
+#CheckAll1
+{
+	position     : absolute ;
+	top          : 2px ;
+	left         : 16px ;
+	text-align   : center ;
+	border-width : 0px ;
+	border-style : none ;
+	padding      : 3px 0px 0px 8px ;
+}
+
+#CheckAll2
+{
+	position     : absolute ;
+	top          : 2px ;
+	left         : 65px ;
+	text-align   : center ;
+	border-width : 0px ;
+	border-style : none ;
+	padding      : 3px 0px 0px 8px ;
+}
+
+#ViewSearch1
+{
+	position     : absolute ;
+	top          : 23px ;
+	left         : 1px ;
+	text-align   : center ;
+	border-width : 0px ;
+	border-style : none ;
+	padding      : 3px 0px 0px 8px ;
+}
+
+#ViewSearch2
+{
+	position     : absolute ;
+	top          : 175px ;
+	left         : 1px ;
+	text-align   : center ;
+	border-width : 0px ;
+	border-style : none ;
+	padding      : 3px 0px 0px 8px ;
+}
+
+
+#Checks
+{
+	position     : absolute ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 3px 0px 0px 4px ;
+}
+
+.CheckBoxStyle
+{
+	width        : 40px ;
+	border-width : 0px ;
+	border-style : none ;
+	background   : transparent ;
+}
+
+
+
+#DeleteSegs
+{
+	font-weight  : bold ;
+	position     : absolute ;
+	left         : 10px ;
+	top          : 405px ;
+	width        : 160px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 8px 0px 0px 8px ;
+}
+#DeleteVars
+{
+	position     : absolute ;
+	left         : 129px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 3px 0px 0px 8px ;
+}
+
+
+#FixSegs
+{
+	font-weight  : bold ;
+	position     : absolute ;
+	left         : 10px ;
+	top          : 405px ;
+	width        : 160px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 8px 0px 0px 8px ;
+}
+#FixVars
+{
+	position     : absolute ;
+	left         : 129px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 3px 0px 0px 8px ;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/*---------------------------------------------------------------------------*/
+#Segs
+{ 
+	position     : absolute ;
+	z-index      : 0 ;
+	visibility   : visible ;
+	border-width : 0px ;
+	border-style : none ;
+	background   : transparent ;
+}
+
+#col00
+{
+	font-weight  : bold ;
+	position     : absolute ;
+	left         : 10px ;
+	top          : 140px ;
+	width        : 157px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 8px 0px 0px 8px ;
+}
+
+#col01
+{
+	font-weight  : bold ;
+	position     : absolute ;
+	left         : 10px ;
+	top          : 140px ;
+	width        : 157px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 8px 0px 0px 8px ;
+}
+
+#col02
+{
+	font-weight  : bold ;
+	position     : absolute ;
+	left         : 10px ;
+	top          : 140px ;
+	width        : 157px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 8px 0px 0px 8px ;
+}
+
+#col03
+{
+	font-weight  : bold ;
+	position     : absolute ;
+	left         : 10px ;
+	top          : 140px ;
+	width        : 157px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 8px 0px 0px 8px ;
+}
+
+#col04
+{
+	font-weight  : bold ;
+	position     : absolute ;
+	left         : 10px ;
+	top          : 140px ;
+	width        : 157px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 8px 0px 0px 8px ;
+}
+
+#col0304
+{
+	position     : absolute ;
+	left         : 649px ;
+	top          : 174px ;
+	width        : 33 ;
+	height       : 58px ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #798787 ;
+	background   : #e8f0f1 ;
+}
+
+#col05
+{
+	font-weight  : bold ;
+	position     : absolute ;
+	left         : 10px ;
+	top          : 140px ;
+	width        : 157px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 8px 0px 0px 8px ;
+}
+
+#col06
+{
+	font-weight  : bold ;
+	position     : absolute ;
+	left         : 10px ;
+	top          : 140px ;
+	width        : 157px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 8px 0px 0px 8px ;
+}
+
+#col07
+{
+	font-weight  : bold ;
+	position     : absolute ;
+	left         : 10px ;
+	top          : 140px ;
+	width        : 157px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 8px 0px 0px 8px ;
+}
+
+#col08
+{
+	font-weight  : bold ;
+	position     : absolute ;
+	left         : 10px ;
+	top          : 140px ;
+	width        : 157px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 8px 0px 0px 8px ;
+}
+
+#col09
+{
+	font-weight  : bold ;
+	position     : absolute ;
+	left         : 10px ;
+	top          : 140px ;
+	width        : 157px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 8px 0px 0px 8px ;
+}
+
+#col10
+{
+	font-weight  : bold ;
+	position     : absolute ;
+	left         : 10px ;
+	top          : 140px ;
+	width        : 157px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 8px 0px 0px 8px ;
+}
+
+#col11
+{
+	font-weight  : bold ;
+	position     : absolute ;
+	left         : 10px ;
+	top          : 140px ;
+	width        : 157px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 8px 0px 0px 8px ;
+}
+
+#col12
+{
+	font-weight  : bold ;
+	position     : absolute ;
+	left         : 10px ;
+	top          : 140px ;
+	width        : 157px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 8px 0px 0px 8px ;
+}
+
+#col13
+{
+	font-weight  : bold ;
+	position     : absolute ;
+	left         : 10px ;
+	top          : 140px ;
+	width        : 157px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 8px 0px 0px 8px ;
+}
+
+#col14
+{
+	font-weight  : bold ;
+	position     : absolute ;
+	left         : 10px ;
+	top          : 140px ;
+	width        : 157px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 8px 0px 0px 8px ;
+}
+
+#col15
+{
+	font-weight  : bold ;
+	position     : absolute ;
+	left         : 10px ;
+	top          : 140px ;
+	width        : 157px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 8px 0px 0px 8px ;
+}
+
+#col16
+{
+	font-weight  : bold ;
+	position     : absolute ;
+	left         : 10px ;
+	top          : 140px ;
+	width        : 157px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 8px 0px 0px 8px ;
+}
+
+#col17
+{
+	font-weight  : bold ;
+	position     : absolute ;
+	left         : 10px ;
+	top          : 140px ;
+	width        : 157px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 8px 0px 0px 8px ;
+}
+
+#col18
+{
+	font-weight  : bold ;
+	position     : absolute ;
+	left         : 10px ;
+	top          : 140px ;
+	width        : 157px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 8px 0px 0px 8px ;
+}
+
+#col19
+{
+	font-weight  : bold ;
+	position     : absolute ;
+	left         : 10px ;
+	top          : 140px ;
+	width        : 157px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 8px 0px 0px 8px ;
+}
+
+#col20
+{
+	font-weight  : bold ;
+	position     : absolute ;
+	left         : 10px ;
+	top          : 140px ;
+	width        : 157px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 8px 0px 0px 8px ;
+}
+
+#col21
+{
+	font-weight  : bold ;
+	position     : absolute ;
+	left         : 10px ;
+	top          : 140px ;
+	width        : 157px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 8px 0px 0px 8px ;
+}
+
+#col22
+{
+	font-weight  : bold ;
+	position     : absolute ;
+	left         : 10px ;
+	top          : 140px ;
+	width        : 157px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 8px 0px 0px 8px ;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*---------------------------------------------------------------------------*/
+#var00
+{
+	position     : absolute ;
+	left         : 166px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 3px 0px 0px 8px ;
+}
+
+#var01
+{
+	position     : absolute ;
+	font-family  : £Í£Ó £Ð¥´¥·¥Ã¥¯, Osaka ;
+	font-style   : normal ;
+	font-weight  : normal ;
+	font-size    : 12px;
+	line-height  : 12px ;
+	left         : 166px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 3px 0px 0px 8px ;
+}
+
+#var02
+{
+	position     : absolute ;
+	left         : 166px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 3px 0px 0px 8px ;
+}
+
+#var03
+{
+	position     : absolute ;
+	left         : 166px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 3px 0px 0px 8px ;
+}
+
+#var04
+{
+	position     : absolute ;
+	left         : 166px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 3px 0px 0px 8px ;
+}
+
+#var05
+{
+	position     : absolute ;
+	left         : 166px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 3px 32px 0px 8px ;
+}
+
+#var06
+{
+	position     : absolute ;
+	font-family  : £Í£Ó £Ð¥´¥·¥Ã¥¯, Osaka ;
+	font-style   : normal ;
+	font-weight  : normal ;
+	font-size    : 12px;
+	line-height  : 12px ;
+	left         : 166px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 3px 0px 0px 8px ;
+}
+
+#var07
+{
+	position     : absolute ;
+	font-family  : £Í£Ó £Ð¥´¥·¥Ã¥¯, Osaka ;
+	font-style   : normal ;
+	font-weight  : normal ;
+	font-size    : 12px;
+	line-height  : 12px ;
+	left         : 166px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 3px 0px 0px 8px ;
+}
+
+#var08
+{
+	position     : absolute ;
+	left         : 166px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 3px 0px 0px 8px ;
+}
+
+#var09
+{
+	position     : absolute ;
+	left         : 166px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 3px 0px 0px 8px ;
+}
+
+#var10
+{
+	position     : absolute ;
+	left         : 166px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 3px 0px 0px 8px ;
+}
+
+#var11
+{
+	position     : absolute ;
+	left         : 166px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 3px 0px 0px 8px ;
+}
+
+#var12
+{
+	position     : absolute ;
+	left         : 166px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 3px 0px 0px 8px ;
+}
+
+#var13
+{
+	position     : absolute ;
+	left         : 166px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 3px 0px 0px 8px ;
+}
+
+#var14
+{
+	position     : absolute ;
+	left         : 166px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 3px 0px 0px 8px ;
+}
+
+#var15
+{
+	position     : absolute ;
+	left         : 166px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 3px 0px 0px 8px ;
+}
+
+#var16
+{
+	position     : absolute ;
+	left         : 166px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 3px 0px 0px 8px ;
+}
+
+#var17
+{
+	position     : absolute ;
+	left         : 166px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 3px 0px 0px 8px ;
+}
+
+#var18
+{
+	position     : absolute ;
+	left         : 166px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 3px 0px 0px 8px ;
+}
+
+#var19
+{
+	position     : absolute ;
+	left         : 166px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 3px 0px 0px 8px ;
+}
+
+#var20
+{
+	position     : absolute ;
+	left         : 166px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 3px 0px 0px 8px ;
+}
+
+#var21
+{
+	position     : absolute ;
+	left         : 166px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 3px 0px 0px 8px ;
+}
+
+#var22
+{
+	position     : absolute ;
+	left         : 166px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 3px 0px 0px 8px ;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*---------------------------------------------------------------------------*/
+#MSWBt09
+{
+	position     : absolute ;
+	left         : 657px ;
+	top          : 240px ;
+	border-width : 0px ;
+	border-style : none ;
+	background   : #ffffff ;
+}
+
+
+#MSWBt02
+{
+	position     : absolute ;
+	left         : 657px ;
+	top          : 194px ;
+	border-width : 0px ;
+	border-style : none ;
+	background   : #ffffff ;
+}

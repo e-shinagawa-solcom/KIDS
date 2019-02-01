@@ -1,0 +1,61 @@
+<!--
+
+
+#Backs
+{
+	background : #d6d0b1 ;
+}
+
+
+
+#EmailSet
+{
+	position   : absolute ;
+	left       : 30px ;
+	top        : 45px ;
+	z-index    : 3 ;
+	background : transparent ;
+}
+
+
+
+#Column0
+{
+	position     : absolute ;
+	font-weight  : bold ;
+	left         : 0px ;
+	top          : 0px ;
+	width        : 150px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #798787 #e8f0f1 #798787 #798787 ;
+	background   : #e8f0f1 ;
+	padding      : 8px 0px 0px 8px ;
+}
+
+#Vars0
+{
+	position     : absolute ;
+	left         : 149px ;
+	top          : 0px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #798787 #798787 #798787 #e8f0f1 ;
+	background   : #e8f0f1 ;
+	padding      : 3px 0px 0px 8px ;
+}
+
+
+
+#RegistBt
+{
+	position   : absolute ;
+	left       : 545px ;
+	top        : 4px ;
+	background : transparent ;
+}
+
+
+-->

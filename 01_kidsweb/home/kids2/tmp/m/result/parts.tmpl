@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html lang="ja">
+<head>
+<title>K.I.D.S.</title>
+<meta http-equiv="content-type" content="text/html; charset=euc-jp">
+
+
+
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/images.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
+<script type="text/javascript" language="javascript" src="/result/cmn/functions.js" charset="utf-8"></script>
+
+
+<script type="text/javascript" language="javascript" src="/m/cmn/functions.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="/m/cmn/styles.css">
+
+
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/m/cmn/images.js"></script>
+
+<link rel="stylesheet" type="text/css" media="screen" href="/m/list/c/cmn/layout.css">
+
+<script type="text/javascript" language="javascript" src="/m/list/c/_%strTableName%__exstr.js"></script>
+
+<script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
+
+
+</head>
+<body id="Backs" oncontextmenu="return false;" onload="GetIfrmlngLanguageCode( _%lngLanguageCode%_ );" onscroll="fncStopHeader2( SegTitle2 , DummyTable , MasterAddBt );">
+
+
+<form name="form1" action="index.php" method="POST">
+
+<input type="hidden" value="" name="copyhidden">
+
+
+<span id="COPYAREA1">
+<table width="100%" cellpadding="0" cellspacing="1" border="0" bgcolor="#6f818">
+
+	<tr id="DummyTable">
+		<td>&nbsp;</td>
+	</tr>
+
+	<tr id="SegTitle2">
+<td valign="top" valign="center"><a href="#" onclick="fncDoCopy( copyhidden , document.getElementById('COPYAREA1') , document.getElementById('COPYAREA2') );return false;"><img onmouseover="CopyOn(this);" onmouseout="CopyOff(this);" src="/img/type01/cmn/seg/copy_off_bt.gif" width="15" height="15" border="0" alt="COPY"></a></td>
+_%strColumnHtml%_
+	</tr>
+
+	<tr id="DummyTR">
+		<td colspan="_%lngColumnNum%_">&nbsp;</td>
+	</tr>
+	<tr id="DummyTR">
+		<td colspan="_%lngColumnNum%_">&nbsp;</td>
+	</tr>
+
+_%strResultHtml%_
+
+</table>
+</span>
+
+<span id="COPYAREA2">
+</span>
+
+
+<span id="MasterAddBt" onclick="javascript:fncShowDialogCommonMaster('_%strEditURL%_' , window.form1 , 'ResultIframeCommonMaster' , 'YES' , _%lngLanguageCode%_ , 'add' );return false;"></span>
+
+
+
+<input type="hidden" name="strSessionID" value="_%strSessionID%_">
+_%HIDDEN%_
+</form>
+
+<input type="hidden" name="Vars1" value="_%strInsertForm%_">
+<input type="hidden" name="Vars2" value="_%lngLanguageCode%_">
+
+<script language=javascript>
+fncShowHidePreload( 1 );
+</script>
+
+</body>
+</html>

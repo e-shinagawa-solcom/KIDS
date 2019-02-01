@@ -1,0 +1,169 @@
+<config>
+<header1>
+	<link rel="stylesheet" href="/mold/cmn/form/css/forms.css">
+	<link rel="stylesheet" href="/mold/cmn/form/css/tabs.css">
+	<link rel="stylesheet" href="/mold/cmn/navigate/css/navigate.css">
+
+
+    <!-- confirm iframe スタイル -->
+    <link rel="stylesheet" href="/mold/cmn/confirm/css/confirm-in-iframe.css">
+    <!-- タブ切り替え共通処理 -->
+	<script src="/mold/cmn/form/js/tab-function.js" defer></script>
+    <!-- セレクトボックス共通処理 -->
+	<script src="/mold/cmn/form/js/util-selectbox.js" defer></script>
+	<!-- msw表示切替 -->
+	<script src="/mold/cmn/msw/cmn/js/msw.js" defer></script>
+</header1>
+
+<header2>
+</header2>
+
+<header3>
+	<!-- msw汎用スタイル -->
+	<link rel="stylesheet" href="/mm/regist/css/msw.css">
+    <!-- 金型説明テーブル -->
+	<link rel="stylesheet" href="/mm/regist/css/table-description.css">
+    <!-- フォーム ボタン -->
+    <link rel="stylesheet" href="/mm/regist/css/form-buttons.css">
+	<!-- 言語切り替え処理 -->
+	<script src="/mm/regist/js/switch-language.js" defer></script>
+	<!-- datepickerの要素指定 -->
+	<script src="/mm/regist/js/datepicker.js" defer></script>
+	<!-- マスタデータ検索 -->
+	<script src="/mm/regist/js/invoke-master-search.js" defer></script>
+	<!-- セレクトボックス操作 -->
+	<script src="/mm/regist/js/bind-selectbox-action.js" defer></script>
+    <!-- フォーム ボタン -->
+	<script src="/mm/regist/js/form-buttons.js" defer></script>
+	<!-- 要素フォーカス時の挙動 -->
+	<script src="/mm/regist/js/focus-elements.js" defer></script>
+    <!-- フォーム検証 -->
+    <script src="/mm/regist/js/validate-form.js" defer></script>
+    <!-- フォーム操作 -->
+    <script src="/mm/regist/js/form-change-action.js" defer></script>
+</header3>
+
+<bodyonload>
+</bodyonload>
+</config>
+
+<!-- 左サイドバー ナビゲート -->
+<div class="navigation-loadpoint">
+	<script>
+		$('.navigation-loadpoint').load('/mold/cmn/navigate/mold_navi.html');
+	</script>
+</div>
+
+<!-- 入力フォーム -->
+<div class="form-box--notabs-for-regist">
+	<!-- フォームヘッダ -->
+	<div class="form-box__header">
+		<p class="form-box__header__title">金型履歴登録</p>
+	</div>
+	<!-- フォームコンテンツ -->
+	<div class="form-box__contents">
+		<form name="RegistMoldHistory" action="javascript:void(0);" method="post">
+            <input type="submit">
+            <div class="regist-line">
+                <span class="regist-label">
+                    <span class="regist-label__required-mark">◎</span>
+                    <span class="regist-label__text">製品コード</span>
+                    <input class="TxtStyle05L" name="ProductCode">
+                    <input class="disTxt46L" name="ProductName" readonly>
+                    <img class="msw-button button" invokeMSWName="msw-product" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                </span>
+            </div>
+            <div class="regist-line">
+                <table class="mold-selection">
+                    <tr>
+                        <th class="mold-selection__label">金型リスト</th>
+                        <th></th>
+                        <th class="mold-selection__label">選択中の金型リスト</th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select class="mold-selection__list Slt60" size="10" multiple="multiple"></select>
+                        </td>
+                        <td class="mold-selection__backimage-add-del">
+                            <img class="list-add button" src="/img/type01/cg/del_off_bt.gif" alt="list add">
+                            <img class="list-sort button" src="/img/type01/mr/sort_off_bt.gif" alt="list sort">
+                            <img class="list-del button" src="/img/type01/cg/add_off_bt.gif" alt="list del">
+                        </td>
+                        <td>
+                            <select name="ChoosenMoldList" class="mold-selection__choosen-list Slt60" size="10" multiple="multiple"></select>
+                        </td>
+                        <td class="mold-selection__backimage-up-down">
+                            <img class="list-up button" src="/img/type01/cg/up_off_bt.gif" alt="list up">
+                            <img class="list-sort button" src="/img/type01/mr/sort_off_bt.gif" alt="list sort">
+                            <img class="list-down button" src="/img/type01/cg/down_off_bt.gif" alt="list down">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="regist-line">
+                <span class="regist-label">
+                    <span class="regist-label__required-mark">◎</span>
+                    <span class="regist-label__text">実施日</span>
+                    <input name="ActionDate" class="TxtStyle05L">
+                </span>
+                <span class="regist-label">
+                    <span class="regist-label__required-mark">◎</span>
+                    <span class="regist-label__text">金型ステータス</span>
+                    <select name="Status" class="Slt13">
+                        <option value="">−</option>
+                        <option value="10">移動</option>
+                        <option value="20">返却</option>
+                        <option value="30">廃棄</option>
+                    </select>
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="regist-label">
+                    <span class="regist-label__required-mark">◎</span>
+                    <span class="regist-label__text">保管工場</span>
+                    <input class="TxtStyle05L" name="SourceFactory" readonly>
+                    <input class="disTxt46L" name="SourceFactoryName" readonly>
+                    <img class="msw-button button" invokeMSWName="msw-factory" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                </span>
+            </div>
+            <div class="regist-line--remora">
+                <span class="regist-label">
+                    <span class="regist-label__required-mark">◎</span>
+                    <span class="regist-label__text">移動先工場</span>
+                    <input class="TxtStyle05L" name="DestinationFactory">
+                    <input class="disTxt46L" name="DestinationFactoryName" readonly>
+                    <img class="msw-button button" invokeMSWName="msw-factory" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="regist-label">
+                    <span class="regist-label__required-mark"></span>
+                    <span class="regist-label__text">備考1</span>
+                    <textarea name="Remark1" rows="5"></textarea>
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="regist-label">
+                    <span class="regist-label__required-mark"></span>
+                    <span class="regist-label__text">備考2</span>
+                    <textarea name="Remark2" rows="5"></textarea>
+                </span>
+            </div>
+		</form>
+	</div>
+	<div class="msw-loadpoints">
+		<!-- MSW 製品マスタ検索 -->
+		<iframe class="msw-product" src="/mold/cmn/msw/product/mswproduct.html" frameborder="0">
+		</iframe>
+		<!-- MSW 工場マスタ検索 -->
+		<iframe class="msw-factory" src="/mold/cmn/msw/factory/mswfactory.html" frameborder="0">
+		</iframe>
+	</div>
+</div>
+
+<!-- フォーム ボタン -->
+<div class="form-buttons">
+    <img class="form-buttons__clear button" src="/img/type01/cmn/querybt/clear_off_ja_bt.gif" alt="form clear">
+    <img class="form-buttons__regist button" src="/img/type01/cmn/querybt/reg_off_ja_bt.gif" alt="form regist">
+</div>

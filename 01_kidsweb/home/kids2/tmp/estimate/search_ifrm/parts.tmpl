@@ -1,0 +1,304 @@
+<COMMENT>
+<!-----------------------------------------------------------------------------
+	File name     : Estimate search iframe template
+	Last modified : 2004/09/09
+	Author        : Ryosuke Tomita
+	Remark        : 
+------------------------------------------------------------------------------->
+</COMMENT>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html lang="ja">
+<head>
+<title>K.I.D.S.</title>
+<meta http-equiv="content-type" content="text/html; charset=euc-jp">
+
+
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/images.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/estimate/search/initlayoutsearch.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutcommon.js"></script>
+
+
+<script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/query.js"></script>
+<script type="text/vbscript" Language="vbscript" src="/cmn/vbsclass.js"></script>
+<script type="text/vbscript" Language="vbscript" src="/cmn/vbscript.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/lngcheck.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/masterlib.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="/cmn/layout.css">
+<link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
+
+
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutmsw.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="layout.css">
+<script type="text/javascript" language="javascript" src="exstr.js"></script>
+<script type="text/javascript" language="javascript" src="functions.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
+
+</head>
+<body id="Backs" onload="initLayoutSegs( Segs, Vars, CheckSearch, CheckView );initLayoutESSearch();initLayoutMsw();GetIfrmlngLanguageCode();fncAutoFocus( document.all.strProductCodeFrom );">
+<!-- onContextmenu="return false;" -->
+
+
+<span id="ESSearchObject"></span>
+
+
+<OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting" WIDTH="0" HEIGHT="0"></OBJECT>
+<Script for="objDataSourceSetting" event="ondatasetcomplete">subLoadMasterSetting(this.recordset,0);
+</Script>
+
+
+
+<form name="PS" method="post" action="javascript:void(0);">
+<input type="hidden" name="ActionScriptName" value="/estimate/result/index.php">
+<input type="hidden" name="strSessionID" value="_%strSessionID%_">
+
+
+
+
+
+<p id="Segs">
+	<span id="col00" style="visibility:_%btnDetail_visibility%_;">詳細</span>
+
+	<span id="FixSegs"    style="visibility:_%btnFix_visibility%_;">修正</span>
+
+	<span id="col01">製品コード</span>
+	<span id="col02">製品名称(日本語)</span>
+	<span id="col03">部門</span>
+	<span id="col04">担当者</span>
+	<span id="col05">入力者</span>
+	<span id="col06">作成日時</span>
+	<span id="col07">納期</span>
+	<span id="col08">納価</span>
+	<span id="col09">上代</span>
+	<span id="col10">カートン入数</span>
+	<span id="col11">計画C/t</span>
+	<span id="col12">生産予定数</span>
+	<span id="col13">見積情報</span>
+	<span id="col14">償却合計金額</span>
+	<span id="col15">部材費合計</span>
+	<span id="col16">製造費用合計</span>
+	<span id="col17">予定総売上高</span>
+	<span id="col18">企画目標総利益</span>
+	<span id="col19">目標利益率</span>
+	<span id="col20">間接製造経費</span>
+	<span id="col21">売上総利益</span>
+	<span id="col22">保存状態</span>
+
+	<span id="WFStatus">ワークフロー状態</span>
+
+	<span id="DeleteSegs" style="visibility:_%btnDelete_visibility%_;">削除</span>
+</p>
+
+
+
+<!--  col00      詳細                   var00      :                                                     -->
+<!--  col01      製品コード             var01      :  strProductCodeFrom / strProductCodeTo              -->
+<!--  col02      製品名称(日本語)       var02      :  strProductName                                     -->
+<!--  col03      部門                   var03      :  lngInChargeGroupCode / strInChargeGroupName        -->
+<!--  col04      担当者                 var04      :  lngInChargeUserCode / strInChargeUserName          -->
+<!--  col05      入力者                 var05      :  lngInputUserCode / strInputUserName                -->
+<!--  col06      作成日時               var06      :  dtmCreationDateFrom / dtmCreationDateTo            -->
+<!--  col07      納期                   var07      :  dtmDeliveryLimitDateFrom / dtmDeliveryLimitDateTo  -->
+<!--  col08      納価                   var08      :                                                     -->
+<!--  col09      上代                   var09      :                                                     -->
+<!--  col10      カートン入数           var10      :                                                     -->
+<!--  col11      計画C/t                var11      :                                                     -->
+<!--  col12      生産予定数             var12      :                                                     -->
+<!--  col13      見積情報               var13      :                                                     -->
+<!--  col14      固定費合計             var14      :                                                     -->
+<!--  col15      部材費合計             var15      :                                                     -->
+<!--  col16      総製造費用             var16      :                                                     -->
+<!--  col17      予定売上高             var17      :                                                     -->
+<!--  col18      企画目標利益           var18      :                                                     -->
+<!--  col19      目標利益率             var19      :                                                     -->
+<!--  col20      間接製造経費           var20      :                                                     -->
+<!--  col21      売上総利益             var21      :                                                     -->
+<!--  col22      保存状態               var22      :                                                     -->
+
+<!--  FixSegs    修正                   FixVars    :                                                     -->
+<!--  DeleteSegs 削除                   DeleteVars :                                                     -->
+
+
+
+
+<p id="Vars">
+	<span id="var00"></span>
+
+	<span id="FixVars"    style="visibility:_%btnFix_visibility%_;"></span>
+
+	<span id="var01">
+		FROM&nbsp;<input style="ime-mode:disabled;" class="Txt10L" type="text" name="strProductCodeFrom" value="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCopyValue( this , document.all.strProductCodeTo );" tabindex="">TO&nbsp;<input style="ime-mode:disabled;" class="Txt10L" type="text" name="strProductCodeTo" value="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="">
+	</span>
+	<span id="var02">
+		<input class="Txt52L" type="text" name="strProductName" value="" maxlength="80" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this );" tabindex="">
+	</span>
+
+	<span id="var03">
+		<input style="ime-mode:disabled;" class="TxtStyle02L" type="text" name="lngInChargeGroupCode" value="" maxlength="2" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="" onChange="subLoadMasterText('cnGroup', this, strInChargeGroupName, Array(this.value), objDataSourceSetting);">&nbsp;<input class="TxtStyle06L" type="text"  name="strInChargeGroupName" value="" maxlength="50" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this );" tabindex="" DATASRC="#objInChargeGroupName" DATAFLD="name">
+	</span>
+
+	<span id="var04">
+		<input style="ime-mode:disabled;" class="TxtStyle02L" type="text" name="lngInChargeUserCode" value="" maxlength="3" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="" onChange="subLoadMasterText('11', this, strInChargeUserName, Array(this.value), objDataSourceSetting, 0 );">&nbsp;<input class="TxtStyle06L" type="text"  name="strInChargeUserName" value="" maxlength="50" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this );" tabindex="" DATASRC="#objInChargeUserName" DATAFLD="name">
+	</span>
+
+	<span id="var05">
+		<input style="ime-mode:disabled;" class="TxtStyle02L" type="text" name="lngInputUserCode" value="" maxlength="3" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="" onChange="subLoadMasterText('11', this, strInputUserName, Array(this.value), objDataSourceSetting, 0);">&nbsp;<input class="TxtStyle06L" type="text"  name="strInputUserName" value="" maxlength="50" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this );" DATASRC="#objInputUserName" DATAFLD="name" tabindex="">
+	</span>
+
+	<span id="var06">
+		FROM&nbsp;<input style="ime-mode:disabled;" class="Txt10L" type="text" name="dtmCreationDateFrom" value="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this); fncCheckDate(this); fncCopyValue( this, document.all.dtmCreationDateTo );" tabindex="">TO&nbsp;<input class="Txt10L" type="text"  name="dtmCreationDateTo" value="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this); fncCheckDate(this);" tabindex="">
+	</span>
+
+	<span id="var07">
+		FROM&nbsp;<input style="ime-mode:disabled;" class="Txt07L" type="text" name="dtmDeliveryLimitDateFrom" value="" maxlength="7" onfocus="chColorOn(this);" onblur="chColorOff(this); fncCheckDate(this,1); fncCopyValue( this, document.all.dtmDeliveryLimitDateTo );" tabindex="">TO&nbsp;<input class="Txt07L" type="text"  name="dtmDeliveryLimitDateTo" value="" maxlength="7" onfocus="chColorOn(this);" onblur="chColorOff(this); fncCheckDate(this,1);" tabindex="">
+	</span>
+
+
+
+	<span id="var08"></span>
+	<span id="var09"></span>
+	<span id="var10"></span>
+	<span id="var11"></span>
+	<span id="var12"></span>
+	<span id="var13"></span>
+	<span id="var14"></span>
+	<span id="var15"></span>
+	<span id="var16"></span>
+	<span id="var17"></span>
+	<span id="var18"></span>
+	<span id="var19"></span>
+	<span id="var20"></span>
+	<span id="var21"></span>
+	<span id="var22"></span>
+
+	<span id="varWFStatus">
+		_%lngWorkFlowStatusCode%_
+	</span>
+
+	<span id="DeleteVars" style="visibility:_%btnDelete_visibility%_;"></span>
+</p>
+
+
+
+
+<span id="col0304"></span>
+
+
+
+
+
+
+
+<!-- 共通サブウィンドウ -->
+
+<!-- START [DEPT & IN CHARGE NAME] BUTTON -->
+<span id="MSWBt02" onclick="window.top.fncGetObjectName( window.top.MDwin , lngInChargeGroupCode , strInChargeGroupName , lngInChargeUserCode , strInChargeUserName );window.top.DisplayerM02( '' , window.top.document.all.Mdata02 , window.top.MDwin.document.all.strGroupCode ,  window.top.MDwin.document.all.strUserCode );window.top.ExchangeM02( 0 , window.self );window.top.fncFocusType( window.top.MDwin , 'deptIfrm' );return false;"></span>
+<!-- END [DEPT & IN CHARGE NAME] BUTTON -->
+
+<!-- START [INPUT PERSON] BUTTON -->
+<span id="MSWBt09" onclick="window.top.fncGetObjectName( window.top.INPUT2win , lngInputUserCode , strInputUserName );window.top.DisplayerM09( '' , window.top.document.all.Mdata09 , window.top.INPUT2win.document.all.strInputUserCode );window.top.ExchangeM09( 0 , window.self );window.top.fncFocusType( window.top.INPUT2win , 'inputIfrm' );return false;"></span>
+<!-- END [INPUT PERSON] BUTTON -->
+
+
+
+
+
+
+
+<!-- 検索チェックボックス -->
+<p id="CheckSearch">
+	<span id="Checks" style="visibility:_%btnDetail_visibility%_;"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="btnDetailConditions" disabled></span>
+
+	<span id="Checks" style="visibility:_%btnFix_visibility%_;"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="btnFixConditions" disabled></span>
+
+	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="strProductCodeConditions" _%strProductCodeConditions%_></span>
+	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="strProductNameConditions" _%strProductNameConditions%_></span>
+	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="strInchargeGroupDisplayCodeConditions" _%strInchargeGroupDisplayCodeConditions%_></span>
+	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="strInchargeUserDisplayCodeConditions" _%strInchargeUserDisplayCodeConditions%_></span>
+	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="strInputUserDisplayCodeConditions" _%strInputUserDisplayCodeConditions%_></span>
+	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="dtmCreationDateConditions" _%dtmCreationDateConditions%_></span>
+	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="dtmDeliveryLimitDateConditions" _%dtmDeliveryLimitDateConditions%_></span>
+	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" disabled></span>
+	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" disabled></span>
+	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" disabled></span>
+	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" disabled></span>
+	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" disabled></span>
+	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" disabled></span>
+	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" disabled></span>
+	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" disabled></span>
+	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" disabled></span>
+	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" disabled></span>
+	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" disabled></span>
+	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" disabled></span>
+	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" disabled></span>
+	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" disabled></span>
+	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" disabled></span>
+
+	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngWorkFlowStatusCodeConditions"></span>
+
+	<span id="Checks" style="visibility:_%btnDelete_visibility%_;"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="btnDeleteConditions" disabled></span>
+</p>
+
+
+
+<!-- 表示チェックボックス -->
+<p id="CheckView">
+	<span id="Checks" style="visibility:_%btnDetail_visibility%_;"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="btnDetailVisible" _%btnDetailVisible%_></span>
+
+	<span id="Checks" style="visibility:_%btnFix_visibility%_;"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="btnFixVisible" _%btnFixVisible%_></span>
+
+	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="strProductCodeVisible" _%strProductCodeVisible%_></span>
+	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="strProductNameVisible" _%strProductNameVisible%_></span>
+	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="strInchargeGroupDisplayCodeVisible" _%strInchargeGroupDisplayCodeVisible%_></span>
+	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="strInchargeUserDisplayCodeVisible" _%strInchargeUserDisplayCodeVisible%_></span>
+	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="strInputUserDisplayCodeVisible" _%strInputUserDisplayCodeVisible%_></span>
+	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="dtmCreationDateVisible" _%dtmCreationDateVisible%_></span>
+	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="dtmDeliveryLimitDateVisible" _%dtmDeliveryLimitDateVisible%_></span>
+	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="curProductPriceVisible" _%curProductPriceVisible%_></span>
+	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="curRetailPriceVisible" _%curRetailPriceVisible%_></span>
+	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngCartonQuantityCostVisible" _%lngCartonQuantityCostVisible%_></span>
+	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngPlanCartonProductionVisible" _%lngPlanCartonProductionVisible%_></span>
+	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngProductionQuantityVisible" _%lngProductionQuantityVisible%_></span>
+	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="strEstimateVisible" _%strEstimateVisible%_></span>
+	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="curFixedCostVisible" _%curFixedCostVisible%_></span>
+	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="curMemberCostVisible" _%curMemberCostVisible%_></span>
+	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="curManufacturingCostVisible" _%curManufacturingCostVisible%_></span>
+	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="curAmountOfSalesVisible" _%curAmountOfSalesVisible%_></span>
+	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="curTargetProfitVisible" _%curTargetProfitVisible%_></span>
+	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="curAchievementRatioVisible" _%curAchievementRatioVisible%_></span>
+	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="curStandardRateVisible" _%curStandardRateVisible%_></span>
+	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="curProfitOnSalesVisible" _%curProfitOnSalesVisible%_></span>
+	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="bytDecisionFlagVisible" _%bytDecisionFlagVisible%_></span>
+
+	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngWorkFlowStatusCodeVisible" _%lngWorkFlowStatusCodeVisible%_></span>
+
+
+	<span id="Checks" style="visibility:_%btnDelete_visibility%_;"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="btnDeleteVisible" _%btnDeleteVisible%_></span>
+</p>
+
+
+
+<span id="ViewSearch1"></span>
+
+
+
+
+
+<!-- 検索チェックボックス全選択用ボタン -->
+<span id="CheckAll1" onclick="fncCheckAll1();"></span>
+<span id="CheckAll2" onclick="fncCheckAll2();"></span>
+
+
+
+<!-- 終端調整用ダミーレイヤー -->
+<span id="DummySpace"></span>
+
+
+
+
+
+
+</form>
+</body>
+</html>

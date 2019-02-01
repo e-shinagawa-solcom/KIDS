@@ -1,0 +1,385 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html lang="ja">
+<head>
+<title>K.I.D.S.</title>
+<meta http-equiv="content-type" content="text/html; charset=euc-jp">
+
+
+<script type="text/javascript" language="javascript" src="/layout/type01/cmn/images.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/type01/po/search/initlayoutsearch.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/type01/cmn/initlayoutcommon.js"></script>
+
+
+<script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/query.js"></script>
+<script type="text/vbscript" Language="vbscript" src="/cmn/vbsclass.js"></script>
+<script type="text/vbscript" Language="vbscript" src="/cmn/vbscript.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/lngcheck.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="/cmn/layout.css">
+<link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
+
+
+
+<link rel="stylesheet" type="text/css" media="screen" href="layout.css">
+<script type="text/javascript" language="javascript" src="exstr.js"></script>
+<script type="text/javascript" language="javascript" src="functions.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
+
+
+
+
+</head>
+<body id="Backs" oncontextmenu="return false;" onload="initLayoutSegs( Segs , Vars , Goods , GoodsVars , CheckGoods1 , CheckGoods2 , CheckGoods3 , CheckGoods4 );initLayoutPOSearch();GetIfrmLanguageCode();">
+
+<form action="#" name="PS" method="post">
+
+
+<!-- START SEGMENTS -->
+<p id="Goods">
+<span id="SegC01">基準通貨</span>
+<span id="SegC02">税額</span>
+<span id="SegC03">合計金額</span>
+</p>
+
+<p id="GoodsVars">
+<span id="VarsC01">
+	<input class="TxtStyle08R" type="text" name="punit" value="" maxlength="17" onfocus="chColorOn(this);" onblur="chColorOff(this);">
+</span>
+
+<span id="VarsC02">
+	<input class="TxtStyle08R" type="text" name="punit" value="" maxlength="17" onfocus="chColorOn(this);" onblur="chColorOff(this);">
+</span>
+
+<span id="VarsC03">
+	<input class="TxtStyle08R" type="text" name="punit" value="" maxlength="17" onfocus="chColorOn(this);" onblur="chColorOff(this);">
+</span>
+</p>
+
+
+
+
+<p id="Segs">
+<span id="SegA01">計上日</span>
+
+<span id="SegA02">発注ＮＯ.</span>
+<span id="SegA03">仕入先</span>
+
+
+<span id="SegA04">部門</span>
+<span id="SegA05">担当者</span>
+
+<span id="SegA06">納品場所</span>
+
+<span id="SegA07">状態</span>
+
+<span id="SegA08">通貨</span>
+
+<span id="SegA09">レートタイプ</span>
+
+<span id="SegA10">換算レート</span>
+<span id="SegA11">支払条件</span>
+
+<span id="SegA12">発注有効期限日</span>
+<span id="SegA13">備考</span>
+
+<span id="SegB01">製品</span>
+<span id="SegB02">仕入科目</span>
+
+
+<span id="SegB03">仕入部品</span>
+<span id="SegB04">単価リスト</span>
+<span id="SegB05">顧客品番</span>
+
+
+<span id="SegB06">運搬方法</span>
+
+<span id="SegB07">製品単位計上</span>
+<span id="SegB08">製品単価</span>
+<span id="SegB09">製品単位</span>
+
+<span id="SegB10">製品数量</span>
+<span id="SegB11">税抜金額</span>
+
+<span id="SegB12">荷姿単位計上</span>
+
+<span id="SegB13">荷姿単価</span>
+<span id="SegB14">荷姿単位</span>
+
+<span id="SegB15">荷姿数量</span>
+
+<span id="SegB16">カートン入数</span>
+<span id="SegB17">備考</span>
+<span id="SegB18">承認ルート</span>
+<!-- END SEGMENTS -->
+</p>
+
+
+<!-- START VARS -->
+<p id="Vars">
+
+<span id="VarsA01">
+	FROM&nbsp;<input class="TxtStyle05L" type="text" name="vars" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);">TO&nbsp;<input class="TxtStyle05L" type="text" name="vars" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);">
+</span>
+
+<span id="VarsA02">
+	<input class="TxtStyle05L" type="text" name="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);">-&nbsp;<input class="TxtStyle01L" type="text" name="" maxlength="2" onfocus="chColorOn(this);" onblur="chColorOff(this);">
+</span>
+
+<span id="VarsA03">
+	<input class="TxtStyle05L" type="text" name="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);">&nbsp;<input class="TxtStyle06L" type="text" name="" maxlength="25" onfocus="chColorOn(this);" onblur="chColorOff(this);">
+</span>
+
+<span id="VarsA04">
+	<input class="TxtStyle02L" type="text" name="" maxlength="2" onfocus="chColorOn(this);" onblur="chColorOff(this);">&nbsp;<input class="TxtStyle06L" type="text" name="" maxlength="25" onfocus="chColorOn(this);" onblur="chColorOff(this);">
+</span>
+
+<span id="VarsA05">
+	<input class="TxtStyle02L" type="text" name="vars" maxlength="3" onfocus="chColorOn(this);" onblur="chColorOff(this);">&nbsp;<input class="TxtStyle06L" type="text" name="vars" maxlength="25" onfocus="chColorOn(this);" onblur="chColorOff(this);">
+</span>
+
+<span id="VarsA06">
+	<input class="TxtStyle02L" type="text" name="" size="3" maxlength="3" onfocus="chColorOn(this);" onblur="chColorOff(this);">&nbsp;<input class="TxtStyle06L" type="text" name="" size="25" maxlength="25" onfocus="chColorOn(this);" onblur="chColorOff(this);">
+</span>
+
+<span id="VarsA07">
+	<input class="TxtStyle04L" type="text" name="" value="発注" size="7" maxlength="7">
+</span>
+
+<span id="VarsA08">
+	<select name="Money" onchange="fncCheckNumberCurrencySign( this.value );">
+		<option value="1">日本円</option>
+		<option value="2">ＵＳＤ</option>
+		<option value="3">ＨＫＤ</option>
+	</select>
+</span>
+
+<span id="VarsA09">
+	<select name="">
+		<option value="">TTM</option>
+		<option value="">社内レート</option>
+	</select>
+</span>
+
+
+<span id="VarsA10">
+	<input class="TxtStyle04R" type="text" name="" size="7" maxlength="7" onfocus="chColorOn(this);" onblur="chColorOff(this);">
+</span>
+
+<span id="VarsA11">
+	<select name="">
+		<option value="">L/C</option>
+		<option value="">T/T</option>
+	</select>
+</span>
+
+<span id="VarsA12">
+	<input class="TxtStyle05L" type="text" name="aa" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate( this );">
+</span>
+<span id="VarsA13">
+	<input class="TxtStyle06L" type="text" name="" maxlength="25" onfocus="chColorOn(this);" onblur="chColorOff(this);">
+</span>
+
+<span id="VarsB01">
+	<input class="TxtStyle03L" type="text" name="gcode" maxlength="4" onfocus="chColorOn(this);" onblur="chColorOff(this);">&nbsp;<input class="TxtStyle06L" type="text" name="gname" maxlength="40" onfocus="chColorOn(this);" onblur="chColorOff(this);">
+</span>
+
+<span id="VarsB02">
+	<select class="Slt20" name="">
+		<option value="01">401&nbsp;&nbsp;材料パーツ仕入高</option>
+		<option value="02">402&nbsp;&nbsp;輸入パーツ仕入高</option>
+		<option value="02">403&nbsp;&nbsp;材料ツール仕入高</option>
+		<option value="03">1224&nbsp;チャージ仕入高</option>
+		<option value="03">420&nbsp;&nbsp;外注加工費</option>
+		<option value="03">431&nbsp;&nbsp;金型償却高</option>
+		<option value="03">433&nbsp;&nbsp;金型海外償却</option>
+		<option value="03">430&nbsp;&nbsp;業務委託料</option>
+		<option value="03">434&nbsp;&nbsp;運賃</option>
+		<option value="03">443&nbsp;&nbsp;支払手数料</option>
+	</select>
+</span>
+
+
+
+<span id="VarsB03">
+	<select class="Slt38" name="">
+		<option value="01">1&nbsp;&nbsp;証紙</option>
+		<option value="02">2&nbsp;&nbsp;カプセル</option>
+		<option value="03">3&nbsp;&nbsp;菓子類</option>
+		<option value="03">4&nbsp;&nbsp;製品部材</option>
+		<option value="03">5&nbsp;&nbsp;ミニブック</option>
+		<option value="03">6&nbsp;&nbsp;印刷物</option>
+		<option value="03">7&nbsp;&nbsp;版下・製版代</option>
+		<option value="03">8&nbsp;&nbsp;タンポ代</option>
+		<option value="03">9&nbsp;&nbsp;包材(袋類・内箱・外箱・カートン)</option>
+	</select>
+</span>
+
+<span id="VarsB04">
+	<select class="SlctStyle01" name="pricelist">
+		<option value="100,000">100,000</option>
+		<option value="120,000">120,000</option>
+		<option value="140,000">140,000</option>
+	</select>
+</span>
+
+<span id="VarsB05">
+	<input class="TxtStyle05L" type="text" name="gcodeco" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);">
+</span>
+
+<span id="VarsB06">
+	<select name="pricelist">
+		<option value="">by Air</option>
+		<option value="">by Ship</option>
+	</select>
+</span>
+
+<span id="VarsB07">
+	<input class="RadioStyle01" type="radio" name="gunit" value="gs">
+</span>
+
+<span id="VarsB08">
+	<input class="TxtStyle08R" type="text" name="aaaaa" value="" maxlength="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckNumber( this , 4 );">
+</span>
+
+<span id="VarsB09">
+	<select class="Slt15_2" name="pricelist">
+		<option value="">pcs</option>
+		<option value="">set</option>
+	</select>
+</span>
+
+<span id="VarsB10">
+	<input class="TxtStyle08R" type="text" name="bbbbb" value="" maxlength="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckNumber( this , 4 );">
+</span>
+
+<span id="VarsB11">
+	<input class="TxtStyle08R" type="text" name="ccccc" value="" maxlength="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckNumber( this , 4 );">
+</span>
+
+<span id="VarsB12">
+	<input class="RadioStyle01" type="radio" name="gunit" value="gs">
+</span>
+
+<span id="VarsB13">
+	<input class="TxtStyle08R" type="text" name="ddddd" value="" maxlength="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckNumber( this , 4 );">
+</span>
+<span id="VarsB14">
+	<select class="Slt15_2" name="pricelist">
+		<option value="">c/t</option>
+	</select>
+</span>
+
+<span id="VarsB15">
+	<input class="TxtStyle08R" type="text" name="eeeee" value="" maxlength="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckNumber( this , 4 );">
+</span>
+
+<span id="VarsB16">
+	<input class="TxtStyle08R" type="text" name="fffff" value="" maxlength="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckNumber( this , 4 );">
+</span>
+<span id="VarsB17">
+	<input class="TxtStyle06L" type="text" name="ggggg" value="" maxlength="" onfocus="chColorOn(this);" onblur="chColorOff(this);">
+</span>
+<span id="VarsB18">
+	<select class="SlctStyle05" name="">
+		<option value="01">Aルート</option>
+		<option value="02">Bルート</option>
+		<option value="03">Cルート</option>
+	</select>
+</span>
+<!-- END VARS -->
+</p>
+<!-- //////////////////////////////////// END INPUT A SEGMENTS //////////////////////////////////// -->
+
+<p id="CheckGoods1">
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value=""></span>
+</p>
+<p id="CheckGoods2">
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value=""></span>
+</p>
+
+
+
+
+<p id="CheckGoods3">
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value=""></span>
+</p>
+
+<p id="CheckGoods4">
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value=""></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value=""></span>
+</p>
+
+
+<span id="ViewSearch1"></span>
+<span id="ViewSearch2"></span>
+
+<span id="CheckAll1" onclick="fncCheckAll1();"></span>
+<span id="CheckAll2" onclick="fncCheckAll2();"></span>
+
+<span id="DummySpace"></span>
+</form>
+</body>
+</html>

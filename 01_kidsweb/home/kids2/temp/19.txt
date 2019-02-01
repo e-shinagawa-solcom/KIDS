@@ -1,0 +1,4 @@
+SELECT count(*), count(*) FROM m_AttributeRelation WHERE lngCompanyCode = 1 AND lngAttributeCode = 2 
+SELECT count(*), count(*) FROM m_AttributeRelation WHERE lngCompanyCode = 1 AND lngAttributeCode = 2 
+id	name1
+0	0

@@ -1,0 +1,157 @@
+<!--
+
+
+/********************* MASTER SEARCH WINDOW FORM STYLES *********************/
+
+.TxtMSW01L { /* 2byte */
+	width : 21px ;
+	text-align : left ;
+	background-color : #f1f1f1 ;
+}
+
+.TxtMSW01R { /* 2byte */
+	width : 21px ;
+	text-align : right ;
+}
+
+.TxtMSW02L { /* 3byte */
+	width : 28px ;
+	text-align : left ;
+	background-color : #f1f1f1 ;
+}
+
+.TxtMSW02R { /* 3byte */
+	width : 28px ;
+	text-align : right ;
+}
+
+.TxtMSW03L { /* 4byte */
+	width : 35px ;
+	text-align : left ;
+	background-color : #f1f1f1 ;
+}
+
+.TxtMSW03R { /* 4byte */
+	width : 35px ;
+	text-align : right ;
+}
+
+.TxtMSW04L { /* 7byte */
+	width : 91px ;
+	text-align : left ;
+}
+
+.TxtMSW04R { /* 7byte */
+	width : 91px ;
+	text-align : right ;
+}
+
+.TxtMSW05L { /* 10byte */
+	width : 77px ;
+	text-align : left ;
+	background-color : #f1f1f1 ;
+}
+
+.TxtMSW05R { /* 10byte */
+	width : 77px ;
+	text-align : right ;
+}
+
+.TxtMSW06L { /* 50byte */
+	width : 335px ;
+	text-align : left ;
+	background-color : #f1f1f1 ;
+}
+
+.TxtMSW06R { /* 50byte */
+	width : 335px ;
+	text-align : right ;
+}
+
+.TxtMSW07L { /* 80byte */
+	width : 526px ;
+	text-align : left ;
+	background-color : #f1f1f1 ;
+}
+
+.TxtMSW07R { /* 80byte */
+	width : 526px ;
+	text-align : right ;
+}
+
+
+
+.disTxtMSW01L { /* 2byte */
+	width : 21px ;
+	font-family : monospace ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #cdcdcd ;
+	margin : 0 4px 0 0 ;      
+	color : #666666 ;
+	background-color : #f1f1f1 ;
+	text-align : left ;
+}
+
+
+.disTxtMSW05L { /* 10byte */
+	width : 77px ;
+	font-family : monospace ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #cdcdcd ;
+	margin : 0 4px 0 0 ;      
+	color : #666666 ;
+	background-color : #f1f1f1 ;
+	text-align : left ;
+}
+
+
+
+.RadioMSW01 
+	width : 26px ;
+	border-width : 0px ;
+	border-style : none ;
+	color : #666666 ;
+	background-color : #ffffff ;
+}
+
+
+
+.SlctMSW01 { /* 40byte */
+	z-index : 1 ;
+	font-family : monospace ;
+	color : #666666 ;
+	width : 466px ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #7f7f7f #dfdfdf #dfdfdf #7f7f7f ;     
+	background-color : #f1f1f1 ;
+}
+
+.SlctMSW02 { /* 80byte */
+	z-index : 1 ;
+	font-family : monospace ;
+	color : #666666 ;
+	width : 653px ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #7f7f7f #dfdfdf #dfdfdf #7f7f7f ;     
+	background-color : #f1f1f1 ;
+}
+
+
+.TxtCounter
+{
+	width : 90px ;
+	font-family : Arail ; /* £Í£Ó £Ð¥´¥·¥Ã¥¯ */
+	font-size : 12px ;
+	border-width : 0px ;
+	border-style : none ;  
+	color : #666666 ;
+	background-color : transparent ;
+	text-align : center ;
+}
+
+
+-->

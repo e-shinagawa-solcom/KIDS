@@ -1,0 +1,4 @@
+ SELECT mc.strcompanydisplaycode, mc.strcompanydisplayname FROM m_company mc, m_attribute ma, m_attributerelation mar WHERE mc.lngcompanycode = mar.lngcompanycode AND mar.lngattributecode = ma.lngattributecode AND mar.lngattributecode = 5 AND mc.bytcompanydisplayflag = true AND mc.strcompanydisplaycode = '2101' 
+ SELECT mc.strcompanydisplaycode, mc.strcompanydisplayname FROM m_company mc, m_attribute ma, m_attributerelation mar WHERE mc.lngcompanycode = mar.lngcompanycode AND mar.lngattributecode = ma.lngattributecode AND mar.lngattributecode = 5 AND mc.bytcompanydisplayflag = true AND mc.strcompanydisplaycode = '2101' 
+id	name1
+2101	カタオカプラセス(株)

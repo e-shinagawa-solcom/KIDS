@@ -1,0 +1,2 @@
+1	SELECT lngusercode,struserid FROM m_user WHERE lngusercode = 'FIELD1'
+2	SELECT lngusercode,struserid FROM m_user WHERE lngusercode = 'FIELD1'

@@ -1,0 +1,4 @@
+SELECT c.strcompanydisplaycode,c.strcompanydisplayname FROM m_company c, m_attribute a, m_attributerelation al WHERE c.lngcompanycode = al.lngcompanycode AND al.lngattributecode = a.lngattributecode AND c.strcompanydisplaycode = '0361' AND a.lngattributecode = 2 
+SELECT c.strcompanydisplaycode,c.strcompanydisplayname FROM m_company c, m_attribute a, m_attributerelation al WHERE c.lngcompanycode = al.lngcompanycode AND al.lngattributecode = a.lngattributecode AND c.strcompanydisplaycode = '0361' AND a.lngattributecode = 2 
+id	name1
+0361	ベンダー事業部カプセル課

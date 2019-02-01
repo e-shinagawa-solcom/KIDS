@@ -1,0 +1,560 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+   <html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>Docs For Class clsDB</title>
+  <link rel="stylesheet" href="../media/stylesheet.css" />
+  <script src="../media/lib/classTree.js"></script>
+<link id="webfx-tab-style-sheet" type="text/css" rel="stylesheet" href="../media/lib/tab.webfx.css" />
+<script type="text/javascript" src="../media/lib/tabpane.js"></script>
+  <script language="javascript" type="text/javascript" src="../media/lib/ua.js"></script>
+<script language="javascript" type="text/javascript">
+	var imgPlus = new Image();
+	var imgMinus = new Image();
+	imgPlus.src = "../media/images/plus.gif";
+	imgMinus.src = "../media/images/minus.gif";
+	
+	function showNode(Node){
+        switch(navigator.family){
+        	case 'nn4':
+        		// Nav 4.x code fork...
+				var oTable = document.layers["span" + Node];
+				var oImg = document.layers["img" + Node];
+        		break;
+        	case 'ie4':
+        		// IE 4/5 code fork...
+				var oTable = document.all["span" + Node];
+				var oImg = document.all["img" + Node];
+        		break;
+        	case 'gecko':
+        		// Standards Compliant code fork...
+				var oTable = document.getElementById("span" + Node);
+				var oImg = document.getElementById("img" + Node);
+        		break;
+        }
+		oImg.src = imgMinus.src;
+		oTable.style.display = "block";
+	}
+	
+	function hideNode(Node){
+        switch(navigator.family){
+        	case 'nn4':
+        		// Nav 4.x code fork...
+				var oTable = document.layers["span" + Node];
+				var oImg = document.layers["img" + Node];
+        		break;
+        	case 'ie4':
+        		// IE 4/5 code fork...
+				var oTable = document.all["span" + Node];
+				var oImg = document.all["img" + Node];
+        		break;
+        	case 'gecko':
+        		// Standards Compliant code fork...
+				var oTable = document.getElementById("span" + Node);
+				var oImg = document.getElementById("img" + Node);
+        		break;
+        }
+		oImg.src = imgPlus.src;
+		oTable.style.display = "none";
+	}
+	
+	function nodeIsVisible(Node){
+        switch(navigator.family){
+        	case 'nn4':
+        		// Nav 4.x code fork...
+				var oTable = document.layers["span" + Node];
+        		break;
+        	case 'ie4':
+        		// IE 4/5 code fork...
+				var oTable = document.all["span" + Node];
+        		break;
+        	case 'gecko':
+        		// Standards Compliant code fork...
+				var oTable = document.getElementById("span" + Node);
+        		break;
+        }
+		return (oTable && oTable.style.display == "block");
+	}
+	
+	function toggleNodeVisibility(Node){
+		if (nodeIsVisible(Node)){
+			hideNode(Node);
+		}else{
+			showNode(Node);
+		}
+	}
+</script>
+<!-- template designed by Julien Damon based on PHPEdit's generated templates, and tweaked by Greg Beaver -->
+<body bgcolor="#ffffff" ><!-- Start of Class Data -->
+<h2>
+	Class clsDB
+</h2> (line <span class="linenumber">35</span>)
+<div class="tab-pane" id="tabPane1">
+<script type="text/javascript">
+tp1 = new WebFXTabPane( document.getElementById( "tabPane1" ));
+</script>
+
+<div class="tab-page" id="Description">
+<h2 class="tab">Description</h2>
+<pre>
+</pre>
+<p>
+	<b><i>Located in File: <a href="_clsdb_php.html">/clsdb.php</a></i></b><br>
+</p>
+<!-- ========== Info from phpDoc block ========= -->
+<h5>¥Ç¡¼¥¿¥Ù¡¼¥¹½èÍý¥¯¥é¥¹</h5>
+<div class="desc"><p>isOpen             ÀÜÂ³Ãæ¤«¤É¤¦¤«¤Î¼èÆÀ 	open               DB¤ØÀÜÂ³ 	close              DB¤«¤éÀÚÃÇ 	execute            SQL¤Î¼Â¹Ô 	transactionBegin   ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó³«»Ï(BEGIN) 	transactionCommit  ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó´°Î»(COMMIT) 	fetchArray         ·ë²ÌÇÛÎó¤Î»ØÄê¹Ô¤òÏ¢ÁÛÇÛÎó¤Ë¼èÆÀ¤¹¤ë 	freeResult         ·ë²ÌID¡Ê·ë²Ì¡Ë¤ò²òÊü¤¹¤ë 	getFieldsCount     ·ë²Ì¤Î¥Õ¥£¡¼¥ë¥É¿ô¤ò¼èÆÀ¤¹¤ë 	getFieldName       ·ë²Ì¤Î¥Õ¥£¡¼¥ë¥ÉÌ¾¤ò¼èÆÀ¤¹¤ë 	fetchObject        ·ë²ÌÇÛÎó¤Î»ØÄê¹Ô¤ò¥ª¥Ö¥¸¥§¥¯¥È¤Ç¼èÆÀ¤¹¤ë 	replaceLineFeed    ÂÐ¾ÝÊ¸»úÎó¤Î²þ¹Ô¥³¡¼¥É¤ò&lt;LF&gt;¤ËÅý°ì¤¹¤ë</p></div>
+<ul>
+		<li><strong>version:</strong> - 0.1</li>
+		<li><strong>access:</strong> - public</li>
+		<li><strong>author:</strong> - Kenji Chiba &lt;<a href="mailto:k-chiba@wiseknot.co.jp">mailto:k-chiba@wiseknot.co.jp</a>&gt;</li>
+		<li><strong>copyright:</strong> - Copyright &amp;copy; 2003, Wiseknot</li>
+		<li><strong>license:</strong> - <a href="http://www.wiseknot.co.jp/">http://www.wiseknot.co.jp/</a></li>
+	</ul>
+<br /><hr />
+</div>
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "Description" ) );</script>
+<div class="tab-page" id="tabPage1">
+<h2 class="tab">Class Variables</h2>
+<!-- ============ VARIABLE DETAIL =========== -->
+<strong>Summary:</strong><br />
+<div class="var-title">
+    <span class="var-type">string</span>
+    <a href="#var$ConnectID" title="details" class="property"><strong>$ConnectID</strong></a>
+</div>
+<div class="var-title">
+    <span class="var-type">boolean</span>
+    <a href="#var$Transaction" title="details" class="property"><strong>$Transaction</strong></a>
+</div>
+<hr />
+<a name="var$ConnectID" id="var$ConnectID"><!-- --></A>
+<div style="background='#ffffff'">
+<h4>
+<img src="../media/images/PublicProperty.gif" border="0" /> <strong class="property">$ConnectID</strong> (line <span class="linenumber">41</span>)
+ </h4>
+<h4>Data type : string</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<h5>ÀÜÂ³ID</h5>
+<ul>
+	</ul>
+</div>
+<a name="var$Transaction" id="var$Transaction"><!-- --></A>
+<div style="background='#eeeeee'">
+<h4>
+<img src="../media/images/PublicProperty.gif" border="0" /> <strong class="property">$Transaction</strong> (line <span class="linenumber">46</span>)
+ </h4>
+<h4>Data type : boolean</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<h5>¥È¥é¥ó¥¶¥¯¥·¥ç¥ó¥Õ¥é¥°(TRUE:SQL¥¨¥é¡¼»þROLLBACK¤ò¼Â¹Ô)</h5>
+<ul>
+	</ul>
+</div>
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "tabPage1" ) );</script>
+</div>
+<div class="tab-page" id="tabPage2">
+<h2 class="tab">Method Detail</h2>
+<!-- ============ METHOD DETAIL =========== -->
+<strong>Summary:</strong><br />
+<div class="method-summary">
+				
+    <div class="method-definition">
+            <span class="method-result">void</span>
+        <a href="#methodclsDB" title="details" class="method-name">clsDB</a>
+        ()
+        </div>
+				
+    <div class="method-definition">
+            <span class="method-result">boolean</span>
+        <a href="#methodclose" title="details" class="method-name">close</a>
+        ()
+        </div>
+				
+    <div class="method-definition">
+            <span class="method-result">long</span>
+        <a href="#methodexecute" title="details" class="method-name">execute</a>
+        (<span class="var-type">string</span>&nbsp;<span class="var-name">$strQuery</span>)
+        </div>
+				
+    <div class="method-definition">
+            <span class="method-result">array</span>
+        <a href="#methodfetchArray" title="details" class="method-name">fetchArray</a>
+        (<span class="var-type">string</span>&nbsp;<span class="var-name">$lngResultID</span>, <span class="var-type">long</span>&nbsp;<span class="var-name">$lngResLine</span>)
+        </div>
+				
+    <div class="method-definition">
+            <span class="method-result">object ¥Õ¥£¡¼¥ë¥ÉÌ¾</span>
+        <a href="#methodfetchObject" title="details" class="method-name">fetchObject</a>
+        (<span class="var-type">string</span>&nbsp;<span class="var-name">$lngResultID</span>, <span class="var-type">long</span>&nbsp;<span class="var-name">$lngResLine</span>)
+        </div>
+				
+    <div class="method-definition">
+            <span class="method-result">array</span>
+        <a href="#methodfncColumnsArray" title="details" class="method-name">fncColumnsArray</a>
+        (<span class="var-type">string</span>&nbsp;<span class="var-name">$lngResultID</span>, <span class="var-type">long</span>&nbsp;<span class="var-name">$lngFieldNum</span>)
+        </div>
+				
+    <div class="method-definition">
+            <span class="method-result">boolean</span>
+        <a href="#methodfreeResult" title="details" class="method-name">freeResult</a>
+        (<span class="var-type">string</span>&nbsp;<span class="var-name">$lngResultID</span>)
+        </div>
+				
+    <div class="method-definition">
+            <span class="method-result">array</span>
+        <a href="#methodgetFieldName" title="details" class="method-name">getFieldName</a>
+        (<span class="var-type">string</span>&nbsp;<span class="var-name">$lngResultID</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$lngFieldNum</span>)
+        </div>
+				
+    <div class="method-definition">
+            <span class="method-result">long</span>
+        <a href="#methodgetFieldsCount" title="details" class="method-name">getFieldsCount</a>
+        (<span class="var-type">string</span>&nbsp;<span class="var-name">$lngResultID</span>)
+        </div>
+				
+    <div class="method-definition">
+            <span class="method-result">boolean</span>
+        <a href="#methodisOpen" title="details" class="method-name">isOpen</a>
+        ()
+        </div>
+				
+    <div class="method-definition">
+            <span class="method-result">boolean</span>
+        <a href="#methodopen" title="details" class="method-name">open</a>
+        (<span class="var-type">string</span>&nbsp;<span class="var-name">$strUserID</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$strPasswd</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$strDBName</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$strOptions</span>)
+        </div>
+				
+    <div class="method-definition">
+            <span class="method-result">string</span>
+        <a href="#methodreplaceLineFeed" title="details" class="method-name">replaceLineFeed</a>
+        (<span class="var-type">string</span>&nbsp;<span class="var-name">$strTarget</span>)
+        </div>
+				
+    <div class="method-definition">
+            <span class="method-result">boolean</span>
+        <a href="#methodtransactionBegin" title="details" class="method-name">transactionBegin</a>
+        ()
+        </div>
+				
+    <div class="method-definition">
+            <span class="method-result">boolean</span>
+        <a href="#methodtransactionCommit" title="details" class="method-name">transactionCommit</a>
+        ()
+        </div>
+</div>
+<hr />
+<A NAME='method_detail'></A>
+
+
+<a name="methodclsDB" id="methodclsDB"><!-- --></a>
+<div style="background='#ffffff'"><h4>
+<img src="../media/images/Constructor.gif" border="0" /> <strong class="method">Constructor clsDB</strong> (line <span class="linenumber">57</span>)
+ </h4> 
+<h4><i>void</i> <strong>clsDB(
+)</strong></h4>
+
+<!-- ========== Info from phpDoc block ========= -->
+<h5>¥³¥ó¥¹¥È¥é¥¯¥¿ 	¥¯¥é¥¹Æâ¤Î½é´ü²½¤ò¹Ô¤¦</h5>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="methodclose" id="methodclose"><!-- --></a>
+<div style="background='#eeeeee'"><h4>
+<img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method close</strong> (line <span class="linenumber">178</span>)
+ </h4> 
+<h4><i>boolean</i> <strong>close(
+)</strong></h4>
+
+<!-- ========== Info from phpDoc block ========= -->
+<h5>DB¤«¤éÀÚÃÇ</h5>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>return</strong> - TRUE,FALSE</li>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="methodexecute" id="methodexecute"><!-- --></a>
+<div style="background='#ffffff'"><h4>
+<img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method execute</strong> (line <span class="linenumber">203</span>)
+ </h4> 
+<h4><i>long</i> <strong>execute(
+string
+$strQuery)</strong></h4>
+
+<!-- ========== Info from phpDoc block ========= -->
+<h5>SQL¤Î¼Â¹Ô</h5>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>string $strQuery</strong>: ¼Â¹Ô¤¹¤ëSQLÊ¸</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>return</strong> - ·ë²Ì¥Ð¥Ã¥Õ¥¡ID             boolean FALSE</li>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="methodfetchArray" id="methodfetchArray"><!-- --></a>
+<div style="background='#eeeeee'"><h4>
+<img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method fetchArray</strong> (line <span class="linenumber">297</span>)
+ </h4> 
+<h4><i>array</i> <strong>fetchArray(
+string
+$lngResultID, long
+$lngResLine)</strong></h4>
+
+<!-- ========== Info from phpDoc block ========= -->
+<h5>·ë²ÌÇÛÎó¤Î»ØÄê¹Ô¤òÏ¢ÁÛÇÛÎó¤Ë¼èÆÀ¤¹¤ë</h5>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>string $lngResultID</strong>: ·ë²ÌID</li>
+			<li><strong>long $lngResLine</strong>: ¼èÆÀ¤¹¤ë·ë²Ì¹Ô</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>return</strong> - ¼èÆÀ¥Ç¡¼¥¿ÇÛÎó</li>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="methodfetchObject" id="methodfetchObject"><!-- --></a>
+<div style="background='#ffffff'"><h4>
+<img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method fetchObject</strong> (line <span class="linenumber">447</span>)
+ </h4> 
+<h4><i>object ¥Õ¥£¡¼¥ë¥ÉÌ¾</i> <strong>fetchObject(
+string
+$lngResultID, long
+$lngResLine)</strong></h4>
+
+<!-- ========== Info from phpDoc block ========= -->
+<h5>·ë²ÌÇÛÎó¤Î»ØÄê¹Ô¤ò¥ª¥Ö¥¸¥§¥¯¥È¤Ç¼èÆÀ¤¹¤ë</h5>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>string $lngResultID</strong>: ·ë²ÌID</li>
+			<li><strong>long $lngResLine</strong>: ¼èÆÀ¤¹¤ë·ë²Ì¹Ô</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="methodfncColumnsArray" id="methodfncColumnsArray"><!-- --></a>
+<div style="background='#eeeeee'"><h4>
+<img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method fncColumnsArray</strong> (line <span class="linenumber">323</span>)
+ </h4> 
+<h4><i>array</i> <strong>fncColumnsArray(
+string
+$lngResultID, long
+$lngFieldNum)</strong></h4>
+
+<!-- ========== Info from phpDoc block ========= -->
+<h5>·ë²ÌÇÛÎó¤Î¥«¥é¥àÌ¾¤òÇÛÎó¤Ë¼èÆÀ¤¹¤ë</h5>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>string $lngResultID</strong>: ·ë²ÌID</li>
+			<li><strong>long $lngFieldNum</strong>: ¥Õ¥£¡¼¥ë¥É¿ô</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>return</strong> - ¼èÆÀ¥Ç¡¼¥¿ÇÛÎó</li>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="methodfreeResult" id="methodfreeResult"><!-- --></a>
+<div style="background='#ffffff'"><h4>
+<img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method freeResult</strong> (line <span class="linenumber">356</span>)
+ </h4> 
+<h4><i>boolean</i> <strong>freeResult(
+string
+$lngResultID)</strong></h4>
+
+<!-- ========== Info from phpDoc block ========= -->
+<h5>·ë²ÌID¡Ê·ë²Ì¡Ë¤ò²òÊü¤¹¤ë</h5>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>string $lngResultID</strong>: ·ë²ÌID</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>return</strong> - TRUE,FALSE</li>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="methodgetFieldName" id="methodgetFieldName"><!-- --></a>
+<div style="background='#eeeeee'"><h4>
+<img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method getFieldName</strong> (line <span class="linenumber">417</span>)
+ </h4> 
+<h4><i>array</i> <strong>getFieldName(
+string
+$lngResultID, mixed
+$lngFieldNum)</strong></h4>
+
+<!-- ========== Info from phpDoc block ========= -->
+<h5>·ë²Ì¤Î¥Õ¥£¡¼¥ë¥ÉÌ¾¤ò¼èÆÀ¤¹¤ë</h5>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>string $lngResultID</strong>: ¥Õ¥£¡¼¥ë¥ÉID(0¤«¤é»Ï¤Þ¤ë¥¤¥ó¥Ç¥Ã¥¯¥¹)</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>return</strong> - ¥Õ¥£¡¼¥ë¥ÉÌ¾             boolean FALSE</li>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="methodgetFieldsCount" id="methodgetFieldsCount"><!-- --></a>
+<div style="background='#ffffff'"><h4>
+<img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method getFieldsCount</strong> (line <span class="linenumber">386</span>)
+ </h4> 
+<h4><i>long</i> <strong>getFieldsCount(
+string
+$lngResultID)</strong></h4>
+
+<!-- ========== Info from phpDoc block ========= -->
+<h5>·ë²Ì¤Î¥Õ¥£¡¼¥ë¥É¿ô¤ò¼èÆÀ¤¹¤ë</h5>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>string $lngResultID</strong>: ·ë²ÌID</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>return</strong> - ¥Õ¥£¡¼¥ë¥É¿ô             boolean FALSE</li>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="methodisOpen" id="methodisOpen"><!-- --></a>
+<div style="background='#eeeeee'"><h4>
+<img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method isOpen</strong> (line <span class="linenumber">74</span>)
+ </h4> 
+<h4><i>boolean</i> <strong>isOpen(
+)</strong></h4>
+
+<!-- ========== Info from phpDoc block ========= -->
+<h5>ÀÜÂ³Ãæ¤«¤É¤¦¤«¤Î¼èÆÀ</h5>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>return</strong> - TRUE,FALSE</li>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="methodopen" id="methodopen"><!-- --></a>
+<div style="background='#ffffff'"><h4>
+<img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method open</strong> (line <span class="linenumber">98</span>)
+ </h4> 
+<h4><i>boolean</i> <strong>open(
+string
+$strUserID, string
+$strPasswd, string
+$strDBName, string
+$strOptions)</strong></h4>
+
+<!-- ========== Info from phpDoc block ========= -->
+<h5>DB¤ØÀÜÂ³</h5>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>string $strUserID</strong>: ¥æ¡¼¥¶¡¼ID</li>
+			<li><strong>string $strPasswd</strong>: ¥Ñ¥¹¥ï¡¼¥É</li>
+			<li><strong>string $strDBName</strong>: ¥Ç¡¼¥¿¥Ù¡¼¥¹Ì¾</li>
+			<li><strong>string $strOptions</strong>: ¥Ç¡¼¥¿¥Ù¡¼¥¹ÀÜÂ³¥ª¥×¥·¥ç¥ó¥Ñ¥é¥á¡¼¥¿</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>return</strong> - TRUE,FALSE</li>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="methodreplaceLineFeed" id="methodreplaceLineFeed"><!-- --></a>
+<div style="background='#eeeeee'"><h4>
+<img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method replaceLineFeed</strong> (line <span class="linenumber">472</span>)
+ </h4> 
+<h4><i>string</i> <strong>replaceLineFeed(
+string
+$strTarget)</strong></h4>
+
+<!-- ========== Info from phpDoc block ========= -->
+<h5>ÂÐ¾ÝÊ¸»úÎó¤Î²þ¹Ô¥³¡¼¥É¤ò&lt;LF&gt;¤ËÅý°ì¤¹¤ë</h5>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>string $strTarget</strong>: ÂÐ¾ÝÊ¸»úÎó</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>return</strong> - ½èÍýºÑ¤ßÊ¸»úÎó</li>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="methodtransactionBegin" id="methodtransactionBegin"><!-- --></a>
+<div style="background='#ffffff'"><h4>
+<img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method transactionBegin</strong> (line <span class="linenumber">245</span>)
+ </h4> 
+<h4><i>boolean</i> <strong>transactionBegin(
+)</strong></h4>
+
+<!-- ========== Info from phpDoc block ========= -->
+<h5>¥È¥é¥ó¥¶¥¯¥·¥ç¥ó³«»Ï(BEGIN)</h5>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>return</strong> - TRUE,FALSE</li>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="methodtransactionCommit" id="methodtransactionCommit"><!-- --></a>
+<div style="background='#eeeeee'"><h4>
+<img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method transactionCommit</strong> (line <span class="linenumber">270</span>)
+ </h4> 
+<h4><i>boolean</i> <strong>transactionCommit(
+)</strong></h4>
+
+<!-- ========== Info from phpDoc block ========= -->
+<h5>¥È¥é¥ó¥¶¥¯¥·¥ç¥ó´°Î»(COMMIT)</h5>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>return</strong> - TRUE,FALSE</li>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "tabPage2" ) );</script></div>
+<div class="tab-page" id="iVars">
+<h2 class="tab">Inherited Variables</h2>
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "iVars" ) );</script>
+<!-- =========== VAR INHERITED SUMMARY =========== -->
+<A NAME='var_inherited_summary'><!-- --></A>
+<h3>Inherited Class Variable Summary</h3>
+
+	</div>
+<div class="tab-page" id="iMethods">
+<h2 class="tab">Inherited Methods</h2>
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "iMethods" ) );</script>
+<!-- =========== INHERITED METHOD SUMMARY =========== -->
+<A NAME='functions_inherited'><!-- --></A>
+<h3>Inherited Method Summary</h3>
+
+	</div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+
+setupAllTabs();
+
+//]]>
+</script>
+	<div id="credit">
+		<hr />
+		Documentation generated on Mon,  5 Jan 2004 18:37:32 +0900 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.2.3</a>
+	</div>
+</body>
+</html>

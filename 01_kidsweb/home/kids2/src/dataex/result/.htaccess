@@ -1,0 +1,13 @@
+AddType application/x-httpd-php .html
+
+php_value include_path /Users/solcom/Desktop/Git/kuwagata/webresource/01_kidsweb/home/kids2/lib;/Users/solcom/Desktop/Git/kuwagata/webresource/01_kidsweb/usr/local/lib/php
+
+# Added by k.saito
+php_value default_charset utf-8
+php_value mbstring.internal_encoding utf-8
+php_value mbstring.http_input utf-8
+#php_value mbstring.http_input UCS-2LE
+php_value mbstring.http_output utf-8
+
+#php_value iconv.input_encoding UCS-2LE
+#php_value iconv.internal_encoding UCS-2LE

@@ -1,0 +1,4 @@
+ SELECT mc.lngcompanycode, mc.strcompanydisplayname FROM m_company mc, m_attribute ma, m_attributerelation mar WHERE mc.lngcompanycode = mar.lngcompanycode AND mar.lngattributecode = ma.lngattributecode AND mar.lngattributecode = 2 AND mc.bytcompanydisplayflag = true AND mc.strcompanydisplaycode = '0021' ORDER BY mc.strcompanydisplaycode 
+ SELECT mc.lngcompanycode, mc.strcompanydisplayname FROM m_company mc, m_attribute ma, m_attributerelation mar WHERE mc.lngcompanycode = mar.lngcompanycode AND mar.lngattributecode = ma.lngattributecode AND mar.lngattributecode = 2 AND mc.bytcompanydisplayflag = true AND mc.strcompanydisplaycode = '0021' ORDER BY mc.strcompanydisplaycode 
+id	name1
+462	SPホビー事業部　経費

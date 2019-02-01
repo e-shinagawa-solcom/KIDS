@@ -1,0 +1,190 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html lang="ja">
+<head>
+<title>K.I.D.S.</title>
+<meta http-equiv="content-type" content="text/html; charset=euc-jp">
+
+<script type="text/javascript" language="javascript" src="/layout/type01/cmn/images.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
+
+<script type="text/javascript" language="javascript" src="/result/cmn/functions.js" charset="utf-8"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="/result/cmn/layout.css">
+
+<script type="text/javascript" language="javascript" src="/cmn/processing_module.js"></script>
+<script type="text/javascript" language="javascript" src="/uc/cmn/resultexstr.js"></script>
+<script type="text/javascript" language="javascript" src="/list/result/cmn/functions.js"></script>
+
+</head>
+<body onload="fncChgEtoJ( '_%strMode%_' );">
+
+
+
+<!--ダミー-->
+<table cellpadding="5" cellspacing="0" border="0" bgcolor="#6f8180" align="center">
+	<tr class="SegColumn">
+		<td id="ControlTitle"></td>
+	</tr>
+</table>
+
+<br>
+
+<table cellpadding="5" cellspacing="0" border="0" bgcolor="#f1f1f1" align="center">
+	<tr>
+		<td>
+
+			<table width="100%" cellpadding="0" cellspacing="1" border="0" bgcolor="#6f8180" align="center">
+
+				<tr>
+					<td id="bytInvalidFlag" class="SegColumn">Login permission</td>
+					<td class="Segs">_%bytInvalidFlag%_</td>
+				</tr>
+
+				<tr>
+					<td id="lngUserCode" class="SegColumn">User code</td>
+					<td class="Segs">_%lngUserCode%_</td>
+				</tr>
+
+				<tr>
+					<td id="strUserID" class="SegColumn">User ID</td>
+					<td class="Segs">_%strUserID%_</td>
+				</tr>
+
+				<tr>
+					<td id="strPasswd" class="SegColumn">Password</td>
+					<td class="Segs">_%strPasswd%_</td>
+				</tr>
+
+				<tr>
+					<td id="bytMailTransmitFlag" class="SegColumn">Email permission</td>
+					<td class="Segs">_%bytMailTransmitFlag%_</td>
+				</tr>
+
+				<tr>
+					<td id="strMailAddress" class="SegColumn">Email</td>
+					<td class="Segs">_%strMailAddress%_</td>
+				</tr>
+
+				<tr>
+					<td id="bytUserDisplayFlag" class="SegColumn">User permission</td>
+					<td class="Segs">_%bytUserDisplayFlag%_</td>
+				</tr>
+
+				<tr>
+					<td id="strUserDisplayCode" class="SegColumn">Display user code</td>
+					<td class="Segs">_%strUserDisplayCode%_</td>
+				</tr>
+
+				<tr>
+					<td id="strUserDisplayName" class="SegColumn">Display user name</td>
+					<td class="Segs">_%strUserDisplayName%_</td>
+				</tr>
+
+				<tr>
+					<td id="strUserFullName" class="SegColumn">User full name</td>
+					<td class="Segs">_%strUserFullName%_</td>
+				</tr>
+
+				<tr>
+					<td id="lngCompanyCode" class="SegColumn">Company</td>
+					<td class="Segs">_%strCompanyName%_</td>
+				</tr>
+
+				<tr>
+					<td id="aryGroup" class="SegColumn">Group</td>
+					<td class="Segs">_%aryGroup%_</td>
+				</tr>
+
+				<tr>
+					<td id="strAuthorityGroupName" class="SegColumn">Authority group</td>
+					<td class="Segs">_%strAuthorityGroupName%_</td>
+				</tr>
+
+				<tr>
+					<td id="strAccessIPAddress" class="SegColumn">Access IP Address</td>
+					<td class="Segs">_%strAccessIPAddress%_</td>
+				</tr>
+
+				<tr>
+					<td id="strUserImageFileName" class="SegColumn">User image</td>
+					<td class="Segs"><img src="_%strUserImageFileName%_"></td>
+				</tr>
+
+				<tr>
+					<td id="strNote" class="SegColumn">Remark</td>
+					<td class="Segs">_%strNote%_</td>
+				</tr>
+
+			</table>
+
+		</td>
+	</tr>
+</table>
+
+<br>
+
+<table cellpadding="5" cellspacing="0" border="0" bgcolor="#f1f1f1" align="center">
+	<tr>
+		<td>
+
+			<form name="form1" action="action.php" method="POST">
+				<span id="objQuery"></span>
+				<input type="hidden" name="lngOrderNo" value="_%lngorderno%_">
+				<input type="hidden" name="strSessionID" value="_%strSessionID%_">
+				<input type="hidden" name="strSubmit" value="true">
+				<input type="hidden" name="lngFunctionCode" value="_%lngFunctionCode%_">
+				<input type="hidden" name="lngUserCode" value="_%lngUserCode%_">
+				<input type="hidden" name="strPassword" value="_%strPassword%_">
+				<input type="hidden" name="strPasswordCheck" value="_%strPasswordCheck%_">
+				<input type="hidden" name="bytMailTransmitFlag" value="_%bytMailTransmitFlag%_">
+				<input type="hidden" name="strMailAddress" value="_%strMailAddress%_">
+				<input type="hidden" name="strUserDisplayCode" value="_%strUserDisplayCode%_">
+				<input type="hidden" name="strUserDisplayName" value="_%strUserDisplayName%_">
+				<input type="hidden" name="strUserFullName" value="_%strUserFullName%_">
+				<input type="hidden" name="lngAttributeCode" value="_%lngAttributeCode%_">
+				<input type="hidden" name="lngCompanyCodeOriginal" value="_%lngCompanyCodeOriginal%_">
+				<input type="hidden" name="lngCompanyCode" value="_%lngCompanyCode%_">
+				<input type="hidden" name="strCompanyName" value="_%strCompanyName%_">
+				<input type="hidden" name="lngGroupCodeOriginal" value="_%lngGroupCodeOriginal%_">
+				<input type="hidden" name="lngGroupCode" value="_%lngGroupCode%_">
+				<input type="hidden" name="strGroupName" value="_%strGroupName%_">
+				<input type="hidden" name="strNote" value="_%strNote%_">
+				<input type="hidden" name="bytInvalidFlag_Error" value="_%bytInvalidFlag_Error%_">
+				<input type="hidden" name="lngUserCode_Error" value="_%lngUserCode_Error%_">
+				<input type="hidden" name="strUserID_Error" value="_%strUserID_Error%_">
+				<input type="hidden" name="strPassword_Error" value="_%strPassword_Error%_">
+				<input type="hidden" name="strPasswordCheck_Error" value="_%strPasswordCheck_Error%_">
+				<input type="hidden" name="strMailAddress_Error" value="_%strMailAddress_Error%_">
+				<input type="hidden" name="strUserDisplayCode_Error" value="_%strUserDisplayCode_Error%_">
+				<input type="hidden" name="strUserDisplayName_Error" value="_%strUserDisplayName_Error%_">
+				<input type="hidden" name="strUserFullName_Error" value="_%strUserFullName_Error%_">
+				<input type="hidden" name="lngCompanyCode_Error" value="_%lngCompanyCode_Error%_">
+				<input type="hidden" name="lngGroupCode_Error" value="_%lngGroupCode_Error%_">
+				<input type="hidden" name="strNote_Error" value="_%strNote_Error%_">
+				<input type="hidden" name="lngUserCodeConditions" value="_%lngUserCodeConditions%_">
+				<input type="hidden" name="bytInvalidFlagDisabled" value="_%bytInvalidFlagDisabled%_">
+				<input type="hidden" name="strUserIDDisabled" value="_%strUserIDDisabled%_">
+				<input type="hidden" name="bytUserDisplayFlagDisabled" value="_%bytUserDisplayFlagDisabled%_">
+				<input type="hidden" name="lngAuthorityGroupCodeDisabled" value="_%lngAuthorityGroupCodeDisabled%_">
+				<input type="hidden" name="strUserID" value="_%strUserID%_">
+				<input type="hidden" name="bytInvalidFlag" value="_%bytInvalidFlag%_">
+				<input type="hidden" name="bytUserDisplayFlag" value="_%bytUserDisplayFlag%_">
+				<input type="hidden" name="lngAuthorityGroupCode" value="_%lngAuthorityGroupCode%_">
+				<input type="hidden" name="lngAccessIPAddressCode" value="_%lngAccessIPAddressCode%_">
+				<input type="hidden" name="filename" value="action.php">
+			</form>
+
+		</td>
+	</tr>
+</table>
+
+
+<br>
+
+
+<script language=javascript>
+fncShowHidePreload( 1 );
+</script>
+
+
+</body>
+</html>

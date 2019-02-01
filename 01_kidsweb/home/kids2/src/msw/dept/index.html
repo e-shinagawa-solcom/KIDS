@@ -1,0 +1,189 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html lang="ja">
+<head>
+<title>MASTER SERCH WINDOW - [DEPT & IN CHARGE NAME]</title>
+<meta http-equiv="content-type" content="text/html; charset=euc-jp">
+
+
+<!-- START COMMON LAYOUT FILES -->
+<script type="text/javascript" language="javascript" src="/layout/type01/msw/cmn/images.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/type01/msw/cmn/initlayoutbase.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/type01/msw/cmn/initlayouttab.js"></script>
+<!-- END COMMON LAYOUT FILES -->
+
+
+<!-- START COMMON FILES -->
+<link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
+<link rel="stylesheet" type="text/css" media="screen" href="/msw/cmn/styles.css">
+<script type="text/javascript" language="javascript" src="/msw/cmn/functions.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/masterlib.js"></script>
+<!-- END COMMON FILES -->
+
+
+
+<!-- START MASTER [DEPT & IN CHARGE NAME] FILES -->
+<script type="text/javascript" language="javascript" src="exstr.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/type01/msw/cmn/initlayoutquery.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="layout.css">
+<!-- END MASTER [DEPT & IN CHARGE NAME]] FILES -->
+
+
+
+</head>
+<body id="BaseBack" onContextmenu="return false;" onload="initLayoutBase();initLayoutDragbar();initLayoutTab();initLayoutQuery();" onclick="parent.Zchange( parent.MiFrame02 );">
+
+
+
+<!-- データバインド用オブジェクト -->
+<OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting" WIDTH="0" HEIGHT="0"></OBJECT>
+<Script for="objDataSourceSetting" event="ondatasetcomplete">
+	subLoadMasterSetting(this.recordset,0);
+	document.all.lngSearchResultCount.value=this.recordset.recordcount;
+	document.all.lngCounterParentHidden.value = this.recordset.recordcount;
+	if( this.recordset.recordcount > 0 ) document.all.objGroupName.focus();
+</Script>
+<OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting1" WIDTH="0" HEIGHT="0"></OBJECT>
+<Script for="objDataSourceSetting1" event="ondatasetcomplete">
+	subLoadMasterSetting(this.recordset,1);
+	document.all.lngSearchResultCount.value=this.recordset.recordcount;
+	document.all.lngCounterChildHidden.value = this.recordset.recordcount;
+	if( this.recordset.recordcount > 0 ) document.all.objUserName.focus();
+</Script>
+
+
+<form name="MSW" action="" method="post">
+
+
+
+
+<span id="DeptDrag"></span>
+<span id="MswCloseBt"></span>
+
+
+
+
+<!-- ******************** START TAB ******************** -->
+<p id="TabSet">
+<span id="TabD" onclick="DeptShowD( document.all.strGroupCode );return false;"></span>
+<span id="TabI" onfocus="ItabOn( document.all.Itab );" onblur="ItabOff( document.all.Itab );fncSubmasterTabindex( 'dept' , parent.MiFrame02 , document.all.strGroupCode , document.all.strUserCode );" onclick="DeptShowI( document.all.strUserCode );return false;" tabindex="5"></span>
+</p>
+
+<!-- ******************** END TAB ******************** -->
+
+
+
+
+
+<!-- ************************* START DEPT ************************* -->
+
+<p id="InputA">
+
+<span id="SegABodys"></span>
+<span id="SegABottom"></span>
+
+<span id="SearchHeader01"></span>
+
+<span id="SegA01_1">部門コード</span>
+<span id="SegA01_2">部門名称</span>
+
+
+
+<span id="VarsA01_1">
+	<input class="TxtMSW01L" type="text" name="strGroupCode" size="10" maxlength="10" onfocus="setIME(this.name);chColorOn(this);fncInvalidKey();" onblur="chColorOff(this);fncEffectiveKey();" onchange="fncBothCodeCheck( this.name , strGroupCodeH );" tabindex="1">
+</span>
+<span id="VarsA01_2">
+	<input class="TxtMSW06L" type="text" name="strGroupName" size="25" maxlength="25"  onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="2">
+</span>
+
+
+<span id="SearchButton01" onclick="subLoadMasterOption( 'swGroup', strGroupCode , objGroupName , Array(strGroupCode.value, strGroupName.value), objDataSourceSetting, 0 );return false;"></span>
+
+
+<span id="SegBBodys"></span>
+<span id="SegBBottom"></span>
+
+<span id="ResultHeader01"></span>
+
+
+<span id="VarsB01">
+	<select class="SlctMSW01" size="10" name="objGroupName" onchange="fncViewMasterDataParent( this.value , strGroupCode , strGroupName , strGroupCodeH , objUserName , strUserCode , strUserName );return false;" ondblclick="fncSetMasterDataParent( 'dept' , this.value , objUserName , strUserCode , strUserName );return false;" disabled tabindex="4">
+	</select>
+</span>
+
+
+</p>
+
+<!-- ************************* END DEPT ************************* -->
+
+
+
+
+
+<!-- ************************* START IN CHARGE NAME ************************* -->
+
+<p id="InputB">
+<span id="SegCBodys"></span>
+<span id="SegCBottom"></span>
+
+<span id="SearchHeader01b"></span>
+
+
+<span id="SegC01_1">担当者コード</span>
+<span id="SegC01_2">担当者名称</span>
+
+
+<span id="VarsC01_1">
+	<input class="disTxtMSW01L" type="text" name="strGroupCodeH" size="10" maxlength="10" disabled>-&nbsp;<input class="TxtMSW02L" type="text" name="strUserCode" size="10" maxlength="10" onfocus="setIME(this.name);chColorOn(this);fncInvalidKey();" onblur="chColorOff(this);fncEffectiveKey()" tabindex="6">
+</span>
+<span id="VarsC01_2">
+	<input class="TxtMSW06L" type="text" name="strUserName" size="25" maxlength="25" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="7">
+</span>
+
+
+<span id="SearchButton02" onclick="subLoadMasterOption( 'swUser', strUserCode , objUserName , Array(strGroupCode.value, strUserCode.value, strUserName.value), objDataSourceSetting1, 1 );return false;"></span>
+
+
+<span id="SegDBodys"></span>
+<span id="SegDBottom"></span>
+
+
+<span id="ResultHeader01b"></span>
+
+
+<span id="VarsD01">
+	<select class="SlctMSW01" size="10" name="objUserName" onchange="fncViewMasterDataChild( this.value , strUserCode , strUserName );return false;" ondblclick="fncSetMasterDataChild( 'dept' , this.value , strGroupCodeH , strGroupCode , strGroupName );return false;" disabled tabindex="9">
+	</select>
+</span>
+
+
+</p>
+
+<!-- ************************* END IN CHARGE NAME ************************* -->
+
+
+
+<span id="ApplyButton" onclick="fncSetMasterData( 'dept' , objGroupName , strGroupCode , strGroupName , strUserCode , strUserName );return false;" onfocus="fncApplyBtCharModeOn( document.all.AppBt );" onblur="fncApplyBtCharModeOff( document.all.AppBt );fncSubmasterTabindex( 'dept' , parent.MiFrame02 , document.all.strGroupCode , document.all.strUserCode );" tabindex="11"></span>
+<span id="ClearButton" onclick="fncClearValue( objGroupName , strGroupCode , strGroupName , strGroupCodeH , objUserName , strUserCode , strUserName );return false;"></span>
+
+<span id="Counter"></span>
+<span id="SearchResultCount"><input class="TxtCounter" type="text" name="lngSearchResultCount" value="" disabled></span>
+
+
+
+<!-- 適用データ格納 -->
+<input type="hidden" name="lngCodeParentHidden" value="">
+<input type="hidden" name="strNameParentHidden" value="">
+<input type="hidden" name="lngCodeChildHidden" value="">
+<input type="hidden" name="strNameChildHidden" value="">
+
+<!-- カウンター値格納 -->
+<input type="hidden" name="lngCounterParentHidden" value="">
+<input type="hidden" name="lngCounterChildHidden" value="">
+
+<!-- サブウィンドウタイプ識別 -->
+<input type="hidden" name="strSubMasterWindowType" value="dept">
+
+
+</form>
+</body>
+</html>

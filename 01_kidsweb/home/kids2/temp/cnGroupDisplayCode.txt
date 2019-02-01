@@ -1,0 +1,4 @@
+ SELECT mg.strgroupdisplaycode, mg.strgroupdisplaycode FROM m_group mg, m_attributerelation mar WHERE mg.lngcompanycode = mar.lngcompanycode AND mar.lngattributecode = 1 AND mg.bytgroupdisplayflag = true AND mg.lnggroupcode = '27' 
+ SELECT mg.strgroupdisplaycode, mg.strgroupdisplaycode FROM m_group mg, m_attributerelation mar WHERE mg.lngcompanycode = mar.lngcompanycode AND mar.lngattributecode = 1 AND mg.bytgroupdisplayflag = true AND mg.lnggroupcode = '27' 
+id	name1
+41	41

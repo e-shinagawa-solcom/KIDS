@@ -1,0 +1,356 @@
+<config>
+<header1>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/images.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutbase.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutquery.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayouttab.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutcommon.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayouterror.js"></script>
+</header1>
+
+
+<header2>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/uc/cmn/images.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/uc/regist/initlayout.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutdate.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutpunit.js"></script>
+</header2>
+
+
+<header3>
+<link rel="stylesheet" type="text/css" media="screen" href="layout.css">
+<link rel="stylesheet" type="text/css" media="screen" href="errorlayout.css">
+<script type="text/javascript" language="javascript" src="exstr.js"></script>
+<script type="text/javascript" language="javascript" src="functions.js"></script>
+<script type="text/javascript" language="javascript" src="/uc/cmn/functions.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
+</header3>
+
+
+<bodyonload>
+initLayoutBase();initLayoutUC();initLayoutQuery();initLayoutPunit();GetlngLanguageCode( _%lngLanguageCode%_ );Loading();
+</bodyonload>
+</config>
+
+
+<bgsound id="BeepSound" src="/error/dummy.aif" loop="1" balance="0" volume="-100">
+
+<!-- データバインド用オブジェクト -->
+<OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting" WIDTH="0" HEIGHT="0"></OBJECT>
+<Script for="objDataSourceSetting" event="ondatasetcomplete">subLoadMasterSetting(this.recordset,0);
+</script>
+<OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting2" WIDTH="0" HEIGHT="0"></OBJECT>
+<Script for="objDataSourceSetting2" event="ondatasetcomplete">subLoadMasterSetting(this.recordset,1);
+</script>
+
+<form name="PPP1" action="_%filename%_" method="POST">
+<input type="hidden" name="strSessionID" value="_%strSessionID%_">
+<input type="hidden" name="lngFunctionCode" value="_%lngFunctionCode%_">
+
+
+<!-- initLayoutError1( ErrInputA );initLayoutError2( ErrInputB ); -->
+
+
+<p id="Preload">
+	<iframe id="PreloadFrm" name="PreloadWin" frameborder="0" src="/preload/index.html"></iframe>
+</p>
+
+
+
+
+
+
+
+
+
+
+
+<!-- ////////////////////////////////// START MAIN TITLE ////////////////////////////////// -->
+<span id="MainTitle"></span>
+<!-- /////////////////////////////////// END MAIN TITLE /////////////////////////////////// -->
+
+
+
+
+
+
+
+
+
+<!-- /////////////////////////////////// START NAVIGAION /////////////////////////////////// -->
+<span id="NaviButton"></span>
+
+<p id="Navigations" onmouseout="NavigationOFF( Navigations , NaviButton );">
+<span id="Navi">
+	<iframe id="NaviIfrm" name="NAVIwin" frameborder="0" scrolling="no" src="/navi/uc/regist/index.html"></iframe>
+</span>
+</p>
+<!-- //////////////////////////////////// END NAVIGAION //////////////////////////////////// -->
+
+
+
+
+
+
+
+<!-- /////////////////////////////////// START INPUT A SEGMENTS /////////////////////////////////// -->
+<p id="InputA">
+
+
+<!-- BODYS -->
+<span id="SegABodys"></span>
+
+
+<!-- HEADER -->
+<span id="SegAHeader"></span>
+
+
+<!-- BOTTOM -->
+<span id="SegABottom"></span>
+
+
+<!-- QUERY BUTTON -->
+<span id="RegistBt" onClick="javascript:fncSubmitQuery( window.PPP1 );"></span>
+<span id="SegAClearBt" onClick="alert(lngAttributeCode.value);"></span>
+
+
+
+<!-- SEGMENTS -->
+<span id="SegA01">ログイン許可</span>
+<span id="SegA02">ユーザーコード</span>
+<span id="SegA03">ユーザーID</span>
+<span id="SegA04">パスワード</span>
+<span id="SegA05">パスワード確認</span>
+<span id="SegA06">メール配信許可</span>
+<span id="SegA07">メールアドレス</span>
+<span id="SegA08">ユーザー表示</span>
+<span id="SegA09">表示ユーザーコード</span>
+<span id="SegA10">表示ユーザー名</span>
+<span id="SegA11">フルネーム</span>
+<span id="SegA12">会社</span>
+<span id="SegA13">グループ</span>
+<span id="SegA1213"></span>
+<span id="SegA14">権限グループ</span>
+<span id="SegA15">アクセスIPアドレス</span>
+<span id="SegA16">備考</span>
+
+
+
+<!-- ログイン許可 -->
+<span id="VarsA01">
+	<input class="CheckBox14" type="checkbox" name="bytInvalidFlag" value="f" tabindex="" _%bytInvalidFlag%_ _%bytInvalidFlagDisabled%_>
+</span>
+
+<!-- ユーザーコード -->
+<span id="VarsA02">
+	<input class="disTxt10L" type="text" name="lngUserCode" value="_%lngUserCode%_" maxlength="2" disabled>
+</span>
+
+<!-- ユーザーID -->
+<span id="VarsA03">
+	<input class="Txt20L" type="text" name="strUserID" value="_%strUserID%_" maxlength="20" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="" _%strUserIDDisabled%_>
+</span>
+
+<!-- パスワード -->
+<span id="VarsA04">
+	<input class="Txt20L" type="password" name="strPasswordHash" value="" maxlength="20" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="">
+</span>
+
+<!-- パスワード確認 -->
+<span id="VarsA05">
+	<input class="Txt20L" type="password" name="strPasswordHashConfirm" value="" maxlength="20" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="">
+</span>
+
+<!-- メール配信許可 -->
+<span id="VarsA06">
+	<input class="CheckBox14" type="checkbox" name="bytMailtransmitFlag" value="t" tabindex="" _%bytMailtransmitFlag%_ _%bytMailtransmitFlagDisabled%_>
+</span>
+
+<!-- メールアドレス -->
+<span id="VarsA07">
+	<input class="Txt40L" type="text" name="strMailAddress" value="_%strMailAddress%_" maxlength="40" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="">
+</span>
+
+<!-- 表示ユーザーフラグ -->
+<span id="VarsA08">
+	<input class="CheckBox14" type="checkbox" name="bytUserDisplayFlag" value="t" tabindex="" _%bytUserDisplayFlag%_ _%bytUserDisplayFlagDisabled%_>
+</span>
+
+<!-- 表示ユーザーコード -->
+<span id="VarsA09">
+	<input class="Txt03L" type="text" name="strUserDisplayCode" value="_%strUserDisplayCode%_" maxlength="3" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="">
+</span>
+
+
+<!-- 表示ユーザー名 -->
+<span id="VarsA10">
+	<input class="Txt20L" type="text" name="strUserDisplayName" value="_%strUserDisplayName%_" maxlength="20" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="">
+</span>
+
+<!-- フルネーム -->
+<span id="VarsA11">
+	<input class="Txt40L" type="text" name="strUserFullName" value="_%strUserFullName%_" maxlength="40" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="">
+</span>
+
+<!-- 会社 -->
+<input type="text" name="lngAttributeCode" value="_%lngAttributeCode%_" style="visibility:hidden">
+<span id="VarsA12">
+	<input class="disTxt52L" type="hidden" name="lngCompanyCode" value="_%lngCompanyCode%_">
+	<input class="disTxt52L" type="text" name="strCompanyName" value="_%strCompanyName%_" maxlength="40" contenteditable=false unselectable=off>
+</span>
+
+<!-- グループ -->
+<span id="VarsA13">
+	<input class="disTxt52L" type="hidden" name="lngGroupCode" value="_%lngGroupCode%_">
+	<input class="disTxt52L" type="text" name="strGroupName" value="_%strGroupName%_" maxlength="40" contenteditable=false unselectable=off>
+</span>
+
+<!-- 権限グループ -->
+<span id="VarsA14">
+	<select class="Slt15" name="lngAuthorityGroupCode" tabindex="" _%lngAuthorityGroupCodeDisabled%_>
+	_%lngAuthorityGroupCode%_
+	</select>
+</span>
+
+<!-- アクセスIPアドレス -->
+<span id="VarsA15">
+	<select class="Slt100" name="lngAccessIPAddressCode" tabindex="">
+	_%lngAccessIPAddressCode%_
+	</select>
+</span>
+
+<!-- 備考 -->
+<span id="VarsA16">
+	<input class="Txt100L" type="text" name="strNote" value="_%strNote%_" maxlength="40" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="">
+</span>
+
+
+
+<!-- UNIT BUTTON -->
+<span id="PunitBt" onclick="fncSelectListSet(document.PPP1.lngCompanyCode, document.PPP1.lngGroupCode, document.PPP1.slctCompany, document.PPP1.slctGroup2);ShowCompanyGroup( CompanyGroupSet );fncChangeProperty(lngAttributeCode.value);"></span>
+
+</p>
+<!-- //////////////////////////////////// END INPUT A SEGMENTS //////////////////////////////////// -->
+
+
+
+
+
+
+
+
+<!-- /////////////////////////////////// START E TO J /////////////////////////////////// -->
+<span id="EtoJ"></span>
+<!-- //////////////////////////////////// END E TO J //////////////////////////////////// -->
+
+
+
+
+
+
+
+
+<!-- ///////// Company & Group Select Window ////////// -->
+<p id="CompanyGroupSet">
+
+<span id="CompanyGroupBody"></span>
+<!--
+<span id="Line1"></span>
+<span id="Line2"></span>
+-->
+
+<span id="AddDelBack"></span>
+<span id="UpDownBack"></span>
+<span id="CompanyGroupTitle"></span>
+
+
+
+<!-- 会社選択プルダウン -->
+<span id="selectCompany">
+	<select class="Slt50" name="slctCompany" tabindex="" onChange="
+		subLoadMasterOption( 15, slctCompany , slctGroup2 , '', objDataSourceSetting, 0 );
+		SetCompany( document.all.lngCompanyCode, document.all.strCompanyName, this );
+		fncSelectOptionDel(slctGroup1);
+		fncSelectOptionDel(slctGroup2);
+		document.all.lngGroupCode.value='';
+		document.all.strGroupName.value='';
+		index = this.selectedIndex;
+		subLoadMasterText(19, this.options[index], lngAttributeCode, '', objDataSourceSetting2, 1);
+	">
+		_%slctCompany%_
+	</select>
+</span>
+
+
+<!-- 選択グループ反映先リストボックス -->
+<span id="selectGroup1">
+	<select class="Slt50" size="10" name="slctGroup1" tabindex="" multiple>
+
+	</select>
+</span>
+
+
+<!-- 選択グループリストボックス -->
+<span id="selectGroup2">
+	<select class="Slt50" size="10" name="slctGroup2" tabindex="" multiple>
+		_%slctGroup2%_
+	</select>
+</span>
+
+
+<!-- リスト項目アップ・ダウンボタン -->
+<span id="ListUpBt" onclick="
+	ListMove( document.all.slctGroup1, 'UP' );
+	SetGroup( document.all.lngGroupCode, document.all.strGroupName,slctGroup1 );
+	"></span>
+<span id="ListDownBt" onclick="
+ListMove( document.all.slctGroup1, 'DOWN' );
+SetGroup( document.all.lngGroupCode, document.all.strGroupName,slctGroup1 );
+"></span>
+
+<!-- リスト項目追加・削除ボタン -->
+<span id="ListAddBt" onclick="
+fncSelectList(document.all.slctGroup2, document.all.slctGroup1);
+SetGroup( document.all.lngGroupCode, document.all.strGroupName,slctGroup1 );
+"></span>
+<span id="ListDelBt" onclick="
+fncSelectList(document.all.slctGroup1, document.all.slctGroup2);
+SetGroup( document.all.lngGroupCode, document.all.strGroupName,slctGroup1 );
+fncSelectListDEL(document.all.strGroupName,slctGroup1, document.all.lngGroupCode);
+"></span>
+
+
+</p>
+
+
+
+
+
+
+
+
+<p id="ErrInputA">
+<span id="ErrSegA01" style="_%bytInvalidFlag_Error%_ width:16;" onmouseover="ShowComment( Comments , '' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegA02" style="_%lngUserCode_Error%_ width:16;" onmouseover="ShowComment( Comments , '' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegA03" style="_%strUserID_Error%_ width:16;" onmouseover="ShowComment( Comments , '' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegA04" style="_%strPasswordHash_Error%_ width:16;" onmouseover="ShowComment( Comments , '' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegA05" style="_%strPasswordHashConfirm_Error%_ width:16;" onmouseover="ShowComment( Comments , '' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegA06" style="_%bytMailtransmitFlag_Error%_ width:16;" onmouseover="ShowComment( Comments , '' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegB07" style="_%strMailAddress_Error%_ width:16;" onmouseover="ShowComment( Comments , '' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegB08" style="_%bytUserDisplayFlag_Error%_ width:16;" onmouseover="ShowComment( Comments , '' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegA09" style="_%strUserDisplayCode_Error%_ width:16;" onmouseover="ShowComment( Comments , '' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegA10" style="_%strUserDisplayName_Error%_ width:16;" onmouseover="ShowComment( Comments , '' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegB11" style="_%strUserFullName_Error%_ width:16;" onmouseover="ShowComment( Comments , '' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegB12" style="_%lngCompanyCode_Error%_ width:16;" onmouseover="ShowComment( Comments , '' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegB13" style="_%lngGroupCode_Error%_ width:16;" onmouseover="ShowComment( Comments , '');" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegB14" style="_%lngAuthorityGroupCode_Error%_ width:16;" onmouseover="ShowComment( Comments , '' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegB15" style="_%lngAccressIPAddressCode_Error%_ width:16;" onmouseover="ShowComment( Comments , '' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegB16" style="_%strNote_Error%_ width:16;" onmouseover="ShowComment( Comments , '' );" onmouseout="HideComment( Comments );"></span>
+</p>
+
+
+<span id="Comments"></span>
+<span id="LayoutGrid"></span>
+</form>
+</body>
+</html>

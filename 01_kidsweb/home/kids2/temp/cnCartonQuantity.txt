@@ -1,0 +1,4 @@
+ SELECT mp.lngproductno, mp.lngCartonQuantity FROM m_product mp WHERE mp.bytinvalidflag = false AND mp.strproductcode = '00006' 
+ SELECT mp.lngproductno, mp.lngCartonQuantity FROM m_product mp WHERE mp.bytinvalidflag = false AND mp.strproductcode = '00006' 
+id	name1
+6	1

@@ -1,0 +1,53 @@
+<html lang="ja">
+<head>
+<title>K.I.D.S.</title>
+<meta http-equiv="content-type" content="text/html; charset=euc-jp">
+<script type="text/javascript" language="javascript" src="masterlib.js"></script>
+
+</head>
+
+<body >
+あいうえお
+
+<OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting" WIDTH="0" HEIGHT="0"></OBJECT>
+<Script for="objDataSourceSetting" event="ondatasetcomplete">
+	subLoadMasterSetting(this.recordset,0);
+</Script>
+<OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting2" WIDTH="0" HEIGHT="0"></OBJECT>
+<Script for="objDataSourceSetting2" event="ondatasetcomplete">
+	subLoadMasterSetting(this.recordset,1);
+</Script>
+
+<form name="PPP1" action="" method="post">
+<!--
+	<input class="TxtStyle02L" type="text" name="lngInChargeGroupCode" value="" maxlength="2" onfocus="" onblur="subLoadMasterCheck(this);" onchange="subLoadMasterText(1, this, strInChargeGroupName, '', objDataSourceSetting); lngInChargeUserCode.value='';strInChargeUserName.value='';" tabindex="3" >
+	<input class="TxtStyle06L" type="text" name="strInChargeGroupName" value="" maxlength="25" readonly>
+<br>
+	<input class="TxtStyle02L" type="text" name="lngInChargeUserCode" value="" maxlength="3" onfocus="" onblur="subLoadMasterCheck(this);" onChange="subLoadMasterText(1, this, strInChargeUserName, '', objDataSourceSetting, 0); subLoadMasterOption(3, this, lngProductUnitCode, '', objDataSourceSetting2, 1);" tabindex="5">
+	<input class="TxtStyle06L" type="text" name="strInChargeUserName" value="" maxlength="25" readonly>
+<br>
+
+	<input class="TxtStyle03L" type="text" name="lngInChargeGroupCode" value="" maxlength="4" onfocus="" onblur="subLoadMasterCheck(this);" onchange="subLoadMasterOption(10, this, objProductUnitCode, strInChargeGroupNames.value, objDataSourceSetting);" tabindex="3" >
+	<input class="TxtStyle13L" type="text" name="strInChargeGroupNames" value="" maxlength="4" onfocus="" onblur="subLoadMasterCheck(this);" tabindex="3" >
+-->
+
+<select name="objProductUnitCode" tabindex="12" onChange="alert(subLoadMasterGetIdName(objDataSourceSetting.recordset, this.value)['name']);" >
+	<OPTION VALUE=""></OPTION>
+</select>
+
+	<input class="TxtStyle" type="button" name="" value="" maxlength="4" onfocus="" onclick="subLoadMasterOptionClear(objProductUnitCode, true);" tabindex="3" >
+	<br>
+	<!-- 同一商品名チェック -->
+	製品英語
+	<input class="TxtStyle03Laa" type="text" name="strProductEnglishName" value="" maxlength="50" onfocus="" onblur="subLoadMasterCheck(this);" onchange="subLoadMasterProduct(14, this, productequalcheck, strProductEnglishName.value, lngInChargeGroupCode.value, objDataSourceSetting);" tabindex="3" size="50">
+	<br>
+	部門
+	<input class="TxtStyle03L" type="text" name="lngInChargeGroupCode"    value="" maxlength="4"  onfocus="" onblur="subLoadMasterCheck(this);" onchange="subLoadMasterProduct(14, this, productequalcheck, strProductEnglishName.value, lngInChargeGroupCode.value, objDataSourceSetting);" tabindex="3"  size="2">
+	<input type="hidden" name="productequalcheck" value="" onChange="alert();">
+	<br>
+	<input type="button" onclick="alert(productequalcheck.value);">
+	
+</form>
+
+</body>
+</html>

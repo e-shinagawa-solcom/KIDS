@@ -1,0 +1,18 @@
+[
+	{name : 'col0',		type:'text'},
+	{name : 'col1',		type:'text'},
+	{name : 'col2',		type:'text'},
+	{name : 'col3',		type:'text'},
+	{name : 'col4',		type:'text'},
+	{name : 'col5',		type:'text'},
+	{name : 'col6',		type:'text'},
+	{name : 'col7',		type:'float'},
+	{name : 'col8',		type:'text'},
+	{name : 'col9',		type:'text'},
+	{name : 'col10',		type:'text'},
+	{name : 'col11',		type:'int'},
+	{name : 'col12',		type:'text'},
+	{name : 'col13',		type:'text'},
+	{name : 'col14',		type:'text'},
+	{name : 'col15',		type:'text'}
+]

@@ -1,0 +1,27 @@
+// SigmaGrid用カラムセット
+[
+	{id: 'dtmappropriationdate',	header: "売上計上日",		width :80 },
+	{id: 'strsalescode',		header: "売上No",		width :60 },
+	{id: 'strcustomerreceivecode',	header: "受注No" ,		width :60 },
+	{id: 'strcompanydisplaycode',	header: "客CD",			width :20 },
+	{id: 'strcompanydisplayname',	header: "顧客名称" ,		width :180 },
+	{id: 'strgroupdisplaycode',	header: "部CD" ,		width :10 },
+	{id: 'strgroupdisplayname',	header: "部門名称" ,		width :70 },
+	{id: 'strcategoryname',		header: "カテゴリ" ,		width :60 },
+	{id: 'strslipcode',		header: "伝票No" ,		width :90 },
+	{id: 'strsalesclassname',	header: "売上区分" ,		width :60 },
+	{id: 'strproductcode',		header: "製CD" , 		width :20, align :'right'},
+	{id: 'strproductname',		header: "製品名称" ,		width :140},
+	{id: 'strgoodscode',		header: "顧客品番" ,		width :50},
+	{id: 'strmonetaryunitname',	header: "通貨名称" ,		width :50},
+	{id: 'curproductprice',		header: "単価" ,		width :110, align :'right'},
+	{id: 'productunit',		header: "単位" ,		width :10, align :'right'},
+	{id: 'lngproductquantity',	header: "数量" ,		width :80, align :'right'},
+	{id: 'cursubtotalprice',	header: "税抜金額" ,		width :110, align :'right'},
+	{id: 'tyousei1',		header: "調整" ,		width :10 },
+	{id: 'curtaxprice',		header: "税額" ,		width :90, align :'right'},
+	{id: 'tyousei2',		header: "調整" ,		width :10 },
+	{id: 'curtotalprice',		header: "合計金額" ,		width :110, align :'right'},
+	{id: 'tyousei3',		header: "調整" ,		width :10 },
+	{id: 'strnote',			header: "明細備考" ,		width :430}
+]

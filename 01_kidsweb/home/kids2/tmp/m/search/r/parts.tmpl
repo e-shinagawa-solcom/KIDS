@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html lang="ja">
+<head>
+<title>K.I.D.S.</title>
+<meta http-equiv="content-type" content="text/html; charset=euc-jp">
+
+
+<script type="text/javascript" language="javascript" src="/layout/type01/cmn/images.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/type01/m/cmn/images.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/type01/m/search/initlayoutsearch.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/type01/cmn/initlayoutcommon.js"></script>
+
+
+<script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/query.js"></script>
+<script type="text/vbscript" Language="vbscript" src="/cmn/vbsclass.js"></script>
+<script type="text/vbscript" Language="vbscript" src="/cmn/vbscript.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/lngcheck.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="/cmn/layout.css">
+<link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
+
+
+<link rel="stylesheet" type="text/css" media="screen" href="layout.css">
+<script type="text/javascript" language="javascript" src="exstr.js"></script>
+<script type="text/javascript" language="javascript" src="functions.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
+
+
+
+
+</head>
+<body id="Backs" oncontextmenu="return false;" onload="initLayoutSegs( Segs , Vars , '' , '' );fncAutoFocus( document.all.lngMonetaryRateCode );GetIfrmlngLanguageCode();fncMasterSearchOnload();Loading();">
+
+
+<span id="RMasterSearchObject"></span>
+
+
+<p id="Preload">
+	<iframe id="PreloadFrm" name="PreloadWin" frameborder="0" src="/preload/index.html" onload="fncObjectResize( this , 0 , 0 );"></iframe>
+</p>
+
+
+<form action="javascript:void(0);" name="form1">
+
+<input type="hidden" name="ActionScriptName" value="/m/result/r/index.php">
+<input type="hidden" name="strSessionID" value="_%strSessionID%_">
+
+
+<p id="Segs">
+<span id="SegA01">COLUMN1</span>
+<span id="SegA02">COLUMN2</span>
+<span id="SegA03">COLUMN3</span>
+</p>
+
+
+
+<p id="Vars">
+<span id="VarsA01">
+	<select class="SlctStyle01" name="lngMonetaryRateCode">
+		_%lngMonetaryRateCode%_
+	</select>
+</span>
+
+<span id="VarsA02">
+	<select class="SlctStyle01" name="lngMonetaryUnitCode">
+		_%lngMonetaryUnitCode%_
+	</select>
+</span>
+
+<span id="VarsA03">
+	<input class="CheckBox14" type="checkbox" name="now" value="1" onblur="fncDefaultTabindex( document.all.lngMonetaryRateCode );">
+</span>
+</p>
+
+
+<!-- <input type="button" onclick="fncQueryDialog( Vars1.value , Vars2.value );return false;"> -->
+<input type="hidden" name="Vars1" value="/m/regist/r/edit.php?strSessionID=41a22d3c6291a1860fb0228750104183&lngActionCode=1">
+<input type="hidden" name="Vars2" value="1">
+
+</form>
+</body>
+</html>

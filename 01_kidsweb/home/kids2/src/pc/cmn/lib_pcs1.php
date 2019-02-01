@@ -1,0 +1,1032 @@
+<?
+/** 
+*	仕入　詳細、削除、無効化関数群
+*
+*	@package   kuwagata
+*	@license   http://www.wiseknot.co.jp/ 
+*	@copyright Copyright &copy; 2003, Wiseknot 
+*	@author    Keiji Suzukaze <k-suzukaze@wiseknot.co.jp> 
+*	@access    public
+*	@version   1.01
+*
+*	処理概要
+*	検索結果関連の関数
+*
+*	修正履歴
+*
+*	2004.03.04	仕入の削除時にその仕入の状態により、対応する発注、仕入の状態を変更する関数を追加途中
+*	2004.03.09	換算区分のdefine設定追加
+*	2004.03.09	各最新データ取得時の処理に削除データ判別を追加
+*	2004.03.17	詳細表示時の単価部分の表示方式を小数点以下４桁に変更
+*	2004.03.29	詳細表示時の表示順を明細行番号順から表示用ソートキー順に変更
+*	2004.03.30	仕入科目、仕入部品が変更された場合でも、明細行番号のみを判断基準として相殺するように変更する
+*
+*/
+
+/**
+* 指定された仕入番号から仕入ヘッダ情報を取得するＳＱＬ文を作成
+*
+*	指定仕入番号のヘッダ情報の取得用ＳＱＬ文作成関数
+*
+*	@param  Integer 	$lngStockNo 			取得する仕入番号
+*	@return strQuery 	$strQuery 検索用SQL文
+*	@access public
+*/
+function fncGetStockHeadNoToInfoSQL ( $lngStockNo )
+{
+	// SQL文の作成
+	$aryQuery[] = "SELECT distinct on (s.lngStockNo) s.lngStockNo as lngStockNo, s.lngRevisionNo as lngRevisionNo";
+
+	// 登録日
+	$aryQuery[] = ", to_char( s.dtmInsertDate, 'YYYY/MM/DD HH:MI:SS' ) as dtmInsertDate";
+	// 計上日
+	$aryQuery[] = ", to_char( s.dtmAppropriationDate, 'YYYY/MM/DD' ) as dtmStockAppDate";
+	// 仕入No
+	$aryQuery[] = ", s.strStockCode as strStockCode";
+	// 発注No
+	$aryQuery[] = ", o.strOrderCode || '-' || o.strReviseCode as strOrderCode";
+	// 発注コード
+	$aryQuery[] = ", o.lngOrderNo as lngOrderNo";
+	// 発注コード
+	$aryQuery[] = ", o.strOrderCode as strRealOrderCode";
+	// 伝票コード
+	$aryQuery[] = ", s.strSlipCode as strSlipCode";
+	// 入力者
+	$aryQuery[] = ", s.lngInputUserCode as lngInputUserCode";
+	$aryQuery[] = ", input_u.strUserDisplayCode as strInputUserDisplayCode";
+	$aryQuery[] = ", input_u.strUserDisplayName as strInputUserDisplayName";
+	// 仕入先
+	$aryQuery[] = ", s.lngCustomerCompanyCode as lngCustomerCode";
+	$aryQuery[] = ", cust_c.strCompanyDisplayCode as strCustomerDisplayCode";
+	$aryQuery[] = ", cust_c.strCompanyDisplayName as strCustomerDisplayName";
+	// 部門
+	$aryQuery[] = ", s.lngGroupCode as lngInChargeGroupCode";
+	$aryQuery[] = ", inchg_g.strGroupDisplayCode as strInChargeGroupDisplayCode";
+	$aryQuery[] = ", inchg_g.strGroupDisplayName as strInChargeGroupDisplayName";
+	// 担当者
+	$aryQuery[] = ", s.lngUserCode as lngInChargeUserCode";
+	$aryQuery[] = ", inchg_u.strUserDisplayCode as strInChargeUserDisplayCode";
+	$aryQuery[] = ", inchg_u.strUserDisplayName as strInChargeUserDisplayName";
+	// 納品場所
+	$aryQuery[] = ", s.lngDeliveryPlaceCode as lngDeliveryPlaceCode";
+	$aryQuery[] = ", delv_c.strCompanyDisplayCode as strDeliveryDisplayCode";
+	$aryQuery[] = ", delv_c.strCompanyDisplayName as strDeliveryDisplayName";
+	// 通貨
+	$aryQuery[] = ", s.lngMonetaryUnitCode as lngMonetaryUnitCode";
+	$aryQuery[] = ", mu.strMonetaryUnitName as strMonetaryUnitName";
+	$aryQuery[] = ", mu.strMonetaryUnitSign as strMonetaryUnitSign";
+	// レートタイプ
+	$aryQuery[] = ", s.lngMonetaryRateCode as lngMonetaryRateCode";
+	$aryQuery[] = ", mr.strMonetaryRateName as strMonetaryRateName";
+	// 換算レート
+	$aryQuery[] = ", s.curConversionRate as curConversionRate";
+	// 状態
+	$aryQuery[] = ", s.lngStockStatusCode as lngStockStatusCode";
+	$aryQuery[] = ", ss.strStockStatusName as strStockStatusName";
+	// 支払条件
+	$aryQuery[] = ", s.lngPayConditionCode as lngPayConditionCode";
+	$aryQuery[] = ", pc.strPayConditionName as strPayConditionName";
+	// 仕入有効期限日
+	$aryQuery[] = ", to_char( s.dtmExpirationDate, 'YYYY/MM/DD' ) as dtmExpirationDate";
+	// 備考
+	$aryQuery[] = ", s.strNote as strNote";
+	// 合計金額
+	$aryQuery[] = ", To_char( s.curTotalPrice, '9,999,999,990.99' ) as curTotalPrice";
+
+	$aryQuery[] = " FROM m_Stock s LEFT JOIN m_Order o ON s.lngOrderNo = o.lngOrderNo";
+	$aryQuery[] = " LEFT JOIN m_User input_u ON s.lngInputUserCode = input_u.lngUserCode";
+	$aryQuery[] = " LEFT JOIN m_Company cust_c ON s.lngCustomerCompanyCode = cust_c.lngCompanyCode";
+	$aryQuery[] = " LEFT JOIN m_Company delv_c ON s.lngDeliveryPlaceCode = delv_c.lngCompanyCode";
+	$aryQuery[] = " LEFT JOIN m_Group inchg_g ON s.lngGroupCode = inchg_g.lngGroupCode";
+	$aryQuery[] = " LEFT JOIN m_User inchg_u ON s.lngUserCode = inchg_u.lngUserCode";
+	$aryQuery[] = " LEFT JOIN m_StockStatus ss USING (lngStockStatusCode)";
+	$aryQuery[] = " LEFT JOIN m_PayCondition pc ON s.lngPayConditionCode = pc.lngPayConditionCode";
+	$aryQuery[] = " LEFT JOIN m_MonetaryUnit mu ON s.lngMonetaryUnitCode = mu.lngMonetaryUnitCode";
+	$aryQuery[] = " LEFT JOIN m_MonetaryRateClass mr ON s.lngMonetaryRateCode = mr.lngMonetaryRateCode";
+
+	$aryQuery[] = " WHERE s.lngStockNo = " . $lngStockNo . "";
+
+	$strQuery = implode( "\n", $aryQuery );
+
+	return $strQuery;
+}
+
+
+
+
+
+
+/**
+* 指定された仕入番号から仕入明細情報を取得するＳＱＬ文を作成
+*
+*	指定仕入番号の明細情報の取得用ＳＱＬ文作成関数
+*
+*	@param  Integer 	$lngStockNo 			取得する仕入番号
+*	@return strQuery 	$strQuery 検索用SQL文
+*	@access public
+*/
+function fncGetStockDetailNoToInfoSQL ( $lngStockNo )
+{
+// 2004.03.29 suzukaze update start
+	// SQL文の作成
+//	$aryQuery[] = "SELECT distinct on (sd.lngStockDetailNo) sd.lngStockDetailNo as lngRecordNo, ";
+	$aryQuery[] = "SELECT distinct on (sd.lngSortKey) sd.lngSortKey as lngRecordNo, ";
+// 2004.03.29 suzukaze update end
+	$aryQuery[] = "sd.lngStockNo as lngStockNo, sd.lngRevisionNo as lngRevisionNo";
+
+	// 製品コード・名称
+	$aryQuery[] = ", sd.strProductCode as strProductCode";
+	$aryQuery[] = ", p.strProductName as strProductName";
+	// 仕入科目
+	$aryQuery[] = ", sd.lngStockSubjectCode as lngStockSubjectCode";
+	$aryQuery[] = ", ss.strStockSubjectName as strStockSubjectName";
+	// 仕入部品
+	$aryQuery[] = ", sd.lngStockItemCode as lngStockItemCode";
+	$aryQuery[] = ", si.strStockItemName as strStockItemName";
+	// 金型番号
+	$aryQuery[] = ", sd.strMoldNo as strMoldNo";
+	// 顧客品番
+	$aryQuery[] = ", p.strGoodsCode as strGoodsCode";
+	// 運搬方法
+	$aryQuery[] = ", sd.lngDeliveryMethodCode as lngDeliveryMethodCode";
+	$aryQuery[] = ", dm.strDeliveryMethodName as strDeliveryMethodName";
+	// 納期
+	$aryQuery[] = ", sd.dtmDeliveryDate as dtmDeliveryDate";
+// 2004.03.17 suzukaze update start
+	// 単価
+	$aryQuery[] = ", To_char( sd.curProductPrice, '9,999,999,990.9999' )  as curProductPrice";
+//	$aryQuery[] = ", To_char( sd.curProductPrice, '9,999,999,990.99' )  as curProductPrice";
+// 2004.03.17 suzukaze update end
+	// 単位
+	$aryQuery[] = ", sd.lngProductUnitCode as lngProductUnitCode";
+	$aryQuery[] = ", pu.strProductUnitName as strProductUnitName";
+	// 数量
+	$aryQuery[] = ", To_char( sd.lngProductQuantity, '9,999,999,990' )  as lngProductQuantity";
+	// 税抜金額
+	$aryQuery[] = ", To_char( sd.curSubTotalPrice, '9,999,999,990.99' )  as curSubTotalPrice";
+	// 税区分
+	$aryQuery[] = ", sd.lngTaxClassCode as lngTaxClassCode";
+	$aryQuery[] = ", tc.strTaxClassName as strTaxClassName";
+	// 税率
+	$aryQuery[] = ", sd.lngTaxCode as lngTaxCode";
+	$aryQuery[] = ", To_char( t.curTax, '9,999,999,990.9999' ) as curTax";
+	// 税額
+	$aryQuery[] = ", To_char( sd.curTaxPrice, '9,999,999,990.99' )  as curTaxPrice";
+	// 明細備考
+	$aryQuery[] = ", sd.strNote as strDetailNote";
+
+	// 明細行を表示する場合
+	$aryQuery[] = " FROM t_StockDetail sd LEFT JOIN m_Product p USING (strProductCode)";
+	$aryQuery[] = " LEFT JOIN m_StockSubject ss USING (lngStockSubjectCode)";
+//	$aryQuery[] = " LEFT JOIN m_StockItem si USING (lngStockItemCode)";
+	$aryQuery[] = " LEFT JOIN m_DeliveryMethod dm USING (lngDeliveryMethodCode)";
+	$aryQuery[] = " LEFT JOIN m_ProductUnit pu ON sd.lngProductUnitCode = pu.lngProductUnitCode";
+	$aryQuery[] = " LEFT JOIN m_TaxClass tc USING (lngTaxClassCode)";
+	$aryQuery[] = " LEFT JOIN m_Tax t USING (lngTaxCode)";
+	$aryQuery[] = ", m_StockItem si ";
+
+	$aryQuery[] = " WHERE sd.lngStockNo = " . $lngStockNo . "";
+	$aryQuery[] = "AND si.lngStockSubjectCode = ss.lngStockSubjectCode ";
+	$aryQuery[] = "AND sd.lngStockItemCode = si.lngStockItemCode ";
+
+// 2004.03.30 suzukaze update start
+	$aryQuery[] = " ORDER BY sd.lngSortKey ASC ";
+// 2004.03.30 suzukaze update end
+
+	$strQuery = implode( "\n", $aryQuery );
+
+	return $strQuery;
+}
+
+
+
+
+
+
+/**
+* 詳細表示関数（ヘッダ用）
+*
+*	テーブル構成で仕入データ詳細を出力する関数
+*	ヘッダ行を表示する
+*
+*	@param  Array 	$aryResult 				ヘッダ行の検索結果が格納された配列
+*	@access public
+*/
+function fncSetStockHeadTabelData ( $aryResult )
+{
+	$aryColumnNames = array_keys($aryResult);
+
+	// 表示対象カラムの配列より結果の出力
+	for ( $i = 0; $i < count($aryColumnNames); $i++ )
+	{
+		$strColumnName = $aryColumnNames[$i];
+
+		// 登録日
+		if ( $strColumnName == "dtminsertdate" )
+		{
+			$aryNewResult[$strColumnName] = str_replace( "-", "/", substr( $aryResult["dtminsertdate"], 0, 19 ) );
+		}
+
+		// 計上日
+		else if ( $strColumnName == "dtmstockappdate" )
+		{
+			$aryNewResult[$strColumnName] = str_replace( "-", "/", $aryResult["dtmstockappdate"] );
+		}
+
+		// 入力者
+		else if ( $strColumnName == "lnginputusercode" )
+		{
+			if ( $aryResult["strinputuserdisplaycode"] )
+			{
+				$aryNewResult[$strColumnName] = "[" . $aryResult["strinputuserdisplaycode"] ."]";
+			}
+			else
+			{
+				$aryNewResult[$strColumnName] = "     ";
+			}
+			$aryNewResult[$strColumnName] .= " " . $aryResult["strinputuserdisplayname"];
+		}
+
+		// 仕入先
+		else if ( $strColumnName == "lngcustomercode" )
+		{
+			if ( $aryResult["strcustomerdisplaycode"] )
+			{
+				$aryNewResult[$strColumnName] = "[" . $aryResult["strcustomerdisplaycode"] ."]";
+			}
+			else
+			{
+				$aryNewResult[$strColumnName] = "      ";
+			}
+			$aryNewResult[$strColumnName] .= " " . $aryResult["strcustomerdisplayname"];
+		}
+
+		// 部門
+		else if ( $strColumnName == "lnginchargegroupcode" )
+		{
+			if ( $aryResult["strinchargegroupdisplaycode"] )
+			{
+				$aryNewResult[$strColumnName] = "[" . $aryResult["strinchargegroupdisplaycode"] ."]";
+			}
+			else
+			{
+				$aryNewResult[$strColumnName] = "    ";
+			}
+			$aryNewResult[$strColumnName] .= " " . $aryResult["strinchargegroupdisplayname"];
+		}
+
+		// 担当者
+		else if ( $strColumnName == "lnginchargeusercode" )
+		{
+			if ( $aryResult["strinchargeuserdisplaycode"] )
+			{
+				$aryNewResult[$strColumnName] = "[" . $aryResult["strinchargeuserdisplaycode"] ."]";
+			}
+			else
+			{
+				$aryNewResult[$strColumnName] = "     ";
+			}
+			$aryNewResult[$strColumnName] .= " " . $aryResult["strinchargeuserdisplayname"];
+		}
+
+		// 納品場所
+		else if ( $strColumnName == "lngdeliveryplacecode" )
+		{
+			if ( $aryResult["strdeliverydisplaycode"] )
+			{
+				$aryNewResult[$strColumnName] = "[" . $aryResult["strdeliverydisplaycode"] ."]";
+			}
+			else
+			{
+				$aryNewResult[$strColumnName] = "      ";
+			}
+			$aryNewResult[$strColumnName] .= " " . $aryResult["strdeliverydisplayname"];
+		}
+
+		// 合計金額
+		else if ( $strColumnName == "curtotalprice" )
+		{
+			$aryNewResult[$strColumnName] = $aryResult["strmonetaryunitsign"] . " ";
+			if ( !$aryResult["curtotalprice"] )
+			{
+				$aryNewResult[$strColumnName] .= "0.00";
+			}
+			else
+			{
+				$aryNewResult[$strColumnName] .= $aryResult["curtotalprice"];
+			}
+		}
+
+		// 状態
+		else if ( $strColumnName == "lngstockstatuscode" )
+		{
+			$aryNewResult[$strColumnName] = $aryResult["strstockstatusname"];
+		}
+
+		// 支払条件
+		else if ( $strColumnName == "lngpayconditioncode" )
+		{
+			$aryNewResult[$strColumnName] = $aryResult["strpayconditionname"];
+		}
+
+		// 通貨
+		else if ( $strColumnName == "lngmonetaryunitcode" )
+		{
+			$aryNewResult[$strColumnName] = $aryResult["strmonetaryunitname"];
+		}
+
+		// レートタイプ
+		else if ( $strColumnName == "lngmonetaryratecode" )
+		{
+			if ( $aryResult["lngmonetaryratecode"] and $aryResult["lngmonetaryunitcode"] != DEF_MONETARY_YEN )
+			{
+				$aryNewResult[$strColumnName] = $aryResult["strmonetaryratename"];
+			}
+			else
+			{
+				$aryNewResult[$strColumnName] = "";
+			}
+		}
+
+		// 発注有効期限日
+		else if ( $strColumnName == "dtmexpirationdate" )
+		{
+			$aryNewResult[$strColumnName] = str_replace( "-", "/", $aryResult["dtmexpirationdate"] );
+		}
+
+		// 備考
+		else if ( $strColumnName == "strnote" )
+		{
+			$aryNewResult[$strColumnName] = nl2br($aryResult["strnote"]);
+		}
+
+		// その他の項目はそのまま出力
+		else
+		{
+			$aryNewResult[$strColumnName] = $aryResult[$strColumnName];
+		}
+	}
+
+	return $aryNewResult;
+}
+
+
+
+
+
+
+/**
+* 詳細表示関数（明細用）
+*
+*	テーブル構成で仕入データ詳細を出力する関数
+*	明細行を表示する
+*
+*	@param  Array 	$aryDetailResult 	明細行の検索結果が格納された配列（１データ分）
+*	@param  Array 	$aryHeadResult 		ヘッダ行の検索結果が格納された配列（参照用）
+*	@access public
+*/
+function fncSetStockDetailTabelData ( $aryDetailResult, $aryHeadResult )
+{
+	$aryColumnNames = array_keys($aryDetailResult);
+
+	// 表示対象カラムの配列より結果の出力
+	for ( $i = 0; $i < count($aryColumnNames); $i++ )
+	{
+		$strColumnName = $aryColumnNames[$i];
+
+		// 製品コード名称
+		if ( $strColumnName == "strproductcode" )
+		{
+			if ( $aryDetailResult["strproductcode"] )
+			{
+				$aryNewDetailResult[$strColumnName] = "[" . $aryDetailResult["strproductcode"] ."]";
+			}
+			else
+			{
+				$aryNewDetailResult[$strColumnName] = "      ";
+			}
+			$aryNewDetailResult[$strColumnName] .= " " . $aryDetailResult["strproductname"];
+		}
+
+		// 仕入科目
+		else if ( $strColumnName == "lngstocksubjectcode" )
+		{
+			if ( $aryDetailResult["lngstocksubjectcode"] )
+			{
+				$aryNewDetailResult[$strColumnName] = "[" . $aryDetailResult["lngstocksubjectcode"] ."]";
+			}
+			else
+			{
+				$aryNewDetailResult[$strColumnName] = "      ";
+			}
+			$aryNewDetailResult[$strColumnName] .= " " . $aryDetailResult["strstocksubjectname"];
+		}
+
+		// 仕入部品
+		else if ( $strColumnName == "lngstockitemcode" )
+		{
+			if ( $aryDetailResult["lngstockitemcode"] )
+			{
+				$aryNewDetailResult[$strColumnName] = "[" . $aryDetailResult["lngstockitemcode"] ."]";
+			}
+			else
+			{
+				$aryNewDetailResult[$strColumnName] = "      ";
+			}
+			$aryNewDetailResult[$strColumnName] .= " " . $aryDetailResult["strstockitemname"];
+		}
+
+		// 金型番号
+		else if ( $strColumnName == "strmoldno" )
+		{
+// 2004.05.31 suzukaze update start
+			// 仕入科目が４３３　金型海外償却　仕入部品が１ Injection Moldの場合
+			// 仕入科目が４３１　金型償却高　　仕入部品が８ 金型の場合
+			if ( $aryDetailResult["strmoldno"] 
+				and ( $aryDetailResult["lngstocksubjectcode"] = 433 and $aryDetailResult["lngstockitemcode"] = 1 )
+				or  ( $aryDetailResult["lngstocksubjectcode"] = 431 and $aryDetailResult["lngstockitemcode"] = 8 ) )
+			{
+				$aryNewDetailResult[$strColumnName] = $aryDetailResult["strmoldno"];
+			}
+// 2004.05.31 suzukaze update end
+		}
+
+		// 顧客品番
+		else if ( $strColumnName == "strgoodscode" )
+		{
+			$aryNewDetailResult[$strColumnName] = $aryDetailResult[$strColumnName];
+		}
+
+		// 運搬方法
+		else if ( $strColumnName == "lngdeliverymethodcode" )
+		{
+			if ( $aryDetailResult["strdeliverymethodname"] == "" )
+			{
+				$aryDetailResult["strdeliverymethodname"] = "未定";
+			}
+			$aryNewDetailResult[$strColumnName] .= $aryDetailResult["strdeliverymethodname"];
+		}
+
+		// 納期
+		else if ( $strColumnName == "dtmdeliverydate" )
+		{
+			$aryNewDetailResult[$strColumnName] = str_replace( "-", "/", $aryDetailResult["dtmdeliverydate"] );
+		}
+
+		// 単価
+		else if ( $strColumnName == "curproductprice" )
+		{
+			$aryNewDetailResult[$strColumnName] = $aryHeadResult["strmonetaryunitsign"] . " ";
+			if ( !$aryDetailResult["curproductprice"] )
+			{
+				$aryNewDetailResult[$strColumnName] .= "0.00";
+			}
+			else
+			{
+				$aryNewDetailResult[$strColumnName] .= $aryDetailResult["curproductprice"];
+			}
+		}
+
+		// 単位
+		else if ( $strColumnName == "lngproductunitcode" )
+		{
+			$aryNewDetailResult[$strColumnName] = $aryDetailResult["strproductunitname"];
+		}
+
+		// 税抜金額
+		else if ( $strColumnName == "cursubtotalprice" )
+		{
+			$aryNewDetailResult[$strColumnName] = $aryHeadResult["strmonetaryunitsign"] . " ";
+			if ( !$aryDetailResult["cursubtotalprice"] )
+			{
+				$aryNewDetailResult[$strColumnName] .= "0.00";
+			}
+			else
+			{
+				$aryNewDetailResult[$strColumnName] .= $aryDetailResult["cursubtotalprice"];
+			}
+		}
+
+		// 税区分
+		else if ( $strColumnName == "lngtaxclasscode" )
+		{
+			$aryNewDetailResult[$strColumnName] = $aryDetailResult["strtaxclassname"];
+		}
+
+		// 税率
+		else if ( $strColumnName == "curtax" )
+		{
+			if ( !$aryDetailResult["curtax"] )
+			{
+				$aryNewDetailResult[$strColumnName] = "";
+			}
+			else
+			{
+				$aryNewDetailResult[$strColumnName] = $aryDetailResult["curtax"];
+			}
+		}
+
+		// 税額
+		else if ( $strColumnName == "curtaxprice" )
+		{
+			$aryNewDetailResult[$strColumnName] = $aryHeadResult["strmonetaryunitsign"] . " ";
+			if ( !$aryDetailResult["curtaxprice"] )
+			{
+				$aryNewDetailResult[$strColumnName] .= "0.00";
+			}
+			else
+			{
+				$aryNewDetailResult[$strColumnName] .= $aryDetailResult["curtaxprice"];
+			}
+		}
+
+		// 明細備考
+		else if ( $strColumnName == "strdetailnote" )
+		{
+			$aryNewDetailResult[$strColumnName] = nl2br($aryDetailResult[$strColumnName]);
+		}
+
+		// その他の項目はそのまま出力
+		else
+		{
+			$aryNewDetailResult[$strColumnName] = $aryDetailResult[$strColumnName];
+		}
+	}
+
+	return $aryNewDetailResult;
+}
+
+
+
+
+
+
+/**
+* 詳細表示用カラム名セット関数
+*
+*	詳細表示時のカラム名（日本語、英語）での設定関数
+*
+*	@param  Array 	$aryResult 		検索結果が格納された配列
+*	@param  Array 	$aryTytle 		カラム名が格納された配列
+*	@access public
+*/
+function fncSetStockTabelName ( $aryResult, $aryTytle )
+{
+	$aryColumnNames = array_values($aryResult);
+
+	// 表示対象カラムの配列より結果の出力
+	for ( $i = 0; $i < count($aryColumnNames); $i++ )
+	{
+		$strColumnName = $aryColumnNames[$i];
+
+		if ( $aryTytle[$strColumnName] )
+		{
+			$strNewColumnName = "CN" . $strColumnName;
+			$aryNames[$strNewColumnName] = $aryTytle[$strColumnName];
+		}
+	}
+
+	return $aryNames;
+}
+
+
+
+
+
+
+/**
+* 指定の仕入データについて無効化することでどうなるかケースわけする
+*
+*	指定の仕入データの状態を調査し、ケースわけする関数
+*
+*	@param  Array 		$aryStockData 	仕入データ
+*	@param  Object		$objDB			DBオブジェクト
+*	@return Integer 	$lngCase		状態のケース
+*										1: 対象仕入データを無効化しても、最新の仕入データが影響受けない
+*										2: 対象仕入データを無効化することで、最新の仕入データが入れ替わる
+*										3: 対象仕入データが削除データで、仕入が復活する
+*										4: 対象仕入データを無効化することで、最新の仕入データになりうる仕入データがない
+*	@access public
+*/
+function fncGetInvalidCodeToMaster ( $aryStockData, $objDB )
+{
+	// 削除対象仕入と同じ仕入コードの最新の仕入Noを調べる
+	$strQuery = "SELECT lngStockNo FROM m_Stock s WHERE s.strStockCode = '" . $aryStockData["strstockcode"] . "' AND s.bytInvalidFlag = FALSE "
+		. " AND s.lngRevisionNo >= 0"
+		. " AND s.lngRevisionNo = ( "
+		. "SELECT MAX( s1.lngRevisionNo ) FROM m_Stock s1 WHERE s1.strStockCode = s.strStockCode )";
+
+	// 検索クエリーの実行
+	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
+
+	if ( $lngResultNum == 1 )
+	{
+		$objResult = $objDB->fetchObject( $lngResultID, 0 );
+		$lngNewStockNo = $objResult->lngstockno;
+	}
+	else
+	{
+		$lngCase = 4;
+	}
+	$objDB->freeResult( $lngResultID );
+
+	// 削除対象が最新かどうかのチェック
+	if ( $lngCase != 4 )
+	{
+		if ( $lngNewStockNo == $aryStockData["lngstockno"] )
+		{
+			// 最新の場合
+			// 削除対象仕入以外でと同じ仕入コードの最新の仕入Noを調べる
+			$strQuery = "SELECT lngStockNo FROM m_Stock s WHERE s.strStockCode = '" . $strStockCode . "' AND s.bytInvalidFlag = FALSE ";
+			$strQuery .= " AND s.lngStockNo <> " . $aryStockData["lngstockno"] . " AND s.lngRevisionNo >= 0";
+
+			// 検索クエリーの実行
+			list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
+
+			if ( $lngResultNum >= 1 )
+			{
+				$lngCase = 2;
+			}
+			else
+			{
+				$lngCase = 4;
+			}
+			$objDB->freeResult( $lngResultID );
+		}
+		// 対象仕入が削除データかどうかの確認
+		else if ( $aryStockData["lngrevisionno"] < 0 )
+		{
+			$lngCase = 3;
+		}
+		else
+		{
+			$lngCase = 1;
+		}
+	}
+
+	return $lngCase;
+}
+
+
+
+
+
+// 2004.03.09 suzukaze update start
+/**
+* 指定の仕入データの削除に関して、その仕入データを削除することでの状態変更関数
+*
+*	仕入の状態が「納品済」の場合、発注Noを指定していた場合、分納であった場合など
+*	各状態ごとにその仕入に関するデータの状態を変更する
+*
+*	@param  Array 		$aryStockData 	仕入データ
+*	@param  Object		$objDB			DBオブジェクト
+*	@return Boolean 	0				実行成功
+*						1				実行失敗 情報取得失敗
+*	@access public
+*/
+function fncStockDeleteSetStatus ( $aryStockData, $objDB )
+{
+	// 削除対象仕入は、発注Noを指定しない仕入である
+	if ( $aryStockData["lngorderno"] == "" or $aryStockData["lngorderno"] == 0 )
+	{
+		return 0;
+	}
+
+	// 発注Noを指定している仕入の場合は、指定している最新の発注のデータを取得する
+	$strQuery = "SELECT o.lngOrderNo as lngOrderNo, o.strOrderCode as strOrderCode, "
+		. "o.lngOrderStatusCode as lngOrderStatusCode, o.lngMonetaryUnitCode as lngMonetaryUnitCode FROM m_Order o "
+		. "WHERE o.strOrderCode = ( "
+		. "SELECT o1.strOrderCode FROM m_Order o1 WHERE o1.lngOrderNo = " . $aryStockData["lngorderno"] . " ) "
+		. "AND o.bytInvalidFlag = FALSE "
+		. "AND o.lngRevisionNo >= 0 "
+		. "AND o.lngRevisionNo = ( "
+		. "SELECT MAX( o2.lngRevisionNo ) FROM m_Order o2 WHERE o2.strOrderCode = o.strOrderCode ) "
+		. "AND 0 <= ( "
+		. "SELECT MIN( o3.lngRevisionNo ) FROM m_Order o3 WHERE o3.bytInvalidFlag = false AND o3.strOrderCode = o.strOrderCode ) ";
+
+	// 検索クエリーの実行
+	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
+
+	if ( $lngResultNum == 1 )
+	{
+		$objResult = $objDB->fetchObject( $lngResultID, 0 );
+		$lngNewOrderNo = $objResult->lngorderno;
+		$strNewOrderCode = $objResult->strordercode;
+		$lngNewOrderStatusCode = $objResult->lngorderstatuscode;
+		$OrderlngMonetaryUnitCode = $objResult->lngmonetaryunitcode;
+	}
+	else
+	{
+		// 発注Noは指定しているが現在有効な最新発注が存在しない場合はそのまま削除可能とする
+		return 0;
+	}
+	$objDB->freeResult( $lngResultID );
+
+	// 最新発注の明細情報を取得する
+	$strQuery = "SELECT od.lngOrderDetailNo as lngOrderDetailNo, od.strProductCode as strProductCode, "
+		. "od.lngStockSubjectCode as lngStockSubjectCode, od.lngStockItemCode as lngStockItemCode, "
+		. "od.lngConversionClassCode as lngConversionClassCode, od.curProductPrice as curProductPrice, "
+		. "od.lngProductQuantity as lngProductQuantity, od.lngProductUnitCode as lngProductUnitCode, "
+		. "od.curSubTotalPrice as curSubTotalPrice, p.lngCartonQuantity as lngCartonQuantity "
+		. "FROM t_OrderDetail od, m_Product p "
+		. "WHERE lngOrderNo = " . $lngNewOrderNo . " AND od.strProductCode = p.strProductCode "
+		. "ORDER BY lngSortKey";
+
+	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
+
+	if ( $lngResultNum )
+	{
+		for ( $i = 0; $i < $lngResultNum; $i++ )
+		{
+			$aryOrderDetailResult[] = $objDB->fetchArray( $lngResultID, $i );
+		}
+	}
+	else
+	{
+		// 明細行が存在しない場合異常データ
+		return 1;
+	}
+	$objDB->freeResult( $lngResultID );
+
+	// 削除対象仕入と同じ発注Noを指定している最新仕入を検索
+	$strQuery = "SELECT s.lngStockNo as lngStockNo, s.lngStockStatusCode as lngStockStatusCode, "
+		. "s.lngMonetaryUnitCode as lngMonetaryUnitCode FROM m_Stock s, m_Order o "
+		. "WHERE o.strOrderCode = '" . $strNewOrderCode . "' AND o.lngOrderNo = s.lngOrderNo "
+		. "AND s.bytInvalidFlag = FALSE "
+		. "AND s.lngRevisionNo >= 0 "
+		. "AND s.lngRevisionNo = ( "
+		. "SELECT MAX( s2.lngRevisionNo ) FROM m_Stock s2 WHERE s2.strStockCode = s.strStockCode ) "
+		. "AND 0 <= ( "
+		. "SELECT MIN( s3.lngRevisionNo ) FROM m_Stock s3 WHERE s3.bytInvalidFlag = false AND s3.strStockCode = s.strStockCode ) "
+		// 上記条件かつ削除対象の仕入ではない
+		. "AND s.strStockCode <> '" . $aryStockData["strstockcode"] . "'";
+
+	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
+
+	if ( $lngResultNum )
+	{
+		// 削除対象以外の仕入データが存在する場合
+		for ( $i = 0; $i < $lngResultNum; $i++ )
+		{
+			$aryStockResult[] = $objDB->fetchArray( $lngResultID, $i );
+			// 明細情報を取得する
+			$strStockDetailQuery = "SELECT lngStockDetailNo, strProductCode, lngStockSubjectCode, lngStockItemCode, lngConversionClassCode, "
+				. "curProductPrice, lngProductQuantity, lngProductUnitCode, curSubTotalPrice "
+				. "FROM t_StockDetail "
+				. "WHERE lngStockNo = " . $aryStockResult[$i]["lngstockno"] . " "
+				. "ORDER BY lngSortKey";
+
+			list ( $lngStockDetailResultID, $lngStockDetailResultNum ) = fncQuery( $strStockDetailQuery, $objDB );
+
+			if ( $lngStockDetailResultNum )
+			{
+				for ( $j = 0; $j < $lngStockDetailResultNum; $j++ )
+				{
+					$aryStockDetailResult[$i][] = $objDB->fetchArray( $lngStockDetailResultID, $j );
+				}
+			}
+			$objDB->freeResult( $lngStockDetailResultID );
+		}
+
+		// 参照元発注の明細毎に取得した仕入にてどのような状態になっているのか調査
+		for ( $i = 0; $i < count($aryOrderDetailResult); $i++ )
+		{
+			// 参照元発注の明細行番号を取得･････明細行番号にひもづいて仕入が消しこみされるため
+			$lngOrderDetailNo 		= $aryOrderDetailResult[$i]["lngorderdetalno"];				// 明細行番号
+
+			$strProductCode 		= $aryOrderDetailResult[$i]["strproductcode"];				// 製品コード
+			$lngStockSubjectCode 	= $aryOrderDetailResult[$i]["lngstocksubjectcode"];			// 仕入科目コード
+			$lngStockItemCode 		= $aryOrderDetailResult[$i]["lngstockitemcode"];			// 仕入部品コード
+			$lngConversionClassCode = $aryOrderDetailResult[$i]["lngconversionclasscode"];		// 換算区分コード
+			$curProductPrice		= $aryOrderDetailResult[$i]["curproductprice"];				// 製品単価（荷姿単価）
+			$lngProductQuantity		= $aryOrderDetailResult[$i]["lngproductquantity"];			// 製品数量（荷姿数量）
+			$lngProductUnitCode		= $aryOrderDetailResult[$i]["lngproductunitcode"];			// 製品単位（荷姿単位）
+			$curSubTotalPrice		= $aryOrderDetailResult[$i]["cursubtotalprice"];			// 税抜金額
+			$lngCartonQuantity		= $aryOrderDetailResult[$i]["lngcartonquantity"];			// カートン入数
+
+			// 換算区分が荷姿単位計上の場合、製品単価へ計算
+			if ( $lngConversionClassCode != DEF_CONVERSION_SEIHIN )
+			{
+				// 0 割り対策
+				if ( $lngCartonQuantity == 0 or $lngCartonQuantity == "" )
+				{
+					// カートン入り数が ０ だった場合は その製品に対する納品済みかどうかの判断ができないため 強制的に １ にて換算
+					$lngCartonQuantity = 1;
+				}
+
+				// 製品数量は荷姿数量 * カートン入数
+				$lngProductQuantity = $lngProductQuantity * $lngCartonQuantity;
+
+				// 製品価格は荷姿単価 / カートン入数
+				$curProductPrice = $curProductPrice / $lngCartonQuantity;
+			}
+
+			$bytEndFlag = 0;
+			$lngStockProductQuantity = 0;
+			$curStockSubTotalPrice = 0;
+			
+			for ( $j = 0; $j < count($aryStockResult); $j++ )
+			{
+				$StocklngMonetaryUnitCode = $aryStockResult[$j]["lngmonetaryunitcode"];
+				for ( $k = 0; $k < count($aryStockDetailResult[$j]); $k++ )
+				{
+// 2004.03.30 suzukaze update start
+					// 発注明細行番号に対して仕入明細行番号が同じ、かつ製品コードが同じ明細が見つかった場合
+					// それに加え　通貨が同じ場合
+					if ( $lngOrderDetailNo == $aryStockDetailResult[$j][$k]["lngstockdetailno"] 
+						and $strProductCode == $aryStockDetailResult[$j][$k]["strproductcode"] 
+//						and $lngStockSubjectCode == $aryStockDetailResult[$j][$k]["lngstocksubjectcode"] 
+//						and $lngStockItemCode == $aryStockDetailResult[$j][$k]["lngstockitemcode"] 
+						and $OrderlngMonetaryUnitCode == $StocklngMonetaryUnitCode )
+// 2004.03.30 suzukaze update end
+					{
+						// 換算区分が荷姿単位計上の場合、製品単価へ計算
+						if ( $aryStockDetailResult[$j][$k]["lngconversionclasscode"] != DEF_CONVERSION_SEIHIN )
+						{
+							// 0 割り対策
+							if ( $aryStockDetailResult[$j][$k]["lngCartonQuantity"] == 0 or $aryStockDetailResult[$j][$k]["lngCartonQuantity"] == "" )
+							{
+								// カートン入り数が ０ だった場合は その製品に対する納品済みかどうかの判断ができないため 強制的に １ にて換算
+								$aryStockDetailResult[$j][$k]["lngCartonQuantity"] = 1;
+							}
+
+							// 製品数量は荷姿数量 * カートン入数
+							$aryStockDetailResult[$j][$k]["lngProductQuantity"] 
+								= $aryStockDetailResult[$j][$k]["lngProductQuantity"] * $aryStockDetailResult[$j][$k]["lngCartonQuantity"];
+
+							// 製品価格は荷姿単価 / カートン入数
+							$aryStockDetailResult[$j][$k]["curProductPrice"] 
+								= $aryStockDetailResult[$j][$k]["curProductPrice"] / $aryStockDetailResult[$j][$k]["lngCartonQuantity"];
+						}
+
+						// 数量比較
+						if ( $lngProductQuauntity > $aryStockDetailResult[$j][$k]["lngproductquantity"] )
+						{
+							$lngStockProductQuantity += $aryStockDetailResult[$j][$k]["lngproductquantity"];
+							// 複数仕入からの合算での数量比較
+							if ( $lngProductQuauntity <= $lngStockProductQuantity )
+							{
+								$bytEndFlag = 99;
+								break;
+							}
+						}
+						else
+						{
+							$bytEndFlag = 99;
+							break;
+						}
+						
+						// 税抜金額比較
+						if ( $curSubTotalPrice > $aryStockDetailResult[$j]["cursubtotalprice"] )
+						{
+							$curStockSubTotalPrice += $aryStockDetailResult[$j]["cursubtotalprice"];
+							// 複数仕入からの合算での税抜金額比較
+							if ( $curSubTotalPrice <= $curStockSubTotalPrice )
+							{
+								$bytEndFlag = 99;
+								break;
+							}
+						}
+						else
+						{
+							$bytEndFlag = 99;
+							break;
+						}
+
+						// 同じ明細行の情報が発注と仕入で見つかった際には「納品中」となるため以下設定
+						$bytEndFlag = 1;
+					}
+				}
+				// 仕入明細に発注明細と同内容が見つかった場合は　for 文抜け
+				if ( $bytEndFlag == 99 )
+				{
+					break;
+				}
+			}
+			// 発注明細行毎の仕入明細行が見つかった状態を記憶
+			$aryStatus[] = $bytEndFlag;
+		}
+		
+		// 再度チェック　$aryStatus（明細ごとの状態）により発注全体としての状態を判断
+		$flagZERO = 0;
+		$flagALL  = 0;
+		for ( $i = 0; $i < count($aryStatus); $i++ )
+		{
+			if ( $aryStatus[$i] == 0 )
+			{
+				$flagZERO++;
+			}
+			if ( $aryStatus[$i] == 99 )
+			{
+				$flagALL++;
+			}
+		}
+		// 発注明細に対して一件も仕入が発生していない場合、または完納ではない場合
+		// （flagZEROが発注明細数に対してイコールの場合実際は初期状態であるが、仕入にて
+		//   発注Noが指定されているのでここでの状態は「納品中」とする）
+		if ( $flagALL != count($aryStatus) )
+		{
+			// 仕入参照発注の状態の状態を「納品中」とする
+		
+			// 更新対象発注データをロックする
+			$strLockQuery = "SELECT lngOrderNo FROM m_Order WHERE lngOrderNo = " . $lngNewOrderNo . " AND bytInvalidFlag = FALSE FOR UPDATE";
+
+			list ( $lngLockResultID, $lngLockResultNum ) = fncQuery( $strLockQuery, $objDB );
+			$objDB->freeResult( $lngLockResultID );
+
+			// 「納品中」状態への更新処理
+			$strUpdateQuery = "UPDATE m_Order set lngOrderStatusCode = " . DEF_ORDER_DELIVER . " WHERE lngOrderNo = " . $lngNewOrderNo;
+
+			list ( $lngUpdateResultID, $lngUpdateResultNum ) = fncQuery( $strUpdateQuery, $objDB );
+			$objDB->freeResult( $lngUpdateResultID );
+
+			// 同じ発注NOを指定している仕入の状態に対しても「納品中」とする
+			for ( $i = 0; $i < count($aryStockResult); $i++ )
+			{
+				// 更新対象仕入データをロックする
+				$strLockQuery = "SELECT lngStockNo FROM m_Stock " 
+					. "WHERE lngStockNo = " . $aryStockResult[$i]["lngstockno"] . " AND bytInvalidFlag = FALSE FOR UPDATE";
+
+				list ( $lngLockResultID, $lngLockResultNum ) = fncQuery( $strLockQuery, $objDB );
+				$objDB->freeResult( $lngLockResultID );
+
+				// 「納品中」状態への更新処理
+				$strUpdateQuery = "UPDATE m_Stock set lngStockStatusCode = " . DEF_STOCK_DELIVER 
+					. " WHERE lngStockNo = " . $aryStockResult[$i]["lngstockno"];
+
+				list ( $lngUpdateResultID, $lngUpdateResultNum ) = fncQuery( $strUpdateQuery, $objDB );
+				$objDB->freeResult( $lngUpdateResultID );
+			}
+			
+			return 0;
+		}
+		else
+		// 削除対象仕入を削除しても対象発注は完納状態であったら
+		{
+			// 仕入参照発注の状態の状態を「納品済」とする
+		
+			// 更新対象発注データをロックする
+			$strLockQuery = "SELECT lngOrderNo FROM m_Order WHERE lngOrderNo = " . $lngNewOrderNo . " AND bytInvalidFlag = FALSE FOR UPDATE";
+			list ( $lngLockResultID, $lngLockResultNum ) = fncQuery( $strLockQuery, $objDB );
+			$objDB->freeResult( $lngLockResultID );
+
+			// 「納品中」状態への更新処理
+			$strUpdateQuery = "UPDATE m_Order set lngOrderStatusCode = " . DEF_ORDER_END . " WHERE lngOrderNo = " . $lngNewOrderNo;
+
+			list ( $lngUpdateResultID, $lngUpdateResultNum ) = fncQuery( $strUpdateQuery, $objDB );
+			$objDB->freeResult( $lngUpdateResultID );
+
+			// 同じ発注NOを指定している仕入の状態に対しても「納品中」とする
+			for ( $i = 0; $i < count($aryStockResult); $i++ )
+			{
+				// 更新対象仕入データをロックする
+				$strLockQuery = "SELECT lngStockNo FROM m_Stock " 
+					. "WHERE lngStockNo = " . $aryStockResult[$i]["lngstockno"] . " AND bytInvalidFlag = FALSE FOR UPDATE";
+				list ( $lngLockResultID, $lngLockResultNum ) = fncQuery( $strLockQuery, $objDB );
+				$objDB->freeResult( $lngLockResultID );
+
+				// 「納品中」状態への更新処理
+				$strUpdateQuery = "UPDATE m_Stock set lngStockStatusCode = " . DEF_STOCK_END 
+					. " WHERE lngStockNo = " . $aryStockResult[$i]["lngstockno"];
+
+				list ( $lngUpdateResultID, $lngUpdateResultNum ) = fncQuery( $strUpdateQuery, $objDB );
+				$objDB->freeResult( $lngUpdateResultID );
+			}
+			return 0;
+		}
+	}
+	else
+	{
+		// 削除対象以外の仕入データが存在しない場合
+		// 仕入の参照元最新発注の状態を「発注」に戻す
+		
+		// 更新対象発注データをロックする
+		$strLockQuery = "SELECT lngOrderNo FROM m_Order WHERE lngOrderNo = " . $lngNewOrderNo . " AND bytInvalidFlag = FALSE FOR UPDATE";
+		list ( $lngLockResultID, $lngLockResultNum ) = fncQuery( $strLockQuery, $objDB );
+		if ( !$lngLockResultNum )
+		{
+			fncOutputError ( 9051, DEF_ERROR, "無効化処理エラー", TRUE, "", $objDB );
+		}
+		$objDB->freeResult( $lngLockResultID );
+
+		// 「発注」状態への更新処理
+		$strUpdateQuery = "UPDATE m_Order set lngOrderStatusCode = " . DEF_ORDER_ORDER . " WHERE lngOrderNo = " . $lngNewOrderNo;
+
+		list ( $lngUpdateResultID, $lngUpdateResultNum ) = fncQuery( $strUpdateQuery, $objDB );
+		$objDB->freeResult( $lngUpdateResultID );
+
+		return 0;
+	}
+
+	$objDB->freeResult( $lngResultID );
+
+	return 0;
+}
+
+// 2004.03.09 suzukaze update end
+
+
+
+
+
+?>

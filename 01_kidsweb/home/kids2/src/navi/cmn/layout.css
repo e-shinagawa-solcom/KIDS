@@ -1,0 +1,399 @@
+<!--
+
+
+
+
+
+/* START SEGMENTS */
+#NaviBodys
+{
+	position : absolute ;
+	left : 0px ;
+	top : 0px ;
+	width : 169px ;
+	height : 552px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color : #cdcdcd ;
+	background-color: #72828b ;
+}
+
+
+/* END SEGMENTS */
+/************************************** END INPUT C **************************************/
+
+
+
+
+
+
+
+
+
+
+/********************* START NAVIGATION *********************/
+
+#RegistNaviBt1 {
+	position : absolute ;
+	left : 9px ;
+	top : 20px ;
+	z-index : 2 ;
+	background-color: transparent ;
+}
+#RegistNaviBt3 {
+	position : absolute ;
+	left : 9px ;
+	top : 20px ;
+	z-index : 2 ;
+	background-color: transparent ;
+}
+
+#SearchNaviBt1 {
+	position : absolute ;
+	left : 9px ;
+	top : 60px ;
+	z-index : 2 ;
+	background-color: transparent ;
+}
+#SearchNaviBt3 {
+	position : absolute ;
+	left : 9px ;
+	top : 60px ;
+	z-index : 2 ;
+	background-color: transparent ;
+}
+
+
+
+
+
+
+
+
+
+
+/* START EXPORT NAVI */
+#ListExNaviBt1 {
+	position : absolute ;
+	left : 9px ;
+	top : 370px ;
+	z-index : 2 ;
+	background-color: transparent ;
+}
+#ListExNaviBt3 {
+	position : absolute ;
+	left : 9px ;
+	top : 370px ;
+	z-index : 2 ;
+	background-color: transparent ;
+}
+
+#DataExNaviBt1 {
+	position : absolute ;
+	left : 9px ;
+	top : 403px ;
+	z-index : 2 ;
+	background-color: transparent ;
+}
+#DataExNaviBt3 {
+	position : absolute ;
+	left : 9px ;
+	top : 403px ;
+	z-index : 2 ;
+	background-color: transparent ;
+}
+/* END EXPORT NAVI */
+
+
+/* START COMMON NAVI */
+#MasterNaviBt1 {
+	position : absolute ;
+	left : 9px ;
+	top : 515px ;
+	z-index : 2 ;
+	background-color: transparent ;
+}
+#MasterNaviBt3 {
+	position : absolute ;
+	left : 9px ;
+	top : 515px ;
+	z-index : 2 ;
+	background-color: transparent ;
+}
+/* END COMMON NAVI */
+/********************** END NAVIGATION **********************/
+
+
+
+
+
+#MessageBt1
+{
+	position   : absolute ;
+	left       : 9px ;
+	top        : 20px ;
+	z-index    : 2 ;
+	background : transparent ;
+}
+
+#MessageBt3
+{
+	position   : absolute ;
+	left       : 9px ;
+	top        : 20px ;
+	z-index    : 2 ;
+	background : transparent ;
+}
+
+
+
+#EmailBt1
+{
+	position   : absolute ;
+	left       : 9px ;
+	top        : 60px ;
+	z-index    : 2 ;
+	background : #transparent ;
+}
+
+#EmailBt3
+{
+	position   : absolute ;
+	left       : 9px ;
+	top        : 60px ;
+	z-index    : 2 ;
+	background : #transparent ;
+}
+
+
+
+#SessionBt1
+{
+	position   : absolute ;
+	left       : 9px ;
+	top        : 100px ;
+	z-index    : 2 ;
+	background : #transparent ;
+}
+
+#SessionBt3
+{
+	position   : absolute ;
+	left       : 9px ;
+	top        : 100px ;
+	z-index    : 2 ;
+	background : #transparent ;
+}
+
+
+
+#ServerBt1
+{
+	position   : absolute ;
+	left       : 9px ;
+	top        : 140px ;
+	z-index    : 2 ;
+	background : #transparent ;
+}
+
+
+
+#ServerBt3
+{
+	position   : absolute ;
+	left       : 9px ;
+	top        : 140px ;
+	z-index    : 2 ;
+	background : #transparent ;
+}
+
+
+#ClosedBt1
+{
+	position   : absolute ;
+	left       : 9px ;
+	top        : 20px ;
+	z-index    : 2 ;
+	background : transparent ;
+}
+
+
+
+
+
+	/* “o˜^2 */
+	#RegistNaviBtA {
+		position : absolute ;
+		left : 9px ;
+		top : 130px ;
+		z-index : 2 ;
+		background-color: transparent ;
+	}
+	#RegistNaviBtC {
+		position : absolute ;
+		left : 9px ;
+		top : 130px ;
+		z-index : 2 ;
+		background-color: transparent ;
+	}
+
+	/* ŒŸõ2 */
+	#SearchNaviBtA {
+		position : absolute ;
+		left : 9px ;
+		top : 170px ;
+		z-index : 2 ;
+		background-color: transparent ;
+	}
+	#SearchNaviBtC {
+		position : absolute ;
+		left : 9px ;
+		top : 170px ;
+		z-index : 2 ;
+		background-color: transparent ;
+	}
+
+
+	/* “o˜^3 */
+	#RegistNaviBtAA {
+		position : absolute ;
+		left : 9px ;
+		top : 230px ;
+		z-index : 2 ;
+		background-color: transparent ;
+	}
+	#RegistNaviBtCC {
+		position : absolute ;
+		left : 9px ;
+		top : 230px ;
+		z-index : 2 ;
+		background-color: transparent ;
+	}
+
+	/* ŒŸõ3 */
+	#SearchNaviBtAA {
+		position : absolute ;
+		left : 9px ;
+		top : 270px ;
+		z-index : 2 ;
+		background-color: transparent ;
+	}
+	#SearchNaviBtCC {
+		position : absolute ;
+		left : 9px ;
+		top : 270px ;
+		z-index : 2 ;
+		background-color: transparent ;
+	}
+
+
+	/* “o˜^4 */
+	#RegistNaviBtAAA {
+		position : absolute ;
+		left : 9px ;
+		top : 330px ;
+		z-index : 2 ;
+		background-color: transparent ;
+	}
+	#RegistNaviBtCCC {
+		position : absolute ;
+		left : 9px ;
+		top : 330px ;
+		z-index : 2 ;
+		background-color: transparent ;
+	}
+
+	/* ŒŸõ4 */
+	#SearchNaviBtAAA {
+		position : absolute ;
+		left : 9px ;
+		top : 370px ;
+		z-index : 2 ;
+		background-color: transparent ;
+	}
+	#SearchNaviBtCCC {
+		position : absolute ;
+		left : 9px ;
+		top : 370px ;
+		z-index : 2 ;
+		background-color: transparent ;
+	}
+
+
+	/* “o˜^5 */
+	#RegistNaviBtAAAA {
+		position : absolute ;
+		left : 9px ;
+		top : 430px ;
+		z-index : 2 ;
+		background-color: transparent ;
+	}
+	#RegistNaviBtCCCC {
+		position : absolute ;
+		left : 9px ;
+		top : 430px ;
+		z-index : 2 ;
+		background-color: transparent ;
+	}
+
+	/* ŒŸõ5 */
+	#SearchNaviBtAAAA {
+		position : absolute ;
+		left : 9px ;
+		top : 470px ;
+		z-index : 2 ;
+		background-color: transparent ;
+	}
+	#SearchNaviBtCCCC {
+		position : absolute ;
+		left : 9px ;
+		top : 470px ;
+		z-index : 2 ;
+		background-color: transparent ;
+	}
+
+
+
+	/* ˆÄŒˆê—— */
+	#WFRegistNaviBt {
+		position : absolute ;
+		left : 9px ;
+		top : 330px ;
+		z-index : 2 ;
+		background-color: transparent ;
+	}
+	#WFRegistNaviBt {
+		position : absolute ;
+		left : 9px ;
+		top : 330px ;
+		z-index : 2 ;
+		background-color: transparent ;
+	}
+
+	/* ˆÄŒŒŸõ */
+	#WFSearchNaviBt {
+		position : absolute ;
+		left : 9px ;
+		top : 370px ;
+		z-index : 2 ;
+		background-color: transparent ;
+	}
+	#WFSearchNaviBt {
+		position : absolute ;
+		left : 9px ;
+		top : 370px ;
+		z-index : 2 ;
+		background-color: transparent ;
+	}
+
+
+	/* ƒAƒbƒvƒ[ƒh */
+	#UploadNaviBt1 {
+		position : absolute ;
+		left : 9px ;
+		top : 510px ;
+		z-index : 2 ;
+		background-color: transparent ;
+	}
+
+-->

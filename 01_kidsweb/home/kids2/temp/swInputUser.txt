@@ -1,0 +1,54 @@
+ SELECT DISTINCT mu.struserdisplaycode,(mu.struserdisplaycode || ' ' || mu.struserdisplayname) AS struserdisplaycodename, mu.struserdisplayname FROM m_group mg, m_grouprelation mgr, m_user mu, m_attributerelation mar WHERE mu.lngcompanycode = mar.lngcompanycode  AND mu.lngusercode = mgr.lngusercode  AND mg.lnggroupcode = mgr.lnggroupcode  AND mar.lngattributecode = 1  AND mg.bytgroupdisplayflag = true  AND mu.bytuserdisplayflag = true     ORDER BY mu.struserdisplaycode 
+ SELECT DISTINCT mu.struserdisplaycode,(mu.struserdisplaycode || ' ' || mu.struserdisplayname) AS struserdisplaycodename, mu.struserdisplayname FROM m_group mg, m_grouprelation mgr, m_user mu, m_attributerelation mar WHERE mu.lngcompanycode = mar.lngcompanycode  AND mu.lngusercode = mgr.lngusercode  AND mg.lnggroupcode = mgr.lnggroupcode  AND mar.lngattributecode = 1  AND mg.bytgroupdisplayflag = true  AND mu.bytuserdisplayflag = true     ORDER BY mu.struserdisplaycode 
+id	name1	name2
+000	000 竹田（TAKEDA）	竹田（TAKEDA）
+004	004 社長	社長
+049	049 竹田　宏	竹田　宏
+050	050 市川　実	市川　実
+053	053 新妻　康子	新妻　康子
+091	091 木藤　幹裕	木藤　幹裕
+096	096 早川　裕太	早川　裕太
+103	103 田中　経義	田中　経義
+112	112 山崎　朗	山崎　朗
+118	118 谷中　理恵	谷中　理恵
+119	119 山崎　一己	山崎　一己
+141	141 正　直彦	正　直彦
+150	150 片桐　健太郎	片桐　健太郎
+163	163 吉澤　武実	吉澤　武実
+196	196 菊永　慧	菊永　慧
+201	201 小林　貴也	小林　貴也
+204	204 荻島　一敏	荻島　一敏
+209	209 笹生	笹生
+211	211 川田　浩	川田　浩
+212	212 斎藤　由紀子	斎藤　由紀子
+214	214 清水　みどり	清水　みどり
+216	216 陳　静	陳　静
+217	217 斉藤　佳之	斉藤　佳之
+220	220 鈴木　竜也	鈴木　竜也
+223	223 邱 少龍(Alon)	邱 少龍(Alon)
+229	229 阿部　真之	阿部　真之
+230	230 柳原　幸一	柳原　幸一
+231	231 織立　廣司	織立　廣司
+237	237 Hilda	Hilda
+238	238 矢寺　健一	矢寺　健一
+243	243 瓦井 まち子	瓦井 まち子
+246	246 服部　圭介	服部　圭介
+248	248 孫　豫	孫　豫
+249	249 櫻井　駿	櫻井　駿
+250	250 上島　和信	上島　和信
+251	251 飛鳥井　峻	飛鳥井　峻
+252	252 樊　超	樊　超
+254	254 染谷　志穂	染谷　志穂
+255	255 今泉　大輔	今泉　大輔
+256	256 佐野　実	佐野　実
+257	257 林田　実華	林田　実華
+258	258 廣田　敬厚	廣田　敬厚
+259	259 伊藤　浩子	伊藤　浩子
+260	260 慶田　歩	慶田　歩
+261	261 郡司　安沙子	郡司　安沙子
+265	265 明間 貴文	明間 貴文
+267	267 小林 稜平	小林 稜平
+904	904 森　剛久	森　剛久
+907	907 経理サブ承認	経理サブ承認
+918	918 山崎 徳明	山崎 徳明
+923	923 稲垣　恵美	稲垣　恵美

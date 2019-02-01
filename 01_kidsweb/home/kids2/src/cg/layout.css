@@ -1,0 +1,182 @@
+
+/* セット */
+#CompanyGroupSet
+{
+	position : absolute ;
+	left : 0px ;
+	top : 0px ;
+	visibility : visible ;
+	z-index : 5 ;
+	border-width : 0px ;
+	border-style : none ;
+	background-color : transparent ;
+}
+
+/* 背景 */
+#CompanyGroupBody
+{
+	background-color : #6f8180 ;
+}
+
+/* ヘッダーイメージ */
+#CompanyGroupHeader
+{
+	position : absolute ;
+	left : 0px ;
+	top : 0px ;
+	border-width : 0px ;
+	border-style : none ;
+	background-color : #6f8180 ;
+}
+
+/* フッターイメージ */
+#CompanyGroupFooter
+{
+	position : absolute ;
+	left : 0px ;
+	top : 245px ;
+	border-width : 0px ;
+	border-style : none ;
+	background-color : #6f8180 ;
+}
+
+#CompanyGroupLine
+{
+	position : absolute ;
+	left : 0px ;
+	top : 49px ;
+	border-width : 0px ;
+	border-style : none ;
+	background-color : transparent ;
+}
+
+#CompanyGroupStrSelectCompany
+{
+	position : absolute ;
+	left : 395px ;
+	top : 27px ;
+	border-width : 0px ;
+	border-style : none ;
+	background-color : transparent ;
+}
+
+#CompanyGroupStrSelectGroup
+{
+	position : absolute ;
+	left : 423px ;
+	top : 66px ;
+	border-width : 0px ;
+	border-style : none ;
+	background-color : transparent ;
+}
+
+#CompanyGroupStrGroup
+{
+	position : absolute ;
+	left : 29px ;
+	top : 66px ;
+	border-width : 0px ;
+	border-style : none ;
+	background-color : transparent ;
+}
+
+/* 会社選択プルダウン */
+#selectCompany
+{
+	position : absolute ;
+	left : 30px ;
+	top : 23px ;
+	border-width : 0px ;
+	border-style : none ;
+	background-color : transparent ;
+}
+
+
+/* 選択グループ反映先リストボックス */
+#selectGroup1
+{
+	position : absolute ;
+	left : 30px ;
+	top : 80px ;
+	border-width : 0px ;
+	border-style : none ;
+	background-color : transparent ;
+}
+
+
+/* 選択グループリストボックス */
+#selectGroup2
+{
+	position : absolute ;
+	left : 424px ;
+	top : 80px ;
+	border-width : 0px ;
+	border-style : none ;
+	background-color : transparent ;
+}
+
+
+/* リスト項目アップ・ダウンボタン */
+#ListUpBt
+{
+	position : absolute ;
+	left : 9px ;
+	top : 97px ;
+	border-width : 0px ;
+	border-style : none ;
+	background-color : transparent ;
+}
+
+#ListDownBt
+{
+	position : absolute ;
+	left : 9px ;
+	top : 195px ;
+	border-width : 0px ;
+	border-style : none ;
+	background-color : transparent ;
+}
+
+
+/* リスト項目追加・削除ボタン */
+#ListAddBt
+{
+	position : absolute ;
+	left : 397px ;
+	top : 118px ;
+	border-width : 0px ;
+	border-style : none ;
+	background-color : transparent ;
+}
+
+#ListDelBt
+{
+	position : absolute ;
+	left : 397px ;
+	top : 172px ;
+	border-width : 0px ;
+	border-style : none ;
+	background-color : transparent ;
+}
+
+
+/* ボタン背景画像 */
+#AddDelBack
+{
+	position : absolute ;
+	left : 395px ;
+	top : 82px ;
+	border-width : 0px ;
+	border-style : none ;
+	background-color : transparent ;
+}
+
+#UpDownBack
+{
+	position : absolute ;
+	left : 8px ;
+	top : 80px ;
+	border-width : 0px ;
+	border-style : none ;
+	background-color : transparent ;
+}

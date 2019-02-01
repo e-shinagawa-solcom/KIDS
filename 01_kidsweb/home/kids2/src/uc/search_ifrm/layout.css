@@ -1,0 +1,602 @@
+<!--
+
+
+#Backs
+{
+	background-color : #d6d0b1 ;
+}
+
+
+
+
+
+
+#DetailSegs
+{
+	font-weight : bold ;
+	position : absolute ;
+	left : 10px ;
+	top : 170px ;
+	width : 157px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#DetailVars
+{
+	position : absolute ;
+	left : 129px ;
+	top : 70px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 3px 0px 0px 8px ;
+}
+
+
+#LoginPermissionSegs
+{
+	font-weight : bold ;
+	position : absolute ;
+	left : 10px ;
+	top : 170px ;
+	width : 157px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#LoginPermissionVars
+{
+	position : absolute ;
+	left : 129px ;
+	top : 70px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 3px 0px 0px 8px ;
+}
+
+
+#UserCodeSegs
+{
+	font-weight : bold ;
+	position : absolute ;
+	left : 10px ;
+	top : 170px ;
+	width : 157px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#UserCodeVars
+{
+	position : absolute ;
+	left : 129px ;
+	top : 70px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 3px 0px 0px 8px ;
+}
+
+
+#UserIDSegs
+{
+	font-weight : bold ;
+	position : absolute ;
+	left : 10px ;
+	top : 170px ;
+	width : 157px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#UserIDVars
+{
+	position : absolute ;
+	left : 129px ;
+	top : 70px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 3px 0px 0px 8px ;
+}
+
+
+#EmailPermissionSegs
+{
+	font-weight : bold ;
+	position : absolute ;
+	left : 10px ;
+	top : 170px ;
+	width : 157px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#EmailPermissionVars
+{
+	position : absolute ;
+	left : 129px ;
+	top : 70px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 3px 0px 0px 8px ;
+}
+
+
+#EmailSegs
+{
+	font-weight : bold ;
+	position : absolute ;
+	left : 10px ;
+	top : 170px ;
+	width : 157px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#EmailVars
+{
+	position : absolute ;
+	left : 129px ;
+	top : 70px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 3px 0px 0px 8px ;
+}
+
+
+#DisplayUserSegs
+{
+	font-weight : bold ;
+	position : absolute ;
+	left : 10px ;
+	top : 170px ;
+	width : 157px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#DisplayUserVars
+{
+	position : absolute ;
+	left : 129px ;
+	top : 70px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 3px 0px 0px 8px ;
+}
+
+
+#DisplayUserCodeSegs
+{
+	font-weight : bold ;
+	position : absolute ;
+	left : 10px ;
+	top : 170px ;
+	width : 157px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#DisplayUserCodeVars
+{
+	position : absolute ;
+	left : 129px ;
+	top : 70px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 3px 0px 0px 8px ;
+}
+
+
+#DisplayUserNameSegs
+{
+	font-weight : bold ;
+	position : absolute ;
+	left : 10px ;
+	top : 170px ;
+	width : 157px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#DisplayUserNameVars
+{
+	position : absolute ;
+	left : 129px ;
+	top : 70px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 3px 0px 0px 8px ;
+}
+
+
+#UserFullNameSegs
+{
+	font-weight : bold ;
+	position : absolute ;
+	left : 10px ;
+	top : 170px ;
+	width : 157px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#UserFullNameVars
+{
+	position : absolute ;
+	left : 129px ;
+	top : 70px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 3px 0px 0px 8px ;
+}
+
+
+#CompanySegs
+{
+	font-weight : bold ;
+	position : absolute ;
+	left : 10px ;
+	top : 170px ;
+	width : 157px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#CompanyVars
+{
+	position : absolute ;
+	left : 129px ;
+	top : 70px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 3px 0px 0px 8px ;
+}
+
+
+#GroupSegs
+{
+	font-weight : bold ;
+	position : absolute ;
+	left : 10px ;
+	top : 170px ;
+	width : 157px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#GroupVars
+{
+	position : absolute ;
+	left : 129px ;
+	top : 70px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 3px 0px 0px 8px ;
+}
+
+
+#AuthorityGroupSegs
+{
+	font-weight : bold ;
+	position : absolute ;
+	left : 10px ;
+	top : 170px ;
+	width : 157px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#AuthorityGroupVars
+{
+	position : absolute ;
+	left : 129px ;
+	top : 70px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 3px 0px 0px 8px ;
+}
+
+
+#AccessIPAddressSegs
+{
+	font-weight : bold ;
+	position : absolute ;
+	left : 10px ;
+	top : 170px ;
+	width : 157px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#AccessIPAddressVars
+{
+	position : absolute ;
+	left : 129px ;
+	top : 70px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 3px 0px 0px 8px ;
+}
+
+
+#RemarkSegs
+{
+	font-weight : bold ;
+	position : absolute ;
+	left : 10px ;
+	top : 170px ;
+	width : 157px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#RemarkVars
+{
+	position : absolute ;
+	left : 129px ;
+	top : 70px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 3px 0px 0px 8px ;
+}
+
+
+#FixSegs
+{
+	font-weight : bold ;
+	position : absolute ;
+	left : 10px ;
+	top : 170px ;
+	width : 157px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#FixVars
+{
+	position : absolute ;
+	left : 129px ;
+	top : 70px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 3px 0px 0px 8px ;
+}
+
+
+#DeleteSegs
+{
+	font-weight : bold ;
+	position : absolute ;
+	left : 10px ;
+	top : 170px ;
+	width : 157px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#DeleteVars
+{
+	position : absolute ;
+	left : 129px ;
+	top : 70px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 3px 0px 0px 8px ;
+}
+
+
+
+
+
+
+#DummySpace
+{
+	position : absolute ;
+	left : 0px ;
+	top : 544px ;
+	width : 10px ;
+	height : 20px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+
+
+#CheckAll1
+{
+	position : absolute ;
+	top : 2px ;
+	left : 16px ;
+	text-align : center ;
+	border-width: 0px ;
+	border-style: none ;
+	padding : 3px 0px 0px 8px ;
+}
+
+#CheckAll2
+{
+	position : absolute ;
+	top : 2px ;
+	left : 65px ;
+	text-align : center ;
+	border-width: 0px ;
+	border-style: none ;
+	padding : 3px 0px 0px 8px ;
+}
+
+#ViewSearch1
+{
+	position : absolute ;
+	top : 23px ;
+	left : 1px ;
+	text-align : center ;
+	border-width: 0px ;
+	border-style: none ;
+	padding : 3px 0px 0px 8px ;
+}
+
+#ViewSearch2
+{
+	position : absolute ;
+	top : 143px ;
+	left : 1px ;
+	text-align : center ;
+	border-width: 0px ;
+	border-style: none ;
+	padding : 3px 0px 0px 8px ;
+}
+
+
+#Checks
+{
+	position : absolute ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 3px 0px 0px 4px ;
+}
+
+.CheckBoxStyle
+{
+	width : 40px ;
+	border-width : 0px ;
+	border-style : none ;
+	background-color : transparent ;
+}
+
+
+
+
+
+
+
+
+/********************* START DATE BUTTON *********************/
+#DateBtA {
+	position : absolute ;
+	left : 728px ;
+	top : 104px ;
+	border-width : 0px ;
+	border-style : none ;
+	background-color : #ffffff ;
+}
+/********************** END DATE BUTTON **********************/
+
+
+
+
+
+
+
+/********************* START MSW BUTTON *********************/
+/* START [SUPPLIER] BUTTON */
+#MSWBt08 {
+	position : absolute ;
+	left : 706px ;
+	top : 209px ;
+	width : 19px ;
+	height : 19px ;
+	border-width : 0px ;
+	border-style : none ;
+	background-color : #ffffff ;
+}
+/* END [SUPPLIER] BUTTON */
+
+
+/* START [DEPT & IN CHARGE NAME] BUTTON */
+#MSWBt02 {
+	position : absolute ;
+	left : 706px ;
+	top : 257px ;
+	width : 19px ;
+	height : 19px ;
+	border-width : 0px ;
+	border-style : none ;
+	background-color : #ffffff ;
+}
+/* END [DEPT & IN CHARGE NAME] BUTTON */
+
+
+#MSWBt03 {
+	position : absolute ;
+	left : 706px ;
+	top : 488px ;
+	width : 19px ;
+	height : 19px ;
+	border-width : 0px ;
+	border-style : none ;
+	background-color : #ffffff ;
+}
+
+
+/* START [INPUT2] BUTTON */
+#MSWBt09 {
+	position : absolute ;
+	left : 706px ;
+	top : 178px ;
+	width : 19px ;
+	height : 19px ;
+	border-width : 0px ;
+	border-style : none ;
+	background-color : #ffffff ;
+}
+/* END [INPUT2] BUTTON */
+/********************** END MSW BUTTON **********************/
+
+
+
+
+
+-->

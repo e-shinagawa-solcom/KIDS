@@ -1,0 +1,1500 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+   <html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>Docs for page conf.inc</title>
+  <link rel="stylesheet" href="../media/stylesheet.css" />
+  <script src="../media/lib/classTree.js"></script>
+<link id="webfx-tab-style-sheet" type="text/css" rel="stylesheet" href="../media/lib/tab.webfx.css" />
+<script type="text/javascript" src="../media/lib/tabpane.js"></script>
+  <script language="javascript" type="text/javascript" src="../media/lib/ua.js"></script>
+<script language="javascript" type="text/javascript">
+	var imgPlus = new Image();
+	var imgMinus = new Image();
+	imgPlus.src = "../media/images/plus.gif";
+	imgMinus.src = "../media/images/minus.gif";
+	
+	function showNode(Node){
+        switch(navigator.family){
+        	case 'nn4':
+        		// Nav 4.x code fork...
+				var oTable = document.layers["span" + Node];
+				var oImg = document.layers["img" + Node];
+        		break;
+        	case 'ie4':
+        		// IE 4/5 code fork...
+				var oTable = document.all["span" + Node];
+				var oImg = document.all["img" + Node];
+        		break;
+        	case 'gecko':
+        		// Standards Compliant code fork...
+				var oTable = document.getElementById("span" + Node);
+				var oImg = document.getElementById("img" + Node);
+        		break;
+        }
+		oImg.src = imgMinus.src;
+		oTable.style.display = "block";
+	}
+	
+	function hideNode(Node){
+        switch(navigator.family){
+        	case 'nn4':
+        		// Nav 4.x code fork...
+				var oTable = document.layers["span" + Node];
+				var oImg = document.layers["img" + Node];
+        		break;
+        	case 'ie4':
+        		// IE 4/5 code fork...
+				var oTable = document.all["span" + Node];
+				var oImg = document.all["img" + Node];
+        		break;
+        	case 'gecko':
+        		// Standards Compliant code fork...
+				var oTable = document.getElementById("span" + Node);
+				var oImg = document.getElementById("img" + Node);
+        		break;
+        }
+		oImg.src = imgPlus.src;
+		oTable.style.display = "none";
+	}
+	
+	function nodeIsVisible(Node){
+        switch(navigator.family){
+        	case 'nn4':
+        		// Nav 4.x code fork...
+				var oTable = document.layers["span" + Node];
+        		break;
+        	case 'ie4':
+        		// IE 4/5 code fork...
+				var oTable = document.all["span" + Node];
+        		break;
+        	case 'gecko':
+        		// Standards Compliant code fork...
+				var oTable = document.getElementById("span" + Node);
+        		break;
+        }
+		return (oTable && oTable.style.display == "block");
+	}
+	
+	function toggleNodeVisibility(Node){
+		if (nodeIsVisible(Node)){
+			hideNode(Node);
+		}else{
+			showNode(Node);
+		}
+	}
+</script>
+<!-- template designed by Julien Damon based on PHPEdit's generated templates, and tweaked by Greg Beaver -->
+<body bgcolor="#ffffff" ><h2>File: /conf.inc</h2>
+<div class="tab-pane" id="tabPane1">
+<script type="text/javascript">
+tp1 = new WebFXTabPane( document.getElementById( "tabPane1" ) );
+</script>
+
+<div class="tab-page" id="Description">
+<h2 class="tab">Description</h2>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+<!-- =========== Used Classes =========== -->
+<A NAME='classes_summary'><!-- --></A>
+<h3>Classes defined in this file</h3>
+
+<TABLE CELLPADDING='3' CELLSPACING='0' WIDTH='100%' CLASS="border">
+	<THEAD>
+		<TR><TD STYLE="width:20%"><h4>CLASS NAME</h4></TD><TD STYLE="width: 80%"><h4>DESCRIPTION</h4></TD></TR>
+	</THEAD>
+	<TBODY>
+			</TBODY>
+</TABLE>
+</div>
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "Description" ) );</script>
+<div class="tab-page" id="tabPage1">
+<!-- ============ Includes DETAIL =========== -->
+
+<h2 class="tab">Include/Require Statements</h2>
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "tabPage1" ) );</script>
+
+
+</div>
+<div class="tab-page" id="tabPage2">
+<!-- ============ GLOBAL DETAIL =========== -->
+
+<h2 class="tab">Global Variables</h2>
+
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "tabPage2" ) );</script>
+
+</div>
+<div class="tab-page" id="tabPage3">
+<!-- ============ CONSTANT DETAIL =========== -->
+
+<A NAME='constant_detail'></A>
+<h2 class="tab">Constants</h2>
+
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "tabPage3" ) );</script>
+
+<a name="define"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property"></strong> (line <span class="linenumber">159</span>)
+ </h4> 
+<h4> : 1300</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineCLS_AUTH_FILE"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">CLS_AUTH_FILE</strong> (line <span class="linenumber">32</span>)
+ </h4> 
+<h4>CLS_AUTH_FILE : LIB_ROOT.&quot;clsauth.php&quot;</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineCLS_CACHE_FILE"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">CLS_CACHE_FILE</strong> (line <span class="linenumber">34</span>)
+ </h4> 
+<h4>CLS_CACHE_FILE : LIB_ROOT.&quot;clscache.php&quot;</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineCLS_DB_FILE"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">CLS_DB_FILE</strong> (line <span class="linenumber">31</span>)
+ </h4> 
+<h4>CLS_DB_FILE : LIB_ROOT.&quot;clsdb.php&quot;</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineCLS_ROOT"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">CLS_ROOT</strong> (line <span class="linenumber">26</span>)
+ </h4> 
+<h4>CLS_ROOT : &quot;/home/kuwagata/lib/&quot;</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineCLS_TEMPLATE_FILE"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">CLS_TEMPLATE_FILE</strong> (line <span class="linenumber">33</span>)
+ </h4> 
+<h4>CLS_TEMPLATE_FILE : LIB_ROOT.&quot;clstemplate.php&quot;</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDB_LOGIN_PASSWORD"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DB_LOGIN_PASSWORD</strong> (line <span class="linenumber">15</span>)
+ </h4> 
+<h4>DB_LOGIN_PASSWORD : &quot;kabutomushi&quot;</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDB_LOGIN_USERNAME"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DB_LOGIN_USERNAME</strong> (line <span class="linenumber">14</span>)
+ </h4> 
+<h4>DB_LOGIN_USERNAME : &quot;kuwagata&quot;</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDB_NAME"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DB_NAME</strong> (line <span class="linenumber">17</span>)
+ </h4> 
+<h4>DB_NAME : &quot;devkids&quot;</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_ANNOUNCE"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_ANNOUNCE</strong> (line <span class="linenumber">165</span>)
+ </h4> 
+<h4>DEF_ANNOUNCE : 99</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_APPROVER"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_APPROVER</strong> (line <span class="linenumber">62</span>)
+ </h4> 
+<h4>DEF_APPROVER : 1</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_APPROVE_VOID"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_APPROVE_VOID</strong> (line <span class="linenumber">61</span>)
+ </h4> 
+<h4>DEF_APPROVE_VOID : </h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_AUTHG_ADMIN"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_AUTHG_ADMIN</strong> (line <span class="linenumber">89</span>)
+ </h4> 
+<h4>DEF_AUTHG_ADMIN : 10</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_AUTHG_DIRECTOR"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_AUTHG_DIRECTOR</strong> (line <span class="linenumber">91</span>)
+ </h4> 
+<h4>DEF_AUTHG_DIRECTOR : 100</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_AUTHG_GUEST"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_AUTHG_GUEST</strong> (line <span class="linenumber">94</span>)
+ </h4> 
+<h4>DEF_AUTHG_GUEST : 130</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_AUTHG_MANAGER"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_AUTHG_MANAGER</strong> (line <span class="linenumber">92</span>)
+ </h4> 
+<h4>DEF_AUTHG_MANAGER : 110</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_AUTHG_OPERATOR"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_AUTHG_OPERATOR</strong> (line <span class="linenumber">90</span>)
+ </h4> 
+<h4>DEF_AUTHG_OPERATOR : 20</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_AUTHG_USER"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_AUTHG_USER</strong> (line <span class="linenumber">93</span>)
+ </h4> 
+<h4>DEF_AUTHG_USER : 120</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_DEBUG_MODE"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_DEBUG_MODE</strong> (line <span class="linenumber">168</span>)
+ </h4> 
+<h4>DEF_DEBUG_MODE : </h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_ERROR"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_ERROR</strong> (line <span class="linenumber">163</span>)
+ </h4> 
+<h4>DEF_ERROR : 2</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FATAL"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FATAL</strong> (line <span class="linenumber">164</span>)
+ </h4> 
+<h4>DEF_FATAL : 3</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FINAL_APPROVER"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FINAL_APPROVER</strong> (line <span class="linenumber">63</span>)
+ </h4> 
+<h4>DEF_FINAL_APPROVER : 2</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_DE0"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_DE0</strong> (line <span class="linenumber">151</span>)
+ </h4> 
+<h4>DEF_FUNCTION_DE0 : 1000</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_LO0"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_LO0</strong> (line <span class="linenumber">148</span>)
+ </h4> 
+<h4>DEF_FUNCTION_LO0 : 900</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_LO1"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_LO1</strong> (line <span class="linenumber">149</span>)
+ </h4> 
+<h4>DEF_FUNCTION_LO1 : 901</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_LO2"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_LO2</strong> (line <span class="linenumber">150</span>)
+ </h4> 
+<h4>DEF_FUNCTION_LO2 : 902</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_LOGIN0"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_LOGIN0</strong> (line <span class="linenumber">97</span>)
+ </h4> 
+<h4>DEF_FUNCTION_LOGIN0 : 100</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_LOGIN1"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_LOGIN1</strong> (line <span class="linenumber">98</span>)
+ </h4> 
+<h4>DEF_FUNCTION_LOGIN1 : 101</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_LOGIN2"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_LOGIN2</strong> (line <span class="linenumber">99</span>)
+ </h4> 
+<h4>DEF_FUNCTION_LOGIN2 : 102</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_M0"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_M0</strong> (line <span class="linenumber">158</span>)
+ </h4> 
+<h4>DEF_FUNCTION_M0 : 1200</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_MENU0"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_MENU0</strong> (line <span class="linenumber">100</span>)
+ </h4> 
+<h4>DEF_FUNCTION_MENU0 : 200</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_P0"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_P0</strong> (line <span class="linenumber">101</span>)
+ </h4> 
+<h4>DEF_FUNCTION_P0 : 300</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_P1"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_P1</strong> (line <span class="linenumber">102</span>)
+ </h4> 
+<h4>DEF_FUNCTION_P1 : 301</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_P2"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_P2</strong> (line <span class="linenumber">103</span>)
+ </h4> 
+<h4>DEF_FUNCTION_P2 : 302</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_P3"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_P3</strong> (line <span class="linenumber">104</span>)
+ </h4> 
+<h4>DEF_FUNCTION_P3 : 303</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_P4"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_P4</strong> (line <span class="linenumber">105</span>)
+ </h4> 
+<h4>DEF_FUNCTION_P4 : 304</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_P5"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_P5</strong> (line <span class="linenumber">106</span>)
+ </h4> 
+<h4>DEF_FUNCTION_P5 : 305</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_P6"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_P6</strong> (line <span class="linenumber">107</span>)
+ </h4> 
+<h4>DEF_FUNCTION_P6 : 306</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_P7"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_P7</strong> (line <span class="linenumber">108</span>)
+ </h4> 
+<h4>DEF_FUNCTION_P7 : 307</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_PC0"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_PC0</strong> (line <span class="linenumber">133</span>)
+ </h4> 
+<h4>DEF_FUNCTION_PC0 : 700</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_PC1"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_PC1</strong> (line <span class="linenumber">134</span>)
+ </h4> 
+<h4>DEF_FUNCTION_PC1 : 701</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_PC2"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_PC2</strong> (line <span class="linenumber">135</span>)
+ </h4> 
+<h4>DEF_FUNCTION_PC2 : 702</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_PC3"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_PC3</strong> (line <span class="linenumber">136</span>)
+ </h4> 
+<h4>DEF_FUNCTION_PC3 : 703</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_PC4"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_PC4</strong> (line <span class="linenumber">137</span>)
+ </h4> 
+<h4>DEF_FUNCTION_PC4 : 704</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_PC5"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_PC5</strong> (line <span class="linenumber">138</span>)
+ </h4> 
+<h4>DEF_FUNCTION_PC5 : 705</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_PC6"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_PC6</strong> (line <span class="linenumber">139</span>)
+ </h4> 
+<h4>DEF_FUNCTION_PC6 : 706</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_PC7"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_PC7</strong> (line <span class="linenumber">140</span>)
+ </h4> 
+<h4>DEF_FUNCTION_PC7 : 707</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_PO0"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_PO0</strong> (line <span class="linenumber">117</span>)
+ </h4> 
+<h4>DEF_FUNCTION_PO0 : 500</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_PO1"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_PO1</strong> (line <span class="linenumber">118</span>)
+ </h4> 
+<h4>DEF_FUNCTION_PO1 : 501</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_PO2"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_PO2</strong> (line <span class="linenumber">119</span>)
+ </h4> 
+<h4>DEF_FUNCTION_PO2 : 502</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_PO3"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_PO3</strong> (line <span class="linenumber">120</span>)
+ </h4> 
+<h4>DEF_FUNCTION_PO3 : 503</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_PO4"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_PO4</strong> (line <span class="linenumber">121</span>)
+ </h4> 
+<h4>DEF_FUNCTION_PO4 : 504</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_PO5"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_PO5</strong> (line <span class="linenumber">122</span>)
+ </h4> 
+<h4>DEF_FUNCTION_PO5 : 505</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_PO6"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_PO6</strong> (line <span class="linenumber">123</span>)
+ </h4> 
+<h4>DEF_FUNCTION_PO6 : 506</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_PO7"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_PO7</strong> (line <span class="linenumber">124</span>)
+ </h4> 
+<h4>DEF_FUNCTION_PO7 : 507</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_SC0"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_SC0</strong> (line <span class="linenumber">125</span>)
+ </h4> 
+<h4>DEF_FUNCTION_SC0 : 600</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_SC1"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_SC1</strong> (line <span class="linenumber">126</span>)
+ </h4> 
+<h4>DEF_FUNCTION_SC1 : 601</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_SC2"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_SC2</strong> (line <span class="linenumber">127</span>)
+ </h4> 
+<h4>DEF_FUNCTION_SC2 : 602</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_SC3"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_SC3</strong> (line <span class="linenumber">128</span>)
+ </h4> 
+<h4>DEF_FUNCTION_SC3 : 603</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_SC4"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_SC4</strong> (line <span class="linenumber">129</span>)
+ </h4> 
+<h4>DEF_FUNCTION_SC4 : 604</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_SC5"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_SC5</strong> (line <span class="linenumber">130</span>)
+ </h4> 
+<h4>DEF_FUNCTION_SC5 : 605</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_SC6"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_SC6</strong> (line <span class="linenumber">131</span>)
+ </h4> 
+<h4>DEF_FUNCTION_SC6 : 606</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_SC7"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_SC7</strong> (line <span class="linenumber">132</span>)
+ </h4> 
+<h4>DEF_FUNCTION_SC7 : 607</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_SO0"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_SO0</strong> (line <span class="linenumber">109</span>)
+ </h4> 
+<h4>DEF_FUNCTION_SO0 : 400</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_SO1"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_SO1</strong> (line <span class="linenumber">110</span>)
+ </h4> 
+<h4>DEF_FUNCTION_SO1 : 401</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_SO2"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_SO2</strong> (line <span class="linenumber">111</span>)
+ </h4> 
+<h4>DEF_FUNCTION_SO2 : 402</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_SO3"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_SO3</strong> (line <span class="linenumber">112</span>)
+ </h4> 
+<h4>DEF_FUNCTION_SO3 : 403</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_SO4"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_SO4</strong> (line <span class="linenumber">113</span>)
+ </h4> 
+<h4>DEF_FUNCTION_SO4 : 404</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_SO5"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_SO5</strong> (line <span class="linenumber">114</span>)
+ </h4> 
+<h4>DEF_FUNCTION_SO5 : 405</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_SO6"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_SO6</strong> (line <span class="linenumber">115</span>)
+ </h4> 
+<h4>DEF_FUNCTION_SO6 : 406</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_SO7"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_SO7</strong> (line <span class="linenumber">116</span>)
+ </h4> 
+<h4>DEF_FUNCTION_SO7 : 407</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_UC0"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_UC0</strong> (line <span class="linenumber">152</span>)
+ </h4> 
+<h4>DEF_FUNCTION_UC0 : 1100</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_UC1"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_UC1</strong> (line <span class="linenumber">153</span>)
+ </h4> 
+<h4>DEF_FUNCTION_UC1 : 1101</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_UC2"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_UC2</strong> (line <span class="linenumber">154</span>)
+ </h4> 
+<h4>DEF_FUNCTION_UC2 : 1102</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_UC3"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_UC3</strong> (line <span class="linenumber">155</span>)
+ </h4> 
+<h4>DEF_FUNCTION_UC3 : 1103</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_UC4"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_UC4</strong> (line <span class="linenumber">156</span>)
+ </h4> 
+<h4>DEF_FUNCTION_UC4 : 1104</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_UC5"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_UC5</strong> (line <span class="linenumber">157</span>)
+ </h4> 
+<h4>DEF_FUNCTION_UC5 : 1105</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_WF0"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_WF0</strong> (line <span class="linenumber">141</span>)
+ </h4> 
+<h4>DEF_FUNCTION_WF0 : 800</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_WF1"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_WF1</strong> (line <span class="linenumber">142</span>)
+ </h4> 
+<h4>DEF_FUNCTION_WF1 : 801</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_WF2"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_WF2</strong> (line <span class="linenumber">143</span>)
+ </h4> 
+<h4>DEF_FUNCTION_WF2 : 802</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_WF3"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_WF3</strong> (line <span class="linenumber">144</span>)
+ </h4> 
+<h4>DEF_FUNCTION_WF3 : 803</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_WF4"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_WF4</strong> (line <span class="linenumber">145</span>)
+ </h4> 
+<h4>DEF_FUNCTION_WF4 : 804</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_WF5"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_WF5</strong> (line <span class="linenumber">146</span>)
+ </h4> 
+<h4>DEF_FUNCTION_WF5 : 805</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_FUNCTION_WF6"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_FUNCTION_WF6</strong> (line <span class="linenumber">147</span>)
+ </h4> 
+<h4>DEF_FUNCTION_WF6 : 806</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_MONETARY_HKD"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_MONETARY_HKD</strong> (line <span class="linenumber">180</span>)
+ </h4> 
+<h4>DEF_MONETARY_HKD : 3</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_MONETARY_USD"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_MONETARY_USD</strong> (line <span class="linenumber">179</span>)
+ </h4> 
+<h4>DEF_MONETARY_USD : 2</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_MONETARY_YEN"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_MONETARY_YEN</strong> (line <span class="linenumber">178</span>)
+ </h4> 
+<h4>DEF_MONETARY_YEN : 1</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_MONEY_DIRECTOR"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_MONEY_DIRECTOR</strong> (line <span class="linenumber">184</span>)
+ </h4> 
+<h4>DEF_MONEY_DIRECTOR : 200000</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_MONEY_MANAGER"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_MONEY_MANAGER</strong> (line <span class="linenumber">183</span>)
+ </h4> 
+<h4>DEF_MONEY_MANAGER : 50000</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_MONEY_USER"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_MONEY_USER</strong> (line <span class="linenumber">182</span>)
+ </h4> 
+<h4>DEF_MONEY_USER : </h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_M_WORKFLOW_FUNCTIONCODE"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_M_WORKFLOW_FUNCTIONCODE</strong> (line <span class="linenumber">172</span>)
+ </h4> 
+<h4>DEF_M_WORKFLOW_FUNCTIONCODE : 1</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_ORDER_APPLICATE"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_ORDER_APPLICATE</strong> (line <span class="linenumber">66</span>)
+ </h4> 
+<h4>DEF_ORDER_APPLICATE : 1</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_ORDER_CLOSED"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_ORDER_CLOSED</strong> (line <span class="linenumber">70</span>)
+ </h4> 
+<h4>DEF_ORDER_CLOSED : 99</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_ORDER_DELIVER"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_ORDER_DELIVER</strong> (line <span class="linenumber">68</span>)
+ </h4> 
+<h4>DEF_ORDER_DELIVER : 3</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_ORDER_END"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_ORDER_END</strong> (line <span class="linenumber">69</span>)
+ </h4> 
+<h4>DEF_ORDER_END : 4</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_ORDER_ORDER"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_ORDER_ORDER</strong> (line <span class="linenumber">67</span>)
+ </h4> 
+<h4>DEF_ORDER_ORDER : 2</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_RECEIVE_CLOSED"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_RECEIVE_CLOSED</strong> (line <span class="linenumber">81</span>)
+ </h4> 
+<h4>DEF_RECEIVE_CLOSED : 99</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_RECEIVE_DELIVER"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_RECEIVE_DELIVER</strong> (line <span class="linenumber">79</span>)
+ </h4> 
+<h4>DEF_RECEIVE_DELIVER : 3</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_RECEIVE_END"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_RECEIVE_END</strong> (line <span class="linenumber">80</span>)
+ </h4> 
+<h4>DEF_RECEIVE_END : 4</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_RECEIVE_ORDER"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_RECEIVE_ORDER</strong> (line <span class="linenumber">78</span>)
+ </h4> 
+<h4>DEF_RECEIVE_ORDER : 2</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_SALES_CLOSED"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_SALES_CLOSED</strong> (line <span class="linenumber">86</span>)
+ </h4> 
+<h4>DEF_SALES_CLOSED : 99</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_SALES_DELIVER"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_SALES_DELIVER</strong> (line <span class="linenumber">84</span>)
+ </h4> 
+<h4>DEF_SALES_DELIVER : 3</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_SALES_END"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_SALES_END</strong> (line <span class="linenumber">85</span>)
+ </h4> 
+<h4>DEF_SALES_END : 4</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_STATUS_APPROVE"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_STATUS_APPROVE</strong> (line <span class="linenumber">57</span>)
+ </h4> 
+<h4>DEF_STATUS_APPROVE : 10</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_STATUS_BACK"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_STATUS_BACK</strong> (line <span class="linenumber">55</span>)
+ </h4> 
+<h4>DEF_STATUS_BACK : 3</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_STATUS_CANCELL"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_STATUS_CANCELL</strong> (line <span class="linenumber">56</span>)
+ </h4> 
+<h4>DEF_STATUS_CANCELL : 4</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_STATUS_CONSIDER"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_STATUS_CONSIDER</strong> (line <span class="linenumber">54</span>)
+ </h4> 
+<h4>DEF_STATUS_CONSIDER : 2</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_STATUS_DENIAL"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_STATUS_DENIAL</strong> (line <span class="linenumber">58</span>)
+ </h4> 
+<h4>DEF_STATUS_DENIAL : 99</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_STATUS_ORDER"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_STATUS_ORDER</strong> (line <span class="linenumber">53</span>)
+ </h4> 
+<h4>DEF_STATUS_ORDER : 1</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_STATUS_VOID"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_STATUS_VOID</strong> (line <span class="linenumber">52</span>)
+ </h4> 
+<h4>DEF_STATUS_VOID : </h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_STOCK_CLOSED"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_STOCK_CLOSED</strong> (line <span class="linenumber">75</span>)
+ </h4> 
+<h4>DEF_STOCK_CLOSED : 99</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_STOCK_DELIVER"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_STOCK_DELIVER</strong> (line <span class="linenumber">73</span>)
+ </h4> 
+<h4>DEF_STOCK_DELIVER : 3</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_STOCK_END"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_STOCK_END</strong> (line <span class="linenumber">74</span>)
+ </h4> 
+<h4>DEF_STOCK_END : 4</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_T_WORKFLOW_ORDERNO"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_T_WORKFLOW_ORDERNO</strong> (line <span class="linenumber">174</span>)
+ </h4> 
+<h4>DEF_T_WORKFLOW_ORDERNO : 1</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_T_WORKFLOW_STATUS"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_T_WORKFLOW_STATUS</strong> (line <span class="linenumber">175</span>)
+ </h4> 
+<h4>DEF_T_WORKFLOW_STATUS : 1</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_T_WORKFLOW_SUBCODE"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_T_WORKFLOW_SUBCODE</strong> (line <span class="linenumber">173</span>)
+ </h4> 
+<h4>DEF_T_WORKFLOW_SUBCODE : 1</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineDEF_WARNING"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">DEF_WARNING</strong> (line <span class="linenumber">162</span>)
+ </h4> 
+<h4>DEF_WARNING : 1</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineERROR_MAIL_TO"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">ERROR_MAIL_TO</strong> (line <span class="linenumber">20</span>)
+ </h4> 
+<h4>ERROR_MAIL_TO : &quot;devkids@wiseknot.co.jp&quot;</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineIMAGE_LIMIT"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">IMAGE_LIMIT</strong> (line <span class="linenumber">7</span>)
+ </h4> 
+<h4>IMAGE_LIMIT : 102400</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineLAYOUT_CODE"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">LAYOUT_CODE</strong> (line <span class="linenumber">8</span>)
+ </h4> 
+<h4>LAYOUT_CODE : &quot;type01&quot;</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineLIB_FILE"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">LIB_FILE</strong> (line <span class="linenumber">30</span>)
+ </h4> 
+<h4>LIB_FILE : LIB_ROOT.&quot;lib.php&quot;</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineLIB_ROOT"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">LIB_ROOT</strong> (line <span class="linenumber">25</span>)
+ </h4> 
+<h4>LIB_ROOT : &quot;/home/kuwagata/lib/&quot;</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineLOGIN_URL"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">LOGIN_URL</strong> (line <span class="linenumber">44</span>)
+ </h4> 
+<h4>LOGIN_URL : TOP_URL.&quot;login/login.php&quot;</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="definePOSTGRESQL_HOSTNAME"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">POSTGRESQL_HOSTNAME</strong> (line <span class="linenumber">12</span>)
+ </h4> 
+<h4>POSTGRESQL_HOSTNAME : &quot;192.168.0.160&quot;</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="definePOSTGRESQL_HOSTPORT"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">POSTGRESQL_HOSTPORT</strong> (line <span class="linenumber">13</span>)
+ </h4> 
+<h4>POSTGRESQL_HOSTPORT : &quot;&quot;</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineREMINDER_LIMIT"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">REMINDER_LIMIT</strong> (line <span class="linenumber">5</span>)
+ </h4> 
+<h4>REMINDER_LIMIT : 1440</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineSRC_ROOT"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">SRC_ROOT</strong> (line <span class="linenumber">27</span>)
+ </h4> 
+<h4>SRC_ROOT : &quot;/home/kuwagata/src/&quot;</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineTMP_ROOT"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">TMP_ROOT</strong> (line <span class="linenumber">24</span>)
+ </h4> 
+<h4>TMP_ROOT : &quot;/home/kuwagata/tmp/&quot;</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineTOP_URL"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">TOP_URL</strong> (line <span class="linenumber">43</span>)
+ </h4> 
+<h4>TOP_URL : &quot;http://192.168.0.160/&quot;</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineUSER_IMAGE_DEFAULT_URL"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">USER_IMAGE_DEFAULT_URL</strong> (line <span class="linenumber">46</span>)
+ </h4> 
+<h4>USER_IMAGE_DEFAULT_URL : USER_IMAGE_URL.&quot;default.gif&quot;</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineUSER_IMAGE_DIR"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">USER_IMAGE_DIR</strong> (line <span class="linenumber">38</span>)
+ </h4> 
+<h4>USER_IMAGE_DIR : SRC_ROOT.&quot;face/&quot;</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineUSER_IMAGE_TMPDIR"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">USER_IMAGE_TMPDIR</strong> (line <span class="linenumber">37</span>)
+ </h4> 
+<h4>USER_IMAGE_TMPDIR : &quot;/home/kuwagata/image_tmp/&quot;</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineUSER_IMAGE_TYPE"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">USER_IMAGE_TYPE</strong> (line <span class="linenumber">39</span>)
+ </h4> 
+<h4>USER_IMAGE_TYPE : &quot;pjpeg|jpeg|gif&quot;</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="defineUSER_IMAGE_URL"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/Constant.gif" border="0" /> <strong class="property">USER_IMAGE_URL</strong> (line <span class="linenumber">45</span>)
+ </h4> 
+<h4>USER_IMAGE_URL : TOP_URL.&quot;face/&quot;</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+</div>
+<div class="tab-page" id="tabPage4">
+<!-- ============ FUNCTION DETAIL =========== -->
+
+<h2 class="tab">Functions</h2>
+
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "tabPage4" ) );</script>
+
+</div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+
+setupAllTabs();
+
+//]]>
+</script>
+	<div id="credit">
+		<hr />
+		Documentation generated on Mon,  5 Jan 2004 18:37:32 +0900 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.2.3</a>
+	</div>
+</body>
+</html>

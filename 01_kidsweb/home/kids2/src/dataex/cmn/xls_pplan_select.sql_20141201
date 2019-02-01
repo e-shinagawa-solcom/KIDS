@@ -1,0 +1,30 @@
+
+	tgp.lngProductNo AS strReportKeyCode,
+	tgp.lngGoodsPlanProgressCode,
+	me.lngEstimateNo,
+	me.lngEstimateStatusCode,
+
+	mp.strProductName, 
+	mp.strProductCode, 
+	mp.strGoodsCode,
+	mp.dtmDeliveryLimitDate, 
+	'', 
+	mp.curRetailPrice, 
+	mp.lngFactoryCode,
+	mc.strCompanyDisplayName	AS strCompanyDisplayName,
+	mp.lngCustomerCompanyCode,
+	mc2.strCompanyDisplayName	AS strCustomerCompanyName,
+	mp.lngProductUnitCode,
+	CASE WHEN mp.lngProductUnitCode = 2 THEN 
+		mp.lngCartonQuantity
+	ELSE
+		mp.lngCartonQuantity / mp.lngBoxQuantity
+	END AS lngDeliveryQuantity,
+	mp.lngCartonQuantity,
+	mp.lngBoxQuantity,
+	mp.lngInchargeUserCode,
+	mu.strUserDisplayName,
+	mp.lngBoxQuantity,
+	mp.lngCertificateClassCode,
+	mcc.strCertificateClassName
+

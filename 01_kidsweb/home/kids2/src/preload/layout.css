@@ -1,0 +1,85 @@
+<!--
+
+
+a:link     { color : #bbbbbb ;  background-color : transparent ; }
+a:visited  { color : #bbbbbb ;  background-color : transparent ; }
+a:active   { color : #bbbbbb ;  background-color : transparent ; }
+a:hover    { color : #ffffff ;  text-decoration  : underline ; }
+
+body
+{
+	background : #72828b ;
+}
+
+#LoadSet
+{
+	position     : absolute ;
+	/*top : 310px ;*/
+	/*left : 463px ;*/
+	border-width : 0px ;
+	border-style : none ;
+	background   : transparent ;
+}
+
+#KIDSminiTxt
+{
+	position     : absolute ;
+	font-family  : Arial ;
+	font-style   : normal ;
+	font-weight  : bold ;
+	color        : #ea8555 ;
+	font-size    : 13px;
+	top          : 0px ;
+	left         : 33px ;
+	border-width : 0px ;
+	border-style : none ;
+	background   : transparent ;
+}
+
+#LoadingTxt
+{
+	position     : absolute ;
+	font-family  : Arial ;
+	font-style   : normal ;
+	font-weight  : bold ;
+	color        : #d1a893 ;
+	font-size    : 11px;
+	top          : 15px ;
+	left         : 28px ;
+	border-width : 0px ;
+	border-style : none ;
+	background   : transparent ;
+}
+
+#Loadbar
+{
+	position     : absolute ;
+	font-family  : Arial ;
+	font-style   : normal ;
+	font-weight  : bold ;
+	color        : #d1a893 ;
+	font-size    : 11px;
+	top          : 40px ;
+	left         : 0px ;
+	border-width : 0px ;
+	border-style : none ;
+	background   : transparent ;
+}
+
+#MenuBack
+{
+	position     : absolute ;
+	font-family  : Arial ;
+	font-style   : normal ;
+	font-weight  : normal ;
+	color        : #d1a893 ;
+	font-size    : 11px;
+	top          : 100px ;
+	left         : 42px ;
+	border-width : 0px ;
+	border-style : none ;
+	background   : transparent ;
+}
+
+
+-->

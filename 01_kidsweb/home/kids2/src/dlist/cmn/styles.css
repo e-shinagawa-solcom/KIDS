@@ -1,0 +1,40 @@
+<!--
+
+
+#Backs
+{
+	background : #f1f1f1 ;
+}
+
+/********************* COLUMN *********************/
+.TrSegs
+{
+	font-family : Arial , £Í£Ó £Ð¥´¥·¥Ã¥¯ ;
+	font-style  : normal ;
+	font-weight : bold ;
+	color       : #ffffff ;
+	font-size   : 12px ;
+	line-height : 12px ;
+	text-align  : center ;
+	padding     : 4px 3px 1px 3px ;
+	background  : #799797 ;
+}
+
+
+
+/********************* RECORD *********************/
+.Lists01
+{
+	font-family : monospace ;
+	font-style  : normal ;
+	font-weight : normal ;
+	color       : #666666 ;
+	font-size   : 12px ;
+	line-height : 12px ;
+	padding     : 5px 3px 0px 3px ;
+	background  : #ffffff ;
+	cursor      : pointer ;
+}
+
+
+-->

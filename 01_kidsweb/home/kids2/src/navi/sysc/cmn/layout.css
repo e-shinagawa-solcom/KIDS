@@ -1,0 +1,58 @@
+<!--
+
+
+#NaviBodys
+{
+	position : absolute ;
+	left : 0px ;
+	top : 0px ;
+	width : 169px ;
+	height : 552px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color : #cdcdcd ;
+	background-color: #72828b ;
+}
+
+
+
+
+
+#MessageBt
+{
+	position   : absolute ;
+	left       : 9px ;
+	top        : 20px ;
+	z-index    : 2 ;
+	background : transparent ;
+}
+
+#EmailBt
+{
+	position   : absolute ;
+	left       : 9px ;
+	top        : 60px ;
+	z-index    : 2 ;
+	background : #transparent ;
+}
+
+#SessionBt
+{
+	position   : absolute ;
+	left       : 9px ;
+	top        : 100px ;
+	z-index    : 2 ;
+	background : #transparent ;
+}
+
+#ServerBt
+{
+	position   : absolute ;
+	left       : 9px ;
+	top        : 140px ;
+	z-index    : 2 ;
+	background : #transparent ;
+}
+
+
+-->

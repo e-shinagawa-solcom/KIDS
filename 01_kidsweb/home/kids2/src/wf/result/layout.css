@@ -1,0 +1,92 @@
+<!--
+
+
+table
+{
+	width : 100% ; /* 920px */
+	font-family : Arial , £Í£Ó £Ð¥´¥·¥Ã¥¯, Osaka ;
+	font-style : normal ;
+	font-weight : normal ;
+	font-size : 12px ;
+	color : #666666 ;
+	text-align : center ;
+	padding : 4px 3px 1px 3px ;
+}
+
+
+#SegTitle
+{
+	color : #ffffff ;
+	background-color : #799797 ;
+}
+
+#Segs
+{
+	font-family : monospace ;
+	color : #666666 ;
+	background-color : #ffffff ;
+	padding : 4px 6px 3px 6px ;
+}
+
+#PrevNext
+{
+	position : absolute ;
+	width : 920px ;
+	border-width : 0px ;
+	border-style : none ;
+	border-color : #cdcdcd ;
+	padding : 0px 0px 0px 0px ;
+}
+
+#PrevButton
+{
+	position : absolute ;
+	top : 14px ;
+	left : 365px ;
+	border-width : 0px ;
+	border-style : none ;
+}
+
+#NextButton
+{
+	position : absolute ;
+	top : 14px ;
+	left : 537px ;
+	border-width : 0px ;
+	border-style : none ;
+}
+
+#PageCount
+{
+	position : absolute ;
+	top : 10px ;
+	left : 430px ;
+	border-width : 0px ;
+	border-style : none ;
+}
+
+#PageCountNum
+{
+	position : absolute ;
+	top : 17px ;
+	left : 430px ;
+	font-family : £Í£Ó £Ð¥´¥·¥Ã¥¯, Osaka ;
+	font-style : normal ;
+	font-weight : normal ;
+	width : 100px ;
+	height : 23px ;
+	border-width : 0px ;
+	border-style : none ;
+	text-align : center ;
+	padding : 0px 0px 0px 0px ;
+	background-color : transparent ;
+}
+
+#W01
+{
+	color : #ea8555 ;
+	background-color : #f1f1f1 ;
+}
+
+
+-->

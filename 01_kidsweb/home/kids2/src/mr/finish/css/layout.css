@@ -1,0 +1,170 @@
+<!--
+
+#Backs
+{
+	background-color : #d6d0b1 ;
+}
+
+
+#MoldReportInfo
+{
+	position : absolute ;
+	left : 23px ;
+	top : 300px ;
+	border-width: 0px ;
+	border-style: none ;
+	z-index : 3 ;
+	background : transparent ;
+
+}
+
+#Borders
+{
+	font-family : Arial , £Í£Ó £Ð¥´¥·¥Ã¥¯, Osaka ;
+	font-weight : bold ;
+	width : 915px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color : #798787 ;
+	background : transparent ; /* e8f0f1 */
+}
+
+
+.Columns
+{
+	font-family : Arial , £Í£Ó £Ð¥´¥·¥Ã¥¯, Osaka ;
+	font-weight : bold ;
+	background-color: #e8f0f1 ;
+	border-color : #798787 #d6d0b1 #798787 #798787 ;
+	text-align : center;
+}
+
+.Values
+{
+	font-family : Arial , £Í£Ó £Ð¥´¥·¥Ã¥¯, Osaka ;
+	font-weight : normal ;
+	color : #555555 ;
+	border-color : #798787 ;
+	background-color : #eeeeee ;
+	text-align : center;
+}
+
+#CompleteSetList
+{
+	position : absolute ;
+	left : 478px ;
+	top : 250px ;
+	border-width: 0px ;
+	border-style: none ;
+	z-index : 3 ;
+	background : transparent ;
+
+}
+
+#ColumnListout
+{
+	font-family : Arial , £Í£Ó £Ð¥´¥·¥Ã¥¯, Osaka ;
+	font-weight : bold ;
+	position : absolute ;
+	left : 0px ;
+	top : 0px ;
+	width : 220px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	background : #f1f1f1 ; /* e8f0f1 */
+	border-color : #798787 #d6d0b1 #798787 #798787 ;
+	padding : 8px 0px 0px 8px ;
+	text-align : left ;
+}
+
+#BackSpaceList
+{
+	font-weight : bold ;
+	position : absolute ;
+	left : 215px ;
+	top : 0px ;
+	width : 100px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	background : d6d0b1 ; /* e8f0f1 */
+	border-color : #798787 #798787 #798787 #798787 ;
+	padding : 8px 0px 0px 8px ;
+	text-align : left ;
+}
+
+#ListOutputBt
+{
+	position : absolute ;
+	left : 229px ;
+	top : 3px ;
+	border-width: 0px ;
+	border-style: none ;
+	background : transparent ;
+}
+
+
+
+
+
+
+#CompleteSet
+{
+	position : absolute ;
+	left : 360px ;
+	top : 250px ;
+	border-width: 0px ;
+	border-style: none ;
+	z-index : 3 ;
+	background : transparent ;
+
+}
+
+#FinishRegist
+{
+	font-family : Arial , £Í£Ó £Ð¥´¥·¥Ã¥¯, Osaka ;
+	font-weight : bold ;
+	position : absolute ;
+	left : 185px
+	top : 15px ;
+	width : 220px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	background : #f1f1f1 ; /* e8f0f1 */
+	border-color : #798787 #798787 #798787 #798787 ;
+	padding : 8px 0px 0px 8px ;
+	text-align : center ;
+}
+
+#BackSpace
+{
+	font-weight : bold ;
+	position : absolute ;
+	left : 215px ;
+	top : 0px ;
+	width : 100px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	background : d6d0b1 ; /* e8f0f1 */
+	border-color : #798787 #798787 #798787 #798787 ;
+	padding : 8px 0px 0px 8px ;
+	text-align : left ;
+}
+
+#CloseBt
+{
+	position : absolute ;
+	left : 74px ;
+	top : 110px ;
+	border-width: 0px ;
+	border-style: none ;
+	background : transparent ;
+}
+
+
+
+
+-->

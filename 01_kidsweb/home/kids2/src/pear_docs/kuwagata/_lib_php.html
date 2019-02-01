@@ -1,0 +1,767 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+   <html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>Docs for page lib.php</title>
+  <link rel="stylesheet" href="../media/stylesheet.css" />
+  <script src="../media/lib/classTree.js"></script>
+<link id="webfx-tab-style-sheet" type="text/css" rel="stylesheet" href="../media/lib/tab.webfx.css" />
+<script type="text/javascript" src="../media/lib/tabpane.js"></script>
+  <script language="javascript" type="text/javascript" src="../media/lib/ua.js"></script>
+<script language="javascript" type="text/javascript">
+	var imgPlus = new Image();
+	var imgMinus = new Image();
+	imgPlus.src = "../media/images/plus.gif";
+	imgMinus.src = "../media/images/minus.gif";
+	
+	function showNode(Node){
+        switch(navigator.family){
+        	case 'nn4':
+        		// Nav 4.x code fork...
+				var oTable = document.layers["span" + Node];
+				var oImg = document.layers["img" + Node];
+        		break;
+        	case 'ie4':
+        		// IE 4/5 code fork...
+				var oTable = document.all["span" + Node];
+				var oImg = document.all["img" + Node];
+        		break;
+        	case 'gecko':
+        		// Standards Compliant code fork...
+				var oTable = document.getElementById("span" + Node);
+				var oImg = document.getElementById("img" + Node);
+        		break;
+        }
+		oImg.src = imgMinus.src;
+		oTable.style.display = "block";
+	}
+	
+	function hideNode(Node){
+        switch(navigator.family){
+        	case 'nn4':
+        		// Nav 4.x code fork...
+				var oTable = document.layers["span" + Node];
+				var oImg = document.layers["img" + Node];
+        		break;
+        	case 'ie4':
+        		// IE 4/5 code fork...
+				var oTable = document.all["span" + Node];
+				var oImg = document.all["img" + Node];
+        		break;
+        	case 'gecko':
+        		// Standards Compliant code fork...
+				var oTable = document.getElementById("span" + Node);
+				var oImg = document.getElementById("img" + Node);
+        		break;
+        }
+		oImg.src = imgPlus.src;
+		oTable.style.display = "none";
+	}
+	
+	function nodeIsVisible(Node){
+        switch(navigator.family){
+        	case 'nn4':
+        		// Nav 4.x code fork...
+				var oTable = document.layers["span" + Node];
+        		break;
+        	case 'ie4':
+        		// IE 4/5 code fork...
+				var oTable = document.all["span" + Node];
+        		break;
+        	case 'gecko':
+        		// Standards Compliant code fork...
+				var oTable = document.getElementById("span" + Node);
+        		break;
+        }
+		return (oTable && oTable.style.display == "block");
+	}
+	
+	function toggleNodeVisibility(Node){
+		if (nodeIsVisible(Node)){
+			hideNode(Node);
+		}else{
+			showNode(Node);
+		}
+	}
+</script>
+<!-- template designed by Julien Damon based on PHPEdit's generated templates, and tweaked by Greg Beaver -->
+<body bgcolor="#ffffff" ><h2>File: /lib.php</h2>
+<div class="tab-pane" id="tabPane1">
+<script type="text/javascript">
+tp1 = new WebFXTabPane( document.getElementById( "tabPane1" ) );
+</script>
+
+<div class="tab-page" id="Description">
+<h2 class="tab">Description</h2>
+<!-- ========== Info from phpDoc block ========= -->
+<h5>¥é¥¤¥Ö¥é¥ê</h5>
+<div class="desc"><p>´Ø¿ô¥é¥¤¥Ö¥é¥ê</p></div>
+<ul>
+		<li><strong>version:</strong> - 0.01</li>
+		<li><strong>access:</strong> - public</li>
+		<li><strong>author:</strong> - Kenji Chiba &lt;<a href="mailto:k-chiba@wiseknot.co.jp">mailto:k-chiba@wiseknot.co.jp</a>&gt;</li>
+		<li><strong>copyright:</strong> - Copyright &amp;copy; 2003, Wiseknot</li>
+		<li><strong>license:</strong> - <a href="http://www.wiseknot.co.jp/">http://www.wiseknot.co.jp/</a></li>
+	</ul>
+<!-- =========== Used Classes =========== -->
+<A NAME='classes_summary'><!-- --></A>
+<h3>Classes defined in this file</h3>
+
+<TABLE CELLPADDING='3' CELLSPACING='0' WIDTH='100%' CLASS="border">
+	<THEAD>
+		<TR><TD STYLE="width:20%"><h4>CLASS NAME</h4></TD><TD STYLE="width: 80%"><h4>DESCRIPTION</h4></TD></TR>
+	</THEAD>
+	<TBODY>
+			</TBODY>
+</TABLE>
+</div>
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "Description" ) );</script>
+<div class="tab-page" id="tabPage1">
+<!-- ============ Includes DETAIL =========== -->
+
+<h2 class="tab">Include/Require Statements</h2>
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "tabPage1" ) );</script>
+
+
+<a name="_CLS_TEMPLATE_FILE"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/file.png" border="0" /> <strong class="Property">CLS_TEMPLATE_FILE</strong> (line <span class="linenumber">20</span>)
+ </h4> 
+<h4>require : CLS_TEMPLATE_FILE</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="_CLS_AUTH_FILE"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/file.png" border="0" /> <strong class="Property">CLS_AUTH_FILE</strong> (line <span class="linenumber">19</span>)
+ </h4> 
+<h4>require : CLS_AUTH_FILE</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+<a name="_CLS_DB_FILE"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/file.png" border="0" /> <strong class="Property">CLS_DB_FILE</strong> (line <span class="linenumber">18</span>)
+ </h4> 
+<h4>require : CLS_DB_FILE</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+	</ul>
+</div>
+</div>
+<div class="tab-page" id="tabPage2">
+<!-- ============ GLOBAL DETAIL =========== -->
+
+<h2 class="tab">Global Variables</h2>
+
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "tabPage2" ) );</script>
+
+</div>
+<div class="tab-page" id="tabPage3">
+<!-- ============ CONSTANT DETAIL =========== -->
+
+<A NAME='constant_detail'></A>
+<h2 class="tab">Constants</h2>
+
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "tabPage3" ) );</script>
+
+</div>
+<div class="tab-page" id="tabPage4">
+<!-- ============ FUNCTION DETAIL =========== -->
+
+<h2 class="tab">Functions</h2>
+
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "tabPage4" ) );</script>
+
+<a name="functionfncAllCheck" id="functionfncAllCheck"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">fncAllCheck</strong> (line <span class="linenumber">361</span>)
+ </h4> 
+<h4><i>Array</i> <strong>fncAllCheck(
+Array $aryData, Array $aryCheck)</strong></h4>
+
+<!-- ========== Info from phpDoc block ========= -->
+<h5>Ï¢ÁÛÇÛÎó¤ÇÅÏ¤µ¤ì¤¿¥Ç¡¼¥¿¤ò¤¹¤Ù¤Æ¥Á¥§¥Ã¥¯¤¹¤ë´Ø¿ô</h5>
+<div class="desc"><p>ÊÑ¿ô¤Î¥Á¥§¥Ã¥¯¤ò¼Â¹Ô¤¹¤ë</p></div>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>Array $aryData</strong>: ¥Á¥§¥Ã¥¯ÂÐ¾Ý¥Ç¡¼¥¿(ÊÑ¿ôÌ¾¤ò¥­¡¼¤È¤¹¤ëÏ¢ÁÛÇÛÎó)</li>
+			<li><strong>Array $aryCheck</strong>: ¥Á¥§¥Ã¥¯ÆâÍÆ(ÊÑ¿ôÌ¾¤ò¥­¡¼¤È¤¹¤ëÏ¢ÁÛÇÛÎó)</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>return</strong> - ¥Á¥§¥Ã¥¯¿¿µ¶(ÊÑ¿ôÌ¾¤ò¥­¡¼¤È¤¹¤ëÏ¢ÁÛÇÛÎó)</li>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="functionfncCheckAuthority" id="functionfncCheckAuthority"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">fncCheckAuthority</strong> (line <span class="linenumber">1106</span>)
+ </h4> 
+<h4><i>Boolean</i> <strong>fncCheckAuthority(
+Long $lngFunctionCode, Object $objAuth)</strong></h4>
+
+<!-- ========== Info from phpDoc block ========= -->
+<h5>¸¢¸Â¥Á¥§¥Ã¥¯´Ø¿ô</h5>
+<div class="desc"><p>¸¢¸Â¤Î³ÎÇ§</p></div>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>Long $lngFunctionCode</strong>: µ¡Ç½¥³¡¼¥É</li>
+			<li><strong>Object $objAuth</strong>: Ç§¾Ú¥ª¥Ö¥¸¥§¥¯¥È</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>return</strong> - ¸¢¸Â¤ÎÍ­Ìµ</li>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="functionfncCheckString" id="functionfncCheckString"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">fncCheckString</strong> (line <span class="linenumber">60</span>)
+ </h4> 
+<h4><i>String</i> <strong>fncCheckString(
+String $str, String $strCheckMode)</strong></h4>
+
+<!-- ========== Info from phpDoc block ========= -->
+<h5>ÊÑ¿ô¥Á¥§¥Ã¥¯´Ø¿ô</h5>
+<div class="desc"><p>µ¡¼ï°ÍÂ¸Ê¸»ú¡¢Ê¸»úÎó¥Á¥§¥Ã¥¯ 	Îã:ÆüÉÕ      Boolean = fncCheckString( &quot;2003/01/01&quot;, &quot;null:date&quot; ) 	Îã:¿ôÃÍ0°Ê¾å Boolean = fncCheckString( 1920, &quot;null:number(0,)&quot; )</p></div>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>String $str</strong>: ÊÑ´¹ÂÐ¾Ý¤È¤Ê¤ë¥Ç¡¼¥¿</li>
+			<li><strong>String $strCheckMode</strong>: ¥Á¥§¥Ã¥¯¥â¡¼¥É[(À©¸Â)]                                   number(min,max)    : ¿ôÃÍ                                   english(minlength,maxlength)    : ±Ñ»ú                                   numenglish(minlength,maxlength) : ±Ñ¿ô»ú                                   ascii(minlength,maxlength)      : ±Ñ¿ô»úµ­¹æ                                   ID(minlength,maxlength)         : ID                                   password(minlength,maxlength)   : ¥Ñ¥¹¥ï¡¼¥É                                   email(minlength,maxlength)      : ¥á¡¼¥ë                                   date(string)                    : YYYY/MM/DD                                   file(minlength,maxlength)       : ¥Õ¥¡¥¤¥ë                                   lemgth(minlength,maxlength)     : Ê¸»ú¿ô                                   money(min,max)                  : ¶â³Û                                   IP(min,max,plural,asterisk)     : IP¥¢¥É¥ì¥¹                                   color                           : ¿§</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>return</strong> - ¥¨¥é¡¼¾ðÊó             Boolean               FALSE ¥¨¥é¡¼Ìµ¤·</li>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="functionfncCheckStringLength" id="functionfncCheckStringLength"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">fncCheckStringLength</strong> (line <span class="linenumber">390</span>)
+ </h4> 
+<h4><i>Boolean</i> <strong>fncCheckStringLength(
+String $strCheckType, Atring $str)</strong></h4>
+
+<!-- ========== Info from phpDoc block ========= -->
+<h5>Ê¸»úÎóÄ¹¥Á¥§¥Ã¥¯´Ø¿ô</h5>
+<div class="desc"><p>Ê¸»úÎó¤ÎÄ¹¤µ¤ò¥Á¥§¥Ã¥¯¤¹¤ë</p></div>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>String $strCheckType</strong>: ¥Á¥§¥Ã¥¯ÆâÍÆ</li>
+			<li><strong>Atring $str</strong>: ¥Á¥§¥Ã¥¯Ê¸»úÎó</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="functionfncError" id="functionfncError"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">fncError</strong> (line <span class="linenumber">1216</span>)
+ </h4> 
+<h4><i>void</i> <strong>fncError(
+Long $errno, String $errstr, String $errfile, Long $errline)</strong></h4>
+
+<!-- ========== Info from phpDoc block ========= -->
+<h5>¥·¥¹¥Æ¥à¥¨¥é¡¼´Ø¿ô</h5>
+<div class="desc"><p>¥·¥¹¥Æ¥à¥¨¥é¡¼½ÐÎÏ</p></div>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>Long $errno</strong>: ¥¨¥é¡¼ÈÖ¹æ</li>
+			<li><strong>String $errstr</strong>: ¥¨¥é¡¼Ê¸</li>
+			<li><strong>String $errfile</strong>: ¥Õ¥¡¥¤¥ëÌ¾</li>
+			<li><strong>Long $errline</strong>: ¥¨¥é¡¼¹Ô</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="functionfncGetAdminFunction" id="functionfncGetAdminFunction"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">fncGetAdminFunction</strong> (line <span class="linenumber">518</span>)
+ </h4> 
+<h4><i>$strVAlue</i> <strong>fncGetAdminFunction(
+String $strClass, Object $objDB)</strong></h4>
+
+<!-- ========== Info from phpDoc block ========= -->
+<h5>´ÉÍý¼Ôµ¡Ç½¥Þ¥¹¥¿¥Ç¡¼¥¿¼èÆÀ´Ø¿ô</h5>
+<div class="desc"><p>´ÉÍý¼Ôµ¡Ç½¥Þ¥¹¥¿¤«¤é»ØÄê¤µ¤ì¤¿¼ïÎà¤ÎÃÍ¤ò¼èÆÀ¤¹¤ë</p></div>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>String $strClass</strong>: ¼ïÎà</li>
+			<li><strong>Object $objDB</strong>: DB¥ª¥Ö¥¸¥§¥¯¥È</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>return</strong> - ÃÍ</li>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="functionfncGetCommonFunction" id="functionfncGetCommonFunction"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">fncGetCommonFunction</strong> (line <span class="linenumber">484</span>)
+ </h4> 
+<h4><i>$strVAlue</i> <strong>fncGetCommonFunction(
+String $strClass, mixed $strTable, Object $objDB)</strong></h4>
+
+<!-- ========== Info from phpDoc block ========= -->
+<h5>¶¦ÄÌµ¡Ç½¥Þ¥¹¥¿¥Ç¡¼¥¿¼èÆÀ´Ø¿ô</h5>
+<div class="desc"><p>¶¦ÄÌµ¡Ç½¥Þ¥¹¥¿¤«¤é»ØÄê¤µ¤ì¤¿¼ïÎà¤ÎÃÍ¤ò¼èÆÀ¤¹¤ë</p></div>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>String $strClass</strong>: ¼ïÎà</li>
+			<li><strong>Object $objDB</strong>: DB¥ª¥Ö¥¸¥§¥¯¥È</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>return</strong> - ÃÍ</li>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="functionfncGetDateSequence" id="functionfncGetDateSequence"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">fncGetDateSequence</strong> (line <span class="linenumber">638</span>)
+ </h4> 
+<h4><i>Long</i> <strong>fncGetDateSequence(
+String $year, String $month, String $strSequenceName, Object $objDB)</strong></h4>
+
+<!-- ========== Info from phpDoc block ========= -->
+<h5>ÆüÉÕ¥·¡¼¥±¥ó¥¹´Ø¿ô</h5>
+<div class="desc"><p>ÆüÉÕ¥·¡¼¥±¥ó¥¹¤Î¥¤¥ó¥¯¥ê¥á¥ó¥È¤ª¤è¤Ó¼èÆÀ</p></div>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>String $year</strong>: Ç¯</li>
+			<li><strong>String $month</strong>: ·î</li>
+			<li><strong>String $strSequenceName</strong>: ¼ïÎà</li>
+			<li><strong>Object $objDB</strong>: DB¥ª¥Ö¥¸¥§¥¯¥È</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>return</strong> - ÈÖ¹æ</li>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="functionfncGetMailMessage" id="functionfncGetMailMessage"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">fncGetMailMessage</strong> (line <span class="linenumber">844</span>)
+ </h4> 
+<h4><i>String</i> <strong>fncGetMailMessage(
+Long $lngFunctionCode, Array $aryData, Object $objDB)</strong></h4>
+
+<!-- ========== Info from phpDoc block ========= -->
+<h5>¥á¡¼¥ëÊ¸ÌÌ¼èÆÀ¡¦À¸À®´Ø¿ô</h5>
+<div class="desc"><p>¥Þ¥¹¥¿¡¼¤«¤é¿÷·¿¼èÆÀ¡¢°ú¿ô¤Ë¤è¤ëÃÖ¤­´¹¤¨</p></div>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>Long $lngFunctionCode</strong>: µ¡Ç½¥³¡¼¥É</li>
+			<li><strong>Array $aryData</strong>: ÃÖ¤­´¹¤¨Ê¸»úÎó</li>
+			<li><strong>Object $objDB</strong>: DB¥ª¥Ö¥¸¥§¥¯¥È</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>return</strong> - ¥á¡¼¥ë¥¿¥¤¥È¥ë             String $strBody       ¥á¡¼¥ëËÜÊ¸</li>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="functionfncGetMasterValue" id="functionfncGetMasterValue"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">fncGetMasterValue</strong> (line <span class="linenumber">776</span>)
+ </h4> 
+<h4><i>$aryResult[0]</i> <strong>fncGetMasterValue(
+String $strTable, mixed $strKeyFieldName, String $strDisplayFieldName, mixed $defaultValue, String $strQueryWhere, Object $objDB, String $strValueFieldName)</strong></h4>
+
+<!-- ========== Info from phpDoc block ========= -->
+<h5>¥Þ¥¹¥¿¡¼¥Ç¡¼¥¿¼èÆÀ´Ø¿ô</h5>
+<div class="desc"><p>¥Þ¥¹¥¿¡¼¤«¤éÃÍ¼èÆÀ</p></div>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>String $strTable</strong>: ¥Æ¡¼¥Ö¥ëÌ¾</li>
+			<li><strong>String $strValueFieldName</strong>: value¤ËÆþ¤ë¥Õ¥£¡¼¥ë¥ÉÌ¾</li>
+			<li><strong>String $strDisplayFieldName</strong>: É½¼¨¤µ¤ì¤ë¥Õ¥£¡¼¥ë¥ÉÌ¾</li>
+			<li><strong>mixed $defaultValue</strong>: ÁªÂòÃÍ('Array'¤Î¾ì¹ç¡¢¥³¡¼¥É¤ò¥­¡¼¤È¤¹¤ëÏ¢ÁÛÇÛÎó¤òÊÖ¤¹ÆÃÊÌ»ÅÍÍ)</li>
+			<li><strong>String $strQueryWhere</strong>: ¾ò·ï(value¤ËÆþ¤ëÃÍ¤ÈÆ±¤¸)</li>
+			<li><strong>Object $objDB</strong>: DB¥ª¥Ö¥¸¥§¥¯¥È</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>return</strong> - ¥Þ¥¹¥¿¡¼¥Ç¡¼¥¿</li>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="functionfncGetPulldown" id="functionfncGetPulldown"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">fncGetPulldown</strong> (line <span class="linenumber">720</span>)
+ </h4> 
+<h4><i>$strHtml</i> <strong>fncGetPulldown(
+String $strTable, String $strValueFieldName, String $strDisplayFieldName, Long $lngDefaultValue, String $strQueryWhere, Object $objDB)</strong></h4>
+
+<!-- ========== Info from phpDoc block ========= -->
+<h5>¥Þ¥¹¥¿¡¼¡¦¥×¥ë¥À¥¦¥ó¥ê¥¹¥ÈÀ¸À®´Ø¿ô</h5>
+<div class="desc"><p>¥Þ¥¹¥¿¡¼¥Æ¡¼¥Ö¥ë¤«¤é¥×¥ë¥À¥¦¥ó¥á¥Ë¥å¡¼ºîÀ®</p></div>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>String $strTable</strong>: ¥Æ¡¼¥Ö¥ëÌ¾</li>
+			<li><strong>String $strValueFieldName</strong>: value¤ËÆþ¤ë¥Õ¥£¡¼¥ë¥ÉÌ¾</li>
+			<li><strong>String $strDisplayFieldName</strong>: É½¼¨¤µ¤ì¤ë¥Õ¥£¡¼¥ë¥ÉÌ¾</li>
+			<li><strong>Long $lngDefaultValue</strong>: ¥×¥ë¥À¥¦¥ó¥á¥Ë¥å¡¼¤Î½é´üÁªÂòÃÍ</li>
+			<li><strong>String $strQueryWhere</strong>: ¾ò·ï(SQL)WHERE¤«¤é½ñ¤­»Ï¤á</li>
+			<li><strong>Object $objDB</strong>: DB¥ª¥Ö¥¸¥§¥¯¥È</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>return</strong> - ¥×¥ë¥À¥¦¥ó¥á¥Ë¥å¡¼HTML</li>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="functionfncGetReplacedHtml" id="functionfncGetReplacedHtml"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">fncGetReplacedHtml</strong> (line <span class="linenumber">891</span>)
+ </h4> 
+<h4><i>$strTemplate</i> <strong>fncGetReplacedHtml(
+String $strTemplatePath, Array $aryPost, Object $objAuth)</strong></h4>
+
+<!-- ========== Info from phpDoc block ========= -->
+<h5>¥Æ¥ó¥×¥ì¡¼¥È´Ø¿ô</h5>
+<div class="desc"><p>¥Æ¥ó¥×¥ì¡¼¥È¤«¤éHTML¤òÀ¸À®¤¹¤ë</p></div>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>String $strTemplatePath</strong>: ¥Æ¥ó¥×¥ì¡¼¥È¥Õ¥¡¥¤¥ë¥Ñ¥¹</li>
+			<li><strong>Array $aryPost</strong>: POST¥Ç¡¼¥¿</li>
+			<li><strong>Object $objAuth</strong>: Ç§¾Ú¥ª¥Ö¥¸¥§¥¯¥È</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>return</strong> - ·ë²ÌHTML</li>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="functionfncGetSequence" id="functionfncGetSequence"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">fncGetSequence</strong> (line <span class="linenumber">586</span>)
+ </h4> 
+<h4><i>Long</i> <strong>fncGetSequence(
+String $strSequenceName, Object $objDB)</strong></h4>
+
+<!-- ========== Info from phpDoc block ========= -->
+<h5>¥·¡¼¥±¥ó¥¹´Ø¿ô</h5>
+<div class="desc"><p>¥·¡¼¥±¥ó¥¹¤Î¥¤¥ó¥¯¥ê¥á¥ó¥È¤ª¤è¤Ó¼èÆÀ</p></div>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>String $strSequenceName</strong>: ¼ïÎà</li>
+			<li><strong>Object $objDB</strong>: DB¥ª¥Ö¥¸¥§¥¯¥È</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>return</strong> - ÈÖ¹æ</li>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="functionfncIsSequence" id="functionfncIsSequence"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">fncIsSequence</strong> (line <span class="linenumber">552</span>)
+ </h4> 
+<h4><i>Long</i> <strong>fncIsSequence(
+String $strSequenceName, Object $objDB)</strong></h4>
+
+<!-- ========== Info from phpDoc block ========= -->
+<h5>¥·¡¼¥±¥ó¥¹´Ø¿ô</h5>
+<div class="desc"><p>¸½ºß¤Î¥·¡¼¥±¥ó¥¹¤Î¼èÆÀ(¥¤¥ó¥¯¥ê¥á¥ó¥È¡¢UPDATEÌµ¤·)</p></div>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>String $strSequenceName</strong>: ¼ïÎà</li>
+			<li><strong>Object $objDB</strong>: DB¥ª¥Ö¥¸¥§¥¯¥È</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>return</strong> - ÈÖ¹æ</li>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="functionfncIsSession" id="functionfncIsSession"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">fncIsSession</strong> (line <span class="linenumber">1077</span>)
+ </h4> 
+<h4><i>Object</i> <strong>fncIsSession(
+String $strSessionID, Object $objAuth, Object $objDB)</strong></h4>
+
+<!-- ========== Info from phpDoc block ========= -->
+<h5>¥»¥Ã¥·¥ç¥ó´Ø¿ô(³ÎÇ§)</h5>
+<div class="desc"><p>¥»¥Ã¥·¥ç¥ó¤Î³ÎÇ§</p></div>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>String $strSessionID</strong>: ¥»¥Ã¥·¥ç¥óID</li>
+			<li><strong>Object $objAuth</strong>: Ç§¾Ú¥ª¥Ö¥¸¥§¥¯¥È</li>
+			<li><strong>Object $objDB</strong>: DB¥ª¥Ö¥¸¥§¥¯¥È</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>return</strong> - Ç§¾Ú¥ª¥Ö¥¸¥§¥¯¥È</li>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="functionfncLogin" id="functionfncLogin"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">fncLogin</strong> (line <span class="linenumber">1133</span>)
+ </h4> 
+<h4><i>Object</i> <strong>fncLogin(
+String $strUserID, String $strPasswordHash, Object $objAuth, Object $objDB)</strong></h4>
+
+<!-- ========== Info from phpDoc block ========= -->
+<h5>¥í¥°¥¤¥ó´Ø¿ô</h5>
+<div class="desc"><p>¥í¥°¥¤¥ó½èÍý</p></div>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>String $strUserID</strong>: ID</li>
+			<li><strong>String $strPasswordHash</strong>: ¥Ñ¥¹¥ï¡¼¥É</li>
+			<li><strong>Object $objAuth</strong>: Ç§¾Ú¥ª¥Ö¥¸¥§¥¯¥È</li>
+			<li><strong>Object $objDB</strong>: DB¥ª¥Ö¥¸¥§¥¯¥È</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>return</strong> - Ç§¾Ú¥ª¥Ö¥¸¥§¥¯¥È</li>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="functionfncLogout" id="functionfncLogout"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">fncLogout</strong> (line <span class="linenumber">1157</span>)
+ </h4> 
+<h4><i>Boolean</i> <strong>fncLogout(
+mixed $strSessionID, Object $objDB, String $SessionID)</strong></h4>
+
+<!-- ========== Info from phpDoc block ========= -->
+<h5>¥í¥°¥¢¥¦¥È´Ø¿ô</h5>
+<div class="desc"><p>¥í¥°¥¢¥¦¥È½èÍý</p></div>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>String $SessionID</strong>: ¥»¥Ã¥·¥ç¥óID</li>
+			<li><strong>Object $objDB</strong>: DB¥ª¥Ö¥¸¥§¥¯¥È</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>return</strong> - ¥í¥°¥¢¥¦¥È¤ÎÀ®ÈÝ</li>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="functionfncOutputError" id="functionfncOutputError"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">fncOutputError</strong> (line <span class="linenumber">1285</span>)
+ </h4> 
+<h4><i>String</i> <strong>fncOutputError(
+Long $lngErrorCode, Long $lngErrorClass, Array $aryErrorMessage, Boolean $bytOutputFlag, Long $strReturnPath, Object $objDB)</strong></h4>
+
+<!-- ========== Info from phpDoc block ========= -->
+<h5>¥¨¥é¡¼½ÐÎÏ´Ø¿ô</h5>
+<div class="desc"><p>¥¨¥é¡¼½ÐÎÏ</p></div>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>Long $lngErrorCode</strong>: ¥¨¥é¡¼¥³¡¼¥É¡Êm_Message¥Þ¥¹¥¿¤Î¥á¥Ã¥»¡¼¥¸¥³¡¼¥É¡Ë</li>
+			<li><strong>Long $lngErrorClass</strong>: ¥¨¥é¡¼¼ïÎà¡¡conf.inc¤Ë¤ÆÄêµÁ¤Î¤¢¤ë¥¨¥é¡¼¥ì¥Ù¥ë                                         DEF_ANNOUNCE    ¥·¥¹¥Æ¥à¥¢¥Ê¥¦¥ó¥¹                                         DEF_WARNING    Ãí°Õ¥ì¥Ù¥ë¡ÊÆþÎÏ¥ß¥¹¤Ê¤É¡Ë                                         DEF_ERROR    ¥¨¥é¡¼¥ì¥Ù¥ë                                         DEF_FATAL    ¥·¥¹¥Æ¥à¥¨¥é¡¼¥ì¥Ù¥ë</li>
+			<li><strong>Array $aryErrorMessage</strong>: ¥¨¥é¡¼ÃÖ´¹Ê¸»ú¡ÊÇÛÎó¡Ë</li>
+			<li><strong>Boolean $bytOutputFlag</strong>: ½ÐÎÏ¥Õ¥é¥°                             FALSE¡¦¡¦¡¦´Ø¿ô¤ÎÌá¤êÃÍ¤ÎString¤Ë¤Æ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤òÊÖ¤¹                             TRUE¡¦¡¦¡¦¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸²èÌÌ¤ÎÉ½¼¨</li>
+			<li><strong>Long $strReturnPath</strong>: ¡ÖÌá¤ë¡×¥Ü¥¿¥ó¤ÎURL(Á°¥Ú¡¼¥¸¤Î¾ì¹ç¤ÏÉÔÍ×)</li>
+			<li><strong>Object $objDB</strong>: DB¥ª¥Ö¥¸¥§¥¯¥È</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>return</strong> - ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸</li>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="functionfncPutStringCheckError" id="functionfncPutStringCheckError"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">fncPutStringCheckError</strong> (line <span class="linenumber">425</span>)
+ </h4> 
+<h4><i>Boolean</i> <strong>fncPutStringCheckError(
+Array $aryResult, Object $objDB)</strong></h4>
+
+<!-- ========== Info from phpDoc block ========= -->
+<h5>Ê¸»úÎó¥Á¥§¥Ã¥¯¥¨¥é¡¼½ÐÎÏ´Ø¿ô</h5>
+<div class="desc"><p>Ï¢ÁÛÇÛÎó¤ÇÅÏ¤µ¤ì¤¿¥Ç¡¼¥¿¤ò¤¹¤Ù¤Æ¥Á¥§¥Ã¥¯¤¹¤ë´Ø¿ô¤Ç¼èÆÀ¤·¤¿·ë²Ì¤«¤é 	Ê¸»úÎó¥Á¥§¥Ã¥¯¥¨¥é¡¼¤ò½ÐÎÏ¤¹¤ë</p></div>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>Array $aryResult</strong>: Ê¸»úÎó¥Á¥§¥Ã¥¯¥¨¥é¡¼·ë²Ì</li>
+			<li><strong>Object $objDB</strong>: DB¥ª¥Ö¥¸¥§¥¯¥È</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="functionfncQuery" id="functionfncQuery"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">fncQuery</strong> (line <span class="linenumber">458</span>)
+ </h4> 
+<h4><i>$lngResultID</i> <strong>fncQuery(
+String $strQuery, Object $objDB)</strong></h4>
+
+<!-- ========== Info from phpDoc block ========= -->
+<h5>¥¯¥¨¥ê¼Â¹Ô´Ø¿ô</h5>
+<div class="desc"><p>¥¯¥¨¥ê¼Â¹Ô¤¹¤ë</p></div>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>String $strQuery</strong>: ¥¯¥¨¥ê</li>
+			<li><strong>Object $objDB</strong>: DB¥ª¥Ö¥¸¥§¥¯¥È</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>return</strong> - ·ë²ÌID             $lngResultNum    ¹Ô¿ô</li>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="functionfncStringToArray" id="functionfncStringToArray"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">fncStringToArray</strong> (line <span class="linenumber">1185</span>)
+ </h4> 
+<h4><i>Array</i> <strong>fncStringToArray(
+String $strData, String $strAmpersand, String $strEqual)</strong></h4>
+
+<!-- ========== Info from phpDoc block ========= -->
+<h5>ÇÛÎóÀ¸À®´Ø¿ô</h5>
+<div class="desc"><p>ÆÃÄê¤Î¥Õ¥©¡¼¥Þ¥Ã¥È¤Ç1¹Ô¤ËÊÝÂ¸¤µ¤ì¤¿Ê¸»úÎó¤òÏ¢ÁÛÇÛÎó¤ËÀ®·Á¤·¤ÆÊÖ¤¹</p></div>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>String $strData</strong>: Ê¬³ä¸µÊ¸»úÎó</li>
+			<li><strong>String $strAmpersand</strong>: ¥Ç¡¼¥¿Ê¬³äÊ¸»úÎó</li>
+			<li><strong>String $strEqual</strong>: ¥­¡¼¤ÈÃÍ¤ÎÊ¬³äÊ¸»ú</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>return</strong> - Ê¬³ä¸åÇÛÎó</li>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="functionfncToHTMLString" id="functionfncToHTMLString"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">fncToHTMLString</strong> (line <span class="linenumber">973</span>)
+ </h4> 
+<h4><i>Array</i> <strong>fncToHTMLString(
+Array $aryData)</strong></h4>
+
+<!-- ========== Info from phpDoc block ========= -->
+<h5>HTMLÉ½¼¨¤ËÌäÂê¤Î¤Ê¤¤Ê¸»úÎó¤òÊÖ¤¹´Ø¿ô</h5>
+<div class="desc"><p>HTMLÉ½¼¨¤ËÌäÂê¤Î¤Ê¤¤Ê¸»úÎó¤òÊÖ¤¹</p></div>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>Array $aryData</strong>: Ê¸»úÎó</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>return</strong> - Ê¸»úÎó</li>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="functiongetArrayErrorVisibility" id="functiongetArrayErrorVisibility"><!-- --></a>
+<div style="background='#ffffff'">
+<h4>
+  <img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">getArrayErrorVisibility</strong> (line <span class="linenumber">1041</span>)
+ </h4> 
+<h4><i>Array</i> <strong>getArrayErrorVisibility(
+Array $aryData, Array $aryCheckResult)</strong></h4>
+
+<!-- ========== Info from phpDoc block ========= -->
+<h5>¥¨¥é¡¼¹àÌÜÉ½¼¨½èÍý´Ø¿ô</h5>
+<div class="desc"><p>¥¨¥é¡¼¹àÌÜÉ½¼¨½èÍý(visibility:visible; or hidden ¤òÊÖ¤¹)</p></div>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>Array $aryData</strong>: Ä´¤Ù¤¿¤¤¥Ç¡¼¥¿ÇÛÎó</li>
+			<li><strong>Array $aryCheckResult</strong>: ¥¨¥é¡¼ÇÛÎó</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>return</strong> - HTML TABLE             boolean $bytErrorFlag   ¥¨¥é¡¼¤ÎÂ¸ºß¥Õ¥é¥°</li>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="functiongetArrayTable" id="functiongetArrayTable"><!-- --></a>
+<div style="background='#eeeeee'">
+<h4>
+  <img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">getArrayTable</strong> (line <span class="linenumber">999</span>)
+ </h4> 
+<h4><i>String</i> <strong>getArrayTable(
+Array $aryData, String $strExpressMode)</strong></h4>
+
+<!-- ========== Info from phpDoc block ========= -->
+<h5>ÇÛÎó½ÐÎÏ´Ø¿ô</h5>
+<div class="desc"><p>ÇÛÎó¤Î¥­¡¼¤ÈÃÍ¤Î¥Æ¡¼¥Ö¥ë¤Þ¤¿¤Ï¥Õ¥©¡¼¥à(HIDDEN)À¸À®</p></div>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>Array $aryData</strong>: Ä´¤Ù¤¿¤¤¥Ç¡¼¥¿ÇÛÎó</li>
+			<li><strong>String $strExpressMode</strong>: TABLE  : ¥Æ¡¼¥Ö¥ë¤Î¤ß                                   HIDDEN : HIDDEN¤Î¤ß                                    MIX    : Î¾Êý</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>return</strong> - HTML TABLE</li>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+</div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+
+setupAllTabs();
+
+//]]>
+</script>
+	<div id="credit">
+		<hr />
+		Documentation generated on Mon,  5 Jan 2004 18:37:32 +0900 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.2.3</a>
+	</div>
+</body>
+</html>

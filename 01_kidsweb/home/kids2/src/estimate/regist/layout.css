@@ -1,0 +1,1279 @@
+
+	.tables
+	{
+		font-size  : 12px ;
+		width      : 927px ;
+		color      : #666666;
+		background : #6f8180; /* 444444 798787 */
+	}
+	.colnum
+	{
+		font-weight : bold ;
+		color       : #666666;
+		background  : #F3F6FA; /* e8f0f1 */
+	}
+	.column
+	{
+		font-weight : bold ;
+		color       : #666666;
+		background  : #e8f0f1; /* e8f0f1 */
+	}
+	.titles
+	{
+		font-weight : bold ;
+		color       : #ffffff;
+		background  : #799797; /* 798787 */
+		text-align  : center ;
+	}
+	.inputbt
+	{
+		background  : #ffffff;
+	}
+	.subtotals
+	{
+		font-weight : normal ;
+		color       : #666666;
+		background  : #ffffff;
+	}
+	.totals
+	{
+		font-weight : bold ;
+		color       : #ffffff;
+		background  : #5294B2;
+	}
+	.colm
+	{
+		background : #f1f1f1;
+	}
+	.disTxtBorder
+	{
+
+		font-family : monospace ;
+		width       : 165px ;
+		border      : 0px solid #ffffff ;
+		margin      : 0 ;      
+		color       : #666666 ;
+		background  : #ffffff ;
+		text-align  : right ;
+	}
+
+
+
+
+/************************************* START INPUT A *************************************/
+/* INPUT A SEGMENTS */
+#InputA
+{ 
+	position     : absolute ;
+	left         : 34px ;
+	top          : 111px ;
+	z-index      : 0 ;
+	visibility   : visible ;
+	border-width : 0px ;
+	border-style : none ;
+	background   : transparent ;
+}
+
+#headerBlock
+{ 
+	position     : absolute ;
+	left         : 44px ;
+	top          : 151px ;
+	z-index      : 1 ;
+	visibility   : visible ;
+	border-width : 0px ;
+	border-style : none ;
+	background   : transparent ;
+}
+
+
+
+
+#SegAHeader {
+	position : absolute ;
+	left : 0px ;
+	top : 0px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+#SegABodys {
+	left : 10px ;
+	top : 31px ;
+	width : 949px ;
+	height : 160px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #cdcdcd ;
+	background-color: #ffffff ;
+}
+
+#SegABottom {
+	position : absolute ;
+	left : 0px ;
+	top : 158px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: #ffffff ;
+}
+
+
+
+
+
+/* HEADER */
+#SegBHeader
+{
+	position     : absolute ;
+	left         : 0px ;
+	top          : 180px ;
+	border-width : 0px ;
+	border-style : none ;
+	background   : transparent ;
+}
+
+#SegBBodys
+{
+	position     : absolute ;
+	left         : 0px ;
+	top          : 210px ;
+	width        : 949px ;
+	height       : 280px ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #cdcdcd ;
+	background   : #ffffff ;
+}
+
+
+#SegBBottom
+{
+	position     : absolute ;
+	left         : 0px ;
+	top          : 488px ;
+	border-width : 0px ;
+	border-style : none ;
+	background   : #ffffff ;
+}
+
+
+
+
+
+
+
+#colProductsCode
+{
+	font-weight : bold ;
+	position : absolute ;
+	left : 0px ;
+	top : 0px ;
+	width : 160px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#varProductsCode
+{
+	position : absolute ;
+	left : 130px ;
+	top : 0px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 3px 55px 0px 0px ;
+}
+
+
+
+
+#colProductsName
+{
+	font-weight : bold ;
+	position : absolute ;
+	left : 228px ;
+	top : 0px ;
+	width : 160px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#varProductsName
+{
+	position : absolute ;
+	left : 330px ;
+	top : 0px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 3px 35px 0px 0px ;
+}
+
+
+
+
+#colDeliveryDate
+{
+	font-weight : bold ;
+	position : absolute ;
+	left : 753px ;
+	top : 0px ;
+	width : 160px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#varDeliveryDate
+{
+	position : absolute ;
+	left : 845px ;
+	top : 0px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 3px 0px 0px 0px ;
+}
+
+
+
+
+#colDeptCode
+{
+	font-weight : bold ;
+	position : absolute ;
+	left : 0px ;
+	top : 30px ;
+	width : 100px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#varDeptCode
+{
+	position : absolute ;
+	left : 80px ;
+	top : 30px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 3px 0px 0px 0px ;
+}
+
+
+
+
+#colInChargeCode
+{
+	font-weight : bold ;
+	position : absolute ;
+	left : 116px ;
+	top : 30px ;
+	width : 120px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#varInChargeCode
+{
+	position : absolute ;
+	left : 225px ;
+	top : 30px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 3px 0px 0px 0px ;
+}
+
+
+
+
+#colInChargeName
+{
+	font-weight : bold ;
+	position : absolute ;
+	left : 261px ;
+	top : 30px ;
+	width : 160px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#varInChargeName
+{
+	position : absolute ;
+	left : 373px ;
+	top : 30px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 3px 0px 0px 0px ;
+}
+
+
+
+
+#colSellingPrice
+{
+	font-weight : bold ;
+	position : absolute ;
+	left : 649px ;
+	top : 30px ;
+	width : 160px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#varSellingPrice
+{
+	position : absolute ;
+	left : 759px ;
+	top : 30px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 3px 0px 0px 0px ;
+}
+
+
+
+
+#colCartonQty
+{
+	font-weight : bold ;
+	position : absolute ;
+	left : 0px ;
+	top : 60px ;
+	width : 180px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#varCartonQty
+{
+	position : absolute ;
+	left : 160px ;
+	top : 60px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 3px 0px 0px 0px ;
+}
+
+
+
+
+#colPlanQty
+{
+	font-weight : bold ;
+	position : absolute ;
+	left : 331px ;
+	top : 60px ;
+	width : 160px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#varPlanQty
+{
+	position : absolute ;
+	left : 478px ;
+	top : 60px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 3px 0px 0px 0px ;
+}
+
+
+
+#colWholesalePrice
+{
+	font-weight : bold ;
+	position : absolute ;
+	left : 649px ;
+	top : 60px ;
+	width : 160px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#varWholesalePrice
+{
+	position : absolute ;
+	left : 759px ;
+	top : 60px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 3px 0px 0px 0px ;
+}
+
+
+
+
+#colRefoundQty
+{
+	font-weight : bold ;
+	position : absolute ;
+	left : 0px ;
+	top : 90px ;
+	width : 160px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#varRefoundQty
+{
+	position : absolute ;
+	left : 110px ;
+	top : 90px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 3px 0px 0px 0px ;
+}
+
+
+
+
+#tblStock
+{
+	font-weight : bold ;
+	position : absolute ;
+	left : 0px ;
+	top : 179px ;
+}
+
+
+
+
+
+#colWorkflowRoot
+{
+	color       : #ffffff ;
+	font-weight : bold ;
+	position : absolute ;
+	left : 435px ;
+	top : 463px ;
+	width : 150px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #cdcdcd #72828b #cdcdcd #cdcdcd ;
+	background-color: transparent ;
+	padding : 8px 0px 0px 8px ;
+}
+
+#varWorkflowRoot
+{
+	position : absolute ;
+	left : 572px ;
+	top : 463px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #cdcdcd #cdcdcd #cdcdcd #72828b ;
+	background-color: transparent ;
+	padding : 3px 94px 0px 8px ;
+}
+
+
+
+
+/************************************** END INPUT A **************************************/
+
+
+
+
+
+
+
+
+
+
+
+#InputB
+{ 
+	position     : absolute ;
+	left         : 34px ;
+	top          : 111px ;
+	z-index      : 2 ;
+	width        : 900px ;
+	height       : 533px ;
+	visibility   : hidden ;
+	border-width : 0px ;
+	border-style : none ;
+	background   : #72828b ;
+}
+
+#detailBlock
+{ 
+	position     : absolute ;
+	left         : 44px ;
+	top          : 151px ;
+	z-index      : 3 ;
+	visibility   : hidden ;
+	border-width : 0px ;
+	border-style : none ;
+	background   : transparent ;
+}
+
+
+
+
+#SegCHeader
+{
+	position     : absolute ;
+	left         : 0px ;
+	top          : 0px ;
+	border-width : 0px ;
+	border-style : none ;
+	background   : transparent ;
+}
+
+#SegCBodys
+{
+	left         : 10px ;
+	top          : 31px ;
+	width        : 949px ;
+	height       : 190px ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #cdcdcd ;
+	background   : #ffffff ;
+}
+
+#SegCBottoms
+{
+	position     : absolute ;
+	left         : 0px ;
+	top          : 197px ;
+	border-width : 0px ;
+	border-style : none ;
+	background   : #ffffff ;
+}
+
+
+
+
+
+/* HEADER */
+#SegDHeader
+{
+	position     : absolute ;
+	left         : 0px ;
+	top          : 235px ;
+	border-width : 0px ;
+	border-style : none ;
+	background   : transparent ;
+}
+
+#SegDBodys
+{
+	position     : absolute ;
+	left         : 0px ;
+	top          : 265px ;
+	width        : 949px ;
+	height       : 225px ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #cdcdcd ;
+	background   : #ffffff ;
+}
+
+
+#SegDBottom
+{
+	position     : absolute ;
+	left         : 0px ;
+	top          : 488px ;
+	border-width : 0px ;
+	border-style : none ;
+	background   : #ffffff ;
+}
+
+
+
+
+
+
+
+#colDetailStockSubject
+{
+	position     : absolute ;
+	font-weight  : bold ;
+	left         : 0px ;
+	top          : 0px ;
+	width        : 160px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 8px 0px 0px 8px ;
+}
+
+#varDetailStockSubject
+{
+	position     : absolute ;
+	left         : 100px ;
+	top          : 0px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 3px 0px 0px 0px ;
+}
+
+
+#colDetailStockItem
+{
+	position     : absolute ;
+	font-weight  : bold ;
+	left         : 271px ;
+	top          : 0px ;
+	width        : 190px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 8px 0px 0px 8px ;
+}
+
+#varDetailStockItem
+{
+	position     : absolute ;
+	left         : 411px ;
+	top          : 0px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 3px 0px 0px 0px ;
+}
+
+
+#colDetailAmortized
+{
+	position     : absolute ;
+	font-weight  : bold ;
+	left         : 557px ;
+	top          : 0px ;
+	width        : 170px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 8px 0px 0px 8px ;
+}
+
+#varDetailAmortized
+{
+	position     : absolute ;
+	left         : 714px ;
+	top          : 0px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 3px 0px 0px 0px ;
+}
+
+
+#colDetailSupplier
+{
+	position     : absolute ;
+	font-weight  : bold ;
+	left         : 0px ;
+	top          : 30px ;
+	width        : 120px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 8px 0px 0px 8px ;
+}
+
+#varDetailSupplierCode
+{
+	position     : absolute ;
+	left         : 100px ;
+	top          : 30px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 3px 0px 0px 0px ;
+}
+#varDetailSupplierName
+{
+	position     : absolute ;
+	left         : 181px ;
+	top          : 30px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 3px 33px 0px 0px ;
+}
+
+
+#colDetailCurrency
+{
+	position     : absolute ;
+	font-weight  : bold ;
+	left         : 557px ;
+	top          : 30px ;
+	width        : 120px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 8px 0px 0px 8px ;
+}
+
+#varDetailCurrency
+{
+	position     : absolute ;
+	left         : 637px ;
+	top          : 30px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 3px 0px 0px 0px ;
+}
+
+
+#colDetailRate
+{
+	position     : absolute ;
+	font-weight  : bold ;
+	left         : 736px ;
+	top          : 30px ;
+	width        : 120px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 8px 0px 0px 8px ;
+}
+
+#varDetailRate
+{
+	position     : absolute ;
+	left         : 829px ;
+	top          : 30px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 3px 0px 0px 0px ;
+}
+
+
+#colDetailPlanQty
+{
+	position     : absolute ;
+	font-weight  : bold ;
+	left         : 0px ;
+	top          : 60px ;
+	width        : 120px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 8px 0px 0px 8px ;
+}
+
+#varDetailPlanQty
+{
+	position     : absolute ;
+	left         : 100px ;
+	top          : 60px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 3px 0px 0px 0px ;
+}
+
+
+#colDetailPrice
+{
+	position     : absolute ;
+	font-weight  : bold ;
+	left         : 271px ;
+	top          : 60px ;
+	width        : 150px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 8px 0px 0px 8px ;
+}
+
+#varDetailPrice
+{
+	position     : absolute ;
+	left         : 386px ;
+	top          : 60px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 3px 0px 0px 0px ;
+}
+
+
+#colDetailPlanEstimate
+{
+	position     : absolute ;
+	font-weight  : bold ;
+	left         : 557px ;
+	top          : 60px ;
+	width        : 230px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 8px 0px 0px 8px ;
+}
+
+#varDetailPlanEstimate
+{
+	position     : absolute ;
+	left         : 757px ;
+	top          : 60px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 3px 0px 0px 0px ;
+}
+
+
+#colDetailInput
+{
+	position     : absolute ;
+	font-weight  : bold ;
+	left         : 0px ;
+	top          : 90px ;
+	width        : 120px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 8px 0px 0px 8px ;
+}
+
+#varDetailInput
+{
+	position     : absolute ;
+	left         : 100px ;
+	top          : 90px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 3px 0px 0px 0px ;
+}
+
+
+#colDetailPlanRate
+{
+	position     : absolute ;
+	font-weight  : bold ;
+	left         : 122px ;
+	top          : 90px ;
+	width        : 120px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 8px 0px 0px 8px ;
+}
+
+#varDetailPlanRate
+{
+	position     : absolute ;
+	font-weight  : bold ;
+	left         : 203px ;
+	top          : 90px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 3px 7px 0px 0px ;
+}
+
+
+#colDetailSubTotal
+{
+	position     : absolute ;
+	font-weight  : bold ;
+	left         : 557px ;
+	top          : 90px ;
+	width        : 220px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 8px 0px 0px 8px ;
+}
+
+#varDetailSubTotal
+{
+	position     : absolute ;
+	font-weight  : bold ;
+	left         : 757px ;
+	top          : 90px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 3px 0px 0px 0px ;
+}
+
+
+#colDetailReamrk
+{
+	position     : absolute ;
+	font-weight  : bold ;
+	left         : 0px ;
+	top          : 120px ;
+	width        : 120px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 8px 0px 0px 8px ;
+}
+
+#varDetailReamrk
+{
+	position     : absolute ;
+	font-weight  : bold ;
+	left         : 100px ;
+	top          : 120px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	padding      : 3px 0px 0px 0px ;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#RegistBt
+{
+	position : absolute ;
+	top : 466px ;
+	left : 839px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+#Confirm1Bt
+{
+	position : absolute ;
+	top : 467px ;
+	left : 273px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+#PreSaveBt
+{
+	position : absolute ;
+	top : 467px ;
+	left : 350px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+#DataSetBt
+{
+	position : absolute ;
+	top : 4px ;
+	left : 178px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+#PunitBt
+{
+	position : absolute ;
+	top : 4px ;
+	left : 722px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+
+
+
+
+#WFrootBt
+{
+	position     : absolute ;
+	top          : 467px ;
+	left         : 555px ;
+	border-width : 0px ;
+	border-style : none ;
+	background   : transparent ;
+}
+
+
+
+
+#WFRootFrame {
+	position : absolute ;
+	left : 0px ;
+	top : 137px ;
+	z-index : 8 ;
+	visibility: hidden ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+
+#WFroot
+{
+	position : absolute ;
+	width : 927px ;
+	height : 328px ; /* 328px */
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+	filter:progid:DXImageTransform.Microsoft.Alpha(opacity=98);
+}
+
+
+
+
+
+
+
+#AddRowBt
+{
+	position : absolute ;
+	top : 168px ;
+	left : 18px ;
+	width : 72px ;
+	height : 21px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+#DelRowBt
+{
+	position : absolute ;
+	top : 168px ;
+	left : 103px ;
+	width : 72px ;
+	height : 21px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+#CommitBt
+{
+	position : absolute ;
+	top : 168px ;
+	left : 188px ;
+	width : 72px ;
+	height : 21px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+#SegAClearBt
+{
+	position : absolute ;
+	top : 168px ;
+	left : 273px ;
+	width : 72px ;
+	height : 21px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+#Confirm2Bt
+{
+	position : absolute ;
+	top : 465px ;
+	left : 755px ;
+	width : 72px ;
+	height : 21px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+#DecisionBt
+{
+	position : absolute ;
+	top : 465px ;
+	left : 830px ;
+	width : 72px ;
+	height : 21px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+
+
+
+
+
+
+
+#DetailList
+{
+	position     : absolute ;
+	left         : 0px ;
+	top          : 230px ;
+	width        : 927px ;
+	height       : 222px ;
+	border-width : 0px ;
+	border-style : none ;
+	background   : #f1f1f1 ;
+	overflow     : auto ;
+}
+#dlinner
+{
+	width        : 940px ;
+	border-width : 0px ;
+	border-style : none ;
+}
+
+
+
+.TrSegs
+{
+	font-family : Arial , £Í£Ó £Ð¥´¥·¥Ã¥¯ ;
+	font-style  : normal ;
+	font-weight : bold ;
+	color       : #ffffff ;
+	font-size   : 12px ;
+	line-height : 12px ;
+	text-align  : center ;
+	padding     : 4px 3px 1px 3px ;
+	background  : #799797 ;
+}
+.Lists01
+{
+	font-family : monospace ;
+	font-style  : normal ;
+	font-weight : normal ;
+	color       : #666666 ;
+	font-size   : 12px ;
+	line-height : 12px ;
+	padding     : 5px 3px 0px 3px ;
+	background  : #ffffff ;
+	cursor      : pointer ;
+}
+
+
+
+
+
+
+
+
+
+
+#MSWBt03
+{
+	position     : absolute ;
+	top          : 4px ;
+	left         : 201px ;
+	width        : 19px ;
+	height       : 19px ;
+	border-width : 0px ;
+	border-style : none ;
+	background   : #ffffff ;
+}
+#MiFrame03
+{
+	position     : absolute ;
+	left         : 228px ;
+	top          : 180px ;
+	z-index      : 8 ;
+	position     : absolute ;
+	visibility   : hidden ;
+	border-width : 0px ;
+	border-style : none ;
+	background   : transparent ;
+}
+
+#MSWBt08
+{
+	position     : absolute ;
+	left         : 527px ;
+	top          : 34px ;
+	width        : 19px ;
+	height       : 19px ;
+	border-width : 0px ;
+	border-style : none ;
+	background   : #ffffff ;
+}
+#MiFrame08
+{
+	position     : absolute ;
+	left         : 94px ;
+	top          : 209px ;
+	z-index      : 8 ;
+	visibility   : hidden ;
+	border-width : 0px ;
+	border-style : none ;
+	background   : transparent ;
+}
+
+
+
+
+
+
+
+
+
+#ErrorMessageFrame
+{
+	position : absolute ;
+	top : 115px ;
+	left : 11px ;
+	z-index : 11 ;
+	visibility: hidden ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+#ErrorMessage
+{
+	position : absolute ;
+	width : 978px ;
+	height : 34px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+	filter:progid:DXImageTransform.Microsoft.Alpha(opacity=90);
+}

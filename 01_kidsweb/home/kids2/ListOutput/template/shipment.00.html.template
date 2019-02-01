@@ -1,0 +1,68 @@
+_%PAGE_HEADER%_
+<style>
+#list table ,#list td
+{
+	border:1px solid #999999;
+	border-spacing:1px;
+	border-collapse:collapse;
+	padding: 1px;
+	font-size:100%;
+}
+th#col1, td#col1
+{
+	text-align: center;
+	background-color: #ADA9FC;
+}
+th#col2, td#col2
+{
+	text-align: center;
+	background-color: #ADF57A;
+}
+</style>
+
+<h3 align="center">出荷スケジュール表 </h3>
+
+<form name="form1" method="post" action="chklist.php">
+<input type="hidden" name="conf" value="shipment.00.conf">
+<input type="hidden" name="template" value="_%PAGE_TEMPLATENAME%_">
+
+<div align="center" id="list">
+<table border="1">
+	<tr> 
+		<th id="col1" colspan="3" bgcolor="#ADA9FC">商品に関する条件</th>
+		<th id="col1" colspan="1" bgcolor="#ADA9FC">発注に関する条件</th>
+		<th id="col1" colspan="1" bgcolor="#ADA9FC">カレンダーに関する条件</th>
+		<th id="col1" rowspan="4"><input type="submit" name="submit" value="見る"></th>
+	</tr>
+
+	<tr> 
+		<td id="col2">部門</td>
+		<td id="col2">担当者</td>
+		<td id="col2">商品納期</td>
+		<td id="col2">発注状態</td>
+		<td id="col2">カレンダー期間</td>
+	</tr>
+	<tr>
+		<td nowrap>_%M_GROUP%_</td>
+		<td nowrap>_%M_USER%_</td>
+		<td nowrap>_%DATE_FROM%_ 〜 _%DATE_TO%_</td>
+		<td nowrap>_%M_ORDERSTATUS%_</td>
+		<td nowrap>_%CAL_DATE_FROM%_ 〜 _%CAL_DATE_TO%_</td>
+	</tr>
+</table>
+</div>
+
+</form>
+
+<script type="JavaScript">
+function fncThisUrl()
+{
+	return "'" . location.hash . "'";
+}
+</script>
+<span style="color: #999999">このページを“お気に入り”に追加しておく事で同じ選択状態が復元出来ます。</span>
+<!--
+<a href="#" onClick="javascript:window.external.AddFavorite("'".location.hash."'",'チェックリスト');return false"><font style="font-size: 15px" color="#666666">お気に入りに追加！</font></a>
+-->
+
+_%PAGE_FOOTER%_

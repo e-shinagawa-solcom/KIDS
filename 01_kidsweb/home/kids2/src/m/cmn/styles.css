@@ -1,0 +1,562 @@
+<!--
+
+
+a:active, a:link, a:visited  { text-decoration: none ;}
+
+
+a:link     { color: #ffffff ;  background-color: transparent ; }
+a:visited  { color: #ffffff ;  background-color: transparent ; }
+a:active   { color: #ffffff ;  background-color: transparent ; }
+/* a:hover    { color: #ffffff ;  text-decoration:underline ; } */
+
+
+
+body
+{
+	background-color : #ffffff ;
+	font-family : £Í£Ó £Ð¥´¥·¥Ã¥¯, Osaka ;
+	font-style : normal ;
+	font-weight : normal ;
+	color : #666666 ;
+	font-size : 12px;
+	line-height : 12px ;
+	margin : 0px ;
+	scrollbar-face-color       : #cdcdcd ;
+	scrollbar-highlight-color  : #cdcdcd ;
+	scrollbar-shadow-color     : #cdcdcd ;
+	scrollbar-3dlight-color    : #788787 ;
+	scrollbar-arrow-color      : #788787 ;
+	scrollbar-track-color      : #f1f1f1 ;
+	scrollbar-darkshadow-color : #788787 ;
+}
+
+input
+{
+	font-family : monospace ;
+	width : 110px ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #7f7f7f #7f7f7f #7f7f7f #7f7f7f ; /* dfdfdf */
+	margin : 0 4px 0 0 ;      
+	color : #666666 ;
+	background-color : #ffffff ;
+}
+
+select {
+	font-family : monospace ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #7f7f7f #7f7f7f #7f7f7f #7f7f7f ;
+	margin : 0 4px 0 0 ;      
+	color : #666666 ;
+	background-color : #ffffff ;
+}
+
+
+/***************************************************************************/
+
+
+
+#TxtSlt10 { /* 10byte */
+	z-index : 1 ;
+	font-family : monospace ;
+	width : 100px ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #7f7f7f #dfdfdf #dfdfdf #7f7f7f ;
+	margin : 0 4px 0 0 ;      
+	color : #666666 ;
+	background-color : #ffffff ;
+}
+
+#TxtSlt15 { /* 14byte */
+	z-index : 1 ;
+	font-family : monospace ;
+	width : 123px ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #7f7f7f #dfdfdf #dfdfdf #7f7f7f ;
+	margin : 0 4px 0 0 ;      
+	color : #666666 ;
+	background-color : #ffffff ;
+}
+
+#TxtSlt16 { /* 16byte */
+	z-index : 1 ;
+	font-family : monospace ;
+	width : 138px ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #7f7f7f #dfdfdf #dfdfdf #7f7f7f ;
+	margin : 0 4px 0 0 ;      
+	color : #666666 ;
+	background-color : #ffffff ;
+}
+
+#TxtSlt20 { /* 20byte */
+	z-index : 1 ;
+	font-family : monospace ;
+	width : 171px ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #7f7f7f #dfdfdf #dfdfdf #7f7f7f ;
+	margin : 0 4px 0 0 ;      
+	color : #666666 ;
+	background-color : transparent ;
+}
+
+#TxtSlt38 { /* 38byte */
+	z-index : 1 ;
+	font-family : monospace ;
+	width : 317px ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #7f7f7f #dfdfdf #dfdfdf #7f7f7f ;
+	margin : 0 4px 0 0 ;      
+	color : #666666 ;
+	background-color : transparent ;
+}
+
+#TxtSlt39 { /* 38byte */
+	z-index : 1 ;
+	font-family : monospace ;
+	width : 370px ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #7f7f7f #dfdfdf #dfdfdf #7f7f7f ;
+	margin : 0 4px 0 0 ;      
+	color : #666666 ;
+	background-color : transparent ;
+}
+
+#TxtSlt15_2 { /* 15byte */
+	z-index : 1 ;
+	font-family : monospace ;
+	width : 127px ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #7f7f7f #dfdfdf #dfdfdf #7f7f7f ;
+	margin : 0 4px 0 0 ;      
+	color : #666666 ;
+	background-color : #ffffff ;
+}
+
+#TxtSlt20 { /* 20byte */
+	z-index : 1 ;
+	font-family : monospace ;
+	width : 163px ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #7f7f7f #dfdfdf #dfdfdf #7f7f7f ;
+	margin : 0 4px 0 0 ;      
+	color : #666666 ;
+	background-color : #ffffff ;
+}
+
+#TxtSlt21 { /* 20byte */
+	z-index : 1 ;
+	font-family : monospace ;
+	width : 171px ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #7f7f7f #dfdfdf #dfdfdf #7f7f7f ;
+	margin : 0 4px 0 0 ;      
+	color : #666666 ;
+	background-color : #ffffff ;
+}
+
+#TxtSlt18 { /* 18byte */
+	z-index : 1 ;
+	font-family : monospace ;
+	width : 149px ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #7f7f7f #dfdfdf #dfdfdf #7f7f7f ;
+	margin : 0 4px 0 0 ;      
+	color : #666666 ;
+	background-color : #ffffff ;
+}
+
+#TxtSlt50 { /* 50byte */
+	font-family : monospace ;
+	width : 360px ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #7f7f7f #dfdfdf #dfdfdf #7f7f7f ;
+	margin : 0 4px 0 0 ;      
+	color : #666666 ;
+	background-color : #f1f1f1 ;
+}
+
+#TxtSlt51 { /* 51byte */
+	font-family : monospace ;
+	width : 370px ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #7f7f7f #dfdfdf #dfdfdf #7f7f7f ;
+	margin : 0 4px 0 0 ;      
+	color : #666666 ;
+	background-color : #ffffff ;
+}
+
+#TxtSlt40 { /* 40byte */
+	font-family : monospace ;
+	color : #666666 ;
+	width : 466px ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #7f7f7f #dfdfdf #dfdfdf #7f7f7f ;     
+	background-color : #f1f1f1 ;
+}
+
+#TxtSlt100 { /* 18byte */
+	z-index : 1 ;
+	font-family : monospace ;
+	width : 773px ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #7f7f7f #dfdfdf #dfdfdf #7f7f7f ;
+	margin : 0 4px 0 0 ;      
+	color : #666666 ;
+	background-color : #ffffff ;
+}
+
+#TxtSltFree { /* 18byte */
+	z-index : 1 ;
+	font-family : monospace ;
+	width : 200px ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #7f7f7f #dfdfdf #dfdfdf #7f7f7f ;
+	margin : 0 4px 0 0 ;      
+	color : #666666 ;
+	background-color : #ffffff ;
+}
+/***************************************************************************/
+
+
+#Txt02L { /* 2byte */
+	width : 21px ;
+	text-align : left ;
+}
+
+#Txt02R { /* 2byte */
+	width : 21px ;
+	text-align : right ;
+}
+
+#Txt03L { /* 3byte */
+	width : 28px ;
+	text-align : left ;
+}
+
+#Txt04L { /* 4byte */
+	width : 35px ;
+	text-align : left ;
+}
+
+#Txt07R { /* 7byte */
+	width : 91px ;
+	text-align : right ;
+}
+
+#Txt08L { /* 8byte */
+	width : 63px ;
+	text-align : left ;
+}
+
+#Txt10L { /* 10byte */
+	width : 77px ;
+	text-align : left ;
+}
+
+#TxtFreeC { /* 10byte */
+	width : 28px ;
+	text-align : center ;
+}
+
+#Txt19L { /* 19byte */
+	width : 138px ;
+	text-align : left ;
+}
+
+#Txt25L { /* 25byte */
+	width : 177px ;
+	text-align : left ;
+}
+
+#Txt23R { /* 23byte */
+	width : 163px ;
+	text-align : right ;
+}
+
+#Txt20L { /* 20byte */
+	width : 149px ;
+	text-align : left ;
+}
+
+#Txt20R { /* 20byte */
+	width : 149px ;
+	text-align : right ;
+}
+
+#Txt40L { /* 40byte */
+	width : 285px ;
+	text-align : left ;
+}
+
+#Txt41L { /* 41byte */
+	width : 298px ;
+	text-align : left ;
+}
+
+#Txt46L { /* 46byte */
+	width : 335px ;
+	text-align : left ;
+}
+
+#Txt52L { /* 52byte */
+	width : 370px ;
+	text-align : left ;
+}
+
+#Txt53L { /* 53byte */
+	width : 377px ;
+	text-align : left ;
+}
+
+#Txt54L { /* 54byte */
+	width : 384px ;
+	text-align : left ;
+}
+
+#Txt59L { /* 59byte */
+	width : 419px ;
+	text-align : left ;
+}
+
+#Txt100L { /* 100byte */
+	width : 773px ;
+	text-align : left ;
+}
+
+
+/***************************************************************************/
+
+
+
+#TxtDis02L { /* 2byte */
+	width : 21px ;
+	font-family : monospace ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #cdcdcd ;
+	margin : 0 4px 0 0 ;      
+	color : #666666 ;
+	background-color : #ffffff ;
+	text-align : left ;
+}
+
+#TxtDis02R { /* 2byte */
+	width : 21px ;
+	font-family : monospace ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #cdcdcd ;
+	margin : 0 4px 0 0 ;      
+	color : #666666 ;
+	background-color : #ffffff ;
+	text-align : right ;
+}
+
+#TxtDis03L { /* 3byte */
+	width : 28px ;
+	font-family : monospace ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #cdcdcd ;
+	margin : 0 4px 0 0 ;      
+	color : #666666 ;
+	background-color : #ffffff ;
+	text-align : left ;
+}
+
+#TxtDis04L { /* 4byte */
+	width : 35px ;
+	font-family : monospace ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #cdcdcd ;
+	margin : 0 4px 0 0 ;      
+	color : #666666 ;
+	background-color : #ffffff ;
+	text-align : left ;
+}
+
+#TxtDis05L { /* 4byte */
+	width : 42px ;
+	font-family : monospace ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #cdcdcd ;
+	margin : 0 4px 0 0 ;      
+	color : #666666 ;
+	background-color : #ffffff ;
+	text-align : left ;
+}
+
+#TxtDis07L { /* 7byte */
+	width : 91px ;
+	font-family : monospace ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #cdcdcd ;
+	margin : 0 4px 0 0 ;      
+	color : #666666 ;
+	background-color : #ffffff ;
+	text-align : left ;
+}
+
+#TxtDis07R { /* 7byte */
+	width : 91px ;
+	font-family : monospace ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #cdcdcd ;
+	margin : 0 4px 0 0 ;      
+	color : #666666 ;
+	background-color : #ffffff ;
+	text-align : right ;
+}
+
+#TxtDis10L { /* 10byte */
+	width : 77px ;
+	font-family : monospace ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #cdcdcd ;
+	margin : 0 4px 0 0 ;      
+	color : #666666 ;
+	background-color : #ffffff ;
+	text-align : left ;
+}
+
+#TxtDis17R { /* 17byte */
+	width : 127px ;
+	font-family : monospace ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #cdcdcd ;
+	margin : 0 4px 0 0 ;      
+	color : #666666 ;
+	background-color : #ffffff ;
+	text-align : right ;
+}
+
+#TxtDis19L { /* 19byte */
+	width : 138px ;
+	font-family : monospace ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #cdcdcd ;
+	margin : 0 4px 0 0 ;      
+	color : #666666 ;
+	background-color : #ffffff ;
+	text-align : left ;
+}
+
+#TxtDis20L { /* 20byte */
+	width : 149px ;
+	font-family : monospace ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #cdcdcd ;
+	margin : 0 4px 0 0 ;      
+	color : #666666 ;
+	background-color : #ffffff ;
+	text-align : left ;
+}
+
+#TxtDis20R { /* 20byte */
+	width : 149px ;
+	font-family : monospace ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #cdcdcd ;
+	margin : 0 4px 0 0 ;      
+	color : #666666 ;
+	background-color : #ffffff ;
+	text-align : right ;
+}
+
+#TxtDis23R { /* 23byte */
+	width : 163px ;
+	font-family : monospace ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #cdcdcd ;
+	margin : 0 4px 0 0 ;      
+	color : #666666 ;
+	background-color : #ffffff ;
+	text-align : right ;
+}
+
+#TxtDis40L { /* 40byte */
+	width : 285px ;
+	font-family : monospace ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #cdcdcd ;
+	margin : 0 4px 0 0 ;      
+	color : #666666 ;
+	background-color : #ffffff ;
+	text-align : left ;
+}
+
+#TxtDis52L { /* 52byte */
+	width : 370px ;
+	font-family : monospace ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #cdcdcd ;
+	margin : 0 4px 0 0 ;      
+	color : #666666 ;
+	background-color : #ffffff ;
+	text-align : left ;
+}
+
+#TxtDis46L { /* 46byte */
+	width : 335px ;
+	font-family : monospace ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #cdcdcd ;
+	margin : 0 4px 0 0 ;      
+	color : #666666 ;
+	background-color : #ffffff ;
+	text-align : left ;
+}
+
+#TxtDis80L { /* 80byte */
+	width : 526px ;
+	font-family : monospace ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #cdcdcd ;
+	margin : 0 4px 0 0 ;      
+	color : #666666 ;
+	background-color : #ffffff ;
+	text-align : left ;
+}
+
+
+#CheckBox14
+{
+	width : 14px ;
+	border-width : 0px ;
+	border-style : none ;
+	background-color : transparent ;
+}
+
+
+-->

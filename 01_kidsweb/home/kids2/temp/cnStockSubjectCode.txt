@@ -1,0 +1,6 @@
+ SELECT lngStockSubjectCode, lngStockSubjectCode || ':' || strStockSubjectName FROM m_Stocksubject WHERE lngStockClassCode = '2' 
+ SELECT lngStockSubjectCode, lngStockSubjectCode || ':' || strStockSubjectName FROM m_Stocksubject WHERE lngStockClassCode = '2' 
+id	name1
+431	431:¶â·¿½þµÑ¹â
+433	433:¶â·¿³¤³°½þµÑ
+403	403:ºàÎÁ¥Ä¡¼¥ë»ÅÆþ¹â

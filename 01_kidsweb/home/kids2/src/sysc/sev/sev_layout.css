@@ -1,0 +1,41 @@
+<!--
+
+
+#Backs
+{
+	background : #d6d0b1 ;
+}
+
+
+
+#ApacheSet
+{
+	position   : absolute ;
+	left       : 315px ;
+	top        : 210px ;
+	z-index    : 3 ;
+	background : transparent ;
+}
+
+
+
+#RestartBt
+{
+	position   : absolute ;
+	left       : 0px ;
+	top        : 0px ;
+	background : transparent ;
+}
+
+
+
+#StopBt
+{
+	position   : absolute ;
+	left       : 170px ;
+	top        : 0px ;
+	background : transparent ;
+}
+
+
+-->

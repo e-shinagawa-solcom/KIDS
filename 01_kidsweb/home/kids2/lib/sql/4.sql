@@ -1,0 +1,2 @@
+// No4: ∏‹µ“•≥°º•…				¢™ ∏‹µ“… »÷(æ¶… ≈–œø°ßwatanabe)
+SELECT lngcompanycode,strdistinctcode FROM m_company WHERE strcompanydisplaycode = '_%strFormValue0%_'

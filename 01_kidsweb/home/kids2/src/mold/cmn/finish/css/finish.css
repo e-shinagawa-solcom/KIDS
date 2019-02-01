@@ -1,0 +1,109 @@
+/* 埋め込みパラメータ */
+input.finish-hidden
+{
+    display: none;
+}
+
+/* センタリング */
+html, body, div.centering
+{
+    height: 100%;
+}
+div.centering
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column nowrap;
+
+}
+
+/* 全体背景 */
+.finish-background
+{
+    background-color: #D6D0B1;
+    overflow-y: scroll;
+}
+
+/* div マージン設定 */
+.finish-background div
+{
+    margin: 15px;
+}
+
+/* 完了メッセージBOX */
+.finish-box
+{
+}
+
+/* 完了メッセージ */
+.finish-box__message
+{
+    padding: 5px 50px;
+    font-weight: bold;
+    background-color: #F1F1F1;
+    border: 1px solid #798787;
+}
+
+/* 完了サマリ */
+.finish-summary-box
+{
+}
+
+/* 完了サマリ table */
+.finish-summary-box table
+{
+    display: inline-table;
+    border-collapse: collapse;
+    border: 1px solid #798787;
+}
+
+/* 完了サマリ th */
+.finish-summary-box th
+{
+    padding: 5px 15px;
+    text-align: center;
+    background-color: #E8F0F1;
+    border: 1px solid #798787;
+}
+
+/* 完了サマリ td */
+.finish-summary-box td
+{
+    padding: 5px 15px;
+    text-align: center;
+    background-color: #FAFAFA;
+    border: 1px solid #798787;
+}
+
+/* 帳票プレビューBOX */
+.report-box
+{
+}
+
+.report-box *
+{
+    vertical-align: middle;
+}
+
+.report-box__wrap > .report-box
+{
+    margin: 0px 5px;
+}
+
+/* 帳票プレビューBOX ラベル */
+.report-box__label
+{
+    padding: 5px 20px;
+    font-weight: bold;
+    background-color: #F1F1F1;
+    border: 1px solid #798787;
+}
+
+/* 帳票プレビューBOX ラップbox ボタン */
+.report-box__wrap-box-button
+{
+    margin-left:-4px;
+    padding: 5px 15px;
+    border: 1px solid #798787;
+}

@@ -1,0 +1,142 @@
+<config>
+<header1>
+	<link rel="stylesheet" href="/mold/cmn/form/css/forms.css">
+	<link rel="stylesheet" href="/mold/cmn/form/css/tabs.css">
+	<link rel="stylesheet" href="/mold/cmn/navigate/css/navigate.css">
+
+    <!-- confirm iframe スタイル -->
+    <link rel="stylesheet" href="/mold/cmn/confirm/css/confirm-in-iframe.css">
+    <!-- msw 表示 -->
+    <script src="/mold/cmn/msw/cmn/js/msw.js" defer></script>
+</header1>
+
+<header2>
+</header2>
+
+<header3>
+    <!-- フォーム ボタン -->
+    <link rel="stylesheet" href="/mm/modify/css/form-buttons.css">
+	<!-- 言語切り替え処理 -->
+	<script src="/mm/modify/js/switch-language.js" defer></script>
+	<!-- datepickerの要素指定 -->
+	<script src="/mm/modify/js/datepicker.js" defer></script>
+	<!-- マスタデータ検索 -->
+	<script src="/mm/modify/js/invoke-master-search.js" defer></script>
+    <!-- フォーム ボタン -->
+	<script src="/mm/modify/js/form-buttons.js" defer></script>
+    <!-- フォーム検証 -->
+    <script src="/mm/modify/js/validate-form.js" defer></script>
+    <!-- フォーム操作 -->
+    <script src="/mm/modify/js/form-change-action.js" defer></script>
+    <!-- フォーム初期化 -->
+    <script src="/mm/modify/js/init-form.js" defer></script>
+    <!-- msw汎用スタイル -->
+	<link rel="stylesheet" href="/mm/modify/css/msw.css">
+</header3>
+
+<bodyonload>
+</bodyonload>
+</config>
+
+<!-- 入力フォーム -->
+<div class="form-box--notabs-for-modify">
+	<!-- フォームヘッダ -->
+	<div class="form-box__header">
+		<p class="form-box__header__title">金型履歴修正</p>
+        <div class="form-box__header__buttons">
+            <img class="form-buttons__regist button" src="/img/type01/cmn/querybt/reg_off_ja_bt.gif" alt="form regist">
+        </div>
+	</div>
+	<!-- フォームコンテンツ -->
+	<div class="form-box__contents">
+		<form name="RegistMoldHistory" action="javascript:void(0);" method="post">
+            <input type="submit">
+            <div class="regist-line">
+                <span class="regist-label">
+                    <span class="regist-label__text">製品コード</span>
+                    <input class="TxtStyle05L" name="ProductCode" value="_%ProductCode%_" readonly>
+                    <input class="disTxt46L" name="ProductName" value="_%ProductName%_" readonly>
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="regist-label">
+                    <span class="regist-label__text">金型NO</span>
+                    <input class="TxtStyle05L" name="MoldNo" value="_%MoldNo%_" readonly>
+                </span>
+                <span class="regist-label">
+                    <span class="regist-label__text">履歴番号</span>
+                    <input class="TxtStyle05L" name="HistoryNo" value="_%HistoryNo%_" readonly>
+                    <input style="display: none;" class="TxtStyle05L" name="Version" value="_%Version%_" readonly>
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="regist-label">
+                    <span class="regist-label__required-mark">◎</span>
+                    <span class="regist-label__text">実施日</span>
+                    <input name="ActionDate" class="TxtStyle05L" value="_%ActionDate%_">
+                </span>
+                <span class="regist-label">
+                    <span class="regist-label__text">金型ステータス</span>
+                    <select class="Slt13" init-value="_%DummyStatus%_" disabled>
+                        <option value="">−</option>
+                        <option value="10">移動</option>
+                        <option value="20">返却</option>
+                        <option value="30">廃棄</option>
+                    </select>
+                    <input style="display:none" name="Status" value="_%Status%_">
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="regist-label">
+                    <span class="regist-label__required-mark">◎</span>
+                    <span class="regist-label__text">保管工場</span>
+                    <input class="TxtStyle05L" name="SourceFactory" value="_%SourceFactory%_">
+                    <input class="disTxt46L" name="SourceFactoryName" value="_%SourceFactoryName%_" readonly>
+                    <img class="msw-button button" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw" invokeMSWName="msw-factory">
+                </span>
+            </div>
+            <div class="regist-line--remora">
+                <span class="regist-label">
+                    <span class="regist-label__required-mark">◎</span>
+                    <span class="regist-label__text">移動先工場</span>
+                    <input class="TxtStyle05L" name="DestinationFactory"  value="_%DestinationFactory%_">
+                    <input class="disTxt46L" name="DestinationFactoryName" value="_%DestinationFactoryName%_" readonly>
+                    <img class="msw-button button" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw" invokeMSWName="msw-factory">
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="regist-label">
+                    <span class="regist-label__required-mark"></span>
+                    <span class="regist-label__text">備考1</span>
+                    <textarea name="Remark1" rows="4">_%Remark1%_</textarea>
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="regist-label">
+                    <span class="regist-label__required-mark"></span>
+                    <span class="regist-label__text">備考2</span>
+                    <textarea name="Remark2" rows="4">_%Remark2%_</textarea>
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="regist-label">
+                    <span class="regist-label__required-mark"></span>
+                    <span class="regist-label__text">備考3</span>
+                    <textarea name="Remark3" rows="4">_%Remark3%_</textarea>
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="regist-label">
+                    <span class="regist-label__required-mark"></span>
+                    <span class="regist-label__text">備考4</span>
+                    <textarea name="Remark4" rows="4">_%Remark4%_</textarea>
+                </span>
+            </div>
+		</form>
+	</div>
+	<div class="msw-loadpoints">
+		<!-- MSW 工場マスタ検索 -->
+		<iframe class="msw-factory" src="/mold/cmn/msw/factory/mswfactory.html" frameborder="0">
+		</iframe>
+	</div>
+</div>

@@ -1,0 +1,29 @@
+ SELECT ms.lngstockitemcode, ms.lngstockitemcode || ' ' || ms.strstockitemname AS lngstockitemcodename FROM m_stockitem ms WHERE ms.lngstocksubjectcode = 402 AND ms.bytdisplayflag = TRUE AND ms.bytinvalidflag = FALSE ORDER BY ms.lngstockitemcode 
+ SELECT ms.lngstockitemcode, ms.lngstockitemcode || ' ' || ms.strstockitemname AS lngstockitemcodename FROM m_stockitem ms WHERE ms.lngstocksubjectcode = 402 AND ms.bytdisplayflag = TRUE AND ms.bytinvalidflag = FALSE ORDER BY ms.lngstockitemcode 
+id	name1
+0	0
+1	1 MassProduct
+2	2 Set Sample
+3	3 Bulk Sample
+4	4 Set-Up Charge
+5	5 Inspection
+6	6 Rework
+7	7 Spare
+8	8 Freightt Cost
+9	9 Sample
+10	10 Shipment Sample
+11	11 Sales Sample
+12	12 Printing Matters
+13	13 Correction Charge
+14	14 I C
+15	15 Lab Test Fee
+16	16 PPFinalSample
+17	17 LocalCost(³¤³°Î¦Á÷±¿ÄÂ)
+92	92 Ink Jet Printing Cost
+93	93 Ink Jet Miscellaneous Cost
+94	94 Ink Jet Repair Cost
+95	95 Ink Jet Maintenance Cost
+96	96 Ink Jet Jig
+97	97 Ink Jet Ink
+98	98 Ink Jet Printer Parts
+99	99 ¡Ý

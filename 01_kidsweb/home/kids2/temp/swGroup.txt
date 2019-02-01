@@ -1,0 +1,12 @@
+ SELECT DISTINCT mg.strgroupdisplaycode,(mg.strgroupdisplaycode || ' ' || mg.strgroupdisplayname) AS strgroupdisplaycodename, mg.strgroupdisplayname FROM m_group mg, m_attributerelation mar WHERE mg.lngcompanycode = mar.lngcompanycode AND mar.lngattributecode = 1 AND mg.bytgroupdisplayflag = true   ORDER BY mg.strgroupdisplaycode 
+ SELECT DISTINCT mg.strgroupdisplaycode,(mg.strgroupdisplaycode || ' ' || mg.strgroupdisplayname) AS strgroupdisplaycodename, mg.strgroupdisplayname FROM m_group mg, m_attributerelation mar WHERE mg.lngcompanycode = mar.lngcompanycode AND mar.lngattributecode = 1 AND mg.bytgroupdisplayflag = true   ORDER BY mg.strgroupdisplaycode 
+id	name1	name2
+01	01 System	System
+03	03 経理	経理
+04	04 管理責任者	管理責任者
+31	31 ライフカプセル	ライフカプセル
+32	32 ライフキャンディ	ライフキャンディ
+41	41 トイコレクターズ	トイコレクターズ
+42	42 トイバンダイ他	トイバンダイ他
+50	50 新規企画	新規企画
+96	96 品質管理	品質管理

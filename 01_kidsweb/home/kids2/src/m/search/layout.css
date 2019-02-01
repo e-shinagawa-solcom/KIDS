@@ -1,0 +1,132 @@
+<!--
+
+
+#schSchButton {
+	position : absolute ;
+	left : 875px ;
+	top : 114px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+#schClrButton {
+	position : absolute ;
+	left : 790px ;
+	top : 114px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+/************************************* START INPUT A *************************************/
+/* START INPUT A SEGMENTS */
+#InputA { 
+	position : absolute ;
+	left : 34px ;
+	top : 111px ;
+	z-index : 0 ;
+	visibility : visible ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+/* END INPUT A SEGMENTS */
+
+
+/* START HEADER */
+#SegAHeader {
+	position : absolute ;
+	left : 0px ;
+	top : 0px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+/* END HEADER */
+
+
+/* START BODYS */
+#SegABodys {
+	left : 190px ;
+	top : 500px ;
+	width : 949px ;
+	height : 514px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #cdcdcd ;
+}
+/* END BODYS */
+
+
+/* START BOTTOM */
+#SegABottom {
+	position : absolute ;
+	left : 0px ;
+	top : 508px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: #ffffff ;
+}
+/* END BOTTOM */
+
+
+/* START SEGMENTS */
+#SegA01 {
+	position : absolute ;
+	left : 8px ;
+	top : 39px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+#SegAIFrm {
+	width : 931px ;
+	height : 471px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #799797 ;
+}
+/* END SEGMENTS */
+/************************************** END INPUT C **************************************/
+
+
+
+
+
+#MasterTitle
+{
+	position : absolute ;
+	top : 20px ;
+	left : 235px ;
+	border-width : 0px ;
+	border-style : none ;
+}
+
+
+
+
+#SelectMaster
+{
+	position : absolute ;
+	top : 60px ;
+	left : 235px ;
+	border-width : 0px ;
+	border-style : none ;
+}
+
+
+
+
+#SelectBt
+{
+	position : absolute ;
+	top : 375px ;
+	left : 427px ;
+	border-width : 0px ;
+	border-style : none ;
+}
+
+
+-->

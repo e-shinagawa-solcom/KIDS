@@ -1,0 +1,60 @@
+
+<config>
+<header1>
+<script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/query.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="/cmn/layout.css">
+<link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
+</header1>
+
+
+<header2>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/images.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutbase.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/po/cmn/images.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/po/initlayout.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/navi/po/images.js"></script>
+<script type="text/javascript" language="javascipt" src="/layout/_%lngLayoutCode%_/navi/cmn/images.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/navi/po/initlayout.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/navi/cmn/initlayoutnavi.js"></script>
+</header2>
+
+
+<header3>
+<script type="text/javascript" language="javascript" src="/po/exstr.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="/po/layout.css">
+<script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
+</header3>
+
+<bodyonload>
+initLayoutBase();initLayoutPO();initLayoutNavigation();GetlngLanguageCode( _%lngLanguageCode%_ );Loading();
+</bodyonload>
+</config>
+
+
+<p id="Preload">
+	<iframe id="PreloadFrm" name="PreloadWin" frameborder="0" src="/preload/index.html" onload="fncObjectResize( this , 0 , 0 );"></iframe>
+</p>
+
+
+
+<!-- ////////////////////////////////// START MAIN TITLE ////////////////////////////////// -->
+<span id="MainTitle"></span>
+<!-- /////////////////////////////////// END MAIN TITLE /////////////////////////////////// -->
+
+<span id="strSelectFunctions"></span>
+<span id="MenuBackBorder"></span>
+<span id="MenuBack"></span>
+
+<p id="TopNavi">
+<span id="RegistNaviBt1" onClick="javascript:location='_%strRegistURL%_';" style="visibility:_%registview%_"></span>
+<span id="SearchNaviBt1" onClick="javascript:location='_%strSearchURL%_';"></span>
+</p>
+
+
+<!-- /////////////////////////////////// START E TO J /////////////////////////////////// -->
+<span id="EtoJ"></span>
+<!-- //////////////////////////////////// END E TO J //////////////////////////////////// -->
+
+
+<span id="OverLayer"></span>

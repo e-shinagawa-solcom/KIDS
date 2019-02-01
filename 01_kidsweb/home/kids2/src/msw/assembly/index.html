@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html lang="ja">
+<head>
+<title>MASTER SERCH WINDOW - [ASSEMBLY FACTORY]</title>
+<meta http-equiv="content-type" content="text/html; charset=euc-jp">
+
+
+<!-- START COMMON LAYOUT FILES -->
+<script type="text/javascript" language="javascript" src="/layout/type01/msw/cmn/images.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/type01/msw/cmn/initlayoutbase.js"></script>
+<!-- END COMMON LAYOUT FILES -->
+
+
+<!-- START COMMON FILES -->
+<link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
+<link rel="stylesheet" type="text/css" media="screen" href="/msw/cmn/styles.css">
+<script type="text/javascript" language="javascript" src="/msw/cmn/functions.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/masterlib.js"></script>
+<!-- END COMMON FILES -->
+
+
+
+<!-- START EXCLUSIVE USE FILES -->
+<script type="text/javascript" language="javascript" src="exstr.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/type01/msw/cmn/initlayoutquery.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="layout.css">
+<!-- END EXCLUSIVE USE FILES -->
+
+
+
+</head>
+<body id="BaseBack" onContextmenu="return false;" onload="initLayoutBase();initLayoutDragbar();initLayoutQuery();" onclick="parent.Zchange( parent.MiFrame01_3 );">
+
+
+<!-- データバインド用オブジェクト -->
+<OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting" WIDTH="0" HEIGHT="0"></OBJECT>
+<Script for="objDataSourceSetting" event="ondatasetcomplete">
+	subLoadMasterSetting(this.recordset,0);
+	document.all.lngSearchResultCount.value=this.recordset.recordcount;
+	document.all.lngCounterParentHidden.value = this.recordset.recordcount;
+	if( this.recordset.recordcount > 0 ) document.all.objFactoryName.focus();
+</Script>
+
+
+<form name="" action="" method="post">
+
+
+
+<!-- ////////// START SEARCH ////////// -->
+<p id="InputA">
+
+
+<span id="SegABodys"></span>
+<span id="SegABottom"></span>
+
+<span id="Vendor03Drag"></span>
+<span id="MswCloseBt"></span>
+
+<span id="SearchHeader01"></span>
+
+<span id="SegA01_1">工場コード</span>
+<span id="SegA01_2">工場名称</span>
+
+
+<span id="VarsA01_1">
+	<input class="TxtMSW05L" type="text" name="strFactoryCode" size="10" maxlength="10" onfocus="setIME(this.name);chColorOn(this);fncInvalidKey();" onblur="chColorOff(this);fncEffectiveKey();" tabindex="1">
+</span>
+<span id="VarsA01_2">
+	<input class="TxtMSW06L" type="text" name="strFactoryName" size="25" maxlength="25" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="2">
+</span>
+
+<span id="SearchButton01" onclick="subLoadMasterOption( 'swFactory', strFactoryCode , objFactoryName , Array(strFactoryCode.value, strFactoryName.value), objDataSourceSetting, 0 );return false;"></span>
+
+<!-- /////////// END SEARCH /////////// -->
+
+
+
+<!-- ////////// START RESULT ////////// -->
+<span id="SegBBodys"></span>
+<span id="SegBBottom"></span>
+
+<span id="ResultHeader01"></span>
+
+<span id="VarsB01">
+	<select class="SlctMSW01" size="10" name="objFactoryName" onchange="fncViewMasterDataParent( this.value , strFactoryCode , strFactoryName );return false;" ondblclick="fncSetMasterDataParent( 'assembly' , this.value );return false;" disabled tabindex="4">
+	</select>
+</span>
+
+
+
+
+
+</p>
+<!-- /////////// END RESULT /////////// -->
+
+
+<span id="ApplyButton" onclick="fncSetMasterData( 'assembly' , objFactoryName , strFactoryCode , strFactoryName );return false;" onfocus="fncApplyBtCharModeOn( document.all.AppBt );" onblur="fncApplyBtCharModeOff( document.all.AppBt );fncSubmasterTabindex( 'assembly' , parent.MiFrame01_3 , document.all.strFactoryCode );return false;" tabindex="5"></span>
+<span id="ClearButton" onclick="fncClearValue( objFactoryName , strFactoryCode , strFactoryName );return false;"></span>
+
+<span id="Counter"></span>
+<span id="SearchResultCount"><input class="TxtCounter" type="text" name="lngSearchResultCount" value="" disabled></span>
+
+
+
+<!-- 適用データ格納 -->
+<input type="hidden" name="lngCodeParentHidden" value="">
+<input type="hidden" name="strNameParentHidden" value="">
+
+<!-- カウンター値格納 -->
+<input type="hidden" name="lngCounterParentHidden" value="">
+
+<!-- サブウィンドウタイプ識別 -->
+<input type="hidden" name="strSubMasterWindowType" value="assembly">
+</form>
+</body>
+</html>

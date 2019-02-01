@@ -1,0 +1,4 @@
+SELECT lngcompanycode,strdistinctcode FROM m_company WHERE strcompanydisplaycode = '0361' 
+SELECT lngcompanycode,strdistinctcode FROM m_company WHERE strcompanydisplaycode = '0361' 
+id	name1
+211	

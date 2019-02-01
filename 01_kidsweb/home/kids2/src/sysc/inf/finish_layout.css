@@ -1,0 +1,139 @@
+<!--
+
+
+#Backs
+{
+	background : #d6d0b1 ;
+}
+
+
+
+#CompleteSet
+{
+	position : absolute ;
+	left : 310px ;
+	top : 200px ;
+	border-width: 0px ;
+	border-style: none ;
+	z-index : 3 ;
+	background : transparent ;
+
+}
+
+#FinishRegist
+{
+	font-family : Arial , £Í£Ó £Ð¥´¥·¥Ã¥¯, Osaka ;
+	font-weight : bold ;
+	position : absolute ;
+	left : 0px ;
+	top : 0px ;
+	width : 220px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	background : #f1f1f1 ; /* e8f0f1 */
+	border-color : #798787 #d6d0b1 #798787 #798787 ;
+	padding : 8px 0px 0px 8px ;
+	text-align : left ;
+}
+
+#BackSpace
+{
+	font-weight : bold ;
+	position : absolute ;
+	left : 215px ;
+	top : 0px ;
+	width : 100px ;
+	height : 27px ;
+	border-width: 1px ;
+	border-style: solid ;
+	background : d6d0b1 ; /* e8f0f1 */
+	border-color : #798787 #798787 #798787 #798787 ;
+	padding : 8px 0px 0px 8px ;
+	text-align : left ;
+}
+
+#BackBt
+{
+	position : absolute ;
+	left : 229px ;
+	top : 3px ;
+	border-width: 0px ;
+	border-style: none ;
+	background : transparent ;
+}
+
+
+
+
+
+#MessageSet
+{
+	position   : absolute ;
+	left       : 53px ;
+	top        : 280px ;
+	z-index    : 3 ;
+	background : transparent ;
+}
+
+
+
+#Column0
+{
+	position     : absolute ;
+	font-weight  : bold ;
+	left         : 0px ;
+	top          : 0px ;
+	width        : 150px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #798787 #e8f0f1 #798787 #798787 ;
+	background   : #e8f0f1 ;
+	padding      : 8px 0px 0px 8px ;
+}
+
+#Vars0
+{
+	position     : absolute ;
+	left         : 149px ;
+	top          : 0px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #798787 #798787 #798787 #e8f0f1 ;
+	background   : #e8f0f1 ;
+	padding      : 3px 0px 0px 8px ;
+}
+
+
+#Column1
+{
+	position     : absolute ;
+	font-weight  : bold ;
+	left         : 0px ;
+	top          : 30px ;
+	width        : 150px ;
+	height       : 56px ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #798787 #e8f0f1 #798787 #798787 ;
+	background   : #e8f0f1 ;
+	padding      : 23px 0px 0px 8px ;
+}
+
+#Vars1
+{
+	position     : absolute ;
+	left         : 149px ;
+	top          : 30px ;
+	height       : 27px ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #798787 #798787 #798787 #e8f0f1 ;
+	background   : #e8f0f1 ;
+	padding      : 3px 0px 3px 8px ;
+}
+
+
+-->

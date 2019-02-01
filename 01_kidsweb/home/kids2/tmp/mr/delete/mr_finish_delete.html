@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <!-- 互換表示OFFを強制させる -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="euc-jp">
+
+    <title>K.I.D.S.</title>
+    <!-- jQuery -->
+    <script src="/cmn/jquery/jquery-3.1.0.js"></script>
+    <script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
+
+    <!-- 完了画面共通  CSS -->
+    <link rel="stylesheet" href="/mold/cmn/finish/css/finish.css">
+
+    <!-- スタイル初期化 & 各種コントロールスタイル -->
+    <link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
+
+    <!-- ボタン画像の共通の振る舞い CSS -->
+    <link rel="stylesheet" href="/mold/cmn/button/css/button-behaivior.css">
+
+    <!-- 閉じるボタンの挙動 -->
+    <script src="./js/form-action.js" defer></script>
+</head>
+<body class="finish-background">
+    <div class="centering">
+        <div class="finish-box">
+            <span class="finish-box__message">削除完了<span>
+        </div>
+        <div class="finish-summary-box">
+            <table>
+                <thead>
+                    <th>金型帳票ID</th>
+                </thead>
+                <tbody>
+                    <td>_%MoldReportId%_</td>
+                </tbody>
+            </table>
+        </div>
+        <img class="close-action button" src="/img/type01/cmn/querybt/close_blown_off_ja_bt.gif" alt="close">
+    </div>
+</body>
+</html>

@@ -1,0 +1,290 @@
+<config>
+<header1>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/images.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutbase.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutcommon.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayouterror.js"></script>
+</header1>
+
+
+<header2>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/uc/cmn/images.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/uc/regist/initlayout.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutquery.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutdate.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutpunit.js"></script>
+</header2>
+
+
+<header3>
+<link rel="stylesheet" type="text/css" media="screen" href="_%strCssName%_">
+<link rel="stylesheet" type="text/css" media="screen" href="_%strErrorCssName%_">
+<script type="text/javascript" language="javascript" src="exstr.js"></script>
+<script type="text/javascript" language="javascript" src="functions.js"></script>
+<script type="text/javascript" language="javascript" src="/uc/cmn/functions.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
+</header3>
+
+
+<bodyonload>
+initLayoutBase();initLayoutUC();initLayoutQuery();initLayoutPunit();initLayoutError1( ErrInputA );GetlngLanguageCode( _%lngLanguageCode%_ );Loading();
+</bodyonload>
+</config>
+
+
+<bgsound id="BeepSound" src="/error/dummy.aif" loop="1" balance="0" volume="-100">
+
+<form name="PPP1" action="_%filename%_" method="POST" enctype="multipart/form-data">
+<input type="hidden" name="strSessionID" value="_%strSessionID%_">
+<input type="hidden" name="lngFunctionCode" value="_%lngFunctionCode%_">
+
+<p id="Preload">
+	<iframe id="PreloadFrm" name="PreloadWin" frameborder="0" src="/preload/index.html" onload="fncObjectResize( this , 0 , 0 );"></iframe>
+</p>
+
+
+
+
+
+
+
+
+
+
+
+<!-- ////////////////////////////////// START MAIN TITLE ////////////////////////////////// -->
+<span id="MainTitle" style="visibility:_%strBaseVisibilityName%_;"></span>
+<!-- /////////////////////////////////// END MAIN TITLE /////////////////////////////////// -->
+
+
+
+
+
+
+
+
+
+<!-- /////////////////////////////////// START NAVIGAION /////////////////////////////////// -->
+<span id="NaviButton" style="visibility:_%strBaseVisibilityName%_;"></span>
+
+<p id="Navigations" onmouseout="NavigationOFF( Navigations , NaviButton );">
+<span id="Navi">
+	<iframe id="NaviIfrm" name="NAVIwin" frameborder="0" scrolling="no" src="/navi/index.php?strSessionID=_%strSessionID%_&strNaviCode=_%strNaviCode%_"></iframe>
+</span>
+</p>
+<!-- //////////////////////////////////// END NAVIGAION //////////////////////////////////// -->
+
+
+
+
+
+
+
+<!-- /////////////////////////////////// START INPUT A SEGMENTS /////////////////////////////////// -->
+<p id="InputA">
+
+
+<!-- BODYS -->
+<span id="SegABodys"></span>
+
+
+<!-- HEADER -->
+<span id="SegAHeader"></span>
+
+
+<!-- BOTTOM -->
+<span id="SegABottom"></span>
+
+
+<!-- QUERY BUTTON -->
+
+<span id="RegistBt" onClick="PPP1.submit();"></span>
+
+
+<span id="SegAClearBt" onClick="fncResetFrm( window.PPP1 );CGWin.document.forms[0].reset();"></span>
+
+
+
+<!-- SEGMENTS -->
+<span id="SegA01">ログイン許可</span>
+<span id="SegA02">ユーザーコード</span>
+<span id="SegA03">ユーザーID</span>
+<span id="SegA04">パスワード</span>
+<span id="SegA05">パスワード確認</span>
+<span id="SegA06">メール配信許可</span>
+<span id="SegA07">メールアドレス</span>
+<span id="SegA08">ユーザー表示</span>
+<span id="SegA09">表示ユーザーコード</span>
+<span id="SegA10">表示ユーザー名</span>
+<span id="SegA11">フルネーム</span>
+<span id="SegA12">会社</span>
+<span id="SegA13">グループ</span>
+<span id="SegA1213"></span>
+<span id="SegA14">権限グループ</span>
+<span id="SegA15">アクセスIPアドレス</span>
+<span id="SegA16">備考</span>
+
+
+
+<!-- ログイン許可 -->
+<span id="VarsA01">
+	<input class="CheckBox14" type="checkbox" name="bytInvalidFlag" value="f" tabindex="1" onClick="isChecked(this, 'チェックをOFFにするとこのユーザーはK.I.D.Sシステムにログインできません');" _%bytInvalidFlag%_ _%bytInvalidFlagDisabled%_>
+</span>
+
+<!-- ユーザーコード -->
+<span id="VarsA02">
+	<input class="disTxt10L" type="text" name="lngUserCode" value="_%lngUserCode%_" maxlength="10" contenteditable=false unselectable=off>
+</span>
+
+<!-- ユーザーID -->
+<span id="VarsA03">
+	<input style="ime-mode:disabled;" class="Txt20L" type="text" name="strUserID" value="_%strUserID%_" maxlength="20" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="2" _%strUserIDDisabled%_>
+</span>
+
+<!-- パスワード -->
+<span id="VarsA04">
+	<input style="ime-mode:disabled;" class="Txt20L" type="password" name="strPassword" value="" maxlength="20" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="3">
+</span>
+
+<!-- パスワード確認 -->
+<span id="VarsA05">
+	<input style="ime-mode:disabled;" class="Txt20L" type="password" name="strPasswordCheck" value="" maxlength="20" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="4">
+</span>
+
+<!-- メール配信許可 -->
+<span id="VarsA06">
+	<input class="CheckBox14" type="checkbox" name="bytMailTransmitFlag" value="t" tabindex="5" _%bytMailTransmitFlag%_ _%bytMailTransmitFlagDisabled%_>
+</span>
+
+<!-- メールアドレス -->
+<span id="VarsA07">
+	<input style="ime-mode:disabled;" class="Txt40L" type="text" name="strMailAddress" value="_%strMailAddress%_" maxlength="40" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="6">
+</span>
+
+<!-- 表示ユーザーフラグ -->
+<span id="VarsA08">
+	<input class="CheckBox14" type="checkbox" name="bytUserDisplayFlag" value="t" tabindex="7" onClick="isChecked(this, 'チェックをOFFにするとこのユーザーの情報でK.I.D.Sシステムにて新たなデータを登録することができません');" _%bytUserDisplayFlag%_ _%bytUserDisplayFlagDisabled%_>
+</span>
+
+<!-- 表示ユーザーコード -->
+<span id="VarsA09">
+	<input style="ime-mode:disabled;" class="Txt03L" type="text" name="strUserDisplayCode" value="_%strUserDisplayCode%_" maxlength="3" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="8">
+</span>
+
+
+<!-- 表示ユーザー名 -->
+<span id="VarsA10">
+	<input class="Txt20L" type="text" name="strUserDisplayName" value="_%strUserDisplayName%_" maxlength="20" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="9">
+</span>
+
+<!-- フルネーム -->
+<span id="VarsA11">
+	<input class="Txt40L" type="text" name="strUserFullName" value="_%strUserFullName%_" maxlength="40" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="10">
+</span>
+
+<!-- 会社 -->
+<input type="text" name="lngAttributeCode" value="_%lngAttributeCode%_" style="visibility:hidden">
+<input type="hidden" name="lngCompanyCodeOriginal" value="_%lngCompanyCode%_">
+<span id="VarsA12">
+	<input class="disTxt52L" type="hidden" name="lngCompanyCode" value="_%lngCompanyCode%_">
+	<input class="disTxt52L" type="text" name="strCompanyName" value="_%strCompanyDisplayCode%_ _%strCompanyName%_" maxlength="40" contenteditable=false unselectable=off>
+</span>
+
+<!-- グループ -->
+<input type="hidden" name="lngGroupCodeOriginal" value="_%lngGroupCode%_">
+<span id="VarsA13">
+	<input class="disTxt52L" type="hidden" name="lngGroupCode" value="_%lngGroupCode%_">
+	<input class="disTxt52L" type="text" name="strGroupName" value="_%strGroupDisplayCode%_ _%strGroupName%_" maxlength="40" contenteditable=false unselectable=off>
+</span>
+
+<!-- 権限グループ -->
+<span id="VarsA14">
+	<select class="Slt15" name="lngAuthorityGroupCode" tabindex="12" _%lngAuthorityGroupCodeDisabled%_>
+	_%lngAuthorityGroupCode%_
+	</select>
+</span>
+
+<!-- アクセスIPアドレス -->
+<span id="VarsA15">
+	<select class="Slt100" name="lngAccessIPAddressCode" tabindex="13" _%lngAccessIPAddressCodeDisabled%_>
+	_%lngAccessIPAddressCode%_
+	</select>
+</span>
+
+<!-- 備考 -->
+<span id="VarsA16">
+	<input class="Txt100L" type="text" name="strNote" value="_%strNote%_" maxlength="40" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="14">
+</span>
+
+
+
+<!-- UNIT BUTTON -->
+<span id="PunitBt" onclick="ShowCompanyGroup( CompanyGroup );fncSelectListSet(lngCompanyCode, lngGroupCode, CGWin.document.forms[0].slctCompany, CGWin.document.forms[0].slctGroup2, CGWin.document.forms[0].slctGroup1);fncChangeProperty(lngAttributeCode.value, document.forms[0]);"></span>
+
+
+
+<!-- ユーザー写真表示スペース -->
+<span id="PictSpace"></span>
+<span id="UserPict"><img src="_%strUserImageFileName%_" width="52" height="52" border="0"></span>
+<span id="DisplayPictUploadSegs">画像アップロード</span>
+<span id="DisplayPictUploadVars"><input type="file" class="Txt40L" name="binUserPic"></span>
+<span id="PixelImg"></span>
+
+</p>
+<!-- //////////////////////////////////// END INPUT A SEGMENTS //////////////////////////////////// -->
+
+
+
+
+
+
+
+
+<!-- /////////////////////////////////// START E TO J /////////////////////////////////// -->
+<span id="EtoJ" style="visibility:_%strBaseVisibilityName%_;"></span>
+<!-- //////////////////////////////////// END E TO J //////////////////////////////////// -->
+
+
+
+<!-- ///////// Company & Group Select Window ////////// -->
+<p id="CompanyGroup">
+	<iframe id="CompanyGroupFrm" name="CGWin" frameborder="0" scrolling="NO" src="/cg/index.php?lngFunctionCode=_%lngFunctionCode%_&lngCompanyCode=_%lngCompanyCode%_"></iframe>
+</p>
+
+
+
+
+
+
+
+
+
+
+
+<p id="ErrInputA">
+<span id="ErrSegA01" style="_%bytInvalidFlag_Error%_ width:16;" onmouseover="ShowComment( Comments , '_%bytInvalidFlag_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegA02" style="_%lngUserCode_Error%_ width:16;" onmouseover="ShowComment( Comments , '_%lngUserCode_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegA03" style="_%strUserID_Error%_ width:16;" onmouseover="ShowComment( Comments , '_%strUserID_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegA04" style="_%strPassword_Error%_ width:16;" onmouseover="ShowComment( Comments , '_%strPassword_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegA05" style="_%strPasswordCheck_Error%_ width:16;" onmouseover="ShowComment( Comments , '_%strPasswordCheck_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegA07" style="_%strMailAddress_Error%_ width:16;" onmouseover="ShowComment( Comments , '_%strMailAddress_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegA09" style="_%strUserDisplayCode_Error%_ width:16;" onmouseover="ShowComment( Comments , '_%strUserDisplayCode_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegA10" style="_%strUserDisplayName_Error%_ width:16;" onmouseover="ShowComment( Comments , '_%strUserDisplayName_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegA11" style="_%strUserFullName_Error%_ width:16;" onmouseover="ShowComment( Comments , '_%strUserFullName_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegA12" style="_%lngCompanyCode_Error%_ width:16;" onmouseover="ShowComment( Comments , '_%lngCompanyCode_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegA13" style="_%lngGroupCode_Error%_ width:16;" onmouseover="ShowComment( Comments , '_%lngGroupCode_Error_Message%_');" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegA16" style="_%strNote_Error%_ width:16;" onmouseover="ShowComment( Comments , '_%strNote_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+</p>
+<span id="Comments"></span>
+
+</form>
+
+
+<!-- ERROR MESSAGE -->
+<span id="ErrorMessageFrame">
+	<iframe id="ErrorMessage" name="errorWin" frameborder="0" scrolling="no" src="/error/error.html"></iframe>
+</span>
+
+
+
+<span id="OverLayer"></span>

@@ -1,0 +1,4 @@
+  SELECT dtmApplyEndDate, to_char ( date_trunc('month', dtmApplyendDate + interval '1 month' ), 'YYYY/MM/DD') FROM m_MonetaryRate WHERE lngMonetaryRateCode = 2 AND lngMonetaryUnitCode = 3 AND dtmApplyStartDate < now() AND dtmApplyEndDate > now() UNION SELECT now() as dtmApplyEndDate, to_char ( date_trunc('month', now() ), 'YYYY/MM/DD') order by dtmApplyEndDate desc limit 1
+  SELECT dtmApplyEndDate, to_char ( date_trunc('month', dtmApplyendDate + interval '1 month' ), 'YYYY/MM/DD') FROM m_MonetaryRate WHERE lngMonetaryRateCode = 2 AND lngMonetaryUnitCode = 3 AND dtmApplyStartDate < now() AND dtmApplyEndDate > now() UNION SELECT now() as dtmApplyEndDate, to_char ( date_trunc('month', now() ), 'YYYY/MM/DD') order by dtmApplyEndDate desc limit 1
+id	name1
+2019-01-07 09:55:04.794066+09	2019/01/01

@@ -1,0 +1,200 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html lang="ja">
+<head>
+<title>K.I.D.S.</title>
+<meta http-equiv="content-type" content="text/html; charset=euc-jp">
+
+
+<script type="text/javascript" language="javascript" src="/layout/type01/cmn/images.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/type01/uc/search/initlayoutsearch.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/type01/cmn/initlayoutcommon.js"></script>
+
+
+<script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/query.js"></script>
+<script type="text/vbscript" Language="vbscript" src="/cmn/vbsclass.js"></script>
+<script type="text/vbscript" Language="vbscript" src="/cmn/vbscript.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/lngcheck.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/masterlib.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="/cmn/layout.css">
+<link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
+
+
+
+<link rel="stylesheet" type="text/css" media="screen" href="/uc/search_ifrm/layout.css">
+<script type="text/javascript" language="javascript" src="/uc/search_ifrm/exstr.js"></script>
+<script type="text/javascript" language="javascript" src="/uc/search_ifrm/functions.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
+
+
+
+
+</head>
+<body id="Backs" oncontextmenu="return false;" onload="initLayoutSegs( Segs , Vars , '' , '' , '' , '' , CheckGoods3 , CheckGoods4 );initLayoutUCSearch();fncAutoFocus( document.all.bytInvalidFlag );GetIfrmlngLanguageCode();">
+
+
+<span id="UCSearchObject"></span>
+
+
+<!-- データバインド用オブジェクト -->
+<OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting" WIDTH="0" HEIGHT="0"></OBJECT>
+<Script for="objDataSourceSetting" event="ondatasetcomplete">subLoadMasterSetting(this.recordset,0);
+</script>
+
+
+
+<!-- oncontextmenu="return false;" -->
+<form action="javascript:void(0);" name="PS" method="POST">
+<input type="hidden" name="ActionScriptName" value="/uc/result/index.php">
+<input type="hidden" name="strSessionID" value="_%strSessionID%_">
+<input type="hidden" name="lngFunctionCode" value="_%lngFunctionCode%_">
+
+<p id="Segs">
+<span id="DetailSegs">詳細</span>
+<span id="LoginPermissionSegs">ログイン許可</span>
+<span id="UserCodeSegs">ユーザーコード</span>
+<span id="UserIDSegs">ユーザーID</span>
+<span id="EmailPermissionSegs">メール配信許可</span>
+<span id="EmailSegs">メールアドレス</span>
+<span id="DisplayUserSegs">ユーザー表示</span>
+<span id="DisplayUserCodeSegs">表示ユーザーコード</span>
+<span id="DisplayUserNameSegs">表示ユーザー名</span>
+<span id="UserFullNameSegs">フルネーム</span>
+<span id="CompanySegs">会社</span>
+<span id="GroupSegs">グループ</span>
+<span id="AuthorityGroupSegs">権限グループ</span>
+<span id="AccessIPAddressSegs">アクセスIPアドレス</span>
+<span id="RemarkSegs">備考</span>
+<span id="FixSegs">修正</span>
+</p>
+
+
+
+<p id="Vars">
+
+<span id="DetailVars"></span>
+
+<span id="LoginPermissionVars">
+	<input class="CheckBox14" type="checkbox" name="bytInvalidFlag" value="FALSE">
+</span>
+
+<span id="UserCodeVars">
+	<input style="ime-mode:disabled;" class="Txt10L" type="text" name="lngUserCode" value="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);">
+</span>
+
+<span id="UserIDVars">
+	<input style="ime-mode:disabled;" class="Txt20L" type="text" name="strUserID" value="" maxlength="20" onfocus="chColorOn(this);" onblur="chColorOff(this);">
+</span>
+
+<span id="EmailPermissionVars">
+	<input class="CheckBox14" type="checkbox" name="bytMailTransmitFlag" value="TRUE">
+</span>
+
+<span id="EmailVars">
+	<input style="ime-mode:disabled;" class="Txt52L" type="text" name="strMailAddress" value="" maxlength="40" onfocus="chColorOn(this);" onblur="chColorOff(this);">
+</span>
+
+<span id="DisplayUserVars">
+	<input class="CheckBox14" type="checkbox" name="bytUserDisplayFlag" value="TRUE">
+</span>
+
+<span id="DisplayUserCodeVars">
+	<input style="ime-mode:disabled;" class="Txt03L" type="text" name="strUserDisplayCode" value="" maxlength="3" onfocus="chColorOn(this);" onblur="chColorOff(this);">
+</span>
+
+<span id="DisplayUserNameVars">
+	<input class="Txt52L" type="text" name="strUserDisplayName" value="" maxlength="20" onfocus="chColorOn(this);" onblur="chColorOff(this);">
+</span>
+
+<span id="UserFullNameVars">
+	<input class="Txt52L" type="text" name="strUserFullName" value="" maxlength="40" onfocus="chColorOn(this);" onblur="chColorOff(this);">
+</span>
+
+<span id="CompanyVars">
+	<select class="Slt51" name="lngCompanyCode" onChange="subLoadMasterOption( 15, this, lngGroupCode, Array(this.value), objDataSourceSetting, 0 );">
+		<option value="0"></option>
+		_%lngCompanyCode%_
+	</select>
+</span>
+
+<span id="GroupVars">
+	<select class="Slt51" name="lngGroupCode">
+		<option value="0"></option>
+		_%lngGroupCode%_
+	</select>
+</span>
+
+<span id="AuthorityGroupVars">
+	<select class="Slt15" name="lngAuthorityGroupCode">
+		<option value=""></option>
+		_%lngAuthorityGroupCode%_
+	</select>
+</span>
+
+<span id="AccessIPAddressVars">
+	<select class="Slt51" name="lngAccessIPAddressCode" tabindex="" onblur="fncDefaultTabindex( document.all.bytInvalidFlag );">
+		<option value=""></option>
+		_%lngAccessIPAddressCode%_
+	</select>
+</span>
+
+<span id="RemarkVars"></span>
+
+<span id="FixVars"></span>
+
+</p>
+
+
+
+
+<p id="CheckGoods3">
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="detailConditions" disabled></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="bytInvalidFlagConditions" _%bytInvalidFlagConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngUserCodeConditions" _%lngUserCodeConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="strUserIDConditions" _%strUserIDConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="bytMailTransmitFlagConditions" _%bytMailTransmitFlagConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="strMailAddressConditions" _%strMailAddressConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="bytUserDisplayFlagConditions" _%bytUserDisplayFlagConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="strUserDisplayCodeConditions" _%strUserDisplayCodeConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="strUserDisplayNameConditions" _%strUserDisplayNameConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="strUserFullNameConditions" _%strUserFullNameConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngCompanyCodeConditions" _%lngCompanyCodeConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngGroupCodeConditions" _%lngGroupCodeConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngAuthorityGroupCodeConditions" _%lngAuthorityGroupCodeConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngAccessIPAddressCodeConditions" _%lngAccessIPAddressCodeConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="strNoteConditions" _%strNoteConditions%_ disabled></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="updateConditions" disabled></span>
+</p>
+
+<p id="CheckGoods4">
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="detailVisible" _%detailVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="bytInvalidFlagVisible" _%bytInvalidFlagVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngUserCodeVisible" _%lngUserCodeVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="strUserIDVisible" checked disabled></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="bytMailTransmitFlagVisible" _%bytMailTransmitFlagVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="strMailAddressVisible" _%strMailAddressVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="bytUserDisplayFlagVisible" _%bytUserDisplayFlagVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="strUserDisplayCodeVisible" _%strUserDisplayCodeVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="strUserDisplayNameVisible" checked disabled></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="strUserFullNameVisible" _%strUserFullNameVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngCompanyCodeVisible" _%lngCompanyCodeVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngGroupCodeVisible" _%lngGroupCodeVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngAuthorityGroupCodeVisible" _%lngAuthorityGroupCodeVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngAccessIPAddressCodeVisible" _%lngAccessIPAddressCodeVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="strNoteVisible" _%strNoteVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="updateVisible" _%updateVisible%_></span>
+</p>
+
+<span id="ViewSearch1"></span>
+
+<span id="CheckAll1" onclick="fncCheckAll1();"></span>
+<span id="CheckAll2" onclick="fncCheckAll2();"></span>
+
+
+<span id="SegA0405"></span>
+
+
+<span id="DummySpace"></span>
+</form>
+</body>
+</html>

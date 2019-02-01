@@ -1,0 +1,438 @@
+<!--
+
+
+/*-------------------------------------------------
+ Body
+-------------------------------------------------*/
+#StaffBack
+{
+	background : #72828b ; /* d6d0b1 */
+}
+
+
+
+
+
+/*-------------------------------------------------
+ ¥í¥´
+-------------------------------------------------*/
+#Logo
+{
+	position   : absolute ;
+	top        : 10px ;
+	left       : 10px ;
+	background : transparent ;
+}
+
+#pictLogo
+{
+	position     : absolute ;
+	top          : 0px ;
+	left         : 0px ;
+	background   : transparent ;
+}
+
+
+
+
+
+/*-------------------------------------------------
+ ÀÆÆ£
+-------------------------------------------------*/
+#Saito
+{
+	position   : absolute ;
+	top        : 80px ;
+	left       : 10px ;
+	background : transparent ;
+}
+
+
+#pictSaito
+{
+	position     : absolute ;
+	top          : 0px ;
+	left         : 0px ;
+	width        : 65px ;
+	height       : 60px ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #cdcdcd ;
+	background   : transparent ;
+}
+
+
+#txtNameSaito
+{
+	position     : absolute ;
+	top          : 0px ;
+	left         : 64px ;
+	width        : 300px ;
+	height       : 20px ;
+	font-family  : Arial ;
+	font-size    : 12px ;
+	font-weight  : bold ;
+	color        : #ffffff ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #cdcdcd  ;
+	padding      : 5px 0px 0px 8px ;
+	background   : #867af5 ;
+}
+
+
+#txtDescriptionSaito
+{
+	position     : absolute ;
+	top          : 21px ;
+	left         : 64px ;
+	width        : 300px ;
+	height       : 39px ;
+	font-family  : Arial , £Í£Ó¡¡£Ð¥´¥·¥Ã¥¯ ;
+	font-size    : 11px ;
+	font-weight  : normal ;
+	color        : #ffffff ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #cdcdcd  ;
+	padding      : 3px 0px 0px 8px ;
+	background   : transparent ;
+}
+
+
+
+
+
+/*-------------------------------------------------
+ ÎÃÉ÷
+-------------------------------------------------*/
+#Suzukaze
+{
+	position   : absolute ;
+	top        : 150px ;
+	left       : 10px ;
+	background : transparent ;
+}
+
+
+#pictSuzukaze
+{
+	position     : absolute ;
+	top          : 0px ;
+	left         : 0px ;
+	width        : 65px ;
+	height       : 60px ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #cdcdcd ;
+	background   : transparent ;
+}
+
+
+#txtNameSuzukaze
+{
+	position     : absolute ;
+	top          : 0px ;
+	left         : 64px ;
+	width        : 300px ;
+	height       : 20px ;
+	font-family  : Arial ;
+	font-size    : 12px ;
+	font-weight  : bold ;
+	color        : #ffffff ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #cdcdcd  ;
+	padding      : 5px 0px 0px 8px ;
+	background   : #7db95c ;
+}
+
+
+#txtDescriptionSuzukaze
+{
+	position     : absolute ;
+	top          : 21px ;
+	left         : 64px ;
+	width        : 300px ;
+	height       : 39px ;
+	font-family  : Arial , £Í£Ó¡¡£Ð¥´¥·¥Ã¥¯ ;
+	font-size    : 11px ;
+	font-weight  : normal ;
+	color        : #ffffff ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #cdcdcd  ;
+	padding      : 3px 0px 0px 8px ;
+	background   : transparent ;
+}
+
+
+
+
+
+/*-------------------------------------------------
+ ÅÏÊÕ
+-------------------------------------------------*/
+#Watanabe
+{
+	position   : absolute ;
+	top        : 220px ;
+	left       : 10px ;
+	background : transparent ;
+}
+
+
+#pictWatanabe
+{
+	position     : absolute ;
+	top          : 0px ;
+	left         : 0px ;
+	width        : 65px ;
+	height       : 60px ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #cdcdcd ;
+	background   : transparent ;
+}
+
+
+#txtNameWatanabe
+{
+	position     : absolute ;
+	top          : 0px ;
+	left         : 64px ;
+	width        : 300px ;
+	height       : 20px ;
+	font-family  : Arial ;
+	font-size    : 12px ;
+	font-weight  : bold ;
+	color        : #ffffff ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #cdcdcd  ;
+	padding      : 5px 0px 0px 8px ;
+	background   : #edc563 ;
+}
+
+
+#txtDescriptionWatanabe
+{
+	position     : absolute ;
+	top          : 21px ;
+	left         : 64px ;
+	width        : 300px ;
+	height       : 39px ;
+	font-family  : Arial , £Í£Ó¡¡£Ð¥´¥·¥Ã¥¯ ;
+	font-size    : 11px ;
+	font-weight  : normal ;
+	color        : #ffffff ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #cdcdcd  ;
+	padding      : 3px 0px 0px 8px ;
+	background   : transparent ;
+}
+
+
+
+
+
+/*-------------------------------------------------
+ ÀéÍÕ
+-------------------------------------------------*/
+#Chiba
+{
+	position   : absolute ;
+	top        : 290px ;
+	left       : 10px ;
+	background : transparent ;
+}
+
+
+#pictChiba
+{
+	position     : absolute ;
+	top          : 0px ;
+	left         : 0px ;
+	width        : 65px ;
+	height       : 60px ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #cdcdcd ;
+	background   : transparent ;
+}
+
+
+#txtNameChiba
+{
+	position     : absolute ;
+	top          : 0px ;
+	left         : 64px ;
+	width        : 300px ;
+	height       : 20px ;
+	font-family  : Arial ;
+	font-size    : 12px ;
+	font-weight  : bold ;
+	color        : #ffffff ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #cdcdcd  ;
+	padding      : 5px 0px 0px 8px ;
+	background   : #a27048 ;
+}
+
+
+#txtDescriptionChiba
+{
+	position     : absolute ;
+	top          : 21px ;
+	left         : 64px ;
+	width        : 300px ;
+	height       : 39px ;
+	font-family  : Arial , £Í£Ó¡¡£Ð¥´¥·¥Ã¥¯ ;
+	font-size    : 11px ;
+	font-weight  : normal ;
+	color        : #ffffff ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #cdcdcd  ;
+	padding      : 3px 0px 0px 8px ;
+	background   : transparent ;
+}
+
+
+
+
+
+/*-------------------------------------------------
+ ¼êÄÍ
+-------------------------------------------------*/
+#Tetsuka
+{
+	position   : absolute ;
+	top        : 360px ;
+	left       : 10px ;
+	background : transparent ;
+}
+
+
+#pictTetsuka
+{
+	position     : absolute ;
+	top          : 0px ;
+	left         : 0px ;
+	width        : 65px ;
+	height       : 60px ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #cdcdcd ;
+	background   : transparent ;
+}
+
+
+#txtNameTetsuka
+{
+	position     : absolute ;
+	top          : 0px ;
+	left         : 64px ;
+	width        : 300px ;
+	height       : 20px ;
+	font-family  : Arial ;
+	font-size    : 12px ;
+	font-weight  : bold ;
+	color        : #ffffff ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #cdcdcd  ;
+	padding      : 5px 0px 0px 8px ;
+	background   : #9d73d7 ;
+}
+
+
+#txtDescriptionTetsuka
+{
+	position     : absolute ;
+	top          : 21px ;
+	left         : 64px ;
+	width        : 300px ;
+	height       : 39px ;
+	font-family  : Arial , £Í£Ó¡¡£Ð¥´¥·¥Ã¥¯ ;
+	font-size    : 11px ;
+	font-weight  : normal ;
+	color        : #ffffff ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #cdcdcd  ;
+	padding      : 3px 0px 0px 8px ;
+	background   : transparent ;
+}
+
+
+
+
+
+/*-------------------------------------------------
+ ÉÙÅÄ
+-------------------------------------------------*/
+#Tomita
+{
+	position   : absolute ;
+	top        : 430px ;
+	left       : 10px ;
+	background : transparent ;
+}
+
+
+#pictTomita
+{
+	position     : absolute ;
+	top          : 0px ;
+	left         : 0px ;
+	width        : 65px ;
+	height       : 60px ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #cdcdcd ;
+	background   : transparent ;
+}
+
+
+#txtNameTomita
+{
+	position     : absolute ;
+	top          : 0px ;
+	left         : 64px ;
+	width        : 300px ;
+	height       : 20px ;
+	font-family  : Arial ;
+	font-size    : 12px ;
+	font-weight  : bold ;
+	color        : #ffffff ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #cdcdcd  ;
+	padding      : 5px 0px 0px 8px ;
+	background   : #fc6565 ; /* 666666 */
+}
+
+
+#txtDescriptionTomita
+{
+	position     : absolute ;
+	top          : 21px ;
+	left         : 64px ;
+	width        : 300px ;
+	height       : 39px ;
+	font-family  : Arial , £Í£Ó¡¡£Ð¥´¥·¥Ã¥¯ ;
+	font-size    : 11px ;
+	font-weight  : normal ;
+	color        : #ffffff ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #cdcdcd  ;
+	padding      : 3px 0px 0px 8px ;
+	background   : transparent ;
+}
+
+
+-->

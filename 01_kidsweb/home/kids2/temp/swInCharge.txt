@@ -1,0 +1,10 @@
+ SELECT DISTINCT mu.struserdisplaycode,(mu.struserdisplaycode || ' ' || mu.struserdisplayname) AS struserdisplaycodename, mu.struserdisplayname FROM m_user mu, m_company mc, m_attributerelation mal WHERE mc.lngcompanycode = mal.lngcompanycode  AND mal.lngattributecode = 2 AND mu.lngcompanycode = mc.lngcompanycode AND mc.bytcompanydisplayflag = true AND mu.bytuserdisplayflag = true AND mc.strcompanydisplaycode LIKE '%0311%'   ORDER BY mu.struserdisplaycode 
+ SELECT DISTINCT mu.struserdisplaycode,(mu.struserdisplaycode || ' ' || mu.struserdisplayname) AS struserdisplaycodename, mu.struserdisplayname FROM m_user mu, m_company mc, m_attributerelation mal WHERE mc.lngcompanycode = mal.lngcompanycode  AND mal.lngattributecode = 2 AND mu.lngcompanycode = mc.lngcompanycode AND mc.bytcompanydisplayflag = true AND mu.bytuserdisplayflag = true AND mc.strcompanydisplaycode LIKE '%0311%'   ORDER BY mu.struserdisplaycode 
+id	name1	name2
+T01	T01 ¾¾Ìî	¾¾Ìî
+T03	T03 Àô	Àô
+T04	T04 ËÙÂ¼	ËÙÂ¼
+T08	T08 ¶â°æ	¶â°æ
+T11	T11 ¸¶ÅÄ	¸¶ÅÄ
+T12	T12 ²ÏÆâ	²ÏÆâ
+T14	T14 Â¼»³	Â¼»³

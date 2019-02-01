@@ -1,0 +1,8 @@
+.msw-loadpoints iframe{
+    display: none;
+}
+
+/* 保管工場のMボタンを削除しつつレイアウトを維持 */
+input[name="SourceFactoryName"] + img{
+    visibility: hidden;
+}

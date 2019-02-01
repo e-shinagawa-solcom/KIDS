@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <!-- 互換表示OFFを強制させる -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--
+    <meta http-equiv="Content-Type" content="text/html; charset=euc-jp" />
+    php domパース用メタ要素 コメントアウトしていてもphpのdomElement->loadHTMLで認識される
+    -->
+    <meta charset="euc-jp">
+
+    <title>K.I.D.S.</title>
+    <!-- jQuery -->
+    <script src="/cmn/jquery/jquery-3.1.0.js"></script>
+    <script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
+
+    <!-- 完了画面共通  CSS -->
+    <link rel="stylesheet" href="/mold/cmn/finish/css/finish.css">
+
+    <!-- スタイル初期化 & 各種コントロールスタイル -->
+    <link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
+
+    <!-- ボタン画像の共通の振る舞い CSS -->
+    <link rel="stylesheet" href="/mold/cmn/button/css/button-behaivior.css">
+
+    <!-- 帳票画面表示 -->
+    <script src="/mr/finish/scripts/display-mold-report.js" defer></script>
+
+    <!-- 閉じるボタンの挙動 -->
+    <script src="/mr/finish/scripts/form-action.js" defer></script>
+</head>
+<body class="finish-background">
+    <div class="centering">
+        <div class="report-box__wrap">
+            <span class="report-box">
+                <span class="report-box__label">登録完了</span>
+                <span class="report-box__wrap-box-button">
+                    <img class="close-action button" src="/img/type01/cmn/querybt/close_blown_off_ja_bt.gif" alt="close">
+                </span>
+            </span>
+            <span class="report-box">
+                <span class="report-box__label">帳票プレビュー</span>
+                <span class="report-box__wrap-box-button">
+                    <img id="preview" class="button" src="/img/type01/cmn/querybt/blownpreview_off_bt.gif" alt="preview">
+                </span>
+            </span>
+        </div>
+        <div class="finish-summary-box">
+            <table>
+                <thead>
+                    <th>金型帳票ID</th>
+                    <th>帳票区分</th>
+                    <th>製品コード</th>
+                    <th>製品名称</th>
+                    <th>金型件数</th>
+                </thead>
+                <tbody>
+                    <td>_%MoldReportId%_</td>
+                    <td>_%ReportCategory%_</td>
+                    <td>_%ProductCode%_</td>
+                    <td>_%ProductName%_</td>
+                    <td>_%MoldCount%_</td>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <input class='finish-hidden id' value="_%MoldReportId%_">
+</body>
+</html>

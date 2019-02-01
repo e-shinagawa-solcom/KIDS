@@ -1,0 +1,78 @@
+<style>
+#list table ,#list td
+{
+	border:1px solid #666666;
+	border-spacing:1px;
+	border-collapse:collapse;
+	padding: 1px;
+	font-size:100%;
+ }
+td#listtop
+{
+	border-left-width:0px;
+	border-right-width:0px;
+}
+td#listhead
+{
+	text-align: center;
+	background-color: #CCFFFF;
+}
+td#listcol
+{
+	vertical-align: top;
+}
+td#listcol_top
+{
+	vertical-align: middle;
+}
+</style>
+
+<div>発注状態チェックリスト【カプセルチーム用】　<font color="#999999">灰色の発注番号：未申請（承認ルートに無い）</font>／<font color="#008000">緑の発注番号：申請取消</font>／<font color="#FF0000">赤の発注番号：否認（不許可）</font></div>
+
+<table width="100%">
+  <tr> 
+    <th align="left"><a href="/lo/inputform.php?template=_%templatename%_&lngGroupCode=_%lnggroupcode%_&lngUserCode=_%lngusercode%_&date_from=_%get_date_from%_&date_to=_%get_date_to%_&lngOrderStatusCode=_%lngorderstatuscode%_"><img src="/lo/images/back.gif" border="0"></a></th>
+    <th align="left">取得日時: _%querydate%_　　件数：_%PRODUCTCOUNT%_<br />部門：_%strgroupdisplayname%_　担当者：_%struserdisplayname%_　_%column_lngproductno_in_disable_html_start%_　閲覧範囲：_%date_from%_〜_%date_to%_　_%column_lngproductno_in_disable_html_end%_　発注状態：_%strorderstatusname%_　_%column_lngproductno_in_enable_html_start%_　製品番号：_%productno_in%__%column_lngproductno_in_enable_html_end%_</th>
+    <th align="right"><a href="/lo/inputform.php?template=_%templatename%_&lngGroupCode=_%lnggroupcode%_&lngUserCode=_%lngusercode%_&date_from=_%get_date_from%_&date_to=_%get_date_to%_&lngOrderStatusCode=_%lngorderstatuscode%_"><img src="/lo/images/back.gif" border="0"></a></th>
+  </tr>
+</table>
+
+
+<div id="list">
+<table width="80%">
+<tr height="3">
+	<td nowrap bgcolor="#8AED90" style="border-right-width:0px"></td>
+	<td nowrap bgcolor="#91E289" id="listtop"></td>
+	<td nowrap bgcolor="#95DA87" id="listtop"></td>
+	<td nowrap bgcolor="#9AD382" id="listtop"></td>
+	<td nowrap bgcolor="#9ECB7F" id="listtop"></td>
+	<td nowrap bgcolor="#A4C37B" id="listtop"></td>
+	<td nowrap bgcolor="#AABA76" id="listtop"></td>
+	<td nowrap bgcolor="#B0B072" id="listtop"></td>
+	<td nowrap bgcolor="#B5A76D" id="listtop"></td>
+	<td nowrap bgcolor="#D77052" id="listtop"></td>
+	<td nowrap bgcolor="#DD654D" id="listtop"></td>
+	<td nowrap bgcolor="#E45B48" id="listtop"></td>
+	<td nowrap bgcolor="#E95143" id="listtop"></td>
+	<td nowrap bgcolor="#EF493E" style="border-left-width:0px"></td>
+</tr>
+<tr>
+	<td nowrap id="listhead">《製品番号》製品名</td>
+	<td nowrap id="listhead">担当者</td>
+	<td nowrap id="listhead">納期</td>
+	<td nowrap id="listhead">原型</td>
+	<td nowrap id="listhead">シリコン</td>
+	<td nowrap id="listhead">キャスト</td>
+	<td nowrap id="listhead">分割</td>
+	<td nowrap id="listhead">彩色</td>
+	<td nowrap id="listhead">マスク</td>
+	<td nowrap id="listhead">金型</td>
+	<td nowrap id="listhead">ミニブック</td>
+	<td nowrap id="listhead">カートン版</td>
+	<td nowrap id="listhead">MassProduct</td>
+	<td nowrap id="listhead">Sample</td>
+	<td nowrap id="listhead">（その他）</td>
+</tr>
+_%PAGE%_
+</table>
+</div>
