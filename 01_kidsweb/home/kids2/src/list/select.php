@@ -60,17 +60,17 @@ $aryParts["strPurchaseOrderURL"] = "#";
 if ( fncCheckAuthority( DEF_FUNCTION_LO1, $objAuth ) )
 {
 	// 商品化企画書帳票出力可能
-	$aryParts["strGoodsPlanURL"] = "/list/search/p/search.php?strSessionID=" . $aryData["strSessionID"];
+	$aryParts["strGoodsPlanURL"] = '/list/index.php?strSessionID=' . $aryData["strSessionID"] . '&strListMode=p';
 }
 if ( fncCheckAuthority( DEF_FUNCTION_LO2, $objAuth ) )
 {
 	// 発注書（P.O）帳票出力可能
-	$aryParts["strPurchaseOrderURL"] = "/list/search/po/search.php?strSessionID=" . $aryData["strSessionID"];
+	$aryParts["strPurchaseOrderURL"] = "/list/index.php?strSessionID=" . $aryData["strSessionID"] . "&strListMode=po";
 }
 if ( fncCheckAuthority( DEF_FUNCTION_E0, $objAuth ) )
 {
 	// 見積原価計算帳票出力可能
-	$aryParts["strEstimateURL"] = "/list/search/estimate/search.php?strSessionID=" . $aryData["strSessionID"];
+	$aryParts["strEstimateURL"] =  "/list/index.php?strSessionID=" . $aryData["strSessionID"] . "&strListMode=es";
 }
 
 

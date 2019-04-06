@@ -50,4 +50,4 @@
 
 	$objDB->close();
 
-	echo fncGetReplacedHtmlWithBase("base_mold.html", "/mm/regist/mm_regist.tmpl", $aryData ,$objAuth);
+	echo fncGetReplacedHtmlWithBase("base_mold.html", "mm/regist/mm_regist.tmpl", $aryData ,$objAuth);

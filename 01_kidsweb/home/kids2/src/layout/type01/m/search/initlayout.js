@@ -62,7 +62,7 @@ function initLayoutM()
 	MainTitle.innerHTML = maintitleJ;
 
 	///// INPUT A BODYS COLOR /////
-	SegABodys.style.background = segbody;
+	//SegABodys.style.background = segbody;
 
 	///// INPUT A,B,C HEADER TITLE IMAGE /////
 	//SegAHeader.innerHTML = headerAJ;
@@ -72,15 +72,9 @@ function initLayoutM()
 
 	///// [SEARCH]SEARCH & CLEAR BUTTON /////
 
-	if( typeof(schSchButton) != 'undefined' )
-	{
-		schSchButton.innerHTML = schSchBtJ1;
-	}
-
-	if( typeof(schClrButton) != 'undefined' )
-	{
-		schClrButton.innerHTML = schClrBtJ1;
-	}
+	//schSchButton.innerHTML = schSchBtJ1;
+	
+	//schClrButton.innerHTML = schClrBtJ1;
 
 	return false;
 }

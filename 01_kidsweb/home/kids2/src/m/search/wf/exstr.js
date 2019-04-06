@@ -33,11 +33,7 @@ function ChgEtoJ( lngCount )
 
 		window.top.SegAHeader.innerHTML = headerAE;
 
-		SegA01.innerText = 'Order name';
-		SegA02.innerText = 'Group name';
-		SegA03.innerText = 'In charge name';
-
-		if( typeof(parent.schSchButton) != 'undefined' )
+		/*if( typeof(parent.schSchButton) != 'undefined' )
 		{
 			parent.schSchButton.innerHTML = parent.schSchBtE1;
 		}
@@ -45,7 +41,7 @@ function ChgEtoJ( lngCount )
 		if( typeof(parent.schClrButton) != 'undefined' )
 		{
 			parent.schClrButton.innerHTML = parent.schClrBtE1;
-		}
+		}*/
 
 	}
 
@@ -56,11 +52,7 @@ function ChgEtoJ( lngCount )
 
 		window.top.SegAHeader.innerHTML = headerAJ;
 
-		SegA01.innerText = '½ç½øÌ¾¾Î';
-		SegA02.innerText = '¥°¥ë¡¼¥×Ì¾¾Î';
-		SegA03.innerText = 'Ã´Åö¼Ô';
-
-		if( typeof(parent.schSchButton) != 'undefined' )
+		/*if( typeof(parent.schSchButton) != 'undefined' )
 		{
 			parent.schSchButton.innerHTML = parent.schSchBtJ1;
 		}
@@ -68,7 +60,7 @@ function ChgEtoJ( lngCount )
 		if( typeof(parent.schClrButton) != 'undefined' )
 		{
 			parent.schClrButton.innerHTML = parent.schClrBtJ1;
-		}
+		}*/
 
 	}
 

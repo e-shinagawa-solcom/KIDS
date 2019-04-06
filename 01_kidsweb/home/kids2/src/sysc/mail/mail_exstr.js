@@ -13,7 +13,7 @@ function ChgEtoJ( lngSelfCode )
 		// 登録ボタン書き出し
 		RegistBt.innerHTML = blownRegiBtE1;
 
-		Column0.innerText = 'Admin email address';
+		
 	}
 
 	// 日本語
@@ -22,7 +22,7 @@ function ChgEtoJ( lngSelfCode )
 		// 登録ボタン書き出し
 		RegistBt.innerHTML = blownRegiBtJ1;
 
-		Column0.innerText = '管理者メールアドレス';
+		
 	}
 
 	return false;

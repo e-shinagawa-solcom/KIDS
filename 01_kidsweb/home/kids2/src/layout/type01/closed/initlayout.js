@@ -81,7 +81,7 @@ var headerAE = '<img src="' + headertitleE + '" width="949" height="30" border="
 ///// CSS VALUE /////
 var fcolor = '#666666'; //¹àÌÜ¥Õ¥©¥ó¥È¥«¥é¡¼
 var segcolor = '#e8f0f1'; //¹àÌÜÇØ·Ê¿§
-var segbody = '#d6d0b1'; //INPUT A BODY ÇØ·Ê¿§
+//var segbody = '#d6d0b1'; //INPUT A BODY ÇØ·Ê¿§
 var brcolor01 = '#798787 #e8f0f1 #798787 #798787'; //¹àÌÜ±¦¶õ¤­BORDER
 var brcolor02 = '#798787 #798787 #798787 #e8f0f1'; //¹àÌÜº¸¶õ¤­BORDER
 var brcolor03 = '#798787 #e8f0f1 #798787 #e8f0f1'; //¹àÌÜº¸±¦¶õ¤­BORDER
@@ -94,12 +94,12 @@ var brcolor03 = '#798787 #e8f0f1 #798787 #e8f0f1'; //¹àÌÜº¸±¦¶õ¤­BORDER
 function initLayout()
 {
 	///// MAIN TITLE /////
-	//MainTitle.innerHTML = maintitleJ;
+	MainTitle.innerHTML = maintitleJ;
 
-	//SegAHeader.innerHTML = headerAJ;
+	SegAHeader.innerHTML = headerAJ;
 
 	///// INPUT A BODYS COLOR /////
-	SegABodys.style.background = segbody;
+	//SegABodys.style.background = segbody;
 
 	///// INPUT A,B,C BOTTOM IMAGE /////
 	SegABottom.innerHTML = bottom03;

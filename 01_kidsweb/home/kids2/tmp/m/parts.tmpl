@@ -15,7 +15,6 @@
 
 
 <header3>
-<script type="text/javascript" language="javascript" src="exstr.js"></script>
 <link rel="stylesheet" type="text/css" media="screen" href="layout.css">
 <script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
 </header3>
@@ -23,7 +22,7 @@
 
 
 <bodyonload>
-initLayoutBase();initLayoutM();initLayoutNavigation();GetlngLanguageCode( _%lngLanguageCode%_ );Loading();
+initLayoutBase();initLayoutM();initLayoutNavigation();Loading();
 </bodyonload>
 </config>
 
@@ -36,27 +35,21 @@ initLayoutBase();initLayoutM();initLayoutNavigation();GetlngLanguageCode( _%lngL
 <!-- ////////////////////////////////// START MAIN TITLE ////////////////////////////////// -->
 <span id="MainTitle"></span>
 <!-- /////////////////////////////////// END MAIN TITLE /////////////////////////////////// -->
-
-<span id="strSelectFunctions"></span>
-<span id="MenuBackBorder"></span>
-<span id="MenuBack"></span>
-
-
-<p id="TopNavi">
-<form action="list/index.php" method="GET" name="LIST">
-<input type="hidden" name="strSessionID" value="_%strSessionID%_">
-<span id="RegistNaviBt1" onclick="document.LIST.submit();"></span>
-</form>
-<form action="search/index.php" method="GET" name="SEARCH">
-<input type="hidden" name="strSessionID" value="_%strSessionID%_">
-<span id="SearchNaviBt1" onclick="document.SEARCH.submit();"></span>
-</form>
-</p>
-
-
-<!-- /////////////////////////////////// START E TO J /////////////////////////////////// -->
-<span id="EtoJ"></span>
-<!-- //////////////////////////////////// END E TO J //////////////////////////////////// -->
+<div class="main-area">
+	<span id="strSelectFunctions">µ¡Ç½ÁªÂò</span>
+	<span id="MenuBackBorder"></span>
+	<span id="MenuBack"></span>
+	<div id="TopNavi">
+		<form action="list/index.php" method="GET" name="LIST">
+		<input type="hidden" name="strSessionID" value="_%strSessionID%_">
+		<span id="RegistNaviBt1" onclick="document.LIST.submit();"></span>
+		</form>
+		<form action="search/index.php" method="GET" name="SEARCH">
+		<input type="hidden" name="strSessionID" value="_%strSessionID%_">
+		<span id="SearchNaviBt1" onclick="document.SEARCH.submit();"></span>
+		</form>
+	</div>
+</div>
 
 
 <span id="OverLayer"></span>

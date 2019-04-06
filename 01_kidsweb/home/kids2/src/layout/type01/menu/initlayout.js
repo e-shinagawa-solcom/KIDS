@@ -169,6 +169,11 @@ var mmNaviE1 = '<a href="#"><img onmouseover="fncMMButton( \'onE\' , this );" on
 var mrNaviJ1 = '<a href="#"><img onmouseover="fncMRButton( \'onJ\' , this );" onmouseout="fncMRButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + mrJ1 + '" width="151" height="25" border="0" alt="金型帳票管理" tabindex="11"></a>';
 var mrNaviE1 = '<a href="#"><img onmouseover="fncMRButton( \'onE\' , this );" onmouseout="fncMRButton( \'offE\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + mrE1 + '" width="151" height="25" border="0" alt="MOLD REPORT" tabindex="11"></a>';
 
+//---------------------------------------------------------
+//適用 :「LC管理」
+//---------------------------------------------------------
+var lcNaviJ1 = '<a href="#"><img onmouseover="fncLCButton( \'onJ\' , this );" onmouseout="fncLCButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + lcJ1 + '" width="151" height="25" border="0" alt="LC管理" tabindex="12"></a>';
+
 
 //---------------------------------------------------------
 // 適用 :「ユーザー管理」
@@ -209,14 +214,14 @@ function initLayoutSegs( obj1 , obj2 )
 {
 
 	var initXpos1 = 24;  //LEFT座標・初期値1
-	var initXpos2 = 24;  //LEFT座標・初期値2 185
+	var initXpos2 = 104;  //LEFT座標・初期値2 185
 
 	var moveXpos = 160;   //LEFT座標・移動値
 
 
 
-	var navi1Ypos = 330;  //TOP座標・固定値1
-	var navi2Ypos = 400;  //TOP座標・固定値2
+	var navi1Ypos = 318;  //TOP座標・固定値1
+	var navi2Ypos = 388;  //TOP座標・固定値2
 
 
 
@@ -350,6 +355,11 @@ function initLayoutNavi()
 	if (typeof(MRnavi)!='undefined')
 	{
 		MRnavi.innerHTML = mrNaviJ1;
+	}
+	
+	if (typeof(LCnavi)!='undefined')
+	{
+		LCnavi.innerHTML = lcNaviJ1;
 	}
 
 	return false;

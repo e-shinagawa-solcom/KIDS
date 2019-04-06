@@ -1,0 +1,203 @@
+
+/* テキストボックス プレースホルダ */
+input:-ms-input-placeholder {
+    color: #cccccc;
+    text-align: center;
+}
+
+/* 入力フォーム その他 */
+input.note
+{
+    width: 38em;
+}
+
+
+/* テキスト入力 共通 */
+input:focus, textarea:focus
+{
+    background-color: #c7d0cb;
+}
+
+/* テキスト入力 共通 readonlyの場合は背景色を変えない */
+input[readonly]:focus
+{
+    background-color: #ffffff;
+}
+
+/* 検索/表示 全切り替えボタン */
+img.toggle-search
+{
+    margin: 0px 17px 0px 17px;
+}
+
+img.toggle-display
+{
+    margin: 0px 17px 0px 8px;
+}
+
+.form-box
+{
+    position: absolute;
+    top: 31px;
+    left: 21px;
+
+    width: 927px;
+    height: 484px;
+
+    border-style: solid;
+    border-width: 1px;
+    border-color: #cdcdcd;
+    border-radius: 15px;
+
+    background-color: #d6d0b1;
+}
+
+/* 入力フォーム帳票用*/
+.form-box--list
+{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+
+    width : 931px ;
+	height : 467px ;
+
+    background-color: #d6d0b1;
+    padding: 3px 10px;
+}
+
+/* 入力フォーム ヘッダタイトル */
+.form-box__header__title
+{
+    margin: 8px 12px;
+
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 12px;
+}
+
+/* 入力フォーム コンテンツ */
+.form-box__contents
+{
+    margin: 40px 10px 20px;
+
+    height: auto;
+}
+
+/* 入力フォーム 詳細タブ */
+.regist-tab-detail
+{
+    display: none;
+}
+
+/* 入力フォーム 行 */
+.regist-line
+{
+    margin: 1px 3px 4px 0px;
+}
+
+/* 検索フォーム 行 */
+.search-line
+{
+    margin: 1px 3px 4px 0px;
+}
+
+/* 入力フォーム 行 negative-margin-top */
+.regist-line--remora
+{
+    margin: -6px 3px 4px 0px;
+}
+
+/* 入力フォーム ラベル */
+.regist-label
+{
+    display: inline-block;
+
+    box-sizing: border-box;
+    padding: 3px 3px 3px 10px;
+
+    border-style: solid;
+    border-width: 1px;
+    border-color: #798787;
+
+    background-color: #e8f0f1;
+}
+
+/* 検索フォーム チェックボックス input */
+.search-label--checkbox
+{
+    display: inline-block;
+
+    box-sizing: border-box;
+    padding: 3px 10px 3px 10px;
+
+    border-style: solid;
+    border-width: 1px;
+    border-color: #798787;
+
+    background-color: #e8f0f1;
+}
+
+/* 検索フォーム チェックボックス 位置調整 */
+.is-search
+{
+    width: 30px;
+    margin: 3px 0px 2px 0px;
+    background-color: #e8f0f1;
+    border-style: none;
+}
+
+/* ラベルの子要素を縦中央に揃える */
+.regist-label *,
+.search-label--checkbox *,
+.search-label--textonly *
+{
+    vertical-align: middle;
+}
+
+
+/* 入力フォーム 必須項目マーク */
+.regist-label__required-mark
+{
+    position: relative;
+    top: 1px;
+
+    width: 10px;
+
+    color: #7f7cff;
+    font-family: Arial;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+/* 入力フォーム ラベルテキスト */
+.regist-label__text
+{
+    display: inline-block;
+    width: 120px;
+    font-weight: bold;
+    background-color: #e8f0f1;
+}
+
+/* 入力フォーム ラベルテキストのみ */
+.regist-label--text-only
+{
+    display: inline-block;
+    width: 120px;
+    line-height: 18px;
+    font-weight: bold;
+    background-color: #e8f0f1;
+}
+
+/* 入力フォーム */
+.msw-button
+{
+    display: inline;
+    position: relative;;
+
+    width: 18px;
+    height: 18px;
+}
+

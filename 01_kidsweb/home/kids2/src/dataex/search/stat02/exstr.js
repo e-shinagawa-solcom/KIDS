@@ -34,32 +34,6 @@ function ChgEtoJ( lngCount )
 	// エクスポートボタンの書出し
 	ExportBt.innerHTML  = blownexportBt;
 
-
-	// 英語
-	if ( lngCount == 0 )
-	{
-
-		window.top.SegAHeader.innerHTML = headerAE;
-
-		Column0.innerText = 'Sales / Adding up day';
-		Column1.innerText = 'Group';
-		Column2.innerText = 'Sales Class';
-
-	}
-
-
-	// 日本語
-	else if ( lngCount == 1 )
-	{
-
-		window.top.SegAHeader.innerHTML = headerAJ;
-
-		Column0.innerText = '売上・計上日';
-		Column1.innerText = '部門';
-		Column2.innerText = '売上区分';
-
-	}
-
 	return false;
 
 }

@@ -39,32 +39,6 @@ function ChgEtoJ( lngCount )
 	// エクスポートボタンの書出し
 	ExportBt2.innerHTML  = blownexportBt;
 
-
-	// 英語
-	if ( lngCount == 0 )
-	{
-
-		window.top.SegAHeader.innerHTML = headerAE;
-
-		Column0.innerText = 'Sales Date';
-		Column1.innerText = 'Dept & Vendor';
-		Column2.innerText = 'Dept & Products';
-
-	}
-
-
-	// 日本語
-	else if ( lngCount == 1 )
-	{
-
-		window.top.SegAHeader.innerHTML = headerAJ;
-
-		Column0.innerText = '売上計上日';
-		Column1.innerText = '部門・顧客別';
-		Column2.innerText = '部門・製品別';
-
-	}
-
 	return false;
 
 }

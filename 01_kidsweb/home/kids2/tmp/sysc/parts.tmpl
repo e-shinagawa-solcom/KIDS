@@ -16,13 +16,12 @@
 
 
 <header3>
-<script type="text/javascript" language="javascript" src="/sysc/exstr.js"></script>
 <link rel="stylesheet" type="text/css" media="screen" href="/sysc/layout.css">
 <script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
 </header3>
 
 <bodyonload>
-initLayoutBase();initLayout();GetlngLanguageCode( _%lngLanguageCode%_ );Loading();
+initLayoutBase();initLayout();Loading();
 </bodyonload>
 </config>
 
@@ -36,22 +35,17 @@ initLayoutBase();initLayout();GetlngLanguageCode( _%lngLanguageCode%_ );Loading(
 <!-- ////////////////////////////////// START MAIN TITLE ////////////////////////////////// -->
 <span id="MainTitle"></span>
 <!-- /////////////////////////////////// END MAIN TITLE /////////////////////////////////// -->
-
-<span id="strSelectFunctions"></span>
-<span id="MenuBackBorder"></span>
-<!-- <span id="MenuBack"></span> -->
-
-<p id="TopNavi">
-<span id="MessageBt" onclick="location.href = 'inf/index.php?strSessionID=_%strSessionID%_';return false;" style="visibility:_%strInfVisibility%_;"></span>
-<span id="EmailBt" onclick="location.href = 'mail/index.php?strSessionID=_%strSessionID%_';return false;" style="visibility:_%strMailVisibility%_;"></span>
-<span id="SessionBt" onclick="location.href = 'session/index.php?strSessionID=_%strSessionID%_';return false;" style="visibility:_%strSessionVisibility%_;"></span>
-<span id="ServerBt" onclick="location.href = 'sev/index.php?strSessionID=_%strSessionID%_';return false;" style="visibility:_%strSevVisibility%_;"></span>
-</p>
-
-
-<!-- /////////////////////////////////// START E TO J /////////////////////////////////// -->
-<span id="EtoJ"></span>
-<!-- //////////////////////////////////// END E TO J //////////////////////////////////// -->
+<div class="main-area">
+	<span id="strSelectFunctions">µ¡Ç½ÁªÂò</span>
+	<span id="MenuBackBorder"></span>
+	<!-- <span id="MenuBack"></span> -->
+	<p id="TopNavi">
+		<span id="MessageBt" onclick="location.href = 'inf/index.php?strSessionID=_%strSessionID%_';return false;" style="visibility:_%strInfVisibility%_;"></span>
+		<span id="EmailBt" onclick="location.href = 'mail/index.php?strSessionID=_%strSessionID%_';return false;" style="visibility:_%strMailVisibility%_;"></span>
+		<span id="SessionBt" onclick="location.href = 'session/index.php?strSessionID=_%strSessionID%_';return false;" style="visibility:_%strSessionVisibility%_;"></span>
+		<span id="ServerBt" onclick="location.href = 'sev/index.php?strSessionID=_%strSessionID%_';return false;" style="visibility:_%strSevVisibility%_;"></span>
+	</p>
+</div>
 
 
 

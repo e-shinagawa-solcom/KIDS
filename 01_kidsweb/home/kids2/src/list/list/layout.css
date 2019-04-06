@@ -1,19 +1,31 @@
 <!--
+.main-area{
+	position : absolute ;
+	top : 95px ;
+}
+.navi-area {
+    position: absolute;
+    top: 1px;
+    left: 11px;
+    width: 186px;
+    height: 550px;
+    z-index : 4 ;
+    pointer-events: none;
+}
 
-
-#schSchButton {
+.clear {
 	position : absolute ;
 	left : 875px ;
-	top : 114px ;
+	top : 14px ;
 	border-width: 0px ;
 	border-style: none ;
 	background-color: transparent ;
 }
 
-#schClrButton {
+.search {
 	position : absolute ;
 	left : 790px ;
-	top : 114px ;
+	top : 14px ;
 	border-width: 0px ;
 	border-style: none ;
 	background-color: transparent ;
@@ -24,12 +36,18 @@
 #InputA { 
 	position : absolute ;
 	left : 34px ;
-	top : 111px ;
+	top : 0px ;
 	z-index : 0 ;
 	visibility : visible ;
 	border-width: 0px ;
 	border-style: none ;
-	background-color: transparent ;
+	height: 512px;
+	width: 949px;
+	background-color: #d6d0b1 ;
+	margin-top: 12px;
+	margin-bottom: 0px;
+	border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
 }
 /* END INPUT A SEGMENTS */
 
@@ -45,17 +63,6 @@
 }
 /* END HEADER */
 
-
-/* START BODYS */
-#SegABodys {
-	left : 190px ;
-	top : 500px ;
-	width : 949px ;
-	height : 514px ;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #cdcdcd ;
-}
 /* END BODYS */
 
 
@@ -84,7 +91,7 @@
 
 #SegAIFrm {
 	width : 931px ;
-	height : 471px ;
+	height : 467px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #799797 ;

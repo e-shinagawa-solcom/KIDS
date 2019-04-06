@@ -52,7 +52,7 @@ var schClrBtE1 = '<a href="#"><img onmouseover="schClrEOn(this)" onmouseout="sch
 ///// CSS VALUE /////
 var fcolor = '#666666'; //¹àÌÜ¥Õ¥©¥ó¥È¥«¥é¡¼
 var segcolor = '#e8f0f1'; //¹àÌÜÇØ·Ê¿§
-var segbody = '#d6d0b1'; //INPUT A BODY ÇØ·Ê¿§
+//var segbody = '#d6d0b1'; //INPUT A BODY ÇØ·Ê¿§
 var brcolor01 = '#798787 #e8f0f1 #798787 #798787'; //¹àÌÜ±¦¶õ¤­BORDER
 var brcolor02 = '#798787 #798787 #798787 #e8f0f1'; //¹àÌÜº¸¶õ¤­BORDER
 var brcolor03 = '#798787 #e8f0f1 #798787 #e8f0f1'; //¹àÌÜº¸±¦¶õ¤­BORDER
@@ -65,7 +65,7 @@ function initLayout()
 	MainTitle.innerHTML = maintitleJ;
 
 	///// INPUT A BODYS COLOR /////
-	SegABodys.style.background = segbody;
+	//SegABodys.style.background = segbody;
 
 	///// INPUT A,B,C BOTTOM IMAGE /////
 	SegABottom.innerHTML = bottom03;

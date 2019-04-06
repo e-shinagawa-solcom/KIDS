@@ -18,7 +18,8 @@
 
 
 
-
+///// FOCUS COLOR /////
+var focuscolor = '#c7d0cb';
 
 
 
@@ -3848,6 +3849,42 @@ function fncMRButton( strMode , obj )
 
 		case 'downE':
 			obj.src = mrE3;
+			break;
+
+		default:
+			break;
+	}
+}
+
+//---------------------------------------------------
+//適用：「L/C管理」ボタン
+//---------------------------------------------------
+function fncLCButton( strMode , obj )
+{
+	switch( strMode )
+	{
+		case 'offJ':
+			obj.src = lcJ1;
+			break;
+
+		case 'onJ':
+			obj.src = lcJ2;
+			break;
+
+		case 'offE':
+			obj.src = lcE1;
+			break;
+
+		case 'onE':
+			obj.src = lcE2;
+			break;
+
+		case 'downJ':
+			obj.src = lcJ3;
+			break;
+
+		case 'downE':
+			obj.src = lcE3;
 			break;
 
 		default:

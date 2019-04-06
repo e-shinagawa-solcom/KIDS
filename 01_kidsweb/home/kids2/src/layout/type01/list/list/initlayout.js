@@ -65,7 +65,7 @@ function initLayout()
 	MainTitle.innerHTML = maintitleJ;
 
 	///// INPUT A BODYS COLOR /////
-	SegABodys.style.background = segbody;
+	//SegABodys.style.background = segbody;
 
 	///// INPUT A,B,C BOTTOM IMAGE /////
 	SegABottom.innerHTML = bottom03;

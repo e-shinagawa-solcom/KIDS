@@ -1,0 +1,47 @@
+<!--
+#Backs
+{
+	background : #d6d0b1 ;
+}
+
+.form-box__contents
+{
+    margin: 20px 10px 20px;
+
+    height: auto;
+}
+
+.regist-line
+{
+	left : 35px ;
+	overflow: hidden;
+	margin-bottom: 3px;
+}
+
+.form-line{
+	display: inline-block;
+    box-sizing: border-box;
+    padding: 3px 3px 3px 10px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #798787;
+    background-color: #e8f0f1;
+}
+
+.Column {
+	display: inline-block;
+	vertical-align: middle;
+	font-weight : bold ;
+	width : 157px ;
+	line-height: 23px;
+}
+
+.VarText {
+	font-family : ‚l‚r ‚oƒSƒVƒbƒN, Osaka ;
+	font-style : normal ;
+	font-weight : normal ;
+	font-size : 12px;
+	vertical-align: middle;
+}
+
+-->

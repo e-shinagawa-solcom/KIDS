@@ -59,6 +59,8 @@
 // 設定読み込み
 include_once('conf.inc');
 
+require_once(SRC_ROOT.'/mold/lib/UtilSearchForm.class.php');
+
 // ライブラリ読み込み
 require (LIB_FILE);
 require (SRC_ROOT . "uc/cmn/lib_uc.php");
@@ -68,21 +70,29 @@ $objDB   = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open( "", "", "", "" );
 
-// データ取得
-if ( $_GET )
-{
-	$aryData = $_GET;
-}
-elseif ( $_POST )
-{
-	$aryData = $_POST;
+//////////////////////////////////////////////////////////////////////////
+// POST(一部GET)データ取得
+//////////////////////////////////////////////////////////////////////////
+// フォームデータから各カテゴリの振り分けを行う
+$options = UtilSearchForm::extractArrayByOption($_REQUEST);
+$isDisplay = UtilSearchForm::extractArrayByIsDisplay($_REQUEST);
+$isSearch = UtilSearchForm::extractArrayByIsSearch($_REQUEST);
+$searchValue = $_REQUEST;
+
+$isDisplay=array_keys($isDisplay);
+$isSearch=array_keys($isSearch);
+$aryData['ViewColumn']=$isDisplay;
+$aryData['SearchColumn']=$isSearch;
+
+foreach($searchValue as $key=> $item){
+	$aryData[$key]=$item;
 }
 
 // クッキーから言語コードを取得
-$aryData["lngLanguageCode"] = $_COOKIE["lngLanguageCode"];
+$aryData["lngLanguageCode"] = 1;
 
 // 検索表示項目取得
-if ( $lngArrayLength = count ( $aryData["ViewColumn"] ) )
+if ( is_array($aryData["ViewColumn"]) &&  $lngArrayLength = count ( $aryData["ViewColumn"] ) )
 {
 	$aryColumn = $aryData["ViewColumn"];
 	for ( $i = 0; $i < $lngArrayLength; $i++ )
@@ -94,7 +104,7 @@ if ( $lngArrayLength = count ( $aryData["ViewColumn"] ) )
 }
 
 // 検索条件項目取得
-if ( $lngArrayLength = count ( $aryData["SearchColumn"] ) )
+if ( is_array($aryData["SearchColumn"]) && $lngArrayLength = count ( $aryData["SearchColumn"] ) )
 {
 	$aryColumn = $aryData["SearchColumn"];
 	for ( $i = 0; $i < $lngArrayLength; $i++ )
@@ -345,7 +355,7 @@ if ( $aryData["updateVisible"] )
 
 
 // 同じ項目のソートは逆順にする処理
-list ( $column, $lngSort, $DESC ) = split ( "_", $aryData["strSort"] );
+list ( $column, $lngSort, $DESC ) = explode ( "_", $aryData["strSort"] );
 
 if ( $DESC == 'ASC' )
 {
@@ -369,7 +379,7 @@ for ( $i = 0; $i < $lngResultNum; $i++ )
 	// 詳細URL
 	if ( $aryData["detailVisible"] )
 	{
-		$partsData["detail"] = "<td bgcolor=\"#FFFFFF\" align=\"center\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $lngResultNum . "_',1 );\"><a class=\"cells\" href=\"javascript:fncShowDialogCommon('/uc/result/detail.php?strSessionID=$aryData[strSessionID]&lngUserCode=" . $objResult->lngusercode . "&lngFunctionCode=" . DEF_FUNCTION_UC4 . "&lngUserCodeCondition=1' , window.form1 , 'ResultIframeCommon' , 'YES' , " . $aryData["lngLanguageCode"] . " , 'detail' );\"><img onmouseover=\"DetailOn(this);\" onmouseout=\"DetailOff(this);\" src=\"/img/type01/wf/result/detail_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"DETAIL\"></a></td>";
+		$partsData["detail"] = "<td bgcolor=\"#FFFFFF\" align=\"center\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $lngResultNum . "_',1 );\"><a class=\"cells\" href=\"javascript:fncShowDialogCommon('/uc/result/detail.php?strSessionID=" .$aryData["strSessionID"] ."&lngUserCode=" . $objResult->lngusercode . "&lngFunctionCode=" . DEF_FUNCTION_UC4 . "&lngUserCodeCondition=1' , window.form1 , 'ResultIframeCommon' , 'YES' , " . $aryData["lngLanguageCode"] . " , 'detail' );\"><img onmouseover=\"DetailOn(this);\" onmouseout=\"DetailOff(this);\" src=\"/img/type01/wf/result/detail_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"DETAIL\"></a></td>";
 	}
 	// ログイン許可
 	if ( $aryData["bytInvalidFlagVisible"] )
@@ -444,7 +454,7 @@ for ( $i = 0; $i < $lngResultNum; $i++ )
 	// 修正
 	if ( $aryData["updateVisible"] )
 	{
-		$partsData["update"] = "<td bgcolor=\"#FFFFFF\" align=\"center\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $lngResultNum . "_',1 );\"><a class=\"cells\" href=\"javascript:fncShowDialogRenew('/uc/regist/edit.php?strSessionID=$aryData[strSessionID]&lngUserCode=" . $objResult->lngusercode . "&lngFunctionCode=" . DEF_FUNCTION_UC5 . "&lngUserCodeCondition=1' , window.form1 , 'ResultIframeRenew' , 'NO' , " . $aryData["lngLanguageCode"] . " );\"><img onmouseover=\"RenewOn(this);\" onmouseout=\"RenewOff(this);\" src=\"/img/type01/cmn/seg/renew_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"RENEW\"></a></td>";
+		$partsData["update"] = "<td bgcolor=\"#FFFFFF\" align=\"center\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $lngResultNum . "_',1 );\"><a class=\"cells\" href=\"javascript:fncShowDialogRenew('/uc/regist/edit.php?strSessionID=" .$aryData["strSessionID"] ."&lngUserCode=" . $objResult->lngusercode . "&lngFunctionCode=" . DEF_FUNCTION_UC5 . "&lngUserCodeCondition=1' , window.form1 , 'ResultIframeRenew' , 'NO' , " . $aryData["lngLanguageCode"] . " );\"><img onmouseover=\"RenewOn(this);\" onmouseout=\"RenewOff(this);\" src=\"/img/type01/cmn/seg/renew_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"RENEW\"></a></td>";
 	}
 
 	// グループカラー
@@ -473,17 +483,21 @@ while ( list ($strKeys, $strValues ) = each ( $ary_Keys ) )
 	if( $strValues == "ViewColumn")
 	{
 //		reset( $aryData["ViewColumn"] );
-		for ( $i = 0; $i < count( $aryData["ViewColumn"] ); $i++ )
-		{
-			$aryHidden[] = "<input type='hidden' name='ViewColumn[]' value='" .$aryData["ViewColumn"][$i]. "'>";
+		if (is_array($aryData["ViewColumn"])) {
+			for ( $i = 0; $i < count( $aryData["ViewColumn"] ); $i++ )
+			{
+				$aryHidden[] = "<input type='hidden' name='ViewColumn[]' value='" .$aryData["ViewColumn"][$i]. "'>";
+			}
 		}
 	}
 	elseif( $strValues == "SearchColumn")
 	{
 //		reset( $aryData["SearchColumn"] );
-		for ( $j = 0; $j < count( $aryData["SearchColumn"] ); $j++ )
-		{
-			$aryHidden[] = "<input type='hidden' name='SearchColumn[]' value='". $aryData["SearchColumn"][$j] ."'>";
+		if (is_array($aryData["SearchColumn"])) {
+			for ( $j = 0; $j < count( $aryData["SearchColumn"] ); $j++ )
+			{
+				$aryHidden[] = "<input type='hidden' name='SearchColumn[]' value='". $aryData["SearchColumn"][$j] ."'>";
+			}
 		}
 	}
 	elseif( $strValues == "strSort" || $strValues == "strSortOrder" )

@@ -29,6 +29,8 @@ $aryCheck["strSessionID"]    = "null:numenglish(32,32)";
 $aryResult = fncAllCheck( $aryData, $aryCheck );
 fncPutStringCheckError( $aryResult, $objDB );
 
+setcookie("strSessionID", $aryData["strSessionID"], 0, "/");
+
 // セッション確認
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 

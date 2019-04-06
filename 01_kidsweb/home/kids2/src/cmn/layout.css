@@ -83,7 +83,7 @@
 {
 	position     : absolute ;
 	left         : 861px ; /* 222px */
-	top          : 151px  ; /* 25px */
+	top          : 121px  ; /* 25px */
 	font-family  : Arial ;
 	font-size    : 8px ;
 	font-style   : normal ;
@@ -244,6 +244,19 @@
 
 
 /********************* MAIN TITLE *********************/
+#Title{
+	position : absolute ;
+	margin-top: 0;
+	margin-bottom: 0;
+	top : 10px ;
+	left : 10px ;
+	z-index : 0 ;
+	visibility : visible ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+	
 #MainTitle {
 	position : absolute ;
 	left : 44px ;
@@ -258,16 +271,7 @@
 
 
 /********************* MARGINS *********************/
-#Margins {
-	position : absolute ;
-	top : 10px ;
-	left : 10px ;
-	z-index : 0 ;
-	visibility : visible ;
-	border-width: 0px ;
-	border-style: none ;
-	background-color: transparent ;
-}
+
 
 
 
@@ -324,6 +328,7 @@
 	border-style: solid ;
 	border-color: #cdcdcd ;
 	background-color: transparent ;
+	box-sizing: border-box;
 }
 
 
@@ -332,12 +337,13 @@
 #NaviButton
 {
 	position : absolute ;
-	left : 11px ;
-	top : 96px ;
+	left : 0px ;
+	top : 0px ;
 	border-width: 0px ;
 	border-style: none ;
 	z-index : 4 ;
 	background-color: transparent ;
+	pointer-events: auto;
 }
 
 
@@ -347,11 +353,13 @@
 	position : absolute ;
 	z-index : 7 ;
 	visibility : hidden ;
-	top : 95px ;
-	left : 28px ;
+	top : 0px ;
+	left : 17px ;
 	border-width: 0px ;
 	border-style: none ;
 	background-color: transparent ;
+	margin-top: 0;
+	pointer-events: auto;
 }
 
 #NaviIfrm /* I FRAME SIZE */
@@ -363,6 +371,8 @@
 	border-style: none ;
 	background-color: transparent ;
 	filter:progid:DXImageTransform.Microsoft.Alpha(opacity=90);
+	z-index : 3 ;
+	pointer-events: auto;
 }
 
 

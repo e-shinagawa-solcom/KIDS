@@ -85,14 +85,13 @@ if ( $aryData["now"] )
 }
 
 // 条件分を生成、クエリに追加
-if ( count ( $aryWhereString ) )
+if ( $aryWhereString && count ( $aryWhereString ) )
 {
 	$strWhereString = join ( " AND", $aryWhereString );
 	$strQuery .= " WHERE " . $strWhereString;
 }
 
 $strQuery .= " ORDER BY lngMonetaryRateCode, lngMonetaryUnitCode, dtmApplyStartDate DESC";
-
 
 // データの取得とオブジェクトへのセット
 list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
@@ -152,7 +151,7 @@ if ( $lngResultNum )
 		$aryParts["strResultHtml"] .= "		<td nowrap>" . $record[$objMaster->aryColumnName[4]] . "</td>\n";
 
 		// GETで渡す文字列生成
-		$getUrl = "strSessionID=$aryData[strSessionID]&lngmonetaryratecode=" . $record["lngmonetaryratecode"] . "&lngmonetaryunitcode=" . $record["lngmonetaryunitcode"] . "&dtmapplystartdate=" . $record["dtmapplystartdate"];
+		$getUrl = "strSessionID=" .$aryData["strSessionID"]. "&lngmonetaryratecode=" . $record["lngmonetaryratecode"] . "&lngmonetaryunitcode=" . $record["lngmonetaryunitcode"] . "&dtmapplystartdate=" . $record["dtmapplystartdate"];
 
 
 		// 過去のレートの場合、修正ボタンを非表示
@@ -190,10 +189,10 @@ $objDB->close();
 
 
 
-$aryParts["HIDDEN"]          = "<input type=hidden name=strSessionID value=$aryData[strSessionID]>\n";
-$aryParts["HIDDEN"]         .= "<input type=hidden name=lngMonetaryRateCode value=$aryData[lngMonetaryRateCode]>\n";
-$aryParts["HIDDEN"]         .= "<input type=hidden name=lngMonetaryUnitCode value=$aryData[lngMonetaryUnitCode]>\n";
-$aryParts["HIDDEN"]         .= "<input type=hidden name=now value=$aryData[now]>\n";
+$aryParts["HIDDEN"]          = "<input type=hidden name=strSessionID value=" .$aryData["strSessionID"]. ">\n";
+$aryParts["HIDDEN"]         .= "<input type=hidden name=lngMonetaryRateCode value=" . $aryData["lngMonetaryRateCode"]. ">\n";
+$aryParts["HIDDEN"]         .= "<input type=hidden name=lngMonetaryUnitCode value=" .$aryData["lngMonetaryUnitCode"].">\n";
+$aryParts["HIDDEN"]         .= "<input type=hidden name=now value=" .$aryData["now"].">\n";
 $aryParts["lngLanguageCode"] =& $_COOKIE["lngLanguageCode"];
 $aryParts["strTableName"]   =& $objMaster->strTableName;
 $aryParts["lngColumnNum"]   = 5;

@@ -20,13 +20,13 @@
 <link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
 
 
-<link rel="stylesheet" type="text/css" media="screen" href="layout.css">
+<link rel="stylesheet" type="text/css" media="screen" href="/m/cmn/form.css">
 <script type="text/javascript" language="javascript" src="exstr.js"></script>
 <script type="text/javascript" language="javascript" src="functions.js"></script>
 <script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
 
 </head>
-<body id="Backs" oncontextmenu="return false;" onload="initLayoutSegs( Segs , Vars , '' , '' );fncAutoFocus( document.all.strGroupDisplayName );GetIfrmlngLanguageCode();fncMasterSearchOnload();Loading();">
+<body id="Backs" oncontextmenu="return false;" onload="fncAutoFocus( document.all.strGroupDisplayName );GetIfrmlngLanguageCode();fncMasterSearchOnload();Loading();">
 
 <span id="GMasterSearchObject"></span>
 
@@ -40,19 +40,18 @@
 <input type="hidden" name="ActionScriptName" value="/m/result/g/index.php">
 <input type="hidden" name="strSessionID" value="_%strSessionID%_">
 
-<p id="Segs">
-<span id="SegA01">COLUMN1</span>
-</p>
-
-
-
-<p id="Vars">
-<span id="VarsA01">
-	<input class="Txt25L" type="text" name="strGroupDisplayName" onfocus="chColorOn(this);" onblur="chColorOff(this);">
-</span>
-</p>
-
-
+<!-- フォーム -->
+<div class="form-box__contents">
+	<div class="regist-line">
+		<span class="form-line">
+			<span class="Column" id="SegA01">グループ名称</span>
+			<span class="VarText" id="Vars">
+			<span id="VarsA01">
+				<input class="Txt25L" type="text" name="strGroupDisplayName" onfocus="chColorOn(this);" onblur="chColorOff(this);">
+			</span>
+		</span>
+	</div>
+</div>
 </form>
 </body>
 </html>

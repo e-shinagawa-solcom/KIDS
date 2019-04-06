@@ -18,6 +18,7 @@
 	padding : 7px 0px 0px 8px ;
 	background-color: #4b6486 ;
 	text-align :center ;
+	box-sizing: border-box;
 }
 
 
@@ -30,6 +31,7 @@
 	border-width: 0px ;
 	border-style: none ;
 	background-color: transparent ;
+	margin: 0;
 }
 
 #UserInfoNaviBt1
@@ -62,18 +64,6 @@
 	background-color: transparent ;
 }
 
-#MenuBack
-{
-	position : absolute ;
-	left : 275 ;
-	top : 350 ; /* 350 */
-	border-width: 0px ;
-	border-style: none ;
-	background-color: transparent ;
-	filter : alpha(opacity=100) ;
-}
-
-
 #MenuBackBorder
 {
 	position : absolute ;
@@ -85,6 +75,7 @@
 	border-style: solid ;
 	border-color : #cdcdcd ;
 	background-color: transparent ;
+	box-sizing: border-box;
 }
 
 

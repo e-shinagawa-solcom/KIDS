@@ -16,7 +16,8 @@
 
 //		$aryData["lngSubFlag_es_0"]		= 1;	// 見積原価登録
 		$aryData["lngSubFlag_es_0"]		= 1;	// 見積原価検索
-		$aryData["lngSubFlag_es_1"]		= 1;	// アップロード
+		$aryData["lngSubFlag_es_1"]		= 1;	// ダウンロード
+		$aryData["lngSubFlag_es_2"]		= 1;	// アップロード
 
 		$aryData["lngSubFlag_so_0"]		= 1;	// 受注登録
 		$aryData["lngSubFlag_so_1"]		= 1;	// 受注検索
@@ -42,6 +43,10 @@
 
 		$aryData["lngSubFlag_mr_0"]		= 1;	// 金型帳票登録
 		$aryData["lngSubFlag_mr_1"]		= 1;	// 金型帳票検索
+		
+		$aryData["lngSubFlag_lc_0"]		= 1;	// L/C情報
+		$aryData["lngSubFlag_lc_1"]		= 1;	// L/C設定変更
+		$aryData["lngSubFlag_lc_2"]		= 1;	// L/C編集
 
 		// リンク
 		// 商品管理
@@ -51,7 +56,8 @@
 		// 見積原価管理
 //		$aryData["lngSubRef_es_0"]		= '/estimate/regist/edit.php?strSessionID=' . $aryData["strSessionID"] . '&lngFunctionCode=' . DEF_FUNCTION_E1 . '&lngRegist=1';
 		$aryData["lngSubRef_es_0"]		= '/estimate/search/index.php?strSessionID=' . $aryData["strSessionID"];
-		$aryData["lngSubRef_es_1"]		= '/upload2/index.php?strSessionID=' . $aryData["strSessionID"];
+		$aryData["lngSubRef_es_1"]		= '/download/index.php?strSessionID=' . $aryData["strSessionID"];
+		$aryData["lngSubRef_es_2"]		= '/upload2/index.php?strSessionID=' . $aryData["strSessionID"];
 
 		// 受注管理
 		$aryData["lngSubRef_so_0"]		= '/so/regist/index.php?strSessionID=' . $aryData["strSessionID"];
@@ -85,6 +91,11 @@
 		$aryData["lngSubRef_mr_0"]		= '/mr/regist/index.php?strSessionID=' . $aryData["strSessionID"];
 		$aryData["lngSubRef_mr_1"]		= '/mr/search/index.php?strSessionID=' . $aryData["strSessionID"];
 
+		$aryData["lngSubRef_lc_0"]		= '/lc/info/index.php?strSessionID=' . $aryData["strSessionID"];
+		$aryData["lngSubRef_lc_1"]		= '/lc/set/index.php?strSessionID=' . $aryData["strSessionID"];
+		$aryData["lngSubRef_lc_2"]		= '/lc/mod/index.php?strSessionID=' . $aryData["strSessionID"];
+
+
 		//-------------------------------------------------------------------------
 		// 商品管理
 		//-------------------------------------------------------------------------
@@ -100,10 +111,16 @@
 			$aryData["lngSubFlag_es_0"] = 0;
 		}
 
+		// ダウンロード
+		if ( !fncCheckAuthority( DEF_FUNCTION_DWN, $objAuth ) )
+		{
+			$aryData["lngSubFlag_es_1"] = 0;
+		}
+		
 		// アップロード
 		if ( !fncCheckAuthority( DEF_FUNCTION_UP0, $objAuth ) )
 		{
-			$aryData["lngSubFlag_es_1"] = 0;
+			$aryData["lngSubFlag_es_2"] = 0;
 		}
 		//-------------------------------------------------------------------------
 
@@ -243,6 +260,25 @@
 		if( !fncCheckAuthority( DEF_FUNCTION_MR2, $objAuth ) )
 		{
 			$aryData["lngSubFlag_mr_1"] = 0;
+		}
+
+		//-------------------------------------------------------------------------
+		// L/C管理
+		//-------------------------------------------------------------------------
+		// L/C情報
+		if( !fncCheckAuthority( DEF_FUNCTION_LC1, $objAuth ) )
+		{
+			$aryData["lngSubFlag_lc_0"] = 0;
+		}
+		// L/C設定変更
+		if( !fncCheckAuthority( DEF_FUNCTION_LC2, $objAuth ) )
+		{
+			$aryData["lngSubFlag_lc_1"] = 0;
+		}
+		// L/C編集
+		if( !fncCheckAuthority( DEF_FUNCTION_LC3, $objAuth ) )
+		{
+			$aryData["lngSubFlag_lc_2"] = 0;
 		}
 
 		//-------------------------------------------------------------------------

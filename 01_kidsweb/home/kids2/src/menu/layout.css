@@ -1,13 +1,27 @@
 <!--
+#message-area{
+	position : absolute ;
+	top : 95px ;
+	left : 30px ;
+	width : 938px ;
+	height : 198px ;
+}
 
-
+#message-box{
+	position : absolute ;
+	top: 20px;
+	width : 938px ;
+	height : 147px ;
+	box-sizing: border-box;
+}
+	
 #strWelcomeMessage
 {
 	font-weight : bold ;
 	color : #ffffff ;
 	position : absolute ;
-	top : 147px ;
-	left : 30px ;
+	top : 0px ;
+	left : 0px ;
 	width : 938px ;
 	height : 27px ;
 	text-align : center ;
@@ -16,6 +30,7 @@
 	border-color : #cdcdcd ;
 	padding : 7px 0px 0px 8px ;
 	background-color: transparent ; /* #4b6486 */
+	box-sizing: border-box;
 }
 
 
@@ -24,15 +39,16 @@
 	font-weight : bold ;
 	color : #ffffff ;
 	position : absolute ;
-	top : 173px ;
-	left : 30px ;
+	top : 26px ;
+	left : 0px ;
 	width : 160px ;
-	height : 80px ;
+	height : 120px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color : #cdcdcd ;
-	padding : 34px 0px 0px 8px ;
+	padding : 50px 0px 0px 8px ;
 	background-color: #666666 ;
+	box-sizing: border-box;
 }
 
 #strAdminMessageTitle
@@ -40,8 +56,8 @@
 	font-weight : normal ;
 	color : #ffffff ;
 	position : absolute ;
-	top : 173px ;
-	left : 189px ;
+	top : 26px ;
+	left : 159px ;
 	width : 779px ;
 	height : 27px ;
 	border-width: 1px ;
@@ -49,6 +65,7 @@
 	border-color : #cdcdcd ;
 	padding : 7px 0px 0px 8px ;
 	background-color: #4b6486 ;
+	box-sizing: border-box;
 }
 
 #strAdminMessageComment
@@ -56,16 +73,17 @@
 	font-weight : normal ;
 	color : #ffffff ;
 	position : absolute ;
-	top : 199px ;
-	left : 189px ;
+	top : 52px ;
+	left : 159px ;
 	width : 779px ;
-	height : 54px ;
+	height : 94px ;
 	line-height : 14px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color : #cdcdcd ;
 	padding : 7px 0px 0px 8px ;
 	background-color: transparent ;
+	box-sizing: border-box;
 }
 
 
@@ -81,17 +99,10 @@
 	border-style: solid ;
 	border-color : #cdcdcd ;
 	background-color: transparent ;
+	box-sizing: border-box;
 }
 
-#MenuBacksImg
-{
-	position : absolute ;
-	top : 293px ;
-	left : 11px ;
-	border-width: 0px ;
-	border-style: none ;
-	background-color: transparent ;
-}
+
 
 
 
@@ -209,6 +220,14 @@
     background-color: transparent ;
 }
 
+#LCnavi
+{
+    position : absolute ;
+    border-width: 0px ;
+    border-style: none ;
+    background-color: transparent ;
+}
+
 #SystemSet
 {
 	position : absolute ;
@@ -218,6 +237,7 @@
 	border : 0px solid #ff0000 ;
 	background-color: transparent ;
 	text-align : center ;
+	margin-top: 0;
 }
 
 

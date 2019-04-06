@@ -7,8 +7,8 @@
 
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/images.js"></script>
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/dataex/lc/images.js"></script>
-<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/dataex/lc/initlayoutsearch.js"></script>
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutcommon.js"></script>
+
 
 
 <script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
@@ -20,15 +20,14 @@
 <link rel="stylesheet" type="text/css" media="screen" href="/cmn/layout.css">
 <link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
 
-
-<link rel="stylesheet" type="text/css" media="screen" href="/dataex/search/lc/layout.css">
+<link rel="stylesheet" type="text/css" media="screen" href="/dataex/search/cmn/layout.css">
 <script type="text/javascript" language="javascript" src="/dataex/search/lc/exstr.js"></script>
 <script type="text/javascript" language="javascript" src="/dataex/search/lc/functions.js"></script>
 <script type="text/javascript" language="javascript" src="/dataex/search/cmn/functions.js"></script>
 <script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
 
 </head>
-<body id="Backs" oncontextmenu="return false;" onload="initLayoutSegs( Segs , Vars , '' , '' , '' , '' , '' , '' );ChgEtoJ( parent.lngLanguageCode );fncAutoFocus( document.all.dtmAppropriationDateFrom );">
+<body id="Backs" oncontextmenu="return false;" onload="ChgEtoJ( parent.lngLanguageCode );fncAutoFocus( document.all.dtmAppropriationDateFrom );">
 
 
 
@@ -44,54 +43,54 @@
 <input type="hidden" name="lngExportData" value="_%lngExportData%_">
 <input type="hidden" name="lngActionCode" value="1">
 
-
-
-
-<!-- カラム -->
-<p id="Segs">
-<span id="Column0">設定日</span>
-<span id="Column1">発注ＮＯ.</span>
-<span id="Column2">L/C 予定表</span>
-<span id="Column3">リバイズ</span>
-</p>
-
-
-<!-- フォーム -->
-<p id="Vars">
-<span id="VarsA01">
-	FROM&nbsp;<input style="ime-mode:disabled;" class="Txt10L" type="text" name="dtmAppropriationDateFrom" value="_%lcdatestart%_" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate( this );fncCopyValue( this , document.all.dtmAppropriationDateTo );" tabindex="">TO&nbsp;<input style="ime-mode:disabled;" class="Txt10L" type="text" name="dtmAppropriationDateTo" value="_%lcdateend%_" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate( this );" tabindex="">
-</span>
-
-<span id="VarsA02">
-	FROM&nbsp;<input style="ime-mode:disabled;" class="Txt10L" type="text" name="strOrderCodeFrom" value="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCopyValue( this , document.all.strOrderCodeTo );" tabindex="">TO&nbsp;<input style="ime-mode:disabled;" class="Txt10L" type="text" name="strOrderCodeTo" value="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="">
-</span>
-
-<span id="VarsA03">
-	<input class="RadioStyle01" type="radio" name="lngExportConditions" value="1" tabindex="" checked>
-</span>
-
-<span id="VarsA04">
-	<input class="RadioStyle01" type="radio" name="lngExportConditions" value="2" tabindex="" >
-</span>
-</p>
-
-
-<p id="QuerySet">
-<!-- プレビューボタン -->
-<span id="PreviewBt" onclick="document.PS.lngActionCode.value=1;fncDataFormPreview( window.PS , '/dataex/result/index.html' );return false;"></span>
-<!-- エクスポートボタン -->
-<span id="ExportBt" onclick="document.PS.lngActionCode.value=2;submit();"></span>
-</p>
-
-
-<!-- 終端調整用ダミーレイヤー -->
-<span id="DummySpace"></span>
-
-
-
-
-
-
+<div class="form-box__contents">
+	<div class="regist-line">
+		<span class="form-line">
+			<span class="Column">設定日</span>
+			<span class="VarText" id="VarsA01">
+				<span class="VarLabel">FROM</span>
+				<input style="ime-mode:disabled;" class="TxtStyle05L" type="text" name="dtmAppropriationDateFrom" value="_%lcdatestart%_" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate( this );fncCopyValue( this , document.all.dtmAppropriationDateTo );" tabindex="">
+				<span class="VarLabel">TO</span>
+				<input style="ime-mode:disabled;" class="TxtStyle05L" type="text" name="dtmAppropriationDateTo" value="_%lcdateend%_" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate( this );" tabindex="">
+			</span>
+		</span>
+	</div>
+	<div class="regist-line">
+		<span class="form-line">
+			<span class="Column">発注ＮＯ.</span>
+			<span class="VarText" id="VarsA02">
+				<span class="VarLabel">FROM</span>
+				<input style="ime-mode:disabled;" class="Txt10L" type="text" name="strOrderCodeFrom" value="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCopyValue( this , document.all.strOrderCodeTo );" tabindex="">
+				<span class="VarLabel">TO</span>
+				<input style="ime-mode:disabled;" class="Txt10L" type="text" name="strOrderCodeTo" value="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="">
+			</span>
+		</span>
+	</div>
+	<div class="regist-line">
+		<span class="form-line">
+			<span class="Column">L/C予定表</span>
+			<span class="VarText" id="VarsA03">
+				<input class="RadioStyle01" type="radio" name="lngExportConditions" value="1" tabindex="" checked>
+			</span>
+		</span>
+	</div>
+	<div class="regist-line">
+		<span class="form-line">
+			<span class="Column">リバイズ</span>
+			<span class="VarText" id="VarsA04">
+				<input class="RadioStyle01" type="radio" name="lngExportConditions" value="2" tabindex="" >
+			</span>
+		</span>
+	</div>
+	<div class="Spacer">
+	</div>
+	<div class="QuerySet-none">	
+		<!-- プレビューボタン -->
+		<span class="QueryBt" id="PreviewBt" onclick="document.PS.lngActionCode.value=1;fncDataFormPreview( window.PS , '/dataex/result/index.html' );return false;"></span>
+		<!-- エクスポートボタン -->
+		<span class="QueryBt" id="ExportBt" onclick="document.PS.lngActionCode.value=2;PS.submit();"></span>
+	</div>
+</div>
 </form>
 </body>
 </html>

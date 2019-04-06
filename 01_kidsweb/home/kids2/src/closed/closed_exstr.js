@@ -14,8 +14,6 @@ function ChgEtoJ( lngSelfCode )
 		ProcessBt.innerHTML = blownProcessBtE1;
 		RivivalBt.innerHTML = blownRivivalBtE1;
 
-		Column0.innerText = 'Date';
-		Column1.innerText = 'Target';
 
 	}
 
@@ -26,9 +24,7 @@ function ChgEtoJ( lngSelfCode )
 		ProcessBt.innerHTML = blownProcessBtJ1;
 		RivivalBt.innerHTML = blownRivivalBtJ1;
 
-		Column0.innerText = '計上日';
-		Column1.innerText = '対象';
-
+		
 	}
 
 	return false;

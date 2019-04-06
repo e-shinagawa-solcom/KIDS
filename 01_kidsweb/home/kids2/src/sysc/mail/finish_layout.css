@@ -1,13 +1,5 @@
 <!--
 
-
-#Backs
-{
-	background : #d6d0b1 ;
-}
-
-
-
 #CompleteSet
 {
 	position : absolute ;
@@ -27,14 +19,15 @@
 	position : absolute ;
 	left : 0px ;
 	top : 0px ;
-	width : 220px ;
+	width: 215px;
 	height : 27px ;
 	border-width: 1px ;
 	border-style: solid ;
 	background : #f1f1f1 ; /* e8f0f1 */
 	border-color : #798787 #d6d0b1 #798787 #798787 ;
-	padding : 8px 0px 0px 8px ;
-	text-align : left ;
+	padding-top: 8px;
+    text-align: center;
+	box-sizing: border-box;
 }
 
 #BackSpace
@@ -47,10 +40,10 @@
 	height : 27px ;
 	border-width: 1px ;
 	border-style: solid ;
-	background : d6d0b1 ; /* e8f0f1 */
+	background : d6d0b1 ;
 	border-color : #798787 #798787 #798787 #798787 ;
-	padding : 8px 0px 0px 8px ;
 	text-align : left ;
+	box-sizing: border-box;
 }
 
 #BackBt
@@ -63,10 +56,6 @@
 	background : transparent ;
 }
 
-
-
-
-
 #MessageSet
 {
 	position   : absolute ;
@@ -75,36 +64,5 @@
 	z-index    : 3 ;
 	background : transparent ;
 }
-
-
-
-#Column0
-{
-	position     : absolute ;
-	font-weight  : bold ;
-	left         : 0px ;
-	top          : 0px ;
-	width        : 150px ;
-	height       : 27px ;
-	border-width : 1px ;
-	border-style : solid ;
-	border-color : #798787 #e8f0f1 #798787 #798787 ;
-	background   : #e8f0f1 ;
-	padding      : 8px 0px 0px 8px ;
-}
-
-#Vars0
-{
-	position     : absolute ;
-	left         : 149px ;
-	top          : 0px ;
-	height       : 27px ;
-	border-width : 1px ;
-	border-style : solid ;
-	border-color : #798787 #798787 #798787 #e8f0f1 ;
-	background   : #e8f0f1 ;
-	padding      : 3px 0px 0px 8px ;
-}
-
 
 -->

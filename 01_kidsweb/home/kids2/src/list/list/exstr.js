@@ -6,19 +6,6 @@ function ChgEtoJ()
 {
 
 
-	//-----------------------------------------------------
-	// 解説 : [検索][クリア]ボタンを隠す
-	//-----------------------------------------------------
-	if( typeof(schSchButton) != 'undefined' )
-	{
-		schSchButton.style.visibility = 'hidden';
-	}
-
-	if( typeof(schClrButton) != 'undefined' )
-	{
-		schClrButton.style.visibility = 'hidden';
-	}
-
 
 ////////////////////////////////// ENGLISH /////////////////////////////////////
 
@@ -31,7 +18,7 @@ function ChgEtoJ()
 
 
 		///// E TO J /////
-		EtoJ.innerHTML = etojJbt;
+		//EtoJ.innerHTML = etojJbt;
 
 
 		///// MAIN TITLE /////
@@ -43,8 +30,8 @@ function ChgEtoJ()
 		lngClickCode = 1;
 		lngLanguageCode = 0;
 
-		window.Pwin.ChgEtoJ( 0 );
-		window.NAVIwin.ChgEtoJ( 0 );
+		//window.Pwin.ChgEtoJ( 0 );
+		//window.NAVIwin.ChgEtoJ( 0 );
 
 	}
 
@@ -59,7 +46,7 @@ function ChgEtoJ()
 
 
 		///// E TO J /////
-		EtoJ.innerHTML = etojEbt;
+		//EtoJ.innerHTML = etojEbt;
 
 
 		///// MAIN TITLE /////
@@ -71,8 +58,8 @@ function ChgEtoJ()
 		lngClickCode = 0;
 		lngLanguageCode = 1;
 
-		window.Pwin.ChgEtoJ( 1 );
-		window.NAVIwin.ChgEtoJ( 1 );
+		//window.Pwin.ChgEtoJ( 1 );
+		//window.NAVIwin.ChgEtoJ( 1 );
 
 	}
 

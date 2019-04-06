@@ -19,7 +19,7 @@ function ChgEtoJ()
 
 
 		///// E TO J /////
-		EtoJ.innerHTML = etojJbt;
+		//EtoJ.innerHTML = etojJbt;
 
 
 		///// MAIN TITLE /////
@@ -28,7 +28,7 @@ function ChgEtoJ()
 		///// INPUT A /////
 		//SegAHeader.innerHTML = headerAE;
 
-		if( typeof(schSchButton) != 'undefined' )
+		/*if( typeof(schSchButton) != 'undefined' )
 		{
 			schSchButton.innerHTML = schSchBtE1;
 		}
@@ -36,7 +36,7 @@ function ChgEtoJ()
 		if( typeof(schClrButton) != 'undefined' )
 		{
 			schClrButton.innerHTML = schClrBtE1;
-		}
+		}*/
 
 
 		lngClickCode = 1;
@@ -58,7 +58,7 @@ function ChgEtoJ()
 
 
 		///// E TO J /////
-		EtoJ.innerHTML = etojEbt;
+		//EtoJ.innerHTML = etojEbt;
 
 
 		///// MAIN TITLE /////
@@ -67,7 +67,7 @@ function ChgEtoJ()
 		///// INPUT A /////
 		//SegAHeader.innerHTML = headerAJ;
 
-		if( typeof(schSchButton) != 'undefined' )
+		/*if( typeof(schSchButton) != 'undefined' )
 		{
 			schSchButton.innerHTML = schSchBtJ1;
 		}
@@ -75,7 +75,7 @@ function ChgEtoJ()
 		if( typeof(schClrButton) != 'undefined' )
 		{
 			schClrButton.innerHTML = schClrBtJ1;
-		}
+		}*/
 
 
 		lngClickCode = 0;

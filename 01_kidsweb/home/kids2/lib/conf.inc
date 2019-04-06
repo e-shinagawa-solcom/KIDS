@@ -34,9 +34,7 @@ define ( "EXECUTE_HOST_NAME_DEV",	"kids.devs.biz" );
 define ( "EXECUTE_HOST_NAME_KWG_WEBv2",	"192.168.10.228" );
 define ( "EXECUTE_HOST_NAME_KWG_WEBv1",	"192.168.10.235" );
 define ( "EXECUTE_HOST_NAME_KWG_BACK",	"192.168.10.230" );
-// define ( "EXECUTE_HOST_NAME_KWG_DB",	"192.168.10.229" );
-define ( "EXECUTE_HOST_NAME_KWG_DB",	"192.168.1.82" );
-
+define ( "EXECUTE_HOST_NAME_KWG_DB",	"192.168.1.113" );
 
 // 実行サーバー名称の取得
 $strExcuteHttpHostName = $_SERVER["HTTP_HOST"];
@@ -133,7 +131,7 @@ switch( $strExcuteHttpHostName )
 		define ( "ERROR_MAIL_TO", "kids@kuwagata.co.jp" );
 		define ( "SEND_MAIL_FLAG", true);
 		// 各ルートパス
-		define ( "PATH_HOME",	"/Users/solcom/Desktop/Git/kuwagata/webresource/01_kidsweb/home/kids2" );
+		define ( "PATH_HOME",	"/home/kids2" );
 		break;
 }
 
@@ -251,6 +249,7 @@ define ( "DEF_ORDER_ORDER",		2 );	// 発注
 define ( "DEF_ORDER_DELIVER",	3 );	// 納品中
 define ( "DEF_ORDER_END",		4 );	// 納品済
 define ( "DEF_ORDER_DENIAL",	5 );	// 否認
+define ( "DEF_ORDER_TEMPORARY",	10);	// 仮発注
 define ( "DEF_ORDER_CLOSED",	99 );	// 締め済
 
 // m_Stock.lngStockStatusCode
@@ -408,6 +407,13 @@ define ( "DEF_FUNCTION_MR3", 1903 );	//金型帳票管理(詳細)
 define ( "DEF_FUNCTION_MR4", 1904 );	//金型帳票管理(修正)
 define ( "DEF_FUNCTION_MR5", 1905 );	//金型帳票管理(削除)
 
+define ( "DEF_FUNCTION_DWN",	2001 );	// 2001 ダウンロード管理
+
+define ( "DEF_FUNCTION_LC0",	2100 );	// 2100 L/C管理
+define ( "DEF_FUNCTION_LC1",	2101 );	// 2101 L/C情報
+define ( "DEF_FUNCTION_LC2",	2102 );	// 2102 L/C設定変更
+define ( "DEF_FUNCTION_LC3",	2103 );	// 2103 L/C編集
+
 // エラー種類
 define ( "DEF_WARNING",		1 );           //  1 注意レベル（入力ミスなど）
 define ( "DEF_ERROR",		2 );           //  2 エラーレベル
@@ -415,8 +421,8 @@ define ( "DEF_FATAL",		3 );           //  3 システムエラーレベル
 define ( "DEF_ANNOUNCE",	99 );          //  99 システムアナウンス
 
 // デバッグモード
-//define ( "DEF_DEBUG_MODE",	0 );         //  本稼動モード　　エラー画面表示
-define ( "DEF_DEBUG_MODE",	1 );      //  デバッグモード　エラー画面非表示
+define ( "DEF_DEBUG_MODE",	0 );         //  本稼動モード　　エラー画面表示
+//define ( "DEF_DEBUG_MODE",	1 );      //  デバッグモード　エラー画面非表示
 
 // 発注登録
 define ("DEF_M_WORKFLOW_FUNCTIONCODE",	1);		// 機能コード
@@ -431,7 +437,7 @@ define ("DEF_MONETARY_HKD",	3);				// HKドル
 
 define ("DEF_MONEY_USER",		0);			// ユーザはなし
 define ("DEF_MONEY_MANAGER",	50000);		// マネージャーは5万まで
-define ("DEF_MONEY_DIRECTOR",	200000);	// ディレクターは20万まで
+define ("DEF_MONEY_DIRECTOR",	200000);	// ディレクターは20万まで 
 
 // 2004.03.01 suzukaze update start
 define ("DEF_MONEY_NO_CODE",	50000);		// 仕入売上での発注受注Noなしでの登録可能金額  上記コードを使用しないように修正

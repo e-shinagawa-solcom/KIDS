@@ -1,4 +1,4 @@
-<?
+<?php
 	define ( "CONFIG_TAG", "config" );
 // ----------------------------------------------------------------------------
 /**
@@ -49,7 +49,7 @@ class clsTemplate
 	*	@return void
 	*	@access public
 	*/
-	function clsTemplate()
+	function __construct()
 	{
 		$this->strTemplate     = "";
 		$this->strConfigTag    = CONFIG_TAG;
@@ -185,8 +185,10 @@ class clsTemplate
 		// レイアウトコードを設定
 		$this->strTemplate = preg_replace ( "/_%lngLayoutCode%_/", LAYOUT_CODE, $this->strTemplate );
 
-		// コメント文字列を削除
-		$this->strTemplate = mb_ereg_replace ( "<COMMENT>.+?<\/COMMENT>", "", $this->strTemplate );
+		if (mb_ereg_replace ( "<COMMENT>.+?<\/COMMENT>", "", $this->strTemplate )) {
+			// コメント文字列を削除
+			$this->strTemplate = mb_ereg_replace ( "<COMMENT>.+?<\/COMMENT>", "", $this->strTemplate );
+		}
 
 		// 置換されなかった置き換え文字列を削除
 		$this->strTemplate = preg_replace ( "/_%.+?%_/", "", $this->strTemplate );

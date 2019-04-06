@@ -168,9 +168,9 @@ function initLayoutNavigation()
 
 
 	// Äù¤á½èÍý
-	if( typeof(ClosedBt) != 'undefined' )
+	if( typeof(ClosedBt1) != 'undefined' )
 	{
-		ClosedBt.innerHTML = closednaviBtJ1;
+		ClosedBt1.innerHTML = closednaviBtJ1;
 	}
 
 

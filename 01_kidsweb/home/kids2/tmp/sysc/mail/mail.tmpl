@@ -23,7 +23,7 @@
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/sysc/email/initlayoutifrm.js"></script>
 <script type="text/javascript" language="javascript" src="/sysc/mail/mail_exstr.js"></script>
 
-
+<link rel="stylesheet" type="text/css" media="screen" href="/sysc/cmn/form.css">
 <link rel="stylesheet" type="text/css" media="screen" href="/sysc/mail/mail_layout.css">
 <script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
 
@@ -37,16 +37,17 @@
 <form name="REGIST" action="action.php" method="post">
 	<input type="hidden" name="strSessionID" value="_%strSessionID%_">
 
-	<p id="EmailSet">
-		<span id="Column0">管理者メール</span>
-
-		<span id="Vars0">
-			<input class="Txt52L" type="text" name="strAdminMailAddress" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="1" value="_%strAdminMailAddress%_" maxlength="100">
-		</span>
-
-		<span id="RegistBt" onclick="window.REGIST.submit();return false;"></span> <!-- window.REGIST.submit() -->
-	</p>
-
+	<div id="EmailSet">
+		<div class="regist-line">
+			<span class="form-line">
+				<span class="Column">管理者メール</span>
+				<span class="VarText" id="Vars0">
+					<input class="Txt52L" type="text" name="strAdminMailAddress" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="1" value="_%strAdminMailAddress%_" maxlength="100">
+				</span>
+			</span>
+			<span id="RegistBt" onclick="window.REGIST.submit();return false;"></span> <!-- window.REGIST.submit() -->
+		</div>
+	</div>
 </form>
 
 

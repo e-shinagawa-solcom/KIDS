@@ -57,12 +57,12 @@ if ( !fncCheckAuthority( DEF_FUNCTION_LO0, $objAuth ) )
 if ( fncCheckAuthority( DEF_FUNCTION_LO1, $objAuth ) )
 {
 	// 商品化企画書帳票出力可能
-	$aryParts["strManagementMenu"] .= "<a href=search/" . $aryListOutputMenu[DEF_REPORT_PRODUCT][file] . ".php?strSessionID=" . $aryData["strSessionID"] . ">" . $aryListOutputMenu[DEF_REPORT_PRODUCT][name] . "</a>\n";
+	$aryParts["strManagementMenu"] .= "<a href=search/" . $aryListOutputMenu[DEF_REPORT_PRODUCT]["file"] . ".php?strSessionID=" . $aryData["strSessionID"] . ">" . $aryListOutputMenu[DEF_REPORT_PRODUCT]["name"] . "</a>\n";
 }
 if ( fncCheckAuthority( DEF_FUNCTION_LO2, $objAuth ) )
 {
 	// 発注書（P.O）帳票出力可能
-	$aryParts["strManagementMenu"] .= "<a href=search/" . $aryListOutputMenu[DEF_REPORT_ORDER][file] . ".php?strSessionID=" . $aryData["strSessionID"] . ">" . $aryListOutputMenu[DEF_REPORT_ORDER][name] . "</a>\n";
+	$aryParts["strManagementMenu"] .= "<a href=search/" . $aryListOutputMenu[DEF_REPORT_ORDER]["file"] . ".php?strSessionID=" . $aryData["strSessionID"] . ">" . $aryListOutputMenu[DEF_REPORT_ORDER]["name"] . "</a>\n";
 }
 
 
@@ -113,6 +113,13 @@ $aryData["lngFunctionCode"] = DEF_FUNCTION_LO0;
 
 
 // HTML出力
-echo fncGetReplacedHtml( "/list/list/parts.tmpl", $aryData, $objAuth );
+if(!$aryData["strListMode"])
+{
+	echo fncGetReplacedHtml( "/list/list/parts.tmpl", $aryData, $objAuth );
+}
+else
+{
+	echo fncGetReplacedHtml( "/list/list/parts_button.tmpl", $aryData, $objAuth );
+}
 
 ?>

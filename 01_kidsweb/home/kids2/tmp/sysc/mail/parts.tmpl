@@ -11,12 +11,12 @@
 
 <header3>
 <script type="text/javascript" language="javascript" src="/sysc/mail/exstr.js"></script>
-<link rel="stylesheet" type="text/css" media="screen" href="/sysc/mail/layout.css">
+<link rel="stylesheet" type="text/css" media="screen" href="/sysc/cmn/layout.css">
 <script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
 </header3>
 
 <bodyonload>
-initLayoutBase();initLayout();GetlngLanguageCode( _%lngLanguageCode%_ );Loading();
+initLayoutBase();initLayout();Loading();
 </bodyonload>
 </config>
 
@@ -31,62 +31,44 @@ initLayoutBase();initLayout();GetlngLanguageCode( _%lngLanguageCode%_ );Loading(
 <!-- ///////////////////////////////////// END MAIN TITLE ///////////////////////////////////// -->
 
 
-
-<!-- //////////////////////////////////// START NAVIGATION //////////////////////////////////// -->
-<span id="NaviButton"></span>
-
-
-<p id="Navigations" onmouseout="NavigationOFF( Navigations , NaviButton );">
-<span id="Navi">
-	<iframe id="NaviIfrm" name="NAVIwin" frameborder="0" scrolling="no" src="/navi/index.php?strSessionID=_%strSessionID%_&strNaviCode=sysc-1311"></iframe>
-</span>
-</p>
-
-<!--  -->
+<div class="main-area">
+	<!-- //////////////////////////////////// START NAVIGATION //////////////////////////////////// -->
+	<div class="navi-area">
+		<span id="NaviButton"></span>
+		<p id="Navigations" onmouseout="NavigationOFF( Navigations , NaviButton );">
+			<span id="Navi">
+				<iframe id="NaviIfrm" name="NAVIwin" frameborder="0" scrolling="no" src="/navi/index.php?strSessionID=_%strSessionID%_&strNaviCode=sysc-1311"></iframe>
+			</span>
+		</p>
+	</div>
 
 <!-- ///////////////////////////////////// END NAVIGATION ///////////////////////////////////// -->
 
 
-<!-- //////////////////////////////////// START INPUT A SEGMENTS //////////////////////////////////// -->
-<p id="InputA">
+	<!-- //////////////////////////////////// START INPUT A SEGMENTS //////////////////////////////////// -->
+	<p id="InputA">
 
-<!-- START BODYS -->
-<span id="SegABodys"></span>
-<!-- END BODYS -->
+		<!-- START HEADER -->
+		<span id="SegAHeader"></span>
+		<!-- END HEADER -->
 
-<!-- START HEADER -->
-<span id="SegAHeader"></span>
-<!-- END HEADER -->
-
-<!-- START BOTTOM -->
-<span id="SegABottom"></span>
-<!-- END BOTTOM -->
+		<!-- START BOTTOM -->
+		<span id="SegABottom"></span>
+		<!-- END BOTTOM -->
 
 
-<!-- START SEGMENTS -->
-<span id="SegA01">
-	<iframe id="SegAIFrm" name="Pwin" frameborder="0" scrolling="no" src="/sysc/mail/mail.php?strSessionID=_%strSessionID%_"></iframe>
-</span>
-<!-- END SEGMENTS -->
+		<!-- START SEGMENTS -->
+		<span id="SegA01">
+			<iframe id="SegAIFrm" name="Pwin" frameborder="0" scrolling="no" src="/sysc/mail/mail.php?strSessionID=_%strSessionID%_"></iframe>
+		</span>
+		<!-- END SEGMENTS -->
 
 
 
 
-</p>
-<!-- ///////////////////////////////////// END INPUT A SEGMENTS ///////////////////////////////////// -->
-
-
-
-
-
-
-
-<!-- ////////// START E TO J ////////// -->
-<span id="EtoJ"></span>
-<!-- /////////// END E TO J /////////// -->
-
-
-
+	</p>
+	<!-- ///////////////////////////////////// END INPUT A SEGMENTS ///////////////////////////////////// -->
+</div>
 
 <!-- ERROR MESSAGE -->
 <span id="ErrorMessageFrame">

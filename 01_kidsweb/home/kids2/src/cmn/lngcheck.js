@@ -245,9 +245,40 @@
 		
 		// 対象オブジェクト名の取得
 		strObjectName = 'window.'+ objObject.form.name +'.'+ objObject.name;
-		// VBScriptの実行
-		window.execScript('Call fncVBSCheckDate('+ strObjectName +', '+ lngFormat + ')', "VBScript");
 		
+		var strDate = objObject.value;
+		
+		// 空文字は無視
+	    if(strDate == ""){
+	        fncErrorMessage(0, strObjectName);
+	        return true;
+	    }
+		
+	    // 年/月/日の形式のみ許容する
+	    if(!strDate.match(/^\d{4}\/\d{1,2}\/\d{1,2}$/)){
+	        fncErrorMessage(2, strObjectName);
+	        return false;
+	    }
+
+	    // 日付変換された日付が入力値と同じ事を確認
+	    // new Date()の引数に不正な日付が入力された場合、相当する日付に変換されてしまうため
+	    // 
+	    var date = new Date(strDate);  
+	    if(date.getFullYear() !=  strDate.split("/")[0] 
+	        || date.getMonth() != strDate.split("/")[1] - 1 
+	        || date.getDate() != strDate.split("/")[2]
+	    ){
+	        fncErrorMessage(2, strObjectName);
+	        return false;
+	    }
+
+	    if(date.getFullYear() <= 1600){
+	    	var today = new Date();  
+	        objObject.value = today.getFullYear() + "/" + (today.getMonth() + 1) + "/" + today.getDate();
+	    }
+
+	    fncErrorMessage(0, strObjectName);
+	    return true;
 	}
 
 	// -------------------------------------------------------

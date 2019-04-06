@@ -20,11 +20,13 @@
 	// 設定読み込み
 	include_once('conf.inc');
 
+	require_once(SRC_ROOT.'/mold/lib/UtilSearchForm.class.php');
+
 	// ライブラリ読み込み
 	require (LIB_FILE);
 	require (SRC_ROOT . "list/cmn/lib_lo.php");
-	require( LIB_DEBUGFILE );
-		
+	require (LIB_DEBUGFILE);
+
 	$objDB   = new clsDB();
 	$objAuth = new clsAuth();
 	$objDB->open( "", "", "", "" );
@@ -32,10 +34,26 @@
 	//////////////////////////////////////////////////////////////////////////
 	// POST(一部GET)データ取得
 	//////////////////////////////////////////////////////////////////////////
-	$aryData = $_REQUEST;
+	$isSearch = UtilSearchForm::extractArrayByIsSearch($_REQUEST);
+	$from = UtilSearchForm::extractArrayByFrom($_REQUEST);
+	$to = UtilSearchForm::extractArrayByTo($_REQUEST);
+	$searchValue = $_REQUEST;
+	
+	$isSearch=array_keys($isSearch);
+	$aryData['SearchColumn']=$isSearch;
+	foreach($from as $key=> $item){
+		$aryData[$key.'From']=$item;
+	}
+	foreach($to as $key=> $item){
+		$aryData[$key.'To']=$item;
+	}
+	foreach($searchValue as $key=> $item){
+		$aryData[$key]=$item;
+	}
+
 
 	// 検索条件項目取得
-	if ( $lngArrayLength = count ( $aryData["SearchColumn"] ) )
+	if (is_array($aryData["SearchColumn"]) && $lngArrayLength = count ( $aryData["SearchColumn"] ) )
 	{
 		$aryColumn = $aryData["SearchColumn"];
 		for ( $i = 0; $i < $lngArrayLength; $i++ )

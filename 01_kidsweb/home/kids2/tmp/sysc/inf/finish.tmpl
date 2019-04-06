@@ -23,7 +23,7 @@
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/sysc/message/initlayoutifrm.js"></script>
 <script type="text/javascript" language="javascript" src="/sysc/inf/finish_exstr.js"></script>
 
-
+<link rel="stylesheet" type="text/css" media="screen" href="/sysc/cmn/form.css">
 <link rel="stylesheet" type="text/css" media="screen" href="/sysc/inf/finish_layout.css">
 <script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
 
@@ -33,29 +33,39 @@
 
 
 
-<p id="CompleteSet">
-	<span id="FinishRegist">登録完了</span>
-	<span id="BackSpace"></span>
+<div id="CompleteSet">
+	<div class="regist-line">
+		<span class="form-line">
+			<span id="FinishRegist">登録完了</span>
+			<span id="BackSpace"></span>
+			<!-- 戻るボタン -->
+			<span id="BackBt" onclick="location.href='inf.php?strSessionID=_%strSessionID%_';return false;"></span>
+		</span>
+	</div>
+</div>
 
-	<!-- 戻るボタン -->
-	<span id="BackBt" onclick="location.href='inf.php?strSessionID=_%strSessionID%_';return false;"></span>
-</p>
 
 
-
-<p id="MessageSet">
-	<span id="Column0">タイトル</span>
-	<span id="Column1">メッセージ</span>
-
-	<span id="Vars0">
-		<input class="Txt90L" type="text" name="strSystemInformationTitle" contenteditable="false" value="_%strSystemInformationTitle%_">
-	</span>
-	<span id="Vars1">
-		<textarea rows="3" name="strSystemInformationBody" wrap="hard" tabindex="2" maxlength="200" contenteditable="false">
-_%strSystemInformationBody%_
-		</textarea>
-	</span>
-</p>
+<div id="MessageSet">
+	<div class="regist-line">
+		<span class="form-line">
+			<span class="Column" id="Column0">タイトル</span>
+			<span class="VarText" id="Vars0">
+				<input class="Txt90L" type="text" name="strSystemInformationTitle" contenteditable="false" value="_%strSystemInformationTitle%_">
+			</span>
+		</span>
+	</div>
+	<div class="regist-line">
+		<span class="form-line">
+			<span class="ColumnArea" id="Column1">メッセージ</span>
+			<span class="VarTextArea" id="Vars1">
+				<textarea rows="3" name="strSystemInformationBody" wrap="hard" tabindex="2" maxlength="200" contenteditable="false">
+		_%strSystemInformationBody%_
+				</textarea>
+			</span>
+		</span>
+	</div>
+</div>
 
 
 

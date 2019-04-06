@@ -91,6 +91,11 @@
 	var mrE2 = '/img/type01/menu/mr_off_on_en_bt.gif';
 	var mrE3 = '/img/type01/menu/mr_on_en_bt.gif';
 
+	///// LC NAVI BT IMAGE /////
+	var lcJ1 = '/img/type01/menu/lc_off_ja_bt.gif';
+	var lcJ2 = '/img/type01/menu/lc_off_on_ja_bt.gif';
+	var lcJ3 = '/img/type01/menu/lc_on_ja_bt.gif';
+
 	///// LIST OUTPUT NAVI BT IMAGE /////
 	var listoutJ1 = '/img/type01/cmn/navi/listout_off_ja_bt.gif';
 	var listoutJ2 = '/img/type01/cmn/navi/listout_off_on_ja_bt.gif';

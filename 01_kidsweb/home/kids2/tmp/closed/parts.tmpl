@@ -7,6 +7,8 @@
 
 <header2>
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/closed/initlayout.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/navi/cmn/images.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/navi/cmn/initlayoutnavi.js"></script>
 </header2>
 
 <header3>
@@ -16,7 +18,7 @@
 </header3>
 
 <bodyonload>
-initLayoutBase();initLayout();GetlngLanguageCode( _%lngLanguageCode%_ );Loading();
+initLayoutBase();initLayout();initLayoutNavigation();Loading();
 </bodyonload>
 </config>
 
@@ -31,60 +33,38 @@ initLayoutBase();initLayout();GetlngLanguageCode( _%lngLanguageCode%_ );Loading(
 <!-- ///////////////////////////////////// END MAIN TITLE ///////////////////////////////////// -->
 
 
-
-<!-- //////////////////////////////////// START NAVIGATION //////////////////////////////////// -->
-<span id="NaviButton"></span>
-
-
-<p id="Navigations" onmouseout="NavigationOFF( Navigations , NaviButton );">
-<span id="Navi">
-	<iframe id="NaviIfrm" name="NAVIwin" frameborder="0" scrolling="no" src="/navi/index.php?strSessionID=_%strSessionID%_&strNaviCode=closed-1"></iframe>
-</span>
-</p>
-
-<!--  -->
-
-<!-- ///////////////////////////////////// END NAVIGATION ///////////////////////////////////// -->
+<div class="main-area">
+	<!-- //////////////////////////////////// START NAVIGATION //////////////////////////////////// -->
+	<div class="navi-area">
+		<span id="NaviButton"></span>
+		<p id="Navigations" onmouseout="NavigationOFF( Navigations , NaviButton );">
+			<span id="Navi">
+				<iframe id="NaviIfrm" name="NAVIwin" frameborder="0" scrolling="no" src="/navi/index.php?strSessionID=_%strSessionID%_&strNaviCode=closed-1"></iframe>
+			</span>
+		</p>
+	</div>
+	<!-- ///////////////////////////////////// END NAVIGATION ///////////////////////////////////// -->
 
 
-<!-- //////////////////////////////////// START INPUT A SEGMENTS //////////////////////////////////// -->
-<p id="InputA">
+	<!-- //////////////////////////////////// START INPUT A SEGMENTS //////////////////////////////////// -->
+	<p id="InputA">
+	<!-- START HEADER -->
+	<span id="SegAHeader"></span>
+	<!-- END HEADER -->
 
-<!-- START BODYS -->
-<span id="SegABodys"></span>
-<!-- END BODYS -->
-
-<!-- START HEADER -->
-<span id="SegAHeader"></span>
-<!-- END HEADER -->
-
-<!-- START BOTTOM -->
-<span id="SegABottom"></span>
-<!-- END BOTTOM -->
+	<!-- START BOTTOM -->
+	<span id="SegABottom"></span>
+	<!-- END BOTTOM -->
 
 
-<!-- START SEGMENTS -->
-<span id="SegA01">
-	<iframe id="SegAIFrm" name="Pwin" frameborder="0" src="/closed/closed.php?strSessionID=_%strSessionID%_"></iframe>
-</span>
-<!-- END SEGMENTS -->
-
-
-
-
-</p>
-<!-- ///////////////////////////////////// END INPUT A SEGMENTS ///////////////////////////////////// -->
-
-
-
-
-
-
-
-<!-- ////////// START E TO J ////////// -->
-<span id="EtoJ"></span>
-<!-- /////////// END E TO J /////////// -->
-
+	<!-- START SEGMENTS -->
+	<span id="SegA01">
+		<iframe id="SegAIFrm" name="Pwin" frameborder="0" src="/closed/closed.php?strSessionID=_%strSessionID%_"></iframe>
+	</span>
+	<!-- END SEGMENTS -->
+	</p>
+	<!-- ///////////////////////////////////// END INPUT A SEGMENTS ///////////////////////////////////// -->
+</div>
 
 
 

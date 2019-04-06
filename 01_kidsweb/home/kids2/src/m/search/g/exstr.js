@@ -34,9 +34,8 @@ function ChgEtoJ( lngCount )
 
 		window.top.SegAHeader.innerHTML = headerAE;
 
-		SegA01.innerText = 'Group name';
 
-		if( typeof(parent.schSchButton) != 'undefined' )
+		/*if( typeof(parent.schSchButton) != 'undefined' )
 		{
 			parent.schSchButton.innerHTML = parent.schSchBtE1;
 		}
@@ -44,7 +43,7 @@ function ChgEtoJ( lngCount )
 		if( typeof(parent.schClrButton) != 'undefined' )
 		{
 			parent.schClrButton.innerHTML = parent.schClrBtE1;
-		}
+		}*/
 
 	}
 
@@ -55,9 +54,7 @@ function ChgEtoJ( lngCount )
 
 		window.top.SegAHeader.innerHTML = headerAJ;
 
-		SegA01.innerText = 'グループ名称';
-
-		if( typeof(parent.schSchButton) != 'undefined' )
+		/*if( typeof(parent.schSchButton) != 'undefined' )
 		{
 			parent.schSchButton.innerHTML = parent.schSchBtJ1;
 		}
@@ -65,7 +62,7 @@ function ChgEtoJ( lngCount )
 		if( typeof(parent.schClrButton) != 'undefined' )
 		{
 			parent.schClrButton.innerHTML = parent.schClrBtJ1;
-		}
+		}*/
 
 	}
 

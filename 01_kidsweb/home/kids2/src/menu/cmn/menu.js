@@ -109,6 +109,12 @@ function setMenu_MR(){
 	document.frmMenu.submit();
 }
 
+function setMenuLC(){
+
+	document.frmMenu.action = "/lc/select-function/index.php";
+	document.frmMenu.submit();
+}
+
 function setMenu_SYSC() {
 
 	document.frmMenu.action = "/sysc/index.php";

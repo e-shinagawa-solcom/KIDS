@@ -146,7 +146,7 @@ fncDebug("lib_ps.txt", $aryColumnNames, __FILE__, __LINE__);
 
 	// テンプレート生成
 	$objTemplate->replace( $aryNewResult );
-	$objTemplate->replace( $aryHeadColumnNames );
+	//$objTemplate->replace( $aryHeadColumnNames );
 	$objTemplate->complete();
 
 	// HTML出力

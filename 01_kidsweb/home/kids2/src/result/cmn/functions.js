@@ -2,7 +2,15 @@
 
 var g_DialogLoadFlag = false;
 
-var g_aryArgs = window.dialogArguments;
+if(window.dialogArguments){
+	var g_aryArgs = window.dialogArguments;
+}
+else if(window.opener){
+	var g_aryArgs = window.opener.args;
+}
+else{
+	var g_aryArgs = window.parent.opener.args;
+}
 
 var g_ActionScriptName = ''; // フォームアクション値格納グローバル変数
 
@@ -15,8 +23,6 @@ function fncIframe( obj1 , obj2 )
 {
 
 // alert(g_aryArgs.join("\r\n"));
-
-
 
 	// Iframe 生成
 	obj1.innerHTML = '<iframe id="' + g_aryArgs[0][1] + '" name="Rwin" scrolling="' + g_aryArgs[0][2] + '" src="' + g_aryArgs[0][0] + '"></iframe>';

@@ -20,7 +20,7 @@
 <link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
 
 
-<link rel="stylesheet" type="text/css" media="screen" href="layout.css">
+<link rel="stylesheet" type="text/css" media="screen" href="/m/cmn/form.css">
 <script type="text/javascript" language="javascript" src="exstr.js"></script>
 <script type="text/javascript" language="javascript" src="functions.js"></script>
 <script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
@@ -29,7 +29,7 @@
 
 
 </head>
-<body id="Backs" oncontextmenu="return false;" onload="initLayoutSegs( Segs , Vars , '' , '' );fncAutoFocus( document.all.lngMonetaryRateCode );GetIfrmlngLanguageCode();fncMasterSearchOnload();Loading();">
+<body id="Backs" oncontextmenu="return false;" onload="fncAutoFocus( document.all.lngMonetaryRateCode );GetIfrmlngLanguageCode();fncMasterSearchOnload();Loading();">
 
 
 <span id="RMasterSearchObject"></span>
@@ -46,37 +46,39 @@
 <input type="hidden" name="strSessionID" value="_%strSessionID%_">
 
 
-<p id="Segs">
-<span id="SegA01">COLUMN1</span>
-<span id="SegA02">COLUMN2</span>
-<span id="SegA03">COLUMN3</span>
-</p>
-
-
-
-<p id="Vars">
-<span id="VarsA01">
-	<select class="SlctStyle01" name="lngMonetaryRateCode">
-		_%lngMonetaryRateCode%_
-	</select>
-</span>
-
-<span id="VarsA02">
-	<select class="SlctStyle01" name="lngMonetaryUnitCode">
-		_%lngMonetaryUnitCode%_
-	</select>
-</span>
-
-<span id="VarsA03">
-	<input class="CheckBox14" type="checkbox" name="now" value="1" onblur="fncDefaultTabindex( document.all.lngMonetaryRateCode );">
-</span>
-</p>
-
-
+<!-- フォーム -->
+<div class="form-box__contents">
+	<div class="regist-line">
+		<span class="form-line">
+			<span class="Column" id="SegA01">レートタイプ</span>
+			<span class="VarText" id="VarsA01">
+				<select class="SlctStyle01" name="lngMonetaryRateCode">
+					_%lngMonetaryRateCode%_
+				</select>
+			</span>
+		</span>
+	</div>
+	<div class="regist-line">
+		<span class="form-line">
+			<span class="Column" id="SegA02">通貨単位</span>
+			<span class="VarText" id="VarsA02">
+				<select class="SlctStyle01" name="lngMonetaryUnitCode">
+					_%lngMonetaryUnitCode%_
+				</select>
+			</span>
+		</span>
+	</div>
+	<div class="regist-line">
+		<span class="form-line">
+			<span class="Column" id="SegA03">現在の通貨レート</span>
+			<span class="VarText" id="VarsA03">
+				<input class="CheckBox14" type="checkbox" name="now" value="1" onblur="fncDefaultTabindex( document.all.lngMonetaryRateCode );">
+			</span>
+		</span>
+	</div>
 <!-- <input type="button" onclick="fncQueryDialog( Vars1.value , Vars2.value );return false;"> -->
 <input type="hidden" name="Vars1" value="/m/regist/r/edit.php?strSessionID=41a22d3c6291a1860fb0228750104183&lngActionCode=1">
 <input type="hidden" name="Vars2" value="1">
-
 </form>
 </body>
 </html>

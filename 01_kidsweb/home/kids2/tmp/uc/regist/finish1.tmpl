@@ -47,60 +47,41 @@ initLayoutBase();initLayout();GetlngLanguageCode( _%lngLanguageCode%_ );Loading(
 
 
 
-
-<!-- /////////////////////////////////// START NAVIGAION /////////////////////////////////// -->
-<span id="NaviButton" style="visibility:_%strBaseVisibilityName%_;"></span>
-
-<p id="Navigations" onmouseout="NavigationOFF( Navigations , NaviButton );">
-<span id="Navi">
-	<iframe id="NaviIfrm" name="NAVIwin" frameborder="0" scrolling="no" src="/navi/index.php?strSessionID=_%strSessionID%_&strNaviCode=_%strNaviCode%_"></iframe>
-</span>
-</p>
+<div class="main-area">
+	<!-- /////////////////////////////////// START NAVIGAION /////////////////////////////////// -->
+	<div class="navi-area">
+		<span id="NaviButton" style="visibility:_%strBaseVisibilityName%_;"></span>
+		<p id="Navigations" onmouseout="NavigationOFF( Navigations , NaviButton );">
+			<span id="Navi">
+				<iframe id="NaviIfrm" name="NAVIwin" frameborder="0" scrolling="no" src="/navi/index.php?strSessionID=_%strSessionID%_&strNaviCode=_%strNaviCode%_"></iframe>
+			</span>
+		</p>
+	</div>
 <!-- //////////////////////////////////// END NAVIGAION //////////////////////////////////// -->
 
-
-
-
-
-
-
 <!-- /////////////////////////////////// START INPUT A SEGMENTS /////////////////////////////////// -->
-<p id="InputA">
-
-<!-- BODYS -->
-<span id="SegABodys"></span>
-
-<!-- HEADER -->
-<span id="SegAHeader"></span>
-
-<!-- BOTTOM -->
-<span id="SegABottom"></span>
-
-
-
-
-<span id="FinishRegist">瓚狤敦弇</span>
-<span id="BackSpace"></span>
-
-<!-- 枑月示正件 -->
-<span id="CloseBt" onclick="location.href='_%strAction%_';return false;"></span>
-
-</p>
+	<div id="InputA">
+		<!-- HEADER -->
+		<span id="SegAHeader"></span>
+		
+		<!-- BODYS -->
+		<span id="SegABodys"></span>
+		<div id="CompleteSet">
+			<div class="regist-line">
+				<span class="form-line">
+					<span id="FinishRegist">瓚狤敦弇</span>
+					<span id="BackSpace"></span>
+					<!-- 枑月示正件 -->
+					<span id="CloseBt" onclick="location.href='_%strAction%_';return false;"></span>
+				</span>
+			</div>
+		</div>
+		
+		<!-- BOTTOM -->
+		<span id="SegABottom"></span>
+	</div>
 <!-- //////////////////////////////////// END INPUT A SEGMENTS //////////////////////////////////// -->
-
-
-
-
-
-
-
-
-<!-- /////////////////////////////////// START E TO J /////////////////////////////////// -->
-<span id="EtoJ" style="visibility:_%strBaseVisibilityName%_;"></span>
-<!-- //////////////////////////////////// END E TO J //////////////////////////////////// -->
-
-
-
+</div>
 
 
 <!-- ERROR MESSAGE -->

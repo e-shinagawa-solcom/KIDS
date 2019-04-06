@@ -23,8 +23,6 @@ function initLayoutUC()
 	///// MAIN TITLE /////
 	MainTitle.innerHTML = maintitleJ;
 
-	MenuBack.innerHTML  = menuBackImg;
-
 	return false;
 }
 

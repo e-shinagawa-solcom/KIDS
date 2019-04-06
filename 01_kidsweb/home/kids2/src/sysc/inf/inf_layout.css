@@ -1,12 +1,24 @@
 <!--
 
-
-#Backs
-{
-	background : #d6d0b1 ;
+.ColumnArea {
+	display: inline-block;
+	vertical-align: middle;
+	font-weight : bold ;
+	width : 157px ;
+	line-height: 23px;
 }
 
+.VarTextArea {
+	font-family : ‚l‚r ‚oƒSƒVƒbƒN, Osaka ;
+	font-style : normal ;
+	font-weight : normal ;
+	font-size : 12px;
+	vertical-align: middle;
+}
 
+textarea{
+	vertical-align: middle;
+}
 
 #MessageSet
 {
@@ -16,66 +28,6 @@
 	z-index    : 3 ;
 	background : transparent ;
 }
-
-
-
-#Column0
-{
-	position     : absolute ;
-	font-weight  : bold ;
-	left         : 0px ;
-	top          : 0px ;
-	width        : 150px ;
-	height       : 27px ;
-	border-width : 1px ;
-	border-style : solid ;
-	border-color : #798787 #e8f0f1 #798787 #798787 ;
-	background   : #e8f0f1 ;
-	padding      : 8px 0px 0px 8px ;
-}
-
-#Vars0
-{
-	position     : absolute ;
-	left         : 149px ;
-	top          : 0px ;
-	height       : 27px ;
-	border-width : 1px ;
-	border-style : solid ;
-	border-color : #798787 #798787 #798787 #e8f0f1 ;
-	background   : #e8f0f1 ;
-	padding      : 3px 0px 0px 8px ;
-}
-
-
-#Column1
-{
-	position     : absolute ;
-	font-weight  : bold ;
-	left         : 0px ;
-	top          : 30px ;
-	width        : 150px ;
-	height       : 56px ;
-	border-width : 1px ;
-	border-style : solid ;
-	border-color : #798787 #e8f0f1 #798787 #798787 ;
-	background   : #e8f0f1 ;
-	padding      : 23px 0px 0px 8px ;
-}
-
-#Vars1
-{
-	position     : absolute ;
-	left         : 149px ;
-	top          : 30px ;
-	height       : 27px ;
-	border-width : 1px ;
-	border-style : solid ;
-	border-color : #798787 #798787 #798787 #e8f0f1 ;
-	background   : #e8f0f1 ;
-	padding      : 3px 0px 3px 8px ;
-}
-
 
 #RegistBt
 {

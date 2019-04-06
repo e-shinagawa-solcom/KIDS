@@ -21,7 +21,7 @@ function ChgEtoJ()
 
 
 		///// E TO J /////
-		EtoJ.innerHTML = etojJbt;
+		//EtoJ.innerHTML = etojJbt;
 
 
 		///// MAIN TITLE /////
@@ -39,7 +39,7 @@ function ChgEtoJ()
 		lngLanguageCode = 0;
 		lngClickCode = 1;
 
-		window.NAVIwin.ChgEtoJ( 0 );
+		//window.NAVIwin.ChgEtoJ( 0 );
 
 
 	}
@@ -54,7 +54,7 @@ function ChgEtoJ()
 
 
 		///// E TO J /////
-		EtoJ.innerHTML = etojEbt;
+		//EtoJ.innerHTML = etojEbt;
 
 
 		///// MAIN TITLE /////
@@ -71,7 +71,7 @@ function ChgEtoJ()
 		lngLanguageCode = 1;
 		lngClickCode = 0;
 
-		window.NAVIwin.ChgEtoJ( 1 );
+		//window.NAVIwin.ChgEtoJ( 1 );
 
 
 	}

@@ -45,6 +45,8 @@ elseif ( $_GET )
 	$aryData = $_GET;
 }
 
+setcookie("strSessionID", $aryData["strSessionID"], 0, "/");
+
 // 文字列チェック
 $aryCheck["strSessionID"]   = "null:numenglish(32,32)";
 $aryResult = fncAllCheck( $aryData, $aryCheck );
@@ -65,14 +67,20 @@ if ( !fncCheckAuthority( DEF_FUNCTION_P2, $objAuth ) )
 	fncOutputError ( 9018, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
 
+// 文字列チェック
+$aryCheck["strSessionID"]          = "null:numenglish(32,32)";
+$aryResult = fncAllCheck( $aryData, $aryCheck );
+fncPutStringCheckError( $aryResult, $objDB );
+
 // ヘルプ対応
 $aryData["lngFunctionCode"] = DEF_FUNCTION_P2;
 
 // テンプレート読み込み
-echo fncGetReplacedHtml( "p/search/parts.tmpl", $aryData ,$objAuth );
+echo fncGetReplacedHtmlWithBase("search/base_search.html", "p/search/p_search.tmpl", $aryData ,$objAuth );
 
 $objDB->close();
 
 return true;
 
 ?>
+

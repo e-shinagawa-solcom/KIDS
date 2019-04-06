@@ -18,6 +18,7 @@
 	padding : 7px 0px 0px 8px ;
 	background-color: #4b6486 ;
 	text-align :center ;
+	box-sizing: border-box;
 }
 
 
@@ -72,8 +73,6 @@
 	background-color: transparent ;
 }
 
-
-
 #MenuBack
 {
 	position : absolute ;
@@ -84,7 +83,6 @@
 	background-color: transparent ;
 	filter : alpha(opacity=100) ;
 }
-
 
 #MenuBackBorder
 {
@@ -97,6 +95,7 @@
 	border-style: solid ;
 	border-color : #cdcdcd ;
 	background-color: transparent ;
+	box-sizing: border-box;
 }
 
 

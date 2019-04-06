@@ -32,6 +32,7 @@ $objAuth = new clsAuth();
 $objDB->open( "", "", "", "" );
 
 $aryData["strSessionID"]    = $_GET["strSessionID"];
+setcookie("lngLanguageCode", 1,0,"/");
 
 // 文字列チェック
 $aryCheck["strSessionID"]   = "null:numenglish(32,32)";
@@ -201,6 +202,15 @@ else
 {
 	$aryData["MRnavi_visibility"] = "hidden";
 }
+// L/C管理
+if ( fncCheckAuthority( DEF_FUNCTION_LC0, $objAuth))
+{
+	$aryData["LCnavi_visibility"] = "visible";
+}
+else
+{
+	$aryData["LCnavi_visibility"] = "hidden";
+}
 
 	// サブメニュー生成
 	$aryData = fncSetSubMenu( $aryData, $objAuth, $objDB );
@@ -226,7 +236,6 @@ $aryData["strSystemVersion"] = DEF_SYSTEM_VERSION;
 
 // ヘルプ対応
 $aryData["lngFunctionCode"] = DEF_FUNCTION_MENU0;
-
 
 // HTML出力
 echo fncGetReplacedHtml( "menu/parts.tmpl", $aryData, $objAuth );

@@ -24,6 +24,28 @@ function initLayout()
 	MainTitle.innerHTML = maintitleJ;
 
 	//MenuBack.innerHTML  = menuBackImg;
+	
+
+	if( typeof(MessageBt) != 'undefined' )
+	{
+		MessageBt.innerHTML = messagenaviJ1;
+	}
+
+	if( typeof(ServerBt) != 'undefined' )
+	{
+		ServerBt.innerHTML = servernaviJ1;
+	}
+
+	if( typeof(EmailBt) != 'undefined' )
+	{
+		EmailBt.innerHTML = emailnaviJ1;
+	}
+
+	if( typeof(SessionBt) != 'undefined' )
+	{
+		SessionBt.innerHTML = sessionnaviJ1;
+	}
+	
 
 	return false;
 }

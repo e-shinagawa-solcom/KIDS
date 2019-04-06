@@ -59,6 +59,7 @@
 // 設定読み込み
 include_once('conf.inc');
 require_once( LIB_DEBUGFILE );
+require_once(SRC_ROOT.'/mold/lib/UtilSearchForm.class.php');
 
 // ライブラリ読み込み
 require (LIB_FILE);
@@ -69,15 +70,32 @@ $objDB   = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open( "", "", "", "" );
 
-// データ取得
-if ( $_GET )
-{
-	$aryData = $_GET;
-}
-elseif ( $_POST )
-{
-	$aryData = $_POST;
-}
+// フォームデータから各カテゴリの振り分けを行う
+	$options = UtilSearchForm::extractArrayByOption($_REQUEST);
+	$isDisplay = UtilSearchForm::extractArrayByIsDisplay($_REQUEST);
+	$isSearch = UtilSearchForm::extractArrayByIsSearch($_REQUEST);
+	$from = UtilSearchForm::extractArrayByFrom($_REQUEST);
+	$to = UtilSearchForm::extractArrayByTo($_REQUEST);
+	$searchValue = $_REQUEST;
+	$isDisplay=array_keys($isDisplay);
+	$isSearch=array_keys($isSearch);
+
+	//////////////////////////////////////////////////////////////////////////
+	// POST(一部GET)データ取得
+	//////////////////////////////////////////////////////////////////////////
+
+	$aryData['ViewColumn']=$isDisplay;
+	$aryData['SearchColumn']=$isSearch;
+	foreach($from as $key=> $item){
+		$aryData[$key.'From']=$item;
+	}
+	foreach($to as $key=> $item){
+		$aryData[$key.'To']=$item;
+	}
+	foreach($searchValue as $key=> $item){
+		$aryData[$key]=$item;
+	}
+
 
 // クッキーから言語コードを取得
 $aryData["lngLanguageCode"] = $_COOKIE["lngLanguageCode"];
@@ -104,7 +122,6 @@ if ( $lngArrayLength = count ( $aryData["SearchColumn"] ) )
 	unset ( $aryData["SearchColumn"] );
 }
 unset ( $lngArrayLength );
-
 $aryData = fncToHTMLString( $aryData );
 
 //echo getArrayTable( $aryData, "TABLE" );
@@ -232,7 +249,6 @@ $aryCheck["dtmDeliveryLimitDateTo"]      = "date(/)";
 // 文字列チェック
 $aryCheckResult = fncAllCheck( $aryData, $aryCheck );
 fncPutStringCheckError( $aryCheckResult, $objDB );
-
 
 // 見積原価管理データ読み込み、検索、詳細情報取得クエリ関数
 list ( $lngResultID, $lngResultNum, $baseData["strErrorMessage"] ) = getEstimateQuery( $objAuth->UserCode, $aryData, $objDB );

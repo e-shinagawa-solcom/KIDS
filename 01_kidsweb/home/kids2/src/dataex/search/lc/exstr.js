@@ -34,34 +34,6 @@ function ChgEtoJ( lngCount )
 	// エクスポートボタンの書出し
 	ExportBt.innerHTML  = blownexportBt;
 
-
-	// 英語
-	if ( lngCount == 0 )
-	{
-
-		window.top.SegAHeader.innerHTML = headerAE;
-
-		Column0.innerText = 'Setting date';
-		Column1.innerText = 'P.O. No.';
-		Column2.innerText = 'L/C Schedule file';
-		Column3.innerText = 'Revise';
-
-	}
-
-
-	// 日本語
-	else if ( lngCount == 1 )
-	{
-
-		window.top.SegAHeader.innerHTML = headerAJ;
-
-		Column0.innerText = '設定日';
-		Column1.innerText = '発注ＮＯ.';
-		Column2.innerText = 'L/C 予定表';
-		Column3.innerText = 'リバイズ';
-
-	}
-
 	return false;
 
 }

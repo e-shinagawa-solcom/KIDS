@@ -25,6 +25,8 @@
 
 	// 設定読み込み
 	include_once('conf.inc');
+	
+	require_once(SRC_ROOT.'/mold/lib/UtilSearchForm.class.php');
 
 	// ライブラリ読み込み
 	require (LIB_FILE);
@@ -42,25 +44,36 @@
 	//////////////////////////////////////////////////////////////////////////
 	// POST(一部GET)データ取得
 	//////////////////////////////////////////////////////////////////////////
-	$aryData = $_REQUEST;
-
-
-	// 検索表示項目取得
-	// 表示項目  $aryViewColumnに格納
-	if( is_array( $_POST["ViewColumn"] ) )
-	{
-		while ( list( $strKeys, $strValues ) = each( $_POST["ViewColumn"] ) )
-		{
-			$strValues =  preg_replace("/(.+?)(Visible|Conditions)$/", "\\1", $strValues );
-			$aryViewColumn[$strKeys] = $strValues;
-		}
+	// フォームデータから各カテゴリの振り分けを行う
+	$options = UtilSearchForm::extractArrayByOption($_REQUEST);
+	$isDisplay = UtilSearchForm::extractArrayByIsDisplay($_REQUEST);
+	$isSearch = UtilSearchForm::extractArrayByIsSearch($_REQUEST);
+	$from = UtilSearchForm::extractArrayByFrom($_REQUEST);
+	$to = UtilSearchForm::extractArrayByTo($_REQUEST);
+	$searchValue = $_REQUEST;
+	
+	$isDisplay=array_keys($isDisplay);
+	$isSearch=array_keys($isSearch);
+	$aryData['ViewColumn']=$isDisplay;
+	$aryData['SearchColumn']=$isSearch;
+	foreach($from as $key=> $item){
+		$aryData[$key.'From']=$item;
 	}
-	else
+	foreach($to as $key=> $item){
+		$aryData[$key.'To']=$item;
+	}
+	foreach($searchValue as $key=> $item){
+		$aryData[$key]=$item;
+	}
+	
+	
+	// 検索表示項目取得
+	if(empty($isDisplay))
 	{
 		$strMessage = fncOutputError( 9058, DEF_WARNING, "" ,FALSE, "../so/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
 
 		// [lngLanguageCode]書き出し
-		$aryHtml["lngLanguageCode"] = $aryData["lngLanguageCode"];
+		$aryHtml["lngLanguageCode"] = 1;
 
 		// [strErrorMessage]書き出し
 		$aryHtml["strErrorMessage"] = $strMessage;
@@ -72,29 +85,19 @@
 		// テンプレート生成
 		$objTemplate->replace( $aryHtml );
 		$objTemplate->complete();
-
 		// HTML出力
 		echo $objTemplate->strTemplate;
 
 		exit;
 	}
-
+	
 	// 検索条件項目取得
 	// 検索条件 $arySearchColumnに格納
-	if( is_array ( $aryData["SearchColumn"] ) )
-	{
-		while ( list ($strKeys, $strValues ) = each ( $aryData["SearchColumn"] ))
-		{
-			$strValues =  preg_replace("/(.+?)(Visible|Conditions)$/", "\\1", $strValues );
-			$arySearchColumn[$strKeys] = $strValues;
-		}
-	}
-	else
+	if( empty ( $isSearch ) )
 	{
 	//	fncOutputError( 502, DEF_WARNING, "検索対象項目がチェックされていません",TRUE, "../so/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
 		$bytSearchFlag = TRUE;
 	}
-
 
 	//////////////////////////////////////////////////////////////////////////
 	// セッション、権限確認
@@ -178,9 +181,15 @@
 	{
 		$aryUserAuthority["Invalid"] = 1;	// 407 無効化
 	}
+	
+	// 表示項目  $aryViewColumnに格納
+	$aryViewColumn=$isDisplay;
+	
+	// 検索項目  $arySearchColumnに格納
+	$arySearchColumn=$isSearch;
 
 	// クッキー取得
-	$aryData["lngLanguageCode"] = $_COOKIE["lngLanguageCode"];
+	$aryData["lngLanguageCode"] = 1;
 
 	reset($aryViewColumn);
 	if ( !$bytSearchFlag )
@@ -188,28 +197,9 @@
 		reset($arySearchColumn);
 	}
 	reset($aryData);
-
-
-
-
+	
 	// 検索条件に一致する受注コードを取得するSQL文の作成
 	$strQuery = fncGetSearchReceiveSQL( $aryViewColumn, $arySearchColumn, $aryData, $objDB, "", 0, FALSE );
-
-	//fncDebug( 'lib_sos.txt', $strQuery, __FILE__, __LINE__);
-
-
-
-
-	// echo "<br><br>strQuery: <BR>";
-	// var_dump( $strQuery );
-	// echo "<BR>aryViewColumn: <BR>";
-	// var_dump( $aryViewColumn );
-	// echo "<BR>arySearchColumn: <BR>";
-	// var_dump( $arySearchColumn );
-	// echo "<BR>aryData: <BR>";
-	// var_dump( $aryData );
-	// exit;
-
 	// 値をとる =====================================
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
@@ -285,8 +275,6 @@
 	// テーブル構成で検索結果を取得、ＨＴＭＬ形式で出力する
 	$aryHtml["strHtml"] = fncSetReceiveTable ( $aryResult, $aryViewColumn, $aryData, $aryUserAuthority, $aryTytle, $objDB, $objCache, $aryTableViewName );
 
-
-
 	// POSTされたデータをHiddenにて設定する
 	unset($ary_keys);
 	$ary_Keys = array_keys( $aryData );
@@ -337,7 +325,7 @@
 
 	// テンプレート読み込み
 	$objTemplate = new clsTemplate();
-	$objTemplate->getTemplate( "/so/result/parts.tmpl" );
+	$objTemplate->getTemplate( "/so/result/so_search_result.html" );
 
 	// テンプレート生成
 	$objTemplate->replace( $aryHtml );

@@ -7,7 +7,6 @@
 
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/images.js"></script>
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/dataex/pplan/images.js"></script>
-<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/dataex/pplan/initlayoutsearch.js"></script>
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutcommon.js"></script>
 
 
@@ -21,22 +20,18 @@
 <link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
 
 
-<link rel="stylesheet" type="text/css" media="screen" href="/dataex/search/pplan/layout.css">
+<link rel="stylesheet" type="text/css" media="screen" href="/dataex/search/cmn/layout.css">
 <script type="text/javascript" language="javascript" src="/dataex/search/pplan/exstr.js"></script>
 <script type="text/javascript" language="javascript" src="/dataex/search/pplan/functions.js"></script>
 <script type="text/javascript" language="javascript" src="/dataex/search/cmn/functions.js"></script>
 <script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
 
 </head>
-<body id="Backs" oncontextmenu="return false;" onload="initLayoutSegs( Segs , Vars , '' , '' , '' , '' , '' , '' );ChgEtoJ( parent.lngLanguageCode );fncAutoFocus( document.all.dtmAppropriationDateFrom );">
-
-
+<body id="Backs" oncontextmenu="return false;"onload="ChgEtoJ( parent.lngLanguageCode );fncAutoFocus( document.all.dtmAppropriationDateFrom );">
 
 <OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting" WIDTH="0" HEIGHT="0"></OBJECT>
 <Script for="objDataSourceSetting" event="ondatasetcomplete">subLoadMasterSetting(this.recordset,0);
 </Script>
-
-
 
 <form name="PS" method="post">
 <input type="hidden" name="ActionScriptName" value="">
@@ -44,47 +39,38 @@
 <input type="hidden" name="lngExportData" value="_%lngExportData%_">
 <input type="hidden" name="lngActionCode" value="2">
 
-
-
-
-<!-- カラム -->
-<p id="Segs">
-<span id="Column0">基準日</span>
-<span id="Column1">部門</span>
-</p>
-
-
 <!-- フォーム -->
-<p id="Vars">
-<span id="VarsA01">
-	FROM&nbsp;<input style="ime-mode:disabled;" class="Txt10L" type="text" name="dtmAppropriationDateFrom" value="_%lcdatestart%_" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate( this );" tabindex="">TO&nbsp;<input style="ime-mode:disabled;" class="Txt10L" type="text" name="dtmAppropriationDateTo" value="_%lcdateend%_" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate( this );" tabindex="">
-</span>
-
-<span id="VarsA02">
-	_%lngGroupCode%_
-</span>
-
-
-</p>
-
-
-<p id="QuerySet">
-
-<span id="label_Excel">Excelファイル：</span>
-<span id="PreviewBt" onclick="document.PS.lngActionCode.value=1;fncDataFormPreview( window.PS , '/dataex/result/stat.html' );return false;" style="visibility:hidden;"></span>
-<!-- エクスポートボタン -->
-<span id="ExportBt" onclick="document.PS.lngActionCode.value=2;PS.action='/dataex/result/stat.php';PS.submit();"></span>
-</p>
-
-
-<!-- 終端調整用ダミーレイヤー -->
-<span id="DummySpace"></span>
-
-
-
-
-
-
+<div class="form-box__contents">
+	<div class="regist-line">
+		<span class="form-line">
+			<span class="Column">基準日</span>
+			<span class="VarText" id="VarsA01">
+				<span class="VarLabel">FROM</span>
+				<input style="ime-mode:disabled;" class="Txt10L" type="text" name="dtmAppropriationDateFrom" value="_%lcdatestart%_" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate( this );" tabindex="" display: inline-block; vertical-align: middle;>
+				<span class="VarLabel">TO</span>
+				<input style="ime-mode:disabled;" class="Txt10L" type="text" name="dtmAppropriationDateTo" value="_%lcdateend%_" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate( this );" tabindex="" display: inline-block; vertical-align: middle;>
+			</span>
+		</span>
+	</div>
+	<div class="regist-line">
+		<span class="form-line">
+			<span class="Column">部門</span>
+			<span class="VarCheck" id="VarsA02">
+				_%lngGroupCode%_
+			</span>
+		</span>
+	</div>
+	<div class="SpacerLong">
+	</div>
+	<div class="QuerySet">
+		<span class="Column">Excelファイル：</span>
+		<span class="QueryBt" id="PreviewBt" onclick="document.PS.lngActionCode.value=1;fncDataFormPreview( window.PS , '/dataex/result/stat.html' );return false;" style="visibility:hidden;">
+		</span>
+		<!-- エクスポートボタン -->
+		<span class="QueryBt" id="ExportBt" onclick="document.PS.lngActionCode.value=2;PS.action='/dataex/result/stat.php';PS.submit();">
+		</span>
+	</div>
+</div>
 </form>
 </body>
 </html>

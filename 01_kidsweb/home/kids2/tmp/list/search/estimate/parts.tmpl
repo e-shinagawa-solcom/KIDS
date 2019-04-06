@@ -1,149 +1,140 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html lang="ja">
-<head>
-<title>K.I.D.S.</title>
-<meta http-equiv="content-type" content="text/html; charset=euc-jp">
+<config>
+<header1>
+	<link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
+	<link rel="stylesheet" href="/list/cmn/forms_list.css">
+	<script type="text/javascript" language="javascript" src="/cmn/lngcheck.js"></script>
+	<script type="text/javascript" language="javascript" src="/list/search/estimate/exstr.js"></script>
+	<script src="/search/cmn/form/js/util-selectbox.js" defer></script>
+    <!-- チェックボックスの切り替え処理 -->
+    <script src="/search/cmn/search/js/toggleCheckbox.js" defer></script>
+    <!-- 検索画面共通入力補助 -->
+    <script src="/search/cmn/search/js/input-assist.js" defer></script>
+	<!-- msw 表示 -->
+	<script src="/search/cmn/msw/cmn/js/msw.js" defer></script>
+    <!-- COOKIE関連の処理(検索画面) -->
+    <script src="/search/cmn/search/js/cookie-functions.js" defer></script>
+</header1>
 
+<header2>
+	<!-- jQuery -->
+	<script src="/cmn/jquery/jquery-3.1.0.js"></script>
+    <!-- jQuery Cookie -->
+	<script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
+    <!-- jQuery UI -->
+	<script src="/cmn/jquery/ui/jquery-ui-1.12.0.js"></script>
+    <link rel="stylesheet" href="/cmn/jquery/ui/jquery-ui-1.12.0.css">
+    <link rel="stylesheet" href="/cmn/jquery/ui/jquery-ui.theme.css">
+    <!-- jQuery UI datepickerローカライズ用スクリプト -->
+	<script src="/cmn/jquery/ui/datepicker-ja.js"></script>
+    <!-- jQuery Validation Plugin -->
+    <script src="/cmn/jquery/validation/jquery.validate.js"></script>
+    <!-- jQuery tooltipster -->
+    <script src="/cmn/jquery/tooltipster/js/tooltipster.bundle.js"></script>
+    <link rel="stylesheet" href="/cmn/jquery/tooltipster/css/tooltipster.bundle.css">
+</header2>
 
-<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/images.js"></script>
-<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/list/estimate/images.js"></script>
-<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/list/estimate/initlayoutsearch.js"></script>
-<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutcommon.js"></script>
-
-
-<script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
-<script type="text/javascript" language="javascript" src="/cmn/query.js"></script>
-<script type="text/vbscript" Language="vbscript" src="/cmn/vbsclass.js"></script>
-<script type="text/vbscript" Language="vbscript" src="/cmn/vbscript.js"></script>
-<script type="text/javascript" language="javascript" src="/cmn/lngcheck.js"></script>
-<script type="text/javascript" language="javascript" src="/cmn/masterlib.js"></script>
-<link rel="stylesheet" type="text/css" media="screen" href="/cmn/layout.css">
-<link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
-
-
-<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutmsw.js"></script>
-<link rel="stylesheet" type="text/css" media="screen" href="/list/search/estimate/layout.css">
-<script type="text/javascript" language="javascript" src="/list/search/estimate/exstr.js"></script>
-<script type="text/javascript" language="javascript" src="/list/search/estimate/functions.js"></script>
-<script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
-
-
-
-
-</head>
-<body id="Backs" onload="initLayoutSegs( Segs , Vars , '' , '' , '' , '' , CheckGoods3 , '' );initLayoutESSearch();fncAutoFocus( document.all.dtmInsertDateFrom );initLayoutMsw();ChgEtoJ( parent.lngLanguageCode );Loading();">
-<!-- oncontextmenu="return false;" -->
-
-<span id="ESListSearchObject"></span>
-
-
-<p id="Preload">
-	<iframe id="PreloadFrm" name="PreloadWin" frameborder="0" src="/preload/index.html" onload="fncObjectResize( this , 0 , 0 );"></iframe>
-</p>
-
-
-<OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting" WIDTH="0" HEIGHT="0"></OBJECT>
-<Script for="objDataSourceSetting" event="ondatasetcomplete">subLoadMasterSetting(this.recordset,0);
-</Script>
-
-
-
-<form name="PS" method="post" action="javascript:void(0);">
-<input type="hidden" name="ActionScriptName" value="/list/result/estimate/index.php">
-<input type="hidden" name="strSessionID" value="_%strSessionID%_">
-
-
-
-
-<p id="Segs">
-	<span id="SegA15">作成日時</span>
-	<span id="SegA01">製品コード</span>
-	<span id="SegA02">製品名称(日本語)</span>
-	<span id="SegA18">入力者</span>
-	<span id="SegA04">営業部署</span>
-	<span id="SegA05">開発担当者</span>
-	<span id="SegA03">納期</span>
-</p>
-
-
-
-
-<p id="Vars">
-	<span id="VarsA15">
-		FROM&nbsp;<input style="ime-mode:disabled;" class="TxtStyle05L" type="text" name="dtmInsertDateFrom" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate(this);fncCopyValue( this , document.all.dtmInsertDateTo );" tabindex="" maxlength="10">TO&nbsp;<input style="ime-mode:disabled;" class="TxtStyle05L" type="text" name="dtmInsertDateTo" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate(this);" tabindex="" maxlength="10">
-	</span>
-
-	<span id="VarsA01">
-		FROM&nbsp;<input style="ime-mode:disabled;" class="TxtStyle05L" type="text" name="strProductCodeFrom" value="" onfocus="chColorOn(this);" onblur="chColorOff(this); fncCopyValue( this , document.all.strProductCodeTo );" tabindex="" maxlength="10">TO&nbsp;<input style="ime-mode:disabled;" class="TxtStyle05L" type="text" name="strProductCodeTo" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="" maxlength="10">
-	</span>
-
-	<span id="VarsA02">
-		FROM&nbsp;<input class="Txt52L" type="text" name="strProductName" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="">
-	</span>
-
-	<span id="VarsA18">
-		<input style="ime-mode:disabled;" class="TxtStyle05L" type="text" name="lngInputUserCode" maxlength="4" onfocus="chColorOn(this);" onblur="chColorOff(this);subLoadMasterCheck(this);" onChange="subLoadMasterText('11', this, strInputUserName, Array(this.value), objDataSourceSetting, 0 );">&nbsp;<input class="TxtStyle06L" type="text" name="strInputUserName" maxlength="50" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this );" DATASRC="#objInputUserName" DATAFLD="name" tabindex="">
-	</span>
-
-	<span id="VarsA04">
-		<input style="ime-mode:disabled;" class="TxtStyle02L" type="text" name="lngInChargeGroupCode" maxlength="2" onfocus="chColorOn(this);" onblur="chColorOff(this);subLoadMasterCheck(this);" onChange="subLoadMasterText('cnGroup', this, strInChargeGroupName, Array(this.value), objDataSourceSetting );">&nbsp;<input style="ime-mode:disabled;" class="Txt54L" type="text" name="strInChargeGroupName" maxlength="50" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this );" tabindex="" DATASRC="#objInChargeGroupName" DATAFLD="name">
-	</span>
-
-	<span id="VarsA05">
-		<input style="ime-mode:disabled;" class="TxtStyle02L" type="text" name="lngInChargeUserCode" maxlength="3" onfocus="chColorOn(this);" onblur="chColorOff(this);subLoadMasterCheck(this);" onChange="subLoadMasterText('11', this, strInChargeUserName, Array(this.value), objDataSourceSetting, 0 );">&nbsp;<input style="ime-mode:disabled;" class="Txt54L" type="text" name="strInChargeUserName" maxlength="25" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="" DATASRC="#objInChargeUserName" DATAFLD="name">
-	</span>
-
-	<span id="VarsA03">
-		FROM&nbsp;<input style="ime-mode:disabled;" class="Txt10L" type="text" name="dtmDeliveryLimitDateFrom" value="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this); fncCheckDate(this); fncCopyValue( this, document.all.dtmDeliveryLimitDateTo );" tabindex="">TO&nbsp;<input class="Txt10L" type="text"  name="dtmDeliveryLimitDateTo" value="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this); fncCheckDate(this); fncDefaultTabindex( document.all.dtmInsertDateFrom );" tabindex="">
-	</span>
-</p>
-
-
-
-
-
-<span id="SegA0405"></span>
-
-
-<!-- START [DEPT & IN CHARGE NAME] BUTTON -->
-<span id="MSWBt02" onclick="window.top.fncGetObjectName( window.top.MDwin , lngInChargeGroupCode , strInChargeGroupName , lngInChargeUserCode , strInChargeUserName );window.top.DisplayerM02( '' , window.top.document.all.Mdata02 , window.top.MDwin.document.all.strGroupCode , window.top.MDwin.document.all.strUserCode );window.top.ExchangeM02( 0 , window.self );window.top.fncFocusType( window.top.MDwin , 'deptIfrm' );return false;"></span>
-<!-- END [DEPT & IN CHARGE NAME] BUTTON -->
-
-<!-- START [INPUT PERSON] BUTTON -->
-<span id="MSWBt09" onclick="window.top.fncGetObjectName( window.top.INPUT2win , lngInputUserCode , strInputUserName );window.top.DisplayerM09( '' , window.top.document.all.Mdata09 , window.top.INPUT2win.document.all.strInputUserCode );window.top.ExchangeM09( 0 , window.self );window.top.fncFocusType( window.top.INPUT2win , 'inputIfrm' );return false;"></span>
-<!-- END [INPUT PERSON] BUTTON -->
-
-
-
-
-
-
-
-<p id="CheckGoods3">
-	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="dtmInsertDateConditions" _%dtmInsertDateConditions%_></span>
-	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="strProductCodeConditions" _%strProductCodeConditions%_></span>
-	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="strProductNameConditions" _%strProductNameConditions%_></span>
-	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngInputUserCodeConditions" _%lngInputUserCodeConditions%_></span>
-	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngInChargeGroupCodeConditions" _%lngInChargeGroupCodeConditions%_></span>
-	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngInChargeUserCodeConditions" _%lngInChargeUserCodeConditions%_></span>
-	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="dtmDeliveryLimitDateConditions" _%dtmDeliveryLimitDateConditions%_></span>
-</p>
-
-
-
-<span id="ViewSearch1"></span>
-
-<span id="CheckAll1" onclick="fncCheckAll1();"></span>
-
-
-
-
-
-
-<span id="DummySpace"></span>
-
-
-
-</form>
+<header3>
+	<!-- datepickerの要素指定 -->
+	<script src="/search/cmn/js/datepicker.js" defer></script>
+	<!-- msw汎用スタイル -->
+	<link rel="stylesheet" href="/search/cmn/css/msw.css">
+    <!-- フォームボタン css -->
+    <link rel="stylesheet" href="/search/cmn/css/form-buttons.css">
+    <!-- フォームバリデーション -->
+    <script src="/search/cmn/js/validate-form.js" defer></script>
+    <!-- マスタ検索呼び出し -->
+	<script src="/search/cmn/js/invoke-master-search.js" defer></script>
+    <!-- COOKIE 表示チェックボックス 保存/復元 -->
+	<script src="/search/cmn/js/cookie-display-items.js" defer></script>
+    <!-- キーバインド -->
+	<script src="/search/cmn/js/key-bind.js" defer></script>
+	<!-- キーバインド -->
+	<script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
+</header3>
+<body onload="ChgEtoJ( parent.lngLanguageCode );">
+<bodyonload>
+</bodyonload>
+</config>
+<!-- フォームコンテンツ -->
+	<div class="form-box--list">
+		<form name="SearchEstimate" method="post">
+            <div class="regist-line">
+                <img class="toggle-search button" src="/img/type01/cmn/seg/off_bt.gif" alt="toggle search">
+            </div>
+            <div class="regist-line">
+                <img src="/img/type01/cmn/seg/search_column_ja.gif" alt="view search">
+            </div>
+            <div class="regist-line">
+                <span class="search-label--checkbox">
+                    <input name="IsSearch_dtmInsertDateConditions" class="is-search" type="checkbox">
+                </span>
+                <span class="regist-label">
+                    <span class="regist-label__text">作成日時</span>
+                    FROM <input class="TxtStyle05L" name="From_dtmInsertDate" type="text" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate(this);fncCopyValue( this , document.all.To_dtmInsertDate );" tabindex="" maxlength="10">
+                    TO <input class="TxtStyle05L" name="To_dtmInsertDate" type="text" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate(this);" tabindex="" maxlength="10">
+                </span>
+            </div>
+			<div class="regist-line">
+                <span class="search-label--checkbox">
+                    <input name="IsSearch_strProductCodeConditions" class="is-search" type="checkbox">
+                </span>
+				<span class="regist-label">
+					<span class="regist-label__text">製品コード</span>
+                    <input class="TxtStyle05L" name="From_strProductCode"  type="text" value="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="">
+				</span>
+			</div>
+			<div class="regist-line">
+                <span class="search-label--checkbox">
+                    <input name="IsSearch_strProductNameConditions" class="is-search" type="checkbox">
+                </span>
+				<span class="regist-label">
+					<span class="regist-label__text">製品名</span>
+                    <input class="TxtStyle05L" name="strProductName" type="text" value="" maxlength="80" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this );" tabindex="">
+				</span>
+			</div>
+			<div class="regist-line">
+                <span class="search-label--checkbox">
+                    <input name="IsSearch_lngInputUserCodeConditions" class="is-search" type="checkbox">
+                </span>
+				<span class="regist-label">
+					<span class="regist-label__text">入力者</span>
+                    <input class="TxtStyle05L" name="strInputUserDisplayCode" type="text">
+                    <input class="disTxt46L" name="strInputUserDisplayName" type="text" readonly>
+                    <img class="msw-button button" invokeMSWName="msw-user" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+				</span>
+			</div>
+            <div class="regist-line">
+                <span class="search-label--checkbox">
+                    <input name="IsSearch_lngInChargeGroupCodeConditions" class="is-search" type="checkbox">
+                </span>
+                <span class="regist-label">
+                    <span class="regist-label__text">営業部署</span>
+                    <input class="TxtStyle05L" name="strInChargeGroupDisplayCode" type="text">
+                    <input class="disTxt46L" name="strInChargeGroupDisplayName" type="text" readonly>
+                    <img class="msw-button button" invokeMSWName="msw-group" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="search-label--checkbox">
+                    <input name="IsSearch_lngInChargeUserCodeConditions" class="is-search" type="checkbox">
+                </span>    
+                <span class="regist-label">
+                    <span class="regist-label__text">開発担当者</span>
+                    <input class="TxtStyle05L" name="strInChargeUserDisplayCode" type="text">
+                    <input class="disTxt46L" name="strInChargeUserDisplayName" type="text" readonly>
+                    <img class="msw-button button" invokeMSWName="msw-user" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                </span>
+            </div>
+            <input type="hidden" name="ActionScriptName" value="/list/result/estimate/index.php">
+            <input type="hidden" name="strSessionID" value="_%strSessionID%_">
+		</form>
+	</div>
+    <div class="msw-loadpoints">
+		<!-- MSW 担当部署マスタ検索 -->
+		<iframe class="msw-group" src="/search/cmn/msw/group/mswgroup.html" frameborder="0">
+		</iframe>
+		<!-- MSW 担当者マスタ検索 -->
+		<iframe class="msw-user" src="/search/cmn/msw/user/mswuser.html" frameborder="0">
+		</iframe>
+	</div>
 </body>
-</html>

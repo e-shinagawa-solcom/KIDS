@@ -33,11 +33,7 @@ function ChgEtoJ( lngCount )
 
 		window.top.SegAHeader.innerHTML = headerAE;
 
-		SegA01.innerText = 'Rate type';
-		SegA02.innerText = 'Rate';
-		SegA03.innerText = 'Currency rate';
-
-		if( typeof(parent.schSchButton) != 'undefined' )
+		/*if( typeof(parent.schSchButton) != 'undefined' )
 		{
 			parent.schSchButton.innerHTML = parent.schSchBtE1;
 		}
@@ -45,7 +41,7 @@ function ChgEtoJ( lngCount )
 		if( typeof(parent.schClrButton) != 'undefined' )
 		{
 			parent.schClrButton.innerHTML = parent.schClrBtE1;
-		}
+		}*/
 
 	}
 
@@ -55,10 +51,6 @@ function ChgEtoJ( lngCount )
 	{
 
 		window.top.SegAHeader.innerHTML = headerAJ;
-
-		SegA01.innerText = 'レートタイプ';
-		SegA02.innerText = '通貨単位';
-		SegA03.innerText = '現在の通貨レート';
 
 		if( typeof(parent.schSchButton) != 'undefined' )
 		{

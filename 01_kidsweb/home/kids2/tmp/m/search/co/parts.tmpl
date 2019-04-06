@@ -19,14 +19,13 @@
 <link rel="stylesheet" type="text/css" media="screen" href="/cmn/layout.css">
 <link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
 
-
-<link rel="stylesheet" type="text/css" media="screen" href="layout.css">
+<link rel="stylesheet" type="text/css" media="screen" href="/m/cmn/form.css">
 <script type="text/javascript" language="javascript" src="exstr.js"></script>
 <script type="text/javascript" language="javascript" src="functions.js"></script>
 <script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
 
 </head>
-<body id="Backs" oncontextmenu="return false;" onload="initLayoutSegs( Segs , Vars , '' , '' );fncAutoFocus( document.all.lngAttributeCode );GetIfrmlngLanguageCode();fncMasterSearchOnload();Loading();">
+<body id="Backs" oncontextmenu="return false;" onload="fncAutoFocus( document.all.lngAttributeCode );GetIfrmlngLanguageCode();fncMasterSearchOnload();Loading();">
 
 <span id="COMasterSearchObject"></span>
 
@@ -41,26 +40,26 @@
 _%strHiddenForm%_
 
 
-<p id="Segs">
-<span id="SegA01">会社属性</span>
-<span id="SegA02">会社名称</span>
-</p>
-
-
-
-<p id="Vars">
-<span id="VarsA01">
-	<select class="SlctStyle05" name="lngAttributeCode" tabindex="">
-		_%lngAttributeCode%_
-	</select>
-</span>
-
-<span id="VarsA02">
-	<input class="Txt52L" type="text" name="strCompanyDisplayName" onfocus="chColorOn(this);" onblur="chColorOff(this);fncDefaultTabindex( document.all.lngAttributeCode );" tabindex="">
-</span>
-</p>
-
-
+<!-- フォーム -->
+<div class="form-box__contents">
+	<div class="regist-line">
+		<span class="form-line">
+			<span class="Column" id="SegA01">会社属性</span>
+			<span class="VarText" id="VarsA01">
+				<select class="SlctStyle05" name="lngAttributeCode" tabindex="">
+					_%lngAttributeCode%_
+				</select>
+			</span>
+		</span>
+	</div>
+	<div class="regist-line">
+		<span class="form-line">
+			<span class="Column" id="SegA02">会社名称</span>
+			<span class="VarText" id="VarsA02">
+				<input class="Txt52L" type="text" name="strCompanyDisplayName" onfocus="chColorOn(this);" onblur="chColorOff(this);fncDefaultTabindex( document.all.lngAttributeCode );" tabindex="">
+			</span>
+		</span>
+	</div>
 </form>
 </body>
 </html>

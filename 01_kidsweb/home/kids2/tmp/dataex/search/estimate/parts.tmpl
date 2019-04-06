@@ -7,7 +7,6 @@
 
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/images.js"></script>
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/dataex/estimate/images.js"></script>
-<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/dataex/estimate/initlayoutsearch.js"></script>
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutcommon.js"></script>
 
 
@@ -20,15 +19,14 @@
 <link rel="stylesheet" type="text/css" media="screen" href="/cmn/layout.css">
 <link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
 
-
-<link rel="stylesheet" type="text/css" media="screen" href="/dataex/search/estimate/layout.css">
+<link rel="stylesheet" type="text/css" media="screen" href="/dataex/search/cmn/layout.css">
 <script type="text/javascript" language="javascript" src="/dataex/search/estimate/exstr.js"></script>
 <script type="text/javascript" language="javascript" src="/dataex/search/estimate/functions.js"></script>
 <script type="text/javascript" language="javascript" src="/dataex/search/cmn/functions.js"></script>
 <script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
 
 </head>
-<body id="Backs" oncontextmenu="return true;" onload="initLayoutSegs( Segs , Vars , '' , '' , '' , '' , '' , '' );ChgEtoJ( parent.lngLanguageCode );fncAutoFocus( document.all.strProductCode );">
+<body id="Backs" oncontextmenu="return true;" onload="ChgEtoJ( parent.lngLanguageCode );fncAutoFocus( document.all.strProductCode );">
 
 
 
@@ -47,42 +45,25 @@
 
 
 
-<!-- カラム -->
-<p id="Segs">
-<span id="Column0">製品コード</span>
-<!--
-<span id="Column1">L/C</span>
-<span id="Column2">T/T</span>
-<span id="Column3">On Board</span>
--->
-</p>
-
-
 <!-- フォーム -->
-<p id="Vars">
-<span id="VarsA01">
-	&nbsp;<input style="ime-mode:disabled;" class="Txt10L" type="text" name="strProductCode" value="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="">
-</span>
-
-</p>
-
-
-<p id="QuerySet">
-<!-- プレビューボタン -->
-<span id="PreviewBt" onclick="document.PS.lngActionCode.value=1;fncDataFormPreview( window.PS , '/dataex/result/index.html' );return false;"></span>
-<!-- エクスポートボタン -->
-<span id="ExportBt" onclick="document.PS.lngActionCode.value=2;submit();"></span>
-</p>
-
-
-<!-- 終端調整用ダミーレイヤー -->
-<span id="DummySpace"></span>
-
-
-
-
-
-
+<div class="form-box__contents">
+	<div class="regist-line">
+		<span class="form-line">
+			<span class="Column">製品コード</span>
+			<span class="VarText" id="VarsA01">
+					<input style="ime-mode:disabled;" class="Txt10L" type="text" name="strProductCode" value="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="">
+			</span>
+		</span>
+	</div>
+	<div class="Spacer">
+	</div>
+	<div class="QuerySet-none">	
+		<!-- プレビューボタン -->
+		<span class="QueryBt" id="PreviewBt" onclick="document.PS.lngActionCode.value=1;fncDataFormPreview( window.PS , '/dataex/result/index.html' );return false;"></span>
+		<!-- エクスポートボタン -->
+		<span class="QueryBt" id="ExportBt"  onclick="document.PS.lngActionCode.value=2;PS.submit();"></span>
+	</div>
+</div>
 </form>
 </body>
 </html>

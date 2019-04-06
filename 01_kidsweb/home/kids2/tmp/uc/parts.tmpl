@@ -14,13 +14,12 @@
 </header2>
 
 <header3>
-<script type="text/javascript" language="javascript" src="exstr.js"></script>
 <link rel="stylesheet" type="text/css" media="screen" href="layout.css">
 <script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
 </header3>
 
 <bodyonload>
-initLayoutBase();initLayoutUC();initLayoutNavigation();GetlngLanguageCode( _%lngLanguageCode%_ );Loading();
+initLayoutBase();initLayoutUC();initLayoutNavigation();Loading();
 </bodyonload>
 </config>
 
@@ -38,23 +37,15 @@ initLayoutBase();initLayoutUC();initLayoutNavigation();GetlngLanguageCode( _%lng
 <!-- ////////////////////////////////// START MAIN TITLE ////////////////////////////////// -->
 <span id="MainTitle"></span>
 <!-- /////////////////////////////////// END MAIN TITLE /////////////////////////////////// -->
-
-<span id="strSelectFunctions"></span>
-<span id="MenuBackBorder"></span>
-<span id="MenuBack"></span>
-
-
-<p id="TopNavi">
-<span id="UserInfoNaviBt1" onclick="window.location='regist/edit.php?strSessionID=_%strSessionID%_&lngFunctionCode=_%lngFunctionCode1%_';" style="visibility:_%visibility1%_"></span>
-<span id="RegistNaviBt1" onclick="window.location='regist/edit.php?strSessionID=_%strSessionID%_&lngFunctionCode=_%lngFunctionCode2%_';" style="visibility:_%visibility2%_"></span>
-<span id="SearchNaviBt1" onclick="window.location='search/index.php?strSessionID=_%strSessionID%_&lngFunctionCode=_%lngFunctionCode3%_';" style="visibility:_%visibility3%_"></span>
-</p>
-
-
-<!-- /////////////////////////////////// START E TO J /////////////////////////////////// -->
-<span id="EtoJ"></span>
-<!-- //////////////////////////////////// END E TO J //////////////////////////////////// -->
-
+<div class="main-area">
+	<span id="strSelectFunctions">µ¡Ç½ÁªÂò</span>
+	<span id="MenuBackBorder"></span>
+	<p id="TopNavi">
+		<span id="UserInfoNaviBt1" onclick="window.location='regist/edit.php?strSessionID=_%strSessionID%_&lngFunctionCode=_%lngFunctionCode1%_';" style="visibility:_%visibility1%_"></span>
+		<span id="RegistNaviBt1" onclick="window.location='regist/edit.php?strSessionID=_%strSessionID%_&lngFunctionCode=_%lngFunctionCode2%_';" style="visibility:_%visibility2%_"></span>
+		<span id="SearchNaviBt1" onclick="window.location='search/index.php?strSessionID=_%strSessionID%_&lngFunctionCode=_%lngFunctionCode3%_';" style="visibility:_%visibility3%_"></span>
+	</p>
+</div>
 
 
 <span id="OverLayer"></span>

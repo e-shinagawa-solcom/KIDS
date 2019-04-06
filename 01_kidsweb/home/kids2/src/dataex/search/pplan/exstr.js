@@ -34,30 +34,6 @@ function ChgEtoJ( lngCount )
 	// エクスポートボタンの書出し
 	ExportBt.innerHTML  = blownexportBt;
 
-
-	// 英語
-	if ( lngCount == 0 )
-	{
-
-		window.top.SegAHeader.innerHTML = headerAE;
-
-		Column0.innerText = 'Reference Date';
-		Column1.innerText = 'Group';
-
-	}
-
-
-	// 日本語
-	else if ( lngCount == 1 )
-	{
-
-		window.top.SegAHeader.innerHTML = headerAJ;
-
-		Column0.innerText = '基準日';
-		Column1.innerText = '部門';
-
-	}
-
 	return false;
 
 }

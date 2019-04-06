@@ -725,12 +725,14 @@ function fncGetSearchProductSQL ( $aryViewColumn, $arySearchColumn, $arySearchDa
 */
 function fncSetProductViewTable ( $lngColumnCount, $aryResult, $aryViewColumn, $aryData, $aryUserAuthority, $objDB, $objCache )
 {
-	$aryHtml[] =  "<td nowrap align=\"center\">" . $lngColumnCount . "</td>";
-
+	$aryHtml[] =  "<tr>";
+	$aryHtml[] =  "\t<td>" . ($lngColumnCount) . "</td>";
+	
 	// 表示対象カラムの配列より結果の出力
 	for ( $j = 0; $j < count($aryViewColumn); $j++ )
 	{
 		$strColumnName = $aryViewColumn[$j];
+		$TdData = "";
 
 		if ( $aryResult["bytinvalidflag"] == "f" )
 		{
@@ -754,11 +756,11 @@ function fncSetProductViewTable ( $lngColumnCount, $aryResult, $aryViewColumn, $
 					or ( !$aryResult["bytinvalidflag"] and $aryUserAuthority["Detail"] ) )
 				{
 					// 商品データが削除対象の場合、詳細表示ボタンは選択不可
-					$aryHtml[] = "<td bgcolor=\"#FFFFFF\" align=\"center\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $lngColumnCount . "_', 0 );\"><a class=\"cells\" href=\"javascript:fncShowDialogCommon('/p/result/index2.php?lngProductNo=" . $aryResult["lngproductno"] . "&strSessionID=" . $aryData["strSessionID"] . "' , window.form1 , 'ResultIframeCommon' , 'YES' , " . $aryData["lngLanguageCode"] . " , 'detail' )\"><img onmouseover=\"DetailOn(this);\" onmouseout=\"DetailOff(this);\" src=\"/img/type01/wf/result/detail_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"DETAIL\"></a></td>";
+					$aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/detail_off_bt.gif\" lngproductno=\"" . $aryResult["lngproductno"] . "\" class=\"detail button\"></td>\n";
 				}
 				else
 				{
-					$aryHtml[] = "<td bgcolor=\"#FFFFFF\" align=\"center\"></td>";
+					$aryHtml[] = "\t<td></td>\n";
 				}
 			}
 
@@ -770,11 +772,11 @@ function fncSetProductViewTable ( $lngColumnCount, $aryResult, $aryViewColumn, $
 					and $aryResult["lngproductstatuscode"] != DEF_PRODUCT_APPLICATE
 				)
 				{
-					$aryHtml[] = "<td bgcolor=\"#FFFFFF\" align=\"center\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $lngColumnCount . "_', 0 );\"><a class=\"cells\" href=\"javascript:fncShowDialogRenew('/p/regist/renew.php?strProductCode=" . $aryResult["strproductcode"] . "&strSessionID=" . $aryData["strSessionID"] . "&lngLanguageCode=" . $aryData["lngLanguageCode"] . "' , window.form1 , 'ResultIframeRenew' , 'NO' , " . $aryData["lngLanguageCode"] . " )\"><img onmouseover=\"RenewOn(this);\" onmouseout=\"RenewOff(this);\" src=\"/img/type01/cmn/seg/renew_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"RENEW\"></a></td>";
+					$aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/renew_off_bt.gif\" strproductcode=\"" . $aryResult["strproductcode"] . "\" class=\"detail button\"></td>\n";
 				}
 				else
 				{
-					$aryHtml[] = "<td bgcolor=\"#FFFFFF\" align=\"center\"></td>";
+					$aryHtml[] = "\t<td></td>\n";
 				}
 			}
 
@@ -786,369 +788,345 @@ function fncSetProductViewTable ( $lngColumnCount, $aryResult, $aryViewColumn, $
 					and $aryResult["lngproductstatuscode"] != DEF_PRODUCT_APPLICATE
 				)
 				{
-					$aryHtml[] = "<td bgcolor=\"#FFFFFF\" align=\"center\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $lngColumnCount . "_', 0 );\"><a class=\"cells\" href=\"javascript:fncShowDialogCommon( '/p/result/index3.php?lngProductNo=" . $aryResult["lngproductno"] . "&strSessionID=" . $aryData["strSessionID"] . "&lngLanguageCode=" . $aryData["lngLanguageCode"] . "' , window.form1 , 'ResultIframeCommon' , 'YES' , " . $aryData["lngLanguageCode"] . " , 'delete' )\"><img onmouseover=\"RemoveOn(this);\" onmouseout=\"RemoveOff(this);\" src=\"/img/type01/cmn/seg/remove_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"REMOVE\"></a></td>";
+					$aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/remove_off_bt.gif\" lngproductno=\"" . $aryResult["lngproductno"] . "\" class=\"detail button\"></td>\n";
 				}
 				else
 				{
-					$aryHtml[] = "<td bgcolor=\"#FFFFFF\" align=\"center\"></td>";
+					$aryHtml[] = "\t<td></td>\n";
 				}
 			}
 		}
-
-		///////////////////////////////////
-		////// 表示対象が日付の場合 ///////
-		///////////////////////////////////
-		// 作成日時、改訂日時
-		else if ( $strColumnName == "dtmInsertDate" or $strColumnName == "dtmRevisionDate" )
-		{
-			$strLowerColumnName = strtolower($strColumnName);
-			if ( $aryResult[$strLowerColumnName] )
+		else if ($strColumnName != "") {
+			$TdData = "\t<td>";
+			$TdDataUse = true;
+			$strText = "";
+			///////////////////////////////////
+			////// 表示対象が日付の場合 ///////
+			///////////////////////////////////
+			// 作成日時、改訂日時
+			if ( $strColumnName == "dtmInsertDate" or $strColumnName == "dtmRevisionDate" )
 			{
-				$aryHtml[] = "<td align=\"left\" nowrap>" . str_replace( "-", "/", $aryResult[$strLowerColumnName] ) . "</td>";
-			}
-			else
-			{
-				$aryHtml[] = "<td align=\"left\" nowrap></td>";
-			}
-		}
-		// 納期
-		else if ( $strColumnName == "dtmDeliveryLimitDate" )
-		{
-			if ( $aryResult["dtmdeliverylimitdate"] )
-			{
-				$dtmNewDate = substr( $aryResult["dtmdeliverylimitdate"], 0, 7 );
-				$aryHtml[] = "<td align=\"left\" nowrap>" . str_replace( "-", "/", $dtmNewDate ) . "</td>";
-			}
-			else
-			{
-				$aryHtml[] = "<td align=\"left\" nowrap></td>";
-			}
-		}
-
-		/////////////////////////////////////////////////
-		////// 表示対象がコードから名称参照の場合 ///////
-		/////////////////////////////////////////////////
-		// 企画進行状況
-		else if ( $strColumnName == "lngGoodsPlanProgressCode" )
-		{
-			$strText = "<td align=\"left\" nowrap>";
-			if ( $aryResult["lnggoodsplanprogresscode"] )
-			{
-				$aryGoodsPlanProgressCode = $objCache->GetValue("lnggoodsplanprogresscode", $aryResult["lnggoodsplanprogresscode"]);
-				if( !is_array($aryGoodsPlanProgressCode) )
-				{
-					// 企画進行状況名称の取得
-					$strGoodsPlanProgressName = fncGetMasterValue( "m_goodsplanprogress", "lnggoodsplanprogresscode", "strgoodsplanprogressname" , 
-						$aryResult["lnggoodsplanprogresscode"], "", $objDB );
-					// 企画進行状況名称の設定
-					$aryGoodsPlanProgressCode[0] = $strGoodsPlanProgressName;
-					$objCache->SetValue("lnggoodsplanprogresscode", $strGoodsPlanProgressName, $aryGoodsPlanProgressCode);
-				}
-				$strText .= $aryGoodsPlanProgressCode[0] . "</td>";
-			}
-			$aryHtml[] = $strText;
-		}
-		// 入力者
-		else if ( $strColumnName == "lngInputUserCode" )
-		{
-			$strText = "<td align=\"left\" nowrap>";
-			if ( $aryResult["strinputuserdisplaycode"] )
-			{
-				$strText .= "[" . $aryResult["strinputuserdisplaycode"] ."]";
-			}
-			else
-			{
-				$strText .= "     ";
-			}
-			$strText .= " " . $aryResult["strinputuserdisplayname"] . "</td>";
-			$aryHtml[] = $strText;
-		}
-		// 部門
-		else if ( $strColumnName == "lngInChargeGroupCode" )
-		{
-			$strText = "<td align=\"left\" nowrap>";
-			if ( $aryResult["strinchargegroupdisplaycode"] )
-			{
-				$strText .= "[" . $aryResult["strinchargegroupdisplaycode"] ."]";
-			}
-			else
-			{
-				$strText .= "    ";
-			}
-			$strText .= " " . $aryResult["strinchargegroupdisplayname"] . "</td>";
-			$aryHtml[] = $strText;
-		}
-		// 担当者
-		else if ( $strColumnName == "lngInChargeUserCode" )
-		{
-			$strText = "<td align=\"left\" nowrap>";
-			if ( $aryResult["strinchargeuserdisplaycode"] )
-			{
-				$strText .= "[" . $aryResult["strinchargeuserdisplaycode"] ."]";
-			}
-			else
-			{
-				$strText .= "     ";
-			}
-			$strText .= " " . $aryResult["strinchargeuserdisplayname"] . "</td>";
-			$aryHtml[] = $strText;
-		}
-		// 顧客
-		else if ( $strColumnName == "lngCustomerCompanyCode" )
-		{
-			$strText = "<td align=\"left\" nowrap>";
-			if ( $aryResult["strcustomercompanydisplaycode"] )
-			{
-				$strText .= "[" . $aryResult["strcustomercompanydisplaycode"] ."]";
-			}
-			else
-			{
-				$strText .= "      ";
-			}
-			$strText .= " " . $aryResult["strcustomercompanydisplayname"] . "</td>";
-			$aryHtml[] = $strText;
-		}
-		// 顧客担当者
-		else if ( $strColumnName == "lngCustomerUserCode" )
-		{
-			$strText = "<td align=\"left\" nowrap>";
-			if ( $aryResult["strcustomeruserdisplaycode"] )
-			{
-				$strText .= "[" . $aryResult["strcustomeruserdisplaycode"] ."]";
-				$strText .= " " . $aryResult["strcustomeruserdisplayname"] . "</td>";
-			}
-			else
-			{
-				$strText .= "      ";
-				$strText .= " " . $aryResult["strcustomerusername"] . "</td>";
-			}
-			$aryHtml[] = $strText;
-		}
-		// 荷姿単位
-		else if ( $strColumnName == "lngPackingUnitCode" )
-		{
-			$aryHtml[] = "<td align=\"left\" nowrap>" . $aryResult["strpackingunitname"] . "</td>";
-		}
-		// 製品単位
-		else if ( $strColumnName == "lngProductUnitCode" )
-		{
-			$aryHtml[] = "<td align=\"left\" nowrap>" . $aryResult["strproductunitname"] . "</td>";
-		}
-		// 商品形態
-		else if ( $strColumnName == "lngProductFormCode" )
-		{
-			$aryHtml[] = "<td align=\"left\" nowrap>" . $aryResult["strproductformname"] . "</td>";
-		}
-		// 生産工場
-		else if ( $strColumnName == "lngFactoryCode" )
-		{
-			$strText = "<td align=\"left\" nowrap>";
-			if ( $aryResult["strfactorydisplaycode"] )
-			{
-				$strText .= "[" . $aryResult["strfactorydisplaycode"] ."]";
-			}
-			else
-			{
-				$strText .= "      ";
-			}
-			$strText .= " " . $aryResult["strfactorydisplayname"] . "</td>";
-			$aryHtml[] = $strText;
-		}
-		// アッセンブリ工場
-		else if ( $strColumnName == "lngAssemblyFactoryCode" )
-		{
-			$strText = "<td align=\"left\" nowrap>";
-			if ( $aryResult["strassemblyfactorydisplaycode"] )
-			{
-				$strText .= "[" . $aryResult["strassemblyfactorydisplaycode"] ."]";
-			}
-			else
-			{
-				$strText .= "      ";
-			}
-			$strText .= " " . $aryResult["strassemblyfactorydisplayname"] . "</td>";
-			$aryHtml[] = $strText;
-		}
-		// 納品場所
-		else if ( $strColumnName == "lngDeliveryPlaceCode" )
-		{
-			$strText = "<td align=\"left\" nowrap>";
-			if ( $aryResult["strdeliveryplacedisplaycode"] )
-			{
-				$strText .= "[" . $aryResult["strdeliveryplacedisplaycode"] ."]";
-			}
-			else
-			{
-				$strText .= "      ";
-			}
-			$strText .= " " . $aryResult["strdeliveryplacedisplayname"] . "</td>";
-			$aryHtml[] = $strText;
-		}
-		// 対象年齢
-		else if ( $strColumnName == "lngTargetAgeCode" )
-		{
-			$aryHtml[] = "<td align=\"left\" nowrap>" . $aryResult["strtargetagename"] . "</td>";
-		}
-		// 証紙
-		else if ( $strColumnName == "lngCertificateClassCode" )
-		{
-			$aryHtml[] = "<td align=\"left\" nowrap>" . $aryResult["strcertificateclassname"] . "</td>";
-		}
-		// 版権元
-		else if ( $strColumnName == "lngCopyrightCode" )
-		{
-			$aryHtml[] = "<td align=\"left\" nowrap>" . $aryResult["strcopyrightname"] . "</td>";
-		}
-
-		///////////////////////////////////
-		////// 表示対象が数量の場合 ///////
-		///////////////////////////////////
-		// 内箱（袋）入数、カートン入数
-		else if ( $strColumnName == "lngBoxQuantity" or $strColumnName == "lngCartonQuantity" )
-		{
-			$strLowerColumnName = strtolower($strColumnName);
-			$strText = "<td align=\"right\" nowrap>";
-			if ( !$aryResult[$strLowerColumnName] )
-			{
-				$strText .= "0</td>";
-			}
-			else
-			{
-				$strText .= $aryResult[$strLowerColumnName] . "</td>";
-			}
-			$aryHtml[] = $strText;
-		}
-		// 生産予定数
-		else if ( $strColumnName == "lngProductionQuantity" )
-		{
-			$strText = "<td align=\"right\" nowrap>";
-			if ( !$aryResult["lngproductionquantity"] )
-			{
-				$strText .= "0";
-			}
-			else
-			{
-				$strText .= $aryResult[lngproductionquantity];
-			}
-			// 単位の設定
-			if ( $aryResult["lngproductionunitcode"] )
-			{
-				$aryProductUnit = $objCache->GetValue("lngproductunitcode", $aryResult["lngproductionunitcode"]);
-				if( !is_array($aryProductUnit) )
-				{
-					// 単位名称の取得
-					$strProductUnitName = fncGetMasterValue( "m_productunit", "lngproductunitcode", "strproductunitname" , 
-						$aryResult["lngproductionunitcode"], "", $objDB );
-					// 単位名称の設定
-					$aryProductUnit[0] = $strProductUnitName;
-					$objCache->SetValue("lngproductunitcode", $strProductUnitName, $aryProductUnit);
-				}
-				$strText .= " " . $aryProductUnit[0];
-			}
-			$strText .= "</td>";
-			$aryHtml[] = $strText;
-		}
-		// 初回納品数
-		else if ( $strColumnName == "lngFirstDeliveryQuantity" )
-		{
-			$strText = "<td align=\"right\" nowrap>";
-			if ( !$aryResult["lngfirstdeliveryquantity"] )
-			{
-				$strText .= "0";
-			}
-			else
-			{
-				$strText .= $aryResult[lngfirstdeliveryquantity];
-			}
-			// 単位の設定
-			if ( $aryResult["lngfirstdeliveryunitcode"] )
-			{
-				$aryProductUnit = $objCache->GetValue("lngproductunitcode", $aryResult["lngfirstdeliveryunitcode"]);
-				if( !is_array($aryProductUnit) )
-				{
-					// 単位名称の取得
-					$strProductUnitName = fncGetMasterValue( "m_productunit", "lngproductunitcode", "strproductunitname" , 
-						$aryResult["lngfirstdeliveryunitcode"], "", $objDB );
-					// 単位名称の設定
-					$aryProductUnit[0] = $strProductUnitName;
-					$objCache->SetValue("lngproductunitcode", $strProductUnitName, $aryProductUnit);
-				}
-				$strText .= " " . $aryProductUnit[0];
-			}
-			$strText .= "</td>";
-			$aryHtml[] = $strText;
-		}
-
-		///////////////////////////////////
-		////// 表示対象が価格の場合 ///////
-		///////////////////////////////////
-		// 納価、上代
-		else if ( $strColumnName == "curProductPrice" or $strColumnName == "curRetailPrice" )
-		{
-			$strLowerColumnName = strtolower($strColumnName);
-			$strText = "<td align=\"right\" nowrap>";
-			$strText .= DEF_PRODUCT_MONETARYSIGN . " ";
-			if ( !$aryResult[$strLowerColumnName] )
-			{
-				$strText .= "0.00</td>";
-			}
-			else
-			{
-				$strText .= $aryResult[$strLowerColumnName] . "</td>";
-			}
-			$aryHtml[] = $strText;
-		}
-
-		///////////////////////////////////
-		////// 表示対象が数値の場合 ///////
-		///////////////////////////////////
-		// ロイヤリティ
-		else if ( $strColumnName == "lngRoyalty" )
-		{
-			$aryHtml[] = "<td align=\"right\" nowrap>" . $aryResult["lngroyalty"] . "</td>";
-		}
-
-		/////////////////////////////////////////
-		////// 表示対象が文字列項目の場合 ///////
-		/////////////////////////////////////////
-		// その他の項目はそのまま出力
-		else
-		{
-			$strLowerColumnName = strtolower($strColumnName);
-			$strText = "<td align=\"left\" nowrap>";
-			// 仕様詳細は改行設定
-			if ( $strColumnName == "strSpecificationDetails" )
-			{
-				$strText .= $aryResult[$strLowerColumnName] . "</td>";
-			}
-			// 製品構成は文字列追加
-			else if ( $strColumnName == "strProductComposition" )
-			{
+				$strLowerColumnName = strtolower($strColumnName);
 				if ( $aryResult[$strLowerColumnName] )
 				{
-					$strText .= "全" . $aryResult[$strLowerColumnName] . "種アッセンブリ</td>";
+					$TdData .= str_replace( "-", "/", $aryResult[$strLowerColumnName] );
+				}
+			}
+			// 納期
+			else if ( $strColumnName == "dtmDeliveryLimitDate" )
+			{
+				if ( $aryResult["dtmdeliverylimitdate"] )
+				{
+					$dtmNewDate = substr( $aryResult["dtmdeliverylimitdate"], 0, 7 );
+					$TdData .= str_replace( "-", "/", $dtmNewDate );
+				}
+			}
+
+			/////////////////////////////////////////////////
+			////// 表示対象がコードから名称参照の場合 ///////
+			/////////////////////////////////////////////////
+			// 企画進行状況
+			else if ( $strColumnName == "lngGoodsPlanProgressCode" )
+			{
+				if ( $aryResult["lnggoodsplanprogresscode"] )
+				{
+					$aryGoodsPlanProgressCode = $objCache->GetValue("lnggoodsplanprogresscode", $aryResult["lnggoodsplanprogresscode"]);
+					if( !is_array($aryGoodsPlanProgressCode) )
+					{
+						// 企画進行状況名称の取得
+						$strGoodsPlanProgressName = fncGetMasterValue( "m_goodsplanprogress", "lnggoodsplanprogresscode", "strgoodsplanprogressname" , 
+						$aryResult["lnggoodsplanprogresscode"], "", $objDB );
+						// 企画進行状況名称の設定
+						$aryGoodsPlanProgressCode[0] = $strGoodsPlanProgressName;
+						$objCache->SetValue("lnggoodsplanprogresscode", $strGoodsPlanProgressName, $aryGoodsPlanProgressCode);
+					}
+					$TdData .= $aryGoodsPlanProgressCode[0] . "</td>";
+				}
+			}
+			// 入力者
+			else if ( $strColumnName == "lngInputUserCode" )
+			{
+				if ( $aryResult["strinputuserdisplaycode"] )
+				{
+					$strText .= "[" . $aryResult["strinputuserdisplaycode"] ."]";
 				}
 				else
 				{
-					$strText .= $aryResult[$strLowerColumnName] . "</td>";
+					$strText .= "     ";
 				}
+				$strText .= " " . $aryResult["strinputuserdisplayname"];
+				$TdData .= $strText;
 			}
+			// 部門
+			else if ( $strColumnName == "lngInChargeGroupCode" )
+			{
+				if ( $aryResult["strinchargegroupdisplaycode"] )
+				{
+					$strText .= "[" . $aryResult["strinchargegroupdisplaycode"] ."]";
+				}
+				else
+				{
+					$strText .= "    ";
+				}
+				$strText .= " " . $aryResult["strinchargegroupdisplayname"] . "</td>";
+				$TdData .= $strText;
+			}
+			// 担当者
+			else if ( $strColumnName == "lngInChargeUserCode" )
+			{
+				if ( $aryResult["strinchargeuserdisplaycode"] )
+				{
+					$strText .= "[" . $aryResult["strinchargeuserdisplaycode"] ."]";
+				}
+				else
+				{
+					$strText .= "     ";
+				}
+				$strText .= " " . $aryResult["strinchargeuserdisplayname"];
+				$TdData .= $strText;
+			}
+			// 顧客
+			else if ( $strColumnName == "lngCustomerCompanyCode" )
+			{
+				if ( $aryResult["strcustomercompanydisplaycode"] )
+				{
+					$strText .= "[" . $aryResult["strcustomercompanydisplaycode"] ."]";
+				}
+				else
+				{
+					$strText .= "      ";
+				}
+				$strText .= " " . $aryResult["strcustomercompanydisplayname"];
+				$TdData .= $strText;
+			}
+			// 顧客担当者
+			else if ( $strColumnName == "lngCustomerUserCode" )
+			{
+				if ( $aryResult["strcustomeruserdisplaycode"] )
+				{
+					$strText .= "[" . $aryResult["strcustomeruserdisplaycode"] ."]";
+					$strText .= " " . $aryResult["strcustomeruserdisplayname"];
+				}
+				else
+				{
+					$strText .= "      ";
+					$strText .= " " . $aryResult["strcustomerusername"];
+				}
+				$TdData .= $strText;
+			}
+			// 荷姿単位
+			else if ( $strColumnName == "lngPackingUnitCode" )
+			{
+				$TdData .= $aryResult["strpackingunitname"];
+			}
+			// 製品単位
+			else if ( $strColumnName == "lngProductUnitCode" )
+			{
+				$TdData .= $aryResult["strproductunitname"];
+			}
+			// 商品形態
+			else if ( $strColumnName == "lngProductFormCode" )
+			{
+				$TdData .= $aryResult["strproductformname"];
+			}
+			// 生産工場
+			else if ( $strColumnName == "lngFactoryCode" )
+			{
+				if ( $aryResult["strfactorydisplaycode"] )
+				{
+					$strText .= "[" . $aryResult["strfactorydisplaycode"] ."]";
+				}
+				else
+				{
+					$strText .= "      ";
+				}
+				$strText .= " " . $aryResult["strfactorydisplayname"];
+				$TdData .= $strText;
+			}
+			// アッセンブリ工場
+			else if ( $strColumnName == "lngAssemblyFactoryCode" )
+			{
+				if ( $aryResult["strassemblyfactorydisplaycode"] )
+				{
+					$strText .= "[" . $aryResult["strassemblyfactorydisplaycode"] ."]";
+				}
+				else
+				{
+					$strText .= "      ";
+				}
+				$strText .= " " . $aryResult["strassemblyfactorydisplayname"];
+				$TdData .= $strText;
+			}
+			// 納品場所
+			else if ( $strColumnName == "lngDeliveryPlaceCode" )
+			{
+				if ( $aryResult["strdeliveryplacedisplaycode"] )
+				{
+					$strText .= "[" . $aryResult["strdeliveryplacedisplaycode"] ."]";
+				}
+				else
+				{
+					$strText .= "      ";
+				}
+				$strText .= " " . $aryResult["strdeliveryplacedisplayname"];
+				$TdData .= $strText;
+			}
+			// 対象年齢
+			else if ( $strColumnName == "lngTargetAgeCode" )
+			{
+				$TdData .= $aryResult["strtargetagename"];
+			}
+			// 証紙
+			else if ( $strColumnName == "lngCertificateClassCode" )
+			{
+				$TdData .= $aryResult["strcertificateclassname"];
+			}
+			// 版権元
+			else if ( $strColumnName == "lngCopyrightCode" )
+			{
+				$TdData .= $aryResult["strcopyrightname"];
+			}
+
+			///////////////////////////////////
+			////// 表示対象が数量の場合 ///////
+			///////////////////////////////////
+			// 内箱（袋）入数、カートン入数
+			else if ( $strColumnName == "lngBoxQuantity" or $strColumnName == "lngCartonQuantity" )
+			{
+				$strLowerColumnName = strtolower($strColumnName);
+				if ( !$aryResult[$strLowerColumnName] )
+				{
+					$strText .= "0";
+				}
+				else
+				{
+					$strText .= $aryResult[$strLowerColumnName];
+				}
+				$TdData .= $strText;
+			}
+			// 生産予定数
+			else if ( $strColumnName == "lngProductionQuantity" )
+			{
+				if ( !$aryResult["lngproductionquantity"] )
+				{
+					$strText .= "0";
+				}
+				else
+				{
+					$strText .= $aryResult["lngproductionquantity"];
+				}
+				// 単位の設定
+				if ( $aryResult["lngproductionunitcode"] )
+				{
+					$aryProductUnit = $objCache->GetValue("lngproductunitcode", $aryResult["lngproductionunitcode"]);
+					if( !is_array($aryProductUnit) )
+					{
+						// 単位名称の取得
+						$strProductUnitName = fncGetMasterValue( "m_productunit", "lngproductunitcode", "strproductunitname" , 
+							$aryResult["lngproductionunitcode"], "", $objDB );
+						// 単位名称の設定
+						$aryProductUnit[0] = $strProductUnitName;
+						$objCache->SetValue("lngproductunitcode", $strProductUnitName, $aryProductUnit);
+					}
+					$strText .= " " . $aryProductUnit[0];
+				}
+				$TdData .= $strText;
+			}
+			// 初回納品数
+			else if ( $strColumnName == "lngFirstDeliveryQuantity" )
+			{
+				if ( !$aryResult["lngfirstdeliveryquantity"] )
+				{
+					$strText .= "0";
+				}
+				else
+				{
+					$strText .= $aryResult[lngfirstdeliveryquantity];
+				}
+				// 単位の設定
+				if ( $aryResult["lngfirstdeliveryunitcode"] )
+				{
+					$aryProductUnit = $objCache->GetValue("lngproductunitcode", $aryResult["lngfirstdeliveryunitcode"]);
+					if( !is_array($aryProductUnit) )
+					{
+						// 単位名称の取得
+						$strProductUnitName = fncGetMasterValue( "m_productunit", "lngproductunitcode", "strproductunitname" , 
+							$aryResult["lngfirstdeliveryunitcode"], "", $objDB );
+						// 単位名称の設定
+						$aryProductUnit[0] = $strProductUnitName;
+						$objCache->SetValue("lngproductunitcode", $strProductUnitName, $aryProductUnit);
+					}
+					$strText .= " " . $aryProductUnit[0];
+				}
+				$TdData .= $strText;
+			}
+
+			///////////////////////////////////
+			////// 表示対象が価格の場合 ///////
+			///////////////////////////////////
+			// 納価、上代
+			else if ( $strColumnName == "curProductPrice" or $strColumnName == "curRetailPrice" )
+			{
+				$strLowerColumnName = strtolower($strColumnName);
+				$strText .= DEF_PRODUCT_MONETARYSIGN . " ";
+				if ( !$aryResult[$strLowerColumnName] )
+				{
+					$strText .= "0.00";
+				}
+				else
+				{
+					$strText .= $aryResult[$strLowerColumnName];
+				}
+				$TdData .= $strText;
+			}
+
+			///////////////////////////////////
+			////// 表示対象が数値の場合 ///////
+			///////////////////////////////////
+			// ロイヤリティ
+			else if ( $strColumnName == "lngRoyalty" )
+			{
+				$TdData .= $aryResult["lngroyalty"];
+			}
+
+			/////////////////////////////////////////
+			////// 表示対象が文字列項目の場合 ///////
+			/////////////////////////////////////////
+			// その他の項目はそのまま出力
 			else
 			{
-				$strText .= $aryResult[$strLowerColumnName] . "</td>";
+				$strLowerColumnName = strtolower($strColumnName);
+				// 仕様詳細は改行設定
+				if ( $strColumnName == "strSpecificationDetails" )
+				{
+					$strText .= $aryResult[$strLowerColumnName];
+				}
+				// 製品構成は文字列追加
+				else if ( $strColumnName == "strProductComposition" )
+				{
+					if ( $aryResult[$strLowerColumnName] )
+					{
+						$strText .= "全" . $aryResult[$strLowerColumnName] . "種アッセンブリ";
+					}
+					else
+					{
+						$strText .= $aryResult[$strLowerColumnName];
+					}
+				}
+				else
+				{
+					$strText .= $aryResult[$strLowerColumnName];
+				}
+				$TdData .= $strText;
 			}
-			$aryHtml[] = $strText;
+			$TdData .= "</td>\n";
+			$aryHtml[] = $TdData;
 		}
 	}
-
 	$aryHtml[] = "</tr>";
 
 	return $aryHtml;
 }
-
-
-
-
 
 
 /**
@@ -1168,133 +1146,70 @@ function fncSetProductViewTable ( $lngColumnCount, $aryResult, $aryViewColumn, $
 function fncSetProductTable ( $aryResult, $aryViewColumn, $aryData, $aryUserAuthority, $aryTytle, $objDB, $objCache, $aryTableName )
 {
 	// テーブルの形成
-	$lngResultCount = count($aryResult);
-
-	$aryHtml[] = "<span id=\"COPYAREA1\">";
-	$aryHtml[] = "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"1\" bproduct=\"0\" bgcolor=\"#6f8180\" align=\"center\">";
-
-	$lngColumnCount = 0;
-
-	for ( $i = 0; $i < $lngResultCount; $i++ )
-	{
 
 // 項目名列の生成 start=========================================
+	$aryHtml[] = "<thead>";
+	$aryHtml[] = "<tr>";
+	$aryHtml[] = "\t<th class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/copy_off_bt.gif\" class=\"copy button\"></th>";
 
-		if ($i == 0)
+	// 表示対象カラムの配列より項目設定
+	for ( $j = 0; $j < count($aryViewColumn); $j++ )
+	{
+		$Addth = "\t<th>";
+		$strColumnName = $aryViewColumn[$j];
+		
+		// ソート項目以外の場合
+		if ( $strColumnName == "btnDetail" or $strColumnName == "btnFix" or $strColumnName == "btnDelete" or $strColumnName == "btnInvalid" )
 		{
-			$aryHtml[] = "<tr id=\"SegTitle\">";
-			$aryHtml[] = "<td valign=\"top\" valign=\"center\"><a href=\"#\" onclick=\"fncDoCopy( copyhidden , document.getElementById('COPYAREA1') , document.getElementById('COPYAREA2') );return false;\"><img onmouseover=\"CopyOn(this);\" onmouseout=\"CopyOff(this);\" src=\"/img/type01/cmn/seg/copy_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"COPY\"></a></td>";
-
-			// 表示対象カラムの配列より項目設定
-			for ( $j = 0; $j < count($aryViewColumn); $j++ )
+			// ソート項目以外の場合
+			if ( ( $strColumnName == "btnDetail" and $aryUserAuthority["Detail"] ) 
+			or ( $strColumnName == "btnFix" and $aryUserAuthority["Fix"] ) 
+			or ( $strColumnName == "btnDelete" and $aryUserAuthority["Delete"] ) )
 			{
-				$strColumnName = $aryViewColumn[$j];
-				// ソート項目以外の場合
-				if ( $strColumnName == "btnDetail" or $strColumnName == "btnFix" or $strColumnName == "btnDelete" )
-				{
-					// 詳細ボタンの場合は、詳細表示可能なユーザーのみ表示する
-					if ( $strColumnName == "btnDetail" and $aryUserAuthority["Detail"] )
-					{
-						$aryHtml[] = "<td nowrap>".$aryTytle[$strColumnName]."</td>";
-					}
-					// 修正ボタンの場合は、修正処理可能なユーザーのみ表示する
-					if ( $strColumnName == "btnFix" and $aryUserAuthority["Fix"] )
-					{
-						$aryHtml[] = "<td nowrap>".$aryTytle[$strColumnName]."</td>";
-					}
-					// 削除ボタンの場合は、削除処理可能なユーザーのみ表示する
-					if ( $strColumnName == "btnDelete" and $aryUserAuthority["Delete"])
-					{
-						$aryHtml[] = "<td nowrap>".$aryTytle[$strColumnName]."</td>";
-					}
-				}
-				// ソート項目の場合
-				else
-				{
-					$strText = "<td id=\"Columns\" nowrap onmouseover=\"SortOn( this );\" onmouseout=\"SortOff( this );\" ";
-					if ( $aryData["strSort"] == $aryTableName[$strColumnName] )
-					{
-						if ( $aryData["strSortOrder"] == "DESC" )
-						{
-							$strSortOrder = "ASC";
-						}
-						else
-						{
-							$strSortOrder = "DESC";
-						}
-					}
-					else
-					{
-						$strSortOrder = "ASC";
-					}
-					$strText .= "onclick=\"fncSort2('" . $aryTableName[$strColumnName] . "', '" . $strSortOrder . "');\">";
-					$strText .= "<a href=\"#\">".$aryTytle[$strColumnName]."</a></td>";
-					$aryHtml[] = $strText;
-				}
+				$Addth .= $aryTytle[$strColumnName];
 			}
-			$aryHtml[] = "</tr>";
-//			$aryHtml[] = "</span>";
-
-			// ダミーTR
-			$aryHtml[] = "<tr id=\"DummyTR\"><td colspan=\"" . count($aryViewColumn) . "\">&nbsp;</td></tr>";
-
-//			$aryHtml[] = "<span id=\"COPYAREA2\">";
 		}
+		// ソート項目の場合
+		else
+		{
+			$Addth .= $aryTytle[$strColumnName];
+		}
+
+		$Addth .= "</th>";
+		$aryHtml[] = $Addth;
+	}
+	$aryHtml[] = "</tr>";
+	$aryHtml[] = "</thead>";
 
 // 項目名列の生成 end=========================================
 
 // 検索結果出力　　共通start==================================
+	$lngResultCount = count($aryResult);
+	$lngColumnCount = 0;
+	
+	for ( $i = 0; $i < $lngResultCount; $i++ )
+	{
 		reset( $aryResult[$i] );
-
-		// 行の背景色の取得
-		if ( $aryResult[$i]["lnggroupcode"] != "" )
-		{
-			$aryGroupColor = $objCache->GetValue("lnggroupcode", $aryResult[$i]["lnggroupcode"]);
-			if( !is_array($aryGroupColor) )
-			{
-				// グループ色の取得
-				$strGroupDisplayColor = fncGetMasterValue( "m_group", "lnggroupcode", "strgroupdisplaycolor" , 
-					$aryResult[$i]["lnggroupcode"], "", $objDB );
-				// グループ色の設定
-				$aryGroupColor[0] = $strGroupDisplayColor;
-				$objCache->SetValue("lnggroupcode", $strGroupDisplayColor, $aryGroupColor);
-			}
-			$strGroupColor = $aryGroupColor[0];
-		}
-		else
-		{
-			$strGroupColor = "#FFFFFF";
-		}
-
-		// 検索結果部分の設定
-		$aryHtml[] = "<tr class=\"Segs\" name=\"strTrName" . $i . "\" style=\"background:" . $strGroupColor . "\" onclick=\"fncSelectTrColor( this );\">";
-
-//		$aryHtml[] = "<tr id=\"TD" . $lngColumnCount . "_0\" class=\"Segs\" name=\"strTrName" . $lngColumnCount . "\" onclick=\"fncSelectSomeTrColor( this, 'TD" . $lngColumnCount . "_', " . $lngDetailCount . " );\" style=\"background:#99FF99\">";
 
 		$lngColumnCount++;
 
 		// １レコード分の出力
 		$aryHtml_add = fncSetProductViewTable ( $lngColumnCount, $aryResult[$i], $aryViewColumn, $aryData, $aryUserAuthority, $objDB, $objCache );
+		
+		$strColBuff = '';
 		for ( $j = 0; $j < count($aryHtml_add); $j++ )
 		{
-			$aryHtml[] = $aryHtml_add[$j];
+			$strColBuff .= $aryHtml_add[$j];
 		}
+		$aryHtml[] =$strColBuff;
 // 検索結果出力　　共通end==================================
 	}
 
-	$aryHtml[] = "</table>";
-	$aryHtml[] = "</span>";
-
-	// コピー不具合対応 ダミー行を抜かす処理を現状省略することで対応
-	$aryHtml[] = "<span id=\"COPYAREA2\">";
-	$aryHtml[] = "</span>";
+	$aryHtml[] = "</tbody>";
 
 	$strhtml = implode( "\n", $aryHtml );
 
 	return $strhtml;
 }
-
-
-
 
 ?>

@@ -4,7 +4,7 @@
 #ErrInputA { 
 	position : absolute ;
 	left : 33px ;
-	top : 111px ;
+	top : 95px;
 	z-index : 5 ;
 	border-width: 0px ;
 	border-style: none ;
@@ -14,7 +14,7 @@
 #ErrSegA01 {
 	position : absolute ;
 	left : 143px ;
-	top : 46px ;
+	top : 40px ;
 	border-width: 0px ;
 	border-style: none ;
 
@@ -23,7 +23,7 @@
 #ErrSegA02 {
 	position : absolute ;
 	left : 143px ;
-	top : 76px ;
+	top : 70px ;
 	border-width: 0px ;
 	border-style: none ;
 
@@ -32,7 +32,7 @@
 #ErrSegA03 {
 	position : absolute ;
 	left : 143px ;
-	top : 106px ;
+	top : 100px ;
 	border-width: 0px ;
 	border-style: none ;
 
@@ -40,8 +40,8 @@
 
 #ErrSegA04 {
 	position : absolute ;
-	left : 451px ;
-	top : 76px ;
+	left: 460px;
+    top: 70px;
 	border-width: 0px ;
 	border-style: none ;
 
@@ -49,8 +49,8 @@
 
 #ErrSegA05 {
 	position : absolute ;
-	left : 451px ;
-	top : 106px ;
+	left: 460px;
+    top: 100px;
 	border-width: 0px ;
 	border-style: none ;
 
@@ -59,7 +59,7 @@
 #ErrSegA07 {
 	position : absolute ;
 	left : 143px ;
-	top : 181px ;
+	top : 175px ;
 	border-width: 0px ;
 	border-style: none ;
 
@@ -67,8 +67,8 @@
 
 #ErrSegA09 {
 	position : absolute ;
-	left : 143px ;
-	top : 256px ;
+	left: 143px;
+    top: 246px;
 	border-width: 0px ;
 	border-style: none ;
 
@@ -76,8 +76,8 @@
 
 #ErrSegA10 {
 	position : absolute ;
-	left : 143px ;
-	top : 286px ;
+	left: 143px;
+    top: 276px;
 	border-width: 0px ;
 	border-style: none ;
 
@@ -85,8 +85,8 @@
 
 #ErrSegA11 {
 	position : absolute ;
-	left : 451px ;
-	top : 286px ;
+	left: 460px;
+    top: 276px;
 	border-width: 0px ;
 	border-style: none ;
 
@@ -95,7 +95,7 @@
 #ErrSegA12 {
 	position : absolute ;
 	left : 143px ;
-	top : 331px ;
+	top: 321px; ;
 	border-width: 0px ;
 	border-style: none ;
 
@@ -104,7 +104,7 @@
 #ErrSegA13 {
 	position : absolute ;
 	left : 143px ;
-	top : 357px ;
+	top : 349px ;
 	border-width: 0px ;
 	border-style: none ;
 
@@ -113,7 +113,7 @@
 #ErrSegA15 {
 	position : absolute ;
 	left : 143px ;
-	top : 417px ;
+	top : 411px ;
 	border-width: 0px ;
 	border-style: none ;
 
@@ -122,7 +122,7 @@
 #ErrSegA16 {
 	position : absolute ;
 	left : 143px ;
-	top : 461px ;
+	top : 455px ;
 	border-width: 0px ;
 	border-style: none ;
 

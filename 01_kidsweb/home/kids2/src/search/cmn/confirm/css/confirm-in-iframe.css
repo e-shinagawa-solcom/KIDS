@@ -1,0 +1,13 @@
+
+/* 確認画面iframeのサイズ */
+iframe[class*="regist-confirm"]
+{
+    width: 900px;
+    height: 500px;
+}
+
+iframe[class*="modify-confirm"]
+{
+    width: 700px;
+    height: 400px;
+}

@@ -20,7 +20,7 @@
 <link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
 
 
-<link rel="stylesheet" type="text/css" media="screen" href="layout.css">
+<link rel="stylesheet" type="text/css" media="screen" href="/m/cmn/form.css">
 <script type="text/javascript" language="javascript" src="exstr.js"></script>
 <script type="text/javascript" language="javascript" src="functions.js"></script>
 <script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
@@ -29,7 +29,7 @@
 
 
 </head>
-<body id="Backs" oncontextmenu="return false;" onload="initLayoutSegs( Segs , Vars , '' , '' );fncAutoFocus( document.all.lngWorkflowOrderCode );GetIfrmlngLanguageCode();fncMasterSearchOnload();Loading();">
+<body id="Backs" oncontextmenu="return false;" onload="fncAutoFocus( document.all.lngWorkflowOrderCode );GetIfrmlngLanguageCode();fncMasterSearchOnload();Loading();">
 
 <span id="WFMasterSearchObject"></span>
 
@@ -43,35 +43,39 @@
 <input type="hidden" name="ActionScriptName" value="/m/result/wf/index.php">
 <input type="hidden" name="strSessionID" value="_%strSessionID%_">
 
-<p id="Segs">
-<span id="SegA01">COLUMN1</span>
-<span id="SegA02">COLUMN2</span>
-<span id="SegA03">COLUMN3</span>
-</p>
-
-
-
-<p id="Vars">
-<span id="VarsA01">
-	<select class="Slt38" name="lngWorkflowOrderCode">
-		_%lngWorkflowOrderCode%_
-	</select>
-</span>
-
-<span id="VarsA02">
-	<select class="Slt21" name="lngWorkflowOrderGroupCode">
-		_%lngWorkflowOrderGroupCode%_
-	</select>
-</span>
-
-<span id="VarsA03">
-	<select class="SlctStyle05" name="lngInChargeCode" onblur="fncDefaultTabindex( document.all.lngWorkflowOrderCode );">
-		_%lngInChargeCode%_
-	</select>
-</span>
-</p>
-
-
+<!-- フォーム -->
+<div class="form-box__contents">
+	<div class="regist-line">
+		<span class="form-line">
+			<span class="Column" id="SegA01">順序名称</span>
+			<span class="VarText" id="VarsA01">
+				<select class="Slt38" name="lngWorkflowOrderCode">
+					_%lngWorkflowOrderCode%_
+				</select>
+			</span>
+		</span>
+	</div>
+	<div class="regist-line">
+		<span class="form-line">
+			<span class="Column" id="SegA02">グループ名称</span>
+			<span class="VarText" id="VarsA02">
+				<select class="Slt21" name="lngWorkflowOrderGroupCode">
+					_%lngWorkflowOrderGroupCode%_
+				</select>
+			</span>
+		</span>
+	</div>
+	<div class="regist-line">
+		<span class="form-line">
+			<span class="Column" id="SegA03">担当者</span>
+			<span class="VarText" id="VarsA03">
+				<select class="SlctStyle05" name="lngInChargeCode" onblur="fncDefaultTabindex( document.all.lngWorkflowOrderCode );">
+					_%lngInChargeCode%_
+				</select>
+			</span>
+		</span>
+	</div>
+</div>
 </form>
 </body>
 </html>

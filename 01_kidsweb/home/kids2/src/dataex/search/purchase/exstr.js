@@ -39,34 +39,6 @@ function ChgEtoJ( lngCount )
 	// エクスポートボタンの書出し
 	ExportBt2.innerHTML  = blownexportBt;
 
-
-	// 英語
-	if ( lngCount == 0 )
-	{
-
-		window.top.SegAHeader.innerHTML = headerAE;
-
-		Column0.innerText = 'Stock Date';
-		Column1.innerText = 'L/C';
-		Column2.innerText = 'T/T';
-		Column3.innerText = 'On Board';
-
-	}
-
-
-	// 日本語
-	else if ( lngCount == 1 )
-	{
-
-		window.top.SegAHeader.innerHTML = headerAJ;
-
-		Column0.innerText = '仕入計上日';
-		Column1.innerText = 'L/C';
-		Column2.innerText = 'T/T';
-		Column3.innerText = 'On Board';
-
-	}
-
 	return false;
 
 }

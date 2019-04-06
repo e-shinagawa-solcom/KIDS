@@ -1,414 +1,104 @@
 <!--
 
-
 #Backs
 {
 	background-color : #d6d0b1 ;
 }
 
-
-
-
-
-
-#DetailSegs
+/* 入力フォーム 行 */
+.form-box__contents
 {
+	position : absolute ;
+	left: 0px;
+	width: 890px;
+	height: 464px;
+    padding: 3px 10px;
+    background-color: #d6d0b1;
+}
+.toggle-line{
+	height: 20px;
+	margin: 1px 3px 4px 0px;
+}
+
+/* 検索/表示 全切り替えボタン */
+.toggle-search
+{
+    margin: 0px 13px 0px 13px;
+}
+
+.toggle-display
+{
+    margin: 0px 13px 0px 10px;
+}
+
+.regist-line
+{
+    margin: 1px 3px 4px 0px;
+}
+
+.form-line{
+	display: inline-block;
+    box-sizing: border-box;
+    padding: 3px 3px 3px 10px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #798787;
+    background-color: #e8f0f1;
+    margin-bottom: 3px;
+    
+}
+.Column {
+	display: inline-block;
+	vertical-align: middle;
 	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 170px ;
 	width : 157px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
+	line-height: 23px;
 }
 
-#DetailVars
+.VarText {
+	display: inline-block;
+	font-family : ＭＳ Ｐゴシック, Osaka ;
+	font-style : normal ;
+	font-weight : normal ;
+	font-size : 12px;
+	vertical-align: middle;
+}
+.search-label--checkbox
 {
-	position : absolute ;
-	left : 129px ;
-	top : 70px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 8px ;
+    display: inline-block;
+
+    box-sizing: border-box;
+    padding: 3px 10px 3px 10px;
+
+    border-style: solid;
+    border-width: 1px;
+    border-color: #798787;
+    line-height: 23px;
+    margin-right: 5px;
+
+    background-color: #e8f0f1;
 }
-
-
-#LoginPermissionSegs
+/* 検索フォーム チェックボックス 位置調整 */
+.is-search
 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 170px ;
-	width : 157px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
+    width: 30px;
+    margin: 3px 0px 2px 0px;
+    background-color: #e8f0f1;
+    border-style: none;
+    vertical-align: middle;
 }
 
-#LoginPermissionVars
+.is-display
 {
-	position : absolute ;
-	left : 129px ;
-	top : 70px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 8px ;
+    width: 30px;
+    margin: 3px 0px 2px 6px;
+    background-color: #e8f0f1;
+    border-style: none;
+    vertical-align: middle;
 }
 
 
-#UserCodeSegs
-{
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 170px ;
-	width : 157px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
-}
 
-#UserCodeVars
-{
-	position : absolute ;
-	left : 129px ;
-	top : 70px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 8px ;
-}
-
-
-#UserIDSegs
-{
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 170px ;
-	width : 157px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
-}
-
-#UserIDVars
-{
-	position : absolute ;
-	left : 129px ;
-	top : 70px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 8px ;
-}
-
-
-#EmailPermissionSegs
-{
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 170px ;
-	width : 157px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
-}
-
-#EmailPermissionVars
-{
-	position : absolute ;
-	left : 129px ;
-	top : 70px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 8px ;
-}
-
-
-#EmailSegs
-{
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 170px ;
-	width : 157px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
-}
-
-#EmailVars
-{
-	position : absolute ;
-	left : 129px ;
-	top : 70px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 8px ;
-}
-
-
-#DisplayUserSegs
-{
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 170px ;
-	width : 157px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
-}
-
-#DisplayUserVars
-{
-	position : absolute ;
-	left : 129px ;
-	top : 70px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 8px ;
-}
-
-
-#DisplayUserCodeSegs
-{
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 170px ;
-	width : 157px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
-}
-
-#DisplayUserCodeVars
-{
-	position : absolute ;
-	left : 129px ;
-	top : 70px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 8px ;
-}
-
-
-#DisplayUserNameSegs
-{
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 170px ;
-	width : 157px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
-}
-
-#DisplayUserNameVars
-{
-	position : absolute ;
-	left : 129px ;
-	top : 70px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 8px ;
-}
-
-
-#UserFullNameSegs
-{
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 170px ;
-	width : 157px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
-}
-
-#UserFullNameVars
-{
-	position : absolute ;
-	left : 129px ;
-	top : 70px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 8px ;
-}
-
-
-#CompanySegs
-{
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 170px ;
-	width : 157px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
-}
-
-#CompanyVars
-{
-	position : absolute ;
-	left : 129px ;
-	top : 70px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 8px ;
-}
-
-
-#GroupSegs
-{
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 170px ;
-	width : 157px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
-}
-
-#GroupVars
-{
-	position : absolute ;
-	left : 129px ;
-	top : 70px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 8px ;
-}
-
-
-#AuthorityGroupSegs
-{
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 170px ;
-	width : 157px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
-}
-
-#AuthorityGroupVars
-{
-	position : absolute ;
-	left : 129px ;
-	top : 70px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 8px ;
-}
-
-
-#AccessIPAddressSegs
-{
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 170px ;
-	width : 157px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
-}
-
-#AccessIPAddressVars
-{
-	position : absolute ;
-	left : 129px ;
-	top : 70px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 8px ;
-}
-
-
-#RemarkSegs
-{
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 170px ;
-	width : 157px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
-}
-
-#RemarkVars
-{
-	position : absolute ;
-	left : 129px ;
-	top : 70px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 8px ;
-}
-
-
-#FixSegs
-{
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 170px ;
-	width : 157px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
-}
-
-#FixVars
-{
-	position : absolute ;
-	left : 129px ;
-	top : 70px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 8px ;
-}
 
 
 #DeleteSegs
@@ -452,77 +142,6 @@
 	background-color: transparent ;
 }
 
-
-
-#CheckAll1
-{
-	position : absolute ;
-	top : 2px ;
-	left : 16px ;
-	text-align : center ;
-	border-width: 0px ;
-	border-style: none ;
-	padding : 3px 0px 0px 8px ;
-}
-
-#CheckAll2
-{
-	position : absolute ;
-	top : 2px ;
-	left : 65px ;
-	text-align : center ;
-	border-width: 0px ;
-	border-style: none ;
-	padding : 3px 0px 0px 8px ;
-}
-
-#ViewSearch1
-{
-	position : absolute ;
-	top : 23px ;
-	left : 1px ;
-	text-align : center ;
-	border-width: 0px ;
-	border-style: none ;
-	padding : 3px 0px 0px 8px ;
-}
-
-#ViewSearch2
-{
-	position : absolute ;
-	top : 143px ;
-	left : 1px ;
-	text-align : center ;
-	border-width: 0px ;
-	border-style: none ;
-	padding : 3px 0px 0px 8px ;
-}
-
-
-#Checks
-{
-	position : absolute ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 4px ;
-}
-
-.CheckBoxStyle
-{
-	width : 40px ;
-	border-width : 0px ;
-	border-style : none ;
-	background-color : transparent ;
-}
-
-
-
-
-
-
-
-
 /********************* START DATE BUTTON *********************/
 #DateBtA {
 	position : absolute ;
@@ -536,64 +155,6 @@
 
 
 
-
-
-
-
-/********************* START MSW BUTTON *********************/
-/* START [SUPPLIER] BUTTON */
-#MSWBt08 {
-	position : absolute ;
-	left : 706px ;
-	top : 209px ;
-	width : 19px ;
-	height : 19px ;
-	border-width : 0px ;
-	border-style : none ;
-	background-color : #ffffff ;
-}
-/* END [SUPPLIER] BUTTON */
-
-
-/* START [DEPT & IN CHARGE NAME] BUTTON */
-#MSWBt02 {
-	position : absolute ;
-	left : 706px ;
-	top : 257px ;
-	width : 19px ;
-	height : 19px ;
-	border-width : 0px ;
-	border-style : none ;
-	background-color : #ffffff ;
-}
-/* END [DEPT & IN CHARGE NAME] BUTTON */
-
-
-#MSWBt03 {
-	position : absolute ;
-	left : 706px ;
-	top : 488px ;
-	width : 19px ;
-	height : 19px ;
-	border-width : 0px ;
-	border-style : none ;
-	background-color : #ffffff ;
-}
-
-
-/* START [INPUT2] BUTTON */
-#MSWBt09 {
-	position : absolute ;
-	left : 706px ;
-	top : 178px ;
-	width : 19px ;
-	height : 19px ;
-	border-width : 0px ;
-	border-style : none ;
-	background-color : #ffffff ;
-}
-/* END [INPUT2] BUTTON */
-/********************** END MSW BUTTON **********************/
 
 
 

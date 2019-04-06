@@ -391,7 +391,7 @@ function fncSetProductTableData ( $aryResult, $objDB, $objCache )
 			}
 			else
 			{
-				$strText = $aryResult[lngproductionquantity];
+				$strText = $aryResult["lngproductionquantity"];
 			}
 			// 単位の設定
 			if ( $aryResult["lngproductionunitcode"] )
@@ -419,7 +419,7 @@ function fncSetProductTableData ( $aryResult, $objDB, $objCache )
 			}
 			else
 			{
-				$strText = $aryResult[lngfirstdeliveryquantity];
+				$strText = $aryResult["lngfirstdeliveryquantity"];
 			}
 			// 単位の設定
 			if ( $aryResult["lngfirstdeliveryunitcode"] )

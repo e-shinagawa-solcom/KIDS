@@ -16,29 +16,30 @@
 <link rel="stylesheet" type="text/css" media="screen" href="/login/layout.css">
 
 </head>
-<body id="Backs" onContextmenu="return false;" onload="fncNavigatorCheck();initLayoutLogin();">
+<body id="Backs" onContextmenu="return false;" onload="initLayoutLogin();">
 <form name="frmLogin" action="/login/login.php" method="post">
 
 
 <span id="KidsLogo"></span>
 
-<p id="LoginSet">
+<div id="LoginSet">
 <span id="sUID">ID</span>
-<span id="sPASSWD">PASSWORD</span>
-
 <span id="sUIDVars"><input style="ime-mode:disabled;" class="Txt19L" name="strUserID" type="text" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="1" autocomplete="off"></span>
+</div>
+<div id="PassSet">
+<span id="sPASSWD">PASSWORD</span>
 <span id="sPASSWDVars"><input style="ime-mode:disabled;" class="Txt19L" name="strPassword" type="password" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="2"></span>
-</p>
+</div>
 
 <span id="LoginButton" onclick="LoginCheck();"></span>
 <span id="CloseButton" onclick="window.close();return false;"></span>
 
 </form>
 
-
+<div id="ReminderSet">
 <span id="strReminder">PASSWORD REMINDER</span>
 <span id="rAllowButton" onclick="fncPasswdRemind( '/remind/index.html' );return false;"></span>
-
+</div>
 
 <span id="LoginObject"></span>
 </body>

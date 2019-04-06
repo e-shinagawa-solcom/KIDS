@@ -23,7 +23,7 @@
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/sysc/message/initlayoutifrm.js"></script>
 <script type="text/javascript" language="javascript" src="/sysc/inf/inf_exstr.js"></script>
 
-
+<link rel="stylesheet" type="text/css" media="screen" href="/sysc/cmn/form.css">
 <link rel="stylesheet" type="text/css" media="screen" href="/sysc/inf/inf_layout.css">
 <script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
 
@@ -41,7 +41,7 @@
 <form name="LOG" action="log.php" method="GET">
 	<input type="hidden" name="strSessionID" value="_%strSessionID%_">
 
-	<span id="LogBt" onclick="submit();return false;"></span> <!-- window.LOG.submit() -->
+	<span id="LogBt" onclick="LOG.submit();return false;"></span> <!-- window.LOG.submit() -->
 
 </form>
 
@@ -51,19 +51,26 @@
 <form name="REGIST" action="action.php" method="post">
 	<input type="hidden" name="strSessionID" value="_%strSessionID%_">
 
-	<p id="MessageSet">
-		<span id="Column0">タイトル</span>
-		<span id="Column1">メッセージ</span>
+	<div id="MessageSet">
+		<div class="regist-line">
+			<span class="form-line">
+				<span class="Column" id="Column0">タイトル</span>
+				<span class="VarText" id="Vars0">
+					<input class="Txt90L" type="text" name="strSystemInformationTitle" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="1" value="_%strSystemInformationTitle%_">
+				</span>
+			</span>
+		</div>
+		<div class="regist-line">
+			<span class="form-line">
+				<span class="ColumnArea" id="Column1">メッセージ</span>
+				<span class="VarTextArea" id="Vars1">
+					<textarea rows="3" name="strSystemInformationBody" wrap="hard" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this , 200 );" tabindex="2" maxlength="200">_%strSystemInformationBody%_</textarea>
+				</span>
+			</span>
+		</div>
 
-		<span id="Vars0">
-			<input class="Txt90L" type="text" name="strSystemInformationTitle" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="1" value="_%strSystemInformationTitle%_">
-		</span>
-		<span id="Vars1">
-			<textarea rows="3" name="strSystemInformationBody" wrap="hard" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this , 200 );" tabindex="2" maxlength="200">_%strSystemInformationBody%_</textarea>
-		</span>
-
-		<span id="RegistBt" onclick="submit();return false;"></span> <!-- window.REGIST.submit(); -->
-	</p>
+		<span id="RegistBt" onclick="REGIST.submit();return false;"></span> <!-- window.REGIST.submit(); -->
+	</div>
 
 </form>
 

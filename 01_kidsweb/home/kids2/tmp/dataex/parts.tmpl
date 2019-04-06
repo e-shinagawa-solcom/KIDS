@@ -19,7 +19,7 @@
 </header3>
 
 <bodyonload>
-initLayoutBase();initLayout();initLayoutNavi();GetlngLanguageCode( _%lngLanguageCode%_ );Loading();
+initLayoutBase();initLayout();initLayoutNavi();Loading();
 </bodyonload>
 </config>
 
@@ -34,46 +34,37 @@ initLayoutBase();initLayout();initLayoutNavi();GetlngLanguageCode( _%lngLanguage
 <!-- ///////////////////////////////////// END MAIN TITLE ///////////////////////////////////// -->
 
 
-
-<!-- //////////////////////////////////// START NAVIGATION //////////////////////////////////// -->
-<span id="NaviButton"></span>
-
-
-<p id="Navigations" onmouseout="NavigationOFF( Navigations , NaviButton );">
-<span id="Navi">
-	<iframe id="NaviIfrm" name="NAVIwin" frameborder="0" scrolling="no" src="/navi/index.php?strSessionID=_%strSessionID%_&strNaviCode=dataex-1"></iframe>
-</span>
-</p>
-<!-- ///////////////////////////////////// END NAVIGATION ///////////////////////////////////// -->
-
-
-<!-- //////////////////////////////////// START INPUT A SEGMENTS //////////////////////////////////// -->
-<p id="InputA">
-
-<!-- START BODYS -->
-<span id="SegABodys"></span>
-<!-- END BODYS -->
-
-<!-- START HEADER -->
-<span id="SegAHeader"></span>
-<!-- END HEADER -->
-
-<!-- START BOTTOM -->
-<span id="SegABottom"></span>
-<!-- END BOTTOM -->
+<div class="main-area">
+	<!-- //////////////////////////////////// START NAVIGATION //////////////////////////////////// -->
+	<div class="navi-area">
+		<span id="NaviButton"></span>
+		<p id="Navigations" onmouseout="NavigationOFF( Navigations , NaviButton );">
+			<span id="Navi">
+				<iframe id="NaviIfrm" name="NAVIwin" frameborder="0" scrolling="no" src="/navi/index.php?strSessionID=_%strSessionID%_&strNaviCode=dataex-1"></iframe>
+			</span>
+		</p>
+	</div>
+	<!-- ///////////////////////////////////// END NAVIGATION ///////////////////////////////////// -->
 
 
-<!-- START SEGMENTS -->
-<span id="SegA01">
-	<iframe id="SegAIFrm" name="Pwin" frameborder="0" scrolling="no" src="/dataex/select.php?strSessionID=_%strSessionID%_"></iframe>
-</span>
-<!-- END SEGMENTS -->
-
-
-
-
-</p>
-<!-- ///////////////////////////////////// END INPUT A SEGMENTS ///////////////////////////////////// -->
+	<!-- //////////////////////////////////// START INPUT A SEGMENTS //////////////////////////////////// -->
+	<p id="InputA">
+		<!-- START HEADER -->
+		<span id="SegAHeader"></span>
+		<!-- END HEADER -->
+	
+		<!-- START BOTTOM -->
+		<span id="SegABottom"></span>
+		<!-- END BOTTOM -->
+	
+		<!-- START SEGMENTS -->
+		<span id="SegA01">
+			<iframe id="SegAIFrm" name="Pwin" frameborder="0" scrolling="no" src="/dataex/select.php?strSessionID=_%strSessionID%_"></iframe>
+		</span>
+		<!-- END SEGMENTS -->
+	</p>
+	<!-- ///////////////////////////////////// END INPUT A SEGMENTS ///////////////////////////////////// -->
+</div>
 
 
 
@@ -81,9 +72,8 @@ initLayoutBase();initLayout();initLayoutNavi();GetlngLanguageCode( _%lngLanguage
 
 
 
-<!-- ////////// START E TO J ////////// -->
-<span id="EtoJ"></span>
-<!-- /////////// END E TO J /////////// -->
+
+
 
 
 

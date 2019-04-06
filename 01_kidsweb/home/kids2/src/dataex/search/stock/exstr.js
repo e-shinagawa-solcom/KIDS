@@ -39,31 +39,6 @@ function ChgEtoJ( lngCount )
 	// エクスポートボタンの書出し
 	ExportBt2.innerHTML  = blownexportBt;
 
-	// 英語
-	if ( lngCount == 0 )
-	{
-
-		window.top.SegAHeader.innerHTML = headerAE;
-
-		Column0.innerText = 'Stock Date';
-		Column1.innerText = 'Goods set & Supplier';
-		Column2.innerText = 'Goods set & Dept & Products';
-
-	}
-
-
-	// 日本語
-	else if ( lngCount == 1 )
-	{
-
-		window.top.SegAHeader.innerHTML = headerAJ;
-
-		Column0.innerText = '仕入計上日';
-		Column1.innerText = '仕入科目・仕入先別';
-		Column2.innerText = '仕入科目・部門・製品別';
-
-	}
-
 	return false;
 
 }

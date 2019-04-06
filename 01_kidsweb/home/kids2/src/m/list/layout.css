@@ -1,44 +1,75 @@
 <!--
+.main-area{
+	position : absolute ;
+	top : 95px ;
+}
 
 
 /************************************* START INPUT A *************************************/
 /* START INPUT A SEGMENTS */
+.navi-area {
+    position: absolute;
+    top: 1px;
+    left: 11px;
+    width: 186px;
+    height: 550px;
+    z-index : 4 ;
+    pointer-events: none;
+}
+
 #InputA { 
 	position : absolute ;
 	left : 34px ;
-	top : 111px ;
+	top : 0px ;
 	z-index : 0 ;
 	visibility : visible ;
 	border-width: 0px ;
 	border-style: none ;
-	background-color: transparent ;
+	//background-color: transparent ;
+	height: 512px;
+	width: 950px;
+	background-color: #d6d0b1 ;
+	margin-top: 12px;
+	margin-bottom: 0px;
+	border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
 }
 /* END INPUT A SEGMENTS */
 
 
 /* START HEADER */
 #SegAHeader {
-	position : absolute ;
-	left : 0px ;
-	top : 0px ;
-	border-width: 0px ;
-	border-style: none ;
-	background-color: transparent ;
+	position: absolute;
+    top: 0px;
+    left: 0px;
+
+    width: 100%;
+    height: 30px;
+
+    background-color: #6c8cac;
+
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
 }
+/* 入力フォーム ヘッダタイトル */
+.form-box__header__title
+{
+    margin: 8px 12px;
+
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 12px;
+}
+/* フォームボックスヘッダ ボタン */
+.form-box__header__buttons
+{
+    position: absolute;
+    top: 2px;
+    right: 10px;
+}
+
 /* END HEADER */
-
-
-/* START BODYS */
-#SegABodys {
-	left : 190px ;
-	top : 500px ;
-	width : 949px ;
-	height : 514px ;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #cdcdcd ;
-}
-/* END BODYS */
 
 
 /* START BOTTOM */
@@ -65,7 +96,7 @@
 
 #SegAIFrm {
 	width : 931px ; /* 931px */
-	height : 471px ;
+	height : 467px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #799797 ;
@@ -111,8 +142,8 @@
 #MasterAddBt
 {
 	position : absolute ;
-	left : 885px ;
-	top : 116px ;
+	left : 840px ;
+	top : 17px ;
 	border-width: 0px ;
 	border-style: none ;
 	background-color: transparent ;

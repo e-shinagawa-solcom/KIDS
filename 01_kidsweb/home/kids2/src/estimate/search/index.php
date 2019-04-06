@@ -22,7 +22,19 @@ $objDB   = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open( "", "", "", "" );
 
-$aryData = $_GET;
+//////////////////////////////////////////////////////////////////////////
+// POST(一部GET)データ取得
+//////////////////////////////////////////////////////////////////////////
+if ( $_POST )
+{
+	$aryData = $_POST;
+}
+elseif ( $_GET )
+{
+	$aryData = $_GET;
+}
+
+setcookie("strSessionID", $aryData["strSessionID"], 0, "/");
 
 // 文字列チェック
 $aryCheck["strSessionID"]    = "null:numenglish(32,32)";
@@ -47,7 +59,7 @@ $aryData["lngFunctionCode"] = DEF_FUNCTION_UC3;
 // HTML出力
 //$aryData["Pwin"] = "search.php?strSessionID=" . $aryData["strSessionID"];
 //$aryData["Pwin"] = "../search_ifrm/index.html";
-echo fncGetReplacedHtml( "estimate/search/parts.tmpl", $aryData, $objAuth );
+echo fncGetReplacedHtmlWithBase("search/base_search.html", "estimate/search/es_search.tmpl", $aryData ,$objAuth );
 
 
 

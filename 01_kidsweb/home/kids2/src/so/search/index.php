@@ -45,6 +45,8 @@ elseif ( $_GET )
 	$aryData = $_GET;
 }
 
+setcookie("strSessionID", $aryData["strSessionID"], 0, "/");
+
 // 文字列チェック
 $aryCheck["strSessionID"]   = "null:numenglish(32,32)";
 $aryResult = fncAllCheck( $aryData, $aryCheck );
@@ -68,7 +70,7 @@ fncPutStringCheckError( $aryResult, $objDB );
 $aryData["lngFunctionCode"] = DEF_FUNCTION_SO2;
 
 // テンプレート読み込み
-echo fncGetReplacedHtml( "so/search/parts.tmpl", $aryData ,$objAuth );
+echo fncGetReplacedHtmlWithBase("search/base_search.html", "so/search/so_search.tmpl", $aryData ,$objAuth );
 
 $objDB->close();
 

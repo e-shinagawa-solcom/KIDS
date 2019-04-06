@@ -1,7 +1,8 @@
 <!--
-
-
-
+.main-area{
+	position : absolute ;
+	top : 95px ;
+}
 
 
 /************************************* START INPUT A *************************************/
@@ -9,12 +10,14 @@
 #InputA { 
 	position : absolute ;
 	left : 34px ;
-	top : 111px ;
+	top : 0px ;
 	z-index : 0 ;
 	visibility : visible ;
-	border-width: 0px ;
-	border-style: none ;
-	background-color: transparent ;
+	background-color: #d6d0b1 ;
+	height: 512px;
+	width: 949px;
+	margin-top: 12px;
+	margin-bottom: 0px;
 }
 
 
@@ -30,518 +33,146 @@
 }
 
 
-
-/* BODYS */
-#SegABodys {
-	left : 10px ;
-	top : 31px ;
-	width : 949px ;
-	height : 487px ;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #cdcdcd ;
-	background-color: #ffffff ;
-}
-
-
-
 /* BOTTOM */
 #SegABottom {
 	position : absolute ;
 	left : 0px ;
-	top : 485px ;
+	top : 500px ;
 	border-width: 0px ;
 	border-style: none ;
 	background-color: #ffffff ;
 }
 
-
-
-/* ログイン許可 */
-#SegA01
+/* 入力フォーム 行 */
+.form-box__contents
 {
+	position : absolute ;
+	top: 30px;
+	left: 0px;
+	width: 931px;
+	height: 467px;
+    padding-top: 3px;
+    box-sizing: border-box;
+}
+
+.contents{
+	box-sizing: border-box;
+	position: relative;
+}
+
+.block{
+	float:left;
+	box-sizing: border-box;
+	position: relative;
+}
+
+.regist-line
+{
+	left : 35px ;
+	overflow: hidden;
+	margin-bottom:	2px;
+	margin-left:	2px;
+}
+
+.form-line{
+	display: inline-block;
+    box-sizing: border-box;
+    padding: 3px 3px 3px 10px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #798787;
+    background-color: #e8f0f1;
+}
+
+.form-line-pic{
+	display: inline-block;
+    box-sizing: border-box;
+    padding: 0px 0px 0px 10px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #798787;
+    background-color: #e8f0f1;
+}
+
+.form-line-fullname{
+	display: inline-block;
+    box-sizing: border-box;
+    padding: 3px 3px 3px 10px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #798787;
+    background-color: #e8f0f1;
+    margin-top: 64px;
+}
+
+.Column {
+	display: inline-block;
+	vertical-align: middle;
 	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 40px ;
-	width : 160px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
+	width : 157px ;
+	line-height: 22px;
 }
 
-#VarsA01
-{
-	position : absolute ;
-	left : 160px ;
-	top : 40px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 0px ;
+.VarText {
+	font-family : ＭＳ Ｐゴシック, Osaka ;
+	font-style : normal ;
+	font-weight : normal ;
+	font-size : 12px;
+	vertical-align: middle;
 }
 
-
-
-/* ユーザーコード */
-#SegA02
-{
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 70px ;
-	width : 160px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
+.LongText{
+	z-index: 1;
+    font-family: monospace;
+    width: 740px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #7f7f7f #dfdfdf #dfdfdf #7f7f7f;
+    margin: 0 4px 0 0;
+    color: #666666;
+    background-color: #ffffff;
 }
 
-#VarsA02
-{
-	position : absolute ;
-	left : 160px ;
-	top : 70px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 0px ;
+.Spacer {
+	height: 10px;
+	clear:both
 }
 
-
-
-/* ユーザーID */
-#SegA03
-{
-	font-weight : bold ;
+.button-area{
 	position : absolute ;
-	left : 10px ;
-	top : 100px ;
-	width : 160px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
-}
-
-#VarsA03
-{
-	position : absolute ;
-	left : 160px ;
-	top : 100px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 0px ;
-}
-
-
-
-/* パスワード */
-#SegA04
-{
-	font-weight : bold ;
-	position : absolute ;
-	left : 318px ;
-	top : 70px ;
-	width : 160px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
-}
-
-#VarsA04
-{
-	position : absolute ;
-	left : 468px ;
-	top : 70px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 0px ;
-}
-
-
-
-/* パスワード確認 */
-#SegA05
-{
-	font-weight : bold ;
-	position : absolute ;
-	left : 318px ;
-	top : 100px ;
-	width : 160px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
-}
-
-#VarsA05
-{
-	position : absolute ;
-	left : 468px ;
-	top : 100px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 0px ;
-}
-
-
-
-/* メール配信許可 */
-#SegA06
-{
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 145px ;
-	width : 160px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
-}
-
-#VarsA06
-{
-	position : absolute ;
-	left : 160px ;
-	top : 145px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 0px ;
-}
-
-
-
-/* メールアドレス */
-#SegA07
-{
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 175px ;
-	width : 160px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
-}
-
-#VarsA07
-{
-	position : absolute ;
-	left : 160px ;
-	top : 175px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 0px ;
-}
-
-
-
-/* 表示ユーザーフラグ */
-#SegA08
-{
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 220px ;
-	width : 160px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
-}
-
-#VarsA08
-{
-	position : absolute ;
-	left : 160px ;
-	top : 220px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 0px ;
-}
-
-
-
-/* 表示ユーザーコード */
-#SegA09
-{
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 250px ;
-	width : 160px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
-}
-
-#VarsA09
-{
-	position : absolute ;
-	left : 160px ;
-	top : 250px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 0px ;
-}
-
-
-
-/* 表示ユーザー名 */
-#SegA10
-{
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 280px ;
-	width : 160px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
-}
-
-#VarsA10
-{
-	position : absolute ;
-	left : 160px ;
-	top : 280px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 0px ;
-}
-
-
-
-/* フルネーム */
-#SegA11
-{
-	font-weight : bold ;
-	position : absolute ;
-	left : 318px ;
-	top : 280px ;
-	width : 160px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
-}
-
-#VarsA11
-{
-	position : absolute ;
-	left : 468px ;
-	top : 280px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 0px ;
-}
-
-
-
-/* 会社 */
-#SegA12
-{
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 325px ;
-	width : 160px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
-}
-
-#VarsA12
-{
-	position : absolute ;
-	left : 160px ;
-	top : 325px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 0px ;
-}
-
-
-
-/* グループ */
-#SegA13
-{
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 351px ;
-	width : 160px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
-}
-
-#VarsA13
-{
-	position : absolute ;
-	left : 160px ;
-	top : 351px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 0px ;
-}
-
-
-
-#SegA1213
-{
-	position : absolute ;
-	left : 536px ;
-	top : 325px ;
-	width : 33 ;
-	height : 53px ;
+	left: 550px;
+    top: 0px;
+    width: 33px;
+    height: 60px;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color : #798787 ;
 	background-color : #e8f0f1 ;
 }
 
-
-
-/* 権限グループ */
-#SegA14
-{
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 381px ;
-	width : 160px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
+.Fileup{
+	width : 285px ;
+	height : 28px ;
+	text-align : left ;
 }
-
-#VarsA14
-{
-	position : absolute ;
-	left : 160px ;
-	top : 381px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 0px ;
-}
-
-
-
-/* アクセスIPアドレス */
-#SegA15
-{
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 411px ;
-	width : 160px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
-}
-
-#VarsA15
-{
-	position : absolute ;
-	left : 160px ;
-	top : 411px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 0px ;
-}
-
-
-
-/* 備考 */
-#SegA16
-{
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 455px ;
-	width : 160px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
-}
-
-#VarsA16
-{
-	position : absolute ;
-	left : 160px ;
-	top : 455px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 0px ;
-}
-
-/************************************** END INPUT A **************************************/
-
-
-
-
-
-
 
 #PunitBt
 {
 	position : absolute ;
-	left : 543px ;
-	top : 343px ;
+	left: 7px;
+    top: 18px;
 	border-width: 0px ;
 	border-style: none ;
 	background-color: transparent ;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/************************************** END INPUT A **************************************/
 
 /********************* START QUERY BUTTON *********************/
 /* REGIST BUTTON */
 #RegistBt
 {
 	position : absolute ;
-	top : 505px ;
+	top : 515px ;
 	left : 830px ;
 	border-width: 0px ;
 	border-style: none ;
@@ -554,17 +185,13 @@
 #SegAClearBt
 {
 	position : absolute ;
-	top : 505px ;
+	top : 515px ;
 	left : 745px ;
 	border-width: 0px ;
 	border-style: none ;
 	background-color: transparent ;
 }
 /********************** END QUERY BUTTON **********************/
-
-
-
-
 
 /********** Company & Group **********/
 #CompanyGroup
@@ -592,59 +219,38 @@
 }
 
 
-
-
-
 /* PICTURE SPACE */
+.pict-area{
+	position : absolute ;
+	left: 40px;
+    top: 0px;
+	width : 100px;
+	height : 100px ;
+}
+	
 #PixelImg
 {
 	position : absolute ;
-	left     : 849px ;
-	top      : 111px ;
+	left     : 0px ;
+	top      : 70px ;
 }
 
 #PictSpace
 {
 	position : absolute ;
-	left : 855px ;
-	top : 40px ;
+	left: 5px;
+	top : 0px ;
 	border-width: 0px ;
 	border-style: none ;
-	background-color: transparent ;
 }
 
 #UserPict
 {
 	position : absolute ;
-	left : 864px ;
-	top : 49px ;
+	left : 15px ;
+	top  : 10px ;
 	border-width: 0px ;
 	border-style: none ;
-	background-color: transparent ;
-}
-
-#DisplayPictUploadSegs
-{
-	font-weight : bold ;
-	position : absolute ;
-	left : 318px ;
-	top : 40px ;
-	width : 160px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
-}
-
-#DisplayPictUploadVars
-{
-	position : absolute ;
-	left : 468px ;
-	top : 40px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 0px 
 }
 
 #DisplayBrowseBt
@@ -659,8 +265,15 @@
 	background-color: transparent ;
 }
 
-
-
+.navi-area {
+    position: absolute;
+    top: 1px;
+    left: 11px;
+    width: 186px;
+    height: 550px;
+    z-index : 4 ;
+    pointer-events: none;
+}
 
 
 /* 予備 PRICE WINDOW */

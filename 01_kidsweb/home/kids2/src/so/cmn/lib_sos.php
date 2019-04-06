@@ -258,39 +258,6 @@ function fncGetSearchReceiveSQL ( $aryViewColumn, $arySearchColumn, $arySearchDa
 					$flgCustomerCompany = TRUE;
 				}
 			}
-			// 部門
-			/*
-			if ( $strSearchColumnName == "lngInChargeGroupCode" )
-			{
-				if ( $arySearchDataColumn["lngInChargeGroupCode"] )
-				{
-					$aryQuery[] = " AND inchg_g.strGroupDisplayCode ~* '" . $arySearchDataColumn["lngInChargeGroupCode"] . "'";
-					$flgInChargeGroup = TRUE;
-				}
-				if ( $arySearchDataColumn["strInChargeGroupName"] )
-				{
-					$aryQuery[] = " AND UPPER(inchg_g.strGroupDisplayName) LIKE UPPER('%" . $arySearchDataColumn["strInChargeGroupName"] . "%')";
-					$flgInChargeGroup = TRUE;
-				}
-			}
-			*/
-			// 担当者
-			/*
-			if ( $strSearchColumnName == "lngInChargeUserCode" )
-			{
-				if ( $arySearchDataColumn["lngInChargeUserCode"] )
-				{
-					$aryQuery[] = " AND inchg_u.strUserDisplayCode ~* '" . $arySearchDataColumn["lngInChargeUserCode"] . "'";
-					$flgInChargeUser = TRUE;
-				}
-				if ( $arySearchDataColumn["strInChargeUserName"] )
-				{
-					$aryQuery[] = " AND UPPER(inchg_u.strUserDisplayName) LIKE UPPER('%" . $arySearchDataColumn["strInChargeUserName"] . "%')";
-					$flgInChargeUser = TRUE;
-				}
-			}
-			*/
-
 			// 状態
 			if ( $strSearchColumnName == "lngReceiveStatusCode" )
 			{
@@ -981,182 +948,6 @@ function fncGetReceiveToProductSQL ( $aryDetailViewColumn, $lngReceiveNo, $aryDa
 	return implode("\n", $aryOutQuery);
 }
 
-
-
-
-
-
-/**
-* 検索結果表示関数（明細行用）
-*
-*	検索結果からテーブル構成で結果を出力する関数
-*	明細行を表示する
-*
-*	@param  Array 	$aryHeadResult 			ヘッダ行の検索結果が格納された配列
-*	@param  Array 	$aryDetailResult 		明細行の検索結果が格納された配列
-*	@param  Array 	$aryDetailViewColumn 	表示対象カラム名の配列
-*	@param  Array 	$aryData 				ＰＯＳＴデータ群
-*	@param	Integer	$lngMode				出力モード　0: １行目の表示		それ以外: ２行目以降の表示
-*	@param	Integer	$lngColumnCount			表示行数
-*	@access public
-*/
-function fncSetReceiveDetailTable ( $aryHeadResult, $aryDetailResult, $aryDetailViewColumn, $aryData, $lngMode, $lngColumnCount, $objDB, $objCache )
-{
-	// 明細行数
-	$lngDetailCount = count($aryDetailResult);
-
-	// モード設定
-	if ( $lngMode == 0 )
-	{
-		$lngStart = 0;
-		$lngEnd = 1;
-	}
-	else
-	{
-		$lngStart = 1;
-		$lngEnd = $lngDetailCount;
-	}
-
-	// $aryDetailResult[] 中の明細情報の出力（２行目以降）
-	for ( $x = $lngStart; $x < $lngEnd; $x++ )
-	{
-//		reset( $aryDetailResult[$x] );
-
-		if ( $lngMode )
-		{
-			$lngColumnCountMinus = $lngColumnCount - 1;
-			if ( $lngDetailCount == "" )
-			{
-				$lngDetailCount = 0;
-			}
-			$aryHtml[] = "<tr id=\"TD" . $lngColumnCountMinus . "_" . $x . "\" class=\"Segs\" name=\"strTrName" . $lngColumnCountMinus . "\" onclick=\"fncSelectSomeTrColor( this,  'TD" . $lngColumnCountMinus . "_', " . $lngDetailCount . " );\" style=\"background:#FFB2B2;\">";
-		}
-
-		// 表示対象カラムの配列より結果の出力
-		for ( $y = 0; $y < count($aryDetailViewColumn); $y++ )
-		{
-			$strDetailColumnName = $aryDetailViewColumn[$y];
-
-			// 明細行番号
-			if ( $strDetailColumnName == "lngRecordNo" )
-			{
-				$aryHtml[] = "<td align=\"center\" nowrap>";
-				$aryHtml[] = $aryDetailResult[$x]["lngrecordno"] . "</td>";
-			}
-
-// 2004.03.31 suzukaze update start
-			// 製品コード
-			else if ( $strDetailColumnName == "strProductCode" )
-			{
-				$strText = "<td align=\"center\" nowrap>";
-				if ( $aryDetailResult[$x]["strproductcode"] )
-				{
-					$strText .= "[" . $aryDetailResult[$x]["strproductcode"] ."]";
-				}
-				else
-				{
-					$strText .= "      ";
-				}
-				$strText .= "</td>";
-				$aryHtml[] = $strText;
-			}
-// 2004.03.31 suzukaze update end
-
-			// 売上区分
-			else if ( $strDetailColumnName == "lngSalesClassCode" )
-			{
-				$aryHtml[] = "<td align=\"left\" nowrap>";
-				if ( $aryDetailResult[$x]["lngsalesclasscode"] )
-				{
-					$aryHtml[] = "[" . $aryDetailResult[$x]["lngsalesclasscode"] ."]";
-				}
-				else
-				{
-					$aryHtml[] = "      ";
-				}
-				$aryHtml[] = " " . $aryDetailResult[$x]["strsalesclassname"] . "</td>";
-			}
-
-			// 納期
-			else if ( $strDetailColumnName == "dtmDeliveryDate" )
-			{
-				$aryHtml[] = "<td align=\"left\" nowrap>";
-				$aryHtml[] = str_replace( "-", "/", $aryDetailResult[$x]["dtmdeliverydate"] ) . "</td>";
-			}
-
-			// 単価
-			else if ( $strDetailColumnName == "curProductPrice" )
-			{
-				$aryHtml[] = "<td align=\"right\" nowrap>";
-				$aryHtml[] = $aryHeadResult["strmonetaryunitsign"] . " ";
-				if ( !$aryDetailResult[$x]["curproductprice"] )
-				{
-					$aryHtml[] = "0.00</td>";
-				}
-				else
-				{
-					$aryHtml[] = $aryDetailResult[$x]["curproductprice"] . "</td>";
-				}
-			}
-
-			// 単位
-			else if ( $strDetailColumnName == "lngProductUnitCode" )
-			{
-				$aryHtml[] = "<td align=\"left\" nowrap>";
-				$aryHtml[] = $aryDetailResult[$x]["strproductunitname"] . "</td>";
-			}
-
-			// 数量
-			else if ( $strDetailColumnName == "lngProductQuantity" )
-			{
-				$aryHtml[] = "<td align=\"right\" nowrap>";
-				$aryHtml[] = $aryDetailResult[$x]["lngproductquantity"] . "</td>";
-			}
-
-			// 税抜金額
-			else if ( $strDetailColumnName == "curSubTotalPrice" )
-			{
-				$aryHtml[] = "<td align=\"right\" nowrap>";
-				$aryHtml[] = $aryHeadResult["strmonetaryunitsign"] . " ";
-				if ( !$aryDetailResult[$x]["cursubtotalprice"] )
-				{
-					$aryHtml[] = "0.00</td>";
-				}
-				else
-				{
-					$aryHtml[] = $aryDetailResult[$x]["cursubtotalprice"] . "</td>";
-				}
-			}
-
-			// その他の項目はそのまま出力
-			else
-			{
-				$strLowDetailColumnName = strtolower($strDetailColumnName);
-				$aryHtml[] = "<td align=\"left\" nowrap>";
-				if ( $strLowDetailColumnName == "strdetailnote" )
-				{
-					$aryHtml[] = nl2br($aryDetailResult[$x][$strLowDetailColumnName]) . "</td>";
-				}
-				else
-				{
-					$aryHtml[] = $aryDetailResult[$x][$strLowDetailColumnName] . "</td>";
-				}
-			}
-		}
-		if ( $lngMode )
-		{
-			$aryHtml[] = "</tr>";
-		}
-	}
-
-	return $aryHtml;
-}
-
-
-
-
-
-
 /**
 * 検索結果表示関数（ヘッダ用）
 *
@@ -1174,313 +965,197 @@ function fncSetReceiveDetailTable ( $aryHeadResult, $aryDetailResult, $aryDetail
 */
 function fncSetReceiveHeadTable ( $lngColumnCount, $aryHeadResult, $aryDetailResult, $aryDetailViewColumn, $aryHeadViewColumn, $aryData, $aryUserAuthority, $objDB, $objCache, $lngReviseTotalCount, $lngReviseCount, $bytDeleteFlag )
 {
-	
-	// 明細行の行数
-	$lngDetailCount = count($aryDetailResult);
-	if ( !$lngDetailCount )
+	for ( $i = 0; $i < count($aryDetailResult); $i++ )
 	{
-		$lngDetailCount = 1;
-	}
-	// 管理モードの場合も１
-	if ( $aryData["Admin"] )
-	{
-		$lngDetailCount = 1;
-	}
-
-	$aryHtml[] =  "<td nowrap align=\"center\" rowspan=\"" . $lngDetailCount . "\">" . $lngColumnCount . "</td>";
-
-	// 管理モードでない場合の明細行出力対応カウンター
-	$count = 0;
-
-	// 表示対象カラムの配列より結果の出力
-	for ( $j = 0; $j < count($aryHeadViewColumn); $j++ )
-	{
-		$strColumnName = $aryHeadViewColumn[$j];
-
-		// 表示対象がボタンの場合
-		if ( $strColumnName == "btnDetail" or $strColumnName == "btnFix" or $strColumnName == "btnDelete" or $strColumnName == "btnInvalid" )
+		$aryHtml[] =  "<tr>";
+		$aryHtml[] =  "\t<td>" . ($lngColumnCount + $i) . "</td>";
+		// 表示対象カラムの配列より結果の出力
+		for ( $j = 0; $j < count($aryHeadViewColumn); $j++ )
 		{
-			// ボタン種により変更
+			$strColumnName = $aryHeadViewColumn[$j];
+			$TdData = "";
 
-			// 詳細表示
-			if ( $strColumnName == "btnDetail" and $aryUserAuthority["Detail"] )
+			// 表示対象がボタンの場合
+			if ( $strColumnName == "btnDetail" or $strColumnName == "btnFix" or $strColumnName == "btnDelete" or $strColumnName == "btnInvalid" )
 			{
-				// 受注データが削除対象の場合、詳細表示ボタンは選択不可
-				if ( $aryHeadResult["lngrevisionno"] >= 0 )
-				{
-					$aryHtml[] = "<td bgcolor=\"#FFFFFF\" align=\"center\" rowspan=\"" . $lngDetailCount . "\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $lngColumnCount . "_', " . $lngDetailCount . " );\"><a class=\"cells\" href=\"javascript:fncShowDialogCommon('/so/result/index2.php?lngReceiveNo=" . $aryHeadResult["lngreceiveno"] . "&strSessionID=" . $aryData["strSessionID"] . "&lngLanguageCode=" . $aryData["lngLanguageCode"] . "' , window.form1 , 'ResultIframeCommon' , 'YES' , " . $aryData["lngLanguageCode"] . ", 'detail' )\"><img onmouseover=\"DetailOn(this);\" onmouseout=\"DetailOff(this);\" src=\"/img/type01/wf/result/detail_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"DETAIL\"></a></td>";
-				}
-				else
-				{
-					$aryHtml[] = "<td bgcolor=\"#FFFFFF\" align=\"center\" rowspan=\"" . $lngDetailCount . "\"></td>";
-				}
-			}
+				// ボタン種により変更
 
-			// 修正
-			if ( $strColumnName == "btnFix" and $aryUserAuthority["Fix"] )
-			{
-				// 受注データの状態により分岐  //// 状態が「締め済」、また削除対象の場合修正ボタンは選択不可
-				// 最新受注が削除データの場合も選択不可
-				// 納品済で管理モードで無い場合も選択不可
-				if ( $aryHeadResult["lngreceivestatuscode"] == DEF_RECEIVE_CLOSED 
-					or ( $aryHeadResult["lngreceivestatuscode"] == DEF_RECEIVE_END and !$aryData["Admin"] ) 
-					or $aryHeadResult["lngrevisionno"] < 0 
-					or $bytDeleteFlag )
+				// 詳細表示
+				if ( $strColumnName == "btnDetail" and $aryUserAuthority["Detail"] )
 				{
-					$aryHtml[] = "<td bgcolor=\"#FFFFFF\" align=\"center\" rowspan=\"" . $lngDetailCount . "\"></td>";
-				}
-				else
-				{
-					$aryHtml[] = "<td bgcolor=\"#FFFFFF\" align=\"center\" rowspan=\"" . $lngDetailCount . "\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $lngColumnCount . "_', " . $lngDetailCount . " );\"><a class=\"cells\" href=\"javascript:fncShowDialogRenew('/so/regist/renew.php?lngReceiveNo=" . $aryHeadResult["lngreceiveno"] . "&strSessionID=" . $aryData["strSessionID"] . "&lngLanguageCode=" . $aryData["lngLanguageCode"] . "' , window.form1 , 'ResultIframeRenew' , 'NO' , " . $aryData["lngLanguageCode"] . " )\"><img onmouseover=\"RenewOn(this);\" onmouseout=\"RenewOff(this);\" src=\"/img/type01/cmn/seg/renew_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"RENEW\"></a></td>";
-				}
-			}
-
-			// 削除
-			if ( $strColumnName == "btnDelete" and $aryUserAuthority["Delete"] )
-			{
-				// 管理モードで無い場合もしくはリバイズが存在しない場合
-				if ( !$aryData["Admin"] or $lngReviseTotalCount == 1 )
-				{
-					// 受注データの状態により分岐  //// 状態が「申請中」「納品中」「納品済」「締め済」の場合削除ボタンを選択不可
-					// 最新受注が削除データの場合も選択不可
-					if (    $aryHeadResult["lngreceivestatuscode"] != DEF_RECEIVE_APPLICATE
-						and $aryHeadResult["lngreceivestatuscode"] != DEF_RECEIVE_DELIVER
-						and $aryHeadResult["lngreceivestatuscode"] != DEF_RECEIVE_END
-						and $aryHeadResult["lngreceivestatuscode"] != DEF_RECEIVE_CLOSED
-						and !$bytDeleteFlag )
+					// 受注データが削除対象の場合、詳細表示ボタンは選択不可
+					if ( $aryHeadResult["lngrevisionno"] >= 0 )
 					{
-						$aryHtml[] = "<td bgcolor=\"#FFFFFF\" align=\"center\" rowspan=\"" . $lngDetailCount . "\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $lngColumnCount . "_', " . $lngDetailCount . " );\"><a class=\"cells\" href=\"javascript:fncShowDialogCommon('/so/result/index3.php?lngReceiveNo=" . $aryHeadResult["lngreceiveno"] . "&strSessionID=" . $aryData["strSessionID"] . "&lngLanguageCode=" . $aryData["lngLanguageCode"] . "' , window.form1 , 'ResultIframeCommon' , 'YES' , " . $aryData["lngLanguageCode"] . " , 'delete' )\"><img onmouseover=\"RemoveOn(this);\" onmouseout=\"RemoveOff(this);\" src=\"/img/type01/cmn/seg/remove_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"REMOVE\"></a></td>";
+						$aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/detail_off_bt.gif\" lngreceiveno=\"" . $aryDetailResult[$i]["lngreceiveno"] . "\" class=\"detail button\"></td>\n";
 					}
 					else
 					{
-						$aryHtml[] = "<td bgcolor=\"#FFFFFF\" align=\"center\" rowspan=\"" . $lngDetailCount . "\"></td>";
+						$aryHtml[] = "\t<td></td>\n";
 					}
 				}
-				// 管理モードで複数リバイズが存在する場合
-				else
+
+				// 確定
+				if ( $strColumnName == "btnFix" and $aryUserAuthority["Fix"] )
 				{
-					// 最新受注の場合
-					if ( $lngReviseCount == 0 )
+					// 受注データの状態により分岐  //// 状態が「仮受注」の場合確定ボタンは選択不可
+					if ( $aryHeadResult["lngreceivestatuscode"] == DEF_RECEIVE_PREORDER )
 					{
-						// 受注データの状態により分岐  //// 状態が「締め済」以外
+						$aryHtml[] = "\t<td></td>\n";
+					}
+					else
+					{
+						$aryHtml[] = "\t<td>確定ボタン置く</td>\n";
+					}
+				}
+
+				// 確定取消
+				if ( $strColumnName == "btnDelete" and $aryUserAuthority["Delete"] )
+				{
+					// リバイズが存在しない場合
+					if ( $lngReviseTotalCount == 1 )
+					{
+						// 受注データの状態により分岐  //// 状態が「申請中」「納品中」「納品済」「締め済」の場合削除ボタンを選択不可
 						// 最新受注が削除データの場合も選択不可
-						if ( $aryHeadResult["lngreceivestatuscode"] != DEF_RECEIVE_CLOSED 
+						if (    $aryHeadResult["lngreceivestatuscode"] != DEF_RECEIVE_APPLICATE
+							and $aryHeadResult["lngreceivestatuscode"] != DEF_RECEIVE_DELIVER
+							and $aryHeadResult["lngreceivestatuscode"] != DEF_RECEIVE_END
+							and $aryHeadResult["lngreceivestatuscode"] != DEF_RECEIVE_CLOSED
 							and !$bytDeleteFlag )
 						{
-							$aryHtml[] = "<td bgcolor=\"#FFFFFF\" align=\"center\" rowspan=\"" . $lngReviseTotalCount . "\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $lngColumnCount . "_', " . $lngDetailCount . " );\"><a class=\"cells\" href=\"javascript:fncShowDialogCommon('/so/result/index3.php?lngReceiveNo=" . $aryHeadResult["lngreceiveno"] . "&strSessionID=" . $aryData["strSessionID"] . "&lngLanguageCode=" . $aryData["lngLanguageCode"] . "' , window.form1 , 'ResultIframeCommon' , 'YES' , " . $aryData["lngLanguageCode"] . " , 'delete' )\"><img onmouseover=\"RemoveOn(this);\" onmouseout=\"RemoveOff(this);\" src=\"/img/type01/cmn/seg/remove_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"REMOVE\"></a></td>";
+							$aryHtml[] = "\t<td>確定取消ボタン置く</td>\n";
 						}
 						else
 						{
-							$aryHtml[] = "<td bgcolor=\"#FFFFFF\" align=\"center\" rowspan=\"" . $lngReviseTotalCount . "\"></td>";
+							$aryHtml[] = "\t<td></td>\n";
+						}
+					}
+					//複数リバイズが存在する場合
+					else
+					{
+						// 最新受注の場合
+						if ( $lngReviseCount == 0 )
+						{
+							// 受注データの状態により分岐  //// 状態が「締め済」以外
+							// 最新受注が削除データの場合も選択不可
+							if ( $aryHeadResult["lngreceivestatuscode"] != DEF_RECEIVE_CLOSED 
+								and !$bytDeleteFlag )
+							{
+								$aryHtml[] = "\t<td>確定取消ボタン置く</td>\n";
+							}
+							else
+							{
+								$aryHtml[] = "\t<td></td>\n";
+							}
+						}
+						else
+						{
+							$aryHtml[] = "\t<td></td>\n";
 						}
 					}
 				}
 			}
-
-			// 無効化
-			if ( $strColumnName == "btnInvalid" and $aryData["Admin"] and $aryUserAuthority["Admin"] and $aryUserAuthority["Invalid"] )
+			else if ($strColumnName != "")
 			{
-				// 受注データの状態により分岐  //// 状態が「申請中」「納品中」「納品済」「締め済」の場合無効化ボタンを選択不可
-				// 上記条件に加え、対象受注が削除データの場合も選択不可
-				if (    $aryHeadResult["lngreceivestatuscode"] != DEF_RECEIVE_APPLICATE
-					and $aryHeadResult["lngreceivestatuscode"] != DEF_RECEIVE_DELIVER
-					and $aryHeadResult["lngreceivestatuscode"] != DEF_RECEIVE_END
-					and $aryHeadResult["lngreceivestatuscode"] != DEF_RECEIVE_CLOSED
-					and $aryHeadResult["lngrevisionno"] >= 0 )
+				$TdData = "\t<td>";
+				$TdDataUse = true;
+				$strText = "";
+				// 登録日
+				if ( $strColumnName == "dtmInsertDate" )
 				{
-					$aryHtml[] = "<td bgcolor=\"#FFFFFF\" align=\"center\" rowspan=\"" . $lngDetailCount . "\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $lngColumnCount . "_', " . $lngDetailCount . " );\"><a class=\"cells\" href=\"javascript:fncShowDialogCommon('/so/result/index4.php?lngReceiveNo=" .$aryHeadResult["lngreceiveno"]. "&strSessionID=" . $aryData["strSessionID"] . "&lngLanguageCode=" . $aryData["lngLanguageCode"] . "' , window.form1 , 'ResultIframeCommon' , 'YES' , " . $aryData["lngLanguageCode"] . " , 'Invalid01' )\"><img onmousedown=\"fncAlphaOn( this );\" onmouseup=\"fncAlphaOff( this );\" onmouseover=\"fncInvalidSmallButton( 'on' , this );\" onmouseout=\"fncInvalidSmallButton( 'off' , this );fncAlphaOff( this );\" src=\"/img/type01/cmn/querybt/invalid_small_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"INVALID\"></a></td>";
+					$TdData .= str_replace( "-", "/", substr( $aryHeadResult["dtminsertdate"], 0, 19 ) );
 				}
-				else
+
+				// 計上日
+				else if ( $strColumnName == "dtmReceiveAppDate" )
 				{
-					$aryHtml[] = "<td bgcolor=\"#FFFFFF\" align=\"center\" rowspan=\"" . $lngDetailCount . "\"></td>";
+					$TdData .= str_replace( "-", "/", $aryHeadResult["dtmreceiveappdate"] );
 				}
-			}
-		}
 
-		// 登録日
-		else if ( $strColumnName == "dtmInsertDate" )
-		{
-			$aryHtml[] = "<td align=\"left\" nowrap rowspan=\"" . $lngDetailCount . "\">";
-			$aryHtml[] = str_replace( "-", "/", substr( $aryHeadResult["dtminsertdate"], 0, 19 ) ) . "</td>";
-		}
-
-		// 計上日
-		else if ( $strColumnName == "dtmReceiveAppDate" )
-		{
-			$aryHtml[] = "<td align=\"left\" nowrap rowspan=\"" . $lngDetailCount . "\">";
-			$aryHtml[] = str_replace( "-", "/", $aryHeadResult["dtmreceiveappdate"] ) . "</td>";
-		}
-
-		// 受注NO
-		else if ( $strColumnName == "strReceiveCode" )
-		{
-			$aryHtml[] = "<td align=\"left\" nowrap rowspan=\"" . $lngDetailCount . "\">";
-			$aryHtml[] = $aryHeadResult["strreceivecode"] . "</td>";
-			// 管理モードの場合　リビジョン番号を表示する
-			if ( $aryData["Admin"] )
-			{
-				$aryHtml[] = "<td align=\"center\" nowrap rowspan=\"" . $lngDetailCount . "\">" . $aryHeadResult["lngrevisionno"] . "</td>";
-			}
-		}
-
-		// 入力者
-		else if ( $strColumnName == "lngInputUserCode" )
-		{
-			$aryHtml[] = "<td align=\"left\" nowrap rowspan=\"" . $lngDetailCount . "\">";
-			if ( $aryHeadResult["strinputuserdisplaycode"] )
-			{
-				$aryHtml[] = "[" . $aryHeadResult["strinputuserdisplaycode"] ."]";
-			}
-			else
-			{
-				$aryHtml[] = "     ";
-			}
-			$aryHtml[] = " " . $aryHeadResult["strinputuserdisplayname"] . "</td>";
-		}
-
-		// 顧客
-		else if ( $strColumnName == "lngCustomerCode" )
-		{
-			$aryHtml[] = "<td align=\"left\" nowrap rowspan=\"" . $lngDetailCount . "\">";
-			if ( $aryHeadResult["strcustomerdisplaycode"] )
-			{
-				$aryHtml[] = "[" . $aryHeadResult["strcustomerdisplaycode"] ."]";
-			}
-			else
-			{
-				$aryHtml[] = "      ";
-			}
-			$aryHtml[] = " " . $aryHeadResult["strcustomerdisplayname"] . "</td>";
-		}
-		
-/*
-		// 部門
-		else if ( $strColumnName == "lngInChargeGroupCode" )
-		{
-			$aryHtml[] = "<td align=\"left\" nowrap rowspan=\"" . $lngDetailCount . "\">";
-			if ( $aryHeadResult["strinchargegroupdisplaycode"] )
-			{
-				$aryHtml[] = "[" . $aryHeadResult["strinchargegroupdisplaycode"] ."]";
-			}
-			else
-			{
-				$aryHtml[] = "    ";
-			}
-			$aryHtml[] = " " . $aryHeadResult["strinchargegroupdisplayname"] . "</td>";
-		}
-
-		// 担当者
-		else if ( $strColumnName == "lngInChargeUserCode" )
-		{
-			$aryHtml[] = "<td align=\"left\" nowrap rowspan=\"" . $lngDetailCount . "\">";
-			if ( $aryHeadResult["strinchargeuserdisplaycode"] )
-			{
-				$aryHtml[] = "[" . $aryHeadResult["strinchargeuserdisplaycode"] ."]";
-			}
-			else
-			{
-				$aryHtml[] = "     ";
-			}
-			$aryHtml[] = " " . $aryHeadResult["strinchargeuserdisplayname"] . "</td>";
-		}
-*/
-
-		// 合計金額
-		else if ( $strColumnName == "curTotalPrice" )
-		{
-			$aryHtml[] = "<td align=\"right\" nowrap rowspan=\"" . $lngDetailCount . "\">";
-			$aryHtml[] = $aryHeadResult["strmonetaryunitsign"] . " ";
-			if ( !$aryHeadResult["curtotalprice"] )
-			{
-				$aryHtml[] = "0.00</td>";
-			}
-			else
-			{
-				$aryHtml[] = $aryHeadResult["curtotalprice"] . "</td>";
-			}
-		}
-
-		// 状態
-		else if ( $strColumnName == "lngReceiveStatusCode" )
-		{
-			$aryHtml[] = "<td align=\"left\" nowrap rowspan=\"" . $lngDetailCount . "\">";
-			$aryHtml[] = $aryHeadResult["strreceivestatusname"] . "</td>";
-		}
-		// 明細行の出力
-		else if ( $strColumnName == "strProductCode"
-			or $strColumnName == "lngInChargeGroupCode" or $strColumnName == "lngInChargeUserCode" // <-- added by siato
-			or $strColumnName == "lngRecordNo" 
-			or $strColumnName == "lngSalesClassCode" or $strColumnName == "strGoodsCode"
-			or $strColumnName == "dtmDeliveryDate" or $strColumnName == "curProductPrice" or $strColumnName == "lngProductUnitCode"
-			or $strColumnName == "lngProductQuantity" or $strColumnName == "curSubTotalPrice" or $strColumnName == "strDetailNote" 
-			or $strColumnName == "strProductName" or $strColumnName == "strProductEnglishName" )
-		{
-			if ( !$aryData["Admin"] and $count == 0 )
-			{
-				// 明細行の出力
-				$aryDetailHtml = fncSetReceiveDetailTable ( $aryHeadResult, $aryDetailResult, $aryDetailViewColumn, $aryData, 0, $lngColumnCount, $objDB, $objCache );
-				for ( $k = 0; $k < count($aryDetailHtml); $k++ )
+				// 受注NO
+				else if ( $strColumnName == "strReceiveCode" )
 				{
-					$aryHtml[] = $aryDetailHtml[$k];
-				}
-				$count++;
-			}
-			// 管理モードの場合、製品名称は１カラムに表示する
-			else if ( $aryData["Admin"] and $strColumnName == "strProductCode" )
-			{
-				$aryHtml[] = "<td align=\"left\" nowrap rowspan=\"" . $lngDetailCount . "\">";
-				for ( $k = 0; $k < count($aryDetailResult); $k++ )
-				{
-					if ( $aryDetailResult[$k]["strproductcode"] )
+					$TdData .= $aryHeadResult["strreceivecode"];
+					// 管理モードの場合　リビジョン番号を表示する
+					if ( $aryData["Admin"] )
 					{
-						$aryHtml[] = "[" . $aryDetailResult[$k]["strproductcode"] ."]";
+						$TdData .= "</td>\n\t<td>" . $aryHeadResult["lngrevisionno"];
+					}
+				}
+				// 入力者
+				else if ( $strColumnName == "lngInputUserCode" )
+				{
+					if ( $aryHeadResult["strinputuserdisplaycode"] )
+					{
+						$strText .= "[" . $aryHeadResult["strinputuserdisplaycode"] ."]";
 					}
 					else
 					{
-						$aryHtml[] = "      ";
+						$strText .= "     ";
 					}
-					$aryHtml[] = " " . $aryDetailResult[$k]["strproductname"] . "<br>";
+					$strText .= " " . $aryHeadResult["strinputuserdisplayname"];
+					$TdData .= $strText;
 				}
-				$aryHtml[] = "</td>";
+				// 顧客
+				else if ( $strColumnName == "lngCustomerCode" )
+				{
+					if ( $aryHeadResult["strcustomerdisplaycode"] )
+					{
+						$strText .= "[" . $aryHeadResult["strcustomerdisplaycode"] ."]";
+					}
+					else
+					{
+						$strText .= "      ";
+					}
+					$strText .= " " . $aryHeadResult["strcustomerdisplayname"];
+					$TdData .= $strText;
+				}
+				// 合計金額
+				else if ( $strColumnName == "curTotalPrice" )
+				{
+					$strText .= $aryHeadResult["strmonetaryunitsign"] . " ";
+					if ( !$aryHeadResult["curtotalprice"] )
+					{
+						$strText .= "0.00";
+					}
+					else
+					{
+						$strText .= $aryHeadResult["curtotalprice"];
+					}
+					$TdData .= $strText;
+				}
+				// 状態
+				else if ( $strColumnName == "lngReceiveStatusCode" )
+				{
+					$TdData .= $aryHeadResult["strreceivestatusname"];
+				}
+				// その他の項目はそのまま出力
+				else
+				{
+					$strLowColumnName = strtolower($strColumnName);
+					if ( $strLowColumnName == "strnote" )
+					{
+						$strText .= nl2br($aryHeadResult[$strLowColumnName]);
+					}
+					else if ( array_key_exists( $strLowColumnName , $aryDetailResult[$i] ) )
+					{
+						$strText .= $aryDetailResult[$i][$strLowColumnName];
+					}
+					else
+					{
+						$strText .= $aryHeadResult[$strLowColumnName];
+					}
+					$TdData .= $strText;
+				}
+				$TdData .= "</td>\n";
+				if ($TdDataUse) {
+					$aryHtml[] = $TdData;
+				}
 			}
 		}
-
-		// その他の項目はそのまま出力
-		else
-		{
-			$strLowColumnName = strtolower($strColumnName);
-			$aryHtml[] = "<td align=\"left\" nowrap";
-			$aryHtml[] = " rowspan=\"" . $lngDetailCount . "\">";
-			if ( $strLowColumnName == "strnote" )
-			{
-				$aryHtml[] = nl2br($aryHeadResult[$strLowColumnName]) . "</td>";
-			}
-			else
-			{
-				$aryHtml[] = $aryHeadResult[$strLowColumnName] . "</td>";
-			}
-		}
+		$aryHtml[] = "</tr>";
 	}
-
-	$aryHtml[] = "</tr>";
-
-	// もし、明細行が複数行存在していれば
-	if ( ( !$aryData["Admin"] ) and ( count($aryDetailResult) >= 2 ) )
-	{
-		// 明細行の出力
-		$aryDetailHtml = fncSetReceiveDetailTable ( $aryHeadResult, $aryDetailResult, $aryDetailViewColumn, $aryData, 1, $lngColumnCount, $objDB, $objCache );
-		for ( $k = 0; $k < count($aryDetailHtml); $k++ )
-		{
-			$aryHtml[] = $aryDetailHtml[$k];
-		}
-	}
-
 	return $aryHtml;
 }
-
-
-
-
 
 
 /**
@@ -1499,7 +1174,6 @@ function fncSetReceiveHeadTable ( $lngColumnCount, $aryHeadResult, $aryDetailRes
 */
 function fncSetReceiveTable ( $aryResult, $aryViewColumn, $aryData, $aryUserAuthority, $aryTytle, $objDB, $objCache, $aryTableName )
 {
-
 	// 準備
 
 	// 表示カラムのヘッダ部と明細部の分離処理
@@ -1555,271 +1229,143 @@ function fncSetReceiveTable ( $aryResult, $aryViewColumn, $aryData, $aryUserAuth
 		}
 	}
 
-
-
 	// テーブルの形成
 	$lngResultCount = count($aryResult);
 
-	$aryHtml[] = "<span id=\"COPYAREA1\">";
-	$aryHtml[] = "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"1\" border=\"0\" bgcolor=\"#6f8180\" align=\"center\">";
-
-	$lngColumnCount = 0;
-
-	for ( $i = 0; $i < $lngResultCount; $i++ )
+	$lngColumnCount = 1;
+	
+	// 項目名列の生成 start=========================================
+	$aryHtml[] = "<thead>";
+	$aryHtml[] = "<tr>";
+	$aryHtml[] = "\t<th class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/copy_off_bt.gif\" class=\"copy button\"></th>";
+	
+	// 表示対象カラムの配列より項目設定
+	for ( $j = 0; $j < count($aryViewColumn); $j++ )
 	{
-
-// 項目名列の生成 start=========================================
-
-		if ($i == 0)
+		$Addth = "\t<th>";
+		$strColumnName = $aryViewColumn[$j];
+		
+		// ソート項目以外の場合
+		if ( $strColumnName == "btnDetail" or $strColumnName == "btnFix" or $strColumnName == "btnDelete" )
 		{
-			$aryHtml[] = "<tr id=\"SegTitle\">";
-			$aryHtml[] = "<td valign=\"top\" valign=\"center\"><a href=\"#\" onclick=\"fncDoCopy( copyhidden , document.getElementById('COPYAREA1') , document.getElementById('COPYAREA2') );return false;\"><img onmouseover=\"CopyOn(this);\" onmouseout=\"CopyOff(this);\" src=\"/img/type01/cmn/seg/copy_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"COPY\"></a></td>";
-
-			// 表示対象カラムの配列より項目設定
-			for ( $j = 0; $j < count($aryViewColumn); $j++ )
+			// ソート項目以外の場合
+			if ( ( $strColumnName == "btnDetail" and $aryUserAuthority["Detail"] ) 
+			or ( $strColumnName == "btnFix" and $aryUserAuthority["Fix"] ) 
+			or ( $strColumnName == "btnDelete" and $aryUserAuthority["Delete"] ) )
 			{
-				$strColumnName = $aryViewColumn[$j];
-				// 管理モードの場合、製品名称は１カラムに表示する
-				if ( $aryData["Admin"] and $strColumnName == "strProductName" )
-				{
-					// 管理モードで製品名称が表示対象になっている場合はカラムタイトルは非表示
-				}
-				else
-				{
-					// ソート項目以外の場合
-					if ( $strColumnName == "btnDetail" or $strColumnName == "btnFix" or $strColumnName == "btnDelete" or $strColumnName == "btnInvalid" )
-					{
-						// 詳細ボタンの場合は、詳細表示可能なユーザーのみ表示する
-						if ( $strColumnName == "btnDetail" and $aryUserAuthority["Detail"] )
-						{
-							$aryHtml[] = "<td id=\"Columns\" nowrap>".$aryTytle[$strColumnName]."</td>";
-						}
-						// 修正ボタンの場合は、修正処理可能なユーザーのみ表示する
-						if ( $strColumnName == "btnFix" and $aryUserAuthority["Fix"] )
-						{
-							$aryHtml[] = "<td id=\"Columns\" nowrap>".$aryTytle[$strColumnName]."</td>";
-						}
-						// 削除ボタンの場合は、削除処理可能なユーザーのみ表示する
-						if ( $strColumnName == "btnDelete" and $aryUserAuthority["Delete"] )
-						{
-							$aryHtml[] = "<td id=\"Columns\" nowrap>".$aryTytle[$strColumnName]."</td>";
-						}
-						// 無効ボタンの場合は、管理モード、および無効処理可能なユーザーの場合のみ表示する
-						if ( $strColumnName == "btnInvalid" and $aryData["Admin"] and $aryUserAuthority["Admin"] and $aryUserAuthority["Invalid"] )
-						{
-							$aryHtml[] = "<td id=\"Columns\" nowrap>".$aryTytle[$strColumnName]."</td>";
-						}
-					}
-					// ソート項目の場合
-					else
-					{
-						$aryHtml[] = "<td id=\"Columns\" nowrap onmouseover=\"SortOn( this );\" onmouseout=\"SortOff( this );\" ";
-						if ( $aryData["strSort"] == $aryTableName[$strColumnName] )
-						{
-							if ( $aryData["strSortOrder"] == "DESC" )
-							{
-								$strSortOrder = "ASC";
-							}
-							else
-							{
-								$strSortOrder = "DESC";
-							}
-						}
-						else
-						{
-							$strSortOrder = "DESC";
-						}
-						$aryHtml[] = "onclick=\"fncSort2('" . $aryTableName[$strColumnName] . "', '" . $strSortOrder . "');\">";
-						$aryHtml[] = "<a href=\"#\">".$aryTytle[$strColumnName]."</a></td>";
-						// 管理モードの場合　リビジョン番号を表示する
-						if ( $aryData["Admin"] and $strColumnName == "strReceiveCode" )
-						{
-							$aryHtml[] = "<td id=\"Columns\" nowrap>".$aryTytle["lngRevisionNo"]."</td>";
-						}
-					}
-				}
+				$Addth .= $aryTytle[$strColumnName];
 			}
-			$aryHtml[] = "</tr>";
-// 検索結果のコピー機能対応の為以下の行をコメントアウト
-//			$aryHtml[] = "</span>";
-
-			// ダミーTR
-			$aryHtml[] = "<tr id=\"DummyTR\"><td colspan=\"" . count($aryViewColumn) . "\">&nbsp;</td></tr>";
-
-// 検索結果のコピー機能対応の為以下の行をコメントアウト
-//			$aryHtml[] = "<span id=\"COPYAREA2\">";
 		}
+		// ソート項目の場合
+		else
+		{
+			$Addth .= $aryTytle[$strColumnName];
+		}
+
+		$Addth .= "</th>";
+		$aryHtml[] = $Addth;
+	}
+	$aryHtml[] = "</tr>";
+	$aryHtml[] = "</thead>";
 
 // 項目名列の生成 end=========================================
 
-// 検索結果出力　　共通start==================================
-		// 管理モードでなければ
-		if ( !$aryData["Admin"] )
-		{
-			reset( $aryResult[$i] );
+	$aryHtml[] = "<tbody>";
 
-			// 明細出力用の調査
-			$lngDetailViewCount = count( $aryDetailViewColumn );
-
-			if ( $lngDetailViewCount )
-			{
-				// 明細行数の調査
-				$strDetailQuery = fncGetReceiveToProductSQL( $aryDetailViewColumn, $aryResult[$i]["lngreceiveno"], $aryData, $objDB );
-//fncDebug('lib_sos.txt', $strDetailQuery, __FILE__, __LINE__);
-				// クエリー実行
-				if ( !$lngDetailResultID = $objDB->execute( $strDetailQuery ) )
-				{
-					$strMessage = fncOutputError( 3, "DEF_FATAL", "クエリー実行エラー" ,TRUE, "../so/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
-				}
-
-				$lngDetailCount = pg_num_rows( $lngDetailResultID );
-
-				// 配列のクリア
-				unset( $aryDetailResult );
-
-				// 結果の取得
-				if ( $lngDetailCount )
-				{
-					for ( $j = 0; $j < $lngDetailCount; $j++ )
-					{
-						$aryDetailResult[] = pg_fetch_array( $lngDetailResultID, $j, PGSQL_ASSOC );
-					}
-				}
-
-				$objDB->freeResult( $lngDetailResultID );
-			}
-
-			// 検索結果部分の設定
-			if ( $lngDetailCount == "" )
-			{
-				$lngDetailCount = 0;
-			}
-			$aryHtml[] = "<tr id=\"TD" . $lngColumnCount . "_0\" class=\"Segs\" name=\"strTrName" . $lngColumnCount . "\" onclick=\"fncSelectSomeTrColor( this, 'TD" . $lngColumnCount . "_', " . $lngDetailCount . " );\" style=\"background:#FFB2B2\">";
-
-			$lngColumnCount++;
-
-			// １レコード分の出力
-			$aryHtml_add = fncSetReceiveHeadTable ( $lngColumnCount, $aryResult[$i], $aryDetailResult, $aryDetailViewColumn, $aryHeadViewColumn, $aryData, $aryUserAuthority, $objDB, $objCache, 1, 0, FALSE );
-			for ( $j = 0; $j < count($aryHtml_add); $j++ )
-			{
-				$aryHtml[] = $aryHtml_add[$j];
-			}
-		}
-// 検索結果出力　　共通end==================================
-
+	for ( $i = 0; $i < $lngResultCount; $i++ )
+	{
 // 管理モード用過去リバイズ、削除データ出力start==================================
-		// 管理モードの場合
+		// 管理モードの場合　同じ受注コードの一覧を取得し表示する
+
+		// リバイズコード無しの受注コードを取得する
+		$strSubText = strrchr( $aryResult[$i]["strreceivecode"], "-" );
+		if ( $strSubText )
+		{
+			$strReceiveCodeBase = preg_replace( "/" . strstr( $aryResult[$i]["strreceivecode"] . "/", "-" ), "", $aryResult[$i]["strreceivecode"] );
+		}
 		else
 		{
-			// 管理モードの場合　同じ受注コードの一覧を取得し表示する
+			$strReceiveCodeBase = $aryResult[$i]["strreceivecode"];
+		}
 
-			// リバイズコード無しの受注コードを取得する
-			$strSubText = strrchr( $aryResult[$i]["strreceivecode"], "-" );
-			if ( $strSubText )
+		$strSameReceiveCodeQuery = fncGetSearchReceiveSQL( $aryViewColumn, $arySearchColumn, $aryData, $objDB, $strReceiveCodeBase, $aryResult[$i]["lngreceiveno"], FALSE );
+
+		// 値をとる =====================================
+		list ( $lngResultID, $lngResultNum ) = fncQuery( $strSameReceiveCodeQuery, $objDB );
+
+		// 配列のクリア
+		unset( $arySameReceiveCodeResult );
+
+		if ( $lngResultNum )
+		{
+			for ( $j = 0; $j < $lngResultNum; $j++ )
 			{
-				$strReceiveCodeBase = ereg_replace( $strSubText, "", $aryResult[$i]["strreceivecode"] );
+				$arySameReceiveCodeResult[] = $objDB->fetchArray( $lngResultID, $j );
 			}
-			else
+			$lngSameReceiveCount = $lngResultNum;
+		}
+		$objDB->freeResult( $lngResultID );
+
+		// 同じ受注コードでの過去リバイズデータが存在すれば
+		if ( $lngResultNum )
+		{
+			for ( $j = 0; $j < $lngSameReceiveCount; $j++ )
 			{
-				$strReceiveCodeBase = $aryResult[$i]["strreceivecode"];
-			}
+				// 検索結果部分の設定
 
-			$strSameReceiveCodeQuery = fncGetSearchReceiveSQL( $aryViewColumn, $arySearchColumn, $aryData, $objDB, $strReceiveCodeBase, $aryResult[$i]["lngreceiveno"], FALSE );
+				reset( $arySameReceiveCodeResult[$j] );
 
-			// 値をとる =====================================
-			list ( $lngResultID, $lngResultNum ) = fncQuery( $strSameReceiveCodeQuery, $objDB );
+				// 明細出力用の調査
+				$lngDetailViewCount = count( $aryDetailViewColumn );
 
-			// 配列のクリア
-			unset( $arySameReceiveCodeResult );
-
-			if ( $lngResultNum )
-			{
-				for ( $j = 0; $j < $lngResultNum; $j++ )
+				if ( $lngDetailViewCount )
 				{
-					$arySameReceiveCodeResult[] = $objDB->fetchArray( $lngResultID, $j );
-				}
-				$lngSameReceiveCount = $lngResultNum;
-			}
-			$objDB->freeResult( $lngResultID );
+					// 明細行数の調査
+					$strDetailQuery = fncGetReceiveToProductSQL ( $aryDetailViewColumn, $arySameReceiveCodeResult[$j]["lngreceiveno"], $aryData, $objDB );
 
-			// 同じ受注コードでの過去リバイズデータが存在すれば
-			if ( $lngResultNum )
-			{
-				for ( $j = 0; $j < $lngSameReceiveCount; $j++ )
+					// クエリー実行
+					if ( !$lngDetailResultID = $objDB->execute( $strDetailQuery ) )
+					{
+						$strMessage = fncOutputError( 3, "DEF_FATAL", "クエリー実行エラー" ,TRUE, "../so/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+					}
+
+					$lngDetailCount = pg_num_rows( $lngDetailResultID );
+
+					// 配列のクリア
+					unset( $aryDetailResult );
+
+					// 結果の取得
+					if ( $lngDetailCount )
+					{
+						for ( $k = 0; $k < $lngDetailCount; $k++ )
+						{
+							$aryDetailResult[] = pg_fetch_array( $lngDetailResultID, $k, PGSQL_ASSOC );
+						}
+					}
+
+					$objDB->freeResult( $lngDetailResultID );
+				}
+				
+				// 同じコードの受注データで一番上に表示されている受注データが削除データの場合
+				if ( $arySameReceiveCodeResult[0]["lngrevisionno"] < 0 )
 				{
-					// 検索結果部分の設定
-
-					reset( $arySameReceiveCodeResult[$j] );
-
-					// 明細出力用の調査
-					$lngDetailViewCount = count( $aryDetailViewColumn );
-
-					if ( $lngDetailViewCount )
-					{
-						// 明細行数の調査
-						$strDetailQuery = fncGetReceiveToProductSQL ( $aryDetailViewColumn, $arySameReceiveCodeResult[$j]["lngreceiveno"], $aryData, $objDB );
-
-						// クエリー実行
-						if ( !$lngDetailResultID = $objDB->execute( $strDetailQuery ) )
-						{
-							$strMessage = fncOutputError( 3, "DEF_FATAL", "クエリー実行エラー" ,TRUE, "../so/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
-						}
-
-						$lngDetailCount = pg_num_rows( $lngDetailResultID );
-
-						// 配列のクリア
-						unset( $aryDetailResult );
-
-						// 結果の取得
-						if ( $lngDetailCount )
-						{
-							for ( $k = 0; $k < $lngDetailCount; $k++ )
-							{
-								$aryDetailResult[] = pg_fetch_array( $lngDetailResultID, $k, PGSQL_ASSOC );
-							}
-						}
-
-						$objDB->freeResult( $lngDetailResultID );
-					}
-					// データの状態による背景色の変更
-					if ( $lngDetailCount == "" )
-					{
-						$lngDetailCount = 0;
-					}
-					if ( $arySameReceiveCodeResult[$j]["lngrevisionno"] < 0 )
-					{
-						// 削除データの場合
-						$aryHtml[] = "<tr id=\"TD" . $lngColumnCount . "_0\" class=\"Segs\" name=\"strTrName" . $lngColumnCount . "\" onclick=\"fncSelectSomeTrColor( this, 'TD" . $lngColumnCount . "_', 1 );\" style=\"background:#B3E0FF;\">";
-					}
-					else if ( $j == 0 )
-					{
-						// 最新のデータの場合
-						$aryHtml[] = "<tr id=\"TD" . $lngColumnCount . "_0\" class=\"Segs\" name=\"strTrName" . $lngColumnCount . "\" onclick=\"fncSelectSomeTrColor( this, 'TD" . $lngColumnCount . "_', 1 );\" style=\"background:#FFB2B2;\">";
-					}
-					else
-					{
-						$aryHtml[] = "<tr id=\"TD" . $lngColumnCount . "_0\" class=\"Segs\" name=\"strTrName" . $lngColumnCount . "\" onclick=\"fncSelectSomeTrColor( this, 'TD" . $lngColumnCount . "_', 1 );\" style=\"background:#FEEF8B;\">";
-					}
-
-					$lngColumnCount++;
-
-					// 同じコードの受注データで一番上に表示されている受注データが削除データの場合
-					if ( $arySameReceiveCodeResult[0]["lngrevisionno"] < 0 )
-					{
-						$bytDeleteFlag = TRUE;
-					}
-					else
-					{
-						$bytDeleteFlag = FALSE;
-					}
-
-					// １レコード分の出力
-					$aryHtml_add = fncSetReceiveHeadTable ( $lngColumnCount, $arySameReceiveCodeResult[$j], $aryDetailResult, $aryDetailViewColumn, $aryHeadViewColumn, $aryData, $aryUserAuthority, $objDB, $objCache, $lngSameReceiveCount, $j, $bytDeleteFlag );
-					for ( $k = 0; $k < count($aryHtml_add); $k++ )
-					{
-						$aryHtml[] = $aryHtml_add[$k];
-					}
+					$bytDeleteFlag = TRUE;
 				}
+				else
+				{
+					$bytDeleteFlag = FALSE;
+				}
+
+				// １レコード分の出力
+				$aryHtml_add = fncSetReceiveHeadTable ( $lngColumnCount, $arySameReceiveCodeResult[$j], $aryDetailResult, $aryDetailViewColumn, $aryHeadViewColumn, $aryData, $aryUserAuthority, $objDB, $objCache, $lngSameReceiveCount, $j, $bytDeleteFlag );
+				$lngColumnCount = $lngColumnCount + count($aryDetailResult);
+				
+				$strColBuff = '';
+				for ( $k = 0; $k < count($aryHtml_add); $k++ )
+				{
+					$strColBuff .= $aryHtml_add[$k];
+				}
+				$aryHtml[] =$strColBuff;
 			}
 		}
 
@@ -1827,19 +1373,11 @@ function fncSetReceiveTable ( $aryResult, $aryViewColumn, $aryData, $aryUserAuth
 
 	}
 
-	$aryHtml[] = "</table>";
-	$aryHtml[] = "</span>";
-
-	// コピー不具合対応 ダミー行を抜かす処理を現状省略することで対応
-	$aryHtml[] = "<span id=\"COPYAREA2\">";
-	$aryHtml[] = "</span>";
+	$aryHtml[] = "</tbody>";
 
 	$strhtml = implode( "\n", $aryHtml );
 
 	return $strhtml;
 }
-
-
-
 
 ?>

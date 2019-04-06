@@ -27,6 +27,9 @@
 
 // 日本語コード
 $arySearchTableTytle["btnDetail"]				= "詳細";
+$arySearchTableTytle["btnFix"]					= "確定";
+$arySearchTableTytle["Record"]					= "履歴";
+$arySearchTableTytle["Resale"]					= "再販";
 $arySearchTableTytle["dtmInsertDate"]			= "登録日";
 $arySearchTableTytle["dtmOrderAppDate"]			= "計上日";
 $arySearchTableTytle["strOrderCode"]			= "発注ＮＯ.";
@@ -46,7 +49,7 @@ $arySearchTableTytle["strNote"]					= "備考";
 $arySearchTableTytle["curTotalPrice"]			= "合計金額";
 $arySearchTableTytle["lngRecordNo"]				= "明細行番号";
 $arySearchTableTytle["strProductCode"]			= "製品コード";
-$arySearchTableTytle["strProductName"]			= "製品名称（日本語）";
+$arySearchTableTytle["strProductName"]			= "製品名";
 $arySearchTableTytle["strProductEnglishName"]	= "製品名称（英語）";
 $arySearchTableTytle["lngStockSubjectCode"]		= "仕入科目";
 $arySearchTableTytle["lngStockItemCode"]		= "仕入部品";
@@ -59,7 +62,6 @@ $arySearchTableTytle["lngProductUnitCode"]		= "単位";
 $arySearchTableTytle["lngProductQuantity"]		= "数量";
 $arySearchTableTytle["curSubTotalPrice"]		= "税抜金額";
 $arySearchTableTytle["strDetailNote"]			= "明細備考";
-$arySearchTableTytle["btnFix"]					= "修正";
 $arySearchTableTytle["btnDelete"]				= "削除";
 $arySearchTableTytle["btnInvalid"]				= "無効";
 $arySearchTableTytle["lngRevisionNo"]			= "リビジョン番号";

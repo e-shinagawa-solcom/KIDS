@@ -81,7 +81,7 @@
 	//-------------------------------------------------------------------------
 	// 管理ディレクトリ・表示タイプの抽出
 	//-------------------------------------------------------------------------
-	list( $strDirName, $strNaviCode ) = split( "-", $aryData["strNaviCode"] );
+	list( $strDirName, $strNaviCode ) = explode( "-", $aryData["strNaviCode"] );
 
 	$length = strlen( $strNaviCode );
 
@@ -286,6 +286,44 @@
 			break;
 
 
+		// 金型管理
+		case "mm":
+
+			$strVisibility1	= ( !fncCheckAuthority( DEF_FUNCTION_MM1, $objAuth ) )	? 'style="visibility:hidden"' : '';
+			$strVisibility2	= ( !fncCheckAuthority( DEF_FUNCTION_MM2, $objAuth ) )	? 'style="visibility:hidden"' : '';
+			$strVisibility3	= ( !fncCheckAuthority( DEF_FUNCTION_LO0, $objAuth ) )	? 'style="visibility:hidden"' : '';
+
+			$strVisibility4	= ( !fncCheckAuthority( DEF_FUNCTION_MR1, $objAuth ) )	? 'style="visibility:hidden"' : '';
+			$strVisibility5	= ( !fncCheckAuthority( DEF_FUNCTION_MR2, $objAuth ) )	? 'style="visibility:hidden"' : '';
+
+			$aryData["strButton"]	 = '<span id="RegistNaviBt' . $aryNaviCode[0] . '" ' . $strVisibility1 . ' onclick="top.location=\'/mm/regist/index.php?strSessionID=' . $aryData["strSessionID"] . '\';" ' . $aryDisabled[0] . '></span>';
+			$aryData["strButton"]	.= '<span id="SearchNaviBt' . $aryNaviCode[1] . '" ' . $strVisibility2 . ' onclick="top.location=\'/mm/search/index.php?strSessionID=' . $aryData["strSessionID"] . '\';" ' . $aryDisabled[1] . '></span>';
+			$aryData["strButton"]	.= '<span id="ListExNaviBt' . $aryNaviCode[2] . '" ' . $strVisibility3 . ' onclick="top.location=\'/list/index.php?strSessionID=' . $aryData["strSessionID"] . '\';" ' . $aryDisabled[2] . '></span>';
+
+			$aryData["strButton"]	.= '<span id="RegistNaviBtA"' . $strVisibility4 . ' onclick="top.location=\'/mr/regist/index.php?strSessionID=' . $aryData["strSessionID"] . '\';" ' . $aryDisabled[3] . '></span>';
+			$aryData["strButton"]	.= '<span id="SearchNaviBtA"' . $strVisibility5 . ' onclick="top.location=\'/mr/search/index.php?strSessionID=' . $aryData["strSessionID"] . '\';" ' . $aryDisabled[4] . '></span>';
+
+			break;
+
+		// 金型帳票管理
+		case "mr":
+
+			$strVisibility1	= ( !fncCheckAuthority( DEF_FUNCTION_MR1, $objAuth ) )	? 'style="visibility:hidden"' : '';
+			$strVisibility2	= ( !fncCheckAuthority( DEF_FUNCTION_MR2, $objAuth ) )	? 'style="visibility:hidden"' : '';
+			$strVisibility3	= ( !fncCheckAuthority( DEF_FUNCTION_LO0, $objAuth ) )	? 'style="visibility:hidden"' : '';
+
+			$strVisibility4	= ( !fncCheckAuthority( DEF_FUNCTION_MM1, $objAuth ) )	? 'style="visibility:hidden"' : '';
+			$strVisibility5	= ( !fncCheckAuthority( DEF_FUNCTION_MM2, $objAuth ) )	? 'style="visibility:hidden"' : '';
+
+			$aryData["strButton"]	 = '<span id="RegistNaviBt' . $aryNaviCode[0] . '" ' . $strVisibility1 . ' onclick="top.location=\'/mr/regist/index.php?strSessionID=' . $aryData["strSessionID"] . '\';" ' . $aryDisabled[0] . '></span>';
+			$aryData["strButton"]	.= '<span id="SearchNaviBt' . $aryNaviCode[1] . '" ' . $strVisibility2 . ' onclick="top.location=\'/mr/search/index.php?strSessionID=' . $aryData["strSessionID"] . '\';" ' . $aryDisabled[1] . '></span>';
+			$aryData["strButton"]	.= '<span id="ListExNaviBt' . $aryNaviCode[2] . '" ' . $strVisibility3 . ' onclick="top.location=\'/list/index.php?strSessionID=' . $aryData["strSessionID"] . '\';" ' . $aryDisabled[2] . '></span>';
+
+			$aryData["strButton"]	.= '<span id="RegistNaviBtA"' . $strVisibility4 . ' onclick="top.location=\'/mm/regist/index.php?strSessionID=' . $aryData["strSessionID"] . '\';"></span>';
+			$aryData["strButton"]	.= '<span id="SearchNaviBtA"' . $strVisibility5 . ' onclick="top.location=\'/mm/search/index.php?strSessionID=' . $aryData["strSessionID"] . '\';"></span>';
+
+			break;
+
 		// ユーザー管理
 		case "uc":
 			//if( !fncCheckAuthority( DEF_FUNCTION_UC1, $objAuth ) ) break;
@@ -295,7 +333,7 @@
 
 			$aryData["strButton"]	 = '<span id="UserInfoNaviBt' . $aryNaviCode[0] . '" onclick="top.location=\'/uc/regist/edit.php?strSessionID=' . $aryData["strSessionID"] . '&lngFunctionCode=' . DEF_FUNCTION_UC1 . '\';" ' . $aryDisabled[0] . '></span>';
 			$aryData["strButton"]	 = '<span id="RegistNaviBt' . $aryNaviCode[1] . '" ' . $strVisibility1 . ' onclick="top.location=\'/uc/regist/edit.php?strSessionID=' . $aryData["strSessionID"] . '&lngFunctionCode=' . DEF_FUNCTION_UC2 . '\';" ' . $aryDisabled[1] . '></span>';
-			$aryData["strButton"]	 = '<span id="SearchNaviBt' . $aryNaviCode[2] . '" ' . $strVisibility2 . ' onclick="top.location=\'/uc/search/edit.php?strSessionID=' . $aryData["strSessionID"] . '\';" ' . $aryDisabled[2] . '></span>';
+			$aryData["strButton"]	 = '<span id="SearchNaviBt' . $aryNaviCode[2] . '" ' . $strVisibility2 . ' onclick="top.location=\'/uc/search/index.php?strSessionID=' . $aryData["strSessionID"] . '&lngFunctionCode=' . DEF_FUNCTION_UC3 . '\';" ' . $aryDisabled[2] . '></span>';
 			break;
 
 

@@ -42,6 +42,7 @@
 				g_aryMenuPos['list']	= new Array();
 				g_aryMenuPos['mm']		= new Array();
 				g_aryMenuPos['mr']		= new Array();
+				g_aryMenuPos['lc']		= new Array();
 
 				g_aryMenuPos['p'][0]	= 24;
 				g_aryMenuPos['p'][1]	= 354;
@@ -64,14 +65,17 @@
 				g_aryMenuPos['wf'][0]	= 24;
 				g_aryMenuPos['wf'][1]	= 424;
 
-				g_aryMenuPos['list'][0]	= 184;
+				g_aryMenuPos['list'][0]	= 104;
 				g_aryMenuPos['list'][1]	= 424;
 
-				g_aryMenuPos['mm'][0]	= 664;
+				g_aryMenuPos['mm'][0]	= 424;
 				g_aryMenuPos['mm'][1]	= 424;
 
-				g_aryMenuPos['mr'][0]	= 824;
+				g_aryMenuPos['mr'][0]	= 584;
 				g_aryMenuPos['mr'][1]	= 424;
+				
+				g_aryMenuPos['lc'][0]	= 744;
+				g_aryMenuPos['lc'][1]	= 424;
 			}
 		}
 		//---------------------------------------------------------------------
@@ -98,6 +102,7 @@
 				g_arySubMenu['list']	= new Array();
 				g_arySubMenu['mm']		= new Array();
 				g_arySubMenu['mr']		= new Array();
+				g_arySubMenu['lc']		= new Array();
 
 				switch( g_lngLang )
 				{
@@ -141,7 +146,8 @@
 
 //						g_arySubMenu['es'][0]	= '見積原価登録';
 						g_arySubMenu['es'][0]	= '見積原価検索';
-						g_arySubMenu['es'][1]	= 'アップロード';
+						g_arySubMenu['es'][1]	= 'ダウンロード';
+						g_arySubMenu['es'][2]	= 'アップロード';
 
 						g_arySubMenu['so'][0]	= '受注登録';
 						g_arySubMenu['so'][1]	= '受注検索';
@@ -167,6 +173,10 @@
 
 						g_arySubMenu['mr'][0]	= '金型帳票登録';
 						g_arySubMenu['mr'][1]	= '金型帳票検索';
+						
+						g_arySubMenu['lc'][0]	= 'L/C 情報';
+						g_arySubMenu['lc'][1]	= 'L/C 設定変更';
+						g_arySubMenu['lc'][2]	= 'L/C 編集';
 						break;
 
 					default:

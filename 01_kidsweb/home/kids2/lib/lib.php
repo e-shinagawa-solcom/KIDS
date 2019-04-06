@@ -1,4 +1,4 @@
-<?
+<?php
 // ----------------------------------------------------------------------------
 /**
 *       関数ライブラリ
@@ -78,7 +78,7 @@ function fncCheckString( $str, $strCheckMode )
 	//	errorExit ( "不正記号を使用しています。問題のある文字列 \"$str\"" );
 	//}
 
-	$aryCheck = split ( ":", $strCheckMode );
+	$aryCheck = explode ( ":", $strCheckMode );
 	foreach ( $aryCheck as $strCheckType )
 	{
 		$lngRange[1] = "";
@@ -135,7 +135,7 @@ function fncCheckString( $str, $strCheckMode )
 */
 
 		// 数字チェック(エラーメッセージ指定可能チェックテスト運用)
-		if ( ereg ( "^number", $strCheckType ) && $str != "" )
+		if ( preg_match ( "/^number/", $strCheckType ) && $str != "" )
 		{
 			// スペース除去
 			$str = mb_ereg_replace ( "[\s,]", "", $str );
@@ -154,7 +154,7 @@ function fncCheckString( $str, $strCheckMode )
 			}
 
 			// 数値チェック
-			if ( !ereg ( "^-?[0-9]*\.?[0-9]+$", $str ) || ereg ( "^(\.|-\.)", $str ) ) {
+			if ( !preg_match ( "/^-?[0-9]*\.?[0-9]+$/", $str ) || preg_match ( "/^(\.|-\.)/", $str ) ) {
 				return "9003:$lngRange[3]";
 			}
 
@@ -173,7 +173,7 @@ function fncCheckString( $str, $strCheckMode )
 
 		}
 		// 英字チェック
-		elseif ( ereg ( "^english", $strCheckType ) && $str != "" )
+		elseif ( preg_match ( "/^english/", $strCheckType ) && $str != "" )
 		{
 			// スペース除去
 			$str = mb_ereg_replace ( "\s", "", $str );
@@ -192,7 +192,7 @@ function fncCheckString( $str, $strCheckMode )
 			}
 		}
 		// 英数字チェック
-		elseif ( ereg ( "^numenglish", $strCheckType ) && $str != "" )
+		elseif ( preg_match ( "/^numenglish/", $strCheckType ) && $str != "" )
 		{
 			// スペース除去
 			$str = mb_ereg_replace ( "\s", "", $str );
@@ -211,7 +211,7 @@ function fncCheckString( $str, $strCheckMode )
 			}
 		}
 		// 英数字記号チェック
-		elseif ( ereg ( "^ascii", $strCheckType ) && $str != "" )
+		elseif ( preg_match ( "/^ascii/", $strCheckType ) && $str != "" )
 		{
 			// スペース除去
 			$str = mb_ereg_replace ( "\s", "", $str );
@@ -227,7 +227,7 @@ function fncCheckString( $str, $strCheckMode )
 			}
 		}
 		// IDチェック
-		elseif ( ereg ( "^ID", $strCheckType ) && $str != "" )
+		elseif ( preg_match ( "/^ID/", $strCheckType ) && $str != "" )
 		{
 			if ( !mb_ereg ( "^[0-9a-zA-Z\"#%\+-\/=^_`\{\}\|~@\.]+$", $str ) || strlen ( $str ) < 3 || strlen ( $str ) > 64 ) {
 				return "9011:$str";
@@ -241,7 +241,7 @@ function fncCheckString( $str, $strCheckMode )
 			}
 		}
 		// パスワードチェック
-		elseif ( ereg ( "^password", $strCheckType ) && $str != "" )
+		elseif ( preg_match ( "/^password/", $strCheckType ) && $str != "" )
 		{
 			if ( !mb_ereg ( "^[0-9a-zA-Z]+$", $str ) || strlen ( $str ) > 64 ) {
 				return "9012:$str";
@@ -255,7 +255,7 @@ function fncCheckString( $str, $strCheckMode )
 			}
 		}
 		// メールアドレスチェック
-		elseif ( ereg ( "^e?mail", $strCheckType ) && $str != "" )
+		elseif ( preg_match ( "/^e?mail/", $strCheckType ) && $str != "" )
 		{
 			if ( !mb_ereg ( "^[0-9a-zA-Z!\"#\$%&\'\(\)\=\~\|\`\{\+\*\}\<\>\?\_\-\^\@\[\;\:\]\,\.\/\\\\]+$", $str ) || !mb_ereg ( "^[^@.\-][^@]*@[^@.\-][^@]*\..+[a-z]$", $str ) ) {
 				return "9013:$str";
@@ -269,14 +269,14 @@ function fncCheckString( $str, $strCheckMode )
 			}
 		}
 		// 日付チェック
-		if ( ereg ( "^date", $strCheckType ) && $str != "" )
+		if ( preg_match ( "/^date/", $strCheckType ) && $str != "" )
 		{
 			if ( !preg_match ( "/^[0-9\-\/]+$/", $str ) )
 			{
 				return "9014:$str";
 			}
 
-			list ( $year, $mon, $date ) = split ( "[-\/]", $str );
+			list ( $year, $mon, $date ) = explode ( "[-\/]", $str );
 
 			// 日が未記入な場合、1日に強制設定
 			if ( !$date )
@@ -296,7 +296,7 @@ function fncCheckString( $str, $strCheckMode )
 			}
 		}
 		// ファイル
-		elseif ( ereg ( "^file", $strCheckType ) && $str != "" )
+		elseif ( preg_match ( "/^file/", $strCheckType ) && $str != "" )
 		{
 			if ( mb_ereg ( "^\.\.", $str ) || !mb_ereg ( "^[0-9a-zA-Z\"#%\+-\/=^_`\{\}\|~@\.:]+$", $str ) ) {
 				return "9016:$str";
@@ -310,7 +310,7 @@ function fncCheckString( $str, $strCheckMode )
 			}
 		}
 		// 文字数チェック
-		elseif ( ereg ( "^length", $strCheckType ) && $str != "" )
+		elseif ( preg_match ( "/^length/", $strCheckType ) && $str != "" )
 		{
 			// 文字数チェック
 			$strError = fncCheckStringLength( $strCheckType, $str );
@@ -320,7 +320,7 @@ function fncCheckString( $str, $strCheckMode )
 			}
 		}
 		// 金額チェック
-		elseif ( ereg ( "^money", $strCheckType ) && $str != "" )
+		elseif ( preg_match ( "/^money/", $strCheckType ) && $str != "" )
 		{
 			// スペースとカンマ、\、$ 除去
 			$str = mb_ereg_replace ( "[\s,]", "", $str );
@@ -330,7 +330,7 @@ function fncCheckString( $str, $strCheckMode )
 			preg_match ( "/\((-?[0-9]*\.?[0-9]*),(-?[0-9]*\.?[0-9]*)\)/", $strCheckType , $lngRange );
 
 			// 数値チェック
-			if ( !ereg ( "^-?[0-9]*\.?[0-9]+$", $str ) || ereg ( "^(\.|-\.)", $str ) ) {
+			if ( !preg_match ( "/^-?[0-9]*\.?[0-9]+$/", $str ) || preg_match ( "/^(\.|-\.)/", $str ) ) {
 				return "9017:$str";
 			}
 
@@ -346,7 +346,7 @@ function fncCheckString( $str, $strCheckMode )
 
 		}
 		// IPアドレスチェック
-		elseif ( ereg ( "^IP", $strCheckType ) && $str != "" )
+		elseif ( preg_match ( "/^IP/", $strCheckType ) && $str != "" )
 		{
 			// スペース除去
 			$str = mb_ereg_replace ( " ", "", $str );
@@ -358,8 +358,8 @@ function fncCheckString( $str, $strCheckMode )
 			// 複数制定を許可している場合、IPアドレスを分解する
 			if ( $lngRange[3] != "''" )
 			{
-				$lngRange[3] = ereg_replace ( "'", "", $lngRange[3] );
-				$aryStr = split ( $lngRange[3], $str );
+				$lngRange[3] = preg_replace ( "'", "", $lngRange[3] );
+				$aryStr = explode ( $lngRange[3], $str );
 			}
 			else
 			{
@@ -481,7 +481,7 @@ function fncPutStringCheckError( $aryResult, $objDB )
 	{
 		if ( $aryResult[$strKey] )
 		{
-			list ( $lngErrorNo, $strErrorMessage ) = split ( ":", $aryResult[$strKey] );
+			list ( $lngErrorNo, $strErrorMessage ) = explode ( ":", $aryResult[$strKey] );
 			fncOutputError ( $lngErrorNo, DEF_ERROR, $strErrorMessage, TRUE, "", $objDB );
 //			echo $strErrorMessage . "<BR>";
 			$flag = FALSE;
@@ -509,7 +509,7 @@ function fncPutStringCheckError( $aryResult, $objDB )
 function fncQuery( $strQuery, $objDB )
 {
 	$strQuery = html_entity_decode ( $strQuery, ENT_QUOTES );
-
+	
 	if ( !$lngResultID = $objDB->execute( $strQuery ) )
 	{
 		fncOutputError ( 9051, DEF_ERROR, "", TRUE, "", $objDB );
@@ -548,7 +548,7 @@ function fncGetCommonFunction( $strClass, $strTable, $objDB )
 	}
 
 	$objResult = $objDB->fetchObject( $lngResultID, 0 );
-	$strValue  = strtolower ( strValue );
+	$strValue  = strtolower ( "strValue" );
 	$strValue = $objResult->$strValue;
 	$objDB->freeResult( $lngResultID );
 
@@ -1083,7 +1083,7 @@ function fncGetCheckBoxObject( $strTable, $strValueFieldName, $strDisplayFieldNa
 function fncGetMasterValue( $strTable, $strKeyFieldName, $strDisplayFieldName, $defaultValue, $strQueryWhere, $objDB )
 {
 	// WHERE句内のカラムが文字型だった場合の処理(「:str」があった場合''で囲む)
-	list ( $defaultValue, $type ) = split ( ":", $defaultValue );
+	list ( $defaultValue, $type ) = explode ( ":", $defaultValue );
 	if ( $type == 'str' )
 	{
 		$defaultValue = "'$defaultValue'";
@@ -1251,10 +1251,10 @@ function fncGetReplacedHtml( $strTemplatePath, $aryPost, $objAuth )
 	{
 		$_COOKIE["lngLanguageCode"] = "0";
 	}
-	$aryBaseInsert["bodyonload"] = ereg_replace ( "_%lngLanguageCode%_", $_COOKIE["lngLanguageCode"], $aryBaseInsert["bodyonload"] );
+	$aryBaseInsert["bodyonload"] = preg_replace ( "/_%lngLanguageCode%_/", $_COOKIE["lngLanguageCode"], $aryBaseInsert["bodyonload"] );
 
 // 2004.09.29 suzukaze update start
-	$aryBaseInsert["bodyonload"] = ereg_replace ( "_%strHeaderErrorMessage%_", $aryPost["strHeaderErrorMessage"], $aryBaseInsert["bodyonload"] );
+	$aryBaseInsert["bodyonload"] = preg_replace ( "/_%strHeaderErrorMessage%_/", $aryPost["strHeaderErrorMessage"], $aryBaseInsert["bodyonload"] );
 // 2004.09.29 suzukaze update end
 
 
@@ -1263,11 +1263,11 @@ function fncGetReplacedHtml( $strTemplatePath, $aryPost, $objAuth )
 	$aryBaseInsert["bodyonclick"] = 'fncHideSubMenu();';
 
 
-
 	if ( $aryPost )
 	{
 		$objContentsTemplate->replace( $aryPost );
 	}
+	
 	$aryBaseInsert["BODY"] = $objContentsTemplate->strTemplate;
 
 	// ベーステンプレート取得
@@ -1276,13 +1276,12 @@ function fncGetReplacedHtml( $strTemplatePath, $aryPost, $objAuth )
 
 	// エラーメッセージ埋め込み
 	$aryBaseInsert["strErrorMessage"] = $aryPost["strErrorMessage"];
-
 	// ベーステンプレート置き換え
 	$objBaseTemplate->replace( $aryBaseInsert );
 
 	$objBaseTemplate->complete();
 
-	header("Content-type: text/plain; charset=EUC-JP");
+	// header("Content-type: text/plain; charset=EUC-JP");
 
 
 //require( LIB_DEBUGFILE );
@@ -1326,7 +1325,8 @@ function fncGetReplacedHtmlWithBase($strBaseTemplate, $strTemplatePath, $aryPost
 	$aryBaseInsert["strSessionID"]          = $objAuth->SessionID;
 
 	$aryBaseInsert["strUserID"] = trim( $aryBaseInsert["strUserID"] );
-
+	
+	$aryBaseInsert["HeaderTitleImage"] = '/img/type01/'.explode('/',$strTemplatePath)[0].'/title_ja.gif';
 
 	// ページデータ取得
 	$aryBaseInsert["lngFunctionCode"]       = $aryPost["lngFunctionCode"];
@@ -1516,7 +1516,7 @@ function getArrayErrorVisibility( $aryData, $aryCheckResult, $objDB )
 		// チェック結果に値が存在した場合、エラー表示文字列設定
 		if ( $aryCheckResult[$key] )
 		{
-			list ( $lngErrorCode, $strErrorMessage ) = split ( ":", $aryCheckResult[$key] );
+			list ( $lngErrorCode, $strErrorMessage ) = explode ( ":", $aryCheckResult[$key] );
 			// 先頭に文字列「ORIGINAL」があった場合、その先にある文字列を
 			// エラーメッセージとする
 			if ( preg_match ( "/^ORIGINAL/", $strErrorMessage ) )
@@ -1664,11 +1664,11 @@ function fncLogout( $strSessionID, $objDB )
 // -----------------------------------------------------------------
 function fncStringToArray ( $strData, $strAmpersand, $strEqual )
 {
-	$aryString = split ( $strAmpersand, $strData );
+	$aryString = explode ( $strAmpersand, $strData );
 
 	for ( $i = 0; $i < count ( $aryString ); $i++ )
 	{
-		list ( $key, $value ) = split ( $strEqual, $aryString[$i] );
+		list ( $key, $value ) = explode ( $strEqual, $aryString[$i] );
 		$aryData[$key] = $value;
 	}
 
@@ -1789,7 +1789,7 @@ function fncOutputError ( $lngErrorCode, $lngErrorClass, $aryErrorMessage, $bytO
 
 
 	// メッセージ文字列の置換
-	if (count($aryErrorMessage) == 1)
+	if (!is_array($aryErrorMessage))
 	{
 
 		$aryErrorMessage = mb_convert_encoding($aryErrorMessage, $objDB->InputEncoding);

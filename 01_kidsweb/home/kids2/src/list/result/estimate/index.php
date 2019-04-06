@@ -19,6 +19,8 @@
 // 設定読み込み
 include_once('conf.inc');
 
+require_once(SRC_ROOT.'/mold/lib/UtilSearchForm.class.php');
+
 // ライブラリ読み込み
 require (LIB_FILE);
 require (SRC_ROOT . "list/cmn/lib_lo.php");
@@ -30,17 +32,25 @@ $objDB->open( "", "", "", "" );
 //////////////////////////////////////////////////////////////////////////
 // POST(一部GET)データ取得
 //////////////////////////////////////////////////////////////////////////
-if ( $_POST )
-{
-	$aryData = $_POST;
+$isSearch = UtilSearchForm::extractArrayByIsSearch($_REQUEST);
+$from = UtilSearchForm::extractArrayByFrom($_REQUEST);
+$to = UtilSearchForm::extractArrayByTo($_REQUEST);
+$searchValue = $_REQUEST;
+
+$isSearch=array_keys($isSearch);
+$aryData['SearchColumn']=$isSearch;
+foreach($from as $key=> $item){
+	$aryData[$key.'From']=$item;
 }
-elseif ( $_GET )
-{
-	$aryData = $_GET;
+foreach($to as $key=> $item){
+	$aryData[$key.'To']=$item;
+}
+foreach($searchValue as $key=> $item){
+	$aryData[$key]=$item;
 }
 
 // 検索条件項目取得
-if ( $lngArrayLength = count ( $aryData["SearchColumn"] ) )
+if ( is_array($aryData["SearchColumn"]) &&  $lngArrayLength = count ( $aryData["SearchColumn"] ) )
 {
 	$aryColumn = $aryData["SearchColumn"];
 	for ( $i = 0; $i < $lngArrayLength; $i++ )
@@ -244,9 +254,9 @@ $strQuery = join ( "\n", $aryQuery );
 
 //require( LIB_DEBUGFILE );
 //fncDebug( 'lib_list_estimate.txt', $strQuery, __FILE__, __LINE__);
-
+//echo $strQuery;
 // 帳票データ取得クエリ実行・テーブル生成
-list ( $lngResultID, $lngResultNum ) = fncQuery( join ( " ", $aryQuery ), $objDB );
+list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 unset ( $aryQuery );
 
 for ( $i = 0; $i < $lngResultNum; $i++ )

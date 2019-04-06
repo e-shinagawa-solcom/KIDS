@@ -8,15 +8,19 @@
 // 日本語コード
 $aryTableTytle["btnDetail"]					= "詳細";
 $aryTableTytle["dtmInsertDate"]				= "作成日時";
-$aryTableTytle["lngGoodsPlanProgressCode"]	= "企画進行状況";
-$aryTableTytle["lngRevisionNo"]				= "改訂番号";
-$aryTableTytle["dtmRevisionDate"]			= "改訂日時";
 $aryTableTytle["strProductCode"]			= "製品コード";
-$aryTableTytle["strProductName"]			= "製品名称（日本語）";
-$aryTableTytle["strProductEnglishName"]		= "製品名称（英語）";
+$aryTableTytle["strProductName"]			= "製品名";
 $aryTableTytle["lngInputUserCode"]			= "入力者";
 $aryTableTytle["lngInChargeGroupCode"]		= "営業部署";
 $aryTableTytle["lngInChargeUserCode"]		= "開発担当者";
+$aryTableTytle["curRetailPrice"]			= "上代";
+$aryTableTytle["lngCartonQuantity"]			= "カートン入数";
+$aryTableTytle["lngProductionQuantity"]		= "償却数 pcs";
+
+$aryTableTytle["lngGoodsPlanProgressCode"]	= "企画進行状況";
+$aryTableTytle["lngRevisionNo"]				= "改訂番号";
+$aryTableTytle["dtmRevisionDate"]			= "改訂日時";
+$aryTableTytle["strProductEnglishName"]		= "製品名称（英語）";
 $aryTableTytle["lngCategoryCode"]			= "カテゴリ";
 $aryTableTytle["strGoodsCode"]				= "顧客品番";
 $aryTableTytle["strGoodsName"]				= "商品名称";
@@ -26,7 +30,6 @@ $aryTableTytle["lngPackingUnitCode"]		= "荷姿単位";
 $aryTableTytle["lngProductUnitCode"]		= "製品単位";
 $aryTableTytle["lngProductFormCode"]		= "商品形態";
 $aryTableTytle["lngBoxQuantity"]			= "内箱（袋）入数";
-$aryTableTytle["lngCartonQuantity"]			= "カートン入数";
 $aryTableTytle["lngProductionQuantity"]		= "生産予定数";
 $aryTableTytle["lngFirstDeliveryQuantity"]	= "初回納品数";
 $aryTableTytle["lngFactoryCode"]			= "生産工場";
@@ -34,7 +37,6 @@ $aryTableTytle["lngAssemblyFactoryCode"]	= "アッセンブリ工場";
 $aryTableTytle["lngDeliveryPlaceCode"]		= "納品場所";
 $aryTableTytle["dtmDeliveryLimitDate"]		= "納期";
 $aryTableTytle["curProductPrice"]			= "納価";
-$aryTableTytle["curRetailPrice"]			= "上代";
 $aryTableTytle["lngTargetAgeCode"]			= "対象年齢";
 $aryTableTytle["lngRoyalty"]				= "ロイヤリティ";
 $aryTableTytle["lngCertificateClassCode"]	= "証紙";
@@ -135,6 +137,7 @@ $aryTableView[] = "strCopyrightDisplayPrint";
 $aryTableView[] = "strProductComposition";
 $aryTableView[] = "strAssemblyContents";
 $aryTableView[] = "strSpecificationDetails";
+$aryTableView[] = "lngProductionQuantity";
 
 
 // 設定カラム名とマスタ内カラム名取得用

@@ -6,46 +6,58 @@
 	background-color : #d6d0b1 ;
 }
 
+#CompleteSet
+{
+	position : absolute ;
+	left : 310px ;
+	top : 200px ;
+	border-width: 0px ;
+	border-style: none ;
+	z-index : 3 ;
+	background : transparent ;
 
+}
 
 #FinishRegist
 {
 	font-family : Arial , £Í£Ó £Ð¥´¥·¥Ã¥¯, Osaka ;
 	font-weight : bold ;
 	position : absolute ;
-	left : 330px ;
-	top : 250px ;
-	width : 220px ;
+	left : 0px ;
+	top : 0px ;
+	width: 215px;
 	height : 27px ;
 	border-width: 1px ;
 	border-style: solid ;
 	background : #f1f1f1 ; /* e8f0f1 */
 	border-color : #798787 #d6d0b1 #798787 #798787 ;
-	padding : 8px 0px 0px 8px ;
-	text-align : left ;
+	padding-top: 8px;
+    text-align: center;
+	box-sizing: border-box;
 }
 
 #BackSpace
 {
 	font-weight : bold ;
 	position : absolute ;
-	left : 545px ;
-	top : 250px ;
+	left : 215px ;
+	top : 0px ;
 	width : 100px ;
 	height : 27px ;
 	border-width: 1px ;
 	border-style: solid ;
-	background : d6d0b1 ; /* e8f0f1 */
+	background : d6d0b1 ;
 	border-color : #798787 #798787 #798787 #798787 ;
-	padding : 8px 0px 0px 8px ;
 	text-align : left ;
+	box-sizing: border-box;
 }
+
 
 #CloseBt
 {
 	position : absolute ;
-	left : 559px ;
-	top : 253px ;
+	left : 229px ;
+	top : 3px ;
 	border-width: 0px ;
 	border-style: none ;
 	background : transparent ;

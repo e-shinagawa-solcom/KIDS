@@ -27,16 +27,13 @@
 
 
 <bodyonload>
-initLayoutBase();initLayoutUC();initLayoutQuery();initLayoutPunit();initLayoutError1( ErrInputA );GetlngLanguageCode( _%lngLanguageCode%_ );Loading();
+initLayoutBase();initLayoutUC();initLayoutQuery();initLayoutPunit();initLayoutError1( ErrInputA );Loading();
 </bodyonload>
 </config>
 
 
 <bgsound id="BeepSound" src="/error/dummy.aif" loop="1" balance="0" volume="-100">
 
-<form name="PPP1" action="_%filename%_" method="POST" enctype="multipart/form-data">
-<input type="hidden" name="strSessionID" value="_%strSessionID%_">
-<input type="hidden" name="lngFunctionCode" value="_%lngFunctionCode%_">
 
 <p id="Preload">
 	<iframe id="PreloadFrm" name="PreloadWin" frameborder="0" src="/preload/index.html" onload="fncObjectResize( this , 0 , 0 );"></iframe>
@@ -51,10 +48,11 @@ initLayoutBase();initLayoutUC();initLayoutQuery();initLayoutPunit();initLayoutEr
 
 
 
-
+<div>
 <!-- ////////////////////////////////// START MAIN TITLE ////////////////////////////////// -->
 <span id="MainTitle" style="visibility:_%strBaseVisibilityName%_;"></span>
 <!-- /////////////////////////////////// END MAIN TITLE /////////////////////////////////// -->
+</div>
 
 
 
@@ -62,187 +60,228 @@ initLayoutBase();initLayoutUC();initLayoutQuery();initLayoutPunit();initLayoutEr
 
 
 
-
-
-<!-- /////////////////////////////////// START NAVIGAION /////////////////////////////////// -->
-<span id="NaviButton" style="visibility:_%strBaseVisibilityName%_;"></span>
-
-<p id="Navigations" onmouseout="NavigationOFF( Navigations , NaviButton );">
-<span id="Navi">
-	<iframe id="NaviIfrm" name="NAVIwin" frameborder="0" scrolling="no" src="/navi/index.php?strSessionID=_%strSessionID%_&strNaviCode=_%strNaviCode%_"></iframe>
-</span>
-</p>
-<!-- //////////////////////////////////// END NAVIGAION //////////////////////////////////// -->
-
-
-
-
-
-
-
-<!-- /////////////////////////////////// START INPUT A SEGMENTS /////////////////////////////////// -->
-<p id="InputA">
-
-
-<!-- BODYS -->
-<span id="SegABodys"></span>
-
-
-<!-- HEADER -->
-<span id="SegAHeader"></span>
-
-
-<!-- BOTTOM -->
-<span id="SegABottom"></span>
-
-
-<!-- QUERY BUTTON -->
-
-<span id="RegistBt" onClick="PPP1.submit();"></span>
-
-
-<span id="SegAClearBt" onClick="fncResetFrm( window.PPP1 );CGWin.document.forms[0].reset();"></span>
-
-
-
-<!-- SEGMENTS -->
-<span id="SegA01">ログイン許可</span>
-<span id="SegA02">ユーザーコード</span>
-<span id="SegA03">ユーザーID</span>
-<span id="SegA04">パスワード</span>
-<span id="SegA05">パスワード確認</span>
-<span id="SegA06">メール配信許可</span>
-<span id="SegA07">メールアドレス</span>
-<span id="SegA08">ユーザー表示</span>
-<span id="SegA09">表示ユーザーコード</span>
-<span id="SegA10">表示ユーザー名</span>
-<span id="SegA11">フルネーム</span>
-<span id="SegA12">会社</span>
-<span id="SegA13">グループ</span>
-<span id="SegA1213"></span>
-<span id="SegA14">権限グループ</span>
-<span id="SegA15">アクセスIPアドレス</span>
-<span id="SegA16">備考</span>
-
-
-
-<!-- ログイン許可 -->
-<span id="VarsA01">
-	<input class="CheckBox14" type="checkbox" name="bytInvalidFlag" value="f" tabindex="1" onClick="isChecked(this, 'チェックをOFFにするとこのユーザーはK.I.D.Sシステムにログインできません');" _%bytInvalidFlag%_ _%bytInvalidFlagDisabled%_>
-</span>
-
-<!-- ユーザーコード -->
-<span id="VarsA02">
-	<input class="disTxt10L" type="text" name="lngUserCode" value="_%lngUserCode%_" maxlength="10" contenteditable=false unselectable=off>
-</span>
-
-<!-- ユーザーID -->
-<span id="VarsA03">
-	<input style="ime-mode:disabled;" class="Txt20L" type="text" name="strUserID" value="_%strUserID%_" maxlength="20" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="2" _%strUserIDDisabled%_>
-</span>
-
-<!-- パスワード -->
-<span id="VarsA04">
-	<input style="ime-mode:disabled;" class="Txt20L" type="password" name="strPassword" value="" maxlength="20" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="3">
-</span>
-
-<!-- パスワード確認 -->
-<span id="VarsA05">
-	<input style="ime-mode:disabled;" class="Txt20L" type="password" name="strPasswordCheck" value="" maxlength="20" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="4">
-</span>
-
-<!-- メール配信許可 -->
-<span id="VarsA06">
-	<input class="CheckBox14" type="checkbox" name="bytMailTransmitFlag" value="t" tabindex="5" _%bytMailTransmitFlag%_ _%bytMailTransmitFlagDisabled%_>
-</span>
-
-<!-- メールアドレス -->
-<span id="VarsA07">
-	<input style="ime-mode:disabled;" class="Txt40L" type="text" name="strMailAddress" value="_%strMailAddress%_" maxlength="40" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="6">
-</span>
-
-<!-- 表示ユーザーフラグ -->
-<span id="VarsA08">
-	<input class="CheckBox14" type="checkbox" name="bytUserDisplayFlag" value="t" tabindex="7" onClick="isChecked(this, 'チェックをOFFにするとこのユーザーの情報でK.I.D.Sシステムにて新たなデータを登録することができません');" _%bytUserDisplayFlag%_ _%bytUserDisplayFlagDisabled%_>
-</span>
-
-<!-- 表示ユーザーコード -->
-<span id="VarsA09">
-	<input style="ime-mode:disabled;" class="Txt03L" type="text" name="strUserDisplayCode" value="_%strUserDisplayCode%_" maxlength="3" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="8">
-</span>
-
-
-<!-- 表示ユーザー名 -->
-<span id="VarsA10">
-	<input class="Txt20L" type="text" name="strUserDisplayName" value="_%strUserDisplayName%_" maxlength="20" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="9">
-</span>
-
-<!-- フルネーム -->
-<span id="VarsA11">
-	<input class="Txt40L" type="text" name="strUserFullName" value="_%strUserFullName%_" maxlength="40" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="10">
-</span>
-
-<!-- 会社 -->
-<input type="text" name="lngAttributeCode" value="_%lngAttributeCode%_" style="visibility:hidden">
-<input type="hidden" name="lngCompanyCodeOriginal" value="_%lngCompanyCode%_">
-<span id="VarsA12">
-	<input class="disTxt52L" type="hidden" name="lngCompanyCode" value="_%lngCompanyCode%_">
-	<input class="disTxt52L" type="text" name="strCompanyName" value="_%strCompanyDisplayCode%_ _%strCompanyName%_" maxlength="40" contenteditable=false unselectable=off>
-</span>
-
-<!-- グループ -->
-<input type="hidden" name="lngGroupCodeOriginal" value="_%lngGroupCode%_">
-<span id="VarsA13">
-	<input class="disTxt52L" type="hidden" name="lngGroupCode" value="_%lngGroupCode%_">
-	<input class="disTxt52L" type="text" name="strGroupName" value="_%strGroupDisplayCode%_ _%strGroupName%_" maxlength="40" contenteditable=false unselectable=off>
-</span>
-
-<!-- 権限グループ -->
-<span id="VarsA14">
-	<select class="Slt15" name="lngAuthorityGroupCode" tabindex="12" _%lngAuthorityGroupCodeDisabled%_>
-	_%lngAuthorityGroupCode%_
-	</select>
-</span>
-
-<!-- アクセスIPアドレス -->
-<span id="VarsA15">
-	<select class="Slt100" name="lngAccessIPAddressCode" tabindex="13" _%lngAccessIPAddressCodeDisabled%_>
-	_%lngAccessIPAddressCode%_
-	</select>
-</span>
-
-<!-- 備考 -->
-<span id="VarsA16">
-	<input class="Txt100L" type="text" name="strNote" value="_%strNote%_" maxlength="40" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="14">
-</span>
-
-
-
-<!-- UNIT BUTTON -->
-<span id="PunitBt" onclick="ShowCompanyGroup( CompanyGroup );fncSelectListSet(lngCompanyCode, lngGroupCode, CGWin.document.forms[0].slctCompany, CGWin.document.forms[0].slctGroup2, CGWin.document.forms[0].slctGroup1);fncChangeProperty(lngAttributeCode.value, document.forms[0]);"></span>
-
-
-
-<!-- ユーザー写真表示スペース -->
-<span id="PictSpace"></span>
-<span id="UserPict"><img src="_%strUserImageFileName%_" width="52" height="52" border="0"></span>
-<span id="DisplayPictUploadSegs">画像アップロード</span>
-<span id="DisplayPictUploadVars"><input type="file" class="Txt40L" name="binUserPic"></span>
-<span id="PixelImg"></span>
-
-</p>
+<div class="main-area">
+	<!-- /////////////////////////////////// START NAVIGAION /////////////////////////////////// -->
+	<div class="navi-area">
+		<span id="NaviButton" style="visibility:_%strBaseVisibilityName%_;"></span>
+		<p id="Navigations" onmouseout="NavigationOFF( Navigations , NaviButton );">
+			<span id="Navi">
+				<iframe id="NaviIfrm" name="NAVIwin" frameborder="0" scrolling="no" src="/navi/index.php?strSessionID=_%strSessionID%_&strNaviCode=_%strNaviCode%_"></iframe>
+			</span>
+		</p>
+	</div>
+	<!-- //////////////////////////////////// END NAVIGAION //////////////////////////////////// -->
+	<!-- /////////////////////////////////// START INPUT A SEGMENTS /////////////////////////////////// -->
+	<div id="InputA">
+		<!-- HEADER -->
+		<span id="SegAHeader"></span>
+		<!-- BOTTOM -->
+		<span id="SegABottom"></span>
+		<span id="RegistBt" onClick="PPP1.submit();"></span>
+		<span id="SegAClearBt" onClick="fncResetFrm( window.PPP1 );CGWin.document.forms[0].reset();"></span>
+		<!-- フォーム -->
+		<div class="form-box__contents">
+			<form name="PPP1" action="_%filename%_" method="POST" enctype="multipart/form-data">
+				<input type="hidden" name="strSessionID" value="_%strSessionID%_">
+				<input type="hidden" name="lngFunctionCode" value="_%lngFunctionCode%_">
+				<input type="hidden" name="strNaviCode" value="_%strNaviCode%_">
+				<div class="contents">
+					<div class="block">
+						<div class="regist-line">
+							<span class="form-line">
+								<span class="Column" id="SegA01">ログイン許可</span>
+								<span class="VarText" id="VarsA01">
+									<input class="CheckBox14" type="checkbox" name="bytInvalidFlag" value="f" tabindex="1" onClick="isChecked(this, 'チェックをOFFにするとこのユーザーはK.I.D.Sシステムにログインできません');" _%bytInvalidFlag%_ _%bytInvalidFlagDisabled%_>
+								</span>
+							</span>		
+						</div>
+						<div class="regist-line">
+							<span class="form-line">
+								<span class="Column" id="SegA02">ユーザーコード</span>
+								<span class="VarText" id="VarsA02">
+									<input class="disTxt10L" type="text" name="lngUserCode" value="_%lngUserCode%_" maxlength="10" contenteditable=false unselectable=off>
+								</span>
+							</span>		
+						</div>
+						<div class="regist-line">
+							<span class="form-line">
+								<span class="Column" id="SegA03">ユーザーID</span>
+								<span class="VarText" id="VarsA03">
+									<input style="ime-mode:disabled;" class="Txt20L" type="text" name="strUserID" value="_%strUserID%_" maxlength="20" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="2" _%strUserIDDisabled%_>
+								</span>
+							</span>
+						</div>	
+					</div>
+					<div class="block">
+						<div class="regist-line">
+							<span class="form-line-pic">
+								<span class="Column" id="DisplayPictUploadSegs">画像アップロード</span>
+								<span class="VarText" id="DisplayPictUploadVars">
+									<input type="file" class="Fileup" name="binUserPic">
+								</span>
+							</span>
+						</div>
+						<div class="regist-line">
+							<span class="form-line">
+								<span class="Column" id="SegA04">パスワード</span>
+								<span class="VarText" id="VarsA04">
+									<input style="ime-mode:disabled;" class="Txt20L" type="password" name="strPassword" value="" maxlength="20" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="3">
+								</span>
+							</span>
+						</div>
+						<div class="regist-line">
+							<span class="form-line">
+								<span class="Column" id="SegA05">パスワード確認</span>
+								<span class="VarText" id="VarsA05">
+									<input style="ime-mode:disabled;" class="Txt20L" type="password" name="strPasswordCheck" value="" maxlength="20" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="4">
+								</span>
+							</span>
+						</div>
+					</div>
+					<div class="block">
+						<div class="pict-area">
+						<!-- ユーザー写真表示スペース -->
+							<span id="PictSpace"></span>
+							<span id="UserPict">
+								<img src="_%strUserImageFileName%_" width="52" height="52" border="0">
+							</span>
+							<span id="PixelImg"></span>
+						</div>
+					</div>
+				</div>
+				<div class="Spacer">
+				</div>
+				<div class="contents">
+					<div class="regist-line">
+						<span class="form-line">
+							<span class="Column" id="SegA06">メール配信許可</span>
+							<span class="VarText" id="VarsA06">
+								<input class="CheckBox14" type="checkbox" name="bytMailTransmitFlag" value="t" tabindex="5" _%bytMailTransmitFlag%_ _%bytMailTransmitFlagDisabled%_>
+							</span>
+						</span>
+					</div>
+					<div class="regist-line">
+						<span class="form-line">
+							<span class="Column" id="SegA07">メールアドレス</span>
+							<span class="VarText" VarsA07">
+								<input style="ime-mode:disabled;" class="Txt40L" type="text" name="strMailAddress" value="_%strMailAddress%_" maxlength="40" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="6">
+							</span>
+						</span>
+					</div>
+				</div>
+				<div class="Spacer">
+				</div>
+				<div class="contents">
+					<div class="block">
+						<div class="regist-line">
+							<span class="form-line">
+								<span class="Column" id="SegA08">ユーザー表示</span>
+								<span class="VarText" id="VarsA08">
+									<input class="CheckBox14" type="checkbox" name="bytUserDisplayFlag" value="t" tabindex="7" onClick="isChecked(this, 'チェックをOFFにするとこのユーザーの情報でK.I.D.Sシステムにて新たなデータを登録することができません');" _%bytUserDisplayFlag%_ _%bytUserDisplayFlagDisabled%_>
+								</span>
+							</span>
+						</div>
+						<div class="regist-line">
+							<span class="form-line">
+								<span class="Column" id="SegA09">表示ユーザーコード</span>
+								<span class="VarText" id="VarsA09">
+									<input style="ime-mode:disabled;" class="Txt03L" type="text" name="strUserDisplayCode" value="_%strUserDisplayCode%_" maxlength="3" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="8">
+								</span>
+							</span>
+						</div>
+						<div class="regist-line">
+							<span class="form-line">
+								<span class="Column" id="SegA10">表示ユーザー名</span>
+								<span class="VarText" id="VarsA10">
+									<input class="Txt20L" type="text" name="strUserDisplayName" value="_%strUserDisplayName%_" maxlength="20" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="9">
+								</span>
+							</span>	
+						</div>
+					</div>
+					<div class="block">
+						<div class="regist-line">
+							<span class="form-line-fullname">
+								<span class="Column" id="SegA11">フルネーム</span>
+								<span class="VarText" "VarsA11">
+									<input class="Txt40L" type="text" name="strUserFullName" value="_%strUserFullName%_" maxlength="40" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="10">
+								</span>
+							</span>
+						</div>
+					</div>
+				</div>
+				<div class="Spacer">
+				</div>
+				<div class="contents">
+					<div class="regist-line">
+						<span class="form-line">
+							<span class="Column" id="SegA12">会社</span>
+							<input type="hidden" name="lngAttributeCode" value="_%lngAttributeCode%_" style="visibility:hidden">
+							<input type="hidden" name="lngCompanyCodeOriginal" value="_%lngCompanyCode%_">
+							<span class="VarText" id="VarsA12">
+								<input class="disTxt52L" type="hidden" name="lngCompanyCode" value="_%lngCompanyCode%_">
+								<input class="disTxt52L" type="text" name="strCompanyName" value="_%strCompanyDisplayCode%_ _%strCompanyName%_" maxlength="40" contenteditable=false unselectable=off>
+							</span>
+						</span>
+					</div>
+					<div class="regist-line">
+						<span class="form-line">
+							<span class="Column" id="SegA13">グループ</span>
+							<input type="hidden" name="lngGroupCodeOriginal" value="_%lngGroupCode%_">
+							<span class="VarText" id="VarsA13">
+								<input class="disTxt52L" type="hidden" name="lngGroupCode" value="_%lngGroupCode%_">
+								<input class="disTxt52L" type="text" name="strGroupName" value="_%strGroupDisplayCode%_ _%strGroupName%_" maxlength="40" contenteditable=false unselectable=off>
+							</span>
+						</span>
+					</div>
+					<div class="button-area">
+						<span class="button" id="SegA1213"></span>
+							<span id="PunitBt" onclick="ShowCompanyGroup( CompanyGroup );fncSelectListSet(lngCompanyCode, lngGroupCode, CGWin.document.forms[0].slctCompany, CGWin.document.forms[0].slctGroup2, CGWin.document.forms[0].slctGroup1);fncChangeProperty(lngAttributeCode.value, document.forms[0]);"></span>
+						</span>
+					</div>
+					<div class="regist-line">
+						<span class="form-line">
+							<span class="Column" id="SegA14">権限グループ</span>
+							<span class="VarText" id="VarsA14">
+								<select class="Slt15" name="lngAuthorityGroupCode" tabindex="12" _%lngAuthorityGroupCodeDisabled%_>
+								_%lngAuthorityGroupCode%_
+								</select>
+							</span>
+						</span>
+					</div>
+					<div class="regist-line">
+						<span class="form-line">
+							<span class="Column" id="SegA15">アクセスIPアドレス</span>
+							<span class="VarText" id="VarsA15">
+								<select class="LongText" name="lngAccessIPAddressCode" tabindex="13" _%lngAccessIPAddressCodeDisabled%_>
+								_%lngAccessIPAddressCode%_
+								</select>
+							</span>
+						</span>
+					</div>
+				</div>
+				<div class="Spacer">
+				</div>
+				<div class="contents">
+					<div class="regist-line">
+						<span class="form-line">
+							<span class="Column" id="SegA16">備考</span>
+							<span class="VarText id="VarsA16">
+								<input class="LongText" type="text" name="strNote" value="_%strNote%_" maxlength="40" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="14">
+							</span>
+						</span>
+					</div>
+				</div>
+				<div class="Spacer">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
 <!-- //////////////////////////////////// END INPUT A SEGMENTS //////////////////////////////////// -->
 
 
 
 
-
-
-
-
-<!-- /////////////////////////////////// START E TO J /////////////////////////////////// -->
-<span id="EtoJ" style="visibility:_%strBaseVisibilityName%_;"></span>
-<!-- //////////////////////////////////// END E TO J //////////////////////////////////// -->
 
 
 
@@ -277,7 +316,7 @@ initLayoutBase();initLayoutUC();initLayoutQuery();initLayoutPunit();initLayoutEr
 </p>
 <span id="Comments"></span>
 
-</form>
+
 
 
 <!-- ERROR MESSAGE -->
