@@ -43,7 +43,7 @@ if ( !fncCheckAuthority( DEF_FUNCTION_M0, $objAuth ) )
 }
 
 // HIDDEN À¸À®
-$aryParts["strSessionID"] =& $aryData[strSessionID];
+$aryParts["strSessionID"] =& $aryData["strSessionID"];
 
 
 $objDB->close();

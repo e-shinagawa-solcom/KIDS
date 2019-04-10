@@ -43,7 +43,7 @@ if ( !fncCheckAuthority( DEF_FUNCTION_LO0, $objAuth ) )
 }
 
 // HIDDEN 生成
-$aryParts["strSessionID"] =& $aryData[strSessionID];
+$aryParts["strSessionID"] =& $aryData["strSessionID"];
 
 // 企画進行状況プルダウンメニュー 生成
 $aryParts["lngGoodsPlanProgressCode"]  = "<option value=\"\"></option>\n";

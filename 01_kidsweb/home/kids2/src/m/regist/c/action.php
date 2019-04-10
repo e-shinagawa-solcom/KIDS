@@ -60,7 +60,6 @@ $objMaster = new clsMaster();
 $objMaster->setMasterTable( $aryData["strMasterTableName"], $aryData["strKeyName"], $aryData[$aryData["strKeyName"]], Array ( "lngstocksubjectcode" => $aryData["lngstocksubjectcode"] ), $objDB );
 $objMaster->setAryMasterInfo( $aryData[$aryData["strKeyName"]], $aryData["lngstocksubjectcode"] );
 
-
 //////////////////////////////////////////////////////////////////////////
 // 処理の有効性をチェック
 //////////////////////////////////////////////////////////////////////////
@@ -196,7 +195,6 @@ if ( $bytErrorFlag )
 else
 {
 	//echo "<form name=form1><input type=hidden name=strSessionID value=" . $aryData["strSessionID"] . "></form>";
-	//echo "<script language=javascript>window.form1.submit();window.returnValue=true;window.close();</script>";
 	echo "<script language=javascript>window.returnValue=true;window.close();</script>";
 }
 

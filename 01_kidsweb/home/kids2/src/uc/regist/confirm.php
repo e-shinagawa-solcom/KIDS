@@ -346,7 +346,7 @@ if ( $aryData["lngFunctionCode"] == DEF_FUNCTION_UC1 || $aryData["lngFunctionCod
 
 	// グループ変更チェック
 	// 入力されたグループコードの配列を生成
-	$aryGroupCode = split ( ":", $aryData["lngGroupCode"] );
+	$aryGroupCode = explode ( ":", $aryData["lngGroupCode"] );
 	array_shift ( $aryGroupCode );
 	$lngGroupCodeNum = count ( $aryGroupCode );
 

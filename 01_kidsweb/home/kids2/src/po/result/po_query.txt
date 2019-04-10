@@ -1,0 +1,55 @@
+SELECT o.lngOrderNo as lngOrderNo
+	,o.lngRevisionNo as lngRevisionNo
+	,o.strOrderCode as strOrderCode
+	,o.lngOrderStatusCode as lngOrderStatusCode
+	,od.lngOrderDetailNo
+, to_char( o.dtmInsertDate, 'YYYY/MM/DD HH:MI:SS' ) as dtmInsertDate
+, input_u.strUserDisplayCode as strInputUserDisplayCode
+, input_u.strUserDisplayName as strInputUserDisplayName
+, to_char( o.dtmExpirationDate, 'YYYY/MM/DD' ) as dtmExpirationDate
+, o.strOrderCode || '-' || o.strReviseCode as strOrderCode
+, cust_c.strCompanyDisplayCode as strCustomerDisplayCode
+, cust_c.strCompanyDisplayName as strCustomerDisplayName
+, o.lngOrderStatusCode as lngOrderStatusCode
+, os.strOrderStatusName as strOrderStatusName
+, o.strNote as strNote
+, mu.strMonetaryUnitSign as strMonetaryUnitSign
+ FROM m_Order o
+ LEFT JOIN m_User input_u ON o.lngInputUserCode = input_u.lngUserCode
+ LEFT JOIN m_Company cust_c ON o.lngCustomerCompanyCode = cust_c.lngCompanyCode
+ LEFT JOIN m_OrderStatus os USING (lngOrderStatusCode)
+ LEFT JOIN m_MonetaryUnit mu ON o.lngMonetaryUnitCode = mu.lngMonetaryUnitCode
+, (SELECT distinct on ( od1.lngOrderNo ) od1.lngOrderNo
+	,od1.lngOrderDetailNo
+	,p.strProductCode
+	,mg.strGroupDisplayCode
+	,mg.strGroupDisplayName
+	,mu.struserdisplaycode
+	,mu.struserdisplayname
+	,p.strProductName
+	,p.strProductEnglishName
+	,od1.lngStockSubjectCode
+	,od1.lngStockItemCode
+	,od1.strMoldNo
+	,p.strGoodsCode
+	,od1.lngDeliveryMethodCode
+	,od1.dtmDeliveryDate
+	,od1.curProductPrice
+	,od1.lngProductUnitCode
+	,od1.lngProductQuantity
+	,od1.curSubTotalPrice
+	,od1.strNote
+	FROM t_OrderDetail od1
+		LEFT JOIN m_Product p ON od1.strProductCode = p.strProductCode
+		left join m_group mg on p.lnginchargegroupcode = mg.lnggroupcode
+		left join m_user  mu on p.lnginchargeusercode = mu.lngusercode
+		left join m_tax  mt on mt.lngtaxcode = od1.lngtaxcode
+) as od
+
+ WHERE o.bytInvalidFlag = FALSE AND o.lngRevisionNo >= 0
+ AND input_u.strUserDisplayCode ~* '169'
+ AND od.lngOrderNo = o.lngOrderNo
+ AND o.lngRevisionNo = ( SELECT MAX( o1.lngRevisionNo ) FROM m_Order o1 WHERE o1.strOrderCode = o.strOrderCode AND o1.bytInvalidFlag = false )
+ AND o.strReviseCode = ( SELECT MAX( o2.strReviseCode ) FROM m_Order o2 WHERE o2.strOrderCode = o.strOrderCode AND o2.bytInvalidFlag = false )
+ AND 0 <= ( SELECT MIN( o3.lngRevisionNo ) FROM m_Order o3 WHERE o3.bytInvalidFlag = false AND o3.strOrderCode = o.strOrderCode )
+ ORDER BY o.lngOrderNo DESC

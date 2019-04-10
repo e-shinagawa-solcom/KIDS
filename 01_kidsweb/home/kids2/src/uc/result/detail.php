@@ -58,7 +58,7 @@ $aryCheck["lngAccessIPAddressCode"] = "number(0,32767)";
 $aryCheck["strNote"]                = "length(0,1000)";
 
 // セッション確認
-$objAuth = fncIsSession( $aryData[strSessionID], $objAuth, $objDB );
+$objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
 // 権限確認
 if ( !fncCheckAuthority( DEF_FUNCTION_UC4, $objAuth ) )

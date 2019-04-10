@@ -1,0 +1,4 @@
+<?
+	echo LIB_FILE
+?>
+

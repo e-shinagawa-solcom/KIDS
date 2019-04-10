@@ -189,7 +189,7 @@ function getUserQuery( $lngUserCode, $aryData, $objDB )
 	//////////////////////////////////////////////////////////////////////////
 	// $strSort 菇陇 "sort_[滦据戎规]_[惯界ˇ竞界]"
 	// $strSort から滦据戎规、惯界ˇ竞界を艰评
-	list ( $sort, $column, $DESC ) = split ( "_", $strSort );
+	list ( $sort, $column, $DESC ) = explode ( "_", $strSort );
 	if ( $column )
 	{
 		$strQuery .= "ORDER BY $arySortColumn[$column] $DESC, u.lngUserCode ASC\n";

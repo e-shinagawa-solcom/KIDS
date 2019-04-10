@@ -1,0 +1,3496 @@
+.: ASCII
+./sysc/index.php: EUC-JP (CRLF)
+./sysc/sev/index.php: EUC-JP (CRLF)
+./sysc/sev/select.php: EUC-JP (CRLF)
+./sysc/sev/sev_exstr.js: EUC-JP (LF)
+./sysc/sev/exstr.js: ASCII (LF)
+./sysc/sev/layout.css: ASCII (LF)
+./sysc/sev/sev_layout.css: ASCII (LF)
+./sysc/sev/functions.js: ASCII (LF)
+./sysc/sev/action.php: EUC-JP (CRLF)
+./sysc/inf/index.php: EUC-JP (CRLF)
+./sysc/inf/inf.php: EUC-JP (CRLF)
+./sysc/inf/log.php: EUC-JP (CRLF)
+./sysc/inf/exstr.js: ASCII (LF)
+./sysc/inf/layout.css: ASCII (LF)
+./sysc/inf/functions.js: ASCII (LF)
+./sysc/inf/log_layout.css: EUC-JP (LF)
+./sysc/inf/finish_exstr.js: EUC-JP (LF)
+./sysc/inf/inf_layout.css: ASCII (LF)
+./sysc/inf/log_exstr.js: EUC-JP (LF)
+./sysc/inf/action.php: EUC-JP (CRLF)
+./sysc/inf/detail_exstr.js: EUC-JP (LF)
+./sysc/inf/detail_layout.css: EUC-JP (LF)
+./sysc/inf/finish_layout.css: EUC-JP (LF)
+./sysc/inf/detail.php: EUC-JP (CRLF)
+./sysc/inf/inf_exstr.js: EUC-JP (LF)
+./sysc/cmn/lib_sys.php: EUC-JP (CRLF)
+./sysc/exstr.js: EUC-JP (LF)
+./sysc/layout.css: EUC-JP (LF)
+./sysc/session/index.php: EUC-JP (CRLF)
+./sysc/session/select.php: EUC-JP (CRLF)
+./sysc/session/log.php: EUC-JP (CRLF)
+./sysc/session/exstr.js: ASCII (LF)
+./sysc/session/session_layout.css: EUC-JP (LF)
+./sysc/session/layout.css: ASCII (LF)
+./sysc/session/functions.js: ASCII (LF)
+./sysc/session/log_layout.css: EUC-JP (LF)
+./sysc/session/log_exstr.js: EUC-JP (LF)
+./sysc/session/session_exstr.js: EUC-JP (LF)
+./sysc/mail/index.php: EUC-JP (CRLF)
+./sysc/mail/mail.php: EUC-JP (CRLF)
+./sysc/mail/exstr.js: ASCII (LF)
+./sysc/mail/layout.css: ASCII (LF)
+./sysc/mail/functions.js: ASCII (LF)
+./sysc/mail/finish_exstr.js: EUC-JP (LF)
+./sysc/mail/action.php: EUC-JP (CRLF)
+./sysc/mail/finish_layout.css: EUC-JP (LF)
+./sysc/mail/mail_layout.css: ASCII (LF)
+./sysc/mail/mail_exstr.js: EUC-JP (LF)
+./phpinfo.txt: ASCII (LF)
+./img/tomita.gif: BINARY
+./img/grid_10px.gif: BINARY
+./img/type02/punit/open_off_bt.gif: BINARY
+./img/type02/punit/open_on_bt.gif: BINARY
+./img/type02/punit/open_off_on_bt.gif: BINARY
+./img/grid_5px.gif: ASCII
+./img/signature/12.gif: BINARY
+./img/signature/310.gif: BINARY
+./img/signature/16.gif: BINARY
+./img/signature/165.gif: BINARY
+./img/signature/286.gif: BINARY
+./img/signature/2.gif: BINARY
+./img/signature/308.gif: BINARY
+./img/signature/29.gif: BINARY
+./img/signature/50.gif: BINARY
+./img/signature/287.gif: BINARY
+./img/signature/206.gif: BINARY
+./img/signature/228.gif: BINARY
+./img/signature/147.gif: BINARY
+./img/signature/242.gif: BINARY
+./img/signature/232.gif: BINARY
+./img/signature/302.gif: BINARY
+./img/signature/288.gif: BINARY
+./img/signature/301.gif: BINARY
+./img/signature/151.gif: BINARY
+./img/signature/323.gif: BINARY
+./img/signature/261.gif: BINARY
+./img/signature/199.gif: BINARY
+./img/signature/5.gif: BINARY
+./img/signature/150.gif: BINARY
+./img/signature/164.gif: BINARY
+./img/signature/322.gif: BINARY
+./img/signature/170.gif: BINARY
+./img/signature/195.gif: BINARY
+./img/signature/171.gif: BINARY
+./img/signature/26.gif: BINARY
+./img/signature/243.gif: BINARY
+./img/signature/46.gif: BINARY
+./img/signature/13.gif: BINARY
+./img/signature/28.gif: BINARY
+./img/signature/285.gif: BINARY
+./img/signature/47.gif: BINARY
+./img/signature/34.gif: BINARY
+./img/signature/168.gif: BINARY
+./img/signature/9.gif: BINARY
+./img/signature/144.gif: BINARY
+./img/signature/152.gif: BINARY
+./img/signature/252.gif: BINARY
+./img/signature/4.gif: BINARY
+./img/signature/43.gif: BINARY
+./img/signature/320.gif: BINARY
+./img/signature/207.gif: BINARY
+./img/signature/3.gif: BINARY
+./img/signature/167.gif: BINARY
+./img/signature/262.gif: BINARY
+./img/signature/10.gif: BINARY
+./img/signature/default.gif: EUC-JP
+./img/signature/309.gif: BINARY
+./img/signature/22.gif: BINARY
+./img/signature/37.gif: BINARY
+./img/signature/227.gif: BINARY
+./img/signature/319.gif: BINARY
+./img/signature/204.gif: BINARY
+./img/signature/226.gif: BINARY
+./img/signature/200.gif: BINARY
+./img/signature/197.gif: BINARY
+./img/signature/1.gif: BINARY
+./img/signature/289.gif: BINARY
+./img/signature/27.gif: BINARY
+./img/signature/24.gif: BINARY
+./img/signature/25.gif: BINARY
+./img/signature/225.gif: BINARY
+./img/signature/142.gif: BINARY
+./img/signature/283.gif: BINARY
+./img/signature/14.gif: BINARY
+./img/signature/41.gif: BINARY
+./img/signature/11.gif: BINARY
+./img/signature/15.gif: BINARY
+./img/signature/7.gif: BINARY
+./img/signature/250.gif: BINARY
+./img/signature/321.gif: BINARY
+./img/signature/8.gif: BINARY
+./img/signature/42.gif: BINARY
+./img/signature/229.gif: BINARY
+./img/signature/282.gif: BINARY
+./img/signature/44.gif: BINARY
+./img/signature/38.gif: BINARY
+./img/signature/6.gif: BINARY
+./img/staff/pict_saito.gif: BINARY
+./img/staff/pict_watanabe.gif: BINARY
+./img/staff/kids_logo_staff.gif: BINARY
+./img/staff/pict_chiba.gif: BINARY
+./img/staff/pict_tomita.gif: BINARY
+./img/staff/pict_suzukaze.gif: BINARY
+./img/staff/pict_tetsuka.gif: BINARY
+./img/staff/pict_tomita2.gif: BINARY
+./img/type01/sysc/email_on_ja_bt.gif: BINARY
+./img/type01/sysc/email_off_en_bt.gif: BINARY
+./img/type01/sysc/email/header_title_ja.gif: BINARY
+./img/type01/sysc/email/header_title_en.gif: BINARY
+./img/type01/sysc/server/restart_off_ja_bt.gif: BINARY
+./img/type01/sysc/server/restart_off_en_bt.gif: BINARY
+./img/type01/sysc/server/stop_off_on_ja_bt.gif: BINARY
+./img/type01/sysc/server/stop_off_on_en_bt.gif: BINARY
+./img/type01/sysc/server/restart_off_on_ja_bt.gif: BINARY
+./img/type01/sysc/server/stop_off_ja_bt.gif: BINARY
+./img/type01/sysc/server/header_title_ja.gif: BINARY
+./img/type01/sysc/server/stop_off_en_bt.gif: BINARY
+./img/type01/sysc/server/restart_off_on_en_bt.gif: BINARY
+./img/type01/sysc/server/header_title_en.gif: BINARY
+./img/type01/sysc/email_off_on_ja_bt.gif: BINARY
+./img/type01/sysc/message_on_en_bt.gif: BINARY
+./img/type01/sysc/session_off_en_bt.gif: BINARY
+./img/type01/sysc/session_on_ja_bt.gif: BINARY
+./img/type01/sysc/server_off_on_en_bt.gif: BINARY
+./img/type01/sysc/session/header_title_ja.gif: BINARY
+./img/type01/sysc/session/header_title_en.gif: BINARY
+./img/type01/sysc/title_ja.gif: BINARY
+./img/type01/sysc/email_off_on_en_bt.gif: BINARY
+./img/type01/sysc/email_on_en_bt.gif: BINARY
+./img/type01/sysc/session_off_on_en_bt.gif: BINARY
+./img/type01/sysc/server_on_ja_bt.gif: BINARY
+./img/type01/sysc/server_off_on_ja_bt.gif: BINARY
+./img/type01/sysc/message_on_ja_bt.gif: BINARY
+./img/type01/sysc/title_en.gif: BINARY
+./img/type01/sysc/server_on_en_bt.gif: BINARY
+./img/type01/sysc/message/.DS_Store: BINARY
+./img/type01/sysc/message/header_title_ja.gif: BINARY
+./img/type01/sysc/message/header_title_en.gif: BINARY
+./img/type01/sysc/server_off_ja_bt.gif: BINARY
+./img/type01/sysc/session_on_en_bt.gif: BINARY
+./img/type01/sysc/session_off_ja_bt.gif: BINARY
+./img/type01/sysc/message_off_on_en_bt.gif: BINARY
+./img/type01/sysc/message_off_on_ja_bt.gif: BINARY
+./img/type01/sysc/message_off_ja_bt.gif: BINARY
+./img/type01/sysc/email_off_ja_bt.gif: BINARY
+./img/type01/sysc/session_off_on_ja_bt.gif: BINARY
+./img/type01/sysc/message_off_en_bt.gif: BINARY
+./img/type01/sysc/server_off_en_bt.gif: BINARY
+./img/type01/estimate/regist_on_ja_bt.gif: BINARY
+./img/type01/estimate/es_title_ja_3.gif: BINARY
+./img/type01/estimate/es_title_en_2.gif: BINARY
+./img/type01/estimate/ess_title_en.gif: BINARY
+./img/type01/estimate/search_off_ja_bt.gif: BINARY
+./img/type01/estimate/search_on_ja_bt.gif: BINARY
+./img/type01/estimate/title_ja.gif: BINARY
+./img/type01/estimate/title_en.gif: BINARY
+./img/type01/estimate/es_title_ja_2.gif: BINARY
+./img/type01/estimate/es_title_en_1.gif: BINARY
+./img/type01/estimate/search_off_on_ja_bt.gif: BINARY
+./img/type01/estimate/es_title_ja_4.gif: BINARY
+./img/type01/estimate/regist_off_on_ja_bt.gif: BINARY
+./img/type01/estimate/es_title_en_4.gif: BINARY
+./img/type01/estimate/regist_off_ja_bt.gif: BINARY
+./img/type01/estimate/ess_title_ja.gif: BINARY
+./img/type01/estimate/es_title_ja_1.gif: BINARY
+./img/type01/estimate/es_title_en_3.gif: BINARY
+./img/type01/closed/closed_off_ja_bt.gif: BINARY
+./img/type01/closed/closed_off_on_en_bt.gif: BINARY
+./img/type01/closed/title_ja.gif: BINARY
+./img/type01/closed/title_en.gif: BINARY
+./img/type01/closed/closed_off_en_bt.gif: BINARY
+./img/type01/closed/header_title_ja.gif: BINARY
+./img/type01/closed/header_title_en.gif: BINARY
+./img/type01/closed/closed_off_on_ja_bt.gif: BINARY
+./img/type01/date/open_off_bt.gif: BINARY
+./img/type01/date/next_off_bt.gif: BINARY
+./img/type01/date/prev_off_bt.gif: BINARY
+./img/type01/date/now_off_bt.gif: BINARY
+./img/type01/date/now_off_on_bt.gif: BINARY
+./img/type01/date/next_off_on_bt.gif: BINARY
+./img/type01/date/prev_off_on_bt.gif: BINARY
+./img/type01/date/open_on_bt.gif: BINARY
+./img/type01/date/open_off_on_bt.gif: BINARY
+./img/type01/upload2/title_ja.gif: BINARY
+./img/type01/upload2/upbt_on_off.gif: BINARY
+./img/type01/upload2/up_title_ja_1.gif: BINARY
+./img/type01/upload2/up_title_en_1.gif: BINARY
+./img/type01/upload2/title_en.gif: BINARY
+./img/type01/upload2/upbt_off.gif: BINARY
+./img/type01/upload2/upbt_on.gif: BINARY
+./img/type01/m/m_header_rate_ja.gif: BINARY
+./img/type01/m/m_header_copy_ja.gif: BINARY
+./img/type01/m/master_b_off_on_ja_bt.gif: BINARY
+./img/type01/m/master_b_on_en_bt.gif: BINARY
+./img/type01/m/m_header_wf_ja.gif: BINARY
+./img/type01/m/m_header_goodsparts_en.gif: BINARY
+./img/type01/m/m_header_age_ja.gif: BINARY
+./img/type01/m/m_company_search_en.gif: BINARY
+./img/type01/m/m_header_group_ja.gif: BINARY
+./img/type01/m/list_on_ja_bt.gif: BINARY
+./img/type01/m/m_header_salesclass_en.gif: BINARY
+./img/type01/m/list_off_on_ja_bt.gif: BINARY
+./img/type01/m/m_header_wf_en.gif: BINARY
+./img/type01/m/master_a_on_en_bt.gif: BINARY
+./img/type01/m/m_monetary_rate_search_en.gif: BINARY
+./img/type01/m/master_b_off_ja_bt.gif: BINARY
+./img/type01/m/m_group_search_ja.gif: BINARY
+./img/type01/m/m_header_organization_en.gif: BINARY
+./img/type01/m/master_b_off_on_en_bt.gif: BINARY
+./img/type01/m/m_header_company_en.gif: BINARY
+./img/type01/m/m_company_search_ja.gif: BINARY
+./img/type01/m/m_add_off_en_bt.gif: BINARY
+./img/type01/m/m_header_country_en.gif: BINARY
+./img/type01/m/m_add_off_on_en_bt.gif: BINARY
+./img/type01/m/search_off_ja_bt.gif: BINARY
+./img/type01/m/master_a_off_ja_bt.gif: BINARY
+./img/type01/m/m_add_off_on_ja_bt.gif: BINARY
+./img/type01/m/search_on_ja_bt.gif: BINARY
+./img/type01/m/m_header_title_en.gif: BINARY
+./img/type01/m/m_wf_order_search_ja.gif: BINARY
+./img/type01/m/title_ja.gif: BINARY
+./img/type01/m/m_wf_order_search_en.gif: BINARY
+./img/type01/m/m_header_group_en.gif: BINARY
+./img/type01/m/m_header_copy_en.gif: BINARY
+./img/type01/m/add_off_bt.gif: BINARY
+./img/type01/m/m_header_inspection_ja.gif: BINARY
+./img/type01/m/m_header_ip_ja.gif: BINARY
+./img/type01/m/m_header_ip_en.gif: BINARY
+./img/type01/m/title_en.gif: BINARY
+./img/type01/m/m_header_goodsform_ja.gif: BINARY
+./img/type01/m/list_off_ja_bt.gif: BINARY
+./img/type01/m/m_header_inspection_en.gif: BINARY
+./img/type01/m/m_group_search_en.gif: BINARY
+./img/type01/m/add_off_on_bt.gif: BINARY
+./img/type01/m/add_on_bt.gif: BINARY
+./img/type01/m/master_a_on_ja_bt.gif: BINARY
+./img/type01/m/master_b_off_en_bt.gif: BINARY
+./img/type01/m/m_header_goodsparts_ja.gif: BINARY
+./img/type01/m/m_header_transport_ja.gif: BINARY
+./img/type01/m/m_header_goodsform_en.gif: BINARY
+./img/type01/m/m_add_off_ja_bt.gif: BINARY
+./img/type01/m/m_header_goodsclass_en.gif: BINARY
+./img/type01/m/m_monetary_rate_search_ja.gif: BINARY
+./img/type01/m/master_a_off_on_en_bt.gif: BINARY
+./img/type01/m/search_off_on_ja_bt.gif: BINARY
+./img/type01/m/m_header_goodsset_ja.gif: BINARY
+./img/type01/m/ms_header_title_ja.gif: BINARY
+./img/type01/m/m_header_age_en.gif: BINARY
+./img/type01/m/m_header_transport_en.gif: BINARY
+./img/type01/m/ms_header_title_en.gif: BINARY
+./img/type01/m/m_header_goodsclass_ja.gif: BINARY
+./img/type01/m/master_a_off_on_ja_bt.gif: BINARY
+./img/type01/m/master_b_on_ja_bt.gif: BINARY
+./img/type01/m/master_a_off_en_bt.gif: BINARY
+./img/type01/m/m_add_on_en_bt.gif: BINARY
+./img/type01/m/m_header_rate_en.gif: BINARY
+./img/type01/m/m_header_title_ja.gif: BINARY
+./img/type01/m/m_header_country_ja.gif: BINARY
+./img/type01/m/m_add_on_ja_bt.gif: BINARY
+./img/type01/m/m_header_organization_ja.gif: BINARY
+./img/type01/m/m_header_salesclass_ja.gif: BINARY
+./img/type01/m/m_header_company_ja.gif: BINARY
+./img/type01/m/m_header_goodsset_en.gif: BINARY
+./img/type01/po/regist_on_ja_bt.gif: BINARY
+./img/type01/po/wfroot_header.gif: BINARY
+./img/type01/po/pos_title_ja.gif: BINARY
+./img/type01/po/search_off_ja_bt.gif: BINARY
+./img/type01/po/search_on_ja_bt.gif: BINARY
+./img/type01/po/title_ja.gif: BINARY
+./img/type01/po/title_en.gif: BINARY
+./img/type01/po/pos_title_en.gif: BINARY
+./img/type01/po/search_off_on_ja_bt.gif: BINARY
+./img/type01/po/regist_off_on_ja_bt.gif: BINARY
+./img/type01/po/search_header_en.gif: BINARY
+./img/type01/po/regist_off_ja_bt.gif: BINARY
+./img/type01/po/search_header_ja.gif: BINARY
+./img/type01/so/regist_on_ja_bt.gif: BINARY
+./img/type01/so/sos_title_en.gif: BINARY
+./img/type01/so/presales_off.gif: BINARY
+./img/type01/so/search_off_ja_bt.gif: BINARY
+./img/type01/so/search_on_ja_bt.gif: BINARY
+./img/type01/so/title_ja.gif: BINARY
+./img/type01/so/presales_on.gif: BINARY
+./img/type01/so/title_en.gif: BINARY
+./img/type01/so/search_off_on_ja_bt.gif: BINARY
+./img/type01/so/regist_off_on_ja_bt.gif: BINARY
+./img/type01/so/regist_off_ja_bt.gif: BINARY
+./img/type01/so/sos_title_ja.gif: BINARY
+./img/type01/price/del_on_bt.gif: BINARY
+./img/type01/price/header.gif: BINARY
+./img/type01/price/open_off_bt.gif: BINARY
+./img/type01/price/up.gif: BINARY
+./img/type01/price/add_off_bt.gif: BINARY
+./img/type01/price/down.gif: BINARY
+./img/type01/price/add_off_on_bt.gif: BINARY
+./img/type01/price/add_on_bt.gif: BINARY
+./img/type01/price/del_off_bt.gif: BINARY
+./img/type01/price/del_off_on_bt.gif: BINARY
+./img/type01/price/open_on_bt.gif: BINARY
+./img/type01/price/open_off_on_bt.gif: BINARY
+./img/type01/cmn/check_on.gif: BINARY
+./img/type01/cmn/loadbar.gif: BINARY
+./img/type01/cmn/kids_logo_center.gif_v1: BINARY
+./img/type01/cmn/kids_logo_center.gif: BINARY
+./img/type01/cmn/check_off.gif: BINARY
+./img/type01/cmn/error/err_mark.gif: BINARY
+./img/type01/cmn/error/meg_win.gif: BINARY
+./img/type01/cmn/navi/listout_on_ja_bt.gif: BINARY
+./img/type01/cmn/navi/ms_on_en_bt.gif: BINARY
+./img/type01/cmn/navi/uc_off_on_bt.gif: BINARY
+./img/type01/cmn/navi/dataex_off_on_ja_bt.gif: BINARY
+./img/type01/cmn/navi/ms_off_ja_bt.gif: BINARY
+./img/type01/cmn/navi/ms_off_on_ja_bt.gif: BINARY
+./img/type01/cmn/navi/ms_off_on_en_bt.gif: BINARY
+./img/type01/cmn/navi/listout_on_en_bt.gif: BINARY
+./img/type01/cmn/navi/dataex_off_en_bt.gif: BINARY
+./img/type01/cmn/navi/ms_off_on_bt.gif: BINARY
+./img/type01/cmn/navi/ms_off_bt.gif: BINARY
+./img/type01/cmn/navi/dataex_off_ja_bt.gif: BINARY
+./img/type01/cmn/navi/dataex_off_on_en_bt.gif: BINARY
+./img/type01/cmn/navi/listout_off_en_bt.gif: BINARY
+./img/type01/cmn/navi/regist_off_en_bt.gif: BINARY
+./img/type01/cmn/navi/listout_off_on_ja_bt.gif: BINARY
+./img/type01/cmn/navi/ms_off_en_bt.gif: BINARY
+./img/type01/cmn/navi/dataex_on_ja_bt.gif: BINARY
+./img/type01/cmn/navi/regist_off_on_en_bt.gif: BINARY
+./img/type01/cmn/navi/listout_off_on_en_bt.gif: BINARY
+./img/type01/cmn/navi/search_on_en_bt.gif: BINARY
+./img/type01/cmn/navi/search_off_on_en_bt.gif: BINARY
+./img/type01/cmn/navi/dataex_on_en_bt.gif: BINARY
+./img/type01/cmn/navi/search_off_en_bt.gif: BINARY
+./img/type01/cmn/navi/ms_on_ja_bt.gif: BINARY
+./img/type01/cmn/navi/regist_on_en_bt.gif: BINARY
+./img/type01/cmn/navi/listout_off_ja_bt.gif: BINARY
+./img/type01/cmn/navi/uc_off_bt.gif: BINARY
+./img/type01/cmn/warning.gif: BINARY
+./img/type01/cmn/add/d_in_off_on.gif: BINARY
+./img/type01/cmn/add/d_in_on.gif: BINARY
+./img/type01/cmn/add/d_in_off.gif: BINARY
+./img/type01/cmn/querybt/reg_off_on_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/back_blown_off_en_bt.gif: BINARY
+./img/type01/cmn/querybt/blownprev_off_on_bt.gif: BINARY
+./img/type01/cmn/querybt/regist_gray_on_en_bt.gif: BINARY
+./img/type01/cmn/querybt/back_blue_off_on_en_bt.gif: BINARY
+./img/type01/cmn/querybt/back_blown_off_on_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/close_blown_off_en_bt.gif: BINARY
+./img/type01/cmn/querybt/clear_off_on_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/back_gray_on_en_bt.gif: BINARY
+./img/type01/cmn/querybt/back_blue_on_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/cmt_on_en_bt.gif: BINARY
+./img/type01/cmn/querybt/regist_gray_off_on_en_bt.gif: BINARY
+./img/type01/cmn/querybt/back_gray_off_en_bt.gif: BINARY
+./img/type01/cmn/querybt/back_gray_off_on_en_bt.gif: BINARY
+./img/type01/cmn/querybt/listout_on_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/back_blue_off_en_bt.gif: BINARY
+./img/type01/cmn/querybt/del_off_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/grayclear_off_en_bt.gif: BINARY
+./img/type01/cmn/querybt/cmt_off_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/regist_blue_on_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/confirm_off_on_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/presave_off_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/darkback_on_bt.gif: BINARY
+./img/type01/cmn/querybt/invalid_small_off_bt.gif: BINARY
+./img/type01/cmn/querybt/clear_on_en_bt.gif: BINARY
+./img/type01/cmn/querybt/select_off_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/blown_revival_off_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/reload_small_off_bt.gif: BINARY
+./img/type01/cmn/querybt/darklogout_on_bt.gif: BINARY
+./img/type01/cmn/querybt/back_blue_off_on_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/blown_process_off_en_bt.gif: BINARY
+./img/type01/cmn/querybt/close_dark_off_on_en_bt.gif: BINARY
+./img/type01/cmn/querybt/cmt_off_en_bt.gif: BINARY
+./img/type01/cmn/querybt/submit_off_bt.gif: BINARY
+./img/type01/cmn/querybt/regist_gray_off_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/add_off_on_en_bt.gif: BINARY
+./img/type01/cmn/querybt/log_off_on_bt.gif: BINARY
+./img/type01/cmn/querybt/blown_revival_off_en_bt.gif: BINARY
+./img/type01/cmn/querybt/blown_process_off_on_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/select_off_en_bt.gif: BINARY
+./img/type01/cmn/querybt/del_on_en_bt.gif: BINARY
+./img/type01/cmn/querybt/add_off_en_bt.gif: BINARY
+./img/type01/cmn/querybt/reload_small_off_on_bt.gif: BINARY
+./img/type01/cmn/querybt/cmt_off_on_en_bt.gif: BINARY
+./img/type01/cmn/querybt/grayclear_off_on_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/graypreview_off_bt.gif: BINARY
+./img/type01/cmn/querybt/grayclear_on_en_bt.gif: BINARY
+./img/type01/cmn/querybt/blown_revival_off_on_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/blown_process_off_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/blownprev_off_bt.gif: BINARY
+./img/type01/cmn/querybt/presave_off_en_bt.gif: BINARY
+./img/type01/cmn/querybt/back_blown_on_en_bt.gif: BINARY
+./img/type01/cmn/querybt/preview_off_bt.gif: BINARY
+./img/type01/cmn/querybt/add_off_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/regist_blue_on_en_bt.gif: BINARY
+./img/type01/cmn/querybt/search_off_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/del_off_on_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/invalid_big_off_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/back_gray_off_on_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/back_small_off_bt.gif: BINARY
+./img/type01/cmn/querybt/search_on_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/decision_off_on_en_bt.gif: BINARY
+./img/type01/cmn/querybt/back_blown_off_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/listout_on_en_bt.gif: BINARY
+./img/type01/cmn/querybt/reg_on_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/clear_off_en_bt.gif: BINARY
+./img/type01/cmn/querybt/regist_gray_off_on_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/blownpreview_off_bt.gif: BINARY
+./img/type01/cmn/querybt/back_gray_on_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/regist_blue_off_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/regist_blue_off_on_en_bt.gif: BINARY
+./img/type01/cmn/querybt/cmt_off_on_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/close_dark_off_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/preview_on_bt.gif: BINARY
+./img/type01/cmn/querybt/close_blown_off_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/graypreview_off_on_bt.gif: BINARY
+./img/type01/cmn/querybt/regist_gray_on_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/presave_off_on_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/grayclear_on_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/confirm_off_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/listout_off_en_bt.gif: BINARY
+./img/type01/cmn/querybt/back_gray_off_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/invalid_big_off_en_bt.gif: BINARY
+./img/type01/cmn/querybt/decision_off_en_bt.gif: BINARY
+./img/type01/cmn/querybt/listout_off_on_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/select_on_en_bt.gif: BINARY
+./img/type01/cmn/querybt/blown_process_off_on_en_bt.gif: BINARY
+./img/type01/cmn/querybt/del_off_on_en_bt.gif: BINARY
+./img/type01/cmn/querybt/close_dark_on_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/reload_off_on_bt.gif: BINARY
+./img/type01/cmn/querybt/confirm_off_on_en_bt.gif: BINARY
+./img/type01/cmn/querybt/close_blown_on_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/back_blown_off_on_en_bt.gif: BINARY
+./img/type01/cmn/querybt/close_dark_on_en_bt.gif: BINARY
+./img/type01/cmn/querybt/cmt_on_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/reg_off_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/select_off_on_en_bt.gif: BINARY
+./img/type01/cmn/querybt/add_on_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/invalid_big_off_on_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/preview_off_on_bt.gif: BINARY
+./img/type01/cmn/querybt/add_on_en_bt.gif: BINARY
+./img/type01/cmn/querybt/decision_off_on_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/darklogout_off_bt.gif: BINARY
+./img/type01/cmn/querybt/regist_blue_off_en_bt.gif: BINARY
+./img/type01/cmn/querybt/listout_off_on_en_bt.gif: BINARY
+./img/type01/cmn/querybt/blownnext_off_bt.gif: BINARY
+./img/type01/cmn/querybt/log_off_bt.gif: BINARY
+./img/type01/cmn/querybt/search_on_en_bt.gif: BINARY
+./img/type01/cmn/querybt/search_off_on_en_bt.gif: BINARY
+./img/type01/cmn/querybt/back_small_off_on_bt.gif: BINARY
+./img/type01/cmn/querybt/close_dark_off_on_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/clear_off_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/close_blown_on_en_bt.gif: BINARY
+./img/type01/cmn/querybt/select_on_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/regist_blown_off_en_bt.gif: BINARY
+./img/type01/cmn/querybt/darkback_off_bt.gif: BINARY
+./img/type01/cmn/querybt/clear_on_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/close_blown_off_on_en_bt.gif: BINARY
+./img/type01/cmn/querybt/submit_off_on_bt.gif: BINARY
+./img/type01/cmn/querybt/regist_blown_off_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/reg_off_on_en_bt.gif: BINARY
+./img/type01/cmn/querybt/search_off_on_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/decision_off_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/blown_revival_off_on_en_bt.gif: BINARY
+./img/type01/cmn/querybt/back_blown_on_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/close_dark_off_en_bt.gif: BINARY
+./img/type01/cmn/querybt/blownpreview_off_on_bt.gif: BINARY
+./img/type01/cmn/querybt/grayclear_off_on_en_bt.gif: BINARY
+./img/type01/cmn/querybt/select_off_on_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/regist_blown_off_on_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/darkback_off_on_bt.gif: BINARY
+./img/type01/cmn/querybt/regist_blown_off_on_en_bt.gif: BINARY
+./img/type01/cmn/querybt/invalid_small_off_on_bt.gif: BINARY
+./img/type01/cmn/querybt/search_off_en_bt.gif: BINARY
+./img/type01/cmn/querybt/regist_gray_off_en_bt.gif: BINARY
+./img/type01/cmn/querybt/del_off_en_bt.gif: BINARY
+./img/type01/cmn/querybt/add_off_on_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/submit_on_bt.gif: BINARY
+./img/type01/cmn/querybt/blownnext_off_on_bt.gif: BINARY
+./img/type01/cmn/querybt/regist_blue_off_on_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/confirm_off_en_bt.gif: BINARY
+./img/type01/cmn/querybt/grayclear_off_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/listout_off_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/reload_off_bt.gif: BINARY
+./img/type01/cmn/querybt/back_blue_on_en_bt.gif: BINARY
+./img/type01/cmn/querybt/invalid_big_off_on_en_bt.gif: BINARY
+./img/type01/cmn/querybt/reload_on_bt.gif: BINARY
+./img/type01/cmn/querybt/reg_off_en_bt.gif: BINARY
+./img/type01/cmn/querybt/presave_off_on_en_bt.gif: BINARY
+./img/type01/cmn/querybt/reg_on_en_bt.gif: BINARY
+./img/type01/cmn/querybt/del_on_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/darklogout_off_on_bt.gif: BINARY
+./img/type01/cmn/querybt/back_blue_off_ja_bt.gif: BINARY
+./img/type01/cmn/querybt/clear_off_on_en_bt.gif: BINARY
+./img/type01/cmn/querybt/close_blown_off_on_ja_bt.gif: BINARY
+./img/type01/cmn/dot.gif: EUC-JP
+./img/type01/cmn/seg/darkgray_open_off_on.gif: BINARY
+./img/type01/cmn/seg/enter_off_on_bt.gif: BINARY
+./img/type01/cmn/seg/ralow_off_bt.gif: BINARY
+./img/type01/cmn/seg/close_off_on_en_bt.gif: BINARY
+./img/type01/cmn/seg/d_tab_off.gif: BINARY
+./img/type01/cmn/seg/off_bt.gif: BINARY
+./img/type01/cmn/seg/bottom03.gif: BINARY
+./img/type01/cmn/seg/renew_off_bt.gif: BINARY
+./img/type01/cmn/seg/remove_off_on_bt.gif: BINARY
+./img/type01/cmn/seg/d_tab_off_on.gif: BINARY
+./img/type01/cmn/seg/menu_back2.gif: BINARY
+./img/type01/cmn/seg/dataset_off_on_bt.gif: BINARY
+./img/type01/cmn/seg/regist_on_ja_bt.gif: BINARY
+./img/type01/cmn/seg/search_column_ja.gif: BINARY
+./img/type01/cmn/seg/h._tab_off_on.gif: BINARY
+./img/type01/cmn/seg/dataopen_on_bt.gif: BINARY
+./img/type01/cmn/seg/dataopen_off_bt.gif: BINARY
+./img/type01/cmn/seg/confirm_header_ja.gif: BINARY
+./img/type01/cmn/seg/sch_clear_off_on_en_bt.gif: BINARY
+./img/type01/cmn/seg/dataset_off_bt.gif: BINARY
+./img/type01/cmn/seg/pa_tab_off_on.gif: BINARY
+./img/type01/cmn/seg/menu_back1.gif: BINARY
+./img/type01/cmn/seg/on_bt.gif: BINARY
+./img/type01/cmn/seg/search_column_en.gif: BINARY
+./img/type01/cmn/seg/main_menu_off_bt.gif: BINARY
+./img/type01/cmn/seg/finish_header_ja.gif: BINARY
+./img/type01/cmn/seg/main_menu_off_on_bt.gif: BINARY
+./img/type01/cmn/seg/copy_off_bt.gif: BINARY
+./img/type01/cmn/seg/darkgray_open_off.gif: BINARY
+./img/type01/cmn/seg/close_on_en_bt.gif: BINARY
+./img/type01/cmn/seg/enter_on_bt.gif: BINARY
+./img/type01/cmn/seg/copy_off_on_bt.gif: BINARY
+./img/type01/cmn/seg/copy_on_bt.gif: BINARY
+./img/type01/cmn/seg/sch_search_on_en_bt.gif: BINARY
+./img/type01/cmn/seg/menu_back3.gif: BINARY
+./img/type01/cmn/seg/delete_on_ja_bt.gif: BINARY
+./img/type01/cmn/seg/view_search_en.gif: BINARY
+./img/type01/cmn/seg/showwin_off_bt.gif: BINARY
+./img/type01/cmn/seg/pa_tab_on.gif: BINARY
+./img/type01/cmn/seg/dataopen_off_on_bt.gif: BINARY
+./img/type01/cmn/seg/finish_header_en.gif: BINARY
+./img/type01/cmn/seg/renew_off_on_bt.gif: BINARY
+./img/type01/cmn/seg/ralow_off_on_bt.gif: BINARY
+./img/type01/cmn/seg/delete_off_on_ja_bt.gif: BINARY
+./img/type01/cmn/seg/seg_error_mark.gif: BINARY
+./img/type01/cmn/seg/bottom02.gif: BINARY
+./img/type01/cmn/seg/detail_title_ja.gif: BINARY
+./img/type01/cmn/seg/dl_title_en.gif: BINARY
+./img/type01/cmn/seg/pa_tab_off.gif: BINARY
+./img/type01/cmn/seg/close_on_ja_bt.gif: BINARY
+./img/type01/cmn/seg/regist_off_en_bt.gif: BINARY
+./img/type01/cmn/seg/off_on_bt.gif: BINARY
+./img/type01/cmn/seg/delete_on_en_bt.gif: BINARY
+./img/type01/cmn/seg/sch_search_off_en_bt.gif: BINARY
+./img/type01/cmn/seg/confirm_header_en.gif: BINARY
+./img/type01/cmn/seg/seg_error_mark.gif@@: BINARY
+./img/type01/cmn/seg/sch_search_off_on_ja_bt.gif: BINARY
+./img/type01/cmn/seg/main_menu_on_bt.gif: BINARY
+./img/type01/cmn/seg/header_title_ja.gif: BINARY
+./img/type01/cmn/seg/regist_off_on_en_bt.gif: BINARY
+./img/type01/cmn/seg/h_tab_off.gif: BINARY
+./img/type01/cmn/seg/sch_clear_off_ja_bt.gif: BINARY
+./img/type01/cmn/seg/detail_title_en.gif: BINARY
+./img/type01/cmn/seg/sch_search_off_ja_bt.gif: BINARY
+./img/type01/cmn/seg/dot.gif: EUC-JP
+./img/type01/cmn/seg/d_tab_on.gif: BINARY
+./img/type01/cmn/seg/showwin_off_on_bt.gif: BINARY
+./img/type01/cmn/seg/darkgray_open_on.gif: BINARY
+./img/type01/cmn/seg/delete_off_on_en_bt.gif: BINARY
+./img/type01/cmn/seg/renew_on_bt.gif: BINARY
+./img/type01/cmn/seg/close_off_on_ja_bt.gif: BINARY
+./img/type01/cmn/seg/remove_on_bt.gif: BINARY
+./img/type01/cmn/seg/dataset_on_bt.gif: BINARY
+./img/type01/cmn/seg/Thumbs.db: BINARY
+./img/type01/cmn/seg/sch_search_off_on_en_bt.gif: BINARY
+./img/type01/cmn/seg/close_off_en_bt.gif: BINARY
+./img/type01/cmn/seg/delete_off_ja_bt.gif: BINARY
+./img/type01/cmn/seg/remove_off_bt.gif: BINARY
+./img/type01/cmn/seg/close_off_ja_bt.gif: BINARY
+./img/type01/cmn/seg/h_tab_on.gif: BINARY
+./img/type01/cmn/seg/enter_off_bt.gif: BINARY
+./img/type01/cmn/seg/showwin_on_bt.gif: BINARY
+./img/type01/cmn/seg/view_search_ja.gif: BINARY
+./img/type01/cmn/seg/regist_off_on_ja_bt.gif: BINARY
+./img/type01/cmn/seg/tax_header.gif: BINARY
+./img/type01/cmn/seg/pagenum_win.gif: BINARY
+./img/type01/cmn/seg/pb_tab_on.gif: BINARY
+./img/type01/cmn/seg/sch_search_on_ja_bt.gif: BINARY
+./img/type01/cmn/seg/sch_clear_off_en_bt.gif: BINARY
+./img/type01/cmn/seg/sch_clear_off_on_ja_bt.gif: BINARY
+./img/type01/cmn/seg/regist_on_en_bt.gif: BINARY
+./img/type01/cmn/seg/pb_tab_off_on.gif: BINARY
+./img/type01/cmn/seg/regist_off_ja_bt.gif: BINARY
+./img/type01/cmn/seg/header_title_en.gif: BINARY
+./img/type01/cmn/seg/ralow_on_bt.gif: BINARY
+./img/type01/cmn/seg/menu_back4.gif: BINARY
+./img/type01/cmn/seg/sch_clear_on_ja_bt.gif: BINARY
+./img/type01/cmn/seg/bottom01.gif: BINARY
+./img/type01/cmn/seg/seg_error_mark.gif@: BINARY
+./img/type01/cmn/seg/delete_off_en_bt.gif: BINARY
+./img/type01/cmn/seg/bottom01.gif_old: BINARY
+./img/type01/cmn/seg/sch_clear_on_en_bt.gif: BINARY
+./img/type01/cmn/seg/h_tab_off_on.gif: BINARY
+./img/type01/cmn/seg/dl_title_ja.gif: BINARY
+./img/type01/cmn/seg/pb_tab_off.gif: BINARY
+./img/type01/cmn/based/footer.gif: BINARY
+./img/type01/cmn/based/header.gif: BINARY
+./img/type01/cmn/based/pict_space_small.gif: BINARY
+./img/type01/cmn/based/header.gif_v1: BINARY
+./img/type01/cmn/logout/off_bt.gif: BINARY
+./img/type01/cmn/logout/on_bt.gif: BINARY
+./img/type01/cmn/logout/off_on_bt.gif: BINARY
+./img/type01/cmn/kids_logo_left.gif_v1: BINARY
+./img/type01/cmn/kids_logo_left.gif: BINARY
+./img/type01/cmn/etoj/en_off_bt.gif: BINARY
+./img/type01/cmn/etoj/ja_off_on_bt.gif: BINARY
+./img/type01/cmn/etoj/en_off_on_bt.gif: BINARY
+./img/type01/cmn/etoj/ja_off_bt.gif: BINARY
+./img/type01/cmn/etoj/en_on_bt.gif: BINARY
+./img/type01/cmn/etoj/ja_on_bt.gif: BINARY
+./img/type01/pc/regist_on_ja_bt.gif: BINARY
+./img/type01/pc/pcs_title_ja.gif: BINARY
+./img/type01/pc/search_off_ja_bt.gif: BINARY
+./img/type01/pc/search_on_ja_bt.gif: BINARY
+./img/type01/pc/title_ja.gif: BINARY
+./img/type01/pc/title_en.gif: BINARY
+./img/type01/pc/search_off_on_ja_bt.gif: BINARY
+./img/type01/pc/pcs_title_en.gif: BINARY
+./img/type01/pc/regist_off_on_ja_bt.gif: BINARY
+./img/type01/pc/regist_off_ja_bt.gif: BINARY
+./img/type01/dataex/sales/header_title_ja.gif: BINARY
+./img/type01/dataex/sales/header_title_en.gif: BINARY
+./img/type01/dataex/blownexport_off_bt.gif: BINARY
+./img/type01/dataex/list_off_on_ja_bt.gif: BINARY
+./img/type01/dataex/lc/header_title_ja.gif: BINARY
+./img/type01/dataex/lc/header_title_en.gif: BINARY
+./img/type01/dataex/blownexport_off_on_bt.gif: BINARY
+./img/type01/dataex/title_ja.gif: BINARY
+./img/type01/dataex/stock/header_title_ja.gif: BINARY
+./img/type01/dataex/stock/header_title_en.gif: BINARY
+./img/type01/dataex/title_en.gif: BINARY
+./img/type01/dataex/list_off_ja_bt.gif: BINARY
+./img/type01/dataex/purchase/header_title_ja.gif: BINARY
+./img/type01/dataex/purchase/header_title_en.gif: BINARY
+./img/type01/dataex/stat02/header_title_ja.gif: BINARY
+./img/type01/dataex/stat02/header_title_en.gif: BINARY
+./img/type01/dataex/header_title_ja.gif: BINARY
+./img/type01/dataex/header_title_en.gif: BINARY
+./img/type01/dataex/stat01/header_title_ja.gif: BINARY
+./img/type01/dataex/stat01/header_title_en.gif: BINARY
+./img/type01/special/special_off_on_bt.gif: BINARY
+./img/type01/special/special_on_bt.gif: BINARY
+./img/type01/special/special_off_bt.gif: BINARY
+./img/type01/navi/off_bt.gif: BINARY
+./img/type01/navi/on_bt.gif: BINARY
+./img/type01/navi/off_on_bt.gif: BINARY
+./img/type01/p/pb_title_en.gif: BINARY
+./img/type01/p/insert_on_en_bt.gif: BINARY
+./img/type01/p/edit_off_bt.gif: BINARY
+./img/type01/p/pa_title_ja.gif: BINARY
+./img/type01/p/regist_on_ja_bt.gif: BINARY
+./img/type01/p/pb_title_ja.gif: BINARY
+./img/type01/p/edit_on_bt.gif: BINARY
+./img/type01/p/edit_off_on_bt.gif: BINARY
+./img/type01/p/edit_header.gif: BINARY
+./img/type01/p/insert_off_on_ja_bt.gif: BINARY
+./img/type01/p/search_off_ja_bt.gif: BINARY
+./img/type01/p/ps_title_ja.gif: BINARY
+./img/type01/p/search_on_ja_bt.gif: BINARY
+./img/type01/p/insert_on_ja_bt.gif: BINARY
+./img/type01/p/title_ja.gif: BINARY
+./img/type01/p/insert_off_en_bt.gif: BINARY
+./img/type01/p/pa_title_en.gif: BINARY
+./img/type01/p/title_en.gif: BINARY
+./img/type01/p/insert_off_ja_bt.gif: BINARY
+./img/type01/p/Thumbs.db: BINARY
+./img/type01/p/search_off_on_ja_bt.gif: BINARY
+./img/type01/p/ps_title_en.gif: BINARY
+./img/type01/p/regist_off_on_ja_bt.gif: BINARY
+./img/type01/p/regist_off_ja_bt.gif: BINARY
+./img/type01/p/goods_plan_header.gif: BINARY
+./img/type01/p/insert_off_on_en_bt.gif: BINARY
+./img/type01/punit/open_off_bt.gif: BINARY
+./img/type01/punit/Thumbs.db: BINARY
+./img/type01/punit/open_on_bt.gif: BINARY
+./img/type01/punit/open_off_on_bt.gif: BINARY
+./img/type01/help/help_off_bt.gif: BINARY
+./img/type01/help/help_on_bt.gif: BINARY
+./img/type01/help/help_off_on_bt.gif: BINARY
+./img/type01/cg/header_footer.gif: BINARY
+./img/type01/cg/str_select_group.gif: BINARY
+./img/type01/cg/line.gif: BINARY
+./img/type01/cg/up_off_on_bt.gif: BINARY
+./img/type01/cg/up_off_bt.gif: BINARY
+./img/type01/cg/add_off_bt.gif: BINARY
+./img/type01/cg/down_off_on_bt.gif: BINARY
+./img/type01/cg/add_off_on_bt.gif: BINARY
+./img/type01/cg/del_off_bt.gif: BINARY
+./img/type01/cg/add_del_back.gif: BINARY
+./img/type01/cg/del_off_on_bt.gif: BINARY
+./img/type01/cg/cg_title.gif: BINARY
+./img/type01/cg/str_select_company.gif: BINARY
+./img/type01/cg/str_group.gif: BINARY
+./img/type01/cg/up_down_back.gif: BINARY
+./img/type01/cg/down_off_bt.gif: BINARY
+./img/type01/wf/deny_off_on_en_bt.gif: BINARY
+./img/type01/wf/recogn_off_on_ja_bt.gif: BINARY
+./img/type01/wf/cancel_off_on_ja_bt.gif: BINARY
+./img/type01/wf/list_on_ja_bt.gif: BINARY
+./img/type01/wf/recogn_off_ja_bt.gif: BINARY
+./img/type01/wf/process_off_on_en_bt.gif: BINARY
+./img/type01/wf/list_off_on_ja_bt.gif: BINARY
+./img/type01/wf/recogn_off_on_en_bt.gif: BINARY
+./img/type01/wf/process_off_ja_bt.gif: BINARY
+./img/type01/wf/list_on_en_bt.gif: BINARY
+./img/type01/wf/search_off_ja_bt.gif: BINARY
+./img/type01/wf/recogn_off_en_bt.gif: BINARY
+./img/type01/wf/deny_off_en_bt.gif: BINARY
+./img/type01/wf/search_on_ja_bt.gif: BINARY
+./img/type01/wf/title_ja.gif: BINARY
+./img/type01/wf/process_off_on_ja_bt.gif: BINARY
+./img/type01/wf/cancel_off_en_bt.gif: BINARY
+./img/type01/wf/list/header_title_ja.gif: BINARY
+./img/type01/wf/list/header_title_en.gif: BINARY
+./img/type01/wf/title_en.gif: BINARY
+./img/type01/wf/cancel_off_ja_bt.gif: BINARY
+./img/type01/wf/list_off_ja_bt.gif: BINARY
+./img/type01/wf/list_off_on_en_bt.gif: BINARY
+./img/type01/wf/deny_off_on_ja_bt.gif: BINARY
+./img/type01/wf/process_off_en_bt.gif: BINARY
+./img/type01/wf/result/dispo_off_on_bt.gif: BINARY
+./img/type01/wf/result/dispo_off_on_en_bt.gif: BINARY
+./img/type01/wf/result/detail_off_bt.gif: BINARY
+./img/type01/wf/result/next_off_bt.gif: BINARY
+./img/type01/wf/result/dispo_on_en_bt.gif: BINARY
+./img/type01/wf/result/prev_on_bt.gif: BINARY
+./img/type01/wf/result/dispo_off_ja_bt.gif: BINARY
+./img/type01/wf/result/prev_off_bt.gif: BINARY
+./img/type01/wf/result/dispo_off_en_bt.gif: BINARY
+./img/type01/wf/result/dispo_off_on_ja_bt.gif: BINARY
+./img/type01/wf/result/detail_on_bt.gif: BINARY
+./img/type01/wf/result/next_off_on_bt.gif: BINARY
+./img/type01/wf/result/dispo_on_bt.gif: BINARY
+./img/type01/wf/result/detail_off_on_bt.gif: BINARY
+./img/type01/wf/result/prev_off_on_bt.gif: BINARY
+./img/type01/wf/result/next_on_bt.gif: BINARY
+./img/type01/wf/result/dispo_on_ja_bt.gif: BINARY
+./img/type01/wf/result/dispo_off_bt.gif: BINARY
+./img/type01/wf/list_off_en_bt.gif: BINARY
+./img/type01/wf/search_off_on_ja_bt.gif: BINARY
+./img/type01/wf/cancel_off_on_en_bt.gif: BINARY
+./img/type01/wf/deny_off_ja_bt.gif: BINARY
+./img/type01/wf/search/result_header_ja.gif: BINARY
+./img/type01/wf/search/result_header_en.gif: BINARY
+./img/type01/wf/search/search_header_en.gif: BINARY
+./img/type01/wf/search/search_header_ja.gif: BINARY
+./img/type01/menu/uc_off_on_ja_bt.gif: BINARY
+./img/type01/menu/uc_off_en_bt.gif: BINARY
+./img/type01/menu/wf_on_ja_bt.gif: BINARY
+./img/type01/menu/so_off_en_bt.gif: BINARY
+./img/type01/menu/po_off_on_ja_bt.gif: BINARY
+./img/type01/menu/uc_on_en_bt.gif: BINARY
+./img/type01/menu/po_off_on_en_bt.gif: BINARY
+./img/type01/menu/sc_off_on_ja_bt.gif: BINARY
+./img/type01/menu/wf_off_on_en_bt.gif: BINARY
+./img/type01/menu/es_off_on_en_bt.gif: BINARY
+./img/type01/menu/upload_off_on_en_bt.gif: BINARY
+./img/type01/menu/po_off_ja_bt.gif: BINARY
+./img/type01/menu/p_off_on_ja_bt.gif: BINARY
+./img/type01/menu/wf_off_en_bt.gif: BINARY
+./img/type01/menu/wf_off_ja_bt.gif: BINARY
+./img/type01/menu/title_ja.gif: BINARY
+./img/type01/menu/wf_off_on_ja_bt.gif: BINARY
+./img/type01/menu/pc_off_ja_bt.gif: BINARY
+./img/type01/menu/pc_on_ja_bt.gif: BINARY
+./img/type01/menu/title_en.gif: BINARY
+./img/type01/menu/dataclose_off_bt.gif: BINARY
+./img/type01/menu/sys_off_bt.gif: BINARY
+./img/type01/menu/sc_off_ja_bt.gif: BINARY
+./img/type01/menu/pc_off_on_en_bt.gif: BINARY
+./img/type01/menu/upload_off_ja_bt.gif: BINARY
+./img/type01/menu/so_off_ja_bt.gif: BINARY
+./img/type01/menu/menuback.gif: BINARY
+./img/type01/menu/p_on_en_bt.gif: BINARY
+./img/type01/menu/es_off_en_bt.gif: BINARY
+./img/type01/menu/sc_on_ja_bt.gif: BINARY
+./img/type01/menu/so_on_ja_bt.gif: BINARY
+./img/type01/menu/so_on_en_bt.gif: BINARY
+./img/type01/menu/pc_off_on_ja_bt.gif: BINARY
+./img/type01/menu/so_off_on_ja_bt.gif: BINARY
+./img/type01/menu/sc_on_en_bt.gif: BINARY
+./img/type01/menu/uc_off_on_en_bt.gif: BINARY
+./img/type01/menu/p_off_ja_bt.gif: BINARY
+./img/type01/menu/sys_on_bt.gif: BINARY
+./img/type01/menu/p_off_en_bt.gif: BINARY
+./img/type01/menu/es_off_on_ja_bt.gif: BINARY
+./img/type01/menu/sc_off_en_bt.gif: BINARY
+./img/type01/menu/upload_on_en_bt.gif: BINARY
+./img/type01/menu/uc_off_ja_bt.gif: BINARY
+./img/type01/menu/sys_off_on_bt.gif: BINARY
+./img/type01/menu/dataclose_off_on_bt.gif: BINARY
+./img/type01/menu/po_on_en_bt.gif: BINARY
+./img/type01/menu/upload_on_ja_bt.gif: BINARY
+./img/type01/menu/upload_off_on_ja_bt.gif: BINARY
+./img/type01/menu/p_off_on_en_bt.gif: BINARY
+./img/type01/menu/pc_off_en_bt.gif: BINARY
+./img/type01/menu/es_off_ja_bt.gif: BINARY
+./img/type01/menu/uc_on_ja_bt.gif: BINARY
+./img/type01/menu/so_off_on_en_bt.gif: BINARY
+./img/type01/menu/po_off_en_bt.gif: BINARY
+./img/type01/menu/pc_on_en_bt.gif: BINARY
+./img/type01/menu/po_on_ja_bt.gif: BINARY
+./img/type01/menu/es_on_ja_bt.gif: BINARY
+./img/type01/menu/upload_off_en_bt.gif: BINARY
+./img/type01/menu/es_on_en_bt.gif: BINARY
+./img/type01/menu/wf_on_en_bt.gif: BINARY
+./img/type01/menu/p_on_ja_bt.gif: BINARY
+./img/type01/menu/sc_off_on_en_bt.gif: BINARY
+./img/type01/list/header_po_search_en.gif: BINARY
+./img/type01/list/list_off_on_ja_bt.gif: BINARY
+./img/type01/list/header_goods_search_ja.gif: BINARY
+./img/type01/list/copybig_off_bt.gif: BINARY
+./img/type01/list/header_po_search_ja.gif: BINARY
+./img/type01/list/copybig_on_bt.gif: BINARY
+./img/type01/list/title_ja.gif: BINARY
+./img/type01/list/copybig_off_on_bt.gif: BINARY
+./img/type01/list/header_goods_search_en.gif: BINARY
+./img/type01/list/title_en.gif: BINARY
+./img/type01/list/list_off_ja_bt.gif: BINARY
+./img/type01/list/header_es_search_en.gif: BINARY
+./img/type01/list/header_es_search_ja.gif: BINARY
+./img/type01/list/print_off_bt.gif: BINARY
+./img/type01/list/header_list_search_ja.gif: BINARY
+./img/type01/list/header_list_search_en.gif: BINARY
+./img/type01/list/print_off_on_bt.gif: BINARY
+./img/type01/sc/regist_on_ja_bt.gif: BINARY
+./img/type01/sc/search_off_ja_bt.gif: BINARY
+./img/type01/sc/search_on_ja_bt.gif: BINARY
+./img/type01/sc/title_ja.gif: BINARY
+./img/type01/sc/title_en.gif: BINARY
+./img/type01/sc/scs_title_ja.gif: BINARY
+./img/type01/sc/scs_title_en.gif: BINARY
+./img/type01/sc/search_off_on_ja_bt.gif: BINARY
+./img/type01/sc/regist_off_on_ja_bt.gif: BINARY
+./img/type01/sc/regist_off_ja_bt.gif: BINARY
+./img/type01/msw/location/drag.gif: BINARY
+./img/type01/msw/date/drag.gif: BINARY
+./img/type01/msw/creation/drag.gif: BINARY
+./img/type01/msw/cmn/apply_off_en_bt.gif: BINARY
+./img/type01/msw/cmn/clear_off_on_ja_bt.gif: BINARY
+./img/type01/msw/cmn/apply_off_on_en_bt.gif: BINARY
+./img/type01/msw/cmn/clear_on_en_bt.gif: BINARY
+./img/type01/msw/cmn/apply_off_ja_bt.gif: BINARY
+./img/type01/msw/cmn/open_off_bt.gif: BINARY
+./img/type01/msw/cmn/apply_on_ja_bt.gif: BINARY
+./img/type01/msw/cmn/apply_off_on_ja_bt.gif: BINARY
+./img/type01/msw/cmn/apply_on_en_bt.gif: BINARY
+./img/type01/msw/cmn/result_header_ja.gif: BINARY
+./img/type01/msw/cmn/search_off_ja_bt.gif: BINARY
+./img/type01/msw/cmn/search_on_ja_bt.gif: BINARY
+./img/type01/msw/cmn/clear_off_en_bt.gif: BINARY
+./img/type01/msw/cmn/bottom02.gif: BINARY
+./img/type01/msw/cmn/dummy_drag.gif: BINARY
+./img/type01/msw/cmn/dummy_close.gif: BINARY
+./img/type01/msw/cmn/msw_close.gif: BINARY
+./img/type01/msw/cmn/search_on_en_bt.gif: BINARY
+./img/type01/msw/cmn/search_off_on_en_bt.gif: BINARY
+./img/type01/msw/cmn/clear_off_ja_bt.gif: BINARY
+./img/type01/msw/cmn/clear_on_ja_bt.gif: BINARY
+./img/type01/msw/cmn/Thumbs.db: BINARY
+./img/type01/msw/cmn/search_off_on_ja_bt.gif: BINARY
+./img/type01/msw/cmn/result_header_en.gif: BINARY
+./img/type01/msw/cmn/search_off_en_bt.gif: BINARY
+./img/type01/msw/cmn/search_header_en.gif: BINARY
+./img/type01/msw/cmn/search_header_ja.gif: BINARY
+./img/type01/msw/cmn/counter.gif: BINARY
+./img/type01/msw/cmn/bottom01.gif: BINARY
+./img/type01/msw/cmn/open_on_bt.gif: BINARY
+./img/type01/msw/cmn/clear_off_on_en_bt.gif: BINARY
+./img/type01/msw/cmn/open_off_on_bt.gif: BINARY
+./img/type01/msw/assembly/drag.gif: BINARY
+./img/type01/msw/products/result_header_ja.gif: BINARY
+./img/type01/msw/products/Thumbs.db: BINARY
+./img/type01/msw/products/result_header_en.gif: BINARY
+./img/type01/msw/products/bottom.gif: BINARY
+./img/type01/msw/products/search_header_en.gif: BINARY
+./img/type01/msw/products/drag.gif: BINARY
+./img/type01/msw/products/search_header_ja.gif: BINARY
+./img/type01/msw/vi/i_tab_off.gif: BINARY
+./img/type01/msw/vi/i_tab_on.gif: BINARY
+./img/type01/msw/vi/vi_tab_on.gif: BINARY
+./img/type01/msw/vi/Thumbs.db: BINARY
+./img/type01/msw/vi/i_tab_off_on.gif: BINARY
+./img/type01/msw/vi/drag.gif: BINARY
+./img/type01/msw/vi/vi_tab_off_on.gif: BINARY
+./img/type01/msw/vi/vi_tab_off.gif: BINARY
+./img/type01/msw/input/drag.gif: BINARY
+./img/type01/msw/dept/d_tab_off.gif: BINARY
+./img/type01/msw/dept/d_tab_off_on.gif: BINARY
+./img/type01/msw/dept/i_tab_off.gif: BINARY
+./img/type01/msw/dept/i_tab_on.gif: BINARY
+./img/type01/msw/dept/d_tab_on.gif: BINARY
+./img/type01/msw/dept/Thumbs.db: BINARY
+./img/type01/msw/dept/i_tab_off_on.gif: BINARY
+./img/type01/msw/dept/drag.gif: BINARY
+./img/type01/msw/vendor/drag.gif: BINARY
+./img/type01/msw/applicant/drag.gif: BINARY
+./img/type01/msw/supplier/drag.gif: BINARY
+./img/type01/uc/ucs_title_en.gif: BINARY
+./img/type01/uc/pict_space.gif: BINARY
+./img/type01/uc/uci_title_en.gif: BINARY
+./img/type01/uc/info_on_en_bt.gif: BINARY
+./img/type01/uc/uci_title_ja.gif: BINARY
+./img/type01/uc/regist_on_ja_bt.gif: BINARY
+./img/type01/uc/pict_space_big.gif: BINARY
+./img/type01/uc/info_off_on_en_bt.gif: BINARY
+./img/type01/uc/info_off_en_bt.gif: BINARY
+./img/type01/uc/uc_title_ja.gif: BINARY
+./img/type01/uc/uc_title_en.gif: BINARY
+./img/type01/uc/info_off_ja_bt.gif: BINARY
+./img/type01/uc/search_off_ja_bt.gif: BINARY
+./img/type01/uc/search_on_ja_bt.gif: BINARY
+./img/type01/uc/title_ja.gif: BINARY
+./img/type01/uc/ucs_title_ja.gif: BINARY
+./img/type01/uc/title_en.gif: BINARY
+./img/type01/uc/search_off_on_ja_bt.gif: BINARY
+./img/type01/uc/pixel.gif: BINARY
+./img/type01/uc/regist_off_on_ja_bt.gif: BINARY
+./img/type01/uc/regist_off_ja_bt.gif: BINARY
+./img/type01/uc/info_on_ja_bt.gif: BINARY
+./img/type01/uc/info_off_on_ja_bt.gif: BINARY
+./img/type01/login/off_bt.gif: BINARY
+./img/type01/login/on_bt.gif: BINARY
+./img/type01/login/off_on_bt.gif: BINARY
+./img/type01/upload/title_ja.gif: BINARY
+./img/type01/upload/upbt_on_off.gif: BINARY
+./img/type01/upload/up_title_ja_1.gif: BINARY
+./img/type01/upload/up_title_en_1.gif: BINARY
+./img/type01/upload/title_en.gif: BINARY
+./img/type01/upload/upbt_off.gif: BINARY
+./img/type01/upload/upbt_on.gif: BINARY
+./estimate/index.php: EUC-JP (LF)
+./estimate/finish/exstr.js: EUC-JP (LF)
+./estimate/finish/layout.css: EUC-JP (LF)
+./estimate/finish/functions.js: ASCII (LF)
+./estimate/regist/renewerrorlayout.css: ASCII (LF)
+./estimate/regist/renewlayout.css: EUC-JP (LF)
+./estimate/regist/function.js: EUC-JP (LF)
+./estimate/regist/confirm.php: EUC-JP (LF)
+./estimate/regist/exstr.js: EUC-JP (LF)
+./estimate/regist/edit.php: EUC-JP (LF)
+./estimate/regist/layout.css: EUC-JP (LF)
+./estimate/regist/errorlayout.css: ASCII (LF)
+./estimate/regist/renew.php: EUC-JP (LF)
+./estimate/regist/confirm_exstr.js: EUC-JP (LF)
+./estimate/regist/action.php: EUC-JP (LF)
+./estimate/regist/detail_exstr.js: EUC-JP (LF)
+./estimate/regist/detail.php: EUC-JP (LF)
+./estimate/regist/confirm_delete_exstr.js: EUC-JP (LF)
+./estimate/cmn/functions.js: EUC-JP (LF)
+./estimate/cmn/lib_e.php: EUC-JP (LF)
+./estimate/cmn/resultexstr.js: EUC-JP (LF)
+./estimate/exstr.js: EUC-JP (LF)
+./estimate/layout.css: EUC-JP (LF)
+./estimate/.htaccess: ASCII (LF)
+./estimate/confirm/exstr.js: EUC-JP (LF)
+./estimate/confirm/layout.css: EUC-JP (LF)
+./estimate/search_ifrm/index.php: EUC-JP (LF)
+./estimate/search_ifrm/exstr.js: EUC-JP (LF)
+./estimate/search_ifrm/layout.css: EUC-JP (LF)
+./estimate/search_ifrm/functions.js: ASCII (LF)
+./estimate/search_ifrm/search.php: EUC-JP (LF)
+./estimate/list/index.php: EUC-JP (LF)
+./estimate/dlist/exstr.js: EUC-JP (LF)
+./estimate/dlist/index.html: EUC-JP (LF)
+./estimate/dlist/styles.css: EUC-JP (LF)
+./estimate/result/index.php: EUC-JP (LF)
+./estimate/result/exstr.js: EUC-JP (LF)
+./estimate/result/layout.css: EUC-JP (LF)
+./estimate/result/detail.php: EUC-JP (LF)
+./estimate/info/exstr.js: EUC-JP (LF)
+./estimate/info/parts.tmpl: EUC-JP (LF)
+./estimate/info/layout.css: EUC-JP (LF)
+./estimate/info/functions.js: ASCII (LF)
+./estimate/info/errorlayout.css: ASCII (LF)
+./estimate/test.php: EUC-JP (LF)
+./estimate/search/index.php: EUC-JP (LF)
+./estimate/search/exstr.js: ASCII (LF)
+./estimate/search/layout.css: ASCII (LF)
+./estimate/search/functions.js: ASCII (LF)
+./closed/index.php: EUC-JP (CRLF)
+./closed/cmn/functions.js: EUC-JP (LF)
+./closed/cmn/lib_closed.php: EUC-JP (CRLF)
+./closed/exstr.js: ASCII (LF)
+./closed/index.html: EUC-JP (LF)
+./closed/layout.css: ASCII (LF)
+./closed/functions.js: ASCII (LF)
+./closed/finish_exstr.js: EUC-JP (MIXED NL)
+./closed/closed_exstr.js: EUC-JP (LF)
+./closed/action.php: EUC-JP (LF)
+./closed/finish_layout.css: EUC-JP (LF)
+./closed/@action.php: EUC-JP (CRLF)
+./closed/closed_layout.css: ASCII (LF)
+./closed/closed.php: EUC-JP (CRLF)
+./testscript.php: ASCII (LF)
+./time/index.php: EUC-JP (LF)
+./pear_docs/classtrees_default.html: ASCII (LF)
+./pear_docs/li_k.i.d.s..html: ASCII (LF)
+./pear_docs/elementindex.html: EUC-JP (LF)
+./pear_docs/default/_conf_inc.html: ASCII (LF)
+./pear_docs/default/_master_query_php.html: ASCII (LF)
+./pear_docs/classtrees_k.i.d.s..html: ASCII (LF)
+./pear_docs/elementindex_k.i.d.s..html: EUC-JP (LF)
+./pear_docs/packages.html: ASCII (LF)
+./pear_docs/index.html: ASCII (LF)
+./pear_docs/errors.html: ASCII (LF)
+./pear_docs/elementindex_default.html: ASCII (LF)
+./pear_docs/li_default.html: ASCII (LF)
+./pear_docs/li_kuwagata.html: ASCII (LF)
+./pear_docs/media/stylesheet.css: ASCII (CRLF)
+./pear_docs/media/empty.png: BINARY
+./pear_docs/media/style.css: ASCII (CRLF)
+./pear_docs/media/background.png: BINARY
+./pear_docs/media/lib/tab.webfx.css: ASCII (CRLF)
+./pear_docs/media/lib/classTree.js: ASCII (CRLF)
+./pear_docs/media/lib/ua.js: ASCII (CRLF)
+./pear_docs/media/lib/tabpane.js: ASCII (CRLF)
+./pear_docs/media/images/error.gif: BINARY
+./pear_docs/media/images/GhostClass.gif: BINARY
+./pear_docs/media/images/Constants.gif: BINARY
+./pear_docs/media/images/minus.gif: BINARY
+./pear_docs/media/images/PrivateDataMember.gif: BINARY
+./pear_docs/media/images/Functions.gif: BINARY
+./pear_docs/media/images/FolderClosed.gif: BINARY
+./pear_docs/media/images/msgInformation.gif: BINARY
+./pear_docs/media/images/msgWarning.gif: BINARY
+./pear_docs/media/images/Tplus.png: BINARY
+./pear_docs/media/images/Destructor.gif: BINARY
+./pear_docs/media/images/ProtectedDataMember.gif: BINARY
+./pear_docs/media/images/Constant.gif: BINARY
+./pear_docs/media/images/PublicMethod.gif: BINARY
+./pear_docs/media/images/PrivateMethod.gif: BINARY
+./pear_docs/media/images/spacer.gif: BINARY
+./pear_docs/media/images/ProtectedMethod.gif: BINARY
+./pear_docs/media/images/Lminus.png: BINARY
+./pear_docs/media/images/PublicDataMember.gif: BINARY
+./pear_docs/media/images/Types.gif: BINARY
+./pear_docs/media/images/ProtectedProperty.gif: BINARY
+./pear_docs/media/images/plus.gif: Shift_JIS
+./pear_docs/media/images/Variable.gif: BINARY
+./pear_docs/media/images/L.png: BINARY
+./pear_docs/media/images/foldericon.png: BINARY
+./pear_docs/media/images/Vars.gif: BINARY
+./pear_docs/media/images/msgError.gif: BINARY
+./pear_docs/media/images/FolderOpened.gif: BINARY
+./pear_docs/media/images/Disk.gif: BINARY
+./pear_docs/media/images/Class.gif: BINARY
+./pear_docs/media/images/msgFatalError.gif: BINARY
+./pear_docs/media/images/msgHint.gif: BINARY
+./pear_docs/media/images/classFolder.gif: BINARY
+./pear_docs/media/images/openfoldericon.png: BINARY
+./pear_docs/media/images/file.png: BINARY
+./pear_docs/media/images/PublicProperty.gif: BINARY
+./pear_docs/media/images/Tminus.png: BINARY
+./pear_docs/media/images/blank.png: BINARY
+./pear_docs/media/images/PrivateProperty.gif: BINARY
+./pear_docs/media/images/T.png: BINARY
+./pear_docs/media/images/I.png: BINARY
+./pear_docs/media/images/Lplus.png: BINARY
+./pear_docs/media/images/Constructor.gif: BINARY
+./pear_docs/classtrees_kuwagata.html: ASCII (LF)
+./pear_docs/KIDS~8I/clsTemplate.html: EUC-JP (LF)
+./pear_docs/KIDS~8I/clsAuth.html: EUC-JP (LF)
+./pear_docs/KIDS~8I/clsCache.html: EUC-JP (LF)
+./pear_docs/KIDS~8I/_clsdb_php.html: EUC-JP (LF)
+./pear_docs/KIDS~8I/clsDBLock.html: ASCII (LF)
+./pear_docs/KIDS~8I/_clsauth_php.html: EUC-JP (LF)
+./pear_docs/KIDS~8I/clsDB.html: EUC-JP (LF)
+./pear_docs/KIDS~8I/_clscache_php.html: EUC-JP (LF)
+./pear_docs/KIDS~8I/_clstemplate_php.html: EUC-JP (LF)
+./pear_docs/blank.html: ASCII (LF)
+./pear_docs/elementindex_kuwagata.html: EUC-JP (LF)
+./pear_docs/kuwagata/_lib_php.html: EUC-JP (LF)
+./upload2/index.php: EUC-JP (LF)
+./upload2/parse/parse.php_backup091210: UTF-8 (LF)
+./upload2/parse/confirm.php: UTF-8 (LF)
+./upload2/parse/cmn/getWorkSheet2Array.php: UTF-8 (LF)
+./upload2/parse/cmn/function.js: UTF-8 (LF)
+./upload2/parse/cmn/lib_parse.php__org__: UTF-8 (BOM) (LF)
+./upload2/parse/cmn/getWorkSheet2Array.php_100125: UTF-8 (BOM) (LF)
+./upload2/parse/cmn/lib_parse.php: UTF-8 (BOM) (LF)
+./upload2/parse/parse.php: UTF-8 (BOM) (LF)
+./upload2/parse/.htaccess: ASCII (BOM) (LF)
+./upload2/parse/confirm.php_backup091210: UTF-8 (BOM) (LF)
+./upload2/cmn/function.js: EUC-JP (BOM) (LF)
+./upload2/cmn/xls2html.php: UTF-8 (BOM) (LF)
+./upload2/cmn/lib_peruser.php: UTF-8 (BOM) (LF)
+./upload2/cmn/peruser.php: EUC-JP (BOM) (LF)
+./upload2/exstr.js: EUC-JP (BOM) (LF)
+./upload2/layout.css: ASCII (BOM) (LF)
+./m/index.php: EUC-JP (BOM) (CRLF)
+./m/regist/r/confirm.php: EUC-JP (BOM) (CRLF)
+./m/regist/r/edit.php: EUC-JP (BOM) (CRLF)
+./m/regist/r/action.php: EUC-JP (BOM) (CRLF)
+./m/regist/g/confirm.php: EUC-JP (BOM) (CRLF)
+./m/regist/g/edit.php: EUC-JP (BOM) (CRLF)
+./m/regist/g/action.php: EUC-JP (BOM) (CRLF)
+./m/regist/c/confirm.php: EUC-JP (BOM) (CRLF)
+./m/regist/c/edit.php: EUC-JP (BOM) (CRLF)
+./m/regist/c/action.php: EUC-JP (BOM) (CRLF)
+./m/regist/wf/confirm.php: EUC-JP (BOM) (CRLF)
+./m/regist/wf/edit.php: EUC-JP (BOM) (CRLF)
+./m/regist/wf/functions.js: EUC-JP (BOM) (LF)
+./m/regist/wf/action.php: EUC-JP (BOM) (CRLF)
+./m/regist/co/confirm.php: EUC-JP (BOM) (LF)
+./m/regist/co/edit.php: EUC-JP (BOM) (CRLF)
+./m/regist/co/action.php: EUC-JP (BOM) (CRLF)
+./m/cmn/lib_m.php: EUC-JP (BOM) (LF)
+./m/cmn/layout.css: ASCII (BOM) (LF)
+./m/cmn/functions.js: EUC-JP (BOM) (LF)
+./m/cmn/styles.css: EUC-JP (BOM) (LF)
+./m/cmn/m_querytable.js: EUC-JP (BOM) (LF)
+./m/exstr.js: EUC-JP (BOM) (LF)
+./m/layout.css: EUC-JP (BOM) (LF)
+./m/list/index.php: EUC-JP (BOM) (CRLF)
+./m/list/select.php: EUC-JP (BOM) (CRLF)
+./m/list/r/index.php: EUC-JP (BOM) (CRLF)
+./m/list/r/cmn/layout.css: EUC-JP (BOM) (LF)
+./m/list/r/exstr.js: EUC-JP (BOM) (LF)
+./m/list/exstr.js: EUC-JP (BOM) (LF)
+./m/list/c/index.php: EUC-JP (BOM) (CRLF)
+./m/list/c/m_AccessIPAddress_exstr.js: EUC-JP (BOM) (LF)
+./m/list/c/m_DeliveryMethod_exstr.js: EUC-JP (BOM) (LF)
+./m/list/c/m_MonetaryRate_exstr.js: EUC-JP (BOM) (LF)
+./m/list/c/cmn/layout.css: EUC-JP (BOM) (LF)
+./m/list/c/m_WorkflowOrder_exstr.js: EUC-JP (BOM) (LF)
+./m/list/c/m_TargetAge_exstr.js: EUC-JP (BOM) (LF)
+./m/list/c/m_StockSubject_exstr.js: EUC-JP (BOM) (LF)
+./m/list/c/m_Organization_exstr.js: EUC-JP (BOM) (LF)
+./m/list/c/m_StockItem_exstr.js: EUC-JP (BOM) (LF)
+./m/list/c/m_Country_exstr.js: EUC-JP (BOM) (LF)
+./m/list/c/m_Group_exstr.js: EUC-JP (BOM) (LF)
+./m/list/c/m_Copyright_exstr.js: EUC-JP (BOM) (LF)
+./m/list/c/m_CertificateClass_exstr.js: EUC-JP (BOM) (LF)
+./m/list/c/m_StockClass_exstr.js: EUC-JP (BOM) (LF)
+./m/list/c/m_ProductForm_exstr.js: EUC-JP (BOM) (LF)
+./m/list/c/m_Company_exstr.js: EUC-JP (BOM) (LF)
+./m/list/c/m_SalesClass_exstr.js: EUC-JP (BOM) (LF)
+./m/list/layout.css: ASCII (BOM) (LF)
+./m/list/functions.js: ASCII (BOM) (LF)
+./m/list/select_exstr.js: EUC-JP (BOM) (LF)
+./m/list/search_exstr.js: EUC-JP (BOM) (LF)
+./m/result/r/index.php: EUC-JP (BOM) (CRLF)
+./m/result/g/index.php: EUC-JP (BOM) (CRLF)
+./m/result/wf/index.php: EUC-JP (BOM) (CRLF)
+./m/result/co/index.php: EUC-JP (BOM) (LF)
+./m/search/index.php: EUC-JP (BOM) (CRLF)
+./m/search/select.php: EUC-JP (BOM) (CRLF)
+./m/search/r/exstr.js: EUC-JP (BOM) (LF)
+./m/search/r/layout.css: ASCII (BOM) (LF)
+./m/search/r/functions.js: ASCII (BOM) (MIXED NL)
+./m/search/r/search.php: EUC-JP (BOM) (CRLF)
+./m/search/select.html: ASCII (BOM) (LF)
+./m/search/exstr.js: ASCII (BOM) (LF)
+./m/search/g/exstr.js: EUC-JP (BOM) (LF)
+./m/search/g/index.html: ASCII (BOM) (LF)
+./m/search/g/layout.css: ASCII (BOM) (LF)
+./m/search/g/functions.js: ASCII (BOM) (MIXED NL)
+./m/search/g/search.tmpl: EUC-JP (BOM) (LF)
+./m/search/g/search.php: EUC-JP (BOM) (CRLF)
+./m/search/index.html: ASCII (BOM) (LF)
+./m/search/layout.css: ASCII (BOM) (LF)
+./m/search/functions.js: ASCII (BOM) (LF)
+./m/search/select_exstr.js: EUC-JP (BOM) (LF)
+./m/search/wf/exstr.js: EUC-JP (BOM) (LF)
+./m/search/wf/index.html: ASCII (BOM) (LF)
+./m/search/wf/layout.css: ASCII (BOM) (LF)
+./m/search/wf/functions.js: ASCII (BOM) (MIXED NL)
+./m/search/wf/search.tmpl: EUC-JP (BOM) (LF)
+./m/search/wf/search.php: EUC-JP (BOM) (CRLF)
+./m/search/co/exstr.js: EUC-JP (BOM) (LF)
+./m/search/co/layout.css: ASCII (BOM) (LF)
+./m/search/co/functions.js: ASCII (BOM) (MIXED NL)
+./m/search/co/search.php: EUC-JP (BOM) (CRLF)
+./po/index.php: EUC-JP (BOM) (LF)
+./po/finish/invalid_layout.css: EUC-JP (BOM) (LF)
+./po/finish/remove_layout.css: EUC-JP (BOM) (LF)
+./po/finish/exstr.js: EUC-JP (BOM) (LF)
+./po/finish/remove_exstr.js: EUC-JP (BOM) (LF)
+./po/finish/layout.css: EUC-JP (BOM) (LF)
+./po/finish/functions.js: ASCII (BOM) (LF)
+./po/finish/invalid_exstr.js: EUC-JP (BOM) (LF)
+./po/regist/index.php: EUC-JP (BOM) (LF)
+./po/regist/renewerrorlayout.css: ASCII (BOM) (LF)
+./po/regist/renewlayout.css: ASCII (BOM) (LF)
+./po/regist/form.php: EUC-JP (BOM) (CRLF)
+./po/regist/exstr.js: EUC-JP (BOM) (LF)
+./po/regist/index.html: EUC-JP (BOM) (LF)
+./po/regist/layout.css: ASCII (BOM) (LF)
+./po/regist/functions.js: ASCII (BOM) (LF)
+./po/regist/index2.php: EUC-JP (BOM) (LF)
+./po/regist/errorlayout.css: ASCII (BOM) (LF)
+./po/regist/renew.php: EUC-JP (BOM) (LF)
+./po/regist/@v1_form.php: EUC-JP (BOM) (CRLF)
+./po/cmn/js.php: EUC-JP (BOM) (CRLF)
+./po/cmn/lib_pop.php: EUC-JP (BOM) (LF)
+./po/cmn/lib_po.php: EUC-JP (BOM) (LF)
+./po/cmn/lib_pos.php: EUC-JP (BOM) (LF)
+./po/cmn/resultexstr.js: EUC-JP (BOM) (LF)
+./po/cmn/lib_pos1.php: EUC-JP (BOM) (LF)
+./po/cmn/subloadmastersettings.js: EUC-JP (BOM) (LF)
+./po/cmn/column.php: EUC-JP (BOM) (LF)
+./po/exstr.js: EUC-JP (BOM) (LF)
+./po/index.html: ASCII (BOM) (LF)
+./po/layout.css: EUC-JP (BOM) (LF)
+./po/confirm/index.php: EUC-JP (BOM) (LF)
+./po/confirm/exstr.js: EUC-JP (BOM) (LF)
+./po/confirm/layout.css: EUC-JP (BOM) (LF)
+./po/search_ifrm/index.php: EUC-JP (BOM) (LF)
+./po/search_ifrm/exstr.js: EUC-JP (BOM) (LF)
+./po/search_ifrm/index.html: EUC-JP (BOM) (LF)
+./po/search_ifrm/layout.css: EUC-JP (BOM) (LF)
+./po/search_ifrm/functions.js: EUC-JP (BOM) (LF)
+./po/wf/index.php: EUC-JP (BOM) (LF)
+./po/wf/exstr.js: EUC-JP (BOM) (LF)
+./po/wf/layout.css: EUC-JP (BOM) (LF)
+./po/wf/root.php: EUC-JP (BOM) (LF)
+./po/statuscheck.php: EUC-JP (BOM) (LF)
+./po/result/index.php: EUC-JP (BOM) (LF)
+./po/result/index3.php: EUC-JP (BOM) (LF)
+./po/result/index2.php: EUC-JP (BOM) (LF)
+./po/result/index4.php: EUC-JP (BOM) (LF)
+./po/search/index.php: EUC-JP (BOM) (LF)
+./po/search/exstr.js: ASCII (BOM) (LF)
+./po/search/index.html: ASCII (BOM) (LF)
+./po/search/layout.css: ASCII (BOM) (LF)
+./po/search/functions.js: ASCII (BOM) (LF)
+./str.php: ASCII (BOM) (LF)
+./.htpasswd: ASCII (BOM) (LF)
+./so/index.php: EUC-JP (BOM) (LF)
+./so/finish/invalid_layout.css: EUC-JP (BOM) (LF)
+./so/finish/remove_layout.css: EUC-JP (BOM) (LF)
+./so/finish/exstr.js: EUC-JP (BOM) (LF)
+./so/finish/remove_exstr.js: EUC-JP (BOM) (LF)
+./so/finish/layout.css: EUC-JP (BOM) (LF)
+./so/finish/functions.js: ASCII (BOM) (LF)
+./so/finish/invalid_exstr.js: EUC-JP (BOM) (LF)
+./so/regist/index.php: EUC-JP (BOM) (LF)
+./so/regist/renewerrorlayout.css: ASCII (BOM) (LF)
+./so/regist/renewlayout.css: ASCII (BOM) (LF)
+./so/regist/soinput.php: ASCII (BOM) (CRLF)
+./so/regist/exstr.js: EUC-JP (BOM) (LF)
+./so/regist/index.html: EUC-JP (BOM) (LF)
+./so/regist/layout.css: ASCII (BOM) (LF)
+./so/regist/functions.js: ASCII (BOM) (LF)
+./so/regist/index2.php: EUC-JP (BOM) (LF)
+./so/regist/errorlayout.css: ASCII (BOM) (LF)
+./so/regist/renew.php: EUC-JP (BOM) (LF)
+./so/regist/index2.php060215: EUC-JP (BOM) (LF)
+./so/cmn/lib_sos.php: EUC-JP (BOM) (LF)
+./so/cmn/lib_sos1.php: EUC-JP (BOM) (LF)
+./so/cmn/receivecodeequalcheck.js: EUC-JP (BOM) (LF)
+./so/cmn/resultexstr.js: EUC-JP (BOM) (LF)
+./so/cmn/lib_so.php: EUC-JP (BOM) (LF)
+./so/cmn/subloadmastersettings.js: EUC-JP (BOM) (LF)
+./so/cmn/column.php: EUC-JP (BOM) (LF)
+./so/exstr.js: EUC-JP (BOM) (LF)
+./so/index.html: ASCII (BOM) (LF)
+./so/layout.css: EUC-JP (BOM) (LF)
+./so/confirm/index.php: EUC-JP (BOM) (LF)
+./so/confirm/exstr.js: EUC-JP (BOM) (LF)
+./so/confirm/layout.css: EUC-JP (BOM) (LF)
+./so/search_ifrm/index.php: EUC-JP (BOM) (LF)
+./so/search_ifrm/exstr.js: EUC-JP (BOM) (LF)
+./so/search_ifrm/index.html: EUC-JP (BOM) (LF)
+./so/search_ifrm/layout.css: EUC-JP (BOM) (LF)
+./so/search_ifrm/functions.js: EUC-JP (BOM) (LF)
+./so/statuscheck.php: EUC-JP (BOM) (LF)
+./so/result/index.php: EUC-JP (BOM) (LF)
+./so/result/index3.php: EUC-JP (BOM) (LF)
+./so/result/index2.php: EUC-JP (BOM) (LF)
+./so/result/index4.php: EUC-JP (BOM) (LF)
+./so/search/index.php: EUC-JP (BOM) (LF)
+./so/search/exstr.js: ASCII (BOM) (LF)
+./so/search/layout.css: ASCII (BOM) (LF)
+./so/search/functions.js: ASCII (BOM) (LF)
+./cmn/msw.js: EUC-JP (BOM) (LF)
+./cmn/vbsclass.js: EUC-JP (BOM) (LF)
+./cmn/processing_module_20081222.js: EUC-JP (BOM) (LF)
+./cmn/lngcheck.js: EUC-JP (BOM) (LF)
+./cmn/vbscript.js: EUC-JP (BOM) (LF)
+./cmn/index.html: EUC-JP (BOM) (LF)
+./cmn/layout.css: EUC-JP (BOM) (LF)
+./cmn/functions.js: EUC-JP (BOM) (LF)
+./cmn/styles.css: EUC-JP (BOM) (LF)
+./cmn/processing_module.js: EUC-JP (BOM) (LF)
+./cmn/login.js: EUC-JP (BOM) (LF)
+./cmn/msw.css: ASCII (BOM) (LF)
+./cmn/languages.js: ASCII (BOM) (LF)
+./cmn/masterlib.js: EUC-JP (BOM) (CRLF)
+./cmn/query.js: EUC-JP (BOM) (LF)
+./cmn/getmasterdata.php: EUC-JP (BOM) (LF)
+./cmn/clsSubMenu.js: EUC-JP (BOM) (LF)
+./cmn/price.js: ASCII (BOM) (LF)
+./cmn/master_query.tsv: ASCII (BOM) (CRLF)
+./pc/index.php: EUC-JP (BOM) (LF)
+./pc/finish/invalid_layout.css: EUC-JP (BOM) (LF)
+./pc/finish/remove_layout.css: EUC-JP (BOM) (LF)
+./pc/finish/exstr.js: EUC-JP (BOM) (LF)
+./pc/finish/remove_exstr.js: EUC-JP (BOM) (LF)
+./pc/finish/layout.css: EUC-JP (BOM) (LF)
+./pc/finish/functions.js: ASCII (BOM) (LF)
+./pc/finish/invalid_exstr.js: EUC-JP (BOM) (LF)
+./pc/regist/index.php: EUC-JP (BOM) (LF)
+./pc/regist/renewerrorlayout.css: ASCII (BOM) (LF)
+./pc/regist/renewlayout.css: ASCII (BOM) (LF)
+./pc/regist/exstr.js: EUC-JP (BOM) (LF)
+./pc/regist/index.html: EUC-JP (BOM) (LF)
+./pc/regist/layout.css: ASCII (BOM) (LF)
+./pc/regist/functions.js: ASCII (BOM) (LF)
+./pc/regist/index2.php: EUC-JP (BOM) (CRLF)
+./pc/regist/errorlayout.css: ASCII (BOM) (LF)
+./pc/regist/renew.php: EUC-JP (BOM) (LF)
+./pc/regist/index.php060904: EUC-JP (BOM) (LF)
+./pc/cmn/lib_pcp.php: EUC-JP (BOM) (CRLF)
+./pc/cmn/lib_pcs.php: EUC-JP (BOM) (LF)
+./pc/cmn/lib_pc.php: EUC-JP (BOM) (LF)
+./pc/cmn/lib_pcs1.php: EUC-JP (BOM) (LF)
+./pc/cmn/resultexstr.js: EUC-JP (BOM) (LF)
+./pc/cmn/subloadmastersettings.js: EUC-JP (BOM) (LF)
+./pc/cmn/column.php: EUC-JP (BOM) (LF)
+./pc/exstr.js: EUC-JP (BOM) (LF)
+./pc/index.html: ASCII (BOM) (LF)
+./pc/layout.css: EUC-JP (BOM) (LF)
+./pc/confirm/index.php: EUC-JP (BOM) (CRLF)
+./pc/confirm/exstr.js: EUC-JP (BOM) (LF)
+./pc/confirm/layout.css: EUC-JP (BOM) (LF)
+./pc/search_ifrm/index.php: EUC-JP (BOM) (LF)
+./pc/search_ifrm/exstr.js: EUC-JP (BOM) (LF)
+./pc/search_ifrm/index.html: EUC-JP (BOM) (LF)
+./pc/search_ifrm/layout.css: EUC-JP (BOM) (LF)
+./pc/search_ifrm/functions.js: EUC-JP (BOM) (LF)
+./pc/result/index.php: EUC-JP (BOM) (LF)
+./pc/result/index.html: EUC-JP (BOM) (LF)
+./pc/result/index3.php: EUC-JP (BOM) (LF)
+./pc/result/index2.php: EUC-JP (BOM) (LF)
+./pc/result/index4.php: EUC-JP (BOM) (LF)
+./pc/search/index.php: EUC-JP (BOM) (LF)
+./pc/search/exstr.js: ASCII (BOM) (LF)
+./pc/search/index.html: ASCII (BOM) (LF)
+./pc/search/layout.css: ASCII (BOM) (LF)
+./pc/search/functions.js: ASCII (BOM) (LF)
+./remind/index.php: EUC-JP (BOM) (CRLF)
+./remind/ifrm.html: EUC-JP (BOM) (LF)
+./remind/index.html: EUC-JP (BOM) (LF)
+./remind/layout.css: EUC-JP (BOM) (LF)
+./remind/functions.js: EUC-JP (BOM) (LF)
+./remind/confirm.html: ASCII (BOM) (LF)
+./remind/reminder.php: EUC-JP (BOM) (CRLF)
+./remind/passwdinfo.php: EUC-JP (BOM) (CRLF)
+./postgres/pgpool.php: Shift_JIS (BOM) (LF)
+./dataex/index.php: EUC-JP (BOM) (LF)
+./dataex/select.php: EUC-JP (BOM) (LF)
+./dataex/cmn/xls_stat02.sql: UTF-8 (BOM) (LF)
+./dataex/cmn/lib_dataex.php: UTF-8 (BOM) (LF)
+./dataex/cmn/xls_purchase.sql: UTF-8 (BOM) (LF)
+./dataex/cmn/xls_stat01.sql_backup: UTF-8 (BOM) (LF)
+./dataex/cmn/xls_stat02.sql_bakup: UTF-8 (BOM) (LF)
+./dataex/cmn/order.sql: UTF-8 (BOM) (LF)
+./dataex/cmn/tsv_stock.sql: UTF-8 (BOM) (LF)
+./dataex/cmn/xls_stat01.sql: UTF-8 (BOM) (LF)
+./dataex/cmn/tsv_purchase.sql: UTF-8 (BOM) (LF)
+./dataex/cmn/xls_stock.sql: UTF-8 (BOM) (LF)
+./dataex/cmn/backup/purchase.sql: EUC-JP (BOM) (LF)
+./dataex/cmn/backup/lib_dataex.php: EUC-JP (BOM) (LF)
+./dataex/cmn/backup/stock.sql: EUC-JP (BOM) (LF)
+./dataex/cmn/backup/order.sql: EUC-JP (BOM) (LF)
+./dataex/cmn/backup/sale.sql: EUC-JP (BOM) (LF)
+./dataex/cmn/backup/estimate.sql: EUC-JP (BOM) (LF)
+./dataex/cmn/xls_sales.sql: UTF-8 (BOM) (LF)
+./dataex/cmn/tsv_sales.sql: UTF-8 (BOM) (LF)
+./dataex/cmn/estimate.sql: UTF-8 (BOM) (LF)
+./dataex/exstr.js: EUC-JP (BOM) (LF)
+./dataex/layout.css: ASCII (BOM) (LF)
+./dataex/functions.js: ASCII (BOM) (LF)
+./dataex/select_exstr.js: EUC-JP (BOM) (LF)
+./dataex/result/index.php: UTF-8 (BOM) (LF)
+./dataex/result/stat.html: ASCII (BOM) (LF)
+./dataex/result/index.php060712: EUC-JP (BOM) (LF)
+./dataex/result/spreadsheet_stat01.html_使用してない: UTF-8 (BOM) (LF)
+./dataex/result/js/JSON.php: ASCII (BOM) (LF)
+./dataex/result/spreadsheet.php: UTF-8 (BOM) (LF)
+./dataex/result/index.html: ASCII (BOM) (LF)
+./dataex/result/functions.js: ASCII (BOM) (LF)
+./dataex/result/.htaccess: ASCII (BOM) (LF)
+./dataex/result/index.php060904: EUC-JP (BOM) (LF)
+./dataex/result/spreadsheet/stat01.php: UTF-8 (BOM) (LF)
+./dataex/result/spreadsheet/sales_colmuns.txt: UTF-8 (BOM) (LF)
+./dataex/result/spreadsheet/stock_colmuns.txt: UTF-8 (BOM) (LF)
+./dataex/result/spreadsheet/stat02.php: UTF-8 (BOM) (LF)
+./dataex/result/spreadsheet/stock_dataset.txt: UTF-8 (BOM) (LF)
+./dataex/result/spreadsheet/sales_dataset.txt: UTF-8 (BOM) (LF)
+./dataex/result/spreadsheet/stat02_dataset.txt: UTF-8 (BOM) (LF)
+./dataex/result/spreadsheet/stat01_colmuns.txt: UTF-8 (BOM) (LF)
+./dataex/result/spreadsheet/purchase_dataset.txt: UTF-8 (BOM) (LF)
+./dataex/result/spreadsheet/stock.php: UTF-8 (BOM) (LF)
+./dataex/result/spreadsheet/purchase_colmuns.txt: UTF-8 (BOM) (LF)
+./dataex/result/spreadsheet/stat01_dataset.txt: UTF-8 (BOM) (LF)
+./dataex/result/spreadsheet/purchase.php: UTF-8 (BOM) (LF)
+./dataex/result/spreadsheet/stat02_colmuns.txt: UTF-8 (BOM) (LF)
+./dataex/result/spreadsheet/sales.php: UTF-8 (BOM) (LF)
+./dataex/result/sales.html: ASCII (BOM) (LF)
+./dataex/result/spreadsheet.php_20101004backup: UTF-8 (BOM) (LF)
+./dataex/result/stat.php: UTF-8 (BOM) (LF)
+./dataex/result/sales.php: UTF-8 (BOM) (LF)
+./dataex/result/index.php060308: EUC-JP (BOM) (LF)
+./dataex/result/spreadsheet_preview.html: UTF-8 (BOM) (LF)
+./dataex/search/index.php: EUC-JP (BOM) (LF)
+./dataex/search/sales/exstr.js: EUC-JP (BOM) (LF)
+./dataex/search/sales/layout.css: EUC-JP (BOM) (LF)
+./dataex/search/sales/functions.js: ASCII (BOM) (MIXED NL)
+./dataex/search/estimate/exstr.js: EUC-JP (BOM) (LF)
+./dataex/search/estimate/layout.css: EUC-JP (BOM) (MIXED NL)
+./dataex/search/estimate/functions.js: ASCII (BOM) (MIXED NL)
+./dataex/search/cmn/functions.js: Shift_JIS (BOM) (LF)
+./dataex/search/lc/exstr.js: EUC-JP (BOM) (LF)
+./dataex/search/lc/layout.css: EUC-JP (BOM) (MIXED NL)
+./dataex/search/lc/functions.js: ASCII (BOM) (MIXED NL)
+./dataex/search/stock/exstr.js: EUC-JP (BOM) (LF)
+./dataex/search/stock/layout.css: EUC-JP (BOM) (LF)
+./dataex/search/stock/functions.js: ASCII (BOM) (MIXED NL)
+./dataex/search/index.php100924_backup: EUC-JP (BOM) (LF)
+./dataex/search/purchase/exstr.js: EUC-JP (BOM) (LF)
+./dataex/search/purchase/layout.css: EUC-JP (BOM) (LF)
+./dataex/search/purchase/functions.js: ASCII (BOM) (MIXED NL)
+./dataex/search/stat02/exstr.js: EUC-JP (BOM) (LF)
+./dataex/search/stat02/layout.css: EUC-JP (BOM) (MIXED NL)
+./dataex/search/stat02/functions.js: ASCII (BOM) (MIXED NL)
+./dataex/search/stat01/exstr.js: EUC-JP (BOM) (LF)
+./dataex/search/stat01/layout.css: EUC-JP (BOM) (MIXED NL)
+./dataex/search/stat01/functions.js: ASCII (BOM) (MIXED NL)
+./special/index.php: EUC-JP (BOM) (LF)
+./special/index.html: EUC-JP (BOM) (LF)
+./special/layout.css: ASCII (BOM) (LF)
+./special/functions.js: EUC-JP (BOM) (LF)
+./test.txt: Shift_JIS (BOM) (LF)
+./index.html: EUC-JP (BOM) (LF)
+./error/index.php: EUC-JP (BOM) (CRLF)
+./error/exstr.js: EUC-JP (BOM) (LF)
+./error/lupin.wav: BINARY
+./error/layout.css: EUC-JP (BOM) (LF)
+./error/lupin_org.wav: BINARY
+./error/env_layout.css: EUC-JP (BOM) (LF)
+./error/error.html: ASCII (BOM) (LF)
+./error/chimes.wav: BINARY
+./error/confirm.html: ASCII (BOM) (LF)
+./error/use/exstr.js: EUC-JP (BOM) (LF)
+./error/use/layout.css: EUC-JP (BOM) (LF)
+./error/env.html: EUC-JP (BOM) (LF)
+./error/dummy.aif: BINARY
+./navi/index.php: EUC-JP (BOM) (LF)
+./navi/sysc/email/exstr.js: EUC-JP (BOM) (LF)
+./navi/sysc/email/index.html: ASCII (BOM) (LF)
+./navi/sysc/server/exstr.js: EUC-JP (BOM) (LF)
+./navi/sysc/server/index.html: ASCII (BOM) (LF)
+./navi/sysc/cmn/layout.css: ASCII (BOM) (LF)
+./navi/sysc/session/exstr.js: EUC-JP (BOM) (LF)
+./navi/sysc/session/index.html: ASCII (BOM) (LF)
+./navi/sysc/message/exstr.js: EUC-JP (BOM) (LF)
+./navi/sysc/message/index.html: ASCII (BOM) (LF)
+./navi/cmn/exstr.js: EUC-JP (BOM) (LF)
+./navi/cmn/layout.css: Shift_JIS (BOM) (LF)
+./navi/uc/layout.css: ASCII (BOM) (LF)
+./navi/__old__index.php: EUC-JP (BOM) (LF)
+./.htaccess: ASCII (BOM) (CRLF)
+./face/index.php: ASCII (BOM) (LF)
+./face/5759d9ff2a54eeab381f9cf6062800e8.gif: BINARY
+./face/6c4b761a28b734fe93831e3fb400ce87.pjpeg: BINARY
+./face/61894b21be75260c4964065b1eecec4d.gif: BINARY
+./face/fa7cdfad1a5aaf8370ebeda47a1ff1c3.pjpeg: BINARY
+./face/f2217062e9a397a1dca429e7d70bc6ca.pjpeg: BINARY
+./face/892c91e0a653ba19df81a90f89d99bcd.pjpeg: BINARY
+./face/5233c744940ae41353be955e10794e2b.gif: BINARY
+./face/1d7f7abc18fcb43975065399b0d1e48e.pjpeg: BINARY
+./face/69adc1e107f7f7d035d7baf04342e1ca.pjpeg: BINARY
+./face/default.gif: BINARY
+./face/757b505cfd34c64c85ca5b5690ee5293.pjpeg: BINARY
+./face/63dc7ed1010d3c3b8269faf0ba7491d4.pjpeg: BINARY
+./face/aa5711b55574547f64e4af43932e8bc9.gif: BINARY
+./face/65ded5353c5ee48d0b7d48c591b8f430.pjpeg: BINARY
+./face/818efa808283fddc1d5e21224aca1308.gif: BINARY
+./face/3b8a614226a953a8cd9526fca6fe9ba5.pjpeg: BINARY
+./face/9766527f2b5d3e95d4a733fcfb77bd7e.pjpeg: BINARY
+./face/5ef059938ba799aaa845e1c2e8a762bd.pjpeg: BINARY
+./face/7ef605fc8dba5425d6965fbd4c8fbe1f.pjpeg: BINARY
+./face/3636638817772e42b59d74cff571fbb3.pjpeg: BINARY
+./face/3636638817772e42b59d74cff571fbb3.gif: BINARY
+./face/5ef059938ba799aaa845e1c2e8a762bd.gif: BINARY
+./p/index.php: EUC-JP (BOM) (LF)
+./p/finish/remove_layout.css: EUC-JP (BOM) (LF)
+./p/finish/exstr.js: EUC-JP (BOM) (LF)
+./p/finish/remove_exstr.js: EUC-JP (BOM) (LF)
+./p/finish/layout.css: EUC-JP (BOM) (LF)
+./p/finish/functions.js: ASCII (BOM) (LF)
+./p/regist/index.php: EUC-JP (BOM) (LF)
+./p/regist/renewerrorlayout.css: ASCII (BOM) (LF)
+./p/regist/renewlayout.css: EUC-JP (BOM) (LF)
+./p/regist/renew3.php: EUC-JP (BOM) (LF)
+./p/regist/exstr.js: EUC-JP (BOM) (LF)
+./p/regist/layout.css: EUC-JP (BOM) (LF)
+./p/regist/functions.js: EUC-JP (BOM) (LF)
+./p/regist/index3.php: EUC-JP (BOM) (LF)
+./p/regist/errorlayout.css: ASCII (BOM) (LF)
+./p/regist/renew.php: EUC-JP (BOM) (LF)
+./p/regist/conf.php: EUC-JP (BOM) (LF)
+./p/regist/index3.php060315: EUC-JP (BOM) (LF)
+./p/regist/renew3.php060215: EUC-JP (BOM) (LF)
+./p/confirm_ifrm/index.php: EUC-JP (BOM) (LF)
+./p/confirm_ifrm/base.tmpl: EUC-JP (BOM) (LF)
+./p/confirm_ifrm/exstr.js: EUC-JP (BOM) (LF)
+./p/confirm_ifrm/layout.css: EUC-JP (BOM) (LF)
+./p/cmn/lib_ps1.php: EUC-JP (BOM) (LF)
+./p/cmn/lib_p.php: EUC-JP (BOM) (LF)
+./p/cmn/lib_ps.php: EUC-JP (BOM) (LF)
+./p/cmn/lib_p3.php: EUC-JP (BOM) (LF)
+./p/cmn/lib_p2.php: EUC-JP (BOM) (LF)
+./p/cmn/resultexstr.js: EUC-JP (BOM) (LF)
+./p/cmn/productequalcheck.js: EUC-JP (BOM) (LF)
+./p/cmn/column.php: EUC-JP (BOM) (LF)
+./p/exstr.js: EUC-JP (BOM) (LF)
+./p/layout.css: EUC-JP (BOM) (LF)
+./p/confirm/index.php: EUC-JP (BOM) (LF)
+./p/confirm/exstr.js: EUC-JP (BOM) (LF)
+./p/confirm/layout.css: EUC-JP (BOM) (LF)
+./p/confirm/functions.js: ASCII (BOM) (LF)
+./p/search_ifrm/index.php: EUC-JP (BOM) (LF)
+./p/search_ifrm/_body.html_: ASCII (BOM) (LF)
+./p/search_ifrm/exstr.js: EUC-JP (BOM) (LF)
+./p/search_ifrm/tmpl.php: EUC-JP (BOM) (CRLF)
+./p/search_ifrm/parts.tmpl: EUC-JP (BOM) (LF)
+./p/search_ifrm/layout.css: EUC-JP (BOM) (LF)
+./p/search_ifrm/functions.js: ASCII (BOM) (MIXED NL)
+./p/search_ifrm/body.html: ASCII (BOM) (LF)
+./p/search_ifrm/_parts.tmpl_: EUC-JP (BOM) (LF)
+./p/search_ifrm/_tmpl.php_: EUC-JP (BOM) (CRLF)
+./p/bat/monthbat.php: EUC-JP (BOM) (LF)
+./p/edit/image_tmp/50908439a2c9b/php60uqsx.jpg: BINARY
+./p/edit/image_tmp/4fc3186361339/phpN9b2Hq.jpg: BINARY
+./p/edit/image_tmp/47709a6fd807b/phpzy7tL3.jpg: BINARY
+./p/edit/image_tmp/4e03e83846c73/phpCrDHRi.jpg: BINARY
+./p/edit/image_tmp/4e03e83846c73/php0rs9AZ.jpg: BINARY
+./p/edit/image_tmp/4bf232ba45010/phpNG3BXd.jpg: BINARY
+./p/edit/image_tmp/4701e2009c298/phpPggU8Z.jpg: BINARY
+./p/edit/image_tmp/4701e2009c298/phpdj4wsr.jpg: BINARY
+./p/edit/image_tmp/47f2d9e25aca9/phpMEP7yy.jpg: BINARY
+./p/edit/image_tmp/50d934ddb1483/phpvrAwtM.tif: BINARY
+./p/edit/image_tmp/50d934ddb1483/phpclODwX.tif: BINARY
+./p/edit/image_tmp/50d934ddb1483/phphsN9wy.tif: BINARY
+./p/edit/image_tmp/50d934ddb1483/phpqZHVTK.jpg: BINARY
+./p/edit/image_tmp/4615f48cb06cb/phpRwg1yr.jpg: BINARY
+./p/edit/image_tmp/508a405135a0a/phpv7Clbk.jpg: BINARY
+./p/edit/image_tmp/50b598b683bd3/phpHvyX0b.jpg: BINARY
+./p/edit/image_tmp/50b598b683bd3/phplk7Msk.jpg: BINARY
+./p/edit/image_tmp/50b598b683bd3/phpwdQw85.jpg: BINARY
+./p/edit/image_tmp/50b598b683bd3/phpROXsn1.jpg: BINARY
+./p/edit/image_tmp/50b598b683bd3/phphBkd4q.tif: BINARY
+./p/edit/image_tmp/50b598b683bd3/phpZgIXM2.tif: BINARY
+./p/edit/image_tmp/50b598b683bd3/phprWu2xt.jpg: BINARY
+./p/edit/image_tmp/50b598b683bd3/phpTL3jfy.tif: BINARY
+./p/edit/image_tmp/4f25ebb6104c0/phpa7Yp3O.jpg: BINARY
+./p/edit/image_tmp/470d91c54f22e/phprdnIwK.jpg: BINARY
+./p/edit/image_tmp/4908255fa3b06/phpF1Ecrn.gif: BINARY
+./p/edit/image_tmp/4eb79d64996ef/phpgzYWDS.jpg: BINARY
+./p/edit/image_tmp/4eb79d64996ef/phpeCftMy.jpg: BINARY
+./p/edit/image_tmp/4ef95887cd021/phpVffvSa.jpg: BINARY
+./p/edit/image_tmp/4716ed213f973/phpizjnMm.jpg: BINARY
+./p/edit/image_tmp/4bc55bf6dfa8b/phpQFqL0Q.jpg: BINARY
+./p/edit/image_tmp/4bc55bf6dfa8b/phpmAFVmc.jpg: BINARY
+./p/edit/image_tmp/505aa7504f89b/php2tOKnj.jpg: BINARY
+./p/edit/image_tmp/505aa7504f89b/phpF7nNTX.jpg: BINARY
+./p/edit/image_tmp/505aa7504f89b/phpFAjDlo.jpg: BINARY
+./p/edit/image_tmp/505aa7504f89b/phpCGd4XS.jpg: BINARY
+./p/edit/image_tmp/505aa7504f89b/phpbuR0gY.jpg: BINARY
+./p/edit/image_tmp/4b710370c0cfe/phpaDUX6o.jpg: BINARY
+./p/edit/image_tmp/4b710370c0cfe/php8z46ng.jpg: BINARY
+./p/edit/image_tmp/492275f18838d/php9j8cmN.gif: BINARY
+./p/edit/image_tmp/5057dfab8cef5/phpTUIgO1.jpg: BINARY
+./p/edit/image_tmp/4db0df6d4ba8e/php64waMe.jpg: BINARY
+./p/edit/image_tmp/4db0df6d4ba8e/phpO0tV7M.jpg: BINARY
+./p/edit/image_tmp/47f2d7d6b283f/phprXkUNF.jpg: BINARY
+./p/edit/image_tmp/47f2d7d6b283f/phpyCTqCN.jpg: BINARY
+./p/edit/image_tmp/4afa500e8b61a/phpUqvXAN.jpg: BINARY
+./p/edit/image_tmp/4fed148498d00/phplRCwdf.tif: BINARY
+./p/edit/image_tmp/4fed148498d00/php499sFr.tif: BINARY
+./p/edit/image_tmp/4fed148498d00/phpKTeBaK.tif: BINARY
+./p/edit/image_tmp/4f82a1f1b4dad/phpHHpDpb.jpg: BINARY
+./p/edit/image_tmp/4b58e105361ca/phpfWBPom.jpg: BINARY
+./p/edit/image_tmp/4f62fca1ee858/phpUUMUsk.jpg: BINARY
+./p/edit/image_tmp/50b5d20596339/phpF2vQmi.jpg: BINARY
+./p/edit/image_tmp/46ca66a348c18/phpZIlsgq.jpg: BINARY
+./p/edit/image_tmp/46ca66a348c18/php9DhVIS.jpg: BINARY
+./p/edit/image_tmp/4c4e6f4a03af3/phpDJjMfT.jpg: BINARY
+./p/edit/image_tmp/4907ef485917a/phpFAUogi.gif: BINARY
+./p/edit/image_tmp/4907ef485917a/phpdXuvrB.tif: BINARY
+./p/edit/image_tmp/4cbce592815f9/phpsq7O83.jpg: BINARY
+./p/edit/image_tmp/4e9f8546ea31d/phpnMfNRE.jpg: BINARY
+./p/edit/image_tmp/4850f366051ac/phpGHYGiL.jpg: BINARY
+./p/edit/image_tmp/4850f366051ac/php1pD5NL.jpg: BINARY
+./p/edit/image_tmp/4850f366051ac/phplJSVxF.jpg: BINARY
+./p/edit/image_tmp/4850f366051ac/phpfQDLbq.jpg: BINARY
+./p/edit/image_tmp/4850f366051ac/phpTmUEdk.jpg: BINARY
+./p/edit/image_tmp/4850f366051ac/phpLTG4qQ.jpg: BINARY
+./p/edit/image_tmp/49dd7d924c4a2/phpbn74Go.jpg: BINARY
+./p/edit/image_tmp/49dd7d924c4a2/phphemNt0.jpg: BINARY
+./p/edit/image_tmp/510946300a0d7/phpJMVb6s.jpg: BINARY
+./p/edit/image_tmp/49dd7c5c3456e/phpwvuns1.jpg: BINARY
+./p/edit/image_tmp/50b5d153bbcbf/phpHZLOEE.jpg: BINARY
+./p/edit/image_tmp/47f2dd0604ab7/phpuAwG2u.jpg: BINARY
+./p/edit/image_tmp/4eeef011a5101/php2Fydr6.jpg: BINARY
+./p/edit/image_tmp/491a66c6e066c/phpIJ2qPU.jpg: BINARY
+./p/edit/image_tmp/48d6e5fe26285/php3F0qbN.jpg: BINARY
+./p/edit/image_tmp/5114b3b19d2a2/phpIMz3zm.jpg: BINARY
+./p/edit/image_tmp/49753d42708e4/phpzMbqSQ.jpg: BINARY
+./p/edit/image_tmp/47f2da93441d8/phpoO7I5U.jpg: BINARY
+./p/edit/image_tmp/49a35aaf50ef5/phppx609u.jpg: BINARY
+./p/edit/image_tmp/4c58c65a5d671/phpb70ibo.jpg: BINARY
+./p/edit/image_tmp/4c58c65a5d671/php0CY9So.jpg: BINARY
+./p/edit/image_tmp/476750be2fc01/phpRNvXB5.jpg: BINARY
+./p/edit/image_tmp/500cbcb26a4af/phpAPsyhf.jpg: BINARY
+./p/edit/image_tmp/4ca918bf1cee9/phpxcGAlz.jpg: BINARY
+./p/edit/image_tmp/4ca918bf1cee9/phpVEHEAE.jpg: BINARY
+./p/edit/image_tmp/47eaf92b488d2/php7Ijz0a.jpg: BINARY
+./p/edit/image_tmp/47d646ce886d3/phpVDLtQf.jpg: BINARY
+./p/edit/image_tmp/47d646ce886d3/phpodMk9q.jpg: BINARY
+./p/edit/image_tmp/47d646ce886d3/phprD691R.jpg: BINARY
+./p/edit/image_tmp/47d646ce886d3/phpGO1ObM.jpg: BINARY
+./p/edit/image_tmp/49bf3232d1f8e/phpr2c2MN.jpg: BINARY
+./p/edit/image_tmp/49bf3232d1f8e/phpv63w1A.jpg: BINARY
+./p/edit/image_tmp/49bf3232d1f8e/phpGM6yYn.jpg: BINARY
+./p/edit/image_tmp/49bf3232d1f8e/phpVqtxLb.jpg: BINARY
+./p/edit/image_tmp/49bf3232d1f8e/phpjBJrOE.jpg: BINARY
+./p/edit/image_tmp/457e0693ad53c/phpQHCwoN.jpg: BINARY
+./p/edit/image_tmp/489ab3cce7779/phppEq3YY.jpg: BINARY
+./p/edit/image_tmp/489ab3cce7779/phpAaIcz3.jpg: BINARY
+./p/edit/image_tmp/5018b418a0f54/php6aS0hR.jpg: BINARY
+./p/edit/image_tmp/488d20f8ebc9b/phpZDh91y.jpg: BINARY
+./p/edit/image_tmp/488d20f8ebc9b/php98qqi4.jpg: BINARY
+./p/edit/image_tmp/50b5d2e8dff95/phpj96YD6.jpg: BINARY
+./p/edit/image_tmp/48a11c8f18fcf/phpIvhSIW.jpg: BINARY
+./p/edit/image_tmp/4f3898a4ea792/phpcgaAvG.jpg: BINARY
+./p/edit/image_tmp/4528be37574a8/phpFnf1Qb.jpg: BINARY
+./p/edit/image_tmp/50d938f927c86/phpBZMmrv.tif: BINARY
+./p/edit/image_tmp/50d938f927c86/php3RrEKL.tif: BINARY
+./p/edit/image_tmp/50d938f927c86/phpLM8Lxj.tif: BINARY
+./p/edit/image_tmp/5111e453ee51c/phpI2KWwz.jpg: BINARY
+./p/edit/image_tmp/5022420fc917e/phpHiIVIu.jpg: BINARY
+./p/edit/image_tmp/503ecdd2547d2/phpYuaJ8x.jpg: BINARY
+./p/edit/image_tmp/4f6bdca2b19b8/phpMrohix.jpg: BINARY
+./p/edit/image_tmp/4694584a30eee/phpvWJ2Ud.jpg: BINARY
+./p/edit/image_tmp/4cd78211d3160/phpmXrfAt.jpg: BINARY
+./p/edit/image_tmp/49d055a43aefa/php536mWr.jpg: BINARY
+./p/edit/image_tmp/49d055a43aefa/phpdthORe.jpg: BINARY
+./p/edit/image_tmp/4fe809b80aa46/phpuJAeiI.jpg: BINARY
+./p/edit/image_tmp/4fe809b80aa46/phpVOaUtc.jpg: BINARY
+./p/edit/image_tmp/4fe809b80aa46/phphCQPxR.jpg: BINARY
+./p/edit/image_tmp/4c5b7e793965a/phpCOcZ07.jpg: BINARY
+./p/edit/image_tmp/4c5b7e793965a/phpsnh80B.jpg: BINARY
+./p/edit/image_tmp/50b5d076145ab/php2a0qKM.jpg: BINARY
+./p/edit/image_tmp/4b4fc70fad9b5/phpKvWsXB.jpg: BINARY
+./p/edit/image_tmp/4b4fc70fad9b5/phpjjLUsC.tif: BINARY
+./p/edit/image_tmp/4b4fc70fad9b5/phpqWRtve.jpg: BINARY
+./p/edit/image_tmp/49226c3b19bbd/phpaeJg8A.jpg: BINARY
+./p/edit/image_tmp/50ed340173d05/phpqh7q8c.jpg: BINARY
+./p/edit/image_tmp/4cfd8660dfef1/phpcFohzV.jpg: BINARY
+./p/edit/image_tmp/470b189574ab9/phpNVqr2l.jpg: BINARY
+./p/edit/image_tmp/4892639be8e91/phpiqIH6J.jpg: BINARY
+./p/edit/image_tmp/4f7e74c8b3db8/phpL8taEh.jpg: BINARY
+./p/edit/image_tmp/4f7e74c8b3db8/php4Ey8Bj.jpg: BINARY
+./p/edit/image_tmp/4f7e74c8b3db8/phpLLdaBU.jpg: BINARY
+./p/edit/image_tmp/4c11ec002773a/php4Yi88N.jpg: BINARY
+./p/edit/image_tmp/4c11ec002773a/php1GYjrm.jpg: BINARY
+./p/edit/image_tmp/47745e197ebeb/phpJwv8A3.jpg: BINARY
+./p/edit/image_tmp/47745e197ebeb/phpG4uqni.jpg: BINARY
+./p/edit/image_tmp/47745e197ebeb/phpAW2X8C.jpg: BINARY
+./p/edit/image_tmp/47745e197ebeb/phpvwcrb5.jpg: BINARY
+./p/edit/image_tmp/47745e197ebeb/phpytplIm.jpg: BINARY
+./p/edit/image_tmp/47745e197ebeb/phpPVvY6B.jpg: BINARY
+./p/edit/image_tmp/47745e197ebeb/phpSehKZM.jpg: BINARY
+./p/edit/image_tmp/457e1c8c3b140/phpMzGbZh.jpg: BINARY
+./p/edit/image_tmp/4cca875116698/phpiCp1G3.jpg: BINARY
+./p/edit/image_tmp/4c3191272442e/php3usMLi.jpg: BINARY
+./p/edit/image_tmp/4c2db0b34e4aa/phpjvr9PK.jpg: BINARY
+./p/edit/image_tmp/46ca4f1a74156/php1oMvvv.jpg: BINARY
+./p/edit/image_tmp/46ca4f1a74156/phpCPAd5K.jpg: BINARY
+./p/edit/image_tmp/46ca4f1a74156/phpUXOwJM.jpg: BINARY
+./p/edit/image_tmp/46ca4f1a74156/phpvb4LYF.jpg: BINARY
+./p/edit/image_tmp/5018e15341298/php1OX4Xz.jpg: BINARY
+./p/edit/image_tmp/4e03e75a75f93/phpPiPZPp.jpg: BINARY
+./p/edit/image_tmp/4e03e75a75f93/php73OjUn.jpg: BINARY
+./p/edit/image_tmp/4e83f63f1cb15/phpBrBpV2.jpg: BINARY
+./p/edit/image_tmp/4f9654b72add2/php0yKcrY.jpg: BINARY
+./p/edit/image_tmp/4f9654b72add2/phprxBn5R.jpg: BINARY
+./p/edit/image_tmp/4eb79f04168c2/phpQzORbU.jpg: BINARY
+./p/edit/image_tmp/4eb79f04168c2/phpUVDRhG.jpg: BINARY
+./p/edit/image_tmp/47625908ed436/phpSBzPsy.jpg: BINARY
+./p/edit/image_tmp/47625908ed436/phpcyT3bs.tif: BINARY
+./p/edit/image_tmp/47625908ed436/phpwdmeSs.jpg: BINARY
+./p/edit/image_tmp/51131947a1c54/phpec5LnG.jpg: BINARY
+./p/edit/image_tmp/481031d7a8344/phpgGrhzz.jpg: BINARY
+./p/edit/image_tmp/500cbbd39c1b3/php9dbmAF.jpg: BINARY
+./p/edit/image_tmp/47d639152b079/phpMY8s81.jpg: BINARY
+./p/edit/image_tmp/500e392a40948/phptphq1H.jpg: BINARY
+./p/edit/image_tmp/500e392a40948/phpOYsIuX.jpg: BINARY
+./p/edit/image_tmp/46666975baf2a/php6brkCm.jpg: BINARY
+./p/edit/image_tmp/46666975baf2a/phpXVllIG.jpg: BINARY
+./p/edit/image_tmp/46666975baf2a/phpkMm0As.jpg: BINARY
+./p/edit/image_tmp/468bb23bf2f8e/phplgJW1h.jpg: BINARY
+./p/edit/image_tmp/468bb23bf2f8e/phpPOtPzG.jpg: BINARY
+./p/edit/image_tmp/4fffb52b38163/phpZLFBi4.jpg: BINARY
+./p/edit/image_tmp/49e306079f08e/phpRymCwQ.jpg: BINARY
+./p/edit/image_tmp/4b21fd7baaf82/phpmM80wv.jpg: BINARY
+./p/edit/image_tmp/4b21fd7baaf82/phpC8pCIV.jpg: BINARY
+./p/edit/image_tmp/4de5a3c478767/php9cNQDk.jpg: BINARY
+./p/edit/image_tmp/4bed27bac86fe/phpV7Zk8G.jpg: BINARY
+./p/edit/image_tmp/4b035151d0b0b/phpFpQenJ.jpg: BINARY
+./p/edit/image_tmp/5114889477dad/phpwwjnic.jpg: BINARY
+./p/edit/image_tmp/5113290b15ea8/phpvQyFYB.jpg: BINARY
+./p/edit/image_tmp/4f4d78278bbd9/phpAjxzlO.jpg: BINARY
+./p/edit/image_tmp/4f4d78278bbd9/phpuMhWdB.jpg: BINARY
+./p/edit/image_tmp/45908e1f6d50d/phpqDXPKc.jpg: BINARY
+./p/edit/image_tmp/4c1b271e48451/phpUd9ast.jpg: BINARY
+./p/edit/image_tmp/4770a5ee0748e/phpKZ1KlB.jpg: BINARY
+./p/edit/image_tmp/4770a5ee0748e/phpwHIHWb.jpg: BINARY
+./p/edit/image_tmp/4c75f72fcf643/phpT6i3BW.jpg: BINARY
+./p/edit/image_tmp/4a120d37b2cd2/php9gNYMp.jpg: BINARY
+./p/edit/image_tmp/4fe3c12f48e89/phppyUfqY.jpg: BINARY
+./p/edit/image_tmp/4e3a516a07511/phpdz6rcM.jpg: BINARY
+./p/edit/image_tmp/452d90deb440d/php3rCuwK.jpg: BINARY
+./p/edit/image_tmp/452d90deb440d/phpkahD8e.jpg: BINARY
+./p/edit/image_tmp/452d90deb440d/phpfJFj6X.jpg: BINARY
+./p/edit/image_tmp/49dd7f6a0f76a/php2q23FW.jpg: BINARY
+./p/edit/image_tmp/5121c3d8ee0c9/phpAmOl4T.jpg: BINARY
+./p/edit/image_tmp/5121c3d8ee0c9/phpkhJHrC.jpg: BINARY
+./p/edit/image_tmp/5121c3d8ee0c9/phprlVfei.jpg: BINARY
+./p/edit/image_tmp/5121c3d8ee0c9/phpU7lAG8.jpg: BINARY
+./p/edit/image_tmp/50650b99ee4ff/phpXHv2Cm.jpg: BINARY
+./p/edit/image_tmp/506a91f539ff6/phpnnrjld.jpg: BINARY
+./p/edit/image_tmp/50373705d5697/php2M1ya4.jpg: BINARY
+./p/edit/image_tmp/4785b7a890480/phpq1OA7p.jpg: BINARY
+./p/edit/image_tmp/4bb5928362e3e/phpxwihvN.jpg: BINARY
+./p/edit/image_tmp/4f6bde40ebb66/phpC2aR4I.jpg: BINARY
+./p/edit/image_tmp/4bf0fc78770df/phpdOBqzZ.jpg: BINARY
+./p/edit/image_tmp/4860a56a9ac65/php188x2J.jpg: BINARY
+./p/edit/image_tmp/4a160be6dd5e8/php5wxIqu.jpg: BINARY
+./p/edit/image_tmp/45ff6a0bc175a/php1ND5Vy.jpg: BINARY
+./p/edit/image_tmp/4c05d3e8604c3/php9qnD4U.jpg: BINARY
+./p/edit/image_tmp/47675198d6101/phpqtx57o.jpg: BINARY
+./p/edit/image_tmp/4e268343aa893/phpvSTR3C.jpg: BINARY
+./p/edit/image_tmp/4f8f6f9181963/phpXp4jW8.jpg: BINARY
+./p/edit/image_tmp/500cddbfc888c/phpgkCcQx.jpg: BINARY
+./p/edit/image_tmp/4bb941c8ab897/phpm7P5gj.jpg: BINARY
+./p/edit/image_tmp/4e3b48b57b8d0/phpSbZgBi.jpg: BINARY
+./p/edit/image_tmp/4ee5aea1d6b36/php4vT21o.jpg: BINARY
+./p/edit/image_tmp/4785b46f201e2/phpsrPW6l.jpg: BINARY
+./p/edit/image_tmp/4785b46f201e2/phpKjxGw1.jpg: BINARY
+./p/edit/image_tmp/4e13a80d303b6/phpsGDPlm.jpg: BINARY
+./p/edit/image_tmp/4e13a80d303b6/phpRGbzS9.jpg: BINARY
+./p/edit/image_tmp/50b5cf1abf02e/phpVOuFtz.jpg: BINARY
+./p/edit/image_tmp/4c62452d004d9/phpfh2GdN.jpg: BINARY
+./p/edit/image_tmp/4c62452d004d9/php4tXqYP.jpg: BINARY
+./p/edit/image_tmp/4faa21aee002c/php8PqY5e.jpg: BINARY
+./p/edit/image_tmp/4716eca74b5ea/php1e6Nhc.jpg: BINARY
+./p/edit/image_tmp/4fed12b2bcf57/phpUrYNP7.jpg: BINARY
+./p/edit/image_tmp/4fed12b2bcf57/phpHnfbFn.tif: BINARY
+./p/edit/image_tmp/4fed12b2bcf57/phpgXmPo9.tif: BINARY
+./p/edit/image_tmp/4fed12b2bcf57/phpB82GFo.tif: BINARY
+./p/edit/image_tmp/4bb93724ca455/phpdi1OyB.tif: BINARY
+./p/edit/image_tmp/4bb93724ca455/phpkzeJGE.jpg: BINARY
+./p/edit/image_tmp/4d92d3557240f/phpvlZYR0.jpg: BINARY
+./p/edit/image_tmp/4be374458a0bc/phpDCDmo9.jpg: BINARY
+./p/edit/image_tmp/50c005e929e07/php35gSnc.jpg: BINARY
+./p/edit/image_tmp/4acaf432279b2/php0BUmrV.jpg: BINARY
+./p/edit/image_tmp/5114acbf12118/phpuzPhGZ.jpg: BINARY
+./p/edit/image_tmp/5114acbf12118/phpPsBtd7.jpg: BINARY
+./p/edit/image_tmp/5114acbf12118/phpVBI85q.jpg: BINARY
+./p/edit/image_tmp/5114acbf12118/phpK9oXU6.jpg: BINARY
+./p/edit/image_tmp/49f656e835e30/phpQCcala.jpg: BINARY
+./p/edit/image_tmp/5036ebb9992e9/php1iqkLl.jpg: BINARY
+./p/edit/image_tmp/4f2244fdd0d06/php8qF3a8.jpg: BINARY
+./p/edit/image_tmp/4a4dba18ee4ba/phpzmHWjO.jpg: BINARY
+./p/edit/image_tmp/4aa70249f01ef/phpLzZ9Hs.jpg: BINARY
+./p/edit/image_tmp/4d0f1fbc695ab/phpvDaA4U.jpg: BINARY
+./p/edit/image_tmp/508a18d94fffe/phpUZ85XQ.jpg: BINARY
+./p/edit/image_tmp/47fadcb663aee/phpqBkJCy.jpg: BINARY
+./p/edit/image_tmp/47fadcb663aee/php2klCn0.jpg: BINARY
+./p/edit/image_tmp/47f2dd53c0086/phpYVIo5N.jpg: BINARY
+./p/edit/image_tmp/50f6501273bd2/phpeAWc4W.jpg: BINARY
+./p/edit/image_tmp/50f6501273bd2/phpnjkRkp.jpg: BINARY
+./p/edit/image_tmp/48abeed7f313e/phprZgVSP.jpg: BINARY
+./p/edit/image_tmp/47d6553e57144/phpfdlTAB.jpg: BINARY
+./p/edit/image_tmp/47d6553e57144/phpCClQXj.jpg: BINARY
+./p/edit/image_tmp/4fffac110d0f6/php4a6VHW.jpg: BINARY
+./p/edit/image_tmp/4fd15a0305579/phpzoeZFu.jpg: BINARY
+./p/edit/image_tmp/500cbde57d4fa/phpRQi94a.jpg: BINARY
+./p/edit/image_tmp/4897a80f8f897/php7bnNkt.jpg: BINARY
+./p/edit/image_tmp/45289f1b9f40a/phpQt6a5s.jpg: BINARY
+./p/edit/image_tmp/49f657cf40813/phpcqgjIT.jpg: BINARY
+./p/edit/image_tmp/4cd787e8d9659/php53102L.jpg: BINARY
+./p/edit/image_tmp/48a116e98160d/phpnnZMwd.jpg: BINARY
+./p/edit/image_tmp/4cad59c474063/phpvEyiUz.jpg: BINARY
+./p/edit/image_tmp/5064fbe74a094/phpsLLND8.jpg: BINARY
+./p/edit/image_tmp/4c5b5d5eca3a7/phpX4IDSK.jpg: BINARY
+./p/edit/image_tmp/4fb9a296636f4/phpPPPSGe.jpg: BINARY
+./p/edit/image_tmp/4c98323a6023f/phpIpJBY0.jpg: BINARY
+./p/edit/image_tmp/49253b53a3d80/phpfEeA1j.jpg: BINARY
+./p/edit/image_tmp/4be372ef5ef62/phpH7CWE4.jpg: BINARY
+./p/edit/image_tmp/4c293ed94dbc9/phpHUWFkd.jpg: BINARY
+./p/edit/image_tmp/4c293ed94dbc9/phppQjNi0.jpg: BINARY
+./p/edit/image_tmp/4c293ed94dbc9/php0ZxZ3q.jpg: BINARY
+./p/edit/image_tmp/49e41f785cb7c/phpmtI7q7.jpg: BINARY
+./p/edit/image_tmp/4fcd987d79eef/phpD1JD5e.jpg: BINARY
+./p/edit/image_tmp/4a7932e1e2bbf/phpRuv8L6.jpg: BINARY
+./p/edit/image_tmp/50ebe9bbef1cf/php1naoqR.jpg: BINARY
+./p/edit/image_tmp/50ebe9bbef1cf/phpLZxhgo.jpg: BINARY
+./p/edit/image_tmp/5020628dcca7c/php3Wfjb4.jpg: BINARY
+./p/edit/image_tmp/5020628dcca7c/php4ycPhn.jpg: BINARY
+./p/edit/image_tmp/4fbd8d83d2c22/phpTLGVxQ.jpg: BINARY
+./p/edit/image_tmp/4fd7f290c84b4/phpgQqfNb.jpg: BINARY
+./p/edit/image_tmp/457e0e3d61651/phpWPCLEY.jpg: BINARY
+./p/edit/image_tmp/538ebc387cf34/phpzfZ4gi.jpg: BINARY
+./p/edit/image_tmp/4e9f7e754e5e9/phpbLvS78.jpg: BINARY
+./p/edit/image_tmp/4ac98a4d712b1/phpnePLLj.jpg: BINARY
+./p/edit/image_tmp/4ac98a4d712b1/phponNJ3G.jpg: BINARY
+./p/edit/image_tmp/50b5c77cbf9c1/php1csLpk.jpg: BINARY
+./p/edit/image_tmp/49755dd3bbbc8/phphHiBBc.jpg: BINARY
+./p/edit/image_tmp/46cace3e2b167/phprXbTSO.jpg: BINARY
+./p/edit/image_tmp/4e26822e2befd/phpO8Ovkq.jpg: BINARY
+./p/edit/image_tmp/4d782c5ed6280/phpKzDe6u.jpg: BINARY
+./p/edit/image_tmp/4716a55fce894/phpvolYuA.jpg: BINARY
+./p/edit/image_tmp/4716a55fce894/phpFmPaE2.jpg: BINARY
+./p/edit/image_tmp/452b0ab4b4e4d/phplC7UiD.jpg: BINARY
+./p/edit/image_tmp/452b0ab4b4e4d/phpfB8di8.jpg: BINARY
+./p/edit/image_tmp/452b0ab4b4e4d/phpzQK8qZ.jpg: BINARY
+./p/edit/image_tmp/452b0ab4b4e4d/phpcDsoRN.jpg: BINARY
+./p/edit/image_tmp/50234faf7b171/phpTsq7tM.jpg: BINARY
+./p/edit/image_tmp/452aed0c3e6e8/phpnV3VNg.jpg: ASCII (BOM)
+./p/edit/image_tmp/452aed0c3e6e8/phpikHqo4.gif: BINARY
+./p/edit/image_tmp/4f25ea6ae2590/php4C7yVj.jpg: BINARY
+./p/edit/image_tmp/4f25ea6ae2590/phpsw0In2.jpg: BINARY
+./p/edit/image_tmp/4f25ea6ae2590/phpfalCTZ.jpg: BINARY
+./p/edit/image_tmp/4f25ea6ae2590/phpeS2ZqE.jpg: BINARY
+./p/edit/image_tmp/4b550156b6e8f/phpmF7qfY.jpg: BINARY
+./p/edit/image_tmp/4eb9ea2edea2f/phpoEHvd4.jpg: BINARY
+./p/edit/image_tmp/4fecfbe01144c/phpvpEcx5.jpg: BINARY
+./p/edit/image_tmp/47c6157a47a50/phpmHhuXr.jpg: BINARY
+./p/edit/image_tmp/47c6157a47a50/phpuo7UdP.jpg: BINARY
+./p/edit/image_tmp/489ab6488d2f8/phppjyeof.jpg: BINARY
+./p/edit/image_tmp/4b873097adb09/phpLDDC56.jpg: BINARY
+./p/edit/image_tmp/476110d4a7b91/phphgnp6H.tif: BINARY
+./p/edit/image_tmp/476110d4a7b91/phpCsvCZw.jpg: BINARY
+./p/edit/image_tmp/4a8e045e4f9aa/phpraAe3r.jpg: BINARY
+./p/edit/image_tmp/4f4add5e4ce7a/phpgRDuhC.jpg: BINARY
+./p/edit/image_tmp/4f4add5e4ce7a/php4P63Tp.jpg: BINARY
+./p/edit/image_tmp/4907efc46b3eb/phpTHCaPG.jpg: BINARY
+./p/edit/image_tmp/4f8f6e6f625cf/phpxQPQ5Q.jpg: BINARY
+./p/edit/image_tmp/5108b18dca202/phpDO3Jyc.jpg: BINARY
+./p/edit/image_tmp/5108b18dca202/php3Yv1gM.jpg: BINARY
+./p/edit/image_tmp/5108b18dca202/phpfx19CM.jpg: BINARY
+./p/edit/image_tmp/5108b18dca202/phpOPiRFB.jpg: BINARY
+./p/edit/image_tmp/507cd47eec378/phpUQl2gH.jpg: BINARY
+./p/edit/image_tmp/507cd47eec378/phpb2xXcI.jpg: BINARY
+./p/edit/image_tmp/4a9b7dcd8ed96/phpcdsXRm.jpg: BINARY
+./p/edit/image_tmp/4a9b7dcd8ed96/phpoqoTd3.jpg: BINARY
+./p/edit/image_tmp/4b344b7c5d73b/phpuppk76.jpg: BINARY
+./p/edit/image_tmp/4b344b7c5d73b/phpogSYSH.jpg: BINARY
+./p/edit/image_tmp/4c29813978a69/phpLLUGHm.jpg: BINARY
+./p/edit/image_tmp/5057c7bc624a7/phpNge63y.jpg: BINARY
+./p/edit/image_tmp/49bf3085520b6/phppDix1k.jpg: BINARY
+./p/edit/image_tmp/49bf3085520b6/phpL8sjZu.jpg: BINARY
+./p/edit/image_tmp/49bf3085520b6/phpFj339y.jpg: BINARY
+./p/edit/image_tmp/4d3797279f97d/phpJ0DoqU.jpg: BINARY
+./p/edit/image_tmp/4d3797279f97d/php5Ie5v2.jpg: BINARY
+./p/edit/image_tmp/4d3797279f97d/phpQgaEfj.jpg: BINARY
+./p/edit/image_tmp/48b74eaee0578/phpTpX5X1.jpg: BINARY
+./p/edit/image_tmp/48b74eaee0578/phpPFxxKh.jpg: BINARY
+./p/edit/image_tmp/4b8c6e4499f81/phpCfVB8E.jpg: BINARY
+./p/edit/image_tmp/4bfb391c6ba58/phpd2SzLV.jpg: BINARY
+./p/edit/image_tmp/4bfb391c6ba58/phpdpQ6AD.jpg: BINARY
+./p/edit/image_tmp/4bfb391c6ba58/phpQD2EBT.jpg: BINARY
+./p/edit/image_tmp/4bfb391c6ba58/phpPq3i9D.jpg: BINARY
+./p/edit/image_tmp/4bfb391c6ba58/phptrZJuI.jpg: BINARY
+./p/edit/image_tmp/4bfb391c6ba58/phpXZcJEJ.jpg: BINARY
+./p/edit/image_tmp/4bfb391c6ba58/phpRc92kv.jpg: BINARY
+./p/edit/image_tmp/4bfb391c6ba58/phpJWM5jl.jpg: BINARY
+./p/edit/image_tmp/4bfb391c6ba58/php9qMEc7.jpg: BINARY
+./p/edit/image_tmp/4bfb391c6ba58/phpg3EDrJ.jpg: BINARY
+./p/edit/image_tmp/4bfb391c6ba58/phptQxJok.jpg: BINARY
+./p/edit/image_tmp/4bfb391c6ba58/phpBNh6fV.jpg: BINARY
+./p/edit/image_tmp/4684bf841d721/phpxv2sov.jpg: BINARY
+./p/edit/image_tmp/4db0e14e53053/phpkVwY22.jpg: BINARY
+./p/edit/image_tmp/502065a6c20ca/phpwppPyL.jpg: BINARY
+./p/edit/image_tmp/4d9ad55624ef1/phpiXhY4L.jpg: BINARY
+./p/edit/image_tmp/49d454107b22a/phpxZE1xy.jpg: BINARY
+./p/edit/image_tmp/4d379b67792fa/phpmktxDQ.jpg: BINARY
+./p/edit/image_tmp/4d379b67792fa/phpt47AXE.jpg: BINARY
+./p/edit/image_tmp/46947825b9689/phpGiwbek.jpg: BINARY
+./p/edit/image_tmp/46947825b9689/php0LVQSV.jpg: BINARY
+./p/edit/image_tmp/46947825b9689/php8XzY0u.jpg: BINARY
+./p/edit/image_tmp/46947825b9689/phpz4ve8W.jpg: BINARY
+./p/edit/image_tmp/46947825b9689/phpIjiAOF.jpg: BINARY
+./p/edit/image_tmp/46947825b9689/phpg0Qmuq.jpg: BINARY
+./p/edit/image_tmp/46947825b9689/phpMmQiBT.jpg: BINARY
+./p/edit/image_tmp/46947825b9689/phpol7f3y.jpg: BINARY
+./p/edit/image_tmp/46947825b9689/phpy23aJF.jpg: BINARY
+./p/edit/image_tmp/46947825b9689/phpwjNu66.jpg: BINARY
+./p/edit/image_tmp/46947825b9689/phpbDpqmh.jpg: BINARY
+./p/edit/image_tmp/46947825b9689/phpcO1mga.tif: BINARY
+./p/edit/image_tmp/46947825b9689/phpIS3pud.jpg: BINARY
+./p/edit/image_tmp/46947825b9689/phpIsxGHG.jpg: BINARY
+./p/edit/image_tmp/4c9832c452492/phpnannu3.jpg: BINARY
+./p/edit/image_tmp/46809a2ed39e5/phpSpwbHi.jpg: BINARY
+./p/edit/image_tmp/46809a2ed39e5/phpPJCI8J.jpg: BINARY
+./p/edit/image_tmp/50b5cb6608eb7/phpLfOQMp.jpg: BINARY
+./p/edit/image_tmp/50b5cb6608eb7/phpRgxKiD.jpg: BINARY
+./p/edit/image_tmp/4fcfdff2893ad/phpH4uxmW.jpg: BINARY
+./p/edit/image_tmp/4f96553eca35b/phpdnsqkm.jpg: BINARY
+./p/edit/image_tmp/4ee5ac887f72a/phplEzpC4.jpg: BINARY
+./p/edit/image_tmp/4ee5ac887f72a/phpUfXlqH.jpg: BINARY
+./p/edit/image_tmp/50178c9725824/phpxJnsJn.jpg: BINARY
+./p/edit/image_tmp/50178c9725824/phppHdIzl.jpg: BINARY
+./p/edit/image_tmp/4b1c50dfe76d6/phpian4vJ.jpg: BINARY
+./p/edit/image_tmp/47f2dbbd6adce/phpb0nyUy.jpg: BINARY
+./p/edit/image_tmp/47f2dbbd6adce/phpyqX80X.jpg: BINARY
+./p/edit/image_tmp/49226dc3563cf/phpXaj8n6.gif: BINARY
+./p/edit/image_tmp/47f2de8e5e672/phpCywYhW.jpg: BINARY
+./p/edit/image_tmp/4c19d871b8fbb/phpO6rp5F.jpg: BINARY
+./p/edit/image_tmp/4e38cefc6fdf5/phpKJ7diJ.jpg: BINARY
+./p/edit/image_tmp/50b5d4c4f0c4d/php95oYxB.jpg: BINARY
+./p/edit/image_tmp/47297c96d0c45/phpW4MAX9.tif: BINARY
+./p/edit/image_tmp/47297c96d0c45/phpkpTBez.tif: BINARY
+./p/edit/image_tmp/47297c96d0c45/php05QvWB.tif: BINARY
+./p/edit/image_tmp/47297c96d0c45/phpSVGpZp.jpg: BINARY
+./p/edit/image_tmp/47297c96d0c45/phpShtDiB.tif: BINARY
+./p/edit/image_tmp/47ccf061474e9/phpBeOE0p.jpg: BINARY
+./p/edit/image_tmp/4b1c5528a502a/phpcQDkQ4.jpg: BINARY
+./p/edit/image_tmp/4774473567af1/php72O9Y8.jpg: BINARY
+./p/edit/image_tmp/4774473567af1/phpmng4jh.jpg: BINARY
+./p/edit/image_tmp/473a43f3484a9/phpYn3132.jpg: BINARY
+./p/edit/image_tmp/4cbce50219db9/phptaW31Y.jpg: BINARY
+./p/edit/image_tmp/4f7d259d070c6/phpWxqXsa.jpg: BINARY
+./p/edit/image_tmp/4761033a52c24/phpo3mcNt.tif: BINARY
+./p/edit/image_tmp/4761033a52c24/phpWbWG4m.tif: BINARY
+./p/edit/image_tmp/4761033a52c24/phpJpAmPy.jpg: BINARY
+./p/edit/image_tmp/4761033a52c24/php1tJasu.tif: BINARY
+./p/edit/image_tmp/4761033a52c24/phpgA7bl7.tif: BINARY
+./p/edit/image_tmp/4cad594672472/phpmmr2jX.jpg: BINARY
+./p/edit/image_tmp/4cad594672472/phpBYUCgd.jpg: BINARY
+./p/edit/image_tmp/508a41ed61e95/php5Q3s2q.jpg: BINARY
+./p/edit/image_tmp/508a41ed61e95/phpOVQx4t.jpg: BINARY
+./p/edit/image_tmp/47f2de4404c61/phpAlfHO8.jpg: BINARY
+./p/edit/image_tmp/4afa50a547955/phpfXYiJo.jpg: BINARY
+./p/edit/image_tmp/457e1438cc3f3/phpwVAmaF.jpg: BINARY
+./p/edit/image_tmp/46de5264297b5/phpxo6bmY.jpg: BINARY
+./p/edit/image_tmp/4c7afb970a7f2/phpsj0eQS.jpg: BINARY
+./p/edit/image_tmp/50c003d69b160/php7xF2T1.jpg: BINARY
+./p/edit/image_tmp/50c003d69b160/phpPAPXbw.jpg: BINARY
+./p/edit/image_tmp/4a120e8d87810/php5mAiEV.jpg: BINARY
+./p/edit/image_tmp/4a120e8d87810/php5Ny0fs.jpg: BINARY
+./p/edit/image_tmp/4f6bdedb7d0c7/phpgUKVBB.jpg: BINARY
+./p/edit/image_tmp/49f654869119b/phpe7ewRu.jpg: BINARY
+./p/edit/image_tmp/4c3bfaf95bb16/phpaKtgrw.jpg: BINARY
+./p/edit/image_tmp/47a9096bab542/phpFgL2E2.jpg: BINARY
+./p/edit/image_tmp/47a9096bab542/php0B1JZc.jpg: BINARY
+./p/edit/image_tmp/47a9096bab542/phpv0PBlb.jpg: BINARY
+./p/edit/image_tmp/47a9096bab542/phpreYdH7.jpg: BINARY
+./p/edit/image_tmp/47a9096bab542/phpSaAzlC.jpg: BINARY
+./p/edit/image_tmp/47a9096bab542/phpFRKKuO.jpg: BINARY
+./p/edit/image_tmp/47a9096bab542/phppsfxfI.jpg: BINARY
+./p/edit/image_tmp/4fd9968902275/phpzKgNGO.jpg: BINARY
+./p/edit/image_tmp/50b5ceb2f1dc0/phpBUvFYG.jpg: BINARY
+./p/edit/image_tmp/4ee5ad2558bc7/phpeCV3Ic.jpg: BINARY
+./p/edit/image_tmp/4ee5ad2558bc7/php2xme9I.jpg: BINARY
+./p/edit/image_tmp/4fcdb3bc5e345/phphAmRci.jpg: BINARY
+./p/edit/image_tmp/4c0497b7cea25/phpAlQCj1.tif: BINARY
+./p/edit/image_tmp/4c0497b7cea25/phpRbBCWB.jpg: BINARY
+./p/edit/image_tmp/4c0497b7cea25/phpTxYAZZ.jpg: BINARY
+./p/edit/image_tmp/488d21b7967a2/php1EI8pQ.jpg: BINARY
+./p/edit/image_tmp/4663775d8a8df/phpo3VkOe.jpg: BINARY
+./p/edit/image_tmp/4663775d8a8df/phpjiWTp2.jpg: BINARY
+./p/edit/image_tmp/4851f4ed575dc/phpJ0anfE.jpg: BINARY
+./p/edit/image_tmp/4851f4ed575dc/phpBxVjP3.jpg: BINARY
+./p/edit/image_tmp/4ec0c9fc64796/php1Mstrv.jpg: BINARY
+./p/edit/image_tmp/4f13b88a854f8/phpgQ3xPb.jpg: BINARY
+./p/edit/image_tmp/4f7a58eb903b8/phpiRqvcM.jpg: BINARY
+./p/edit/image_tmp/4d0f20a499012/phpiGlp9P.jpg: BINARY
+./p/edit/image_tmp/4d0f20a499012/phpYphqGI.jpg: BINARY
+./p/edit/image_tmp/4f389745c3892/phprJHqHr.jpg: BINARY
+./p/edit/image_tmp/50b594de320e8/phpiJDKaT.tif: BINARY
+./p/edit/image_tmp/50b594de320e8/phpTRoaOH.jpg: BINARY
+./p/edit/image_tmp/50b594de320e8/phpcMsxNr.jpg: BINARY
+./p/edit/image_tmp/50b594de320e8/phpf7j5Sl.jpg: BINARY
+./p/edit/image_tmp/50b594de320e8/php9FKSQR.jpg: BINARY
+./p/edit/image_tmp/50b594de320e8/phplDVGDF.tif: BINARY
+./p/edit/image_tmp/46a6f0fadd003/phpEtRD93.jpg: BINARY
+./p/edit/image_tmp/46a6f0fadd003/phpA3GXw8.jpg: BINARY
+./p/edit/image_tmp/46a6f0fadd003/php9QprTq.jpg: BINARY
+./p/edit/image_tmp/46a6f0fadd003/phpXJJ3nW.jpg: BINARY
+./p/edit/image_tmp/46a6f0fadd003/phpN3enHl.jpg: BINARY
+./p/edit/image_tmp/46a6f0fadd003/phpyJle73.jpg: BINARY
+./p/edit/image_tmp/47f2da4e8bbbf/phpwX4khv.jpg: BINARY
+./p/edit/image_tmp/5373163a2493b/phpANasYo.jpg: BINARY
+./p/edit/image_tmp/5373163a2493b/phpxz5bwj.jpg: BINARY
+./p/edit/image_tmp/5089fc89ea066/phpiC4EOW.jpg: BINARY
+./p/edit/image_tmp/5089fc89ea066/phpoTy8oF.jpg: BINARY
+./p/edit/image_tmp/498b8ad7e8497/phpfa1Ecz.jpg: BINARY
+./p/edit/image_tmp/498b8ad7e8497/phpDaB4UV.jpg: BINARY
+./p/edit/image_tmp/498b8ad7e8497/phpv8pj8i.jpg: BINARY
+./p/edit/image_tmp/498b8ad7e8497/phpn8iVAY.jpg: BINARY
+./p/edit/image_tmp/498b8ad7e8497/phpNI8Fm4.jpg: BINARY
+./p/edit/image_tmp/498b8ad7e8497/phpBtoxan.jpg: BINARY
+./p/edit/image_tmp/4f25e96dbc87d/phpOa0yoD.jpg: BINARY
+./p/edit/image_tmp/4cf4b32a4a98c/phpvpoZCw.jpg: BINARY
+./p/edit/image_tmp/467931fb8d10b/phpybStEc.jpg: BINARY
+./p/edit/image_tmp/4ea60729377f3/phpjDVZCY.jpg: BINARY
+./p/edit/image_tmp/4a56ad7a77f96/phpmDfpml.jpg: BINARY
+./p/edit/image_tmp/4a56ad7a77f96/phpLsiWRg.jpg: BINARY
+./p/edit/image_tmp/50b5d0db679df/phpBZGQWh.jpg: BINARY
+./p/edit/image_tmp/4f717a46cbbaf/phpPcakZv.jpg: BINARY
+./p/edit/image_tmp/491a87c3556d2/phpOJnmAN.jpg: BINARY
+./p/edit/image_tmp/45383af8451ff/phpxsq7lU.jpg: BINARY
+./p/edit/image_tmp/489ab53612db5/phpprQj9b.jpg: BINARY
+./p/edit/image_tmp/465534871ce14/phpkYShFN.jpg: BINARY
+./p/edit/image_tmp/4e6eaee44883a/phpL4Al4F.jpg: BINARY
+./p/edit/image_tmp/4e6eaee44883a/phpS0llBZ.jpg: BINARY
+./p/edit/image_tmp/5057d74808314/phpDcbQMj.jpg: BINARY
+./p/edit/image_tmp/490820db9a38a/phpwUFYBV.gif: BINARY
+./p/edit/image_tmp/46dd041a19985/phpYLtBLt.jpg: BINARY
+./p/edit/image_tmp/509b1c9900a2c/phpn4vvj3.jpg: BINARY
+./p/edit/image_tmp/498151d4cdc1f/php3TR7RP.jpg: BINARY
+./p/edit/image_tmp/5011ec2f7f9e8/phpEk3PhE.jpg: BINARY
+./p/edit/image_tmp/48d0c86dcbf9d/phpiXEV6N.jpg: BINARY
+./p/edit/image_tmp/4ddf355bdff5f/phpA5tHcR.jpg: BINARY
+./p/edit/image_tmp/489b9ec465f0f/phpTueQiy.jpg: BINARY
+./p/edit/image_tmp/50b5d1b22e291/phpDBXj46.jpg: BINARY
+./p/edit/image_tmp/4ef95805e315f/phpZ70TCH.jpg: BINARY
+./p/edit/image_tmp/4d9e8af781edc/php9JfEKP.jpg: BINARY
+./p/edit/image_tmp/4c1b3ddc3f35a/phplbiAED.jpg: BINARY
+./p/edit/image_tmp/4bccfdd3262df/php0LoOC9.jpg: BINARY
+./p/edit/image_tmp/477069ae9a7ed/phpVVdFxp.jpg: BINARY
+./p/edit/image_tmp/477069ae9a7ed/phpIbNBR2.jpg: BINARY
+./p/edit/image_tmp/477069ae9a7ed/phpOiyOgZ.jpg: BINARY
+./p/edit/image_tmp/4afa4ebb36dec/phpIkVN1u.jpg: BINARY
+./p/edit/image_tmp/4e03e987b6e57/php1J0bU4.jpg: BINARY
+./p/edit/image_tmp/4c04a009a6f65/phpl5S3Oi.jpg: BINARY
+./p/edit/image_tmp/4b78921d08068/phpnvJi1X.jpg: BINARY
+./p/edit/image_tmp/50b5c5ca59a72/phpn0I7yT.jpg: BINARY
+./p/edit/image_tmp/50b5c5ca59a72/phpZKzR51.jpg: BINARY
+./p/edit/image_tmp/4e6eb0ae7bbd5/phpzh97QN.jpg: BINARY
+./p/edit/image_tmp/4add7024c46c2/phpHcKQOz.jpg: BINARY
+./p/edit/image_tmp/505aa60caad62/phpTQ5GA1.jpg: BINARY
+./p/edit/image_tmp/507cd6152ba1c/phpz9enoY.jpg: BINARY
+./p/edit/image_tmp/507cd6152ba1c/phpkxUQxo.jpg: BINARY
+./p/edit/image_tmp/49fbeabae7eed/phpaVZo6c.jpg: BINARY
+./p/edit/image_tmp/4c298d4b789bc/php2F7Yvm.jpg: BINARY
+./p/edit/image_tmp/4c298d4b789bc/phpNcXwaF.jpg: BINARY
+./p/edit/image_tmp/4afa4f6510cc9/phpcnHkHI.jpg: BINARY
+./p/edit/image_tmp/5015ea6d48935/phpBt6mBs.jpg: BINARY
+./p/edit/image_tmp/5015ea6d48935/php3CeRTZ.jpg: BINARY
+./p/edit/image_tmp/493cea824f8fe/phplfFVNV.jpg: BINARY
+./p/edit/image_tmp/493cea824f8fe/phpe5FDt1.jpg: BINARY
+./p/edit/image_tmp/49ae0ab3892a8/phplBcEa2.jpg: BINARY
+./p/edit/image_tmp/49ae0ab3892a8/phprmjrMl.jpg: BINARY
+./p/edit/image_tmp/4b4287f2817d6/php7ZPrc3.jpg: BINARY
+./p/edit/image_tmp/50a2011f4454b/phpqmzfrS.jpg: BINARY
+./p/edit/image_tmp/50a2011f4454b/phpoLJxfw.jpg: BINARY
+./p/edit/image_tmp/50a2011f4454b/phptWX9xe.jpg: BINARY
+./p/edit/image_tmp/467f58094bf8c/php8rGByn.jpg: BINARY
+./p/edit/image_tmp/48056d9300c49/phpQ2br3V.jpg: BINARY
+./p/edit/image_tmp/4e9f898ab366d/phpqTpRT0.tif: BINARY
+./p/edit/image_tmp/4e9f898ab366d/php90LXRq.jpg: BINARY
+./p/edit/image_tmp/4e9f898ab366d/php5NzYw8.jpg: BINARY
+./p/edit/image_tmp/4e9f898ab366d/phpDZj0un.jpg: BINARY
+./p/edit/image_tmp/4e9f898ab366d/phpD2eGc5.tif: BINARY
+./p/edit/image_tmp/4f8b866ad14c5/phphcvP6F.jpg: BINARY
+./p/edit/image_tmp/4e3762b62ab32/phpTMDk1y.jpg: BINARY
+./p/edit/image_tmp/4fd58bcad3109/php4bd1NT.jpg: BINARY
+./p/edit/image_tmp/4fd58bcad3109/phpbklyPw.jpg: BINARY
+./p/edit/image_tmp/492274366c355/phpQef67W.gif: BINARY
+./p/edit/image_tmp/503476291a181/phpk2r3TB.jpg: BINARY
+./p/edit/image_tmp/503d6e2c369d9/phpJCVhH0.jpg: BINARY
+./p/edit/image_tmp/4b00b6a64208e/phpNfl18r.jpg: BINARY
+./p/edit/image_tmp/4aa847f4145d3/phphK1b4G.jpg: BINARY
+./p/edit/image_tmp/49090c9395869/phpC3Bfsz.gif: BINARY
+./p/edit/image_tmp/479e894eeeabb/php9YdWbt.jpg: BINARY
+./p/edit/image_tmp/479e894eeeabb/phpDPwOfh.jpg: BINARY
+./p/edit/image_tmp/508e302fe8717/phpGDdowd.jpg: BINARY
+./p/edit/image_tmp/4a7fb71cd78ee/phpU2UhLx.jpg: BINARY
+./p/edit/image_tmp/4c2d48393bb98/phplvAFgD.jpg: BINARY
+./p/edit/image_tmp/50441cd5f0db3/php9bXAGN.jpg: BINARY
+./p/edit/image_tmp/4680992192bed/phpZ72LxC.jpg: BINARY
+./p/edit/image_tmp/50b5d1199eb5b/phpSDXiue.jpg: BINARY
+./p/edit/image_tmp/50c001f199f22/phpuWn9rq.jpg: BINARY
+./p/edit/image_tmp/50c001f199f22/phpCqq5xg.jpg: BINARY
+./p/edit/image_tmp/49081d2804e94/phpMkqgm1.jpg: BINARY
+./p/edit/image_tmp/4ec47551605e8/phpNIjgvT.jpg: BINARY
+./p/edit/image_tmp/457e11a936825/phpKIJSyF.jpg: BINARY
+./p/edit/image_tmp/50b5cc4d3b21e/phpKcjj4d.jpg: BINARY
+./p/edit/image_tmp/4b63cc16b99f3/phpabnV0v.jpg: BINARY
+./p/edit/image_tmp/4ca18ed044dec/phpYwzUuk.jpg: BINARY
+./p/edit/image_tmp/4d92d07585a07/phpfYKufz.jpg: BINARY
+./p/edit/image_tmp/4d92d07585a07/phpJDkWt1.jpg: BINARY
+./p/edit/image_tmp/4e03ea39b3b3f/phpBGBsBo.jpg: BINARY
+./p/edit/image_tmp/50b5cd9a92ecd/phpPapbjK.jpg: BINARY
+./p/edit/image_tmp/461c39715ec4a/phpifZv0o.jpg: BINARY
+./p/edit/image_tmp/461c39715ec4a/phpyztt47.jpg: BINARY
+./p/edit/image_tmp/4f13b7dd09a16/phpxtmUI2.jpg: BINARY
+./p/edit/image_tmp/4f13b7dd09a16/php2WRLIZ.jpg: BINARY
+./p/edit/image_tmp/49dd7e83a4fb3/phpZguerD.jpg: BINARY
+./p/edit/image_tmp/49dd7e83a4fb3/phpBtSJs9.jpg: BINARY
+./p/edit/image_tmp/49dd7e83a4fb3/php2feP25.jpg: BINARY
+./p/edit/image_tmp/4e9f878b288e5/phpheaIri.jpg: BINARY
+./p/edit/image_tmp/4e9f878b288e5/phpk7enhy.jpg: BINARY
+./p/edit/image_tmp/4e9f878b288e5/php6vMgG5.jpg: BINARY
+./p/edit/image_tmp/473a42cdb1b3f/phpwmb9g7.jpg: BINARY
+./p/edit/image_tmp/4a4db90a4ca53/phpbjdBET.jpg: BINARY
+./p/edit/image_tmp/4c107a235ca16/phpKYrEZO.jpg: BINARY
+./p/edit/image_tmp/50a477328a56e/phpapoAlZ.jpg: BINARY
+./p/edit/image_tmp/47ff0239b5c05/php8r9UZH.jpg: BINARY
+./p/edit/image_tmp/50b5d294339c3/phpB0Kkfb.jpg: BINARY
+./p/edit/image_tmp/4df716d24cca9/phpJUkdUm.jpg: BINARY
+./p/edit/image_tmp/4a2c6eb8e3eec/php5mOTMl.jpg: BINARY
+./p/edit/image_tmp/489ab2bf3452b/phpn13hSn.jpg: BINARY
+./p/edit/image_tmp/4e436be377b17/phpMSX7S4.jpg: BINARY
+./p/edit/image_tmp/5108ad8b654fc/phpaIZ6iQ.jpg: BINARY
+./p/edit/image_tmp/5108ad8b654fc/phpbnEr0R.jpg: BINARY
+./p/edit/image_tmp/5108ad8b654fc/phpDlV8dm.jpg: BINARY
+./p/edit/image_tmp/5108ad8b654fc/php5HFkZg.jpg: BINARY
+./p/edit/image_tmp/50b5d34350be4/phplGYTKg.jpg: BINARY
+./p/edit/image_tmp/50b5cfaed691a/phpTjVurg.jpg: BINARY
+./p/edit/image_tmp/49d0338bc9302/phpPK1IOi.jpg: BINARY
+./p/edit/image_tmp/49d0338bc9302/phpZx4U1J.jpg: BINARY
+./p/edit/image_tmp/49090a6908b79/phpN7masZ.gif: BINARY
+./p/edit/image_tmp/4628757025d34/phpJFExOm.jpg: BINARY
+./p/edit/image_tmp/4628757025d34/php6jXV0B.jpg: BINARY
+./p/edit/image_tmp/4628757025d34/phpKGX7mB.jpg: BINARY
+./p/edit/image_tmp/4628757025d34/phpQ88vYK.jpg: BINARY
+./p/edit/image_tmp/4628757025d34/phpWi0M2j.jpg: BINARY
+./p/edit/image_tmp/4b4fc53d8ea11/php3UdWOQ.jpg: BINARY
+./p/edit/image_tmp/4b4fc53d8ea11/phpu6s94e.jpg: BINARY
+./p/edit/image_tmp/4d50f31539a73/phpw8fEAo.jpg: BINARY
+./p/edit/image_tmp/4fb1a1cb8d051/phpvuKEN9.jpg: BINARY
+./p/edit/image_tmp/4cdc9a0f0fbf8/phpUupYCu.jpg: BINARY
+./p/edit/image_tmp/4680981d96743/phpAXkDIe.jpg: BINARY
+./p/edit/image_tmp/4680981d96743/phpVtqYZK.jpg: BINARY
+./p/edit/image_tmp/4680981d96743/phpilFyv2.jpg: BINARY
+./p/edit/image_tmp/4680981d96743/phpJKPSae.jpg: BINARY
+./p/edit/image_tmp/51149d694fb90/phpN4OAEX.jpg: BINARY
+./p/edit/image_tmp/51149d694fb90/phpXRE88F.jpg: BINARY
+./p/edit/image_tmp/4d379d256257b/phpL616IC.jpg: BINARY
+./p/edit/image_tmp/4e6eb22d3fdd4/phpJ9V8hG.jpg: BINARY
+./p/edit/image_tmp/4bd639a9d6c96/phph10EJG.jpg: BINARY
+./p/edit/image_tmp/4bd639a9d6c96/php79Qinr.jpg: BINARY
+./p/edit/image_tmp/4bd639a9d6c96/phpeHwlSx.jpg: BINARY
+./p/edit/image_tmp/4bd639a9d6c96/phpQnrHnY.jpg: BINARY
+./p/edit/image_tmp/4bd639a9d6c96/phpDttkna.jpg: BINARY
+./p/edit/image_tmp/47f209b1e42fc/phpB1lltQ.jpg: BINARY
+./p/edit/image_tmp/49226b78ab363/phpViw6Gp.gif: BINARY
+./p/edit/image_tmp/53730e5425776/phpM8OQ0O.jpg: BINARY
+./p/edit/image_tmp/5057cc3743a16/phpRVqru2.jpg: BINARY
+./p/edit/image_tmp/4680951288ea9/phpL3ae7K.jpg: BINARY
+./p/edit/image_tmp/4680951288ea9/phpV4zrqh.jpg: BINARY
+./p/edit/image_tmp/4680951288ea9/php6xMAih.jpg: BINARY
+./p/edit/image_tmp/4680951288ea9/phph8iWhF.jpg: BINARY
+./p/edit/image_tmp/4fcdbaa57025f/phplOvmgi.jpg: BINARY
+./p/edit/image_tmp/47cb47697c71b/phpyKAXal.jpg: BINARY
+./p/edit/image_tmp/50b5d0075937a/phpkLcaUX.jpg: BINARY
+./p/edit/image_tmp/4e1d53b1e2ed2/phprHVQ8h.jpg: BINARY
+./p/edit/image_tmp/4e1d53b1e2ed2/phpuUOB2U.jpg: BINARY
+./p/edit/image_tmp/4bf0fcc5ddf89/phpBNj3xN.jpg: BINARY
+./p/edit/image_tmp/53730dfb9ec79/phpK1wDJY.gif: BINARY
+./p/edit/image_tmp/4afa5755595a5/php974AL9.jpg: BINARY
+./p/edit/image_tmp/4b5f9d3a8e32b/phpCF7Jkq.jpg: BINARY
+./p/edit/image_tmp/50b5c99bc0cb0/phpPgyQlq.jpg: BINARY
+./p/edit/image_tmp/49100f0183f7e/php3hWor3.jpg: BINARY
+./p/edit/image_tmp/50b5ce3f2c465/phpby0Xtp.jpg: BINARY
+./p/edit/image_tmp/49178016c4acd/php5tdVPR.jpg: BINARY
+./p/edit/image_tmp/472984fb2f31c/phpWWWPHn.jpg: BINARY
+./p/edit/image_tmp/472984fb2f31c/phpzUx3nd.jpg: BINARY
+./p/edit/image_tmp/4dd4b3190303b/phpKX0r03.jpg: BINARY
+./p/edit/image_tmp/4dd4b3190303b/phpLBketP.jpg: BINARY
+./p/edit/image_tmp/4dd4b3190303b/phpDSxHyA.jpg: BINARY
+./p/edit/image_tmp/50b5ccc62af2a/phpBNlBhq.jpg: BINARY
+./p/edit/image_tmp/4f4d7f0240d32/phpupxOEu.jpg: BINARY
+./p/edit/image_tmp/4f62d76fa151e/phpWflaDl.jpg: BINARY
+./p/edit/image_tmp/4767512bb14c1/phpnvgdvs.jpg: BINARY
+./p/edit/image_tmp/4e65b17617274/phpK3aTX8.jpg: BINARY
+./p/edit/image_tmp/4e65b17617274/phpveVkXH.jpg: BINARY
+./p/edit/image_tmp/4e8157daf0737/phpZ7ubUb.jpg: BINARY
+./p/edit/image_tmp/4851f82bc28e0/phpfnYhvP.jpg: BINARY
+./p/edit/image_tmp/4e28d24434743/phpHgjMWz.jpg: BINARY
+./p/edit/image_tmp/4e28d24434743/phprgrfhR.jpg: BINARY
+./p/edit/image_tmp/4e28d24434743/php48wWAM.jpg: BINARY
+./p/edit/image_tmp/4e28d24434743/php8wbWVf.jpg: BINARY
+./p/edit/image_tmp/4e28d24434743/phpVdqenZ.jpg: BINARY
+./p/edit/image_tmp/452aef3ae3010/php9UEw6Q.jpg: BINARY
+./p/edit/image_tmp/452aef3ae3010/phpe4rnV7.tif: BINARY
+./p/edit/image_tmp/4c049f27f40f5/php9L5D5n.tif: BINARY
+./p/edit/image_tmp/4c049f27f40f5/phpCCtxE1.jpg: BINARY
+./p/edit/image_tmp/4c049f27f40f5/phpmfYbSy.jpg: BINARY
+./p/edit/image_tmp/4a56a86f25a77/phpZNJ0qW.jpg: BINARY
+./p/edit/image_tmp/49090c347bc4f/phpHLfp2e.gif: BINARY
+./p/edit/image_tmp/4e03e5ba87a53/phpm4G5B8.jpg: BINARY
+./p/edit/image_tmp/4e03e5ba87a53/phpvBLP0v.tif: BINARY
+./p/edit/image_tmp/47f2df0096c92/phpxj3EO4.jpg: BINARY
+./p/edit/image_tmp/47871e36e6c35/phpUpITBr.jpg: BINARY
+./p/edit/image_tmp/497063d5cf37d/phpDjoP4O.jpg: BINARY
+./p/edit/image_tmp/4f7a62309e562/phpdIjTlx.jpg: BINARY
+./p/edit/image_tmp/49081b916d453/phpji8tjp.jpg: BINARY
+./p/edit/image_tmp/50ebe7ab98f12/phpbbVLjO.jpg: BINARY
+./p/edit/image_tmp/4e5707f970209/php8Zcz4T.jpg: BINARY
+./p/edit/image_tmp/5057cd9dd4108/phpmRiSw8.jpg: BINARY
+./p/edit/image_tmp/45400fac5ddda/php96Zzml.jpg: BINARY
+./p/edit/image_tmp/49226e8389586/phpFnJOca.gif: BINARY
+./p/edit/image_tmp/4912a84d48b66/php0ACVvZ.jpg: BINARY
+./p/edit/image_tmp/489ab5dbc3edc/php0LgN7e.jpg: BINARY
+./p/edit/image_tmp/45287c3539140/phpj2zcKs.jpg: BINARY
+./p/edit/image_tmp/45287c3539140/phpbcCENm.jpg: BINARY
+./p/edit/image_tmp/45287c3539140/phpjIX0Se.jpg: BINARY
+./p/edit/image_tmp/45287c3539140/phpzzVs8B.jpg: BINARY
+./p/edit/image_tmp/4d782a8bd4bb0/php4etLzh.jpg: BINARY
+./p/edit/image_tmp/4a25dd248731d/phpRpC6PD.jpg: BINARY
+./p/edit/image_tmp/50b5d2476cc11/phpVOiT8E.jpg: BINARY
+./p/edit/image_tmp/4bc55461eb0ff/phplWvsw7.jpg: BINARY
+./p/edit/image_tmp/4bc55461eb0ff/phpIq9JNC.jpg: BINARY
+./p/edit/image_tmp/51132ae4b3ed6/php1vQrKy.jpg: BINARY
+./p/edit/image_tmp/4e83cea086ff5/phpfGkVxf.jpg: BINARY
+./p/edit/image_tmp/4c08aeec37886/phpzUVUbA.jpg: BINARY
+./p/edit/image_tmp/49fbebda013e7/phpvFQpPg.jpg: BINARY
+./p/edit/image_tmp/4700a9df19042/phpxzLNtv.jpg: BINARY
+./p/edit/image_tmp/4700a9df19042/phprziCUh.jpg: BINARY
+./p/edit/image_tmp/46130d9a42409/phpaf9WXR.jpg: BINARY
+./p/edit/image_tmp/47f2ddf53b15f/php4zwcYz.jpg: BINARY
+./p/edit/image_tmp/4c297ed18149e/php1JCTwB.jpg: BINARY
+./p/edit/image_tmp/4fe7f98e0f47d/phpnbiT4B.jpg: BINARY
+./p/edit/image_tmp/4737ffa3f3d6a/phpdubNWT.jpg: BINARY
+./p/edit/image_tmp/4737ffa3f3d6a/phpU0aP7v.jpg: BINARY
+./p/edit/image_tmp/4e3905b7820ef/phpJddkto.jpg: BINARY
+./p/edit/image_tmp/50b5cd4eedf96/phpdA7Oyu.jpg: BINARY
+./p/edit/image_tmp/4e40faebd2655/phpIYJHTT.jpg: BINARY
+./p/edit/image_tmp/4c60a465e42a7/phpg0HJYT.jpg: BINARY
+./p/edit/image_tmp/489ab4aeadee7/phpqvuyY5.jpg: BINARY
+./p/edit/image_tmp/45daac16021fd/phpoEbcRm.jpg: BINARY
+./p/edit/image_tmp/45daac16021fd/phpFoQxzf.jpg: BINARY
+./p/edit/image_tmp/49178ff237fa5/phpdD23VL.jpg: BINARY
+./p/edit/image_tmp/50b5d3846ed94/php7LwV8X.jpg: BINARY
+./p/edit/image_tmp/4aa9b4ad44de9/phpPNoCcj.jpg: BINARY
+./p/edit/image_tmp/4dd5fadb318c0/php4sFW44.jpg: BINARY
+./p/edit/image_tmp/4e71aefc634d0/php1upZQx.jpg: BINARY
+./p/edit/image_tmp/4765d935e612b/php5BTldM.jpg: BINARY
+./p/edit/image_tmp/49081c6e54448/phpbD3KYU.jpg: BINARY
+./p/edit/image_tmp/4922749eefc7e/phpvXj0ho.jpg: BINARY
+./p/edit/image_tmp/4ccf9687bffce/phpswsFEP.jpg: BINARY
+./p/edit/image_tmp/47fabc281b4ae/php2m0nh8.jpg: BINARY
+./p/edit/image_tmp/5114aa61c269c/phpBN8lsR.jpg: BINARY
+./p/edit/image_tmp/5114aa61c269c/php3UE9qn.jpg: BINARY
+./p/edit/image_tmp/46f85a7ec068b/phpSPWDwz.jpg: BINARY
+./p/edit/image_tmp/4f8f659a4c075/php8G6UFw.jpg: BINARY
+./p/edit/image_tmp/4f8f659a4c075/phpyFAi4d.jpg: BINARY
+./p/edit/image_tmp/4f8f659a4c075/php6b8CVH.jpg: BINARY
+./p/edit/image_tmp/4e3a4e3ef0562/phpfyrT7h.jpg: BINARY
+./p/edit/image_tmp/4e3a4e3ef0562/phpz0ZIV9.jpg: BINARY
+./p/edit/image_tmp/4ffd2a3d6a48b/phpPtzvr1.jpg: BINARY
+./p/edit/image_tmp/4ffd2a3d6a48b/phpiKU2Wt.jpg: BINARY
+./p/edit/image_tmp/46aebaa438cb3/phpFpKsbh.jpg: BINARY
+./p/edit/image_tmp/4f0cda91a1f2b/phpGtPrWf.jpg: BINARY
+./p/edit/image_tmp/4f4714c125bd0/php3MAwku.jpg: BINARY
+./p/edit/image_tmp/4f4714c125bd0/php5TJstU.jpg: BINARY
+./p/edit/image_tmp/4f4714c125bd0/phpKhrKw9.jpg: BINARY
+./p/edit/image_tmp/4fcdb46722b5f/phpOt1tY8.jpg: BINARY
+./p/edit/image_tmp/4860b02d26dbe/php7HabGe.jpg: BINARY
+./p/edit/image_tmp/4860b02d26dbe/phpbhbj3J.jpg: BINARY
+./p/edit/image_tmp/4589e14a38f83/phpeLLGbA.jpg: BINARY
+./p/edit/image_tmp/4ca3fba5718c0/phpcU6ocW.jpg: BINARY
+./p/edit/image_tmp/506527a004798/phpoANzCs.jpg: BINARY
+./p/edit/image_tmp/50232d3f7f9bb/phpCG40IO.jpg: BINARY
+./p/edit/image_tmp/452c5684bea6e/phpQh3IIj.jpg: BINARY
+./p/edit/image_tmp/452c5684bea6e/phpTqvc2j.jpg: BINARY
+./p/edit/image_tmp/452c5684bea6e/phphfaFkA.jpg: BINARY
+./p/edit/image_tmp/4f696af627c24/phpyNk3MQ.jpg: BINARY
+./p/edit/image_tmp/4f696af627c24/phpJGahG8.jpg: BINARY
+./p/edit/image_tmp/4f696af627c24/phpRWCdpm.jpg: BINARY
+./p/edit/image_tmp/4a4db7c947fc8/php2bAWPn.jpg: BINARY
+./p/edit/image_tmp/47cb46d1eba04/phpKc5aUm.jpg: BINARY
+./p/edit/image_tmp/4ff268fa21c2e/php8J5BgI.jpg: BINARY
+./p/edit/image_tmp/47940189033f0/phpaB53sh.jpg: BINARY
+./p/edit/image_tmp/47940189033f0/phpKzyTEE.jpg: BINARY
+./p/edit/image_tmp/47940189033f0/phpx9pwz2.jpg: BINARY
+./p/edit/image_tmp/486060f223683/phpJ8SHFs.jpg: BINARY
+./p/edit/image_tmp/471d4635b03b9/phpR3WX0z.jpg: BINARY
+./p/edit/image_tmp/471d4635b03b9/phpkraL2H.jpg: BINARY
+./p/edit/image_tmp/471d4635b03b9/phpUPHXGp.jpg: BINARY
+./p/edit/image_tmp/471d4635b03b9/phpLvU4Wu.jpg: BINARY
+./p/edit/image_tmp/471d4635b03b9/phpSM4KGS.jpg: BINARY
+./p/edit/image_tmp/471d4635b03b9/php46QnMm.jpg: BINARY
+./p/edit/image_tmp/471d4635b03b9/phptJy18t.jpg: BINARY
+./p/edit/image_tmp/5024bc4aaad8a/phpf5TTUw.jpg: BINARY
+./p/edit/image_tmp/4bb947d2c4a9d/phpoPjxPp.jpg: BINARY
+./p/edit/image_tmp/4bf0b738c0bb9/phpxv3Sp8.jpg: BINARY
+./p/edit/image_tmp/4bf0b738c0bb9/phpszvl2K.jpg: BINARY
+./p/edit/image_tmp/4bf0b738c0bb9/phpjst2c1.jpg: BINARY
+./p/edit/image_tmp/4bf0b738c0bb9/phpSxco9i.jpg: BINARY
+./p/edit/image_tmp/479409aadcbc0/phpSVYa2T.jpg: BINARY
+./p/edit/image_tmp/479409aadcbc0/php8N9loH.jpg: BINARY
+./p/edit/image_tmp/4a120c46402d5/phpJzCKD5.jpg: BINARY
+./p/edit/image_tmp/4a56a6625d1c1/phpNLRNA6.jpg: BINARY
+./p/edit/image_tmp/4e55a0b3ae811/phpV3wBoY.jpg: BINARY
+./p/edit/image_tmp/4850f3849b67d/phpZtAjmA.jpg: BINARY
+./p/edit/image_tmp/4ea8dd55e21d3/phpdAsDPa.jpg: BINARY
+./p/edit/image_tmp/49081bed5652f/phpZ6ED3X.jpg: BINARY
+./p/edit/image_tmp/49081bed5652f/phpFaf7Zc.jpg: BINARY
+./p/edit/image_tmp/468394c8efd30/phpNoJTY3.tif: BINARY
+./p/edit/image_tmp/468394c8efd30/phprVv3Ku.tif: BINARY
+./p/edit/image_tmp/468394c8efd30/php4qNXJR.tif: BINARY
+./p/edit/image_tmp/50b5d50dd5c4d/phpraweiG.jpg: BINARY
+./p/edit/image_tmp/53706d8128f66/phpHDDSu3.jpg: BINARY
+./p/edit/image_tmp/5108b00f8608c/phppsWSkd.jpg: BINARY
+./p/edit/image_tmp/5108b00f8608c/phpZYGwhx.jpg: BINARY
+./p/edit/image_tmp/5108b00f8608c/phpHXMyO0.jpg: BINARY
+./p/edit/image_tmp/5108b00f8608c/phpbTrq3q.jpg: BINARY
+./p/edit/image_tmp/5108b00f8608c/phpn85KHt.jpg: BINARY
+./p/edit/image_tmp/4fcdb781b617a/php4XAsIe.jpg: BINARY
+./p/edit/image_tmp/4b4434ead9a79/phpG0qVxJ.jpg: BINARY
+./p/edit/image_tmp/4b4434ead9a79/php1v7X14.jpg: BINARY
+./p/edit/image_tmp/4b4434ead9a79/phpLhzqXy.jpg: BINARY
+./p/edit/image_tmp/4b4434ead9a79/phpXtLGkz.jpg: BINARY
+./p/edit/image_tmp/4fcdb537bd531/phpSGywAP.jpg: BINARY
+./p/edit/image_tmp/4fcdb537bd531/phpCMWuEV.jpg: BINARY
+./p/edit/image_tmp/50b5d44e7b55c/phpJosW1J.jpg: BINARY
+./p/edit/image_tmp/4e43749a84360/phpqqEo6A.jpg: BINARY
+./p/edit/image_tmp/4e43749a84360/phpaltCH1.jpg: BINARY
+./p/edit/image_tmp/4c3bf6048c4a3/phpFqPeFZ.jpg: BINARY
+./p/edit/image_tmp/492275bb2a0e6/phpWKzLR0.gif: BINARY
+./p/edit/image_tmp/4e857477b74bd/php4OoUxS.jpg: BINARY
+./p/edit/image_tmp/4e857477b74bd/phpy5QlIp.jpg: BINARY
+./p/edit/image_tmp/4ee1ab057421f/phpth666z.jpg: BINARY
+./p/edit/image_tmp/47f2ddac5e013/phpXddVst.jpg: BINARY
+./p/edit/image_tmp/47ff019399627/phpgIJe4f.jpg: BINARY
+./p/edit/image_tmp/4bc27d4b1dfa2/phpc3WAO3.jpg: BINARY
+./p/edit/image_tmp/4b0f7a2a4c801/phphlTrs5.jpg: BINARY
+./p/edit/image_tmp/4ffe72688389b/phpqIdAbH.jpg: BINARY
+./p/edit/image_tmp/4d645a0f58bea/phpPLRJoH.jpg: BINARY
+./p/edit/image_tmp/4e13a9c7f1091/phpZj9dJw.jpg: BINARY
+./p/edit/image_tmp/4d782d33b04a3/php34icZW.jpg: BINARY
+./p/edit/image_tmp/47660f4e1c7f0/phpCU8RbT.jpg: BINARY
+./p/edit/image_tmp/47660f4e1c7f0/phpN6uIC2.tif: BINARY
+./p/edit/image_tmp/47660f4e1c7f0/phpgHQk1o.tif: BINARY
+./p/edit/image_tmp/47660f4e1c7f0/phpf5hpAE.jpg: BINARY
+./p/edit/image_tmp/49f6996019a7b/phptuIHS8.jpg: BINARY
+./p/edit/image_tmp/49f6996019a7b/phpYXc6s5.jpg: BINARY
+./p/edit/image_tmp/4b32ed4c90f4c/phpYWhWsc.jpg: BINARY
+./p/edit/image_tmp/4b0dd7033406d/phpUrI2T7.jpg: BINARY
+./p/edit/image_tmp/45e29ae2cf994/phpsPRdTJ.jpg: BINARY
+./p/edit/image_tmp/4c1f274a448f1/phpnPJBk6.jpg: BINARY
+./p/edit/image_tmp/47f19464c8c6b/phpwtgtHQ.jpg: BINARY
+./p/edit/image_tmp/47f19464c8c6b/phpSsHfWG.jpg: BINARY
+./p/edit/image_tmp/47f19464c8c6b/phpq7zmxh.jpg: BINARY
+./p/edit/image_tmp/4e9cea53bb48c/phpAIpaaU.jpg: BINARY
+./p/edit/image_tmp/4e3612ad98989/phpqTjFqn.jpg: BINARY
+./p/edit/image_tmp/49895c7112ddc/phpVUUkFm.jpg: BINARY
+./p/edit/image_tmp/4edc1ea84699b/phpMu0ozi.jpg: BINARY
+./p/edit/image_tmp/4edc1ea84699b/phpOCQRk2.jpg: BINARY
+./p/edit/image_tmp/4e96491bdcf5e/phphVex8M.jpg: BINARY
+./p/edit/image_tmp/4e96491bdcf5e/phpSNQCBg.jpg: BINARY
+./p/edit/image_tmp/46809b6b12cdd/phpJcvCtJ.jpg: BINARY
+./p/edit/image_tmp/46809b6b12cdd/phpXrUyDF.jpg: BINARY
+./p/edit/parts.html: EUC-JP (BOM) (LF)
+./p/edit/htmleditor.js: EUC-JP (BOM) (LF)
+./p/edit/upload.php: EUC-JP (BOM) (LF)
+./p/edit/exstr.js: EUC-JP (BOM) (LF)
+./p/edit/image_tmp2/47709a6fd807b/phpzy7tL3.jpg: BINARY
+./p/edit/image_tmp2/4701e2009c298/phpPggU8Z.jpg: BINARY
+./p/edit/image_tmp2/4701e2009c298/phpdj4wsr.jpg: BINARY
+./p/edit/image_tmp2/47f2d9e25aca9/phpMEP7yy.jpg: BINARY
+./p/edit/image_tmp2/4615f48cb06cb/phpRwg1yr.jpg: BINARY
+./p/edit/image_tmp2/470d91c54f22e/phprdnIwK.jpg: BINARY
+./p/edit/image_tmp2/4716ed213f973/phpizjnMm.jpg: BINARY
+./p/edit/image_tmp2/47f2d7d6b283f/phprXkUNF.jpg: BINARY
+./p/edit/image_tmp2/47f2d7d6b283f/phpyCTqCN.jpg: BINARY
+./p/edit/image_tmp2/46ca66a348c18/phpZIlsgq.jpg: BINARY
+./p/edit/image_tmp2/46ca66a348c18/php9DhVIS.jpg: BINARY
+./p/edit/image_tmp2/4850f366051ac/phpGHYGiL.jpg: BINARY
+./p/edit/image_tmp2/4850f366051ac/php1pD5NL.jpg: BINARY
+./p/edit/image_tmp2/4850f366051ac/phplJSVxF.jpg: BINARY
+./p/edit/image_tmp2/4850f366051ac/phpfQDLbq.jpg: BINARY
+./p/edit/image_tmp2/4850f366051ac/phpTmUEdk.jpg: BINARY
+./p/edit/image_tmp2/4850f366051ac/phpLTG4qQ.jpg: BINARY
+./p/edit/image_tmp2/47f2dd0604ab7/phpuAwG2u.jpg: BINARY
+./p/edit/image_tmp2/48d6e5fe26285/php3F0qbN.jpg: BINARY
+./p/edit/image_tmp2/47f2da93441d8/phpoO7I5U.jpg: BINARY
+./p/edit/image_tmp2/476750be2fc01/phpRNvXB5.jpg: BINARY
+./p/edit/image_tmp2/47eaf92b488d2/php7Ijz0a.jpg: BINARY
+./p/edit/image_tmp2/47d646ce886d3/phpVDLtQf.jpg: BINARY
+./p/edit/image_tmp2/47d646ce886d3/phpodMk9q.jpg: BINARY
+./p/edit/image_tmp2/47d646ce886d3/phprD691R.jpg: BINARY
+./p/edit/image_tmp2/47d646ce886d3/phpGO1ObM.jpg: BINARY
+./p/edit/image_tmp2/457e0693ad53c/phpQHCwoN.jpg: BINARY
+./p/edit/image_tmp2/489ab3cce7779/phppEq3YY.jpg: BINARY
+./p/edit/image_tmp2/489ab3cce7779/phpAaIcz3.jpg: BINARY
+./p/edit/image_tmp2/488d20f8ebc9b/phpZDh91y.jpg: BINARY
+./p/edit/image_tmp2/488d20f8ebc9b/php98qqi4.jpg: BINARY
+./p/edit/image_tmp2/48a11c8f18fcf/phpIvhSIW.jpg: BINARY
+./p/edit/image_tmp2/4528be37574a8/phpFnf1Qb.jpg: BINARY
+./p/edit/image_tmp2/4694584a30eee/phpvWJ2Ud.jpg: BINARY
+./p/edit/image_tmp2/470b189574ab9/phpNVqr2l.jpg: BINARY
+./p/edit/image_tmp2/4892639be8e91/phpiqIH6J.jpg: BINARY
+./p/edit/image_tmp2/47745e197ebeb/phpJwv8A3.jpg: BINARY
+./p/edit/image_tmp2/47745e197ebeb/phpG4uqni.jpg: BINARY
+./p/edit/image_tmp2/47745e197ebeb/phpAW2X8C.jpg: BINARY
+./p/edit/image_tmp2/47745e197ebeb/phpvwcrb5.jpg: BINARY
+./p/edit/image_tmp2/47745e197ebeb/phpytplIm.jpg: BINARY
+./p/edit/image_tmp2/47745e197ebeb/phpPVvY6B.jpg: BINARY
+./p/edit/image_tmp2/47745e197ebeb/phpSehKZM.jpg: BINARY
+./p/edit/image_tmp2/457e1c8c3b140/phpMzGbZh.jpg: BINARY
+./p/edit/image_tmp2/46ca4f1a74156/php1oMvvv.jpg: BINARY
+./p/edit/image_tmp2/46ca4f1a74156/phpCPAd5K.jpg: BINARY
+./p/edit/image_tmp2/46ca4f1a74156/phpUXOwJM.jpg: BINARY
+./p/edit/image_tmp2/46ca4f1a74156/phpvb4LYF.jpg: BINARY
+./p/edit/image_tmp2/47625908ed436/phpSBzPsy.jpg: BINARY
+./p/edit/image_tmp2/47625908ed436/phpcyT3bs.tif: BINARY
+./p/edit/image_tmp2/47625908ed436/phpwdmeSs.jpg: BINARY
+./p/edit/image_tmp2/481031d7a8344/phpgGrhzz.jpg: BINARY
+./p/edit/image_tmp2/47d639152b079/phpMY8s81.jpg: BINARY
+./p/edit/image_tmp2/46666975baf2a/php6brkCm.jpg: BINARY
+./p/edit/image_tmp2/46666975baf2a/phpXVllIG.jpg: BINARY
+./p/edit/image_tmp2/46666975baf2a/phpkMm0As.jpg: BINARY
+./p/edit/image_tmp2/468bb23bf2f8e/phplgJW1h.jpg: BINARY
+./p/edit/image_tmp2/468bb23bf2f8e/phpPOtPzG.jpg: BINARY
+./p/edit/image_tmp2/45908e1f6d50d/phpqDXPKc.jpg: BINARY
+./p/edit/image_tmp2/4770a5ee0748e/phpKZ1KlB.jpg: BINARY
+./p/edit/image_tmp2/4770a5ee0748e/phpwHIHWb.jpg: BINARY
+./p/edit/image_tmp2/452d90deb440d/php3rCuwK.jpg: BINARY
+./p/edit/image_tmp2/452d90deb440d/phpkahD8e.jpg: BINARY
+./p/edit/image_tmp2/452d90deb440d/phpfJFj6X.jpg: BINARY
+./p/edit/image_tmp2/4785b7a890480/phpq1OA7p.jpg: BINARY
+./p/edit/image_tmp2/4860a56a9ac65/php188x2J.jpg: BINARY
+./p/edit/image_tmp2/45ff6a0bc175a/php1ND5Vy.jpg: BINARY
+./p/edit/image_tmp2/47675198d6101/phpqtx57o.jpg: BINARY
+./p/edit/image_tmp2/4785b46f201e2/phpsrPW6l.jpg: BINARY
+./p/edit/image_tmp2/4785b46f201e2/phpKjxGw1.jpg: BINARY
+./p/edit/image_tmp2/4716eca74b5ea/php1e6Nhc.jpg: BINARY
+./p/edit/image_tmp2/47fadcb663aee/phpqBkJCy.jpg: BINARY
+./p/edit/image_tmp2/47fadcb663aee/php2klCn0.jpg: BINARY
+./p/edit/image_tmp2/47f2dd53c0086/phpYVIo5N.jpg: BINARY
+./p/edit/image_tmp2/48abeed7f313e/phprZgVSP.jpg: BINARY
+./p/edit/image_tmp2/47d6553e57144/phpfdlTAB.jpg: BINARY
+./p/edit/image_tmp2/47d6553e57144/phpCClQXj.jpg: BINARY
+./p/edit/image_tmp2/4897a80f8f897/php7bnNkt.jpg: BINARY
+./p/edit/image_tmp2/45289f1b9f40a/phpQt6a5s.jpg: BINARY
+./p/edit/image_tmp2/48a116e98160d/phpnnZMwd.jpg: BINARY
+./p/edit/image_tmp2/457e0e3d61651/phpWPCLEY.jpg: BINARY
+./p/edit/image_tmp2/46cace3e2b167/phprXbTSO.jpg: BINARY
+./p/edit/image_tmp2/4716a55fce894/phpvolYuA.jpg: BINARY
+./p/edit/image_tmp2/4716a55fce894/phpFmPaE2.jpg: BINARY
+./p/edit/image_tmp2/452b0ab4b4e4d/phplC7UiD.jpg: BINARY
+./p/edit/image_tmp2/452b0ab4b4e4d/phpzQK8qZ.jpg: BINARY
+./p/edit/image_tmp2/452b0ab4b4e4d/phpcDsoRN.jpg: BINARY
+./p/edit/image_tmp2/452aed0c3e6e8/phpnV3VNg.jpg: ASCII (BOM)
+./p/edit/image_tmp2/452aed0c3e6e8/phpikHqo4.gif: BINARY
+./p/edit/image_tmp2/47c6157a47a50/phpmHhuXr.jpg: BINARY
+./p/edit/image_tmp2/47c6157a47a50/phpuo7UdP.jpg: BINARY
+./p/edit/image_tmp2/489ab6488d2f8/phppjyeof.jpg: BINARY
+./p/edit/image_tmp2/476110d4a7b91/phphgnp6H.tif: BINARY
+./p/edit/image_tmp2/476110d4a7b91/phpCsvCZw.jpg: BINARY
+./p/edit/image_tmp2/48b74eaee0578/phpTpX5X1.jpg: BINARY
+./p/edit/image_tmp2/48b74eaee0578/phpPFxxKh.jpg: BINARY
+./p/edit/image_tmp2/4684bf841d721/phpxv2sov.jpg: BINARY
+./p/edit/image_tmp2/46947825b9689/phpGiwbek.jpg: BINARY
+./p/edit/image_tmp2/46947825b9689/php0LVQSV.jpg: BINARY
+./p/edit/image_tmp2/46947825b9689/php8XzY0u.jpg: BINARY
+./p/edit/image_tmp2/46947825b9689/phpz4ve8W.jpg: BINARY
+./p/edit/image_tmp2/46947825b9689/phpIjiAOF.jpg: BINARY
+./p/edit/image_tmp2/46947825b9689/phpg0Qmuq.jpg: BINARY
+./p/edit/image_tmp2/46947825b9689/phpMmQiBT.jpg: BINARY
+./p/edit/image_tmp2/46947825b9689/phpol7f3y.jpg: BINARY
+./p/edit/image_tmp2/46947825b9689/phpy23aJF.jpg: BINARY
+./p/edit/image_tmp2/46947825b9689/phpwjNu66.jpg: BINARY
+./p/edit/image_tmp2/46947825b9689/phpbDpqmh.jpg: BINARY
+./p/edit/image_tmp2/46947825b9689/phpcO1mga.tif: BINARY
+./p/edit/image_tmp2/46947825b9689/phpIS3pud.jpg: BINARY
+./p/edit/image_tmp2/46947825b9689/phpIsxGHG.jpg: BINARY
+./p/edit/image_tmp2/46809a2ed39e5/phpSpwbHi.jpg: BINARY
+./p/edit/image_tmp2/46809a2ed39e5/phpPJCI8J.jpg: BINARY
+./p/edit/image_tmp2/47f2dbbd6adce/phpb0nyUy.jpg: BINARY
+./p/edit/image_tmp2/47f2dbbd6adce/phpyqX80X.jpg: BINARY
+./p/edit/image_tmp2/47f2de8e5e672/phpCywYhW.jpg: BINARY
+./p/edit/image_tmp2/47297c96d0c45/phpW4MAX9.tif: BINARY
+./p/edit/image_tmp2/47297c96d0c45/phpkpTBez.tif: BINARY
+./p/edit/image_tmp2/47297c96d0c45/php05QvWB.tif: BINARY
+./p/edit/image_tmp2/47297c96d0c45/phpSVGpZp.jpg: BINARY
+./p/edit/image_tmp2/47297c96d0c45/phpShtDiB.tif: BINARY
+./p/edit/image_tmp2/47ccf061474e9/phpBeOE0p.jpg: BINARY
+./p/edit/image_tmp2/4774473567af1/php72O9Y8.jpg: BINARY
+./p/edit/image_tmp2/4774473567af1/phpmng4jh.jpg: BINARY
+./p/edit/image_tmp2/473a43f3484a9/phpYn3132.jpg: BINARY
+./p/edit/image_tmp2/4761033a52c24/phpo3mcNt.tif: BINARY
+./p/edit/image_tmp2/4761033a52c24/phpWbWG4m.tif: BINARY
+./p/edit/image_tmp2/4761033a52c24/phpJpAmPy.jpg: BINARY
+./p/edit/image_tmp2/4761033a52c24/php1tJasu.tif: BINARY
+./p/edit/image_tmp2/4761033a52c24/phpgA7bl7.tif: BINARY
+./p/edit/image_tmp2/47f2de4404c61/phpAlfHO8.jpg: BINARY
+./p/edit/image_tmp2/457e1438cc3f3/phpwVAmaF.jpg: BINARY
+./p/edit/image_tmp2/46de5264297b5/phpxo6bmY.jpg: BINARY
+./p/edit/image_tmp2/47a9096bab542/phpFgL2E2.jpg: BINARY
+./p/edit/image_tmp2/47a9096bab542/php0B1JZc.jpg: BINARY
+./p/edit/image_tmp2/47a9096bab542/phpv0PBlb.jpg: BINARY
+./p/edit/image_tmp2/47a9096bab542/phpreYdH7.jpg: BINARY
+./p/edit/image_tmp2/47a9096bab542/phpSaAzlC.jpg: BINARY
+./p/edit/image_tmp2/47a9096bab542/phpFRKKuO.jpg: BINARY
+./p/edit/image_tmp2/47a9096bab542/phppsfxfI.jpg: BINARY
+./p/edit/image_tmp2/488d21b7967a2/php1EI8pQ.jpg: BINARY
+./p/edit/image_tmp2/4663775d8a8df/phpo3VkOe.jpg: BINARY
+./p/edit/image_tmp2/4663775d8a8df/phpjiWTp2.jpg: BINARY
+./p/edit/image_tmp2/4851f4ed575dc/phpJ0anfE.jpg: BINARY
+./p/edit/image_tmp2/4851f4ed575dc/phpBxVjP3.jpg: BINARY
+./p/edit/image_tmp2/46a6f0fadd003/phpEtRD93.jpg: BINARY
+./p/edit/image_tmp2/46a6f0fadd003/phpA3GXw8.jpg: BINARY
+./p/edit/image_tmp2/46a6f0fadd003/php9QprTq.jpg: BINARY
+./p/edit/image_tmp2/46a6f0fadd003/phpXJJ3nW.jpg: BINARY
+./p/edit/image_tmp2/46a6f0fadd003/phpN3enHl.jpg: BINARY
+./p/edit/image_tmp2/46a6f0fadd003/phpyJle73.jpg: BINARY
+./p/edit/image_tmp2/47f2da4e8bbbf/phpwX4khv.jpg: BINARY
+./p/edit/image_tmp2/467931fb8d10b/phpybStEc.jpg: BINARY
+./p/edit/image_tmp2/45383af8451ff/phpxsq7lU.jpg: BINARY
+./p/edit/image_tmp2/489ab53612db5/phpprQj9b.jpg: BINARY
+./p/edit/image_tmp2/465534871ce14/phpkYShFN.jpg: BINARY
+./p/edit/image_tmp2/46dd041a19985/phpYLtBLt.jpg: BINARY
+./p/edit/image_tmp2/48d0c86dcbf9d/phpiXEV6N.jpg: BINARY
+./p/edit/image_tmp2/489b9ec465f0f/phpTueQiy.jpg: BINARY
+./p/edit/image_tmp2/477069ae9a7ed/phpVVdFxp.jpg: BINARY
+./p/edit/image_tmp2/477069ae9a7ed/phpIbNBR2.jpg: BINARY
+./p/edit/image_tmp2/477069ae9a7ed/phpOiyOgZ.jpg: BINARY
+./p/edit/image_tmp2/467f58094bf8c/php8rGByn.jpg: BINARY
+./p/edit/image_tmp2/48056d9300c49/phpQ2br3V.jpg: BINARY
+./p/edit/image_tmp2/479e894eeeabb/php9YdWbt.jpg: BINARY
+./p/edit/image_tmp2/479e894eeeabb/phpDPwOfh.jpg: BINARY
+./p/edit/image_tmp2/4680992192bed/phpZ72LxC.jpg: BINARY
+./p/edit/image_tmp2/457e11a936825/phpKIJSyF.jpg: BINARY
+./p/edit/image_tmp2/461c39715ec4a/phpifZv0o.jpg: BINARY
+./p/edit/image_tmp2/461c39715ec4a/phpyztt47.jpg: BINARY
+./p/edit/image_tmp2/473a42cdb1b3f/phpwmb9g7.jpg: BINARY
+./p/edit/image_tmp2/47ff0239b5c05/php8r9UZH.jpg: BINARY
+./p/edit/image_tmp2/489ab2bf3452b/phpn13hSn.jpg: BINARY
+./p/edit/image_tmp2/4628757025d34/phpJFExOm.jpg: BINARY
+./p/edit/image_tmp2/4628757025d34/php6jXV0B.jpg: BINARY
+./p/edit/image_tmp2/4628757025d34/phpKGX7mB.jpg: BINARY
+./p/edit/image_tmp2/4628757025d34/phpQ88vYK.jpg: BINARY
+./p/edit/image_tmp2/4628757025d34/phpWi0M2j.jpg: BINARY
+./p/edit/image_tmp2/4680981d96743/phpAXkDIe.jpg: BINARY
+./p/edit/image_tmp2/4680981d96743/phpVtqYZK.jpg: BINARY
+./p/edit/image_tmp2/4680981d96743/phpilFyv2.jpg: BINARY
+./p/edit/image_tmp2/4680981d96743/phpJKPSae.jpg: BINARY
+./p/edit/image_tmp2/47f209b1e42fc/phpB1lltQ.jpg: BINARY
+./p/edit/image_tmp2/4680951288ea9/phpL3ae7K.jpg: BINARY
+./p/edit/image_tmp2/4680951288ea9/phpV4zrqh.jpg: BINARY
+./p/edit/image_tmp2/4680951288ea9/php6xMAih.jpg: BINARY
+./p/edit/image_tmp2/4680951288ea9/phph8iWhF.jpg: BINARY
+./p/edit/image_tmp2/47cb47697c71b/phpyKAXal.jpg: BINARY
+./p/edit/image_tmp2/472984fb2f31c/phpWWWPHn.jpg: BINARY
+./p/edit/image_tmp2/472984fb2f31c/phpzUx3nd.jpg: BINARY
+./p/edit/image_tmp2/4767512bb14c1/phpnvgdvs.jpg: BINARY
+./p/edit/image_tmp2/4851f82bc28e0/phpfnYhvP.jpg: BINARY
+./p/edit/image_tmp2/452aef3ae3010/php9UEw6Q.jpg: BINARY
+./p/edit/image_tmp2/452aef3ae3010/phpe4rnV7.tif: BINARY
+./p/edit/image_tmp2/47f2df0096c92/phpxj3EO4.jpg: BINARY
+./p/edit/image_tmp2/47871e36e6c35/phpUpITBr.jpg: BINARY
+./p/edit/image_tmp2/45400fac5ddda/php96Zzml.jpg: BINARY
+./p/edit/image_tmp2/489ab5dbc3edc/php0LgN7e.jpg: BINARY
+./p/edit/image_tmp2/45287c3539140/phpj2zcKs.jpg: BINARY
+./p/edit/image_tmp2/45287c3539140/phpbcCENm.jpg: BINARY
+./p/edit/image_tmp2/45287c3539140/phpjIX0Se.jpg: BINARY
+./p/edit/image_tmp2/45287c3539140/phpzzVs8B.jpg: BINARY
+./p/edit/image_tmp2/4700a9df19042/phpxzLNtv.jpg: BINARY
+./p/edit/image_tmp2/4700a9df19042/phprziCUh.jpg: BINARY
+./p/edit/image_tmp2/46130d9a42409/phpaf9WXR.jpg: BINARY
+./p/edit/image_tmp2/47f2ddf53b15f/php4zwcYz.jpg: BINARY
+./p/edit/image_tmp2/4737ffa3f3d6a/phpdubNWT.jpg: BINARY
+./p/edit/image_tmp2/4737ffa3f3d6a/phpU0aP7v.jpg: BINARY
+./p/edit/image_tmp2/489ab4aeadee7/phpqvuyY5.jpg: BINARY
+./p/edit/image_tmp2/45daac16021fd/phpoEbcRm.jpg: BINARY
+./p/edit/image_tmp2/45daac16021fd/phpFoQxzf.jpg: BINARY
+./p/edit/image_tmp2/4765d935e612b/php5BTldM.jpg: BINARY
+./p/edit/image_tmp2/47fabc281b4ae/php2m0nh8.jpg: BINARY
+./p/edit/image_tmp2/46f85a7ec068b/phpSPWDwz.jpg: BINARY
+./p/edit/image_tmp2/46aebaa438cb3/phpFpKsbh.jpg: BINARY
+./p/edit/image_tmp2/4860b02d26dbe/php7HabGe.jpg: BINARY
+./p/edit/image_tmp2/4860b02d26dbe/phpbhbj3J.jpg: BINARY
+./p/edit/image_tmp2/4589e14a38f83/phpeLLGbA.jpg: BINARY
+./p/edit/image_tmp2/452c5684bea6e/phpQh3IIj.jpg: BINARY
+./p/edit/image_tmp2/452c5684bea6e/phpTqvc2j.jpg: BINARY
+./p/edit/image_tmp2/452c5684bea6e/phphfaFkA.jpg: BINARY
+./p/edit/image_tmp2/47cb46d1eba04/phpKc5aUm.jpg: BINARY
+./p/edit/image_tmp2/47940189033f0/phpaB53sh.jpg: BINARY
+./p/edit/image_tmp2/47940189033f0/phpKzyTEE.jpg: BINARY
+./p/edit/image_tmp2/47940189033f0/phpx9pwz2.jpg: BINARY
+./p/edit/image_tmp2/486060f223683/phpJ8SHFs.jpg: BINARY
+./p/edit/image_tmp2/471d4635b03b9/phpR3WX0z.jpg: BINARY
+./p/edit/image_tmp2/471d4635b03b9/phpkraL2H.jpg: BINARY
+./p/edit/image_tmp2/471d4635b03b9/phpUPHXGp.jpg: BINARY
+./p/edit/image_tmp2/471d4635b03b9/phpLvU4Wu.jpg: BINARY
+./p/edit/image_tmp2/471d4635b03b9/phpSM4KGS.jpg: BINARY
+./p/edit/image_tmp2/471d4635b03b9/php46QnMm.jpg: BINARY
+./p/edit/image_tmp2/471d4635b03b9/phptJy18t.jpg: BINARY
+./p/edit/image_tmp2/479409aadcbc0/phpSVYa2T.jpg: BINARY
+./p/edit/image_tmp2/479409aadcbc0/php8N9loH.jpg: BINARY
+./p/edit/image_tmp2/4850f3849b67d/phpZtAjmA.jpg: BINARY
+./p/edit/image_tmp2/468394c8efd30/phpNoJTY3.tif: BINARY
+./p/edit/image_tmp2/468394c8efd30/phprVv3Ku.tif: BINARY
+./p/edit/image_tmp2/468394c8efd30/php4qNXJR.tif: BINARY
+./p/edit/image_tmp2/47f2ddac5e013/phpXddVst.jpg: BINARY
+./p/edit/image_tmp2/47ff019399627/phpgIJe4f.jpg: BINARY
+./p/edit/image_tmp2/47660f4e1c7f0/phpCU8RbT.jpg: BINARY
+./p/edit/image_tmp2/47660f4e1c7f0/phpN6uIC2.tif: BINARY
+./p/edit/image_tmp2/47660f4e1c7f0/phpgHQk1o.tif: BINARY
+./p/edit/image_tmp2/47660f4e1c7f0/phpf5hpAE.jpg: BINARY
+./p/edit/image_tmp2/45e29ae2cf994/phpsPRdTJ.jpg: BINARY
+./p/edit/image_tmp2/47f19464c8c6b/phpq7zmxh.jpg: BINARY
+./p/edit/image_tmp2/46809b6b12cdd/phpJcvCtJ.jpg: BINARY
+./p/edit/image_tmp2/46809b6b12cdd/phpXrUyDF.jpg: BINARY
+./p/edit/index.html: EUC-JP (BOM) (LF)
+./p/edit/layout.css: EUC-JP (BOM) (LF)
+./p/edit/upload.js: ASCII (BOM) (CRLF)
+./p/edit/dummy.html: ASCII (BOM) (CRLF)
+./p/edit/edit/html_bgcolor36x25.gif: BINARY
+./p/edit/edit/html_center25.gif: BINARY
+./p/edit/edit/html_fontcolor36x25.gif: BINARY
+./p/edit/edit/html_underline25.gif: BINARY
+./p/edit/edit/html_left25.gif: BINARY
+./p/edit/edit/html_italic25.gif: BINARY
+./p/edit/edit/html_bold25.gif: BINARY
+./p/edit/edit/html_fontsize36x25.gif: BINARY
+./p/edit/edit/html_link25.gif: BINARY
+./p/edit/edit/html_right25.gif: Shift_JIS (BOM)
+./p/result/index.php: EUC-JP (BOM) (LF)
+./p/result/index.html: ASCII (BOM) (LF)
+./p/result/index3.php: EUC-JP (BOM) (LF)
+./p/result/index2.php: EUC-JP (BOM) (LF)
+./p/test/vbscript.html: EUC-JP (BOM) (LF)
+./p/test/vbscript.js: EUC-JP (BOM) (LF)
+./p/search/index.php: EUC-JP (BOM) (LF)
+./p/search/test.js: ASCII (BOM) (LF)
+./p/search/exstr.js: ASCII (BOM) (LF)
+./p/search/layout.css: ASCII (BOM) (LF)
+./p/search/functions.js: ASCII (BOM) (LF)
+./p/search/body.html: ASCII (BOM) (LF)
+./p/search/conf.php: ASCII (BOM)
+./p/search/backup/index.html: ASCII (BOM) (LF)
+./punit/preload.html: ASCII (BOM) (LF)
+./help/img/darkgray_open_off_on.gif: BINARY
+./help/img/error.gif: BINARY
+./help/img/clear_off_on_ja_bt.gif: BINARY
+./help/img/remove_off_on_bt.gif: BINARY
+./help/img/cmt_off_ja_bt.gif: BINARY
+./help/img/regist.gif: BINARY
+./help/img/copy_off_on_bt.gif: BINARY
+./help/img/edit_off_on_bt.gif: BINARY
+./help/img/special_off_bt.gif: BINARY
+./help/img/add_off_ja_bt.gif: BINARY
+./help/img/renew_off_on_bt.gif: BINARY
+./help/img/del_off_on_ja_bt.gif: BINARY
+./help/img/check.gif: BINARY
+./help/img/open_off_on_bts.gif: BINARY
+./help/img/add_off_bt.gif: BINARY
+./help/img/master.gif: BINARY
+./help/img/preview_off_on_bt.gif: BINARY
+./help/img/search_off_on_ja_bt.gif: BINARY
+./help/img/products.gif: BINARY
+./help/cmn/functions.js: EUC-JP (BOM) (LF)
+./help/cmn/styles.css: EUC-JP (BOM) (LF)
+./help/index.html: ASCII (BOM)
+./help/conveuc.sh: EUC-JP (BOM) (LF)
+./help/borders.html: ASCII (BOM)
+./help/navi/index.html: ASCII (BOM)
+./help/contents/100.html: ASCII (BOM)
+./help/contents/200.html: ASCII (BOM)
+./help/contents/302.html: ASCII (BOM)
+./help/contents/307.html: ASCII (BOM)
+./help/contents/504.html: ASCII (BOM)
+./help/contents/304.html: ASCII (BOM)
+./help/contents/2.html: ASCII (BOM)
+./help/contents/900.html: ASCII (BOM)
+./help/contents/1103.html: ASCII (BOM)
+./help/contents/802.html: ASCII (BOM)
+./help/contents/602.html: ASCII (BOM)
+./help/contents/300.html: ASCII (BOM)
+./help/contents/806.html: ASCII (BOM)
+./help/contents/1105.html: ASCII (BOM)
+./help/contents/501.html: ASCII (BOM)
+./help/contents/402.html: ASCII (BOM)
+./help/contents/407.html: ASCII (BOM)
+./help/contents/102.html: ASCII (BOM)
+./help/contents/606.html: ASCII (BOM)
+./help/contents/506.html: ASCII (BOM)
+./help/contents/1302.html: ASCII (BOM)
+./help/contents/1100.html: ASCII (BOM)
+./help/contents/1.html: ASCII (BOM)
+./help/contents/redirect.html: ASCII (BOM)
+./help/contents/607.html: ASCII (BOM)
+./help/contents/507.html: ASCII (BOM)
+./help/contents/1200.html: ASCII (BOM)
+./help/contents/705.html: ASCII (BOM)
+./help/contents/1300.html: ASCII (BOM)
+./help/contents/702.html: ASCII (BOM)
+./help/contents/503.html: ASCII (BOM)
+./help/contents/405.html: ASCII (BOM)
+./help/contents/1401.html: ASCII (BOM)
+./help/contents/500.html: ASCII (BOM)
+./help/contents/605.html: ASCII (BOM)
+./help/contents/505.html: ASCII (BOM)
+./help/contents/707.html: ASCII (BOM)
+./help/contents/303.html: ASCII (BOM)
+./help/contents/1303.html: ASCII (BOM)
+./help/contents/1301.html: ASCII (BOM)
+./help/contents/1102.html: ASCII (BOM)
+./help/contents/400.html: ASCII (BOM)
+./help/contents/706.html: ASCII (BOM)
+./help/contents/700.html: ASCII (BOM)
+./help/contents/801.html: ASCII (BOM)
+./help/contents/1000.html: ASCII (BOM)
+./help/contents/704.html: ASCII (BOM)
+./help/contents/404.html: ASCII (BOM)
+./help/contents/306.html: ASCII (BOM)
+./help/contents/502.html: ASCII (BOM)
+./help/contents/601.html: ASCII (BOM)
+./help/contents/1306.html: ASCII (BOM)
+./help/contents/804.html: ASCII (BOM)
+./help/contents/401.html: ASCII (BOM)
+./help/contents/600.html: ASCII (BOM)
+./help/contents/1104.html: ASCII (BOM)
+./help/contents/1101.html: ASCII (BOM)
+./help/contents/301.html: ASCII (BOM)
+./help/contents/800.html: ASCII (BOM)
+./help/contents/604.html: ASCII (BOM)
+./help/contents/406.html: ASCII (BOM)
+./help/contents/1304.html: ASCII (BOM)
+./help/contents/902.html: ASCII (BOM)
+./help/contents/1401.php: EUC-JP (BOM) (CRLF)
+./help/contents/701.html: ASCII (BOM)
+./help/contents/901.html: ASCII (BOM)
+./cg/index.php: EUC-JP (BOM) (CRLF)
+./cg/layout.css: EUC-JP (BOM) (LF)
+./wf/index.php: EUC-JP (BOM) (CRLF)
+./wf/finish/exstr.js: EUC-JP (BOM) (LF)
+./wf/finish/index.html: EUC-JP (BOM) (LF)
+./wf/finish/parts.tmpl: EUC-JP (BOM) (LF)
+./wf/finish/layout.css: EUC-JP (BOM) (LF)
+./wf/finish/functions.js: ASCII (BOM) (LF)
+./wf/regist/confirm.php: EUC-JP (BOM) (LF)
+./wf/regist/exstr.js: EUC-JP (BOM) (LF)
+./wf/regist/edit.php: EUC-JP (BOM) (LF)
+./wf/regist/layout.css: EUC-JP (BOM) (LF)
+./wf/regist/functions.js: ASCII (BOM) (LF)
+./wf/regist/action.php: EUC-JP (BOM) (LF)
+./wf/cmn/functions.js: ASCII (BOM) (LF)
+./wf/cmn/lib_wf.php: EUC-JP (BOM) (LF)
+./wf/cmn/styles.css: EUC-JP (BOM) (LF)
+./wf/cmn/resultexstr.js: EUC-JP (BOM) (LF)
+./wf/exstr.js: EUC-JP (BOM) (LF)
+./wf/layout.css: EUC-JP (BOM) (LF)
+./wf/search_ifrm/exstr.js: EUC-JP (BOM) (LF)
+./wf/search_ifrm/index.html: EUC-JP (BOM) (LF)
+./wf/search_ifrm/layout.css: EUC-JP (BOM) (LF)
+./wf/search_ifrm/functions.js: ASCII (BOM) (MIXED NL)
+./wf/list/index.php: EUC-JP (BOM) (CRLF)
+./wf/list/exstr.js: ASCII (BOM) (LF)
+./wf/list/layout.css: ASCII (BOM) (LF)
+./wf/list/functions.js: ASCII (BOM) (LF)
+./wf/result/index.php: EUC-JP (BOM) (LF)
+./wf/result/exstr.js: EUC-JP (BOM) (LF)
+./wf/result/layout.css: EUC-JP (BOM) (LF)
+./wf/result/detail.php: EUC-JP (BOM) (LF)
+./wf/search/index.php: EUC-JP (BOM) (CRLF)
+./wf/search/exstr.js: ASCII (BOM) (LF)
+./wf/search/layout.css: ASCII (BOM) (LF)
+./wf/search/functions.js: ASCII (BOM) (LF)
+./wf/search/search.php: EUC-JP (BOM) (LF)
+./pw.php: ASCII (BOM) (LF)
+./menu/menu.php: EUC-JP (BOM) (LF)
+./menu/cmn/menu.js: ASCII (BOM) (LF)
+./menu/cmn/lib_submenu.php: EUC-JP (BOM) (LF)
+./menu/exstr.js: EUC-JP (BOM) (LF)
+./menu/layout.css: ASCII (BOM) (LF)
+./dataexbackup20101006/index.php: EUC-JP (BOM) (LF)
+./dataexbackup20101006/select.php: EUC-JP (BOM) (LF)
+./dataexbackup20101006/cmn/xls_stat02.sql: UTF-8 (BOM) (LF)
+./dataexbackup20101006/cmn/lib_dataex.php: UTF-8 (BOM) (LF)
+./dataexbackup20101006/cmn/xls_purchase.sql: UTF-8 (BOM) (LF)
+./dataexbackup20101006/cmn/order.sql: UTF-8 (BOM) (LF)
+./dataexbackup20101006/cmn/tsv_stock.sql: UTF-8 (BOM) (LF)
+./dataexbackup20101006/cmn/xls_stat01.sql: UTF-8 (BOM) (LF)
+./dataexbackup20101006/cmn/tsv_purchase.sql: UTF-8 (BOM) (LF)
+./dataexbackup20101006/cmn/xls_stock.sql: UTF-8 (BOM) (LF)
+./dataexbackup20101006/cmn/backup/purchase.sql: EUC-JP (BOM) (LF)
+./dataexbackup20101006/cmn/backup/lib_dataex.php: EUC-JP (BOM) (LF)
+./dataexbackup20101006/cmn/backup/stock.sql: EUC-JP (BOM) (LF)
+./dataexbackup20101006/cmn/backup/order.sql: EUC-JP (BOM) (LF)
+./dataexbackup20101006/cmn/backup/sale.sql: EUC-JP (BOM) (LF)
+./dataexbackup20101006/cmn/backup/estimate.sql: EUC-JP (BOM) (LF)
+./dataexbackup20101006/cmn/xls_sales.sql: UTF-8 (BOM) (LF)
+./dataexbackup20101006/cmn/tsv_sales.sql: UTF-8 (BOM) (LF)
+./dataexbackup20101006/cmn/estimate.sql: UTF-8 (BOM) (LF)
+./dataexbackup20101006/exstr.js: EUC-JP (BOM) (LF)
+./dataexbackup20101006/layout.css: ASCII (BOM) (LF)
+./dataexbackup20101006/functions.js: ASCII (BOM) (LF)
+./dataexbackup20101006/select_exstr.js: EUC-JP (BOM) (LF)
+./dataexbackup20101006/result/index.php: UTF-8 (BOM) (LF)
+./dataexbackup20101006/result/stat.html: ASCII (BOM) (LF)
+./dataexbackup20101006/result/index.php060712: EUC-JP (BOM) (LF)
+./dataexbackup20101006/result/spreadsheet_stat01.html_使用してない: UTF-8 (BOM) (LF)
+./dataexbackup20101006/result/js/JSON.php: ASCII (BOM) (LF)
+./dataexbackup20101006/result/spreadsheet.php: UTF-8 (BOM) (LF)
+./dataexbackup20101006/result/index.html: ASCII (BOM) (LF)
+./dataexbackup20101006/result/functions.js: ASCII (BOM) (LF)
+./dataexbackup20101006/result/.htaccess: ASCII (BOM) (LF)
+./dataexbackup20101006/result/index.php060904: EUC-JP (BOM) (LF)
+./dataexbackup20101006/result/spreadsheet/stat01.php: UTF-8 (BOM) (LF)
+./dataexbackup20101006/result/spreadsheet/sales_colmuns.txt: UTF-8 (BOM) (LF)
+./dataexbackup20101006/result/spreadsheet/stock_colmuns.txt: UTF-8 (BOM) (LF)
+./dataexbackup20101006/result/spreadsheet/stat02.php: UTF-8 (BOM) (LF)
+./dataexbackup20101006/result/spreadsheet/stock_dataset.txt: UTF-8 (BOM) (LF)
+./dataexbackup20101006/result/spreadsheet/sales_dataset.txt: UTF-8 (BOM) (LF)
+./dataexbackup20101006/result/spreadsheet/stat02_dataset.txt: UTF-8 (BOM) (LF)
+./dataexbackup20101006/result/spreadsheet/stat01_colmuns.txt: UTF-8 (BOM) (LF)
+./dataexbackup20101006/result/spreadsheet/purchase_dataset.txt: UTF-8 (BOM) (LF)
+./dataexbackup20101006/result/spreadsheet/stock.php: UTF-8 (BOM) (LF)
+./dataexbackup20101006/result/spreadsheet/purchase_colmuns.txt: UTF-8 (BOM) (LF)
+./dataexbackup20101006/result/spreadsheet/stat01_dataset.txt: UTF-8 (BOM) (LF)
+./dataexbackup20101006/result/spreadsheet/purchase.php: UTF-8 (BOM) (LF)
+./dataexbackup20101006/result/spreadsheet/stat02_colmuns.txt: UTF-8 (BOM) (LF)
+./dataexbackup20101006/result/spreadsheet/sales.php: UTF-8 (BOM) (LF)
+./dataexbackup20101006/result/sales.html: ASCII (BOM) (LF)
+./dataexbackup20101006/result/spreadsheet.php_20101004backup: UTF-8 (BOM) (LF)
+./dataexbackup20101006/result/stat.php: UTF-8 (BOM) (LF)
+./dataexbackup20101006/result/sales.php: UTF-8 (BOM) (LF)
+./dataexbackup20101006/result/index.php060308: EUC-JP (BOM) (LF)
+./dataexbackup20101006/result/spreadsheet_preview.html: UTF-8 (BOM) (LF)
+./dataexbackup20101006/search/index.php: EUC-JP (BOM) (LF)
+./dataexbackup20101006/search/sales/exstr.js: EUC-JP (BOM) (LF)
+./dataexbackup20101006/search/sales/layout.css: EUC-JP (BOM) (LF)
+./dataexbackup20101006/search/sales/functions.js: ASCII (BOM) (MIXED NL)
+./dataexbackup20101006/search/estimate/exstr.js: EUC-JP (BOM) (LF)
+./dataexbackup20101006/search/estimate/layout.css: EUC-JP (BOM) (LF)
+./dataexbackup20101006/search/estimate/functions.js: ASCII (BOM) (MIXED NL)
+./dataexbackup20101006/search/cmn/functions.js: Shift_JIS (BOM) (LF)
+./dataexbackup20101006/search/lc/exstr.js: EUC-JP (BOM) (LF)
+./dataexbackup20101006/search/lc/layout.css: EUC-JP (BOM) (LF)
+./dataexbackup20101006/search/lc/functions.js: ASCII (BOM) (MIXED NL)
+./dataexbackup20101006/search/stock/exstr.js: EUC-JP (BOM) (LF)
+./dataexbackup20101006/search/stock/layout.css: EUC-JP (BOM) (LF)
+./dataexbackup20101006/search/stock/functions.js: ASCII (BOM) (MIXED NL)
+./dataexbackup20101006/search/index.php100924_backup: EUC-JP (BOM) (LF)
+./dataexbackup20101006/search/purchase/exstr.js: EUC-JP (BOM) (LF)
+./dataexbackup20101006/search/purchase/layout.css: EUC-JP (BOM) (LF)
+./dataexbackup20101006/search/purchase/functions.js: ASCII (BOM) (MIXED NL)
+./dataexbackup20101006/search/stat02/exstr.js: EUC-JP (BOM) (LF)
+./dataexbackup20101006/search/stat02/layout.css: EUC-JP (BOM) (LF)
+./dataexbackup20101006/search/stat02/functions.js: ASCII (BOM) (MIXED NL)
+./dataexbackup20101006/search/stat01/exstr.js: EUC-JP (BOM) (LF)
+./dataexbackup20101006/search/stat01/layout.css: EUC-JP (BOM) (LF)
+./dataexbackup20101006/search/stat01/functions.js: ASCII (BOM) (MIXED NL)
+./list/index.php: EUC-JP (BOM) (LF)
+./list/select.php: EUC-JP (BOM) (LF)
+./list/cmn/lib_lo.php: EUC-JP (BOM) (LF)
+./list/printset/layout.css: ASCII (BOM) (LF)
+./list/printset/borders.html: ASCII (BOM) (LF)
+./list/printset/functions.js: EUC-JP (BOM) (LF)
+./list/list/exstr.js: EUC-JP (BOM) (LF)
+./list/list/layout.css: ASCII (BOM) (LF)
+./list/list/functions.js: ASCII (BOM) (LF)
+./list/list/select_exstr.js: EUC-JP (BOM) (LF)
+./list/result/estimate/index.php: EUC-JP (BOM) (LF)
+./list/result/estimate/listoutput.php: EUC-JP (BOM) (LF)
+./list/result/estimate/exstr.js: EUC-JP (BOM) (LF)
+./list/result/estimate/layout.css: EUC-JP (BOM) (LF)
+./list/result/estimate/rogo_copy.wmz: BINARY
+./list/result/estimate/po.xml: ASCII (BOM) (LF)
+./list/result/estimate/estimate.php050203: EUC-JP (BOM) (LF)
+./list/result/estimate/rogo_po.wmz: BINARY
+./list/result/estimate/action.php: EUC-JP (BOM) (LF)
+./list/result/estimate/rogo_po.gif: BINARY
+./list/result/estimate/estimate.php: EUC-JP (BOM) (LF)
+./list/result/estimate/rogo_copy.gif: BINARY
+./list/result/po/index.php: EUC-JP (BOM) (LF)
+./list/result/po/listoutput.php: EUC-JP (BOM) (LF)
+./list/result/po/exstr.js: EUC-JP (BOM) (LF)
+./list/result/po/layout.css: EUC-JP (BOM) (LF)
+./list/result/po/rogo_copy.wmz: BINARY
+./list/result/po/po.xml: ASCII (BOM) (CRLF)
+./list/result/po/rogo_po.wmz: BINARY
+./list/result/po/action.php: EUC-JP (BOM) (LF)
+./list/result/po/rogo_po.gif: BINARY
+./list/result/po/rogo_copy.gif: BINARY
+./list/result/po/listoutput.php050323: EUC-JP (BOM) (CRLF)
+./list/result/cmn/functions.js: ASCII (BOM) (LF)
+./list/result/frameset.php: EUC-JP (BOM) (CRLF)
+./list/result/p/index.php: EUC-JP (BOM) (LF)
+./list/result/p/rogo_p.gif: BINARY
+./list/result/p/listoutput.php: EUC-JP (BOM) (LF)
+./list/result/p/exstr.js: EUC-JP (BOM) (LF)
+./list/result/p/layout.css: EUC-JP (BOM) (LF)
+./list/result/p/action.php: EUC-JP (BOM) (LF)
+./list/result/p/dot.gif: EUC-JP (BOM)
+./list/result/p/rogo_p.wmz: BINARY
+./list/result/p/p.xml: ASCII (BOM) (CRLF)
+./list/result/button.php: EUC-JP (BOM) (CRLF)
+./list/search/estimate/exstr.js: EUC-JP (BOM) (LF)
+./list/search/estimate/layout.css: ASCII (BOM) (LF)
+./list/search/estimate/functions.js: EUC-JP (BOM) (LF)
+./list/search/estimate/search.php: EUC-JP (BOM) (LF)
+./list/search/po/exstr.js: EUC-JP (BOM) (LF)
+./list/search/po/layout.css: ASCII (BOM) (LF)
+./list/search/po/functions.js: EUC-JP (BOM) (LF)
+./list/search/po/search.php: EUC-JP (BOM) (CRLF)
+./list/search/p/exstr.js: EUC-JP (BOM) (LF)
+./list/search/p/layout.css: EUC-JP (BOM) (LF)
+./list/search/p/functions.js: ASCII (BOM) (MIXED NL)
+./list/search/p/search.php: EUC-JP (BOM) (CRLF)
+./jsdoc/jsdoc.html: EUC-JP (BOM) (LF)
+./jsdoc/jsdoc.php: EUC-JP (BOM) (CRLF)
+./jsdoc/htmltemplate.inc: ASCII (BOM) (LF)
+./jsdoc/test/vbsclass.js: EUC-JP (BOM) (LF)
+./jsdoc/test/vbscript.js: EUC-JP (BOM) (LF)
+./jsdoc/test/record.js: EUC-JP (BOM) (LF)
+./jsdoc/test/login.js: EUC-JP (BOM) (LF)
+./jsdoc/test/lng.js: EUC-JP (BOM) (LF)
+./jsdoc/test/test2/record.js: EUC-JP (BOM) (LF)
+./jsdoc/test/test2/login.js: EUC-JP (BOM) (LF)
+./jsdoc/test/test2/lng.js: EUC-JP (BOM) (LF)
+./_dataex20090619/index.php: EUC-JP (BOM) (CRLF)
+./_dataex20090619/select.php: EUC-JP (BOM) (LF)
+./_dataex20090619/cmn/purchase.sql: EUC-JP (BOM) (LF)
+./_dataex20090619/cmn/lib_dataex.php: EUC-JP (BOM) (LF)
+./_dataex20090619/cmn/stock.sql: EUC-JP (BOM) (LF)
+./_dataex20090619/cmn/order.sql: EUC-JP (BOM) (LF)
+./_dataex20090619/cmn/sale.sql: EUC-JP (BOM) (LF)
+./_dataex20090619/cmn/estimate.sql: EUC-JP (BOM) (LF)
+./_dataex20090619/exstr.js: EUC-JP (BOM) (LF)
+./_dataex20090619/layout.css: ASCII (BOM) (LF)
+./_dataex20090619/functions.js: ASCII (BOM) (LF)
+./_dataex20090619/select_exstr.js: EUC-JP (BOM) (LF)
+./_dataex20090619/result/index.php: EUC-JP (BOM) (LF)
+./_dataex20090619/result/index.php060712: EUC-JP (BOM) (LF)
+./_dataex20090619/result/index.html: ASCII (BOM) (LF)
+./_dataex20090619/result/functions.js: ASCII (BOM) (LF)
+./_dataex20090619/result/index.php060904: EUC-JP (BOM) (LF)
+./_dataex20090619/result/index.php080604: EUC-JP (BOM) (LF)
+./_dataex20090619/search/index.php: EUC-JP (BOM) (LF)
+./_dataex20090619/search/sales/exstr.js: EUC-JP (BOM) (LF)
+./_dataex20090619/search/sales/layout.css: EUC-JP (BOM) (LF)
+./_dataex20090619/search/sales/functions.js: ASCII (BOM) (MIXED NL)
+./_dataex20090619/search/estimate/exstr.js: EUC-JP (BOM) (LF)
+./_dataex20090619/search/estimate/layout.css: EUC-JP (BOM) (LF)
+./_dataex20090619/search/estimate/functions.js: ASCII (BOM) (MIXED NL)
+./_dataex20090619/search/cmn/functions.js: EUC-JP (BOM) (LF)
+./_dataex20090619/search/lc/exstr.js: EUC-JP (BOM) (LF)
+./_dataex20090619/search/lc/layout.css: EUC-JP (BOM) (LF)
+./_dataex20090619/search/lc/functions.js: ASCII (BOM) (MIXED NL)
+./_dataex20090619/search/stock/exstr.js: EUC-JP (BOM) (LF)
+./_dataex20090619/search/stock/layout.css: EUC-JP (BOM) (LF)
+./_dataex20090619/search/stock/functions.js: ASCII (BOM) (MIXED NL)
+./_dataex20090619/search/purchase/exstr.js: EUC-JP (BOM) (LF)
+./_dataex20090619/search/purchase/layout.css: EUC-JP (BOM) (LF)
+./_dataex20090619/search/purchase/functions.js: ASCII (BOM) (MIXED NL)
+./dlist/po/exstr.js: EUC-JP (BOM) (LF)
+./dlist/po/index.html: EUC-JP (BOM) (LF)
+./dlist/po/functions.js: ASCII (BOM) (LF)
+./dlist/so/exstr.js: EUC-JP (BOM) (LF)
+./dlist/so/index.html: EUC-JP (BOM) (LF)
+./dlist/so/functions.js: ASCII (BOM) (LF)
+./dlist/cmn/@record.js: EUC-JP (BOM) (LF)
+./dlist/cmn/record.js060429: EUC-JP (BOM) (LF)
+./dlist/cmn/styles.css: EUC-JP (BOM) (LF)
+./dlist/cmn/record.js_20051201: EUC-JP (BOM) (LF)
+./dlist/cmn/record.js: EUC-JP (BOM) (LF)
+./dlist/cmn/record.js_20101119: EUC-JP (BOM) (LF)
+./dlist/cmn/record.js060904: EUC-JP (BOM) (LF)
+./dlist/cmn/record.js_20051130: EUC-JP (BOM) (LF)
+./iconv.php: ASCII (BOM) (LF)
+./staff/exstr.js: EUC-JP (BOM) (LF)
+./staff/index.html: ASCII (BOM) (LF)
+./staff/layout.css: EUC-JP (BOM) (LF)
+./staff/functions.js: EUC-JP (BOM) (LF)
+./dataex20101006/index.php: EUC-JP (BOM) (LF)
+./dataex20101006/select.php: EUC-JP (BOM) (LF)
+./dataex20101006/cmn/stat02.sql: UTF-8 (BOM) (LF)
+./dataex20101006/cmn/purchase.sql: UTF-8 (BOM) (LF)
+./dataex20101006/cmn/lib_dataex.php: UTF-8 (BOM) (LF)
+./dataex20101006/cmn/stat01.sql: UTF-8 (BOM) (LF)
+./dataex20101006/cmn/stock.sql: UTF-8 (BOM) (LF)
+./dataex20101006/cmn/order.sql: UTF-8 (BOM) (LF)
+./dataex20101006/cmn/sale.sql: UTF-8 (BOM) (LF)
+./dataex20101006/cmn/backup/purchase.sql: EUC-JP (BOM) (LF)
+./dataex20101006/cmn/backup/lib_dataex.php: EUC-JP (BOM) (LF)
+./dataex20101006/cmn/backup/stock.sql: EUC-JP (BOM) (LF)
+./dataex20101006/cmn/backup/order.sql: EUC-JP (BOM) (LF)
+./dataex20101006/cmn/backup/sale.sql: EUC-JP (BOM) (LF)
+./dataex20101006/cmn/backup/estimate.sql: EUC-JP (BOM) (LF)
+./dataex20101006/cmn/estimate.sql: UTF-8 (BOM) (LF)
+./dataex20101006/exstr.js: EUC-JP (BOM) (LF)
+./dataex20101006/layout.css: ASCII (BOM) (LF)
+./dataex20101006/functions.js: ASCII (BOM) (LF)
+./dataex20101006/select_exstr.js: EUC-JP (BOM) (LF)
+./dataex20101006/result/index.php: UTF-8 (BOM) (LF)
+./dataex20101006/result/stat.html: ASCII (BOM) (LF)
+./dataex20101006/result/index.php060712: EUC-JP (BOM) (LF)
+./dataex20101006/result/spreadsheet_stat01.html_使用してない: UTF-8 (BOM) (LF)
+./dataex20101006/result/js/JSON.php: ASCII (BOM) (LF)
+./dataex20101006/result/spreadsheet.php: UTF-8 (BOM) (LF)
+./dataex20101006/result/index.html: ASCII (BOM) (LF)
+./dataex20101006/result/functions.js: ASCII (BOM) (LF)
+./dataex20101006/result/.htaccess: ASCII (BOM) (LF)
+./dataex20101006/result/index.php060904: EUC-JP (BOM) (LF)
+./dataex20101006/result/spreadsheet/stat01.php: UTF-8 (BOM) (LF)
+./dataex20101006/result/spreadsheet/stat02.php: UTF-8 (BOM) (LF)
+./dataex20101006/result/spreadsheet/stat02_dataset.txt: UTF-8 (BOM) (LF)
+./dataex20101006/result/spreadsheet/stat01_colmuns.txt: UTF-8 (BOM) (LF)
+./dataex20101006/result/spreadsheet/stat01_dataset.txt: UTF-8 (BOM) (LF)
+./dataex20101006/result/spreadsheet/stat02_colmuns.txt: UTF-8 (BOM) (LF)
+./dataex20101006/result/stat.php: UTF-8 (BOM) (LF)
+./dataex20101006/result/index.php060308: EUC-JP (BOM) (LF)
+./dataex20101006/result/spreadsheet_preview.html: UTF-8 (BOM) (LF)
+./dataex20101006/search/index.php: EUC-JP (BOM) (LF)
+./dataex20101006/search/sales/exstr.js: EUC-JP (BOM) (LF)
+./dataex20101006/search/sales/layout.css: EUC-JP (BOM) (LF)
+./dataex20101006/search/sales/functions.js: ASCII (BOM) (MIXED NL)
+./dataex20101006/search/estimate/exstr.js: EUC-JP (BOM) (LF)
+./dataex20101006/search/estimate/layout.css: EUC-JP (BOM) (LF)
+./dataex20101006/search/estimate/functions.js: ASCII (BOM) (MIXED NL)
+./dataex20101006/search/cmn/functions.js: Shift_JIS (BOM) (LF)
+./dataex20101006/search/lc/exstr.js: EUC-JP (BOM) (LF)
+./dataex20101006/search/lc/layout.css: EUC-JP (BOM) (LF)
+./dataex20101006/search/lc/functions.js: ASCII (BOM) (MIXED NL)
+./dataex20101006/search/stock/exstr.js: EUC-JP (BOM) (LF)
+./dataex20101006/search/stock/layout.css: EUC-JP (BOM) (LF)
+./dataex20101006/search/stock/functions.js: ASCII (BOM) (MIXED NL)
+./dataex20101006/search/purchase/exstr.js: EUC-JP (BOM) (LF)
+./dataex20101006/search/purchase/layout.css: EUC-JP (BOM) (LF)
+./dataex20101006/search/purchase/functions.js: ASCII (BOM) (MIXED NL)
+./dataex20101006/search/stat02/exstr.js: EUC-JP (BOM) (LF)
+./dataex20101006/search/stat02/layout.css: EUC-JP (BOM) (LF)
+./dataex20101006/search/stat02/functions.js: ASCII (BOM) (MIXED NL)
+./dataex20101006/search/stat01/exstr.js: EUC-JP (BOM) (LF)
+./dataex20101006/search/stat01/layout.css: EUC-JP (BOM) (LF)
+./dataex20101006/search/stat01/functions.js: ASCII (BOM) (MIXED NL)
+./sc/index.php: EUC-JP (BOM) (LF)
+./sc/finish/invalid_layout.css: EUC-JP (BOM) (LF)
+./sc/finish/remove_layout.css: EUC-JP (BOM) (LF)
+./sc/finish/exstr.js: EUC-JP (BOM) (LF)
+./sc/finish/remove_exstr.js: EUC-JP (BOM) (LF)
+./sc/finish/layout.css: EUC-JP (BOM) (LF)
+./sc/finish/functions.js: ASCII (BOM) (LF)
+./sc/finish/invalid_exstr.js: EUC-JP (BOM) (LF)
+./sc/regist/index.php: EUC-JP (BOM) (LF)
+./sc/regist/renewerrorlayout.css: ASCII (BOM) (LF)
+./sc/regist/index.phpbackup: EUC-JP (BOM) (LF)
+./sc/regist/renewlayout.css: Shift_JIS (BOM) (LF)
+./sc/regist/index.php_060127: EUC-JP (BOM) (LF)
+./sc/regist/exstr.js: EUC-JP (BOM) (LF)
+./sc/regist/index.html: EUC-JP (BOM) (LF)
+./sc/regist/layout.css: Shift_JIS (BOM) (LF)
+./sc/regist/functions.js: Shift_JIS (BOM) (LF)
+./sc/regist/index2.php: EUC-JP (BOM) (CRLF)
+./sc/regist/errorlayout.css: ASCII (BOM) (LF)
+./sc/regist/renew.php: EUC-JP (BOM) (CRLF)
+./sc/regist/index.php060904: EUC-JP (BOM) (LF)
+./sc/cmn/lib_sc.php: EUC-JP (BOM) (LF)
+./sc/cmn/lib_scs.php: EUC-JP (BOM) (LF)
+./sc/cmn/lib_scp.php: EUC-JP (BOM) (CRLF)
+./sc/cmn/lib_scp.php.20060127: EUC-JP (BOM) (LF)
+./sc/cmn/lib_scs1.php: EUC-JP (BOM) (LF)
+./sc/cmn/resultexstr.js: EUC-JP (BOM) (LF)
+./sc/cmn/subloadmastersettings.js: EUC-JP (BOM) (LF)
+./sc/cmn/column.php: EUC-JP (BOM) (LF)
+./sc/exstr.js: EUC-JP (BOM) (LF)
+./sc/index.html: ASCII (BOM) (LF)
+./sc/layout.css: EUC-JP (BOM) (LF)
+./sc/confirm/index.php: EUC-JP (BOM) (CRLF)
+./sc/confirm/exstr.js: EUC-JP (BOM) (LF)
+./sc/confirm/layout.css: EUC-JP (BOM) (LF)
+./sc/confirm/index.php_20051129: EUC-JP (BOM) (LF)
+./sc/search_ifrm/index.php: EUC-JP (BOM) (LF)
+./sc/search_ifrm/exstr.js: EUC-JP (BOM) (LF)
+./sc/search_ifrm/index.html: EUC-JP (BOM) (LF)
+./sc/search_ifrm/layout.css: EUC-JP (BOM) (LF)
+./sc/search_ifrm/functions.js: EUC-JP (BOM) (LF)
+./sc/result/index.php: EUC-JP (BOM) (LF)
+./sc/result/index.html: EUC-JP (BOM) (LF)
+./sc/result/index3.php: EUC-JP (BOM) (LF)
+./sc/result/index2.php: EUC-JP (BOM) (LF)
+./sc/result/index4.php: EUC-JP (BOM) (LF)
+./sc/search/index.php: EUC-JP (BOM) (LF)
+./sc/search/exstr.js: ASCII (BOM) (LF)
+./sc/search/index.html: ASCII (BOM) (LF)
+./sc/search/layout.css: ASCII (BOM) (LF)
+./sc/search/functions.js: ASCII (BOM) (LF)
+./lo/functions.php: EUC-JP (BOM) (LF)
+./lo/chklist.php: EUC-JP (BOM) (LF)
+./lo/index.html: EUC-JP (BOM) (LF)
+./lo/inputform.php: EUC-JP (BOM) (LF)
+./lo/images/back.gif: BINARY
+./layout/type01/sysc/email/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/sysc/email/initlayoutifrm.js: EUC-JP (BOM) (LF)
+./layout/type01/sysc/server/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/sysc/server/initlayoutifrm.js: EUC-JP (BOM) (LF)
+./layout/type01/sysc/cmn/images.js: ASCII (BOM) (LF)
+./layout/type01/sysc/session/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/sysc/session/initlayoutifrm.js: EUC-JP (BOM) (LF)
+./layout/type01/sysc/message/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/sysc/message/initlayoutifrm.js: EUC-JP (BOM) (LF)
+./layout/type01/sysc/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/estimate/regist/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/estimate/cmn/images.js: ASCII (BOM) (LF)
+./layout/type01/estimate/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/estimate/search/initlayoutsearch.js: EUC-JP (BOM) (LF)
+./layout/type01/estimate/search/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/closed/cmn/images.js: ASCII (BOM) (LF)
+./layout/type01/closed/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/closed/initlayoutifrm.js: EUC-JP (BOM) (LF)
+./layout/type01/upload2/cmn/images.js: ASCII (BOM) (LF)
+./layout/type01/upload2/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/m/cmn/images.js: EUC-JP (BOM) (LF)
+./layout/type01/m/list/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/m/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/m/search/initlayoutsearch.js: EUC-JP (BOM) (LF)
+./layout/type01/m/search/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/po/regist/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/po/cmn/images.js: ASCII (BOM) (LF)
+./layout/type01/po/wf/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/po/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/po/search/initlayoutsearch.js: EUC-JP (BOM) (LF)
+./layout/type01/po/search/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/so/regist/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/so/cmn/images.js: ASCII (BOM) (LF)
+./layout/type01/so/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/so/search/initlayoutsearch.js: EUC-JP (BOM) (LF)
+./layout/type01/so/search/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/cmn/initlayouterror.js: EUC-JP (BOM) (LF)
+./layout/type01/cmn/initlayoutcommon.js: ASCII (BOM) (LF)
+./layout/type01/cmn/initlayoutdate.js: ASCII (BOM) (LF)
+./layout/type01/cmn/initlayoutbase.js: EUC-JP (BOM) (LF)
+./layout/type01/cmn/initlayoutmsw.js: ASCII (BOM) (LF)
+./layout/type01/cmn/images.js: EUC-JP (BOM) (LF)
+./layout/type01/cmn/initlayoutquery.js: EUC-JP (BOM) (LF)
+./layout/type01/cmn/initlayoutpunit.js: ASCII (BOM) (LF)
+./layout/type01/cmn/initlayoutresult.js: ASCII (BOM) (LF)
+./layout/type01/cmn/initlayoutconfirm.js: ASCII (BOM) (LF)
+./layout/type01/cmn/initlayouttab.js: ASCII (BOM) (LF)
+./layout/type01/cmn/initlayoutprice.js: ASCII (BOM) (LF)
+./layout/type01/cmn/initlayoutnavi.js: EUC-JP (BOM) (LF)
+./layout/type01/pc/regist/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/pc/cmn/images.js: ASCII (BOM) (LF)
+./layout/type01/pc/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/pc/search/initlayoutsearch.js: EUC-JP (BOM) (LF)
+./layout/type01/pc/search/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/remind/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/dataex/sales/images.js: EUC-JP (BOM) (LF)
+./layout/type01/dataex/sales/initlayoutsearch.js: EUC-JP (BOM) (LF)
+./layout/type01/dataex/estimate/images.js: EUC-JP (BOM) (MIXED NL)
+./layout/type01/dataex/estimate/initlayoutsearch.js: EUC-JP (BOM) (LF)
+./layout/type01/dataex/cmn/images.js: EUC-JP (BOM) (LF)
+./layout/type01/dataex/lc/images.js: EUC-JP (BOM) (LF)
+./layout/type01/dataex/lc/initlayoutsearch.js: EUC-JP (BOM) (LF)
+./layout/type01/dataex/stock/images.js: EUC-JP (BOM) (LF)
+./layout/type01/dataex/stock/initlayoutsearch.js: EUC-JP (BOM) (LF)
+./layout/type01/dataex/list/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/dataex/purchase/images.js: EUC-JP (BOM) (LF)
+./layout/type01/dataex/purchase/initlayoutsearch.js: EUC-JP (BOM) (LF)
+./layout/type01/dataex/stat02/images.js: EUC-JP (BOM) (LF)
+./layout/type01/dataex/stat02/initlayoutsearch.js: EUC-JP (BOM) (LF)
+./layout/type01/dataex/select/images.js: ASCII (BOM) (LF)
+./layout/type01/dataex/stat01/images.js: EUC-JP (BOM) (LF)
+./layout/type01/dataex/stat01/initlayoutsearch.js: EUC-JP (BOM) (LF)
+./layout/type01/navi/sysc/images.js: EUC-JP (BOM) (LF)
+./layout/type01/navi/sysc/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/navi/estimate/images.js: ASCII (BOM) (LF)
+./layout/type01/navi/estimate/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/navi/closed/images.js: EUC-JP (BOM) (LF)
+./layout/type01/navi/closed/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/navi/m/images.js: EUC-JP (BOM) (LF)
+./layout/type01/navi/m/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/navi/po/images.js: ASCII (BOM) (LF)
+./layout/type01/navi/po/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/navi/so/images.js: Shift_JIS (BOM) (LF)
+./layout/type01/navi/so/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/navi/cmn/images.js: ASCII (BOM) (LF)
+./layout/type01/navi/cmn/initlayoutnavi.js: EUC-JP (BOM) (LF)
+./layout/type01/navi/pc/images.js: ASCII (BOM) (LF)
+./layout/type01/navi/pc/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/navi/dataex/images.js: ASCII (BOM) (LF)
+./layout/type01/navi/dataex/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/navi/p/images.js: ASCII (BOM) (LF)
+./layout/type01/navi/p/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/navi/wf/images.js: ASCII (BOM) (LF)
+./layout/type01/navi/wf/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/navi/list/images.js: ASCII (BOM) (LF)
+./layout/type01/navi/list/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/navi/sc/images.js: ASCII (BOM) (LF)
+./layout/type01/navi/sc/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/navi/uc/images.js: ASCII (BOM) (LF)
+./layout/type01/navi/uc/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/p/regist/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/p/cmn/images.js: ASCII (BOM) (LF)
+./layout/type01/p/confirm/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/p/edit/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/p/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/p/search/initlayoutsearch.js: EUC-JP (BOM) (LF)
+./layout/type01/p/search/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/cg/images.js: ASCII (BOM) (LF)
+./layout/type01/cg/initlayout.js: ASCII (BOM) (LF)
+./layout/type01/wf/cmn/images.js: ASCII (BOM) (LF)
+./layout/type01/wf/list/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/wf/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/wf/search/initlayoutsearch.js: EUC-JP (BOM) (LF)
+./layout/type01/wf/search/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/menu/images.js: ASCII (BOM) (LF)
+./layout/type01/menu/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/list/estimate/images.js: ASCII (BOM) (LF)
+./layout/type01/list/estimate/initlayoutsearch.js: EUC-JP (BOM) (LF)
+./layout/type01/list/po/images.js: ASCII (BOM) (LF)
+./layout/type01/list/po/initlayoutsearch.js: EUC-JP (BOM) (LF)
+./layout/type01/list/cmn/images.js: EUC-JP (BOM) (LF)
+./layout/type01/list/p/images.js: ASCII (BOM) (LF)
+./layout/type01/list/p/initlayoutsearch.js: EUC-JP (BOM) (LF)
+./layout/type01/list/list/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/list/select/images.js: ASCII (BOM) (LF)
+./layout/type01/sc/regist/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/sc/cmn/images.js: ASCII (BOM) (LF)
+./layout/type01/sc/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/sc/search/initlayoutsearch.js: EUC-JP (BOM) (LF)
+./layout/type01/sc/search/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/msw/cmn/initlayoutbase.js: EUC-JP (BOM) (LF)
+./layout/type01/msw/cmn/images.js: ASCII (BOM) (LF)
+./layout/type01/msw/cmn/initlayoutquery.js: EUC-JP (BOM) (LF)
+./layout/type01/msw/cmn/initlayouttab.js: ASCII (BOM) (LF)
+./layout/type01/enter/initlayout.js: ASCII (BOM) (LF)
+./layout/type01/uc/finish/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/uc/regist/@initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/uc/regist/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/uc/cmn/images.js: ASCII (BOM) (LF)
+./layout/type01/uc/cmn/@images.js: ASCII (BOM) (LF)
+./layout/type01/uc/info/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/uc/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/uc/search/initlayoutsearch.js: EUC-JP (BOM) (LF)
+./layout/type01/uc/search/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/login/initlayout.js: EUC-JP (BOM) (LF)
+./layout/type01/logout/initlayout.js: ASCII (BOM) (LF)
+./layout/type01/upload/cmn/images.js: ASCII (BOM) (LF)
+./layout/type01/upload/initlayout.js: EUC-JP (BOM) (LF)
+./msw/location/exstr.js: EUC-JP (BOM) (LF)
+./msw/location/index.html: EUC-JP (BOM) (LF)
+./msw/location/layout.css: ASCII (BOM) (LF)
+./msw/date/exstr.js: EUC-JP (BOM) (LF)
+./msw/date/indexb.html: ASCII (BOM) (LF)
+./msw/date/indexc.html: ASCII (BOM) (LF)
+./msw/date/index.html: ASCII (BOM) (LF)
+./msw/date/layout.css: EUC-JP (BOM) (LF)
+./msw/date/date.js: EUC-JP (BOM) (LF)
+./msw/creation/exstr.js: EUC-JP (BOM) (LF)
+./msw/creation/index.html: EUC-JP (BOM) (LF)
+./msw/creation/layout.css: ASCII (BOM) (LF)
+./msw/cmn/functions.js: EUC-JP (BOM) (LF)
+./msw/cmn/styles.css: EUC-JP (BOM) (LF)
+./msw/assembly/exstr.js: EUC-JP (BOM) (LF)
+./msw/assembly/index.html: EUC-JP (BOM) (LF)
+./msw/assembly/layout.css: ASCII (BOM) (LF)
+./msw/wfinput/exstr.js: EUC-JP (BOM) (LF)
+./msw/wfinput/index.html: EUC-JP (BOM) (LF)
+./msw/wfinput/layout.css: ASCII (BOM) (LF)
+./msw/products/exstr.js: EUC-JP (BOM) (LF)
+./msw/products/index.html: EUC-JP (BOM) (LF)
+./msw/products/layout.css: ASCII (BOM) (LF)
+./msw/vi/exstr.js: EUC-JP (BOM) (LF)
+./msw/vi/index.html: EUC-JP (BOM) (LF)
+./msw/vi/layout.css: ASCII (BOM) (LF)
+./msw/input/exstr.js: EUC-JP (BOM) (LF)
+./msw/input/index.html: EUC-JP (BOM) (LF)
+./msw/input/layout.css: ASCII (BOM) (LF)
+./msw/dept/exstr.js: EUC-JP (BOM) (LF)
+./msw/dept/index.html: EUC-JP (BOM) (LF)
+./msw/dept/layout.css: ASCII (BOM) (LF)
+./msw/vendor/exstr.js: EUC-JP (BOM) (LF)
+./msw/vendor/index.html: EUC-JP (BOM) (LF)
+./msw/vendor/layout.css: ASCII (BOM) (LF)
+./msw/applicant/exstr.js: EUC-JP (BOM) (LF)
+./msw/applicant/index.html: EUC-JP (BOM) (LF)
+./msw/applicant/layout.css: ASCII (BOM) (LF)
+./msw/supplier/exstr.js: EUC-JP (BOM) (LF)
+./msw/supplier/index.html: EUC-JP (BOM) (LF)
+./msw/supplier/layout.css: ASCII (BOM) (LF)
+./msw/supplier/index.html20090402: EUC-JP (BOM) (LF)
+./enter/functions.js: EUC-JP (BOM) (LF)
+./result/ifrm.html: ASCII (BOM) (LF)
+./result/cmn/layout.css: EUC-JP (BOM) (LF)
+./result/cmn/functions.js: UTF-8 (BOM) (LF)
+./result/cmn/resultexstr.js: EUC-JP (BOM) (LF)
+./result/index.html: ASCII (BOM) (LF)
+./result/renew.html: ASCII (BOM) (LF)
+./result/remove_master.html: ASCII (BOM) (LF)
+./result/regist_ifrm.html: ASCII (BOM) (LF)
+./result/common.html: ASCII (BOM) (LF)
+./stat.php: UTF-8 (BOM) (LF)
+./uc/index.php: EUC-JP (BOM) (CRLF)
+./uc/finish/layout1.css: EUC-JP (BOM) (LF)
+./uc/finish/exstr1.js: EUC-JP (BOM) (LF)
+./uc/finish/exstr.js: EUC-JP (BOM) (LF)
+./uc/finish/layout.css: EUC-JP (BOM) (LF)
+./uc/finish/functions.js: ASCII (BOM) (LF)
+./uc/regist/renewerrorlayout.css: ASCII (BOM) (LF)
+./uc/regist/renewlayout.css: EUC-JP (BOM) (LF)
+./uc/regist/confirm.php: EUC-JP (BOM) (CRLF)
+./uc/regist/exstr.js: EUC-JP (BOM) (LF)
+./uc/regist/edit.php: EUC-JP (BOM) (CRLF)
+./uc/regist/layout.css: EUC-JP (BOM) (LF)
+./uc/regist/functions.js: ASCII (BOM) (LF)
+./uc/regist/errorlayout.css: ASCII (BOM) (LF)
+./uc/regist/action.php: EUC-JP (BOM) (CRLF)
+./uc/cmn/functions.js: EUC-JP (BOM) (LF)
+./uc/cmn/lib_uc.php: EUC-JP (BOM) (CRLF)
+./uc/cmn/resultexstr.js: EUC-JP (BOM) (LF)
+./uc/exstr.js: EUC-JP (BOM) (LF)
+./uc/layout.css: EUC-JP (BOM) (LF)
+./uc/confirm/exstr.js: EUC-JP (BOM) (LF)
+./uc/confirm/layout.css: EUC-JP (BOM) (LF)
+./uc/search_ifrm/exstr.js: EUC-JP (BOM) (LF)
+./uc/search_ifrm/layout.css: ASCII (BOM) (LF)
+./uc/search_ifrm/functions.js: ASCII (BOM) (LF)
+./uc/list/index.php: EUC-JP (BOM) (CRLF)
+./uc/result/index.php: EUC-JP (BOM) (CRLF)
+./uc/result/exstr.js: EUC-JP (BOM) (LF)
+./uc/result/layout.css: EUC-JP (BOM) (LF)
+./uc/result/detail.php: EUC-JP (BOM) (CRLF)
+./uc/info/exstr.js: EUC-JP (BOM) (LF)
+./uc/info/parts.tmpl: EUC-JP (BOM) (LF)
+./uc/info/layout.css: EUC-JP (BOM) (LF)
+./uc/info/functions.js: ASCII (BOM) (LF)
+./uc/info/errorlayout.css: ASCII (BOM) (LF)
+./uc/search/index.php: EUC-JP (BOM) (CRLF)
+./uc/search/exstr.js: ASCII (BOM) (LF)
+./uc/search/layout.css: ASCII (BOM) (LF)
+./uc/search/functions.js: ASCII (BOM) (LF)
+./uc/search/search.php: EUC-JP (BOM) (CRLF)
+./login/login.php: EUC-JP (BOM) (CRLF)
+./login/exstr.js: ASCII (BOM) (LF)
+./login/logout.php: EUC-JP (BOM) (CRLF)
+./login/layout.css: EUC-JP (BOM) (LF)
+./login/functions.js: ASCII (BOM) (LF)
+./logout/exstr.js: EUC-JP (BOM) (LF)
+./logout/layout.css: EUC-JP (BOM) (LF)
+./preload/preload.html: ASCII (BOM) (LF)
+./preload/index.html: ASCII (BOM) (LF)
+./preload/layout.css: ASCII (BOM) (LF)
+./preload/functions.js: EUC-JP (BOM) (LF)
+./preload/index2.html: ASCII (BOM) (LF)
+./preload/result_preload.html: ASCII (BOM) (LF)
+./phpinfo.php: ASCII (BOM) (LF)
+./upload/index.php: EUC-JP (BOM) (LF)
+./upload/parse/confirm.php: UTF-8 (BOM) (LF)
+./upload/parse/cmn/getWorkSheet2Array.php: UTF-8 (BOM) (LF)
+./upload/parse/cmn/function.js: UTF-8 (BOM) (LF)
+./upload/parse/cmn/lib_parse.php__org__: UTF-8 (BOM) (LF)
+./upload/parse/cmn/lib_parse.php: UTF-8 (BOM) (LF)
+./upload/parse/parse.php: UTF-8 (BOM) (LF)
+./upload/parse/.htaccess: ASCII (BOM) (LF)
+./upload/cmn/function.js: EUC-JP (BOM) (LF)
+./upload/exstr.js: EUC-JP (BOM) (LF)
+./upload/layout.css: ASCII (BOM) (LF)
+./sendmail.php: EUC-JP (BOM) (LF)
+./exc.php: UTF-8 (BOM) (LF)
+./mbconv.php: ASCII (BOM) (LF)
+./dataex20101015/index.php: EUC-JP (BOM) (LF)
+./dataex20101015/select.php: EUC-JP (BOM) (LF)
+./dataex20101015/cmn/xls_stat02.sql: UTF-8 (BOM) (LF)
+./dataex20101015/cmn/lib_dataex.php: UTF-8 (BOM) (LF)
+./dataex20101015/cmn/xls_purchase.sql: UTF-8 (BOM) (LF)
+./dataex20101015/cmn/xls_stat01.sql_backup: UTF-8 (BOM) (LF)
+./dataex20101015/cmn/xls_stat02.sql_bakup: UTF-8 (BOM) (LF)
+./dataex20101015/cmn/order.sql: UTF-8 (BOM) (LF)
+./dataex20101015/cmn/tsv_stock.sql: UTF-8 (BOM) (LF)
+./dataex20101015/cmn/xls_stat01.sql: UTF-8 (BOM) (LF)
+./dataex20101015/cmn/tsv_purchase.sql: UTF-8 (BOM) (LF)
+./dataex20101015/cmn/xls_stock.sql: UTF-8 (BOM) (LF)
+./dataex20101015/cmn/backup/purchase.sql: EUC-JP (BOM) (LF)
+./dataex20101015/cmn/backup/lib_dataex.php: EUC-JP (BOM) (LF)
+./dataex20101015/cmn/backup/stock.sql: EUC-JP (BOM) (LF)
+./dataex20101015/cmn/backup/order.sql: EUC-JP (BOM) (LF)
+./dataex20101015/cmn/backup/sale.sql: EUC-JP (BOM) (LF)
+./dataex20101015/cmn/backup/estimate.sql: EUC-JP (BOM) (LF)
+./dataex20101015/cmn/xls_sales.sql: UTF-8 (BOM) (LF)
+./dataex20101015/cmn/tsv_sales.sql: UTF-8 (BOM) (LF)
+./dataex20101015/cmn/estimate.sql: UTF-8 (BOM) (LF)
+./dataex20101015/exstr.js: EUC-JP (BOM) (LF)
+./dataex20101015/layout.css: ASCII (BOM) (LF)
+./dataex20101015/functions.js: ASCII (BOM) (LF)
+./dataex20101015/select_exstr.js: EUC-JP (BOM) (LF)
+./dataex20101015/result/index.php: UTF-8 (BOM) (LF)
+./dataex20101015/result/stat.html: ASCII (BOM) (LF)
+./dataex20101015/result/index.php060712: EUC-JP (BOM) (LF)
+./dataex20101015/result/spreadsheet_stat01.html_使用してない: UTF-8 (BOM) (LF)
+./dataex20101015/result/js/JSON.php: ASCII (BOM) (LF)
+./dataex20101015/result/spreadsheet.php: UTF-8 (BOM) (LF)
+./dataex20101015/result/index.html: ASCII (BOM) (LF)
+./dataex20101015/result/functions.js: ASCII (BOM) (LF)
+./dataex20101015/result/.htaccess: ASCII (BOM) (LF)
+./dataex20101015/result/index.php060904: EUC-JP (BOM) (LF)
+./dataex20101015/result/spreadsheet/stat01.php: UTF-8 (BOM) (LF)
+./dataex20101015/result/spreadsheet/sales_colmuns.txt: UTF-8 (BOM) (LF)
+./dataex20101015/result/spreadsheet/stock_colmuns.txt: UTF-8 (BOM) (LF)
+./dataex20101015/result/spreadsheet/stat02.php: UTF-8 (BOM) (LF)
+./dataex20101015/result/spreadsheet/stock_dataset.txt: UTF-8 (BOM) (LF)
+./dataex20101015/result/spreadsheet/sales_dataset.txt: UTF-8 (BOM) (LF)
+./dataex20101015/result/spreadsheet/stat02_dataset.txt: UTF-8 (BOM) (LF)
+./dataex20101015/result/spreadsheet/stat01_colmuns.txt: UTF-8 (BOM) (LF)
+./dataex20101015/result/spreadsheet/purchase_dataset.txt: UTF-8 (BOM) (LF)
+./dataex20101015/result/spreadsheet/stock.php: UTF-8 (BOM) (LF)
+./dataex20101015/result/spreadsheet/purchase_colmuns.txt: UTF-8 (BOM) (LF)
+./dataex20101015/result/spreadsheet/stat01_dataset.txt: UTF-8 (BOM) (LF)
+./dataex20101015/result/spreadsheet/purchase.php: UTF-8 (BOM) (LF)
+./dataex20101015/result/spreadsheet/stat02_colmuns.txt: UTF-8 (BOM) (LF)
+./dataex20101015/result/spreadsheet/sales.php: UTF-8 (BOM) (LF)
+./dataex20101015/result/sales.html: ASCII (BOM) (LF)
+./dataex20101015/result/spreadsheet.php_20101004backup: UTF-8 (BOM) (LF)
+./dataex20101015/result/stat.php: UTF-8 (BOM) (LF)
+./dataex20101015/result/sales.php: UTF-8 (BOM) (LF)
+./dataex20101015/result/index.php060308: EUC-JP (BOM) (LF)
+./dataex20101015/result/spreadsheet_preview.html: UTF-8 (BOM) (LF)
+./dataex20101015/search/index.php: EUC-JP (BOM) (LF)
+./dataex20101015/search/sales/exstr.js: EUC-JP (BOM) (LF)
+./dataex20101015/search/sales/layout.css: EUC-JP (BOM) (LF)
+./dataex20101015/search/sales/functions.js: ASCII (BOM) (MIXED NL)
+./dataex20101015/search/estimate/exstr.js: EUC-JP (BOM) (LF)
+./dataex20101015/search/estimate/layout.css: EUC-JP (BOM) (LF)
+./dataex20101015/search/estimate/functions.js: ASCII (BOM) (MIXED NL)
+./dataex20101015/search/cmn/functions.js: Shift_JIS (BOM) (LF)
+./dataex20101015/search/lc/exstr.js: EUC-JP (BOM) (LF)
+./dataex20101015/search/lc/layout.css: EUC-JP (BOM) (LF)
+./dataex20101015/search/lc/functions.js: ASCII (BOM) (MIXED NL)
+./dataex20101015/search/stock/exstr.js: EUC-JP (BOM) (LF)
+./dataex20101015/search/stock/layout.css: EUC-JP (BOM) (LF)
+./dataex20101015/search/stock/functions.js: ASCII (BOM) (MIXED NL)
+./dataex20101015/search/index.php100924_backup: EUC-JP (BOM) (LF)
+./dataex20101015/search/purchase/exstr.js: EUC-JP (BOM) (LF)
+./dataex20101015/search/purchase/layout.css: EUC-JP (LF)
+./dataex20101015/search/purchase/functions.js: ASCII (MIXED NL)
+./dataex20101015/search/stat02/exstr.js: EUC-JP (LF)
+./dataex20101015/search/stat02/layout.css: EUC-JP (LF)
+./dataex20101015/search/stat02/functions.js: ASCII (MIXED NL)
+./dataex20101015/search/stat01/exstr.js: EUC-JP (LF)
+./dataex20101015/search/stat01/layout.css: EUC-JP (LF)
+./dataex20101015/search/stat01/functions.js: ASCII (MIXED NL)
+./test.php: ASCII (LF)
+./warning/index.html: ASCII (LF)

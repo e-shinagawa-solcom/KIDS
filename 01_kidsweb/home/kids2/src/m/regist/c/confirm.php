@@ -76,6 +76,7 @@ $objMaster->setAryMasterInfo( $aryData[$aryData["strKeyName"]], $aryData["lngsto
 
 
 
+
 // 入力データの文字列チェック
 if ( $aryData["lngActionCode"] != DEF_ACTION_DELETE )
 {

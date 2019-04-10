@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" -->
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
+<title>K.I.D.S. - Spread Sheet</title>
+
+<script src="sigma_grid/demos/highlight/jssc3.js" type="text/javascript"></script>
+<link href="sigma_grid/demos/highlight/style.css" rel="stylesheet" type="text/css" />
+<style>
+	h1 {
+		font-size: 16px;
+	}
+	table{
+		border-collapse:collapse;
+	}
+	th {
+		border:solid 2px #778899;
+		background-color: #FFFF00;
+		white-space: nowrap;
+		padding: 0px;
+	
+	}
+	td {
+		border:solid 1px #778899;
+		white-space: nowrap;
+		padding: 0px;
+	}
+</style>
+<script type="text/javascript"><!--
+function $(tagId)
+{
+	return document.getElementById(tagId);
+}
+
+var __COLUMNS__ = 
+_%__COLUMNS__%_
+;
+
+var __DATA__=
+_%__DATA__%_
+;
+
+function displayData()
+{
+	$("result").innerHTML = "データ処理中です...";
+}
+function displayData1()
+{
+	$("result").innerHTML = parseJSON(__COLUMNS__, __DATA__);
+}
+
+// JSONのデータを解析して表示
+function parseJSON(varColumns, varData)
+{
+
+	var columns = eval(varColumns);
+	var data = eval(varData);
+
+	var resultData = "<table>";
+//alert(columns.length);
+//alert(columns[0]["header"]);
+
+	for(var j=0; j<columns.length; j++)
+	{
+		resultData += "<th>" + columns[j]["header"] + "&nbsp;</th>";
+	}
+
+	for(var i=0; i<data.length; i++)
+	{
+		resultData += "<tr>";
+		for(var j=0; j<data[i].length; j++)
+		{
+			resultData += "<td>" + data[i][j] + "&nbsp;</td>";
+		}
+		resultData += "</tr>";
+	}
+	resultData += "</table>";
+	return resultData;
+}
+// --></script>
+
+</head>
+<body onLoad="displayData1();">
+
+   
+  <div id="header">
+  <h1>_%__TITLE__%_</h1>
+  </div>
+
+  <div id="content">
+    <div id="bigbox" style="margin:15px;display:!none;font-size:12px;">
+<div id="result"></div>
+    </div>
+  </div>
+<a href="_%__EXCEL_URL__%_">EXCEL</a>
+</div>
+</body>
+</html>

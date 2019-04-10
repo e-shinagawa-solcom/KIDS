@@ -43,7 +43,7 @@ if ( !fncCheckAuthority( DEF_FUNCTION_M0, $objAuth ) )
 }
 
 // HIDDEN 生成
-$aryParts["strSessionID"] =& $aryData[strSessionID];
+$aryParts["strSessionID"] =& $aryData["strSessionID"];
 
 // 通貨レートコードプルダウンメニュー 生成
 $aryParts["lngMonetaryRateCode"]  = "<option value=\"\"></option>\n";

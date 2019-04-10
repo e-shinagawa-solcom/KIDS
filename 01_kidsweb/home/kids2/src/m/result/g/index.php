@@ -32,7 +32,7 @@ include_once('conf.inc');
 require (LIB_FILE);
 require (SRC_ROOT . "m/cmn/lib_m.php");
 
-
+echo "est";
 
 $objDB   = new clsDB();
 $objAuth = new clsAuth();
@@ -76,7 +76,6 @@ $strWhereString = join ( " AND", $aryWhereString );
 $strQuery .= " WHERE " . $strWhereString . " ORDER BY c.lngCompanyCode, g.lngGroupCode";
 
 
-
 // データの取得とオブジェクトへのセット
 $lngResultNum = $objMaster->setMasterTableData( $strQuery, $objDB );
 $objMaster->strTableName = "m_Group";
@@ -102,7 +101,7 @@ if ( $lngResultNum )
 		// カラム生成
 		$aryParts["strResultHtml"] .= "		<th>$count</th>\n";
 		$aryParts["strResultHtml"] .= "		<td nowrap>" . $record[$objMaster->aryColumnName[0]] . "</td>\n";
-		$aryParts["strResultHtml"] .= "		<td nowrap>" . fncHTMLSpecialChars( $record[strcompanydisplayname] ) . "</td>\n";
+		$aryParts["strResultHtml"] .= "		<td nowrap>" . fncHTMLSpecialChars( $record["strcompanydisplayname"] ) . "</td>\n";
 		$aryParts["strResultHtml"] .= "		<td nowrap>" . fncHTMLSpecialChars( $record[$objMaster->aryColumnName[2]] ) . "</td>\n";
 		$aryParts["strResultHtml"] .= "		<td nowrap>" . $aryGroupDisplayFlag[$record[$objMaster->aryColumnName[3]]] . "</td>\n";
 		$aryParts["strResultHtml"] .= "		<td nowrap>" . $record[$objMaster->aryColumnName[4]] . "</td>\n";
@@ -138,8 +137,8 @@ $objDB->close();
 
 
 
-$aryParts["HIDDEN"]          = "<input type=hidden name=strSessionID value=$aryData[strSessionID]>\n";
-$aryParts["HIDDEN"]         .= "<input type=hidden name=strGroupDisplayName value=$aryData[strGroupDisplayName]>\n";
+$aryParts["HIDDEN"]          = "<input type=hidden name=strSessionID value=". $aryData["strSessionID"]. ">\n";
+$aryParts["HIDDEN"]         .= "<input type=hidden name=strGroupDisplayName value=" .$aryData["strGroupDisplayName"]. ">\n";
 $aryParts["lngLanguageCode"] =& $_COOKIE["lngLanguageCode"];
 $aryParts["strTableName"]    =& $objMaster->strTableName;
 $aryParts["lngColumnNum"]    = 7;

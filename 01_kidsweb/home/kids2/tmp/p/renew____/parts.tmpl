@@ -1,0 +1,606 @@
+<config>
+<!-----------------------------------------------------------------------------
+	File name     : Products renew template
+	Last modified : 2008/04/18
+	Author        : 
+	Remark        : 
+------------------------------------------------------------------------------->
+<header1>
+<script type="text/javascript" language="javascript" src="/layout/type01/cmn/images.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/type01/cmn/initlayoutbase.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/type01/cmn/initlayoutquery.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/type01/cmn/initlayouttab.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/type01/cmn/initlayoutcommon.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/type01/cmn/initlayouterror.js"></script>
+</header1>
+
+
+<header2>
+<script type="text/javascript" language="javascript" src="/layout/type01/p/cmn/images.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/type01/p/regist/initlayout.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/type01/cmn/initlayoutmsw.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/type01/cmn/initlayoutdate.js"></script>
+</header2>
+
+
+<header3>
+<link rel="stylesheet" type="text/css" media="screen" href="layout.css">
+<link rel="stylesheet" type="text/css" media="screen" href="errorlayout.css">
+<script type="text/javascript" language="javascript" src="exstr.js"></script>
+<script type="text/javascript" language="javascript" src="functions.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
+</header3>
+
+
+<bodyonload>
+initLayoutBase();initLayoutP();initLayoutQuery();initLayoutTab();initLayoutMsw();initLayoutDate();autoFocus1();initLayoutError1( ErrInputA );initLayoutError2( ErrInputB );GetlngLanguageCode( 1 );Loading();
+</bodyonload>
+</config>
+
+
+
+<p id="Preload">
+	<iframe id="PreloadFrmRenew" name="PreloadWin" frameborder="0" src="/preload/renew.html"></iframe>
+</p>
+
+
+
+<bgsound id="BeepSound" src="/error/dummy.aif" loop="1" balance="0" volume="-100">
+
+
+<!-- オブジェクト -->
+<!-- 1:部門→部門名称 -->
+<!-- 2:担当者コード→担当者名 -->
+<!-- 3:顧客→顧客名称 -->
+<!-- 4:顧客品番 -->
+<!-- 5:生産工場→生産工場名称 -->
+<!-- 6:アッセンブリコード→アッセンブリ名 -->
+<!-- 7:納品場所→納品場所名称 -->
+
+
+<OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting" WIDTH="0" HEIGHT="0"></OBJECT>
+<Script for="objDataSourceSetting" event="ondatasetcomplete">subLoadMasterSetting(this.recordset,0);
+</Script>
+
+<OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting2" WIDTH="0" HEIGHT="0"></OBJECT>
+<Script for="objDataSourceSetting2" event="ondatasetcomplete">subLoadMasterSetting(this.recordset,1);
+</Script>
+
+
+<!-- form name="PPP1" action="" method="post" -->
+<form name="PPP1" action="_%strurl%_" method="post">
+<input type="hidden" name="strProcess" value="_%strProcess%_">
+<input type="hidden" name="strSessionID" value="_%strSessionID%_">
+
+
+
+<!-- ////////////////////////////////// START MAIN TITLE ////////////////////////////////// -->
+<span id="MainTitle"></span>
+<!-- /////////////////////////////////// END MAIN TITLE /////////////////////////////////// -->
+
+
+
+
+
+
+
+
+
+<!-- /////////////////////////////////// START NAVIGAION /////////////////////////////////// -->
+<span id="NaviButton"></span>
+
+<p id="Navigations" onmouseout="NavigationOFF( Navigations , NaviButton );">
+<span id="Navi">
+	<iframe id="NaviIfrm" name="NAVIwin" frameborder="0" scrolling="no" src="/navi/p/regist/index.html"></iframe>
+</span>
+</p>
+<!-- //////////////////////////////////// END NAVIGAION //////////////////////////////////// -->
+
+
+
+
+
+
+
+<!-- /////////////////////////////////// START INPUT A SEGMENTS /////////////////////////////////// -->
+<p id="InputA">
+
+
+<!-- START BODYS -->
+<span id="SegABodys"></span>
+<!-- END BODYS -->
+
+<!-- START HEADER -->
+<span id="SegAHeaderRenew"></span>
+<!-- END HEADER -->
+
+<!-- START BOTTOM -->
+<span id="SegABottom"></span>
+<!-- END BOTTOM -->
+
+<!-- START QUERY BUTTON -->
+<span id="SegAClearBt"></span>
+<!-- END QUERY BUTTON -->
+
+
+<!-- START SEGMENTS -->
+<span id="SegA01">製品コード</span>
+
+<span id="SegA05">製品名称(日本語)</span>
+<span id="SegA06">製品名称(英語)</span>
+
+<span id="SegA03">営業部署</span>
+<span id="SegA04">開発担当者</span>
+<span id="SegA0304"></span>
+
+<span id="SegA02">顧客品番</span>
+<span id="SegA18">カテゴリ</span>
+
+<span id="SegA07">商品名称</span>
+<span id="SegB08">顧客</span>
+<span id="SegB09">顧客担当者</span>
+<span id="SegB0809"></span>
+
+<span id="SegA09">荷姿単位</span>
+<span id="SegA08">製品単位</span>
+
+<span id="SegA12">内箱(袋)入数</span>
+<span id="SegA13">カートン入数</span>
+
+<span id="SegB06">生産予定数</span>
+<span id="SegB07">初回納品数</span>
+
+<span id="CreateDate">作成日時</span>
+
+<!-- END SEGMENTS -->
+
+
+<!-- START VARS -->
+<span id="VarsA01">
+	<input class="disTxt04L" type="text" name="strProductName" value="" maxlength="4" disabled tabindex="1">
+</span>
+
+<span id="VarsA02">
+	<input class="disTxt02R" type="text" name="" value="01" maxlength="2" disabled>&nbsp;<input class="TxtStyle05L" type="text" name="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="2">
+</span>
+
+<!-- カテゴリ -->
+
+<span id="VarsA03">
+	<input class="TxtStyle02L" type="text" name="" maxlength="2" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="3">&nbsp;<input class="disTxt46L" type="text" name="" value="" maxlength="25" tabindex="4" disabled>
+</span>
+
+<span id="VarsA04">
+	<input class="TxtStyle02L" type="text" name="" maxlength="3" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="6">&nbsp;<input class="disTxt46L" type="text" name="" maxlength="25" tabindex="7" disabled>
+</span>
+
+<span id="VarsA05">
+	<input class="TxtStyle07L" type="text" name="" maxlength="40" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="8">
+</span>
+
+<span id="VarsA06">
+	<input class="TxtStyle07L" type="text" name="" maxlength="40" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="9">
+</span>
+
+<span id="VarsA07">
+	<input class="TxtStyle07L" type="text" name="" maxlength="40" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="10">
+</span>
+
+<span id="VarsB08">
+	<input class="TxtStyle05L" type="text" name="lngCompanyCode" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="35">&nbsp;<input class="disTxt46L" type="text" name="strCustomerName" maxlength="25" tabindex="36" disabled>
+</span>
+
+<span id="VarsB09">
+	<input class="TxtStyle05L" type="text" name="strCustomerUserCode" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="35">&nbsp;<input class="Txt46L" type="text" name="strCustomerUserName" maxlength="25" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="36">
+</span>
+
+
+<span id="VarsA08">
+	<select name="" tabindex="11">
+		<option value="">pcs</option>
+		<option value="">set</option>
+	</select>
+</span>
+
+<span id="VarsA09">
+	<select name="" tabindex="12">
+		<option value="">c/t</option>
+	</select>
+</span>
+
+<span id="VarsA12">
+	<input class="TxtStyle14R" type="text" name="" maxlength="" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="15">
+</span>
+
+<span id="VarsA13">
+	<input class="TxtStyle14R" type="text" name="" maxlength="" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="16">
+</span>
+
+<span id="VarsB06_1">
+	<input class="TxtStyle05R" type="text" name="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="31">
+</span>
+<span id="VarsB06_2">
+	<select name="" tabindex="32">
+		<option value="">c/t</option>
+	</select>
+</span>
+
+<span id="VarsB07_1">
+	<input class="TxtStyle05R" type="text" name="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="33">
+</span>
+<span id="VarsB07_2">
+	<select name="" tabindex="34">
+		<option value="">pcs</option>
+		<option value="">set</option>
+	</select>
+</span>
+
+<span id="CreateDateVars">
+	<input class="disTxt19L" type="text" name="" value="" disabled>
+</span>
+<!-- END VARS -->
+
+
+<!-- START [DEPT & IN CHARGE NAME] BUTTON -->
+<span id="MSWBt02"></span>
+<!-- END [DEPT & IN CHARGE NAME] BUTTON -->
+
+<!-- START [VENDOR & IN CHARGE NAME] BUTTON -->
+<span id="MSWBt07"></span>
+<!-- END [VENDOR & IN CHARGE NAME] BUTTON -->
+
+
+<!-- START GOODS PLAN BUTTON -->
+<span id="GoodsPlanButton" onclick="ShowGoodsPlan(this);"></span>
+<!-- END GOODS PLAN BUTTON -->
+
+
+
+</p>
+<!-- //////////////////////////////////// END INPUT A SEGMENTS //////////////////////////////////// -->
+
+
+
+
+
+
+
+
+<!-- ////////// START GOODS PLAN WINDOW ////////// -->
+<p id="GoodsPlan">
+<span id="GoodsPlanBodys"></span>
+<span id="GoodsPlanHeader"></span>
+<span id="GoodsPlanBottom"></span>
+<span id="ProgressStatus">企画進行状況</span>
+<span id="ReviseNumber">改訂番号</span>
+<span id="ReviseDate">改訂日時</span>
+
+<span id="ProgressCodeVars">
+	<select class="Slt16" name="" tabindex="">
+		<option value="">企画進行中</option>
+		<option value="">保留</option>
+		<option value="">中止</option>
+		<option value="">納品済</option>
+	</select>
+</span>
+
+<span id="ReviseNumberVars">
+	<input class="disTxt03L" type="text" name="revise" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);" disabled>
+</span>
+
+<span id="ReviseDateVars">
+	<input class="disTxt19L" type="text" name="" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);" disabled>
+</span>
+</p>
+<!-- ////////// END GOODS PLAN WINDOW ////////// -->
+
+
+
+<span id="Record"></span>
+</form>
+<form name="PPP2">
+
+
+
+
+
+
+
+
+
+
+<!-- /////////////////////////////////// START INPUT B SEGMENTS /////////////////////////////////// -->
+<p id="InputB">
+
+
+<!-- START HEADER -->
+<span id="SegBHeaderRenew"></span>
+<!-- END HEADER -->
+
+<!-- START TITLE -->
+<span id="SegBBodys"></span>
+<!-- END TITLE -->
+
+<!-- START BOTTOM -->
+<span id="SegBBottom"></span>
+<!-- END BOTTOM -->
+
+<!-- START QUERY BUTTON -->
+<span id="SegBClearBt"></span>
+<span id="RegistBt"></span>
+<!-- END QUERY BUTTON -->
+
+
+<!-- START SEGMENTS -->
+<span id="SegB03">生産工場</span>
+<span id="SegA17">アッセンブリ工場</span>
+<span id="SegB04">納品場所</span>
+
+
+<span id="SegB05">納期</span>
+
+<span id="SegB02">納価</span>
+<span id="SegB01">上代</span>
+
+<span id="SegA11">対象年齢</span>
+<span id="SegB11">ロイヤリティ</span>
+<span id="SegB16">証紙</span>
+
+<span id="SegB10">版権元</span>
+<span id="SegB12">版権表示(刻印)</span>
+<span id="SegB13">版権表示(印刷物)</span>
+
+<span id="SegB17">商品形態</span>
+
+<span id="SegA14">製品構成</span>
+<span id="SegA15">アッセンブリ内容</span>
+
+<span id="SegB14">仕様詳細</span>
+<!-- END SEGMENTS -->
+
+
+<!-- START VARS -->
+<span id="VarsB03">
+	<input class="TxtStyle05L" type="text" name="lngFactoryCode" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="25">&nbsp;<input class="disTxt40L" type="text" name="" value="" maxlength="" tabindex="26" disabled>
+</span>
+
+<span id="VarsA17">
+	<input class="TxtStyle05L" type="text" name="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="28">&nbsp;<input class="disTxt40L" type="text" name="" maxlength="25" tabindex="29" disabled>
+</span>
+
+<span id="VarsB04">
+	<input class="TxtStyle05L" type="text" name="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="28">&nbsp;<input class="disTxt40L" type="text" name="" maxlength="25" tabindex="29" disabled>
+</span>
+
+<span id="VarsB01">
+	<input class="Txt23R" type="text" name="sprice" value="" maxlength="23" onfocus="chColorOn(this);" onblur="fncCheckNumber(this, 0);chColorOff(this);" tabindex="21">
+</span>
+
+<span id="VarsB02">
+	<input class="Txt23R" type="text" name="PriceText1" value="" maxlength="23" onfocus="chColorOn(this);" onblur="fncCheckNumber(this, 0);chColorOff(this);" tabindex="22">
+</span>
+
+<span id="VarsB05">
+	<input class="TxtStyle05L" type="text" name="ddate" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="23">
+</span>
+
+<span id="VarsA11">
+	<select name="" tabindex="14">
+		<option value=""></option>
+		<option value="">10歳</option>
+		<option value="">10歳</option>
+		<option value="">10歳</option>
+	</select>
+</span>
+
+<span id="VarsB10">
+	<select class="SlctStyle04" name="" tabindex="39">
+		<option value=""></option>
+		<option value=""></option>
+		<option value=""></option>
+	</select>
+</span>
+
+<span id="VarsB11">
+	<input class="TxtStyle05R" type="text" name="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="40">
+</span>
+
+<span id="VarsB16">
+	<select name="" tabindex="39">
+		<option value=""></option>
+		<option value="">無し</option>
+		<option value="">印刷</option>
+		<option value="">シール</option>
+	</select>
+</span>
+
+<span id="VarsB12">
+	<input class="TxtStyle09L" type="text" name="" maxlength="40" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="41">
+</span>
+
+<span id="VarsB13">
+	<input class="TxtStyle09L" type="text" name="" maxlength="40" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="42">
+</span>
+
+<span id="VarsB17">
+	<select name="" tabindex="39">
+		<option value=""></option>
+		<option value="">袋</option>
+		<option value=""></option>
+		<option value=""></option>
+	</select>
+</span>
+
+<span id="VarsB14">
+	<textarea rows="4" wrap="hard" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="43"></textarea>
+</span>
+
+<span id="VarsA14">
+	<input class="TxtStyle09L" type="text" name="" maxlength="50" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="18">
+</span>
+
+<span id="VarsA15">
+	<input class="TxtStyle09L" type="text" name="" maxlength="50" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="19">
+</span>
+
+<!-- END VARS -->
+
+
+<!-- START [VENDOR 02] BUTTON -->
+<span id="MSWBt01_2"></span>
+<!-- END [VENDOR 02] BUTTON -->
+
+<!-- START [VENDOR 03] BUTTON -->
+<span id="MSWBt01_3"></span>
+<!-- END [VENDOR 03] BUTTON -->
+
+<!-- START [LOCATION] BUTTON -->
+<span id="MSWBt04"></span>
+<!-- END [LOCATION] BUTTON -->
+
+<!-- START DATE BUTTON -->
+<span id="DateBtA"></span>
+<!-- END DATE BUTTON -->
+
+<!-- START PRICE BUTTON -->
+<!--
+<span id="PriceBt" onclick="ShowPrice(this);"></span>
+-->
+<!-- END PRICE BUTTON -->
+
+
+</p>
+<!-- //////////////////////////////////// END INPUT B SEGMENTS //////////////////////////////////// -->
+
+
+
+
+
+
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- /////////////////////////////////// START MSW /////////////////////////////////// -->
+<!-- START [CREATION FACTORY] -->
+<p id="MiFrame01_2" onclick="Zchange(this);">
+<iframe id="Mdata01_2" name="MVwin_2" frameborder="0" scrolling="no" src="/msw/creation/index.html"></iframe>
+<span id="DummyDrag01_2" onmousedown="pickup01_2('MiFrame01_2',event);return false;" onmouseup="ShowValue( window.MVwin_2 );"></span>
+<span id="DummyClose01_2" onclick="DisplayerM01_2();ExchangeM01_2( window.Pwin );return false;"></span>
+</p>
+<!-- END [CREATION FACTORY] -->
+
+
+<!-- START [ASSEMBLY FACTORY] -->
+<p id="MiFrame01_3" onclick="Zchange(this);">
+<iframe id="Mdata01_3" name="MVwin_3" frameborder="0" scrolling="no" src="/msw/assembly/index.html"></iframe>
+<span id="DummyDrag01_3" onmousedown="pickup01_3('MiFrame01_3',event);return false;" onmouseup="ShowValue( window.MVwin_3 );"></span>
+<span id="DummyClose01_3" onclick="DisplayerM01_3();ExchangeM01_3( window.Pwin );return false;"></span>
+</p>
+<!-- END [ASSEMBLY FACTORY] -->
+
+
+<!-- START [DEPT & IN CHARGE NAME] -->
+<p id="MiFrame02" onclick="Zchange(this);">
+<iframe id="Mdata02" name="MDwin" frameborder="0" scrolling="no" src="/msw/dept/index.html"></iframe>
+<span id="DummyDrag02" onmousedown="pickup02('MiFrame02',event);return false;" onmouseup="ShowHideValueDept( window.MDwin );"></span>
+<span id="DummyClose02" onclick="DisplayerM02();ExchangeM02( window.Pwin );return false;"></span>
+</p>
+<!-- END [DEPT & IN CHARGE NAME] -->
+
+
+<!-- START [LOCATION] -->
+<p id="MiFrame04" onclick="Zchange(this);">
+<iframe id="Mdata04" name="MLwin" frameborder="0" scrolling="no" src="/msw/location/index.html"></iframe>
+<span id="DummyDrag04" onmousedown="pickup04('MiFrame04',event);return false;" onmouseup="ShowValue( window.MLwin );"></span>
+<span id="DummyClose04" onclick="DisplayerM04();ExchangeM04( window.Pwin );return false;"></span>
+</p>
+<!-- END [LOCATION] -->
+
+
+<!-- START [VENDOR & IN CHARGE NAME] -->
+<p id="MiFrame07" onclick="Zchange(this);">
+<iframe id="Mdata07" name="VIwin" frameborder="0" scrolling="no" src="/msw/vi/index.html"></iframe>
+<span id="DummyDrag07" onmousedown="pickup07('MiFrame07',event);return false;" onmouseup="ShowHideValueVi( window.VIwin );"></span>
+<span id="DummyClose07" onclick="DisplayerM07();ExchangeM07( window.Pwin );return false;"></span>
+</p>
+<!-- END [VENDOR & IN CHARGE NAME] -->
+<!-- //////////////////////////////////// END MSW //////////////////////////////////// -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- /////////////////////////////////// START TAB /////////////////////////////////// -->
+<span id="PTabA"></span>
+<span id="PTabB"></span>
+<!-- //////////////////////////////////// END TAB //////////////////////////////////// -->
+
+
+
+
+
+
+
+
+
+
+
+
+<p id="ErrInputA">
+<span id="ErrSegA05" style="_%strProductName_Error%_" onmouseover="ShowComment( Comments , '_%strErrComments%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegA06" style="_%strProductEnglishName_Error%_" onmouseover="ShowComment( Comments , '_%strErrComments%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegA03" style="_%lngInChargeGroupCode_Error%_" onmouseover="ShowComment( Comments , '_%strErrComments%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegA04" style="_%lngInChargeUserCode_Error%_" onmouseover="ShowComment( Comments , '' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegA02" style="_%lngCustomerCode_Error%_" onmouseover="ShowComment( Comments , '_%strErrComments%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegA18" style="_%lngCategoryCode_Error%_" onmouseover="ShowComment( Comments , '_%strErrComments%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegA07" style="_%strGoodsName_Error%_" onmouseover="ShowComment( Comments , '_%strErrComments%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegB08" style="_%lngCustomerCode_Error%_" onmouseover="ShowComment( Comments , '_%strErrComments%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegB09" style="_%strCustomerUserName_Error%_" onmouseover="ShowComment( Comments , '_%strErrComments%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegA12" style="_%lngBoxQuantity_Error%_" onmouseover="ShowComment( Comments , '_%strErrComments%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegA13" style="_%lngCartonQuantity_Error%_" onmouseover="ShowComment( Comments , '_%strErrComments%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegB06" style="_%lngProductionQuantity_Error%_" onmouseover="ShowComment( Comments , '_%strErrComments%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegB07" style="_%lngFirstDeliveryQuantity_Error%_" onmouseover="ShowComment( Comments , '_%strErrComments%_' );" onmouseout="HideComment( Comments );"></span>
+</p>
+
+<p id="ErrInputB">
+<span id="ErrSegB03" style="_%lngFactoryCode_Error%_" onmouseover="ShowComment( Comments , '_%strErrComments%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegA17" style="_%lngAssemblyFactoryCode_Error%_" onmouseover="ShowComment( Comments , '_%strErrComments%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegB04" style="_%lngDeliveryPlaceCode_Error%_" onmouseover="ShowComment( Comments , '_%strErrComments%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegB05" style="_%dtmDeliveryLimitDate_Error%_" onmouseover="ShowComment( Comments , '_%strErrComments%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegB02" style="_%curProductPrice_Error%_" onmouseover="ShowComment( Comments , '_%strErrComments%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegB01" style="_%curRetailPrice_Error%_" onmouseover="ShowComment( Comments , '_%strErrComments%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegA11" style="_%lngTargetAgeCode_Error%_" onmouseover="ShowComment( Comments , '_%strErrComments%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegB11" style="_%lngRoyalty_Error%_" onmouseover="ShowComment( Comments , '_%strErrComments%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegB16" style="_%lngCertificateClassCode_Error%_" onmouseover="ShowComment( Comments , '_%strErrComments%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegB10" style="_%lngCopyrightCode_Error%_" onmouseover="ShowComment( Comments , '_%strErrComments%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegB12" style="_%strCopyrightDisplayStamp_Error%_" onmouseover="ShowComment( Comments , '_%strErrComments%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegB13" style="_%strCopyrightDisplayPrint_Error%_" onmouseover="ShowComment( Comments , '_%strErrComments%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegB17" style="_%lngProductFormCode_Error%_" onmouseover="ShowComment( Comments , '_%strErrComments%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegA14" style="_%strProductComposition_Error%_" onmouseover="ShowComment( Comments , '_%strErrComments%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegA15" style="_%strAssemblyContents_Error%_" onmouseover="ShowComment( Comments , '_%strErrComments%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegB14" style="_%strSpecificationDetails_Error%_" onmouseover="ShowComment( Comments , '_%strErrComments%_' );" onmouseout="HideComment( Comments );"></span>
+</p>
+
+
+<span id="Comments"></span>

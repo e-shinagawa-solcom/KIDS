@@ -117,13 +117,13 @@ if ( $aryData["lngActionCode"] == DEF_ACTION_INSERT && !join ( $aryCheckResult )
 	// C.並び順の有効性(権限チェック)
 
 	// 順番登録データ を '&' で分解
-	$aryOrderData = split ( "&", $aryData["strOrderData"] );
+	$aryOrderData = explode ( "&", $aryData["strOrderData"] );
 	$lngOrderDataLength = count ( $aryOrderData ) - 1;
 
 	// '=' で分解し、ユーザーコード、期限日数を配列にセット
 	for ( $i = 0; $i < $lngOrderDataLength; $i++ )
 	{
-		$aryOrderSubData = split ( "=", $aryOrderData[$i] );
+		$aryOrderSubData = explode ( "=", $aryOrderData[$i] );
 
 		// A.グループ所属チェック
 		// 入力されたユーザーコードがグループに属していなかった場合エラー
@@ -212,7 +212,7 @@ elseif ( $aryData["lngActionCode"] == DEF_ACTION_DELETE && !join ( $aryCheckResu
 	$objMaster = new clsMaster();
 
 	// 順番登録データ を '&' で分解
-	$aryOrderData = split ( "&", $aryData["strOrderData"] );
+	$aryOrderData = explode ( "&", $aryData["strOrderData"] );
 	$lngOrderDataLength = count ( $aryOrderData ) - 1;
 }
 
@@ -234,7 +234,7 @@ $aryParts["strSessionID"]    =& $aryData["strSessionID"];
 // lngWorkflowOrderGroupCode の(CODE+NAME)取得
 $aryGroupCode = fncGetMasterValue( "m_Group", "lngGroupCode", "strGroupDisplayCode || ':' || strGroupDisplayName", "Array", "", $objDB );
 
-list ( $lngUserCode, $lngLimitDays ) = split ( "=", $aryOrderData[0] );
+list ( $lngUserCode, $lngLimitDays ) = explode ( "=", $aryOrderData[0] );
 
 $aryParts["MASTER"]  = "				<tr><td id=\"Column0\" class=\"SegColumn\"></td><td class=\"Segs\" align=\"left\">" . fncHTMLSpecialChars( $aryData["strWorkflowOrderName"] ) . "</td></tr>";
 $aryParts["MASTER"] .= "				<tr><td id=\"Column1\" class=\"SegColumn\"></td><td class=\"Segs\" align=\"left\">" . fncHTMLSpecialChars( $aryGroupCode[$aryData["lngWorkflowOrderGroupCode"]] ) . "</td></tr>\n";
@@ -245,7 +245,7 @@ $aryParts["HIDDEN"] .= "<input type=\"hidden\" name=\"lngWorkflowOrderGroupCode\
 
 for ( $i = 0; $i < $lngOrderDataLength; $i++ )
 {
-	list ( $lngUserCode, $lngLimitDays ) = split ( "=", $aryOrderData[$i] );
+	list ( $lngUserCode, $lngLimitDays ) = explode ( "=", $aryOrderData[$i] );
 
 	$aryParts["MASTER"] .= "				<tr><td class=\"SegColumn\">" . ( $i + 1 ) . "</td><td class=\"Segs\" align=\"left\">$aryUserName[$lngUserCode] : $lngLimitDays 日間</td></tr>\n";
 }

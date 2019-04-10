@@ -285,7 +285,7 @@ if ( $aryData["lngFunctionCode"] == DEF_FUNCTION_UC1 || $aryData["lngFunctionCod
 	// グループ変更チェック
 	////////////////////////////////////////////////////////////////
 	// 入力されたグループコードの配列を生成
-	$aryGroupCode = split ( ":", $aryData["lngGroupCode"] );
+	$aryGroupCode = explode ( ":", $aryData["lngGroupCode"] );
 	array_shift ( $aryGroupCode );
 	$lngGroupCodeNum = count ( $aryGroupCode );
 
@@ -510,7 +510,7 @@ if ( $aryData["lngFunctionCode"] == DEF_FUNCTION_UC1 || $aryData["lngFunctionCod
 	}
 
 	// m_User UPDATE クエリ生成
-	if ( count ( $aryUpdate ) )
+	if ( is_array($aryUpdate) && count ( $aryUpdate ) )
 	{
 		// ユーザーマスタロック
 		$aryQuery[] = "SELECT * FROM m_User WHERE lngUserCode = " . $aryData["lngUserCode"] . " FOR UPDATE";
@@ -551,7 +551,7 @@ if ( $aryData["lngFunctionCode"] == DEF_FUNCTION_UC2 )
                    " '$aryData[strMyPageInfo]'," .
                    " '$aryData[strNote]' )";
 
-	$aryGroupCode = split ( ":", $aryData["lngGroupCode"] );
+	$aryGroupCode = explode ( ":", $aryData["lngGroupCode"] );
 
 	// デフォルトグループ登録
 	$lngGroupRelationCode = fncGetSequence( "m_GroupRelation.lngGroupRelationCode", $objDB );

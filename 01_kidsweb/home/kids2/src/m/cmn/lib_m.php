@@ -53,7 +53,7 @@ $arySearchTableName = Array (
 *
 *	setMasterTable     テーブル情報の取得、設定
 *	setAryMasterInfo   各マスタのカラムチェック法、追加・削除チェッククエリ、プルダウンカラムの設定
-*	getColumnHtmlTable カラムのHTMLを取得(<td>〜</td>・・・)
+*	getColumnHtmlTable カラムのHTMLを取得(<td>~</td>・・・)
 *
 *	@package k.i.d.s.
 *	@license http://www.wiseknot.co.jp/
@@ -184,7 +184,6 @@ class clsMaster
 		{
 			$strQuery .= " ORDER BY 1";
 		}
-
 		$this->setMasterTableData( $strQuery, $objDB );
 
 		return TRUE;
@@ -454,9 +453,9 @@ class clsMaster
 
 	// -----------------------------------------------------------------
 	/**
-	*	カラムのHTMLを取得(<td>〜</td>・・・)
+	*	カラムのHTMLを取得(<td>~</td>・・・)
 	*	@param	Int    $lngColumnNum  カラム数(指定がない場合、属性から取得)
-	*	@return	String $strColumnHtml カラム行(<td>〜</td>・・・)
+	*	@return	String $strColumnHtml カラム行(<td>~</td>・・・)
 	*/
 	// -----------------------------------------------------------------
 	function getColumnHtmlTable( $lngColumnNum )

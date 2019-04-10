@@ -1,0 +1,452 @@
+<!--
+
+
+#schSchButton {
+	position : absolute ;
+	left : 875px ;
+	top : 114px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+#schClrButton {
+	position : absolute ;
+	left : 790px ;
+	top : 114px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+
+/************************************* START INPUT A *************************************/
+/* START INPUT A SEGMENTS */
+#InputA { 
+	position : absolute ;
+	left : 34px ;
+	top : 111px ;
+	z-index : 0 ;
+	visibility : visible ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+/* END INPUT A SEGMENTS */
+
+
+/* START HEADER */
+#SegAHeader {
+	position : absolute ;
+	left : 0px ;
+	top : 0px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+/* END HEADER */
+
+
+/* START BODYS */
+#SegABodys {
+	left : 190px ;
+	top : 500px ;
+	width : 949px ;
+	height : 514px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #cdcdcd ;
+}
+/* END BODYS */
+
+
+/* START BOTTOM */
+#SegABottom {
+	position : absolute ;
+	left : 0px ;
+	top : 508px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: #ffffff ;
+}
+/* END BOTTOM */
+
+
+/* START SEGMENTS */
+#SegA01 {
+	position : absolute ;
+	left : 8px ;
+	top : 39px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+#SegAIFrm {
+	width : 931px ; /* 931px */
+	height : 471px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #799797 ;
+}
+/* END SEGMENTS */
+/************************************** END INPUT C **************************************/
+
+
+#MasterTitle
+{
+	position : absolute ;
+	top : 20px ;
+	left : 235px ;
+	border-width : 0px ;
+	border-style : none ;
+}
+
+
+
+
+#SelectMaster
+{
+	position : absolute ;
+	top : 60px ;
+	left : 235px ;
+	border-width : 0px ;
+	border-style : none ;
+}
+
+
+
+
+#SelectBt
+{
+	position : absolute ;
+	top : 375px ;
+	left : 427px ;
+	border-width : 0px ;
+	border-style : none ;
+}
+
+
+#MasterAddBt
+{
+	position : absolute ;
+	left : 885px ;
+	top : 116px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+	visibility : visible ;
+}
+
+
+
+
+/********************* START MSW POSITION *********************/
+/* START [SUPPLIER] */
+#MiFrame08 {
+	position : absolute ;
+	left : 266px ;
+	top : 246px ;
+	z-index : 8 ;
+	visibility: hidden ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+/* END [SUPPLIER] */
+
+
+/* START [DEPT & IN CHARGE NAME] */
+#MiFrame02 {
+	position : absolute ;
+	left : 316px ;
+	top : 280px ;
+	z-index : 8 ;
+	position : absolute ;
+	visibility: hidden ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+/* END [DEPT & IN CHARGE NAME] */
+
+
+/* START [PRODUCTS] */
+#MiFrame03 {
+	position : absolute ;
+	left : 260px ;
+	top : 210px ;
+	z-index : 8 ;
+	position : absolute ;
+	visibility: hidden ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+/* END [PRODUCTS] */
+
+
+/* START [INPUT2] */
+#MiFrame09 {
+	position : absolute ;
+	left : 266px ;
+	top : 246px ;
+	z-index : 8 ;
+	visibility: hidden ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+/* END [INPUT2] */
+/********************** END MSW POSITION **********************/
+
+
+
+
+
+
+
+#ErrorMessageFrame
+{
+	position : absolute ;
+	top : 115px ;
+	left : 11px ;
+	z-index : 11 ;
+	visibility: hidden ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+#ErrorMessage
+{
+	position : absolute ;
+	width : 978px ;
+	height : 34px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+	filter:progid:DXImageTransform.Microsoft.Alpha(opacity=90);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/********************* START MSW BUTTON *********************/
+/* START [VENDOR] BUTTON */
+#MSWBt01 {
+	position : absolute ;
+	left : 511px ;
+	top : 114px ;
+	border-width : 0px ;
+	border-style : none ;
+	background-color : #ffffff ;
+}
+/* END [VENDOR] BUTTON */
+
+
+/* START [DEPT & IN CHARGE NAME] BUTTON */
+#MSWBt02 {
+	position : absolute ;
+	left : 511px ;
+	top : 160px ;
+	border-width : 0px ;
+	border-style : none ;
+	background-color : #ffffff ;
+}
+/* END [DEPT & IN CHARGE NAME] BUTTON */
+
+
+/* START [GOODS] BUTTON */
+#MSWBt03 {
+	position : absolute ;
+	left : 718px ;
+	top : 44px ;
+	border-width : 0px ;
+	border-style : none ;
+	background-color : #ffffff ;
+}
+/* END [GOODS] BUTTON */
+/********************** END MSW BUTTON **********************/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/********************* START MSW POSITION *********************/
+/* START [VENDOR] */
+#MiFrame01 {
+	position : absolute ;
+	left : 266px ;
+	top : 246px ;
+	z-index : 8 ;
+	visibility: hidden ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+/* END [VENDOR] */
+
+
+/* START [DEPT & IN CHARGE NAME] */
+#MiFrame02 {
+	position : absolute ;
+	left : 316px ;
+	top : 280px ;
+	z-index : 8 ;
+	position : absolute ;
+	visibility: hidden ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+/* END [DEPT & IN CHARGE NAME] */
+
+
+/* START [GOODS] */
+#MiFrame03 {
+	position : absolute ;
+	left : 260px ;
+	top : 210px ;
+	z-index : 8 ;
+	position : absolute ;
+	visibility: hidden ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+/* END [GOODS] */
+/********************** END MSW POSITION **********************/
+
+
+
+
+
+#DummyDrag01 {
+	position : absolute ;
+	left : 0px ;
+	top : 0px ;
+	width : 484px ;
+	height : 18px;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+	filter : alpha(opacity=0) ;
+	-moz-opacity : 0.5 ;
+}
+
+#DummyClose01 {
+	position : absolute ;
+	left : 482px ;
+	top : 0px ;
+	width : 21px ;
+	height : 18px;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+	filter : alpha(opacity=0) ;
+	-moz-opacity : 0.5 ;
+}
+
+
+#DummyDrag02 {
+	position : absolute ;
+	left : 0px ;
+	top : 0px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+	filter : alpha(opacity=0) ;
+	-moz-opacity : 0.5 ;
+}
+
+#DummyClose02 {
+	position : absolute ;
+	left : 503px ;
+	top : 0px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+	filter : alpha(opacity=0) ;
+	-moz-opacity : 0.5 ;
+}
+
+
+#DummyDrag03 {
+	position : absolute ;
+	left : 0px ;
+	top : 0px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+	filter : alpha(opacity=0) ;
+	-moz-opacity : 0.5 ;
+}
+
+#DummyClose03 {
+	position : absolute ;
+	left : 668px ;
+	top : 0px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+	filter : alpha(opacity=0) ;
+	-moz-opacity : 0.5 ;
+}
+
+
+-->

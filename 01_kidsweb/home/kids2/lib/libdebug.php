@@ -1,4 +1,4 @@
-<?
+<?php
 // ----------------------------------------------------------------------------
 /**
 *       デバッグ用関数
@@ -39,6 +39,7 @@ function fncDebug($strOutFile, $objValue, $strFile="", $strLine="", $mode="w")
 	// ディレクトリの存在確認
 	if( !file_exists( dirname($strOutFile) ) )
 	{
+		echo "test";
 		return false;
 	}
 	

@@ -43,7 +43,7 @@ if ( !fncCheckAuthority( DEF_FUNCTION_M0, $objAuth ) )
 }
 
 // HIDDEN 生成
-$aryParts["strSessionID"] =& $aryData[strSessionID];
+$aryParts["strSessionID"] =& $aryData["strSessionID"];
 
 // ワークフロー名プルダウンメニュー 生成
 $aryParts["lngWorkflowOrderCode"]  = "<option value=\"\"></option>\n";

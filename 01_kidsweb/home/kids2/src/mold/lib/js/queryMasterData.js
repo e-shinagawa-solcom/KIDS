@@ -11,12 +11,7 @@ function queryMasterData(condition, procDone, procFail) {
     .done(function(response){
         procDone(response);
     })
-        .fail(function(response){
-            procFail(response);
-        });
-        // .fail(function(xhr, textStatus, errorThrown) {
-        //     alert("NG:" + xhr.status);
-        //     alert("NG:" + textStatus);
-        //     alert("NG:" + errorThrown);
-        // });
+    .fail(function(response){
+        procFail(response);
+    });
 }

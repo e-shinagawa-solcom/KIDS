@@ -303,7 +303,7 @@
 	// ---------------------------------------------------------------------------
 	function subLoadMasterSetting(objRst, lngObjNo)
 	{
-
+alert("ttttt");
 		// オブジェクトNo
 		if( isNaN(lngObjNo) )
 		{	// 指定が無い場合は 0

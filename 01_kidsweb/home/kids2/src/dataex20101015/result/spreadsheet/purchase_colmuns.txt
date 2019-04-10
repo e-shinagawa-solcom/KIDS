@@ -1,0 +1,31 @@
+// SigmaGrid用カラムセット
+[
+	{id: 'dtmappropriationdate',	header: "仕入計上日",		width :80 },
+	{id: 'strstockcode',		header: "仕入No",		width :60 },
+	{id: 'strordercode',		header: "発注No" ,		width :60 },
+	{id: 'strcompanydisplaycode',	header: "仕入先コード",		width :60 },
+	{id: 'strcompanydisplayname',	header: "仕入先名称" ,		width :160 },
+	{id: 'strgroupdisplaycode',	header: "部門コード" ,		width :60 },
+	{id: 'strgroupdisplayname',	header: "部門名称" ,		width :100 },
+	{id: 'strcategoryname',		header: "カテゴリ" ,		width :100 },
+	{id: 'struserdisplaycode',	header: "担当者コード",		width :60 },
+	{id: 'struserdisplayname',	header: "担当者名称" ,		width :160 },
+	{id: 'strslipcode',		header: "伝票コード" ,		width :160 },
+	{id: 'strmonetaryunitname',	header: "通貨名称" ,		width :60 },
+	{id: 'strmonetaryratename',	header: "レートタイプ" ,	width :60 },
+	{id: 'curconversionrate',	header: "通貨レート" ,		width :60 },
+	{id: 'strpayconditionname',	header: "支払条件" ,		width :60 },
+	{id: 'dtmexpirationdate',	header: "製品到着日" ,		width :60 },
+	{id: 'lngstocksubjectcode',	header: "仕入科目コード" ,	width :100 },
+	{id: 'strstocksubjectname',	header: "仕入科目名称" ,	width :200 },
+	{id: 'lngstockitemcode',	header: "仕入部品コード" ,	width :160},
+	{id: 'strstockitemname',	header: "仕入部品名称" ,	width :160},
+	{id: 'strproductcode',		header: "製品コード" ,		width :160},
+	{id: 'strproductenglishname',	header: "製品名称" ,		width :300},
+	{id: 'curproductprice',		header: "単価" ,		width :160, align :'right'},
+	{id: 'strproductunitname',	header: "単位" ,		width :160, align :'right'},
+	{id: 'lngproductquantity',	header: "数量" ,		width :160, align :'right'},
+	{id: 'cursubtotalprice',	header: "税抜金額" ,		width :160, align :'right'},
+	{id: 'strnote',			header: "明細備考" ,		width :160, align :'right'}
+
+]

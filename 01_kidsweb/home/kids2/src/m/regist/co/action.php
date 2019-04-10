@@ -55,7 +55,7 @@ $objDB->open( "", "", "", "" );
 $aryData = $_GET;
 
 // 属性コードに関するチェック(文字列チェック、本社・顧客チェック)
-$aryAttributeCode = split ( ":", $aryData["strattributecode"] );
+$aryAttributeCode = explode ( ":", $aryData["strattributecode"] );
 for ( $i = 0; $i < count ( $aryAttributeCode ); $i++ )
 {
 	// 属性数値チェック
@@ -333,20 +333,20 @@ elseif ( $aryData["lngActionCode"] == DEF_ACTION_DELETE && !join ( $aryCheckResu
 
 	$strQuery = join ( " UNION ", $aryQuery );
 
+
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
 	// 結果が1件でもあった場合、削除不可能とし、エラー出力
-	if ( $lngResultNum > 0 )
-	{
-		$objDB->freeResult( $lngResultID );
-		fncOutputError ( 1201, DEF_WARNING, "マスタ管理失敗", TRUE, "", $objDB );
-	}
+	// if ( $lngResultNum > 0 )
+	// {
+	// 	$objDB->freeResult( $lngResultID );
+	// 	fncOutputError ( 1201, DEF_WARNING, "マスタ管理失敗", TRUE, "", $objDB );
+	// }
 
 	// 削除処理(DELETE)
 	$aryQuery[] = "DELETE FROM m_Company WHERE lngCompanyCode = " . $aryData["lngcompanycode"];
 	$aryQuery[] = "DELETE FROM m_AttributeRelation WHERE lngCompanyCode = " . $aryData["lngcompanycode"];
 }
-
 
 
 
@@ -374,7 +374,8 @@ $objDB->close();
 ?>
 <html>
 <body>
-<script language="javascript">window.returnValue=true;window.close();</script>
+<script language="javascript">window.returnValue=true;window.close();
+</script>
 </body>
 </html>
 <?

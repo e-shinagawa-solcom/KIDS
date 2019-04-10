@@ -79,7 +79,6 @@ $objMaster->setMasterTable( $aryData["strMasterTableName"], $aryData["strKeyName
 $objMaster->setAryMasterInfo( $aryData[$aryData["strKeyName"]], $aryData["lngstocksubjectcode"] );
 
 
-
 // カラム数取得
 $lngColumnNum = count ( $objMaster->aryColumnName );
 
@@ -169,9 +168,13 @@ if ( $objMaster->strTableName == "m_StockSubject" || $objMaster->strTableName ==
 	if ( $objMaster->strTableName == "m_StockItem" )
 	{
 		$aryParts["MASTER"][2] = preg_replace ( "/Input2/", "Input3", $aryParts["MASTER"][2] );
-		$aryData["COLUMN"] .= "<span id=\"Column3\" class=\"ColumnSegs\"></span>\n";
+		$aryParts["MASTER"][3] = preg_replace ( "/Input3/", "Input4", $aryParts["MASTER"][3] );
+		$aryParts["MASTER"][4] = preg_replace ( "/Input4/", "Input5", $aryParts["MASTER"][4] );
+		$aryParts["MASTER"][5] = preg_replace ( "/Input5/", "Input6", $aryParts["MASTER"][5] );
+		$aryData["COLUMN"] .= "<span id=\"Column6\" class=\"ColumnSegs\"></span>\n";
 	}
 }
+
 
 //////////////////////////////////////////////////////////////////////////
 // 結果取得、出力処理

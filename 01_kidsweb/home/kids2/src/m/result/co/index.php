@@ -135,8 +135,8 @@ if ( $lngResultNum )
 		// カラム生成
 		$aryParts["strResultHtml"] .= "		<th>$count</th>\n";
 		$aryParts["strResultHtml"] .= "		<td nowrap>" . $record[$objMaster->aryColumnName[0]] . "</td>\n";
-		$aryParts["strResultHtml"] .= "		<td nowrap>" . $record[strcountryname] . "</td>\n";
-		$aryParts["strResultHtml"] .= "		<td nowrap>" . $record[strorganizationname] . "</td>\n";
+		$aryParts["strResultHtml"] .= "		<td nowrap>" . $record["strcountryname"] . "</td>\n";
+		$aryParts["strResultHtml"] .= "		<td nowrap>" . $record["strorganizationname"] . "</td>\n";
 		$aryParts["strResultHtml"] .= "		<td nowrap>" . $aryOrganizationFront[$record[$objMaster->aryColumnName[3]]] . "</td>\n";
 		$aryParts["strResultHtml"] .= "		<td nowrap>" . $record[$objMaster->aryColumnName[4]] . "</td>\n";
 		$aryParts["strResultHtml"] .= "		<td nowrap>" . $aryCompanyDisplayFlag[$record[$objMaster->aryColumnName[5]]] . "</td>\n";
@@ -152,7 +152,7 @@ if ( $lngResultNum )
 		$aryParts["strResultHtml"] .= "		<td nowrap>" . $record[$objMaster->aryColumnName[15]] . "</td>\n";
 		$aryParts["strResultHtml"] .= "		<td nowrap>" . $record[$objMaster->aryColumnName[16]] . "</td>\n";
 		$aryParts["strResultHtml"] .= "		<td nowrap>" . $record[$objMaster->aryColumnName[17]] . "</td>\n";
-		$aryParts["strResultHtml"] .= "		<td nowrap>" . $record[strcloseddaycode] . ":" . $record[lngclosedday] . "</td>\n";
+		$aryParts["strResultHtml"] .= "		<td nowrap>" . $record["strcloseddaycode"] . ":" . $record["lngclosedday"] . "</td>\n";
 		$aryParts["strResultHtml"] .= "		<td nowrap>" . $aryAttributeCode[$record[$objMaster->aryColumnName[0]]] . "</td>\n";
 
 
@@ -181,9 +181,9 @@ $objDB->close();
 
 // index.php -> lngAttributeCode      -> index.php
 // index.php -> strCompanyDisplayName -> index.php
-$aryParts["HIDDEN"]           = "<input type=hidden name=strSessionID value=$aryData[strSessionID]>\n";
-$aryParts["HIDDEN"]          .= "<input type=hidden name=lngAttributeCode value=$aryData[lngAttributeCode]>\n";
-$aryParts["HIDDEN"]          .= "<input type=hidden name=strCompanyDisplayName value=$aryData[strCompanyDisplayName]>\n";
+$aryParts["HIDDEN"]           = "<input type=hidden name=strSessionID value=" .$aryData["strSessionID"] .">\n";
+$aryParts["HIDDEN"]          .= "<input type=hidden name=lngAttributeCode value=" .$aryData["lngAttributeCode"].">\n";
+$aryParts["HIDDEN"]          .= "<input type=hidden name=strCompanyDisplayName value=" .$aryData["strCompanyDisplayName"]. ">\n";
 $aryParts["lngLanguageCode"]  =& $aryData["lngLanguageCode"];
 $aryParts["strTableName"]     =& $objMaster->strTableName;
 $aryParts["lngColumnNum"]     = 19;

@@ -107,7 +107,6 @@ else
 	// データ取得クエリ
 	$strQuery = fncGetListOutputQuery( DEF_REPORT_PRODUCT, $aryData["strReportKeyCode"], $objDB );
 
-
 	$objMaster = new clsMaster();
 	$objMaster->setMasterTableData( $strQuery, $objDB );
 
@@ -242,6 +241,7 @@ else
 
 	$strQuery = "";
 	$strQuery = implode( "\n", $aryQuery );
+
 
 	list( $lngCheckResultID, $lngCheckResultNum ) = fncQuery( $strQuery, $objDB );
 

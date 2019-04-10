@@ -130,7 +130,7 @@ foreach ( $objMaster->aryData as $record )
 	}
 
 	// GETで渡す文字列生成
-	$getUrl = "strSessionID=$aryData[strSessionID]&strMasterTableName=$aryData[strMasterTableName]&strKeyName=" .  $objMaster->aryColumnName[0] ."&" .  $objMaster->aryColumnName[0] ."=" . $lngKeyCode;
+	$getUrl = "strSessionID=".$aryData["strSessionID"]. "&strMasterTableName=" .$aryData["strMasterTableName"]."&strKeyName=" .  $objMaster->aryColumnName[0] ."&" .  $objMaster->aryColumnName[0] ."=" . $lngKeyCode;
 
 	// 仕入部品マスタの場合、2つ目のカラムもキーとする
 	if ( $objMaster->strTableName == "m_StockItem" )
@@ -156,7 +156,7 @@ $objDB->close();
 
 
 // 登録ボタンのGET文字列生成
-$aryData["strInsertForm"] = "/m/regist/c/edit.php?strSessionID=$aryData[strSessionID]&lngActionCode=" . DEF_ACTION_INSERT . "&strMasterTableName=$aryData[strMasterTableName]&strKeyName=" .  $objMaster->aryColumnName[0];
+$aryData["strInsertForm"] = "/m/regist/c/edit.php?strSessionID=". $aryData["strSessionID"] . "&lngActionCode=" . DEF_ACTION_INSERT . "&strMasterTableName=" . $aryData["strMasterTableName"] ."&strKeyName=" .  $objMaster->aryColumnName[0];
 
 $aryData["strTableName"] =& $objMaster->strTableName;
 $aryData["lngLanguageCode"] =& $_COOKIE["lngLanguageCode"];

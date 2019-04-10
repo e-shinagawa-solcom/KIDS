@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=_%CHAR_SET%_" />
+	<script type="text/javascript" language="javascript" src="/upload/parse/cmn/function.js" charset="utf-8"></script>
+
+	<title>Excel Uploader - ワークシート選択後確認画面</title>
+
+	<link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="/result/cmn/layout.css">
+
+
+
+	<style type="text/css">
+		<!--
+
+			body
+			{
+				margin		: 0;
+				font-family	: Arial;
+				font-size	: 12px;
+				background	: #ffffff;
+			}
+
+			#excHref
+			{
+				color			: #006699;
+				text-decoration	: underline;
+			}
+
+			table			{ border: 1px solid #716f64; border-collapse:collapse; }
+			td				{ border: 1px solid #0c0c0c; border-collapse:collapse; font-family:Arial; font-size: 12px; }
+			th				{ border: 1px solid #7e7d68; background-color:#efebde; font-family:Arial; font-size: 12px; }
+			td.index		{ font-size: 10px; color: #000000; font-weight: bold; }
+			td.empty		{ font-size: 10px; color: #000000; font-weight: bold; }
+			td.dt_string	{ font-size: 10px; color: #000090; font-weight: bold; }
+			td.dt_int		{ font-size: 10px; color: #909000; font-weight: bold; }
+			td.dt_float		{ font-size: 10px; color: #007000; font-weight: bold; }
+			td.dt_date 		{ font-size: 10px; color: #008080; font-weight: bold; }
+			td.dt_hlink		{ font-size: 10px; color: #000090; font-weight: bold;text-decoration: underline; }
+			td.dt_unknown	{ font-size: 10px; background-color: #f0d0d0; font-weight: bold; }
+			td.empty		{ font-size: 10px; background-color: #f0f0f0; font-weight: bold; }
+			.border			{ border: thin solid #666666; }
+
+
+			.column
+			{
+				border		: 1px solid #7e7d68;
+				background	: #efebde;
+				font-family	: Arial;
+				font-size	: 12px;
+				font-weight	: bold;
+				text-align	: center;
+			}
+		-->
+	</style>
+
+</head>
+<body>
+
+_%DEBUG%_
+
+	<table width="100%" bgcolor="#006699">
+		<tr>
+			<td style="color:white;"><h4>確認</h4></td>
+		</tr>
+	</table>
+	<br />
+
+
+
+_%DIFF%_
+
+
+
+<form name="_%FORM_NAME%_" method="post">
+
+_%FORM%_
+
+	<input type="hidden" name="bytTemporaryFlg"	value="_%bytTemporaryFlg%_" />
+
+
+	<div align="right">
+		&nbsp;&nbsp;<strong>承認ルート : </strong>
+		<select class="Slt30PO" name="lngWorkflowOrderCode">
+			_%WORKFLOW%_
+		</select>
+	</div>
+	<hr size=1>
+
+</form>
+
+
+
+_%EXCEL%_
+
+
+
+	<!-- プリロード画面の非表示 -->
+	<script type="text/javascript" language="javascript">parent.Preload.style.visibility = 'hidden';</script>
+
+</body>
+</html>

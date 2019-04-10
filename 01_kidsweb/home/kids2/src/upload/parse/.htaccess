@@ -1,0 +1,13 @@
+
+	# php mbstring
+	php_value default_charset UTF-8
+	php_value mbstring.internal_encoding UTF-8
+#	php_value mbstring.http_input AUTO
+#	php_value mbstring.http_output AUTO
+
+
+	<Files ~ "^\.ht">
+		Order allow,deny
+		Deny from all
+		Satisfy All
+	</Files>

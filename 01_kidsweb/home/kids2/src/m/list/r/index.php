@@ -77,7 +77,7 @@ foreach ( $objMaster->aryData as $record )
 	}
 
 	// GETで渡す文字列生成
-	$getUrl = "strSessionID=$aryData[strSessionID]&lngmonetaryratecode=" . $record["lngmonetaryratecode"] . "&lngmonetaryunitcode=" . $record["lngmonetaryunitcode"];
+	$getUrl = "strSessionID=" .$aryData["strSessionID"]. "&lngmonetaryratecode=" . $record["lngmonetaryratecode"] . "&lngmonetaryunitcode=" . $record["lngmonetaryunitcode"];
 
 
 	// 修正ボタン生成
@@ -94,7 +94,7 @@ $objDB->close();
 
 
 // 登録ボタンのGET文字列生成
-$aryData["strInsertForm"] = "/m/regist/r/edit.php?strSessionID=$aryData[strSessionID]&lngActionCode=" . DEF_ACTION_INSERT;
+$aryData["strInsertForm"] = "/m/regist/r/edit.php?strSessionID=" .$aryData["strSessionID"]. "&lngActionCode=" . DEF_ACTION_INSERT;
 
 $aryData["lngLanguageCode"] =& $_COOKIE["lngLanguageCode"];
 

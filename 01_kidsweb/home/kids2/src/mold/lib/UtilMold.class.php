@@ -565,44 +565,6 @@ class UtilMold extends WithQuery
 		return $result;
 	}
 
-    /**
-     * <pre>
-     * 仕入マスタに無効データを金型マスタに反映する
-     * 無効化フラグ = 1 またはリビジョン番号=-1の仕入コードに応じる金型Noを対象にする
-     * </pre>
-     *
-     * @return 取り込み件数
-     */
-    public function updateMoldToInvalid()
-    {
-        $result = false;
-
-        $query = file_get_contents($this->getQueryFileName(__FUNCTION__));
-        // クエリパラメータ作成(SELECT)
-        $param = array();
-
-        // 業務コードの説明を取得する
-        pg_prepare(static::$db->ConnectID, "", $query);
-        $pgResult = pg_execute("", $param);
-
-        if ($pgResult)
-        {
-            $result = pg_affected_rows($pgResult);
-        }
-        else
-        {
-            throw new SQLException(
-                "検索の問い合わせに失敗しました。",
-                $query,
-                $param
-            );
-        }
-
-        return $result;
-    }
-
-
-
 	/**
 	 * 金型履歴のデータの更新処理を行う。
 	 *

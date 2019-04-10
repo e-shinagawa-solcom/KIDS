@@ -1,0 +1,696 @@
+
+<div id="LIST_30882" align=center x:publishsource="Excel">
+<table x:str border=0 cellpadding=0 cellspacing=0 width=696 style='border-collapse:collapse;table-layout:fixed;width:528pt'>
+
+
+
+	<col width=29 span=24 style='mso-width-source:userset;mso-width-alt:928;width:22pt'>
+	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
+		<td height=12 class=xl1530882 width=29 style='height:9.0pt;width:22pt'></td>
+		<td width=29 style='width:22pt' align=left valign=top>
+			<!--[if gte vml 1]>
+			<v:shapetype id="_x0000_t75" coordsize="21600,21600" o:spt="75" o:preferrelative="t" path="m@4@5l@4@11@9@11@9@5xe" filled="f" stroked="f">
+			<v:stroke joinstyle="miter"/>
+			<v:formulas>
+				<v:f eqn="if lineDrawn pixelLineWidth 0"/>
+				<v:f eqn="sum @0 1 0"/>
+				<v:f eqn="sum 0 0 @1"/>
+				<v:f eqn="prod @2 1 2"/>
+				<v:f eqn="prod @3 21600 pixelWidth"/>
+				<v:f eqn="prod @3 21600 pixelHeight"/>
+				<v:f eqn="sum @0 0 1"/>
+				<v:f eqn="prod @6 1 2"/>
+				<v:f eqn="prod @7 21600 pixelWidth"/>
+				<v:f eqn="sum @8 21600 0"/>
+				<v:f eqn="prod @7 21600 pixelHeight"/>
+				<v:f eqn="sum @10 21600 0"/>
+			</v:formulas>
+			<v:path o:extrusionok="f" gradientshapeok="t" o:connecttype="rect"/>
+			<o:lock v:ext="edit" aspectratio="t"/>
+			</v:shapetype><v:shape id="_x0000_s51201" style='position:absolute;margin-left:10.5pt;margin-top:0;width:97.5pt;height:46.5pt;z-index:1'>
+			<v:imagedata src="rogo_po.wmz" o:title="logo"/>
+			<x:ClientData ObjectType="Pict">
+				<x:SizeWithCells/>
+				<x:CF>PictOld</x:CF>
+			</x:ClientData>
+			</v:shape>
+			<![endif]-->
+			<![if !vml]>
+			<span style='mso-ignore:vglayout;position:absolute;z-index:1;margin-left:14px;margin-top:0px;width:130px;height:62px'>
+				<img width=130 height=62 src="rogo_po.gif" v:shapes="_x0000_s51201">
+			</span>
+			<![endif]>
+			<span style='mso-ignore:vglayout2'>
+				<table cellpadding=0 cellspacing=0>
+					<tr>
+						<td height=12 class=xl1530882 width=29 style='height:9.0pt;width:22pt'></td>
+					</tr>
+				</table>
+			</span>
+		</td>
+		<td class=xl1530882 width=29 style='width:22pt'></td>
+		<td class=xl1530882 width=29 style='width:22pt'></td>
+		<td class=xl1530882 width=29 style='width:22pt'></td>
+		<td class=xl1530882 width=29 style='width:22pt'></td>
+		<td colspan=11 rowspan=5 class=xl10830882 width=319 valign="top" align="left">
+			<table cellspacing="0" cellpadding="0" border="0" width="319" height="60">
+				<tr>
+					<td align="left" valign="top">
+						<span class="strKuwagata">KUWAGATA&nbsp;CO.,&nbsp;LTD</span><br>
+						<span class="font630882">
+						7F.,&nbsp;NISSAY&nbsp;Asakusa&nbsp;Building.,&nbsp;<br>
+						12-14&nbsp;KOMAGATA&nbsp;1-CHOME,&nbsp;TAITOU-KU,&nbsp;TOKYO,&nbsp;<br>
+						111-0043&nbsp;JAPAN.<br>TEL&nbsp;:&nbsp;(81)-3-3845-5925&nbsp;&nbsp;&nbsp;&nbsp;FAX&nbsp;:&nbsp;(81)-3-3845-0547
+						</span>
+					</td>
+				</tr>
+			</table>
+		</td>
+
+
+
+		<!-- ページ番号 -->
+		<td colspan=2 rowspan=2 class=xl11030882 width=58 style='width:44pt'>
+			No.
+		</td>
+		<td colspan=3 rowspan=2 class=xl10330882 width=87 style='width:66pt'>
+			_%lngNowPage%_/_%lngAllPage%_
+		</td>
+		<td class=xl2830882 width=29 style='width:22pt'></td>
+		<td class=xl2830882 width=29 style='width:22pt'></td>
+	</tr>
+
+
+
+	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
+		<td height=12 class=xl1530882 style='height:9.0pt'></td>
+		<td class=xl1530882></td>
+		<td class=xl1530882></td>
+		<td class=xl1530882></td>
+		<td class=xl1530882></td>
+		<td class=xl1530882></td>
+		<td class=xl2830882></td>
+		<td class=xl2830882></td>
+	</tr>
+	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
+		<td height=12 class=xl1530882 style='height:9.0pt'></td>
+		<td class=xl1530882></td>
+		<td class=xl1530882></td>
+		<td class=xl1530882></td>
+		<td class=xl1530882></td>
+		<td class=xl1530882></td>
+
+
+
+		<!-- 計上日 -->
+		<td colspan=2 rowspan=2 class=xl11030882 width=58 style='width:44pt'>
+			Date.
+		</td>
+		<td colspan=3 rowspan=2 class=xl10430882 width=87 style='width:66pt'>
+			_%dtmInsertDate%_
+		</td>
+		<td class=xl2830882></td>
+		<td class=xl2830882></td>
+	</tr>
+
+
+
+	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
+		<td height=12 class=xl1530882 style='height:9.0pt'></td>
+		<td class=xl1530882></td>
+		<td class=xl1530882></td>
+		<td class=xl1530882></td>
+		<td class=xl1530882></td>
+		<td class=xl1530882></td>
+		<td class=xl2830882></td>
+		<td class=xl2830882></td>
+	</tr>
+	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
+		<td height=12 class=xl1530882 style='height:9.0pt'></td>
+		<td class=xl1530882></td>
+		<td class=xl1530882></td>
+		<td class=xl1530882></td>
+		<td class=xl1530882></td>
+		<td class=xl1530882></td>
+		<td colspan=5 class=xl11130882 width=145 style='width:110pt'></td>
+		<td class=xl2830882></td>
+		<td class=xl2830882></td>
+	</tr>
+	<tr height=26 style='mso-height-source:userset;height:19.5pt'>
+		<td colspan=22 height=26 class="strPurchaseOrder" style='height:19.5pt'>
+			PURCHASE ORDER
+		</td>
+		<td class=xl1530882></td>
+		<td class=xl1530882></td>
+	</tr>
+	<tr height=17 style='mso-height-source:userset;height:12.95pt'>
+
+
+
+		<!-- 宛名 -->
+		<td colspan=16 rowspan=2 height=34 class=xl7830882 width=464 style='border-right:.5pt solid black;height:25.9pt;width:352pt'>
+			_%strCustomerDisplayName%_
+		</td>
+
+
+		<!-- 発注番号 -->
+		<td colspan=3 rowspan=2 class=xl8230882 style='border-right:.5pt solid black; border-bottom:.5pt solid black'>
+			<span style='mso-spacerun:yes'>&nbsp;</span>P.O. No.
+		</td>
+		<td colspan=3 rowspan=2 class=xl7230882 style='border-right:.5pt solid black; border-bottom:.5pt solid black'>
+			_%strOrderCode%_
+		</td>
+		<td class=xl1530882></td>
+		<td class=xl1530882></td>
+	</tr>
+
+
+
+	<tr height=17 style='mso-height-source:userset;height:12.95pt'>
+		<td height=17 class=xl1530882 style='height:12.95pt'></td>
+		<td class=xl1530882></td>
+	</tr>
+	<tr height=24 style='mso-height-source:userset;height:18.0pt'>
+
+
+
+		<!-- 住所 -->
+		<td colspan=16 rowspan=2 height=48 class=xl8830882 width=464 style='height:36.0pt;width:352pt'>
+			_%strAddress%_<br>
+			TEL. _%strTel1%_<span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;</span>FAX. _%strFax1%_
+		</td>
+
+
+
+		<!-- 発注有効期限 -->
+		<td colspan=3 class=xl11530882 style='border-right:.5pt solid black'>
+			<span style='mso-spacerun:yes'>&nbsp;</span>P.O. Due Date
+		</td>
+		<td colspan=3 class=xl6930882 style='border-right:.5pt solid black;border-left:none'>
+			_%dtmExpirationDate%_
+		</td>
+		<td class=xl1530882></td>
+		<td class=xl1530882></td>
+	</tr>
+
+
+
+	<tr height=24 style='mso-height-source:userset;height:18.0pt'>
+
+
+
+		<!-- 通貨 -->
+		<td colspan=3 height=24 class=xl5830882 style='border-right:.5pt solid black;height:18.0pt'>
+			<span style='mso-spacerun:yes'>&nbsp;</span>Currency
+		</td>
+		<td colspan=3 class=xl3030882 style='border-right:.5pt solid black;border-left:none'>
+			_%strMonetaryUnitName%_
+		</td>
+		<td class=xl1530882></td>
+		<td class=xl1530882></td>
+	</tr>
+	<tr height=24 style='mso-height-source:userset;height:18.0pt'>
+		<td colspan=3 rowspan=2 height=48 class=xl9030882 style='border-bottom:.5pt solid black;height:36.0pt'>
+			<span style='mso-spacerun:yes'>&nbsp;</span>
+			Products name
+		</td>
+
+
+
+		<!-- 商品コード -->
+		<td colspan=2 rowspan=2 class=xl9430882 style='border-bottom:.5pt solid black'>
+			_%strProductCode%_
+		</td>
+
+
+
+		<!-- 商品名称(日本語) -->
+		<td colspan=10 class=xl9830882 style='border-right:.5pt solid black'>
+			_%strProductName%_
+		</td>
+
+
+
+		<td rowspan=2 class=xl10230882>&nbsp;&nbsp;</td>
+
+
+
+		<!-- 支払条件 -->
+		<td colspan=3 class=xl5830882 style='border-right:.5pt solid black;border-left:none'>
+			<span style='mso-spacerun:yes'>&nbsp;</span>Pay Condition
+		</td>
+		<td colspan=3 class=xl3030882 style='border-right:.5pt solid black;border-left:none'>
+			_%strPayConditionName%_
+		</td>
+		<td class=xl1530882></td>
+		<td class=xl1530882></td>
+	</tr>
+	<tr height=24 style='mso-height-source:userset;height:18.0pt'>
+
+
+
+		<!-- 商品名称(英語) -->
+		<td colspan=10 height=24 class=xl10030882 style='border-right:.5pt solid black;height:18.0pt'>_%strProductEnglishName%_</td>
+
+
+
+		<!-- 担当者 -->
+		<td colspan=3 class=xl5830882 style='border-right:.5pt solid black;border-left:none'>
+			<span style='mso-spacerun:yes'>&nbsp;</span>In Charge
+		</td>
+		<td colspan=3 class=xl11230882 style='border-right:.5pt solid black;border-left:none'>
+			_%lngInChargeUserDisplayCode%_ _%strInChargeUserDisplayName%_
+		</td>
+		<td class=xl1530882></td>
+		<td class=xl1530882></td>
+	</tr>
+
+
+
+	<tr height=1 style='mso-height-source:userset;height:.95pt'>
+		<td colspan=22 height=1 class=xl8030882 style='height:.95pt'>&nbsp;&nbsp;</td>
+		<td class=xl1530882></td>
+		<td class=xl1530882></td>
+	</tr>
+	<tr height=18 style='mso-height-source:userset;height:14.1pt'>
+		<td height=18 class=xl2930882 style='height:14.1pt;border-top:none'>No.</td>
+		<td colspan=8 class=xl10530882 style='border-right:.5pt solid black'>
+			Products parts / Means of transport / Remark
+		</td>
+		<td colspan=5 class=xl2930882 style='border-right:.5pt solid black;border-left:none'>
+			Price / Unit
+		</td>
+		<td colspan=5 class=xl4030882 style='border-right:.5pt solid black;border-left:none'>
+			Total
+		</td>
+		<td colspan=3 class=xl2930882 style='border-right:.5pt solid black;border-left:none'>
+			Delivery Date
+		</td>
+		<td class=xl1530882></td>
+		<td class=xl1530882></td>
+	</tr>
+
+
+
+	<!-- 明細 1 -->
+	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
+		<td rowspan=5 height=60 class=xl6430882 style='height:45.0pt;border-top:none'>
+			_%record0%_
+		</td>
+		<td colspan=8 rowspan=5 height=60 width=232 style='height:45.0pt;width:176pt' align=left valign=top>
+
+			<!--[if gte vml 1]>
+
+
+			<!-- [COPY] イメージ定義 -->
+			<v:shape id="_x0000_s51205" type="#_x0000_t75" style='position:absolute;margin-left:55.5pt;margin-top:122.25pt;width:363.75pt;height:98.25pt;rotation:310;z-index:-1;visibility:_%copyDisabled%_;'>
+			<!-- [COPY] イメージ定義 // -->
+
+
+				<v:imagedata src="rogo_copy.wmz" o:title="copy"/>
+				<x:ClientData ObjectType="Pict">
+					<x:SizeWithCells/>
+					<x:CF>PictOld</x:CF>
+				</x:ClientData>
+
+			</v:shape>
+			<![endif]-->
+
+
+			<![if !vml]>
+			<span style='mso-ignore:vglayout;position:absolute;z-index:-1;margin-left:110px;margin-top:1px;width:414px;height:456px'>
+				<img width=414 height=456 src="rogo_copy.gif" v:shapes="_x0000_s51205">
+			</span>
+			<![endif]>
+
+
+			<span style='mso-ignore:vglayout2'>
+				<table cellpadding=0 cellspacing=0>
+					<tr>
+						<td colspan=8 rowspan=5 height=81 class=xl6630882 width=232 style='height:81px;width:176pt'>
+							_%strStockItemName0%_ _%strMoldNo0%_<br>
+							_%strDeliveryMethodName0%_<span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>_%lngCartonQuantity0%_<br>
+							_%strNote0%_
+						</td>
+					</tr>
+				</table>
+			</span>
+
+		</td>
+		<td colspan=5 rowspan=5 class=xl11830882 width=145 style='width:110pt' x:str="_%curProductPrice0%_ &#10;_%lngProductQuantity0%_ ">
+			_%curProductPrice0%_<br>
+			_%lngProductQuantity0%_<span style='mso-spacerun:yes'>&nbsp;</span>
+		</td>
+		<td colspan=5 rowspan=5 class=xl4330882>
+			_%curSubTotalPrice0%_
+		</td>
+		<td colspan=3 rowspan=5 class=xl3430882 style='border-right:.5pt solid black;border-bottom:.5pt solid black'>
+			_%dtmDeliveryDate0%_
+		</td>
+
+		<td class=xl1530882></td>
+		<td class=xl1530882></td>
+	</tr>
+
+
+
+	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
+		<td height=12 class=xl1530882 style='height:9.0pt'></td>
+		<td class=xl1530882></td>
+	</tr>
+	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
+		<td height=12 class=xl1530882 style='height:9.0pt'></td>
+		<td class=xl1530882></td>
+	</tr>
+	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
+		<td height=12 class=xl1530882 style='height:9.0pt'></td>
+		<td class=xl1530882></td>
+	</tr>
+	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
+		<td height=12 class=xl1530882 style='height:9.0pt'></td>
+		<td class=xl1530882></td>
+	</tr>
+
+
+
+	<!-- 明細 2 -->
+	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
+		<td rowspan=5 height=60 class=xl6530882 style='height:45.0pt;border-top:none' x:num>_%record1%_</td>
+		<td colspan=8 rowspan=5 class=xl5130882 width=232 style='width:176pt'>
+			_%strStockItemName1%_ _%strMoldNo1%_<br>
+			_%strDeliveryMethodName1%_<span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>_%lngCartonQuantity1%_<br>
+			_%strNote1%_
+		</td>
+		<td colspan=5 rowspan=5 class=xl11830882 width=145 style='width:110pt' x:str="_%curProductPrice1%_ &#10;_%lngProductQuantity1%_ ">
+			_%curProductPrice1%_ <br>
+			_%lngProductQuantity1%_<span style='mso-spacerun:yes'>&nbsp;</span>
+		</td>
+		<td colspan=5 rowspan=5 class=xl4330882>
+			_%curSubTotalPrice1%_
+		</td>
+		<td colspan=3 rowspan=5 class=xl3430882 style='border-right:.5pt solid black;border-bottom:.5pt solid black'>
+			_%dtmDeliveryDate1%_
+		</td>
+		<td class=xl1530882></td>
+		<td class=xl1530882></td>
+	</tr>
+
+
+
+	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
+		<td height=12 class=xl1530882 style='height:9.0pt'></td>
+		<td class=xl1530882></td>
+	</tr>
+	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
+		<td height=12 class=xl1530882 style='height:9.0pt'></td>
+		<td class=xl1530882></td>
+	</tr>
+	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
+		<td height=12 class=xl1530882 style='height:9.0pt'></td>
+		<td class=xl1530882></td>
+	</tr>
+	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
+		<td height=12 class=xl1530882 style='height:9.0pt'></td>
+		<td class=xl1530882></td>
+	</tr>
+
+
+
+	<!-- 明細 3 -->
+	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
+		<td rowspan=5 height=60 class=xl6530882 style='height:45.0pt;border-top:none' x:num>_%record2%_</td>
+		<td colspan=8 rowspan=5 class=xl5130882 width=232 style='width:176pt'>
+			_%strStockItemName2%_ _%strMoldNo2%_<br>
+		    _%strDeliveryMethodName2%_<span
+		  style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		  </span>_%lngCartonQuantity2%_<br>
+			_%strNote2%_
+		</td>
+		<td colspan=5 rowspan=5 class=xl11830882 width=145 style='width:110pt' x:str="_%curProductPrice2%_ &#10;_%lngProductQuantity2%_ ">
+			_%curProductPrice2%_ <br>
+			_%lngProductQuantity2%_<span style='mso-spacerun:yes'>&nbsp;</span>
+		</td>
+		<td colspan=5 rowspan=5 class=xl4330882>
+			_%curSubTotalPrice2%_
+		</td>
+		<td colspan=3 rowspan=5 class=xl3430882 style='border-right:.5pt solid black;border-bottom:.5pt solid black'>
+			_%dtmDeliveryDate2%_
+		</td>
+		<td class=xl1530882></td>
+		<td class=xl1530882></td>
+	</tr>
+
+
+
+	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
+		<td height=12 class=xl1530882 style='height:9.0pt'></td>
+		<td class=xl1530882></td>
+	</tr>
+	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
+		<td height=12 class=xl1530882 style='height:9.0pt'></td>
+		<td class=xl1530882></td>
+	</tr>
+	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
+		<td height=12 class=xl1530882 style='height:9.0pt'></td>
+		<td class=xl1530882></td>
+	</tr>
+	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
+		<td height=12 class=xl1530882 style='height:9.0pt'></td>
+		<td class=xl1530882></td>
+	</tr>
+
+
+
+	<!-- 明細 4 -->
+	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
+		<td rowspan=5 height=60 class=xl6530882 style='height:45.0pt;border-top:none' x:num>_%record3%_</td>
+		<td colspan=8 rowspan=5 class=xl5130882 width=232 style='width:176pt'>
+			_%strStockItemName3%_ _%strMoldNo3%_<br>
+		    _%strDeliveryMethodName3%_<span
+		  style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		  </span>_%lngCartonQuantity3%_<br>
+			_%strNote3%_
+		</td>
+		<td colspan=5 rowspan=5 class=xl11830882 width=145 style='width:110pt' x:str="_%curProductPrice3%_ &#10;_%lngProductQuantity3%_ ">
+			_%curProductPrice3%_ <br>
+			_%lngProductQuantity3%_<span style='mso-spacerun:yes'>&nbsp;</span>
+		</td>
+		<td colspan=5 rowspan=5 class=xl4330882>
+			_%curSubTotalPrice3%_
+		</td>
+		<td colspan=3 rowspan=5 class=xl3430882 style='border-right:.5pt solid black;border-bottom:.5pt solid black'>
+			_%dtmDeliveryDate3%_
+		</td>
+		<td class=xl1530882></td>
+		<td class=xl1530882></td>
+	</tr>
+
+
+
+	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
+		<td height=12 class=xl1530882 style='height:9.0pt'></td>
+		<td class=xl1530882></td>
+	</tr>
+	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
+		<td height=12 class=xl1530882 style='height:9.0pt'></td>
+		<td class=xl1530882></td>
+	</tr>
+	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
+		<td height=12 class=xl1530882 style='height:9.0pt'></td>
+		<td class=xl1530882></td>
+	</tr>
+	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
+		<td height=12 class=xl1530882 style='height:9.0pt'></td>
+		<td class=xl1530882></td>
+	</tr>
+
+
+
+	<!-- 明細 5 -->
+	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
+		<td rowspan=5 height=60 class=xl6530882 style='height:45.0pt;border-top:none' x:num>_%record4%_</td>
+		<td colspan=8 rowspan=5 class=xl5130882 width=232 style='width:176pt'>
+			_%strStockItemName4%_ _%strMoldNo4%_<br>
+		    _%strDeliveryMethodName4%_<span
+		  style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		  </span>_%lngCartonQuantity4%_<br>
+			_%strNote4%_
+		</td>
+		<td colspan=5 rowspan=5 class=xl11830882 width=145 style='width:110pt' x:str="_%curProductPrice4%_ &#10;_%lngProductQuantity4%_ ">
+			_%curProductPrice4%_ <br>
+			_%lngProductQuantity4%_<span style='mso-spacerun:yes'>&nbsp;</span>
+		</td>
+		<td colspan=5 rowspan=5 class=xl4330882>
+			_%curSubTotalPrice4%_
+		</td>
+		<td colspan=3 rowspan=5 class=xl3430882 style='border-right:.5pt solid black;border-bottom:.5pt solid black'>
+			_%dtmDeliveryDate4%_
+		</td>
+		<td class=xl1530882></td>
+		<td class=xl1530882></td>
+	</tr>
+
+
+
+	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
+		<td height=12 class=xl1530882 style='height:9.0pt'></td>
+		<td class=xl1530882></td>
+	</tr>
+	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
+		<td height=12 class=xl1530882 style='height:9.0pt'></td>
+		<td class=xl1530882></td>
+	</tr>
+	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
+		<td height=12 class=xl1530882 style='height:9.0pt'></td>
+		<td class=xl1530882></td>
+	</tr>
+	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
+		<td height=12 class=xl1530882 style='height:9.0pt'></td>
+		<td class=xl1530882></td>
+	</tr>
+
+
+
+	<!-- 合計金額(税抜) -->
+	<tr height=24 style='mso-height-source:userset;height:18.0pt'>
+		<td colspan=14 height=24 class=xl12130882 style='border-right:.5pt solid black;height:18.0pt'>
+			_%strTotalAmount%_
+		</td>
+		<td colspan=8 class=xl12430882 style='border-right:.5pt solid black;border-left:none'>
+			_%curTotalPrice%_
+		</td>
+		<td class=xl1530882></td>
+		<td class=xl1530882></td>
+	</tr>
+
+
+
+	<tr height=1 style='mso-height-source:userset;height:.95pt'>
+		<td colspan=22 height=1 class=xl12830882 style='height:.95pt'>&nbsp;&nbsp;</td>
+		<td class=xl1530882></td>
+		<td class=xl1530882></td>
+	</tr>
+
+
+
+	<!-- 納品場所 -->
+	<tr height=21 style='mso-height-source:userset;height:15.95pt'>
+		<td colspan=3 height=21 class=xl11930882 style='height:15.95pt'>
+			<span style='mso-spacerun:yes'>&nbsp;</span>Location
+		</td>
+		<td colspan=19 class=xl3230882 style='border-right:.5pt solid black;border-left:none'>
+			_%strDeliveryDisplayName%_
+		</td>
+		<td class=xl1530882></td>
+		<td class=xl1530882></td>
+	</tr>
+
+
+
+	<!-- 備考 -->
+	<tr height=21 style='mso-height-source:userset;height:15.95pt'>
+		<td colspan=3 height=21 class=xl11930882 style='height:15.95pt'>
+			<span style='mso-spacerun:yes'>&nbsp;</span>Remark
+		</td>
+		<td colspan=19 class=xl3230882 style='border-right:.5pt solid black;border-left:none'>
+			_%strNote%_
+		</td>
+		<td class=xl1530882></td>
+		<td class=xl1530882></td>
+	</tr>
+
+
+
+	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
+		<td colspan=22 height=12 class=xl4830882 style='height:9.0pt'>&nbsp;&nbsp;</td>
+		<td class=xl1530882></td>
+		<td class=xl1530882></td>
+	</tr>
+
+
+
+	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
+		<td colspan=14 height=12 class=xl5730882 style='height:9.0pt'>
+			*Please make sure that you fill in the P.O. No. on the D/N &amp; Inv.*
+		</td>
+		<td colspan=8 class=xl4930882></td>
+		<td class=xl1530882></td>
+		<td class=xl1530882></td>
+	</tr>
+	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
+		<td colspan=14 height=12 class=xl4630882 style='height:9.0pt'>
+			お手数ですが、納品書には弊社発注No.の記入をお願いいたします。
+		</td>
+		<td colspan=8 class=xl4930882></td>
+		<td class=xl1530882></td>
+		<td class=xl1530882></td>
+	</tr>
+	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
+		<td colspan=11 rowspan=2 height=24 class=xl6230882 style='height:18.0pt'>
+			KUWAGATA CO., LTD
+		</td>
+		<td colspan=11 rowspan=2 class=xl6330882>
+			ACCEPTED AND CONFIRMED BY
+		</td>
+		<td class=xl1530882></td>
+		<td class=xl1530882></td>
+	</tr>
+
+
+
+	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
+		<td height=12 class=xl1530882 style='height:9.0pt'></td>
+		<td class=xl1530882></td>
+	</tr>
+	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
+		<td colspan=22 rowspan=3 height=36 class=xl5630882 style='height:27.0pt'></td>
+		<td class=xl1530882></td>
+		<td class=xl1530882></td>
+	</tr>
+	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
+		<td height=12 class=xl1530882 style='height:9.0pt'></td>
+		<td class=xl1530882></td>
+	</tr>
+	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
+		<td height=12 class=xl1530882 style='height:9.0pt'></td>
+		<td class=xl1530882></td>
+	</tr>
+
+
+
+	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
+		<td colspan=8 height=12 class=xl5230882 style='height:9.0pt'>&nbsp;&nbsp;</td>
+		<td colspan=6 class=xl5530882></td>
+		<td colspan=8 class=xl5430882>&nbsp;&nbsp;</td>
+		<td class=xl1530882></td>
+		<td class=xl1530882></td>
+	</tr>
+
+
+
+	<!-- 最終承認者 -->
+	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
+		<td colspan=8 height=12 class=xl5330882 style='height:9.0pt'>
+			Authorized Signature
+		</td>
+		<td colspan=6 class=xl5530882></td>
+		<td colspan=8 class=xl5330882>
+			Authorized Signature
+		</td>
+		<td class=xl1530882></td>
+		<td class=xl1530882></td>
+	</tr>
+	<tr height=18 style='mso-height-source:userset;height:14.1pt'>
+		<td colspan=8 height=18 class=xl4730882 style='height:14.1pt'>
+			_%strInChargeUserName%_
+		</td>
+		<td colspan=6 class=xl5030882></td>
+		<td colspan=8 class=xl5030882 align="right" id="strFormatCode">Format&nbsp;Code&nbsp:&nbsp;2004-6-1</td>
+		<td class=xl1530882></td>
+		<td class=xl1530882></td>
+	</tr>
+
+
+
+</table>
+</div>

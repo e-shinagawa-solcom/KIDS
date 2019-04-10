@@ -1,74 +1,53 @@
-insert into
-    m_mold (
-        moldno,
-        vendercode,
-        productcode
-    )
-select
-    src.strmoldno,
-    src.lngcustomercompanycode,
-    src.strproductcode
-from
-    (
-        select
-            tsd.strmoldno,
-            s1.lngcustomercompanycode,
-            tsd.strproductcode
-        from
-            t_stockdetail tsd
-            inner join (
-                SELECT
-                    s.lngStockno,
-                    s.lngRevisionNo,
-                    s.lngcustomercompanycode
-                from
-                    m_Stock s
-                WHERE
-                    s.lngRevisionNo = (
-                        SELECT
-                            MAX (s2.lngRevisionNo)
-                        FROM
-                            m_Stock s2
-                        WHERE
-                            s.strStockCode = s2.strStockCode
-                            AND s2.bytInvalidFlag = false
-                    )
-                    AND 0 <= (
-                        SELECT
-                            MIN (s3.lngRevisionNo)
-                        FROM
-                            m_Stock s3
-                        WHERE
-                            s.strStockCode = s3.strStockCode
-                            AND s3.bytInvalidFlag = false
-                    )
-                order by
-                    s.strStockCode,
-                    s.lngRevisionNo
-            ) s1 on tsd.lngStockno = s1.lngStockno
-            and tsd.lngRevisionNo = s1.lngRevisionNo
-        where
-            tsd.strmoldno is not null
-            AND (
-                (
-                    tsd.lngStockItemCode = 1
-                    AND tsd.lngStockSubjectCode = 433
-                )
-                OR (
-                    tsd.lngStockItemCode = 8
-                    AND tsd.lngStockSubjectCode = 431
-                )
+insert into m_mold
+(
+      moldno
+    , vendercode
+    , productcode
+)
+SELECT
+      src.strmoldno
+    , src.lngcustomercompanycode
+    , src.strproductcode
+FROM
+(
+    SELECT
+          tsd.strmoldno
+        , ms.lngcustomercompanycode
+        , tsd.strproductcode
+    FROM
+        t_stockdetail tsd
+    INNER JOIN
+        m_stock ms
+      ON
+            tsd.lngstockno = ms.lngstockno
+        AND tsd.lngrevisionno = ms.lngrevisionno
+    WHERE
+        (tsd.strmoldno, tsd.lngstockno, tsd.lngrevisionno, tsd.lngstockdetailno) in
+        (
+            SELECT
+                  strmoldno
+                , max(lngstockno)
+                , max(lngrevisionno)
+                , max(lngstockdetailno)
+            FROM
+                t_stockdetail
+            WHERE
+                strmoldno is not null
+            AND
+            (
+                    (lngStockItemCode = 1 AND lngStockSubjectCode = 433)
+                OR  (lngStockItemCode = 8 AND lngStockSubjectCode = 431)
             )
-        group by
-            tsd.strmoldno,
-            s1.lngcustomercompanycode,
-            tsd.strproductcode
-        order by
-            tsd.strproductcode,
-            tsd.strmoldno
-    ) as src
-    LEFT OUTER JOIN m_mold mm ON src.strmoldno = mm.moldno
+            GROUP BY
+                strmoldno
+        )
+) src
+LEFT OUTER JOIN
+    m_mold mm
+  ON
+    src.strmoldno = mm.moldno
 WHERE
-    mm.moldno is null
+   mm.moldno is null
 ORDER BY
-    src.strmoldno;
+    src.strmoldno
+;

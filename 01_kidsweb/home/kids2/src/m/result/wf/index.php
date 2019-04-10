@@ -151,7 +151,7 @@ if ( $lngResultNum )
 		if ( $record["lngworkfloworderno"] == 1 )
 		{
 			// GETで渡す文字列生成
-			$getUrl = "strSessionID=$aryData[strSessionID]&lngWorkflowOrderCode=" . $record["lngworkflowordercode"] . "&lngActionCode=" . DEF_ACTION_DELETE;
+			$getUrl = "strSessionID=" .$aryData["strSessionID"]. "&lngWorkflowOrderCode=" . $record["lngworkflowordercode"] . "&lngActionCode=" . DEF_ACTION_DELETE;
 
 			// 削除ボタン生成
 			$aryParts["strResultHtml"] .= "		<th bgcolor=\"#ffffff\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncSelectSomeTrColor( this, 'TD" . $lngResultNum . "_',1 );\" nowrap rowspan=_%count" . $record["lngworkflowordercode"] . "%_><a href=\"javascript:fncShowDialogCommonMaster('/m/regist/wf/confirm.php?$getUrl' , window.form1 , 'ResultIframeCommonMaster' , 'NO' , $_COOKIE[lngLanguageCode] , 'delete' );\"><img onmouseover=\"RemoveOn(this);\" onmouseout=\"RemoveOff(this);\" src=\"/img/type01/cmn/seg/remove_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"DELETE\"></a></th>\n";
@@ -185,10 +185,10 @@ $objDB->close();
 
 
 
-$aryParts["HIDDEN"]           = "<input type=hidden name=strSessionID value=$aryData[strSessionID]>\n";
-$aryParts["HIDDEN"]          .= "<input type=hidden name=lngWorkflowOrderCode value=$aryData[lngWorkflowOrderCode]>\n";
-$aryParts["HIDDEN"]          .= "<input type=hidden name=lngWorkflowOrderGroupCode value=$aryData[lngWorkflowOrderGroupCode]>\n";
-$aryParts["HIDDEN"]          .= "<input type=hidden name=lngInChargeCode value=$aryData[lngInChargeCode]>\n";
+$aryParts["HIDDEN"]           = "<input type=hidden name=strSessionID value=" .$aryData["strSessionID"] . ">\n";
+$aryParts["HIDDEN"]          .= "<input type=hidden name=lngWorkflowOrderCode value=" .$aryData["lngWorkflowOrderCode"]. ">\n";
+$aryParts["HIDDEN"]          .= "<input type=hidden name=lngWorkflowOrderGroupCode value=" .$aryData["lngWorkflowOrderGroupCode"]. ">\n";
+$aryParts["HIDDEN"]          .= "<input type=hidden name=lngInChargeCode value=" .$aryData["lngInChargeCode"]. ">\n";
 $aryParts["lngLanguageCode"] =& $_COOKIE["lngLanguageCode"];
 $aryParts["strTableName"]    = $objMaster->strTableName;
 $aryParts["lngColumnNum"]    = 5;

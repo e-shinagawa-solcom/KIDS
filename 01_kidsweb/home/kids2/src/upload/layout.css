@@ -1,0 +1,104 @@
+
+	#InputA
+	{ 
+		position		: absolute;
+		left			: 34px;
+		top				: 111px;
+		z-index			: 0;
+		visibility		: visible;
+		border-width	: 0px;
+		border-style	: none;
+		background		: transparent;
+	}
+	#uploadSection
+	{ 
+		position		: absolute;
+		left			: 44px;
+		top 			: 151px;
+		z-index			: 1;
+		visibility		: visible;
+		border-width	: 0px;
+		border-style	: none;
+		background		: transparent;
+	}
+
+
+
+
+	#SegAHeader
+	{
+		position		: absolute;
+		left			: 0px;
+		top				: 0px;
+		border-width	: 0px;
+		border-style	: none;
+		background		: transparent;
+	}
+	#SegABodys
+	{
+		left			: 10px;
+		top				: 31px;
+		width			: 949px;
+		height			: 160px;
+		border-width	: 1px;
+		border-style	: solid;
+		border-color	: #cdcdcd;
+		background		: #ffffff;
+	}
+	#SegABottom
+	{
+		position		: absolute;
+		left			: 0px;
+		top				: 158px;
+		border-width	: 0px;
+		border-style	: none;
+		background		: #ffffff;
+	}
+
+
+
+
+
+	#colExcel
+	{
+		font-weight		: bold;
+		position		: absolute;
+		left			: 0px;
+		top				: 0px;
+		width			: 160px;
+		height			: 27px;
+		border-width	: 1px;
+		border-style	: solid;
+		padding			: 8px 0px 0px 8px;
+	}
+	#varExcel
+	{
+		position		: absolute;
+		left			: 130px;
+		top				: 0px;
+		height			: 27px;
+		border-width	: 1px;
+		border-style	: solid;
+		padding			: 3px 80px 0px 0px;
+	}
+	#btnUpload
+	{
+		position		: absolute;
+		left			: 770px;
+		top				: 4px;
+		border-width	: 0px;
+		border-style	: none;
+		background		: transparent;
+	}
+
+
+
+	#RegistBt
+	{
+		position		: absolute;
+		top				: 466px;
+		left			: 839px;
+		border-width	: 0px;
+		border-style	: none;
+		background		: transparent;
+	}

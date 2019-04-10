@@ -1,11 +1,11 @@
 <?
-/** 
+/**
 *	Ä¢É¼½ÐÎÏ ¾¦ÉÊ´ë²è½ñ °õºþ¥×¥ì¥Ó¥å¡¼²èÌÌ(FARAMESET)
 *
 *	@package   KIDS
-*	@license   http://www.wiseknot.co.jp/ 
-*	@copyright Copyright &copy; 2003, Wiseknot 
-*	@author    Kenji Chiba <k-chiba@wiseknot.co.jp> 
+*	@license   http://www.wiseknot.co.jp/
+*	@copyright Copyright &copy; 2003, Wiseknot
+*	@author    Kenji Chiba <k-chiba@wiseknot.co.jp>
 *	@access    public
 *	@version   1.00
 *

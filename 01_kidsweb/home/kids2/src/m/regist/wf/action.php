@@ -105,13 +105,13 @@ if ( $aryData["lngActionCode"] == DEF_ACTION_INSERT && !join ( $aryCheckResult )
 	// C.並び順の有効性(権限チェック)
 
 	// 順番登録データ を '&' で分解
-	$aryOrderData = split ( "&", $aryData["strOrderData"] );
+	$aryOrderData = explode ( "&", $aryData["strOrderData"] );
 	$lngOrderDataLength = count ( $aryOrderData ) - 1;
 
 	// '=' で分解し、ユーザーコード、期限日数を配列にセット
 	for ( $i = 0; $i < $lngOrderDataLength; $i++ )
 	{
-		$aryOrderSubData = split ( "=", $aryOrderData[$i] );
+		$aryOrderSubData = explode ( "=", $aryOrderData[$i] );
 
 		// A.グループ所属チェック
 		// 入力されたユーザーコードがグループに属していなかった場合エラー
@@ -156,7 +156,7 @@ if ( $aryData["lngActionCode"] == DEF_ACTION_INSERT && !join ( $aryCheckResult )
 	for ( $i = 0; $i < $lngOrderDataLength; $i++ )
 	{
 		// ユーザーコード、期限を分解
-		list ( $lngUserCode, $lngLimitDays ) = split ( "=", $aryOrderData[$i] );
+		list ( $lngUserCode, $lngLimitDays ) = explode ( "=", $aryOrderData[$i] );
 
 		// 最終承認者の場合、状態コードを2に設定
 		if ( $i == ( $lngOrderDataLength - 1 ) )

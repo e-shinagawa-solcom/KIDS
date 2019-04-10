@@ -91,7 +91,7 @@ if ( ( $aryData["lngActionCode"] == DEF_ACTION_INSERT || $aryData["lngActionCode
 	// グループコード重複チェック
 	$strQuery = "SELECT * FROM m_Group " .
                 "WHERE lngGroupCode = " . $aryData["lnggroupcode"];
-
+    
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
 	// 新規登録 かつ 結果件数が0以上
@@ -205,10 +205,9 @@ elseif ( $aryData["lngActionCode"] == DEF_ACTION_DELETE && !join ( $aryCheckResu
 
 
 
-
 ////////////////////////////////////////////////////////////////////////////
 // クエリ実行
-////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////
 $objDB->transactionBegin();
 
 for ( $i = 0; $i < count ( $aryQuery ); $i++ )
@@ -220,7 +219,7 @@ for ( $i = 0; $i < count ( $aryQuery ); $i++ )
 $objDB->transactionCommit();
 
 
-$objDB->close();
+// $objDB->close();
 
 
 

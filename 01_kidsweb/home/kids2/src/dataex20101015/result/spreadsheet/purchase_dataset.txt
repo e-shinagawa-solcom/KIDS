@@ -1,0 +1,31 @@
+// SigmaGrid用データセット
+[
+	{name : 'dtmappropriationdate',		type:'date'},
+	{name : 'strstockcode',			type:'text'},
+	{name : 'strordercode',			type:'text'},
+	{name : 'strcompanydisplaycode',	type:'text'},
+	{name : 'strcompanydisplayname',	type:'text'},
+	{name : 'strgroupdisplaycode',		type:'text'},
+	{name : 'strgroupdisplayname',		type:'text'},
+	{name : 'strcategoryname',		type:'text'},
+	{name : 'struserdisplaycode',		type:'text'},
+	{name : 'struserdisplayname',		type:'text'},
+	{name : 'strslipcode',			type:'text'},
+	{name : 'strmonetaryunitname',		type:'text'},
+	{name : 'strmonetaryratename',		type:'text'},
+	{name : 'curconversionrate',		type:'int'},
+	{name : 'strpayconditionname',		type:'text'},
+	{name : 'dtmexpirationdate',		type:'date'},
+	{name : 'lngstocksubjectcode',		type:'int'},
+	{name : 'strstocksubjectname',		type:'text'},
+	{name : 'lngstockitemcode',		type:'int'},
+	{name : 'strstockitemname',		type:'text'},
+	{name : 'strproductcode',		type:'text'},
+	{name : 'strproductenglishname',	type:'text'},
+	{name : 'curproductprice',		type:'float'},
+	{name : 'strproductunitname',		type:'text'},
+	{name : 'lngproductquantity',		type:'int'},
+	{name : 'cursubtotalprice',		type:'float'},
+	{name : 'strnote',			type:'text'}
+
+]
