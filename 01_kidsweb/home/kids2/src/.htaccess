@@ -1,6 +1,6 @@
 AddType application/x-httpd-php .html
 
-php_value include_path /home/kids2/lib
+php_value include_path /Users/solcom/Desktop/Git-new/KIDS/01_kidsweb/home/kids2/lib
 
 # Added by k.saito
 php_value default_charset EUC-JP

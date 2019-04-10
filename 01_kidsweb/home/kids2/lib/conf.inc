@@ -131,7 +131,7 @@ switch( $strExcuteHttpHostName )
 		define ( "ERROR_MAIL_TO", "kids@kuwagata.co.jp" );
 		define ( "SEND_MAIL_FLAG", true);
 		// 各ルートパス
-		define ( "PATH_HOME",	"/home/kids2" );
+		define ( "PATH_HOME",	"/Users/solcom/Desktop/Git-new/KIDS/01_kidsweb/home/kids2" );
 		break;
 }
 
