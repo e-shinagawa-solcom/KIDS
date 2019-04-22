@@ -1,5 +1,3 @@
-<!--
-
 
 ///// HEADER IMAGE /////
 var headerAJ = '<img src="' + search01J + '" width="949" height="30" border="0" alt="マスタ検索">';
@@ -21,7 +19,6 @@ function ChgEtoJ( lngSelfCode )
 
 		m_Company.innerText       = 'Company master';
 		m_Group.innerText         = 'Group master';
-		m_WorkflowOrder.innerText = 'Work flow order master';
 		m_MonetaryRate.innerText  = 'Monetary rate master';
 
 	}
@@ -38,7 +35,6 @@ function ChgEtoJ( lngSelfCode )
 
 		m_Company.innerText       = '会社マスタ管理';
 		m_Group.innerText         = 'グループマスタ管理';
-		m_WorkflowOrder.innerText = 'ワークフロー順序マスタ管理';
 		m_MonetaryRate.innerText  = '通貨レートマスタ管理';
 
 	}

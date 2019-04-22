@@ -14,7 +14,6 @@
 
 // 設定読み込み
 include_once('conf.inc');
-
 // ライブラリ読み込み
 require (LIB_FILE);
 require (SRC_ROOT . "m/cmn/lib_m.php");
@@ -38,7 +37,6 @@ if ( !fncCheckAuthority( DEF_FUNCTION_M0, $objAuth ) )
 {
 	fncOutputError ( 9052, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
-
 $objDB->close();
 
 
@@ -53,7 +51,6 @@ foreach ( $aryMasterTableKeyName as $key)
 				</tr>
 ";
 }
-
 
 // テンプレート読み込み
 $objTemplate = new clsTemplate();

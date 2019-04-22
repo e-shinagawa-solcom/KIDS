@@ -103,7 +103,7 @@ if ( $aryData["lngActionCode"] != DEF_ACTION_DELETE )
 	$aryCheck["strcompanyname"]        = "null:length(1,100)";
 	$aryCheck["bytcompanydisplayflag"] = "english(4,5)";
 	$aryCheck["strcompanydisplaycode"] = "null:numenglish(0,10)";
-	$aryCheck["strcompanydisplayname"] = "null:length(1,100)";
+	$aryCheck["strcompanyomitname"] = "length(1,100)";
 	$aryCheck["strpostalcode"]         = "ascii(0,20)";
 	$aryCheck["straddress1"]           = "length(1,100)";
 	$aryCheck["straddress2"]           = "length(1,100)";
@@ -189,6 +189,7 @@ if ( ( $aryData["lngActionCode"] == DEF_ACTION_INSERT || $aryData["lngActionCode
                        $aryData["bytcompanydisplayflag"] . ", " .
                  "'" . $aryData["strcompanydisplaycode"] . "', " .
                  "'" . $aryData["strcompanydisplayname"] . "', " .
+                 "'" . $aryData["strcompanyomitname"] . "', " .
                  "'" . $aryData["strpostalcode"] . "', " .
                  "'" . $aryData["straddress1"] . "', " .
                  "'" . $aryData["straddress2"] . "', " .
@@ -227,6 +228,7 @@ if ( ( $aryData["lngActionCode"] == DEF_ACTION_INSERT || $aryData["lngActionCode
                        "bytcompanydisplayflag = " . $aryData["bytcompanydisplayflag"] . ", " .
                        "strcompanydisplaycode = '" . $aryData["strcompanydisplaycode"] . "', " .
                        "strcompanydisplayname = '" . $aryData["strcompanydisplayname"] . "', " .
+                       "strcompanyomitname = '" . $aryData["strcompanyomitname"] . "', " .
                        "strpostalcode = '" . $aryData["strpostalcode"] . "', " .
                        "straddress1 = '" . $aryData["straddress1"] . "', " .
                        "straddress2 = '" . $aryData["straddress2"] . "', " .
@@ -260,7 +262,7 @@ if ( ( $aryData["lngActionCode"] == DEF_ACTION_INSERT || $aryData["lngActionCode
 			{
 				// 同じ属性が存在した場合、
 				// チェックフラグを偽、新規登録分を削除し、ループを抜ける
-				if ( $objAttribute->aryData[$i][lngattributecode] == $aryAttributeCopy[$j] )
+				if ( $objAttribute->aryData[$i]["lngattributecode"] == $aryAttributeCopy[$j] )
 				{
 					$bytCheckFlag = FALSE;
 					$aryAttributeCopy[$j] = "";
@@ -374,7 +376,7 @@ $objDB->close();
 ?>
 <html>
 <body>
-<script language="javascript">window.returnValue=true;window.close();
+<script language="javascript">window.returnValue=true;window.open('about:blank','_parent').close();
 </script>
 </body>
 </html>

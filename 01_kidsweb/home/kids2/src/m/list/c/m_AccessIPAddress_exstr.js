@@ -1,4 +1,3 @@
-<!--
 /************************* [ アクセスIPアドレスマスタ ] *************************/
 
 
@@ -97,10 +96,8 @@ if( typeof(window.top.MasterAddBt) != 'undefined' )
 
 
 //////////////////////////////////////////////////////////////////
-////////// ヘッダーの生成 //////////
-var headerAJ = '<p class="form-box__header__title">アクセスIPアドレスマスタ</p>\n';
-headerAJ    += '<span id="MasterAddBt" onclick="fncQueryDialog( window.Pwin.document.all.Vars1.value , window.Pwin.document.all.Vars2.value );return false;">\n';
-headerAJ    += '</span>\n'
+////////// ヘッダーイメージの生成 //////////
+var headerAJ = '<img src="' + h_ipJ + '" width="949" height="30" border="0" alt="アクセスIPアドレスマスタ">';
 var headerAE = '<img src="' + h_ipE + '" width="949" height="30" border="0" alt="ACCESS IP ADDRESS MASTER">';
 
 
@@ -180,17 +177,19 @@ function ChgEtoJ( g_lngCode )
 	{
 
 
-		// ヘッダー書き出し
+		// ヘッダーイメージ書き出し
 		if( typeof(window.top.SegAHeader) != 'undefined' )
 		{
 			window.top.SegAHeader.innerHTML = headerAJ;
 		}
+
 
 		// 追加ボタンイメージ書き出し
 		if( typeof(window.top.MasterAddBt) != 'undefined' )
 		{
 			window.top.MasterAddBt.innerHTML = maddbtJ1;
 		}
+
 
 		// クエリーボタンテーブル書き出し
 		if( typeof(fncTitleOutput) != 'undefined' )
@@ -232,6 +231,3 @@ function ChgEtoJ( g_lngCode )
 	return false;
 
 }
-
-
-//-->

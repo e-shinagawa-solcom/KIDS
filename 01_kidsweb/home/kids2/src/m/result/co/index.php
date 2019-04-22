@@ -152,15 +152,16 @@ if ( $lngResultNum )
 		$aryParts["strResultHtml"] .= "		<td nowrap>" . $record[$objMaster->aryColumnName[15]] . "</td>\n";
 		$aryParts["strResultHtml"] .= "		<td nowrap>" . $record[$objMaster->aryColumnName[16]] . "</td>\n";
 		$aryParts["strResultHtml"] .= "		<td nowrap>" . $record[$objMaster->aryColumnName[17]] . "</td>\n";
+		$aryParts["strResultHtml"] .= "		<td nowrap>" . $record[$objMaster->aryColumnName[18]] . "</td>\n";
 		$aryParts["strResultHtml"] .= "		<td nowrap>" . $record["strcloseddaycode"] . ":" . $record["lngclosedday"] . "</td>\n";
 		$aryParts["strResultHtml"] .= "		<td nowrap>" . $aryAttributeCode[$record[$objMaster->aryColumnName[0]]] . "</td>\n";
 
 
 		// 修正ボタン生成
-		$aryParts["strResultHtml"] .= "		<td bgcolor=\"#ffffff\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncSelectSomeTrColor( this, 'TD" . $lngResultNum . "_',1 );\" nowrap><a href=\"javascript:fncShowDialogCommonMaster('/m/regist/co/edit.php?lngActionCode=" . DEF_ACTION_UPDATE . fncGetUrl( $aryData ) . "&lngcompanycode=" . $record[$objMaster->aryColumnName[0]] . "' , window.form1 , 'ResultIframeCommonMaster' , 'YES' , $aryData[lngLanguageCode] , 'fix' );\"><img onmouseover=\"RenewOn(this);\" onmouseout=\"RenewOff(this);\" src=\"/img/type01/cmn/seg/renew_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"RENEW\"></a></td>\n";
+		$aryParts["strResultHtml"] .= "		<td bgcolor=\"#ffffff\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncSelectSomeTrColor( this, 'TD" . $lngResultNum . "_',1 );\" nowrap><a href=\"/m/regist/co/edit.php?lngActionCode=" . DEF_ACTION_UPDATE . fncGetUrl( $aryData ) . "&lngcompanycode=" . $record[$objMaster->aryColumnName[0]] . "\" name=\"fix\"><img onmouseover=\"RenewOn(this);\" onmouseout=\"RenewOff(this);\" src=\"/img/type01/cmn/seg/renew_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"RENEW\"></a></td>\n";
 
 		// 削除ボタン生成
-		$aryParts["strResultHtml"] .= "		<td bgcolor=\"#ffffff\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncSelectSomeTrColor( this, 'TD" . $lngResultNum . "_',1 );\" nowrap><a href=\"javascript:fncShowDialogCommonMaster('/m/regist/co/confirm.php?lngActionCode=" . DEF_ACTION_DELETE . fncGetUrl( $aryData ) . "&lngcompanycode=" . $record[$objMaster->aryColumnName[0]] . "' , window.form1 , 'ResultIframeCommonMaster' , 'YES' , $aryData[lngLanguageCode] , 'delete' );\"><img onmouseover=\"RemoveOn(this);\" onmouseout=\"RemoveOff(this);\" src=\"/img/type01/cmn/seg/remove_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"DELETE\"></a></td>\n";
+		$aryParts["strResultHtml"] .= "		<td bgcolor=\"#ffffff\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncSelectSomeTrColor( this, 'TD" . $lngResultNum . "_',1 );\" nowrap><a href=\"/m/regist/co/confirm.php?lngActionCode=" . DEF_ACTION_DELETE . fncGetUrl( $aryData ) . "&lngcompanycode=" . $record[$objMaster->aryColumnName[0]] . "\" name=\"delete\"><img onmouseover=\"RemoveOn(this);\" onmouseout=\"RemoveOff(this);\" src=\"/img/type01/cmn/seg/remove_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"DELETE\"></a></td>\n";
 
 
 		$aryParts["strResultHtml"] .= "	</tr>\n";
@@ -173,7 +174,7 @@ else
 }
 
 // カラム行HTML取得
-$aryParts["strColumnHtml"] = $objMaster->getColumnHtmlTable( 20 );
+$aryParts["strColumnHtml"] = $objMaster->getColumnHtmlTable( 21 );
 
 $objDB->close();
 
@@ -186,7 +187,7 @@ $aryParts["HIDDEN"]          .= "<input type=hidden name=lngAttributeCode value=
 $aryParts["HIDDEN"]          .= "<input type=hidden name=strCompanyDisplayName value=" .$aryData["strCompanyDisplayName"]. ">\n";
 $aryParts["lngLanguageCode"]  =& $aryData["lngLanguageCode"];
 $aryParts["strTableName"]     =& $objMaster->strTableName;
-$aryParts["lngColumnNum"]     = 19;
+$aryParts["lngColumnNum"]     = 20;
 $aryParts["strEditURL"]       = "/m/regist/co/edit.php?lngActionCode=" . DEF_ACTION_INSERT . "&strSessionID=" . $aryData["strSessionID"];
 //$aryParts["strEditURL"]       = "/m/regist/co/edit.php?lngActionCode=" . DEF_ACTION_INSERT . fncGetUrl( $aryData );
 

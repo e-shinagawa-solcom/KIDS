@@ -16,7 +16,7 @@
 	font-weight : bold ;
 	position : absolute ;
 	width : 160px ;
-	height : 27px ;
+	height : 16px ;
 	border-width: 1px ;
 	border-style: solid ;
 	padding : 8px 0px 0px 8px ;
@@ -35,13 +35,36 @@
 .InputSegs
 {
 	position : absolute ;
-	height : 27px ;
+	height : 21px ;
 	border-width: 1px ;
 	border-style: solid ;
 	padding : 3px 0px 0px 8px ;
 }
 
 #QueryTable
+{
+	position:relative;
+}
+
+#objTable
+{
+	position:relative;
+	top:160px;
+	left:60px;
+	width:300px;
+}
+
+.InputSegs_for_attribute
+{
+	position : absolute ;
+	height : 127px ;
+	border-width: 1px ;
+	border-style: solid ;
+	padding : 3px 0px 0px 8px ;
+}
+
+
+#objColumn
 {
 	position : absolute ;
 	z-index : 0 ;
@@ -50,6 +73,3 @@
 	border-style: none ;
 	background-color: transparent ;
 }
-
-
-//-->

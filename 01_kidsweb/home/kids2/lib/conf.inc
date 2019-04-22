@@ -435,6 +435,9 @@ define ("DEF_MONETARY_YEN",	1);				// 日本円
 define ("DEF_MONETARY_USD",	2);				// USドル
 define ("DEF_MONETARY_HKD",	3);				// HKドル
 
+// 社内レート定義
+define ("DEF_MONETARYCLASS_SHANAI", 	2);		// 社内
+
 define ("DEF_MONEY_USER",		0);			// ユーザはなし
 define ("DEF_MONEY_MANAGER",	50000);		// マネージャーは5万まで
 define ("DEF_MONEY_DIRECTOR",	200000);	// ディレクターは20万まで 

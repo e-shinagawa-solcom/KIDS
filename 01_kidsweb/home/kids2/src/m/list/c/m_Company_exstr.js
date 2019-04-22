@@ -1,4 +1,3 @@
-<!--
 /************************* [ 会社マスタ ] *************************/
 
 
@@ -12,8 +11,8 @@ function fncEditObjectOnload( lngLangCode )
 
 
 	// 「会社属性」専用レイアウト
-	Column19.style.padding = '50 0 0 8';
-	Column19.style.height = '109';
+	Column20.style.padding = '50 0 0 8';
+	Column20.style.height = '80';
 
 
 	// [追加]
@@ -23,10 +22,10 @@ function fncEditObjectOnload( lngLangCode )
 		fncChangeObjectIdModule( Array( 'Input0' , 'Input1' , 'Input2' , 'Input3' , 'Input4' ,
 										'Input5' , 'Input6' , 'Input7' , 'Input8' , 'Input9' ,
 										'Input10' , 'Input11' , 'Input12' , 'Input13' , 'Input14' ,
-										'Input15' , 'Input16' , 'Input17' , 'Input18' , 'Input19' ) ,
+										'Input15' , 'Input16' , 'Input17' , 'Input18' , 'Input19' , 'Input20' ) ,
 
 								 Array( 'TxtDis04L' , 'TxtSlt20' , 'TxtSlt20' , 'CheckBox14' , 'Txt40L' ,
-										'CheckBox14' , 'Txt40L' , 'Txt40L' , 'Txt08L' , 'Txt40L' ,
+										'CheckBox14' , 'Txt40L' , 'Txt40L' , 'Txt40L' , 'Txt08L' , 'Txt40L' ,
 										'Txt40L' , 'Txt40L' , 'Txt40L' , 'Txt40L' , 'Txt40L' ,
 										'Txt40L' , 'Txt40L' , 'Txt02L' , 'TxtSlt20' , 'TxtSlt20' ) );
 	}
@@ -37,10 +36,10 @@ function fncEditObjectOnload( lngLangCode )
 		fncChangeObjectIdModule( Array( 'Input0' , 'Input1' , 'Input2' , 'Input3' , 'Input4' ,
 										'Input5' , 'Input6' , 'Input7' , 'Input8' , 'Input9' ,
 										'Input10' , 'Input11' , 'Input12' , 'Input13' , 'Input14' ,
-										'Input15' , 'Input16' , 'Input17' , 'Input18' , 'Input19' ) ,
+										'Input15' , 'Input16' , 'Input17' , 'Input18' , 'Input19' , 'Input20' ) ,
 
 								 Array( 'TxtDis04L' , 'TxtSlt20' , 'TxtSlt20' , 'CheckBox14' , 'Txt40L' ,
-										'CheckBox14' , 'Txt40L' , 'Txt40L' , 'Txt08L' , 'Txt40L' ,
+										'CheckBox14' , 'Txt40L' , 'Txt40L' , 'Txt40L' , 'Txt08L' , 'Txt40L' ,
 										'Txt40L' , 'Txt40L' , 'Txt40L' , 'Txt40L' , 'Txt40L' ,
 										'Txt40L' , 'Txt40L' , 'Txt02L' , 'TxtSlt20' , 'TxtSlt20' ) );
 	}
@@ -149,18 +148,19 @@ function ChgEtoJ( g_lngCode )
 		Column5.innerText	= 'Company permission';
 		Column6.innerText	= 'Company display code';
 		Column7.innerText	= 'Company display name';
-		Column8.innerText	= 'Postal code';
-		Column9.innerText	= 'Address 1';
-		Column10.innerText	= 'Address 2';
-		Column11.innerText	= 'Address 3';
-		Column12.innerText	= 'Address 4';
-		Column13.innerText	= 'Tel 1';
-		Column14.innerText	= 'Tel 2';
-		Column15.innerText	= 'Fax 1';
-		Column16.innerText	= 'Fax 2';
-		Column17.innerText	= 'Distinct code';
-		Column18.innerText	= 'Paystyle code';
-		Column19.innerText	= 'Company attribute';
+		Column8.innerText	= 'Company omit name';
+		Column9.innerText	= 'Postal code';
+		Column10.innerText	= 'Address 1';
+		Column11.innerText	= 'Address 2';
+		Column12.innerText	= 'Address 3';
+		Column13.innerText	= 'Address 4';
+		Column14.innerText	= 'Tel 1';
+		Column15.innerText	= 'Tel 2';
+		Column16.innerText	= 'Fax 1';
+		Column17.innerText	= 'Fax 2';
+		Column18.innerText	= 'Distinct code';
+		Column19.innerText	= 'Paystyle code';
+		Column20.innerText	= 'Company attribute';
 
 		// 処理名
 		if( typeof(FixColumn) != 'undefined' )
@@ -178,20 +178,17 @@ function ChgEtoJ( g_lngCode )
 	// 日本語
 	else if ( g_lngCode == 1 )
 	{
-
 		// 追加ボタンイメージ書き出し
 		if( typeof(MasterAddBt) != 'undefined' )
 		{
 			MasterAddBt.innerHTML = maddbtJ1;
 		}
 
-
 		// クエリーボタンテーブル書き出し
 		if( typeof(fncTitleOutput) != 'undefined' )
 		{
 			fncTitleOutput( 1 );
 		}
-
 
 		// カラム名
 		Column0.innerText	= '会社コード';
@@ -202,18 +199,19 @@ function ChgEtoJ( g_lngCode )
 		Column5.innerText	= '表示会社許可';
 		Column6.innerText	= '表示会社コード';
 		Column7.innerText	= '表示会社名称';
-		Column8.innerText	= '郵便番号';
-		Column9.innerText	= '住所1 / 都道府県';
-		Column10.innerText	= '住所2 / 市、区、郡';
-		Column11.innerText	= '住所3 / 町、番地';
-		Column12.innerText	= '住所4 / ビル等、建物名';
-		Column13.innerText	= '電話番号1';
-		Column14.innerText	= '電話番号2';
-		Column15.innerText	= 'ファックス番号1';
-		Column16.innerText	= 'ファックス番号2';
-		Column17.innerText	= '識別コード';
-		Column18.innerText	= '締め日コード';
-		Column19.innerText	= '会社属性';
+		Column8.innerText	= '省略名称';
+		Column9.innerText	= '郵便番号';
+		Column10.innerText	= '住所1 / 都道府県';
+		Column11.innerText	= '住所2 / 市、区、郡';
+		Column12.innerText	= '住所3 / 町、番地';
+		Column13.innerText	= '住所4 / ビル等、建物名';
+		Column14.innerText	= '電話番号1';
+		Column15.innerText	= '電話番号2';
+		Column16.innerText	= 'ファックス番号1';
+		Column17.innerText	= 'ファックス番号2';
+		Column18.innerText	= '識別コード';
+		Column19.innerText	= '締め日コード';
+		Column20.innerText	= '会社属性';
 
 		// 処理名
 		if( typeof(FixColumn) != 'undefined' )
@@ -231,6 +229,3 @@ function ChgEtoJ( g_lngCode )
 	return false;
 
 }
-
-
-//-->

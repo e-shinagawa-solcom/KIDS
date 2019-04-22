@@ -136,6 +136,7 @@ if ( $aryData["lngActionCode"] != DEF_ACTION_DELETE )
 	$aryCheck["bytcompanydisplayflag"] = "english(1,1)";
 	$aryCheck["strcompanydisplaycode"] = "null:numenglish(0,10)";
 	$aryCheck["strcompanydisplayname"] = "null:length(1,100)";
+	$aryCheck["strcompanyomitname"] = "length(1,100)";
 	$aryCheck["strpostalcode"]         = "ascii(0,20)";
 	$aryCheck["straddress1"]           = "length(1,100)";
 	$aryCheck["straddress2"]           = "length(1,100)";
@@ -309,9 +310,8 @@ $aryOrganizationFront  = Array ( "TRUE" => "前", "FALSE" => "後" );
 //////////////////////////////////////////////////////////////////////////
 // 出力
 //////////////////////////////////////////////////////////////////////////
-$aryParts["lngLanguageCode"] =& $_COOKIE["lngLanguageCode"];
-$aryParts["lngActionCode"]   =& $aryData["lngActionCode"];
-$aryParts["strSessionID"]    =& $aryData["strSessionID"];
+$aryParts["lngActionCode"]   = $aryData["lngActionCode"];
+$aryParts["strSessionID"]    = $aryData["strSessionID"];
 
 
 // lngCompanyCode の(CODE+NAME)取得
@@ -355,48 +355,52 @@ $aryParts["HIDDEN"] .= "<input type=\"hidden\" name=\"strcompanydisplaycode\" va
 $aryParts["MASTER"] .= "				<tr><td id=\"Column7\" class=\"SegColumn\" width=\"25%\">Column0</td><td class=\"Segs\">" . fncHTMLSpecialChars ( $aryData["strcompanydisplayname"] ) . "</td></tr>\n";
 $aryParts["HIDDEN"] .= "<input type=\"hidden\" name=\"strcompanydisplayname\" value=\"" . fncHTMLSpecialChars ( $aryData["strcompanydisplayname"] ) . "\">\n";
 
+// 省略名称
+$aryParts["MASTER"] .= "				<tr><td id=\"Column8\" class=\"SegColumn\" width=\"25%\">Column0</td><td class=\"Segs\">" . fncHTMLSpecialChars ( $aryData["strcompanyomitname"] ) . "</td></tr>\n";
+$aryParts["HIDDEN"] .= "<input type=\"hidden\" name=\"strcompanyomitname\" value=\"" . fncHTMLSpecialChars ( $aryData["strcompanyomitname"] ) . "\">\n";
+
 // 郵便番号
-$aryParts["MASTER"] .= "				<tr><td id=\"Column8\" class=\"SegColumn\" width=\"25%\">Column0</td><td class=\"Segs\">" . $aryData["strpostalcode"] . "</td></tr>\n";
+$aryParts["MASTER"] .= "				<tr><td id=\"Column9\" class=\"SegColumn\" width=\"25%\">Column0</td><td class=\"Segs\">" . $aryData["strpostalcode"] . "</td></tr>\n";
 $aryParts["HIDDEN"] .= "<input type=\"hidden\" name=\"strpostalcode\" value=\"" . $aryData["strpostalcode"] . "\">\n";
 
 // 住所1 / 都道府県
-$aryParts["MASTER"] .= "				<tr><td id=\"Column9\" class=\"SegColumn\" width=\"25%\">Column0</td><td class=\"Segs\">" . fncHTMLSpecialChars ( $aryData["straddress1"] ) . "</td></tr>\n";
+$aryParts["MASTER"] .= "				<tr><td id=\"Column10\" class=\"SegColumn\" width=\"25%\">Column0</td><td class=\"Segs\">" . fncHTMLSpecialChars ( $aryData["straddress1"] ) . "</td></tr>\n";
 $aryParts["HIDDEN"] .= "<input type=\"hidden\" name=\"straddress1\" value=\"" . fncHTMLSpecialChars ( $aryData["straddress1"] ) . "\">\n";
 
 // 住所2 / 市、区、郡
-$aryParts["MASTER"] .= "				<tr><td id=\"Column10\" class=\"SegColumn\" width=\"25%\">Column0</td><td class=\"Segs\">" . fncHTMLSpecialChars ( $aryData["straddress2"] ) . "</td></tr>\n";
+$aryParts["MASTER"] .= "				<tr><td id=\"Column11\" class=\"SegColumn\" width=\"25%\">Column0</td><td class=\"Segs\">" . fncHTMLSpecialChars ( $aryData["straddress2"] ) . "</td></tr>\n";
 $aryParts["HIDDEN"] .= "<input type=\"hidden\" name=\"straddress2\" value=\"" . fncHTMLSpecialChars ( $aryData["straddress2"] ) . "\">\n";
 
 // 住所3 / 町、番地
-$aryParts["MASTER"] .= "				<tr><td id=\"Column11\" class=\"SegColumn\" width=\"25%\">Column0</td><td class=\"Segs\">" . fncHTMLSpecialChars ( $aryData["straddress3"] ) . "</td></tr>\n";
+$aryParts["MASTER"] .= "				<tr><td id=\"Column12\" class=\"SegColumn\" width=\"25%\">Column0</td><td class=\"Segs\">" . fncHTMLSpecialChars ( $aryData["straddress3"] ) . "</td></tr>\n";
 $aryParts["HIDDEN"] .= "<input type=\"hidden\" name=\"straddress3\" value=\"" . fncHTMLSpecialChars ( $aryData["straddress3"] ) . "\">\n";
 
 // 住所4 / ビル等、建物名
-$aryParts["MASTER"] .= "				<tr><td id=\"Column12\" class=\"SegColumn\" width=\"25%\">Column0</td><td class=\"Segs\">" . fncHTMLSpecialChars ( $aryData["straddress4"] ) . "</td></tr>\n";
+$aryParts["MASTER"] .= "				<tr><td id=\"Column13\" class=\"SegColumn\" width=\"25%\">Column0</td><td class=\"Segs\">" . fncHTMLSpecialChars ( $aryData["straddress4"] ) . "</td></tr>\n";
 $aryParts["HIDDEN"] .= "<input type=\"hidden\" name=\"straddress4\" value=\"" . fncHTMLSpecialChars ( $aryData["straddress4"] ) . "\">\n";
 
 // 電話番号1
-$aryParts["MASTER"] .= "				<tr><td id=\"Column13\" class=\"SegColumn\" width=\"25%\">Column0</td><td class=\"Segs\">" . fncHTMLSpecialChars ( $aryData["strtel1"] ) . "</td></tr>\n";
+$aryParts["MASTER"] .= "				<tr><td id=\"Column14\" class=\"SegColumn\" width=\"25%\">Column0</td><td class=\"Segs\">" . fncHTMLSpecialChars ( $aryData["strtel1"] ) . "</td></tr>\n";
 $aryParts["HIDDEN"] .= "<input type=\"hidden\" name=\"strtel1\" value=\"" . fncHTMLSpecialChars ( $aryData["strtel1"] ) . "\">\n";
 
 // 電話番号2
-$aryParts["MASTER"] .= "				<tr><td id=\"Column14\" class=\"SegColumn\" width=\"25%\">Column0</td><td class=\"Segs\">" . fncHTMLSpecialChars ( $aryData["strtel2"] ) . "</td></tr>\n";
+$aryParts["MASTER"] .= "				<tr><td id=\"Column15\" class=\"SegColumn\" width=\"25%\">Column0</td><td class=\"Segs\">" . fncHTMLSpecialChars ( $aryData["strtel2"] ) . "</td></tr>\n";
 $aryParts["HIDDEN"] .= "<input type=\"hidden\" name=\"strtel2\" value=\"" . fncHTMLSpecialChars ( $aryData["strtel2"] ) . "\">\n";
 
 // ファックス番号1
-$aryParts["MASTER"] .= "				<tr><td id=\"Column15\" class=\"SegColumn\" width=\"25%\">Column0</td><td class=\"Segs\">" . fncHTMLSpecialChars ( $aryData["strfax1"] ) . "</td></tr>\n";
+$aryParts["MASTER"] .= "				<tr><td id=\"Column16\" class=\"SegColumn\" width=\"25%\">Column0</td><td class=\"Segs\">" . fncHTMLSpecialChars ( $aryData["strfax1"] ) . "</td></tr>\n";
 $aryParts["HIDDEN"] .= "<input type=\"hidden\" name=\"strfax1\" value=\"" . fncHTMLSpecialChars ( $aryData["strfax1"] ) . "\">\n";
 
 // ファックス番号2
-$aryParts["MASTER"] .= "				<tr><td id=\"Column16\" class=\"SegColumn\" width=\"25%\">Column0</td><td class=\"Segs\">" . fncHTMLSpecialChars ( $aryData["strfax2"] ) . "</td></tr>\n";
+$aryParts["MASTER"] .= "				<tr><td id=\"Column17\" class=\"SegColumn\" width=\"25%\">Column0</td><td class=\"Segs\">" . fncHTMLSpecialChars ( $aryData["strfax2"] ) . "</td></tr>\n";
 $aryParts["HIDDEN"] .= "<input type=\"hidden\" name=\"strfax2\" value=\"" . fncHTMLSpecialChars ( $aryData["strfax2"] ) . "\">\n";
 
 // 識別コード
-$aryParts["MASTER"] .= "				<tr><td id=\"Column17\" class=\"SegColumn\" width=\"25%\">Column0</td><td class=\"Segs\">" . fncHTMLSpecialChars ( $aryData["strdistinctcode"] ) . "</td></tr>\n";
+$aryParts["MASTER"] .= "				<tr><td id=\"Column18\" class=\"SegColumn\" width=\"25%\">Column0</td><td class=\"Segs\">" . fncHTMLSpecialChars ( $aryData["strdistinctcode"] ) . "</td></tr>\n";
 $aryParts["HIDDEN"] .= "<input type=\"hidden\" name=\"strdistinctcode\" value=\"" . fncHTMLSpecialChars ( $aryData["strdistinctcode"] ) . "\">\n";
 
 // 締め日コード
-$aryParts["MASTER"] .= "				<tr><td id=\"Column18\" class=\"SegColumn\" width=\"25%\">Column0</td><td class=\"Segs\">" . fncGetMasterValue( "m_ClosedDay", "lngClosedDayCode", "strClosedDayCode || ':' || lngClosedDay", $aryData["lngcloseddaycode"], "", $objDB ) . "</td></tr>\n";
+$aryParts["MASTER"] .= "				<tr><td id=\"Column19\" class=\"SegColumn\" width=\"25%\">Column0</td><td class=\"Segs\">" . fncGetMasterValue( "m_ClosedDay", "lngClosedDayCode", "strClosedDayCode || ':' || lngClosedDay", $aryData["lngcloseddaycode"], "", $objDB ) . "</td></tr>\n";
 $aryParts["HIDDEN"] .= "<input type=\"hidden\" name=\"lngcloseddaycode\" value=\"" . $aryData["lngcloseddaycode"] . "\">\n";
 
 // 属性
@@ -415,7 +419,7 @@ for ( $i = 0; $i < $lngResultNum; $i++ )
 	$objResult = $objDB->fetchObject( $lngResultID, $i );
 	$aryAttributeName[] = $objResult->strattributename;
 }
-$aryParts["MASTER"] .= "				<tr><td id=\"Column19\" class=\"SegColumn\" width=\"25%\">Column0</td><td class=\"Segs\">" . join ( " / ", $aryAttributeName ) . "</td></tr>\n";
+$aryParts["MASTER"] .= "				<tr><td id=\"Column20\" class=\"SegColumn\" width=\"25%\">Column0</td><td class=\"Segs\">" . join ( " / ", $aryAttributeName ) . "</td></tr>\n";
 $aryParts["HIDDEN"] .= "<input type=\"hidden\" name=\"strattributecode\" value=\"" . $aryData["strattributecode"] . "\">\n";
 
 

@@ -1855,7 +1855,8 @@ function fncShowDialogCommonMaster( strUrl , ObjFrm , strID , strScroll , lngLan
 	args[0][3] = lngLanguageCode; // $lngLanguageCode
 	args[0][4] = strMode; // 'fix' , 'add' , 'delete'
 
-	retval = window.showModalDialog( '/result/remove_master.html' , args , "dialogHeight:510px;dialogWidth:600px;center:yes;status:no;edge:raised;help:no;scroll:no;" );
+	// retval = window.showModalDialog( '/result/remove_master.html' , args , "dialogHeight:510px;dialogWidth:600px;center:yes;status:no;edge:raised;help:no;scroll:no;" );
+	retval = window.open( '/result/remove_master.html' , args , "dialogHeight:510px;dialogWidth:600px;center:yes;status:no;edge:raised;help:no;scroll:no;" );
 
 
 	if( retval )

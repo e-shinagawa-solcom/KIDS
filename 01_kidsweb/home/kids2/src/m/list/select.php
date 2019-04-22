@@ -54,7 +54,6 @@ foreach ( $aryMasterTableKeyName as $key)
 ";
 }
 
-
 // テンプレート読み込み
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate( "m/list/select.tmpl" );

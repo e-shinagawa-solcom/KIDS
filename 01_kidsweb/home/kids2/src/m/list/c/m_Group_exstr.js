@@ -1,4 +1,3 @@
-<!--
 /************************* [ グループマスタ ] *************************/
 
 
@@ -101,7 +100,7 @@ function ChgEtoJ( g_lngCode )
 	// クエリーテーブルＴＯＰ座標
 	if( typeof(QueryTable) != 'undefined' )
 	{
-		QueryTable.style.top = 400;
+		QueryTable.style.top = 300;
 	}
 
 

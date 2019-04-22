@@ -32,8 +32,6 @@ include_once('conf.inc');
 require (LIB_FILE);
 require (SRC_ROOT . "m/cmn/lib_m.php");
 
-echo "est";
-
 $objDB   = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open( "", "", "", "" );
@@ -110,10 +108,10 @@ if ( $lngResultNum )
 
 
 		// 修正ボタン生成
-		$aryParts["strResultHtml"] .= "		<td bgcolor=\"#ffffff\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncSelectSomeTrColor( this, 'TD" . $lngResultNum . "_',1 );\" nowrap><a href=\"javascript:fncShowDialogCommonMaster('/m/regist/g/edit.php?lngActionCode=" . DEF_ACTION_UPDATE . "&lnggroupcode=" . $record["lnggroupcode"] . fncGetURL( $aryData ) . "' , window.form1 , 'ResultIframeCommonMaster' , 'NO' , $_COOKIE[lngLanguageCode] , 'fix' );\"><img onmouseover=\"RenewOn(this);\" onmouseout=\"RenewOff(this);\" src=\"/img/type01/cmn/seg/renew_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"RENEW\"></a></td>\n";
+		$aryParts["strResultHtml"] .= "		<td bgcolor=\"#ffffff\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncSelectSomeTrColor( this, 'TD" . $lngResultNum . "_',1 );\" nowrap><a href=\"/m/regist/g/edit.php?lngActionCode=" . DEF_ACTION_UPDATE . "&lnggroupcode=" . $record["lnggroupcode"] . fncGetURL( $aryData ) . "\" name=\"fix\"><img onmouseover=\"RenewOn(this);\" onmouseout=\"RenewOff(this);\" src=\"/img/type01/cmn/seg/renew_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"RENEW\"></a></td>\n";
 
 		// 削除ボタン生成
-		$aryParts["strResultHtml"] .= "		<td bgcolor=\"#ffffff\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncSelectSomeTrColor( this, 'TD" . $lngResultNum . "_',1 );\" nowrap><a href=\"javascript:fncShowDialogCommonMaster('/m/regist/g/confirm.php?lngActionCode=" . DEF_ACTION_DELETE . "&lnggroupcode=" . $record["lnggroupcode"] . fncGetURL( $aryData ) . "' , window.form1 , 'ResultIframeCommonMaster' , 'NO' , $_COOKIE[lngLanguageCode] , 'delete' );\"><img onmouseover=\"RemoveOn(this);\" onmouseout=\"RemoveOff(this);\" src=\"/img/type01/cmn/seg/remove_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"DELETE\"></a></td>\n";
+		$aryParts["strResultHtml"] .= "		<td bgcolor=\"#ffffff\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncSelectSomeTrColor( this, 'TD" . $lngResultNum . "_',1 );\" nowrap><a href=\"/m/regist/g/confirm.php?lngActionCode=" . DEF_ACTION_DELETE . "&lnggroupcode=" . $record["lnggroupcode"] . fncGetURL( $aryData ) . "\" name=\"delete\"><img onmouseover=\"RemoveOn(this);\" onmouseout=\"RemoveOff(this);\" src=\"/img/type01/cmn/seg/remove_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"DELETE\"></a></td>\n";
 
 
 		$aryParts["strResultHtml"] .= "	</tr>\n";
@@ -139,8 +137,7 @@ $objDB->close();
 
 $aryParts["HIDDEN"]          = "<input type=hidden name=strSessionID value=". $aryData["strSessionID"]. ">\n";
 $aryParts["HIDDEN"]         .= "<input type=hidden name=strGroupDisplayName value=" .$aryData["strGroupDisplayName"]. ">\n";
-$aryParts["lngLanguageCode"] =& $_COOKIE["lngLanguageCode"];
-$aryParts["strTableName"]    =& $objMaster->strTableName;
+$aryParts["strTableName"]    = $objMaster->strTableName;
 $aryParts["lngColumnNum"]    = 7;
 $aryParts["strEditURL"]      = "/m/regist/g/edit.php?lngActionCode=" . DEF_ACTION_INSERT . fncGetURL( $aryData );
 

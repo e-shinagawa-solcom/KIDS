@@ -153,38 +153,41 @@ if ( $aryData["lngActionCode"] == DEF_ACTION_INSERT )
 	// 表示会社名称
 	$objMaster->aryData[0][$objMaster->aryColumnName[7]] =& $aryData[$objMaster->aryColumnName[7]];
 
-	// 郵便番号
+	// 省略名称
 	$objMaster->aryData[0][$objMaster->aryColumnName[8]] =& $aryData[$objMaster->aryColumnName[8]];
 
-	// 都道府県
+	// 郵便番号
 	$objMaster->aryData[0][$objMaster->aryColumnName[9]] =& $aryData[$objMaster->aryColumnName[9]];
 
-	// 市区郡
+	// 都道府県
 	$objMaster->aryData[0][$objMaster->aryColumnName[10]] =& $aryData[$objMaster->aryColumnName[10]];
 
-	// 町・番地
+	// 市区郡
 	$objMaster->aryData[0][$objMaster->aryColumnName[11]] =& $aryData[$objMaster->aryColumnName[11]];
 
-	// ビル等、建物名
+	// 町・番地
 	$objMaster->aryData[0][$objMaster->aryColumnName[12]] =& $aryData[$objMaster->aryColumnName[12]];
 
-	// 電話番号1
+	// ビル等、建物名
 	$objMaster->aryData[0][$objMaster->aryColumnName[13]] =& $aryData[$objMaster->aryColumnName[13]];
 
-	// 電話番号2
+	// 電話番号1
 	$objMaster->aryData[0][$objMaster->aryColumnName[14]] =& $aryData[$objMaster->aryColumnName[14]];
 
-	// FAX番号1
+	// 電話番号2
 	$objMaster->aryData[0][$objMaster->aryColumnName[15]] =& $aryData[$objMaster->aryColumnName[15]];
 
-	// FAX番号2
+	// FAX番号1
 	$objMaster->aryData[0][$objMaster->aryColumnName[16]] =& $aryData[$objMaster->aryColumnName[16]];
 
-	// 識別番号
+	// FAX番号2
 	$objMaster->aryData[0][$objMaster->aryColumnName[17]] =& $aryData[$objMaster->aryColumnName[17]];
 
-	// 締め日コード
+	// 識別番号
 	$objMaster->aryData[0][$objMaster->aryColumnName[18]] =& $aryData[$objMaster->aryColumnName[18]];
+
+	// 締め日コード
+	$objMaster->aryData[0][$objMaster->aryColumnName[19]] =& $aryData[$objMaster->aryColumnName[19]];
 
 	// 属性コード
 	$aryAttributeCode = explode ( ":", $aryData["strattributecode"] );
@@ -239,43 +242,46 @@ $aryParts["MASTER"][6] = "<span class=\"InputSegs\"><input id=\"Input6\" type=\"
 // 表示会社名称
 $aryParts["MASTER"][7] = "<span class=\"InputSegs\"><input id=\"Input7\" type=\"text\" name=\"" . $objMaster->aryColumnName[7] . "\" value=\"" . $objMaster->aryData[0][$objMaster->aryColumnName[7]] . "\" onfocus=\"chColorOn(this);\" onblur=\"chColorOff(this);\" maxlength=\"100\"></span>\n";
 
+// 省略名称
+$aryParts["MASTER"][8] = "<span class=\"InputSegs\"><input id=\"Input8\" type=\"text\" name=\"" . $objMaster->aryColumnName[8] . "\" value=\"" . $objMaster->aryData[0][$objMaster->aryColumnName[8]] . "\" onfocus=\"chColorOn(this);\" onblur=\"chColorOff(this);\" maxlength=\"100\"></span>\n";
+
 // 郵便番号
-$aryParts["MASTER"][8] = "<span class=\"InputSegs\"><input id=\"Input8\" type=\"text\" name=\"" . $objMaster->aryColumnName[8] . "\" value=\"" . trim ( $objMaster->aryData[0][$objMaster->aryColumnName[8]] ) . "\" onfocus=\"chColorOn(this);\" onblur=\"chColorOff(this);\" maxlength=\"20\"></span>\n";
+$aryParts["MASTER"][9] = "<span class=\"InputSegs\"><input id=\"Input9\" type=\"text\" name=\"" . $objMaster->aryColumnName[9] . "\" value=\"" . trim ( $objMaster->aryData[0][$objMaster->aryColumnName[9]] ) . "\" onfocus=\"chColorOn(this);\" onblur=\"chColorOff(this);\" maxlength=\"20\"></span>\n";
 
 // 都道府県
-$aryParts["MASTER"][9] = "<span class=\"InputSegs\"><input id=\"Input9\" type=\"text\" name=\"" . $objMaster->aryColumnName[9] . "\" value=\"" . $objMaster->aryData[0][$objMaster->aryColumnName[9]] . "\" onfocus=\"chColorOn(this);\" onblur=\"chColorOff(this);\" maxlength=\"100\"></span>\n";
-
-// 市、区、郡
 $aryParts["MASTER"][10] = "<span class=\"InputSegs\"><input id=\"Input10\" type=\"text\" name=\"" . $objMaster->aryColumnName[10] . "\" value=\"" . $objMaster->aryData[0][$objMaster->aryColumnName[10]] . "\" onfocus=\"chColorOn(this);\" onblur=\"chColorOff(this);\" maxlength=\"100\"></span>\n";
 
-// 町、番地
+// 市、区、郡
 $aryParts["MASTER"][11] = "<span class=\"InputSegs\"><input id=\"Input11\" type=\"text\" name=\"" . $objMaster->aryColumnName[11] . "\" value=\"" . $objMaster->aryData[0][$objMaster->aryColumnName[11]] . "\" onfocus=\"chColorOn(this);\" onblur=\"chColorOff(this);\" maxlength=\"100\"></span>\n";
 
-// ビル等、建物名
+// 町、番地
 $aryParts["MASTER"][12] = "<span class=\"InputSegs\"><input id=\"Input12\" type=\"text\" name=\"" . $objMaster->aryColumnName[12] . "\" value=\"" . $objMaster->aryData[0][$objMaster->aryColumnName[12]] . "\" onfocus=\"chColorOn(this);\" onblur=\"chColorOff(this);\" maxlength=\"100\"></span>\n";
 
-// 電話番号1
+// ビル等、建物名
 $aryParts["MASTER"][13] = "<span class=\"InputSegs\"><input id=\"Input13\" type=\"text\" name=\"" . $objMaster->aryColumnName[13] . "\" value=\"" . $objMaster->aryData[0][$objMaster->aryColumnName[13]] . "\" onfocus=\"chColorOn(this);\" onblur=\"chColorOff(this);\" maxlength=\"100\"></span>\n";
 
-// 電話番号2
+// 電話番号1
 $aryParts["MASTER"][14] = "<span class=\"InputSegs\"><input id=\"Input14\" type=\"text\" name=\"" . $objMaster->aryColumnName[14] . "\" value=\"" . $objMaster->aryData[0][$objMaster->aryColumnName[14]] . "\" onfocus=\"chColorOn(this);\" onblur=\"chColorOff(this);\" maxlength=\"100\"></span>\n";
 
-// ファックス番号1
+// 電話番号2
 $aryParts["MASTER"][15] = "<span class=\"InputSegs\"><input id=\"Input15\" type=\"text\" name=\"" . $objMaster->aryColumnName[15] . "\" value=\"" . $objMaster->aryData[0][$objMaster->aryColumnName[15]] . "\" onfocus=\"chColorOn(this);\" onblur=\"chColorOff(this);\" maxlength=\"100\"></span>\n";
 
-// ファックス番号2
+// ファックス番号1
 $aryParts["MASTER"][16] = "<span class=\"InputSegs\"><input id=\"Input16\" type=\"text\" name=\"" . $objMaster->aryColumnName[16] . "\" value=\"" . $objMaster->aryData[0][$objMaster->aryColumnName[16]] . "\" onfocus=\"chColorOn(this);\" onblur=\"chColorOff(this);\" maxlength=\"100\"></span>\n";
 
-// 識別コード
+// ファックス番号2
 $aryParts["MASTER"][17] = "<span class=\"InputSegs\"><input id=\"Input17\" type=\"text\" name=\"" . $objMaster->aryColumnName[17] . "\" value=\"" . $objMaster->aryData[0][$objMaster->aryColumnName[17]] . "\" onfocus=\"chColorOn(this);\" onblur=\"chColorOff(this);\" maxlength=\"100\"></span>\n";
 
+// 識別コード
+$aryParts["MASTER"][18] = "<span class=\"InputSegs\"><input id=\"Input18\" type=\"text\" name=\"" . $objMaster->aryColumnName[18] . "\" value=\"" . $objMaster->aryData[0][$objMaster->aryColumnName[18]] . "\" onfocus=\"chColorOn(this);\" onblur=\"chColorOff(this);\" maxlength=\"100\"></span>\n";
+
 // 締め日
-$aryParts["MASTER"][18]  = "<span class=\"InputSegs\"><select id=\"Input18\" name=\"" . $objMaster->aryColumnName[18] . "\">\n";
-$aryParts["MASTER"][18] .= fncGetPulldown( "m_ClosedDay", "lngClosedDayCode", "strClosedDayCode || ':' || lngClosedDay",  $objMaster->aryData[0][$objMaster->aryColumnName[18]], "", $objDB );
-$aryParts["MASTER"][18] .= "</select></span>\n";
+$aryParts["MASTER"][19]  = "<span class=\"InputSegs\"><select id=\"Input19\" name=\"" . $objMaster->aryColumnName[19] . "\">\n";
+$aryParts["MASTER"][19] .= fncGetPulldown( "m_ClosedDay", "lngClosedDayCode", "strClosedDayCode || ':' || lngClosedDay",  $objMaster->aryData[0][$objMaster->aryColumnName[19]], "", $objDB );
+$aryParts["MASTER"][19] .= "</select></span>\n";
 
 // 属性
-$aryParts["MASTER"][19] = fncGetAttributeHtml( $aryData["lngActionCode"], $aryData["lngcompanycode"], $aryAttributeCode, $objDB );
+$aryParts["MASTER"][20] = fncGetAttributeHtml( $aryData["lngActionCode"], $aryData["lngcompanycode"], $aryAttributeCode, $objDB );
 
 
 
@@ -296,9 +302,7 @@ for ( $i = 0; $i < $count; $i++ )
 $objDB->close();
 
 
-$aryData["lngLanguageCode"] = $_COOKIE["lngLanguageCode"];
 $aryData["strTableName"]    = $objMaster->strTableName;
-
 
 
 // HTML出力
@@ -329,7 +333,7 @@ function fncGetAttributeHtml( $lngActionCode, $lngcompanycode, $aryAttributeCode
 	// 属性一覧取得
 	list ( $lngResultID, $lngResultNum ) = fncQuery( "SELECT * FROM m_Attribute", $objDB );
 
-	$strParts = "<span class=\"InputSegs\"><select id=\"Input19\" name=\"aryattributecode\" multiple size=\"$lngResultNum\">\n";
+	$strParts = "<span class=\"InputSegs_for_attribute\"><select id=\"Input20\" name=\"aryattributecode\" multiple size=\"$lngResultNum\">\n";
 
 	// 属性一覧表示
 	for ( $i = 0; $i < $lngResultNum; $i++ )

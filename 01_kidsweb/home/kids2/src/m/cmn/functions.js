@@ -1,4 +1,3 @@
-<!--
 
 
 //*******************************************************************
@@ -26,19 +25,19 @@ function fncRequestSearchMasterEdit( strTableName, objForm )
 		objForm.submit();
 	}
 
-	// ワークフロー順番マスタの場合
-	else if  ( strTableName == 'm_WorkflowOrder' )
-	{
-		objForm.action = '/m/search/wf/search.php';
-		objForm.submit();
-	}
-
 	// 通貨レートマスタの場合
 	else if  ( strTableName == 'm_MonetaryRate' )
 	{
 		objForm.action = '/m/search/r/search.php';
 		objForm.submit();
 	}
+
+    // 想定レートマスタの場合
+    else if  ( strTableName == 'm_TemporaryRate' )
+    {
+        objForm.action = '/m/search/tr/search.php';
+        objForm.submit();
+    }
 
 	// その他のマスタの場合(共通マスタ管理へ)
 	else if ( strTableName != '' )

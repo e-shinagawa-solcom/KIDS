@@ -3,53 +3,37 @@
 <head>
 <title>K.I.D.S.</title>
 <meta http-equiv="content-type" content="text/html; charset=euc-jp">
-
-
-
-<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/images.js"></script>
+<script src="/cmn/jquery/jquery-3.1.0.js"></script>
+<script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/type01/cmn/images.js"></script>
 <script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
 <script type="text/javascript" language="javascript" src="/result/cmn/functions.js" charset="utf-8"></script>
-
-
 <script type="text/javascript" language="javascript" src="/m/cmn/functions.js"></script>
 <link rel="stylesheet" type="text/css" media="screen" href="/m/cmn/styles.css">
-
-
-<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/m/cmn/images.js"></script>
-
-<link rel="stylesheet" type="text/css" media="screen" href="/m/list/c/cmn/layout.css">
-
+<script type="text/javascript" language="javascript" src="/layout/type01/m/cmn/images.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="/m/list/tr/cmn/layout.css">
 <script type="text/javascript" language="javascript" src="/m/list/c/_%strTableName%__exstr.js"></script>
-
 <script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
-
-
+<script type="text/javascript" language="javascript" src="/m/winopen.js"></script>
 </head>
-<body id="Backs" oncontextmenu="return false;" onload="GetIfrmlngLanguageCode( _%lngLanguageCode%_ );" onscroll="fncStopHeader2( SegTitle2 , DummyTable , MasterAddBt );">
+<body id="Backs" oncontextmenu="return false;" onload="GetIfrmlngLanguageCode( 1 );" onscroll="fncStopHeader2( SegTitle2 , DummyTable , MasterAddBt );">
 
 
-<form name="form1" action="index.php" method="POST">
+<form name="form1" id="objForm" action="index.php" method="POST">
 
 <input type="hidden" value="" name="copyhidden">
 
 
 <span id="COPYAREA1">
-<table width="100%" cellpadding="0" cellspacing="1" border="0" bgcolor="#6f818">
+<table width="100%" border="1px" border-color="#6f818" border-collapse="separate">
 
 	<tr id="DummyTable">
-		<td>&nbsp;</td>
+		<td colspan="24">&nbsp;</td>
 	</tr>
 
-	<tr id="SegTitle2">
+	<tr id="SegTitle">
 <td valign="top" valign="center"><a href="#" onclick="fncDoCopy( copyhidden , document.getElementById('COPYAREA1') , document.getElementById('COPYAREA2') );return false;"><img onmouseover="CopyOn(this);" onmouseout="CopyOff(this);" src="/img/type01/cmn/seg/copy_off_bt.gif" width="15" height="15" border="0" alt="COPY"></a></td>
 _%strColumnHtml%_
-	</tr>
-
-	<tr id="DummyTR">
-		<td colspan="_%lngColumnNum%_">&nbsp;</td>
-	</tr>
-	<tr id="DummyTR">
-		<td colspan="_%lngColumnNum%_">&nbsp;</td>
 	</tr>
 
 _%strResultHtml%_
@@ -61,11 +45,12 @@ _%strResultHtml%_
 </span>
 
 
-<span id="MasterAddBt" onclick="javascript:fncShowDialogCommonMaster('_%strEditURL%_' , window.form1 , 'ResultIframeCommonMaster' , 'YES' , _%lngLanguageCode%_ , 'add' );return false;"></span>
+<span id="MasterAddBt"></span>
 
 
 
 <input type="hidden" name="strSessionID" value="_%strSessionID%_">
+<input type="hidden" name="strEditURL" value="_%strEditURL%_">
 _%HIDDEN%_
 </form>
 

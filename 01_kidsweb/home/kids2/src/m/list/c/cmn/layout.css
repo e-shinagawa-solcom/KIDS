@@ -1,5 +1,3 @@
-<!--
-
 #Backs
 {
 	background : #f1f1f1;
@@ -51,9 +49,10 @@ table
 
 #SegTitle
 {
-	position : absolute ;
 	color : #ffffff ;
-	background-color : #799797 ; /* 6d8aab */
+	text-align : center ;
+	background-color : #799797 ;
+	padding : 4px 3px 1px 3px ;
 }
 
 
@@ -69,7 +68,7 @@ table
 }
 
 .SegColumn
-{
+{	
 	color : #ffffff ;
 	background-color : #799797 ;
 	word-break : keep-all ;
@@ -124,11 +123,11 @@ table
 }
 
 #DummyTable
-{
-	position : absolute ;
-	height : 20 ;
-	width : 100% ;
-	background-color : #6d8aab ; /* 6d8aab */
+{	
+	color : #799797 ;
+	text-align : center ;
+	background-color : #6d8aab ;
+	height: 20;
 }
 
 
@@ -166,4 +165,10 @@ table
 	padding : 4px 6px 3px 6px ;
 }
 
--->
+#objTable
+{
+	position:relative;
+	top:160px;
+	left:60px;
+	width:300px;
+}

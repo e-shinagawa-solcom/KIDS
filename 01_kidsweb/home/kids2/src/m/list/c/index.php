@@ -111,7 +111,7 @@ foreach ( $objMaster->aryColumnName as $strColumnName )
 	$aryData["strColumnHtml"] .= "		<td id=\"Column$aryData[lngColumnNum]\" nowrap onmouseover=\"SortOn( this );\" onmouseout=\"SortOff( this );\" onclick=\"location.href='#';\">$strColumnName</td>\n";
 	$aryData["lngColumnNum"]++;
 }
-$aryData["lngColumnNum"]++;
+$aryData["lngColumnNum"] = $aryData["lngColumnNum"] + 2;
 
 
 // 結果行表示
@@ -140,16 +140,14 @@ foreach ( $objMaster->aryData as $record )
 
 
 	// 修正ボタン生成
-	$aryData["strResultHtml"] .= "		<td bgcolor=\"#ffffff\" nowrap><a href=\"javascript:fncShowDialogCommonMaster('/m/regist/c/edit.php?lngActionCode=" . DEF_ACTION_UPDATE . "&$getUrl' , window.form1 , 'ResultIframeCommonMaster' , 'NO' , $_COOKIE[lngLanguageCode] , 'fix' );\"><img onmouseover=\"RenewOn(this);\" onmouseout=\"RenewOff(this);\" src=\"/img/type01/cmn/seg/renew_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"RENEW\"></a></td>\n";
+	$aryData["strResultHtml"] .= "		<td bgcolor=\"#ffffff\" nowrap><a href=\"/m/regist/c/edit.php?lngActionCode=" . DEF_ACTION_UPDATE . "&" .$getUrl ."\" name=\"fix\"><img onmouseover=\"RenewOn(this);\" onmouseout=\"RenewOff(this);\" src=\"/img/type01/cmn/seg/renew_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"RENEW\"></a></td>\n";
 
 	// 削除ボタン生成
-	$aryData["strResultHtml"] .= "		<td bgcolor=\"#ffffff\" nowrap><a href=\"javascript:fncShowDialogCommonMaster('/m/regist/c/confirm.php?lngActionCode=" . DEF_ACTION_DELETE . "&$getUrl' , window.form1 , 'ResultIframeCommonMaster' , 'NO' , $_COOKIE[lngLanguageCode] , 'delete' );\"><img onmouseover=\"RemoveOn(this);\" onmouseout=\"RemoveOff(this);\" src=\"/img/type01/cmn/seg/remove_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"REMOVE\"></a></td>\n";
+	$aryData["strResultHtml"] .= "		<td bgcolor=\"#ffffff\" nowrap><a href=\"/m/regist/c/confirm.php?lngActionCode=" . DEF_ACTION_DELETE . "&" .$getUrl ."\" name=\"delete\"><img onmouseover=\"RemoveOn(this);\" onmouseout=\"RemoveOff(this);\" src=\"/img/type01/cmn/seg/remove_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"REMOVE\"></a></td>\n";
 
 	$aryData["strResultHtml"] .= "	</tr>\n";
 
 }
-
-
 
 $objDB->close();
 
@@ -158,8 +156,7 @@ $objDB->close();
 // 登録ボタンのGET文字列生成
 $aryData["strInsertForm"] = "/m/regist/c/edit.php?strSessionID=". $aryData["strSessionID"] . "&lngActionCode=" . DEF_ACTION_INSERT . "&strMasterTableName=" . $aryData["strMasterTableName"] ."&strKeyName=" .  $objMaster->aryColumnName[0];
 
-$aryData["strTableName"] =& $objMaster->strTableName;
-$aryData["lngLanguageCode"] =& $_COOKIE["lngLanguageCode"];
+$aryData["strTableName"] = $objMaster->strTableName;
 
 // HTML出力
 $objTemplate = new clsTemplate();

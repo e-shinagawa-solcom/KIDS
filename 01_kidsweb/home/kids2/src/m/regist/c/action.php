@@ -195,7 +195,7 @@ if ( $bytErrorFlag )
 else
 {
 	//echo "<form name=form1><input type=hidden name=strSessionID value=" . $aryData["strSessionID"] . "></form>";
-	echo "<script language=javascript>window.returnValue=true;window.close();</script>";
+	echo "<script language=javascript>window.returnValue=true;window.open('about:blank','_parent').close();</script>";
 }
 
 

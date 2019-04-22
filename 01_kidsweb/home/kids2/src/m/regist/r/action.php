@@ -167,7 +167,7 @@ if ( $bytErrorFlag )
 }
 else
 {
-	echo "<script language=javascript>window.returnValue=true;window.close();</script>";
+	echo "<script language=javascript>window.returnValue=true;window.open('about:blank','_parent').close();</script>";
 }
 
 

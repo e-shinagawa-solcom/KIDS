@@ -34,12 +34,12 @@ require ( LIB_FILE );
 $aryData["ref"]				= $_GET["ref"];
 $aryData["path"]			= $_GET["path"];
 $aryData["strMessage"]		= $_GET["strMessage"];
-// COOKIEから言語コードを取得
-$aryData["lngLanguageCode"] = $_COOKIE[lngLanguageCode];
-if ( $aryData["lngLanguageCode"] == "" )
-{
-	$aryData["lngLanguageCode"] = 0;
-}
+// // COOKIEから言語コードを取得
+// $aryData["lngLanguageCode"] = $_COOKIE[lngLanguageCode];
+// if ( $aryData["lngLanguageCode"] == "" )
+// {
+// 	$aryData["lngLanguageCode"] = 0;
+// }
 
 // テンプレートオブジェクト生成
 $objTemplate = new clsTemplate();
