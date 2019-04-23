@@ -50,7 +50,7 @@ if ( isset($aryData["strUserID"]) && isset($aryData["strPassword"]) )
 		// $aryCheck[$strKey] : チェック内容(数値、英数字、アスキー等)
 		$strResult = fncCheckString( $aryData[$strKey], $aryCheck[$strKey] );
 		if ( $strResult ) {
-			list ( $lngErrorNo, $strErrorMessage ) = split ( ":", $strResult );
+			list ( $lngErrorNo, $strErrorMessage ) = explode ( ":", $strResult );
 //			fncOutputError ( $lngErrorNo, DEF_ERROR, $strErrorMessage, FALSE, "", $objDB );
 			$flag = FALSE;
 		}

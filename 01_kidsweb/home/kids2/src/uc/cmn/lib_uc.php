@@ -235,55 +235,55 @@ function getUserQuery( $lngUserCode, $aryData, $objDB )
 */
 function fncGetURL( $aryData )
 {
-	$url = "strSessionID=$aryData[strSessionID]" .
-           "&lngFunctionCode=$aryData[lngFunctionCode]" .
-           "&lngUserCode=$aryData[lngUserCode]" .
-           "&bytInvalidFlag=$aryData[bytInvalidFlag]" .
-           "&strUserID=$aryData[strUserID]" .
-           "&strMailAddress=$aryData[strMailAddress]" .
-           "&bytMailTransmitFlag=$aryData[bytMailTransmitFlag]" .
-           "&strUserDisplayCode=$aryData[strUserDisplayCode]" .
-           "&strUserDisplayName=$aryData[strUserDisplayName]" .
-           "&strUserFullName=$aryData[strUserFullName]" .
-           "&lngCompanyCode=$aryData[lngCompanyCode]" .
-           "&lngGroupCode=$aryData[lngGroupCode]" .
-           "&lngAuthorityGroupCode=$aryData[lngAuthorityGroupCode]" .
-           "&lngAccessIPAddressCode=$aryData[lngAccessIPAddressCode]" .
-           "&strNote=$aryData[strNote]";
+	$url = "strSessionID=" .$aryData["strSessionID"] .
+           "&lngFunctionCode=" .$aryData["lngFunctionCode"] .
+           "&lngUserCode=" .$aryData["lngUserCode"] .
+           "&bytInvalidFlag=" .$aryData["bytInvalidFlag"] .
+           "&strUserID=" .$aryData["strUserID"] .
+           "&strMailAddress=" .$aryData["strMailAddress"] .
+           "&bytMailTransmitFlag=" .$aryData["bytMailTransmitFlag"] .
+           "&strUserDisplayCode=" .$aryData["strUserDisplayCode"] .
+           "&strUserDisplayName=" .$aryData["strUserDisplayName"] .
+           "&strUserFullName=" .$aryData["strUserFullName"] .
+           "&lngCompanyCode=" .$aryData["lngCompanyCode"] .
+           "&lngGroupCode=" .$aryData["lngGroupCode"] .
+           "&lngAuthorityGroupCode=" .$aryData["lngAuthorityGroupCode"] .
+           "&lngAccessIPAddressCode=" .$aryData["lngAccessIPAddressCode"] .
+           "&strNote=" .$aryData["strNote"];
 
 	if ( $aryData["lngFunctionCode"] == DEF_FUNCTION_UC3 )
 	{
-		$url .= "&detailVisible=$aryData[detailVisible]" .
-                "&bytInvalidFlagVisible=$aryData[bytInvalidFlagVisible]" .
-                "&lngUserCodeVisible=$aryData[lngUserCodeVisible]" .
-                "&strUserIDVisible=$aryData[strUserIDVisible]" .
-                "&strMailAddressVisible=$aryData[strMailAddressVisible]" .
-                "&bytMailTransmitFlagVisible=$aryData[bytMailTransmitFlagVisible]" .
-                "&bytUserDisplayFlagVisible=$aryData[bytUserDisplayFlagVisible]" .
-                "&strUserDisplayCodeVisible=$aryData[strUserDisplayCodeVisible]" .
-                "&strUserDisplayNameVisible=$aryData[strUserDisplayNameVisible]" .
-                "&strUserFullNameVisible=$aryData[strUserFullNameVisible]" .
-                "&lngCompanyCodeVisible=$aryData[lngCompanyCodeVisible]" .
-                "&lngGroupCodeVisible=$aryData[lngGroupCodeVisible]" .
-                "&lngAuthorityGroupCodeVisible=$aryData[lngAuthorityGroupCodeVisible]" .
-                "&lngAccessIPAddressCodeVisible=$aryData[lngAccessIPAddressCodeVisible]" .
-                "&strNoteVisible=$aryData[strNoteVisible]" .
-                "&updateVisible=$aryData[updateVisible]" .
+		$url .= "&detailVisible=" .$aryData["detailVisible"] .
+                "&bytInvalidFlagVisible=" .$aryData["bytInvalidFlagVisible"] .
+                "&lngUserCodeVisible=" .$aryData["lngUserCodeVisible"] .
+                "&strUserIDVisible=" .$aryData["strUserIDVisible"] .
+                "&strMailAddressVisible=" .$aryData["strMailAddressVisible"] .
+                "&bytMailTransmitFlagVisible=" .$aryData["bytMailTransmitFlagVisible"] .
+                "&bytUserDisplayFlagVisible=" .$aryData["bytUserDisplayFlagVisible"] .
+                "&strUserDisplayCodeVisible=" .$aryData["strUserDisplayCodeVisible"] .
+                "&strUserDisplayNameVisible=" .$aryData["strUserDisplayNameVisible"] .
+                "&strUserFullNameVisible=" .$aryData["strUserFullNameVisible"] .
+                "&lngCompanyCodeVisible=" .$aryData["lngCompanyCodeVisible"] .
+                "&lngGroupCodeVisible=" .$aryData["lngGroupCodeVisible"] .
+                "&lngAuthorityGroupCodeVisible=" .$aryData["lngAuthorityGroupCodeVisible"] .
+                "&lngAccessIPAddressCodeVisible=" .$aryData["lngAccessIPAddressCodeVisible"] .
+                "&strNoteVisible=" .$aryData["strNoteVisible"] .
+                "&updateVisible=" .$aryData["updateVisible"] .
 
-                "&bytInvalidFlagConditions=$aryData[bytInvalidFlagConditions]" .
-                "&lngUserCodeConditions=$aryData[lngUserCodeConditions]" .
-                "&strUserIDConditions=$aryData[strUserIDConditions]" .
-                "&strMailAddressConditions=$aryData[strMailAddressConditions]" .
-                "&bytMailTransmitFlagConditions=$aryData[bytMailTransmitFlagConditions]" .
-                "&bytUserDisplayFlagConditions=$aryData[bytUserDisplayFlagConditions]" .
-                "&strUserDisplayCodeConditions=$aryData[strUserDisplayCodeConditions]" .
-                "&strUserDisplayNameConditions=$aryData[strUserDisplayNameConditions]" .
-                "&strUserFullNameConditions=$aryData[strUserFullNameConditions]" .
-                "&lngCompanyCodeConditions=$aryData[lngCompanyCodeConditions]" .
-                "&lngGroupCodeConditions=$aryData[lngGroupCodeConditions]" .
-                "&lngAuthorityGroupCodeConditions=$aryData[lngAuthorityGroupCodeConditions]" .
-                "&lngAccessIPAddressCodeConditions=$aryData[lngAccessIPAddressCodeConditions]" .
-                "&strNoteConditions=$aryData[strNoteConditions]";
+                "&bytInvalidFlagConditions=" .$aryData["bytInvalidFlagConditions"] .
+                "&lngUserCodeConditions=" .$aryData["lngUserCodeConditions"] .
+                "&strUserIDConditions=" .$aryData["strUserIDConditions"] .
+                "&strMailAddressConditions=" .$aryData["strMailAddressConditions"] .
+                "&bytMailTransmitFlagConditions=" .$aryData["bytMailTransmitFlagConditions"] .
+                "&bytUserDisplayFlagConditions=" .$aryData["bytUserDisplayFlagConditions"] .
+                "&strUserDisplayCodeConditions=" .$aryData["strUserDisplayCodeConditions"] .
+                "&strUserDisplayNameConditions=" .$aryData["strUserDisplayNameConditions"] .
+                "&strUserFullNameConditions=" .$aryData["strUserFullNameConditions"] .
+                "&lngCompanyCodeConditions=" .$aryData["lngCompanyCodeConditions"] .
+                "&lngGroupCodeConditions=" .$aryData["lngGroupCodeConditions"] .
+                "&lngAuthorityGroupCodeConditions=" .$aryData["lngAuthorityGroupCodeConditions"] .
+                "&lngAccessIPAddressCodeConditions=" .$aryData["lngAccessIPAddressCodeConditions"] .
+                "&strNoteConditions=" .$aryData["strNoteConditions"];
 	}
 	return $url;
 }

@@ -55,8 +55,9 @@
 		$strReceiveCode='';
 		
 		// 置き換え用売上区分コード
-		if(!isset($aryResult["lngsalesclasscode"])) break;
-		{
+		if(!isset($aryResult["lngsalesclasscode"])) {
+			return;
+		} else {
 			switch( (int)$aryResult["lngsalesclasscode"] )
 				{
 					case 1:

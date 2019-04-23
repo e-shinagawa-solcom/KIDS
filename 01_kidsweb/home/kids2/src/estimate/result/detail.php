@@ -40,7 +40,7 @@
 	$aryData["lngLanguageCode"] = $_COOKIE["lngLanguageCode"];
 
 	// セッション確認
-	$objAuth = fncIsSession( $aryData[strSessionID], $objAuth, $objDB );
+	$objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
 	// ログインユーザーコードの取得
 	$lngInputUserCode = $objAuth->UserCode;

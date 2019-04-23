@@ -59,7 +59,7 @@ $aryCheck["lngSelectFunctionCode"] = "number(0,32767)";
 $aryData["lngWorkflowStatusCode"] = fncGetArrayToWorkflowStatusCode($aryData["lngWorkflowStatusCode"]);
 
 // セッション確認
-$objAuth = fncIsSession( $aryData[strSessionID], $objAuth, $objDB );
+$objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
 // 権限確認
 if ( !fncCheckAuthority( DEF_FUNCTION_WF4, $objAuth ) )

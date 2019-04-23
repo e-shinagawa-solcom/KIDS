@@ -471,7 +471,7 @@
 
 
 				// 末尾の「,」をとる
-				$strUpdate = ereg_replace (",$", "", $strUpdate);
+				$strUpdate = preg_replace ("/,$/", "", $strUpdate);
 				$aryData["updatekey"] = $strUpdate;
 
 

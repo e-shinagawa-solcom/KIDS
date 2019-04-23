@@ -215,8 +215,8 @@
 			// fncChangeNameで変換された値をもう一度戻し$_POSTと比較
 			// 例）p.strProductCode → strProductCode
 			// dtmInsertDateだけ日付処理（To_char・・）されているので削除してから比較
-			$strValues			= ereg_replace ( ",$", "", $strValues );
-			$strValues_replace	= ereg_replace ( "^[pg]+\.", "", $strValues );
+			$strValues			= preg_replace ( "/,$/", "", $strValues );
+			$strValues_replace	= preg_replace ( "/^[pg]+\./", "", $strValues );
 			$strValues_replace = preg_replace ("/.+?dtmInsertDate$/", "dtmInsertDate", $strValues_replace );
 			$strValues_replace = preg_replace ("/.+?dtmRevisionDate$/",dtmRevisionDate,$strValues_replace );
 			
@@ -225,7 +225,7 @@
 			for ( $j = 0; $j < count( $aryData ); $j++ )							//FORM全ての値
 			{
 				list ($strKeys2, $strValues2 ) = each ( $aryData );
-				$strKeys2_replace = ereg_replace ("(From|To)$","", $strKeys2);
+				$strKeys2_replace = preg_replace ("/(From|To)$/","", $strKeys2);
 				
 				
 				//echo "strValues_replace : $strValues_replace<br>";
@@ -264,7 +264,7 @@
 									$strInArray .=  $strValues3.",";
 								}
 								
-								$strInArray = ereg_replace(",$", "",$strInArray );
+								$strInArray = preg_replace("/,$/", "",$strInArray );
 								$aryQueryWhere[] = "$strValues in ($strInArray) AND";
 								$strLoopFlag = "true";
 								//break;
@@ -281,7 +281,7 @@
 						{
 							if( strcmp( $strValues2, "") != 0 )
 							{
-								$strValues2 = ereg_replace("^0","", $strValues2);		//文字列→数値（0685→685)
+								$strValues2 = preg_replace("/^0/","", $strValues2);		//文字列→数値（0685→685)
 								$aryQueryWhere[] =  $aryFromToValue[$h].$strValues2.$aryFromToValueEnd[$h] ;
 								$aryQueryWhere[] = " AND";
 							}
@@ -294,12 +294,12 @@
 					if($h == count( $aryFromTo ) )
 					{
 						// 文字型
-						if( ereg( "^str", $strValues_replace ) )
+						if( preg_replace( "/^str/", $strValues_replace ) )
 						{
 							$aryQueryWhere[] = " $strValues ~* '$strValues2' AND";
 						}
 						// 日付型
-						elseif ( ereg( "^dtm", $strValues_replace ) )
+						elseif ( preg_replace( "/^dtm/", $strValues_replace ) )
 						{
 							if($strValues_replace == dtmRevisionDate)
 							{

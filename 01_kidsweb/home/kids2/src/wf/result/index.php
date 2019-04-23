@@ -316,11 +316,11 @@
 	}
 
 	// 同じ項目のソートは逆順にする処理
-	list ( $column, $lngSort, $DESC ) = split ( "_", $aryData["strSort"] );
+	list ( $column, $lngSort, $DESC ) = explode ( "_", $aryData["strSort"] );
 
 	if ( $DESC == 'ASC' )
 	{
-		$baseData["column" . $lngSort] = ereg_replace ( "ASC", "DESC", $baseData["column" . $lngSort] );
+		$baseData["column" . $lngSort] = preg_replace ( "/ASC/", "DESC", $baseData["column" . $lngSort] );
 	}
 
 	// $lngStartView から $lngEndView だけパーツテンプレートに埋め込み

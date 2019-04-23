@@ -225,7 +225,7 @@ function fncGetSearchStockSQL ( $aryViewColumn, $arySearchColumn, $arySearchData
 					if ( strpos($arySearchDataColumn["strOrderCodeFrom"], "-") )
 					{
 						// リバイズコード付の仕入Ｎｏのリバイズコードは検索結果では最新版を表示するため、無視する
-						$strNewOrderCode = ereg_replace( strstr( $arySearchDataColumn["strOrderCodeFrom"], "-" ), "", $arySearchDataColumn["strOrderCodeFrom"] );
+						$strNewOrderCode = preg_replace( strstr( $arySearchDataColumn["strOrderCodeFrom"], "-" ), "", $arySearchDataColumn["strOrderCodeFrom"] );
 					}
 					else
 					{
@@ -239,7 +239,7 @@ function fncGetSearchStockSQL ( $aryViewColumn, $arySearchColumn, $arySearchData
 					if ( strpos($arySearchDataColumn["strOrderCodeTo"], "-") )
 					{
 						// リバイズコード付の仕入Ｎｏのリバイズコードは検索結果では最新版を表示するため、無視する
-						$strNewOrderCode = ereg_replace( strstr( $arySearchDataColumn["strOrderCodeTo"], "-" ), "", $arySearchDataColumn["strOrderCodeTo"] );
+						$strNewOrderCode = preg_replace( strstr( $arySearchDataColumn["strOrderCodeTo"], "-" ), "", $arySearchDataColumn["strOrderCodeTo"] );
 					}
 					else
 					{

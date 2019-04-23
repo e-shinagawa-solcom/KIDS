@@ -25,7 +25,7 @@
 
 		var $aryUploadFileInfo;
 		
-		function clsImageLo()
+		function __construct()
 		{
 			
 		}

@@ -65,7 +65,7 @@ foreach ( $aryKey as $strKey )
 	$strResult = fncCheckString( $aryBase[$strKey], $aryCheck[$strKey] );
 	if ( $strResult ) 
 	{
-		list ( $lngErrorNo, $strErrorMessage ) = split ( ":", $strResult );
+		list ( $lngErrorNo, $strErrorMessage ) = explode ( ":", $strResult );
 //			fncOutputError ( $lngErrorNo, DEF_ERROR, $strErrorMessage, FALSE, "", $objDB );
 		$flag = FALSE;
 	}

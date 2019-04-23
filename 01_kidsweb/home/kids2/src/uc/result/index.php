@@ -359,7 +359,7 @@ list ( $column, $lngSort, $DESC ) = explode ( "_", $aryData["strSort"] );
 
 if ( $DESC == 'ASC' )
 {
-	$baseData["column" . $lngSort] = ereg_replace ( "ASC", "DESC", $baseData["column" . $lngSort] );
+	$baseData["column" . $lngSort] = preg_replace ( "/ASC/", "DESC", $baseData["column" . $lngSort] );
 }
 
 

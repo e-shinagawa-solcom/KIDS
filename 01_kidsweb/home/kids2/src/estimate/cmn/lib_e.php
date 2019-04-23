@@ -343,7 +343,7 @@ fncDebug( 'getEstimateQuery_01.txt', $aryData, __FILE__, __LINE__,'a');
 	//////////////////////////////////////////////////////////////////////////
 	// $strSort 構造 "sort_[対象番号]_[降順・昇順]"
 	// $strSort から対象番号、降順・昇順を取得
-	list ( $sort, $column, $DESC ) = split ( "_", $aryData["strSort"] );
+	list ( $sort, $column, $DESC ) = explode ( "_", $aryData["strSort"] );
 	if ( $column )
 	{
 		$aryQuery[] = "ORDER BY $arySortColumn[$column] $DESC, e.dtmInsertDate DESC\n";
@@ -1958,7 +1958,7 @@ $aryEstimate["curNonFixedCost"]	= ( is_null($curNonFixedCost) || empty($curNonFi
 /**
 * 見積原価計算計算結果取得関数
 *
-*	総製造費用〜売上総利益の見積原価計算計算結果データを取得する関数
+*	総製造費用~売上総利益の見積原価計算計算結果データを取得する関数
 *
 *	@param  Array  $aryEstimateData	見積原価計算データ
 *	@param  Object $objDB			DBオブジェクト

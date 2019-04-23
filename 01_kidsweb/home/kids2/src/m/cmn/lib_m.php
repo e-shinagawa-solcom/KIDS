@@ -125,7 +125,7 @@ class clsMaster
      *	@return void
      *	@access public
      */
-    function clsMaster()
+    function __construct()
     {
         $this->strTableName   = "";
         $this->lngRecordRow   = 0;

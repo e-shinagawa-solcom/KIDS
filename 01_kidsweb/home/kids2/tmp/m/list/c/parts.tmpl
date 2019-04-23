@@ -12,7 +12,11 @@
 <link rel="stylesheet" type="text/css" media="screen" href="/m/list/tr/cmn/layout.css">
 <script type="text/javascript" language="javascript" src="/m/list/c/_%strTableName%__exstr.js"></script>
 <script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
+<script src="/cmn/jquery/jquery-3.1.0.js"></script>
+<script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
 <script type="text/javascript" language="javascript" src="/m/winopen.js"></script>
+
+
 </head>
 <body id="Backs" oncontextmenu="return false;" onload="GetIfrmlngLanguageCode(1);Loading();" onscroll="fncStopHeader3( SegTitle , DummyTable2 );">
 
@@ -22,7 +26,7 @@
 </p>
 
 
-<form name="form1" action="index.php" method="POST">
+<form name="form1" id="objForm" action="index.php" method="POST">
 
 
 <table cellpadding="5" cellspacing="0" border="0" bgcolor="#f1f1f1" align="center">
@@ -50,7 +54,7 @@
 <input type="hidden" name="lngActionCode" value="_%lngActionCode%_">
 <input type="hidden" name="strMasterTableName" value="_%strMasterTableName%_">
 <input type="hidden" name="strKeyName" value="_%strKeyName%_">
-
+<input type="hidden" name="strEditURL" value="_%strEditURL%_">
 </form>
 
 

@@ -124,7 +124,7 @@ class HtmlTemplate{
 */
 
 	function _compile($tmpfile,$dirname="./"){
-		$tm=split("/",$tmpfile);
+		$tm=explode("/",$tmpfile);
 		if(file_exists($tmpfile)){
 
 			$newfile=$dirname.$tmpfile.".tmp";
@@ -157,7 +157,7 @@ class HtmlTemplate{
 			$kuri[]=$x[1];
 		}
 		while(list(,$m)=each($kuri)){
-			$ar=split("/",$m);
+			$ar=explode("/",$m);
 			$ind="";
 			$rui=array();
 			$mattan=0;
@@ -186,7 +186,7 @@ class HtmlTemplate{
 		# interpretation of {val }
 		while(preg_match('/\{val ([^\}]+)\}/',$str2,$match)){
 			$m=$match[1];
-			$ar=split("/",$m);
+			$ar=explode("/",$m);
 			$ind="";
 			$rui=array();
 			foreach($ar as $x){
@@ -204,7 +204,7 @@ class HtmlTemplate{
 		# interpretation of {rval }
 		while(preg_match('/\{rval ([^\}]+)\}/',$str2,$match)){
 			$m=$match[1];
-			$ar=split("/",$m);
+			$ar=explode("/",$m);
 			$ind="";
 			$rui=array();
 			foreach($ar as $x){
@@ -221,7 +221,7 @@ class HtmlTemplate{
 		# interpretation of <!--{def }--><!--{/def}-->
 		while(preg_match('/<!--\{def ([^\}]+)\}-->/i',$str2,$match)){
 			$m=$match[1];
-			$ar=split("/",$m);
+			$ar=explode("/",$m);
 			$ind="";
 			$rui=array();
 			$mattan=0;

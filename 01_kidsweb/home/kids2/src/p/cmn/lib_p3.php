@@ -5,7 +5,7 @@
 	{
 
 		// スペースから前文字を取る
-		$aryNearName = split(" |　", $strPostData );
+		$aryNearName = explode(" |　", $strPostData );
 		
 		
 		// 「未定」を引くDEFAINではなくDBに入っている

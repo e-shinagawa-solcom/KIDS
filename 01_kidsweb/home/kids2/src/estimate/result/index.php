@@ -468,11 +468,11 @@ if ( $aryData["strEstimateVisible"] )
 
 
 // 同じ項目のソートは逆順にする処理
-list ( $column, $lngSort, $DESC ) = split ( "_", $aryData["strSort"] );
+list ( $column, $lngSort, $DESC ) = explode ( "_", $aryData["strSort"] );
 
 if ( $DESC == 'ASC' )
 {
-	$baseData["column" . $lngSort] = ereg_replace ( "ASC", "DESC", $baseData["column" . $lngSort] );
+	$baseData["column" . $lngSort] = preg_replace ( "/ASC/", "DESC", $baseData["column" . $lngSort] );
 }
 
 
@@ -610,7 +610,7 @@ for ( $i = 0; $i < $lngResultNum; $i++ )
 			//$partsData["detail"] = "<td bgcolor=\"#FFFFFF\" align=\"center\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $lngResultNum . "_',1 );\"><a class=\"cells\" href=\"javascript:fncShowDialogCommon('detail.php?strSessionID=$aryData[strSessionID]&lngEstimateNo=" . $objResult->lngestimateno . "' , window.form1 , 'ResultIframeCommon' , 'YES' , " . $aryData["lngLanguageCode"] . " , 'detail' );\"><img onmouseover=\"DetailOn(this);\" onmouseout=\"DetailOff(this);\" src=\"/img/type01/wf/result/detail_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"DETAIL\"></a></td>";
 
 //			$partsData["detail"] = "<td bgcolor=\"#FFFFFF\" align=\"center\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $lngResultNum . "_',1 );\"><a class=\"cells\" href=\"detail.php?strSessionID=$aryData[strSessionID]&lngEstimateNo=" . $objResult->lngestimateno . "\" target=_blank><img onmouseover=\"DetailOn(this);\" onmouseout=\"DetailOff(this);\" src=\"/img/type01/wf/result/detail_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"DETAIL\"></a></td>";
-			$partsData["detail"] = "<td bgcolor=\"#FFFFFF\" align=\"center\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $lngResultNum . "_',1 );\"><a class=\"cells\" href=\"/estimate/result/detail.php?strSessionID=$aryData[strSessionID]&lngEstimateNo=" . $objResult->lngestimateno . "\" target=\"_blank\"><img onmouseover=\"DetailOn(this);\" onmouseout=\"DetailOff(this);\" src=\"/img/type01/wf/result/detail_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"DETAIL\"></a></td>";
+			$partsData["detail"] = "<td bgcolor=\"#FFFFFF\" align=\"center\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $lngResultNum . "_',1 );\"><a class=\"cells\" href=\"/estimate/result/detail.php?strSessionID=$aryData["strSessionID"]&lngEstimateNo=" . $objResult->lngestimateno . "\" target=\"_blank\"><img onmouseover=\"DetailOn(this);\" onmouseout=\"DetailOff(this);\" src=\"/img/type01/wf/result/detail_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"DETAIL\"></a></td>";
 		}
 
 //fncDebug( 'estimate_result_index_01.txt', "/estimate/result/detail.php?strSessionID=$aryData[strSessionID]&lngEstimateNo=$objResult->lngestimateno", __FILE__, __LINE__);
@@ -816,7 +816,7 @@ for ( $i = 0; $i < $lngResultNum; $i++ )
 				( $objResult->bytdecisionflag == "t" && $objResult->lngestimatestatuscode != DEF_ESTIMATE_APPLICATE ) )
 			{
 				// 削除
-				$partsData["delete"] = "<td bgcolor=\"#FFFFFF\" align=\"center\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $lngResultNum . "_',1 );\"><a class=\"cells\" href=\"javascript:fncShowDialogRenew('/estimate/regist/confirm.php?strSessionID=$aryData[strSessionID]&lngFunctionCode=" . DEF_FUNCTION_E4 . "&lngEstimateNo=" . $objResult->lngestimateno . "&lngEstimateNoCondition=1' , window.form1 , 'ResultIframeRenew' , 'NO' , " . $aryData["lngLanguageCode"] . " );\"><img onmouseover=\"RenewOn(this);\" onmouseout=\"RenewOff(this);\" src=\"/img/type01/cmn/seg/renew_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"DELETE\"></a></td>";
+				$partsData["delete"] = "<td bgcolor=\"#FFFFFF\" align=\"center\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $lngResultNum . "_',1 );\"><a class=\"cells\" href=\"javascript:fncShowDialogRenew('/estimate/regist/confirm.php?strSessionID=$aryData["strSessionID"]&lngFunctionCode=" . DEF_FUNCTION_E4 . "&lngEstimateNo=" . $objResult->lngestimateno . "&lngEstimateNoCondition=1' , window.form1 , 'ResultIframeRenew' , 'NO' , " . $aryData["lngLanguageCode"] . " );\"><img onmouseover=\"RenewOn(this);\" onmouseout=\"RenewOff(this);\" src=\"/img/type01/cmn/seg/renew_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"DELETE\"></a></td>";
 			}
 			else
 			{

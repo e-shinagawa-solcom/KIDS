@@ -108,7 +108,7 @@
 	$aryNumber[6] = "lngfirstdeliveryquantity";
 
 	// updateするデータを配列に格納 DBのカラム名に統一する
-	$aryUpdate = split (",", $aryData["updatekey"]);
+	$aryUpdate = explode (",", $aryData["updatekey"]);
 
 	$aryUpdateKeys =  array_values($aryUpdate);
 	for( $i = 0; $i < count( $aryUpdate ); $i++ )
@@ -213,7 +213,7 @@
 			}
 
 			// 文字型
-			if( ereg("^str", $strvalue) )
+			if( preg_replace("/^str/", $strvalue) )
 			{
 				// 2004/03/08 watanabe特別処理：他いじると全部動かなくなりそうなので・・・
 				if( $strvalue == "strcustomerusercode" )
@@ -234,7 +234,7 @@
 				}
 			}
 			// 日付型
-			elseif( ereg ("^dtm", $strvalue) )
+			elseif( preg_replace ("/^dtm/", $strvalue) )
 			{
 				$aryColumn[] = "$strvalue = To_timestamp('". $aryData["$strvalue"] ."', 'YYYY-MM-DD'),";
 			}

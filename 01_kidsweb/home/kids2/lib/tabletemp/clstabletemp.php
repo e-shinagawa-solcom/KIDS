@@ -32,7 +32,7 @@ class clsTableTemp
 	// -------------------------------------------------------
 	// constructer
 	// -------------------------------------------------------
-	function clsTableTemp()
+	function __construct()
 	{
 		unset($this->objDB);
 	}

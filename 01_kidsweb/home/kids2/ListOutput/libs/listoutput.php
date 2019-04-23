@@ -77,7 +77,7 @@ class CListOutput{
 	//
 	//	エラー:		返さない
 	//
-	function CListOutput(){
+	function __construct(){
 		// 出力先ディレクトリが未定義ならばデフォルトを定義する
 		if(empty($this->strOutputDir)){
 			$this->strOutputDir = './';
@@ -475,7 +475,7 @@ class CListOutput{
 		$this->DeleteConfig();
 		
 		// <CR><LF>, <CR>, <LF> いずれかで区切る
-		$aryConfigLine = split("\x0D\x0A|\x0A|\x0A", $strConfig);
+		$aryConfigLine = explode("\x0D\x0A|\x0A|\x0A", $strConfig);
 		
 		// デフォルトの処理タイプ・処理名の設定
 		$strNowType = 'DEFAULT';
@@ -490,7 +490,7 @@ class CListOutput{
 			}
 			
 			// 行の取得
-			list($strType, $strHandle) = split("\t", $strValue, 2);
+			list($strType, $strHandle) = explode("\t", $strValue, 2);
 			switch($strType){
 				case CLISTOUTPUT_COMMENT:
 					// コメント
@@ -1926,7 +1926,7 @@ class CListOutputContext {
 	//
 	//	エラー:		返さない
 	//
-	function CListOutputContext() {
+	function __construct() {
 		$this->initializeContext();
 	}
 

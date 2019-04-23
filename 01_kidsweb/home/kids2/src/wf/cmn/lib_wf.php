@@ -279,7 +279,7 @@ function getWorkflowQuery( $lngUserCode, $aryData, $objDB )
 	}
 
 	// $strSort から対象番号、降順・昇順を取得
-	list ( $sort, $column, $DESC ) = split ( "_", $strSort );
+	list ( $sort, $column, $DESC ) = explode ( "_", $strSort );
 	if ( $column )
 	{
 		$strQuery .= "ORDER BY $arySortColumn[$column] $DESC, m.lngFunctionCode, m.dtmStartDate ASC\n";
@@ -314,41 +314,41 @@ function getWorkflowQuery( $lngUserCode, $aryData, $objDB )
 */
 function fncGetURL( $aryData )
 {
-	$url = "strSessionID=$aryData[strSessionID]&" .
-           "lngFunctionCode=$aryData[lngFunctionCode]&" .
-           "lngSelectFunctionCode=$aryData[lngSelectFunctionCode]&" .
-           "lngWorkflowStatusCode=$aryData[lngWorkflowStatusCode]";
+	$url = "strSessionID=" .$aryData["strSessionID"] .
+           "&lngFunctionCode=" .$aryData["lngFunctionCode"] .
+           "&lngSelectFunctionCode=" .$aryData["lngSelectFunctionCode"] .
+           "&lngWorkflowStatusCode=" .$aryData["lngWorkflowStatusCode"];
 	// 検索から実行された場合は検索条件も投げる
 	// (条件:lngSelectFunctionCodeが「一覧」でなかったら)
 	if ( $aryData["lngSelectFunctionCode"] != DEF_FUNCTION_WF1 )
 	{
-		$url .= "&lngApplicantUserDisplayCode=$aryData[lngApplicantUserDisplayCode]" .
-                "&lngInputUserDisplayCode=$aryData[lngInputUserDisplayCode]" .
-                "&dtmStartDateFrom=$aryData[dtmStartDateFrom]" .
-                "&dtmStartDateTo=$aryData[dtmStartDateTo]" .
-                "&dtmEndDateFrom=$aryData[dtmEndDateFrom]" .
-                "&dtmEndDateTo=$aryData[dtmEndDateTo]" .
-                "&lngInChargeCode=$aryData[lngInChargeCode]";
+		$url .= "&lngApplicantUserDisplayCode=" .$aryData["lngApplicantUserDisplayCode"] .
+                "&lngInputUserDisplayCode=" .$aryData["lngInputUserDisplayCode"] .
+                "&dtmStartDateFrom=" .$aryData["dtmStartDateFrom"] .
+                "&dtmStartDateTo=" .$aryData["dtmStartDateTo"] .
+                "&dtmEndDateFrom=" .$aryData["dtmEndDateFrom"] .
+                "&dtmEndDateTo=" .$aryData["dtmEndDateTo"] .
+                "&lngInChargeCode=" .$aryData["lngInChargeCode"];
 	}
 
 	// ページ変更、ソート処理の場合は検索表示項目、検索条件項目も投げる
 	// (条件:lngWorkflowCodeがなかったら)
 	if ( !$aryData["lngWorkflowCode"] )
 	{
-		$url .= "&lngWorkflowStatusCodeVisible=$aryData[lngWorkflowStatusCodeVisible]" .
-                "&lngApplicantUserDisplayCodeVisible=$aryData[lngApplicantUserDisplayCodeVisible]" .
-                "&lngInputUserDisplayCodeVisible=$aryData[lngInputUserDisplayCodeVisible]" .
-                "&dtmStartDateVisible=$aryData[dtmStartDateVisible]" .
-                "&dtmEndDateVisible=$aryData[dtmEndDateVisible]" .
-                "&lngInChargeCodeVisible=$aryData[lngInChargeCodeVisible]" .
-                "&lngSelectFunctionCodeVisible=$aryData[lngSelectFunctionCodeVisible]" .
-                "&lngWorkflowStatusCodeConditions=$aryData[lngWorkflowStatusCodeConditions]" .
-                "&lngApplicantUserDisplayCodeConditions=$aryData[lngApplicantUserDisplayCodeConditions]" .
-                "&lngInputUserDisplayCodeConditions=$aryData[lngInputUserDisplayCodeConditions]" .
-                "&dtmStartDateConditions=$aryData[dtmStartDateConditions]" .
-                "&dtmEndDateConditions=$aryData[dtmEndDateConditions]" .
-                "&lngInChargeCodeConditions=$aryData[lngInChargeCodeConditions]" .
-                "&lngSelectFunctionCodeConditions=$aryData[lngSelectFunctionCodeConditions]";
+		$url .= "&lngWorkflowStatusCodeVisible=" .$aryData["lngWorkflowStatusCodeVisible"] .
+                "&lngApplicantUserDisplayCodeVisible=" .$aryData["lngApplicantUserDisplayCodeVisible"] .
+                "&lngInputUserDisplayCodeVisible=" .$aryData["lngInputUserDisplayCodeVisible"] .
+                "&dtmStartDateVisible=" .$aryData["dtmStartDateVisible"] .
+                "&dtmEndDateVisible=" .$aryData["dtmEndDateVisible"] .
+                "&lngInChargeCodeVisible=" .$aryData["lngInChargeCodeVisible"] .
+                "&lngSelectFunctionCodeVisible=" .$aryData["lngSelectFunctionCodeVisible"] .
+                "&lngWorkflowStatusCodeConditions=" .$aryData["lngWorkflowStatusCodeConditions"] .
+                "&lngApplicantUserDisplayCodeConditions=" .$aryData["lngApplicantUserDisplayCodeConditions"] .
+                "&lngInputUserDisplayCodeConditions=" .$aryData["lngInputUserDisplayCodeConditions"] .
+                "&dtmStartDateConditions=" .$aryData["dtmStartDateConditions"] .
+                "&dtmEndDateConditions=" .$aryData["dtmEndDateConditions"] .
+                "&lngInChargeCodeConditions=" .$aryData["lngInChargeCodeConditions"] .
+                "&lngSelectFunctionCodeConditions=" .$aryData["lngSelectFunctionCodeConditions"];
 	}
 	return $url;
 }

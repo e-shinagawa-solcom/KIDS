@@ -205,7 +205,7 @@ function getSessionIDToInfo( $strSessionID, $objDB )
 	// セッションを保持するユーザーのIDとパスワードを取得
 	$objResult = $objDB->fetchObject( $lngResultID, 0 );
 
-	if ( ereg ( "-", $objResult->remaining ) )
+	if ( preg_replace ( "-", $objResult->remaining ) )
 	{
 		// タイムアウト処理
 		$strQuery = "UPDATE t_LoginSession " .

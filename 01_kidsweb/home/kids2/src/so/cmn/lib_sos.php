@@ -206,7 +206,7 @@ function fncGetSearchReceiveSQL ( $aryViewColumn, $arySearchColumn, $arySearchDa
 					if ( strpos($arySearchDataColumn["strReceiveCodeFrom"], "-") )
 					{
 						// リバイズコード付の受注Ｎｏのリバイズコードは検索結果では最新版を表示するため、無視する
-						$strNewReceiveCode = ereg_replace( strrchr( $arySearchDataColumn["strReceiveCodeFrom"], "-" ), "", $arySearchDataColumn["strReceiveCodeFrom"] );
+						$strNewReceiveCode = preg_replace( strrchr( $arySearchDataColumn["strReceiveCodeFrom"], "-" ), "", $arySearchDataColumn["strReceiveCodeFrom"] );
 					}
 					else
 					{
@@ -220,7 +220,7 @@ function fncGetSearchReceiveSQL ( $aryViewColumn, $arySearchColumn, $arySearchDa
 					if ( strpos($arySearchDataColumn["strReceiveCodeTo"], "-") )
 					{
 						// リバイズコード付の受注Ｎｏのリバイズコードは検索結果では最新版を表示するため、無視する
-						$strNewReceiveCode = ereg_replace( strrchr( $arySearchDataColumn["strReceiveCodeTo"], "-" ), "", $arySearchDataColumn["strReceiveCodeTo"] );
+						$strNewReceiveCode = preg_replace( strrchr( $arySearchDataColumn["strReceiveCodeTo"], "-" ), "", $arySearchDataColumn["strReceiveCodeTo"] );
 					}
 					else
 					{

@@ -154,7 +154,7 @@ $objDB->close();
 
 
 // 登録ボタンのGET文字列生成
-$aryData["strInsertForm"] = "/m/regist/c/edit.php?strSessionID=". $aryData["strSessionID"] . "&lngActionCode=" . DEF_ACTION_INSERT . "&strMasterTableName=" . $aryData["strMasterTableName"] ."&strKeyName=" .  $objMaster->aryColumnName[0];
+$aryData["strEditURL"] = "/m/regist/c/edit.php?strSessionID=". $aryData["strSessionID"] . "&lngActionCode=" . DEF_ACTION_INSERT . "&strMasterTableName=" . $aryData["strMasterTableName"] ."&strKeyName=" .  $objMaster->aryColumnName[0];
 
 $aryData["strTableName"] = $objMaster->strTableName;
 

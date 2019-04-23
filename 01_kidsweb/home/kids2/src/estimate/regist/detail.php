@@ -36,7 +36,7 @@ exit;
 
 
 	// セッション確認
-	$objAuth = fncIsSession( $aryData[strSessionID], $objAuth, $objDB );
+	$objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
 	// 権限確認
 	if ( !fncCheckAuthority( DEF_FUNCTION_E4, $objAuth ) )

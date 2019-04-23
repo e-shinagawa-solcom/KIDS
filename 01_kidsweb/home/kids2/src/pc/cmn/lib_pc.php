@@ -586,7 +586,7 @@ for($i=0; $i<count($aryStock); $i++)
 				reset($aryCheckGyou);
 				while( list( $strKeys, $strValues ) = each( $aryCheckGyou ) )
 				{
-					list( $strKeys2, $strValues2 ) = split( ":", $strValues );
+					list( $strKeys2, $strValues2 ) = explode( ":", $strValues );
 					
 					if( $lnggyou == $strKeys2 )
 					{
@@ -608,7 +608,7 @@ for($i=0; $i<count($aryStock); $i++)
 					reset($aryNewData);
 					while (list ( $strKeys2, $strValues2 ) = each( $aryNewData ))
 					{
-						list( $strKeys2, $strValues2 ) = split(":", $strValues2 );
+						list( $strKeys2, $strValues2 ) = explode(":", $strValues2 );
 						
 						if( $aryNewData2[$i]["lngstockdetailno"] == $strKeys2 )
 						{
@@ -636,7 +636,7 @@ for($i=0; $i<count($aryStock); $i++)
 					while( list ( $strKyes, $strValues ) = each( $aryNewData ) )
 					{
 					
-						list( $strKeys2, $strValues2 ) = split(":", $strValues );
+						list( $strKeys2, $strValues2 ) = explode(":", $strValues );
 						// 「荷姿」の単位を「製品」の単価にする
 						
 						if($aryDataA[$i][lngstockdetailno] == $strKeys2 )

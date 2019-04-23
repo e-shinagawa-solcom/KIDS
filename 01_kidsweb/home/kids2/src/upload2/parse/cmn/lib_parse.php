@@ -1008,7 +1008,7 @@
 				$xf = $obj->getAttribute($sn, $lngRow, $lngCol);
 				
 				if (isset($xf['wrap']))
-				if ($xf['wrap']) $dispval = ereg_replace("\n", "<br />", $dispval);
+				if ($xf['wrap']) $dispval = preg_replace("/\n/", "<br />", $dispval);
 				$xfno = ($xf['xf'] > 0) ? $xf['xf']: 0;
 
 				// アライメントの設定

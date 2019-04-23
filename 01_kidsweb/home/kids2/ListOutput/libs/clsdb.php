@@ -58,7 +58,7 @@ class clsDB
 	*	@access public
 	*/
 	// ---------------------------------------------------------------
-	function clsDB()
+	function __construct()
 	{
 		// 接続IDの初期化
 		$this->ConnectID   = FALSE;
@@ -540,7 +540,7 @@ class clsDBLock {
 	var $ServerCheckSpan; // サーバー側ロック再試行間隔（ミリ秒）
 
 	// コンストラクタ
-	function clsDBLock()
+	function __construct()
 	{
 		global $SERVER_NAME;
 		global $REMOTE_ADDR;
