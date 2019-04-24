@@ -1775,7 +1775,6 @@ function fncOutputError ( $lngErrorCode, $lngErrorClass, $aryErrorMessage, $bytO
 	// メッセージの取得
 	$strQuery = "SELECT strMessageContent from m_Message WHERE lngMessageCode = " . $lngErrorCode;
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
-
 	$objResult = $objDB->fetchObject( $lngResultID, 0 );
 
 	$strErrorMessage = $objResult->strmessagecontent;

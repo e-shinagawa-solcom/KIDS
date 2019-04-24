@@ -101,7 +101,7 @@ if ( join ( $aryCheckResult ) )
 
 // マスターオブジェクト生成
 $objMaster = new clsMaster();
-$objMaster->setMasterTable( "m_company", "lngcompanycode", $aryData["lngcompanycode"], "", $objDB );
+$objMaster->setMasterTable( "m_Company", "lngcompanycode", $aryData["lngcompanycode"], "", $objDB );
 $objMaster->setAryMasterInfo( $aryData["lngcompanycode"], "" );
 
 // カラム数取得

@@ -91,6 +91,8 @@
 	var h_wfJ = '/img/type01/m/m_header_wf_ja.gif';
 	var h_wfE = '/img/type01/m/m_header_wf_en.gif';
 
+	// 通貨レートマスタ
+	var h_trateJ = '/img/type01/m/m_header_trate_ja.gif';
 
 
 
@@ -113,6 +115,9 @@
 	// 通貨レートマスタ検索
 	var mmoneyrateJ = '/img/type01/m/m_monetary_rate_search_ja.gif';
 	var mmoneyrateE = '/img/type01/m/m_monetary_rate_search_en.gif';
+
+	// 想定レートマスタ検索
+	var mtemporaryrateJ = '/img/type01/m/m_temporary_rate_search_ja.gif';
 
 
 
