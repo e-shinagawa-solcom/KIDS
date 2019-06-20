@@ -75,10 +75,8 @@ $aryData["strSystemInformationBody"] = preg_replace ( "/(<.+?>|\r)/", "", $aryDa
 
 // 更新処理実行
 $lngSeq = fncGetSequence( "m_SystemInformation.lngSystemInformationCode", $objDB );
-$strQuery = "INSERT INTO m_SystemInformation VALUES ( $lngSeq, '" . $aryData["strSystemInformationTitle"] . "', '" . preg_replace ( "/\n/", "<br>", $aryData["strSystemInformationBody"] ) . "', now() )";
+$strQuery = "INSERT INTO m_SystemInformation (lngsysteminformationcode, strsysteminformationtitle, strsysteminformationbody, dtminsertdate) VALUES ( $lngSeq, '" . $aryData["strSystemInformationTitle"] . "', '" . preg_replace ( "/\n/", "<br>", $aryData["strSystemInformationBody"] ) . "', now() )";
 list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
-
-
 
 // HTML出力
 $objTemplate = new clsTemplate();

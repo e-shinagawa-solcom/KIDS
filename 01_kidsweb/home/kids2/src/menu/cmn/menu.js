@@ -54,6 +54,11 @@ function setMenu_WF() {
 	return false;
 }
 
+function setMenuINV(){
+
+	document.frmMenu.action = "/inv/select-function/index.php";
+	document.frmMenu.submit();
+}
 
 function setMenu_UC() {
 

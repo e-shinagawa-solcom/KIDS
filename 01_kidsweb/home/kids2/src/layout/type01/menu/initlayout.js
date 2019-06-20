@@ -136,6 +136,11 @@ var pcNaviE1 = '<a href="#"><img onmouseover="fncPCButton( \'onE\' , this );" on
 var wfNaviJ1 = '<a href="#"><img onmouseover="fncWFButton( \'onJ\' , this );" onmouseout="fncWFButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + wfJ1 + '" width="151" height="25" border="0" alt="ワークフロー" tabindex="7"></a>';
 var wfNaviE1 = '<a href="#"><img onmouseover="fncWFButton( \'onE\' , this );" onmouseout="fncWFButton( \'offE\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + wfE1 + '" width="151" height="25" border="0" alt="WORK FLOW" tabindex="7"></a>';
 
+//---------------------------------------------------------
+//適用 :「請求管理」
+//---------------------------------------------------------
+var invNaviJ1 = '<a href="#"><img onmouseover="fncINVButton( \'onJ\' , this );" onmouseout="fncINVButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + invJ1 + '" width="151" height="25" border="0" alt="請求管理" tabindex="7"></a>';
+
 
 //---------------------------------------------------------
 // 適用 :「帳票出力」
@@ -214,7 +219,7 @@ function initLayoutSegs( obj1 , obj2 )
 {
 
 	var initXpos1 = 24;  //LEFT座標・初期値1
-	var initXpos2 = 104;  //LEFT座標・初期値2 185
+	var initXpos2 = 24;  //LEFT座標・初期値2 185
 
 	var moveXpos = 160;   //LEFT座標・移動値
 
@@ -310,6 +315,11 @@ function initLayoutNavi()
 	if (typeof(WFnavi)!='undefined')
 	{
 		WFnavi.innerHTML = wfNaviJ1;
+	}
+	
+	if (typeof(INVnavi)!='undefined')
+	{
+		INVnavi.innerHTML = invNaviJ1;
 	}
 
 	if (typeof(UCnavi)!='undefined')

@@ -34,7 +34,7 @@ define ( "EXECUTE_HOST_NAME_DEV",	"kids.devs.biz" );
 define ( "EXECUTE_HOST_NAME_KWG_WEBv2",	"192.168.10.228" );
 define ( "EXECUTE_HOST_NAME_KWG_WEBv1",	"192.168.10.235" );
 define ( "EXECUTE_HOST_NAME_KWG_BACK",	"192.168.10.230" );
-define ( "EXECUTE_HOST_NAME_KWG_DB",	"192.168.1.113" );
+define ( "EXECUTE_HOST_NAME_KWG_DB",	"localhost" );
 
 // 実行サーバー名称の取得
 $strExcuteHttpHostName = $_SERVER["HTTP_HOST"];
@@ -131,9 +131,10 @@ switch( $strExcuteHttpHostName )
 		define ( "ERROR_MAIL_TO", "kids@kuwagata.co.jp" );
 		define ( "SEND_MAIL_FLAG", true);
 		// 各ルートパス
-		define ( "PATH_HOME",	"/Users/solcom/Desktop/Git/KIDS/01_kidsweb/home/kids2" );
+		define ( "PATH_HOME",	"/Users/solcom-ad/Desktop/Git/KIDS/01_kidsweb/home/kids2" );
 		break;
 }
+
 
 // ログ出力先
 define ("DEF_DEBUG_DIR",	PATH_HOME . "/log/");
@@ -413,6 +414,12 @@ define ( "DEF_FUNCTION_LC0",	2100 );	// 2100 L/C管理
 define ( "DEF_FUNCTION_LC1",	2101 );	// 2101 L/C情報
 define ( "DEF_FUNCTION_LC2",	2102 );	// 2102 L/C設定変更
 define ( "DEF_FUNCTION_LC3",	2103 );	// 2103 L/C編集
+define ( "DEF_FUNCTION_LC4",	2104 );	// 2104 L/C帳票出力
+
+define ( "DEF_FUNCTION_INV0",	2200 );	// 2200 請求管理
+define ( "DEF_FUNCTION_INV1",	2201 );	// 2201 請求書発行
+define ( "DEF_FUNCTION_INV2",	2202 );	// 2202 請求書検索
+define ( "DEF_FUNCTION_INV3",	2203 );	// 2203 請求集計
 
 // エラー種類
 define ( "DEF_WARNING",		1 );           //  1 注意レベル（入力ミスなど）

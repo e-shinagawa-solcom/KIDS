@@ -4,14 +4,29 @@
 <title>K.I.D.S.</title>
 <meta http-equiv="content-type" content="text/html; charset=euc-jp">
 
+<script src="/cmn/jquery/jquery-3.1.0.js"></script>
 <script type="text/javascript" language="javascript" src="/layout/type01/cmn/images.js"></script>
 <script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
 
 <script type="text/javascript" language="javascript" src="/result/cmn/functions.js" charset="utf-8"></script>
+<script type="text/javascript" language="javascript" src="/uc/regist/functions.js" charset="utf-8"></script>
 <link rel="stylesheet" type="text/css" media="screen" href="/result/cmn/layout.css">
-
+<style>
+	table{
+		padding:0;
+	}
+	tbody{
+		position: absolute;
+	}
+	tr{
+		width: 100%;
+	}
+	td{
+		padding:5px 3px;
+	}
+</style>
 </head>
-<body onScroll="fncStopHeader( SegTitle );">
+<body onLoad="setHeaderWidth();" onScroll="fncStopHeader( SegTitle );">
 
 
 
@@ -39,7 +54,25 @@
 		_%column14%_
 		_%update%_
 </tr>
-<tr id="DummyTR"><th colspan="_%lngColumnNum%_">&nbsp;</th></tr>
+<tr id="dummy_tr" style="position:static;word-break: keep-all;font-family: Arial, ＭＳ　Ｐゴシック;">
+<td valign="top" valign="center" style="position:static;"><a href="#" onclick="fncDoCopy( copyhidden , document.getElementById('COPYAREA1') , document.getElementById('COPYAREA2') );return false;"><img onmouseover="CopyOn(this);" onmouseout="CopyOff(this);" src="/img/type01/cmn/seg/copy_off_bt.gif" width="15" height="15" border="0" alt="COPY"></a></td>
+		_%detail%_
+		_%column1%_
+		_%column2%_
+		_%column3%_
+		_%column4%_
+		_%column5%_
+		_%column6%_
+		_%column7%_
+		_%column8%_
+		_%column9%_
+		_%column10%_
+		_%column11%_
+		_%column12%_
+		_%column13%_
+		_%column14%_
+		_%update%_
+</tr>
 _%tabledata%_
 </table>
 </span>
@@ -60,6 +93,16 @@ _%strHidden%_
 
 <script language=javascript>
 fncShowHidePreload( 1 );
+
+function setHeaderWidth(){
+	var dummy_td = $("#dummy_tr").find("td");
+	var orver_header = $("#SegTitle").find("td");
+	for(var i = 0; i < dummy_td.length; i++){
+		var width = $(dummy_td[i]).width();
+		$(orver_header[i]).width(width);
+	}
+	
+}
 </script>
 
 

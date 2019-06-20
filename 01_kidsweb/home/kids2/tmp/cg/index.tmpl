@@ -8,6 +8,8 @@
 
 <!-- END COMMON LAYOUT FILES -->
 
+<!-- jQuery -->
+<script src="/cmn/jquery/jquery-3.1.0.js"></script>
 
 <!-- START COMMON FILES -->
 <script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
@@ -15,7 +17,7 @@
 <script type="text/vbscript" Language="vbscript" src="/cmn/vbsclass.js"></script>
 <script type="text/vbscript" Language="vbscript" src="/cmn/vbscript.js"></script>
 <script type="text/javascript" language="javascript" src="/cmn/lngcheck.js"></script>
-<script type="text/javascript" language="javascript" src="/cmn/masterlib.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/masterlibAjax.js"></script>
 <link rel="stylesheet" type="text/css" media="screen" href="/cmn/layout.css">
 <link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
 <!-- END COMMON FILES -->
@@ -35,6 +37,7 @@
 </head>
 <body id="CompanyGroupBody" onload="initLayoutCG();">
 
+<form>
 
 <!-- データバインド用オブジェクト -->
 <OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting" WIDTH="0" HEIGHT="0"></OBJECT>
@@ -47,8 +50,6 @@
 <OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting2" WIDTH="0" HEIGHT="0"></OBJECT>
 <Script for="objDataSourceSetting2" event="ondatasetcomplete">subLoadMasterSetting(this.recordset,1);
 </script>
-
-<form>
 
 <!-- ///////// Company & Group Select Window ////////// -->
 <p id="CompanyGroupSet">
@@ -73,11 +74,17 @@
 <span id="selectCompany">
 	<select class="Slt50" name="slctCompany" tabindex="" onChange="
 		// 選択肢、選択グループ一覧削除
-		fncSelectOptionDel(slctGroup1);
-		fncSelectOptionDel(slctGroup2);
+		fncSelectOptionDel(document.forms[0].slctGroup1);
+		fncSelectOptionDel(document.forms[0].slctGroup2);
 
 		// グループ選択肢読み込み
-		subLoadMasterOption( 15, this, slctGroup2, Array(this.value), objDataSourceSetting, 0 );
+		var ajaxObj = subLoadMasterOption( 15, this, slctGroup2, Array(this.value), objDataSourceSetting, 0 );
+		ajaxObj.done(function(data){
+		    // 非同期処理が成功時の処理
+		    subLoadMasterSetting(data,0);
+		}).fail(function(data){
+		    console.log('通信失敗');
+		});
 
 		// ウィンドウ呼び出しもとのフォームに企業名を反映
 		SetCompany( parent.document.forms[0].lngCompanyCode, parent.document.forms[0].strCompanyName, this );
@@ -100,14 +107,14 @@
 
 <!-- 選択グループ反映先リストボックス -->
 <span id="selectGroup1">
-	<select class="Slt50" size="10" name="slctGroup1" tabindex="" multiple>
+	<select class="Slt50" size="10" name="slctGroup1" tabindex="" style="height:150px;" multiple>
 
 	</select>
 </span>
 
 <!-- 選択グループリストボックス -->
 <span id="selectGroup2">
-	<select class="Slt50" size="10" name="slctGroup2" tabindex="" multiple>
+	<select class="Slt50" size="10" name="slctGroup2" tabindex="" style="height:150px;" multiple>
 		_%slctGroup2%_
 	</select>
 </span>
@@ -115,29 +122,34 @@
 
 <!-- リスト項目アップ・ダウンボタン -->
 <span id="ListUpBt" onclick="
-	ListMove( slctGroup1, 'UP' );
-	SetGroup( parent.document.forms[0].lngGroupCode, parent.document.forms[0].strGroupName,slctGroup1 );
+	ListMove( document.forms[0].slctGroup1, 'UP' );
+	SetGroup( parent.document.forms[0].lngGroupCode, parent.document.forms[0].strGroupName,document.forms[0].slctGroup1 );
 	return false;
 	"></span>
 <span id="ListDownBt" onclick="
-	ListMove( slctGroup1, 'DOWN' );
-	SetGroup( parent.document.forms[0].lngGroupCode, parent.document.forms[0].strGroupName,slctGroup1 );
+	ListMove( document.forms[0].slctGroup1, 'DOWN' );
+	SetGroup( parent.document.forms[0].lngGroupCode, parent.document.forms[0].strGroupName,document.forms[0].slctGroup1 );
 	return false;
 "></span>
 
 <!-- リスト項目追加・削除ボタン -->
 <span id="ListAddBt" onclick="
-	fncSelectList(slctGroup2, slctGroup1);
-	SetGroup( parent.document.forms[0].lngGroupCode, parent.document.forms[0].strGroupName,slctGroup1 );
+	fncSelectList(document.forms[0].slctGroup2, document.forms[0].slctGroup1);
+	SetGroup( parent.document.forms[0].lngGroupCode, parent.document.forms[0].strGroupName,document.forms[0].slctGroup1 );
 	return false;
 "></span>
 <span id="ListDelBt" onclick="
-	fncSelectList(slctGroup1, slctGroup2);
-	SetGroup( parent.document.forms[0].lngGroupCode, parent.document.forms[0].strGroupName,slctGroup1 );
+	fncSelectList(document.forms[0].slctGroup1, document.forms[0].slctGroup2);
+	SetGroup( parent.document.forms[0].lngGroupCode, parent.document.forms[0].strGroupName,document.forms[0].slctGroup1 );
 	//fncSelectListDEL(slctGroup1, parent.document.forms[0].strGroupName);
 	return false;
 "></span>
 
+<div id"close_btn_box" style="position: fixed;bottom: 5px;left: 10px;text-align: center;width: 100%;">
+	<span id="SegAClearBt" onclick="window.parent.ShowCompanyGroup( parent.document.getElementById('CompanyGroup') );">
+		<a href="javascript:void(0);"><img  src="/img/type01/cmn/querybt/close_dark_off_ja_bt.gif" width="72" height="20" border="0" alt="閉じる"></a>
+	</span>
+</div>
 
 </form>
 

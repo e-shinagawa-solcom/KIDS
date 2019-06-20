@@ -2209,8 +2209,10 @@ function fncClearIfrm( obj1 , obj2 )
 	strFrm = 'window.'+ obj1.name + '.' + obj2.name + '.reset();';
 	//alert(strFrm);
 
-	window.execScript(strFrm, "JavaScript");
-
+	// window.execScriptはEdge非対応のためevalに換装
+	//window.execScript(strFrm, "JavaScript");
+	eval(strFrm);
+	
 	//ErrMeg.style.visibility = 'hidden' ;
 	//ERmark.style.visibility = 'hidden' ;
 
@@ -3411,6 +3413,46 @@ function fncWFButton( strMode , obj )
 
 		case 'downE':
 			obj.src = wfE3;
+			break;
+
+		default:
+			break;
+	}
+}
+
+
+
+
+
+//---------------------------------------------------
+// 適用：「請求管理」ボタン
+//---------------------------------------------------
+function fncINVButton( strMode , obj )
+{
+	switch( strMode )
+	{
+		case 'offJ':
+			obj.src = invJ1;
+			break;
+
+		case 'onJ':
+			obj.src = invJ2;
+			break;
+
+		case 'offE':
+			obj.src = invE1;
+			break;
+
+		case 'onE':
+			obj.src = invE2;
+			break;
+
+		case 'downJ':
+			obj.src = invJ3;
+			break;
+
+		case 'downE':
+			obj.src = invE3;
 			break;
 
 		default:

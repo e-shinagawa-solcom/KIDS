@@ -75,6 +75,11 @@
 	var wfE2 = '/img/type01/menu/wf_off_on_en_bt.gif';
 	var wfE3 = '/img/type01/menu/wf_on_en_bt.gif';
 
+	///// INV NAVI BT IMAGE /////
+	var invJ1 = '/img/type01/menu/inv_off_ja_bt.gif';
+	var invJ2 = '/img/type01/menu/inv_off_on_ja_bt.gif';
+	var invJ3 = '/img/type01/menu/inv_on_ja_bt.gif';
+
 	///// MM NAVI BT IMAGE /////
 	var mmJ1 = '/img/type01/menu/mm_off_ja_bt.gif';
 	var mmJ2 = '/img/type01/menu/mm_off_on_ja_bt.gif';

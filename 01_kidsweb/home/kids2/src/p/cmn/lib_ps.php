@@ -772,7 +772,7 @@ function fncSetProductViewTable ( $lngColumnCount, $aryResult, $aryViewColumn, $
 					and $aryResult["lngproductstatuscode"] != DEF_PRODUCT_APPLICATE
 				)
 				{
-					$aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/renew_off_bt.gif\" strproductcode=\"" . $aryResult["strproductcode"] . "\" class=\"detail button\"></td>\n";
+					$aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/renew_off_bt.gif\" strproductcode=\"" . $aryResult["strproductcode"] . "\" class=\"fix button\"></td>\n";
 				}
 				else
 				{

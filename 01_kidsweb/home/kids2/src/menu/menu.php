@@ -211,7 +211,15 @@ else
 {
 	$aryData["LCnavi_visibility"] = "hidden";
 }
-
+// 請求管理
+if ( fncCheckAuthority( DEF_FUNCTION_INV0, $objAuth))
+{
+	$aryData["INVnavi_visibility"] = "visible";
+}
+else
+{
+	$aryData["INVnavi_visibility"] = "hidden";
+}
 	// サブメニュー生成
 	$aryData = fncSetSubMenu( $aryData, $objAuth, $objDB );
 

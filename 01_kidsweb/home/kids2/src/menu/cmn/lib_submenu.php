@@ -22,21 +22,29 @@
 		$aryData["lngSubFlag_so_0"]		= 1;	// ¼õÃíÅÐÏ¿
 		$aryData["lngSubFlag_so_1"]		= 1;	// ¼õÃí¸¡º÷
 
-		$aryData["lngSubFlag_po_0"]		= 1;	// È¯ÃíÅÐÏ¿
-		$aryData["lngSubFlag_po_1"]		= 1;	// È¯Ãí¸¡º÷
+		$aryData["lngSubFlag_po_0"]		= 1;	// È¯Ãí¸¡º÷
+		$aryData["lngSubFlag_po_1"]		= 1;	// È¯Ãí½ñ½¤Àµ
 
-		$aryData["lngSubFlag_sc_0"]		= 1;	// Çä¾åÅÐÏ¿
+		$aryData["lngSubFlag_sc_0"]		= 1;	// Çä¾å(Ç¼ÉÊ½ñ)ÅÐÏ¿
 		$aryData["lngSubFlag_sc_1"]		= 1;	// Çä¾å¸¡º÷
+		$aryData["lngSubFlag_sc_2"]		= 1;	// Ç¼ÉÊ½ñ¸¡º÷
 
 		$aryData["lngSubFlag_pc_0"]		= 1;	// »ÅÆþÅÐÏ¿
 		$aryData["lngSubFlag_pc_1"]		= 1;	// »ÅÆþ¸¡º÷
 
 		$aryData["lngSubFlag_wf_0"]		= 1;	// °Æ·ï°ìÍ÷
 		$aryData["lngSubFlag_wf_1"]		= 1;	// °Æ·ï¸¡º÷
+		
+		$aryData["lngSubFlag_inv_0"]	= 1;	// ÀÁµá½ñÈ¯¹Ô
+		$aryData["lngSubFlag_inv_1"]	= 1;	// ÀÁµá½ñ¸¡º÷
+		$aryData["lngSubFlag_inv_2"]	= 1;	// ÀÁµá½¸·×
 
 		$aryData["lngSubFlag_list_0"]	= 1;	// ¾¦ÉÊ²½´ë²è½ñ
 		$aryData["lngSubFlag_list_1"]	= 1;	// È¯Ãí½ñ
 		$aryData["lngSubFlag_list_2"]	= 1;	// ¸«ÀÑ¸¶²Á½ñ
+		$aryData["lngSubFlag_list_3"]	= 1;	// ¶â·¿°ÍÍê½ñ
+		$aryData["lngSubFlag_list_4"]	= 1;	// Ç¼ÉÊÅÁÉ¼
+		$aryData["lngSubFlag_list_5"]	= 1;	// ÀÁµá½ñ
 
 		$aryData["lngSubFlag_mm_0"]		= 1;	// ¶â·¿ÍúÎòÅÐÏ¿
 		$aryData["lngSubFlag_mm_1"]		= 1;	// ¶â·¿ÍúÎò¸¡º÷
@@ -47,6 +55,7 @@
 		$aryData["lngSubFlag_lc_0"]		= 1;	// L/C¾ðÊó
 		$aryData["lngSubFlag_lc_1"]		= 1;	// L/CÀßÄêÊÑ¹¹
 		$aryData["lngSubFlag_lc_2"]		= 1;	// L/CÊÔ½¸
+		$aryData["lngSubFlag_lc_3"]		= 1;	// L/CÄ¢É¼½ÐÎÏ
 
 		// ¥ê¥ó¥¯
 		// ¾¦ÉÊ´ÉÍý
@@ -64,12 +73,13 @@
 		$aryData["lngSubRef_so_1"]		= '/so/search/index.php?strSessionID=' . $aryData["strSessionID"];
 
 		// È¯Ãí´ÉÍý
-		$aryData["lngSubRef_po_0"]		= '/po/regist/index.php?strSessionID=' . $aryData["strSessionID"];
+		$aryData["lngSubRef_po_0"]		= '/po/search/index.php?strSessionID=' . $aryData["strSessionID"];
 		$aryData["lngSubRef_po_1"]		= '/po/search/index.php?strSessionID=' . $aryData["strSessionID"];
 
 		// Çä¾å´ÉÍý
 		$aryData["lngSubRef_sc_0"]		= '/sc/regist/index.php?strSessionID=' . $aryData["strSessionID"];
 		$aryData["lngSubRef_sc_1"]		= '/sc/search/index.php?strSessionID=' . $aryData["strSessionID"];
+		$aryData["lngSubRef_sc_2"]		= '/sc/search/index.php?strSessionID=' . $aryData["strSessionID"];
 
 		// »ÅÆþ´ÉÍý
 		$aryData["lngSubRef_pc_0"]		= '/pc/regist/index.php?strSessionID=' . $aryData["strSessionID"];
@@ -83,6 +93,9 @@
 		$aryData["lngSubRef_list_0"]	= '/list/index.php?strSessionID=' . $aryData["strSessionID"] . '&strListMode=p';
 		$aryData["lngSubRef_list_1"]	= '/list/index.php?strSessionID=' . $aryData["strSessionID"] . '&strListMode=po';
 		$aryData["lngSubRef_list_2"]	= '/list/index.php?strSessionID=' . $aryData["strSessionID"] . '&strListMode=es';
+		$aryData["lngSubRef_list_3"]	= '/list/index.php?strSessionID=' . $aryData["strSessionID"] . '&strListMode=??';
+		$aryData["lngSubRef_list_4"]	= '/list/index.php?strSessionID=' . $aryData["strSessionID"] . '&strListMode=??';
+		$aryData["lngSubRef_list_5"]	= '/list/index.php?strSessionID=' . $aryData["strSessionID"] . '&strListMode=inv';
 
 		// ¶â·¿´ÉÍý
 		$aryData["lngSubRef_mm_0"]		= '/mm/regist/index.php?strSessionID=' . $aryData["strSessionID"];
@@ -94,7 +107,11 @@
 		$aryData["lngSubRef_lc_0"]		= '/lc/info/index.php?strSessionID=' . $aryData["strSessionID"];
 		$aryData["lngSubRef_lc_1"]		= '/lc/set/index.php?strSessionID=' . $aryData["strSessionID"];
 		$aryData["lngSubRef_lc_2"]		= '/lc/mod/index.php?strSessionID=' . $aryData["strSessionID"];
-
+		$aryData["lngSubRef_lc_3"]		= '/lc/list/index.php?strSessionID=' . $aryData["strSessionID"];
+		
+		$aryData["lngSubRef_inv_0"]		= '/inv/regist/index.php?strSessionID=' . $aryData["strSessionID"];
+		$aryData["lngSubRef_inv_1"]		= '/inv/search/index.php?strSessionID=' . $aryData["strSessionID"];
+		$aryData["lngSubRef_inv_2"]		= '/inv/aggregate/index.php?strSessionID=' . $aryData["strSessionID"];
 
 		//-------------------------------------------------------------------------
 		// ¾¦ÉÊ´ÉÍý
@@ -146,13 +163,13 @@
 		//-------------------------------------------------------------------------
 		// È¯Ãí´ÉÍý
 		//-------------------------------------------------------------------------
-		// 501 È¯ÃíÅÐÏ¿
+		// 501 È¯Ãí¸¡º÷
 		if( !fncCheckAuthority( DEF_FUNCTION_PO1, $objAuth ) )
 		{
 			$aryData["lngSubFlag_po_0"] = 0;
 		}
 
-		// 502 È¯Ãí¸¡º÷
+		// 502 È¯Ãí½ñ½¤Àµ
 		if( !fncCheckAuthority( DEF_FUNCTION_PO2, $objAuth ) )
 		{
 			$aryData["lngSubFlag_po_1"] = 0;
@@ -163,7 +180,7 @@
 		//-------------------------------------------------------------------------
 		// Çä¾å´ÉÍý
 		//-------------------------------------------------------------------------
-		// 601 Çä¾åÅÐÏ¿
+		// 601 Çä¾å(Ç¼ÉÊ½ñ)ÅÐÏ¿
 		if( !fncCheckAuthority( DEF_FUNCTION_SC1, $objAuth ) )
 		{
 			$aryData["lngSubFlag_sc_0"] = 0;
@@ -173,6 +190,12 @@
 		if( !fncCheckAuthority( DEF_FUNCTION_SC2, $objAuth ) )
 		{
 			$aryData["lngSubFlag_sc_1"] = 0;
+		}
+		
+		// 603 Ç¼ÉÊ½ñ¸¡º÷
+		if( !fncCheckAuthority( DEF_FUNCTION_SC3, $objAuth ) )
+		{
+			$aryData["lngSubFlag_sc_2"] = 0;
 		}
 		//-------------------------------------------------------------------------
 
@@ -210,6 +233,24 @@
 		}
 		//-------------------------------------------------------------------------
 
+		//-------------------------------------------------------------------------
+		// ÀÁµá´ÉÍý
+		//-------------------------------------------------------------------------
+		// ÀÁµá½ñÈ¯¹Ô
+		if( !fncCheckAuthority( DEF_FUNCTION_INV1, $objAuth ) )
+		{
+			$aryData["lngSubFlag_inv_0"] = 0;
+		}
+		// ÀÁµá½ñ¸¡º÷
+		if( !fncCheckAuthority( DEF_FUNCTION_INV2, $objAuth ) )
+		{
+			$aryData["lngSubFlag_inv_1"] = 0;
+		}
+		// ÀÁµá½¸·×
+		if( !fncCheckAuthority( DEF_FUNCTION_INV3, $objAuth ) )
+		{
+			$aryData["lngSubFlag_inv_2"] = 0;
+		}
 
 		//-------------------------------------------------------------------------
 		// Ä¢É¼½ÐÎÏ
@@ -279,6 +320,11 @@
 		if( !fncCheckAuthority( DEF_FUNCTION_LC3, $objAuth ) )
 		{
 			$aryData["lngSubFlag_lc_2"] = 0;
+		}
+		// L/CÄ¢É¼½ÐÎÏ
+		if( !fncCheckAuthority( DEF_FUNCTION_LC4, $objAuth ) )
+		{
+			$aryData["lngSubFlag_lc_3"] = 0;
 		}
 
 		//-------------------------------------------------------------------------

@@ -27,21 +27,27 @@
 	<iframe id="PreloadFrm" name="PreloadWin" frameborder="0" src="/preload/index.html"></iframe>
 </p>
 
-<span id="KidsLogo"></span>
-<span id="Message">
-	<b>PASSWORD REMINDER :</b><br>
-	メールアドレスを入力して、「SUBMIT」ボタンを押してください。<br>
-	登録ユーザーの入力したメールアドレスに、パスワード認証情報が届きます。
-</span>
-
-<p id="RemindSet">
-<span id="strEmail">Email Address</span>
-<span id="strEmailVars"><input style="ime-mode:disabled;" class="Txt46L" name="strMailAddress" type="text" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="1"></span>
-</p>
-
-<span id="SubmitButton" onclick="fncRemindSubmit( window.frmRemind , document.all.strMailAddress );return false;"></span>
-<span id="CloseButton" onclick="window.close();return false;"></span>
-
+<div id="ContentsArea">
+	<div id="KidsLogo">
+	</div>
+	<div id="EmailArea">
+		<span id="EmailSet">
+			<span id="strEmail">Email Address</span>
+			<span id="strEmailVars"><input style="ime-mode:disabled;" class="Txt46L" name="strMailAddress" type="text" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="1"></span>
+		</span>
+		<span id="SubmitButton" onclick="fncRemindSubmit( window.frmRemind , document.all.strMailAddress );return false;"></span>
+	</div>
+	<div id="RemindSet">
+		<span id="Message">
+			<b>PASSWORD REMINDER :</b><br>
+			メールアドレスを入力して、「SUBMIT」ボタンを押してください。<br>
+			登録ユーザーの入力したメールアドレスに、パスワード認証情報が届きます。
+		</span>
+	</div>
+	<div id="CloseButtonArea">
+		<span id="CloseButton" onclick="javascript:top.window.close();return false;"></span>
+	</div>
+</div>
 </form>
 
 </body>

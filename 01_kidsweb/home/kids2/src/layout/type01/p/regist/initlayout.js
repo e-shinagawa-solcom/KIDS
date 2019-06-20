@@ -452,13 +452,13 @@ function initLayoutP()
 	//-------------------------------------------------------------------------
 	// v2 tomita update
 	//-------------------------------------------------------------------------
-	SegBWF.style.color        = '#ffffff';
-	SegBWF.style.borderColor  = '#cdcdcd #72828b #cdcdcd #cdcdcd';
-	SegBWF.style.background   = 'transparent';
-	VarsBWF.style.borderColor = '#cdcdcd #cdcdcd #cdcdcd #72828b';
-	VarsBWF.style.background  = 'transparent';
+	//SegBWF.style.color        = '#ffffff';
+	//SegBWF.style.borderColor  = '#cdcdcd #72828b #cdcdcd #cdcdcd';
+	//SegBWF.style.background   = 'transparent';
+	//VarsBWF.style.borderColor = '#cdcdcd #cdcdcd #cdcdcd #72828b';
+	//VarsBWF.style.background  = 'transparent';
 
-
+/*
 	var obj = document.PPP2.lngWorkflowOrderCode;
 
 
@@ -478,7 +478,7 @@ function initLayoutP()
 			WFrootBt.innerHTML = darkgrayOpenBt1;
 		}
 	}
-
+*/
 
 	// Debug
 	//WFrootBt.innerHTML = darkgrayOpenBtNotActive;

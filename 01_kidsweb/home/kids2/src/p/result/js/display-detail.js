@@ -2,11 +2,19 @@
 (function(){
     $('img.detail.button').on('click', function(){
         url = '/p/result/index2.php';
-        lngproductno = 'lngProductNo=' + $(this).attr('lngproductno');
+        lngproductno = 'lngProductNo=' + $(this).attr('strproductcode');
         sessionID = 'strSessionID=' + getUrlVars()["strSessionID"];
 
         // 別ウィンドウで表示
         open(url + '?' + lngproductno + '&' + sessionID, 'display-detail', 'resizable=yes, scrollbars=yes, menubar=no');
+    });
+    $('img.fix.button').on('click', function(){
+        url = '/p/regist/renew.php';
+        strProductCode = 'strProductCode=' + $(this).attr('strproductcode');
+        sessionID = 'strSessionID=' + getUrlVars()["strSessionID"];
+
+        // 別ウィンドウで表示
+        open(url + '?' + strProductCode + '&' + sessionID, 'display-detail', 'width=961,height=552,resizable=yes, scrollbars=yes, menubar=no');
     });
 })();
 

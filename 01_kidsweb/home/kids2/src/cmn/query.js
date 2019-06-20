@@ -50,9 +50,8 @@ var g_mainwindow = new Object();
 
 function GoLogin()
 {
-
-	if( typeof(g_mainwindow.name) == 'undefined' ||
-		 typeof(g_mainwindow.name) == 'unknown' )
+	if( !Object.keys(g_mainwindow).length ||
+		 g_mainwindow.closed )
 	{
 		g_mainwindow = window.open( '/login/login.php?value=kids', 'mainWin','width=1001,height=689,status=yes,scrollbars=no,directories=no,menubar=no,resizable=no,location=no,toolbar=no,left=6,top=0' );
 	}
