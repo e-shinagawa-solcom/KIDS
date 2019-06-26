@@ -158,7 +158,7 @@ thead, tbody {
 .form-box__checkbox
 {
     vertical-align: middle;
-    line-height:150px;
+    text-align:right;
 }
 /**
  * 入力フォーム コンテンツ スクロール付
@@ -221,4 +221,5 @@ thead, tbody {
     width:40px;
 
 }
+
 

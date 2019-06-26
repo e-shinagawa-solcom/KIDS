@@ -32,7 +32,7 @@
 /* 入力フォーム共通背景枠 右サイドバータブ無し */
 .form-subbox
 {
-    top: 130px;
+    top: 50px;
     left: 5px;
 	color: #fff;
     width: 930px;
@@ -69,5 +69,5 @@
 }
 
 .form-box-for-button {
-    margin-top: 40px;
+    margin-top: 60px;
 }

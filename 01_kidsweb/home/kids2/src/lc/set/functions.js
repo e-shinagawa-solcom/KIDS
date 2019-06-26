@@ -93,7 +93,7 @@ function setBankInfo(bank_info){
 			"<td><input type='text' class='form-control form-control-sm' name='bankomitname' value='" + data.bankomitname + "' ></td>" + 
 			"<td><input type='text' class='form-control form-control-sm' name='bankformalname' value='" + data.bankformalname + "' ></td>" + 
 			"<td><input type='text' class='form-control form-control-sm' name='bankdivrate' value='" + data.bankdivrate + "' ></td>" + 
-			"<td><input type='checkbox' name='invalidflag' value='1' " + invalidflag + "></td>" + 
+			"<td><input type='checkbox' name='invalidflag' value='1' " + invalidflag + " style='width: 11px;margin-top: 10px;margin-left: 25px;'></td>" + 
 			"</tr>";
 		$("#bank_body").append(html);
 	}
@@ -118,7 +118,7 @@ function setPayfInfo(payf_info){
 			"<td><input type='text' class='form-control form-control-sm' name='payfformalname' value='" + data.payfformalname + "' ></td>" + 
 			"<td><input type='text' class='form-control form-control-sm' name='payfsendname' value='" + data.payfsendname + "' ></td>" + 
 			"<td><input type='text' class='form-control form-control-sm' name='payfsendfax' value='" + data.payfsendfax + "' ></td>" + 
-			"<td><input type='checkbox' name='invalidflag' value='1' " + invalidflag + "></td>" + 
+			"<td><input type='checkbox' name='invalidflag' value='1' " + invalidflag + "  style='width: 11px;margin-top: 10px;margin-left: 35px;'></td>" + 
 			"</tr>";
 		$("#payf_body").append(html);
 	}
