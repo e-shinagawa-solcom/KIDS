@@ -1,0 +1,224 @@
+/* 入力フォーム共通背景枠 右サイドバータブ有り */
+.form-box-warp
+{
+    position: absolute;
+    top: 10px;
+    left: 21px;
+
+    width: 927px;
+    height: 484px;
+
+}
+/* 入力フォーム共通背景枠 右サイドバータブ無し */
+.form-box--notabs-for-search
+{
+    position: absolute;
+    top: 10px;
+    left: 21px;
+
+    width: 950px;
+    height: 530px;
+
+    border-style: solid;
+    border-width: 1px;
+    border-color: #cdcdcd;
+    border-radius: 15px;
+
+    background-color: #d6d0b1;
+}
+
+/* 入力フォーム共通背景枠 右サイドバータブ無し */
+.form-box--notabs
+{
+    position: absolute;
+    top: 10px;
+    left: 31px;
+
+    width: 930px;
+    height: 530px;
+}
+/* 入力フォーム共通背景枠 右サイドバータブ無し */
+.form-box--notabs-for-bank
+{
+    position: relative;
+    width: 930px;
+    height: 190px;
+
+    border-style: solid;
+    border-width: 1px;
+    border-color: #cdcdcd;
+    border-radius: 15px;
+
+    background-color: #d6d0b1;
+}
+.form-box--notabs-for-null
+{
+    height: 5px;
+
+}
+/* 入力フォーム共通背景枠 右サイドバータブ無し */
+.form-box--notabs-for-payf
+{
+    position: relative;
+    width: 930px;
+    height: 260px;
+
+    border-style: solid;
+    border-width: 1px;
+    border-color: #cdcdcd;
+    border-radius: 15px;
+
+    background-color: #d6d0b1;
+}
+
+.form-box--notabs-for-openday
+{
+    position: relative;
+    width: 930px;
+    height: 40px;
+
+    border-style: solid;
+    border-width: 1px;
+    border-color: #cdcdcd;
+    border-radius: 15px;
+
+    background-color: #d6d0b1;
+
+}
+thead, tbody {
+    display: block;
+}
+
+.scroll {
+    overflow-x: hidden;
+    overflow-y: scroll;
+    height: 180px;
+}
+
+.scroll_bank {
+    overflow-x: hidden;
+    overflow-y: scroll;
+    height: 115px;
+}
+    
+.form-box--notabs-for-button
+{
+    position: relative;
+    width: 930px;
+    height: 50px;
+    vertical-align: middle;
+    text-align: right;
+}
+
+.form-box--notabs-for-button > button {
+    margin-bottom: 10px;
+    border-radius: 50px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+    width: 80px;
+    height: 20px;
+    font-size: x-small;
+}
+/* 入力フォーム ヘッダ */
+.form-box__header
+{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+
+    width: 100%;
+    height: 30px;
+
+    background-color: #6c8cac;
+
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+/* 入力フォーム ヘッダタイトル */
+.form-box__header__title
+{
+    margin: 8px 12px;
+
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 12px;
+}
+
+/* 入力フォーム コンテンツ */
+.form-box__contents
+{
+    margin: 40px 10px 20px;
+
+    font-size: 12px;
+    height: auto;
+}
+
+.form-box__checkbox
+{
+    vertical-align: middle;
+    line-height:150px;
+}
+/**
+ * 入力フォーム コンテンツ スクロール付
+ * 検索画面向け
+ */
+.form-box__contents--with-scroll
+{
+    height: 89%;
+    margin: 40px 10px 20px;
+    padding: 3px 10px;
+    border: 1px solid #788787;
+    overflow-y: scroll;
+}
+.form-sub-box__contents-for-payf > div:nth-child(2),
+.form-sub-box__contents-for-payf > div:nth-child(3),
+.form-sub-box__contents-for-payf > div:nth-child(4)
+{
+    height: 50px;
+}
+
+
+.form-sub-box__contents-for-payf > div > button {
+    margin-bottom: 10px;
+    border-radius: 50px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+    width: 80px;
+    height: 20px;
+    font-size: x-small;
+}
+.table-condensed_for-bank > thead > tr > th,
+.table-condensed_for-bank > tbody > tr > th,
+.table-condensed_for-bank > tfoot > tr > th,
+.table-condensed_for-bank > thead > tr > td,
+.table-condensed_for-bank > tbody > tr > td,
+.table-condensed_for-bank > tfoot > tr > td {
+     padding: 3px;  /* 5px の値を変更 */
+     width: 150px;
+ }
+
+.table-condensed_for-payf > thead > tr > th,
+.table-condensed_for-payf > tbody > tr > th,
+.table-condensed_for-payf > tfoot > tr > th,
+.table-condensed_for-payf > thead > tr > td,
+.table-condensed_for-payf > tbody > tr > td,
+.table-condensed_for-payf > tfoot > tr > td {
+    padding: 3px;  /* 5px の値を変更 */
+    width: 125px;
+}
+.form-box--notabs-for-openday > div:nth-child(1)
+{
+    margin-left: 3px;
+
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.form-box--notabs-for-openday > text
+{
+    width:40px;
+
+}
+

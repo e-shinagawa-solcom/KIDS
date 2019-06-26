@@ -1,0 +1,134 @@
+/* 入力フォーム共通背景枠 右サイドバータブ無し */
+.form-box
+{
+    position: absolute;
+    top: 10px;
+    left: 22px;
+
+    width: 948px;
+    height: 540px;
+}
+
+.form-box__main
+{
+    position: relative;
+    top: 0px;
+    left: 0px;
+    width: 948px;
+    height: 510px;
+
+    border-style: solid;
+    border-width: 1px;
+    border-color: #cdcdcd;
+    border-radius: 15px;
+
+    background-color: #d6d0b1;
+}
+.form-box__header
+{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+
+    width: 100%;
+    height: 30px;
+
+    background-color: #6c8cac;
+
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+/* 入力フォーム ヘッダタイトル */
+.form-box__header__title
+{
+    margin: 8px 12px;
+
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 12px;
+}
+
+/* 入力フォーム コンテンツ */
+.form-box__contents
+{
+    margin: 40px 10px 20px;
+    font-size: 12px;
+    height: auto;
+}
+
+.form-box__footer
+{
+    position: relative;
+    left: 21px;
+    width: 950px;
+    height: 30px;
+}
+.form-box__footer > div:nth-child(2)
+{
+    text-align: right;
+}
+.btn-kids
+{
+    margin-bottom: 10px;
+    border-radius: 50px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+    width: 95px;
+    height: 20px;
+    font-size: x-small;
+}
+
+.btn-kids-sm
+{
+    margin-bottom: 10px;
+    border-radius: 50px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+    width: 80px;
+    height: 18px;
+    font-size: x-small;
+}
+
+.block
+{
+    border-style: solid;
+    border-width: 1px;
+    border-color: #798787;
+    background-color: #e8f0f1;
+    color: #666666;
+    height: 25px;
+    padding-top: 1px;
+}
+
+.block > div
+{
+    padding: 2px;
+}
+
+.txt-kids
+{
+    height: 18px;
+    border-color: #798787;
+    padding: 0px;
+    font-size: x-small;
+}
+
+.sel-kids
+{
+    height: 18px;
+    border-color: #798787;
+    padding: 0px;
+}
+
+.block > div > label
+{
+    font-weight: bold;
+}
+
+.required
+{
+    font-weight: bold;
+    color: #0056b3;
+}

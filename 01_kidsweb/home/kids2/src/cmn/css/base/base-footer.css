@@ -1,0 +1,46 @@
+
+.base-footer
+{
+	position : absolute;
+	top: 636px;
+	left: 0;
+
+	width: 980px;
+	height: 35px;
+    background-image: url("/img/type01/cmn/based/footer.gif");
+}
+.control-block {
+    position: absolute;
+    top: 5px;
+    left: 20px;
+    text-align: center;
+}
+
+.control-block > button
+{
+    margin-bottom: 10px;
+    border-radius: 50px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+	width: 100px;
+	height: 20px;
+	font-size: x-small;
+}
+
+
+.control-block > button
+{
+    margin-bottom: 10px;
+    border-radius: 50px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+    width: 90px;
+    height: 20px;
+    font-size: x-small;
+}
+
+.control-block > button:nth-child(3)
+{
+    width: 20px;
+    font-weight: bold;
+}

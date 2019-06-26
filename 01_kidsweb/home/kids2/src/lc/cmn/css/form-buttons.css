@@ -1,0 +1,8 @@
+
+/* フォームボックスヘッダ ボタン */
+.form-box__header__buttons
+{
+    position: absolute;
+    top: 2px;
+    right: 10px;
+}

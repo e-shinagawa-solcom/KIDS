@@ -1,0 +1,699 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="49d4eadf-e609-4ca6-aa8b-0e365865a3da" name="Default" comment="" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="edit.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/m/regist/tr/edit.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2125">
+              <caret line="135" column="69" selection-start-line="135" selection-start-column="69" selection-end-line="135" selection-end-column="69" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="detailMoldHistory.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/mm/detail/detailMoldHistory.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1241">
+              <caret line="73" selection-start-line="72" selection-start-column="4" selection-end-line="73" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="displayModify.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/mm/modify/displayModify.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="782">
+              <caret line="46" column="32" selection-start-line="46" selection-start-column="32" selection-end-line="46" selection-end-column="32" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="confirm.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/m/regist/tr/confirm.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1139">
+              <caret line="77" column="24" selection-start-line="77" selection-start-column="24" selection-end-line="77" selection-end-column="24" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="UtilBussinesscode.class.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/mold/lib/UtilBussinesscode.class.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="680">
+              <caret line="40" column="30" selection-start-line="40" selection-start-column="15" selection-end-line="40" selection-end-column="30" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="lib_m.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/m/cmn/lib_m.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="8636">
+              <caret line="521" selection-start-line="521" selection-end-line="521" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="base-mold-contents.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/lc/cmn/base/css/base-mold-contents.css">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file leaf-file-name="db_common.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/lc/lcModel/db_common.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="476">
+              <caret line="28" column="17" selection-start-line="28" selection-start-column="17" selection-end-line="28" selection-end-column="17" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="lcModelCommon.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/lc/lcModel/lcModelCommon.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-340">
+              <caret line="183" column="16" selection-start-line="183" selection-start-column="16" selection-end-line="183" selection-end-column="16" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/m/result/r/index.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1037">
+              <caret line="71" column="84" selection-start-line="71" selection-start-column="24" selection-end-line="71" selection-end-column="84" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>headerAJ</find>
+      <find>$record</find>
+      <find>DEF_MONETARYCLASS_SHANAI</find>
+    </findStrings>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/m/cmn/functions.js" />
+        <option value="$PROJECT_DIR$/src/m/list/tr/exstr.js" />
+        <option value="$PROJECT_DIR$/src/m/list/tr/index.php" />
+        <option value="$PROJECT_DIR$/src/m/list/r/exstr.js" />
+        <option value="$PROJECT_DIR$/src/m/list/c/m_AccessIPAddress_exstr.js" />
+        <option value="$PROJECT_DIR$/src/m/list/c/m_TemporaryRate_exstr.js" />
+        <option value="$PROJECT_DIR$/src/m/search/tr/exstr.js" />
+        <option value="$PROJECT_DIR$/src/m/search/tr/search.php" />
+        <option value="$PROJECT_DIR$/lib/conf.inc" />
+        <option value="$PROJECT_DIR$/src/m/regist/tr/edit.php" />
+        <option value="$PROJECT_DIR$/src/m/cmn/lib_m1.php" />
+        <option value="$PROJECT_DIR$/src/m/cmn/lib_m.php" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBowerSettings">
+    <node-interpreter value="project" />
+    <bower-package value="" />
+    <bower.json value="" />
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsFlowSettings">
+    <service-enabled>true</service-enabled>
+    <exe-path />
+    <other-services-enabled>true</other-services-enabled>
+    <auto-save>true</auto-save>
+  </component>
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="NodePackageJsonFileManager">
+    <packageJsonPaths />
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP 5.6" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-105" />
+    <option name="y" value="80" />
+    <option name="width" value="1920" />
+    <option name="height" value="1050" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="kids2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="kids2" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="kids2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="kids2" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="kids2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="kids2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="kids2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="kids2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="lc" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="kids2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="kids2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="lc" type="462c0819:PsiDirectoryNode" />
+              <item name="cmn" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="kids2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="kids2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="lc" type="462c0819:PsiDirectoryNode" />
+              <item name="cmn" type="462c0819:PsiDirectoryNode" />
+              <item name="base" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="kids2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="kids2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="lc" type="462c0819:PsiDirectoryNode" />
+              <item name="cmn" type="462c0819:PsiDirectoryNode" />
+              <item name="base" type="462c0819:PsiDirectoryNode" />
+              <item name="css" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="kids2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="kids2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="lc" type="462c0819:PsiDirectoryNode" />
+              <item name="cmn" type="462c0819:PsiDirectoryNode" />
+              <item name="search" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="kids2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="kids2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="lc" type="462c0819:PsiDirectoryNode" />
+              <item name="lcModel" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="kids2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="kids2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="lc" type="462c0819:PsiDirectoryNode" />
+              <item name="select-function" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="kids2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="kids2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="mm" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="kids2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="kids2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="mm" type="462c0819:PsiDirectoryNode" />
+              <item name="detail" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="kids2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="kids2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="mm" type="462c0819:PsiDirectoryNode" />
+              <item name="finish" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="kids2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="kids2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="mm" type="462c0819:PsiDirectoryNode" />
+              <item name="finish" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="kids2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="kids2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="mm" type="462c0819:PsiDirectoryNode" />
+              <item name="modify" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="kids2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="kids2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="mm" type="462c0819:PsiDirectoryNode" />
+              <item name="modify" type="462c0819:PsiDirectoryNode" />
+              <item name="confirm" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="kids2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="kids2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="mm" type="462c0819:PsiDirectoryNode" />
+              <item name="regist" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="kids2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="kids2" type="462c0819:PsiDirectoryNode" />
+              <item name="tmp" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="kids2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="kids2" type="462c0819:PsiDirectoryNode" />
+              <item name="tmp" type="462c0819:PsiDirectoryNode" />
+              <item name="m" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="kids2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="kids2" type="462c0819:PsiDirectoryNode" />
+              <item name="tmp" type="462c0819:PsiDirectoryNode" />
+              <item name="m" type="462c0819:PsiDirectoryNode" />
+              <item name="list" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="kids2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="kids2" type="462c0819:PsiDirectoryNode" />
+              <item name="tmp" type="462c0819:PsiDirectoryNode" />
+              <item name="m" type="462c0819:PsiDirectoryNode" />
+              <item name="list" type="462c0819:PsiDirectoryNode" />
+              <item name="c" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="kids2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="kids2" type="462c0819:PsiDirectoryNode" />
+              <item name="tmp" type="462c0819:PsiDirectoryNode" />
+              <item name="m" type="462c0819:PsiDirectoryNode" />
+              <item name="result" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="kids2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="kids2" type="462c0819:PsiDirectoryNode" />
+              <item name="tmp" type="462c0819:PsiDirectoryNode" />
+              <item name="m" type="462c0819:PsiDirectoryNode" />
+              <item name="search" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="C:/xampp/htdocs/kidsweb" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php.debug" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\solcom\Desktop\Git\KIDS\01_kidsweb\home\kids2\src\m\cmn" />
+      <recent name="C:\Users\solcom\Desktop\Git\KIDS\01_kidsweb\home\kids2\src\m\regist" />
+      <recent name="C:\Users\solcom\Desktop\Git\KIDS\01_kidsweb\home\kids2\src\m\search" />
+      <recent name="C:\Users\solcom\Desktop\Git\KIDS\01_kidsweb\home\kids2\src\m\list\c" />
+      <recent name="C:\Users\solcom\Desktop\Git\KIDS\01_kidsweb\home\kids2\tmp\m\list" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="49d4eadf-e609-4ca6-aa8b-0e365865a3da" name="Default" comment="" />
+      <created>1554863238541</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1554863238541</updated>
+      <workItem from="1554863241009" duration="5827000" />
+      <workItem from="1554945394311" duration="6397000" />
+      <workItem from="1555031825024" duration="2070000" />
+      <workItem from="1556156085056" duration="2690000" />
+      <workItem from="1558315852096" duration="32000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="17016000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-7" y="-7" width="1550" height="848" extended-state="6" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
+      <window_info anchor="right" id="Database" order="3" />
+      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/m/cmn/lib_m1.php" />
+    <entry file="file://$PROJECT_DIR$/src/m/result/r/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1037">
+          <caret line="71" column="84" selection-start-line="71" selection-start-column="24" selection-end-line="71" selection-end-column="84" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/m/cmn/lib_m.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="8653">
+          <caret line="522" lean-forward="true" selection-start-line="522" selection-end-line="522" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/m/list/c/m_TemporaryRate_exstr.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="646">
+          <caret line="38" column="66" selection-start-line="38" selection-start-column="66" selection-end-line="38" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/lib.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="16235">
+          <caret line="955" column="95" selection-start-line="955" selection-start-column="12" selection-end-line="955" selection-end-column="95" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mm/detail/detailMoldHistory.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1241">
+          <caret line="73" selection-start-line="72" selection-start-column="4" selection-end-line="73" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mold/lib/UtilBussinesscode.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="680">
+          <caret line="40" column="30" selection-start-line="40" selection-start-column="15" selection-end-line="40" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/conf.inc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7378">
+          <caret line="434" column="25" selection-start-line="434" selection-start-column="9" selection-end-line="434" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/m/cmn/lib_m.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="25" column="33" selection-start-line="25" selection-start-column="9" selection-end-line="25" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/m/result/tr/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1309">
+          <caret line="87" column="45" selection-start-line="87" selection-start-column="4" selection-end-line="87" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/m/result/r/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1037">
+          <caret line="71" column="84" selection-start-line="71" selection-start-column="24" selection-end-line="71" selection-end-column="84" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/m/regist/tr/edit.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2278">
+          <caret line="134" column="69" selection-start-line="134" selection-start-column="69" selection-end-line="134" selection-end-column="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/m/list/c/m_TemporaryRate_exstr.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="28" selection-start-line="28" selection-end-line="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/m/list/c/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1666">
+          <caret line="108" column="30" selection-start-line="108" selection-start-column="30" selection-end-line="108" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/m/search/tr/exstr.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="22" selection-start-line="22" selection-end-line="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/m/search/tr/functions.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/m/list/c/m_TargetAge_exstr.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3043">
+          <caret line="179" column="54" selection-start-line="179" selection-start-column="46" selection-end-line="179" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/m/regist/tr/edit.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/m/cmn/functions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="45" column="25" lean-forward="true" selection-start-line="45" selection-start-column="25" selection-end-line="45" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/m/list/tr/cmn/layout.css" />
+    <entry file="file://$PROJECT_DIR$/src/m/list/tr/exstr.js" />
+    <entry file="file://$PROJECT_DIR$/tmp/m/list/c/parts.tmpl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-823" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tmp/m/list/parts.tmpl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-446" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tmp/m/list/tr/parts.tmpl" />
+    <entry file="file://$PROJECT_DIR$/src/m/list/r/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1129" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/m/list/c/m_AccessIPAddress_exstr.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-680" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/m/list/tr/index.php" />
+    <entry file="file://$PROJECT_DIR$/src/m/list/r/exstr.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="588">
+          <caret line="218" lean-forward="true" selection-start-line="218" selection-end-line="218" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/m/list/c/m_TargetAge_exstr.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3043">
+          <caret line="179" column="54" selection-start-line="179" selection-start-column="46" selection-end-line="179" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/m/list/c/m_StockSubject_exstr.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3560">
+          <caret selection-end-line="264" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/m/search/tr/exstr.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="22" selection-start-line="22" selection-end-line="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/m/search/tr/search.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="33" column="45" lean-forward="true" selection-start-line="33" selection-start-column="45" selection-end-line="33" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/m/search/tr/functions.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/m/list/c/m_TemporaryRate_exstr.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="646">
+          <caret line="38" column="66" selection-start-line="38" selection-start-column="66" selection-end-line="38" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/m/list/c/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="79" column="25" lean-forward="true" selection-start-line="79" selection-start-column="25" selection-end-line="79" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/m/result/tr/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1309">
+          <caret line="87" column="45" selection-start-line="87" selection-start-column="4" selection-end-line="87" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/conf.inc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7225">
+          <caret line="434" column="25" selection-start-line="434" selection-start-column="9" selection-end-line="434" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/stubs/standard/standard_5.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="291">
+          <caret line="1046" column="9" selection-start-line="1046" selection-start-column="9" selection-end-line="1046" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mm/modify/modifyMoldHistory.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/lib.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="16235">
+          <caret line="955" column="95" selection-start-line="955" selection-start-column="12" selection-end-line="955" selection-end-column="95" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/m/result/r/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1037">
+          <caret line="71" column="84" selection-start-line="71" selection-start-column="24" selection-end-line="71" selection-end-column="84" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mold/lib/UtilBussinesscode.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="680">
+          <caret line="40" column="30" selection-start-line="40" selection-start-column="15" selection-end-line="40" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/m/regist/tr/edit.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2125">
+          <caret line="135" column="69" selection-start-line="135" selection-start-column="69" selection-end-line="135" selection-end-column="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mm/detail/detailMoldHistory.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1241">
+          <caret line="73" selection-start-line="72" selection-start-column="4" selection-end-line="73" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mm/modify/displayModify.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="782">
+          <caret line="46" column="32" selection-start-line="46" selection-start-column="32" selection-end-line="46" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/m/regist/tr/confirm.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1139">
+          <caret line="77" column="24" selection-start-line="77" selection-start-column="24" selection-end-line="77" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/m/cmn/lib_m1.php" />
+    <entry file="file://$PROJECT_DIR$/src/m/cmn/lib_m.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="8636">
+          <caret line="521" selection-start-line="521" selection-end-line="521" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lc/cmn/base/css/base-mold-contents.css">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lc/lcModel/db_common.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="28" column="17" selection-start-line="28" selection-start-column="17" selection-end-line="28" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lc/lcModel/lcModelCommon.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-340">
+          <caret line="183" column="16" selection-start-line="183" selection-start-column="16" selection-end-line="183" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

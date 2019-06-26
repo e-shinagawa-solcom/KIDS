@@ -1,0 +1,101 @@
+
+/* 共通ヘッダ ブロック */
+.base-header
+{
+	position : absolute ;
+	top: 0px;
+	left: 0px;
+
+	width: 980px;
+	height: 86px;
+}
+
+/* 共通ヘッダ 背景画像 */
+.base-header__background-image
+{
+	width: 100%;
+	height: 100%;
+}
+
+/*　共通ヘッダ　画面タイトル 画像　*/
+.base-header__title-label
+{
+	position: absolute;
+	top: 44px;
+	left: 40px;
+	color: white;
+}
+
+/* 共通ヘッダ ユーザーボード　*/
+.base-header__user-board
+{
+	position : absolute;
+	left : 285px;
+	top : 10px;
+
+	width : 680px;
+	height : 70px;
+
+	text-align: right;
+}
+
+/*　共通ヘッダ サムネイルBOX　*/
+.thumbnail-box
+{
+	position : absolute;
+	top: 0px;
+	right: 0px;
+
+	width: 66px;
+	height: 66px;
+}
+
+/* 共通ヘッダ サムネイル背景画像 */
+.thumbnail-box__background-image
+{
+	position : absolute;
+	top: 0px;
+	left: 0px;
+
+	width: 66px;
+	height: 66px;
+}
+/*　共通ヘッダ サムネイル画像　*/
+.thumbnail-box__image
+{
+	position : absolute;
+	top: 7px;
+	left: 7px;
+
+	width: 52px;
+	height: 52px;
+}
+
+/* 共通ヘッダ ログイン情報　*/
+.Login-information
+{
+	position: absolute;
+	top: 6px;
+	right: 80px;
+
+	width: 400px;
+	height: 70px;
+
+	color : #deb6a2 ;
+	font-family : monospace ;
+	font-size : 10px;
+	line-height : 11px ;
+	letter-spacing : -0.5px ;
+	text-align : right ;
+}
+
+/* 共通ヘッダ 各画面毎のタイトル */
+#MainTitle {
+	position : absolute ;
+	left : 44px ;
+	top : 53px ;
+
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}

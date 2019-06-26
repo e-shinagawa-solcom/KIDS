@@ -1,0 +1,24 @@
+
+/* 画面全体の背景色 */
+.background
+{
+	position: relative;
+	background-color: #72828b;
+	margin: 0px;
+	height: 700px;
+	width: 1060px;
+}
+
+.background--noframes
+{
+	background-color: #72828b;
+}
+
+/* 共通ヘッダ/フッタ、コンテンツ全体を含めたマージン */
+/* ロード画面を表示する為、初期は非表示 */
+.margin
+{
+	position: absolute ;
+	margin-top: 10px;
+	margin-left: 10px;
+}

@@ -1,0 +1,73 @@
+/* 入力フォーム共通背景枠 右サイドバータブ無し */
+.form-box
+{
+    position: absolute;
+    top: 5px;
+    left: 20px;
+
+    width: 930px;
+    height: 530px;
+    color: white;
+
+}
+
+.form-box-for-title
+{
+    margin-top: 50px;
+    left: 0px;
+
+    width: 978px;
+    height: 25px;
+    border-style: solid;
+    border-left-width: 0px;
+    border-right-width: 0px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-color: #cdcdcd;
+    background-color: #3868AA ;
+    color: white;
+    text-align: center;
+    font-size: 14px;
+}
+/* 入力フォーム共通背景枠 右サイドバータブ無し */
+.form-subbox
+{
+    top: 130px;
+    left: 5px;
+	color: #fff;
+    width: 930px;
+    height: 150px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #cdcdcd;
+}
+
+.form-box-for-contents{
+
+    top: 10px;
+    left: 5px;
+    height: 120px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #cdcdcd;
+    border-bottom-width: 8px;
+}
+
+.form-box-for-null
+{
+    height: 10px;
+
+}
+.form-subbox > div > button {
+    margin-bottom: 10px;
+    border-radius: 50px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+    width: 100px;
+    height: 20px;
+    font-size: x-small;
+}
+
+.form-box-for-button {
+    margin-top: 40px;
+}

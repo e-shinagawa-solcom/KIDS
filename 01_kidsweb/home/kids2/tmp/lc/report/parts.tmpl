@@ -1,0 +1,245 @@
+<config>
+	<header1>
+		<script src="/lc/cmn/form/js/tab-function.js" defer></script>
+		<script src="/lc/cmn/form/js/util-selectbox.js" defer></script>
+		<!-- チェックボックスの切り替え処理 -->
+		<script src="/lc/cmn/search/js/toggleCheckbox.js" defer></script>
+		<!-- 検索画面共通入力補助 -->
+		<script src="/lc/cmn/search/js/input-assist.js" defer></script>
+		<!-- COOKIE関連の処理(検索画面) -->
+		<script src="/lc/cmn/search/js/cookie-functions.js" defer></script>
+	</header1>
+	<header2>
+	</header2>
+	<header3>
+		<!-- フォームボタン css -->
+		<link rel="stylesheet" href="/lc/cmn/css/form-buttons.css">
+		<!-- フォーム ボタン -->
+		<script src="/lc/cmn/js/form-buttons.js" defer></script>
+		<!-- フォームバリデーション -->
+		<script src="/lc/cmn/js/validate-form.js" defer></script>
+		<!-- マスタ検索呼び出し -->
+		<script src="/lc/cmn/js/invoke-master-search.js" defer></script>
+		<!-- COOKIE 表示チェックボックス 保存/復元 -->
+		<script src="/lc/cmn/js/cookie-display-items.js" defer></script>
+		<!-- キーバインド -->
+		<script src="/lc/cmn/js/key-bind.js" defer></script>
+		<!-- キーバインド -->
+		<script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
+	</header3>
+	<bodyonload>
+		Loading();
+	</bodyonload>
+</config>
+<!-- 個別スクリプト -->
+<link rel="stylesheet" href="css/forms.css">
+<script type="text/javascript" language="javascript" src="/lc/report/functions.js"></script>
+
+<!-- msw表示切替 -->
+<link rel="stylesheet" href="/lc/info/css/msw.css">
+<script src="/lc/cmn/msw/cmn/js/msw.js" defer></script>
+<script src="/cmn/querydata.js" defer></script>
+<!--<script type="text/javascript" language="javascript" src="/lc/report/datepicker.js"></script> -->
+
+<style>
+.modal1-button {
+    height: 19px;
+    width: 20px;
+	margin-top: 2px;
+}
+</style>
+
+<!-- 各画面毎の表示内容 -->
+<!-- 各画面毎の表示内容 -->
+<!-- 左サイドバー ナビゲート -->
+<div class="navigation-loadpoint">
+	<script>
+		$('.navigation-loadpoint').load('/lc/cmn/navigate/lc_navi.html');
+	</script>
+</div>
+<div class="form-box">
+	<div class="form-box__main">
+		<!-- フォームヘッダ -->
+		<div class="form-box__header">
+			<p class="form-box__header__title">L/C情報</p>
+		</div>
+		<!-- フォームコンテンツ -->
+		<div class="form-box__contents">
+			<div class="input-group contents_box mb-1">
+				<div class="col-6 input-group">
+					<div class="content_text input-group condition" style="margin-top: 66px;">
+						<div class="col-3">
+							<input type="checkbox" id="impletterChk" value="1" form="lcReportForm">
+
+						</div>
+						<div class="col-9 ">
+							<label>輸入信用状発行情報</label>
+						</div>
+					</div>
+				</div>
+				<div class="msw-loadpoints">
+					<!-- MSW 支払先マスタ検索 -->
+					<iframe class="msw-payf" src="/lc/cmn/msw/payf/mswpayf.html" frameborder="0">
+					</iframe>
+				</div>
+				<div class="col-5 mt-1">
+					<div class="condition input-group">
+						<div class="col-3">
+							<label class="required">◎</label>
+							<label>オープン月</label>
+						</div>
+						<div class="col-3 input-group">
+							<input type="text" class="form-control form-control-sm txt-kids input_short" id="openYm" form="lcReportForm">
+						</div>
+					</div>
+
+					<div class="condition input-group">
+						<div class="col-3">
+							<label class="required">◎</label>
+							<label>船積月</label>
+						</div>
+						<div class="col-3 input-group">
+							<input type="text" class="form-control form-control-sm txt-kids input_short" id="shipYm" form="lcReportForm">
+						</div>
+					</div>
+
+					<div class="condition input-group">
+						<div class="col-3">
+							<label class="required">◎</label>
+							<label for="payfCode">支払先 </label>
+						</div>
+						<div class="col-2 p-0">
+							<input type="text" class="form-control form-control-sm txt-kids" id="payfCode" name="payfCode" form="lcReportForm" aria-label="..."
+							 aria-describedby="basic-addon4">
+						</div>
+						<div class="col-6 p-0">
+							<input type="text" class="form-control form-control-sm txt-kids" id="payfName" name="payfName" form="lcReportForm" aria-label="..."
+							 aria-describedby="basic-addon4">
+						</div>
+						<div class="input-group-append pl-1 p-0">
+							<img class="msw-button button modal1-button" invokeMSWName="msw-payf" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+						</div>
+					</div>
+					<div class="condition input-group">
+						<div class="col-3">
+							<label class="label_only">銀行名</label>
+						</div>
+						<div class="col-9">
+							<select class="form-control form-control-sm" style="height: 18px;padding: 0px;" id="bankcd" form="lcReportForm">
+							</select>
+						</div>
+					</div>
+					<div class="condition input-group">
+						<div class="col-3">
+							<label class="label_only">L/COPEN</label>
+						</div>
+						<div class="col-9">
+							<select class="form-control form-control-sm" style="height: 18px;padding: 0px;" id="lcopen" form="lcReportForm">
+								<option value="0">ALL</option>
+								<option value="1">既発行</option>
+								<option value="2">未発行</option>
+							</select>
+						</div>
+					</div>
+					<div class="condition input-group">
+						<div class="col-3">
+							<label class="label_only">荷揚地</label>
+						</div>
+						<div class="col-9">
+							<select class="form-control form-control-sm" style="height: 18px;padding: 0px;" id="portplace" form="lcReportForm">
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="input-group contents_box mb-1">
+				<div class="col-6 input-group">
+					<div class="input-group mt-1 mb-1">
+						<div class="col-12 content_text input-group">
+							<div class="col-3" style="margin-top: 60px;">
+								<input type="checkbox" id="setChk" value="1" form="lcReportForm">
+
+							</div>
+							<div class="col-9">
+								<label>L/C Open情報(Beneeficiary・BK別合計)</label>
+								<label>L/C Open月・Beneeficiary別L/C発行予定集計表</label>
+								<label>L/C Open情報(LC別合計)</label>
+								<br>
+								<label>L/C Open情報(LC別明細)</label>
+								<br>
+								<label>船積月・B/K・Beneeficiary別L/C発行高集計表</label>
+								<label>船積月・Beneeficiary別L/C発行高集計表</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-5">
+					<div style="margin-top: 65px;">
+						<div class="condition input-group">
+							<div class="col-3">
+								<label class="required">◎</label>
+								<label>対象年月</label>
+							</div>
+							<div class="col-3 input-group">
+								<input type="text" class="form-control form-control-sm txt-kids input_short" id="objectYm" form="lcReportForm">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="input-group contents_box mb-1">
+				<div class="col-6 input-group">
+					<div class="col-12 condition content_text input-group" style="margin-top: 35px;">
+						<div class="col-3">
+							<input type="checkbox" id="unsetChk" value="1" form="lcReportForm">
+						</div>
+						<div class="col-9">
+							<label>L/C未決済リスト（期間指定）</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-5 mt-1">
+					<div class="condition input-group">
+						<div class="col-3">
+							<label class="required">◎</label>
+							<label>開始年月日</label>
+						</div>
+						<div class="col-4 input-group">
+							<input type="text" class="form-control form-control-sm txt-kids input_short" id="startDate" form="lcReportForm">
+						</div>
+					</div>
+					<div class="condition input-group">
+						<div class="col-3">
+							<label class="required">◎</label>
+							<label>終了年月日</label>
+						</div>
+						<div class="col-4 input-group">
+							<input type="text" class="form-control form-control-sm txt-kids input_short" id="endDate" form="lcReportForm">
+						</div>
+					</div>
+					<div class="condition input-group">
+						<div class="col-3">
+							<label class="required">◎</label>
+							<label>円価換算額</label>
+						</div>
+						<div class="col-4">
+							<input type="text" class="form-control form-control-sm txt-kids input_short" id="rate" form="lcReportForm">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="form-box--notabs-for-button mt-1">
+		<div class="col-4 mt-1">
+			<!-- 戻る -->
+			<button type="button" class="btn btn-light btn-xs btn-kids-sm" id="returnBtn" form="lcReportForm" onClick="returnBtn();">戻る</button>
+		</div>
+		<div class="col-8 mt-1">
+			<!-- 印刷 -->
+			<button type="button" class="btn btn-light btn-xs btn-kids-sm" id="printBtn" form="lcReportForm" onClick="printBtn();">印刷</button>
+			<!-- クリア -->
+			<button type="button" class="btn btn-light btn-xs btn-kids-sm" id="releaseBtn" form="lcReportForm" onClick="clearBtn();">クリア</button>
+		</div>
+	</div>
+</div>
