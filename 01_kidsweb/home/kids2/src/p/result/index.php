@@ -51,7 +51,6 @@
 	$from = UtilSearchForm::extractArrayByFrom($_REQUEST);
 	$to = UtilSearchForm::extractArrayByTo($_REQUEST);
 	$searchValue = $_REQUEST;
-	
 	$isDisplay=array_keys($isDisplay);
 	$isSearch=array_keys($isSearch);
 	$aryData['ViewColumn']=$isDisplay;
@@ -65,7 +64,6 @@
 	foreach($searchValue as $key=> $item){
 		$aryData[$key]=$item;
 	}
-	
 	
 	// 検索表示項目取得
 	if(empty($isDisplay))

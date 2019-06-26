@@ -37,10 +37,10 @@
 <header3>
 <script type="text/javascript" language="javascript" src="/pc/cmn/subloadmastersettings.js"></script>
 <script type="text/javascript" language="javascript" src="/pc/regist/functions.js"></script>
-<script type="text/javascript" language="javascript" src="/pc/regist/exstr.js"></script>
+<!-- <script type="text/javascript" language="javascript" src="/pc/regist/exstr.js"></script> -->
 <link rel="stylesheet" type="text/css" media="screen" href="_%strCssName%_">
 <link rel="stylesheet" type="text/css" media="screen" href="_%strErrorCssName%_">
-<script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
+<!-- <script type="text/javascript" language="javascript" src="/cmn/languages.js"></script> -->
 <script type="text/javascript" language="javascript">
 
 	function fncPOSubmit( obj )
@@ -139,8 +139,8 @@
 	// 発注番号から引き当て
 	function fncOrderSubmit()
 	{
-		var lngLangCode = lngLanguageCode;
-		var strAlert    = ( lngLangCode == 1 ) ? '発注番号を入力してください。': 'Input the order code.';
+		// var lngLangCode = lngLanguageCode;
+		var strAlert    = '発注番号を入力してください。';
 		var strCode     = trim( document.HSO.strOrderCode.value );
 
 		if( strCode != "" )
@@ -161,7 +161,8 @@
 
 
 <bodyonload>
-initLayoutBase();initLayoutPC();initLayoutQuery();initLayoutMsw();initLayoutPunit();initLayoutDate();autoFocus1();initLayoutError1( ErrInputA );initLayoutError2( ErrInputB );fncRegistrationConfirm( window.HSO , window.DSO , '/result/common.html' , '/result/regist_ifrm.html' , 'ResultIframeRenew' , 'NO' , _%lngLanguageCode%_ , document.all.lngRegistConfirm.value );fncDetailErrorOpen( '_%strDetailError%_' );GetlngLanguageCode( _%lngLanguageCode%_ );fncDetailErrorOpen( '_%strErrorMessage%_' );Loading();
+initLayoutBase();initLayoutPC();initLayoutQuery();initLayoutMsw();initLayoutPunit();initLayoutDate();autoFocus1();initLayoutError1( ErrInputA );initLayoutError2( ErrInputB );fncRegistrationConfirm( window.HSO , window.DSO , '/result/common.html' , '/result/regist_ifrm.html' , 'ResultIframeRenew' , 'NO' , _%lngLanguageCode%_ , document.all.lngRegistConfirm.value );fncDetailErrorOpen( '_%strDetailError%_' );fncDetailErrorOpen( '_%strErrorMessage%_' );Loading();
+<!-- GetlngLanguageCode( _%lngLanguageCode%_ ); -->
 </bodyonload>
 </config>
 
@@ -275,15 +276,16 @@ initLayoutBase();initLayoutPC();initLayoutQuery();initLayoutMsw();initLayoutPuni
 <!-- END BOTTOM -->
 
 <!-- START QUERY BUTTON -->
-<span id="SegAClearBt" onclick="fncResetFrm( window.HSO );"></span>
+<!-- <span id="SegAClearBt" onclick="fncResetFrm( window.HSO );"></span> -->
+<span id="RegistBt" onclick="fncPOSubmit( document.DSO.lngWorkflowOrderCode ); return false;"></span>
 <!-- END QUERY BUTTON -->
 
 
 <!-- START SEGMENTS -->
-<span id="SegA01">計上日</span>
+<span id="SegA01">仕入日</span>
 <span id="SegA14">仕入ＮＯ．</span>
-<span id="SegA02">発注ＮＯ．</span>
-<span id="SegA15">伝票コード</span>
+<span id="SegA02">発注書ＮＯ．</span>
+<span id="SegA15">納品書ＮＯ．</span>
 <span id="SegA03">仕入先</span>
 
 
@@ -295,19 +297,19 @@ initLayoutBase();initLayoutPC();initLayoutQuery();initLayoutMsw();initLayoutPuni
 
 
 <span id="SegA11">納品場所</span>
-<span id="SegA12">発注有効期限日</span>
+<span id="SegA12">製品到着日</span>
 <span id="SegA13">備考</span>
 <span id="SegA06">状態</span>
 <span id="SegA07">通貨</span>
 <span id="SegA08">レートタイプ</span>
-<span id="SegA09">換算レート</span>
+<span id="SegA09">適用レート</span>
 <span id="SegA10">支払条件</span>
 <!-- END SEGMENTS -->
 
 
 <!-- START VARS -->
 
-<!-- 計上日 -->
+<!-- 仕入日 -->
 <span id="VarsA01">
 	<input style="ime-mode:disabled;" class="Txt10L" type="text" name="dtmOrderAppDate" value="_%dtmOrderAppDate%_" maxlength="10" 
 		onfocus="chColorOn(this);" 
@@ -323,7 +325,7 @@ initLayoutBase();initLayoutPC();initLayoutQuery();initLayoutMsw();initLayoutPuni
 </span>
 
 
-<!-- 発注ＮＯ． -->
+<!-- 発注書ＮＯ． -->
 <span id="VarsA02">
 	<input style="ime-mode:disabled;" class="Txt10L" type="text" name="strOrderCode" value="_%strOrderCode%_" maxlength="10" 
 		onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="3" _%strOrderCode_Editable%_>-&nbsp;<input class="disTxt02L" type="text" name="strReviseCode" value="_%strReviseCode%_" maxlength="2" contenteditable="false">
@@ -418,7 +420,7 @@ initLayoutBase();initLayoutPC();initLayoutQuery();initLayoutMsw();initLayoutPuni
 </span>
 
 
-<!-- 換算レート -->
+<!-- 適用レート -->
 <span id="VarsA09">
 	<input style="ime-mode:disabled;" class="TxtStyle04R" type="text" name="curConversionRate" value="_%curConversionRate%_" size="7" maxlength="7" 
 		onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckNumber( this , 6 , false );" tabindex="15" contentEditable="false">
@@ -435,7 +437,8 @@ initLayoutBase();initLayoutPC();initLayoutQuery();initLayoutMsw();initLayoutPuni
 
 
 <!-- START [SUPPLIER] BUTTON -->
-<span id="MSWBt08" onclick="fncGetObjectName( window.SUPwin , lngCustomerCode , strCustomerName );DisplayerM08( '' , document.all.Mdata08 , window.SUPwin.document.all.strCustomerCode  );ExchangeM08( 0 , window.self );fncFocusType( window.SUPwin , 'supplierTop' );return false;"></span>
+<span id="MSWBt08" onclick="DisplayerM08( '' , document.all.Mdata08 , window.SUPwin.document.all.strCustomerCode  );ExchangeM08( 0 , window.self );fncFocusType( window.SUPwin , 'supplierTop' );return false;"></span>
+<!-- fncGetObjectName( window.SUPwin , lngCustomerCode , strCustomerName ); -->
 <!-- END [SUPPLIER] BUTTON -->
 
 
@@ -447,7 +450,8 @@ END [DEPT & IN CHARGE NAME] BUTTON -->
 
 
 <!-- START [LOCATION] BUTTON -->
-<span id="MSWBt04" onclick="fncGetObjectName( window.MLwin , lngLocationCode , strLocationName );DisplayerM04( '' , document.all.Mdata04 , window.MLwin.document.all.strLocationCode  );ExchangeM04( 0 , window.self );fncFocusType( window.MLwin , 'locationTop' );return false;"></span>
+<span id="MSWBt04" onclick="DisplayerM04( '' , document.all.Mdata04 , window.MLwin.document.all.strLocationCode  );ExchangeM04( 0 , window.self );fncFocusType( window.MLwin , 'locationTop' );return false;"></span>
+<!-- fncGetObjectName( window.MLwin , lngLocationCode , strLocationName ); -->
 <!-- END [LOCATION] BUTTON -->
 
 <!-- START DATE BUTTON -->
@@ -462,7 +466,7 @@ END [DEPT & IN CHARGE NAME] BUTTON -->
 <span id="DtHiddenRecord"></span>
 
 <!-- 発注データ読み込みボタン -->
-<span id="DataOpenBt" onclick="_%OrderSubmit%_return false;"></span>
+<span id="DataOpenBt" onclick="_%OrderSubmit%_　return false;"></span>
 
 
 <!-- 直登録フラグ -->
@@ -470,6 +474,7 @@ END [DEPT & IN CHARGE NAME] BUTTON -->
 <!-- 権限グループフラグ -->
 <input type="hidden" name="lngAuthorityGroupFlag" value="_%lngAuthorityGroupFlag%_">
 </p>
+
 <!-- //////////////////////////////////// END INPUT A SEGMENTS //////////////////////////////////// -->
 
 
@@ -514,7 +519,7 @@ _%strDetailHidden%_
 <span id="AddRowBt" onclick="window.DLwin.fncDtAddRecord();   subLoadMasterHidden('caMonetaryUnitStockSubject', 0, document.all.check_alert, Array ( document.all.HSO.lngMonetaryUnitCode.value, strStockSubjectCode.value ), objDataSourceSettingCheckAlert, 20);return false;" style="visibility:_%adddelrowview%_"></span>
 <span id="DelRowBt" onclick="window.DLwin.fncDtDelRecord();return false;" style="visibility:_%adddelrowview%_"></span>
 <span id="CommitBt" onclick="window.DLwin.fncDtCommitRecord();subLoadMasterHidden('caMonetaryUnitStockSubject', 0, document.all.check_alert, Array ( document.all.HSO.lngMonetaryUnitCode.value, strStockSubjectCode.value ), objDataSourceSettingCheckAlert, 20);return false;"></span>
-<span id="RegistBt" onclick="fncPOSubmit( document.DSO.lngWorkflowOrderCode ); return false;"></span>
+<!-- <span id="RegistBt" onclick="fncPOSubmit( document.DSO.lngWorkflowOrderCode ); return false;"></span> -->
 <!-- *v1* <span id="RegistBt" onclick="window.DLwin.fncDtRegistRecord();return false;"></span> -->
 <span id="SegBClearBt" onclick="fncResetFrm( window.DSO );window.DLwin.fncDtClearRecord();return false;"></span>
 <!-- END QUERY BUTTON -->
@@ -761,7 +766,7 @@ _%strDetailHidden%_
 
 
 <!-- START [PRODUCTS] BUTTON -->
-<span id="MSWBt03" onclick="_%blnBtnEditable%_ fncGetObjectName( window.MGwin , strProductCode , strProductName );DisplayerM03( '' , document.all.Mdata03 , window.MGwin.document.all.strProductCode  );ExchangeM03( 0 , window.self );fncFocusType( window.MGwin , 'productsTop' );return false;"></span>
+<span id="MSWBt03" onclick="_%blnBtnEditable%_. fncGetObjectName( window.MGwin , strProductCode , strProductName );DisplayerM03( '' , document.all.Mdata03 , window.MGwin.document.all.strProductCode  );ExchangeM03( 0 , window.self );fncFocusType( window.MGwin , 'productsTop' );return false;"></span>
 <!-- END [PRODUCTS] BUTTON -->
 
 <!-- START PACKING UNIT BUTTON -->
@@ -845,6 +850,8 @@ _%strDetailHidden%_
 
 
 <!-- //////////////////////////////////// START INPUT C SEGMENTS //////////////////////////////////// -->
+
+<!-- Detale下部明細一覧 -->
 <p id="InputC">
 
 <!-- START BODYS -->
@@ -966,8 +973,8 @@ _%strDetailHidden%_
 
 
 <!-- //////////////////////////////////// START TAB //////////////////////////////////// -->
-<span id="TabA"></span>
-<span id="TabB"></span>
+<!-- <span id="TabA"></span>
+<span id="TabB"></span> -->
 <!-- ///////////////////////////////////// END TAB ///////////////////////////////////// -->
 
 
@@ -984,7 +991,7 @@ _%strDetailHidden%_
 
 
 <!-- //////////////////////////////////// START E TO J //////////////////////////////////// -->
-<span id="EtoJ" style="visibility:_%strBaseVisibilityName%_;"></span>
+<!-- <span id="EtoJ" style="visibility:_%strBaseVisibilityName%_;"></span> -->
 <!-- ///////////////////////////////////// END E TO J ///////////////////////////////////// -->
 
 

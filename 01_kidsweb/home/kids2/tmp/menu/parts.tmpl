@@ -14,7 +14,7 @@
 <header3>
 <link rel="stylesheet" type="text/css" media="screen" href="/menu/layout.css">
 <script type="text/javascript" language="javascript" src="/menu/exstr.js"></script>
-<script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
+<!-- <script type="text/javascript" language="javascript" src="/cmn/languages.js"></script> -->
 <script type="text/javascript" language="javascript" src="/menu/cmn/menu.js"></script>
 
 	<style type="text/css">
@@ -89,15 +89,16 @@ initLayoutBase();initLayoutSegs( Navi1 , Navi2 );initLayoutNavi(); clsSubMenu( d
 
 
 <p id="Navi1">
-	<span id="Pnavi"  style="visibility:_%Pnavi_visibility%_;"  onclick="location.href = '/p/search/index.php?strSessionID=_%strSessionID%_'"></span>
+	<span id="Pnavi"  style="visibility:_%Pnavi_visibility%_;"  onmouseover="fncShowSubMenu( 'p' ); return false;" onclick="setMenu_P();  return false;"></span>
 	<span id="ESnavi" style="visibility:_%Enavi_visibility%_;"  onmouseover="fncShowSubMenu( 'es' ); return false;" onclick="setMenu_E();  return false;"></span>
-	<span id="SOnavi" style="visibility:_%SOnavi_visibility%_;" onclick="location.href = '/so/search/index.php?strSessionID=_%strSessionID%_'"></span>
-	<span id="POnavi" style="visibility:_%POnavi_visibility%_;" onclick="location.href = '/po/search/index.php?strSessionID=_%strSessionID%_'"></span>
-	<span id="SCnavi" style="visibility:_%SCnavi_visibility%_;" onclick="location.href = '/sc/search/index.php?strSessionID=_%strSessionID%_'"></span>
-	<span id="PCnavi" style="visibility:_%PCnavi_visibility%_;" onclick="location.href = '/pc/search/index.php?strSessionID=_%strSessionID%_'"></span>
+	<span id="SOnavi" style="visibility:_%SOnavi_visibility%_;" onmouseover="fncShowSubMenu( 'so' ); return false;" onclick="setMenu_SO();  return false;"></span>
+	<span id="POnavi" style="visibility:_%POnavi_visibility%_;" onmouseover="fncShowSubMenu( 'po' ); return false;" onclick="setMenu_PO();  return false;"></span>
+	<span id="SCnavi" style="visibility:_%SCnavi_visibility%_;" onmouseover="fncShowSubMenu( 'sc' ); return false;" onclick="setMenu_SC();  return false;"></span>
+	<span id="PCnavi" style="visibility:_%PCnavi_visibility%_;" onmouseover="fncShowSubMenu( 'pc' ); return false;" onclick="setMenu_PC();  return false;"></span>
 </p>
 
 <p id="Navi2">
+	<span id="INVnavi"   style="visibility:_%INVnavi_visibility%_;" onmouseover="fncShowSubMenu( 'inv' ); return false;" onclick="setMenu_INV(); return false;"></span>
 	<span id="LISTnavi"   style="visibility:_%LOnavi_visibility%_;" onmouseover="fncShowSubMenu( 'list' ); return false;" onclick="setMenu_LIST(); return false;"></span>
 	<span id="DATAEXnavi" style="visibility:_%DEnavi_visibility%_;" onclick="setMenu_DATAEX(); return false;"></span>
 	<span id="MMnavi"   style="visibility:_%MMnavi_visibility%_;" onmouseover="fncShowSubMenu( 'mm' ); return false;" onclick="setMenu_MM(); return false;"></span>
@@ -150,6 +151,7 @@ initLayoutBase();initLayoutSegs( Navi1 , Navi2 );initLayoutNavi(); clsSubMenu( d
 	<!-- Çä¾å´ÉÍý -->
 	<input type="hidden" name="lngSubFlag_sc_0" value="_%lngSubFlag_sc_0%_">
 	<input type="hidden" name="lngSubFlag_sc_1" value="_%lngSubFlag_sc_1%_">
+	<input type="hidden" name="lngSubFlag_sc_2" value="_%lngSubFlag_sc_2%_">
 
 	<!-- »ÅÆþ´ÉÍý -->
 	<input type="hidden" name="lngSubFlag_pc_0" value="_%lngSubFlag_pc_0%_">
@@ -159,10 +161,18 @@ initLayoutBase();initLayoutSegs( Navi1 , Navi2 );initLayoutNavi(); clsSubMenu( d
 	<input type="hidden" name="lngSubFlag_wf_0" value="_%lngSubFlag_wf_0%_">
 	<input type="hidden" name="lngSubFlag_wf_1" value="_%lngSubFlag_wf_1%_">
 
+	<!-- ÀÁµá½ñ -->
+	<input type="hidden" name="lngSubFlag_inv_0" value="_%lngSubFlag_inv_0%_">
+	<input type="hidden" name="lngSubFlag_inv_1" value="_%lngSubFlag_inv_1%_">
+	<input type="hidden" name="lngSubFlag_inv_2" value="_%lngSubFlag_inv_2%_">
+
 	<!-- Ä¢É¼½ÐÎÏ -->
 	<input type="hidden" name="lngSubFlag_list_0" value="_%lngSubFlag_list_0%_">
 	<input type="hidden" name="lngSubFlag_list_1" value="_%lngSubFlag_list_1%_">
 	<input type="hidden" name="lngSubFlag_list_2" value="_%lngSubFlag_list_2%_">
+	<input type="hidden" name="lngSubFlag_list_3" value="_%lngSubFlag_list_3%_">
+	<input type="hidden" name="lngSubFlag_list_4" value="_%lngSubFlag_list_4%_">
+	<input type="hidden" name="lngSubFlag_list_5" value="_%lngSubFlag_list_5%_">
 
 	<!-- ¶â·¿´ÉÍý -->
 	<input type="hidden" name="lngSubFlag_mm_0" value="_%lngSubFlag_mm_0%_">
@@ -176,6 +186,7 @@ initLayoutBase();initLayoutSegs( Navi1 , Navi2 );initLayoutNavi(); clsSubMenu( d
 	<input type="hidden" name="lngSubFlag_lc_0" value="_%lngSubFlag_lc_0%_">
 	<input type="hidden" name="lngSubFlag_lc_1" value="_%lngSubFlag_lc_1%_">
 	<input type="hidden" name="lngSubFlag_lc_2" value="_%lngSubFlag_lc_2%_">
+	<input type="hidden" name="lngSubFlag_lc_3" value="_%lngSubFlag_lc_3%_">
 
 	<!-- ¥µ¥Ö¥á¥Ë¥å¡¼¡¦RefÊ¸»úÎó -->
 	<!-- ¾¦ÉÊ´ÉÍý -->
@@ -198,6 +209,7 @@ initLayoutBase();initLayoutSegs( Navi1 , Navi2 );initLayoutNavi(); clsSubMenu( d
 	<!-- Çä¾å´ÉÍý -->
 	<input type="hidden" name="lngSubRef_sc_0" value="_%lngSubRef_sc_0%_">
 	<input type="hidden" name="lngSubRef_sc_1" value="_%lngSubRef_sc_1%_">
+	<input type="hidden" name="lngSubRef_sc_2" value="_%lngSubRef_sc_2%_">
 
 	<!-- »ÅÆþ´ÉÍý -->
 	<input type="hidden" name="lngSubRef_pc_0" value="_%lngSubRef_pc_0%_">
@@ -207,10 +219,18 @@ initLayoutBase();initLayoutSegs( Navi1 , Navi2 );initLayoutNavi(); clsSubMenu( d
 	<input type="hidden" name="lngSubRef_wf_0" value="_%lngSubRef_wf_0%_">
 	<input type="hidden" name="lngSubRef_wf_1" value="_%lngSubRef_wf_1%_">
 
+	<!-- ÀÁµá½ñ -->
+	<input type="hidden" name="lngSubRef_inv_0" value="_%lngSubRef_inv_0%_">
+	<input type="hidden" name="lngSubRef_inv_1" value="_%lngSubRef_inv_1%_">
+	<input type="hidden" name="lngSubRef_inv_2" value="_%lngSubRef_inv_2%_">
+
 	<!-- Ä¢É¼½ÐÎÏ -->
 	<input type="hidden" name="lngSubRef_list_0" value="_%lngSubRef_list_0%_">
 	<input type="hidden" name="lngSubRef_list_1" value="_%lngSubRef_list_1%_">
 	<input type="hidden" name="lngSubRef_list_2" value="_%lngSubRef_list_2%_">
+	<input type="hidden" name="lngSubRef_list_3" value="_%lngSubRef_list_3%_">
+	<input type="hidden" name="lngSubRef_list_4" value="_%lngSubRef_list_4%_">
+	<input type="hidden" name="lngSubRef_list_5" value="_%lngSubRef_list_5%_">
 
 	<!-- ¶â·¿´ÉÍý -->
 	<input type="hidden" name="lngSubRef_mm_0" value="_%lngSubRef_mm_0%_">
@@ -224,3 +244,4 @@ initLayoutBase();initLayoutSegs( Navi1 , Navi2 );initLayoutNavi(); clsSubMenu( d
 	<input type="hidden" name="lngSubRef_lc_0" value="_%lngSubRef_lc_0%_">
 	<input type="hidden" name="lngSubRef_lc_1" value="_%lngSubRef_lc_1%_">
 	<input type="hidden" name="lngSubRef_lc_2" value="_%lngSubRef_lc_2%_">
+	<input type="hidden" name="lngSubRef_lc_3" value="_%lngSubRef_lc_3%_">

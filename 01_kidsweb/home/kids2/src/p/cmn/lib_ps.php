@@ -772,7 +772,7 @@ function fncSetProductViewTable ( $lngColumnCount, $aryResult, $aryViewColumn, $
 					and $aryResult["lngproductstatuscode"] != DEF_PRODUCT_APPLICATE
 				)
 				{
-					$aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/renew_off_bt.gif\" strproductcode=\"" . $aryResult["strproductcode"] . "\" class=\"detail button\"></td>\n";
+					$aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/renew_off_bt.gif\" strproductcode=\"" . $aryResult["strproductcode"] . "\" class=\"renew button\"></td>\n";
 				}
 				else
 				{
@@ -788,7 +788,7 @@ function fncSetProductViewTable ( $lngColumnCount, $aryResult, $aryViewColumn, $
 					and $aryResult["lngproductstatuscode"] != DEF_PRODUCT_APPLICATE
 				)
 				{
-					$aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/remove_off_bt.gif\" lngproductno=\"" . $aryResult["lngproductno"] . "\" class=\"detail button\"></td>\n";
+					$aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/remove_off_bt.gif\" lngproductno=\"" . $aryResult["lngproductno"] . "\" class=\"delete button\"></td>\n";
 				}
 				else
 				{

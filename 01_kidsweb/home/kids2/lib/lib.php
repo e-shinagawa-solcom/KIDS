@@ -1233,14 +1233,18 @@ function fncGetReplacedHtml( $strTemplatePath, $aryPost, $objAuth )
 	if ( $aryPost["RENEW"] == TRUE )
 	{
 		$aryPost["strBaseVisibilityName"] = "hidden";
+		$aryPost["strBaseDisplayName"] = "none";
 		$aryBaseInsert["strBaseVisibilityName"] = "hidden";
+		$aryBaseInsert["strBaseDisplayName"] = "none";
 		$aryBaseInsert["strCssName"]            = "renewlayout.css";
 		$aryBaseInsert["strErrorCssName"]       = "renewerrorlayout.css";
 	}
 	else
 	{
 		$aryPost["strBaseVisibilityName"] = "visible";
+		$aryPost["strBaseDisplayName"] = "block";
 		$aryBaseInsert["strBaseVisibilityName"] = "visible";
+		$aryBaseInsert["strBaseDisplayName"] = "block";
 		$aryBaseInsert["strCssName"]            = "layout.css";
 		$aryBaseInsert["strErrorCssName"]       = "errorlayout.css";
 	}
@@ -1344,14 +1348,18 @@ function fncGetReplacedHtmlWithBase($strBaseTemplate, $strTemplatePath, $aryPost
 	if ( $aryPost["RENEW"] == TRUE )
 	{
 		$aryPost["strBaseVisibilityName"] = "hidden";
+		$aryPost["strBaseDisplayName"] = "none";
 		$aryBaseInsert["strBaseVisibilityName"] = "hidden";
+		$aryBaseInsert["strBaseDisplayName"] = "none";
 		$aryBaseInsert["strCssName"]            = "renewlayout.css";
 		$aryBaseInsert["strErrorCssName"]       = "renewerrorlayout.css";
 	}
 	else
 	{
 		$aryPost["strBaseVisibilityName"] = "visible";
+		$aryPost["strBaseDisplayName"] = "block";
 		$aryBaseInsert["strBaseVisibilityName"] = "visible";
+		$aryBaseInsert["strBaseDisplayName"] = "block";
 		$aryBaseInsert["strCssName"]            = "layout.css";
 		$aryBaseInsert["strErrorCssName"]       = "errorlayout.css";
 	}

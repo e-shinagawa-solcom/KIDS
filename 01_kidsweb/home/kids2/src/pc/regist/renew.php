@@ -50,7 +50,7 @@
 	// ■ パラメータ取得
 	//-------------------------------------------------------------------------
 	$aryData["strSessionID"]    = $_REQUEST["strSessionID"];
-	$aryData["lngLanguageCode"] = $_COOKIE["lngLanguageCode"];
+	// $aryData["lngLanguageCode"] = $_COOKIE["lngLanguageCode"];
 
 
 

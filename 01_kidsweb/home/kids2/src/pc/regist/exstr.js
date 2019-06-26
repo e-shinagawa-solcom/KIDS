@@ -1,4 +1,4 @@
-<!--
+
 
 
 function ChgEtoJ()
@@ -171,15 +171,15 @@ function ChgEtoJ()
 		///// INPUT A /////
 		SegAHeader.innerHTML = headerAJ;
 
-		SegA01.innerHTML = '計上日';
-		SegA02.innerHTML = '発注ＮＯ．';
+		SegA01.innerHTML = '仕入日';
+		SegA02.innerHTML = '発注書ＮＯ．';
 		SegA03.innerHTML = '<span class="CheckMark">◎</span>仕入先';
 		// *v1* SegA04.innerHTML = '<span class="CheckMark">◎</span>部門';
 		// *v1* SegA05.innerHTML = '<span class="CheckMark">◎</span>担当者';
 		SegA06.innerHTML = '状態';
 		SegA07.innerHTML = '通貨';
 		SegA08.innerHTML = 'レートタイプ';
-		SegA09.innerHTML = '換算レート';
+		SegA09.innerHTML = '適用レート';
 		SegA10.innerHTML = '支払条件';
 		SegA11.innerHTML = '<span class="CheckMark">◎</span>納品場所';
 		SegA12.innerHTML = '製品到着日';

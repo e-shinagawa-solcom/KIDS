@@ -205,7 +205,7 @@
 	$strQuery = fncGetSearchStockSQL( $aryViewColumn, $arySearchColumn, $aryData, $objDB, "", 0, FALSE );
 	// 値をとる =====================================
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
-
+	
 	if ( $lngResultNum )
 	{
 		// 検索件数が指定数以上の場合エラーメッセージを表示する

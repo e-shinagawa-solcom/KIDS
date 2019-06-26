@@ -25,12 +25,21 @@
 {
     margin-top: 20px;
     margin-left: 9px;
-    margin-bottom: 50px;
 }
 
-.function-group > img:nth-child(1)
+.function-group > img
 {
     margin-bottom: 10px;
+}
+
+.OneLine
+{
+    margin-top: 25px;
+}
+
+.FourLine
+{
+    margin-top: 100px;
 }
 
 .other-function

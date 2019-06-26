@@ -1,3 +1,6 @@
+
+// 検索結果をクリップボードへコピーする処理
+
 // クリップボード除外クラス
 var excludeClassName = ".exclude-in-clip-board-target";
 // 対象テーブル

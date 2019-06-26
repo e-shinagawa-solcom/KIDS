@@ -97,14 +97,14 @@
 
 /* START BODYS */
 #SegABodys {
-	left : 10px ;
-	top : 31px ;
-	width : 927px ;
-	height : 484px ;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #cdcdcd ;
-	background-color: #ffffff ;
+    left: 0px;
+    position: absolute;
+    top: 30px;
+    width: 925px;
+    height: 451px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #cdcdcd;
 }
 /* END BODYS */
 
@@ -123,348 +123,353 @@
 
 /* START SEGMENTS */
 #SegA01 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 40px ;
-	width : 120px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
+    font-weight: bold;
+    position: absolute;
+    left: 10px;
+    top: 40px;
+    width: 120px;
+    height: 18px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 8px 0px 0px 8px;
 }
 
 #SegA02 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 209px ;
-	width : 160px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
+    font-weight: bold;
+    position: absolute;
+    left: 10px;
+    top: 207px;
+    width: 160px;
+    height: 18px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 8px 0px 0px 8px;
 }
 
 #SegA18 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 300px ;
-	top : 209px ;
-	width : 400px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
+    font-weight: bold;
+    position: absolute;
+    left: 306px;
+    top: 207px;
+    width: 400px;
+    height: 18px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 8px 0px 0px 8px;
 }
 
 #SegA03 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 143px ;
-	width : 160px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
+	font-weight: bold;
+    position: absolute;
+    left: 10px;
+    top: 139px;
+    width: 160px;
+    height: 18px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 8px 0px 0px 8px;
 }
 
 #SegA04 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 169px ;
-	width : 160px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
+    font-weight: bold;
+    position: absolute;
+    left: 10px;
+    top: 173px;
+    width: 160px;
+    height: 18px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 8px 0px 0px 8px;
 }
 
 #SegA0304 {
-	position : absolute ;
-	left : 550px ;
-	top : 143px ;
-	width : 33 ;
-	height : 53px ;
-	border-width: 1px ;
-	border-style: solid ;
+    position: absolute;
+    left: 565px;
+    top: 139px;
+    width: 33;
+    height: 26px;
+    border-width: 1px;
+    border-style: solid;
+    z-index: 1;
 }
 
 #SegA05 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 75px ;
-	width : 160px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
+    font-weight: bold;
+    position: absolute;
+    left: 10px;
+    top: 73px;
+    width: 160px;
+    height: 18px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 8px 0px 0px 8px;
 }
 
 #SegA06 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 101px ;
-	width : 160px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
+	font-weight: bold;
+    position: absolute;
+    left: 10px;
+    top: 106px;
+    width: 160px;
+    height: 18px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 8px 0px 0px 8px;
 }
 
 #SegA07 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 244px ;
-	width : 160px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
+    font-weight: bold;
+    position: absolute;
+    left: 10px;
+    top: 241px;
+    width: 160px;
+    height: 18px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 8px 0px 0px 8px;
 }
 
 #SegA08 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 274px ;
-	top : 345px ;
-	width : 170px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
+    font-weight: bold;
+    position: absolute;
+    left: 291px;
+    top: 342px;
+    width: 170px;
+    height: 18px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 8px 0px 0px 8px;
 }
 
 #SegA09 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 345px ;
-	width : 160px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
+    font-weight: bold;
+    position: absolute;
+    left: 10px;
+    top: 342px;
+    width: 160px;
+    height: 18px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 8px 0px 0px 8px;
 }
 
 #SegA11 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 173px ;
-	width : 170px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
+    font-weight: bold;
+    position: absolute;
+    left: 10px;
+    top: 173px;
+    width: 170px;
+    height: 18px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 8px 0px 0px 8px;
 }
 
 #SegA12 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 274px ;
-	top : 375px ;
-	width : 170px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
+	font-weight: bold;
+    position: absolute;
+    left: 291px;
+    top: 375px;
+    width: 170px;
+    height: 18px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 8px 0px 0px 8px;
 }
 
 #SegA13 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 538px ;
-	top : 375px ;
-	width : 170px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
+    font-weight: bold;
+    position: absolute;
+    left: 580px;
+    top: 375px;
+    width: 170px;
+    height: 18px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 8px 0px 0px 8px;
 }
 
 #SegA14 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 315px ;
-	width : 160px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
+	font-weight: bold;
+    position: absolute;
+    left: 10px;
+    top: 312px;
+    width: 160px;
+    height: 18px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 8px 0px 0px 8px;
 }
 
 #SegA15 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 346px ;
-	top : 315px ;
-	width : 160px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
+    font-weight: bold;
+    position: absolute;
+    left: 362px;
+    top: 312px;
+    width: 160px;
+    height: 18px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 8px 0px 0px 8px;
 }
 /* END SEGMENTS */
 
 
 /* START VARS */
 #VarsA01 {
-	position : absolute ;
-	left : 129px ;
-	top : 40px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 8px ;
+position: absolute;
+    left: 140px;
+    top: 40px;
+    height: 21px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 5px 0px 0px 5px;
 }
 
 #VarsA02 {
-	position : absolute ;
-	left : 166px ;
-	top : 209px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 8px ;
+	position: absolute;
+    left: 179px;
+    top: 207px;
+    height: 22px;
+    width: 110px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 4px 0px 0px 8px;
 }
 
 #VarsA18 {
-	position : absolute ;
-	left : 445px ;
-	top : 209px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 8px ;
+    position: absolute;
+    left: 363px;
+    top: 207px;
+    width: 345px;
+    height: 22px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 4px 0px 0px 8px;
 }
 
 #VarsA03 {
-	position : absolute ;
-	left : 166px ;
-	top : 143px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 8px ;
+    position: absolute;
+    left: 179px;
+    top: 139px;
+    width: 377px;
+    height: 22px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 4px 0px 0px 8px;
 }
 
 #VarsA04 {
-	position : absolute ;
-	left : 166px ;
-	top : 169px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 8px ;
+    position: absolute;
+    left: 179px;
+    top: 173px;
+    height: 22px;
+    width: 377px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 4px 0px 0px 8px;
 }
 
 #VarsA05 {
-	position : absolute ;
-	left : 166px ;
-	top : 75px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 8px ;
+	position: absolute;
+    left: 179px;
+    top: 73px;
+    height: 22px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 4px 0px 0px 8px;
 }
 
 #VarsA06 {
-	position : absolute ;
-	left : 166px ;
-	top : 101px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 8px ;
+    position: absolute;
+    left: 179px;
+    top: 106px;
+    height: 22px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 4px 0px 0px 8px;
 }
 
 #VarsA07 {
-	position : absolute ;
-	left : 166px ;
-	top : 244px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 8px ;
+	position: absolute;
+    left: 179px;
+    top: 241px;
+    height: 22px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 4px 0px 0px 8px;
 }
 
 #VarsA08 {
-	position : absolute ;
-	left : 430px ;
-	top : 345px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 8px ;
+	position: absolute;
+    left: 470px;
+    top: 342px;
+    height: 22px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 4px 0px 0px 8px;
 }
 
 #VarsA09 {
-	position : absolute ;
-	left : 166px ;
-	top : 345px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 8px ;
+    position: absolute;
+    left: 179px;
+    top: 342px;
+    height: 22px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 4px 0px 0px 8px;
 }
 
 #VarsA11 {
-	position : absolute ;
-	left : 166px ;
-	top : 173px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 8px ;
+	position: absolute;
+    left: 166px;
+    top: 173px;
+    height: 22px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 4px 0px 0px 8px;
 }
 
 #VarsA12 {
-	position : absolute ;
-	left : 430px ;
-	top : 375px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 8px ;
+    position: absolute;
+    left: 470px;
+    top: 375px;
+    height: 22px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 4px 0px 0px 8px;
 }
 
 #VarsA13 {
-	position : absolute ;
-	left : 694px ;
-	top : 375px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 8px ;
+    position: absolute;
+    left: 758px;
+    top: 375px;
+    height: 22px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 4px 0px 0px 8px;
 }
 
 #VarsA14 {
-	position : absolute ;
-	font-weight : bold ;
-	left : 166px ;
-	top : 315px ;
-	height : 27px ;
-	width : 177px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 8px ;
+	position: absolute;
+    font-weight: bold;
+    left: 166px;
+    top: 312px;
+    height: 22px;
+    width: 177px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 4px 0px 0px 8px;
 }
 
 #VarsA15 {
-	position : absolute ;
-	left : 502px ;
-	top : 315px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 8px ;
+	position: absolute;
+    left: 502px;
+    top: 312px;
+    height: 22px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 4px 0px 0px 8px;
 }
 /* END VARS */
 /************************************** END INPUT A **************************************/
@@ -506,14 +511,15 @@
 
 /* START BODYS */
 #SegBBodys {
-	left : 10px ;
-	top : 31px ;
-	width : 927px ;
-	height : 482px ;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #cdcdcd ;
-	background-color: #ffffff ;
+	left: 0px;
+    position: absolute;
+    top: 30px;
+    width: 925px;
+    height: 449px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #cdcdcd;
+    background-color: #ffffff;
 }
 /* END BODYS */
 
@@ -532,229 +538,230 @@
 
 /* START SEGMENTS */
 #SegB01 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 346px ;
-	top : 143px ;
-	width : 160px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
+    font-weight: bold;
+    position: absolute;
+    left: 350px;
+    top: 139px;
+    width: 160px;
+    height: 18px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 8px 0px 0px 8px;
 }
 
 #SegB02 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 143px ;
-	width : 160px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
+	font-weight: bold;
+    position: absolute;
+    left: 10px;
+    top: 139px;
+    width: 160px;
+    height: 18px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 8px 0px 0px 8px;
 }
 
 #SegB03 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 40px ;
-	width : 170px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
+	font-weight: bold;
+    position: absolute;
+    left: 10px;
+    top: 40px;
+    width: 170px;
+    height: 18px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 8px 0px 0px 8px;
 }
 
 #SegA17 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 70px ;
-	width : 170px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
+    font-weight: bold;
+    position: absolute;
+    left: 10px;
+    top: 73px;
+    width: 170px;
+    height: 18px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 8px 0px 0px 8px;
 }
 
 #SegB04 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 100px ;
-	width : 170px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
+    font-weight: bold;
+    position: absolute;
+    left: 10px;
+    top: 106px;
+    width: 170px;
+    height: 18px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 8px 0px 0px 8px;
 }
 
 #SegB05 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 585px ;
-	top : 100px ;
-	width : 170px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
+	font-weight: bold;
+    position: absolute;
+    left: 594px;
+    top: 106px;
+    width: 170px;
+    height: 18px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 8px 0px 0px 8px;
 }
 
 #SegB06 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 416px ;
-	width : 170px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
+	font-weight: bold;
+    position: absolute;
+    left: 10px;
+    top: 408px;
+    width: 170px;
+    height: 18px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 8px 0px 0px 8px;
 }
 
 #SegB07 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 446px ;
-	width : 160px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
+	font-weight: bold;
+    position: absolute;
+    left: 10px;
+    top: 441px;
+    width: 160px;
+    height: 18px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 8px 0px 0px 8px;
 }
 
 #SegB08 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 274px ;
-	width : 160px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
+    font-weight: bold;
+    position: absolute;
+    left: 10px;
+    top: 275px;
+    width: 160px;
+    height: 18px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 8px 0px 0px 8px;
 }
 
 #SegB09 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 300px ;
-	width : 160px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
+	font-weight: bold;
+    position: absolute;
+    left: 10px;
+    top: 309px;
+    width: 160px;
+    height: 18px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 8px 0px 0px 8px;
 }
 
 #SegB0809 {
-	position : absolute ;
-	left : 599px ;
-	top : 274px ;
-	width : 33 ;
-	height : 53px ;
-	border-width: 1px ;
-	border-style: solid ;
+    position: absolute;
+    left: 615px;
+    top: 275px;
+    width: 33px;
+    height: 26px;
+    border-width: 1px;
+    border-style: solid;
+    z-index: 1;
 }
 
 #SegB11 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 274px ;
-	top : 173px ;
-	width : 140px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
+	font-weight: bold;
+    position: absolute;
+    left: 279px;
+    top: 173px;
+    width: 140px;
+    height: 18px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 8px 0px 0px 8px;
 }
 
 #SegB10 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 214px ;
-	width : 160px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
+	font-weight: bold;
+    position: absolute;
+    left: 10px;
+    top: 207px;
+    width: 160px;
+    height: 18px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 8px 0px 0px 8px;
 }
 
 #SegB20 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 346px ;
-	top : 214px ;
-	width : 160px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
+    font-weight: bold;
+    position: absolute;
+    left: 351px;
+    top: 207px;
+    width: 160px;
+    height: 18px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 8px 0px 0px 8px;
 }
 
 #SegB16 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 487px ;
-	top : 173px ;
-	width : 140px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
+    font-weight: bold;
+    position: absolute;
+    left: 522px;
+    top: 173px;
+    width: 140px;
+    height: 18px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 8px 0px 0px 8px;
 }
 
 #SegB12 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 244px ;
-	width : 160px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
+    font-weight: bold;
+    position: absolute;
+    left: 10px;
+    top: 242px;
+    width: 160px;
+    height: 18px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 8px 0px 0px 8px;
 }
 
 #SegB13 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 274px ;
-	width : 160px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
+    font-weight: bold;
+    position: absolute;
+    left: 10px;
+    top: 277px;
+    width: 160px;
+    height: 18px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 8px 0px 0px 8px;
 }
 
 #SegB17 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 375px ;
-	width : 170px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
+    font-weight: bold;
+    position: absolute;
+    left: 10px;
+    top: 375px;
+    width: 170px;
+    height: 18px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 8px 0px 0px 8px;
 }
 
 #SegB14 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 345px ;
-	width : 160px ;
-	height : 126px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 57px 0px 0px 8px ;
+	font-weight: bold;
+    position: absolute;
+    left: 10px;
+    top: 348px;
+    width: 160px;
+    height: 70px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 57px 0px 0px 8px;
 }
 /* END SEGMENTS */
 
@@ -762,204 +769,209 @@
 
 /* START VARS */
 #VarsB01 {
-	position : absolute ;
-	left : 502px ;
-	top : 143px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 8px ;
+	position: absolute;
+    left: 519px;
+    top: 139px;
+    height: 22px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 4px 0px 0px 8px;
 }
 
 #VarsB02 {
-	position : absolute ;
-	left : 166px ;
-	top : 143px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 8px ;
+	position: absolute;
+    left: 166px;
+    top: 139px;
+    height: 22px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 4px 0px 0px 8px;
 }
 
 #VarsB03 {
-	position : absolute ;
-	left : 166px ;
-	top : 40px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 32px 0px 8px ;
+	position: absolute;
+    left: 166px;
+    top: 40px;
+    height: 22px;
+    width: 380px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 4px 32px 0px 8px;
 }
 
 
 #VarsA17 {
-	position : absolute ;
-	left : 166px ;
-	top : 70px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 32px 0px 8px ;
+	position: absolute;
+    left: 166px;
+    top: 73px;
+    width: 381px;
+    height: 22px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 4px 32px 0px 8px;
 }
 
 #VarsB04 {
-	position : absolute ;
-	left : 166px ;
-	top : 100px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 32px 0px 8px ;
+    position: absolute;
+    left: 166px;
+    top: 106px;
+    width: 381px;
+    height: 22px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 4px 32px 0px 8px;
 }
 
 #VarsB05 {
-	position : absolute ;
-	left : 731px ;
-	top : 100px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 0px ;
+	position: absolute;
+    left: 731px;
+    top: 106px;
+    height: 22px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 4px 0px 0px 0px;
 }
 
 #VarsB06_1 {
-	position : absolute ;
-	left : 166px ;
-	top : 416px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 8px ;
+	position: absolute;
+    left: 179px;
+    top: 408px;
+    height: 22px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 4px 0px 0px 8px;
 }
 
 #VarsB06_2 {
-	position : absolute ;
-	left : 270px ;
-	top : 416px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 3px ;
+	position: absolute;
+    left: 281px;
+    top: 408px;
+    height: 22px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 4px 0px 0px 3px;
 }
 
 #VarsB07_1 {
-	position : absolute ;
-	left : 166px ;
-	top : 446px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 8px ;
+    position: absolute;
+    left: 179px;
+    top: 441px;
+    height: 22px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 4px 0px 0px 8px;
 }
 
 #VarsB07_2 {
-	position : absolute ;
-	left : 270px ;
-	top : 446px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 3px ;
+    position: absolute;
+    left: 281px;
+    top: 441px;
+    height: 22px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 4px 0px 0px 3px;
 }
 
 #VarsB08 {
-	position : absolute ;
-	left : 166px ;
-	top : 274px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 8px ;
+    position: absolute;
+    left: 179px;
+    top: 275px;
+    height: 22px;
+    width: 430px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 4px 0px 0px 8px;
 }
 
 #VarsB09 {
-	position : absolute ;
-	left : 166px ;
-	top : 300px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 8px ;
+    position: absolute;
+    left: 179px;
+    top: 309px;
+    width: 431px;
+    height: 22px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 4px 0px 0px 8px;
 }
 
 #VarsB10 {
-	position : absolute ;
-	left : 166px ;
-	top : 214px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 8px ;
+    position: absolute;
+    left: 166px;
+    top: 207px;
+    height: 22px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 4px 0px 0px 8px;
 }
 
 #VarsB20 {
-	position : absolute ;
-	left : 502px ;
-	top : 214px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 8px ;
+	position: absolute;
+    left: 502px;
+    top: 207px;
+    height: 22px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 4px 0px 0px 8px;
 }
 
 #VarsB11 {
-	position : absolute ;
-	left : 393px ;
-	top : 173px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 8px ;
+	position: absolute;
+    left: 423px;
+    top: 173px;
+    height: 22px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 4px 0px 0px 8px;
 }
 
 #VarsB16 {
-	position : absolute ;
-	left : 611px ;
-	top : 173px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 8px ;
+	position: absolute;
+    left: 671px;
+    top: 173px;
+    height: 22px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 4px 0px 0px 8px;
 }
 
 #VarsB12 {
-	position : absolute ;
-	left : 166px ;
-	top : 244px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 8px ;
+	position: absolute;
+    left: 166px;
+    top: 242px;
+    height: 22px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 4px 0px 0px 8px;
 }
 
 #VarsB13 {
-	position : absolute ;
-	left : 166px ;
-	top : 274px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 8px ;
+    position: absolute;
+    left: 166px;
+    top: 277px;
+    height: 22px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 4px 0px 0px 8px;
 }
 
 #VarsB17 {
-	position : absolute ;
-	left : 166px ;
-	top : 375px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 8px ;
+    position: absolute;
+    left: 179px;
+    top: 375px;
+    height: 22px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 4px 0px 0px 8px;
 }
 
 #VarsB14 {
-	position : absolute ;
-	left : 166px ;
-	top : 345px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 32px 3px 8px ;
+	position: absolute;
+    left: 166px;
+    top: 348px;
+    height: 114px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 10px 32px 3px 8px;
 }
 /* END VARS */
 /************************************** END INPUT B **************************************/
@@ -970,12 +982,12 @@
 
 #EditBt
 {
-	position : absolute ;
-	top : 400px ;
-	left : 818px ;
-	border-width: 0px ;
-	border-style: none ;
-	background-color: transparent ;
+	position: absolute;
+    top: 405px;
+    left: 818px;
+    border-width: 0px;
+    border-style: none;
+    background-color: transparent;
 }
 
 
@@ -1104,47 +1116,49 @@
 
 /* START [ASSEMBLY FACTORY] BUTTON 03 */
 #MSWBt01_3 {
-	position : absolute ;
-	left : 554px ;
-	top : 74px ;
-	border-width : 0px ;
-	border-style : none ;
-	background-color : #ffffff ;
+	position: absolute;
+    left: 554px;
+    top: 45px;
+    border-width: 0px;
+    border-style: none;
+    background-color: #ffffff;
 }
 /* END [ASSEMBLY FACTORY] BUTTON 03 */
 
 /* START [DEPT & IN CHARGE NAME] BUTTON */
 #MSWBt02 {
-	position : absolute ;
-	left : 557px ;
-	top : 160px ;
-	border-width : 0px ;
-	border-style : none ;
-	background-color : #ffffff ;
+    position: absolute;
+    left: 570px;
+    top: 144px;
+    border-width: 0px;
+    border-style: none;
+    background-color: #ffffff;
+    z-index: 1;
 }
 /* END [DEPT & IN CHARGE NAME] BUTTON */
 
 
 /* START [LOCATION] BUTTON */
 #MSWBt04 {
-	position : absolute ;
-	left : 554px ;
-	top : 104px ;
-	border-width : 0px ;
-	border-style : none ;
-	background-color : #ffffff ;
+	position: absolute;
+    left: 554px;
+    top: 111px;
+    border-width: 0px;
+    border-style: none;
+    background-color: #ffffff;
 }
 /* END [LOCATION] BUTTON */
 
 
 /* START [VENDOR & IN CHARGE NAME] BUTTON */
 #MSWBt07 {
-	position : absolute ;
-	left : 606px ;
-	top : 290px ;
-	border-width : 0px ;
-	border-style : none ;
-	background-color : #ffffff ;
+    position: absolute;
+    left: 620px;
+    top: 280px;
+    border-width: 0px;
+    border-style: none;
+    z-index: 1;
+    background-color: #ffffff;
 }
 /* END [VENDOR & IN CHARGE NAME] BUTTON */
 /********************** END MSW BUTTON **********************/
@@ -1234,26 +1248,26 @@
 /********** GOODS PLAN STATUS **********/
 #CreateDate
 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 626px ;
-	top : 40px ;
-	width : 120px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
+	font-weight: bold;
+    position: absolute;
+    left: 598px;
+    top: 40px;
+    width: 120px;
+    height: 18px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 8px 0px 0px 8px;
 }
 
 #CreateDateVars
 {
-	position : absolute ;
-	left : 732px ;
-	top : 40px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 32px 0px 8px ;
+	position: absolute;
+    left: 727px;
+    top: 40px;
+    height: 22px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 4px 32px 0px 8px;
 }
 
 
@@ -1283,7 +1297,7 @@
 	position : absolute ;
 	left : 0px ;
 	top : 0px ;
-	width : 290px ;
+	width: 288px;
 	height : 138px ;
 	border-width: 1px ;
 	border-style: solid ;
@@ -1314,78 +1328,78 @@
 
 #ProgressStatus
 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 15px ;
-	top : 30px ;
-	width : 120px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
+    font-weight: bold;
+    position: absolute;
+    left: 15px;
+    top: 30px;
+    width: 120px;
+    height: 18px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 8px 0px 0px 8px;
 }
 
 #ProgressCodeVars
 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 120px ;
-	top : 30px ;
-	width : 120px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 8px ;
+    font-weight: bold;
+    position: absolute;
+    left: 129px;
+    top: 30px;
+    width: 126px;
+    height: 22px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 4px 0px 0px 8px;
 }
 
 #ReviseNumber
 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 15px ;
-	top : 60px ;
-	width : 120px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
+font-weight: bold;
+    position: absolute;
+    left: 15px;
+    top: 60px;
+    width: 120px;
+    height: 18px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 8px 0px 0px 8px;
 }
 
 #ReviseNumberVars
 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 120px ;
-	top : 60px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 8px ;
+    font-weight: bold;
+    position: absolute;
+    left: 129px;
+    top: 60px;
+    height: 22px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 4px 0px 0px 8px;
 }
 
 #ReviseDate
 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 15px ;
-	top : 90px ;
-	width : 120px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 8px 0px 0px 8px ;
+    font-weight: bold;
+    position: absolute;
+    left: 15px;
+    top: 90px;
+    width: 120px;
+    height: 18px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 8px 0px 0px 8px;
 }
 
 #ReviseDateVars
 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 120px ;
-	top : 90px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	padding : 3px 0px 0px 8px ;
+    font-weight: bold;
+    position: absolute;
+    left: 129px;
+    top: 90px;
+    height: 22px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 4px 0px 0px 8px;
 }
 
 

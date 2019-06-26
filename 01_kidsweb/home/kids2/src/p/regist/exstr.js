@@ -35,7 +35,7 @@ function ChgEtoJ()
 
 		SegA01.innerHTML         = 'Products code';
 		SegA02.innerHTML         = 'Goods code(Corresp)';
-/*		SegA18.innerHTML         = '<span class="CheckMark">◎</span>Category';*/
+//		SegA18.innerHTML         = '<span class="CheckMark">◎</span>Category';
 		SegA18.innerHTML         = '<span class="CheckMark">◎</span>Category';
 		SegA03.innerHTML         = '<span class="CheckMark">◎</span>Dept';
 		SegA04.innerHTML         = '<span class="CheckMark">◎</span>In charge name';
@@ -78,9 +78,9 @@ function ChgEtoJ()
 		SegB07.innerHTML = '<span class="CheckMark">◎</span>Delivery Qty';
 		SegB08.innerHTML = 'Vendor';
 		SegB09.innerHTML = 'In charge name';
-/*		SegB10.innerHTML = '<span class="CheckMark">◎</span>Copyright'; */
+//		SegB10.innerHTML = '<span class="CheckMark">◎</span>Copyright';
 		SegB10.innerHTML = 'Copyright';
-/*		SegB11.innerHTML = '<span class="CheckMark">◎</span>Loyalty(%)'; */
+//		SegB11.innerHTML = '<span class="CheckMark">◎</span>Loyalty(%)';
 		SegB11.innerHTML = 'Loyalty(%)';
 		SegB12.innerHTML = 'Copyright(Stamp)';
 		SegB13.innerHTML = 'Copyright(Print)';
@@ -96,12 +96,13 @@ function ChgEtoJ()
 		//-------------------------------------------------------------------------
 		// v2 tomita update
 		//-------------------------------------------------------------------------
-		SegBWF.innerHTML = 'Work flow root'; /* Admission root */
+/*
+		SegBWF.innerHTML = 'Work flow root';
 		window.WFrootWin.RootWin.fncChgEtoJ( 0 );
 
 		RegistBt.innerHTML = registbtE1;
 
-/*
+
 		var obj = document.PPP2.lngWorkflowOrderCode;
 
 		// 「承認なし」の場合の判定 -> 「承認なし」の場合はボタン押下禁止
@@ -227,7 +228,7 @@ function ChgEtoJ()
 
 		SegA01.innerHTML         = '製品コード';
 		SegA02.innerHTML         = '顧客品番';
-/*		SegA18.innerHTML         = '<span class="CheckMark">◎</span>カテゴリ'; */
+//		SegA18.innerHTML         = '<span class="CheckMark">◎</span>カテゴリ';
 		SegA18.innerHTML         = 'カテゴリ';
 		SegA03.innerHTML         = '<span class="CheckMark">◎</span>営業部署';
 		SegA04.innerHTML         = '<span class="CheckMark">◎</span>開発担当者';
@@ -269,9 +270,9 @@ function ChgEtoJ()
 		SegB07.innerHTML = '<span class="CheckMark">◎</span>初回納品数';
 		SegB08.innerHTML = '顧客';
 		SegB09.innerHTML = '顧客担当者';
-/*		SegB10.innerHTML = '<span class="CheckMark">◎</span>版権元';*/
+//		SegB10.innerHTML = '<span class="CheckMark">◎</span>版権元';
 		SegB10.innerHTML = '版権元';
-/*		SegB11.innerHTML = '<span class="CheckMark">◎</span>ロイヤリティ(%)'; */
+//		SegB11.innerHTML = '<span class="CheckMark">◎</span>ロイヤリティ(%)';
 		SegB11.innerHTML = 'ロイヤリティ(%)';
 		SegB12.innerHTML = '版権表示(刻印)';
 		SegB13.innerHTML = '版権表示(印刷物)';
@@ -287,11 +288,12 @@ function ChgEtoJ()
 		//-------------------------------------------------------------------------
 		// v2 tomita update
 		//-------------------------------------------------------------------------
+/*
 		SegBWF.innerHTML = '承認ルート';
 		window.WFrootWin.RootWin.fncChgEtoJ( 1 );
 
 		RegistBt.innerHTML = registbtJ1;
-/*
+
 		var obj = document.PPP2.lngWorkflowOrderCode;
 
 		// 「承認なし」の場合の判定 -> 「承認なし」の場合はボタン押下禁止

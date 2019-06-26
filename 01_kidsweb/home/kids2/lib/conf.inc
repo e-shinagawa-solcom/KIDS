@@ -140,6 +140,7 @@ switch( $strExcuteHttpHostName )
 		break;
 }
 
+
 // ログ出力先
 define ("DEF_DEBUG_DIR",	PATH_HOME . "/log/");
 
@@ -418,6 +419,12 @@ define ( "DEF_FUNCTION_LC0",	2100 );	// 2100 L/C管理
 define ( "DEF_FUNCTION_LC1",	2101 );	// 2101 L/C情報
 define ( "DEF_FUNCTION_LC2",	2102 );	// 2102 L/C設定変更
 define ( "DEF_FUNCTION_LC3",	2103 );	// 2103 L/C編集
+define ( "DEF_FUNCTION_LC4",	2104 );	// 2104 L/C帳票出力
+
+define ( "DEF_FUNCTION_INV0",	2200 );	// 2200 請求管理
+define ( "DEF_FUNCTION_INV1",	2201 );	// 2201 請求書発行
+define ( "DEF_FUNCTION_INV2",	2202 );	// 2202 請求書検索
+define ( "DEF_FUNCTION_INV3",	2203 );	// 2203 請求集計
 
 // エラー種類
 define ( "DEF_WARNING",		1 );           //  1 注意レベル（入力ミスなど）

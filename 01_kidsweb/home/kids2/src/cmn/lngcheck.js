@@ -176,12 +176,16 @@
 			strCurrencySign = "";
 		}
 		
+		/* window.execScriptはEdge非対応のため、fncVBSCheckNumberをJavascriptに実装しなおしてeval実行
 		// 対象オブジェクト名の取得
 		strObjectName = 'window.'+ objObject.form.name +'.'+ objObject.name;
 		strParam = 'Call fncVBSCheckNumber('+ strObjectName +', '+ lngAfterDecimal + ', '+ '"' + strCurrencySign + '"' +')';
 
 		// VBScriptの実行
 		window.execScript(strParam, "VBScript");
+		*/
+		
+		eval(strParam);
 
 	}
 
@@ -213,12 +217,15 @@
 			lngDecimalCutPoint = null;
 		}
 
-		
+		/* window.execScriptはEdge非対応のため実行関数をjavascriptに置換して直接実行
 		// 対象オブジェクト名の取得
-		strParam = 'Call fncVBSCheckNumberValue("'+ strValue +'", '+ lngAfterDecimal + ', '+ '"' + strCurrencySign + '", ' + lngDecimalCutPoint + ', ' + lngCalcCode + ')';
+		//strParam = 'Call fncVBSCheckNumberValue("'+ strValue +'", '+ lngAfterDecimal + ', '+ '"' + strCurrencySign + '", ' + lngDecimalCutPoint + ', ' + lngCalcCode + ')';
 		
 		// VBScriptの実行
-		window.execScript(strParam, "VBScript");
+		//window.execScript(strParam, "VBScript");
+		/*
+
+		var ret = fncVBSCheckNumberValue(strValue,lngAfterDecimal,strCurrencySign,lngDecimalCutPoint,lngCalcCode);
 
 		// 取得したフォーマット値を返却
 		return fncCheckGetValue(1);
@@ -377,11 +384,12 @@
 		}
 
 		// 対象オブジェクト名の取得
-		strParam = 'Call fncVBSNumberCalculation('+ lngCalc1 + ', '+ '"' + strOperator + '", ' + lngCalc2 + ')';
+		//strParam = 'Call fncVBSNumberCalculation('+ lngCalc1 + ', '+ '"' + strOperator + '", ' + lngCalc2 + ')';
+		strParam = lngCalc1 + " " + strOperator + " " +  lngCalc2;
 		//alert(strParam);
 		// VBScriptの実行
-		window.execScript(strParam, "VBScript");
-
+		//window.execScript(strParam, "VBScript");
+		eval(strParam);
 		// 取得した値を返却
 		return fncCheckGetValue(5);
 

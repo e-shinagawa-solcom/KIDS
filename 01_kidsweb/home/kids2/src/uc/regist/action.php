@@ -330,6 +330,7 @@ if ( $aryData["lngFunctionCode"] == DEF_FUNCTION_UC1 || $aryData["lngFunctionCod
 	}
 
 	// 所属を離れたグループがワークフローオーダーに存在していた場合、エラー
+	/*
 	if ( $flgUpdate )
 	{
 		$strQuery = "SELECT lngWorkflowOrderGroupCode FROM m_WorkflowOrder WHERE lngInChargeCode = " . $aryUserData["lngUserCode"] . " AND (" . join ( " OR", $aryGroupCodeDelete ) . ") AND bytWorkflowOrderDisplayFlag = TRUE\n";
@@ -345,12 +346,14 @@ if ( $aryData["lngFunctionCode"] == DEF_FUNCTION_UC1 || $aryData["lngFunctionCod
 			$aryQuery[0] = preg_replace ( "/lngWorkflowOrderGroupCode/", "lngGroupCode", $aryQuery[0] );
 		}
 	}
+	*/
 
 	// ユーザー修正の場合、ログイン許可・権限グループ変更チェック
 	// ログイン許可を外し、ワークフロー順番に含まれていてた場合
 	// または
 	// 権限グループを変更し、ワークフロー順番に含まれていた場合
 	// エラーとする
+	/*
 	if ( $aryData["lngFunctionCode"] == DEF_FUNCTION_UC5 && ( ( $aryData["bytInvalidFlag"] != $aryUserData["bytInvalidFlag"] && $aryData["bytInvalidFlag"] == "TRUE" ) || ( $aryData["lngAuthorityGroupCode"] != $aryUserData["lngAuthorityGroupCode"] && ( $aryData["lngAuthorityGroupCode"] > 2 && $aryData["lngAuthorityGroupCode"] < 6 ) ) ) )
 	{
 		$strQuery = "SELECT lngWorkflowOrderCode FROM m_WorkflowOrder WHERE lngInChargeCode = " . $aryData["lngUserCode"];
@@ -362,6 +365,7 @@ if ( $aryData["lngFunctionCode"] == DEF_FUNCTION_UC1 || $aryData["lngFunctionCod
 			$bytErrorFlag = TRUE;
 		}
 	}
+	*/
 
 	// ユーザー修正の場合、ユーザーID変更チェック
 	// ユーザーIDが変更された場合、ログイン状態にあった場合、エラー

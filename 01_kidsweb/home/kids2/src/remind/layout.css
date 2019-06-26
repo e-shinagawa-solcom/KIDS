@@ -3,19 +3,21 @@
 
 #SubmitButton
 {
-	position : absolute ;
-	left : 500px ;
-	top : 284px ;
+	position : relative ;
 	border-width: 0px ;
 	border-style: none ;
 	background-color: transparent ;
 }
 
+#CloseButtonArea
+{
+	text-align: right ;
+	margin: 20px 0px 0px 0px;
+}
+
 #CloseButton
 {
-	position : absolute ;
-	left : 500px ;
-	top : 480px ;
+	position : relative ;
 	border-width: 0px ;
 	border-style: none ;
 	background-color: transparent ;
@@ -41,12 +43,19 @@
 	background-color: transparent ;
 }
 
-
-#KidsLogo
+#ContentsArea
 {
 	position : absolute ;
 	left : 30px ;
 	top : 240px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color: transparent ;
+}
+
+#KidsLogo
+{
+	position : relative ;
 	border-width: 0px ;
 	border-style: none ;
 	background-color: transparent ;
@@ -64,16 +73,41 @@
 }
 
 
-#RemindSet
+#EmailArea
 {
-	position : absolute ;
-	left : 30px ;
-	top : 260px ;
+	position : relative ;
 	z-index : 0 ;
 	visibility : visible ;
 	border-width: 0px ;
 	border-style: none ;
 	background-color: transparent ;
+	margin: 30px 0px 0px 0px;
+}
+
+#EmailSet
+{
+	position : relative ;
+	z-index : 0 ;
+	visibility : visible ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #cdcdcd ;
+	background-color: transparent ;
+	vertical-align: top;
+	display: inline-block ;
+	padding : 3px 0px 3px 8px ;
+}
+
+#RemindSet
+{
+	position : relative ;
+	z-index : 0 ;
+	visibility : visible ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #cdcdcd #72828b #72828b #72828b;
+	background-color: transparent ;
+	margin: 30px 0px 0px 0px;
 }
 
 #PasswdSet
@@ -94,28 +128,14 @@
 	font-family : Arial ;
 	font-weight : bold ;
 	color : #ffffff ;
-	position : absolute ;
-	left : 0px ;
-	top : 20px ;
-	width : 120px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #798787 #ffffff #798787 #798787 ;
+	position : relative ;
 	background-color: #ffffff ;
-	padding : 8px 0px 0px 8px ;
 }
 
 #strEmailVars
 {
-	position : absolute ;
-	left : 119px ;
-	top : 20px ;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #798787 #ffffff #798787 #798787 ;
+	position : relative ;
 	background-color: #ffffff ;
-	padding : 3px 0px 2px 0px ;
 }
 
 #strNewPassword
@@ -144,14 +164,8 @@
 	font-size : 12px ;
 	color : #eeeeee ;
 	line-height : 14px ;
-	position : absolute ;
-	left : 30px ;
-	top : 410px ;
+	position : relative ;
 	width : 540px ;
-
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #cdcdcd #72828b #72828b #72828b;
 	padding : 3px 0px 0px 0px ;
 
 /*
@@ -200,15 +214,13 @@
 	font-size : 12px ;
 	color : #eeeeee ;
 	line-height : 14px ;
-	position : absolute ;
-	left : 30px ;
-	top : 281px ;
+	position : relative ;
 	width : 540px ;
 
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #cdcdcd #72828b #72828b #72828b;
-	padding : 3px 0px 0px 0px ;
+	margin : 13px 0px 0px 0px ;
 
 /*
 	border-width: 1px ;

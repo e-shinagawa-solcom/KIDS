@@ -211,13 +211,20 @@
 {
 	position : absolute ;
 	width : 794px ;
-	height : 257px ;
+	height: 300px;
 	border-width: 0px ;
 	border-style: none ;
 	background-color: transparent ;
 	filter:progid:DXImageTransform.Microsoft.Alpha(opacity=90);
 }
 
+#CompanyGroupFrm #close_btn_box{
+	position: fixed;
+    bottom: 5px;
+    left: 10px;
+    text-align: center;
+    width: 100%;
+}
 
 /* PICTURE SPACE */
 .pict-area{

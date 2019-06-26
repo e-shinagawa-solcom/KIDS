@@ -57,6 +57,7 @@
 
 	$aryData["strSessionID"]    = $_REQUEST["strSessionID"];
 	$aryData["lngLanguageCode"] = $_COOKIE["lngLanguageCode"];
+	$aryData["strProductCode"]    = $_REQUEST["strProductCode"];
 	//$aryData["lngLanguageCode"] = $_REQUEST["lngLanguageCode"];
 
 
@@ -86,9 +87,6 @@
 	{
 		fncOutputError ( 9018, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 	}
-
-
-
 
 	//-------------------------------------------------------------------------
 	// ■ 入力チェック
@@ -914,7 +912,6 @@
 
 
 
-
 	//-------------------------------------------------------------------------
 	// ■「製品」にログインユーザーが属しているかチェック
 	//-------------------------------------------------------------------------
@@ -1062,7 +1059,7 @@
 
 
 	// 企画進行状況 =============================================================
-	$aryResult["lngGoodsPlanProgressCode"]	= fncGetPulldown(m_goodsplanprogress, lnggoodsplanprogresscode, strgoodsplanprogressname, $aryResult2["lnggoodsplanprogresscode"], '', $objDB);
+	$aryResult["lngGoodsPlanProgressCode"]	= fncGetPulldown("m_goodsplanprogress", "lnggoodsplanprogresscode", "strgoodsplanprogressname", $aryResult2["lnggoodsplanprogresscode"], '', $objDB);
 	//改訂番号
 	$aryResult["lngRevisionNo"]				= $aryResult2["lngrevisionno"];
 	//改訂日時
@@ -1086,7 +1083,7 @@
 
 
 
-
+/*
 	// 承認ルートの取得
 	$lngWorkflowOrderCode = fncGetMasterValue( "m_workflow", "strworkflowkeycode", "lngworkflowordercode", $aryResult["lngproductno"].":str", '', $objDB );
 
@@ -1104,7 +1101,7 @@
 	{
 		$aryResult["lngWorkflowOrderCode"] = fncWorkFlow( $lngInputUserCode , $objDB , $lngWorkflowOrderCode );
 	}
-
+*/
 	//-------------------------------------------------------------------------
 	// イメージファイルの取得処理
 	//-------------------------------------------------------------------------
@@ -1126,6 +1123,8 @@
 	$aryResult["strActionURL"] = 'renew.php?strProductCode=$strProductCode&strSessionID=$aryData["strSessionID"]';
 
 	$aryResult["strSessionID"] = $aryData["strSessionID"];
+	$aryResult["lngLanguageCode"] = $aryData["lngLanguageCode"];
+	$aryResult["strProductCode"]    = $aryData["strProductCode"];
 	$aryResult["RENEW"] = TRUE;
 
 	// submit関数
@@ -1158,8 +1157,6 @@ if( $lngImageCnt )
 
 // debug file出力
 //fncDebug("p_renew.txt", fncGetReplacedHtml( "p/regist/parts.tmpl", $aryResult, $objAuth ), __FILE__, __LINE__ );
-
-
 
 	echo fncGetReplacedHtml( "p/regist/parts.tmpl", $aryResult, $objAuth );
 

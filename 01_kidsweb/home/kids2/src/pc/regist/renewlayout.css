@@ -256,8 +256,8 @@
 #DataOpenBt
 {
 	position : absolute ;
-	left : 505px ;
-	top : 44px ;
+	left : 595px ;
+	top : 43px ;
 	border-width: 0px ;
 	border-style: none ;
 	background-color: transparent ;
@@ -281,9 +281,9 @@
 /* START HEADER */
 #SegAHeader {
 	position : absolute ;
-	left : 0px ;
+	left : 61px ;
 	top : 0px ;
-	width : 766px ;
+	width : 927px ;
 	height : 30px ;
 	border-width: 0px ;
 	border-style: none ;
@@ -294,14 +294,15 @@
 
 /* START BODYS */
 #SegABodys {
-	left : 10px ;
-	top : 31px ;
-	width : 927px ;
-	height : 310px ;
+	position: absolute ;
+	left : 61px ;
+	top : 30px ;
+	width : 925px ;
+	height : 218px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #cdcdcd ;
-	background-color: #ffffff ;
+	background-color: #d6d0b1 ;
 }
 /* END BODYS */
 
@@ -309,13 +310,13 @@
 /* START BOTTOM */
 #SegABottom {
 	position : absolute ;
-	left : 0px ;
-	top : 308px ;
+	left : 61px ;
+	top : 250px ;
 	width : 766px ;
-	height : 7px ;
+	height : 10px ;
 	border-width: 0px ;
 	border-style: none ;
-	background-color: #ffffff ;
+	background-color:  #d6d0b1;
 }
 /* END BOTTOM */
 
@@ -324,10 +325,10 @@
 #SegA01 {
 	font-weight : bold ;
 	position : absolute ;
-	left : 10px ;
-	top : 40px ;
+	left : 65px ;
+	top : 38px ;
 	width : 120px ;
-	height : 27px ;
+	height : 19px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #798787 ;
@@ -338,10 +339,10 @@
 #SegA14 {
 	font-weight : bold ;
 	position : absolute ;
-	left : 10px ;
+	left : 64px ;
 	top : 70px ;
 	width : 120px ;
-	height : 27px ;
+	height : 17px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #798787 ;
@@ -352,10 +353,10 @@
 #SegA02 {
 	font-weight : bold ;
 	position : absolute ;
-	left : 258px ;
-	top : 40px ;
+	left : 329px ;
+	top : 38px ;
 	width : 120px ;
-	height : 27px ;
+	height : 18px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #798787 ;
@@ -367,10 +368,10 @@
 	font-weight : bold ;
 	color : #666666 ;
 	position : absolute ;
-	left : 258px ;
+	left : 329px ;
 	top : 70px ;
 	width : 120px ;
-	height : 27px ;
+	height : 17px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #798787 ;
@@ -381,10 +382,10 @@
 #SegA03 {
 	font-weight : bold ;
 	position : absolute ;
-	left : 10px ;
-	top : 110px ;
-	width : 120px ;
-	height : 27px ;
+	left : 65px ;
+	top : 101px ;
+	width : 123px ;
+	height : 20px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #798787 ;
@@ -435,10 +436,10 @@
 #SegA11 {
 	font-weight : bold ;
 	position : absolute ;
-	left : 10px ;
-	top : 204px ;
-	width : 170px ;
-	height : 27px ;
+	left : 65px ;
+	top : 137px ;
+	width : 130px ;
+	height : 22px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #798787 ;
@@ -449,10 +450,10 @@
 #SegA12 {
 	font-weight : bold ;
 	position : absolute ;
-	left : 10px ;
-	top : 248px ;
-	width : 120px ;
-	height : 27px ;
+	left : 65px ;
+	top : 173px ;
+	width : 124px ;
+	height : 22px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #798787 ;
@@ -463,10 +464,10 @@
 #SegA13 {
 	font-weight : bold ;
 	position : absolute ;
-	left : 10px ;
-	top : 278px ;
+	left : 65px ;
+	top : 210px ;
 	width : 120px ;
-	height : 27px ;
+	height : 22px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #798787 ;
@@ -477,10 +478,10 @@
 #SegA06 {
 	font-weight : bold ;
 	position : absolute ;
-	left : 712px ;
-	top : 40px ;
+	left : 767px ;
+	top : 38px ;
 	width : 100px ;
-	height : 27px ;
+	height : 18px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #798787 ;
@@ -491,10 +492,10 @@
 #SegA07 {
 	font-weight : bold ;
 	position : absolute ;
-	left : 712px ;
+	left : 767px ;
 	top : 70px ;
 	width : 100px ;
-	height : 27px ;
+	height : 17px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #798787 ;
@@ -505,10 +506,10 @@
 #SegA08 {
 	font-weight : bold ;
 	position : absolute ;
-	left : 712px ;
+	left : 767px ;
 	top : 100px ;
 	width : 100px ;
-	height : 27px ;
+	height : 17px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #798787 ;
@@ -519,10 +520,10 @@
 #SegA09 {
 	font-weight : bold ;
 	position : absolute ;
-	left : 712px ;
+	left : 767px ;
 	top : 130px ;
 	width : 100px ;
-	height : 27px ;
+	height : 16px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #798787 ;
@@ -533,10 +534,10 @@
 #SegA10 {
 	font-weight : bold ;
 	position : absolute ;
-	left : 712px ;
+	left : 767px ;
 	top : 160px ;
 	width : 100px ;
-	height : 27px ;
+	height : 15px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #798787 ;
@@ -549,9 +550,9 @@
 /* START VARS */
 #VarsA01 {
 	position : absolute ;
-	left : 129px ;
-	top : 40px ;
-	height : 27px ;
+	left : 195px ;
+	top : 38px ;
+	height : 24px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #798787 #798787 #ffffff ;
@@ -561,9 +562,9 @@
 
 #VarsA14 {
 	position : absolute ;
-	left : 129px ;
+	left : 194px ;
 	top : 70px ;
-	height : 27px ;
+	height : 22px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #ffffff ;
@@ -573,9 +574,10 @@
 
 #VarsA02 {
 	position : absolute ;
-	left : 376px ;
-	top : 40px ;
-	height : 27px ;
+	left : 459px ;
+	top : 38px ;
+	width: 150px;
+	height : 23px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #ffffff ;
@@ -585,9 +587,9 @@
 
 #VarsA15 {
 	position : absolute ;
-	left : 376px ;
+	left : 459px ;
 	top : 70px ;
-	height : 27px ;
+	height : 22px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #ffffff ;
@@ -597,14 +599,15 @@
 
 #VarsA03 {
 	position : absolute ;
-	left : 129px ;
-	top : 110px ;
-	height : 27px ;
+	left : 196px ;
+	top : 101px ;
+	width: 450px;
+	height : 23px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #ffffff ;
 	background-color: #ffffff ;
-	padding : 3px 33px 0px 8px ;
+	padding : 4px 33px 0px 8px ;
 }
 
 
@@ -636,59 +639,60 @@
 
 #VarsA11 {
 	position : absolute ;
-	left : 171px ;
-	top : 204px ;
-	height : 27px ;
+	left : 198px ;
+	top : 137px ;
+	width: 450px ;
+	height : 23px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #ffffff ;
 	background-color: #ffffff ;
-	padding : 3px 33px 0px 8px ;
+	padding : 7px 33px 0px 8px ;
 }
 
 
 #VarsA12 {
 	position : absolute ;
-	left : 129px ;
-	top : 248px ;
-	height : 27px ;
+	left : 197px ;
+	top : 173px ;
+	height : 24px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #ffffff ;
 	background-color: #ffffff ;
-	padding : 3px 35px 0px 8px ;
+	padding : 6px 35px 0px 8px ;
 }
 
 #VarsA13 {
 	position : absolute ;
-	left : 129px ;
-	top : 278px ;
-	height : 27px ;
+	left : 192px ;
+	top : 210px ;
+	height : 24px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #ffffff ;
 	background-color: #ffffff ;
-	padding : 3px 0px 0px 8px ;
+	padding : 6px 0px 0px 8px ;
 }
 
 
 #VarsA06 {
 	position : absolute ;
-	left : 811px ;
-	top : 40px ;
-	height : 27px ;
+	left : 875px ;
+	top : 38px ;
+	height : 22px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #798787 #798787 #ffffff ;
 	background-color: #ffffff ;
-	padding : 3px 0px 0px 8px ;
+	padding : 4px 0px 0px 8px ;
 }
 
 #VarsA07 {
 	position : absolute ;
-	left : 811px ;
+	left : 875px ;
 	top : 70px ;
-	height : 27px ;
+	height : 22px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #798787 #798787 #ffffff ;
@@ -698,9 +702,9 @@
 
 #VarsA08 {
 	position : absolute ;
-	left : 811px ;
+	left : 875px ;
 	top : 100px ;
-	height : 27px ;
+	height : 22px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #798787 #798787 #ffffff ;
@@ -710,9 +714,9 @@
 
 #VarsA09 {
 	position : absolute ;
-	left : 811px ;
+	left : 875px ;
 	top : 130px ;
-	height : 27px ;
+	height : 21px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #798787 #798787 #ffffff ;
@@ -722,9 +726,9 @@
 
 #VarsA10 {
 	position : absolute ;
-	left : 811px ;
+	left : 875px ;
 	top : 160px ;
-	height : 27px ;
+	height : 20px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #798787 #798787 #ffffff ;
@@ -1496,9 +1500,8 @@
 #InputC {
 	position : absolute ;
 	left : 5px ;
-	top : 374px ;
+	top : 291px ;
 	z-index : 0 ;
-	visibility: hidden ;
 	border-width: 0px ;
 	border-style: none ;
 	background-color: transparent ;
@@ -1509,7 +1512,7 @@
 /* START HEADER */
 #SegCHeader {
 	position : absolute ;
-	left : 0px ;
+	left : 61px ;
 	top : 0px ;
 	width : 766px ;
 	height : 30px ;
@@ -1522,10 +1525,11 @@
 
 /* START BODYS */
 #SegCBodys {
-	left : 190px ;
-	top : 500px ;
-	width : 927px ;
-	height : 153px ;
+	position: absolute ;
+	left : 61px ;
+	top : 30px ;
+	width : 925px ;
+	height : 190px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #cdcdcd ;
@@ -1537,10 +1541,10 @@
 /* START BOTTOM */
 #SegCBottom {
 	position : absolute ;
-	left : 0px ;
-	top : 152px ;
+	left : 61px ;
+	top : 221px ;
 	width : 766px ;
-	height : 7px ;
+	height : 11px ;
 	border-width: 0px ;
 	border-style: none ;
 	background-color: #ffffff ;
@@ -1551,8 +1555,8 @@
 /* START SEGMENTS */
 #SegC01 {
 	position : absolute ;
-	left : 8px ;
-	top : 39px ;
+	left : 69px ;
+	top : 38px ;
 	border-width: 0px ;
 	border-style: none ;
 	background-color: transparent ;
@@ -1560,7 +1564,7 @@
 
 #SegCIFrm {
 	width : 910 ;
-	height : 110 ;
+	height : 180 ;
 }
 /* END SEGMENTS */
 /************************************** END INPUT C **************************************/
@@ -1649,8 +1653,8 @@
 /* START REGIST BUTTON */
 #RegistBt {
 	position : absolute ;
-	top : 333px ;
-	left : 830px ;
+	top : 542px ;
+	left : 884px ;
 	width : 72px ;
 	height : 21px ;
 	border-width: 0px ;
@@ -1701,7 +1705,7 @@
 /********************* START DATE BUTTON *********************/
 #DateBtA {
 	position : absolute ;
-	left : 227px ;
+	left : 291px ;
 	top : 44px ;
 	width : 19px ;
 	height : 19px ;
@@ -1712,8 +1716,8 @@
 
 #DateBtB {
 	position : absolute ;
-	left : 227px ;
-	top : 252px ;
+	left : 294px ;
+	top : 180px ;
 	width : 19px ;
 	height : 19px ;
 	border-width : 0px ;
@@ -1775,8 +1779,8 @@
 /* START [SUPPLIER] BUTTON */
 #MSWBt08 {
 	position : absolute ;
-	left : 569px ;
-	top : 114px ;
+	left : 645px ;
+	top : 104px ;
 	width : 19px ;
 	height : 19px ;
 	border-width : 0px ;
@@ -1817,8 +1821,8 @@
 /* START [LOCATION] BUTTON */
 #MSWBt04 {
 	position : absolute ;
-	left : 569px ;
-	top : 208px ;
+	left : 646px ;
+	top : 144px ;
 	width : 19px ;
 	height : 19px ;
 	border-width : 0px ;

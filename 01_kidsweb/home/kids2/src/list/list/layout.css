@@ -5,8 +5,8 @@
 }
 .navi-area {
     position: absolute;
-    top: 1px;
-    left: 11px;
+    top: -95px;
+    left: 0px;
     width: 186px;
     height: 550px;
     z-index : 4 ;

@@ -1122,7 +1122,7 @@ function fncSetStockHeadTable ( $lngColumnCount, $aryHeadResult, $aryDetailResul
 					}
 					else
 					{
-						$aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/renew_off_bt.gif\" lngstockno=\"" . $aryDetailResult[$i]["lngstockno"] . "\" class=\"detail button\"></td>\n";
+						$aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/renew_off_bt.gif\" lngstockno=\"" . $aryDetailResult[$i]["lngstockno"] . "\" class=\"renew button\"></td>\n";
 					}
 				}
 
@@ -1141,7 +1141,7 @@ function fncSetStockHeadTable ( $lngColumnCount, $aryHeadResult, $aryDetailResul
 							and !$bytDeleteFlag )
 
 						{
-							$aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/remove_off_bt.gif\" lngstockno=\"" . $aryDetailResult[$i]["lngstockno"] . "\" class=\"detail button\"></td>\n";
+							$aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/remove_off_bt.gif\" lngstockno=\"" . $aryDetailResult[$i]["lngstockno"] . "\" class=\"delete button\"></td>\n";
 						}
 						else
 						{

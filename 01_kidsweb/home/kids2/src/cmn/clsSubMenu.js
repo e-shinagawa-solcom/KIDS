@@ -39,6 +39,7 @@
 				g_aryMenuPos['sc']		= new Array();
 				g_aryMenuPos['pc']		= new Array();
 				g_aryMenuPos['wf']		= new Array();
+				g_aryMenuPos['inv']		= new Array();
 				g_aryMenuPos['list']	= new Array();
 				g_aryMenuPos['mm']		= new Array();
 				g_aryMenuPos['mr']		= new Array();
@@ -64,17 +65,20 @@
 
 				g_aryMenuPos['wf'][0]	= 24;
 				g_aryMenuPos['wf'][1]	= 424;
+				
+				g_aryMenuPos['inv'][0]	= 24;
+				g_aryMenuPos['inv'][1]	= 424;
 
-				g_aryMenuPos['list'][0]	= 104;
+				g_aryMenuPos['list'][0]	= 184;
 				g_aryMenuPos['list'][1]	= 424;
 
-				g_aryMenuPos['mm'][0]	= 424;
+				g_aryMenuPos['mm'][0]	= 504;
 				g_aryMenuPos['mm'][1]	= 424;
 
-				g_aryMenuPos['mr'][0]	= 584;
+				g_aryMenuPos['mr'][0]	= 664;
 				g_aryMenuPos['mr'][1]	= 424;
 				
-				g_aryMenuPos['lc'][0]	= 744;
+				g_aryMenuPos['lc'][0]	= 824;
 				g_aryMenuPos['lc'][1]	= 424;
 			}
 		}
@@ -99,6 +103,7 @@
 				g_arySubMenu['sc']		= new Array();
 				g_arySubMenu['pc']		= new Array();
 				g_arySubMenu['wf']		= new Array();
+				g_arySubMenu['inv']		= new Array();
 				g_arySubMenu['list']	= new Array();
 				g_arySubMenu['mm']		= new Array();
 				g_arySubMenu['mr']		= new Array();
@@ -152,21 +157,29 @@
 						g_arySubMenu['so'][0]	= '¼õÃíÅĞÏ¿';
 						g_arySubMenu['so'][1]	= '¼õÃí¸¡º÷';
 
-						g_arySubMenu['po'][0]	= 'È¯ÃíÅĞÏ¿';
-						g_arySubMenu['po'][1]	= 'È¯Ãí¸¡º÷';
+						g_arySubMenu['po'][0]	= 'È¯Ãí¸¡º÷';
+						g_arySubMenu['po'][1]	= 'È¯Ãí½ñ½¤Àµ';
 
-						g_arySubMenu['sc'][0]	= 'Çä¾åÅĞÏ¿';
+						g_arySubMenu['sc'][0]	= 'Çä¾å(Ç¼ÉÊ½ñ)ÅĞÏ¿';
 						g_arySubMenu['sc'][1]	= 'Çä¾å¸¡º÷';
+						g_arySubMenu['sc'][2]	= 'Ç¼ÉÊ½ñ¸¡º÷';
 
 						g_arySubMenu['pc'][0]	= '»ÅÆşÅĞÏ¿';
 						g_arySubMenu['pc'][1]	= '»ÅÆş¸¡º÷';
 
 						g_arySubMenu['wf'][0]	= '°Æ·ï°ìÍ÷';
 						g_arySubMenu['wf'][1]	= '°Æ·ï¸¡º÷';
+						
+						g_arySubMenu['inv'][0]	= 'ÀÁµá½ñÈ¯¹Ô';
+						g_arySubMenu['inv'][1]	= 'ÀÁµá½ñ¸¡º÷';
+						g_arySubMenu['inv'][2]	= 'ÀÁµá½¸·×';
 
 						g_arySubMenu['list'][0]	= '¾¦ÉÊ²½´ë²è½ñ';
 						g_arySubMenu['list'][1]	= 'È¯Ãí½ñ';
 						g_arySubMenu['list'][2]	= '¸«ÀÑ¸¶²Á½ñ';
+						g_arySubMenu['list'][3]	= '¶â·¿°ÍÍê½ñ';
+						g_arySubMenu['list'][4]	= 'Ç¼ÉÊÅÁÉ¼';
+						g_arySubMenu['list'][5]	= 'ÀÁµá½ñ';
 
 						g_arySubMenu['mm'][0]	= '¶â·¿ÍúÎòÅĞÏ¿';
 						g_arySubMenu['mm'][1]	= '¶â·¿ÍúÎò¸¡º÷';
@@ -177,6 +190,7 @@
 						g_arySubMenu['lc'][0]	= 'L/C ¾ğÊó';
 						g_arySubMenu['lc'][1]	= 'L/C ÀßÄêÊÑ¹¹';
 						g_arySubMenu['lc'][2]	= 'L/C ÊÔ½¸';
+						g_arySubMenu['lc'][3]	= 'L/CÄ¢É¼½ĞÎÏ';
 						break;
 
 					default:

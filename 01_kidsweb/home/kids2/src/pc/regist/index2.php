@@ -280,14 +280,14 @@
 	$aryQuery[] = "lngrevisionno, ";													// 2:リビジョン番号
 	$aryQuery[] = "strstockcode, ";														// 3:仕入コード / yymmxxx 年月連番で構成された7桁の番号
 	$aryQuery[] = "lngorderno, ";														// 4:発注番号 
-	$aryQuery[] = "dtmappropriationdate, ";												// 5:計上日
+	$aryQuery[] = "dtmappropriationdate, ";												// 5:仕入日
 	$aryQuery[] = "lngcustomercompanycode, ";											// 6:仕入先コード 
 	//$aryQuery[] = "lnggroupcode, ";														// 7:部門コード
 	//$aryQuery[] = "lngusercode, ";														// 8:担当者コード 
 	$aryQuery[] = "lngstockstatuscode, ";												// 9:仕入状態コード
 	$aryQuery[] = "lngmonetaryunitcode, ";												// 10:通貨単位コード
 	$aryQuery[] = "lngmonetaryratecode, ";												// 11:通貨レートコード
-	$aryQuery[] = "curconversionrate, ";												// 12:換算レート 
+	$aryQuery[] = "curconversionrate, ";												// 12:適用レート 
 	$aryQuery[] = "lngpayconditioncode, ";												// 13:支払い条件
 	$aryQuery[] = "strslipcode, ";														// 14:伝票コード 
 	$aryQuery[] = "curtotalprice, ";													// 15:合計金額
@@ -368,7 +368,7 @@
 	}
 	if ( $aryNewData["curConversionRate"] != "" )
 	{
-		$aryQuery[] = $aryNewData["curConversionRate"].", ";								// 12:換算レート 
+		$aryQuery[] = $aryNewData["curConversionRate"].", ";								// 12:適用レート 
 	}
 	else
 	{
@@ -430,10 +430,10 @@
 
 
 
-	// 確認画面より税率のコードが渡されない場合はその時の計上日より再度取得しなおす
+	// 確認画面より税率のコードが渡されない場合はその時の仕入日より再度取得しなおす
 	// 明細行用に消費税コードを取得する
 	// 消費税コード
-	// 計上日よりその時の税率をもとめる
+	// 仕入日よりその時の税率をもとめる
 	$strQuery = "SELECT lngtaxcode, curtax, MAX(dtmapplystartdate) "
 		. "FROM m_tax "
 		. "WHERE dtmapplystartdate <= '" . $aryNewData["dtmOrderAppDate"] . "' "

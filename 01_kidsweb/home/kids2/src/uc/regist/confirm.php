@@ -270,7 +270,6 @@ if ( $aryData["strPassword"] )
 	$aryData["strPasswordCheck"] = MD5 ( $aryData["strPasswordCheck"] );
 }
 
-
 //////////////////////////////////////////////////////////////////////////
 // ユーザー設定、ユーザー修正の場合、現状のユーザーデータ取得
 //////////////////////////////////////////////////////////////////////////
@@ -387,11 +386,12 @@ if ( $aryData["lngFunctionCode"] == DEF_FUNCTION_UC1 || $aryData["lngFunctionCod
 		$flgMatchDelete = 0;
 	}
 	$objDB->freeResult( $lngResultID );
-
+/*
 	// 所属を離れたグループがワークフローオーダーに存在していた場合、エラー
 	if ( $flgMatchArray )
 	{
 		$strQuery = "SELECT lngWorkflowOrderGroupCode FROM m_WorkflowOrder WHERE lngInChargeCode = " . $aryUserData["lngUserCode"] . " AND (" . join ( " OR", $aryGroupCodeDelete ) . ") AND bytWorkflowOrderDisplayFlag = TRUE\n";
+
 		list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 		if ( $lngResultNum > 0 )
 		{
@@ -402,7 +402,7 @@ if ( $aryData["lngFunctionCode"] == DEF_FUNCTION_UC1 || $aryData["lngFunctionCod
 			$lngErrorCount++;
 		}
 	}
-
+*/
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -412,6 +412,7 @@ if ( $aryData["lngFunctionCode"] == DEF_FUNCTION_UC1 || $aryData["lngFunctionCod
 // 権限グループを変更し、ワークフロー順番に含まれていた場合
 // エラーとする
 //////////////////////////////////////////////////////////////////////////
+/*
 if ( $aryData["lngFunctionCode"] == DEF_FUNCTION_UC5 && ( ( $aryData["bytInvalidFlag"] != $aryUserData["bytInvalidFlag"] && $aryData["bytInvalidFlag"] == "" ) || ( $aryData["lngAuthorityGroupCode"] != $aryUserData["lngAuthorityGroupCode"] && ( $aryData["lngAuthorityGroupCode"] > 2 && $aryData["lngAuthorityGroupCode"] < 6 ) ) ) )
 {
 	$strQuery = "SELECT lngWorkflowOrderCode FROM m_WorkflowOrder WHERE lngInChargeCode = " . $aryData["lngUserCode"];
@@ -437,6 +438,7 @@ if ( $aryData["lngFunctionCode"] == DEF_FUNCTION_UC5 && ( ( $aryData["bytInvalid
 		$lngErrorCount++;
 	}
 }
+*/
 
 
 // パスワードチェック
@@ -500,11 +502,12 @@ if ( $_FILES['binUserPic']['name'] != "" && preg_match ( "/image\/(" . USER_IMAG
 		$lngErrorCount++;
 	}
 }
-
 //////////////////////////////////////////////////////////////////////////
 // 結果取得、出力処理
 //////////////////////////////////////////////////////////////////////////
 // 文字列チェックにエラーがある場合、入力画面に戻る
+
+
 
 //エラーがあったら
 if( $lngErrorCount > 0 )
@@ -526,7 +529,6 @@ else
 	echo "</form>\n";
 	echo "<script language=\"javascript\">document.forms[0].submit();</script>";
 }
-
 
 
 /*

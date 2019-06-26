@@ -259,8 +259,8 @@
 #DataOpenBt
 {
 	position : absolute ;
-	left : 505px ;
-	top : 44px ;
+	left : 526px ;
+	top : 48px ;
 	border-width: 0px ;
 	border-style: none ;
 	background-color: transparent ;
@@ -271,7 +271,7 @@
 #InputA {
 	position : absolute ;
 	left : 34px ;
-	top : 111px ;
+	top : 98px ;
 	z-index : 0 ;
 	visibility : visible ;
 	border-width: 0px ;
@@ -284,9 +284,9 @@
 /* START HEADER */
 #SegAHeader {
 	position : absolute ;
-	left : 0px ;
+	left : 10px ;
 	top : 0px ;
-	width : 766px ;
+	width : 770px ;
 	height : 30px ;
 	border-width: 0px ;
 	border-style: none ;
@@ -297,14 +297,15 @@
 
 /* START BODYS */
 #SegABodys {
+	position: absolute;
 	left : 10px ;
-	top : 31px ;
-	width : 927px ;
-	height : 310px ;
+	top : 30px ;
+	width : 925px ;
+	height : 245px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #cdcdcd ;
-	background-color: #ffffff ;
+	background-color: #d6d0b1 ;
 }
 /* END BODYS */
 
@@ -312,13 +313,12 @@
 /* START BOTTOM */
 #SegABottom {
 	position : absolute ;
-	left : 0px ;
-	top : 308px ;
-	width : 766px ;
-	height : 7px ;
+	left : 10px ;
+	top : 272px ;
+	height : 11px ;
 	border-width: 0px ;
 	border-style: none ;
-	background-color: #ffffff ;
+	background-color: #d6d0b1 ;
 }
 /* END BOTTOM */
 
@@ -327,10 +327,10 @@
 #SegA01 {
 	font-weight : bold ;
 	position : absolute ;
-	left : 10px ;
+	left : 20px ;
 	top : 40px ;
 	width : 120px ;
-	height : 27px ;
+	height : 22px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #798787 ;
@@ -341,10 +341,10 @@
 #SegA14 {
 	font-weight : bold ;
 	position : absolute ;
-	left : 10px ;
-	top : 70px ;
-	width : 120px ;
-	height : 27px ;
+	left : 20px ;
+	top : 77px ;
+	width : 135px ;
+	height : 23px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #798787 ;
@@ -355,10 +355,10 @@
 #SegA02 {
 	font-weight : bold ;
 	position : absolute ;
-	left : 258px ;
+	left : 270px ;
 	top : 40px ;
 	width : 120px ;
-	height : 27px ;
+	height : 22px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #798787 ;
@@ -370,29 +370,29 @@
 	font-weight : bold ;
 	color : #666666 ;
 	position : absolute ;
-	left : 258px ;
-	top : 70px ;
-	width : 120px ;
-	height : 27px ;
+	left : 270px ;
+	top : 77px ;
+	width : 135px ;
+	height : 21px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #798787 ;
 	background-color: #ffffff ;
-	padding : 8px 0px 0px 8px ;
+	padding : 10px 0px 0px 8px ;
 }
 
 #SegA03 {
 	font-weight : bold ;
 	position : absolute ;
-	left : 10px ;
-	top : 110px ;
-	width : 120px ;
-	height : 27px ;
+	left : 20px ;
+	top : 116px ;
+	width : 135px ;
+	height : 20px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #798787 ;
 	background-color: #ffffff ;
-	padding : 8px 0px 0px 8px ;
+	padding : 10px 0px 0px 8px ;
 }
 
 #SegA04 {
@@ -438,10 +438,10 @@
 #SegA11 {
 	font-weight : bold ;
 	position : absolute ;
-	left : 10px ;
-	top : 204px ;
+	left : 20px ;
+	top : 154px ;
 	width : 170px ;
-	height : 27px ;
+	height : 22px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #798787 ;
@@ -452,10 +452,10 @@
 #SegA12 {
 	font-weight : bold ;
 	position : absolute ;
-	left : 10px ;
-	top : 248px ;
+	left : 20px ;
+	top : 192px ;
 	width : 120px ;
-	height : 27px ;
+	height : 23px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #798787 ;
@@ -466,10 +466,10 @@
 #SegA13 {
 	font-weight : bold ;
 	position : absolute ;
-	left : 10px ;
-	top : 278px ;
+	left : 20px ;
+	top : 231px ;
 	width : 120px ;
-	height : 27px ;
+	height : 22px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #798787 ;
@@ -483,7 +483,7 @@
 	left : 712px ;
 	top : 40px ;
 	width : 100px ;
-	height : 27px ;
+	height : 19px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #798787 ;
@@ -495,9 +495,9 @@
 	font-weight : bold ;
 	position : absolute ;
 	left : 712px ;
-	top : 70px ;
+	top : 74px ;
 	width : 100px ;
-	height : 27px ;
+	height : 19px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #798787 ;
@@ -509,42 +509,42 @@
 	font-weight : bold ;
 	position : absolute ;
 	left : 712px ;
-	top : 100px ;
+	top : 107px ;
 	width : 100px ;
-	height : 27px ;
+	height : 18px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #798787 ;
 	background-color: #ffffff ;
-	padding : 8px 0px 0px 8px ;
+	padding : 7px 0px 0px 8px ;
 }
 
 #SegA09 {
 	font-weight : bold ;
 	position : absolute ;
 	left : 712px ;
-	top : 130px ;
+	top : 139px ;
 	width : 100px ;
-	height : 27px ;
+	height : 18px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #798787 ;
 	background-color: #ffffff ;
-	padding : 8px 0px 0px 8px ;
+	padding : 7px 0px 0px 8px ;
 }
 
 #SegA10 {
 	font-weight : bold ;
 	position : absolute ;
 	left : 712px ;
-	top : 160px ;
+	top : 171px ;
 	width : 100px ;
-	height : 27px ;
+	height : 18px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #798787 ;
 	background-color: #ffffff ;
-	padding : 8px 0px 0px 8px ;
+	padding : 7px 0px 0px 8px ;
 }
 /* END SEGMENTS */
 
@@ -554,60 +554,62 @@
 	position : absolute ;
 	left : 129px ;
 	top : 40px ;
-	height : 27px ;
+	height : 23px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #798787 #798787 #ffffff ;
 	background-color: #ffffff ;
-	padding : 3px 35px 0px 8px ;
+	padding : 7px 35px 0px 8px ;
 }
 
 #VarsA14 {
 	position : absolute ;
-	left : 129px ;
-	top : 70px ;
-	height : 27px ;
+	left : 128px ;
+	top : 77px ;
+	height : 24px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #ffffff ;
 	background-color: #ffffff ;
-	padding : 3px 0px 0px 8px ;
+	padding : 7px 0px 0px 8px ;
 }
 
 #VarsA02 {
 	position : absolute ;
-	left : 376px ;
+	left : 400px ;
 	top : 40px ;
-	height : 27px ;
+	height : 23px ;
+	width: 120px;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #ffffff ;
 	background-color: #ffffff ;
-	padding : 3px 32px 0px 8px ;
+	padding : 7px 32px 0px 8px ;
 }
 
 #VarsA15 {
 	position : absolute ;
-	left : 376px ;
-	top : 70px ;
-	height : 27px ;
+	left : 400px ;
+	top : 77px ;
+	height : 24px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #ffffff ;
 	background-color: #ffffff ;
-	padding : 3px 0px 0px 8px ;
+	padding : 7px 3px 0px 8px ;
 }
 
 #VarsA03 {
 	position : absolute ;
 	left : 129px ;
-	top : 110px ;
-	height : 27px ;
+	top : 116px ;
+	height : 23px ;
+	width: 435px;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #ffffff ;
 	background-color: #ffffff ;
-	padding : 3px 33px 0px 8px ;
+	padding : 7px 33px 0px 8px ;
 }
 
 
@@ -639,39 +641,40 @@
 
 #VarsA11 {
 	position : absolute ;
-	left : 171px ;
-	top : 204px ;
-	height : 27px ;
+	left : 164px ;
+	top : 154px ;
+	height : 23px ;
+	width : 395px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #ffffff ;
 	background-color: #ffffff ;
-	padding : 3px 33px 0px 8px ;
+	padding : 7px 33px 0px 15px ;
 }
 
 
 #VarsA12 {
 	position : absolute ;
-	left : 129px ;
-	top : 248px ;
-	height : 27px ;
+	left : 130px ;
+	top : 192px ;
+	height : 23px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #ffffff ;
 	background-color: #ffffff ;
-	padding : 3px 35px 0px 8px ;
+	padding : 8px 35px 0px 8px ;
 }
 
 #VarsA13 {
 	position : absolute ;
 	left : 129px ;
-	top : 278px ;
-	height : 27px ;
+	top : 231px ;
+	height : 24px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #ffffff ;
 	background-color: #ffffff ;
-	padding : 3px 0px 0px 8px ;
+	padding : 6px 0px 0px 8px ;
 }
 
 
@@ -679,60 +682,60 @@
 	position : absolute ;
 	left : 811px ;
 	top : 40px ;
-	height : 27px ;
+	height : 22px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #798787 #798787 #ffffff ;
 	background-color: #ffffff ;
-	padding : 3px 0px 0px 8px ;
+	padding : 5px 0px 0px 8px ;
 }
 
 #VarsA07 {
 	position : absolute ;
 	left : 811px ;
-	top : 70px ;
-	height : 27px ;
+	top : 74px ;
+	height : 21px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #798787 #798787 #ffffff ;
 	background-color: #ffffff ;
-	padding : 3px 0px 0px 8px ;
+	padding : 6px 0px 0px 8px ;
 }
 
 #VarsA08 {
 	position : absolute ;
 	left : 811px ;
-	top : 100px ;
-	height : 27px ;
+	top : 107px ;
+	height : 21px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #798787 #798787 #ffffff ;
 	background-color: #ffffff ;
-	padding : 3px 0px 0px 8px ;
+	padding : 4px 0px 0px 8px ;
 }
 
 #VarsA09 {
 	position : absolute ;
 	left : 811px ;
-	top : 130px ;
-	height : 27px ;
+	top : 139px ;
+	height : 21px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #798787 #798787 #ffffff ;
 	background-color: #ffffff ;
-	padding : 3px 0px 0px 8px ;
+	padding : 4px 0px 0px 8px ;
 }
 
 #VarsA10 {
 	position : absolute ;
 	left : 811px ;
-	top : 160px ;
-	height : 27px ;
+	top : 171px ;
+	height : 21px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #798787 #798787 #ffffff ;
 	background-color: #ffffff ;
-	padding : 3px 0px 0px 8px ;
+	padding : 4px 0px 0px 8px ;
 }
 /* END VARS */
 /************************************** END INPUT A **************************************/
@@ -1498,10 +1501,10 @@
 /* START INPUT C SEGMENTS */
 #InputC {
 	position : absolute ;
-	left : 34px ;
-	top : 470px ;
+	left : 43px ;
+	top : 389px ;
 	z-index : 0 ;
-	visibility: hidden ;
+	visibility: visible ;
 	border-width: 0px ;
 	border-style: none ;
 	background-color: transparent ;
@@ -1541,9 +1544,9 @@
 #SegCBottom {
 	position : absolute ;
 	left : 0px ;
-	top : 152px ;
-	width : 766px ;
-	height : 7px ;
+	top : 195px ;
+	width : 767px ;
+	height : 10px ;
 	border-width: 0px ;
 	border-style: none ;
 	background-color: #ffffff ;
@@ -1553,17 +1556,23 @@
 
 /* START SEGMENTS */
 #SegC01 {
-	position : absolute ;
-	left : 8px ;
-	top : 39px ;
-	border-width: 0px ;
-	border-style: none ;
-	background-color: transparent ;
+	position: absolute;
+    left: 0px;
+    top: 30px;
+    width: 927px;
+    height: 165px;
+    border-width: 0px;
+    border-style: none;
+    background-color: transparent;
+    background-color: #d6d0b1;
 }
 
 #SegCIFrm {
-	width : 910 ;
-	height : 110 ;
+	width: 910px;
+    height: 145px;
+    position: absolute;
+    top: 10px;
+    left: 8px;
 }
 /* END SEGMENTS */
 /************************************** END INPUT C **************************************/
@@ -1652,8 +1661,8 @@
 /* START REGIST BUTTON */
 #RegistBt {
 	position : absolute ;
-	top : 333px ;
-	left : 830px ;
+	top : 506px ;
+	left : 832px ;
 	width : 72px ;
 	height : 21px ;
 	border-width: 0px ;
@@ -1704,8 +1713,8 @@
 /********************* START DATE BUTTON *********************/
 #DateBtA {
 	position : absolute ;
-	left : 227px ;
-	top : 44px ;
+	left : 223px ;
+	top : 48px ;
 	width : 19px ;
 	height : 19px ;
 	border-width : 0px ;
@@ -1715,8 +1724,8 @@
 
 #DateBtB {
 	position : absolute ;
-	left : 227px ;
-	top : 252px ;
+	left : 225px ;
+	top : 200px ;
 	width : 19px ;
 	height : 19px ;
 	border-width : 0px ;
@@ -1778,8 +1787,8 @@
 /* START [SUPPLIER] BUTTON */
 #MSWBt08 {
 	position : absolute ;
-	left : 569px ;
-	top : 114px ;
+	left : 571px ;
+	top : 123px ;
 	width : 19px ;
 	height : 19px ;
 	border-width : 0px ;
@@ -1820,8 +1829,8 @@
 /* START [LOCATION] BUTTON */
 #MSWBt04 {
 	position : absolute ;
-	left : 569px ;
-	top : 208px ;
+	left : 571px ;
+	top : 161px ;
 	width : 19px ;
 	height : 19px ;
 	border-width : 0px ;
