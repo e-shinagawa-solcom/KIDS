@@ -104,9 +104,7 @@
 
 		$aryData["lngSubRef_lc_0"]		= '/lc/info/index.php?strSessionID=' . $aryData["strSessionID"];
 		$aryData["lngSubRef_lc_1"]		= '/lc/set/index.php?strSessionID=' . $aryData["strSessionID"];
-		$aryData["lngSubRef_lc_2"]		= '/lc/mod/index.php?strSessionID=' . $aryData["strSessionID"];
-		$aryData["lngSubRef_lc_3"]		= '/lc/list/index.php?strSessionID=' . $aryData["strSessionID"];
-		
+
 		$aryData["lngSubRef_inv_0"]		= '/inv/regist/index.php?strSessionID=' . $aryData["strSessionID"];
 		$aryData["lngSubRef_inv_1"]		= '/inv/search/index.php?strSessionID=' . $aryData["strSessionID"];
 		$aryData["lngSubRef_inv_2"]		= '/inv/aggregate/index.php?strSessionID=' . $aryData["strSessionID"];
@@ -318,7 +316,7 @@
 		{
 			$aryData["lngSubFlag_lc_1"] = 0;
 		}
-		
+
 		//-------------------------------------------------------------------------
 		// 権限グループコード(ユーザー以下)チェック
 		//-------------------------------------------------------------------------
