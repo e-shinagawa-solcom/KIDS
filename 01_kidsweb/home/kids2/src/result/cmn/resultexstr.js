@@ -27,31 +27,31 @@ function fncTitleOutput( lngCode )
 
 
 // 日本語英語切替
-function fncChgEtoJ()
-{
+// function fncChgEtoJ()
+// {
 
-	// [lngLanguageCode]値取得
-	var g_lngCode = window.lngLangCode.value;
+// 	// [lngLanguageCode]値取得
+// 	var g_lngCode = window.lngLangCode.value;
 
-	// 英語切替
-	if( g_lngCode == 0 )
-	{
+// 	// 英語切替
+// 	if( g_lngCode == 0 )
+// 	{
 
-		fncTitleOutput( 0 );
+// 		fncTitleOutput( 0 );
 
-//		strError.innerText = 'SORRY: There is nothing corresponding.';
+// //		strError.innerText = 'SORRY: There is nothing corresponding.';
 
-	}
+// 	}
 
-	// 日本語切替
-	else if( g_lngCode == 1 )
-	{
+// 	// 日本語切替
+// 	else if( g_lngCode == 1 )
+// 	{
 
-		fncTitleOutput( 1 );
+// 		fncTitleOutput( 1 );
 
-//		strError.innerText = 'SORRY: 該当するものがありません。';
+// //		strError.innerText = 'SORRY: 該当するものがありません。';
 
-	}
+// 	}
 
-	return false;
-}
+// 	return false;
+// }

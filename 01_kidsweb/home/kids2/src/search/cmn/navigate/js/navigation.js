@@ -16,6 +16,10 @@
 	$('.navi-sc-search').on('click', function(){
 		$(location).attr('href', '/sc/search/index.php?strSessionID=' + sessionId);
 	});
+	// 仕入登録画面
+	$('.navi-pc-regist').on('click', function(){
+		$(location).attr('href','/pc/regist/index.php?strSessionID=' +sessionId);
+	});
 	// 仕入検索画面
 	$('.navi-pc-search').on('click', function(){
 		$(location).attr('href', '/pc/search/index.php?strSessionID=' + sessionId);

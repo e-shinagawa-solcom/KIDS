@@ -87,14 +87,14 @@
 	// 701 仕入管理（ 仕入登録）
 	if( fncCheckAuthority( DEF_FUNCTION_PC1, $objAuth ) )
 	{
-		$aryData["strRegistURL"]   = "regist/index.php?strSessionID=" . $aryData["strSessionID"];
+		$aryData["strRegistURL"]   = "pc/regist/index.php?strSessionID=" . $aryData["strSessionID"];
 	}
 
 
 	// 710 仕入管理（行追加・行削除）
 	if( !fncCheckAuthority( DEF_FUNCTION_PC10, $objAuth ) )
 	{
-		$aryData["adddelrowview"] = 'hidden';
+		$aryData["adddelrowview"] = 'visible';
 	}
 
 
@@ -502,9 +502,10 @@
 			}
 
 
-			$objDB->close();
+			
 
 			echo fncGetReplacedHtml( "/pc/regist/parts.tmpl", $aryData, $objAuth );
+			$objDB->close();
 			return true;
 		}
 	}
@@ -847,7 +848,7 @@
 	//-------------------------------------------------------------------------
 	// プルダウンメニューの生成
 	// 通貨
-	$aryData["lngMonetaryUnitCode"]   = fncPulldownMenu( 0, "\\", '', $objDB );
+	$aryData["lngMonetaryUnitCode"]   = fncPulldownMenu( 0, 0, '', $objDB );
 	// レートタイプ
 	$aryData["lngMonetaryRateCode"]   = fncPulldownMenu( 1, 0, '', $objDB );
 	// 支払条件

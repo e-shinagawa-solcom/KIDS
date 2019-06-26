@@ -4,36 +4,24 @@
 					<td class="Segs">_%lngrecordno%_</td>
 				</tr>
 				<tr> 
-					<td id="OrderNo" class="SegColumn" width="25%">発注番号</td>
-					<td class="Segs">_%lngorderno%_</td>
-				</tr>
-				<tr> 
-					<td id="OrderDetailNo" class="SegColumn" width="25%">発注明細番号_</td>
-					<td class="Segs">_%lngorderdetailno%_</td>
-				</tr>
-				<tr> 
 					<td id="ProductCode" class="SegColumn" width="25%">_%CNstrProductCode%_</td>
-					<td class="Segs">_%strproductcode%_</td>
+					<td class="Segs">_%strproductcode_DISCODE%_ _%strproductname%_</td>
 				</tr>
 				<tr> 
 					<td id="StockSubject" class="SegColumn" width="25%">_%CNlngStockSubjectCode%_</td>
-					<td class="Segs">_%lngstocksubjectcode%_</td>
+					<td class="Segs">_%strStockSubjectCode_DISCODE%_ _%strstocksubjectname%_</td>
 				</tr>
 				<tr> 
 					<td id="StockItem" class="SegColumn">_%CNlngStockItemCode%_</td>
-					<td class="Segs">_%lngstockitemcode%_</td>
-				</tr>
-				<tr> 
-					<td id="Injection" class="SegColumn">_%CNstrMoldNo%_</td>
-					<td class="Segs">_%strmoldno%_</td>
+					<td class="Segs">_%strStockItemCode_DISCODE%_ _%strstockitemname%_</td>
 				</tr>
 				<tr> 
 					<td id="GoodsCode" class="SegColumn">_%CNstrGoodsCode%_</td>
-					<td class="Segs">_%strgoodscode%_</td>
+					<td class="Segs">_%strgoodsname%_</td>
 				</tr>
 				<tr> 
 					<td id="DeliveryMethod" class="SegColumn" height="11">_%CNlngDeliveryMethodCode%_</td>
-					<td class="Segs" height="11">_%lngdeliverymethodcode%_</td>
+					<td class="Segs" height="11">_%strcarriername%_</td>
 				</tr>
 				<tr> 
 					<td id="DeliveryDate" class="SegColumn" height="11">_%CNdtmDeliveryDate%_</td>
@@ -41,23 +29,23 @@
 				</tr>
 				<tr> 
 					<td id="ProductPrice" class="SegColumn">_%CNcurProductPrice%_</td>
-					<td class="Segs">_%curproductprice%_</td>
+					<td class="Segs">_%strMonetaryrate%_ _%curproductprice_DIS%_</td>
 				</tr>
 				<tr> 
 					<td id="ProductUnit" class="SegColumn">_%CNlngProductUnitCode%_</td>
-					<td class="Segs">_%lngproductunitcode%_</td>
+					<td class="Segs">_%strproductunitname%_</td>
 				</tr>
 				<tr> 
 					<td id="ProductQuantity" class="SegColumn">_%CNlngProductQuantity%_</td>
-					<td class="Segs">_%lngproductquantity%_</td>
+					<td class="Segs">_%lnggoodsquantity_DIS%_</td>
 				</tr>
 				<tr> 
 					<td id="SubTotalPrice" class="SegColumn">_%CNcurSubTotalPrice%_</td>
-					<td class="Segs">_%cursubtotalprice%_</td>
+					<td class="Segs">_%strMonetaryrate%_ _%curTotalPrice_DIS%_</td>
 				</tr>
 				<tr> 
 					<td id="TaxClassCode" class="SegColumn">_%CNlngTaxClassCode%_</td>
-					<td class="Segs">_%lngtaxclasscode%_</td>
+					<td class="Segs">_%strtaxclassname%_</td>
 				</tr>
 				<tr> 
 					<td id="Tax" class="SegColumn">_%CNcurTax%_</td>
@@ -65,7 +53,7 @@
 				</tr>
 				<tr> 
 					<td id="TaxPrice" class="SegColumn">_%CNcurTaxPrice%_</td>
-					<td class="Segs">_%curtaxprice%_</td>
+					<td class="Segs">_%strMonetaryrate%_ _%curtaxprice_DIS%_</td>
 				</tr>
 				<tr> 
 					<td id="DetailRemark" class="SegColumn">_%CNstrDetailNote%_</td>

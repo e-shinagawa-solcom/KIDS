@@ -1,4 +1,4 @@
-<!--
+
 
 
 
@@ -75,7 +75,7 @@ function ShowInputA() { //PUSH INPUT A TAB
 
 	document.all.InputA.style.visibility = 'visible' ;
 	document.all.InputB.style.visibility = 'hidden' ;
-	document.all.InputC.style.visibility = 'hidden' ;
+	document.all.InputC.style.visibility = 'visible' ;
 
 	TabB.innerHTML = objtabB1;
 	TabA.innerHTML = objtabA3;

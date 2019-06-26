@@ -1,4 +1,6 @@
 
+// 詳細画面表示
+
 (function(){
     $('img.detail.button').on('click', function(){
         url = '/pc/result/index2.php';
