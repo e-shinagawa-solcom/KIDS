@@ -127,6 +127,11 @@ switch( $strExcuteHttpHostName )
 		define ( "DB_LOGIN_USERNAME", "kids" );
 		define ( "DB_LOGIN_PASSWORD", "kids" );
 		define ( "DB_NAME", "kidscore2" );
+		define ( "LC_POSTGRESQL_HOSTNAME", EXECUTE_HOST_NAME_KWG_DB );
+		define ( "LC_POSTGRESQL_HOSTPORT", "5432" );
+		define ( "LC_DB_LOGIN_USERNAME", "ackids" );
+		define ( "LC_DB_LOGIN_PASSWORD", "x7zv1jid" );
+		define ( "LC_DB_NAME", "ackids" );
 		// エラーメール送信先
 		define ( "ERROR_MAIL_TO", "kids@kuwagata.co.jp" );
 		define ( "SEND_MAIL_FLAG", true);
@@ -521,5 +526,13 @@ define ("DEF_PAYCONDITION_TT",		2);		// TT
 
 // 商品化企画書フォーマットコード
 define ( "DEF_P_FORMAT_CODE",	"2004-12-1" );
+
+// 帳票テンプレートディレクトリパス
+define ( "REPORT_TMPDIR",	PATH_HOME . "/report_tmp/" );
+// L/C帳票テンプレートファイル
+define ( "REPORT_LC_TMPFILE",	"帳票テンプレート.xls" );
+// L/C帳票テンプレートファイル
+define ( "REPORT_LC_OUTPUTFILE",	"帳票テンプレート_copy.xls" );
+
 
 ?>

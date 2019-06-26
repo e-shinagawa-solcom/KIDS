@@ -191,7 +191,7 @@ class WithQuery extends Singleton
 	 * @param integer $newUsercode
 	 * @return 新しいユーザコード
 	 */
-	public function setUserCode(integer $newUserCode)
+	public function setUserCode($newUserCode)
 	{
 		$this->userCode = $newUserCode;
 		return $this->userCode;

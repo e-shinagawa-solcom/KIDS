@@ -4,7 +4,7 @@
 	サブメニュー表示設定
 
 -----------------------------------------------------------------------------*/
-	function fncSetSubMenu( $aryData, $objAuth, $objDB )
+	function fncSetSubMenu( $aryData, $objAuth, $objDB, $lcModel )
 	{
 		// ユーザーコード取得
 		$lngUserCode = $objAuth->UserCode;
@@ -46,7 +46,6 @@
 		
 		$aryData["lngSubFlag_lc_0"]		= 1;	// L/C情報
 		$aryData["lngSubFlag_lc_1"]		= 1;	// L/C設定変更
-		$aryData["lngSubFlag_lc_2"]		= 1;	// L/C編集
 
 		// リンク
 		// 商品管理
@@ -93,7 +92,6 @@
 
 		$aryData["lngSubRef_lc_0"]		= '/lc/info/index.php?strSessionID=' . $aryData["strSessionID"];
 		$aryData["lngSubRef_lc_1"]		= '/lc/set/index.php?strSessionID=' . $aryData["strSessionID"];
-		$aryData["lngSubRef_lc_2"]		= '/lc/mod/index.php?strSessionID=' . $aryData["strSessionID"];
 
 
 		//-------------------------------------------------------------------------
@@ -265,20 +263,18 @@
 		//-------------------------------------------------------------------------
 		// L/C管理
 		//-------------------------------------------------------------------------
+		
+		$lcAuthority = $lcModel->checkAuthority(trim($objAuth->UserID));
+
 		// L/C情報
-		if( !fncCheckAuthority( DEF_FUNCTION_LC1, $objAuth ) )
+		if(!$lcAuthority["lcinfo"])
 		{
 			$aryData["lngSubFlag_lc_0"] = 0;
 		}
 		// L/C設定変更
-		if( !fncCheckAuthority( DEF_FUNCTION_LC2, $objAuth ) )
+		if(!$lcAuthority["setting"])
 		{
 			$aryData["lngSubFlag_lc_1"] = 0;
-		}
-		// L/C編集
-		if( !fncCheckAuthority( DEF_FUNCTION_LC3, $objAuth ) )
-		{
-			$aryData["lngSubFlag_lc_2"] = 0;
 		}
 
 		//-------------------------------------------------------------------------
