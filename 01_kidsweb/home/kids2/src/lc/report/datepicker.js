@@ -23,7 +23,7 @@ $(document).ready(function () {
             beforeShow: function (input, inst) {
                 if ((datestr = $(this).val()).length > 0) {
                     year = datestr.substr(0, 4);
-                    month = datestr.substr(4, 2);
+                    month = datestr.substr(5, 2);
                     $(this).datepicker('option', 'defaultDate', new Date(year, month - 1, 1));
                     $(this).datepicker('setDate', new Date(year, month - 1, 1));
                 }

@@ -394,9 +394,10 @@ function lcreport() {
  * @param {*} reportData 
  */
 function setReport1Data(reportData, startIndex, endIndex) {
+	document.getElementById('report').contentWindow.document.title = reportData.report_header.header;
 	var tblTbody = document.getElementById('report').contentWindow.document.getElementById('report_tbody');	
 	var tblCaption = document.getElementById('report').contentWindow.document.getElementById('report_caption');
-	tblCaption.innerHTML = reportData.report_header.header;
+	// tblCaption.innerHTML = reportData.report_header.header;
 	var currencyclass = reportData.report_header.currencyclass;
 	tblTbody.rows[3].cells[0].innerHTML = convertNull(reportData.report_header.A4);
 	tblTbody.rows[4].cells[0].innerHTML = convertNull(reportData.report_header.F5);
@@ -511,9 +512,10 @@ function setReport3Data(reportData, startIndex, endIndex) {
  * @param {*} reportData 
  */
 function setReport4Data(reportData, startIndex, endIndex) {
+	document.getElementById('report').contentWindow.document.title = reportData.report_header.header;
 	var tblTbody = document.getElementById('report').contentWindow.document.getElementById('report_tbody');
 	var tblCaption = document.getElementById('report').contentWindow.document.getElementById('report_caption');
-	tblCaption.innerHTML = reportData.report_header.header;
+	// tblCaption.innerHTML = reportData.report_header.header;
 	var currencyclass = reportData.report_header.currencyclass;
 	tblTbody.rows[0].cells[11].innerHTML = convertNull(reportData.report_header.M1);
 	tblTbody.rows[2].cells[1].innerHTML = convertNull(reportData.report_header.B3);
@@ -662,8 +664,8 @@ function setReport6Data(reportData, startIndex, endIndex) {
 	tblTbody.rows[9].cells[14].innerHTML = convertNull(reportData.report_header.P10);
 	tblTbody.rows[2].cells[1].innerHTML = convertNull(reportData.report_header.B3);
 	tblTbody.rows[3].cells[1].innerHTML = convertNull(reportData.report_header.B4);
-	tblTbody.rows[1].cells[6].innerHTML = convertNull(reportData.report_header.G2);
-	tblTbody.rows[2].cells[7].innerHTML = convertNull(reportData.report_header.H3);
+	tblTbody.rows[1].cells[2].innerHTML = convertNull(reportData.report_header.G2);
+	tblTbody.rows[2].cells[2].innerHTML = convertNull(reportData.report_header.H3);
 	tblTbody.rows[1].cells[1].innerHTML = convertNull(reportData.report_header.B2);
 	tblTbody.rows[41].cells[7].innerHTML = convertNull(reportData.report_header.H42);
 	if (reportData.report_main.length > 15) {

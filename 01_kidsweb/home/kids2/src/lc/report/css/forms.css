@@ -1,3 +1,6 @@
+.datepicker-month-year .ui-datepicker-calendar {
+    display: none;
+}
 /* 入力フォーム共通背景枠 右サイドバータブ無し */
 .form-box
 {

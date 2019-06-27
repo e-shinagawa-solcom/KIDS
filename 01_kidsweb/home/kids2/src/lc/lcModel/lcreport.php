@@ -620,10 +620,10 @@ function reportSixOutput($objDB, $spreadsheet, $currencyClass, $bankLst, $data)
         $sendLst = fncGetSendInfo($objDB);
 
         if ($sendLst && count($sendLst) > 0) {
-            $header["B3"] = convertEncoding($sendLst[0]["lccautionstatement1"]);
-            $header["B4"] = convertEncoding($sendLst[0]["lccautionstatement2"]);
-            $header["G2"] = convertEncoding($sendLst[0]["lcsender"]);
-            $header["H3"] = convertEncoding($sendLst[0]["senderfax"]);
+            $header["B3"] = convertEncoding($sendLst[0]["sendcarenote1"]);
+            $header["B4"] = convertEncoding($sendLst[0]["sendcarenote2"]);
+            $header["G2"] = convertEncoding($sendLst[0]["sendfromname"]);
+            $header["H3"] = convertEncoding($sendLst[0]["sendfromfax"]);
         }
 
         $payfInfo = fncGetPayfInfoByPayfcd($objDB, $data["payfCode"]);
