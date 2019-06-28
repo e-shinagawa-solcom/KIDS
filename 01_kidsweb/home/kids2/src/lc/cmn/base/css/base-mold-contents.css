@@ -1,0 +1,15 @@
+
+.any-contents
+{
+
+    position: absolute;
+    top: 85px;
+    left: 0px;
+
+    width: 980px;
+    height: 550px;
+
+    border-style: solid;
+    border-width: 1px;
+    border-color: #cdcdcd;
+}

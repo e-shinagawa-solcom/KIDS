@@ -34,7 +34,7 @@ define ( "EXECUTE_HOST_NAME_DEV",	"kids.devs.biz" );
 define ( "EXECUTE_HOST_NAME_KWG_WEBv2",	"192.168.10.228" );
 define ( "EXECUTE_HOST_NAME_KWG_WEBv1",	"192.168.10.235" );
 define ( "EXECUTE_HOST_NAME_KWG_BACK",	"192.168.10.230" );
-define ( "EXECUTE_HOST_NAME_KWG_DB",	"localhost" );
+define ( "EXECUTE_HOST_NAME_KWG_DB",	"192.168.1.113" );
 
 // 実行サーバー名称の取得
 $strExcuteHttpHostName = $_SERVER["HTTP_HOST"];
@@ -127,11 +127,16 @@ switch( $strExcuteHttpHostName )
 		define ( "DB_LOGIN_USERNAME", "kids" );
 		define ( "DB_LOGIN_PASSWORD", "kids" );
 		define ( "DB_NAME", "kidscore2" );
+		define ( "LC_POSTGRESQL_HOSTNAME", EXECUTE_HOST_NAME_KWG_DB );
+		define ( "LC_POSTGRESQL_HOSTPORT", "5432" );
+		define ( "LC_DB_LOGIN_USERNAME", "ackids" );
+		define ( "LC_DB_LOGIN_PASSWORD", "x7zv1jid" );
+		define ( "LC_DB_NAME", "ackids" );
 		// エラーメール送信先
 		define ( "ERROR_MAIL_TO", "kids@kuwagata.co.jp" );
 		define ( "SEND_MAIL_FLAG", true);
 		// 各ルートパス
-		define ( "PATH_HOME",	"/Users/miyawaki/Desktop/Git/KIDS/01_kidsweb/home/kids2" );
+		define ( "PATH_HOME",	"/Users/solcom/Desktop/Git/KIDS/01_kidsweb/home/kids2" );
 		break;
 }
 
@@ -528,5 +533,13 @@ define ("DEF_PAYCONDITION_TT",		2);		// TT
 
 // 商品化企画書フォーマットコード
 define ( "DEF_P_FORMAT_CODE",	"2004-12-1" );
+
+// 帳票テンプレートディレクトリパス
+define ( "REPORT_TMPDIR",	PATH_HOME . "/report_tmp/" );
+// L/C帳票テンプレートファイル
+define ( "REPORT_LC_TMPFILE",	"帳票テンプレート.xls" );
+// L/C帳票テンプレートファイル
+define ( "REPORT_LC_OUTPUTFILE",	"帳票テンプレート_copy.xls" );
+
 
 ?>

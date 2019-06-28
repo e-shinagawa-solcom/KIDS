@@ -1,0 +1,62 @@
+
+.base-footer
+{
+	position : absolute;
+	top: 636px;
+	left: 0;
+
+	width: 982px;
+	height: 35px;
+}
+
+/* 共通フッタ 背景画像 */
+.base-footer__background-image
+{
+	width: 100%;
+	height: 100%;
+}
+
+ /* フッタコントロールブロック */
+.control-block
+{
+	position: absolute;
+	top: 5px;
+	left: 20px;
+
+	width: 940px;
+	height: 25px;
+
+	text-align: right;
+}
+
+/* メインメニューボタン */
+.control-block__buttan-main-menu
+{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+
+/* 言語切り替えボタン */
+.control-block__button-language
+{
+	position: absolute;
+	top: 0px;
+	right: 120px;
+}
+
+/* ログアウトボタン */
+.control-block__button-logout
+{
+	position: absolute;
+	top: 0px;
+	right: 30px;
+}
+
+/* ヘルプボタン */
+.control-block__button-help
+{
+	position: absolute;
+	top: 2px;
+	right: 0px;
+}

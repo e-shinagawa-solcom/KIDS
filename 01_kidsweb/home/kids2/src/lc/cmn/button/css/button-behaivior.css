@@ -1,0 +1,13 @@
+
+
+/* マウスオーバー */
+.button:hover
+{
+	opacity: 0.85;
+	cursor: pointer ;
+}
+
+.button:active
+{
+	opacity: 0.5;
+}

@@ -114,7 +114,7 @@ function setMenu_MR(){
 	document.frmMenu.submit();
 }
 
-function setMenuLC(){
+function setMenu_LC(){
 
 	document.frmMenu.action = "/lc/select-function/index.php";
 	document.frmMenu.submit();

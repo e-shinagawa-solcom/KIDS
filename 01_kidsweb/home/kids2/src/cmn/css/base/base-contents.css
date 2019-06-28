@@ -1,0 +1,47 @@
+
+.any-contents
+{
+
+    position: absolute;
+    top: 85px;
+    left: 0px;
+
+    width: 980px;
+    height: 552px;
+
+    border-style: solid;
+    border-width: 1px;
+    border-color: #cdcdcd;
+}
+
+#masking_loader{
+    position: absolute;
+    top: 85px;
+    left: 0px;
+    width: 980px;
+    height: 552px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #cdcdcd;
+    z-index: 100;
+    background: rgba(37, 37, 37, 0.8117647058823529);
+    display: none;
+}
+#masking_loader div{
+    width: 100px;
+    height: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    color: #FFF;
+}
+
+.selected-btn{
+    background: #ffc832;
+}
+.selected-btn:hover{
+    background: #daa924;
+}

@@ -1,0 +1,79 @@
+<config>
+<header1>
+</header1>
+<header2>
+</header2>
+<header3>
+</header3>
+<bodyonload>
+Loading();
+</bodyonload>
+</config>
+<!-- 個別スクリプト -->
+<link rel="stylesheet" href="css/forms.css">
+<script type="text/javascript" language="javascript" src="/lc/select-function/functions.js"></script>
+<!-- 各画面毎の表示内容 -->
+	<div class="form-box-for-title">
+	機能選択
+	</div>
+		<div class="input-group form-subbox m-3">
+			<div class="col-2 form-box-for-button">
+				<!-- <button type="button" class="btn btn-light btn-xs" id="lcinfoBtn" onclick="location.href='/lc/info/index.php?strSessionID=_%session_id%_'">L/C情報</button> -->
+				
+				<button type="button" class="btn btn-light btn-xs" id="lcinfoBtn" onclick="initLcinfo('_%session_id%_')">L/C情報</button>
+			</div>
+			<div class="col-4">
+				<div class="input-group">
+					<div class="col-6">
+						<label></label>
+					</div>
+					<div class="col-6">
+						<label></label>
+					</div>
+				</div>
+				<div class="input-group">
+					<div class="col-6">
+						<label>取得日：</label>
+					</div>
+					<div class="col-6">
+						<label>_%lc_info_date%_</label>
+					</div>
+				</div>
+				<div class="input-group">
+					<div class="col-6">
+						<label>時間：</label>
+					</div>
+					<div class="col-6">
+						<label>_%lc_info_time%_</label>
+					</div>
+				</div>
+				<div class="input-group">
+					<div class="col-6">
+						<label>ユーザー名：</label>
+					</div>
+					<div class="col-6">
+						<label>_%user_nm%_</label>
+					</div>
+				</div>
+			</div>
+			<div class="col-5 form-box-for-contents">
+			L/C情報画面を表示します。<br/>
+			データの更新・削除、リバイズ情報の確認、<br/>
+			銀行割振シミュレーション、データインポート、<br/>
+			データエクスポートを行います。<br/>
+			</div>
+			<div class="form-box-for-null">
+			</div>
+		</div>
+		<div class="input-group form-subbox m-3">
+			<div class="col-2 form-box-for-button">
+			<button type="button" class="btn btn-light btn-xs" id="lcsetBtn" onclick="location.href='/lc/set/index.php?strSessionID=_%session_id%_'">L/設定変更</button>
+			</div>
+			<div class="col-4">
+			</div>
+			<div class="col-5 form-box-for-contents">
+			L/C設定変更画面を表示します。<br/>
+			L/Cに関わる画面の設定変更を行います。<br/>
+			</div>
+		</div>
+

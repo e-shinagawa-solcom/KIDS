@@ -1,0 +1,25 @@
+.tabs
+{
+    position: absolute;
+    top: 3px;
+    right: -1px;
+}
+
+/* 修正画面用 タブレイアウト */
+.tabs--modify
+{
+    position: absolute;
+    top: 3px;
+    right: -56px;
+}
+
+.tabs__header
+{
+    display: block;
+    margin-bottom: 2px;
+}
+
+.tabs__detail
+{
+    display: block;
+}
