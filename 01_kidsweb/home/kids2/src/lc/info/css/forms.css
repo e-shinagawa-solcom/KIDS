@@ -25,8 +25,8 @@
 
 }
 .table {
-    width: 400%;
-    max-width: 400%;
+    width: 445%;
+    max-width: 445%;
     margin-bottom: 0rem;
 }
 .table > thead > tr > th,
@@ -56,11 +56,28 @@
 .table > tbody > tr > td:nth-child(2) {
     width: 100px;
 }
+.table > thead > tr > th:nth-child(3),
+.table > tbody > tr > td:nth-child(3) {
+    width: 60px;
+}
 .table > thead > tr > th:nth-child(4),
-.table > thead > tr > th:nth-child(4),
-.table > tbody > tr > td:nth-child(5),
-.table > tbody > tr > td:nth-child(5) {
-    width: 80px;
+.table > tbody > tr > td:nth-child(4),
+.table > thead > tr > th:nth-child(5),
+.table > tbody > tr > td:nth-child(5){
+    width: 90px;
+}
+.table > thead > tr > th:nth-child(6),
+.table > thead > tr > th:nth-child(7),
+.table > thead > tr > th:nth-child(8),
+.table > thead > tr > th:nth-child(9),
+.table > thead > tr > th:nth-child(10),
+.table > tbody > tr > td:nth-child(6),
+.table > tbody > tr > td:nth-child(7),
+.table > tbody > tr > td:nth-child(8),
+.table > tbody > tr > td:nth-child(9),
+.table > tbody > tr > td:nth-child(10)
+{
+    width: 70px;
 }
 .table > thead > tr > th:nth-child(11),
 .table > tbody > tr > td:nth-child(11) {
@@ -86,6 +103,8 @@ thead, tbody {
 }
 
 tbody {
+    
+    overflow-y:scroll;
     height: 380px;
 }
 .table-responsive{

@@ -109,10 +109,10 @@ function setLcInfoTable(data, phpData) {
 			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.payfcd) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.productcd) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.productname) + '</td>' +
-			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.productnumber) + '</td>' +
+			'<td style="background-color: rgb(' + background_color + ');">' + convertNumber(row.productnumber, "", 0) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.unitname) + '</td>' +
-			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.unitprice) + '</td>' +
-			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.moneyprice) + '</td>' +
+			'<td style="background-color: rgb(' + background_color + ');">' + convertNumber(row.unitprice, "", 4) + '</td>' +
+			'<td style="background-color: rgb(' + background_color + ');">' + convertNumber(row.moneyprice, row.currencyclass, 0) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.shipstartdate) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.shipenddate) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.sumdate) + '</td>' +
@@ -127,13 +127,13 @@ function setLcInfoTable(data, phpData) {
 			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.lcno) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.lcamopen) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.validmonth) + '</td>' +
-			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.usancesettlement) + '</td>' +
+			'<td style="background-color: rgb(' + background_color + ');">' + convertNumber(row.usancesettlement, row.currencyclass, 0) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.bldetail1date) + '</td>' +
-			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.bldetail1money) + '</td>' +
+			'<td style="background-color: rgb(' + background_color + ');">' + convertNumber(row.bldetail1money, row.currencyclass, 0) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.bldetail2date) + '</td>' +
-			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.bldetail2money) + '</td>' +
+			'<td style="background-color: rgb(' + background_color + ');">' + convertNumber(row.bldetail2money, row.currencyclass, 0) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.bldetail3date) + '</td>' +
-			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.bldetail3money) + '</td>' +
+			'<td style="background-color: rgb(' + background_color + ');">' + convertNumber(row.bldetail3money, row.currencyclass, 0) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.lcstate) + '</td>' +
 			'</tr>';
 		$("#lc_table_body").append(html);
@@ -541,4 +541,29 @@ function exportFile() {
 	'&to=' + $("#endYm").val() +
 	'&payfcd=' + $("#payfCode").val() + 
 	'&getDataModeFlg=' + getDataModeFlg;
+}
+
+function convertNumber(str, currencyclass, fracctiondigits) {
+	if (str != "" && str != undefined && str != "null") {
+		if (currencyclass != "") {
+			if (currencyclass == '±ß') {			
+				return Number(str).toLocaleString(undefined, {
+					minimumFractionDigits: 0,
+					maximumFractionDigits: 0
+				});
+			} else {			
+				return Number(str).toLocaleString(undefined, {
+					minimumFractionDigits: 2,
+					maximumFractionDigits: 2
+				});
+			}
+		} else {
+			return Number(str).toLocaleString(undefined, {
+				minimumFractionDigits: fracctiondigits,
+				maximumFractionDigits: fracctiondigits
+			});
+		}
+	} else {
+		return "";
+	}
 }
