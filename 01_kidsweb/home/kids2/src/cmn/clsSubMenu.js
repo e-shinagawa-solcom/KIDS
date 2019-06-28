@@ -161,8 +161,8 @@
 						g_arySubMenu['po'][1]	= 'È¯Ãí½ñ½¤Àµ';
 
 						g_arySubMenu['sc'][0]	= 'Çä¾å(Ç¼ÉÊ½ñ)ÅÐÏ¿';
-						g_arySubMenu['sc'][1]	= 'Çä¾å¸¡º÷';
-						g_arySubMenu['sc'][2]	= 'Ç¼ÉÊ½ñ¸¡º÷';
+						g_arySubMenu['sc'][1]	= 'Ç¼ÉÊ½ñ¸¡º÷';
+						g_arySubMenu['sc'][2]	= 'Çä¾å¸¡º÷';
 
 						g_arySubMenu['pc'][0]	= '»ÅÆþÅÐÏ¿';
 						g_arySubMenu['pc'][1]	= '»ÅÆþ¸¡º÷';

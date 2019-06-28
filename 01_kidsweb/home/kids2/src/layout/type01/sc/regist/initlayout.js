@@ -1,4 +1,4 @@
-<!--
+
 
 
 //-----------------------------------------------------------------------------
@@ -201,7 +201,7 @@ var maintitleE = '<img src="' + titleE + '" width="314" height="22" border="0" a
 
 
 ///// INPUT A,B,C HEADER IMAGE /////
-var headerAJ = '<img src="' + headtitleAJ + '" width="927" height="30" border="0" alt="ヘッダー">';
+var headerAJ = '<img src="/img/type01/cmn/seg/header_title_ja(1).gif" width="927" height="30" border="0" alt="ヘッダー">';
 var headerAE = '<img src="' + headtitleAE + '" width="927" height="30" border="0" alt="HEADER">';
 var headerBJ = '<img src="' + headtitleBJ + '" width="927" height="30" border="0" alt="明細">';
 var headerBE = '<img src="' + headtitleBE + '" width="927" height="30" border="0" alt="DETAIL">';

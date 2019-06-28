@@ -953,11 +953,11 @@ function fncGetPulldownQueryExec($strQuery, $lngDefaultValue, $objDB, $lngMaxFie
 		// HTML出力
 		if ( $lngDefaultValue == $aryResult[0] )
 		{
-			$strHtml .= "<OPTION VALUE=\"$aryResult[0]\" SELECTED>$strDisplayValue</OPTION>\n";
+			$strHtml = "<OPTION VALUE=\"$aryResult[0]\" SELECTED>$strDisplayValue</OPTION>\n";
 		}
 		else
 		{
-			$strHtml .= "<OPTION VALUE=\"$aryResult[0]\">$strDisplayValue</OPTION>\n";
+			$strHtml = "<OPTION VALUE=\"$aryResult[0]\">$strDisplayValue</OPTION>\n";
 		}
 	}
 
@@ -1006,7 +1006,7 @@ function fncGetMultiplePulldown( $strTable, $strValueFieldName, $strDisplayField
 		}
 
 		// HTML出力
-		$strHtml .= "<OPTION VALUE=\"$aryResult[0]\">$strDisplayValue</OPTION>\n";
+		$strHtml = "<OPTION VALUE=\"$aryResult[0]\">$strDisplayValue</OPTION>\n";
 	}
 
 	$objDB->freeResult( $lngResultID );
@@ -1055,7 +1055,7 @@ function fncGetCheckBoxObject( $strTable, $strValueFieldName, $strDisplayFieldNa
 		}
 
 		// HTML出力
-		$strHtml .= '<input class="CheckBox14" type="checkbox" name="'.$strObjectName.'" value="'.$aryResult[0].'">'
+		$strHtml = '<input class="CheckBox14" type="checkbox" name="'.$strObjectName.'" value="'.$aryResult[0].'">'
 		.$strDisplayValue."\n";
 	}
 
@@ -1460,9 +1460,9 @@ function getArrayTable( $aryData, $strExpressMode )
 	$keys = array_keys ( $aryData );
 	foreach ( $keys as $key )
 	{
-		$strTable .= "<tr><th>$key</th><td>$aryData[$key]</td></tr>\n";
+		$strTable = "<tr><th>$key</th><td>$aryData[$key]</td></tr>\n";
 
-		$strHidden .= "<input type=\"hidden\" name=\"$key\" value=\"$aryData[$key]\">\n";
+		$strHidden = "<input type=\"hidden\" name=\"$key\" value=\"$aryData[$key]\">\n";
 	}
 
 	$strTable .= "</table>\n";

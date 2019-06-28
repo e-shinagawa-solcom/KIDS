@@ -31,24 +31,31 @@ function ChgEtoJ( dlCount )
 	{
 		/* DETAIL LIST J */
 
-		ExStrDL02.innerText = '製品';
-		ExStrDL01.innerText = '売上区分';
-		ExStrDL03.innerText = '単価';
-		ExStrDL04.innerText = '単位';
-		ExStrDL05.innerText = '数量';
-		ExStrDL06.innerText = '税抜金額';
-		ExStrDL07.innerText = '納品日';
-		ExStrDL08.innerText = '備考';
+		ExStrDL01.innerText = '選択';
+		ExStrDL02.innerText = 'No';
+		ExStrDL03.innerText = '顧客受注番号';
+		ExStrDL04.innerText = '受注番号';
+		ExStrDL05.innerText = '顧客品番';
+		ExStrDL06.innerText = '製品コード';
+		ExStrDL07.innerText = '製品名';
+		ExStrDL08.innerText = '製品名（英語）';
+		ExStrDL09.innerText = '営業部署';
+		ExStrDL10.innerText = '売上区分';
+		ExStrDL11.innerText = '納期';
+		ExStrDL12.innerText = '単価';
+		ExStrDL13.innerText = '単位';
+		ExStrDL14.innerText = '数量';
+		ExStrDL15.innerText = '税抜金額';
+		ExStrDL16.innerText = '計上単位';
+		// if( typeof( ExStrDL09 ) != 'undefined' )
+		// {
+		// 	ExStrDL09.innerText = '対象';
+		// }
 
-		if( typeof( ExStrDL09 ) != 'undefined' )
-		{
-			ExStrDL09.innerText = '対象';
-		}
-
-		if( typeof( ExStrDL10 ) != 'undefined' )
-		{
-			ExStrDL10.innerText = '元数量';
-		}
+		// if( typeof( ExStrDL10 ) != 'undefined' )
+		// {
+		// 	ExStrDL10.innerText = '元数量';
+		// }
 	}
 
 	return false;

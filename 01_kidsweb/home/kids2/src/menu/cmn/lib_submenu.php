@@ -26,8 +26,8 @@
 		$aryData["lngSubFlag_po_1"]		= 1;	// È¯Ãí½ñ½¤Àµ
 
 		$aryData["lngSubFlag_sc_0"]		= 1;	// Çä¾å(Ç¼ÉÊ½ñ)ÅÐÏ¿
-		$aryData["lngSubFlag_sc_1"]		= 1;	// Çä¾å¸¡º÷
-		$aryData["lngSubFlag_sc_2"]		= 1;	// Ç¼ÉÊ½ñ¸¡º÷
+		$aryData["lngSubFlag_sc_1"]		= 1;	// Ç¼ÉÊ½ñ¸¡º÷
+		$aryData["lngSubFlag_sc_2"]		= 1;	// Çä¾å¸¡º÷
 
 		$aryData["lngSubFlag_pc_0"]		= 1;	// »ÅÆþÅÐÏ¿
 		$aryData["lngSubFlag_pc_1"]		= 1;	// »ÅÆþ¸¡º÷
@@ -186,17 +186,19 @@
 			$aryData["lngSubFlag_sc_0"] = 0;
 		}
 
-		// 602 Çä¾å¸¡º÷
-		if( !fncCheckAuthority( DEF_FUNCTION_SC2, $objAuth ) )
+		// 602 Ç¼ÉÊ½ñ¸¡º÷
+		if( !fncCheckAuthority( DEF_FUNCTION_SC3, $objAuth ) )
 		{
 			$aryData["lngSubFlag_sc_1"] = 0;
 		}
 		
-		// 603 Ç¼ÉÊ½ñ¸¡º÷
-		if( !fncCheckAuthority( DEF_FUNCTION_SC3, $objAuth ) )
+		// 603 Çä¾å¸¡º÷
+		if( !fncCheckAuthority( DEF_FUNCTION_SC2, $objAuth ) )
 		{
 			$aryData["lngSubFlag_sc_2"] = 0;
 		}
+		
+	
 		//-------------------------------------------------------------------------
 
 

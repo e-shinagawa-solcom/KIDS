@@ -1,4 +1,4 @@
-<!--
+
 
 
 
@@ -22,7 +22,7 @@
 	}
 	#CRCHeader
 	{
-		font-family : Arial, ‚l‚r ‚oƒSƒVƒbƒN;
+		font-family : Arial, ?l?r ?o?S?V?b?N;
 		font-weight : bold;
 		font-size   : 12px;
 		color       : #ffffff;
@@ -30,7 +30,7 @@
 	}
 	#CRCColumn
 	{
-		font-family : Arial, ‚l‚r ‚oƒSƒVƒbƒN;
+		font-family : Arial, ?l?r ?o?S?V?b?N;
 		font-size   : 12px;
 		color       : #ffffff;
 		background  : #a9a9a9;
@@ -51,52 +51,118 @@
 		text-decoration : underline;
 	}
 
+/* ¥¯¥¨¥ê¥Ü¥¿¥ó */
+	#Preview{
+		position: absolute;
+		top: 520px;
+		left: 822px;
+	}
+
+	#SearchBt{
+		position: absolute;
+		top: 180px;
+		left: 830px;
+	}
+	#DeleteBt{
+		position: absolute;
+		top: 250px;
+		left: 830px;
+	}
+	#AddBt{
+		position: absolute;
+		top: 370px;
+		left: 830px;
+	}
+	#AlladdBt{
+		position: absolute;
+		top: 445px;
+		left: 830px;
+	}
+/* ÌÀºÙ¹ÔÂØ¤¨¥Ü¥¿¥ó */
+	#selectup{
+		position: absolute;
+		top: 329px;
+		left: 768px;
+	}
+	#selectup1{
+		position: absolute;
+		top: 375px;
+		left: 760px;
+	}
+	#selectdown{
+		position: absolute;
+		top: 463px;
+		left: 767px;
+	}
+	#selectdown1{
+		position: absolute;
+		top: 418px;
+		left: 759px;
+	}
+/* ¥¯¥¨¥ê¥Ü¥¿¥ó */
 
 
 	#SegCRC
 	{
 		font-weight  : bold ;
 		position     : absolute ;
-		top          : 40px ;  /* 70 */
-		left         : 258px ; /* 10 */
-		width        : 120px ;
-		height       : 27px ;
+		top          : 61px ;  /* 70 */
+		left         : 293px ; /* 10 */
+		width        : 110px ;
+		height       : 18px ;
 		border-width : 1px ;
 		border-style : solid ;
-		padding      : 8px 0px 0px 8px ;
+		padding      : 5px 0px 0px 8px ;
 	}
 	#VarsCRC
 	{
 		position     : absolute ;
-		top          : 40px ;  /* 70 */
-		left         : 377px ; /* 129 */
-		height       : 27px ;
+		top          : 61px ;  /* 70 */
+		left         : 358px ; /* 129 */
+		width		 : 329px;
+		height       : 20px ;
 		border-width : 1px ;
 		border-style : solid ;
-		padding      : 3px 35px 0px 8px ;
+		padding      : 3px 0px 0px 8px ;
+	}
+	.hoge1_crc{
+		width: 70px;
+	}
+	
+	.hoge2_crc{
+		width: 200px;
+		border-color: #cdcdcd;
 	}
 
 	#SegPC
 	{
 		font-weight  : bold ;
 		position     : absolute ;
-		top          : 70px ;
-		left         : 258px ;
-		width        : 120px ;
-		height       : 27px ;
+		top          : 116px ;
+		left         : 476px ;
+		width        : 185px ;
+		height       : 17px ;
 		border-width : 1px ;
 		border-style : solid ;
-		padding      : 8px 0px 0px 8px ;
+		padding      : 6px 0px 0px 8px ;
 	}
 	#VarsPC
 	{
 		position     : absolute ;
-		top          : 70px ;
-		left         : 377px ;
-		height       : 27px ;
+		top          : 116px ;
+		left         : 667px ;
+		height       : 20px ;
+		width		 : 20px;
 		border-width : 1px ;
 		border-style : solid ;
-		padding      : 3px 35px 0px 8px ;
+		padding      : 3px 0px 0px 8px ;
+	}
+
+	#hoge_pc{
+		width: 20px;
+    	position: absolute;
+    	top: 7px;
+    	left: 5px;
 	}
 
 	/*
@@ -128,7 +194,7 @@
 	#DataOpenBt
 	{
 		position         : absolute ;
-		top              : 44px ;  /* 74 */
+		top              : 400px ;  /* 74 */
 		left             : 475px ; /* 229 */
 		border-width     : 0px ;
 		border-style     : none ;
@@ -137,7 +203,7 @@
 	#PopenBt
 	{
 		position         : absolute ;
-		top              : 74px ;  /* 44 */
+		top              : 155px ;  /* 44 */
 		left             : 475px ; /* 505 */
 		border-width     : 0px ;
 		border-style     : none ;
@@ -148,54 +214,84 @@
 	{
 		font-weight  : bold ;
 		position     : absolute ;
-		top          : 100px ;
+		top          : 32px ;
 		left         : 10px ;
 		width        : 120px ;
-		height       : 27px ;
+		height       : 17px ;
 		border-width : 1px ;
 		border-style : solid ;
-		padding      : 8px 0px 0px 8px ;
+		padding      : 6px 0px 0px 8px ;
 	}
 
 	#VarsA02
 	{
 		position     : absolute ;
-		top          : 100px ;
-		left         : 129px ;
-		height       : 27px ;
+		top          : 32px ;
+		left         : 130px ;
+		height       : 20px ;
+		width		 : 150px;     
 		border-width : 1px ;
 		border-style : solid ;
 		padding      : 3px 0px 0px 8px ;
+	}
+	#hoge1_a02{
+		position: absolute;
+		width: 48px;
+		top: 3px;
+		left: -50px;
+	}
+	#hoge2_a02{
+		width: 115px;
+		border-color: #cdcdcd;
 	}
 
 	#SegA03
 	{
 		font-weight  : bold ;
 		position     : absolute ;
-		top          : 130px ;
-		left         : 10px ;
-		width        : 120px ;
-		height       : 27px ;
+		top          : 32px ;
+		left         : 293px ;
+		width        : 69px ;
+		height       : 17px ;
 		border-width : 1px ;
 		border-style : solid ;
-		padding      : 8px 0px 0px 8px ;
+		padding      : 6px 0px 0px 8px ;
 	}
 	#VarsA03
 	{
 		position     : absolute ;
-		top          : 130px ;
-		left         : 129px ;
-		height       : 27px ;
+		top          : 32px ;
+		left         : 366px ;
+		height       : 20px ;
+		width		 : 329px;
 		border-width : 1px ;
 		border-style : solid ;
-		padding      : 3px 33px 0px 8px ;
+		padding      : 3px 0px 0px 0px ;
+	}
+	.hoge1_C{
+		width: 70px;
+	}
+	.hoge2_C{
+		width: 240px;
+		border-color: #cdcdcd;
 	}
 
 	#MSWBt01
 	{
 		position         : absolute ;
-		top              : 134px ;
-		left             : 569px ;
+		top              : 64px ;
+		left             : 660px ;
+		width            : 19px ;
+		height           : 19px ;
+		border-width     : 0px ;
+		border-style     : none ;
+		background-color : #ffffff ;
+	}
+	#MSWBt04
+	{
+		position         : absolute ;
+		top              : 35px ;
+		left             : 260px ;
 		width            : 19px ;
 		height           : 19px ;
 		border-width     : 0px ;
@@ -207,29 +303,41 @@
 	{
 		font-weight  : bold ;
 		position     : absolute ;
-		top          : 100px ;
-		left         : 258px ;
-		width        : 120px ;
-		height       : 27px ;
+		top          : 88px ;
+		left         : 476px ;
+		width        : 68px ;
+		height       : 18px ;
 		border-width : 1px ;
 		border-style : solid ;
-		padding      : 8px 0px 0px 8px ;
+		padding      : 5px 0px 0px 8px ;
 	}
 
 	#VarsA12
 	{
 		position     : absolute ;
-		top          : 100px ;
-		left         : 376px ;
-		height       : 27px ;
+		top          : 88px ;
+		left         : 553px ;
+		width		 : 134px; 
+		height       : 20px ;
 		border-width : 1px ;
 		border-style : solid ;
 		padding      : 3px 0px 0px 8px ;
 	}
 
-
-
-
+	.Slt_a12{
+		width: 90px;
+	}
+	#hoge_t{
+		width: 28px;
+    	position: absolute;
+    	top: 3px;
+    	left: 100px;
+	}
+	#hoge_p{
+		position: absolute;
+		top: 7px;
+		left: 129px;
+	}
 
 	#SegDept
 	{
@@ -488,8 +596,8 @@
 /* START INPUT A SEGMENTS */
 #InputA { 
 	position : absolute ;
-	left : 34px ;
-	top : 111px ;
+	left : 36px ;
+	top : 90px ;
 	z-index : 0 ;
 	visibility : visible ;
 	border-width: 0px ;
@@ -515,10 +623,11 @@
 
 /* START BODYS */
 #SegABodys {
-	left : 10px ;
-	top : 31px ;
-	width : 927px ;
-	height : 254px ;
+	position: absolute;
+	left : 0px ;
+	top : 30px ;
+	width : 925px ;
+	height : 470px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #cdcdcd ;
@@ -530,7 +639,7 @@
 #SegABottom {
 	position : absolute ;
 	left : 0px ;
-	top : 246px ;
+	top : 502px ;
 	border-width: 0px ;
 	border-style: none ;
 	background-color: #ffffff ;
@@ -544,14 +653,14 @@
 	color : #666666 ;
 	position : absolute ;
 	left : 10px ;
-	top : 40px ;
+	top : 60px ;
 	width : 120px ;
-	height : 27px ;
+	height : 18px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #798787 ;
 	background-color: #ffffff ;
-	padding : 8px 0px 0px 8px ;
+	padding : 5px 0px 0px 8px ;
 }
 
 
@@ -620,71 +729,71 @@
 #SegA06 {
 	font-weight : bold ;
 	position : absolute ;
-	left : 712px ;
-	top : 40px ;
+	left : 702px ;
+	top : 32px ;
 	width : 100px ;
-	height : 27px ;
+	height : 17px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #798787 ;
 	background-color: #ffffff ;
-	padding : 8px 0px 0px 8px ;
+	padding : 6px 0px 0px 8px ;
 }
 
 #SegA07 {
 	font-weight : bold ;
 	position : absolute ;
-	left : 712px ;
-	top : 70px ;
-	width : 100px ;
-	height : 27px ;
+	left : 702px ;
+	top : 61px ;
+	width : 83px ;
+	height : 18px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #798787 ;
 	background-color: #ffffff ;
-	padding : 8px 0px 0px 8px ;
+	padding : 5px 0px 0px 8px ;
 }
 
 #SegA08 {
 	font-weight : bold ;
 	position : absolute ;
-	left : 712px ;
-	top : 100px ;
-	width : 100px ;
-	height : 27px ;
+	left : 702px ;
+	top : 88px ;
+	width : 90px ;
+	height : 17px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #798787 ;
 	background-color: #ffffff ;
-	padding : 8px 0px 0px 8px ;
+	padding : 6px 0px 0px 8px ;
 }
 
 #SegA09 {
 	font-weight : bold ;
 	position : absolute ;
-	left : 712px ;
-	top : 130px ;
-	width : 100px ;
-	height : 27px ;
+	left : 702px ;
+	top : 116px ;
+	width : 90px ;
+	height : 18px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #798787 ;
 	background-color: #ffffff ;
-	padding : 8px 0px 0px 8px ;
+	padding : 5px 0px 0px 8px ;
 }
 
 #SegA10 {
 	font-weight : bold ;
 	position : absolute ;
 	left : 10px ;
-	top : 216px ;
-	width : 120px ;
-	height : 27px ;
+	top : 88px ;
+	width : 111px ;
+	height : 32px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #798787 ;
 	background-color: #ffffff ;
-	padding : 8px 0px 0px 8px ;
+	padding : 20px 0px 0px 8px ;
 }
 /* END SEGMENTS */
 
@@ -692,9 +801,9 @@
 /* START VARS */
 #VarsA01 {
 	position : absolute ;
-	left : 129px ;
-	top : 40px ;
-	height : 27px ;
+	left : 131px ;
+	top : 60px ;
+	height : 20px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #798787 #798787 #ffffff ;
@@ -745,48 +854,58 @@
 	background-color: #ffffff ;
 	padding : 3px 0px 0px 8px ;
 }
-
+#Sama06{
+	position: absolute;
+	top: 7px;
+	left: 100px;
+}
 #VarsA06 {
 	position : absolute ;
-	left : 811px ;
-	top : 40px ;
-	height : 27px ;
+	left : 790px ;
+	top : 32px ;
+	height : 20px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #798787 #798787 #ffffff ;
 	background-color: #ffffff ;
-	padding : 3px 0px 0px 8px ;
+	padding : 3px 21px 0px 5px ;
 }
-
+#Sama07{
+	position: absolute;
+	top: 5px;
+	left: 103px;
+}
 #VarsA07 {
 	position : absolute ;
-	left : 811px ;
-	top : 70px ;
-	height : 27px ;
+	left : 788px ;
+	top : 61px ;
+	height : 20px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #798787 #798787 #ffffff ;
 	background-color: #ffffff ;
-	padding : 3px 0px 0px 8px ;
+	padding : 3px 20px 0px 8px ;
 }
 
 #VarsA08 {
 	position : absolute ;
-	left : 811px ;
-	top : 100px ;
-	height : 27px ;
+	left : 790px ;
+	top : 88px ;
+	height : 20px ;
+	width : 115px;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #798787 #798787 #ffffff ;
 	background-color: #ffffff ;
-	padding : 3px 0px 0px 8px ;
+	padding : 3px 0px 0px 6px ;
 }
 
 #VarsA09 {
 	position : absolute ;
-	left : 811px ;
-	top : 130px ;
-	height : 27px ;
+	left : 788px ;
+	top : 116px ;
+	height : 20px ;
+	width: 115px;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #798787 #798787 #ffffff ;
@@ -796,14 +915,19 @@
 
 #VarsA10 {
 	position : absolute ;
-	left : 129px ;
-	top : 216px ;
-	height : 27px ;
+	left : 130px ;
+	top : 88px ;
+	height : 47px ;
+	width : 334px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #ffffff ;
 	background-color: #ffffff ;
-	padding : 3px 0px 0px 8px ;
+	padding : 5px 0px 0px 8px ;
+}
+#hoge_a10{
+	width: 323px;
+	height: 40px;
 }
 /* END VARS */
 /************************************** END INPUT A **************************************/
@@ -1477,8 +1601,8 @@
 /* START SEGMENTS */
 #SegC01 {
 	position : absolute ;
-	left : 8px ;
-	top : 39px ;
+	left : 47px ;
+	top : 270px ;
 	border-width: 0px ;
 	border-style: none ;
 	background-color: transparent ;
@@ -1488,6 +1612,29 @@
 	width : 910 ;
 	height : 110 ;
 }
+#DetailList {
+	max-width: 700px;
+    overflow: auto;
+}
+#SegA_01{
+	position: absolute;
+	top: 247px;
+	left: 46px;
+}
+#SegA1_IFrm{
+	width : 800px ;
+	height : 180px ;
+}
+#SegA_02{
+	position: absolute;
+	top: 433px;
+	left: 46px;
+}
+#SegA2_IFrm{
+	width : 750px ;
+	height : 180px ;
+}
+
 /* END SEGMENTS */
 /************************************** END INPUT C **************************************/
 
@@ -1594,7 +1741,7 @@
 /* START CLEAR BUTTON - INPUT A */
 #SegAClearBt {
 	position : absolute ;
-	top : 500px ;
+	top : 520px ;
 	left : 830px ;
 	border-width: 0px ;
 	border-style: none ;
@@ -1635,7 +1782,7 @@
 #DateBtA {
 	position : absolute ;
 	left : 229px ;
-	top : 44px ;
+	top : 63px ;
 	border-width : 0px ;
 	border-style : none ;
 	background-color : #ffffff ;

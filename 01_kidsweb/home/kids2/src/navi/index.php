@@ -209,7 +209,7 @@
 			$aryData["strButton"]	 = '<span id="RegistNaviBt' . $aryNaviCode[0] . '" ' . $strVisibility1 . ' onclick="top.location=\'/sc/regist/index.php?strSessionID=' . $aryData["strSessionID"] . '\';" ' . $aryDisabled[0] . '></span>';
 			$aryData["strButton"]	.= '<span id="SearchNaviBt' . $aryNaviCode[1] . '" ' . $strVisibility2 . ' onclick="top.location=\'/sc/search/index.php?strSessionID=' . $aryData["strSessionID"] . '\';" ' . $aryDisabled[1] . '></span>';
 			$aryData["strButton"]	.= '<span id="DataExNaviBt' . $aryNaviCode[2] . '" ' . $strVisibility3 . ' onclick="top.location=\'/dataex/index.php?strSessionID=' . $aryData["strSessionID"] . '\';" ' . $aryDisabled[2] . '></span>';
-
+			
 			$aryData["strButton"]	.= '<span id="RegistNaviBtA" ' . $strVisibility4 . ' onclick="top.location=\'/so/regist/index.php?strSessionID=' . $aryData["strSessionID"] . '\';"></span>';
 			$aryData["strButton"]	.= '<span id="SearchNaviBtA" ' . $strVisibility5 . ' onclick="top.location=\'/so/search/index.php?strSessionID=' . $aryData["strSessionID"] . '\';"></span>';
 			break;
