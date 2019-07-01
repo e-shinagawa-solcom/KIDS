@@ -122,52 +122,75 @@
 				</div>
 			</div>
 			<div class="result">
-				<div class="table-responsive">
-					<table class="table">
+				<div style="position:relative;width:99%;height:400px;background-color:#CCCCCC;border:1px solid #798787">
+					<table class="table" style="width:40px;position:absolute;left:0px;top:0px;">
 						<thead>
 							<tr>
-								<th></th>
-								<th>仕入先名</th>
-								<th>発行月</th>
-								<th>荷揚地</th>
-								<th>PONo.</th>
-								<th>行No.</th>
-								<th>REV.No.</th>
-								<th>状態</th>
-								<th>仕入先CD</th>
-								<th>商品CD</th>
-								<th>商品名</th>
-								<th>数量</th>
-								<th>単位</th>
-								<th>単価</th>
-								<th>金額</th>
-								<th>船積開始</th>
-								<th>船積終了</th>
-								<th>計上</th>
-								<th>更新</th>
-								<th>納入P</th>
-								<th>通貨</th>
-								<th>備考</th>
-								<th>船積期限</th>
-								<th>有効期限</th>
-								<th>発行銀行</th>
-								<th>依頼日</th>
-								<th>L/Cno</th>
-								<th>発行日</th>
-								<th>有効日</th>
-								<th>決済額</th>
-								<th>決済1日付</th>
-								<th>決済1金額</th>
-								<th>決済2日付</th>
-								<th>決済2金額</th>
-								<th>決済3日付</th>
-								<th>決済3金額</th>
-								<th>状態</th>
+								<th>選択</th>
 							</tr>
 						</thead>
-						<tbody id="lc_table_body">
-						</tbody>
+						<!-- 固定ヘッダ -->
 					</table>
+
+					<div id="header_h">
+						<table class="table" name="T">
+							<thead>
+								<!-- 水平ヘッダ -->
+								<tr>
+									<th>仕入先名</th>
+									<th>発行月</th>
+									<th>荷揚地</th>
+									<th>PONo.</th>
+									<th>行No.</th>
+									<th>REV.No.</th>
+									<th>状態</th>
+									<th>仕入先CD</th>
+									<th>商品CD</th>
+									<th>商品名</th>
+									<th>数量</th>
+									<th>単位</th>
+									<th>単価</th>
+									<th>金額</th>
+									<th>船積開始</th>
+									<th>船積終了</th>
+									<th>計上</th>
+									<th>更新</th>
+									<th>納入P</th>
+									<th>通貨</th>
+									<th>備考</th>
+									<th>船積期限</th>
+									<th>有効期限</th>
+									<th>発行銀行</th>
+									<th>依頼日</th>
+									<th>L/Cno</th>
+									<th>発行日</th>
+									<th>有効日</th>
+									<th>決済額</th>
+									<th>決済1日付</th>
+									<th>決済1金額</th>
+									<th>決済2日付</th>
+									<th>決済2金額</th>
+									<th>決済3日付</th>
+									<th>決済3金額</th>
+									<th>状態</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+
+					<div id="header_v">
+						<table class="table" name="TV">
+							<tbody id="lc_table_radio">
+							</tbody>
+						</table>
+					</div>
+
+					<div id="data">
+						<table class="table" name="T">
+							<tbody id="lc_table_body">
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -198,3 +221,12 @@
 		</div>
 	</div>
 </div>
+
+<script type="text/javascript">
+        function $E(name) { return document.getElementById(name); }
+        function scroll() {
+            $E("header_h").scrollLeft = $E("data").scrollLeft;// データ部のスクロールをヘッダに反映
+            $E("header_v").scrollTop = $E("data").scrollTop;// データ部のスクロールをヘッダに反映
+        }
+        $E("data").onscroll = scroll;
+    </script>

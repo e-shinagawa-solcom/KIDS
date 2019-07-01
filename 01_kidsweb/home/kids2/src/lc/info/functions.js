@@ -97,8 +97,13 @@ function setLcInfoTable(data, phpData) {
 			background_color = background_color_data["lngcolorred"] + "," + background_color_data["lngcolorgreen"] + "," + background_color_data["lngcolorblue"];
 		}
 
-		var html = '<tr>' +
-			'<td style="text-align: left;"><input type="radio" name="selectRow" value="' + i + '" class="form-control form-control-sm"></td>' +
+		var lc_table_radio = '<tr>' +
+		'<td><input type="radio" name="selectRow" value="' + i + '" class="form-control form-control-sm" style="width:35px;"></td>' +
+		'</tr>';
+		$("#lc_table_radio").append(lc_table_radio);
+
+		var lc_table_body = '<tr>' +
+			// '<td style="text-align: left;"><input type="radio" name="selectRow" value="' + i + '" class="form-control form-control-sm"></td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.payfnameomit) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + strIns(row.opendate, 4, '/') + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.portplace) + '</td>' +
@@ -136,7 +141,7 @@ function setLcInfoTable(data, phpData) {
 			'<td style="background-color: rgb(' + background_color + ');">' + convertNumber(row.bldetail3money, row.currencyclass, 0) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.lcstate) + '</td>' +
 			'</tr>';
-		$("#lc_table_body").append(html);
+		$("#lc_table_body").append(lc_table_body);
 	}
 
 	//0件の場合はエラー
