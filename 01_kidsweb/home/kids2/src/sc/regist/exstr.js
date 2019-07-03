@@ -1,4 +1,4 @@
-<!--
+
 
 
 function ChgEtoJ()
@@ -85,7 +85,7 @@ function ChgEtoJ()
 		SegDept.innerHTML     = 'Dept';
 		SegIncharge.innerHTML = 'In charge name';
 		SegBWF.innerHTML      = 'Work flow root'; /* Admission root */
-		window.WFrootWin.RootWin.fncChgEtoJ( 0 );
+		//window.WFrootWin.RootWin.fncChgEtoJ( 0 );
 
 		RegistBt.innerHTML = registbtE1;
 
@@ -170,15 +170,15 @@ function ChgEtoJ()
 		///// INPUT A /////
 		SegAHeader.innerHTML = headerAJ;
 
-		SegA01.innerHTML = '計上日';
-		SegA02.innerHTML = '売上ＮＯ．';
-		SegA03.innerHTML = '<span class="CheckMark">◎</span>顧客';
+		SegA01.innerHTML = '納品日';
+		SegA02.innerHTML = '起票者';
+		SegA03.innerHTML = '顧客';
 		// *v1* SegA04.innerHTML = '<span class="CheckMark">◎</span>部門';
 		// *v1* SegA05.innerHTML = '<span class="CheckMark">◎</span>担当者';
-		SegA06.innerHTML = '状態';
-		SegA07.innerHTML = '通貨';
-		SegA08.innerHTML = 'レートタイプ';
-		SegA09.innerHTML = '換算レート';
+		SegA06.innerHTML = '顧客側担当者';
+		SegA07.innerHTML = '納品先担当者';
+		SegA08.innerHTML = '消費税額';
+		SegA09.innerHTML = '合計金額';
 		SegA10.innerHTML = '備考';
 		// *v1* SegA11.innerHTML = '受注ＮＯ．';
 		SegA12.innerHTML = '<span class="CheckMark">◎</span>納品書ＮＯ.';
@@ -230,7 +230,7 @@ function ChgEtoJ()
 		SegDept.innerHTML     = '部門';
 		SegIncharge.innerHTML = '担当者';
 		SegBWF.innerHTML      = '承認ルート';
-		window.WFrootWin.RootWin.fncChgEtoJ( 1 );
+		// window.WFrootWin.RootWin.fncChgEtoJ( 1 );
 
 		RegistBt.innerHTML = registbtJ1;
 

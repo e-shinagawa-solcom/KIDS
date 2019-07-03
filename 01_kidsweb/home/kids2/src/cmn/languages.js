@@ -1,11 +1,11 @@
-<!--
+
 
 
 function GetlngLanguageCode( lngObj )
 {
 	lngClickCode = lngObj;
 
-	ChgEtoJ();
+	//ChgEtoJ();
 
 	return false;
 }

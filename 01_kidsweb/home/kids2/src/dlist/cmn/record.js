@@ -1,4 +1,4 @@
-<!--
+
 /**
 * 明細枠を操作する関数群
 *
@@ -1452,16 +1452,22 @@ function fncStrTableHtmlColumns()
 			strTableHtml ='<table width="910" cellpadding="0" cellspacing="1" border="0"' + 
 						  'bgcolor="#6f8180"><tr class="TrSegs">'	+ 
 						  '<td nowrap>&nbsp;</td>'                  +
-						  '<td nowrap id="ExStrDL09">対象</td>'		+
-						  '<td nowrap id="ExStrDL02">製品</td>'		+
-						  '<td nowrap id="ExStrDL01">売上区分</td>'	+
-						  '<td nowrap id="ExStrDL03">単価</td>'		+
-						  '<td nowrap id="ExStrDL04">単位</td>'		+
-						  '<td nowrap id="ExStrDL05">数量</td>'		+
-						  '<td nowrap id="ExStrDL10">元数量</td>'	+
-						  '<td nowrap id="ExStrDL06">税抜金額</td>'	+
-						  '<td nowrap id="ExStrDL07">納期</td>'		+
-						  '<td nowrap id="ExStrDL08">備考</td>'		+
+						  '<td nowrap id="ExStrDL01">選択</td>'		+
+						  '<td nowrap id="ExStrDL02">No.</td>'	+
+						  '<td nowrap id="ExStrDL03">顧客受注番号</td>'		+
+						  '<td nowrap id="ExStrDL04">受注番号</td>'		+
+						  '<td nowrap id="ExStrDL05">顧客品番</td>'		+
+						  '<td nowrap id="ExStrDL06">製品コード</td>'	+
+						  '<td nowrap id="ExStrDL07">製品名</td>'		+
+						  '<td nowrap id="ExStrDL08">製品名（英語）</td>'		+
+						  '<td nowrap id="ExStrDL09">営業部署</td>'		+
+						  '<td nowrap id="ExStrDL10">売上区分</td>'	+
+						  '<td nowrap id="ExStrDL11">納期</td>'      +
+						  '<td nowrap id="ExStrDL12">単価</td>'      +
+						  '<td nowrap id="ExStrDL13">単位</td>'      +
+						  '<td nowrap id="ExStrDL14">数量</td>'      +
+						  '<td nowrap id="ExStrDL15">税抜金額</td>'      +
+						  '<td nowrap id="ExStrDL16">計上単位</td>'      +
 						  '</tr>';
 		}
 		else if( window.parent.lngLanguageCode == 0 )

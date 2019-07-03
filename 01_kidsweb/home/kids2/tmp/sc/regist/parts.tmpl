@@ -9,6 +9,9 @@
 
 2004/../.. xxxxxxx
 	xxxxx
+
+	
+the Pixlr x photo editorを使用し各種ボタンやヘッダーの画像を作成
 --------------------------------------------------------------------------- -->
 <header1>
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/images.js"></script>
@@ -32,7 +35,7 @@
 <script type="text/javascript" language="javascript" src="/sc/regist/exstr.js"></script>
 <link rel="stylesheet" type="text/css" media="screen" href="_%strCssName%_">
 <link rel="stylesheet" type="text/css" media="screen" href="_%strErrorCssName%_">
-<script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
+<!-- <script type="text/javascript" language="javascript" src="/cmn/languages.js"></script> -->
 <script type="text/javascript" language="javascript">
 
 	function fncPOSubmit( obj )
@@ -175,8 +178,10 @@
 </header3>
 
 <bodyonload>
-initLayoutBase();initLayoutSC();initLayoutQuery();initLayoutMsw();initLayoutPunit();initLayoutDate();autoFocus1();initLayoutError1( ErrInputA );initLayoutError2( ErrInputB );fncRegistrationConfirm( window.HSO , window.DSO , '/result/common.html' , '/result/regist_ifrm.html' , 'ResultIframeRenew' , 'NO' , _%lngLanguageCode%_ , document.all.lngRegistConfirm.value );GetlngLanguageCode( _%lngLanguageCode%_ );fncDetailErrorOpen( '_%strErrorMessage%_' ); Loading();
+initLayoutBase();initLayoutSC();initLayoutQuery();initLayoutMsw();initLayoutPunit();initLayoutDate();autoFocus1();initLayoutError1( ErrInputA );initLayoutError2( ErrInputB );fncRegistrationConfirm( window.HSO , window.DSO , '/result/common.html' , '/result/regist_ifrm.html' , 'ResultIframeRenew' , 'NO' , _%lngLanguageCode%_ , document.all.lngRegistConfirm.value );fncDetailErrorOpen( '_%strErrorMessage%_' ); Loading();
+<!-- GetlngLanguageCode( _%lngLanguageCode%_ ) -->
 </bodyonload>
+
 </config>
 
 
@@ -207,7 +212,7 @@ initLayoutBase();initLayoutSC();initLayoutQuery();initLayoutMsw();initLayoutPuni
 <input type="hidden" name="strPageCondition" value="_%strPageCondition%_">
 
 <!-- //////////////////////////////////// START MAIN TITLE //////////////////////////////////// -->
-<span id="MainTitle" style="visibility:_%strBaseVisibilityName%_;"></span>
+<span id="MainTitle" style="visibility:_%strBaseVisibilityName%_"></span>
 <!-- ///////////////////////////////////// END MAIN TITLE ///////////////////////////////////// -->
 
 <OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting" WIDTH="0" HEIGHT="0"></OBJECT>
@@ -236,7 +241,7 @@ initLayoutBase();initLayoutSC();initLayoutQuery();initLayoutMsw();initLayoutPuni
 <input type="hidden" name="check_alert_appdate" value="">
 
 <!-- //////////////////////////////////// START NAVIGATION //////////////////////////////////// -->
-<span id="NaviButton" style="visibility:_%strBaseVisibilityName%_;"></span>
+<span id="NaviButton" style="visibility: _%strBaseVisibilityName%_ "></span>
 
 <p id="Navigations" onmouseout="NavigationOFF( Navigations , NaviButton );">
 <span id="Navi">
@@ -264,12 +269,67 @@ initLayoutBase();initLayoutSC();initLayoutQuery();initLayoutMsw();initLayoutPuni
 <!-- END BOTTOM -->
 
 <!-- START QUERY BUTTON -->
-<span id="SegAClearBt" onclick="fncResetFrm( window.HSO );return false;"></span>
+<!-- <span id="SegAClearBt" onclick="fncResetFrm( window.HSO );return false;"></span> -->
+
+<!-- プレビューボタン -->
+<span id="Preview">
+	<a href="#">
+		<img  src="/img/type01/cmn/querybt/preview_off_ja_bt.gif" alt="" style="width: 80px; height: 20px;">
+	</a>
+</span>
+<!-- 検索条件入力ボタン -->
+<span id="SearchBt">
+	<a href="#">
+		<img  src="/img/type01/cmn/querybt/blown_process_off_ja_bt(1).gif" alt="" style="width: 78px; height: 20px;">
+	</a> 
+</span>
+
+<!-- 追加ボタン -->
+<span id="DeleteBt">
+	<a href="#">
+			<img src="/img/type01/cmn/querybt/add_blown_off_ja_bt(2).gif" alt="" style="width: 78px; height: 20px;">
+	</a>
+</span>
+
+<!-- 削除ボタン -->
+<span id="AddBt">
+	<a href="#">
+			<img src="/img/type01/cmn/querybt/delete_blown_off_ja_bt.gif" alt="" style="width: 78px; height: 20px;">
+	</a>
+</span>
+
+<!-- 全削除ボタン -->
+<span id="AlladdBt">
+	<a href="#">
+			<img  src="/img/type01/cmn/querybt/all_delete_blown_off_ja_bt.gif" alt="" style="width: 78px; height: 20px;">
+	</a>
+</span>
+
+<!-- 明細行替えボタン -->
+<span id="selectup">
+	<img onclick="" src="/img/type01/cmn/querybt/select_changeup.gif"  alt="" style="width: 25px; height: 50px;">
+</span>
+<span id="selectup1">
+	<img onclick="" src="/img/type01/cmn/querybt/select_changeup1.gif" alt="" style="width: 41px; height: 50px;">
+</span>
+
+<span id="selectdown">
+	<img onclick="" src="/img/type01/cmn/querybt/select_changedown.gif" alt="" style="width: 25px; height: 50px;">
+</span>
+<span id="selectdown1">
+	<img onclick="" src="/img/type01/cmn/querybt/select_changedown1.gif" alt="" style="width: 41px; height: 50px;">
+</span>
+
+
 <!-- END QUERY BUTTON -->
 
 
+
+
+
+
 <!-- START SEGMENTS -->
-<span id="SegA01">計上日</span>
+<span id="SegA01">納品日</span>
 <!-- *v1* <span id="SegA02">売上ＮＯ．</span> -->
 <!-- *v1* <span id="SegA03">顧客</span> -->
 
@@ -279,10 +339,10 @@ initLayoutBase();initLayoutSC();initLayoutQuery();initLayoutMsw();initLayoutPuni
 -->
 
 <!-- *v1* <span id="SegA0405"></span> -->
-<span id="SegA06">状態</span>
-<span id="SegA07">通貨</span>
-<span id="SegA08">レートタイプ</span>
-<span id="SegA09">換算レート</span>
+<span id="SegA06">顧客側担当者</span>
+<span id="SegA07">納品先担当者</span>
+<span id="SegA08">消費税額</span>
+<span id="SegA09">合計金額</span>
 <span id="SegA10">備考</span>
 <!-- *v1* <span id="SegA11">受注ＮＯ．</span> -->
 <!-- *v1* <span id="SegA12">伝票コード</span> -->
@@ -298,7 +358,6 @@ initLayoutBase();initLayoutSC();initLayoutQuery();initLayoutMsw();initLayoutPuni
 				window.DLwin.fncCalConversionRate(); subLoadMasterHidden('caCheckClosedSales', 0, document.all.check_alert_appdate, Array ( this.value ), objDataSourceSettingCheckAlertAppDate, 9);"
 		tabindex="1">
 </span>
-
 
 <!-- *v1* 売上ＮＯ．
 <span id="VarsA02">
@@ -349,46 +408,56 @@ initLayoutBase();initLayoutSC();initLayoutQuery();initLayoutMsw();initLayoutPuni
 -->
 
 
-<!-- 状態 -->
-<span id="VarsA06">
-	<input class="disTxt07L" type="text" name="lngSalseStatusCode_Display" value="_%lngSalseStatusCode_Display%_" size="7" maxlength="7" tabindex="" contenteditable="false">
-	<input type="hidden" name="lngSalseStatusCode" value="_%lngSalseStatusCode%_">
-</span>
-</span>
+<!-- 状態-->
+<!-- 顧客側担当者 -->
 
+<span id="VarsA06">
+	<input class="disTxt07L" type="text" name="lngSalseStatusCode_Display" value="_%lngSalseStatusCode_Display%_" size="7" maxlength="7" tabindex="" contenteditable="true">
+	<input type="hidden" name="lngSalseStatusCode" value="_%lngSalseStatusCode%_">
+	<span id="Sama06" style="font-weight: bold">様</span>
+</span>
 
 <!-- 通貨 -->
+<!-- 納品先担当者 -->
 <span id="VarsA07">
-	<select name="lngMonetaryUnitCode"_%MonetaryUnitDisabled%_ tabindex="11"
+	<input class="disTxt07L" type="text" size="7" maxlength="7" tabindex="" contenteditable="true">
+	<!-- <select name="lngMonetaryUnitCode"_%MonetaryUnitDisabled%_ tabindex="11"
 			onchange="fncCheckNumberCurrencySign( this.value );
 				window.DLwin.fncHdMonetaryUnitCode();
 				window.DLwin.fncCalConversionRate();
 				window.DLwin.fncDtGoodsPriceList();">
 		_%lngMonetaryUnitCode%_
-	</select>
+	</select> -->
+	<span id="Sama07" style="font-weight: bold">様</span>
 </span>
 
 
 <!-- レートタイプ -->
+<!-- 消費税額 -->
 <span id="VarsA08">
-	<select   name="lngMonetaryRateCode" tabindex="12" disabled
+		<input class="disTxt07L" type="text" size="7" maxlength="7" tabindex="" contenteditable="true">
+	<!-- <select   name="lngMonetaryRateCode" tabindex="12" disabled
 			onChange="window.DLwin.fncCalConversionRate();">
 		_%lngMonetaryRateCode%_
-	</select>
+	</select> -->
 </span>
 
 
 <!-- 換算レート -->
+<!-- 合計金額 -->
 <span id="VarsA09">
-	<input style="ime-mode:disabled;" class="TxtStyle04R" type="text" name="curConversionRate" value="_%curConversionRate%_" size="7" maxlength="7"
-		onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckNumber( this , 6 , false );" tabindex="13" contentEditable="false">
+		<input class="disTxt07L" type="text" size="7" maxlength="7" tabindex="" contenteditable="true">
+	<!-- <input style="ime-mode:disabled;" class="TxtStyle04R" type="text" name="curConversionRate" value="_%curConversionRate%_" size="7" maxlength="7"
+		onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckNumber( this , 6 , false );" tabindex="13" contentEditable="false"> -->
 </span>
 
 
 <!-- 備考 -->
 <span id="VarsA10">
-	<input class="Txt100L" type="text" name="strNote" value="_%strNote%_"
-		onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this , 90 );" tabindex="10">
+	<!-- <input class="Txt100L" type="text" name="strNote" value="_%strNote%_"
+		onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this , 90 );" tabindex="10"> -->
+		<!-- <input id="hoge_a10" type="text" name="strNote" value="_%strNote%_"> -->
+		<textarea id="hoge_a10" name="strNote" value="_%strNote%_" id="" cols="30" rows="10"></textarea>
 </span>
 <!-- END VARS -->
 
@@ -426,14 +495,18 @@ END [DEPT & IN CHARGE NAME] BUTTON -->
 <!-------------------------------------------------------------------------
 	v2 tomita update
 -------------------------------------------------------------------------->
-<span id="SegCRC">顧客受注番号</span>
+<span id="SegCRC">納品先</span>
 <span id="VarsCRC">
-	<input class="TxtStyle05L" onfocus="chColorOn(this);" onblur="chColorOff(this);" type="text" name="strCustomerReceiveCode" value="_%strCustomerReceiveCode%_" maxlength="11" tabindex="3" _%strCustomerReceiveDis%_>
+	<!-- <input class="TxtStyle05L" onfocus="chColorOn(this);" onblur="chColorOff(this);" type="text" name="strCustomerReceiveCode" value="_%strCustomerReceiveCode%_" maxlength="11" tabindex="3" _%strCustomerReceiveDis%_> -->
+	<input class="hoge1_crc" type="text">&nbsp;<input class="hoge2_crc" type="text">
+
 </span>
 
-<span id="SegPC">製品コード</span>
+<!-- 製品コード -->
+<span id="SegPC">再印刷を備考に明記する</span>
 <span id="VarsPC">
-	<input style="ime-mode:disabled;" class="TxtStyle05L" onfocus="chColorOn(this);" onblur="chColorOff(this);" type="text" name="strProductCodeOpen" value="_%strProductCodeOpen%_" maxlength="10" tabindex="5" _%strProductCodeOpenDis%_>
+	<!-- <input style="ime-mode:disabled;" class="TxtStyle05L" onfocus="chColorOn(this);" onblur="chColorOff(this);" type="text" name="strProductCodeOpen" value="_%strProductCodeOpen%_" maxlength="10" tabindex="5" _%strProductCodeOpenDis%_> -->
+	<input id="hoge_pc" type="checkbox">
 </span>
 
 <!--
@@ -443,28 +516,44 @@ END [DEPT & IN CHARGE NAME] BUTTON -->
 </span>
 -->
 
-<span id="DataOpenBt" onclick="_%ReceiveSubmit%_return false;"></span>
-<span id="PopenBt"    onclick="_%ReceiveSubmit2%_return false;"></span>
-
-<span id="SegA02">売上ＮＯ．</span>
+<!-- <span id="DataOpenBt" onclick="_%ReceiveSubmit%_ return false;"></span> -->
+<!-- <span id="PopenBt"    onclick="_%ReceiveSubmit2%_ return false;"></span>  -->
+<!-- 売上ＮＯ． -->
+<span id="SegA02">起票者</span>
 <span id="VarsA02">
-	<input class="disTxt10L" type="text" name="strSalesCode" value="_%strSalesCode%_" maxlength="10" contenteditable="false">
+	<!-- <input class="disTxt10L" type="text" name="strSalesCode" value="_%strSalesCode%_" maxlength="10" contenteditable="false"> -->
+	<input id="hoge1_a02" type="text">
+	<input id="hoge2_a02" type="text">
 </span>
 
 <span id="SegA03">顧客</span>
 <span id="VarsA03">
-	<input style="ime-mode:disabled;" class="TxtStyle05L" type="text" name="lngCustomerCode" value="_%lngCustomerCode%_" maxlength="10"
+	<!-- <input style="ime-mode:disabled;" class="TxtStyle05L" type="text" name="lngCustomerCode" value="_%lngCustomerCode%_" maxlength="10"
 			onfocus="chColorOn(this);" onblur="chColorOff(this);subLoadMasterCheck(this);" tabindex="8"
-			onChange="subLoadMasterText('cnCustomer', this, strCustomerName, Array(this.value,lngCustomerCode.value), objDataSourceSetting);">&nbsp;<input class="disTxt46L" type="text" name="strCustomerName" value="_%strCustomerName%_" maxlength="25" contenteditable="false">
+			onChange="subLoadMasterText('cnCustomer', this, strCustomerName, Array(this.value,lngCustomerCode.value), objDataSourceSetting);">&nbsp;<input class="disTxt46L" type="text" name="strCustomerName" value="_%strCustomerName%_" maxlength="25" contenteditable="false"> -->
+	<input style="ime-mode:disabled;" class="hoge1_C" type="text" name="lngCustomerCode" value="_%lngCustomerCode%_" maxlength="10">&nbsp;<input class="hoge2_C" type="text" name="strCustomerName" value="_%strCustomerName%_" maxlength="25" contenteditable="false" >
 </span>
 
 <span id="MSWBt01" onclick="fncGetObjectName( window.Mdata01 , lngCustomerCode , strCustomerName );DisplayerM01( '' , document.all.Mdata01 , window.Mdata01.document.all.lngCustomerCode  );ExchangeM01( 0 , window.self );fncFocusType( window.Mdata01 , 'vendorTop' );return false;"></span>
+<span id="MSWBt04" onclick="fncGetObjectName( window.Mdata01 , lngCustomerCode , strCustomerName );DisplayerM01( '' , document.all.Mdata01 , window.Mdata01.document.all.lngCustomerCode  );ExchangeM01( 0 , window.self );fncFocusType( window.Mdata01 , 'vendorTop' );return false;"></span>
 
+<!-- 伝票コード -->
+<span id="SegA12">消費税区分</span>
+<span id="VarsA12">
+		<select class="Slt_a12" name="lngTaxClassCode"tabindex="27">
+			<option value="1">1:非課税</option>
+			<option value="2" selected>2:外税</option>
+			<option value="3">3:内税</option>
+		</select>
+		<input id="hoge_t" type="text">
+		<span id="hoge_p">%</span>
+</span>
+<!--
 <span id="SegA12">伝票コード</span>
 <span id="VarsA12">
 	<input style="ime-mode:disabled;" class="Txt10L" type="text" name="strSlipCode" value="_%strSlipCode%_" maxlength="10"
 			onfocus="chColorOn(this);" onblur="chColorOff(this);subLoadMasterCheck(this);" tabindex="7">
-</span>
+</span> -->
 
 <input type="hidden" name="strGetDataMode" value="_%strGetDataMode%_"> <!-- 受注データ引き当てモード -->
 <input type="hidden" name="strReceiveCode" value="_%strReceiveCode%_"> <!-- 受注No. -->
@@ -484,6 +573,15 @@ END [DEPT & IN CHARGE NAME] BUTTON -->
 <!-- 権限グループフラグ -->
 <input type="hidden" name="lngAuthorityGroupFlag" value="_%lngAuthorityGroupFlag%_">
 </p>
+
+
+<span id="SegA_01">
+	<iframe id="segA1_IFrm"  frameborder="0" src="/dlist/so/index2.html" ></iframe>
+</span>
+<span id="SegA_02">
+		<iframe id="segA2_IFrm"  frameborder="0" src="/dlist/so/index3.html" ></iframe>
+</span>
+
 <!-- ///////////////////////////////////// END INPUT A SEGMENTS ///////////////////////////////////// -->
 
 
@@ -579,8 +677,6 @@ _%strDetailHidden%_
 <span id="VarsB03">
 	<input class="disTxt10L" type="text" name="strGoodsCode" value="_%strGoodsCode%_" maxlength="10" disabled>
 </span>
-
-
 <!-- 製品単位計上 -->
 <span id="VarsB04_1">
 	<input   class="RadioStyle01" type="radio" name="lngConversionClassCode" value="gs"
@@ -878,13 +974,13 @@ _%strDetailHidden%_
 
 
 <!-- //////////////////////////////////// START TAB //////////////////////////////////// -->
-<span id="TabA"></span>
-<span id="TabB"></span>
+<!-- <span id="TabA"></span>
+<span id="TabB"></span> -->
 <!-- ///////////////////////////////////// END TAB ///////////////////////////////////// -->
 
 
 <!-- ////////// START E TO J ////////// -->
-<span id="EtoJ" style="visibility:_%strBaseVisibilityName%_;"></span>
+<!-- <span id="EtoJ" style="visibility:_%strBaseVisibilityName%_;"></span> -->
 <!-- /////////// END E TO J /////////// -->
 
 

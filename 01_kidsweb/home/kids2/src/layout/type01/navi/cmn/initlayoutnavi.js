@@ -69,6 +69,17 @@ function initLayoutNavigation()
 	{
 		SearchNaviBt3.innerHTML = schnaviJ3;
 	}
+	
+	///// Ç¼ÉÊ½ñ¸¡º÷//////
+	if (typeof(hogeNaviBt1)!='undefined')
+	{
+		hogeNaviBt1.innerHTML = hogenaviJ1;
+	}
+
+	if (typeof(hogeNaviBt3)!='undefined')
+	{
+		hogeNaviBt3.innerHTML = hogenaviJ3;
+	}
 
 
 	///// LIST OUTPUT /////
@@ -266,7 +277,6 @@ function initLayoutNavigation()
 	{
 		SearchNaviBtCCC.innerHTML = schnaviJCCCC;
 	}
-
 
 
 	return false;

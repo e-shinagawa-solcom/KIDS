@@ -1,4 +1,4 @@
-<!--
+
 
 
 //--------------------------------------------------------
@@ -54,8 +54,8 @@ var logoutbt = '<a href="#"><img onmouseover="LogoutOn(this);" onmouseout="Logou
 
 
 ///// E TO J BT IMAGE /////
-var etojEbt = '<a href="#" onclick="ChgEtoJ();"><img onmouseover="EtoJ1EOn(this);" onmouseout="EtoJ1EOff(this);fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + etojE1 + '" width="82" height="24" border="0" alt="ENGLISH" tabindex="-1"></a>';
-var etojJbt = '<a href="#" onclick="ChgEtoJ();"><img onmouseover="EtoJ1JOn(this);" onmouseout="EtoJ1JOff(this);fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + etojJ1 + '" width="82" height="24" border="0" alt="JAPANESE" tabindex="-1"></a>';
+//var etojEbt = '<a href="#" onclick="ChgEtoJ();"><img onmouseover="EtoJ1EOn(this);" onmouseout="EtoJ1EOff(this);fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + etojE1 + '" width="82" height="24" border="0" alt="ENGLISH" tabindex="-1"></a>';
+//var etojJbt = '<a href="#" onclick="ChgEtoJ();"><img onmouseover="EtoJ1JOn(this);" onmouseout="EtoJ1JOff(this);fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + etojJ1 + '" width="82" height="24" border="0" alt="JAPANESE" tabindex="-1"></a>';
 
 
 

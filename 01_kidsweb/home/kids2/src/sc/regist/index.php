@@ -50,7 +50,7 @@
 	// ■ パラメータ取得
 	//-------------------------------------------------------------------------
 	$aryData["strSessionID"]    = $_REQUEST["strSessionID"];   // セッションID
-	$aryData["lngLanguageCode"] = $_COOKIE["lngLanguageCode"]; // 言語コード
+	// $aryData["lngLanguageCode"] = $_COOKIE["lngLanguageCode"]; // 言語コード
 
 	$strGetDataMode = $_POST["strGetDataMode"]; // データ引き当てモード
 	$strProcMode    = $_POST["strProcMode"];    // 処理モード
@@ -85,7 +85,7 @@
 	}
 
 	// 601 売上管理（売上登録）
-	if( fncCheckAuthority( DEF_FUNCTION_SCO1, $objAuth ) )
+	if( fncCheckAuthority( DEF_FUNCTION_SC1, $objAuth ) )
 	{
 		$aryData["strRegistURL"]   = "regist/index.php?strSessionID=" . $aryData["strSessionID"];
 	}

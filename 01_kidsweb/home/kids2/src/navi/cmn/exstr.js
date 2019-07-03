@@ -259,6 +259,17 @@ function ChgEtoJ( lngCount )
 			SearchNaviBt3.innerHTML = schnaviJ3;
 		}
 
+		///// «º… ΩÒ≈–œø /////
+		if ( typeof(hogeNaviBt1) != 'undefined' )
+		{
+			hogeNaviBt1.innerHTML = hogenaviJ1;
+		}
+
+		if ( typeof(hogeNaviBt3) != 'undefined' )
+		{
+			hogeNaviBt3.innerHTML = hogenaviJ3;
+		}
+
 
 		///// LIST OUTPUT /////
 		if ( typeof(ListExNaviBt1) != 'undefined' )

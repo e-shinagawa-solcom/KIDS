@@ -3059,6 +3059,9 @@ function fncGrayClearButton( strMode , obj )
 	}
 }
 
+
+
+
 ////////// SEARCH BUTTON //////////
 
 function SearchJOff(obj)
@@ -3155,6 +3158,15 @@ function fncChangeBtnImg( objID, strPath )
 
 
 
+//////////«º… ΩÒ°°BUTTON///////////
+function hghJOff(obj)
+{
+	obj.src = hghJ1;
+}
+function hghJOn(obj)
+{
+	obj.src = hghJ2;
+}
 
 ////////// NAVI SEARCH BUTTON //////////
 

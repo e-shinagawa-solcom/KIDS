@@ -1,4 +1,4 @@
-<!--
+
 
 var menuBackImg = '<img src="' + menuback1 + '" width="313" height="27">';
 
@@ -22,7 +22,7 @@ function initLayoutSC()
 	///// MAIN TITLE /////
 	MainTitle.innerHTML = maintitleJ;
 
-	MenuBack.innerHTML  = menuBackImg;
+	// MenuBack.innerHTML  = menuBackImg;
 
 	return false;
 }
