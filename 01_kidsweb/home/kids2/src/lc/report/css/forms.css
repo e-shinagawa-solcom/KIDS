@@ -87,8 +87,8 @@
 }
 
 .content_text{
-    font-size: 13px;
-    font-weight: bold;
+    font-size: 12px;
+    /* font-weight: bold; */
     color: #666666;
     background: #e8f0f1;
     border: 1px solid #798787;
@@ -124,7 +124,7 @@
     flex: 0 0 25%;
     max-width: 25%;
     font-size: 12px;
-    font-weight: bold;
+    /* font-weight: bold; */
     color: #666;
     line-height: 24px;
     padding: 0px;
@@ -138,7 +138,7 @@
     flex: 0 0 35%;
     max-width: 35%;
     font-size: 12px;
-    font-weight: bold;
+    /* font-weight: bold; */
     color: #666;
     line-height: 24px;
 }
@@ -158,7 +158,7 @@
 
 .required{
 	font-size: 13px;
-    font-weight: bold;
+    /* font-weight: bold; */
     color: #0392ca;
     margin-left: 3px;
 }

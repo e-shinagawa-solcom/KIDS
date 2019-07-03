@@ -19,6 +19,7 @@
 {
 	left : 35px ;
 	overflow: hidden;
+	margin-bottom: 3px;
 }
 .form-line{
 	display: inline-block;
@@ -35,7 +36,7 @@
 	vertical-align: middle;
 	font-weight : bold ;
 	width : 157px ;
-	line-height: 27px;
+	line-height: 23px;
 }
 
 .QueryBt {

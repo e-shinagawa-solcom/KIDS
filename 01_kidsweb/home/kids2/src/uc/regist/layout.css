@@ -14,7 +14,7 @@
 	z-index : 0 ;
 	visibility : visible ;
 	background-color: #d6d0b1 ;
-	height: 512px;
+	height: 465px;
 	width: 949px;
 	margin-top: 12px;
 	margin-bottom: 0px;
@@ -37,7 +37,7 @@
 #SegABottom {
 	position : absolute ;
 	left : 0px ;
-	top : 500px ;
+	top : 465px ;
 	border-width: 0px ;
 	border-style: none ;
 	background-color: #ffffff ;
@@ -134,7 +134,7 @@
 }
 
 .Spacer {
-	height: 10px;
+	height: 5px;
 	clear:both
 }
 
@@ -172,7 +172,7 @@
 #RegistBt
 {
 	position : absolute ;
-	top : 515px ;
+	top : 480px ;
 	left : 830px ;
 	border-width: 0px ;
 	border-style: none ;

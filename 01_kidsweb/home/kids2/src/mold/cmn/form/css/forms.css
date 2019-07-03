@@ -55,11 +55,11 @@ img.toggle-display
 .form-box
 {
     position: absolute;
-    top: 31px;
+    top: 10px;
     left: 21px;
 
     width: 927px;
-    height: 484px;
+    height: 475px;
 
     border-style: solid;
     border-width: 1px;
@@ -77,7 +77,7 @@ img.toggle-display
     left: 21px;
 
     width: 950px;
-    height: 530px;
+    height: 498px;
 
     border-style: solid;
     border-width: 1px;
@@ -95,7 +95,7 @@ img.toggle-display
     left: 21px;
 
     width: 950px;
-    height: 500px;
+    height: 470px;
 
     border-style: solid;
     border-width: 1px;

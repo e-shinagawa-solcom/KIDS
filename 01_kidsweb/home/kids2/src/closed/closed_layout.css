@@ -21,6 +21,7 @@
 {
 	left : 35px ;
 	overflow: hidden;
+	margin-bottom: 3px;
 }
 .form-line{
 	display: inline-block;

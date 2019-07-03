@@ -138,7 +138,7 @@
     left: 0px;
     top: 22px;
     width: 40px;
-    height: 375px;
+    height: 345px;
     overflow-x: hidden;
     overflow-y: hidden;
 }
@@ -150,7 +150,7 @@
     overflow-x: scroll;
     overflow-y: scroll;
     width: 97.5%;
-    height: 375px;
+    height: 345px;
 }
 .form-box > div > button {
     margin-bottom: 10px;

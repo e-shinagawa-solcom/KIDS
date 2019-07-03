@@ -17,6 +17,15 @@
 	height: 100%;
 }
 
+
+/*　共通ヘッダ　画面タイトル 画像　*/
+.base-header__title-image
+{
+	position: absolute;
+	top: 44px;
+	left: 33px;
+}
+
 /*　共通ヘッダ　画面タイトル 画像　*/
 .base-header__title-label
 {

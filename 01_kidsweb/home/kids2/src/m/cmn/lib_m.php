@@ -44,8 +44,7 @@ $aryListTableName = Array (
 $arySearchTableName = Array (
     "m_Company"          => "会社マスタ管理",
     "m_Group"            => "グループマスタ管理",
-    "m_MonetaryRate"     => "通貨レートマスタ管理",
-    "m_TemporaryRate"     => "想定レートマスタ管理"
+    "m_MonetaryRate"     => "通貨レートマスタ管理"
 );
 
 
@@ -172,13 +171,6 @@ class clsMaster
             {
                 $strQuery .= " AND lngMonetaryUnitCode = " . $arySubCode["lngmonetaryunitcode"] .
                     " AND dtmApplyStartDate = '" . $arySubCode["dtmapplystartdate"] . "'" .
-                    " AND dtmApplyEndDate > now()";
-            }
-
-            // 想定マスタの場合、条件を追加
-			elseif ( $this->strTableName == "m_TemporaryRate" )
-            {
-                $strQuery .= " AND dtmApplyStartDate = '" . $arySubCode["dtmapplystartdate"] . "'" .
                     " AND dtmApplyEndDate > now()";
             }
         }

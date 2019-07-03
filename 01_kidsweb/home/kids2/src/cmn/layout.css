@@ -6,7 +6,7 @@
 {
 	position   : absolute;
 	left       : 130px;
-	top        : 643px; /* 648 */
+	top        : 592px; /* 648 */
 	width      : 270px;
 	height     : 15px;
 	z-index    : 4;
@@ -196,7 +196,7 @@
 #HelpBt
 {
 	position : absolute ;
-	top : 643px ; /* 8 */
+	top : 608px ; /* 8 */
 	left : 940px ; /* 877px */
 	z-index : 4 ;
 	border-width : 0px ;
@@ -291,7 +291,7 @@
 /********************* LOGOUT BUTTON *********************/
 #LogOutBt {
 	position : absolute ;
-	top : 641px ; /* 8 */
+	top : 605px ; /* 8 */
 	left : 847px ; /* 877px */
 	z-index : 2 ;
 	border-width: 0px ;
@@ -323,7 +323,7 @@
 	top : 76px ;
 	left : 0px ;
 	width : 980px ;
-	height : 580px ;
+	height : 540px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #cdcdcd ;
@@ -337,8 +337,8 @@
 #NaviButton
 {
 	position : absolute ;
-	left : 11px ;
-	top : 95px ;
+	left : 0px ;
+	top : 0px ;
 	border-width: 0px ;
 	border-style: none ;
 	z-index : 4 ;
@@ -365,10 +365,10 @@
 #NaviIfrm /* I FRAME SIZE */
 {
 	position : absolute ;
-	top: 95px;
-	left: 12px;
+	top: 0px;
+	left: 0px;
 	width : 169px ;
-	height : 552px ;
+	height : 515px ;
 	border-width: 0px ;
 	border-style: none ;
 	background-color: transparent ;
@@ -381,7 +381,7 @@
 #MainMenuButton 
 {
 	position : absolute ;
-	top : 641px ;
+	top : 605px ;
 	left : 21px ;
 	z-index : 2 ;
 	border-width: 0px ;
@@ -411,7 +411,7 @@
 /********************* FOOTER *********************/
 #Footer {
 	position : absolute ;
-	top : 636px ;
+	top : 600px ;
 	left : 0px ;
 	z-index : 1 ;
 	border-width: 0px ;

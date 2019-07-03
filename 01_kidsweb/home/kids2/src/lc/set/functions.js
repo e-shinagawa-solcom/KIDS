@@ -89,11 +89,11 @@ function setBankInfo(bank_info){
 			invalidflag = "checked";
 		}
 		var html = "<tr id='bank_data_"+ data.bankcd +"'>" + 
-			"<td><input type='text' class='form-control form-control-sm' name='bankcd' value='" + data.bankcd + "' ></td>" + 
-			"<td><input type='text' class='form-control form-control-sm' name='bankomitname' value='" + data.bankomitname + "' ></td>" + 
-			"<td><input type='text' class='form-control form-control-sm' name='bankformalname' value='" + data.bankformalname + "' ></td>" + 
-			"<td><input type='text' class='form-control form-control-sm' name='bankdivrate' value='" + data.bankdivrate + "' ></td>" + 
-			"<td><input type='checkbox' name='invalidflag' value='1' " + invalidflag + " style='width: 11px;margin-top: 10px;margin-left: 25px;'></td>" + 
+			"<td><input type='text' class='form-control txt-kids' name='bankcd' value='" + data.bankcd + "' ></td>" + 
+			"<td><input type='text' class='form-control txt-kids' name='bankomitname' value='" + data.bankomitname + "' ></td>" + 
+			"<td><input type='text' class='form-control txt-kids' name='bankformalname' value='" + data.bankformalname + "' ></td>" + 
+			"<td><input type='text' class='form-control txt-kids' name='bankdivrate' value='" + data.bankdivrate + "' ></td>" + 
+			"<td><input type='checkbox' name='invalidflag' value='1' " + invalidflag + " style='width: 11px;margin-top: 3px;margin-left: 25px;'></td>" + 
 			"</tr>";
 		$("#bank_body").append(html);
 	}
@@ -113,12 +113,12 @@ function setPayfInfo(payf_info){
 			invalidflag = "checked";
 		}
 		var html = "<tr id='payf_data_"+ data.payfcd +"'>" + 
-			"<td><input type='text' class='form-control form-control-sm' name='payfcd' value='" + data.payfcd + "' ></td>" + 
-			"<td><input type='text' class='form-control form-control-sm' name='payfomitname' value='" + data.payfomitname + "' ></td>" + 
-			"<td><input type='text' class='form-control form-control-sm' name='payfformalname' value='" + data.payfformalname + "' ></td>" + 
-			"<td><input type='text' class='form-control form-control-sm' name='payfsendname' value='" + data.payfsendname + "' ></td>" + 
-			"<td><input type='text' class='form-control form-control-sm' name='payfsendfax' value='" + data.payfsendfax + "' ></td>" + 
-			"<td><input type='checkbox' name='invalidflag' value='1' " + invalidflag + "  style='width: 11px;margin-top: 10px;margin-left: 35px;'></td>" + 
+			"<td><input type='text' class='form-control txt-kids' name='payfcd' value='" + data.payfcd + "' ></td>" + 
+			"<td><input type='text' class='form-control txt-kids' name='payfomitname' value='" + data.payfomitname + "' ></td>" + 
+			"<td><input type='text' class='form-control txt-kids' name='payfformalname' value='" + data.payfformalname + "' ></td>" + 
+			"<td><input type='text' class='form-control txt-kids' name='payfsendname' value='" + data.payfsendname + "' ></td>" + 
+			"<td><input type='text' class='form-control txt-kids' name='payfsendfax' value='" + data.payfsendfax + "' ></td>" + 
+			"<td><input type='checkbox' name='invalidflag' value='1' " + invalidflag + "  style='width: 11px;margin-top: 3px;margin-left: 35px;'></td>" + 
 			"</tr>";
 		$("#payf_body").append(html);
 	}
@@ -149,11 +149,11 @@ function addPayfInfo(){
 
 		//新規行の追加
 		var html = "<tr id='payf_data_"+ payfcd +"'>" + 
-			"<td><input type='text' class='form-control form-control-sm' name='payfcd' value='" + payfcd + "' ></td>" + 
-			"<td><input type='text' class='form-control form-control-sm' name='payfomitname' value='' ></td>" + 
-			"<td><input type='text' class='form-control form-control-sm' name='payfformalname' value='' ></td>" + 
-			"<td><input type='text' class='form-control form-control-sm' name='payfsendname' value='' ></td>" + 
-			"<td><input type='text' class='form-control form-control-sm' name='payfsendfax' value='' ></td>" + 
+			"<td><input type='text' class='form-control txt-kids' name='payfcd' value='" + payfcd + "' ></td>" + 
+			"<td><input type='text' class='form-control txt-kids' name='payfomitname' value='' ></td>" + 
+			"<td><input type='text' class='form-control txt-kids' name='payfformalname' value='' ></td>" + 
+			"<td><input type='text' class='form-control txt-kids' name='payfsendname' value='' ></td>" + 
+			"<td><input type='text' class='form-control txt-kids' name='payfsendfax' value='' ></td>" + 
 			"<td><input type='checkbox' name='invalidflag' value='1'></td>" + 
 			"</tr>";
 		$("#payf_body").append(html);

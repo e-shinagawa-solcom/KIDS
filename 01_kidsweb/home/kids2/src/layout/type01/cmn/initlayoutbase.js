@@ -25,8 +25,8 @@ var helpButton3 = '<img src="' + helpbt3 + '" width="19" height="19" border="0" 
 
 
 ///// NAVIGATION /////
-var naviButton1 = '<a href="#"><img onclick="NaviOn( this );  fncNaviVisible( Navigations , NaviButton ); return false;" src="' + navibt1 + '" width="18" height="550" border="0" tabindex="-1"></a>';
-var naviButton3 = '<a href="#"><img onclick="NaviOff( this ); fncNaviVisible( Navigations , NaviButton ); return false;" src="' + navibt3 + '" width="18" height="550" border="0" tabindex="-1"></a>';
+var naviButton1 = '<a href="#"><img onclick="NaviOn( this );  fncNaviVisible( Navigations , NaviButton ); return false;" src="' + navibt1 + '" width="18" height="515" border="0" tabindex="-1"></a>';
+var naviButton3 = '<a href="#"><img onclick="NaviOff( this ); fncNaviVisible( Navigations , NaviButton ); return false;" src="' + navibt3 + '" width="18" height="515" border="0" tabindex="-1"></a>';
 
 
 

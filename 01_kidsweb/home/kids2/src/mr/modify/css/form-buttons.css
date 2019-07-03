@@ -12,6 +12,7 @@
 /* クリアボタン */
 .form-buttons__clear
 {
+    margin-left: 20px;
 }
 
 /* 登録ボタン */

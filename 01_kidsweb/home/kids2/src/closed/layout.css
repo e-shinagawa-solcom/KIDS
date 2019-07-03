@@ -42,7 +42,7 @@
 	visibility : visible ;
 	border-width: 0px ;
 	border-style: none ;
-	height: 512px;
+	height: 492px;
 	width: 949px;
 	background-color: #d6d0b1 ;
 	margin-top: 12px;
@@ -69,7 +69,7 @@
 #SegABottom {
 	position : absolute ;
 	left : 0px ;
-	top : 508px ;
+	top : 488px ;
 	border-width: 0px ;
 	border-style: none ;
 	background-color: #ffffff ;
@@ -89,7 +89,7 @@
 
 #SegAIFrm {
 	width : 931px ;
-	height : 467px ;
+	height : 447px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #799797 ;

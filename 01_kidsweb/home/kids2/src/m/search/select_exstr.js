@@ -20,7 +20,6 @@ function ChgEtoJ( lngSelfCode )
 		m_Company.innerText       = 'Company master';
 		m_Group.innerText         = 'Group master';
 		m_MonetaryRate.innerText  = 'Monetary rate master';
-		m_TemporaryRate.innerText  = 'Temporary rate master';
 
 	}
 
@@ -37,7 +36,6 @@ function ChgEtoJ( lngSelfCode )
 		m_Company.innerText       = '会社マスタ管理';
 		m_Group.innerText         = 'グループマスタ管理';
 		m_MonetaryRate.innerText  = '通貨レートマスタ管理';
-		m_TemporaryRate.innerText  = '想定レートマスタ管理';
 
 	}
 

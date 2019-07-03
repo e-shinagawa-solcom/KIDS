@@ -12,7 +12,7 @@
     top: 1px;
     left: 11px;
     width: 186px;
-    height: 550px;
+    height: 520px;
     z-index : 4 ;
     pointer-events: none;
 }
@@ -25,8 +25,8 @@
 	visibility : visible ;
 	border-width: 0px ;
 	border-style: none ;
-	//background-color: transparent ;
-	height: 512px;
+	background-color: transparent ;
+	height: 492px;
 	width: 950px;
 	background-color: #d6d0b1 ;
 	margin-top: 12px;
@@ -76,7 +76,7 @@
 #SegABottom {
 	position : absolute ;
 	left : 0px ;
-	top : 508px ;
+	top : 488px ;
 	border-width: 0px ;
 	border-style: none ;
 	background-color: #ffffff ;
@@ -96,7 +96,7 @@
 
 #SegAIFrm {
 	width : 931px ; /* 931px */
-	height : 467px ;
+	height : 447px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #799797 ;

@@ -2,7 +2,7 @@
 .base-footer
 {
 	position : absolute;
-	top: 636px;
+	top: 600px;
 	left: 0;
 
 	width: 980px;
@@ -43,4 +43,29 @@
 {
     width: 20px;
     font-weight: bold;
+}
+
+/* メインメニューボタン */
+.control-block__buttan-main-menu
+{
+    position: absolute;
+    top: 5px;
+    left: 21px;
+}
+
+
+/* ログアウトボタン */
+.control-block__button-logout
+{
+	position: absolute;
+    top: 5px;
+	right: 50px;
+}
+
+/* ヘルプボタン */
+.control-block__button-help
+{
+	position: absolute;
+    top: 8px;
+	right: 20px;
 }
