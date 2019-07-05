@@ -4,28 +4,26 @@
 #strSelectFunctions
 {
 	font-family : Arial , £Í£Ó¡¡£Ð¥´¥·¥Ã¥¯ ;
-	font-weight : bold ;
 	font-size : 12px ;
 	color : #ffffff ;
 	position : absolute ;
-	top : 245px ;
+	top : 250px ;
 	left : 10px ;
 	width : 970px ;
-	height : 27px ;
+	height : 22px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color : #cdcdcd ;
-	padding : 7px 0px 0px 8px ;
+	padding : 8px 0px 0px 8px ;
 	background-color: #4b6486 ;
 	text-align :center ;
 }
-
 
 #TopNavi
 {
 	position : absolute ;
 	left : 350 ;
-	top : 350 ;
+	top : 340 ;
 	z-index : 3 ;
 	border-width: 0px ;
 	border-style: none ;

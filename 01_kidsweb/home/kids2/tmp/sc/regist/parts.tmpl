@@ -35,7 +35,6 @@ the Pixlr x photo editorを使用し各種ボタンやヘッダーの画像を作成
 <script type="text/javascript" language="javascript" src="/sc/regist/exstr.js"></script>
 <link rel="stylesheet" type="text/css" media="screen" href="_%strCssName%_">
 <link rel="stylesheet" type="text/css" media="screen" href="_%strErrorCssName%_">
-<!-- <script type="text/javascript" language="javascript" src="/cmn/languages.js"></script> -->
 <script type="text/javascript" language="javascript">
 
 	function fncPOSubmit( obj )
@@ -179,7 +178,6 @@ the Pixlr x photo editorを使用し各種ボタンやヘッダーの画像を作成
 
 <bodyonload>
 initLayoutBase();initLayoutSC();initLayoutQuery();initLayoutMsw();initLayoutPunit();initLayoutDate();autoFocus1();initLayoutError1( ErrInputA );initLayoutError2( ErrInputB );fncRegistrationConfirm( window.HSO , window.DSO , '/result/common.html' , '/result/regist_ifrm.html' , 'ResultIframeRenew' , 'NO' , _%lngLanguageCode%_ , document.all.lngRegistConfirm.value );fncDetailErrorOpen( '_%strErrorMessage%_' ); Loading();
-<!-- GetlngLanguageCode( _%lngLanguageCode%_ ) -->
 </bodyonload>
 
 </config>
@@ -241,9 +239,9 @@ initLayoutBase();initLayoutSC();initLayoutQuery();initLayoutMsw();initLayoutPuni
 <input type="hidden" name="check_alert_appdate" value="">
 
 <!-- //////////////////////////////////// START NAVIGATION //////////////////////////////////// -->
-<span id="NaviButton" style="visibility: _%strBaseVisibilityName%_ "></span>
+<span id="NaviButton" style="left : 10px;top : 96px;visibility: _%strBaseVisibilityName%_ "></span>
 
-<p id="Navigations" onmouseout="NavigationOFF( Navigations , NaviButton );">
+<p id="Navigations" style="left : 27px;top : 96px;" onmouseout="NavigationOFF( Navigations , NaviButton );">
 <span id="Navi">
 	<iframe id="NaviIfrm" name="NAVIwin" frameborder="0" scrolling="no" src="/navi/index.php?strSessionID=_%strSessionID%_&strNaviCode=sc-1111"></iframe>
 </span>

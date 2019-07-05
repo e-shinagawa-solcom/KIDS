@@ -301,7 +301,7 @@
 	left : 10px ;
 	top : 30px ;
 	width : 925px ;
-	height : 245px ;
+	height : 235px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #cdcdcd ;
@@ -314,7 +314,7 @@
 #SegABottom {
 	position : absolute ;
 	left : 10px ;
-	top : 272px ;
+	top : 262px ;
 	height : 11px ;
 	border-width: 0px ;
 	border-style: none ;
@@ -1502,7 +1502,7 @@
 #InputC {
 	position : absolute ;
 	left : 43px ;
-	top : 389px ;
+	top : 375px ;
 	z-index : 0 ;
 	visibility: visible ;
 	border-width: 0px ;
@@ -1544,7 +1544,7 @@
 #SegCBottom {
 	position : absolute ;
 	left : 0px ;
-	top : 195px ;
+	top : 185px ;
 	width : 767px ;
 	height : 10px ;
 	border-width: 0px ;
@@ -1560,7 +1560,7 @@
     left: 0px;
     top: 30px;
     width: 927px;
-    height: 165px;
+    height: 155px;
     border-width: 0px;
     border-style: none;
     background-color: transparent;
@@ -1661,7 +1661,7 @@
 /* START REGIST BUTTON */
 #RegistBt {
 	position : absolute ;
-	top : 506px ;
+	top : 478px ;
 	left : 832px ;
 	width : 72px ;
 	height : 21px ;

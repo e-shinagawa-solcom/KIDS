@@ -21,7 +21,7 @@ function initLayoutSO()
 	///// MAIN TITLE /////
 	MainTitle.innerHTML = maintitleJ;
 
-	MenuBack.innerHTML  = menuBackImg;
+	// MenuBack.innerHTML  = menuBackImg;
 
 	return false;
 }

@@ -422,7 +422,7 @@ define ( "DEF_FUNCTION_LC3",	2103 );	// 2103 L/C ‘Ω∏
 define ( "DEF_FUNCTION_LC4",	2104 );	// 2104 L/Cƒ¢…ºΩ–Œœ
 
 define ( "DEF_FUNCTION_INV0",	2200 );	// 2200 ¿¡µ·¥…Õ˝
-define ( "DEF_FUNCTION_INV1",	2201 );	// 2201 ¿¡µ·ΩÒ»Øπ‘
+define ( "DEF_FUNCTION_INV1",	2201 );	//  ¿¡µ·ΩÒ»Øπ‘
 define ( "DEF_FUNCTION_INV2",	2202 );	// 2202 ¿¡µ·ΩÒ∏°∫˜
 define ( "DEF_FUNCTION_INV3",	2203 );	// 2203 ¿¡µ·Ω∏∑◊
 

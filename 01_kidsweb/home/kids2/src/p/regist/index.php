@@ -417,7 +417,6 @@ $aryData["strSpecificationDetails"]	= "設計色 : <br />可動性 : <br />";
 
 	// ヘルプ対応
 	$aryData["lngFunctionCode"] = DEF_FUNCTION_P1;
-
 	echo fncGetReplacedHtml( "p/regist/parts.tmpl", $aryData ,$objAuth);
 
 	return true;

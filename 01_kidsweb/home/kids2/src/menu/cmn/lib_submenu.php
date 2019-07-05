@@ -11,15 +11,12 @@
 
 
 		// ボタン表示可否フラグ
-		$aryData["lngSubFlag_p_0"]		= 1;	// 商品登録
 		$aryData["lngSubFlag_p_1"]		= 1;	// 商品検索
 
-//		$aryData["lngSubFlag_es_0"]		= 1;	// 見積原価登録
 		$aryData["lngSubFlag_es_0"]		= 1;	// 見積原価検索
 		$aryData["lngSubFlag_es_1"]		= 1;	// ダウンロード
 		$aryData["lngSubFlag_es_2"]		= 1;	// アップロード
 
-		$aryData["lngSubFlag_so_0"]		= 1;	// 受注登録
 		$aryData["lngSubFlag_so_1"]		= 1;	// 受注検索
 
 		$aryData["lngSubFlag_po_0"]		= 1;	// 発注検索
@@ -31,9 +28,6 @@
 
 		$aryData["lngSubFlag_pc_0"]		= 1;	// 仕入登録
 		$aryData["lngSubFlag_pc_1"]		= 1;	// 仕入検索
-
-		$aryData["lngSubFlag_wf_0"]		= 1;	// 案件一覧
-		$aryData["lngSubFlag_wf_1"]		= 1;	// 案件検索
 		
 		$aryData["lngSubFlag_inv_0"]	= 1;	// 請求書発行
 		$aryData["lngSubFlag_inv_1"]	= 1;	// 請求書検索
@@ -57,17 +51,14 @@
 
 		// リンク
 		// 商品管理
-		$aryData["lngSubRef_p_0"]		= '/p/regist/index.php?strSessionID=' . $aryData["strSessionID"];
 		$aryData["lngSubRef_p_1"]		= '/p/search/index.php?strSessionID=' . $aryData["strSessionID"];
 
 		// 見積原価管理
-//		$aryData["lngSubRef_es_0"]		= '/estimate/regist/edit.php?strSessionID=' . $aryData["strSessionID"] . '&lngFunctionCode=' . DEF_FUNCTION_E1 . '&lngRegist=1';
 		$aryData["lngSubRef_es_0"]		= '/estimate/search/index.php?strSessionID=' . $aryData["strSessionID"];
 		$aryData["lngSubRef_es_1"]		= '/download/index.php?strSessionID=' . $aryData["strSessionID"];
 		$aryData["lngSubRef_es_2"]		= '/upload2/index.php?strSessionID=' . $aryData["strSessionID"];
 
 		// 受注管理
-		$aryData["lngSubRef_so_0"]		= '/so/regist/index.php?strSessionID=' . $aryData["strSessionID"];
 		$aryData["lngSubRef_so_1"]		= '/so/search/index.php?strSessionID=' . $aryData["strSessionID"];
 
 		// 発注管理
@@ -82,10 +73,6 @@
 		// 仕入管理
 		$aryData["lngSubRef_pc_0"]		= '/pc/regist/index.php?strSessionID=' . $aryData["strSessionID"];
 		$aryData["lngSubRef_pc_1"]		= '/pc/search/index.php?strSessionID=' . $aryData["strSessionID"];
-
-		// ワークフロー
-		$aryData["lngSubRef_wf_0"]		= '/wf/list/index.php?strSessionID=' . $aryData["strSessionID"];
-		$aryData["lngSubRef_wf_1"]		= '/wf/search/index.php?strSessionID=' . $aryData["strSessionID"];
 
 		// 帳票出力
 		$aryData["lngSubRef_list_0"]	= '/list/index.php?strSessionID=' . $aryData["strSessionID"] . '&strListMode=p';
@@ -142,12 +129,6 @@
 		//-------------------------------------------------------------------------
 		// 受注管理
 		//-------------------------------------------------------------------------
-		// 401 受注登録
-		if( !fncCheckAuthority( DEF_FUNCTION_SO1, $objAuth ) )
-		{
-			$aryData["lngSubFlag_so_0"] = 0;
-		}
-
 		// 402 受注検索
 		if( !fncCheckAuthority( DEF_FUNCTION_SO2, $objAuth ) )
 		{
@@ -166,7 +147,7 @@
 			$aryData["lngSubFlag_po_0"] = 0;
 		}
 
-		// 502 発注書修正
+		// 502 発注書検索
 		if( !fncCheckAuthority( DEF_FUNCTION_PO2, $objAuth ) )
 		{
 			$aryData["lngSubFlag_po_1"] = 0;

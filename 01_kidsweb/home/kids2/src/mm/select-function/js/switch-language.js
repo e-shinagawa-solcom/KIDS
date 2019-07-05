@@ -52,6 +52,7 @@ $('.control-block__button-language').on('click', function(){
 // そのまま実行すると英日スイッチしてしまうので
 // langCodeを逆に設定してからkickする
 (function(langCode){
+	alert(langCode);
 
 	// 言語コード反転
 	langCode = (langCode === 1) ? 0 : 1;

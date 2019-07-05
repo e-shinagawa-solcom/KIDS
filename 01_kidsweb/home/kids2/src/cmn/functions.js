@@ -3180,6 +3180,15 @@ function SchJOn(obj)
 	obj.src = schJ2;
 }
 
+function DocSchJOff(obj)
+{
+	obj.src = docschJ1;
+}
+
+function DocSchJOn(obj)
+{
+	obj.src = docschJ2;
+}
 function SchEOff(obj)
 {
 	obj.src = schE1;
@@ -3191,8 +3200,38 @@ function SchEOn(obj)
 }
 
 
+////////// NAVI SEARCH BUTTON //////////
+
+function SearchOff(obj)
+{
+	obj.src = search1;
+}
+
+function SearchOn(obj)
+{
+	obj.src = search2;
+}
+
+function RegistOff(obj)
+{
+	obj.src = regist1;
+}
+
+function RegitstOn(obj)
+{
+	obj.src = regist2;
+}
 
 
+function TotalOff(obj)
+{
+	obj.src = total1;
+}
+
+function TotalOn(obj)
+{
+	obj.src = total2;
+}
 
 
 

@@ -1,13 +1,13 @@
 
-	// 発注登録
-	var regiJ1 = '/img/type01/po/regist_off_ja_bt.gif';
-	var regiJ2 = '/img/type01/po/regist_off_on_ja_bt.gif';
-	var regiJ3 = '/img/type01/po/regist_on_ja_bt.gif';
-
 	// 発注検索
 	var schJ1 = '/img/type01/po/search_off_ja_bt.gif';
 	var schJ2 = '/img/type01/po/search_off_on_ja_bt.gif';
 	var schJ3 = '/img/type01/po/search_on_ja_bt.gif';
+
+	// 発注書検索
+	var docschJ1 = '/img/type01/po/doc_search_off_ja_bt.gif';
+	var docschJ2 = '/img/type01/po/doc_search_off_on_ja_bt.gif';
+	var docschJ3 = '/img/type01/po/doc_search_on_ja_bt.gif';
 
 	//-------------------------------------------------------------------------
 
@@ -34,14 +34,6 @@
 
 
 
-	// 発注登録
-	var reginaviJ1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="RegiJOn(this);" onmouseout="RegiJOff(this);fncAlphaOff( this );" src="' + regiJ1 + '" width="151" height="25" border="0" alt="発注登録"></a>';
-	var reginaviE1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="RegiEOn(this);" onmouseout="RegiEOff(this);fncAlphaOff( this );" src="' + regiE1 + '" width="151" height="25" border="0" alt="REGISTRATION"></a>';
-
-	var reginaviJ3 = '<img src="' + regiJ3 + '" width="151" height="25" border="0" alt="発注登録">';
-	var reginaviE3 = '<img src="' + regiE3 + '" width="151" height="25" border="0" alt="REGISTRATION">';
-
-
 	// 発注検索
 	var schnaviJ1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="SchJOn(this);" onmouseout="SchJOff(this);fncAlphaOff( this );" src="' + schJ1 + '" width="151" height="25" border="0" alt="発注検索"></a>';
 	var schnaviE1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="SchEOn(this);" onmouseout="SchEOff(this);fncAlphaOff( this );" src="' + schE1 + '" width="151" height="25" border="0" alt="SEARCH"></a>';
@@ -49,6 +41,11 @@
 	var schnaviJ3 = '<img src="' + schJ3 + '" width="151" height="25" border="0" alt="発注検索">';
 	var schnaviE3 = '<img src="' + schE3 + '" width="151" height="25" border="0" alt="SEARCH">';
 
+	// 発注書検索
+	var docschnaviJ1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="DocSchJOn(this);" onmouseout="DocSchJOff(this);fncAlphaOff( this );" src="' + docschJ1 + '" width="151" height="25" border="0" alt="発注書検索"></a>';
+	
+	var docschnaviJ3 = '<img src="' + docschJ3 + '" width="151" height="25" border="0" alt="発注書検索">';
+	
 	//-------------------------------------------------------------------------
 
 	// 仕入登録

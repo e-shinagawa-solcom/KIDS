@@ -81,23 +81,23 @@
 /* 明細行替えボタン */
 	#selectup{
 		position: absolute;
-		top: 329px;
+		top: 316px;
 		left: 768px;
 	}
 	#selectup1{
 		position: absolute;
-		top: 375px;
+		top: 356px;
 		left: 760px;
 	}
 	#selectdown{
 		position: absolute;
-		top: 463px;
-		left: 767px;
+		top: 443px;
+		left: 768px;
 	}
 	#selectdown1{
 		position: absolute;
-		top: 418px;
-		left: 759px;
+		top: 398px;
+		left: 760px;
 	}
 /* クエリボタン */
 
@@ -627,7 +627,7 @@
 	left : 0px ;
 	top : 30px ;
 	width : 925px ;
-	height : 470px ;
+	height : 460px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #cdcdcd ;
@@ -639,7 +639,7 @@
 #SegABottom {
 	position : absolute ;
 	left : 0px ;
-	top : 502px ;
+	top : 490px ;
 	border-width: 0px ;
 	border-style: none ;
 	background-color: #ffffff ;
@@ -1623,16 +1623,16 @@
 }
 #SegA1_IFrm{
 	width : 800px ;
-	height : 180px ;
+	height : 170px ;
 }
 #SegA_02{
 	position: absolute;
-	top: 433px;
+	top: 423px;
 	left: 46px;
 }
 #SegA2_IFrm{
 	width : 750px ;
-	height : 180px ;
+	height : 170px ;
 }
 
 /* END SEGMENTS */

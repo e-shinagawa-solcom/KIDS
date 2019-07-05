@@ -54,7 +54,7 @@ function setMenu_WF() {
 	return false;
 }
 
-function setMenuINV(){
+function setMenu_INV(){
 
 	document.frmMenu.action = "/inv/select-function/index.php";
 	document.frmMenu.submit();
