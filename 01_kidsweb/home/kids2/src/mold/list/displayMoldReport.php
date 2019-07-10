@@ -283,7 +283,7 @@ if($moldReportId && (0 <= $revision) && (0 <= $version))
 			$td_pageNum->appendChild($doc->createTextNode("1 / 1"));
 
 			// 画面出力
-			header("Content-type: text/html; charset=utf-8");
+			// header("Content-type: text/html; charset=utf-8");
 			$out = $doc->saveHTML();
 			echo $out;
 		}
@@ -380,7 +380,7 @@ if($moldReportId && (0 <= $revision) && (0 <= $version))
 			}
 
 			// 画面出力
-			header("Content-type: text/html; charset=utf-8");
+			// header("Content-type: text/html; charset=utf-8");
 			echo $doc->saveHTML();
 		}
 	}
@@ -412,5 +412,5 @@ function setSelectedCell(DOMElement $element)
 
 function toUTF8($str)
 {
-	return htmlspecialchars(mb_convert_encoding($str, "utf-8", "eucjp-win"));
+	return htmlspecialchars(mb_convert_encoding($str, "utf-8", "eucjp-win"), ENT_QUOTES, 'utf-8');
 }

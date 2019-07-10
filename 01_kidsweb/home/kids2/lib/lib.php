@@ -1741,7 +1741,7 @@ function fncError ( $errno, $errstr, $errfile, $errline )
 		$strPageMessage .= "LINE $errline FILE $errfile<br>\n";
 		$strPageMessage .= $_SERVER["QUERY_STRING"];
 		//error_log($err, 3, "/usr/local/php4/error.log");
-
+echo $errstr;
 		mb_send_mail( ERROR_MAIL_TO,"K.I.D.S. Error Message from " . TOP_URL, $strMailMessage, "From: " . ERROR_MAIL_TO . "\nReturn-Path: " . ERROR_MAIL_TO . "\n" );
 		echo $strPageMessage;
 	}

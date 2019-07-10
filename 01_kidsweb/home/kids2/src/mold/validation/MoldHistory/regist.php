@@ -137,6 +137,8 @@ else
 // ------------------------------------------------------------------------------
 if (!count($errMstList))
 {
+	$moldNoList = array();
+	$usedMoldNoList = array();
 	// 登録可能な金型番号リスト
 	$moldSelectionList = $utilMold->selectMoldSelectionList($_REQUEST[FormMoldHistory::ProductCode]);
 	// ホワイトリスト作成
@@ -240,14 +242,15 @@ if (!count($errMstList) && !count($errSemanticList))
 			break;
 	}
 
-	// 文字列をサニタイズ
-	foreach ($_REQUEST as $key => $value)
-	{
-		if (is_string($value))
-		{
-			$_REQUEST[$key] = htmlspecialchars($value);
-		}
-	}
+	// var_dump($_REQUEST);
+	// // 文字列をサニタイズ
+	// foreach ($_REQUEST as $key => $value)
+	// {
+	// 	if (is_string($value))
+	// 	{
+	// 		$_REQUEST[$key] = htmlspecialchars($value);
+	// 	}
+	// }
 
 	// 金型履歴のダイジェスト作成
 	$summaryHistory = $utilMold->selectSummaryOfMoldHistory($molds);

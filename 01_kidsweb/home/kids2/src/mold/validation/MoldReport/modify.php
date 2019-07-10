@@ -401,13 +401,13 @@ if (!count($errMstList) && !count($errSemanticList))
 	}
 
 	// 文字列をサニタイズ
-	foreach ($_REQUEST as $key => $value)
-	{
-		if (is_string($value))
-		{
-			$_REQUEST[$key] = htmlspecialchars($value);
-		}
-	}
+	// foreach ($_REQUEST as $key => $value)
+	// {
+	// 	if (is_string($value))
+	// 	{
+	// 		$_REQUEST[$key] = htmlspecialchars($value);
+	// 	}
+	// }
 
 	// 金型履歴のダイジェスト作成
 	$summaryHistory = $utilMold->selectSummaryOfMoldHistory($molds);

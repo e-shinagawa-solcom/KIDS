@@ -29,7 +29,7 @@
         if(workForm.valid()){
             var windowName = 'searchResult';
             // 子ウィンドウの表示
-            var windowResult = open('about:blank', windowName, 'scrollbars=yes, resizable=yes');
+            // var windowResult = open('about:blank', windowName, 'scrollbars=yes, resizable=yes');
             // フォーム設定
             workForm.get(0).target = windowName;
             workForm.get(0).method = 'post';

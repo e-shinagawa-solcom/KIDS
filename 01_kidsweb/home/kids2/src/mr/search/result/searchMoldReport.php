@@ -30,7 +30,7 @@ $objDB->open("", "", "", "");
 $aryData = $_REQUEST;
 
 // 言語コードを取得(0->false: 英語, 1->true: 日本語)
-$lngLanguageCode = $_COOKIE["lngLanguageCode"];
+// $lngLanguageCode = $_COOKIE["lngLanguageCode"];
 
 // セッション確認
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
@@ -545,7 +545,7 @@ $trHead->appendChild($thIndex);
 if($existsDetail)
 {
 	// 詳細カラム
-	$thDetail = $doc->createElement("th", $lngLanguageCode ? toUTF8("詳細") : "Detail");
+	$thDetail = $doc->createElement("th", toUTF8("詳細"));
 	$thDetail->setAttribute("class", $exclude);
 	// ヘッダに追加
 	$trHead->appendChild($thDetail);
@@ -555,7 +555,7 @@ if($existsDetail)
 if($existsModify)
 {
 	// 修正カラム
-	$thModify = $doc->createElement("th", $lngLanguageCode ? toUTF8("修正") : "Modify");
+	$thModify = $doc->createElement("th", toUTF8("修正"));
 	$thModify->setAttribute("class", $exclude);
 	// ヘッダに追加
 	$trHead->appendChild($thModify);
@@ -565,13 +565,13 @@ if($existsModify)
 if ($existsPreview)
 {
 	// COPYカラム
-	$thPreview = $doc->createElement("th", $lngLanguageCode ? toUTF8("COPY") : "COPY");
+	$thPreview = $doc->createElement("th", toUTF8("COPY"));
 	$thPreview->setAttribute("class", $exclude);
 	// ヘッダに追加
 	$trHead->appendChild($thPreview);
 
 	// プレビューカラム
-	$thPreview = $doc->createElement("th", $lngLanguageCode ? toUTF8("プレビュー") : "Preview");
+	$thPreview = $doc->createElement("th", toUTF8("プレビュー"));
 	$thPreview->setAttribute("class", $exclude);
 	// ヘッダに追加
 	$trHead->appendChild($thPreview);
@@ -588,123 +588,123 @@ foreach($columnOrder as $columnName)
 		switch ($columnName)
 		{
 			case TableMoldReport::MoldReportId :
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("金型帳票ID") : "Mold Report ID");
+				$th = $doc->createElement("th", toUTF8("金型帳票ID"));
 				$trHead->appendChild($th);
 				break;
 			case TableMoldReport::Revision :
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("リビジョン") : "Revision");
+				$th = $doc->createElement("th", toUTF8("リビジョン"));
 				$trHead->appendChild($th);
 				break;
 			case TableMoldReport::ReportCategory :
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("帳票区分") : "Report Category");
+				$th = $doc->createElement("th", toUTF8("帳票区分"));
 				$trHead->appendChild($th);
 				break;
 			case TableMoldReport::Status :
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("帳票ステータス") : "Status");
+				$th = $doc->createElement("th", toUTF8("帳票ステータス"));
 				$trHead->appendChild($th);
 				break;
 			case TableMoldReport::RequestDate :
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("依頼日") : "Request Date");
+				$th = $doc->createElement("th", toUTF8("依頼日"));
 				$trHead->appendChild($th);
 				break;
 			case TableMoldReport::ProductCode :
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("製品コード") : "Product Code");
+				$th = $doc->createElement("th", toUTF8("製品コード"));
 				$trHead->appendChild($th);
 				break;
 			case "strproductname" :
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("製品名称") : "Product Name");
+				$th = $doc->createElement("th", toUTF8("製品名称"));
 				$trHead->appendChild($th);
 				break;
 			case "strproductenglishname" :
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("製品名称(英語)") : "Product English Name");
+				$th = $doc->createElement("th", toUTF8("製品名称(英語)"));
 				$trHead->appendChild($th);
 				break;
 			case TableMoldReport::GoodsCode :
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("顧客品番(商品コード)") : "Goods Code");
+				$th = $doc->createElement("th", toUTF8("顧客品番(商品コード)"));
 				$trHead->appendChild($th);
 				break;
 			case TableMoldReport::RequestCategory :
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("依頼区分") : "Request Category");
+				$th = $doc->createElement("th", toUTF8("依頼区分"));
 				$trHead->appendChild($th);
 				break;
 			case TableMoldReport::ActionRequestDate :
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("希望日") : "Action Request Date");
+				$th = $doc->createElement("th", toUTF8("希望日"));
 				$trHead->appendChild($th);
 				break;
 			case TableMoldReport::ActionDate :
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("実施日") : "Action Date");
+				$th = $doc->createElement("th", toUTF8("実施日"));
 				$trHead->appendChild($th);
 				break;
 			case TableMoldReport::TransferMethod :
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("移動方法") : "Transfer Method");
+				$th = $doc->createElement("th", toUTF8("移動方法"));
 				$trHead->appendChild($th);
 				break;
 			case TableMoldReport::SourceFactory :
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("保管元工場") : "Source Factory");
+				$th = $doc->createElement("th", toUTF8("保管元工場"));
 				$trHead->appendChild($th);
 				break;
 			case TableMoldReport::DestinationFactory :
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("移動先工場") : "Destination Factory");
+				$th = $doc->createElement("th", toUTF8("移動先工場"));
 				$trHead->appendChild($th);
 				break;
 			case TableMoldReport::InstructionCategory :
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("指示区分") : "Instruction Category");
+				$th = $doc->createElement("th", toUTF8("指示区分"));
 				$trHead->appendChild($th);
 				break;
 			case TableMoldReport::CustomerCode :
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("事業部(顧客)") : "Customer Code");
+				$th = $doc->createElement("th", toUTF8("事業部(顧客)"));
 				$trHead->appendChild($th);
 				break;
 			case TableMoldReport::KuwagataGroupCode :
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("担当部署") : "Kuwagata Group Code");
+				$th = $doc->createElement("th", toUTF8("担当部署"));
 				$trHead->appendChild($th);
 				break;
 			case TableMoldReport::KuwagataUserCode :
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("担当者") : "Kuwagata User Code");
+				$th = $doc->createElement("th", toUTF8("担当者"));
 				$trHead->appendChild($th);
 				break;
 			case TableMoldReport::Note :
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("その他") : "Note");
+				$th = $doc->createElement("th", toUTF8("その他"));
 				$trHead->appendChild($th);
 				break;
 			case TableMoldReport::FinalKeep :
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("生産後の処理") : "Final Keep");
+				$th = $doc->createElement("th", toUTF8("生産後の処理"));
 				$trHead->appendChild($th);
 				break;
 			case TableMoldReport::ReturnSchedule :
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("返却予定日") : "Return Schedule");
+				$th = $doc->createElement("th", toUTF8("返却予定日"));
 				$trHead->appendChild($th);
 				break;
 			case TableMoldReport::MarginalNote :
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("欄外備考") : "Marginal Note");
+				$th = $doc->createElement("th", toUTF8("欄外備考"));
 				$trHead->appendChild($th);
 				break;
 			case TableMoldReport::Created :
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("登録日") : "Created");
+				$th = $doc->createElement("th", toUTF8("登録日"));
 				$trHead->appendChild($th);
 				break;
 			case TableMoldReport::CreateBy :
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("登録者") : "Create By");
+				$th = $doc->createElement("th", toUTF8("登録者"));
 				$trHead->appendChild($th);
 				break;
 			case TableMoldReport::Updated :
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("更新日") : "Updated");
+				$th = $doc->createElement("th", toUTF8("更新日"));
 				$trHead->appendChild($th);
 				break;
 			case TableMoldReport::UpdateBy :
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("更新者") : "Update By");
+				$th = $doc->createElement("th", toUTF8("更新者"));
 				$trHead->appendChild($th);
 				break;
 			case TableMoldReport::Version :
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("バージョン") : "Version");
+				$th = $doc->createElement("th", toUTF8("バージョン"));
 				$trHead->appendChild($th);
 				break;
 			case TableMoldReport::DeleteFlag :
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("削除フラグ") : "Delete Flag");
+				$th = $doc->createElement("th", toUTF8("削除フラグ"));
 				$trHead->appendChild($th);
 				break;
 			case TableMoldReportDetail::MoldNo :
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("金型NO") : "MoldNo");
+				$th = $doc->createElement("th", toUTF8("金型NO"));
 				$trHead->appendChild($th);
 				break;
 		}
@@ -715,7 +715,7 @@ foreach($columnOrder as $columnName)
 if($existsDelete)
 {
 	// 削除カラム
-	$thDelete = $doc->createElement("th", $lngLanguageCode ? toUTF8("削除") : "Delete");
+	$thDelete = $doc->createElement("th", toUTF8("削除"));
 	$thDelete->setAttribute("class", $exclude);
 	// ヘッダに追加
 	$trHead->appendChild($thDelete);
@@ -785,7 +785,7 @@ foreach ($records as $i => $record)
 		$tdCopy->setAttribute("class", $exclude);
 		// COPYボタン
 		$imgCopy = $doc->createElement("img");
-		$imgCopy->setAttribute("src", "/img/type01/list/copybig_off_bt.gif");
+		$imgCopy->setAttribute("src", "/mold/img/copybig_off_bt.gif");
 		$imgCopy->setAttribute("id", $record[TableMoldReport::MoldReportId]);
 		$imgCopy->setAttribute("revision", $record[TableMoldReport::Revision]);
 		$imgCopy->setAttribute("version", $record[TableMoldReport::Version]);
@@ -1062,5 +1062,5 @@ echo $doc->saveHTML();
 
 function toUTF8($str)
 {
-	return htmlspecialchars(mb_convert_encoding($str, "utf-8", "eucjp-win"));
+	return htmlspecialchars(mb_convert_encoding($str, "utf-8", "eucjp-win"), ENT_QUOTES, 'utf-8');
 }

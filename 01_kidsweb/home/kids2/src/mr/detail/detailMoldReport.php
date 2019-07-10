@@ -169,5 +169,5 @@ echo $doc->saveHTML();
 
 function toUTF8($str)
 {
-	return htmlspecialchars(mb_convert_encoding($str, "utf-8", "eucjp-win"));
+	return htmlspecialchars(mb_convert_encoding($str, "utf-8", "eucjp-win"), ENT_QUOTES, 'utf-8');
 }

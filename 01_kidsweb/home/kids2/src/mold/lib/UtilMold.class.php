@@ -629,7 +629,7 @@ class UtilMold extends WithQuery
 		// SQLファイル読み込み
 		$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
 		pg_prepare("", $query);
-
+		
 		// クエリ実行結果が得られなかった場合
 		if ($pgResult = pg_execute("", $params))
 		{

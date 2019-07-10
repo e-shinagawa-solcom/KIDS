@@ -198,9 +198,9 @@ class UtilSearchForm
 		// À½ÉÊ¥³¡¼¥É
 		$order[TableMoldReport::ProductCode] = TableMoldReport::ProductCode;
 		// À½ÉÊÌ¾¾Î
-		$order["strproductname"] = strproductname;
+		$order["strproductname"] = "strproductname";
 		// À½ÉÊÌ¾¾Î(±Ñ¸ì)
-		$order["strproductenglishname"] = strproductenglishname;
+		$order["strproductenglishname"] = "strproductenglishname";
 		// ¸ÜµÒÉÊÈÖ
 		$order[TableMoldReport::GoodsCode] = TableMoldReport::GoodsCode;
 		// ¶â·¿NO

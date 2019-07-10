@@ -24,6 +24,7 @@ if ((new clsAuth())->isLogin($_REQUEST["strSessionID"], $objDB))
 		// クエリファイルの読み込み
 		$query = file_get_contents($queryFilePath);
 		$prepare = pg_prepare($objDB->ConnectID, "", $query);
+		
 		// クエリパラメータ
 		$params = array();
 

@@ -79,7 +79,7 @@
 				<div class="regist-line">
 					<span class="regist-label">
 						<span class="regist-label__required-mark">◎</span>
-						<span class="regist-label__text">帳票区分</span>
+						<span class="regist-label__required-text">帳票区分</span>
 						<select name="ReportCategory" class="Slt13" init-value="_%ReportCategory%_">
 							<option value="">−</option>
 							<option value="10">移動版</option>
@@ -91,12 +91,12 @@
 				<div class="regist-line">
 					<span class="regist-label">
 						<span class="regist-label__required-mark">◎</span>
-						<span class="regist-label__text">依頼日</span>
+						<span class="regist-label__required-text">依頼日</span>
 						<input name="RequestDate" value="_%RequestDate%_" class="TxtStyle05L">
 					</span>
 					<span class="regist-label">
 						<span class="regist-label__required-mark">◎</span>
-						<span class="regist-label__text">依頼区分</span>
+						<span class="regist-label__required-text">依頼区分</span>
 						<select name="RequestCategory" class="Slt25" init-value="_%RequestCategory%_">
 							<option value="">−</option>
 							<option value="10">KUWAGATA JAPAN REQUEST</option>
@@ -107,12 +107,12 @@
 				<div class="regist-line">
 					<span class="regist-label">
 						<span class="regist-label__required-mark">◎</span>
-						<span class="regist-label__text">希望日</span>
+						<span class="regist-label__required-text">希望日</span>
 						<input name="ActionRequestDate" value="_%ActionRequestDate%_" class="TxtStyle05L">
 					</span>
 					<span class="regist-label">
 						<span class="regist-label__required-mark">◎</span>
-						<span class="regist-label__text">移動方法</span>
+						<span class="regist-label__required-text">移動方法</span>
 						<select name="TransferMethod" class="Slt47" init-value="_%TransferMethod%_">
 							<option value="">−</option>
 							<option value="10">DELIVER TO RECEIVER(移動先に届ける)</option>
@@ -124,7 +124,7 @@
 				<div class="regist-line">
 					<span class="regist-label">
 						<span class="regist-label__required-mark">◎</span>
-						<span class="regist-label__text">指示区分</span>
+						<span class="regist-label__required-text">指示区分</span>
 						<select name="InstructionCategory" class="Slt13" init-value="_%InstructionCategory%_">
 							<option value="">−</option>
 							<option value="10">顧客指示</option>
@@ -135,7 +135,7 @@
 				<div class="regist-line">
 					<span class="regist-label">
 						<span class="regist-label__required-mark">◎</span>
-						<span class="regist-label__text">事業部(顧客)</span>
+						<span class="regist-label__required-text">事業部(顧客)</span>
 						<input class="TxtStyle05L" name="CustomerCode" value="_%CustomerCode%_">
 						<input class="disTxt46L" name="CustomerName" readonly>
 						<img class="msw-button button" invokeMSWName="msw-customer" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
@@ -144,7 +144,7 @@
 				<div class="regist-line">
 					<span class="regist-label">
 						<span class="regist-label__required-mark">◎</span>
-						<span class="regist-label__text">KWG担当部署</span>
+						<span class="regist-label__required-text">KWG担当部署</span>
 						<input class="TxtStyle05L" name="KuwagataGroupCode" value="_%KuwagataGroupCode%_">
 						<input class="disTxt46L" name="KuwagataGroupName" readonly>
 						<img class="msw-button button" invokeMSWName="msw-group" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
@@ -153,7 +153,7 @@
 				<div class="regist-line--remora">
 					<span class="regist-label">
 						<span class="regist-label__required-mark">◎</span>
-						<span class="regist-label__text">KWG担当者</span>
+						<span class="regist-label__required-text">KWG担当者</span>
 						<input class="TxtStyle05L" name="KuwagataUserCode" value="_%KuwagataUserCode%_">
 						<input class="disTxt46L" name="KuwagataUserName" readonly>
 						<img class="msw-button button" invokeMSWName="msw-user" msw-before="pickupGroupCode" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
@@ -162,7 +162,7 @@
 				<div class="regist-line">
 					<span class="regist-label">
 						<span class="regist-label__required-mark">◎</span>
-						<span class="regist-label__text">生産後の処理</span>
+						<span class="regist-label__required-text">生産後の処理</span>
 						<select name="FinalKeep" class="Slt39" init-value="_%FinalKeep%_">
                             <option value="">−</option>
                             <option value="10">KEEP BY RECEIVER(移動先工場で保管する)</option>
@@ -233,7 +233,7 @@
 				<div class="regist-line">
 					<span class="regist-label">
 						<span class="regist-label__required-mark">◎</span>
-						<span class="regist-label__text">保管工場</span>
+						<span class="regist-label__required-text">保管工場</span>
 						<input class="TxtStyle05L" name="SourceFactory" value="_%SourceFactory%_" readonly>
 						<input class="disTxt46L" name="SourceFactoryName" value="_%SourceFactoryName%_" readonly>
 						<img class="msw-button button" invokeMSWName="msw-factory" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
@@ -242,7 +242,7 @@
 				<div class="regist-line--remora">
 					<span class="regist-label">
 						<span class="regist-label__required-mark">◎</span>
-						<span class="regist-label__text">移動先工場</span>
+						<span class="regist-label__required-text">移動先工場</span>
 						<input class="TxtStyle05L" name="DestinationFactory" value="_%DestinationFactory%_">
 						<input class="disTxt46L" name="DestinationFactoryName" value="_%DestinationFactoryName%_" readonly>
 						<img class="msw-button button" invokeMSWName="msw-factory" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">

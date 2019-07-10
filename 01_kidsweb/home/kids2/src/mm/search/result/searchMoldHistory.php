@@ -582,7 +582,7 @@ $trHead->appendChild($thIndex);
 if($existsDetail)
 {
 	// 詳細カラム
-	$thDetail = $doc->createElement("th", $lngLanguageCode ? toUTF8("詳細") : "Detail");
+	$thDetail = $doc->createElement("th", toUTF8("詳細"));
 	$thDetail->setAttribute("class", $exclude);
 	// ヘッダに追加
 	$trHead->appendChild($thDetail);
@@ -592,7 +592,7 @@ if($existsDetail)
 if($existsModify)
 {
 	// 修正カラム
-	$thModify = $doc->createElement("th", $lngLanguageCode ? toUTF8("修正") : "Modify");
+	$thModify = $doc->createElement("th", toUTF8("修正"));
 	$thModify->setAttribute("class", $exclude);
 	// ヘッダに追加
 	$trHead->appendChild($thModify);
@@ -602,7 +602,7 @@ if($existsModify)
 if ($existsPreview)
 {
 	// プレビューカラム
-	$thPreview = $doc->createElement("th", $lngLanguageCode ? toUTF8("プレビュー") : "Preview");
+	$thPreview = $doc->createElement("th", toUTF8("プレビュー"));
 	$thPreview->setAttribute("class", $exclude);
 	// ヘッダに追加
 	$trHead->appendChild($thPreview);
@@ -620,122 +620,122 @@ foreach($columnOrder as $columnName)
 		{
 			// 金型帳票関連.金型帳票ID
 			case TableMoldReport::MoldReportId:
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("金型帳票ID") : "Mold Report ID");
+				$th = $doc->createElement("th", toUTF8("金型帳票ID"));
 				$trHead->appendChild($th);
 				break;
 			// 仕入マスタ.仕入計上日
 			case "dtmappropriationdate":
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("計上日") : "Date");
+				$th = $doc->createElement("th", toUTF8("計上日"));
 				$trHead->appendChild($th);
 				break;
 			// 発注マスタ.発注コード-発注マスタ.修正コード
 			case "strordercode":
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("発注コード") : "Order Code");
+				$th = $doc->createElement("th", toUTF8("発注コード"));
 				$trHead->appendChild($th);
 				break;
 			// [会社マスタ.表示会社コード] 会社マスタ.表示会社名称
 			case "strcompanydisplaycode":
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("仕入先") : "Vender");
+				$th = $doc->createElement("th", toUTF8("仕入先"));
 				$trHead->appendChild($th);
 				break;
 			// 製品マスタ.製品コード
 			case "strproductcode":
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("製品コード") : "Products Code");
+				$th = $doc->createElement("th", toUTF8("製品コード"));
 				$trHead->appendChild($th);
 				break;
 			// 製品マスタ.製品コード(日本語)
 			case "strproductname":
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("製品名称") : "Products Name");
+				$th = $doc->createElement("th", toUTF8("製品名称"));
 				$trHead->appendChild($th);
 				break;
 			// 製品マスタ.製品名称(英語)
 			case "strproductenglishname":
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("製品名称(英語)") : "Products English Name");
+				$th = $doc->createElement("th", toUTF8("製品名称(英語)"));
 				$trHead->appendChild($th);
 				break;
 			// 製品マスタ.顧客品番
 			case "strgoodscode":
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("顧客品番") : "Goods Code");
+				$th = $doc->createElement("th", toUTF8("顧客品番"));
 				$trHead->appendChild($th);
 				break;
 			// [グループマスタ.表示グループコード] グループマスタ.表示グループ名
 			case "strgroupdisplaycode":
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("担当部署") : "Group");
+				$th = $doc->createElement("th", toUTF8("担当部署"));
 				$trHead->appendChild($th);
 				break;
 			// [ユーザマスタ.表示ユーザコード] ユーザマスタ.表示ユーザ名
 			case "struserdisplaycode":
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("担当者") : "User");
+				$th = $doc->createElement("th", toUTF8("担当者"));
 				$trHead->appendChild($th);
 				break;
 			// 金型履歴.金型NO
 			case TableMoldHistory::MoldNo:
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("金型NO") : "Mold No");
+				$th = $doc->createElement("th", toUTF8("金型NO"));
 				$trHead->appendChild($th);
 				break;
 			// 金型履歴.履歴番号
 			case TableMoldHistory::HistoryNo:
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("履歴番号") : "History No");
+				$th = $doc->createElement("th", toUTF8("履歴番号"));
 				$trHead->appendChild($th);
 				break;
 			// 仕入詳細.製品数量
 			case "lngproductquantity":
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("数量") : "Products Qty");
+				$th = $doc->createElement("th", toUTF8("数量"));
 				$trHead->appendChild($th);
 				break;
 			// 通貨単位マスタ.通貨単位 || 仕入詳細.税抜金額
 			case "strmonetaryunitsign":
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("税抜金額") : "Amt Bfr tax");
+				$th = $doc->createElement("th", toUTF8("税抜金額"));
 				$trHead->appendChild($th);
 				break;
 			// 金型履歴.金型ステータス
 			case TableMoldHistory::Status:
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("金型ステータス") : "Mold Status");
+				$th = $doc->createElement("th", toUTF8("金型ステータス"));
 				$trHead->appendChild($th);
 				break;
 			// 金型履歴.実施日
 			case TableMoldHistory::ActionDate:
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("実施日") : "Action Date");
+				$th = $doc->createElement("th", toUTF8("実施日"));
 				$trHead->appendChild($th);
 				break;
 			// 金型履歴.保管工場
 			case TableMoldHistory::SourceFactory:
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("保管元工場") : "Source Factory");
+				$th = $doc->createElement("th", toUTF8("保管元工場"));
 				$trHead->appendChild($th);
 				break;
 			// 金型履歴.移動先工場
 			case TableMoldHistory::DestinationFactory:
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("移動先工場") : "Destination Factory");
+				$th = $doc->createElement("th", toUTF8("移動先工場"));
 				$trHead->appendChild($th);
 				break;
 			// 金型履歴.登録日時
 			case TableMoldHistory::Created :
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("登録日") : "Created");
+				$th = $doc->createElement("th", toUTF8("登録日"));
 				$trHead->appendChild($th);
 				break;
 			// 金型履歴.登録者
 			case TableMoldHistory::CreateBy :
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("登録者") : "Create By");
+				$th = $doc->createElement("th", toUTF8("登録者"));
 				$trHead->appendChild($th);
 				break;
 			// 金型履歴.更新日時
 			case TableMoldHistory::Updated :
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("更新日") : "Updated");
+				$th = $doc->createElement("th", toUTF8("更新日"));
 				$trHead->appendChild($th);
 				break;
 			// 金型履歴.更新者
 			case TableMoldHistory::UpdateBy :
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("更新者") : "Update By");
+				$th = $doc->createElement("th", toUTF8("更新者"));
 				$trHead->appendChild($th);
 				break;
 			// 金型履歴.バージョン
 			case TableMoldHistory::Version :
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("バージョン") : "Version");
+				$th = $doc->createElement("th", toUTF8("バージョン"));
 				$trHead->appendChild($th);
 				break;
 			// 金型履歴.削除フラグ
 			case TableMoldHistory::DeleteFlag :
-				$th = $doc->createElement("th", $lngLanguageCode ? toUTF8("削除フラグ") : "Delete Flag");
+				$th = $doc->createElement("th", toUTF8("削除フラグ"));
 				$trHead->appendChild($th);
 				break;
 		}
@@ -746,7 +746,7 @@ foreach($columnOrder as $columnName)
 if($existsDelete)
 {
 	// 削除カラム
-	$thDelete = $doc->createElement("th", $lngLanguageCode ? toUTF8("削除") : "Delete");
+	$thDelete = $doc->createElement("th", toUTF8("削除"));
 	$thDelete->setAttribute("class", $exclude);
 	// ヘッダに追加
 	$trHead->appendChild($thDelete);
@@ -1064,5 +1064,5 @@ echo $doc->saveHTML();
 
 function toUTF8($str)
 {
-	return htmlspecialchars(mb_convert_encoding($str, "utf-8", "eucjp-win"));
+	return htmlspecialchars(mb_convert_encoding($str, "utf-8", "eucjp-win"), ENT_QUOTES, 'utf-8');
 }

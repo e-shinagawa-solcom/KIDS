@@ -20,7 +20,6 @@ $objAuth = new clsAuth ();
 $objDB->open ( "", "", "", "" );
 
 $aryData = $_REQUEST;
-
 // セッション確認
 $objAuth = fncIsSession ( $aryData ["strSessionID"], $objAuth, $objDB);
 
@@ -145,5 +144,5 @@ else
 
 function toUTF8($str)
 {
-	return htmlspecialchars(mb_convert_encoding($str, "utf-8", "eucjp-win"));
+	return htmlspecialchars(mb_convert_encoding($str, "utf-8", "eucjp-win"), ENT_QUOTES, 'utf-8');
 }

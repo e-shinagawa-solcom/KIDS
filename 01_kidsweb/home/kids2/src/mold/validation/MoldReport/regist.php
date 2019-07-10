@@ -219,6 +219,8 @@ else
 // ------------------------------------------------------------------------------
 if (!count($errMstList))
 {
+	$usedMoldNoList = array();
+	$moldNoList = array();
 	// 「顧客品番(商品コード)」が「製品コード」に紐付くものかチェック
 	if (!$utilProduct->existsGoodsCodeWithProductCode($_REQUEST[FormMoldReport::GoodsCode],
 			$_REQUEST[FormMoldReport::ProductCode]))
@@ -374,13 +376,13 @@ if (!count($errMstList) && !count($errSemanticList))
 	}
 
 	// 文字列をサニタイズ
-	foreach ($_REQUEST as $key => $value)
-	{
-		if (is_string($value))
-		{
-			$_REQUEST[$key] = htmlspecialchars($value);
-		}
-	}
+	// foreach ($_REQUEST as $key => $value)
+	// {
+	// 	if (is_string($value))
+	// 	{
+	// 		$_REQUEST[$key] = htmlspecialchars($value);
+	// 	}
+	// }
 
 	// 金型履歴のダイジェスト作成
 	$summaryHistory = $utilMold->selectSummaryOfMoldHistory($molds);

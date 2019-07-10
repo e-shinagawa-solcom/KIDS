@@ -163,7 +163,7 @@ foreach ($recordMoldReportDetail as $i => $record)
 	// 金型テーブルのtd要素作成
 	$cellIndex = $doc->createElement("td", $index);
 	$cellMoldNo = $doc->createElement("td", $record[TableMoldReportDetail::MoldNo]);
-	$cellDescription = $doc->createElement("td", $record[TableMoldReportDetail::MoldDescription]);
+	$cellDescription = $doc->createElement("td", toUTF8($record[TableMoldReportDetail::MoldDescription]));
 
 	// td要素をtr要素に追加
 	$tr->appendChild($cellIndex);
@@ -185,3 +185,8 @@ setcookie("strSessionID", $_REQUEST["strSessionID"]);
 
 // HTML出力
 echo $doc->saveHTML();
+
+function toUTF8($str)
+{
+	return htmlspecialchars(mb_convert_encoding($str, "utf-8", "eucjp-win"), ENT_QUOTES, 'utf-8');
+}

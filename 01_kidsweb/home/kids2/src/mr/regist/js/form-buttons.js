@@ -267,7 +267,7 @@
         .fail(function(response){
             console.log('金型帳票登録-検証 fail');
             console.log(response.responseText);
-
+            
             alert(
                 "リクエストの処理中にエラーが発生しました。" + "\r\n" +
                 "このエラーが解消されない場合はシステム担当者にご連絡下さい。"

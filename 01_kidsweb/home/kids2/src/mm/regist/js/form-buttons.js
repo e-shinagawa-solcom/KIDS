@@ -217,7 +217,6 @@
         .fail(function(response){
             console.log('金型履歴登録-検証 fail');
             console.log(response.responseText);
-
             alert(
                 "リクエストの処理中にエラーが発生しました。" + "\r\n" +
                 "再ログインを行ってもこのエラーが解消されない場合はシステム担当者にご連絡下さい。"
