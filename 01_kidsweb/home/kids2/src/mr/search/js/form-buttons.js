@@ -26,17 +26,12 @@
 
     // 検索ボタン押下時の処理
     btnSearch.on('click', function(){
-        if(workForm.valid()){
+        if(workForm.valid()){            
             var windowName = 'searchResult';
-            // 子ウィンドウの表示
-            // var windowResult = open('about:blank', windowName, 'scrollbars=yes, resizable=yes');
-            // フォーム設定
-            workForm.get(0).target = windowName;
-            workForm.get(0).method = 'post';
-            workForm.get(0).action = '/mr/search/result/searchMoldReport.php?strSessionID=' + $.cookie('strSessionID');
-            //
+            workForm.attr('action', '/mr/search/result/searchMoldReport.php?strSessionID=' + $.cookie('strSessionID'));
+            workForm.attr('method', 'post');
+            workForm.attr('target', windowName);
             moldChoosenList.find('option').prop('selected', true);
-            // サブミット
             workForm.submit();
         }
         else {

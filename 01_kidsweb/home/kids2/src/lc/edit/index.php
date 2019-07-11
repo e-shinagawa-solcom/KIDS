@@ -72,6 +72,8 @@ $loginUserAuth = $lcModel->getUserAuth($usrId);
 
 $userAuth = substr($loginUserAuth, 1, 1);
 
+$lcModel->close();
+
 //HTMLへの引き渡しデータ
 $aryData["login_state"] = $login_state;
 

@@ -90,29 +90,29 @@ $query = array();
 $query[] = "SELECT";
 $query[] = "      tmrr.moldreportid";
 $query[] = "    , tmrr.revision";
-$query[] = "    , ms.dtmappropriationdate   -- 仕入マスタ.仕入計上日";
-$query[] = "    , mo.strOrderCode || '-' || mo.strReviseCode AS strOrderCode -- 発注マスタ.発注コード-発注マスタ.修正コード";
-$query[] = "    , '[' || mc.strCompanyDisplayCode || ']' || mc.strCompanyDisplayname AS strCompanyDisplayCode -- [会社マスタ.表示会社コード] 会社マスタ.表示会社名称";
-$query[] = "    , mp.strproductcode         -- 製品マスタ.製品コード";
-$query[] = "    , mp.strproductname         -- 製品マスタ.製品コード(日本語)";
-$query[] = "    , mp.strproductenglishname  -- 製品マスタ.製品名称(英語)";
-$query[] = "    , mp.strgoodscode           -- 製品マスタ.顧客品番";
-$query[] = "    , '[' || mg.strgroupdisplaycode || ']' || mg.strgroupdisplayname as strgroupdisplaycode -- [グループマスタ.表示グループコード] グループマスタ.表示グループ名";
-$query[] = "    , '[' || mu.struserdisplaycode || ']' || mu.struserdisplayname as struserdisplaycode -- [ユーザマスタ.表示ユーザコード] ユーザマスタ.表示ユーザ名";
-$query[] = "    , tmh.moldno                -- 金型履歴.金型NO";
-$query[] = "    , tmh.historyno             -- 金型履歴.履歴番号";
-$query[] = "    , tsd.lngProductQuantity    -- 仕入詳細.数量";
-$query[] = "    , mou.strMonetaryUnitSign || tsd.curSubTotalPrice as strMonetaryUnitSign -- 通貨単位マスタ.通貨単位 || 仕入詳細.サブトータル価格";
-$query[] = "    , tmh.status                -- 金型履歴.金型ステータス";
-$query[] = "    , tmh.actiondate            -- 金型履歴.実施日";
-$query[] = "    , tmh.sourcefactory         -- 金型履歴.保管工場";
-$query[] = "    , tmh.destinationfactory    -- 金型履歴.移動先工場";
-$query[] = "    , tmh.created::date         -- 金型履歴.登録日";
-$query[] = "    , tmh.createby              -- 金型履歴.登録者";
-$query[] = "    , tmh.updated::date         -- 金型履歴.登録日";
-$query[] = "    , tmh.updateby              -- 金型履歴.更新者";
-$query[] = "    , tmh.version               -- 金型履歴.バージョン";
-$query[] = "    , tmh.deleteflag            -- 金型履歴.削除フラグ";
+$query[] = "    , ms.dtmappropriationdate";   // 仕入マスタ.仕入計上日
+$query[] = "    , mo.strOrderCode || '-' || mo.strReviseCode AS strOrderCode";   // 発注マスタ.発注コード-発注マスタ.修正コード
+$query[] = "    , '[' || mc.strCompanyDisplayCode || ']' || mc.strCompanyDisplayname AS strCompanyDisplayCode";   // [会社マスタ.表示会社コード] 会社マスタ.表示会社名称
+$query[] = "    , mp.strproductcode";            // 製品マスタ.製品コード
+$query[] = "    , mp.strproductname";            // 製品マスタ.製品コード(日本語)
+$query[] = "    , mp.strproductenglishname";     // 製品マスタ.製品名称(英語)
+$query[] = "    , mp.strgoodscode";              // 製品マスタ.顧客品番
+$query[] = "    , '[' || mg.strgroupdisplaycode || ']' || mg.strgroupdisplayname as strgroupdisplaycode";   // [グループマスタ.表示グループコード] グループマスタ.表示グループ名
+$query[] = "    , '[' || mu.struserdisplaycode || ']' || mu.struserdisplayname as struserdisplaycode";   // [ユーザマスタ.表示ユーザコード] ユーザマスタ.表示ユーザ名
+$query[] = "    , tmh.moldno";                // 金型履歴.金型NO
+$query[] = "    , tmh.historyno";             // 金型履歴.履歴番号
+$query[] = "    , tsd.lngProductQuantity";    // 仕入詳細.数量
+$query[] = "    , mou.strMonetaryUnitSign || tsd.curSubTotalPrice as strMonetaryUnitSign"; // 通貨単位マスタ.通貨単位 || 仕入詳細.サブトータル価格
+$query[] = "    , tmh.status";                // 金型履歴.金型ステータス
+$query[] = "    , tmh.actiondate";            // 金型履歴.実施日
+$query[] = "    , tmh.sourcefactory";         // 金型履歴.保管工場
+$query[] = "    , tmh.destinationfactory";    // 金型履歴.移動先工場
+$query[] = "    , tmh.created::date";         // 金型履歴.登録日
+$query[] = "    , tmh.createby";              // 金型履歴.登録者
+$query[] = "    , tmh.updated::date";         // 金型履歴.登録日
+$query[] = "    , tmh.updateby";              // 金型履歴.更新者
+$query[] = "    , tmh.version";               // 金型履歴.バージョン
+$query[] = "    , tmh.deleteflag";            // 金型履歴.削除フラグ
 $query[] = "FROM";
 // 履歴の全件出力
 if (array_key_exists("IsDetail", $optionColumns))
@@ -152,9 +152,9 @@ $query[] = "    t_moldreportrelation tmrr";
 $query[] = "  ON";
 $query[] = "        tmh.moldno = tmrr.moldno";
 $query[] = "    AND tmh.historyno = tmrr.historyno";
-$query[] = "----------------------------------------------";
-$query[] = "--  仕入詳細 - 税 ⇔ 製品 - グループ - ユーザ";
-$query[] = "----------------------------------------------";
+// $query[] = "----------------------------------------------";
+// $query[] = "--  仕入詳細 - 税 ⇔ 製品 - グループ - ユーザ";
+// $query[] = "----------------------------------------------";
 $query[] = "LEFT OUTER JOIN";
 $query[] = "(";
 $query[] = "    SELECT";
@@ -162,34 +162,21 @@ $query[] = "        itsd.*";
 $query[] = "    FROM";
 $query[] = "        t_stockdetail itsd";
 $query[] = "    WHERE";
-$query[] = "        (itsd.lngstockno, itsd.lngstockdetailno, itsd.lngrevisionno) IN";
+$query[] = "        (itsd.strmoldno, itsd.lngstockno, itsd.lngstockdetailno) IN";
 $query[] = "        (";
-$query[] = "            SELECT";
-$query[] = "                  lngstockno";
-$query[] = "                , lngstockdetailno";
-$query[] = "                , MAX(lngrevisionno)";
+$query[] = "        	SELECT";
+$query[] = "            	iitsd.strmoldno";
+$query[] = "                , max(iitsd.lngstockno)";
+$query[] = "                , max(iitsd.lngstockdetailno)";
 $query[] = "            FROM";
 $query[] = "                t_stockdetail iitsd";
 $query[] = "            WHERE";
-$query[] = "                (iitsd.strmoldno, iitsd.lngstockno, lngstockdetailno) IN";
 $query[] = "                (";
-$query[] = "                    SELECT";
-$query[] = "                          iiitsd.strmoldno";
-$query[] = "                        , max(iiitsd.lngstockno)";
-$query[] = "                        , max(iiitsd.lngstockdetailno)";
-$query[] = "                    FROM";
-$query[] = "                        t_stockdetail iiitsd";
-$query[] = "                    WHERE";
-$query[] = "                        (";
-$query[] = "                             (iiitsd.lngStockSubjectCode = 433 AND iiitsd.lngStockItemCode = 1)";
-$query[] = "                          OR (iiitsd.lngStockSubjectCode = 431 AND iiitsd.lngStockItemCode = 8)";
-$query[] = "                        )";
-$query[] = "                    GROUP BY";
-$query[] = "                          iiitsd.strmoldno";
-$query[] = "                )";
+$query[] = "                	(iitsd.lngStockSubjectCode = 433 AND iitsd.lngStockItemCode = 1)";
+$query[] = "                    OR (iitsd.lngStockSubjectCode = 431 AND iitsd.lngStockItemCode = 8)";
+$query[] = "                 )";
 $query[] = "            GROUP BY";
-$query[] = "                  lngstockno";
-$query[] = "                , lngstockdetailno";
+$query[] = "            	iitsd.strmoldno";
 $query[] = "        )";
 $query[] = ") tsd";
 $query[] = "  ON";
@@ -210,9 +197,9 @@ $query[] = "LEFT JOIN";
 $query[] = "    m_user  mu";
 $query[] = "  ON";
 $query[] = "    mp.lnginchargeusercode = mu.lngusercode";
-$query[] = "----------------------------------------------";
-$query[] = "--  仕入マスタ ⇔ 発注 - 会社 - 通貨単位";
-$query[] = "----------------------------------------------";
+// $query[] = "----------------------------------------------";
+// $query[] = "--  仕入マスタ ⇔ 発注 - 会社 - 通貨単位";
+// $query[] = "----------------------------------------------";
 $query[] = "LEFT OUTER JOIN";
 $query[] = "(";
 $query[] = "    SELECT";
@@ -258,10 +245,6 @@ $query[] = "    ms.lngMonetaryUnitCode = mou.lngMonetaryUnitCode";
 $query[] = "WHERE";
 $query[] = "    tmh.deleteflag = false";
 $query[] = "AND mm.deleteflag = false";
-$query[] = "AND (";
-$query[] = "         (tsd.lngStockSubjectCode = 433 AND tsd.lngStockItemCode = 1)";
-$query[] = "      OR (tsd.lngStockSubjectCode = 431 AND tsd.lngStockItemCode = 8)";
-$query[] = "    )";
 
 // ユーティリティのインスタンス取得
 $utilBussinesscode = UtilBussinesscode::getInstance();

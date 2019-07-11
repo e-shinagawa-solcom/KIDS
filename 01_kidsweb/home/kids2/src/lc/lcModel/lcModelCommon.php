@@ -20,6 +20,50 @@ require_once 'db_common.php';
 
 class lcModel
 {
+    /**
+     *    接続ID
+     *    @var string
+     */
+    public $lcConn;
+
+    /**
+     *    コンストラクタ
+     *    クラス内の初期化を行う
+     *
+     *    @return void
+     *    @access public
+     */
+    public function __construct()
+    {
+        // 接続IDの初期化
+        $db = new lcConnect();
+        $db->open();
+        $this->lcConn = $db;
+
+    }
+
+    /**
+     * クラス内の解放を行う
+     *
+     * @return void
+     */
+    public function close()
+    {
+        $db = $this->lcConn;
+        $db->close();
+    }
+
+    public function transactionBegin()
+    {
+        $db = $this->lcConn;
+        $db->transactionBegin();
+    } 
+
+    public function transactionCommit()
+    {
+        $db = $this->lcConn;
+        $db->transactionCommit();
+    } 
     // ---------------------------------------------------------------
     /**
      *    ログインセッションデータの確認
@@ -30,7 +74,7 @@ class lcModel
     public function fncIsSession($session_id)
     {
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
         //クエリの生成
         $sql = "
 				select
@@ -85,7 +129,7 @@ class lcModel
     public function getMaxLoginStateNum()
     {
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
         //クエリの生成
         $sql = "
                 select
@@ -112,7 +156,7 @@ class lcModel
     public function checkAcUsrid($usrid)
     {
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
         //クエリの生成
         $sql = "
                 select
@@ -148,7 +192,7 @@ class lcModel
     public function getUserAuth($usrid)
     {
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
         //クエリの生成
         $sql = "
                 select
@@ -179,7 +223,7 @@ class lcModel
     public function chkEp($lgno, $userAuth, $usrid)
     {
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
 
         $result;
 
@@ -305,7 +349,7 @@ class lcModel
     public function getUserCount()
     {
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
         //クエリの生成
         $sql = "
 				select
@@ -340,7 +384,7 @@ class lcModel
     public function getBackColor()
     {
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
         //クエリの生成
         $sql = "
 				select
@@ -381,7 +425,7 @@ class lcModel
     public function loginStateLogout($param)
     {
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
         //ログイン状況をログアウトに更新する
         $sql = "update
 					m_acloginstate
@@ -416,7 +460,7 @@ class lcModel
     public function getLoginState($user_id)
     {
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
         //クエリの生成
         $sql = "
 				select
@@ -466,7 +510,7 @@ class lcModel
     public function getLcInfoDate()
     {
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
         //クエリの生成
         $sql = "
 				select
@@ -494,7 +538,7 @@ class lcModel
     public function getAcLoginstateBylgno($lgno)
     {
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
         //クエリの生成
         $sql = "
 				select
@@ -520,7 +564,7 @@ class lcModel
     public function setLcLoginState($lgno, $lgusrname)
     {
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
         //クエリの生成
         $sql = "
 				insert into m_acloginstate
@@ -555,7 +599,7 @@ class lcModel
     public function getLcInfoData($data)
     {
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
         //基本取得
         $sql = "
 				select
@@ -602,7 +646,7 @@ class lcModel
 				from
 					t_lcinfo
                 ";
-                
+
         switch ($data["mode"]) {
             case "0":
                 break;
@@ -613,13 +657,13 @@ class lcModel
                             opendate = '" . $data["from"] . "'";
 
                 if ($data["from"] != "" && $data["to"] != "") {
-                    $sql .= " and opendate between '" .$data["from"] ."' and '" . $data["to"] . "'";
+                    $sql .= " and opendate between '" . $data["from"] . "' and '" . $data["to"] . "'";
                 }
                 if ($data["payfcd"] != "") {
-                    $sql .= " and payfcd = '".$data["payfcd"] ."'";
+                    $sql .= " and payfcd = '" . $data["payfcd"] . "'";
                 }
                 if ($data["payfnameomit"] != "") {
-                    $sql .= " and payfnameomit = '".$data["payfnameomit"] ."'";
+                    $sql .= " and payfnameomit = '" . $data["payfnameomit"] . "'";
                 }
                 if ($data["getDataModeFlg"] == 1) {
                     $sql .= " and lcstate in (0,3,4,7,8) ";
@@ -640,7 +684,7 @@ class lcModel
         $sql .= "
 				order by pono,poreviseno,polineno
                 ";
-                
+
         //クエリ実行
         $result = $db->select($sql, array());
         return $sql;
@@ -662,7 +706,7 @@ class lcModel
     public function getLcInfoSingle($data)
     {
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
 
         //基本取得
         $sql = "
@@ -738,7 +782,7 @@ class lcModel
     {
         try {
             //クラスの生成
-            $db = new lcConnect();
+            $db = $this->lcConn;
 
 //以下未実装-----------------------------------------
             /*
@@ -805,7 +849,7 @@ class lcModel
     public function updateBaseOpenDate($data, $lgusrname)
     {
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
 
         //データ更新
         $sql = "update
@@ -860,7 +904,7 @@ class lcModel
             $next_baseno,
             $data,
             $lgusrname,
-            $lgusrname
+            $lgusrname,
         );
 
         //クエリ実行
@@ -878,7 +922,7 @@ class lcModel
     public function getBankInfo()
     {
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
         //クエリの生成
         $sql = "
 				select
@@ -906,9 +950,9 @@ class lcModel
      * @return array
      */
     public function getValidBankInfo()
-    {   
+    {
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
         //クエリの生成
         $sql = "
 				select
@@ -944,7 +988,7 @@ class lcModel
     public function updateBankInfo($data, $lgusrname)
     {
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
 
         for ($i = 0; $i < count($data); $i++) {
             //クエリの生成
@@ -986,7 +1030,7 @@ class lcModel
                     $data[$i]["bankdivrate"],
                     $data[$i]["invalidflag"],
                     $lgusrname,
-                    $data[$i]["bankcd"]
+                    $data[$i]["bankcd"],
                 );
                 //クエリ実行
                 $result = $db->update($sql, $bind);
@@ -1040,7 +1084,7 @@ class lcModel
                     $data[$i]["bankdivrate"],
                     $data[$i]["invalidflag"],
                     $lgusrname,
-                    $lgusrname
+                    $lgusrname,
                 );
 
                 //クエリ実行
@@ -1060,7 +1104,7 @@ class lcModel
     public function getPayfInfo()
     {
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
         //クエリの生成
         $sql = "
 				select
@@ -1091,7 +1135,7 @@ class lcModel
     public function updatePayfInfo($data, $lgusrname)
     {
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
         for ($i = 0; $i < count($data); $i++) {
             //更新処理
             if ($data[$i]["del_flg"] != true) {
@@ -1136,10 +1180,9 @@ class lcModel
                         $data[$i]["payfsendfax"],
                         $data[$i]["invalidflag"],
                         $lgusrname,
-                        $data[$i]["payfcd"]
+                        $data[$i]["payfcd"],
                     );
 
-                    
                     //クエリ実行
                     $result = $db->update($sql, $bind);
 
@@ -1215,7 +1258,7 @@ class lcModel
                         $data[$i]["payfsendfax"],
                         $data[$i]["invalidflag"],
                         $lgusrname,
-                        $lgusrname
+                        $lgusrname,
                     );
 
                     //クエリ実行
@@ -1243,7 +1286,7 @@ class lcModel
     public function getBankList()
     {
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
         //クエリの生成
         $sql = "
 				select
@@ -1275,7 +1318,7 @@ class lcModel
     public function getUnloadingAreas()
     {
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
         //クエリの生成
         $sql = "
 				SELECT
@@ -1305,7 +1348,7 @@ class lcModel
     public function getCurrencyClassList()
     {
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
         //クエリの生成
         $sql = "
 				SELECT
@@ -1338,7 +1381,7 @@ class lcModel
     public function getCurrencyClassListAll()
     {
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
         //クエリの生成
         $sql = "
 				SELECT
@@ -1374,7 +1417,7 @@ class lcModel
         $authority["setting"] = false;
         $authority["lcinfo"] = false;
         $usrauth = $this->getUserAuth($usrId);
-        if ($usrauth <> "") {
+        if ($usrauth != "") {
             if (substr($usrauth, 1, 1) == "1") {
                 $authority["setting"] = true;
             }
@@ -1396,7 +1439,7 @@ class lcModel
         // 現在日付より４ヶ月後の日付を取得
         $fourmonths = date("Ym", strtotime("+4 month"));
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
         //クエリの生
         $sql = "
             SELECT
@@ -1476,7 +1519,7 @@ class lcModel
     public function getMaxLcGetDate()
     {
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
         //クエリの生成
         $sql = "
                 select
@@ -1505,7 +1548,7 @@ class lcModel
     public function deleteAcLcInfo($date, $time)
     {
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
         //クエリの生成
         $sql = "
                 delete from t_aclcinfo
@@ -1537,7 +1580,7 @@ class lcModel
     public function updateAcLcStateToDelete($pono, $postate)
     {
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
         //クエリの生成
         $sql = "
                 update t_aclcinfo
@@ -1568,7 +1611,7 @@ class lcModel
     public function getAcLcCount($pono)
     {
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
         //クエリの生成
         $sql = "
                 select
@@ -1599,7 +1642,7 @@ class lcModel
     {
 
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
         //クエリの生成
         $sql = "
             select distinct
@@ -1634,7 +1677,7 @@ class lcModel
     {
 
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
         //クエリの生成
         $sql = "
             select pono
@@ -1677,7 +1720,7 @@ class lcModel
     {
 
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
         //クエリの生成
         $sql = "
             select poupdatedate
@@ -1710,7 +1753,7 @@ class lcModel
     public function updateAcLcUpdatedate($pono, $polineno, $poreviseno, $lcstate, $poupdatedate)
     {
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
         //クエリの生成
         $sql = "
                 update t_aclcinfo
@@ -1743,7 +1786,7 @@ class lcModel
     public function insertAcLcInfo($data)
     {
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
         //クエリの生成
         $sql = "
             insert into t_aclcinfo
@@ -1819,7 +1862,7 @@ class lcModel
     public function updateAcLcStateByLcState($pono)
     {
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
         //クエリの生成
         $sql = "
                 update
@@ -1850,7 +1893,7 @@ class lcModel
     public function getBaseDate()
     {
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
         //クエリの生成
         $sql = "
                     select
@@ -1884,7 +1927,7 @@ class lcModel
     public function updateAcLcOpendate($pono, $opendate)
     {
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
         //クエリの生成
         $sql = "
                 update
@@ -1917,7 +1960,7 @@ class lcModel
     public function getReviseAcLcInfo($pono, $polineno)
     {
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
         //クエリの生成
         $sql = "
             select
@@ -1960,7 +2003,7 @@ class lcModel
     public function updateReviseAcLcInfo($data)
     {
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
         //クエリの生成
         $sql = "
                 update
@@ -2008,7 +2051,7 @@ class lcModel
     public function updateAcLcStateToRevise($pono, $poreviseno)
     {
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
         //クエリの生成
         $sql = "
                 update
@@ -2042,7 +2085,7 @@ class lcModel
     public function updateUnapprovedAcLcState($pono, $polineno, $poreviseno, $lcstate, $postate)
     {
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
         //クエリの生成
         $sql = "
                 update
@@ -2070,7 +2113,7 @@ class lcModel
     public function getUnapprovedAcLcInfo()
     {
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
         //クエリの生成
         $sql = "
                 select
@@ -2110,7 +2153,7 @@ class lcModel
     public function updateAcLcState($pono, $poreviseno, $lcstate)
     {
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
         //クエリの生成
         $sql = "
                 update
@@ -2136,7 +2179,7 @@ class lcModel
     public function getAcBankInfo($bankcd)
     {
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
         //クエリの生成
         $sql = "
                     select
@@ -2169,7 +2212,7 @@ class lcModel
     public function getAcPayfInfo($payfcd)
     {
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
         //クエリの生成
         $sql = "
                     select
@@ -2204,7 +2247,7 @@ class lcModel
     public function updateLcGetDate($lgno, $lcgetdate)
     {
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
         //クエリの生成
         $sql = "update
                         m_acloginstate
@@ -2236,7 +2279,7 @@ class lcModel
     public function updateLgStateToInit($lgno)
     {
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
         //クエリの生成
         //クエリの生成
         $sql = "update
@@ -2268,7 +2311,7 @@ class lcModel
     public function updateAcLcInfo($data)
     {
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
         //クエリの生成
         $sql = "
                 update
@@ -2363,7 +2406,7 @@ class lcModel
             , $data["pono"]
             , $data["polineno"]
             , $data["poreviseno"]);
-            return $bind;
+        return $bind;
         //クエリ実行
         $result = $db->update($sql, $bind);
 
@@ -2386,7 +2429,7 @@ class lcModel
     public function updateLgoutym($param)
     {
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
         //ログイン状況をログアウトに更新する
         $sql = "update
 					m_acloginstate
@@ -2421,7 +2464,7 @@ class lcModel
     public function updateLcImpDate($lgno, $lcimpdate)
     {
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
         //クエリの生成
         $sql = "update
                         m_acloginstate
@@ -2453,7 +2496,7 @@ class lcModel
     public function updateLcExpDate($lgno, $lcimpdate)
     {
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
         //クエリの生成
         $sql = "update
                         m_acloginstate
@@ -2483,7 +2526,7 @@ class lcModel
     public function getSendInfo()
     {
         //クラスの生成
-        $db = new lcConnect();
+        $db = $this->lcConn;
         //クエリの生成
         $sql = "
 				select

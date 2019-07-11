@@ -58,6 +58,7 @@ switch ($data['method']) {
 }
 
 $objDB->close();
+$lcModel->close();
 
 //結果出力
 mb_convert_variables('UTF-8', 'EUC-JP', $result);

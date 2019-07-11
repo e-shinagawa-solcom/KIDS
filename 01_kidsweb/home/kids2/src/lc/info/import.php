@@ -51,10 +51,10 @@ for ($i = 0; $i <= count($sheetData); $i++) {
         $csvData[$i][$j+1] = rtrim(ltrim($cells[$j], '"'), '"');
     }
 }
-
+// DB処理開始
+$objDB->transactionBegin();
 // t_lcinfテーブルよりデータを削除する
 fncDeleteLcInfo($objDB);
-
 // ファイルより読み込んだデータをt_lcinfoに登録する
 $lccount = count($csvData);
 if ($lccount >= 2) {
@@ -103,7 +103,9 @@ if ($lccount >= 2) {
     }
     $lcModel->updateLcImpDate($lgno, date("YmdHi"));
 }
+$objDB->transactionCommit();
 $objDB->close();
+$lcModel->close();
 echo "success";
 return;
 ?>

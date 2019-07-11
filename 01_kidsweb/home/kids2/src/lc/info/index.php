@@ -88,6 +88,8 @@ if ($aryData["aclcinitFlg"]) {
     }
 
     // ackidsのデータをkidscore2に登録
+    // トランザクションを開始する
+    $objDB->transactionBegin();
     // L/C情報データの削除を行う
     fncDeleteLcInfo($objDB);
     //ACL/C情報データの取得
@@ -136,16 +138,21 @@ if ($aryData["aclcinitFlg"]) {
         $data["shipym"] = $acLcInfo["shipym"];
         fncInsertLcInfo($objDB, $data);
     }
+    
+    $objDB->transactionCommit;
     // $data["from"] = "201905";
     // $data["mode"] = "0";
     // $result = fncGetLcInfoData($objDB, $data);
     // var_dump($result);
 
 }
-$objDB->close();
 
 //行背景設定取得
 $background_color = $lcModel->getBackColor();
+
+
+$objDB->close();
+$lcModel->close();
 
 //HTMLへの引き渡しデータ
 //$aryData["chkEpRes"] = $chkEpRes;

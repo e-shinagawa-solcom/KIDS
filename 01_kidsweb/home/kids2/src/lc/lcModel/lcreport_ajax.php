@@ -19,8 +19,6 @@ require PATH_HOME . "/vendor/autoload.php";
 
 use PhpOffice\PhpSpreadsheet\Reader\Xls as XlsReader;
 use PhpOffice\PhpSpreadsheet\Writer\Xls as XlsWriter;
-use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
-use PhpOffice\PhpSpreadsheet\IOFactory;
 
 //値の取得
 $postdata = file_get_contents("php://input");
@@ -55,22 +53,19 @@ switch ($data['method']) {
         //処理呼び出し
         $result = getSelLcReport($objDB, $lcModel);
         $objDB->close();
+        $lcModel->close();
         break;
-    // 帳票出力の印刷イベント
-    // case 'exportLcReport':
-    //     //処理呼び出し
-    //     $result = exportLcReport($objDB, $data);
-    //     $objDB->close();
-    //     break;
+        // 帳票出力の印刷イベント
+        // case 'exportLcReport':
+        //     //処理呼び出し
+        //     $result = exportLcReport($objDB, $data);
+        //     $objDB->close();
+        //     break;
 }
 
-
-
-    
-        //結果出力
-        mb_convert_variables('UTF-8', 'EUC-JP', $result);
-        echo $s->encodeUnsafe($result);
-
+//結果出力
+mb_convert_variables('UTF-8', 'EUC-JP', $result);
+echo $s->encodeUnsafe($result);
 
 /**
  * LC帳票出力画面-セレクトボックス情報取得
@@ -200,8 +195,6 @@ function exportLcReport($objDB, $data)
     $writer = new XlsWriter($spreadsheet);
     $writer->save(REPORT_TMPDIR . REPORT_LC_OUTPUTFILE);
 
-
-    
 }
 
 /**

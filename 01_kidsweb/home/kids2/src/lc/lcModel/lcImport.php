@@ -111,10 +111,7 @@ if ($lccount > 1) {
 $result = true;
 
 $objDB->close();
+$lcModel->close();
 return true;
-// mb_convert_encoding($result, "sjis", "utf-8");
-// //結果出力
-// // mb_convert_variables('UTF-8', 'EUC-JP', $result);
-// echo $s->encodeUnsafe($result);
 
 

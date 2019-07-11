@@ -74,6 +74,9 @@
 	//ユーザー権限の取得
 	$login_user_auth = $lcModel->getUserAuth($user_id);
 
+	
+	$lcModel->close();
+
 	//HTMLへの引き渡しデータ
 	$aryData["lc_info_date"] = date('Ymd',  strtotime($lcgetdate));
 	$aryData["lc_info_time"] = date('h:m:s',  strtotime($lcgetdate));

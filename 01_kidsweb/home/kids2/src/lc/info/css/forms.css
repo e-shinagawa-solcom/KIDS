@@ -121,12 +121,12 @@
 }
 
 [name="TV"] th {
-    width: 40px
+    width: 30px
 }
 
 #header_h {
     position: absolute;
-    left: 40px;
+    left: 30px;
     top: 0px;
     width: 95.6%;
     overflow-x: hidden;
@@ -137,7 +137,7 @@
     position: absolute;
     left: 0px;
     top: 22px;
-    width: 40px;
+    width: 30px;
     height: 345px;
     overflow-x: hidden;
     overflow-y: hidden;
@@ -145,7 +145,7 @@
 
 #data {
     position: absolute;
-    left: 40px;
+    left: 30px;
     top: 22px;
     overflow-x: scroll;
     overflow-y: scroll;

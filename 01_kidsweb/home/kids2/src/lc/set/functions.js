@@ -93,7 +93,7 @@ function setBankInfo(bank_info){
 			"<td><input type='text' class='form-control txt-kids' name='bankomitname' value='" + data.bankomitname + "' ></td>" + 
 			"<td><input type='text' class='form-control txt-kids' name='bankformalname' value='" + data.bankformalname + "' ></td>" + 
 			"<td><input type='text' class='form-control txt-kids' name='bankdivrate' value='" + data.bankdivrate + "' ></td>" + 
-			"<td><input type='checkbox' name='invalidflag' value='1' " + invalidflag + " style='width: 11px;margin-top: 3px;margin-left: 25px;'></td>" + 
+			"<td><input type='checkbox' name='invalidflag' value='1' " + invalidflag + " style='width: 11px;margin-top: 3px;margin-left: 45px;'></td>" + 
 			"</tr>";
 		$("#bank_body").append(html);
 	}
@@ -118,7 +118,7 @@ function setPayfInfo(payf_info){
 			"<td><input type='text' class='form-control txt-kids' name='payfformalname' value='" + data.payfformalname + "' ></td>" + 
 			"<td><input type='text' class='form-control txt-kids' name='payfsendname' value='" + data.payfsendname + "' ></td>" + 
 			"<td><input type='text' class='form-control txt-kids' name='payfsendfax' value='" + data.payfsendfax + "' ></td>" + 
-			"<td><input type='checkbox' name='invalidflag' value='1' " + invalidflag + "  style='width: 11px;margin-top: 3px;margin-left: 35px;'></td>" + 
+			"<td><input type='checkbox' name='invalidflag' value='1' " + invalidflag + "  style='width: 11px;margin-top: 3px;margin-left: 45px;'></td>" + 
 			"</tr>";
 		$("#payf_body").append(html);
 	}
@@ -220,16 +220,6 @@ function delPayfInfo(){
 		}
 	 
 	} catch (e) {
-	}
-}
-
-//---------------------------------------------------
-//再読み込み
-//---------------------------------------------------
-function reloadInfo(){
-	if( res = confirm("再読込をしますか。") )
-	{
-		getInfo();
 	}
 }
 
@@ -389,7 +379,6 @@ function reflection(){
 				}
 			})
 			.done(function(data) {
-				alert(data);
 				// Ajaxリクエストが成功
 				var data = JSON.parse(data);
 			

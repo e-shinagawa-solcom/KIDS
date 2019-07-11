@@ -81,30 +81,37 @@ $userAuth = substr($loginUserAuth, 1, 1);
 $logined_flg = false;
 $loginState = $lcModel->getLoginState($usrId);
 
+$objDB->transactionBegin();
 // ackidsのデータをkidscore2に登録
 // ackidsの銀行情報の取得
 $bankArry = $lcModel->getBankInfo();
 // kidscore2の銀行情報の削除
-fncDeleteBank($objDB);
-// kidscore2の銀行情報の登録
-if (count($bankArry) > 0) {
-    foreach ($bankArry as $bank) {
-        fncInsertBank($objDB, $bank);
+$deltedNum = fncDeleteBank($objDB);
+if ($deltedNum >= 0) {
+    // kidscore2の銀行情報の登録
+    if (count($bankArry) > 0) {
+        foreach ($bankArry as $bank) {
+            fncInsertBank($objDB, $bank);
+        }
     }
 }
 
 // ackidsの支払先情報の取得
 $payfArry = $lcModel->getPayfInfo();
 // kidscore2の支払先情報の削除
-fncDeletePayfinfo($objDB);
+$deltedNum = fncDeletePayfinfo($objDB);
+if ($deltedNum >= 0) {
 // kidscore2の支払先情報の登録
-if (count($payfArry) > 0) {
-    foreach ($payfArry as $payf) {
-        fncInsertPayf($objDB, $payf);
+    if (count($payfArry) > 0) {
+        foreach ($payfArry as $payf) {
+            fncInsertPayf($objDB, $payf);
+        }
     }
 }
 
+$objDB->transactionCommit();
 $objDB->close();
+$lcModel->close();
 
 //HTMLへの引き渡しデータ
 $aryData["login_state"] = $loginState;

@@ -56,6 +56,7 @@ switch ($data['method']) {
 }
 
 $objDB->close();
+$lcModel->close();
 
 //結果出力
 mb_convert_variables('UTF-8', 'EUC-JP', $result);
@@ -99,6 +100,10 @@ function updateLcSetting($objDB, $lcModel, $data, $lgusrname)
     $baseOpenDateChk = $data["send_data"]["baseOpenDateChk"];
     $baseOpenDate = $data["send_data"]["baseOpenDate"];
 
+    // DB処理開始
+    $objDB->transactionBegin();
+    // DB処理開始
+    $lcModel->transactionBegin();
     if ($bankInfoChk == "true") {
         // kidscore2への銀行情報の更新
         // kidscore2の銀行情報の削除
@@ -127,6 +132,11 @@ function updateLcSetting($objDB, $lcModel, $data, $lgusrname)
         //基準日の更新
         $lcModel->updateBaseOpenDate($baseOpenDate, $lgusrname);
     }
+
+    // DB処理終了
+    $lcModel->transactionCommit();
+    // DB処理終了
+    $objDB->transactionCommit();
 
     return $result;
 }

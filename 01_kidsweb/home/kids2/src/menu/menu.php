@@ -196,6 +196,7 @@ $aryData["lngFunctionCode"] = DEF_FUNCTION_MENU0;
 // HTML½ÐÎÏ
 echo fncGetReplacedHtml("menu/parts.tmpl", $aryData, $objAuth);
 
+$lcModel->close();
 $objDB->close();
 
 return true;

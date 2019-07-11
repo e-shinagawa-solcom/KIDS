@@ -71,6 +71,7 @@ if (count($lcInfoArry) > 0) {
 }
 
 $objDB->close();
+$lcModel->close();
 header("Content-Type: application/octet-stream");
 header('Content-Disposition: attachment;filename="' .$txtFileName .'"');
 header('Cache-Control: max-age=0');

@@ -98,7 +98,7 @@ function setLcInfoTable(data, phpData) {
 		}
 
 		var lc_table_radio = '<tr>' +
-		'<td style="padding-left: 13px;"><input type="radio" name="selectRow" value="' + i + '" class="form-control form-control-sm" style="width:12px;height: 15px;background-color: #f0f0f6;"></td>' +
+		'<td style="padding-left: 8px;"><input type="radio" name="selectRow" value="' + i + '" class="form-control form-control-sm" style="width:12px;height: 15px;background-color: #f0f0f6;"></td>' +
 		'</tr>';
 		$("#lc_table_radio").append(lc_table_radio);
 
