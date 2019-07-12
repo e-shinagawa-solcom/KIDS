@@ -12,8 +12,6 @@
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/estimate/initlayout.js"></script>
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/navi/estimate/images.js"></script>
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/navi/cmn/images.js"></script>
-<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/navi/estimate/initlayout.js"></script>
-<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/navi/cmn/initlayoutnavi.js"></script>
 </header2>
 
 
@@ -22,7 +20,7 @@
 </header3>
 
 <bodyonload>
-initLayoutBase();initLayoutES();initLayoutNavigation();Loading();
+initLayoutBase();initLayoutES();Loading();
 </bodyonload>
 </config>
 
@@ -42,8 +40,16 @@ initLayoutBase();initLayoutES();initLayoutNavigation();Loading();
 <!-- <span id="MenuBack"></span> -->
 
 <p id="TopNavi">
-	<span id="SearchNaviBt1" onClick="window.location='search/index.php?strSessionID=_%strSessionID%_';" style="visibility:_%visibility2%_"></span>
-	<span id="UploadNaviBt1" onClick="window.location='/upload2/index.php?strSessionID=_%strSessionID%_';" style="visibility:_%upload_visibility%_"></span>
+	<span id="SearchNaviBt1" onClick="window.location='search/index.php?strSessionID=_%strSessionID%_';" style="visibility:_%visibility2%_">
+		<a href="#">
+			<img width="151" height="25" style="filter: none;" onmouseover="fncChangeBtImg( this, schJ2 );" onmouseout="fncChangeBtImg( this, schJ1 ); fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" alt="見積原価検索" src="/img/type01/estimate/search_off_ja_bt.gif" border="0">
+		</a>
+	</span>
+	<span id="UploadNaviBt1" onClick="window.location='/upload2/index.php?strSessionID=_%strSessionID%_';" style="visibility:_%upload_visibility%_">
+		<a href="#">
+			<img width="151" height="25" tabindex="0" onmouseover="fncChangeBtImg( this, uploadJ2 );" onmouseout="fncChangeBtImg( this, uploadJ1 ); fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" alt="アップロード" src="/img/type01/menu/upload_off_ja_bt.gif" border="0">
+		</a>
+	</span>
 </p>
 
 

@@ -12,8 +12,6 @@
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/so/initlayout.js"></script>
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/navi/so/images.js"></script>
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/navi/cmn/images.js"></script>
-<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/navi/so/initlayout.js"></script>
-<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/navi/cmn/initlayoutnavi.js"></script>
 </header2>
 
 
@@ -24,7 +22,7 @@
 
 
 <bodyonload>
-initLayoutBase();initLayoutSO();initLayoutNavigation();Loading();
+initLayoutBase();initLayoutSO();Loading();
 </bodyonload>
 </config>
 
@@ -44,7 +42,11 @@ initLayoutBase();initLayoutSO();initLayoutNavigation();Loading();
 
 
 <p id="TopNavi">
-<span id="SearchNaviBt1" onclick="javascript:location='_%strSearchURL%_';"></span>
+	<span id="SearchNaviBt1" onclick="javascript:location='_%strSearchURL%_';">
+		<a href="#">
+			<img width="151" height="25" style="filter: none;" onmouseover="SchJOn(this);" onmouseout="SchJOff(this);fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" alt="¼õÃí¸¡º÷" src="/img/type01/so/search_off_ja_bt.gif" border="0">
+		</a>
+	</span>
 </p>
 
 

@@ -9,20 +9,17 @@
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/m/initlayout.js"></script>
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/navi/m/images.js"></script>
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/navi/cmn/images.js"></script>
-<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/navi/m/initlayout.js"></script>
-<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/navi/cmn/initlayoutnavi.js"></script>
 </header2>
 
 
 <header3>
 <link rel="stylesheet" type="text/css" media="screen" href="layout.css">
-<script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
 </header3>
 
 
 
 <bodyonload>
-initLayoutBase();initLayoutM();initLayoutNavigation();Loading();
+initLayoutBase();initLayoutM();Loading();
 </bodyonload>
 </config>
 
@@ -41,12 +38,20 @@ initLayoutBase();initLayoutM();initLayoutNavigation();Loading();
 	<span id="MenuBack"></span>
 	<div id="TopNavi">
 		<form action="list/index.php" method="GET" name="LIST">
-		<input type="hidden" name="strSessionID" value="_%strSessionID%_">
-		<span id="RegistNaviBt1" onclick="document.LIST.submit();"></span>
+			<input type="hidden" name="strSessionID" value="_%strSessionID%_">
+			<span id="RegistNaviBt1" onclick="document.LIST.submit();">
+				<a href="#">
+					<img width="151" height="25" style="filter: none;" onmouseover="MAJOn(this);" onmouseout="MAJOff(this);fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" alt="マスタＡ" src="/img/type01/m/master_a_off_ja_bt.gif" border="0">
+				</a>
+			</span>
 		</form>
 		<form action="search/index.php" method="GET" name="SEARCH">
-		<input type="hidden" name="strSessionID" value="_%strSessionID%_">
-		<span id="SearchNaviBt1" onclick="document.SEARCH.submit();"></span>
+			<input type="hidden" name="strSessionID" value="_%strSessionID%_">
+			<span id="SearchNaviBt1" onclick="document.SEARCH.submit();">
+				<a href="#">
+					<img width="151" height="25" onmouseover="MBJOn(this);" onmouseout="MBJOff(this);fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" alt="マスタＢ" src="/img/type01/m/master_b_off_ja_bt.gif" border="0">
+				</a>
+			</span>
 		</form>
 	</div>
 </div>

@@ -127,7 +127,6 @@ function initLayoutNavigation()
 		MasterNaviBt3.innerHTML = mstnaviJ3;
 	}
 
-
 	///// USER INFO /////
 	if (typeof(UserInfoNaviBt1)!='undefined')
 	{

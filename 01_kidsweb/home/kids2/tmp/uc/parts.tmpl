@@ -9,17 +9,14 @@
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/uc/initlayout.js"></script>
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/navi/uc/images.js"></script>
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/navi/cmn/images.js"></script>
-<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/navi/uc/initlayout.js"></script>
-<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/navi/cmn/initlayoutnavi.js"></script>
 </header2>
 
 <header3>
 <link rel="stylesheet" type="text/css" media="screen" href="layout.css">
-<script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
 </header3>
 
 <bodyonload>
-initLayoutBase();initLayoutUC();initLayoutNavigation();Loading();
+initLayoutBase();initLayoutUC();Loading();
 </bodyonload>
 </config>
 
@@ -41,9 +38,21 @@ initLayoutBase();initLayoutUC();initLayoutNavigation();Loading();
 	<span id="strSelectFunctions">機能選択</span>
 	<span id="MenuBackBorder"></span>
 	<p id="TopNavi">
-		<span id="UserInfoNaviBt1" onclick="window.location='regist/edit.php?strSessionID=_%strSessionID%_&lngFunctionCode=_%lngFunctionCode1%_';" style="visibility:_%visibility1%_"></span>
-		<span id="RegistNaviBt1" onclick="window.location='regist/edit.php?strSessionID=_%strSessionID%_&lngFunctionCode=_%lngFunctionCode2%_';" style="visibility:_%visibility2%_"></span>
-		<span id="SearchNaviBt1" onclick="window.location='search/index.php?strSessionID=_%strSessionID%_&lngFunctionCode=_%lngFunctionCode3%_';" style="visibility:_%visibility3%_"></span>
+		<span id="UserInfoNaviBt1" onclick="window.location='regist/edit.php?strSessionID=_%strSessionID%_&lngFunctionCode=_%lngFunctionCode1%_';" style="visibility:_%visibility1%_">
+			<a href="#">
+				<img width="151" height="25" style="filter: none;" onmouseover="UInfoJOn(this)" onmouseout="UInfoJOff(this);fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" alt="ユーザー情報" src="/img/type01/uc/info_off_ja_bt.gif" border="0">
+			</a>
+		</span>
+		<span id="RegistNaviBt1" onclick="window.location='regist/edit.php?strSessionID=_%strSessionID%_&lngFunctionCode=_%lngFunctionCode2%_';" style="visibility:_%visibility2%_">
+			<a href="#">
+				<img width="151" height="25" onmouseover="RegiJOn(this)" onmouseout="RegiJOff(this);fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" alt="ユーザー登録" src="/img/type01/uc/regist_off_ja_bt.gif" border="0">
+			</a>
+		</span>
+		<span id="SearchNaviBt1" onclick="window.location='search/index.php?strSessionID=_%strSessionID%_&lngFunctionCode=_%lngFunctionCode3%_';" style="visibility:_%visibility3%_">
+			<a href="#">
+				<img width="151" height="25" onmouseover="SchJOn(this);" onmouseout="SchJOff(this);fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" alt="ユーザー検索" src="/img/type01/uc/search_off_ja_bt.gif" border="0">
+			</a>
+		</span>
 	</p>
 </div>
 
