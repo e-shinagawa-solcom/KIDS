@@ -1,646 +1,448 @@
-<?
-/** 
-*	見積管理 確認画面
+<?php
+
+/**
 *
-*	@package   KIDS
-*	@copyright Copyright &copy; 2004, AntsBizShare 
-*	@author    Kenji Chiba
-*	@access    public
-*	@version   1.00
-*
-*	更新履歴
-*	2004.04.14	見積が顧客であった場合に、表示・非表示を切り替えられないバグの修正
-*
+*	@charset	: EUC-JP
 */
-// edit.php -> strSessionID			-> confirm.php
-// edit.php -> lngFunctionCode		-> confirm.php
-// edit.php -> lngEstimateNo		-> confirm.php見積原価番号
-// edit.php -> strProductCode		-> confirm.php製品コード
-// edit.php -> strActionName		-> confirm.php実行処理名(confirm or temporary)
-// edit.php -> lngWorkflowOrderCode	-> confirm.php承認ルート
-// edit.php -> aryDitail[仕入科目][明細行][lngStockSubjectCode]	-> confirm.php
-// edit.php -> aryDitail[仕入科目][明細行][lngStockItemCode]	-> confirm.php
-// edit.php -> aryDitail[仕入科目][明細行][bytPayOffTargetFlag]	-> confirm.php
-// edit.php -> aryDitail[仕入科目][明細行][lngCustomerCode]		-> confirm.php
-// edit.php -> aryDitail[仕入科目][明細行][bytPercentInputFlag]	-> confirm.php
-// edit.php -> aryDitail[仕入科目][明細行][lngProductQuantity]	-> confirm.php
-// edit.php -> aryDitail[仕入科目][明細行][curProductRate]		-> confirm.php
-// edit.php -> aryDitail[仕入科目][明細行][curProductPrice]		-> confirm.php
-// edit.php -> aryDitail[仕入科目][明細行][curSubTotalPrice]	-> confirm.php
-// edit.php -> aryDitail[仕入科目][明細行][strNote]				-> confirm.php
-// edit.php -> aryDitail[仕入科目][明細行][lngMonetaryUnitCode]	-> confirm.php
-// edit.php -> aryDitail[仕入科目][明細行][curSubTotalPriceJP]	-> confirm.php
-// edit.php -> aryDitail[仕入科目][明細行][curConversionRate]	-> confirm.php
 
-// 実行へ
-// confirm.php -> strSessionID			-> action.php
-// confirm.php -> lngFunctionCode		-> action.php
-// confirm.php -> lngEstimateNo			-> action.php見積原価番号
-// confirm.php -> strProductCode		-> action.php製品コード
-// confirm.php -> strActionName			-> action.php実行処理名(confirm or temporary)
-// confirm.php -> lngWorkflowOrderCode	-> action.php承認ルート
-// confirm.php -> aryDitail[仕入科目][明細行][lngStockSubjectCode]	-> action.php
-// confirm.php -> aryDitail[仕入科目][明細行][lngStockItemCode]		-> action.php
-// confirm.php -> aryDitail[仕入科目][明細行][bytPayOffTargetFlag]	-> action.php
-// confirm.php -> aryDitail[仕入科目][明細行][lngCustomerCode]		-> action.php
-// confirm.php -> aryDitail[仕入科目][明細行][bytPercentInputFlag]	-> action.php
-// confirm.php -> aryDitail[仕入科目][明細行][lngProductQuantity]	-> action.php
-// confirm.php -> aryDitail[仕入科目][明細行][curProductRate]		-> action.php
-// confirm.php -> aryDitail[仕入科目][明細行][curProductPrice]		-> action.php
-// confirm.php -> aryDitail[仕入科目][明細行][curSubTotalPrice]		-> action.php
-// confirm.php -> aryDitail[仕入科目][明細行][strNote]				-> action.php
-// confirm.php -> aryDitail[仕入科目][明細行][lngMonetaryUnitCode]	-> action.php
-// confirm.php -> aryDitail[仕入科目][明細行][curSubTotalPriceJP]	-> action.php
-// confirm.php -> aryDitail[仕入科目][明細行][curConversionRate]	-> action.php
+	require ( 'conf.inc' );										// 設定読み込み
+	require ( LIB_DEBUGFILE );									// Debugモジュール
 
+	require ( LIB_ROOT . "mapping/conf_mapping_common.inc" );	// マッピング設定 - 共通
+	require ( LIB_ROOT . "mapping/conf_mapping_estimate.inc" );	// マッピング設定 - 見積原価管理
 
+	require ( LIB_FILE );										// ライブラリ読み込み
+    
+    require ( SRC_ROOT . "estimate/cmn/estimateSheetController.php" );
+	require ( SRC_ROOT . "estimate/cmn/makeHTML.php" );
 
+	// 行クラスファイルの読み込み
+	require_once (SRC_ROOT. "/estimate/cmn/productSalesRowController.php");
+	require_once (SRC_ROOT. "/estimate/cmn/fixedCostSalesRowController.php");
+	require_once (SRC_ROOT. "/estimate/cmn/fixedCostOrderRowController.php");
+	require_once (SRC_ROOT. "/estimate/cmn/partsCostOrderRowController.php");
 
-	// 設定読み込み
-	include_once('conf.inc');
-	require_once( LIB_DEBUGFILE );
+	require_once (SRC_ROOT. "/estimate/cmn/estimateHeaderController.php");
 
+	require_once (SRC_ROOT. "/estimate/cmn/estimateTotalCalculationController.php");
+
+	require_once ( SRC_ROOT . "/estimate/cmn/estimateDB.php");
+	
+	use PhpOffice\PhpSpreadsheet\Reader\Xlsx as XlsxReader;
+
+	$objDB			= new estimateDB();
+	$objAuth		= new clsAuth();
+	$objTemplate	= new clsTemplate();								// テンプレートオブジェクト生成
+
+	$charset = 'EUC-JP';
+
+    // $objMap			= new clsMapping();									// マッピングオブジェクト生成
+    
+	$objReader      = new XlsxReader();
+	
+	$objMaster;
+	$aryProductHeader	= array();	// ワークシート製品データ取得配列
+	$aryMaster			= array();	// 製品マスタデータ取得配列
+	$arySystemRate		= array();	// システムレート配列
+	$aryExcelRate		= array();	// Excelレート配列
+	$aryDiff			= array();	// 差異取得配列
+	$aryBuff			= array();	// 表示用データ取得配列バッファ
+	$strDiff			= "";
+
+	$aryError			= array();	// エラーチェック配列
 
 
-	//echo mb_internal_encoding();
-	//mb_http_output( "EUC-JP" );
-	//echo mb_http_output();
-
-
-
-	// ライブラリ読み込み
-	require (LIB_FILE);
-	require (SRC_ROOT . "estimate/cmn/lib_e.php");
-
-
-	require ( CLS_TABLETEMP_FILE );	// Temporary DB Object
-	require ( LIB_ROOT . "tabletemp/excel2temp.php" );
-
-
-
-	// DB接続
-	$objDB   = new clsDB();
-	$objAuth = new clsAuth();
+	//-------------------------------------------------------------------------
+	// DBオープン
+	//-------------------------------------------------------------------------
+	$objDB->InputEncoding = 'UTF-8';
 	$objDB->open( "", "", "", "" );
 
-	// GETデータ取得
-	/*
-	if ( $_GET )
-	{
-		$aryData = $_GET;
-	}
-	else
-	{
-		$aryData = $_POST;
-	}
-	*/
-	$aryData = $_REQUEST;
+	//-------------------------------------------------------------------------
+	// パラメータ取得
+	//-------------------------------------------------------------------------
+	$aryData	= array();
+	$aryData	= $_REQUEST;
 
-	// 製品コード5桁化に伴って、4桁の見積ファイルがアップロードされた際に
-	// 5桁に拡張してマスタ検索を実施する
-	if (strlen($aryData["strProductCode"]) == 4)
-	{
-		$aryData["strProductCode"] = '0'.$aryData["strProductCode"];
-	}
+	$aryData["CHAR_SET"]			= TMP_CHARSET;					// テンプレート文字コード
+	$aryData["lngLanguageCode"]		= $_COOKIE["lngLanguageCode"];	// 言語コード
 
-		// Temp配列
-		$g_aryTemp	= $aryData;
+    // シート番号取得
+    $sheetName = mb_convert_encoding($aryData['sheetname'], 'UTF-8', 'EUC-JP');
 
-	//fncDebug( 'temp_renew.txt', $aryData, __FILE__, __LINE__);
-
-
-
-	$aryData["lngLanguageCode"] = $_COOKIE["lngLanguageCode"];
-
-	$aryDetail = $aryData["aryDetail"];
-	if ( !is_Array( $aryData ) )
-	{
-		$aryDetail = $aryData["strDetailData"];
-	}
-	unset ( $aryData["aryDetail"] );
-	//echo getArrayTable( $aryDetail[0][1], "TABLE" );exit;
-
-
-	//fncDebug( 'estimate_regist_confirm.txt', $aryData, __FILE__, __LINE__);
-
-	// ---------------------------------------------------------------------------------------------------------------------------------------
-
-	$aryCheck["strSessionID"]			= "null:numenglish(32,32)";
-	$aryCheck["lngFunctionCode"]		= "null:number(" . DEF_FUNCTION_E1 . "," . DEF_FUNCTION_E5 . ")";
-	$aryCheck["lngWorkflowOrderCode"]	= "null:number(0,32767)";
-
-
-	//$aryData["bytInvalidFlag_Error"]     = "visibility:hidden;";
-
-	$lngErrorCount = 0;
-
+	//-------------------------------------------------------------------------
+	// 入力文字列値・セッション・権限チェック
+	//-------------------------------------------------------------------------
+	// 文字列チェック
+	$aryCheck["strSessionID"]	= "null:numenglish(32,32)";
+	$aryResult	= fncAllCheck( $aryData, $aryCheck );
+	fncPutStringCheckError( $aryResult, $objDB );
 
 	// セッション確認
 	$objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
+
+	// ユーザーコード取得
 	$lngUserCode = $objAuth->UserCode;
 
+	
+
 	// 権限確認
-	//////////////////////////////////////////////////////////////////////////
-	// 見積登録の場合
-	//////////////////////////////////////////////////////////////////////////
-	if ( $aryData["lngFunctionCode"] == DEF_FUNCTION_E1 && fncCheckAuthority( DEF_FUNCTION_E1, $objAuth ) )
-	{
-		$aryCheck["strProductCode"] = "null:numenglish(1,6)";
-	}
-
-	//////////////////////////////////////////////////////////////////////////
-	// 見積修正の場合
-	//////////////////////////////////////////////////////////////////////////
-	elseif ( $aryData["lngFunctionCode"] == DEF_FUNCTION_E3 && fncCheckAuthority( DEF_FUNCTION_E3, $objAuth ) )
-	{
-		$aryCheck["lngEstimateNo"] = "null:number(1,2147483647)";
-
-	}
-
-	//////////////////////////////////////////////////////////////////////////
-	// 見積削除の場合
-	//////////////////////////////////////////////////////////////////////////
-	elseif ( $aryData["lngFunctionCode"] == DEF_FUNCTION_E4 && fncCheckAuthority( DEF_FUNCTION_E4, $objAuth ) )
-	{
-		$aryCheck["lngEstimateNo"] = "null:number(1,2147483647)";
-		unset ( $aryCheck["lngWorkflowOrderCode"] );
-	}
-
-	//////////////////////////////////////////////////////////////////////////
-	// それ以外(権限ERROR)
-	//////////////////////////////////////////////////////////////////////////
-	else
+	if( !fncCheckAuthority( DEF_FUNCTION_UP0, $objAuth ) )
 	{
 		fncOutputError ( 9052, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 	}
 
+	// 権限グループコードの取得
+	$lngAuthorityGroupCode = fncGetUserAuthorityGroupCode( $lngUserCode, $aryData["strSessionID"], $objDB );
+    
+    // ファイル情報取得
+    $file = array (
+        'exc_name' => $aryData["exc_name"],
+        'exc_type' => $aryData["exc_type"],
+        'exc_tmp_name' => $aryData["exc_tmp_name"],
+        'exc_error' => $aryData["exc_error"],
+        'exc_size' => $aryData["exc_size"]
+    );
 
-	// 文字列チェック
-	$aryCheckResult = fncAllCheck( $aryData, $aryCheck );
-	//fncPutStringCheckError( $aryCheckResult, $objDB );
+    // ブックのファイル形式チェック
+	$fileCheckResult = estimateSheetController::checkFileFormat($file);
 
-	//fncDebug( 'estimate_regist_confirm.txt', $aryCheckResult, __FILE__, __LINE__);
+	// DBから標準割合を取得
+	$standardRateMaster = $objDB->getEstimateStandardRate();
+    
+	// ブックのロード
+	if ($fileCheckResult) {
 
+		$spreadSheet = $objReader->load($fileCheckResult);
 
+		// 必要な定数を取得する
+		$nameList = workSheetConst::getAllNameList();	
+		$rowCheckNameList = workSheetConst::DETAIL_HEADER_CELL_NAME_LIST;
+		$targetAreaList = workSheetConst::TARGET_AREA_DISPLAY_NAME_LIST;
 
-	// ファイルテンポラリ処理以外の場合
-	if( !$g_aryTemp["bytTemporaryFlg"] )
-	{
-		//////////////////////////////////////////////////////////////////////////
-		// 登録の場合の既にデータがあるかチェック
-		//////////////////////////////////////////////////////////////////////////
-		if ( $aryData["lngFunctionCode"] == DEF_FUNCTION_E1 )
-		{
-			if ( $aryData["strProductCode"] == "" )
-			{
-				fncOutputError ( 1505, DEF_WARNING, "見積原価書を表示できません。", TRUE, "", $objDB );
+		// phpSpreadSheetオブジェクトからシートの情報を取得
+		$allSheetInfo = estimateSheetController::getSheetInfo($spreadSheet, $nameList, $rowCheckNameList);
+
+		$sheetInfo = $allSheetInfo[$sheetName];
+
+		$objSheet = null;
+		$outputMessage = array(); // 出力メッセージ
+
+		$difference = array();
+		$hiddenList = array();
+
+		// シートが表示無効でない場合はワークシート処理オブジェクトのインスタンス生成
+		$objSheet = new estimateSheetController();
+
+		// オブジェクトにデータをセットする
+		$objSheet->dataInitialize($sheetInfo);
+
+		// phpSpreadSheetで生成したシートオブジェクトをグローバル参照用にセットする
+		$sheet = $sheetInfo['sheet'];
+		$cellAddressList = $sheetInfo['cellAddress'];
+
+		// ヘッダ部のバリデーションを行う
+		$objHeader = new estimateHeaderController();
+		$objHeader->initialize($sheetInfo['cellAddress'], $lngUserCode);
+		$message = $objHeader->validate();
+
+		if ($message) {
+			$outputMessage[] = $message;
+		}
+
+		// 対象エリアの範囲を取得する
+		$targetAreaRows = $objSheet->outputTargetAreaRows();
+		$startRowOfDetail = $targetAreaRows[DEF_AREA_PRODUCT_SALES]['firstRow']; // 明細の開始行
+		$endRowOfDetail = $targetAreaRows[DEF_AREA_PARTS_COST_ORDER]['lastRow']; // 明細の終了行
+
+		// 輸入費用と関税の行を保存するリストを生成する（クラス内からグローバル変数として使用）
+		$importCostRow = array();
+		$tariffRow = array();
+		
+		$tariffRowList = array();
+		$importCostRowList = array();
+
+		$tariff = 0;
+		$importCost = 0;
+
+		for ($row = $startRowOfDetail; $row <= $endRowOfDetail; ++$row) {
+
+			$objRow = null;
+			// 現在の行がどの対象エリアに属するか判定を行う
+			$rowAttribute = $objSheet->checkAttributeRow($row);
+			
+			if ($rowAttribute) {
+				// 対象エリアによってインスタンス作成時のクラスを指定する
+				switch ($rowAttribute) {
+					case DEF_AREA_PRODUCT_SALES:
+						$objRow = new productSalesRowController();
+						break;
+					case DEF_AREA_FIXED_COST_SALES:
+						$objRow = new fixedCostSalesRowController();
+						break;
+					case DEF_AREA_FIXED_COST_ORDER:
+						$objRow = new fixedCostOrderRowController();
+						break;
+					case DEF_AREA_PARTS_COST_ORDER:
+						$objRow = new partsCostOrderRowController();
+						break;
+					default:
+						break;
+				}
+				
+				if ($objRow) {
+					$objRow->initialize($sheetInfo['cellAddress'], $row);
+					// 行のチェック、再計算を行う
+					$objRow->workSheetRegistCheck();
+
+					$divisionSubjectCode = $objRow->divisionSubjectCode;
+					$classItemCode = $objRow->classItemCode;
+
+					switch ($divisionSubjectCode) {
+						case DEF_STOCK_SUBJECT_CODE_IMPORT_PARTS_COST:
+						case DEF_STOCK_SUBJECT_CODE_OVERSEA_MOLD_DEPRECIATION:
+						    $tariff = $tariff + $objRow->calculatedSubtotalJP;
+					}
+					// 輸入費用、関税については個別処理を行う為、対象の行番号を配列に格納する
+					if ($objRow->invalidFlag === false) {
+						if ($objRow->divisionSubjectCode === DEF_STOCK_SUBJECT_CODE_CHARGE) {
+							if ($objRow->classItemCode === DEF_STOCK_ITEM_CODE_IMPORT_COST) {
+								$importCostRowList[] = $row;
+							} else if ($objRow->classItemCode === DEF_STOCK_ITEM_CODE_TARIFF) {
+								$tariffRowList[] = $row;
+							}
+						}
+					}
+
+					$objRowList[$row] = $objRow;
+					if ($objRow->invalidFlag === true) {
+						$hiddenList[$row] = true;
+					}
+				}
+			}
+		}
+
+		// 輸入費用計算用変数に関税計算用変数を代入
+		$importCost = $tariff;
+
+		// 関税の処理
+		foreach ($tariffRowList as $rowIndex) {
+			$tariffObjRow = &$objRowList[$rowIndex];
+			$tariffObjRow->chargeCalculate($tariff);
+
+			if ($tariffObjRow->invalidFlag === false) {
+				// 単価出力
+			    $price = $tariffObjRow->price;
+				$priceColumn = $tariffObjRow->columnNumberList['price'];
+				$priceCell =  $priceColumn. $rowIndex;
+
+				$subtotalColumn = $tariffObjRow->columnNumberList['subtotal'];
+				$subtotalCell =  $subtotalColumn. $rowIndex;
+
+				$deliveryColumn = $tariffObjRow->columnNumberList['delivery'];
+				$deliveryCell = $deliveryColumn. $rowIndex;
+
+				// 計算後の単価、小計をsheetオブジェクトに挿入
+				$objSheet->sheet->getCell($priceCell)->setValue($price);
+				$objSheet->sheet->getCell($subtotalCell)->setValue($tariffObjRow->calculatedSubtotalJP);
+
+				$objSheet->sheet->getCell($deliveryCell)->setValue(null);
+
+				// 輸入費用計算用変数に計算結果を加算
+				$importCost += $tariffObjRow->calculatedSubtotalJP;
+			}
+		}
+
+		// 輸入費用の処理
+		foreach ($importCostRowList as $rowIndex) {
+			$importCostObjRow = &$objRowList[$rowIndex];
+			$importCostObjRow->chargeCalculate($importCost);
+
+			if ($importCostObjRow->invalidFlag === false) {
+				// 単価出力
+				$price = $importCostObjRow->price;
+
+				$priceColumn =  $importCostObjRow->columnNumberList['price'];
+				$priceCell =  $priceColumn. $rowIndex;
+
+				$subtotalColumn = $importCostObjRow->columnNumberList['subtotal'];
+				$subtotalCell =  $subtotalColumn. $rowIndex;
+
+				$deliveryColumn = $importCostObjRow->columnNumberList['delivery'];
+				$deliveryCell = $deliveryColumn. $rowIndex;
+
+				// 計算後の単価をsheetオブジェクトに挿入
+				$objSheet->sheet->getCell($priceCell)->setValue($price);
+				$objSheet->sheet->getCell($subtotalCell)->setValue($importCostObjRow->calculatedSubtotalJP);
+
+				$objSheet->sheet->getCell($deliveryCell)->setValue(null);
+			}
+		}
+
+		// 標準割合のチェック
+		$standardRateCell = $cellAddressList[workSheetConst::STANDARD_RATE];
+		$standardRate = $objSheet->sheet->getCell($standardRateCell)->getCalculatedValue();
+		if ($standardRateMaster != $standardRate) {
+			$companyLocalRate = $standardRateMaster ? number_format(($standardRateMaster * 100), 2, '.', ''). "%" : '-';
+			$sheetRate = $standardRate ? number_format(($standardRate * 100), 2, '.', ''). "%" : '-';
+			$difference[] = array(
+				'delivery' => '-',
+				'monetary' => '標準割合',
+				'temporaryRate' => $companyLocalRate,
+				'sheetRate' => $sheetRate
+			);
+		}
+
+		// 行オブジェクトを基にした処理
+		foreach ($objRowList as $row => $objRow) {
+			$columnList = $objRow->columnNumberList;
+			
+			// メッセージコードの取得
+			$messageOfConversionRate = $objRow->messageCode['conversionRate'];
+			$messageOfSubtotal = $objRow->messageCode['subtotal'];
+
+			// ブックの適用レートがDBの通貨レートと異なる場合、またはブックの小計が計算結果と異なる場合
+			if ($messageOfConversionRate === 9206 || $messageOfSubtotal === 9205) {
+			// ブックの適用レートがDBの通貨レートと異なる場合は差分表のデータを作成する
+				if ($messageOfConversionRate === 9206) {
+					// ブックオブジェクトの通貨レートの置換
+					$column = $columnList['conversionRate'];
+					$cellAddress = $column.$row;
+					$acquiredRate = $objRow->acquiredRate;
+					$objSheet->sheet->getCell($cellAddress)->setValue($acquiredRate);
+					
+				}
+
+				// ブックオブジェクトの小計の置換
+				$column = $columnList['subtotal'];
+				$cellAddress = $column.$row;
+				$calculatedSubtotalJP = $objRow->calculatedSubtotalJP;
+
+				$objSheet->sheet->getCell($cellAddress)->setValue($calculatedSubtotalJP);
+			}
+		}
+
+		// バリデーションでエラーが発生した場合はエラーメッセージを表示する
+		if ( $outputMessage ) {
+			$strMessage = '';
+			foreach ($outputMessage as $messageList) {
+				foreach ($messageList as $message) {
+					if (!$strMessage) {
+						$strMessage = "<div>". $message. "</div>";
+					} else {
+						$strMessage .= "<br>";
+						$strMessage .= "<div>". $message. "</div>";
+					}
+				}			
 			}
 
-			list ( $lngResultID, $lngResultNum ) = fncQuery( "SELECT * FROM m_Estimate WHERE strProductCode = '" . $aryData["strProductCode"] . "'", $objDB );
+			// [lngLanguageCode]書き出し
+			$aryHtml["lngLanguageCode"] = $aryData["lngLanguageCode"];
 
-			if ( $lngResultNum > 0 )
-			{
-				$objDB->freeResult( $lngResultID );
-				fncOutputError ( 1501, DEF_WARNING, "既に見積原価の登録のある製品です。", TRUE, "", $objDB );
-			}
-		}
-	}
+			// [strErrorMessage]書き出し
+			$aryHtml["strErrorMessage"] = mb_convert_encoding($strMessage, 'EUC-JP', 'UTF-8');
 
-
-	//////////////////////////////////////////////////////////////////////////
-	// 削除の場合、現状の見積原価データ取得
-	//////////////////////////////////////////////////////////////////////////
-	if ( $aryData["lngFunctionCode"] == DEF_FUNCTION_E4 )
-	{
-		//-------------------------------------------------------------------------
-		// ■「製品」にログインユーザーが属しているかチェック
-		//-------------------------------------------------------------------------
-		$strFncFlag = "ES";
-		$blnCheck = fncCheckInChargeProduct( $aryData["lngEstimateNo"], $lngUserCode, $strFncFlag, $objDB );
-
-		// ユーザーが対象製品に属していない場合
-		if( !$blnCheck )
-		{
-			fncOutputError( 9060, DEF_WARNING, "", TRUE, "", $objDB );
-		}
-
-
-
-		// 通貨レート配列生成
-		$aryRate = fncGetMonetaryRate( $objDB );
-		$aryRate[DEF_MONETARY_YEN] = 1;
-
-		// 見積原価HTML出力データ取得
-		$aryEstimateData = fncGetEstimate( $aryData["lngEstimateNo"], $objDB );
-		$aryDetail = fncGetEstimateDetail( $aryData["lngEstimateNo"], $aryRate, $objDB );
-
-
-		// コメント（バッファ）取得
-		$strBuffRemark	= $aryEstimateData["strRemark"];
-
-
-	//fncDebug( 'es_delete.txt', $aryEstimateData, __FILE__, __LINE__);
-
-		list ( $aryEstimateDetail, $aryCalculated, $aryHiddenString ) = fncGetEstimateDetailHtml( $aryDetail, "estimate/regist/plan_detail.tmpl", $objDB );
-
-
-		// 計算結果を見積原価配列に組み込む
-		$aryEstimateData = array_merge ( $aryEstimateData, $aryCalculated );
-
-
-		unset ( $aryDetail );
-		unset ( $aryCalculated );
-
-		// (ログインユーザーが入力したものかつ仮保存状態)以外のもの、
-		// または、申請中のものは、修正不可としてエラー出力
-		if ( !( ( $aryEstimateData["bytDecisionFlag"] == "f" && $aryEstimateData["lngInputUserCode"] == $objAuth->UserCode ) || $aryEstimateData["lngEstimateStatusCode"] != DEF_ESTIMATE_APPLICATE ) )
-		{
-			fncOutputError ( 1503, DEF_WARNING, "", TRUE, "", $objDB );
-		}
-
-
-
-		// テンポラリ処理の場合
-		if( $aryEstimateData["blnTempFlag"] )
-		{
-			// 標準割合取得
-			$aryEstimateData["curStandardRate"] = fncGetEstimateDefault( $objDB );
-
-			// 社内USドルレート取得
-			$aryEstimateData["curConversionRate"] = fncGetUSConversionRate( $aryEstimateData["dtmInsertDate"], $objDB );
-
-			// Excel標準割合取得
-	//		$aryEstimateData["curStandardRate"]		= $aryEstimateData["curStandardRate"];
-			// Excel社内USドルレート取得
-	//		$aryEstimateData["curConversionRate"]	= $aryEstimateData["curConversionRate"];
-		}
-		// 通常
-		else
-		{
-			// 標準割合取得
-			$aryEstimateData["curStandardRate"] = fncGetEstimateDefault( $objDB );
-
-			// 社内USドルレート取得
-			$aryEstimateData["curConversionRate"] = fncGetUSConversionRate( $aryEstimateData["dtmInsertDate"], $objDB );
-		}
-
-
-		// 計算結果を取得
-		$aryEstimateData = fncGetEstimateCalculate( $aryEstimateData );
-
-	//fncDebug( 'es_delete.txt', $aryEstimateData, __FILE__, __LINE__);
-
-
-	}
-	// --------------------------------------------------------------------------------------------------------------------------------------------------
-	// 削除以外でエラーが無ければデータ取得
-	// --------------------------------------------------------------------------------------------------------------------------------------------------
-	elseif ( $lngErrorCount < 1 )
-	{
-
-
-		// 修正の場合、修正権限チェック
-		if ( $aryData["lngFunctionCode"] == DEF_FUNCTION_E3 )
-		{
-			$aryEstimateData = fncGetEstimate( $aryData["lngEstimateNo"], $objDB );
-
-			// (ログインユーザーが入力したものかつ仮保存状態)以外のもの、
-			// または、申請中のものは、修正不可としてエラー出力
-
-
-			// コメント（バッファ）取得
-			$strBuffRemark	= $aryEstimateData["strRemark"];
-
-
-	/*
-			if ( !( ( $aryEstimateData["bytDecisionFlag"] == "f" && $aryEstimateData["lngInputUserCode"] == $objAuth->UserCode ) || $aryEstimateData["lngEstimateStatusCode"] != DEF_ESTIMATE_APPLICATE ) )
-			{
-				fncOutputError ( 1503, DEF_WARNING, "", TRUE, "", $objDB );
-			}
-			unset ( $aryEstimateData );
-	*/
-		}
-
-
-//fncDebug( 'es_renew.txt', $aryEstimateData, __FILE__, __LINE__);
-
-
-
-		/*-----------------------------------------------------------------------*/
-		// 製品情報取得
-		$aryEstimateData = fncGetProduct( $aryData["strProductCode"], $objDB, $lngUserCode );
-
-
-fncDebug( 'estimate_regist_confirm_03.txt', $aryEstimateData, __FILE__, __LINE__);
-
-
-
-//fncDebug( 'temp_renew.txt', $aryEstimateData, __FILE__, __LINE__);
-
-
-		// 登録、修正時の確認画面では作成日は実行日とする
-		$aryEstimateData["dtmInsertDate"]	= date("Y/m/d");
-
-
-		// テンポラリ処理の場合
-		if( $aryEstimateData["blnTempFlag"] )
-		{
-			// 標準割合取得
-			$aryEstimateData["curStandardRate"]	= fncGetEstimateDefault( $objDB );
-
-			// 社内USドルレート取得
-			$aryEstimateData["curConversionRate"]	= fncGetUSConversionRate( $aryEstimateData["dtmInsertDate"], $objDB );
-
-			// Excel標準割合取得
-	//		$aryEstimateData["curStandardRate"]		= $aryEstimateData["curStandardRate"];
-			// Excel社内USドルレート取得
-	//		$aryEstimateData["curConversionRate"]	= $aryEstimateData["curConversionRate"];
-		}
-		// ファイルテンポラリ処理の場合
-		else if( $g_aryTemp["bytTemporaryFlg"] )
-		{
-			// コメント（バッファ）取得
-			$strBuffRemark	= $aryEstimateData["strRemark"];
-
-
-			// 標準割合取得
-			$aryEstimateData["curStandardRate"]	= fncGetEstimateDefault( $objDB );
-
-			// 社内USドルレート取得
-			$aryEstimateData["curConversionRate"]	= fncGetUSConversionRate( $aryEstimateData["dtmInsertDate"], $objDB );
-
-			// Excel標準割合取得
-	//		$aryEstimateData["curStandardRate"]		= $g_aryTemp["curStandardRate"];
-			// Excel社内USドルレート取得
-	//		$aryEstimateData["curConversionRate"]	= $g_aryTemp["curConversionRate"];
-		}
-		// 通常
-		else
-		{
-			// 標準割合取得
-			$aryEstimateData["curStandardRate"]	= fncGetEstimateDefault( $objDB );
-
-			// 社内USドルレート取得
-			$aryEstimateData["curConversionRate"]	= fncGetUSConversionRate( $aryEstimateData["dtmInsertDate"], $objDB );
-		}
-
-fncDebug( 'estimate_regist_confirm_03.1.txt', $aryDetail, __FILE__, __LINE__);
-
-
-
-
-
-	//	// 登録、修正時の確認画面では作成日は実行日とする
-	//	$aryEstimateData["dtmInsertDate"]     = date("Y/m/d");
-
-		// 見積原価計算明細HTML出力文字列取得
-		list ( $aryEstimateDetail, $aryCalculated, $aryHiddenString ) = fncGetEstimateDetailHtml( $aryDetail, "estimate/regist/plan_detail.tmpl", $objDB );
-
-		// 計算結果を見積原価配列に組み込む
-		$aryEstimateData = array_merge ( $aryEstimateData, $aryCalculated );
-
-//fncDebug( 'es_temp.txt', $aryHiddenString, __FILE__, __LINE__);
-
-//		unset ( $aryDetail );
-		unset ( $aryCalculated );
-
-		// 明細（売上）の生成
-		list($aryEstimateDetailSales, $curFixedCostSales, $aryHiddenStringSales) = fncGetEstimateDetail_Sales_Html( $aryDetail, "estimate/regist/plan_detail_sales.tmpl", $objDB );
-
-
-		$aryEstimateDetail	= array_merge( $aryEstimateDetail, $aryEstimateDetailSales );
-		$aryEstimateData["curFixedCostSales"]	= $curFixedCostSales;	// 1:固定費売上の合計
-		$aryHiddenString	= array_merge( is_array($aryHiddenString)?$aryHiddenString:(array)$aryHiddenString, 	$aryHiddenStringSales );
-
-fncDebug( 'estimate_retist_confirm_aryEstimateData.txt', $aryEstimateData, __FILE__, __LINE__);
-
-		// 計算結果を取得
-		$aryEstimateData = fncGetEstimateCalculate( $aryEstimateData );
-
-//fncDebug( 'es_temp.txt', $aryEstimateData, __FILE__, __LINE__);
-		/*-----------------------------------------------------------------------*/
-	}
-
-
-
-	// エラー項目表示処理
-	list ( $aryData, $bytErrorFlag ) = getArrayErrorVisibility( $aryData, $aryCheckResult, $objDB );
-	$lngErrorCount += $bytErrorFlag;
-
-
-	//////////////////////////////////////////////////////////////////////////
-	// 結果取得、出力処理
-	//////////////////////////////////////////////////////////////////////////
-	// 文字列チェックにエラーがある場合、入力画面に戻る
-
-	//エラーが存在するかつ(確認ボタンによる表示または削除処理)の場合、エラー出力
-	//if( $lngErrorCount > 0 && ( $aryData["lngActionCode"] == "confirm" || $aryData["lngFunctionCode"] == DEF_FUNCTION_E4 ) )
-	if( $lngErrorCount > 0 && ( $aryData["strActionName"] == "confirm" || $aryData["lngFunctionCode"] == DEF_FUNCTION_E4 ) )
-	{
-		fncOutputError ( 1502, DEF_WARNING, "", TRUE, "", $objDB );
-		exit;
-
-
-	}
-	//エラーがあったら
-	elseif( $lngErrorCount > 0 )
-	{
-		//echo getArrayTable( $aryData, "TABLE" );exit;
-		echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=euc-jp\">\n";
-		echo "<form action=\"/estimate/regist/edit.php\" method=\"POST\">\n";
-		echo getArrayTable( fncToHTMLString( $aryData ), "HIDDEN" );
-		echo getArrayTable( fncToHTMLString( $aryEstimateData ), "HIDDEN" );
-		echo getArrayTable( fncToHTMLString( $aryEstimateDetail ), "HIDDEN" );
-		echo "</form>\n";
-		echo "<script language=\"javascript\">document.forms[0].submit();</script>";
-	}
-	//エラーがなかったら
-	else
-	{
-
-//fncDebug( 'estimate_regist_confirm_02.txt', $aryData["strActionName"], __FILE__, __LINE__);
-
-		// 確認ではなかったら、送信・もどるボタン表示
-		if ( $aryData["strActionName"] != "confirm" )
-		{
-			$aryData["bytReturnFlag"] = "true";
-
-			$aryHiddenString[] = getArrayTable( fncToHTMLString( $aryData ), "HIDDEN" );
-
-fncDebug( 'estimate_regist_confirm_04.txt', $aryHiddenString, __FILE__, __LINE__);
-
-
-			$strHiddenString = join( "", $aryHiddenString );
-			unset ( $aryHiddenString );
-
-			/*
-			$aryForm[] = "<form action=\"action.php\" method=POST>\n";
-			$aryForm[] = $strHiddenString;
-			$aryForm[] = "<input type=submit value='実行'>\n";
-			$aryForm[] = "</form>\n";
-			$aryForm[] = "<form action=\"edit.php\" method=POST>\n";
-			$aryForm[] = $strHiddenString;
-			$aryForm[] = "<input type=hidden name=bytReturnFlag value=true>\n";
-			$aryForm[] = "<input type=submit value='もどる'>\n";
-			$aryForm[] = "</form>\n";
-			*/
-
-
-
-
-
-			/*---------------------------------------------------------------------
-				FORM生成
-			---------------------------------------------------------------------*/
-			$aryForm[] = "<form name=frmAction action=\"action.php\" method=POST>\n";
-			$aryForm[] = $strHiddenString;
-
-			// テンポラリ処理
-			if( $aryEstimateData["blnTempFlag"] )
-			{
-				// テンポラリフラグ
-				$aryForm[] = "<input type=\"hidden\" name=\"blnTempFlag\"	value=\"" .$aryEstimateData["blnTempFlag"]. "\" />\n";
-				// コメント
-				$aryForm[] = "<input type=\"hidden\" name=\"strRemark\"	value=\"" .$strBuffRemark. "\" />\n";
-			}
-			// ファイルテンポラリ処理
-			else if( $aryData["bytTemporaryFlg"] )
-			{
-				// テンポラリフラグ
-	//			$aryForm[] = "<input type=\"hidden\" name=\"bytTemporaryFlg\"	value=\"" .$aryData["bytTemporaryFlg"]. "\" />\n";
-				// コメント
-	//			$aryForm[] = "<input type=\"hidden\" name=\"strRemark\"	value=\"" .$strBuffRemark. "\" />\n";
-				// Excel標準割合
-	//			$aryForm[] = "<input type=\"hidden\" name=\"curStandardRate\"	value=\"" .$aryData["curStandardRate"]. "\" />\n";
-				// Excel社内USドルレート
-	//			$aryForm[] = "<input type=\"hidden\" name=\"curConversionRate\"	value=\"" .$aryData["curConversionRate"]. "\" />\n";
-			}
-
-			$aryForm[] = "</form>\n";
-
-			$aryForm[] = "<form name=frmEdit action=\"edit.php\" method=POST>\n";
-			$aryForm[] = $strHiddenString;
-
-			// テンポラリ処理
-			if( $aryEstimateData["blnTempFlag"] )
-			{
-				// テンポラリフラグ
-				$aryForm[] = "<input type=\"hidden\" name=\"blnTempFlag\"	value=\"" .$aryEstimateData["blnTempFlag"]. "\" />\n";
-				// コメント
-				$aryForm[] = "<input type=\"hidden\" name=\"strRemark\"	value=\"" .$strBuffRemark. "\" />\n";
-			}
-			// ファイルテンポラリ処理
-			else if( $aryData["bytTemporaryFlg"] )
-			{
-				// テンポラリフラグ
-	//			$aryForm[] = "<input type=\"hidden\" name=\"bytTemporaryFlg\"	value=\"" .$aryData["bytTemporaryFlg"]. "\" />\n";
-				// コメント
-	//			$aryForm[] = "<input type=\"hidden\" name=\"strRemark\"	value=\"" .$astrBuffRemark. "\" />\n";
-				// Excel標準割合
-	//			$aryForm[] = "<input type=\"hidden\" name=\"curStandardRate\"	value=\"" .$aryData["curStandardRate"]. "\" />\n";
-				// Excel社内USドルレート
-	//			$aryForm[] = "<input type=\"hidden\" name=\"curConversionRate\"	value=\"" .$aryData["curConversionRate"]. "\" />\n";
-			}
-
-			$aryForm[] = "<input type=hidden name=bytReturnFlag value=true>\n";
-			$aryForm[] = "</form>\n";
-
-
-
-
-
-			$aryEstimateData["FORM"] = join ( "", $aryForm );
-			unset ( $aryForm );
-		}
-
-		unset ( $strHiddenString );
-
-		$aryData["lngLanguageCode"] = $_COOKIE["lngLanguageCode"];
-
-		// 削除の場合
-		if ( $aryData["lngFunctionCode"] == DEF_FUNCTION_E4 )
-		{
+			// テンプレート読み込み
 			$objTemplate = new clsTemplate();
-			$objTemplate->getTemplate( "estimate/regist/plan_button_delete.tmpl" );
-
+			$objTemplate->getTemplate( "/result/error/parts.tmpl" );
+			
+			// テンプレート生成
+			$objTemplate->replace( $aryHtml );
 			$objTemplate->complete();
-			$aryData["BUTTON"] = $objTemplate->strTemplate;
-			$aryData["strMessageJs"] = "<script type=\"text/javascript\" language=\"javascript\" src=\"/estimate/regist/confirm_delete_exstr.js\"></script>";
 
-			$aryData["strScrollType"] = "ScrollAuto";
+			// HTML出力
+			echo $objTemplate->strTemplate;
+
+			exit;
 		}
-		// 登録・修正の場合
-		else if ( $aryData["lngFunctionCode"] == DEF_FUNCTION_E1 or $aryData["lngFunctionCode"] == DEF_FUNCTION_E3 )
-		{
-			if ( $aryData["strActionName"] != "confirm" )
-			{
-				$objTemplate = new clsTemplate();
-				$objTemplate->getTemplate( "estimate/regist/plan_button_regist.tmpl" );
 
-				$objTemplate->complete();
-				$aryData["BUTTON"] = $objTemplate->strTemplate;
-				$aryData["strMessageJs"] = "<script type=\"text/javascript\" language=\"javascript\" src=\"/estimate/regist/confirm_exstr.js\"></script>";
+		$objCal = new estimateTotalCalculationController();
+		$objCal->calculateParam($objRowList, $objHeader, $sheetInfo['cellAddress'], $standardRateMaster);
+		$calcData = $objCal->outputParam();
+
+		foreach ($calcData as $cellName => $value) {
+			$cellAddress = $cellAddressList[$cellName];
+			$objSheet->sheet->getCell($cellAddress)->setValue($value);
+		}
+
+		// 非表示リスト（無効リスト）を追加する
+		$objSheet->setHiddenRowList($hiddenList);
+
+		$viewData = $objSheet->makeDataOfSheet();
+
+		$viewData = $objSheet->deleteInvalidRow($viewData);
+
+		$viewDataList[0] = $viewData;
+
+		$ws_num = 0;
+
+		// 表示用データをJSONに変換
+		$json = json_encode($viewDataList, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
+		$json = htmlspecialchars($json, ENT_QUOTES, 'UTF-8');
+
+		// 登録用データの取得
+		// ヘッダ部
+		$headerData = $objHeader->outputRegistData();
+		// 行データ
+		$index = 0;
+		foreach ($objRowList as $objRow) {
+			if ($objRow->invalidFlag === false) {
+				++$index;
+				$rowData = $objRow->outputRegistData();
+				$rowDataList[$index] = $rowData;
 			}
-			else
-			{
-				$aryData["strMessageJs"] = "<script type=\"text/javascript\" language=\"javascript\" src=\"/estimate/regist/detail_exstr.js\"></script>";
-			}
 		}
+		
+		// 登録用データの整形
+		$registData = array(
+			'headerData' => $headerData,
+			'rowDataList' => $rowDataList,
+			'calculatedData' => $calcData
+		);
 
-	/*
-	// 2004.10.05 suzukaze update start
-		if ( $aryData["strActionName"] != "confirm" )
-		{
-			$aryData["strScrollType"] = "ScrollAuto";
-		}
-		else
-		{
-			$aryData["strScrollType"] = "ScrollHidden";
-		}
-	// 2004.10.05 suzukaze update end
-	*/
+		// JSONに変換
+		$registJson = json_encode($registData, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
+		// ダブルクォーテーションを置換する（HTML経由でデータを渡す際に ":ダブルクォーテーション の重複によってデータが渡せないことを防ぐため)
+		$registJson = str_replace('"', '/quot/', $registJson);
 
+		$registJson = htmlspecialchars($registJson, ENT_QUOTES, 'UTF-8');
 
-		// コメント <br /> 付加
-		$aryData["strRemarkDisp"]	= nl2br($strBuffRemark);
+		// POST用データにセット
+		$aryData['registJson'] = $registJson;
 
-	 	// カンマ処理
-		$aryEstimateData	= fncGetCommaNumber( $aryEstimateData );
+		// ExcelワークシートHTML取得
+		$strExcel       .= "<div class=\"sheetHeaderConfirm\" id=\"sheet". $ws_num. "\">";
+		$strExcel       .= "<br>";
+		$strExcel		.= makeHTML::getWorkSheet2HTML($aryData['sheetname'], $ws_num, "confirm", $data); // ヘッダー
+		$strExcel       .= "</div>";
+		$strExcel		.= makeHTML::getGridTable($ws_num); // データ挿入タグ
 
-		$objTemplate = new clsTemplate();
-		$objTemplate->getTemplate( "estimate/regist/plan_base.tmpl" );
+		$css_rowstyle .= '.rowstyle'.$ws_num.' { display:none;}'."\n";
 
-		// 置き換え
-	// 2004.10.05 tomita update start
+		$strExcel = str_replace('_%css_rowstyle%_', $css_rowstyle, $strCSS). $strExcel;
+
+		// 送信用FORMデータ作成
+		$form = makeHTML::getHiddenFileData($file);
+		
+		$form .= makeHTML::getHiddenData($aryData);
+
+		$aryData["WORKSHEET"]	= $select; // ワークシート選択肢
+		$aryData["EXCEL"]		= $strExcel; // index
+		$aryData["TABLEDATA"]	= $json;
+		$aryData["FORM_NAME"]	= FORM_NAME;
+		$aryData["FORM"]	    = $form;
+		$aryData["TEMPORARY"]	= $strTemporary;
+
+		// テンプレート読み込み
+		$objTemplate->getTemplate( "estimate/regist/confirm.tmpl" );
+
+		// テンプレート生成
 		$objTemplate->replace( $aryData );
-	// 2004.10.05 tomita update end
-
-	//echo getArrayTable( $aryData, "TABLE" );exit;
-		$objTemplate->replace( $aryEstimateData );
-		$objTemplate->replace( $aryEstimateDetail );
-
 		$objTemplate->complete();
+
+		// HTML出力
 		echo $objTemplate->strTemplate;
-
-fncDebug( 'estimate_regist_confirm.txt', $objTemplate->strTemplate, __FILE__, __LINE__);
-
-// debug
-//fncDebug( 'es_detial.txt', $aryData, __FILE__, __LINE__);
-//fncDebug( 'es_post.txt', $_REQUEST, __FILE__, __LINE__);
-
+		return;
 	}
 
-
-	unset ( $aryEstimateData );
-	unset ( $aryEstimateDetailData );
-	unset ( $aryData );
-	unset ( $g_aryTemp );
-
-
-	$objDB->close();
-
-
-	return TRUE;
 ?>
-
-

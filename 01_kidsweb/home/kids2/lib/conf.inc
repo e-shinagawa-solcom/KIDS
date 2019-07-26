@@ -35,6 +35,7 @@ define ( "EXECUTE_HOST_NAME_KWG_WEBv2",	"192.168.10.228" );
 define ( "EXECUTE_HOST_NAME_KWG_WEBv1",	"192.168.10.235" );
 define ( "EXECUTE_HOST_NAME_KWG_BACK",	"192.168.10.230" );
 define ( "EXECUTE_HOST_NAME_KWG_DB",	"192.168.1.113" );
+// define ( "EXECUTE_HOST_NAME_KWG_DB",	"127.0.0.1" ); // ローカル確認用
 
 // 実行サーバー名称の取得
 $strExcuteHttpHostName = $_SERVER["HTTP_HOST"];
@@ -137,6 +138,7 @@ switch( $strExcuteHttpHostName )
 		define ( "SEND_MAIL_FLAG", true);
 		// 各ルートパス
 		define ( "PATH_HOME",	"/Users/solcom/Desktop/Git/KIDS/01_kidsweb/home/kids2" );
+		// define ( "PATH_HOME",	"/Users/solcom-ad/Desktop/Git/KIDS/01_kidsweb/home/kids2" ); // ローカル確認用
 		break;
 }
 
@@ -277,6 +279,8 @@ define ( "DEF_AUTHG_GUEST",		130 );	// ゲスト
 // m_Attribute.lngAttributeCode
 define ( "DEF_ATTRIBUTE_HEADOFFICE",	1 );	// 本社
 define ( "DEF_ATTRIBUTE_CLIENT",		2 );	// 顧客
+define ( "DEF_ATTRIBUTE_SUPPLIER",      3 );    // 仕入先
+define ( "DEF_ATTRIBUTE_DELIVERY",      5 );    // 納品場所・倉庫
 
 // m_ReportClass.lngReportClassCode
 define ( "DEF_REPORT_PRODUCT",	1 );	// 商品化企画書
@@ -534,6 +538,43 @@ define ("DEF_PAYCONDITION_TT",		2);		// TT
 // 商品化企画書フォーマットコード
 define ( "DEF_P_FORMAT_CODE",	"2004-12-1" );
 
+// 対象エリアコード
+define ( "DEF_AREA_PRODUCT_SALES",     1);  // 製品売上
+define ( "DEF_AREA_FIXED_COST_SALES",  2);  // 固定費売上
+define ( "DEF_AREA_FIXED_COST_ORDER",  3);  // 固定費
+define ( "DEF_AREA_PARTS_COST_ORDER",  4);  // 部材費
+
+// 通貨レート区分
+define ( "DEF_MONETARY_RATE_CODE_TTM",           1); // TTM
+define ( "DEF_MONETARY_RATE_CODE_COMPANY_LOCAL", 2); // 社内
+
+// // メッセージコード　※メッセージ見直しの為保留
+// define ( "DEF_MESSAGE_CODE_REQUIRED_ERROR",         9001);
+// define ( "DEF_MESSAGE_CODE_FORMAT_ERROR",           9201);
+// define ( "DEF_MESSAGE_CODE_MASTER_CHECK_ERROR",     9202);
+// define ( "DEF_MESSAGE_CODE_RATE_UNCAUGHT_WARNING",  9203);
+// define ( "DEF_MESSAGE_CODE_SUBTOTAL_CALC_ERROR",    9204);
+// define ( "DEF_MESSAGE_CODE_SUBTOTAL_CALC_DIFFER",   9205);
+// define ( "DEF_MESSAGE_CODE_RATE_DIFFER",            9206);
+
+// 仕入区分マスタコード
+define ("DEF_STOCK_CLASS_CODE_PARTS",      1); // 材料費
+define ("DEF_STOCK_CLASS_CODE_PRODUCTION", 2); // 製造費用
+define ("DEF_STOCK_CLASS_CODE_TEST",       3); // テスト費用
+
+// 仕入科目マスタコード
+define ("DEF_STOCK_SUBJECT_CODE_OVERSEA_MANUFACTURE",       420); // 外注加工費
+define ("DEF_STOCK_SUBJECT_CODE_MOLD_DEPRECIATION",         431); // 金型償却高
+define ("DEF_STOCK_SUBJECT_CODE_OVERSEA_MOLD_DEPRECIATION", 433); // 金型海外償却
+define ("DEF_STOCK_SUBJECT_CODE_MATERIAL_PARTS_COST",       401); // 材料パーツ仕入高
+define ("DEF_STOCK_SUBJECT_CODE_IMPORT_PARTS_COST",         402); // 輸入パーツ仕入高
+define ("DEF_STOCK_SUBJECT_CODE_CHARGE",                   1224); // チャージ
+define ("DEF_STOCK_SUBJECT_CODE_EXPENSE" ,                 1230); // 経費
+define ("DEF_STOCK_SUBJECT_CODE_MATERIAL_TOOLS_COST",       403); // 材料ツール仕入高
+
+// 仕入部品マスタコード
+define ("DEF_STOCK_ITEM_CODE_IMPORT_COST",  2); // 輸入費用
+define ("DEF_STOCK_ITEM_CODE_TARIFF",       3); // 関税
 // 帳票テンプレートディレクトリパス
 define ( "REPORT_TMPDIR",	PATH_HOME . "/report_tmp/" );
 // L/C帳票テンプレートファイル

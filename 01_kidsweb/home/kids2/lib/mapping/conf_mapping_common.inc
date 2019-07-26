@@ -10,7 +10,9 @@
 
 	define ( "ENC_CHARSET",		"UTF-8" );			// 処理文字コード
 
-	define ( "APP_EXCEL_TYPE",	"application/vnd.ms-excel" );	// Excelアプリケーションタイプ
+	define ( "APP_EXCEL_TYPE",	"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" );	// Excel(xlsx)アプリケーションタイプ
+    
+	// define ( "APP_EXCEL_TYPE",	"application/vnd.ms-excel" );	// Excelアプリケーションタイプ(xls)
 
 	define ( "TMP_CHARSET",		"utf-8" );			// パース処理テンプレート文字コード
 	define ( "FORM_NAME",		"frmFile" );			// フォーム名称
@@ -27,6 +29,5 @@
 	define ( "DECIMAL_DIGIT_US",	4 );				// USドル小数点桁数
 	define ( "DECIMAL_DIGIT_HKD",	4 );				// HKD小数点桁数
 	define ( "DECIMAL_DIGIT_YEN",	2 );				// 円小数点桁数
-
 
 ?>

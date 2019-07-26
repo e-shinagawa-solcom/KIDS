@@ -1793,13 +1793,18 @@ function fncOutputError ( $lngErrorCode, $lngErrorClass, $aryErrorMessage, $bytO
 
 	$objDB->freeResult( $lngResultID );
 
-
+    
 
 	// メッセージ文字列の置換
 	if (!is_array($aryErrorMessage))
 	{
-
-		$aryErrorMessage = mb_convert_encoding($aryErrorMessage, $objDB->InputEncoding);
+		// 文字エンコーディングを検出する
+		$encodeType = mb_detect_encoding($aryErrorMessage);
+		
+		//　DBととエラー置換文字のエンコーディングが異なる場合はエンコーディングを行う
+		if ($encodeType != $objDB->InputEncoding) {
+			$aryErrorMessage = mb_convert_encoding($aryErrorMessage, $objDB->InputEncoding);
+		}		
 
 		$strExchange = "msg1";
 		$strErrorMessage = preg_replace ( "/_%" . $strExchange . "%_/i", $aryErrorMessage, $strErrorMessage );
@@ -1809,8 +1814,13 @@ function fncOutputError ( $lngErrorCode, $lngErrorClass, $aryErrorMessage, $bytO
 
 		for ( $i = 0; $i < count($aryErrorMessage); $i++ )
 		{
+			// 文字エンコーディングを検出する
+			$encodeType = mb_detect_encoding($aryErrorMessage[$i]);
 
-			$aryErrorMessage[$i] = mb_convert_encoding($aryErrorMessage[$i], $objDB->InputEncoding);
+			//　DBととエラー置換文字のエンコーディングが異なる場合はエンコーディングを行う
+			if ($encodeType != $objDB->InputEncoding) {
+			    $aryErrorMessage[$i] = mb_convert_encoding($aryErrorMessage[$i], $objDB->InputEncoding);
+			}
 
 			$strExchange = "msg" . (string) ($i + 1);
 			$strErrorMessage = preg_replace ( "/_%" . $strExchange . "%_/i", $aryErrorMessage[$i], $strErrorMessage );

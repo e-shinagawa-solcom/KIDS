@@ -1,38 +1,119 @@
-<table border>
-	<tr>
-		<td>_%strProductCode%_</td>
-		<td>_%strProductName%_</td>
-		<td>_%strInchargeGroup%_</td>
-		<td>_%strInchargeUser%_</td>
-	</tr>
-	<tr>
-		<td>_%strInputUser%_</td>
-		<td>_%dtmCreationDate%_</td>
-		<td>_%dtmDeliveryLimitDate%_</td>
-		<td>_%curProductPrice%_</td>
-	</tr>
-	<tr>
-		<td>_%curRetailPrice%_</td>
-		<td>_%lngCartonQuantity%_</td>
-		<td>_%lngPlanCartonProduction%_</td>
-		<td>_%lngProductionoQuantity%_</td>
-	</tr>
-	<tr>
-		<td>_%curFixedCostEstimate%_</td>
-		<td>_%curFixedCost%_</td>
-		<td>_%curMemberCostEstimate%_</td>
-		<td>_%curMemberCost%_</td>
-	</tr>
-	<tr>
-		<td>_%curManufacturingCost%_</td>
-		<td>_%curAmountOfSales%_</td>
-		<td>_%curTargetProfit%_</td>
-		<td>_%curAchievementRatio%_</td>
-	</tr>
-	<tr>
-		<td>_%curStandardRate%_</td>
-		<td>_%curProfitOnSales%_</td>
-		<td>_%update%_</td>
-		<td>_%delete%_</td>
-	</tr>
-</table>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=_%CHAR_SET%_" />
+
+	<title>Excel Uploader - ワークシート確認画面</title>
+
+	<link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="/estimate/cmn/css/layout.css">
+	<script src="/cmn/jquery/jquery-3.1.0.js"></script>
+	<link rel="stylesheet" href="/cmn/handsontable/css/handsontable.full.min.css"/>
+	<script src="/cmn/handsontable/js/handsontable.full.min.js"></script>
+	<script src="/estimate/regist/js/confirm/function.js"></script>
+
+	<!-- キーバインド -->
+	<script src="/cmn/functions.js"></script>
+
+	<style type="text/css">
+		<!--
+
+			#parse_header
+			{
+				margin		: 0;
+				font-family	: Arial;
+				font-size	: 12px;
+				background	: #ffffff;
+			}
+
+			#excHref
+			{
+				color			: #006699;
+				text-decoration	: underline;
+			}
+
+			#parse_header table			{ border: 1px solid #716f64; border-collapse:collapse; }
+			#parse_header td			{ border: 1px solid #0c0c0c; border-collapse:collapse; font-family:Arial; font-size: 12px; }
+			#parse_header th			{ border: 1px solid #7e7d68; background-color:#efebde; font-family:Arial; font-size: 12px; }
+			#parse_header td.index		{ font-size: 10px; color: #000000; font-weight: bold; }
+			#parse_header td.empty		{ font-size: 10px; color: #000000; font-weight: bold; }
+			#parse_header td.dt_string	{ font-size: 10px; color: #000090; font-weight: bold; }
+			#parse_header td.dt_int		{ font-size: 10px; color: #909000; font-weight: bold; }
+			#parse_header td.dt_float		{ font-size: 10px; color: #007000; font-weight: bold; }
+			#parse_header td.dt_date 		{ font-size: 10px; color: #008080; font-weight: bold; }
+			#parse_header td.dt_hlink		{ font-size: 10px; color: #000090; font-weight: bold;text-decoration: underline; }
+			#parse_header td.dt_unknown	{ font-size: 10px; background-color: #f0d0d0; font-weight: bold; }
+			#parse_header td.empty		{ font-size: 10px; background-color: #f0f0f0; font-weight: bold; }
+			#parse_header .border			{ border: thin solid #666666; }
+
+
+			#parse_header .column
+			{
+				border		: 1px solid #7e7d68;
+				background	: #efebde;
+				font-family	: Arial;
+				font-size	: 12px;
+				font-weight	: bold;
+				text-align	: center;
+			}
+		-->
+	</style>
+
+</head>
+<body id="Backs" oncontextmenu="return false;">
+
+_%DEBUG%_
+
+	<input type="hidden" name="lngLanguageCode"	value="_%lngLanguageCode%_" />
+    
+        _%TEMPORARY%_
+
+	<table class="confirm_header" width="100%">
+		<tr class="title">
+			<td>
+				<span>登録確認</span>
+			</td>
+		</tr>
+        <tr></tr>
+		<tr class="title">
+			<td>
+				<span>下記の内容で登録しますか</span>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<a href="#">
+					<span id="btnClose" onclick="fncWindowClose();">
+						<img class= "window_close button" onmouseover="fncCloseButton( 'onJ' , this );" onmouseout="fncCloseButton( 'offJ' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="/img/type01/estimate/regist/close/close_off_ja_bt.gif">
+					</span>
+				</a>
+				<a href="#">
+					<span id="btnFileProcess" onclick="fncFileProcess();">
+						<img class= "file_process button" onmouseover="fncRegistButton( 'onJ' , this );" onmouseout="fncRegistButton( 'offJ' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="/img/type01/estimate/regist/regist/regist_off_ja_bt.gif">
+					</span>
+			    </a>
+			</td>
+		</tr>
+	</table>
+
+<form method="post" name="formAction" action = "/estimate/regist/result.php">
+	_%FORM%_
+
+<br>
+
+
+_%EXCEL%_
+
+    <script id="script" type="text/javascript" src="/estimate/regist/js/confirm/handsontableRenderer.js" data-param='_%TABLEDATA%_'></script>
+
+	<br /><br />
+</form>
+
+
+	<!-- プリロード画面の非表示 -->
+	<!--
+	<script type="text/javascript" language="javascript">parent.Preload.style.visibility = 'hidden';</script>
+	-->
+
+</body>
+</html>

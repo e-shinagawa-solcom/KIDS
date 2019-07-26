@@ -34,10 +34,9 @@
 	$aryData["lngLanguageCode"]		= $_COOKIE["lngLanguageCode"];	// 言語コード
 	$aryData["style"]				= 'segment';					// or "old"
 	$aryData["lngFunctionCode"]		= DEF_FUNCTION_E1;				// 管理コード（見積原価）
-	$aryData["strActionScriptName"]	= '/upload2/parse/parse.php';	// クエリー実行スクリプトパス
 	$aryData["lngRegistConfirm"]	= 0;							// 確認画面表示フラグ
 
-
+    setcookie("strSessionID", $aryData["strSessionID"], 0, "/");
 	//-------------------------------------------------------------------------
 	// 入力文字列値・セッション・権限チェック
 	//-------------------------------------------------------------------------
@@ -68,37 +67,14 @@
 	$objDB->close();
 	$objDB->freeResult( $lngResultID );
 
-
-
-
-
-	/*-------------------------------------------------------------------------
-		テンポラリファイル作成
-	-------------------------------------------------------------------------*/
-	if( $_FILES )
-	{
-		// テンポラリファイル作成、ファイル名取得
-		$strTmpFileName	= getTempFileName( $_FILES['excel_file']['tmp_name'] );
-
-		// ファイル情報の取得
-		$aryData["exc_name"]			= $_FILES['excel_file']['name'];
-		$aryData["exc_type"]			= $_FILES['excel_file']['type'];
-		$aryData["exc_tmp_name"]		= $strTmpFileName;
-		$aryData["exc_error"]			= $_FILES['excel_file']['error'];
-		$aryData["exc_size"]			= $_FILES['excel_file']['size'];
-
-		$aryData["lngRegistConfirm"]	= 1;	// 確認画面表示フラグ
-	}
-
-
 //fncDebug( 'parse.txt', $_FILES, __FILE__, __LINE__);
-fncDebug( 'parse.txt', fncGetReplacedHtml( "upload2/parts.tmpl", $aryData, $objAuth ), __FILE__, __LINE__);
+fncDebug( 'parse.txt', fncGetReplacedHtmlWithBase("search/base_search.html", "upload2/parts.tmpl", $aryData ,$objAuth ), __FILE__, __LINE__);
 
 	/*-------------------------------------------------------------------------
 		出力
 	-------------------------------------------------------------------------*/
 	// HTML出力
-	echo fncGetReplacedHtml( "upload2/parts.tmpl", $aryData, $objAuth );
+	echo fncGetReplacedHtmlWithBase("search/base_search.html", "upload2/parts.tmpl", $aryData ,$objAuth );
 
 
 	unset( $objDB, $objAuth, $aryData, $strTmpFileName );

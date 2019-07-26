@@ -1,85 +1,56 @@
 <config>
-<header1>
-<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/images.js"></script>
-<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutbase.js"></script>
-<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutcommon.js"></script>
-<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutnavi.js"></script>
-<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/upload2/cmn/images.js"></script>
-</header1>
-
-<header2>
-<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/upload2/initlayout.js"></script>
-</header2>
-
-<header3>
-<script type="text/javascript" language="javascript" src="/upload2/cmn/function.js"></script>
-<script type="text/javascript" language="javascript" src="exstr.js"></script>
-<link rel="stylesheet" type="text/css" media="screen" href="_%strCssName%_">
-<link rel="stylesheet" type="text/css" media="screen" href="_%strErrorCssName%_">
-
-<script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
-</header3>
-
-<bodyonload>
-initLayoutBase(); initLayoutUpload(); initLayoutNavi(); GetlngLanguageCode( _%lngLanguageCode%_ ); fncFileUpload( document.all.lngRegistConfirm.value, window.exc_upload ); Loading();
-</bodyonload>
-</config>
-
-
-
-	<input type="hidden" name="lngRegistConfirm"	value="_%lngRegistConfirm%_" />
-	<input type="hidden" name="lngLanguageCode"		value="_%lngLanguageCode%_" />
-
-
-
-	<p id="Preload">
-		<iframe id="PreloadFrm" name="PreloadWin" frameborder="0" src="/preload/index.html" onload="fncObjectResize( this , 0 , 0 );"></iframe>
-	</p>
-
-
-	<span id="MainTitle"	style="visibility:_%strBaseVisibilityName%_;"></span>
-	<span id="NaviButton"	style="visibility:_%strBaseVisibilityName%_;"></span>
-
-	<p id="Navigations" onmouseout="NavigationOFF( Navigations , NaviButton );">
-		<span id="Navi">
-			<iframe id="NaviIfrm" name="NAVIwin" frameborder="0" scrolling="no" src="/navi/index.php?strSessionID=_%strSessionID%_&strNaviCode=estimate-1111"></iframe>
-		</span>
-	</p>
-
-
-
-	<p id="InputA">
-		<span id="SegABodys"></span>
-		<span id="SegAHeader"></span>
-		<span id="SegABottom"></span>
-
-
-		<div id="uploadSection">
-			<form name="exc_upload" method="post" enctype="multipart/form-data" action="index.php">
-
-				<input type="hidden" name="ActionScriptName"	value="_%strActionScriptName%_" />
-				<input type="hidden" name="strSessionID"		value="_%strSessionID%_" />
-				<input type="hidden" name="lngFunctionCode"		value="_%lngFunctionCode%_" />
-
-				<input type="hidden" name="style"				value="_%style%_" />
-				<input type="hidden" name="exc_name"			value="_%exc_name%_" />
-				<input type="hidden" name="exc_type"			value="_%exc_type%_" />
-				<input type="hidden" name="exc_tmp_name"		value="_%exc_tmp_name%_" />
-				<input type="hidden" name="exc_error"			value="_%exc_error%_" />
-				<input type="hidden" name="exc_size"			value="_%exc_size%_" />
-
-
-
-			<span id="colExcel">Excel</span>
-			<span id="varExcel"><input class="Txt90L" type="file" name="excel_file" />
-			</span>
-			<span id="btnUpload" onclick="fncCheckField(); return false;"></span>
-
+	<header1>
+		<link rel="stylesheet" href="/upload2/cmn/css/layout.css">
+		<link rel="stylesheet" href="/search/cmn/form/css/tabs.css">
+		<link rel="stylesheet" href="/search/cmn/navigate/css/navigate.css">
+		<script src="/search/cmn/form/js/tab-function.js" defer></script>
+		<script src="/layout/type01/upload2/cmn/images.js" defer></script>
+	</header1>
+	
+	<header2>
+		<script src="/layout/type01/upload2/initlayout.js" defer></script>
+	</header2>
+	
+	<header3>
+		<!-- フォームボタン css -->
+		<link rel="stylesheet" href="/search/cmn/css/form-buttons.css">
+		<!-- フォーム ボタン -->
+		<script src="/upload2/cmn/js/function.js" defer></script>
+		<!-- キーバインド -->
+		<script src="/cmn/functions.js"></script>
+	</header3>
+	
+	<bodyonload>
+		initLayoutUpload(); Loading();
+	</bodyonload>
+	</config>
+	
+	<!-- 左サイドバー ナビゲート -->
+	<div class="navigation-loadpoint">
+		<script>
+			$('.navigation-loadpoint').load('/search/cmn/navigate/estimate_navi.html');
+		</script>
+	</div>
+	
+	<!-- 入力フォーム -->
+	<div class="form-box--container">
+		<!-- フォームヘッダ -->
+		<div class="form-box__header">
+			<p class="form-box__header__title">アップロード</p>
+		</div>
+		<!-- フォームコンテンツ -->
+		<div class="form-box">
+			<form name="exc_upload" method="post" enctype="multipart/form-data">
+				<div class="regist-line">
+					<span id="varExcel">
+						<span class="regist-label__text">Excelファイル</span>
+						<input class="Txt90L" type="file" name="excel_file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"/>
+						<span span id="btnUpload">
+							<img class= "upload button" onmouseover="fncUploadButton( 'onJ' , this );" onmouseout="fncUploadButton( 'offJ' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="/img/type01/upload2/upbt_off.gif">
+					    </span>
+					</span>
+				</div>
+				
 			</form>
 		</div>
-
-	</p>
-
-
-
-	<span id="EtoJ" style="visibility:_%strBaseVisibilityName%_;"></span>
+	</div>
