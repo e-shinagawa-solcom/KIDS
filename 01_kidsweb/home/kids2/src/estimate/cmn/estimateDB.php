@@ -296,8 +296,7 @@ class estimateDB extends clsDB {
             $strQuery = "SELECT c.lngsalesdivisioncode, b.lngsalesclasscode FROM m_salesclass a"; 
             $strQuery .= " INNER JOIN m_salesclassdivisonlink b ON a.lngsalesclasscode = b.lngsalesclasscode";
             $strQuery .= " INNER JOIN m_salesdivision c ON b.lngsalesdivisioncode = c.lngsalesdivisioncode";
-            $strQuery .= " INNER JOIN m_pulldown d ON c.lngsalesdivisioncode = d.lngitemcode";
-            $strQuery .= " WHERE d.lngtargetarea = ". $areaCode;
+            $strQuery .= " WHERE b.lngtargetarea = ". $areaCode;
 
             $queryResult = fncQuery($strQuery, $this); // [0]:結果ID [1]:取得行数
 
@@ -322,8 +321,7 @@ class estimateDB extends clsDB {
             $strQuery = "SELECT b.lngstocksubjectcode, b.lngstockclasscode, a.lngstockitemcode FROM m_stockitem a";
             $strQuery .= " INNER JOIN m_stocksubject b ON a.lngstocksubjectcode = b.lngstocksubjectcode";
             $strQuery .= " INNER JOIN m_stockclass c ON b.lngstockclasscode = c.lngstockclasscode";
-            $strQuery .= " INNER JOIN m_pulldown d ON b.lngstocksubjectcode = d.lngitemcode";
-            $strQuery .= " WHERE d.lngtargetarea = " .$areaCode;
+            $strQuery .= " WHERE a.lngtargetarea = " .$areaCode;
 
             $queryResult = fncQuery($strQuery, $this); // [0]:結果ID [1]:取得行数
 
@@ -377,15 +375,38 @@ class estimateDB extends clsDB {
         return $result;
     }
 
-    // ログインユーザーが該当営業部署に所属しているかチェックする
-    public function loginUserAffiliateCheck($loginUserCode, $groupDisplayCode) {
+    // ユーザーコードが該当営業部署に所属しているかチェックする
+    public function userCodeAffiliateCheck($userCode, $groupDisplayCode) {
         if (!$this->isOpen()) {
             return false;
         } else {
             $strQuery  = "SELECT a.strgroupdisplaycode FROM m_group a";
             $strQuery .= " INNER JOIN m_grouprelation b ON b.lnggroupcode = a.lnggroupcode";
             $strQuery .= " INNER JOIN m_user c ON c.lngusercode = b.lngusercode";
-            $strQuery .= " WHERE a.strgroupdisplaycode = '". $groupDisplayCode. "' and b.lngusercode = ". $loginUserCode;
+            $strQuery .= " WHERE a.strgroupdisplaycode = '". $groupDisplayCode. "' and b.lngusercode = ". $userCode;
+            $strQuery .= " AND c.bytinvalidflag = false";
+            
+            $queryResult = fncQuery($strQuery, $this); // [0]:結果ID [1]:取得行数
+            // 検索結果があればtrueを返す
+            if (0 < $queryResult[1]) {
+                $result =  true;
+            } else {
+                $result = false;
+            }
+            $this->freeResult($queryResult[0]);
+            return $result;
+        }        
+    }
+
+    // ユーザー表示コードが該当営業部署に所属しているかチェックする
+    public function userDisplayCodeAffiliateCheck($userDisplayCode, $groupDisplayCode) {
+        if (!$this->isOpen()) {
+            return false;
+        } else {
+            $strQuery  = "SELECT a.strgroupdisplaycode FROM m_group a";
+            $strQuery .= " INNER JOIN m_grouprelation b ON b.lnggroupcode = a.lnggroupcode";
+            $strQuery .= " INNER JOIN m_user c ON c.lngusercode = b.lngusercode";
+            $strQuery .= " WHERE a.strgroupdisplaycode = '". $groupDisplayCode. "' and c.struserdisplaycode = '". $userDisplayCode."'";
             $strQuery .= " AND c.bytinvalidflag = false";
             
             $queryResult = fncQuery($strQuery, $this); // [0]:結果ID [1]:取得行数
@@ -625,7 +646,7 @@ class estimateDB extends clsDB {
 
     /**
     *
-    *	製品コード、リバイスコードに紐付く最新の見積原価明細のデータを取得する
+    *	製品コード、リバイスコードに紐付く最新の製品のデータを取得する
     *
     *	@param string $productCode 製品コード
     *	@param string $reviseCode  リバイスコード
@@ -633,7 +654,7 @@ class estimateDB extends clsDB {
     *	@return array $estimateDetail 見積原価明細
     *	@access public
     */
-    public function getProduct() {
+    public function getProduct($productCode, $reviseCode) {
         if (!$this->isOpen()) {
             return false;
         } else {

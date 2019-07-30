@@ -126,8 +126,8 @@ class estimateSheetController {
         // 対象エリアの開始行と終了行を取得
         $targetAreaRows = $this->targetAreaRows;
 
-        // 対象エリアの名称リストを取得
-        $targetAreaNameList = workSheetConst::TARGET_AREA_DISPLAY_NAME_LIST;
+        // 対象エリア名を取得
+        $targetAreaNameList = workSheetConst::TARGET_AREA_NAME;
 
         foreach ($targetAreaNameList as $areaCode => $areaDisplayName) {
             if ($targetAreaRows[$areaCode]['firstRow'] <= $row && $row <= $targetAreaRows[$areaCode]['lastRow']) {
@@ -1150,10 +1150,43 @@ class estimateSheetController {
 
     // 対象エリアの開始行と終了行をセットする
     protected function setRowRangeOfTargetArea() {
-        $targetAreaList = workSheetConst::TARGET_AREA_DISPLAY_NAME_LIST;
+        $targetAreaList = workSheetConst::TARGET_AREA_NAME;
         foreach($targetAreaList as $areaCode => $areaName) {
-            $rows[$areaCode] = $this->getRowRangeOfTargetArea($areaCode);
+            if ($areaCode !== DEF_AREA_OTHER_COST_ORDER) {
+                $rows[$areaCode] = $this->getRowRangeOfTargetArea($areaCode);
+            }           
         }
+
+        // 部材費エリアの開始行と終了行をセットする
+        $firstRow = $rows[DEF_AREA_PARTS_COST_ORDER]['firstRow'];
+        $lastRow = $rows[DEF_AREA_PARTS_COST_ORDER]['lastRow'];
+
+        // 部材費エリアの仕入科目の列番号を取得する
+        $subjectCellName = workSheetConst::ORDER_ELEMENTS_COST_STOCK_SUBJECT_CODE;
+        $cellAddress = $this->cellAddressList[$subjectCellName];
+        $ret = self::separateRowAndColumn($cellAddress);
+        $column = $ret['column'];
+        
+        // その他費用エリアの開始行と終了行をセットする（部材費の終了行も再セットする）
+        for ($row = $firstRow; $row <= $lastRow; ++$row) {
+            $cell = $column. $row;
+            $backgroundColor = $this->sheet->getStyle($cell)->getFill()->getStartColor()->getRGB();
+            if (isset($color)) {
+                if ($backgroundColor !== $color) {
+                    // 色の変化があった行をその他費用エリアの開始行とする
+                    $rows[DEF_AREA_OTHER_COST_ORDER] = array(
+                        'firstRow' => $row,
+                        'lastRow' => $lastRow
+                    );
+                    // 部材費エリアの終了行を再セットする
+                    $rows[DEF_AREA_PARTS_COST_ORDER]['lastRow'] = $row - 1;
+                    break;
+                }
+            } else {
+                $color = $backgroundColor;
+            }
+        }
+
         $this->targetAreaRows = $rows;
         return true;
     }

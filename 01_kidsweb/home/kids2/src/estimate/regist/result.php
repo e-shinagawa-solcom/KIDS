@@ -34,7 +34,7 @@
 	// POSTデータ取得
 	$aryData = $_POST;
 
-fncDebug( 'estimate_regist_action_data.txt', $aryData["aryDetail"], __FILE__, __LINE__);
+// fncDebug( 'estimate_regist_action_data.txt', $aryData["aryDetail"], __FILE__, __LINE__);
 
 	$aryCheck["strSessionID"] = "null:numenglish(32,32)";
 

@@ -887,11 +887,17 @@ abstract class estimateRowController {
             $acquiredRate = 1;
         } else {
             $conversionRateMaster = self::$conversionRateMaster;
-            foreach ($conversionRateMaster[$monetary] as $data) {
-                // 納品日に対応する通貨レートを取得する（DBから取得したリスト内の検索）
-                if (strtotime($delivery) <= strtotime($data['endDate']) 
-                    && strtotime($data['startDate']) <= strtotime($delivery)) {
-                    $acquiredRate = $data['conversionRate'];
+            if (!$conversionRateMaster[$monetary]) {
+                $acquiredRate = null;
+            } else {
+                foreach ($conversionRateMaster[$monetary] as $data) {
+                    // 納品日に対応する通貨レートを取得する（DBから取得したリスト内の検索）
+                    if (strtotime($delivery) <= strtotime($data['endDate']) 
+                        && strtotime($data['startDate']) <= strtotime($delivery)) {
+                        $acquiredRate = $data['conversionRate'];
+                    } else {
+                        $acquiredRate = null;
+                    }
                 }
             }
         }

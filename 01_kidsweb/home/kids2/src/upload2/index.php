@@ -67,8 +67,8 @@
 	$objDB->close();
 	$objDB->freeResult( $lngResultID );
 
-//fncDebug( 'parse.txt', $_FILES, __FILE__, __LINE__);
-fncDebug( 'parse.txt', fncGetReplacedHtmlWithBase("search/base_search.html", "upload2/parts.tmpl", $aryData ,$objAuth ), __FILE__, __LINE__);
+// fncDebug( 'parse.txt', $_FILES, __FILE__, __LINE__);
+// fncDebug( 'parse.txt', fncGetReplacedHtmlWithBase("search/base_search.html", "upload2/parts.tmpl", $aryData ,$objAuth ), __FILE__, __LINE__);
 
 	/*-------------------------------------------------------------------------
 		╫пно

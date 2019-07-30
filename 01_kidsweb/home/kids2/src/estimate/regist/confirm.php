@@ -21,6 +21,7 @@
 	require_once (SRC_ROOT. "/estimate/cmn/fixedCostSalesRowController.php");
 	require_once (SRC_ROOT. "/estimate/cmn/fixedCostOrderRowController.php");
 	require_once (SRC_ROOT. "/estimate/cmn/partsCostOrderRowController.php");
+	require_once (SRC_ROOT. "/estimate/cmn/otherCostOrderRowController.php");
 
 	require_once (SRC_ROOT. "/estimate/cmn/estimateHeaderController.php");
 
@@ -153,7 +154,7 @@
 		// 対象エリアの範囲を取得する
 		$targetAreaRows = $objSheet->outputTargetAreaRows();
 		$startRowOfDetail = $targetAreaRows[DEF_AREA_PRODUCT_SALES]['firstRow']; // 明細の開始行
-		$endRowOfDetail = $targetAreaRows[DEF_AREA_PARTS_COST_ORDER]['lastRow']; // 明細の終了行
+		$endRowOfDetail = $targetAreaRows[DEF_AREA_OTHER_COST_ORDER]['lastRow']; // 明細の終了行
 
 		// 輸入費用と関税の行を保存するリストを生成する（クラス内からグローバル変数として使用）
 		$importCostRow = array();
@@ -185,6 +186,9 @@
 						break;
 					case DEF_AREA_PARTS_COST_ORDER:
 						$objRow = new partsCostOrderRowController();
+						break;
+					case DEF_AREA_OTHER_COST_ORDER;
+						$objRow = new otherCostOrderRowController();
 						break;
 					default:
 						break;

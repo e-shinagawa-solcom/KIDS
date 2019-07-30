@@ -12,6 +12,9 @@ class estimateRegistData {
     protected $calculatedData;
 
     protected $inputUserCode;
+    protected $inchargeUserCode;
+    protected $developUserCode;
+    protected $groupCode;
     protected $productNo;
     protected $productCode;
     protected $reviseCode;
@@ -43,13 +46,17 @@ class estimateRegistData {
             // DBクラスのセット
             $this->objDB = $objDB;
 
-            // ユーザーコードの取得
-            $userRecord = $this->objDB->getUserRecordForDisplay($this->headerData[workSheetConst::USER_CODE]);
-            $this->userCode = $userRecord->lngusercode;
-
             // グループコードの取得
             $groupRecord = $this->objDB->getGroupRecordForDisplay($this->headerData[workSheetConst::INCHARGE_GROUP_CODE]);
             $this->groupCode = $groupRecord->lnggroupcode;
+
+            // ユーザーコードの取得
+            $inchargeUserRecord = $this->objDB->getUserRecordForDisplay($this->headerData[workSheetConst::INCHARGE_USER_CODE]);
+            $this->inchargeUserCode = $inchargeUserRecord->inchargeUserCode;
+
+            // 開発担当者コードの取得
+            $developUserRecord = $this->objDB->getUserRecordForDisplay($this->headerData[workSheetConst::DEVELOP_USER_CODE]);
+            $this->developUserCode = $developUserRecord->developUserCode;
 
             // 表示会社コードをキーにもつ会社コードの配列取得
             $this->companyCodeList = fncGetMasterValue( "m_company", "strcompanydisplaycode", "lngcompanycode", "Array", "", $this->objDB );
@@ -259,9 +266,9 @@ class estimateRegistData {
             'strproductname' => "'". $this->headerData[workSheetConst::PRODUCT_NAME]. "'",
             'strproductenglishname' => "'". $this->headerData[workSheetConst::PRODUCT_ENGLISH_NAME]. "'",
             'lnginchargegroupcode' => $this->groupCode,
-            'lnginchargeusercode' => $this->userCode,
+            'lnginchargeusercode' => $this->inchargeUserCode,
+            'lngdevelopusercode' => $this->developUserCode,
             'lnginputusercode' => $this->inputUserCode,
-            // 'strcustomerusername' => '',
             'lngcartonquantity' => $this->headerData[workSheetConst::CARTON_QUANTITY],
             'lngproductionquantity' => $this->headerData[workSheetConst::PRODUCTION_QUANTITY],
             // 'curproductprice' => '',
@@ -419,12 +426,11 @@ class estimateRegistData {
             'dtmappropriationdate' => 'NOW()',
             'lngcustomercompanycode' => $this->companyCodeList[$rowData['customerCompany']],
             'lnggroupcode' => $this->groupCode,
-            'lngusercode' => $this->userCode,
+            'lngusercode' => $this->inchargeUserCode,
             'lngreceivestatuscode' => DEF_RECEIVE_PREORDER,
             'lngmonetaryunitcode' => $rowData['monetary'],
             'lngmonetaryratecode' => DEF_MONETARY_RATE_CODE_COMPANY_LOCAL,
             'curconversionrate' => $rowData['acqiredRate'],
-            'strnote' => 'NULL',
             'lnginputusercode' => $this->inputUserCode,
             'bytinvalidflag' => 'false',
             'dtminsertdate' => 'NOW()',
@@ -510,7 +516,7 @@ class estimateRegistData {
             'dtmappropriationdate' => 'NOW()',
             'lngcustomercompanycode' => $this->companyCodeList[$rowData['customerCompany']],
             'lnggroupcode' => $this->groupCode,
-            'lngusercode' => $this->userCode,
+            'lngusercode' => $this->inchargeUserCode,
             'lngorderstatuscode' => DEF_ORDER_TEMPORARY,
             'lngmonetaryunitcode' => $rowData['monetary'],
             'lngmonetaryratecode' => DEF_MONETARY_RATE_CODE_COMPANY_LOCAL,
@@ -518,7 +524,6 @@ class estimateRegistData {
             'lngpayconditioncode' => 'NULL',
             'lngdeliveryplacecode' => 'NULL',
             'dtmexpirationdate' => 'NULL',
-            'strnote' => 'NULL',
             'lnginputusercode' => $this->inputUserCode,
             'bytinvalidflag' => 'false',
             'dtminsertdate' => 'NOW()'

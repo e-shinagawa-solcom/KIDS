@@ -42,13 +42,13 @@ class workSheetConst {
     // 営業部署
     const INCHARGE_GROUP_CODE = 'inchargegroupcode';
     // 担当タイトル
-    const CUSTOMER_USER_NAME_HEADER = 'customerusername_header';
+    const INCHARGE_USER_CODE_HEADER = 'inchargeusercode_header';
     // 担当
-    const CUSTOMER_USER_NAME = 'customerusername';
+    const INCHARGE_USER_CODE = 'inchargeusercode';
     // 担当開発者タイトル
-    const USER_CODE_HEADER = 'usercode_header';
+    const DEVELOP_USER_CODE_HEADER = 'developusercode_header';
     // 担当開発者
-    const USER_CODE = 'usercode';
+    const DEVELOP_USER_CODE = 'developusercode';
     // カートン入り数タイトル
     const CARTON_QUANTITY_HEADER = 'cartonquantity_header';
     // カートン入り数
@@ -283,7 +283,8 @@ class workSheetConst {
         DEF_AREA_PRODUCT_SALES => '製品売上',
         DEF_AREA_FIXED_COST_SALES => '固定費売上',
         DEF_AREA_FIXED_COST_ORDER => '固定費',
-        DEF_AREA_PARTS_COST_ORDER => '部材費'
+        DEF_AREA_PARTS_COST_ORDER => '部材費',
+        DEF_AREA_OTHER_COST_ORDER => 'その他費用'
     ];
 
     // 対象エリアの表示用名称リスト（エラーメッセージ表示用)
@@ -291,7 +292,8 @@ class workSheetConst {
         DEF_AREA_PRODUCT_SALES => '製品受注明細部',
         DEF_AREA_FIXED_COST_SALES => '固定費受注明細部',
         DEF_AREA_FIXED_COST_ORDER => '固定費/償却対象外発注明細部',
-        DEF_AREA_PARTS_COST_ORDER => '部材発注明細部'
+        DEF_AREA_PARTS_COST_ORDER => '部材発注明細部',
+        DEF_AREA_OTHER_COST_ORDER => 'その他明細部',
     ];
 
     // 対象エリアで使用する顧客先、仕入先の分類
@@ -304,7 +306,8 @@ class workSheetConst {
         // 仕入先を使用するエリア
         DEF_ATTRIBUTE_SUPPLIER => array(
             DEF_AREA_FIXED_COST_ORDER => true,
-            DEF_AREA_PARTS_COST_ORDER => true
+            DEF_AREA_PARTS_COST_ORDER => true,
+            DEF_AREA_OTHER_COST_ORDER => true
         )
     ];
 
@@ -414,8 +417,8 @@ class workSheetConst {
         'productEnglishName' => self::PRODUCT_ENGLISH_NAME,
         'retailPrice' =>self::RETAIL_PRICE,
         'inchargeGroupCode' => self::INCHARGE_GROUP_CODE,
-        'customerUserName' => self::CUSTOMER_USER_NAME,
-        'userCode' => self::USER_CODE,
+        'inchargeUserCode' => self::INCHARGE_USER_CODE,
+        'developUserCode' => self::DEVELOP_USER_CODE,
         'cartonQuantity' => self::CARTON_QUANTITY,
         'productionQuantity' => self::PRODUCTION_QUANTITY
     ];
@@ -427,8 +430,8 @@ class workSheetConst {
         'productEnglishName' => self::PRODUCT_ENGLISH_NAME_HEADER,
         'retailPrice' => self::RETAIL_PRICE_HEADER,
         'inchargeGroupCode' => self::INCHARGE_GROUP_CODE_HEADER,
-        'customerUserName' => self::CUSTOMER_USER_NAME_HEADER,
-        'userCode' => self::USER_CODE_HEADER,
+        'inchargeUserCode' => self::INCHARGE_USER_CODE_HEADER,
+        'developUserCode' => self::DEVELOP_USER_CODE_HEADER,
         'cartonQuantity' => self::CARTON_QUANTITY_HEADER,
         'productionQuantity' => self::PRODUCTION_QUANTITY_HEADER
     ];

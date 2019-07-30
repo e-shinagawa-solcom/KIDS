@@ -25,8 +25,8 @@ class estimateHeaderController {
     protected $productEnglishName;
     protected $retailPrice;
     protected $inchargeGroupCode;
-    protected $customerUserName;
-    protected $userCode;
+    protected $inchargeUserCode;
+    protected $developUserCode;
     protected $cartonQuantity;
     protected $productionQuantity;
 
@@ -109,8 +109,8 @@ class estimateHeaderController {
         $this->productEnglishName = $data['productEnglishName'] ? $data['productEnglishName'] : '';
         $this->retailPrice = $data['retailPrice'] ? $data['retailPrice'] : '';
         $this->inchargeGroupCode = $data['inchargeGroupCode'] ? $data['inchargeGroupCode'] : '';
-        $this->customerUserName = $data['customerUserName'] ? $data['customerUserName'] : '';
-        $this->userCode = $data['userCode'] ? $data['userCode'] : '';
+        $this->inchargeUserCode = $data['inchargeUserCode'] ? $data['inchargeUserCode'] : '';
+        $this->developUserCode = $data['developUserCode'] ? $data['developUserCode'] : '';
         $this->cartonQuantity = $data['cartonQuantity'] ? $data['cartonQuantity'] : '';
         $this->productionQuantity = $data['productionQuantity'] ? $data['productionQuantity'] : '';
         return true;
@@ -124,8 +124,8 @@ class estimateHeaderController {
             workSheetConst::PRODUCT_ENGLISH_NAME => $this->productEnglishName,
             workSheetConst::RETAIL_PRICE => $this->retailPrice,
             workSheetConst::INCHARGE_GROUP_CODE => $this->inchargeGroupCodeNumber,
-            workSheetConst::CUSTOMER_USER_NAME => $this->customerUserName,
-            workSheetConst::USER_CODE => $this->userCodeNumber,
+            workSheetConst::INCHARGE_USER_CODE => $this->inchargeUserCodeNumber,
+            workSheetConst::DEVELOP_USER_CODE => $this->developUserCodeNumber,
             workSheetConst::CARTON_QUANTITY => $this->cartonQuantity,
             workSheetConst::PRODUCTION_QUANTITY => $this->productionQuantity,
         );
@@ -140,7 +140,8 @@ class estimateHeaderController {
         $this->validateProductEnglishName(); // 製品名(英語)
         $this->validateRetailPrice(); // 上代
         $this->validateInchargeGroupCode(); // 営業部署
-        $this->validateUserCode(); // 担当者
+        $this->validateInchargeUserCode(); // 担当
+        $this->validateDevelopUserCode(); // 開発担当者
         $this->validateCartonQuantity(); // カートン入り数
         $this->validateProductionQuantity(); // 償却数
         
@@ -149,10 +150,19 @@ class estimateHeaderController {
 
         $loginUserCode = $this->loginUserCode;
         $inchargeGroupCodeNumber = $this->inchargeGroupCodeNumber;
+        $inchargeUserCodeNumber = $this->inchargeUserCodeNumber;
 
         // ログインユーザーが営業部署に所属するかチェックする
         if (!$this->messageCode['inchargeGroupCode']) {
-            $result = $objDB->loginUserAffiliateCheck($loginUserCode, $inchargeGroupCodeNumber);
+            $result = $objDB->userCodeAffiliateCheck($loginUserCode, $inchargeGroupCodeNumber);
+            if (!$result) {
+                $this->messageCode['loginUser'] = 9202;
+            }
+        }
+
+        // 担当者が営業部署に所属するかチェックする
+        if (!$this->messageCode['inchargeGroupCode'] && !$this->messageCode['inchargeUserCode']) {
+            $result = $objDB->userDisplayCodeAffiliateCheck($inchargeUserCodeNumber, $inchargeGroupCodeNumber);
             if (!$result) {
                 $this->messageCode['loginUser'] = 9202;
             }
@@ -168,7 +178,7 @@ class estimateHeaderController {
                 }                
             }
         }
-            
+        
         $messageCodeList = $this->messageCode;
         $headerTitleNameList = $this->headerTitleNameList;
 
@@ -305,29 +315,56 @@ class estimateHeaderController {
         return true;
     }
 
-    // 開発担当者のチェックを行う
-    protected function validateUserCode() {
-        $userCode = $this->userCode;
+    // 担当者のチェックを行う
+    protected function validateInchargeUserCode() {
+        $inchargeUserCode = $this->inchargeUserCode;
         // バリデーション条件
-        if (isset($userCode) && $userCode !=='') {
-            if (preg_match("/\A[0-9]+:.+\z/", $userCode)) {
-                list ($userCodeNumber, $userCodeName) = explode(':', $userCode);
+        if (isset($inchargeUserCode) && $inchargeUserCode !=='') {
+            if (preg_match("/\A[0-9]+:.+\z/", $inchargeUserCode)) {
+                list ($inchargeUserCodeNumber, $inchargeUserCodeName) = explode(':', $inchargeUserCode);
                 global $objDB; // グローバルのデータベースオブジェクト取得
-                $result = $objDB->getUserRecordForDisplay($userCodeNumber);
+                $result = $objDB->getUserRecordForDisplay($inchargeUserCodeNumber);
                 // マスターチェック
                 if (!$result) {
                     // レコードが取得できなかった場合
-                    $this->messageCode['userCode'] = 9202;
+                    $this->messageCode['inchargeUserCode'] = 9202;
                 } else {
-                    $this->userCodeNumber = $userCodeNumber; // 表示上のユーザーコードをセットする
+                    $this->inchargeUserCodeNumber = $inchargeUserCodeNumber; // 表示上のユーザーコードをセットする
                 }
             } else {
                 // 入力形式不正
-                $this->messageCode['userCode'] = 9201;
+                $this->messageCode['inchargeUserCode'] = 9201;
             }
         } else {
             // 必須エラー
-            $this->messageCode['userCode'] = 9001;
+            $this->messageCode['inchargeUserCode'] = 9001;
+        }
+        return true;
+    }
+
+    // 開発担当者のチェックを行う
+    protected function validateDevelopUserCode() {
+        $developUserCode = $this->developUserCode;
+        // バリデーション条件
+        if (isset($developUserCode) && $developUserCode !=='') {
+            if (preg_match("/\A[0-9]+:.+\z/", $developUserCode)) {
+                list ($developUserCodeNumber, $developUserCodeName) = explode(':', $developUserCode);
+                global $objDB; // グローバルのデータベースオブジェクト取得
+                $result = $objDB->getUserRecordForDisplay($developUserCodeNumber);
+                // マスターチェック
+                if (!$result) {
+                    // レコードが取得できなかった場合
+                    $this->messageCode['developUserCode'] = 9202;
+                } else {
+                    $this->developUserCodeNumber = $developUserCodeNumber; // 表示上のユーザーコードをセットする
+                }
+            } else {
+                // 入力形式不正
+                $this->messageCode['developUserCode'] = 9201;
+            }
+        } else {
+            // 必須エラー
+            $this->messageCode['developUserCode'] = 9001;
         }
         return true;
     }
