@@ -52,11 +52,11 @@ class estimateRegistData {
 
             // ユーザーコードの取得
             $inchargeUserRecord = $this->objDB->getUserRecordForDisplay($this->headerData[workSheetConst::INCHARGE_USER_CODE]);
-            $this->inchargeUserCode = $inchargeUserRecord->inchargeUserCode;
+            $this->inchargeUserCode = $inchargeUserRecord->lngusercode;
 
             // 開発担当者コードの取得
             $developUserRecord = $this->objDB->getUserRecordForDisplay($this->headerData[workSheetConst::DEVELOP_USER_CODE]);
-            $this->developUserCode = $developUserRecord->developUserCode;
+            $this->developUserCode = $developUserRecord->lngusercode;
 
             // 表示会社コードをキーにもつ会社コードの配列取得
             $this->companyCodeList = fncGetMasterValue( "m_company", "strcompanydisplaycode", "lngcompanycode", "Array", "", $this->objDB );
