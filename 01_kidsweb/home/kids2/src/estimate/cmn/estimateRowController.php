@@ -360,6 +360,9 @@ abstract class estimateRowController {
 
     // 登録用のデータを出力する
     public function outputRegistData() {
+        if (!isset($this->percentInputFlag)) {
+            $this->percentInputFlag = false;
+        }
         $registData = array(
             'salesOrder' => $this->salesOrder, // 受注または発注
             'delivery' => $this->delivery,
@@ -450,105 +453,8 @@ abstract class estimateRowController {
             if (!$this->importCostFlag && !$this->tariffFlag) {
                 // 単価の桁数再設定と小計の再計算
                 $this->resettingPriceAndSubtotal();
-
-                // 
             }
-            
-
-            // // グローバルにあるデータベースオブジェクトを読み込む
-            // global $objDB;          
-
-
-        //     $areaCode = $this->areaCode;
-
-        //     // 発注明細の時は償却のバリデーション処理
-        //     if ($this->salesOrder === DEF_ATTRIBUTE_SUPPLIER) {
-        //         $this->validatePayoffFlag();
-        //     }
-
-        //     // メッセージコードの取得
-        //     $messageCodeList = $this->messageCode;
-
-        //     // メッセージコードが存在する場合は以下の処理を行う
-        //     if ($messageCodeList) {
-        //         // メッセージ除外リストの生成（行表示の判定に使用した項目についてはエラーメッセージを出力しない）
-        //         $exclusionList =  $this->makeExclusionList();
-
-        //         $prefix = $this->setPrefixOfMessage();
-
-        //         // 対象エリアの名称を取得
-        //         $areaNameList = workSheetConst::TARGET_AREA_NAME;
-        //         mb_convert_variables('UTF-8', 'EUC-JP', $areaNameList);
-        //         $areaDisplayNameList = workSheetConst::TARGET_AREA_DISPLAY_NAME_LIST;
-        //         mb_convert_variables('UTF-8', 'EUC-JP', $areaDisplayNameList);
-
-        //         $areaName = $areaNameList[$areaCode];
-        //         $areaDisplayName = $areaDisplayNameList[$areaCode];
-                
-        //         // エラーデータの出力
-        //         $errorValueList = $this->outputErrorValueList();
-
-        //         $useTableList = $this->setMasterForDetailInputItems($areaCode);
-        //         $tableName = array();
-        //         $tableName = workSheetConst::TABLE_NAME_LIST;
-        //         mb_convert_variables('UTF-8', 'EUC-JP', $tableName);
-
-        //         $columnNameList = $this->columnDisplayNameList;
-        //         $row = $this->row;
-
-        //         $errorMessage = array();
-
-        //         // メッセージに出力する項目をセットする
-        //         foreach ($messageCodeList as $key => $messageCode) {
-        //             $message = '';
-        //             if (!in_array($key, $exclusionList)) {
-        //                 switch ($messageCode) {
-        //                     case 9001:
-        //                         $str = $areaName. mb_convert_encoding("明細 ", 'UTF-8', 'EUC-JP'). $prefix. $columnNameList[$key];
-        //                         break;
-        //                     case 9201:
-        //                         $useTable = $useTableList[$key];
-        //                         $str = array(
-        //                             $areaDisplayName. $prefix,
-        //                             $columnNameList[$key]                         
-        //                         );
-        //                         break;
-        //                     case 9202:
-        //                         $str = array(
-        //                             $prefix,
-        //                             $errorValueList[$key],
-        //                             $tableName[$useTable]                                    
-        //                         );
-        //                         break;
-        //                     case 9208:
-        //                     // 売上分類(仕入科目)と売上区分(仕入部品)の紐付き異常の場合
-        //                         $str = array(
-        //                             $columnNameList['divisionSubject'],
-        //                             $errorValueList['divisionSubject'],
-        //                             $columnNameList['classItem'],
-        //                             $errorValueList['classItem'],                                
-        //                         );
-        //                         break;
-        //                     case 9210:
-        //                     // 仕入科目の仕入区分異常
-        //                         $str = array(
-        //                             $columnNameList['divisionSubject'],
-        //                             $errorValueList['divisionSubject'],
-        //                             $areaName                                 
-        //                         );
-        //                         break;
-        //                     default:
-        //                         break;    
-        //                 }
-        //                 $message = fncOutputError($messageCode, DEF_WARNING, $str, FALSE, '', $objDB);
-        //             }
-        //             if ($message) {
-        //                 $errorMessage[] = $message;
-        //             }
-        //         }
-        //     }
         }
-        // return $errorMessage;
         return;
     }
     
@@ -874,7 +780,7 @@ abstract class estimateRowController {
             'lastRow' => $belowRow -1,
         );
         return $rows;
-    }  
+    }
 
     // 通貨レートマスターから納期に対応する通貨レートを取得する
     protected function getConversionRateForDelivery() {
