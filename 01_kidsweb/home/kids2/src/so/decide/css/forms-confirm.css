@@ -1,0 +1,62 @@
+
+/* 全体背景 */
+.confirm-background
+{
+    background-color: #f1f1f1;
+
+    overflow-y: scroll;
+}
+
+/* タイトル */
+.confirm-title
+{
+    height: 22px;
+
+    color: #ffffff;
+    line-height: 22px;
+    text-align: center;
+
+    background-color: #799797;
+}
+
+/* 閉じる/登録 選択BOX */
+.confirm-box
+{
+    margin: 20px 5px;
+
+    border: 1px solid black;
+}
+
+/* 閉じる/登録 選択BOX div */
+.confirm-box div
+{
+    margin-bottom: 5px;
+}
+
+/* 閉じる/登録 選択BOX ラベル */
+.confirm-box__header
+{
+    color: #ffffff;
+    line-height: 22px;
+    text-align: center;
+
+    background-color: #799797;
+}
+
+/* 閉じる/登録 選択BOX ボタン */
+.confirm-box__buttons
+{
+    text-align: center;
+}
+
+/* データ部 */
+.confirm-data
+{
+    margin: 20px 5px;
+}
+
+/* データ部 セクション */
+.confirm-data__section
+{
+    margin: 15px 0px;
+}

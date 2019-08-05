@@ -34,7 +34,8 @@ define ( "EXECUTE_HOST_NAME_DEV",	"kids.devs.biz" );
 define ( "EXECUTE_HOST_NAME_KWG_WEBv2",	"192.168.10.228" );
 define ( "EXECUTE_HOST_NAME_KWG_WEBv1",	"192.168.10.235" );
 define ( "EXECUTE_HOST_NAME_KWG_BACK",	"192.168.10.230" );
-define ( "EXECUTE_HOST_NAME_KWG_DB",	"192.168.1.113" );
+define ( "EXECUTE_HOST_NAME_KWG_DB",	"192.168.1.82" );
+// define ( "EXECUTE_HOST_NAME_KWG_DB",	"192.168.1.113" );
 // define ( "EXECUTE_HOST_NAME_KWG_DB",	"127.0.0.1" ); // ローカル確認用
 
 // 実行サーバー名称の取得
@@ -307,14 +308,12 @@ define ( "DEF_FUNCTION_P6",	306 );      //  306 商品管理（商品修正）
 define ( "DEF_FUNCTION_P7",	307 );      //  307 商品管理（商品削除）
 
 define ( "DEF_FUNCTION_SO0",	400 );     //  400 受注管理
-define ( "DEF_FUNCTION_SO1",	401 );     //  401 受注管理（受注登録）
-define ( "DEF_FUNCTION_SO2",	402 );     //  402 受注管理（受注検索）
-define ( "DEF_FUNCTION_SO3",	403 );     //  403 受注管理（受注検索　管理モード）
-define ( "DEF_FUNCTION_SO4",	404 );     //  404 受注管理（受注詳細表示）
-define ( "DEF_FUNCTION_SO5",	405 );     //  405 受注管理（受注修正）
-define ( "DEF_FUNCTION_SO6",	406 );     //  406 受注管理（受注削除）
-define ( "DEF_FUNCTION_SO7",	407 );     //  407 受注管理（受注の無効化処理）
-define ( "DEF_FUNCTION_SO8",	408 );     //  408 受注管理（商品マスタダイレクト修正）
+define ( "DEF_FUNCTION_SO1",	401 );     //  401 受注管理（受注検索）
+define ( "DEF_FUNCTION_SO2",	402 );     //  402 受注管理（受注検索　管理モード）
+define ( "DEF_FUNCTION_SO3",	403 );     //  403 受注管理（受注詳細表示）
+define ( "DEF_FUNCTION_SO4",	404 );     //  404 受注管理（受注確定）
+define ( "DEF_FUNCTION_SO5",	405 );     //  405 受注管理（受注再販）
+define ( "DEF_FUNCTION_SO6",	406 );     //  405 受注管理（受注確定取消）
 
 define ( "DEF_FUNCTION_PO0",	500 );     //  500 発注管理
 define ( "DEF_FUNCTION_PO1",	501 );     //  501 発注管理（発注登録）

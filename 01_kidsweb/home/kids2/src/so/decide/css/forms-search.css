@@ -1,0 +1,169 @@
+/* オプションボックス */
+.option-box
+{
+    position: absolute;
+    right: 30px;
+}
+
+.option-box input[type="checkbox"]
+{
+    background-color: #e8f0f1;
+    width: 30px;
+}
+
+/* テキストボックス プレースホルダ */
+input:-ms-input-placeholder {
+    color: #cccccc;
+    text-align: center;
+}
+
+/* 入力フォーム その他 */
+input.note
+{
+    width: 38em;
+}
+
+/* サブミットボタン 非表示　*/
+input[type="submit"]{
+    display: none;
+}
+
+/* テキスト入力 共通 */
+input:focus, textarea:focus
+{
+    background-color: #c7d0cb;
+}
+
+/* テキスト入力 共通 readonlyの場合は背景色を変えない */
+input[readonly]:focus
+{
+    background-color: #ffffff;
+}
+
+/* 検索/表示 全切り替えボタン */
+img.toggle-search
+{
+    margin: 0px 17px 0px 17px;
+}
+
+img.toggle-display
+{
+    margin: 0px 17px 0px 8px;
+}
+
+/* 入力フォーム共通背景枠 右サイドバータブ有り */
+.form-box
+{
+    position: relative;
+    top: 31px;
+    left: 21px;
+
+    width: 680px;
+    height: 280px;
+
+    border-style: solid;
+    border-width: 1px;
+    border-color: #cdcdcd;
+    border-radius: 15px;
+
+    background-color: #d6d0b1;
+}
+/* 入力フォーム ヘッダ */
+.form-box__header
+{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+
+    width: 100%;
+    height: 30px;
+
+    background-color: #6c8cac;
+
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+/* 入力フォーム ヘッダタイトル */
+.form-box__header__title
+{
+    margin: 8px 12px;
+
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 12px;
+}
+
+/* 入力フォーム コンテンツ */
+.form-box__contents
+{
+    margin: 40px 10px 20px;
+
+    height: auto;
+}
+
+/* 入力フォーム 行 */
+.regist-line
+{
+    margin: 1px 3px 4px 0px;
+}
+/* 入力フォーム ラベル */
+.regist-label
+{
+    display: inline-block;
+
+    box-sizing: border-box;
+    padding: 3px 3px 3px 10px;
+
+    border-style: solid;
+    border-width: 1px;
+    border-color: #798787;
+
+    background-color: #e8f0f1;
+}
+
+/* ラベルの子要素を縦中央に揃える */
+.regist-label *,
+.search-label--textonly *
+{
+    vertical-align: middle;
+}
+
+/* 入力フォーム ラベルテキスト */
+.regist-label__text
+{
+    display: inline-block;
+    width: 120px;
+    font-weight: bold;
+    background-color: #e8f0f1;
+}
+
+/* 入力フォーム ラベルテキストのみ */
+.regist-label--text-only
+{
+    display: inline-block;
+    width: 120px;
+    line-height: 18px;
+    font-weight: bold;
+    background-color: #e8f0f1;
+}
+
+/* 入力フォーム */
+.msw-button
+{
+    display: inline;
+    position: relative;;
+
+    width: 18px;
+    height: 18px;
+}
+
+.search
+{
+    padding-left: 10px;
+}
+.clear
+{
+    padding-left: 400px;
+}

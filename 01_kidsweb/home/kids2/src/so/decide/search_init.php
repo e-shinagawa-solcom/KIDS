@@ -2,31 +2,22 @@
 
 // ----------------------------------------------------------------------------
 /**
-*       ¼õÃí´ÉÍı  ¸¡º÷²èÌÌ
+*       å—æ³¨ç®¡ç†  ç¢ºå®šæ¡ä»¶æ¤œç´¢ç”»é¢
 *
+*       å‡¦ç†æ¦‚è¦
+*         ãƒ»ç¢ºå®šå¯¾è±¡æ¤œç´¢ç”»é¢è¡¨ç¤ºå‡¦ç†
 *
-*       @package    K.I.D.S.
-*       @license    http://www.kuwagata.co.jp/
-*       @copyright  KUWAGATA CO., LTD.
-*       @author     K.I.D.S. Groups <info@kids-groups.com>
-*       @access     public
-*       @version    2.00
-*
-*
-*       ½èÍı³µÍ×
-*         ¡¦¸¡º÷²èÌÌÉ½¼¨½èÍı
-*
-*       ¹¹¿·ÍúÎò
+*       æ›´æ–°å±¥æ­´
 *
 */
 // ----------------------------------------------------------------------------
 
 
 
-// ÀßÄê¤ÎÆÉ¤ß¹ş¤ß
+// è¨­å®šã®èª­ã¿è¾¼ã¿
 include_once ( "conf.inc" );
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹ş¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require ( LIB_FILE );
 
 $objDB   = new clsDB();
@@ -34,7 +25,7 @@ $objAuth = new clsAuth();
 $objDB->open( "", "", "", "" );
 
 //////////////////////////////////////////////////////////////////////////
-// POST(°ìÉôGET)¥Ç¡¼¥¿¼èÆÀ
+// POST(ä¸€éƒ¨GET)ãƒ‡ãƒ¼ã‚¿å–å¾—
 //////////////////////////////////////////////////////////////////////////
 if ( $_POST )
 {
@@ -47,28 +38,34 @@ elseif ( $_GET )
 
 setcookie("strSessionID", $aryData["strSessionID"], 0, "/");
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheck["strSessionID"]   = "null:numenglish(32,32)";
 $aryResult = fncAllCheck( $aryData, $aryCheck );
 fncPutStringCheckError( $aryResult, $objDB );
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
-// 402 ¼õÃí´ÉÍı¡Ê¼õÃí¸¡º÷¡Ë
+// 402 å—æ³¨ç®¡ç†ï¼ˆå—æ³¨æ¤œç´¢ï¼‰
 if ( !fncCheckAuthority( DEF_FUNCTION_SO2, $objAuth ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
 
-// ¥Ø¥ë¥×ÂĞ±ş
-$aryData["lngFunctionCode"] = DEF_FUNCTION_SO2;
+// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
+$objTemplate = new clsTemplate();
+$objTemplate->getTemplate( "so/decide/so_search.html" );
+$objTemplate->replace($aryData);
 
-// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹ş¤ß
-echo fncGetReplacedHtmlWithBase("search/base_search.html", "so/search/so_search.tmpl", $aryData ,$objAuth );
+
+// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
+$objTemplate->complete();
+
+// HTMLå‡ºåŠ›
+echo $objTemplate->strTemplate;
+
 
 $objDB->close();
-
 return true;
 
 ?>

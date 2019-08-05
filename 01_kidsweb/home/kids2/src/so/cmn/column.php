@@ -4,14 +4,13 @@
 *
 *	@access public
 *
-*	更新履歴
-*	2004.03.31	検索用の表示タイトルの追加（ワークフロー状態、製品コード類の変更、金型番号の設定）
 *
 */
 
 // 検索用表示タイトル
 
 // 日本語コード
+$arySearchTableTytle["btnDetail"]				= "詳細";
 $arySearchTableTytle["btnDetail"]				= "詳細";
 $arySearchTableTytle["dtmInsertDate"]			= "登録日";
 $arySearchTableTytle["dtmReceiveAppDate"]		= "計上日";
@@ -46,42 +45,6 @@ $arySearchTableTytle["btnDelete"]				= "削除";
 $arySearchTableTytle["btnInvalid"]				= "無効";
 $arySearchTableTytle["lngRevisionNo"]			= "リビジョン番号";
 
-// 英語コード
-$arySearchTableTytleEng["btnDetail"]				= "Detail";
-$arySearchTableTytleEng["dtmInsertDate"]			= "Regist date";
-$arySearchTableTytleEng["dtmReceiveAppDate"]		= "Date";
-$arySearchTableTytleEng["strCustomerReceiveCode"]	= "C order No.";
-$arySearchTableTytleEng["strReceiveCode"]			= "P order No.";
-$arySearchTableTytleEng["lngInputUserCode"]			= "Input person";
-$arySearchTableTytleEng["lngCustomerCode"]			= "Vendor";
-$arySearchTableTytleEng["lngInChargeGroupCode"]		= "Dept";
-$arySearchTableTytleEng["lngInChargeUserCode"]		= "In charge name";
-$arySearchTableTytleEng["lngMonetaryUnitCode"]		= "Currency";
-$arySearchTableTytleEng["lngMonetaryRateCode"]		= "Rate type";
-$arySearchTableTytleEng["curConversionRate"]		= "Rate";
-$arySearchTableTytleEng["lngReceiveStatusCode"]		= "Status";
-$arySearchTableTytleEng["lngWorkFlowStatusCode"]	= "Work flow status";
-$arySearchTableTytleEng["strNote"]					= "Remark";
-$arySearchTableTytleEng["curTotalPrice"]			= "Total";
-$arySearchTableTytleEng["lngRecordNo"]				= "Record No.";
-$arySearchTableTytleEng["strProductCode"]			= "Products code";
-$arySearchTableTytleEng["strProductName"]			= "Products name(ja)";
-$arySearchTableTytleEng["strProductEnglishName"]	= "Products name(en)";
-$arySearchTableTytleEng["lngSalesClassCode"]		= "Goods set";
-$arySearchTableTytleEng["strGoodsCode"]				= "Goods code(Corresp)";
-$arySearchTableTytleEng["dtmDeliveryDate"]			= "Delivery date";
-$arySearchTableTytleEng["curProductPrice"]			= "Price";
-$arySearchTableTytleEng["lngProductUnitCode"]		= "Unit";
-$arySearchTableTytleEng["lngProductQuantity"]		= "Qty";
-$arySearchTableTytleEng["curSubTotalPrice"]			= "Amt Bfr tax";
-$arySearchTableTytleEng["curTotalPrice"]			= "Amt Bfr tax";
-$arySearchTableTytleEng["strDetailNote"]			= "Remark";
-$arySearchTableTytleEng["btnFix"]					= "Fix";
-$arySearchTableTytleEng["btnDelete"]				= "Delete";
-$arySearchTableTytleEng["btnInvalid"]				= "Invalid";
-$arySearchTableTytleEng["lngRevisionNo"]			= "Revision No.";
-
-
 // 日本語コード
 $aryTableTytle["btnDetail"]				= "詳細";
 $aryTableTytle["dtmInsertDate"]			= "登録日";
@@ -114,40 +77,6 @@ $aryTableTytle["btnFix"]				= "修正";
 $aryTableTytle["btnDelete"]				= "削除";
 $aryTableTytle["btnInvalid"]			= "無効";
 $aryTableTytle["lngRevisionNo"]			= "リビジョン番号";
-
-// 英語コード
-$aryTableTytleEng["btnDetail"]				= "Detail";
-$aryTableTytleEng["dtmInsertDate"]			= "Regist date";
-$aryTableTytleEng["dtmReceiveAppDate"]		= "Date";
-$aryTableTytleEng["strCustomerReceiveCode"]	= "C order No.";
-$aryTableTytleEng["strReceiveCode"]			= "P order No.";
-$aryTableTytleEng["lngInputUserCode"]		= "Input person";
-$aryTableTytleEng["lngCustomerCode"]		= "Vendor";
-$aryTableTytleEng["lngInChargeGroupCode"]	= "Dept";
-$aryTableTytleEng["lngInChargeUserCode"]	= "In charge name";
-$aryTableTytleEng["lngMonetaryUnitCode"]	= "Currency";
-$aryTableTytleEng["lngMonetaryRateCode"]	= "Rate type";
-$aryTableTytleEng["curConversionRate"]		= "Rate";
-$aryTableTytleEng["lngReceiveStatusCode"]	= "Status";
-$aryTableTytleEng["lngWorkFlowStatusCode"]	= "Work flow status";
-$aryTableTytleEng["strNote"]				= "Remark";
-$aryTableTytleEng["curTotalPrice"]			= "Total";
-$aryTableTytleEng["lngRecordNo"]			= "Record No.";
-$aryTableTytleEng["strProductCode"]			= "Products code/name";
-$aryTableTytleEng["lngSalesClassCode"]		= "Goods set";
-$aryTableTytleEng["strGoodsCode"]			= "Goods code(Corresp)";
-$aryTableTytleEng["dtmDeliveryDate"]		= "Delivery date";
-$aryTableTytleEng["curProductPrice"]		= "Price";
-$aryTableTytleEng["lngProductUnitCode"]		= "Unit";
-$aryTableTytleEng["lngProductQuantity"]		= "Qty";
-$aryTableTytleEng["curSubTotalPrice"]		= "Amt Bfr tax";
-$aryTableTytleEng["curTotalPrice"]			= "Amt Bfr tax";
-$aryTableTytleEng["strDetailNote"]			= "Remark";
-$aryTableTytleEng["btnFix"]					= "Fix";
-$aryTableTytleEng["btnDelete"]				= "Delete";
-$aryTableTytleEng["btnInvalid"]				= "Invalid";
-$aryTableTytleEng["lngRevisionNo"]			= "Revision No.";
-
 
 // 詳細表示用　表示カラム
 

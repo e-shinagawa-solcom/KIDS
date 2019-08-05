@@ -30,7 +30,7 @@
 *	@return strQuery 	$strQuery 検索用SQL文
 *	@access public
 */
-function fncGetReceiveHeadNoToInfoSQL ( $lngReceiveNo )
+function fncGetReceiveHeadNoToInfoSQL ($lngReceiveNo, $lngreceivestatuscode)
 {
 	// SQL文の作成
 	$aryQuery[] = "SELECT distinct on (r.lngReceiveNo) r.lngReceiveNo as lngReceiveNo, r.lngRevisionNo as lngRevisionNo";
@@ -88,6 +88,9 @@ function fncGetReceiveHeadNoToInfoSQL ( $lngReceiveNo )
 	$aryQuery[] = " LEFT JOIN m_MonetaryRateClass mr ON r.lngMonetaryRateCode = mr.lngMonetaryRateCode";
 
 	$aryQuery[] = " WHERE r.lngReceiveNo = " . $lngReceiveNo . "";
+	if ($lngreceivestatuscode != null) {
+		$aryQuery[] = " and r.lngreceivestatuscode = " . $lngreceivestatuscode ." ";
+	}
 
 	$strQuery = implode( "\n", $aryQuery );
 
@@ -108,17 +111,15 @@ function fncGetReceiveHeadNoToInfoSQL ( $lngReceiveNo )
 *	@return strQuery 	$strQuery 検索用SQL文
 *	@access public
 */
-function fncGetReceiveDetailNoToInfoSQL ( $lngReceiveNo )
+function fncGetReceiveDetailNoToInfoSQL ( $lngReceiveNo)
 {
-// 2004.03.29 suzukaze update start
 	// SQL文の作成
-//	$aryQuery[] = "SELECT distinct on (rd.lngReceiveDetailNo) rd.lngReceiveDetailNo as lngRecordNo, ";
 	$aryQuery[] = "SELECT distinct on (rd.lngSortKey) rd.lngSortKey as lngRecordNo, ";
-// 2004.03.29 suzukaze update end
 	$aryQuery[] = "rd.lngReceiveNo as lngReceiveNo, rd.lngRevisionNo as lngRevisionNo";
-
+	$aryQuery[] = ", rd.lngreceivedetailno";
 	// 製品コード・名称
 	$aryQuery[] = ", rd.strProductCode as strProductCode";
+	$aryQuery[] = ", p.strProductName as strProductName";
 	$aryQuery[] = ", p.strProductName as strProductName";
 	// 売上区分
 	$aryQuery[] = ", rd.lngSalesClassCode as lngSalesClassCode";
@@ -127,11 +128,8 @@ function fncGetReceiveDetailNoToInfoSQL ( $lngReceiveNo )
 	$aryQuery[] = ", p.strGoodsCode as strGoodsCode";
 	// 納期
 	$aryQuery[] = ", rd.dtmDeliveryDate as dtmDeliveryDate";
-// 2004.03.17 suzukaze update start
 	// 単価
 	$aryQuery[] = ", To_char( rd.curProductPrice, '9,999,999,990.9999' )  as curProductPrice";
-//	$aryQuery[] = ", To_char( rd.curProductPrice, '9,999,999,990.99' )  as curProductPrice";
-// 2004.03.17 suzukaze update end
 	// 単位
 	$aryQuery[] = ", rd.lngProductUnitCode as lngProductUnitCode";
 	$aryQuery[] = ", pu.strProductUnitName as strProductUnitName";
@@ -146,12 +144,8 @@ function fncGetReceiveDetailNoToInfoSQL ( $lngReceiveNo )
 	$aryQuery[] = " FROM t_ReceiveDetail rd LEFT JOIN m_Product p USING (strProductCode)";
 	$aryQuery[] = " LEFT JOIN m_SalesClass ss USING (lngSalesClassCode)";
 	$aryQuery[] = " LEFT JOIN m_ProductUnit pu ON rd.lngProductUnitCode = pu.lngProductUnitCode";
-
 	$aryQuery[] = " WHERE rd.lngReceiveNo = " . $lngReceiveNo . " ";
-
-// 2004.03.29 suzukaze update start
 	$aryQuery[] = " ORDER BY rd.lngSortKey ASC ";
-// 2004.03.29 suzukaze update end
 
 	$strQuery = implode( "\n", $aryQuery );
 
