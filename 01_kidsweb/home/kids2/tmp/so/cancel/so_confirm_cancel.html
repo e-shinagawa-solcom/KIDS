@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <!-- 互換表示OFFを強制させる -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    php domパース用メタ要素 コメントアウトしていてもphpのdomElement->loadHTMLで認識される
+    -->
+    <meta charset="euc-jp">
+
+    <title>K.I.D.S.</title>
+    <!-- jQuery -->
+    <script src="/cmn/jquery/jquery-3.1.0.js"></script>
+    <script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
+
+    <!-- スタイル初期化 & 各種コントロールスタイル -->
+    <link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
+
+    <!-- 確認画面共通  CSS -->
+    <link rel="stylesheet" href="/so/cancel/css/forms-confirm.css">
+    <!-- ボタン画像の共通の振る舞い CSS -->
+    <link rel="stylesheet" href="/cmn/css/base/button-behaivior.css">
+
+    <!-- 閉じる/取消 ボタンの挙動 -->
+    <script src="/so/cancel/js/cancel-confirm.js" defer></script>
+</head>
+
+<body class="confirm-background">
+    <div class="confirm-title">
+        確定取消確認
+    </div>
+    <div class="confirm-box">
+        <div class="confirm-box__header">
+            下記の受注を取消します。
+        </div>
+        <div class="confirm-box__buttons">
+            <img class="close button" src="/img/type01/cmn/seg/close_off_ja_bt.gif" alt="close">
+            <img class="cancel button" id="_%lngReceiveNo%_" src="/img/type01/cmn/seg/cancel_off_ja_bt.gif" alt="cancel">
+        </div>
+    </div>
+    <div class="confirm-data">
+        <div class="confirm-data__section">
+            <div class="confirm-data__section__record">
+                <div>受注No.</div>
+                <div>_%strreceivecode%_</div>
+                <div>顧客受注番号</div>
+                <div>_%strcustomerreceivecode%_</div>
+            </div>
+            <div class="confirm-data__section__record">
+                <div>登録日</div>
+                <div>_%dtminsertdate%_</div>
+                <div>入力者</div>
+                <div>[_%lnginputusercode%_]&nbsp;_%strinputusername%_</div>
+            </div>
+            <div class="confirm-data__section__record">
+                <div>製品コード</div>
+                <div>[_%strproductcode%_]</div>
+                <div>売上区分</div>
+                <div>[_%lngsalesclasscode%_]&nbsp;_%strsalesclassname%_</div>
+            </div>
+            <div class="confirm-data__section__record">
+                <div>製品名</div>
+                <div style="width: 80%;">[_%strproductname%_]</div>
+            </div>
+            <div class="confirm-data__section__record">
+                <div>製品名(英語)</div>
+                <div style="width: 80%;">[_%strproductenglishname%_]</div>
+            </div>
+            <div class="confirm-data__section__record">
+                <div>顧客</div>
+                <div>[_%strcustomerdisplaycode%_]&nbsp;_%strcustomerdisplayname%_</div>
+                <div>状態</div>
+                <div>_%strreceivestatusname%_</div>
+            </div>
+            <div class="confirm-data__section__record">
+                <div>納品日</div>
+                <div>_%dtmdeliverydate%_</div>
+                <div>単価</div>
+                <div>_%strmonetaryunitsign%_&nbsp;_%curproductprice%_</div>
+            </div>
+            <div class="confirm-data__section__record">
+                <div>営業部署</div>
+                <div>[_%strinchargegroupdisplaycode%_]&nbsp;_%strinchargegroupdisplayname%_</div>
+                <div>開発担当者</div>
+                <div>[_%strinchargeuserdisplaycode%_]&nbsp;_%strinchargeuserdisplayname%_</div>
+            </div>
+            <div class="confirm-data__section__record">
+                <div>数量</div>
+                <div>_%lngproductquantity%_</div>
+                <div>小計</div>
+                <div>_%strmonetaryunitsign%_&nbsp;_%cursubtotalprice%_</div>
+            </div>
+            <div class="confirm-data__section__record">
+                <div>備考</div>
+                <div style="width: 80%;">&nbsp;_%strnote%_</div>
+            </div>
+            <div class="confirm-data__section__record">
+                <div>明細備考</div>
+                <div style="width: 80%;">_%strdetailnote%_</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

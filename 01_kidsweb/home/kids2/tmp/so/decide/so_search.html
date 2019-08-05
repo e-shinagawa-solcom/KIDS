@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html lang="ja">
+
+<head>
+	<title>K.I.D.S.</title>
+	<meta http-equiv="content-type" content="text/html; charset=euc-jp">
+	<title>K.I.D.S.</title>
+	<link rel="stylesheet" href="/cmn/css/base/base-general.css">
+	<!-- msw汎用スタイル -->
+	<link rel="stylesheet" href="/search/cmn/css/msw.css">
+	<!-- スタイル初期化 & 各種コントロールスタイル -->
+
+	<link rel="stylesheet" type="text/css" media="screen" href="/so/decide/css/forms.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="/so/decide/css/forms-search.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
+	<!-- タブ切り替え共通処理 -->
+	<!-- jQuery -->
+	<script src="/cmn/jquery/jquery-3.1.0.js"></script>
+    <!-- jQuery Cookie -->
+	<script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
+    <!-- jQuery UI -->
+	<script src="/cmn/jquery/ui/jquery-ui-1.12.0.js"></script>
+    <link rel="stylesheet" href="/cmn/jquery/ui/jquery-ui-1.12.0.css">
+    <link rel="stylesheet" href="/cmn/jquery/ui/jquery-ui.theme.css">
+    <!-- jQuery UI datepickerローカライズ用スクリプト -->
+	<script src="/cmn/jquery/ui/datepicker-ja.js"></script>
+    <!-- jQuery Validation Plugin -->
+    <script src="/cmn/jquery/validation/jquery.validate.js"></script>
+    <!-- jQuery tooltipster -->
+    <script src="/cmn/jquery/tooltipster/js/tooltipster.bundle.js"></script>
+    <link rel="stylesheet" href="/cmn/jquery/tooltipster/css/tooltipster.bundle.css">
+	<!-- msw 表示 -->
+	<script src="/search/cmn/msw/cmn/js/msw.js" defer></script>
+    <!-- マスタ検索呼び出し -->
+	<script src="/search/cmn/js/invoke-master-search.js" defer></script>
+    <!-- フォーム ボタン -->
+	<script src="/so/decide/js/form-buttons.js" defer></script>
+    <!-- フォームバリデーション -->
+	<script src="/so/decide/js/validate-form.js" defer></script>
+    <!-- ボタン画像の共通の振る舞い CSS -->
+    <link rel="stylesheet" href="/cmn/css/base/button-behaivior.css">
+</head>
+
+<body class="background--noframes">
+	<!-- 入力フォーム -->
+	<div class="form-box">
+		<!-- フォームヘッダ -->
+		<div class="form-box__header">
+			<p class="form-box__header__title">検索条件</p>
+		</div>
+		<!-- フォームコンテンツ -->
+		<div class="form-box__contents">
+			<form name="decideReceive" action="javascript:void(0);" method="post">
+				<input type="submit">
+				<div class="regist-tab-header">
+					<div class="regist-line">
+						<span class="regist-label">
+							<span class="regist-label__text">製品コード</span>
+							<input class="TxtStyle04L" name="strProductCode" value="" type="text">
+						</span>
+					</div>
+					<div class="regist-line">
+						<span class="regist-label">
+							<span class="regist-label__text">受注No.</span>
+							<input class="TxtStyle04L" name="strReceiveCode" value="_%strReceiveCode%_" type="text">
+						</span>
+					</div>
+					<div class="regist-line">
+						<span class="regist-label">
+							<span class="regist-label__text">顧客</span>
+							<input class="TxtStyle05L" name="lngCustomerCode" type="text">
+							<input class="disTxt46L" name="strCustomerName" type="text" readonly>
+							<img class="msw-button button" invokeMSWName="msw-customer" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+						</span>
+					</div>
+					<div class="regist-line">
+						<span class="regist-label">
+							<span class="regist-label__text">納期</span>
+							FROM
+							<input name="From_dtmDeliveryDate" class="TxtStyle05L" type="text" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate( this );fncCopyValue( this , document.all.To_dtmDeliveryDate );"
+							 tabindex="" maxlength="10"> TO
+							<input name="To_dtmDeliveryDate" class="TxtStyle05L" type="text" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate(this);"
+							 tabindex="" maxlength="10">
+						</span>
+					</div>
+				</div>
+			</form>
+		</div>
+
+		<div class="msw-loadpoints">
+			<!-- MSW 顧客マスタ検索 -->
+			<iframe class="msw-customer" src="/search/cmn/msw/customer/mswcustomer.html" frameborder="0">
+			</iframe>
+		</div>
+
+		<br><br><br>
+
+	<!-- フォーム ボタン -->
+	<div class="form-buttons">
+		<img class="search button" src="/img/type01/so/search_brown_off_ja_bt.gif" alt="form search">
+		<img class="clear button" src="/img/type01/so/clear_off_ja_bt.gif" alt="form clear">
+		<img class="close button" src="/img/type01/so/close_off_ja_bt.gif" alt="form close">
+	</div>
+	</div>
+</body>
+
+</html>
