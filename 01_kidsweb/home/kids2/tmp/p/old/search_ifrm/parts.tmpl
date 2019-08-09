@@ -1,0 +1,498 @@
+<COMMENT>
+<!-----------------------------------------------------------------------------
+	File name     : Products search iframe template
+	Last modified : 2004/04/21
+	Author        : Ryosuke Tomita
+	Remark        : 
+------------------------------------------------------------------------------->
+</COMMENT>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html lang="ja">
+<head>
+<title>K.I.D.S.</title>
+<meta http-equiv="content-type" content="text/html; charset=euc-jp">
+
+
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/images.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/p/search/initlayoutsearch.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutcommon.js"></script>
+
+
+<script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/query.js"></script>
+<script type="text/vbscript" Language="vbscript" src="/cmn/vbsclass.js"></script>
+<script type="text/vbscript" Language="vbscript" src="/cmn/vbscript.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/lngcheck.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/masterlib.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="/cmn/layout.css">
+<link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
+
+
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutmsw.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="layout.css">
+<script type="text/javascript" language="javascript" src="exstr.js"></script>
+<script type="text/javascript" language="javascript" src="functions.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
+
+</head>
+<body id="Backs" onContextmenu="return false;" onload="initLayoutSegs( Segs , Vars , Goods , GoodsVars , CheckGoods1 , CheckGoods2 , CheckGoods3 , CheckGoods4 );initLayoutPSearch();initLayoutMsw();GetIfrmlngLanguageCode();fncAutoFocus( document.all.dtmInsertDateFrom );">
+
+
+<span id="PSearchObject"></span>
+
+
+<OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting" WIDTH="0" HEIGHT="0"></OBJECT>
+<Script for="objDataSourceSetting" event="ondatasetcomplete">subLoadMasterSetting(this.recordset,0);
+</Script>
+
+<OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSettingCategory" WIDTH="0" HEIGHT="0"></OBJECT>
+<Script for="objDataSourceSettingCategory" event="ondatasetcomplete">subLoadMasterSetting(this.recordset,1);
+</Script>
+<OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSettingCategoryGroup" WIDTH="0" HEIGHT="0"></OBJECT>
+<Script for="objDataSourceSettingCategoryGroup" event="ondatasetcomplete">
+if(this.recordset.RecordCount != 0)
+{
+	subLoadMasterSetting(this.recordset,2);
+}
+</Script>
+<script type="text/javascript" language="javascript">
+function setCategory(obj)
+{
+	subLoadMasterText('cnCategoryGroupUser', obj, PS.lngCategoryCode, Array(obj.value), objDataSourceSettingCategory, 1);
+
+	// 部門を強制的に設定
+	subLoadMasterText('cnGroupDisplayCode', obj, PS.lngInChargeGroupCode, Array(obj.value), objDataSourceSettingCategoryGroup, 2);
+
+//	alert(document.getElementsByName("SearchColumn[]").item(10).value);
+
+	if(obj.value == 0)
+	{
+		PS.lngInChargeGroupCode.value = "";
+		document.getElementsByName("SearchColumn[]").item(10).checked = false;
+	}
+	else
+	{
+		if(!document.getElementsByName("SearchColumn[]").item(10).checked)
+		{
+			document.getElementsByName("SearchColumn[]").item(10).checked = true;
+		}
+	}
+}
+</script> 
+
+<form name="PS" method="post" action="javascript:void(0);">
+<input type="hidden" name="ActionScriptName" value="/p/result/index.php">
+<input type="hidden" name="strSessionID" value="_%strSessionID%_">
+
+
+
+<!-- [商品化企画書]カラム -->
+<p id="Goods">
+<span id="DetailSegs" style="visibility:_%btnDetail_visibility%_;">詳細</span>
+<span id="FixSegs" style="visibility:_%btnFix_visibility%_;">修正</span>
+
+<span id="CreateDate">作成日</span>
+<span id="ProgressStatus">企画進行状況</span>
+<span id="ReviseDate">改訂日</span>
+<span id="WFStatus">ワークフロー状態</span>
+</p>
+
+
+
+<!-- DetailSegs      詳細          DetailVars       :                                      -->
+<!-- CreateDate      作成日        CreateDateVars   :  dtmInsertDateFrom / dtmInsertDateTo -->
+<!-- ProgressStatus  企画進行状況  ProgressCodeVars :  lngGoodsPlanProgressName            -->
+<!-- ReviseDate      改訂日        ReviseDateVars   :  dtmRevisionDate                     -->
+
+
+<!-- fncCopyValue( this , document.all.dtmRevisionDateTo ); -->
+
+
+<!-- [商品化企画書]フォーム -->
+<p id="GoodsVars">
+<span id="DetailVars"></span>
+<span id="FixVars" style="visibility:_%btnFix_visibility%_;"></span>
+
+<span id="CreateDateVars">
+	FROM&nbsp;<input style="ime-mode:disabled;" class="Txt10L" type="text" name="dtmInsertDateFrom" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate(this);fncCopyValue( this , document.all.dtmInsertDateTo );" tabindex="" maxlength="10">TO&nbsp;<input style="ime-mode:disabled;" class="Txt10L" type="text" name="dtmInsertDateTo" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate(this);" tabindex="" maxlength="10">
+</span>
+
+<span id="ProgressCodeVars">
+	<select class="Slt15" name="lngGoodsPlanProgressCode" tabindex="">
+	_%lngGoodsPlanProgressCode%_
+	</select>
+</span>
+
+<span id="ReviseDateVars">
+	FROM&nbsp;<input style="ime-mode:disabled;" class="Txt10L" type="text" name="dtmRevisionDateFrom" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate(this);fncCopyValue( this , document.all.dtmRevisionDateTo );" tabindex="" maxlength="10">TO&nbsp;<input style="ime-mode:disabled;" class="Txt10L" type="text" name="dtmRevisionDateTo" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate(this);" tabindex="" maxlength="10">
+</span>
+
+	<span id="varWFStatus">
+		_%lngWorkFlowStatusCode%_
+	</span>
+</p>
+
+
+
+
+
+<!-- [商品]カラム -->
+<p id="Segs">
+<span id="SegA01">製品コード</span>
+<span id="SegA05">製品名称(日本語)</span>
+<span id="SegA06">製品名称(英語)</span>
+<span id="InputSegs">入力者</span>
+<span id="SegA03">部門</span>
+<span id="SegA04">担当者</span>
+<span id="SegA18">カテゴリ</span>
+<span id="SegA02">顧客品番</span>
+<span id="SegA07">商品名称</span>
+<span id="SegB08">顧客</span>
+<span id="SegB09">顧客担当者</span>
+<span id="SegA09">荷姿単位</span>
+<span id="SegA08">製品単位</span>
+<span id="SegB17">商品形態</span>
+<span id="SegA12">内箱(袋)入数</span>
+<span id="SegA13">カートン入数</span>
+<span id="SegB06">生産予定数</span>
+<span id="SegB07">初回納品数</span>
+<span id="SegB03">生産工場</span>
+<span id="SegA17">アッセンブリ工場</span>
+<span id="SegB04">納品場所</span>
+<span id="SegB05">納期</span>
+<span id="SegB02">納価</span>
+<span id="SegB01">上代</span>
+<span id="SegA11">対象年齢</span>
+<span id="SegB11">ロイヤリティ</span>
+<span id="SegB16">証紙</span>
+<span id="SegB10">版権元</span>
+<span id="SegB20">版権元備考</span>
+<span id="SegB12">版権表示(刻印)</span>
+<span id="SegB13">版権元表示(印刷物)</span>
+<span id="SegA14">製品構成</span>
+<span id="SegA15">アッセンブリ内容</span>
+<span id="SegB14">仕様詳細</span>
+
+<span id="DeleteSegs" style="visibility:_%btnDelete_visibility%_;">削除</span>
+</p>
+
+
+
+<!-- SegA01     製品コード         VarsA01      :  strProductCodeFrom / strProductCodeTo           -->
+<!-- SegA05     製品名称(日本語)   VarsA05      :  strProductName                                  -->
+<!-- SegA06     製品名称(英語)     VarsA06      :  strProductEnglishName                           -->
+<!-- InputSegs  入力者             InputVars    :  lngInputUserCode / strInputUserName             -->
+<!-- SegA03     部門               VarsA03      :  lngInChargeGroupCode / strInChargeGroupName     -->
+<!-- SegA04     担当者             VarsA04      :  lngInChargeUserCode / strInChargeUserName       -->
+<!-- SegA02     顧客品番           VarsA02      :  strGoodsCode                                    -->
+<!-- SegA07     商品名称           VarsA07      :  strGoodsName                                    -->
+<!-- SegB08     顧客               VarsB08      :  lngCustomerCompanyCode / strCustomerCompanyName -->
+<!-- SegB09     顧客担当者         VarsB09      :  lngCustomerUserCode / strCustomerUserName       -->
+<!-- SegA09     荷姿単位           VarsA09      :                                                  -->
+<!-- SegA08     製品単位           VarsA08      :                                                  -->
+<!-- SegB17     商品形態           VarsB12      :                                                  -->
+<!-- SegA12     内箱(袋)入数       VarsA12      :                                                  -->
+<!-- SegA13     カートン入数       VarsA13      :                                                  -->
+<!-- SegB06     生産予定数         VarsB06      :                                                  -->
+<!-- SegB07     初回納品数         VarsB07      :                                                  -->
+<!-- SegB03     生産工場           VarsB03      :  lngFactoryCode / strFactoryName                 -->
+<!-- SegA17     アッセンブリ工場   VarsA17      :  lngAssemblyFactoryCode / strAssemblyFactoryName -->
+<!-- SegB04     納品場所           VarsB04      :  lngDeliveryPlaceCode / strDeliveryPlaceName     -->
+<!-- SegB05     納期               VarsB05      :                                                  -->
+<!-- SegB02     納価               VarsB02      :                                                  -->
+<!-- SegB01     上代               VarsB01      :                                                  -->
+<!-- SegA11     対象年齢           VarsA11      :                                                  -->
+<!-- SegB11     ロイヤリティ       VarsB11      :                                                  -->
+<!-- SegB16     証紙               VarsB16      :  lngCertificateClassCode                         -->
+<!-- SegB10     版権元             VarsB10      :  lngCopyrightCode                                -->
+<!-- SegB20     版権元備考         VarsB20      :                                                  -->
+<!-- SegB12     版権表示(刻印)     VarsB12      :                                                  -->
+<!-- SegB13     版権元表示(印刷物) VarsB13      :                                                  -->
+<!-- SegA14     製品構成           VarsA14      :                                                  -->
+<!-- SegA15     アッセンブリ内容   VarsA15      :                                                  -->
+<!-- SegB14     仕様詳細           VarsB14      :                                                  -->
+<!-- WFStatus   ワークフロー状態   varWFStatus  :                                                  -->
+<!-- FixSegs    修正               FixVars      :                                                  -->
+<!-- DeleteSegs 削除               DeleteVars   :                                                  -->
+
+
+
+<!-- [商品]フォーム -->
+<p id="Vars">
+<span id="VarsA01">
+	FROM&nbsp;<input style="ime-mode:disabled;" class="Txt10L" type="text" name="strProductCodeFrom" value="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCopyValue( this , document.all.strProductCodeTo );" tabindex="">TO&nbsp;<input style="ime-mode:disabled;" class="Txt10L" type="text" name="strProductCodeTo" value="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="">
+</span>
+<span id="VarsA05">
+	<input class="Txt52L" type="text" name="strProductName" value="" maxlength="80" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this );" tabindex="">
+</span>
+
+<span id="VarsA06">
+	<input class="Txt52L" type="text" name="strProductEnglishName" value="" maxlength="80" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this );" tabindex="" >
+</span>
+
+<span id="InputVars">
+	<input style="ime-mode:disabled;" class="TxtStyle02L" type="text" name="lngInputUserCode" value="" maxlength="3" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="" onChange="subLoadMasterText('11', this, strInputUserName, Array(this.value), objDataSourceSetting, 0);">&nbsp;<input class="TxtStyle06L" type="text"  name="strInputUserName" value="" maxlength="50" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this );" DATASRC="#objInputUserName" DATAFLD="name" tabindex="">
+</span>
+
+<span id="VarsA03">
+	<input style="ime-mode:disabled;" class="TxtStyle02L" type="text" name="lngInChargeGroupCode" value="" maxlength="2" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="" onChange="subLoadMasterText('cnGroup', this, strInChargeGroupName, Array(this.value), objDataSourceSetting);">&nbsp;<input class="TxtStyle06L" type="text"  name="strInChargeGroupName" value="" maxlength="50" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this );" tabindex="" DATASRC="#objInChargeGroupName" DATAFLD="name">
+</span>
+
+<span id="VarsA04">
+	<input style="ime-mode:disabled;" class="TxtStyle02L" type="text" name="lngInChargeUserCode" value="" maxlength="3" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="" onChange="subLoadMasterText('11', this, strInChargeUserName, Array(this.value), objDataSourceSetting, 0 );">&nbsp;<input class="TxtStyle06L" type="text"  name="strInChargeUserName" value="" maxlength="50" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this );" tabindex="" DATASRC="#objInChargeUserName" DATAFLD="name">
+</span>
+
+<span id="VarsA18">
+	<select class="Slt15" name="lngInChargeGroupCodeSelect" tabindex="" onChange="setCategory(this);">
+		_%lngInChargeGroupCodeSelect%_
+	</select>
+
+	<select class="Slt30" name="lngCategoryCode" tabindex="">
+		_%lngCategoryCode%_
+	</select>
+</span>
+
+<span id="VarsA02">
+	<input class="Txt10L" type="text" name="strGoodsCode" value="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="">
+</span>
+
+<span id="VarsA07">
+	<input class="Txt59L" type="text" name="strGoodsName" value="" maxlength="80" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this );" tabindex="">
+</span>
+
+<span id="VarsB08">
+	<input style="ime-mode:disabled;" class="Txt10L" type="text" name="lngCustomerCompanyCode" value="" maxlength="4" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="" onChange="subLoadMasterText('3', this, strCustomerCompanyName, Array(this.value), objDataSourceSetting, 0 );">&nbsp;<input class="TxtStyle06L" type="text" name="strCustomerCompanyName" value="" maxlength="50" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this );" tabindex="" DATASRC="#objCustomerCompanyName" DATAFLD="name">
+</span>
+
+<span id="VarsB09">
+	<input style="ime-mode:disabled;" class="Txt10L" type="text" name="lngCustomerUserCode" value="" maxlength="6" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="" onChange="subLoadMasterText('11', this, strCustomerUserName, Array(this.value), objDataSourceSetting, 0 );">&nbsp;<input class="TxtStyle06L" type="text" name="strCustomerUserName" value="" maxlength="50" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this );" tabindex="" DATASRC="#" DATAFLD="name">
+</span>
+
+<span id="VarsA09"></span>
+<span id="VarsA08"></span>
+<span id="VarsB17"></span>
+<span id="VarsA12"></span>
+<span id="VarsA13"></span>
+<span id="VarsB06"></span>
+<span id="VarsB07"></span>
+
+<span id="VarsB03">
+	<input style="ime-mode:disabled;" class="Txt10L" type="text" name="lngFactoryCode" value="" maxlength="4" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex=""  onChange="subLoadMasterText('5', this, strFactoryName, Array(this.value), objDataSourceSetting, 0 );">&nbsp;<input class="TxtStyle06L" type="text"  name="strFactoryName" value="" maxlength="50" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this );" tabindex="" DATASRC="#objFactoryName" DATAFLD="name">
+</span>
+
+<span id="VarsA17">
+	<input style="ime-mode:disabled;" class="Txt10L" type="text" name="lngAssemblyFactoryCode" value="" maxlength="4" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="" onChange="subLoadMasterText('6', this, strAssemblyFactoryName, Array(this.value), objDataSourceSetting, 0 );">&nbsp;<input class="TxtStyle06L" type="text" name="strAssemblyFactoryName" value="" maxlength="50" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this );" tabindex="" DATASRC="#objAssemblyFactoryName" DATAFLD="name">
+</span>
+
+<span id="VarsB04">
+	<input style="ime-mode:disabled;" class="Txt10L" type="text" name="lngDeliveryPlaceCode" value="" maxlength="4" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="" onChange="subLoadMasterText('cnLocation', this, strDeliveryPlaceName, Array(this.value), objDataSourceSetting, 0 );">&nbsp;<input class="TxtStyle06L" type="text"  name="strDeliveryPlaceName" value="" maxlength="50" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this );" tabindex=""  DATASRC="#objDeliveryPlaceName" DATAFLD="name">
+</span>
+
+<span id="VarsB05">
+	FROM&nbsp;<input style="ime-mode:disabled;" class="Txt07L" type="text" name="dtmDeliveryLimitDateFrom" value="" maxlength="7" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate(this,1);fncCopyValue( this , document.all.dtmDeliveryLimitDateTo );" tabindex="">TO&nbsp;<input class="Txt07L" type="text" name="dtmDeliveryLimitDateTo" value="" maxlength="7" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate(this,1);" tabindex="">
+</span>
+
+<span id="VarsB02"></span>
+<span id="VarsB01"></span>
+<span id="VarsA11"></span>
+<span id="VarsB11"></span>
+
+<span id="VarsB16">
+	<select name="lngCertificateClassCode" tabindex="">
+		_%lngCertificateClassCode%_
+	</select>
+</span>
+
+<span id="VarsB10">
+	<select class="SlctStyle04" name="lngCopyrightCode" tabindex="">
+		_%lngCopyrightCode%_
+	</select>
+</span>
+
+<span id="VarsB20"></span>
+<span id="VarsB12"></span>
+<span id="VarsB13"></span>
+<span id="VarsA14"></span>
+<span id="VarsA15"></span>
+<span id="VarsB14"></span>
+
+
+<span id="DeleteVars" style="visibility:_%btnDelete_visibility%_;"></span>
+</p>
+
+
+
+
+<span id="SegA0304"></span>
+<span id="SegB0809"></span>
+
+
+<!-- 共通サブウィンドウ -->
+
+<!-- START [INPUT PERSON] BUTTON -->
+<span id="MSWBt09" onclick="window.top.fncGetObjectName( window.top.INPUT2win , lngInputUserCode , strInputUserName );window.top.DisplayerM09( '' , window.top.document.all.Mdata09 , window.top.INPUT2win.document.all.strInputUserCode );window.top.ExchangeM09( 0 , window.self );window.top.fncFocusType( window.top.INPUT2win , 'inputIfrm' );return false;"></span>
+<!-- END [INPUT PERSON] BUTTON -->
+
+<!-- START [DEPT & IN CHARGE NAME] BUTTON -->
+<span id="MSWBt02" onclick="window.top.fncGetObjectName( window.top.MDwin , lngInChargeGroupCode , strInChargeGroupName , lngInChargeUserCode , strInChargeUserName );window.top.DisplayerM02( '' , window.top.document.all.Mdata02 , window.top.MDwin.document.all.strGroupCode ,  window.top.MDwin.document.all.strUserCode );window.top.ExchangeM02( 0 , window.self );window.top.fncFocusType( window.top.MDwin , 'deptIfrm' );return false;"></span>
+<!-- END [DEPT & IN CHARGE NAME] BUTTON -->
+
+<!-- START [VENDOR & IN CHARGE NAME] BUTTON -->
+<span id="MSWBt07" onclick="window.top.fncGetObjectName( window.top.VIwin , lngCustomerCompanyCode , strCustomerCompanyName , lngCustomerUserCode , strCustomerUserName );window.top.DisplayerM07( '' , window.top.document.all.Mdata07 , window.top.VIwin.document.all.strCustomerCode , window.top.VIwin.document.all.strInChargeCode );window.top.ExchangeM07( 0 , window.self );window.top.fncFocusType( window.top.VIwin , 'viIfrm' );return false;"></span>
+<!-- END [VENDOR & IN CHARGE NAME] BUTTON -->
+
+<!-- START [CREATION FACTORY] BUTTON -->
+<span id="MSWBt01_2" onclick="window.top.fncGetObjectName( window.top.MVwin_2 , lngFactoryCode , strFactoryName );window.top.DisplayerM01_2( '' , window.top.document.all.Mdata01_2 , window.top.MVwin_2.document.all.strCreationFactoryCode );window.top.ExchangeM01_2( 0 , window.self );window.top.fncFocusType( window.top.MVwin_2 , 'creationIfrm' );return false;"></span>
+<!-- END [CREATION FACTORY] BUTTON -->
+
+<!-- START [ASSEMBLY FACTORY] BUTTON -->
+<span id="MSWBt01_3" onclick="window.top.fncGetObjectName( window.top.MVwin_3 , lngAssemblyFactoryCode , strAssemblyFactoryName );window.top.DisplayerM01_3( '' , window.top.document.all.Mdata01_3 , window.top.MVwin_3.document.all.strFactoryCode );window.top.ExchangeM01_3( 0 , window.self );window.top.fncFocusType( window.top.MVwin_3 , 'assemblyIfrm' );return false;"></span>
+<!-- END [ASSEMBLY FACTORY] BUTTON -->
+
+<!-- START [LOCATION] BUTTON -->
+<span id="MSWBt04" onclick="window.top.fncGetObjectName( window.top.MLwin , lngDeliveryPlaceCode , strDeliveryPlaceName );window.top.DisplayerM04( '' , window.top.document.all.Mdata04 , window.top.MLwin.document.all.strLocationCode );window.top.ExchangeM04( 0 , window.self );window.top.fncFocusType( window.top.MLwin , 'locationIfrm' );return false;"></span>
+<!-- END [LOCATION] BUTTON -->
+
+
+
+
+
+<!-- [商品化企画書]検索チェックボックス -->
+<p id="CheckGoods1">
+<span id="Checks" style="visibility:_%btnDetail_visibility%_;"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="btnDetailConditions" disabled></span>
+<span id="Checks" style="visibility:_%btnFix_visibility%_;"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="btnFixConditions" disabled></span>
+
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="dtmInsertDateConditions" _%dtmInsertDateConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngGoodsPlanProgressCodeConditions" _%lngGoodsPlanProgressCodeConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="dtmRevisionDateConditions" _%dtmRevisionDateConditions%_></span>
+
+	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngWorkFlowStatusCodeConditions"></span>
+</p>
+
+
+
+<!-- [商品化企画書]表示チェックボックス -->
+<p id="CheckGoods2">
+<span id="Checks" style="visibility:_%btnDetail_visibility%_;"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="btnDetailVisible" _%btnDetailVisible%_></span>
+<span id="Checks" style="visibility:_%btnFix_visibility%_;"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="btnFixVisible" _%btnFixVisible%_></span>
+
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="dtmInsertDateVisible" _%dtmInsertDateVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngGoodsPlanProgressCodeVisible" _%lngGoodsPlanProgressCodeVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="dtmRevisionDateVisible" _%dtmRevisionDateVisible%_></span>
+
+	<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngWorkFlowStatusCodeVisible" _%lngWorkFlowStatusCodeVisible%_></span>
+</p>
+
+
+
+<!-- [商品]検索チェックボックス -->
+<p id="CheckGoods3">
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="strProductCodeConditions" _%strProductCodeConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="strProductNameConditions" _%strProductNameConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="strProductEnglishNameConditions" _%strProductEnglishNameConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngInputUserCodeConditions" _%lngInputUserCodeConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngInChargeGroupCodeConditions" _%lngInChargeGroupCodeConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngInChargeUserCodeConditions" _%lngInChargeUserCodeConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngCategoryCodeConditions" _%lngCategoryCodeConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="strGoodsCodeConditions" _%strGoodsCodeConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="strGoodsNameConditions" _%strGoodsNameConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngCustomerCompanyCodeConditions" _%lngCustomerCompanyCodeConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngCustomerUserCodeConditions" _%lngCustomerUserCodeConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngPackingUnitCodeConditions" disabled></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngProductUnitCodeConditions" disabled></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngProductFormCodeConditions" disabled></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngBoxQuantityConditions" disabled></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngCartonQuantityConditions" disabled></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngProductionQuantityConditions" disabled></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngFirstDeliveryQuantityConditions" disabled></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngFactoryCodeConditions" _%lngFactoryCodeConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngAssemblyFactoryCodeConditions" _%lngAssemblyFactoryCodeConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngDeliveryPlaceCodeConditions" _%lngDeliveryPlaceCodeConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="dtmDeliveryLimitDateConditions" _%dtmDeliveryLimitDateConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="curProductPriceConditions" disabled></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="curRetailPriceConditions" disabled></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngTargetAgeCodeConditions" disabled></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngRoyaltyConditions" disabled></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngCertificateClassCodeConditions" _%lngCertificateClassCodeConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngCopyrightCodeConditions" _%lngCopyrightCodeConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="strCopyrightNoteConditions" disabled></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="strCopyrightDisplayStampConditions" disabled></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="strCopyrightDisplayPrintConditions" disabled></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="strProductCompositionConditions" disabled></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="strAssemblyContentsConditions" disabled></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="strSpecificationDetailsConditions" disabled></span>
+
+
+<span id="Checks" style="visibility:_%btnDelete_visibility%_;"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="btnDeleteConditions" disabled></span>
+</p>
+
+
+
+<!-- [商品]表示チェックボックス -->
+<p id="CheckGoods4">
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="strProductCodeVisible" checked disabled></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="strProductNameVisible" _%strProductNameVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="strProductEnglishNameVisible" _%strProductEnglishNameVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngInputUserCodeVisible" _%lngInputUserCodeVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngInChargeGroupCodeVisible" _%lngInChargeGroupCodeVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngInChargeUserCodeVisible" _%lngInChargeUserCodeVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngCategoryCodeVisible" _%lngCategoryCodeVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="strGoodsCodeVisible" _%strGoodsCodeVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="strGoodsNameVisible" _%strGoodsNameVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngCustomerCompanyCodeVisible" _%lngCustomerCompanyCodeVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngCustomerUserCodeVisible" _%lngCustomerUserCodeVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngPackingUnitCodeVisible" _%lngPackingUnitCodeVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngProductUnitCodeVisible" _%lngProductUnitCodeVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngProductFormCodeVisible" _%lngProductFormCodeVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngBoxQuantityVisible" _%lngBoxQuantityVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngCartonQuantityVisible" _%lngCartonQuantityVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngProductionQuantityVisible" _%lngProductionQuantityVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngFirstDeliveryQuantityVisible" _%lngFirstDeliveryQuantityVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngFactoryCodeVisible" _%lngFactoryCodeVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngAssemblyFactoryCodeVisible" _%lngAssemblyFactoryCodeVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngDeliveryPlaceCodeVisible" _%lngDeliveryPlaceCodeVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="dtmDeliveryLimitDateVisible" _%dtmDeliveryLimitDateVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="curProductPriceVisible" _%curProductPriceVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="curRetailPriceVisible" _%curRetailPriceVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngTargetAgeCodeVisible" _%lngTargetAgeCodeVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngRoyaltyVisible" _%lngRoyaltyVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngCertificateClassCodeVisible" _%lngCertificateClassCodeVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngCopyrightCodeVisible" _%lngCopyrightCodeVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="strCopyrightNoteVisible" _%strCopyrightNoteVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="strCopyrightDisplayStampVisible" _%strCopyrightDisplayStampVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="strCopyrightDisplayPrintVisible" _%strCopyrightDisplayPrintVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="strProductCompositionVisible" _%strProductCompositionVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="strAssemblyContentsVisible" _%strAssemblyContentsVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="strSpecificationDetailsVisible" _%strSpecificationDetailsVisible%_></span>
+
+
+<span id="Checks" style="visibility:_%btnDelete_visibility%_;"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="btnDeleteVisible" _%btnDeleteVisible%_></span>
+</p>
+
+
+
+<span id="ViewSearch1"></span>
+<span id="ViewSearch2"></span>
+
+
+
+
+
+<!-- 検索チェックボックス全選択用ボタン -->
+<span id="CheckAll1" onclick="fncCheckAll1();"></span>
+<!-- 表示チェックボックス全選択用ボタン -->
+<span id="CheckAll2" onclick="fncCheckAll2();"></span>
+
+
+<!-- 終端調整用ダミーレイヤー -->
+<span id="DummySpace"></span>
+
+
+
+
+
+
+</form>
+</body>
+</html>

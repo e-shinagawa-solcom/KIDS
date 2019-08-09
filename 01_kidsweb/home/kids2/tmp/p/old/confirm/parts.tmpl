@@ -1,0 +1,354 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html lang="ja">
+<head>
+<title>K.I.D.S.</title>
+<meta http-equiv="content-type" content="text/html; charset=euc-jp">
+
+
+
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/images.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
+
+<link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
+<link rel="stylesheet" type="text/css" media="screen" href="/result/cmn/layout.css">
+
+<script type="text/javascript" language="javascript" src="/cmn/processing_module.js"></script>
+<script type="text/javascript" language="javascript" src="/p/confirm/exstr.js"></script>
+
+<script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
+
+
+<script type="text/javascript" language="javascript">
+
+	function fncSetWFMessage( obj , objHdn )
+	{
+		objHdn.value = obj.value;
+
+		// デバッグ
+		// alert( objHdn.value );
+	}
+
+</script>
+
+</head>
+<body oncontextmenu="return false;" onload="fncChgEtoJ( 'regist' );">
+
+<p id="ConfirmOverFlowBox">
+
+
+<table cellpadding="5" cellspacing="0" border="0" bgcolor="#6f8180" align="center">
+	<tr class="SegColumn">
+		<td id="ControlTitle"></td>
+	</tr>
+</table>
+
+<br>
+
+<table cellpadding="5" cellspacing="0" border="0" bgcolor="#f1f1f1" align="center">
+	<tr>
+		<td>
+
+			<form name="form1" action="_%strActionURL%_" method="POST">
+				<span id="objQuery"></span>
+				<input type="hidden" name="lngOrderNo" value="_%lngorderno%_">
+				<input type="hidden" name="strSessionID" value="_%strSessionID%_">
+				<input type="hidden" name="strSubmit" value="true">
+				<input type="hidden" name="back" value="">
+				<input type="hidden" name="strSessionID" value="_%strSessionID%_">
+				<input type="hidden" name="strProductCode" value="_%strProductCode%_"><!-- 製品コード -->
+				<input type="hidden" name="strProductName" value="_%strProductName%_"><!-- 製品名称(日本語) -->
+				<input type="hidden" name="strProductEnglishName" value="_%strProductEnglishName%_"><!-- 製品名称(英語)  -->
+				<input type="hidden" name="lngInChargeGroupCode" value="_%lngInChargeGroupCode%_"><!-- 部門コード  -->
+				<input type="hidden" name="strInChargeGroupName" value="_%strInChargeGroupName%_"><!-- 部門名 -->
+				<input type="hidden" name="lngInChargeUserCode" value="_%lngInChargeUserCode%_"><!-- 担当者コード  -->
+				<input type="hidden" name="strInChargeUserName" value="_%strInChargeUserName%_"><!--  担当者名 -->
+				<input type="hidden" name="strCustomerDistinctCode" value="_%strCustomerDistinctCode%_"><!-- 顧客識別コード  -->
+				<input type="hidden" name="strGoodsCode" value="_%strGoodsCode%_"><!-- 顧客品番  -->
+				<input type="hidden" name="lngCategoryCode" value="_%lngCategoryCode%_"><!-- カテゴリー  -->
+				<input type="hidden" name="strGoodsName" value="_%strGoodsName%_"><!--  商品名称 -->
+				<input type="hidden" name="lngCompanyCode" value="_%lngCompanyCode%_"><!-- 顧客 -->
+				<input type="hidden" name="lngCompanyName" value="_%lngCompanyName%_">
+				<input type="hidden" name="strCustomerName" value="_%strCustomerName%_"><!-- 顧客の名称  -->
+				<input type="hidden" name="strCustomerUserCode" value="_%strCustomerUserCode%_"><!--  顧客担当者コード -->
+				<input type="hidden" name="strCustomerUserName" value="_%strCustomerUserName%_"><!--  顧客担当者 -->
+				<input type="hidden" name="lngPackingUnitCode" value="_%lngPackingUnitCode%_"><!-- 荷姿単位  -->
+				<input type="hidden" name="lngProductUnitCode" value="_%lngProductUnitCode%_"><!-- 製品単位  -->
+				<input type="hidden" name="lngBoxQuantity" value="_%lngBoxQuantity%_"><!-- 内箱（袋）入数  -->
+				<input type="hidden" name="lngCartonQuantity" value="_%lngCartonQuantity%_"><!--  カートン入数 -->
+				<input type="hidden" name="lngProductionQuantity" value="_%lngProductionQuantity%_"><!-- 生産予定数  -->
+				<input type="hidden" name="lngProductionUnitCode" value="_%lngProductionUnitCode%_"><!--  生産予定数の単位 -->
+				<input type="hidden" name="lngFirstDeliveryQuantity" value="_%lngFirstDeliveryQuantity%_"><!-- 初回納品数  -->
+				<input type="hidden" name="lngFirstDeliveryUnitCode" value="_%lngFirstDeliveryUnitCode%_"><!-- 初回納品数の単位  -->
+
+				<!-- form2 -->
+				<input type="hidden" name="lngFactoryCode" value="_%lngFactoryCode%_"><!-- 生産工場 -->
+				<input type="hidden" name="strFactoryName" value="_%strFactoryName%_"><!-- 生産工場の名称 -->
+				<input type="hidden" name="lngAssemblyFactoryCode" value="_%lngAssemblyFactoryCode%_"><!-- アッセンブリ工場 -->
+				<input type="hidden" name="strAssemblyFactoryName" value="_%strAssemblyFactoryName%_"><!-- ｱｯｾﾝﾌﾞﾘ工場の名称 -->
+				<input type="hidden" name="lngDeliveryPlaceCode" value="_%lngDeliveryPlaceCode%_"><!-- 納品場所 -->
+				<input type="hidden" name="strDeliveryPlaceName" value="_%strDeliveryPlaceName%_"><!-- 納品場所の名称 -->
+				<input type="hidden" name="dtmDeliveryLimitDate" value="_%dtmDeliveryLimitDate%_"><!-- 納期 -->
+				<input type="hidden" name="curProductPrice" value="_%curProductPrice%_"><!-- 卸値 -->
+				<input type="hidden" name="curRetailPrice" value="_%curRetailPrice%_"><!-- 売値 -->
+				<input type="hidden" name="lngTargetAgeCode" value="_%lngTargetAgeCode%_"><!-- 対象年齢 -->
+				<input type="hidden" name="lngRoyalty" value="_%lngRoyalty%_"><!-- ロイヤリティ -->
+				<input type="hidden" name="lngCertificateClassCode" value="_%lngCertificateClassCode%_"><!-- 証紙 -->
+				<input type="hidden" name="lngCopyrightCode" value="_%lngCopyrightCode%_"><!-- 版権元 -->
+				<input type="hidden" name="strCopyrightNote" value="_%strCopyrightNote%_"><!-- 版権元備考 -->
+				<input type="hidden" name="strCopyrightDisplayStamp" value="_%strCopyrightDisplayStamp%_"><!-- 版権表示（刻印） -->
+				<input type="hidden" name="strCopyrightDisplayPrint" value="_%strCopyrightDisplayPrint%_"><!-- 版権表示（印刷物） -->
+				<input type="hidden" name="lngProductFormCode" value="_%lngProductFormCode%_"><!-- 商品形態 -->
+				<input type="hidden" name="strProductComposition" value="_%strProductComposition%_"><!-- 製品構成 -->
+				<input type="hidden" name="strAssemblyContents" value="_%strAssemblyContents%_"><!-- アッセンブリ内容 -->
+				<input type="hidden" name="strSpecificationDetails" value="_%strSpecificationDetails%_"><!-- 仕様詳細 -->
+				<input type="hidden" name="updatekey" value="_%updatekey%_"><!-- アップデートキー -->
+				<input type="hidden" name="dtmInsertDate" value="_%dtmInsertDate%_"><!-- 作成日 -->
+				<input type="hidden" name="lngGoodsPlanProgressCode" value="_%lngGoodsPlanProgressCode%_"><!-- 企画進行状況 -->
+				<input type="hidden" name="lngRevisionNo" value="_%lngRevisionNo%_"><!-- 改訂番号 -->
+				<input type="hidden" name="dtmRevisionData" value="_%dtmRevisionData%_"><!-- 改訂日時 -->
+				<input type="hidden" name="lnGgoodsPlanCode" value="_%lnGgoodsPlanCode%_"><!-- -->
+				<input type="hidden" name="lngProductNo" value="_%lngProductNo%_">
+
+
+				<input type="hidden" name="lngWorkflowOrderCode" value="_%lngWorkflowOrderCode%_">		<!-- ワークフローコード -->
+				<input type="hidden" name="strWorkflowMessage" value="_%strWorkflowMessage%_">			<!-- ワークフローメッセージ -->
+
+<!-- 仕様詳細画像ファイルHIDDEN -->
+_%re_uploadimages%_
+_%re_editordir%_
+
+			</form>
+
+		</td>
+	</tr>
+</table>
+
+
+<script type="text/javascript">
+<!--
+function fncShowDialogCommonForDblClick()
+{
+	//選択された類似コードを得る
+	var ProductCode = document.all.NearName.value;
+
+	//言語コードを得る
+	var LanguageCode = window.parent.lngLanguageCode.value;
+
+	fncShowDialogCommon("/p/result/index2.php?lngProductNo=" + ProductCode + "&strSessionID=_%strSessionID%_" ,
+			 window.form1 ,
+			 "ResultIframeCommon",
+			 "YES" ,
+			 LanguageCode ,
+			 "detail" );
+
+}
+// -->
+</script>
+
+<table cellpadding="5" cellspacing="0" border="0" bgcolor="#f1f1f1" align="center">
+	<tr>
+		<td>
+
+			<!-- 類似製品・置換ここから -->
+			<div onDblClick="fncShowDialogCommonForDblClick();">
+			_%strOptionValue%_
+			</div>
+			<!-- 類似製品・置換ここまで -->
+
+			<br>
+
+			<!-- メッセージ -->
+			<div style="display:_%strWorkflowMessage_visibility%_">
+				<table width="100%" cellpadding="0" cellspacing="1" border="0" bgcolor="#6f8180" align="center">
+					<tr>
+						<td id="WFMessage" class="SegColumn2" width="25%">
+							メッセージ
+						</td>
+						<td class="Segs">
+							<textarea class="txtArea100P" rows="3" name="**" onchange="fncSetWFMessage( this , document.all.strWorkflowMessage );"></textarea>
+						</td>
+					</tr>
+				</table>
+				<br>
+			</div>
+			<!-- メッセージ // -->
+
+			<table width="100%" cellpadding="0" cellspacing="1" border="0" bgcolor="#6f8180" align="center">
+
+				<tr>
+					<td id="CreationDate" class="SegColumn" width="25%">作成日時</td><td class="Segs">_%dtmInsertDate%_</td>
+				</tr>
+
+				<tr>
+					<td id="GoodsPlanProgress" class="SegColumn">企画進行状況</td><td class="Segs">_%lngGoodsPlanProgressCode_DIS%_</td>
+				</tr>
+				<tr>
+					<td id="RevisionNo" class="SegColumn">改訂番号</td><td class="Segs">_%lngRevisionNo%_</td>
+				</tr>
+				<tr>
+					<td id="RevisionDate" class="SegColumn">改訂日時</td><td class="Segs">_%dtmRevisionData%_</td>
+				</tr>
+
+			</table>
+
+
+			<br>
+
+
+			<table width="100%" cellpadding="0" cellspacing="1" border="0" bgcolor="#6f8180" align="center">
+
+				<tr>
+					<td id="ProductCode" class="SegColumn" width="25%">製品コード</td><td class="Segs">_%strProductCode%_</td>
+				</tr>
+
+				<tr>
+					<td id="ProductName" class="SegColumn">製品名称(日本語)</td><td class="Segs">_%strProductName%_</td>
+				</tr>
+
+				<tr>
+					<td id="ProductEnglishName" class="SegColumn">製品名称(英語)</td><td class="Segs">_%strProductEnglishName%_</td>
+				</tr>
+
+				<tr>
+					<td id="InChargeGroup" class="SegColumn">営業部署</td><td class="Segs">_%lngInChargeGroupCode_DISCODE%_&nbsp;_%strInChargeGroupName%_</td>
+				</tr>
+
+				<tr>
+					<td id="InChargeUser" class="SegColumn">開発担当者</td><td class="Segs">_%lngInChargeUserCode_DISCODE%_&nbsp;_%strInChargeUserName%_</td>
+				</tr>
+
+				<tr>
+					<td id="GoodsCode" class="SegColumn">顧客品番</td><td class="Segs">_%strCustomerDistinctCode%_&nbsp;_%strGoodsCode%_</td>
+				</tr>
+
+				<tr>
+					<td id="CategoryCode" class="SegColumn">カテゴリ</td><td class="Segs">_%lngCategoryCode_DIS%_</td>
+				</tr>
+
+				<tr>
+					<td id="GoodsName" class="SegColumn">商品名称</td><td class="Segs">_%strGoodsName%_</td>
+				</tr>
+
+				<tr>
+					<td id="Customer" class="SegColumn">顧客</td><td class="Segs">_%lngCompanyCode_DISCODE%_&nbsp;_%strCustomerName%_</td>
+				</tr>
+
+				<tr>
+					<td id="CustomerUser" class="SegColumn">顧客担当者</td><td class="Segs">_%strCustomerUserCode_DISCODE%_&nbsp;_%strCustomerUserName%_</td>
+				</tr>
+
+				<tr>
+					<td id="PackingUnit" class="SegColumn">荷姿単位</td><td class="Segs">_%lngPackingUnitCode_DIS%_</td>
+				</tr>
+
+				<tr>
+					<td id="ProductUnit" class="SegColumn">製品単位</td><td class="Segs">_%lngProductUnitCode_DIS%_</td>
+				</tr>
+
+				<tr>
+					<td id="GoodsForm" class="SegColumn">商品形態</td><td class="Segs">_%lngProductFormCode_DIS%_</td>
+				</tr>
+
+				<tr>
+					<td id="BoxQuantity" class="SegColumn">内箱(袋)入数</td><td class="Segs">_%lngBoxQuantity%_</td>
+				</tr>
+
+				<tr>
+					<td id="CartonQuantity" class="SegColumn">カートン入数</td><td class="Segs">_%lngCartonQuantity%_</td>
+				</tr>
+
+				<tr>
+					<td id="RefoundQuantity" class="SegColumn">生産予定数</td><td class="Segs">_%lngProductionQuantity%_&nbsp;[ _%lngProductionUnitCode_DIS%_ ]</td>
+				</tr>
+
+				<tr>
+					<td id="FirstDeliveryQuantity" class="SegColumn">初回納品数</td><td class="Segs">_%lngFirstDeliveryQuantity%_&nbsp;[ _%lngFirstDeliveryUnitCode_DIS%_ ]</td>
+				</tr>
+
+			</table>
+
+
+			<br>
+
+
+			<table width="100%" cellpadding="0" cellspacing="1" border="0" bgcolor="#6f8180" align="center">
+
+				<tr>
+					<td id="CreationFactory" class="SegColumn" width="25%">生産工場</td><td class="Segs">_%lngFactoryCode_DISCODE%_&nbsp;_%strFactoryName%_</td>
+				</tr>
+
+				<tr>
+					<td id="AssemblyFactory" class="SegColumn">アッセンブリ工場</td><td class="Segs">_%lngAssemblyFactoryCode_DISCODE%_&nbsp;_%strAssemblyFactoryName%_</td>
+				</tr>
+
+				<tr>
+					<td id="Location" class="SegColumn">納品場所</td><td class="Segs">_%lngDeliveryPlaceCode_DISCODE%_&nbsp;_%strDeliveryPlaceName%_</td>
+				</tr>
+
+				<tr>
+					<td id="DeliveryLimitDate" class="SegColumn">納期</td><td class="Segs">_%dtmDeliveryLimitDate%_</td>
+				</tr>
+
+				<tr>
+					<td id="SellingPrince" class="SegColumn">納価(pcs)</td><td class="Segs">_%strMonetaryrate%_ _%curProductPrice%_</td>
+				</tr>
+
+				<tr>
+					<td id="WholesalePrice" class="SegColumn">上代(pcs)</td><td class="Segs">_%strMonetaryrate%_ _%curRetailPrice%_</td>
+				</tr>
+
+				<tr>
+					<td id="TargetAge" class="SegColumn">対象年齢</td><td class="Segs">_%lngTargetAgeCode_DIS%_</td>
+				</tr>
+
+				<tr>
+					<td id="Royalty" class="SegColumn">ロイヤリティ(%)</td><td class="Segs">_%lngRoyalty%_</td>
+				</tr>
+
+				<tr>
+					<td id="Inspection" class="SegColumn">証紙</td><td class="Segs">_%lngCertificateClassCode_DIS%_</td>
+				</tr>
+
+				<tr>
+					<td id="Copyright" class="SegColumn">版権元</td><td class="Segs">_%lngCopyrightCode_DIS%_</td>
+				</tr>
+
+				<tr>
+					<td id="CopyrightRemark" class="SegColumn">版権元備考</td><td class="Segs">_%strCopyrightNote%_</td>
+				</tr>
+
+				<tr>
+					<td id="CopyrightStamp" class="SegColumn">版権表示(刻印)</td><td class="Segs">_%strCopyrightDisplayStamp%_</td>
+				</tr>
+
+				<tr>
+					<td id="CopyrightPrint" class="SegColumn">版権表示(印刷物)</td><td class="Segs">_%strCopyrightDisplayPrint%_</td>
+				</tr>
+
+				<tr>
+					<td id="ProductsInfo" class="SegColumn">製品構成</td><td class="Segs">_%strProductComposition%_</td>
+				</tr>
+
+				<tr>
+					<td id="AssemblyInfo" class="SegColumn">アッセンブリ内容</td><td class="Segs">_%strAssemblyContents%_</td>
+				</tr>
+
+				<tr>
+					<td id="Details" class="SegColumn">仕様詳細</td><td class="Segs">_%strSpecificationDetails_DIS%_</td>
+				</tr>
+
+			</table>
+
+
+		</td>
+	</tr>
+</table>
+
+<br>
+
+
+</p>
+
+
+</body>
+</html>

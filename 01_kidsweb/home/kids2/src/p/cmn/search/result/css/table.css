@@ -1,0 +1,30 @@
+table#result th,
+table#result td
+{
+    text-align: center;
+    white-space: nowrap;
+}
+table.tablesorter thead tr th,
+table.tablesorter tfoot tr th {
+	background-color: #799797;
+    font-size: 8pt;
+    color: white;
+    font-weight: normal;
+    padding: 4px;
+    border: 1px solid #ddd
+}
+.wrapper {
+  position: relative;
+  top: 50px;
+  height: 250px;
+  overflow-x: auto;
+}
+
+table {
+    border-collapse: collapse;    
+}
+
+table.tablesorter tbody tr td
+{
+    border: 1px solid #ddd;
+}

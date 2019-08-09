@@ -1,0 +1,385 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html lang="ja">
+<head>
+<title>K.I.D.S.</title>
+<meta http-equiv="content-type" content="text/html; charset=euc-jp">
+
+
+<script type="text/javascript" language="javascript" src="/layout/type01/cmn/images.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/type01/p/search/initlayoutsearch.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/type01/cmn/initlayoutcommon.js"></script>
+
+
+<script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/query.js"></script>
+<script type="text/vbscript" Language="vbscript" src="/cmn/vbsclass.js"></script>
+<script type="text/vbscript" Language="vbscript" src="/cmn/vbscript.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/lngcheck.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/masterlib.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="/cmn/layout.css">
+<link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
+
+
+<script type="text/javascript" language="javascript" src="/layout/type01/cmn/initlayoutmsw.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="layout.css">
+<script type="text/javascript" language="javascript" src="exstr.js"></script>
+<script type="text/javascript" language="javascript" src="functions.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
+
+</head>
+<body id="Backs" onload="initLayoutSegs( Segs , Vars , Goods , GoodsVars , CheckGoods1 , CheckGoods2 , CheckGoods3 , CheckGoods4 );initLayoutPSearch();initLayoutMsw();GetIfrmlngLanguageCode();">
+<!-- oncontextmenu="return false;" -->
+
+
+<OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting" WIDTH="0" HEIGHT="0"></OBJECT>
+<Script for="objDataSourceSetting" event="ondatasetcomplete">subLoadMasterSetting(this.recordset,0);
+</Script>
+
+
+
+<form action="../result/index.php" name="PS" method="post">
+<input type="hidden" name="ActionScriptName" value="/p/result/index.php">
+<input type="hidden" name="strSessionID" value="_%strSessionID%_">
+
+<!-- START SEGMENTS -->
+<p id="Goods">
+<span id="CreateDate">作成日</span>
+<span id="ProgressStatus">企画進行状況</span>
+<span id="ReviseDate">改訂日</span>
+</p>
+
+<p id="GoodsVars">
+<span id="CreateDateVars">
+	FROM&nbsp;<input class="Txt19L" type="text" name="dtmInsertDateFrom" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate(this);" tabindex="">TO&nbsp;<input class="Txt19L" type="text" name="dtmInsertDateTo" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate(this);" tabindex="">
+</span>
+
+<span id="ProgressCodeVars">
+	<select class="Slt15" name="lngGoodsPlanProgressName" tabindex="">
+	_%lngGoodsPlanProgressName%_
+	</select>
+</span>
+
+<span id="ReviseDateVars">
+	<input class="Txt19L" type="text" name="dtmRevisionDate" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate(this);" tabindex="">
+</span>
+</p>
+
+
+
+
+<p id="Segs">
+<span id="SegA01">製品コード</span>
+
+<span id="SegA05">製品名称(日本語)</span>
+<span id="SegA06">製品名称(英語)</span>
+
+
+<span id="SegA03">営業部署</span>
+<span id="SegA04">開発担当者</span>
+
+<span id="SegA02">顧客品番</span>
+<span id="SegA18">カテゴリ</span>
+
+<span id="SegA07">商品名称</span>
+
+<span id="SegB08">顧客</span>
+<span id="SegB09">顧客担当者</span>
+
+<span id="SegA09">荷姿単位</span>
+<span id="SegA08">製品単位</span>
+
+<span id="SegA12">内箱(袋)入数</span>
+<span id="SegA13">カートン入数</span>
+
+<span id="SegB06">生産予定数</span>
+<span id="SegB07">初回納品数</span>
+
+
+<span id="SegB03">生産工場</span>
+<span id="SegA17">アッセンブリ工場</span>
+<span id="SegB04">納品場所</span>
+
+
+<span id="SegB05">納期</span>
+
+<span id="SegB02">納価</span>
+<span id="SegB01">上代</span>
+<span id="SegA11">対象年齢</span>
+
+<span id="SegB11">ロイヤリティ</span>
+<span id="SegB16">証紙</span>
+
+<span id="SegB10">版権元</span>
+
+<span id="SegB12">版権表示(刻印)</span>
+<span id="SegB13">版権元表示(印刷物)</span>
+
+<span id="SegB17">商品形態</span>
+
+<span id="SegA14">製品構成</span>
+<span id="SegA15">アッセンブリ内容</span>
+<span id="SegB14">仕様詳細</span>
+<!-- END SEGMENTS -->
+</p>
+
+<!-- VarsA01	製品コード strProductCodeFrom -->
+<!-- VarsA05	製品名称(日本語) strProductName -->
+<!-- VarsA06	製品名称(英語) strProductEnglishName -->
+<!-- VarsA03_1	営業部署 lngInChargeGroupCode -->
+<!-- VarsA04_1	開発担当者 lngInChargeUserCode -->
+<!-- VarsA02_1	顧客品番 lngCustomerCompanyCode -->
+<!-- SegA07		商品名称 -->
+<!-- SegB08		顧客 lngCustomerCompanyCode -->
+<!-- SegB09		顧客担当者 strCustomerUserName -->
+<!-- SegA09		荷姿単位 lngPackingUnitCode -->
+<!-- SegA12		内箱(袋)入数-->
+<!-- SegA13		カートン入数-->
+<!-- SegB06		生産予定数-->
+<!-- SegB07		初回納品数-->
+<!-- SegB03		生産工場-->
+<!-- SegA17		アッセンブリ工場-->
+<!-- SegB04		納品場所-->
+<!-- SegB05		納期-->
+<!-- SegB01		上代-->
+<!-- SegA11		対象年齢-->
+<!-- SegB11		ロイヤリティ-->
+<!-- SegB16		証紙-- lngCertificateClassCode>
+<!-- SegB10		版権元-->
+<!-- SegB12		版権表示(刻印)-->
+<!-- SegB13		版権元表示(印刷物)-->
+<!-- SegB17		商品形態-->
+<!-- SegA14		製品構成-->
+<!-- SegA15		アッセンブリ内容-->
+<!-- SegB14		仕様詳細-->
+
+
+<!-- START VARS -->
+<p id="Vars">
+
+
+<span id="VarsA01">
+	FROM&nbsp;<input class="TxtStyle03L" type="text" name="strProductCodeFrom" value="" maxlength="4" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="">TO&nbsp;<input class="TxtStyle03L" type="text" name="strProductCodeTo" value="" maxlength="4" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="">
+</span>
+<span id="VarsA05">
+	<input class="Txt52L" type="text" name="strProductName" value="" maxlength="40" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="">
+</span>
+
+
+<span id="VarsA06">
+	<input class="Txt52L" type="text" name="strProductEnglishName" value="" maxlength="40" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="" >
+</span>
+
+
+<span id="VarsA03_1">
+	<input class="TxtStyle02L" type="text" name="lngInChargeGroupCode" value="" maxlength="2" onfocus="chColorOn(this);" onblur="chColorOff(this);subLoadMasterCheck(this);" tabindex="" onChange="subLoadMasterText(1, this, strInChargeGroupName, Array( this.value ), objDataSourceSetting )">&nbsp;<input class="TxtStyle06L" type="text"  name="strInChargeGroupName" value="" maxlength="25" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="">
+</span>
+
+
+<span id="VarsA04_1">
+	<input class="TxtStyle02L" type="text" name="lngInChargeUserCode" value="" maxlength="3" onfocus="chColorOn(this);" onblur="chColorOff(this);subLoadMasterCheck(this);" tabindex="" onChange="subLoadMasterText(2, this, strInChargeUserName, Array( this.value ), objDataSourceSetting )">&nbsp;<input class="TxtStyle06L" type="text"  name="strInChargeUserName" value="" maxlength="25" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="">
+</span>
+
+
+<span id="VarsA02_1">
+	<input class="Txt10L" type="text" name="strGoodsCode" value="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="">
+</span>
+
+<span id="VarsA07">
+	<input class="Txt59L" type="text" name="strGoodsName" value="" maxlength="40" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="">
+</span>
+
+<span id="VarsB08_1">
+	<input class="Txt10L" type="text" name="lngCustomerCompanyCode" value="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);subLoadMasterCheck(this);" tabindex="" onChange="subLoadMasterText(3, this, strCustomerCompanyName, Array( this.value ), objDataSourceSetting );">&nbsp;<input class="TxtStyle06L" type="text" name="strCustomerCompanyName" value="" maxlength="25" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="">
+</span>
+
+
+<span id="VarsB09">
+	<input class="Txt10L" type="text" name="lngCustomerUserCode" value="" maxlength="" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="">&nbsp;<input class="TxtStyle06L" type="text" name="strCustomerUserName" value="" maxlength="25" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="" DATASRC="#" DATAFLD="name">
+</span>
+
+
+<span id="VarsA09"></span>
+
+<span id="VarsA08"></span>
+
+<span id="VarsA12"></span>
+<span id="VarsA13"></span>
+
+<span id="VarsB06_1"></span>
+<span id="VarsB07_1"></span>
+
+
+
+<span id="VarsB03_1">
+	<input class="Txt10L" type="text" name="lngFactoryCode" value="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);subLoadMasterCheck(this);" tabindex=""  onChange="subLoadMasterText(5, this, strFactoryName, Array( this.value ), objDataSourceSetting )">&nbsp;<input class="TxtStyle06L" type="text"  name="strFactoryName" value="" maxlength="" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="">
+</span>
+
+<span id="VarsA17_1">
+	<input class="Txt10L" type="text" name="lngAssemblyFactoryCode" value="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);subLoadMasterCheck(this);" tabindex="" onChange="subLoadMasterText(6, this, AssemblyFactoryName, Array( this.value ), objDataSourceSetting )">&nbsp;<input class="TxtStyle06L" type="text" name="AssemblyFactoryName" value="" maxlength="25" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="" DATASRC="#objAssemblyFactoryName" DATAFLD="name">
+</span>
+
+<span id="VarsB04_1">
+	<input class="Txt10L" type="text" name="lngDeliveryPlaceCode" value="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="" onChange="subLoadMasterText(7, this, DeliveryPlaceName, Array( this.value ), objDataSourceSetting )">&nbsp;<input class="TxtStyle06L" type="text"  name="DeliveryPlaceName" value="" maxlength="25" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="">
+</span>
+
+<span id="VarsB05">
+	<input class="Txt10L" type="text" name="dtmDeliveryLimitDate" value="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate(this);" tabindex="">
+</span>
+
+<span id="VarsB02"></span>
+
+<span id="VarsB01"></span>
+
+<span id="VarsA11"></span>
+
+<span id="VarsB11"></span>
+
+<span id="VarsB16">
+	<select name="lngCertificateClassCode" tabindex="">
+	_%lngCertificateClassCode%_
+	</select>
+</span>
+
+<span id="VarsB10">
+	<select class="SlctStyle04" name="lngCopyrightCode" tabindex="">
+	_%lngCopyrightCode%_
+	</select>
+</span>
+
+<span id="VarsB12"></span>
+<span id="VarsB13"></span>
+
+<span id="VarsB17"></span>
+
+<span id="VarsA14"></span>
+<span id="VarsA15"></span>
+<span id="VarsB14"></span>
+<!-- END VARS -->
+</p>
+<!-- //////////////////////////////////// END INPUT A SEGMENTS //////////////////////////////////// -->
+
+<p id="CheckGoods1">
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="dtmInsertDateConditions" _%dtmInsertDateConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngGoodsPlanProgressCodeConditions" _%lngGoodsPlanProgressCodeConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="dtmRevisionDateConditions" _%dtmRevisionDateConditions%_></span>
+</p>
+<p id="CheckGoods2">
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="dtmInsertDateVisible" _%dtmInsertDateVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngGoodsPlanProgressCodeVisible" _%lngGoodsPlanProgressCodeVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="dtmRevisionDateVisible" _%dtmRevisionDateVisible%_></span>
+</p>
+
+
+<p id="CheckGoods3">
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="strProductCodeConditions" _%strProductCodeConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="strProductNameConditions" _%strProductNameConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="strProductEnglishNameConditions" _%strProductEnglishNameConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngInChargeGroupCodeConditions" _%lngInChargeGroupCodeConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngInChargeUserCodeConditions" _%lngInChargeUserCodeConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="strGoodsCodeConditions" _%strGoodsCodeConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="strGoodsNameConditions" _%strGoodsNameConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngCustomerCompanyCodeConditions" _%lngCustomerCompanyCodeConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngCustomerUserCodeConditions" _%lngCustomerUserCodeConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="" disabled></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="" disabled></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="" disabled></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="" disabled></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="" disabled></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="" disabled></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngFactoryCodeConditions" _%lngFactoryCodeConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngAssemblyFactoryCodeConditions" _%lngAssemblyFactoryCodeConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngDeliveryPlaceCodeConditions" _%lngDeliveryPlaceCodeConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="dtmDeliveryLimitDateConditions" _%dtmDeliveryLimitDateConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="" disabled></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="" disabled></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="" disabled></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="" disabled></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngCertificateClassCodeConditions" _%lngCertificateClassCodeConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="lngCopyrightCodeConditions" _%lngCopyrightCodeConditions%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="" disabled></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="" disabled></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="" disabled></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="" disabled></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="" disabled></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="SearchColumn[]" value="" disabled></span>
+</p>
+
+<p id="CheckGoods4">
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="strProductCode" checked></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="strProductName" checked></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="strProductEnglishNameVisible" _%strProductEnglishNameVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngInChargeGroupCodeVisible" _%lngInChargeGroupCodeVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngInChargeUserCodeVisible" _%lngInChargeUserCodeVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="strGoodsCodeVisible" _%strGoodsCodeVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="strGoodsNameVisible" _%strGoodsNameVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngCustomerCompanyCodeVisible" _%lngCustomerCompanyCodeVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngCustomerUserCodeVisible" _%strCustomerUserNameVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngPackingUnitCodeVisible" _%lngPackingUnitCodeVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngProductUnitCodeVisible" _%lngProductUnitCodeVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngBoxQuantityVisible" _%lngBoxQuantityVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngCartonQuantityVisible" _%lngCartonQuantityVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngProductionQuantityVisible" _%lngProductionQuantityVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngFirstDeliveryQuantityVisible" _%lngFirstDeliveryQuantityVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngFactoryCodeVisible" _%lngFactoryCodeVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngAssemblyFactoryCodeVisible" _%lngAssemblyFactoryCodeVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngDeliveryPlaceCodeVisible" _%lngDeliveryPlaceCodeVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="dtmDeliveryLimitDateVisible" _%dtmDeliveryLimitDateVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="curProductPriceVisible" _%curProductPriceVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="curRetailPriceVisible" _%curRetailPriceVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngTargetAgeCodeVisible" _%lngTargetAgeCodeVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngRoyaltyVisible" _%lngRoyaltyVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngCertificateClassCodeVisible" _%lngCertificateClassCodeVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngCopyrightCodeVisible" _%lngCopyrightCodeVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="strCopyrightDisplayStampVisible" _%strCopyrightDisplayStampVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="strCopyrightDisplayPrintVisible" _%strCopyrightDisplayPrintVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="lngProductFormCodeVisible" _%lngProductFormCodeVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="strProductCompositionVisible" _%strProductCompositionVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="strAssemblyContentsVisible" _%strAssemblyContentsVisible%_></span>
+<span id="Checks"><input class="CheckBoxStyle" type="checkbox" name="ViewColumn[]" value="strSpecificationDetailsVisible" _%strSpecificationDetailsVisible%_></span>
+</p>
+
+
+<span id="ViewSearch1"></span>
+<span id="ViewSearch2"></span>
+
+<span id="CheckAll1" onclick="fncCheckAll1();"></span>
+<span id="CheckAll2" onclick="fncCheckAll2();"></span>
+
+<span id="DummySpace"></span>
+
+
+<span id="SegA0304"></span>
+<span id="SegB0809"></span>
+
+
+
+
+<!-- START [DEPT & IN CHARGE NAME] BUTTON -->
+<span id="MSWBt02"></span>
+<!-- END [DEPT & IN CHARGE NAME] BUTTON -->
+
+<!-- START [VENDOR & IN CHARGE NAME] BUTTON -->
+<span id="MSWBt07"></span>
+<!-- END [VENDOR & IN CHARGE NAME] BUTTON -->
+
+<!-- START [VENDOR 02] BUTTON -->
+<span id="MSWBt01_2"></span>
+<!-- END [VENDOR 02] BUTTON -->
+
+<!-- START [VENDOR 03] BUTTON -->
+<span id="MSWBt01_3"></span>
+<!-- END [VENDOR 03] BUTTON -->
+
+<!-- START [LOCATION] BUTTON -->
+<span id="MSWBt04"></span>
+<!-- END [LOCATION] BUTTON -->
+
+
+
+
+<input type="submit" onClick="javascript:setCookie( 'ProductSearch', document.PS );">
+<!-- input type="button" value="SUBMIT" onClick="GoResult2()" -->
+<!-- input type="button" value="SUBMIT" onClick="GoResult( window.PS , '/p/result/index.html' )" -->
+</form>
+</body>
+</html>

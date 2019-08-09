@@ -1,0 +1,815 @@
+<config>
+<!-----------------------------------------------------------------------------
+	File name     : Products registration template
+	Last modified : 2004/02/25
+	Author        : Ryosuke Tomita
+	Remark        : Test
+------------------------------------------------------------------------------->
+<header1>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/images.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutbase.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutcommon.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayouterror.js"></script>
+</header1>
+
+
+<header2>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/p/cmn/images.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/p/regist/initlayout.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutmsw.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutquery.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutdate.js"></script>
+</header2>
+
+
+<header3>
+<link rel="stylesheet" type="text/css" media="screen" href="_%strCssName%_">
+<link rel="stylesheet" type="text/css" media="screen" href="_%strErrorCssName%_">
+<script type="text/javascript" language="javascript" src="exstr.js"></script>
+<script type="text/javascript" language="javascript" src="functions.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
+<script type="text/javascript" language="javascript" src="/p/cmn/productequalcheck.js"></script>
+<script type="text/javascript" language="javascript">
+
+	function fncPOSubmit( obj )
+	{
+		SubmitRequest( PPP1, PPP2 );
+
+		return false;
+/*
+		// 「承認なし」の場合の判定 -> 「承認なし」の場合はボタン押下禁止
+		for( i=0; i < obj.options.length; i++ )
+		{
+			if( obj.options[i].text == '承認なし' && i == 0)
+			{
+				break;
+			}
+			else
+			{
+				SubmitRequest( PPP1, PPP2 );
+
+				//window.DLwin.fncDtRegistRecord();
+				break;
+			}
+		}
+*/
+	}
+
+
+
+	var WinCnt = 0;
+
+	// 承認ルートボタン押下処理
+	function fncOpenWFRoot( obj )
+	{
+		// 「承認なし」の場合の判定 -> 「承認なし」の場合はボタン押下禁止
+		for( i=0; i < obj.options.length; i++ )
+		{
+			if( obj.options[i].text == '承認なし' )
+			{
+				if( i == 0 ) return false;
+			}
+		}
+
+		if( WinCnt == 0 )
+		{
+			WFRootFrame.style.visibility = 'visible';
+			WFrootBt.innerHTML = darkgrayOpenBt3;
+			WinCnt = 1;
+		}
+		else if( WinCnt == 1 )
+		{
+			WFRootFrame.style.visibility = 'hidden';
+			WFrootBt.innerHTML = darkgrayOpenBt1;
+			WinCnt = 0;
+		}
+
+		return false;
+	}
+
+	function fncRedirectOpen( obj )
+	{
+		if( WinCnt == 1 )
+		{
+			fncOpenWFRoot();
+		}
+	}
+
+</script>
+</header3>
+
+
+<bodyonload>
+initLayoutBase(); 
+initLayoutP(); 
+initLayoutQuery(); 
+initLayoutMsw(); 
+initLayoutDate(); 
+autoFocus1(); 
+initLayoutError1( ErrInputA ); 
+initLayoutError2( ErrInputB ); 
+fncRegistrationConfirm( window.PPP1 , window.PPP2 , '/result/common.html' , '/result/regist_ifrm.html' , 'ResultIframeRenew' , 'NO' , _%lngLanguageCode%_ , document.all.lngRegistConfirm.value ); 
+Loading();
+</bodyonload>
+</config>
+
+
+
+<p id="Preload">
+	<iframe id="PreloadFrm" name="PreloadWin" frameborder="0" src="/preload/index.html" onload="fncObjectResize( this , 0 , 0 );"></iframe>
+</p>
+
+
+<!-- 確認画面表示フラグ -->
+<input type="hidden" name="lngRegistConfirm" value="_%lngRegistConfirm%_">
+
+
+<bgsound id="BeepSound" src="/error/dummy.aif" loop="1" balance="0" volume="-100">
+
+
+<!-- オブジェクト -->
+<!-- 1:部門→部門名称 -->
+<!-- 2:担当者コード→担当者名 -->
+<!-- 3:顧客→顧客名称 -->
+<!-- 4:顧客品番 -->
+<!-- 5:生産工場→生産工場名称 -->
+<!-- 6:アッセンブリコード→アッセンブリ名 -->
+<!-- 7:納品場所→納品場所名称 -->
+
+
+<OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting" WIDTH="0" HEIGHT="0"></OBJECT>
+<Script for="objDataSourceSetting" event="ondatasetcomplete">subLoadMasterSetting(this.recordset,0);
+</Script>
+
+<OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting1" WIDTH="0" HEIGHT="0"></OBJECT>
+<Script for="objDataSourceSetting1" event="ondatasetcomplete">subLoadMasterSetting(this.recordset,1);
+</Script>
+
+<OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSettingProduct" WIDTH="0" HEIGHT="0"></OBJECT>
+<Script for="objDataSourceSettingProduct" event="ondatasetcomplete">
+	subLoadMasterSetting(this.recordset,3);
+	subLoadMasterProductCheck(document.all.strProductEnglishName, document.all.lngInChargeGroupCode, document.all.productequalcheck);
+</Script>
+
+
+
+
+<form name="PPP1" action="_%strActionURL%_" method="post">
+
+<!-- ダイアログ上でのクエリ送信先URL -->
+<input type="hidden" name="ActionScriptName" value="_%strurl%_">
+
+<input type="hidden" name="strProcess" value="_%strProcess%_">
+<input type="hidden" name="strSessionID" value="_%strSessionID%_">
+
+
+
+<!-- ////////////////////////////////// START MAIN TITLE ////////////////////////////////// -->
+<span id="MainTitle" style="visibility:_%strBaseVisibilityName%_;"></span>
+<!-- /////////////////////////////////// END MAIN TITLE /////////////////////////////////// -->
+
+
+
+
+
+
+
+
+
+<!-- /////////////////////////////////// START NAVIGAION /////////////////////////////////// -->
+<span id="NaviButton" style="visibility:_%strBaseVisibilityName%_;"></span>
+
+<p id="Navigations" onmouseout="NavigationOFF( Navigations , NaviButton );">
+<span id="Navi">
+	<iframe id="NaviIfrm" name="NAVIwin" frameborder="0" scrolling="no" src="/navi/index.php?strSessionID=_%strSessionID%_&strNaviCode=p-31111"></iframe>
+</span>
+</p>
+<!-- //////////////////////////////////// END NAVIGAION //////////////////////////////////// -->
+
+
+
+
+
+
+
+<!-- /////////////////////////////////// START INPUT A SEGMENTS /////////////////////////////////// -->
+<p id="InputA">
+
+
+<!-- START BODYS -->
+<span id="SegABodys"></span>
+<!-- END BODYS -->
+
+<!-- START HEADER -->
+<span id="SegAHeader"></span>
+<!-- END HEADER -->
+
+<!-- START BOTTOM -->
+<span id="SegABottom"></span>
+<!-- END BOTTOM -->
+
+<!-- START QUERY BUTTON -->
+<span id="SegAClearBt" onclick="fncResetFrm( window.PPP1 );return false;"></span>
+<!-- END QUERY BUTTON -->
+
+
+<!-- START SEGMENTS -->
+<span id="SegA01">製品コード</span>
+
+<span id="SegA05">製品名称(日本語)</span>
+<span id="SegA06">製品名称(英語)</span>
+
+<span id="SegA03">営業部署</span>
+<span id="SegA04">開発担当者</span>
+<span id="SegA0304"></span>
+
+<span id="SegA02">顧客品番</span>
+<span id="SegA18">カテゴリ</span>
+
+<span id="SegA07">商品名称</span>
+<span id="SegB08">顧客</span>
+<span id="SegB09">顧客担当者</span>
+<span id="SegB0809"></span>
+
+<span id="SegA09">荷姿単位</span>
+<span id="SegA08">製品単位</span>
+
+<span id="SegB17">商品形態</span>
+<span id="SegA12">内箱(袋)入数</span>
+<span id="SegA13">カートン入数</span>
+
+<span id="SegB06">生産予定数</span>
+<span id="SegB07">初回納品数</span>
+
+<span id="CreateDate">作成日時</span>
+
+<!-- END SEGMENTS -->
+
+
+<!-- START VARS -->
+<!-- 製品コード -->
+<span id="VarsA01">
+	<input class="extends-disTxt05L" type="text" name="strProductCode" value="_%strProductCode%_" readonly>
+</span>
+
+<!-- 製品名称 -->
+<span id="VarsA05">
+	<input class="TxtStyle07L" type="text" name="strProductName" value="_%strProductName%_" maxlength="100" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString(this);" tabindex="1">
+</span>
+
+<!-- 製品名称（英語） -->
+<span id="VarsA06">
+	<input style="ime-mode:disabled;" class="TxtStyle07L" type="text" name="strProductEnglishName" value="_%strProductEnglishName%_" maxlength="100" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString(this);" onChange="objWindow1.style.visibility = 'hidden';subLoadMasterText('productEqualCheckCount', this, document.PPP1.productequalcheck, Array ( strProductEnglishName.value, lngInChargeGroupCode.value ), objDataSourceSettingProduct, 3);" tabindex="2">
+</span>
+
+
+<!-- 部門コード & 部門の名称 -->
+<span id="VarsA03">
+	<input style="ime-mode:disabled;" class="TxtStyle02L" type="text" name="lngInChargeGroupCode" value="_%lngInChargeGroupCode%_" maxlength="2" onfocus="chColorOn(this);" onblur="chColorOff(this);subLoadMasterCheck(this);" onChange="objWindow1.style.visibility = 'hidden';subLoadMasterText('cnGroup', this, strInChargeGroupName, Array(this.value), objDataSourceSetting);subLoadMasterText('productEqualCheckCount', this, document.PPP1.productequalcheck, Array ( strProductEnglishName.value, lngInChargeGroupCode.value ), objDataSourceSettingProduct, 3);
+			lngInChargeUserCode.value='';strInChargeUserName.value='';" tabindex="3">&nbsp;<input class="disTxt46L" type="text" name="strInChargeGroupName" value="_%strInChargeGroupName%_" maxlength="" readonly>
+</span>
+
+<!-- 同一チェック値 -->
+<input type="hidden" name="productequalcheck" value="">
+
+<!-- 担当者 & 担当者の名称 -->
+<span id="VarsA04">
+	<input style="ime-mode:disabled;" class="TxtStyle02L" type="text" name="lngInChargeUserCode" value="_%lngInChargeUserCode%_" maxlength="3" onfocus="chColorOn(this);" onblur="chColorOff(this);subLoadMasterCheck(this);" onChange="subLoadMasterText('cnUser', this, strInChargeUserName, Array(this.value,lngInChargeGroupCode.value), objDataSourceSetting);" tabindex="4">&nbsp;<input class="disTxt46L" type="text" name="strInChargeUserName" value="_%strInChargeUserName%_" maxlength="" readonly>
+</span>
+
+<!-- 顧客識別コード & 顧客品番 -->
+<span id="VarsA02">
+	<input class="disTxt02R" type="text" name="strCustomerDistinctCode" value="_%strCustomerDistinctCode%_" maxlength="" readonly>&nbsp;<input style="ime-mode:disabled;" class="TxtStyle05L" type="text" name="strGoodsCode" value="_%strGoodsCode%_" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="6">
+</span>
+
+<!-- カテゴリ -->
+<span id="VarsA18">
+	<select name="lngCategoryCode" tabindex="6" class="Slt30">
+	_%lngCategoryCode%_
+	</select>
+</span>
+
+<!-- 商品名称 -->
+<span id="VarsA07">
+	<input class="TxtStyle07L" type="text" name="strGoodsName" value="_%strGoodsName%_" maxlength="100" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString(this);" tabindex="7">
+</span>
+
+<!-- 顧客& 顧客の名称 -->
+<span id="VarsB08">
+	<input style="ime-mode:disabled;" class="TxtStyle05L" type="text" name="lngCompanyCode" value="_%lngCompanyCode%_" maxlength="4" onfocus="chColorOn(this);" onblur="chColorOff(this);subLoadMasterCheck(this);" onChange="subLoadMasterText(3, this, strCustomerName,Array( this.value ), objDataSourceSetting,0 );subLoadMasterText(4, this, strCustomerDistinctCode, Array( this.value ), objDataSourceSetting1,1 )" tabindex="8">&nbsp;<input class="disTxt46L" type="text" name="strCustomerName" value="_%strCustomerName%_" maxlength="25" readonly>
+</span>
+
+<!-- 顧客担当者 & 顧客担当者の名称 -->
+<span id="VarsB09">
+	<input style="ime-mode:disabled;" class="TxtStyle05L" type="text" name="strCustomerUserCode" value="_%strCustomerUserCode%_" maxlength="3" onfocus="chColorOn(this);" onblur="chColorOff(this);subLoadMasterCheck(this);" onChange="subLoadMasterText(13, this, strCustomerUserName, Array( this.value,lngCompanyCode.value), objDataSourceSetting,0);" tabindex="9">&nbsp;<input class="Txt46L" type="text" name="strCustomerUserName" value="_%strCustomerUserName%_" maxlength="50" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString(this);" tabindex="10">
+</span>
+
+
+<!-- 荷姿単位 -->
+<span id="VarsA09">
+	<select name="lngPackingUnitCode" tabindex="12">
+	_%lngPackingUnitCode%_
+	</select>
+</span>
+
+<!-- 製品単位 -->
+<span id="VarsA08">
+	<select name="lngProductUnitCode" tabindex="13">
+	_%lngProductUnitCode%_
+	</select>
+</span>
+
+<!-- 商品形態 -->
+<span id="VarsB17">
+	<select name="lngProductFormCode" tabindex="14">
+	_%lngProductFormCode%_
+	</select>
+</span>
+
+<!-- 内箱（袋）入数 -->
+<span id="VarsA12">
+	<input style="ime-mode:disabled;" class="TxtStyle14R" type="text" name="lngBoxQuantity" value="_%lngBoxQuantity%_" maxlength="9" onfocus="chColorOn(this);" onblur="chColorOff(this); fncCheckNumber(this, 0, false );" tabindex="15">
+</span>
+
+<!-- カートン入数 -->
+<span id="VarsA13">
+	<input style="ime-mode:disabled;" class="TxtStyle14R" type="text" name="lngCartonQuantity" value="_%lngCartonQuantity%_" maxlength="9" onfocus="chColorOn(this);" onblur="chColorOff(this); fncCheckNumber(this, 0, false);" tabindex="16">
+</span>
+
+<!-- 生産予定数 -->
+<span id="VarsB06_1">
+	<input style="ime-mode:disabled;" class="TxtStyle14R" type="text" name="lngProductionQuantity" value="_%lngProductionQuantity%_" maxlength="9" onfocus="chColorOn(this);" onblur="chColorOff(this); fncCheckNumber(this, 0, false );" tabindex="17">
+</span>
+
+<!-- 生産予定数の単位 -->
+<span id="VarsB06_2">
+	<select name="lngProductionUnitCode" tabindex="18">
+	_%lngProductionUnitCode%_
+	</select>
+</span>
+
+<!-- 初回納品数 -->
+<span id="VarsB07_1">
+	<input style="ime-mode:disabled;" class="TxtStyle14R" type="text" name="lngFirstDeliveryQuantity" value="_%lngFirstDeliveryQuantity%_" maxlength="9" onfocus="chColorOn(this);" onblur="chColorOff(this); fncCheckNumber(this, 0, false );" tabindex="19">
+</span>
+
+<!-- 初回納品数の単位 -->
+<span id="VarsB07_2">
+	<select name="lngFirstDeliveryUnitCode" tabindex="20">
+	_%lngFirstDeliveryUnitCode%_
+	</select>
+</span>
+
+<!-- 作成日 -->
+<span id="CreateDateVars">
+	<input class="disTxt19L" type="text" name="dtmInsertDate" value="_%dtmInsertDate%_" readonly>
+</span>
+<!-- END VARS -->
+
+
+<!-- START [DEPT & IN CHARGE NAME] BUTTON -->
+<span id="MSWBt02" onclick="fncGetObjectName( window.MDwin , lngInChargeGroupCode , strInChargeGroupName , lngInChargeUserCode , strInChargeUserName );DisplayerM02( '' , document.all.Mdata02 , window.MDwin.document.all.strGroupCode , window.MDwin.document.all.strUserCode );ExchangeM02( 0 , window.self );fncFocusType( window.MDwin , 'deptTop' );return false;"></span>
+<!-- END [DEPT & IN CHARGE NAME] BUTTON -->
+
+<!-- START [VENDOR & IN CHARGE NAME] BUTTON -->
+<span id="MSWBt07" onclick="fncGetObjectName( window.VIwin , lngCompanyCode , strCustomerName , strCustomerUserCode , strCustomerUserName );DisplayerM07( '' , document.all.Mdata07 , window.VIwin.document.all.strCustomerCode , window.VIwin.document.all.strInChargeCode );ExchangeM07( 0 , window.self );fncFocusType( window.VIwin , 'viTop' );return false;"></span>
+<!-- END [VENDOR & IN CHARGE NAME] BUTTON -->
+
+<!-- START GOODS PLAN BUTTON -->
+<span id="GoodsPlanButton" onclick="ShowGoodsPlan(this);"></span>
+<!-- END GOODS PLAN BUTTON -->
+
+
+
+</p>
+<!-- //////////////////////////////////// END INPUT A SEGMENTS //////////////////////////////////// -->
+
+
+
+
+
+
+
+
+
+
+
+<!-- ////////// START GOODS PLAN WINDOW ////////// -->
+<p id="GoodsPlan">
+<span id="GoodsPlanBodys"></span>
+<span id="GoodsPlanBottom"></span>
+<span id="GoodsPlanHeader"></span>
+<span id="ProgressStatus">企画進行状況</span>
+<span id="ReviseNumber">改訂番号</span>
+<span id="ReviseDate">改訂日時</span>
+
+<span id="ProgressCodeVars">
+	<select class="Slt15" name="lngGoodsPlanProgressCode" tabindex="">
+		_%lngGoodsPlanProgressCode%_
+	</select>
+</span>
+
+<span id="ReviseNumberVars">
+	<input class="disTxt03L" type="text" name="lngRevisionNo" value="_%lngRevisionNo%_" readonly>
+</span>
+
+<span id="ReviseDateVars">
+	<input class="disTxt19L" type="text" name="dtmRevisionData" value="_%dtmRevisionData%_" readonly>
+</span>
+<input type="hidden" name="lnGgoodsPlanCode" value="_%lnggoodsplancode%_">
+<input type="hidden" name="lngproductno" value="_%lngproductno%_">
+</p>
+<!-- ////////// END GOODS PLAN WINDOW ////////// -->
+
+
+
+
+
+
+
+
+<span id="Record"></span>
+</form>
+<form name="PPP2">
+
+
+
+
+
+
+
+
+
+
+<!-- /////////////////////////////////// START INPUT B SEGMENTS /////////////////////////////////// -->
+<p id="InputB">
+
+
+<!-- START HEADER -->
+<span id="SegBHeader"></span>
+<!-- END HEADER -->
+
+<!-- START TITLE -->
+<span id="SegBBodys"></span>
+<!-- END TITLE -->
+
+<!-- START BOTTOM -->
+<span id="SegBBottom"></span>
+<!-- END BOTTOM -->
+
+<!-- START QUERY BUTTON -->
+<span id="SegBClearBt" onclick="fncResetFrm( window.PPP2 );return false;"></span>
+<span id="RegistBt" onclick="fncPOSubmit( document.PPP2.lngWorkflowOrderCode ); return false;"></span>
+<!-- <span id="RegistBt" onclick="SubmitRequest(PPP1,PPP2);return false;"></span> -->
+<!-- END QUERY BUTTON -->
+
+
+<!-- START SEGMENTS -->
+<span id="SegB03">生産工場</span>
+<span id="SegA17">アッセンブリ工場</span>
+<span id="SegB04">納品場所</span>
+
+
+<span id="SegB05">納期</span>
+
+<span id="SegB02">納価(pcs)</span>
+<span id="SegB01">上代(pcs)</span>
+
+<span id="SegA11">対象年齢</span>
+<span id="SegB11">ロイヤリティ(%)</span>
+<span id="SegB16">証紙</span>
+
+<span id="SegB10">版権元</span>
+<span id="SegB20">版権元備考</span>
+<span id="SegB12">版権表示(刻印)</span>
+<span id="SegB13">版権表示(印刷物)</span>
+
+<span id="SegA14">製品構成</span>
+<span id="SegA15">アッセンブリ内容</span>
+
+<span id="SegB14">仕様詳細</span>
+<!-- END SEGMENTS -->
+
+
+<!-- START VARS -->
+<!-- 生産工場 & 生産工場の名称 -->
+<span id="VarsB03">
+	<input style="ime-mode:disabled;" class="TxtStyle05L" type="text" name="lngFactoryCode" value="_%lngFactoryCode%_" maxlength="4" onfocus="chColorOn(this);" onblur="chColorOff(this);subLoadMasterCheck(this);" onChange="subLoadMasterText(5, this, strFactoryName, Array( this.value ), objDataSourceSetting)" tabindex="22">&nbsp;<input class="disTxt40L" type="text" name="strFactoryName" value="_%strFactoryName%_" maxlength="" readonly>
+</span>
+
+<!-- アッセンブリ工場 & アッセンブリ工場の名称 -->
+<span id="VarsA17">
+	<input style="ime-mode:disabled;" class="TxtStyle05L" type="text" name="lngAssemblyFactoryCode" value="_%lngAssemblyFactoryCode%_" maxlength="4" onfocus="chColorOn(this);" onblur="chColorOff(this);subLoadMasterCheck(this);" onChange="subLoadMasterText(6, this, strAssemblyFactoryName, Array( this.value ), objDataSourceSetting)" tabindex="24">&nbsp;<input class="disTxt40L" type="text" name="strAssemblyFactoryName" value="_%strAssemblyFactoryName%_" maxlength="" readonly>
+</span>
+
+<!-- 納品場所 & 納品場所の名称 -->
+<span id="VarsB04">
+	<input style="ime-mode:disabled;" class="TxtStyle05L" type="text" name="lngDeliveryPlaceCode" value="_%lngDeliveryPlaceCode%_" maxlength="4" onfocus="chColorOn(this);" onblur="chColorOff(this);subLoadMasterCheck(this);" onChange="subLoadMasterText('cnLocation', this, strDeliveryPlaceName, Array( this.value ), objDataSourceSetting)" tabindex="26">&nbsp;<input class="disTxt40L" type="text" name="strDeliveryPlaceName" value="_%strDeliveryPlaceName%_" maxlength="" readonly>
+</span>
+
+<!-- 納期 -->
+<span id="VarsB05">
+	<input style="ime-mode:disabled;" class="Txt07L" type="text" name="dtmDeliveryLimitDate" value="_%dtmDeliveryLimitDate%_" maxlength="7" onfocus="chColorOn(this);" onblur="chColorOff(this); fncCheckDate(this, 1);" tabindex="28">
+</span>
+
+<!-- 卸値 -->
+<span id="VarsB02">
+	<input style="ime-mode:disabled;" class="Txt23R" type="text" name="curProductPrice" value="_%curProductPrice%_" maxlength="14" onfocus="chColorOn(this);" onblur="fncCheckNumber(this, 2, false ); chColorOff(this);" tabindex="29">
+</span>
+
+<!-- 売値 -->
+<span id="VarsB01">
+	<input style="ime-mode:disabled;" class="Txt23R" type="text" name="curRetailPrice" value="_%curRetailPrice%_" maxlength="14" onfocus="chColorOn(this);" onblur="fncCheckNumber(this, 2, false );chColorOff(this);" tabindex="30">
+</span>
+
+<!-- 対象年齢 -->
+<span id="VarsA11">
+	<select name="lngTargetAgeCode" tabindex="31">
+	_%lngTargetAgeCode%_
+	</select>
+</span>
+
+<!-- ロイヤリティ -->
+<span id="VarsB11">
+	<input style="ime-mode:disabled;" class="TxtStyle05R" type="text" name="lngRoyalty" value="_%lngRoyalty%_" maxlength="6" onfocus="chColorOn(this);" onblur="fncCheckNumber(this, 2, false );chColorOff(this);" tabindex="32">
+</span>
+
+<!-- 証紙 -->
+<span id="VarsB16">
+	<select name="lngCertificateClassCode" tabindex="33">
+	_%lngCertificateClassCode%_
+	</select>
+</span>
+
+<!-- 版権元 -->
+<span id="VarsB10">
+	<select class="Slt20" name="lngCopyrightCode" tabindex="34">
+	_%lngCopyrightCode%_
+	</select>
+</span>
+
+<!-- 版権元備考 -->
+<span id="VarsB20">
+	<input class="Txt41L" type="text" name="strCopyrightNote" value="_%strCopyrightNote%_" maxlength="50" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString(this);" tabindex="35">
+</span>
+
+<!-- 版権表示（刻印） -->
+<span id="VarsB12">
+	<input class="Txt90L" type="text" name="strCopyrightDisplayStamp" value="_%strCopyrightDisplayStamp%_" maxlength="100" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString(this);" tabindex="36">
+</span>
+
+<!-- 版権表示（印刷物） -->
+<span id="VarsB13">
+	<input class="Txt90L" type="text" name="strCopyrightDisplayPrint" value="_%strCopyrightDisplayPrint%_" maxlength="100" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString(this);" tabindex="37">
+</span>
+
+<!-- 製品構成 -->
+<span id="VarsA14">
+	&nbsp;全&nbsp;<input style="ime-mode:disabled;" class="Txt02L" type="text" name="strProductComposition" value="_%strProductComposition%_" maxlength="2" onfocus="chColorOn(this);" onblur="fncCheckNumber(this, 0, false );chColorOff(this);" tabindex="38">種アッセンブリ
+</span>
+
+<!-- アッセンブリ内容 -->
+<span id="VarsA15">
+	<input class="Txt41L" type="text" name="strAssemblyContents" value="_%strAssemblyContents%_" maxlength="100" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString(this);" tabindex="39">
+</span>
+
+<!-- 仕様詳細 -->
+<span id="VarsB14">
+	<textarea rows="8" name="strSpecificationDetails" wrap="hard" maxlength="10000" onblur="fncCheckString( this , 10000 );" contenteditable="false">_%strSpecificationDetails%_</textarea>
+</span>
+
+<!-- END VARS -->
+
+<!-- onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this , 10000 );" -->
+
+
+<!-- START [CREATION FACTORY] BUTTON -->
+<span id="MSWBt01_2" onclick="fncGetObjectName( window.MVwin_2 , lngFactoryCode , strFactoryName );DisplayerM01_2( '' , document.all.Mdata01_2 , window.MVwin_2.document.all.strCreationFactoryCode );ExchangeM01_2( 0 , window.self );fncFocusType( window.MVwin_2 , 'creationTop' );return false;"></span>
+<!-- END [CREATION FACTORY] BUTTON -->
+
+<!-- START [ASSEMBLY FACTORY] BUTTON -->
+<span id="MSWBt01_3" onclick="fncGetObjectName( window.MVwin_3 , lngAssemblyFactoryCode , strAssemblyFactoryName );DisplayerM01_3( '' , document.all.Mdata01_3 , window.MVwin_3.document.all.strFactoryCode );ExchangeM01_3( 0 , window.self );fncFocusType( window.MVwin_3 , 'assemblyTop' );return false;"></span>
+<!-- END [ASSEMBLY FACTORY] BUTTON -->
+
+<!-- START [LOCATION] BUTTON -->
+<span id="MSWBt04" onclick="fncGetObjectName( window.MLwin , lngDeliveryPlaceCode , strDeliveryPlaceName );DisplayerM04( '' , document.all.Mdata04 , window.MLwin.document.all.strLocationCode  );ExchangeM04( 0 , window.self );fncFocusType( window.MLwin , 'locationTop' );return false;"></span>
+<!-- END [LOCATION] BUTTON -->
+
+<!-- Special Charaset -->
+<span id="SpecialBt" onclick="fncSpecialChar();return false;"></span>
+
+<!-- Special Charaset Iframe -->
+<span id="SpecialCharFrame">
+	<!-- <iframe id="SpecialChar" name="SpecialCharWin" frameborder="0" scrolling="no" src="/special/index.html"></iframe> -->
+	<iframe id="SpecialChar" name="SpecialCharWin" frameborder="0" scrolling="no" src="/special/index.php"></iframe>
+</span>
+
+<!-- START EDIT BUTTON -->
+<span id="EditBt" onclick="fncEditer( EditFrame );window.editWin.fncEditParentToHtmltext();return false;"></span>
+<!-- END EDIT BUTTON -->
+
+
+
+
+
+<!-------------------------------------------------------------------------
+	v2 tomita update
+-------------------------------------------------------------------------->
+<!-- 承認ルート -->
+<!--
+<span id="SegBWF">承認ルート</span>
+<span id="VarsBWF"><select class="Slt30PO" name="lngWorkflowOrderCode" tabindex="">_%lngWorkflowOrderCode%_</select></span>
+-->
+<!-- WORK FLOW ROOT BUTTON -->
+<!--
+<span id="WFrootBt" onclick="fncOpenWFRoot( document.PPP2.lngWorkflowOrderCode ); return false;"></span>
+<span id="WFRootFrame"><iframe id="WFroot" name="WFrootWin" frameborder="0" scrolling="no" src="/po/wf/index.php?strSessionID=_%strSessionID%_"></iframe></span>
+-->
+
+
+
+
+</p>
+<!-- //////////////////////////////////// END INPUT B SEGMENTS //////////////////////////////////// -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- /////////////////////////////////// START MSW /////////////////////////////////// -->
+<!-- START [CREATION FACTORY] -->
+<p id="MiFrame01_2" onclick="Zchange(this);">
+<iframe id="Mdata01_2" name="MVwin_2" frameborder="0" scrolling="no" src="/msw/creation/index.html"></iframe>
+<span id="DummyDrag01_2" onmousedown="pickup01_2('MiFrame01_2',event);return false;" 
+	onmouseup="ShowValue( window.MVwin_2 );fncMswPositionCheck( document.all.Mdata01_2 , document.all.MiFrame01_2 );" 
+	ondblclick="fncTitlebar( document.all.Mdata01_2 , document.all.MiFrame01_2 );"></span>
+<span id="DummyClose01_2" onclick="DisplayerM01_2( '' , document.all.Mdata01_2 );ExchangeM01_2( 0 , window.Pwin );return false;"></span>
+</p>
+<!-- END [CREATION FACTORY] -->
+
+
+<!-- START [ASSEMBLY FACTORY] -->
+<p id="MiFrame01_3" onclick="Zchange(this);">
+<iframe id="Mdata01_3" name="MVwin_3" frameborder="0" scrolling="no" src="/msw/assembly/index.html"></iframe>
+<span id="DummyDrag01_3" onmousedown="pickup01_3('MiFrame01_3',event);return false;" 
+	onmouseup="ShowValue( window.MVwin_3 );fncMswPositionCheck( document.all.Mdata01_3 , document.all.MiFrame01_3 );" 
+	ondblclick="fncTitlebar( document.all.Mdata01_3 , document.all.MiFrame01_3 );"></span>
+<span id="DummyClose01_3" onclick="DisplayerM01_3( '' , document.all.Mdata01_3 );ExchangeM01_3( 0 , window.Pwin );return false;"></span>
+</p>
+<!-- END [ASSEMBLY FACTORY] -->
+
+
+<!-- START [DEPT & IN CHARGE NAME] -->
+<p id="MiFrame02" onclick="Zchange(this);">
+<iframe id="Mdata02" name="MDwin" frameborder="0" scrolling="no" src="/msw/dept/index.html"></iframe>
+<span id="DummyDrag02" onmousedown="pickup02('MiFrame02',event);return false;" 
+	onmouseup="ShowHideValueDept( window.MDwin );fncMswPositionCheck( document.all.Mdata02 , document.all.MiFrame02 );" 
+	ondblclick="fncTitlebar( document.all.Mdata02 , document.all.MiFrame02 );"></span>
+<span id="DummyClose02" onclick="DisplayerM02( '' , document.all.Mdata02 );ExchangeM02( 0 , window.Pwin );return false;"></span>
+</p>
+<!-- END [DEPT & IN CHARGE NAME] -->
+
+
+<!-- START [LOCATION] -->
+<p id="MiFrame04" onclick="Zchange(this);">
+<iframe id="Mdata04" name="MLwin" frameborder="0" scrolling="no" src="/msw/location/index.html"></iframe>
+<span id="DummyDrag04" onmousedown="pickup04('MiFrame04',event);return false;" 
+	onmouseup="ShowValue( window.MLwin );fncMswPositionCheck( document.all.Mdata04 , document.all.MiFrame04 );" 
+	ondblclick="fncTitlebar( document.all.Mdata04 , document.all.MiFrame04 );"></span>
+<span id="DummyClose04" onclick="DisplayerM04( '' , document.all.Mdata04 );ExchangeM04( 0 , window.Pwin );return false;"></span>
+</p>
+<!-- END [LOCATION] -->
+
+
+<!-- START [VENDOR & IN CHARGE NAME] -->
+<p id="MiFrame07" onclick="Zchange(this);">
+<iframe id="Mdata07" name="VIwin" frameborder="0" scrolling="no" src="/msw/vi/index.html"></iframe>
+<span id="DummyDrag07" onmousedown="pickup07('MiFrame07',event);return false;" 
+	onmouseup="ShowHideValueVi( window.VIwin );fncMswPositionCheck( document.all.Mdata07 , document.all.MiFrame07 );" 
+	ondblclick="fncTitlebar( document.all.Mdata07 , document.all.MiFrame07 );"></span>
+<span id="DummyClose07" onclick="DisplayerM07( '' , document.all.Mdata07 );ExchangeM07( 0 , window.Pwin );return false;"></span>
+</p>
+<!-- END [VENDOR & IN CHARGE NAME] -->
+<!-- //////////////////////////////////// END MSW //////////////////////////////////// -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- /////////////////////////////////// START TAB /////////////////////////////////// -->
+<span id="PTabA"></span>
+<span id="PTabB"></span>
+<!-- //////////////////////////////////// END TAB //////////////////////////////////// -->
+
+
+
+
+
+
+
+
+
+
+<!-- /////////////////////////////////// START E TO J /////////////////////////////////// -->
+<span id="EtoJ" style="visibility:_%strBaseVisibilityName%_;display:none;"></span>
+<!-- //////////////////////////////////// END E TO J //////////////////////////////////// -->
+
+
+
+
+
+
+
+
+<!-- ERROR MESSAGE -->
+<span id="ErrorMessageFrame">
+	<iframe id="ErrorMessage" name="errorWin" frameborder="0" scrolling="no" src="/error/error.html"></iframe>
+</span>
+
+
+
+
+
+
+
+
+
+<p id="ErrInputA">
+<span id="ErrSegA05" style="_%strProductName_Error%_" onmouseover="ShowComment( Comments , '_%strProductName_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegA06" style="_%strProductEnglishName_Error%_" onmouseover="ShowComment( Comments , '_%strProductEnglishName_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegA03" style="_%lngInChargeGroupCode_Error%_" onmouseover="ShowComment( Comments , '_%lngInChargeGroupCode_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegA04" style="_%lngInChargeUserCode_Error%_" onmouseover="ShowComment( Comments , '_%lngInChargeUserCode_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegA02" style="_%lngCustomerCode_Error%_" onmouseover="ShowComment( Comments , '_%lngCustomerCode_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegA18" style="_%lngCategoryCode_Error%_" onmouseover="ShowComment( Comments , '_%lngCategoryCode_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegA07" style="_%strGoodsName_Error%_" onmouseover="ShowComment( Comments , '_%strGoodsName_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegB08" style="_%lngCustomerCode_Error%_" onmouseover="ShowComment( Comments , '_%lngCustomerCode_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegB09" style="_%strCustomerUserName_Error%_" onmouseover="ShowComment( Comments , '_%strCustomerUserName_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegB17" style="_%lngProductFormCode_Error%_" onmouseover="ShowComment( Comments , '_%lngProductFormCode_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegA12" style="_%lngBoxQuantity_Error%_" onmouseover="ShowComment( Comments , '_%lngBoxQuantity_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegA13" style="_%lngCartonQuantity_Error%_" onmouseover="ShowComment( Comments , '_%lngCartonQuantity_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegB06" style="_%lngProductionQuantity_Error%_" onmouseover="ShowComment( Comments , '_%lngProductionQuantity_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegB07" style="_%lngFirstDeliveryQuantity_Error%_" onmouseover="ShowComment( Comments , '_%lngFirstDeliveryQuantity_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+</p>
+
+<p id="ErrInputB">
+<span id="ErrSegB03" style="_%lngFactoryCode_Error%_" onmouseover="ShowComment( Comments , '_%lngFactoryCode_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegA17" style="_%lngAssemblyFactoryCode_Error%_" onmouseover="ShowComment( Comments , '_%lngAssemblyFactoryCode_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegB04" style="_%lngDeliveryPlaceCode_Error%_" onmouseover="ShowComment( Comments , '_%lngDeliveryPlaceCode_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegB05" style="_%dtmDeliveryLimitDate_Error%_" onmouseover="ShowComment( Comments , '_%dtmDeliveryLimitDate_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegB02" style="_%curProductPrice_Error%_" onmouseover="ShowComment( Comments , '_%curProductPrice_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegB01" style="_%curRetailPrice_Error%_" onmouseover="ShowComment( Comments , '_%curRetailPrice_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegA11" style="_%lngTargetAgeCode_Error%_" onmouseover="ShowComment( Comments , '_%lngTargetAgeCode_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegB11" style="_%lngRoyalty_Error%_" onmouseover="ShowComment( Comments , '_%lngRoyalty_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegB16" style="_%lngCertificateClassCode_Error%_" onmouseover="ShowComment( Comments , '_%lngCertificateClassCode_Error%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegB10" style="_%lngCopyrightCode_Error%_" onmouseover="ShowComment( Comments , '_%lngCopyrightCode_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegB12" style="_%strCopyrightDisplayStamp_Error%_" onmouseover="ShowComment( Comments , '_%strCopyrightDisplayStamp_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegB13" style="_%strCopyrightDisplayPrint_Error%_" onmouseover="ShowComment( Comments , '_%strCopyrightDisplayPrint_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegA14" style="_%strProductComposition_Error%_" onmouseover="ShowComment( Comments , '_%strProductComposition_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegA15" style="_%strAssemblyContents_Error%_" onmouseover="ShowComment( Comments , '_%strAssemblyContents_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegB14" style="_%strSpecificationDetails_Error%_" onmouseover="ShowComment( Comments , '_%strSpecificationDetails_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+</p>
+
+
+<span id="Comments"></span>
+
+
+
+<span id="EditFrame">
+	<iframe id="Edit" name="editWin" frameborder="0" scrolling="no" src="/p/edit/index.html"></iframe>
+</span>
+
+
+<span id="OverLayer"></span>
+<span id="EditorRecord">
+_%re_uploadimages%_
+</span>
+
+<span id="EditorDir">
+_%re_editordir%_
+</span>
