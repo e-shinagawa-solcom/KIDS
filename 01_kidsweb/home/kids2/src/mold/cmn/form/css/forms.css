@@ -185,6 +185,12 @@ img.toggle-display
     margin: 1px 3px 4px 0px;
 }
 
+/* 入力フォーム 行 */
+.regist-line--stage
+{
+    margin: 8px 3px 4px 0px;
+}
+
 /* 検索フォーム 行 */
 .search-line
 {
@@ -289,6 +295,14 @@ img.toggle-display
 {
     display: inline-block;
     width: 120px;
+    font-weight: bold;
+    background-color: #e8f0f1;
+}
+/* 入力フォーム ラベルテキスト */
+.regist-label__spec-text
+{
+    display: inline-block;
+    width: 150px;
     font-weight: bold;
     background-color: #e8f0f1;
 }

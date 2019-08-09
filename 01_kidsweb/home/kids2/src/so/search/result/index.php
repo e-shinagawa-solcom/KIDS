@@ -611,13 +611,13 @@ foreach ($records as $i => $record) {
     }
 
     // 再販項目を表示
-    if ($existsDecide) {
+    if ($existsResale) {
         // 再販セル
         $tdResale = $doc->createElement("td");
         $tdResale->setAttribute("class", $exclude);
 
         // 再販ボタンの表示
-        if ($allowedDecide) {
+        if ($allowedResale) {
             // 再販ボタン
             $imgResale = $doc->createElement("img");
             $imgResale->setAttribute("src", "/img/type01/so/renew_off_bt.gif");

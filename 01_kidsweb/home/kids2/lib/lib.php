@@ -953,11 +953,11 @@ function fncGetPulldownQueryExec($strQuery, $lngDefaultValue, $objDB, $lngMaxFie
 		// HTML½ÐÎÏ
 		if ( $lngDefaultValue == $aryResult[0] )
 		{
-			$strHtml = "<OPTION VALUE=\"$aryResult[0]\" SELECTED>$strDisplayValue</OPTION>\n";
+			$strHtml .= "<OPTION VALUE=\"$aryResult[0]\" SELECTED>$strDisplayValue</OPTION>\n";
 		}
 		else
 		{
-			$strHtml = "<OPTION VALUE=\"$aryResult[0]\">$strDisplayValue</OPTION>\n";
+			$strHtml .= "<OPTION VALUE=\"$aryResult[0]\">$strDisplayValue</OPTION>\n";
 		}
 	}
 
