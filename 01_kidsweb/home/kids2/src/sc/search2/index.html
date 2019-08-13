@@ -1,0 +1,224 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html lang="ja">
+<head>
+<title>K.I.D.S.</title>
+<meta http-equiv="content-type" content="text/html; charset=euc-jp">
+
+
+<!-- START COMMON LAYOUT FILES -->
+<script type="text/javascript" language="javascript" src="/layout/type01/cmn/images.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/type01/cmn/initlayoutbase.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/type01/cmn/initlayoutquery.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/type01/cmn/initlayoutconfirm.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/type01/cmn/initlayoutcommon.js"></script>
+<!-- END COMMON LAYOUT FILES -->
+
+
+<!-- START COMMON FILES -->
+<script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/msw.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/date.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/query.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="/cmn/layout.css">
+<link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
+<link rel="stylesheet" type="text/css" media="screen" href="/cmn/msw.css">
+<!-- END COMMON FILES -->
+
+
+<!-- START EXCLUSIVE USE LAYOUT FILES -->
+<script type="text/javascript" language="javascript" src="/layout/type01/sc/cmn/images.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/type01/sc/search2/initlayout.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/type01/cmn/initlayoutmsw.js"></script>
+<!-- END EXCLUSIVE USE LAYOUT FILES -->
+
+
+<!-- START EXCLUSIVE USE FILES -->
+<link rel="stylesheet" type="text/css" media="screen" href="layout.css">
+<script type="text/javascript" language="javascript" src="exstr.js"></script>
+<script type="text/javascript" language="javascript" src="functions.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
+<!-- END EXCLUSIVE USE FILES -->
+
+
+</head>
+<body id="BaseBack" onContextmenu="return false;" onload="initLayoutBase();initLayoutSC();initLayoutMsw();initLayoutConfirm();GetlngLanguageCode( 1 );Loading();">
+
+
+
+
+<p id="Preload">
+	<iframe id="PreloadFrm" name="PreloadWin" frameborder="0" src="/preload/index.html"></iframe>
+</p>
+
+
+
+
+<!-- ////////////////////////////////// START BASE ////////////////////////////////// -->
+<p id="Margins">
+<span id="Header"></span>
+<span id="LogOutBt"></span>
+<span id="Bodys"></span>
+<span id="Footer"></span>
+<span id="MainMenuButton"></span>
+</p>
+<!-- /////////////////////////////////// END BASE /////////////////////////////////// -->
+
+
+
+
+
+
+
+
+<!-- ////////////////////////////////// START MAIN TITLE ////////////////////////////////// -->
+<span id="MainTitle"></span>
+<!-- /////////////////////////////////// END MAIN TITLE /////////////////////////////////// -->
+
+
+
+
+
+
+
+
+
+<!-- /////////////////////////////////// START NAVIGAION /////////////////////////////////// -->
+<span id="NaviButton"></span>
+
+<p id="Navigations" onmouseout="NavigationOFF( Navigations , NaviButton );">
+<span id="Navi">
+	<iframe id="NaviIfrm" name="NAVIwin" frameborder="0" scrolling="no" src="/navi/sc/search/index.html"></iframe>
+</span>
+</p>
+<!-- //////////////////////////////////// END NAVIGAION //////////////////////////////////// -->
+
+
+
+
+
+
+
+<!-- /////////////////////////////////// START INPUT A SEGMENTS /////////////////////////////////// -->
+<p id="InputA">
+
+
+<!-- START BODYS -->
+<span id="SegABodys"></span>
+<!-- END BODYS -->
+
+<!-- START HEADER -->
+<span id="SegAHeader"></span>
+<!-- END HEADER -->
+
+<!-- START BOTTOM -->
+<span id="SegABottom"></span>
+<!-- END BOTTOM -->
+
+
+
+<span id="SegA01">
+	<iframe id="SegAIFrm" name="Pwin" frameborder="0" src="/sc/search_ifrm/index.html"></iframe>
+</span>
+
+
+
+</p>
+<!-- //////////////////////////////////// END INPUT A SEGMENTS //////////////////////////////////// -->
+
+
+
+<span id="schSchButton" onclick="GoResult( window.Pwin.PS , '/sc/result/index.html' );"></span>
+<span id="schClrButton" onclick="fncClearIfrm( Pwin , Pwin.PS );CheckResetCnt();"></span>
+
+
+
+
+
+
+
+<!-- /////////////////////////////////// START E TO J /////////////////////////////////// -->
+<span id="EtoJ"></span>
+<!-- //////////////////////////////////// END E TO J //////////////////////////////////// -->
+
+
+
+
+
+
+
+
+<!-- START [VENDOR] -->
+<p id="MiFrame01" onclick="Zchange(this);">
+<iframe id="Mdata01" name="MVwin" frameborder="0" scrolling="no" src="/msw/vendor/index.html"></iframe>
+<span id="DummyDrag01" onmousedown="pickup01('MiFrame01',event);return false;" onmouseup="ShowValue( window.MVwin );" ondblclick="fncTitlebar( document.all.Mdata01 );"></span>
+<span id="DummyClose01" onclick="DisplayerM01();ExchangeM01( window.Pwin );return false;"></span>
+</p>
+<!-- END [VENDOR] -->
+
+
+<!-- START [DEPT & IN CHARGE NAME] -->
+<p id="MiFrame02" onclick="Zchange(this);">
+<iframe id="Mdata02" name="MDwin" frameborder="0" scrolling="no" src="/msw/dept/index.html"></iframe>
+<span id="DummyDrag02" onmousedown="pickup02('MiFrame02',event);return false;" onmouseup="ShowHideValueDept( window.MDwin );" ondblclick="fncTitlebar( document.all.Mdata02 );"></span>
+<span id="DummyClose02" onclick="DisplayerM02();ExchangeM02( window.Pwin );return false;"></span>
+</p>
+<!-- END [DEPT & IN CHARGE NAME] -->
+
+<!-- START [PRODUCTS] -->
+<p id="MiFrame03" onclick="Zchange(this);">
+<iframe id="Mdata03" name="MGwin" frameborder="0" scrolling="no" src="/msw/products/index.html"></iframe>
+<span id="DummyDrag03" onmousedown="pickup03('MiFrame03',event);return false;" onmouseup="ShowValue( window.MGwin );" ondblclick="fncTitlebar( document.all.Mdata03 );"></span>
+<span id="DummyClose03" onclick="DisplayerM03();ExchangeM03( window.Pwin );return false;"></span>
+</p>
+<!-- END [PRODUCTS] -->
+
+<!-- START [INPUT] -->
+<p id="MiFrame09" onclick="Zchange(this);">
+<iframe id="Mdata09" name="INPUT2win" frameborder="0" scrolling="no" src="/msw/input/index.html"></iframe>
+<span id="DummyDrag09" onmousedown="pickup09('MiFrame09',event);return false;" onmouseup="ShowValue( window.INPUT2win );" ondblclick="fncTitlebar( document.all.Mdata09 );"></span>
+<span id="DummyClose09" onclick="DisplayerM09();ExchangeM09( window.Pwin );return false;"></span>
+</p>
+<!-- END [INPUT] -->
+
+
+
+
+
+
+
+<!-- DUMMY MSW BUUTON -->
+<!-- START [VENDOR] BUTTON -->
+<span id="MSWBt01" style="visibility:hidden;"></span>
+<!-- END [VENDOR] BUTTON -->
+<!-- START [DEPT & IN CHARGE NAME] BUTTON -->
+<span id="MSWBt02" style="visibility:hidden;"></span>
+<!-- END [DEPT & IN CHARGE NAME] BUTTON -->
+<span id="MSWBt03" style="visibility:hidden;"></span>
+<!-- START [INPUT] BUTTON -->
+<span id="MSWBt09" style="visibility:hidden;"></span>
+<!-- END [INPUT] BUTTON -->
+<!-- DUMMY MSW BUUTON -->
+
+
+
+
+
+
+<!-- //////////////////////////////////// START ERROR MESSEAGE //////////////////////////////////// -->
+<!-- START ERROR WINDOW -->
+<span id="MegWin"></span>
+<!-- END ERROR WINDOW -->
+
+<!-- START ERROR MESSAGE -->
+<span id="ErrMeg"></span>
+<!-- END ERROR MESSAGE -->
+
+<!-- START ERROR MARK -->
+<span id="ERmark"></span>
+<!-- END ERROR MARK -->
+<!-- ///////////////////////////////////// END ERROR MESSEAGE ///////////////////////////////////// -->
+
+
+</form>
+</body>
+</html>
