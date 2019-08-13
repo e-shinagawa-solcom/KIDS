@@ -70,7 +70,7 @@ fncPutStringCheckError( $aryResult, $objDB );
 $aryData["lngFunctionCode"] = DEF_FUNCTION_SC2;
 
 // テンプレート読み込み
-echo fncGetReplacedHtmlWithBase("search2/base_search.html", "sc/search2/sc_search.tmpl", $aryData ,$objAuth );
+echo fncGetReplacedHtmlWithBase("search/base_search.html", "sc/search2/sc_search.tmpl", $aryData ,$objAuth );
 
 $objDB->close();
 
