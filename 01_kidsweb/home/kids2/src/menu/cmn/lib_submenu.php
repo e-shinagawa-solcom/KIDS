@@ -67,7 +67,7 @@
 
 		// Çä¾å´ÉÍý
 		$aryData["lngSubRef_sc_0"]		= '/sc/regist/index.php?strSessionID=' . $aryData["strSessionID"];
-		$aryData["lngSubRef_sc_1"]		= '/sc/search/index.php?strSessionID=' . $aryData["strSessionID"];
+		$aryData["lngSubRef_sc_1"]		= '/sc/search2/index.php?strSessionID=' . $aryData["strSessionID"];
 		$aryData["lngSubRef_sc_2"]		= '/sc/search/index.php?strSessionID=' . $aryData["strSessionID"];
 
 		// »ÅÆþ´ÉÍý
