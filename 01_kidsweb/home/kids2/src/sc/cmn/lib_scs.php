@@ -599,7 +599,7 @@ function fncGetSearchSalesSQL ( $aryViewColumn, $arySearchColumn, $arySearchData
 	{
 		$aryFromQuery[] = "	left join t_salesdetail tsd";
 		$aryFromQuery[] = "	on tsd.lngsalesno = s.lngsalesno";
-		$aryFromQuery[] = "		left join m_Receive r on r.lngreceiveno = s.lngreceiveno";
+		$aryFromQuery[] = "		left join m_Receive r on r.lngreceiveno = tsd.lngreceiveno";
 	}
 	if ( $flgInputUser )
 	{
