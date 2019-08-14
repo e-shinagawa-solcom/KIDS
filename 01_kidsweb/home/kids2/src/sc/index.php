@@ -61,6 +61,12 @@
 		$aryData["strSearchURL"]   = "search/index.php?strSessionID=" . $aryData["strSessionID"];
 	}
 
+	// 602 Çä¾å´ÉÍý¡Ê Ç¼ÉÊ½ñ¸¡º÷¡Ë
+	if ( fncCheckAuthority( DEF_FUNCTION_SC2, $objAuth ) )
+	{
+		$aryData["strSearch2URL"]   = "search2/index.php?strSessionID=" . $aryData["strSessionID"];
+	}
+	
 	//echo "button : ".$aryData["strRegist"]."<br>";
 	//echo "button : ".$aryData["strSearch"]."<br>";
 
