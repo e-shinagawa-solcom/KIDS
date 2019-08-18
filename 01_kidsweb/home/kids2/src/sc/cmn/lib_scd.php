@@ -72,52 +72,6 @@ function fncGetSearchSlipSQL ( $aryViewColumn, $arySearchColumn, $arySearchDataC
 		{
 			$arySelectQuery[] = ", To_char( s.curTotalPrice, '9,999,999,990.99' ) as curTotalPrice";
 		}
-		
-
-/* 		// 登録日
-		if ( $strViewColumnName == "dtmInsertDate" )
-		{
-			$arySelectQuery[] = ", to_char( s.dtmInsertDate, 'YYYY/MM/DD HH:MI:SS' ) as dtmInsertDate";
-		}
-
-		// 計上日
-		if ( $strViewColumnName == "dtmSalesAppDate" and !$bytAdminMode )
-		{
-			$arySelectQuery[] = ", to_char( s.dtmAppropriationDate, 'YYYY/MM/DD' ) as dtmSalesAppDate";
-		} 
-
-		// 顧客受注番号
-		if ( $strViewColumnName == "strCustomerReceiveCode" )
-		{
-			//$arySelectQuery[] = ", r.strReceiveCode || '-' || r.strReviseCode as strReceiveCode";
-			$arySelectQuery[] = ", r.strCustomerReceiveCode as strCustomerReceiveCode";
-			$flgReceive = TRUE;
-		}
-
-
-		// 入力者
-		if ( $strViewColumnName == "lngInputUserCode" )
-		{
-			$arySelectQuery[] = ", input_u.strUserDisplayCode as strInputUserDisplayCode";
-			$arySelectQuery[] = ", input_u.strUserDisplayName as strInputUserDisplayName";
-			$flgInputUser = TRUE;
-		}
-
-		// 状態
-		if ( $strViewColumnName == "lngSalesStatusCode" and !$bytAdminMode )
-		{
-			$arySelectQuery[] = ", s.lngSalesStatusCode as lngSalesStatusCode";
-			$arySelectQuery[] = ", ss.strSalesStatusName as strSalesStatusName";
-			$flgSalesStatus = TRUE;
-		}
-
-		// ワークフロー状態
-		if ( $strViewColumnName == "lngWorkFlowStatusCode" and !$bytAdminMode )
-		{
-			$arySelectQuery[] = ", (select strWorkflowStatusName from m_WorkflowStatus where lngWorkflowStatusCode = tw.lngWorkflowStatusCode) as lngWorkFlowStatusCode";
-			$flgWorkFlowStatus = TRUE;
-		}
- */		
 	}
 
 	// 売上Ｎｏ
@@ -130,7 +84,6 @@ function fncGetSearchSlipSQL ( $aryViewColumn, $arySearchColumn, $arySearchDataC
 	// 条件の追加
 	$detailFlag = FALSE;
 
-	// とりあえず無視
 	// 管理モードの検索時、同じ売上コードのデータを取得する場合
 	if ( $strSalesCode or $bytAdminMode )
 	{
@@ -162,85 +115,7 @@ function fncGetSearchSlipSQL ( $aryViewColumn, $arySearchColumn, $arySearchDataC
 			$strSearchColumnName = $arySearchColumn[$i];
 
 			// ////納品書マスタ内の検索条件////
-			/*
-			// 登録日
-			if ( $strSearchColumnName == "dtmInsertDate" )
-			{
-				if ( $arySearchDataColumn["dtmInsertDateFrom"] )
-				{
-					$dtmSearchDate = $arySearchDataColumn["dtmInsertDateFrom"] . " 00:00:00";
-					$aryQuery[] = " AND s.dtmInsertDate >= '" . $dtmSearchDate . "'";
-				}
-				if ( $arySearchDataColumn["dtmInsertDateTo"] )
-				{
-					$dtmSearchDate = $arySearchDataColumn["dtmInsertDateTo"] . " 23:59:59";
-					$aryQuery[] = " AND s.dtmInsertDate <= '" . $dtmSearchDate . "'";
-				}
-			}
-
-			// 計上日
-			if ( $strSearchColumnName == "dtmSalesAppDate" )
-			{
-				if ( $arySearchDataColumn["dtmSalesAppDateFrom"] )
-				{
-					$dtmSearchDate = $arySearchDataColumn["dtmSalesAppDateFrom"] . " 00:00:00";
-					$aryQuery[] = " AND s.dtmAppropriationDate >= '" . $dtmSearchDate . "'";
-				}
-				if ( $arySearchDataColumn["dtmSalesAppDateTo"] )
-				{
-					$dtmSearchDate = $arySearchDataColumn["dtmSalesAppDateTo"] . " 23:59:59";
-					$aryQuery[] = " AND s.dtmAppropriationDate <= '" . $dtmSearchDate . "'";
-				}
-			}
-			// 売上Ｎｏ
-			if ( $strSearchColumnName == "strSalesCode" )
-			{
-				if ( $arySearchDataColumn["strSalesCodeFrom"] )
-				{
-					$aryQuery[] = " AND s.strSalesCode >= '" . $arySearchDataColumn["strSalesCodeFrom"] . "'";
-				}
-				if ( $arySearchDataColumn["strSalesCodeTo"] )
-				{
-					$aryQuery[] = " AND s.strSalesCode <= '" . $arySearchDataColumn["strSalesCodeTo"] . "'";
-				}
-			}
-			// 顧客受注番号
-			if ( $strSearchColumnName == "strCustomerReceiveCode" )
-			{
-				if ( $arySearchDataColumn["strCustomerReceiveCodeFrom"] )
-				{
-					$aryQuery[] = " AND r.strCustomerReceiveCode >= '" . $arySearchDataColumn["strCustomerReceiveCodeFrom"] . "'";
-				}
-				if ( $arySearchDataColumn["strCustomerReceiveCodeTo"] )
-				{
-					$aryQuery[] = " AND r.strCustomerReceiveCode <= '" . $arySearchDataColumn["strCustomerReceiveCodeTo"] . "'";
-				}
-				$flgReceive = TRUE;
-			}
-			// 伝票コード
-			if ( $strSearchColumnName == "strSlipCode" )
-			{
-				if ( $arySearchDataColumn["strSlipCode"] )
-				{
-					$aryQuery[] = " AND UPPER(s.strSlipCode) LIKE UPPER('%" . $arySearchDataColumn["strSlipCode"] . "%')";
-				}
-			}
-
-			// 入力者
-			if ( $strSearchColumnName == "lngInputUserCode" )
-			{
-				if ( $arySearchDataColumn["lngInputUserCode"] )
-				{
-					$aryQuery[] = " AND input_u.strUserDisplayCode ~* '" . $arySearchDataColumn["lngInputUserCode"] . "'";
-					$flgInputUser = TRUE;
-				}
-				if ( $arySearchDataColumn["strInputUserName"] )
-				{
-					$aryQuery[] = " AND UPPER(input_u.strUserDisplayName) LIKE UPPER('%" . $arySearchDataColumn["strInputUserName"] . "%')";
-					$flgInputUser = TRUE;
-				}
-			}
-			// 売上先
+			// 顧客（売上先）
 			if ( $strSearchColumnName == "lngCustomerCode" )
 			{
 				if ( $arySearchDataColumn["lngCustomerCode"] )
@@ -254,164 +129,78 @@ function fncGetSearchSlipSQL ( $aryViewColumn, $arySearchColumn, $arySearchDataC
 					$flgCustomerCompany = TRUE;
 				}
 			}
-*/
-/* 			// 状態
-			if ( $strSearchColumnName == "lngSalesStatusCode" )
+
+			// 課税区分（消費税区分）
+			if ( $strSearchColumnName == "lngTaxClassCode" )
 			{
-				if ( $arySearchDataColumn["lngSalesStatusCode"] )
+				if ( $arySearchDataColumn["lngTaxClassCode"] )
 				{
-					// 売上状態は ","区切りの文字列として渡される
-					//$arySearchStatus = explode( ",", $arySearchDataColumn["lngSalesStatusCode"] );
-					// チェックボックス化により、配列をそのまま代入
-					$arySearchStatus = $arySearchDataColumn["lngSalesStatusCode"];
-					if ( is_array( $arySearchStatus ) )
-					{
-						$aryQuery[] = " AND ( ";
-						// 売上状態は複数設定されている可能性があるので、設定個数分ループ
-						for ( $j = 0; $j < count($arySearchStatus); $j++ )
-						{
-							// 初回処理
-							if ( $j <> 0 )
-							{
-								$aryQuery[] = " OR ";
-							}
-							$aryQuery[] = "s.lngSalesStatusCode = " . $arySearchStatus[$j] . "";
-						}
-						$aryQuery[] = " ) ";
-					}
+					$aryQuery[] = " AND s.strTaxClassName ~* '" . $arySearchDataColumn["lngTaxClassCode"] . "'";
 				}
 			}
- */			
-/* 			// ワークフロー状態
-			if ( $strSearchColumnName == "lngWorkFlowStatusCode" )
-			{
-				if ( $arySearchDataColumn["lngWorkFlowStatusCode"] )
-				{
-					// チェックボックス値より、配列をそのまま代入
-					$arySearchStatus = $arySearchDataColumn["lngWorkFlowStatusCode"];
-					
-					if ( is_array( $arySearchStatus ) )
-					{
-						$aryQuery[] = " AND tw.lngworkflowstatuscode in ( ";
 
-						// WF状態は複数設定されている可能性があるので、設定個数分ループ
-						$strBuff = "";
-						for ( $j = 0; $j < count($arySearchStatus); $j++ )
-						{
-							// 初回処理
-							if ( $j <> 0 )
-							{
-								$strBuff .= " ,";
-							}
-							$strBuff .= "" . $arySearchStatus[$j] . "";
-						}
-						$aryQuery[] = "\t".$strBuff . " )";
-					}
-					
-					$flgWorkFlowStatus = true;
+			// 納品書NO.（納品伝票コード）
+			if ( $strSearchColumnName == "strSlipCode" )
+			{
+				if ( $arySearchDataColumn["strSlipCode"] )
+				{
+					$aryQuery[] = " AND UPPER(s.strSlipCode) LIKE UPPER('%" . $arySearchDataColumn["strSlipCode"] . "%')";
 				}
-			} */
+			}
+
+			// 納品日
+			if ( $strSearchColumnName == "dtmDeliveryDate" )
+			{
+				if ( $arySearchDataColumn["dtmDeliveryDateFrom"] )
+				{
+					$dtmSearchDate = $arySearchDataColumn["dtmDeliveryDateFrom"] . " 00:00:00";
+					$aryQuery[] = " AND s.dtmDeliveryDate >= '" . $dtmSearchDate . "'";
+				}
+				if ( $arySearchDataColumn["dtmDeliveryDateTo"] )
+				{
+					$dtmSearchDate = $arySearchDataColumn["dtmDeliveryDateTo"] . " 23:59:59";
+					$aryQuery[] = " AND s.dtmDeliveryDate <= '" . $dtmSearchDate . "'";
+				}
+			}
+
+			// 納品先
+			if ( $strSearchColumnName == "lngDeliveryPlaceCode" )
+			{
+				if ( $arySearchDataColumn["lngDeliveryPlaceCode"] )
+				{
+					$aryQuery[] = " AND s.strDeliveryPlaceCode ~* '" . $arySearchDataColumn["lngDeliveryPlaceCode"] . "'";
+					$flgCustomerCompany = TRUE;
+				}
+				if ( $arySearchDataColumn["strDeliveryPlaceName"] )
+				{
+					$aryQuery[] = " AND UPPER(s.strDeliveryPlaceName) LIKE UPPER('%" . $arySearchDataColumn["strDeliveryPlaceName"] . "%')";
+					$flgCustomerCompany = TRUE;
+				}
+			}
+
+			// 起票者
+			if ( $strSearchColumnName == "lngInsertUserCode" )
+			{
+				if ( $arySearchDataColumn["lngInsertUserCode"] )
+				{
+					$aryQuery[] = " AND insert_u.strUserDisplayCode ~* '" . $arySearchDataColumn["lngInsertUserCode"] . "'";
+					$flgInsertUser = TRUE;
+				}
+				if ( $arySearchDataColumn["strInsertUserName"] )
+				{
+					$aryQuery[] = " AND UPPER(insert_u.strInsertUserName) LIKE UPPER('%" . $arySearchDataColumn["strInsertUserName"] . "%')";
+					$flgInsertUser = TRUE;
+				}
+			}
 
 			//
 			// 明細テーブルの条件
 			//
 
-			/*
-			// 製品コード
-			if ( $strSearchColumnName == "strProductCode" )
+			// 注文書NO.
+			if ( $strSearchColumnName == "strCustomerSalesCode" )
 			{
-				if ( $arySearchDataColumn["strProductCodeFrom"] )
-				{
-					if ( !$detailFlag )
-					{
-						$aryDetailTargetQuery[] = " where";
-					}
-					else
-					{
-						$aryDetailWhereQuery[] = "AND ";
-					}
-					$aryDetailWhereQuery[] = "sd1.strProductCode >= '" . $arySearchDataColumn["strProductCodeFrom"] . "' ";
-					$detailFlag = TRUE;
-				}
-				if ( $arySearchDataColumn["strProductCodeTo"] )
-				{
-					if ( !$detailFlag )
-					{
-						$aryDetailTargetQuery[] = " where";
-					}
-					else
-					{
-						$aryDetailWhereQuery[] = "AND ";
-					}
-					$aryDetailWhereQuery[] = "sd1.strProductCode <= '" . $arySearchDataColumn["strProductCodeTo"] . "' ";
-					$detailFlag = TRUE;
-				}
-			}
-			
-			// 部門
-			if ( $strSearchColumnName == "lngInChargeGroupCode" )
-			{
-				if( $arySearchDataColumn["lngInChargeGroupCode"] || $arySearchDataColumn["strInChargeGroupName"] )
-				{
-					if ( !$detailFlag )
-					{
-						$aryDetailTargetQuery[] = " where";
-					}
-					else
-					{
-						$aryDetailWhereQuery[] = "AND ";
-					}
-				}
-
-				if ( $arySearchDataColumn["lngInChargeGroupCode"] )
-				{
-					$aryDetailWhereQuery[] = " mg.strGroupDisplayCode = '" . $arySearchDataColumn["lngInChargeGroupCode"] . "'";
-					$detailFlag = TRUE;
-				}
-				if ( $arySearchDataColumn["strInChargeGroupName"] )
-				{
-					if( $arySearchDataColumn["lngInChargeGroupCode"] )
-					{
-						$aryDetailWhereQuery[] = "AND ";
-					}
-					$aryDetailWhereQuery[] = " UPPER(mg.strGroupDisplayName) LIKE UPPER('%" . $arySearchDataColumn["strInChargeGroupName"] . "%')";
-					$detailFlag = TRUE;
-				}
-			}
-			// 担当者
-			if ( $strSearchColumnName == "lngInChargeUserCode" )
-			{
-				if( $arySearchDataColumn["lngInChargeUserCode"] || $arySearchDataColumn["strInChargeUserName"] )
-				{
-					if ( !$detailFlag )
-					{
-						$aryDetailTargetQuery[] = " where";
-					}
-					else
-					{
-						$aryDetailWhereQuery[] = "AND ";
-					}
-				}
-
-				if ( $arySearchDataColumn["lngInChargeUserCode"] )
-				{
-					$aryDetailWhereQuery[] = " mu.strUserDisplayCode = '" . $arySearchDataColumn["lngInChargeUserCode"] . "'";
-					$detailFlag = TRUE;
-				}
-				if ( $arySearchDataColumn["strInChargeUserName"] )
-				{
-					if( $arySearchDataColumn["lngInChargeUserCode"] )
-					{
-						$aryDetailWhereQuery[] = "AND ";
-					}
-					$aryDetailWhereQuery[] = " UPPER(mu.strUserDisplayName) LIKE UPPER('%" . $arySearchDataColumn["strInChargeUserName"] . "%')";
-					$detailFlag = TRUE;
-				}
-			}
-			// 製品名称（日本語）
-			if ( $strSearchColumnName == "strProductName" )
-			{
-				if ( $arySearchDataColumn["strProductName"] )
+				if ( $arySearchDataColumn["strCustomerSalesCode"] )
 				{
 					if ( !$detailFlag )
 					{
@@ -421,53 +210,14 @@ function fncGetSearchSlipSQL ( $aryViewColumn, $arySearchColumn, $arySearchDataC
 					{
 						unset( $aryDetailTargetQuery );
 						$aryDetailTargetQuery[] = " where";
-
+						
 						$aryDetailWhereQuery[] = "AND ";
 					}
-					$aryDetailWhereQuery[] = "UPPER( p.strProductName ) LIKE UPPER( '%" . $arySearchDataColumn["strProductName"] . "%' ) ";
+					$aryDetailWhereQuery[] = "UPPER(p.strCustomerSalesCode) LIKE UPPER('%" . $arySearchDataColumn["strCustomerSalesCode"] . "%') ";
 					$detailFlag = TRUE;
 				}
 			}
-			// 製品名称（英語）
-			if ( $strSearchColumnName == "strProductEnglishName" )
-			{
-				if ( $arySearchDataColumn["strProductEnglishName"] )
-				{
-					if ( !$detailFlag )
-					{
-						$aryDetailTargetQuery[] = " where";
-					}
-					else
-					{
-						unset( $aryDetailTargetQuery );
-						$aryDetailTargetQuery[] = " where";
-
-						$aryDetailWhereQuery[] = "AND ";
-					}
-					$aryDetailWhereQuery[] = "UPPER( p.strProductEnglishName ) LIKE UPPER( '%" . $arySearchDataColumn["strProductEnglishName"] . "%' ) ";
-					$detailFlag = TRUE;
-				}
-			}
-			*/
-
-			// 売上区分
-			if ( $strSearchColumnName == "lngSalesClassCode" )
-			{
-				if ( $arySearchDataColumn["lngSalesClassCode"] )
-				{
-					if ( !$detailFlag )
-					{
-						$aryDetailTargetQuery[] = " where";
-					}
-					else
-					{
-						$aryDetailWhereQuery[] = "AND ";
-					}
-					$aryDetailWhereQuery[] = "sd1.lngSalesClassCode = " . $arySearchDataColumn["lngSalesClassCode"] . " ";
-					$detailFlag = TRUE;
-				}
-			}
-
+		
 			// 顧客品番
 			if ( $strSearchColumnName == "strGoodsCode" )
 			{
@@ -487,14 +237,12 @@ function fncGetSearchSlipSQL ( $aryViewColumn, $arySearchColumn, $arySearchDataC
 					$aryDetailWhereQuery[] = "UPPER(p.strGoodsCode) LIKE UPPER('%" . $arySearchDataColumn["strGoodsCode"] . "%') ";
 					$detailFlag = TRUE;
 				}
-			
 			}
 
-			/*			
-			// 納期
-			if ( $strSearchColumnName == "dtmDeliveryDate" )
+			// 売上区分
+			if ( $strSearchColumnName == "lngSalesClassCode" )
 			{
-				if ( $arySearchDataColumn["dtmDeliveryDateFrom"] )
+				if ( $arySearchDataColumn["lngSalesClassCode"] )
 				{
 					if ( !$detailFlag )
 					{
@@ -504,28 +252,11 @@ function fncGetSearchSlipSQL ( $aryViewColumn, $arySearchColumn, $arySearchDataC
 					{
 						$aryDetailWhereQuery[] = "AND ";
 					}
-					$dtmSearchDate = $arySearchDataColumn["dtmDeliveryDateFrom"] . " 00:00:00";
-					$aryDetailWhereQuery[] = "sd1.dtmDeliveryDate >= '" . $dtmSearchDate . "'";
-					$detailFlag = TRUE;
-				}
-				if ( $arySearchDataColumn["dtmDeliveryDateTo"] )
-				{
-					if ( !$detailFlag )
-					{
-						$aryDetailTargetQuery[] = " where";
-					}
-					else
-					{
-						$aryDetailWhereQuery[] = "AND ";
-					}
-					$dtmSearchDate = $arySearchDataColumn["dtmDeliveryDateTo"] . " 23:59:59";
-					$aryDetailWhereQuery[] = "sd1.dtmDeliveryDate <= '" . $dtmSearchDate . "'";
+					$aryDetailWhereQuery[] = "sd1.lngSalesClassCode = " . $arySearchDataColumn["lngSalesClassCode"] . " ";
 					$detailFlag = TRUE;
 				}
 			}
-			*/
 		}
-
 	}
 
 	// 明細行の検索対応
@@ -610,6 +341,11 @@ function fncGetSearchSlipSQL ( $aryViewColumn, $arySearchColumn, $arySearchDataC
 	{
 		$aryFromQuery[] = " LEFT JOIN m_MonetaryUnit mu ON s.lngMonetaryUnitCode = mu.lngMonetaryUnitCode";
 	}
+	if ( $flgInsertUser )
+	{
+		$aryFromQuery[] = " LEFT JOIN m_User insert_u ON s.lngInsertUserCode = insert_u.lngUserCode";
+	}
+
 	/*
 	if ( $flgReceive )
 	{
