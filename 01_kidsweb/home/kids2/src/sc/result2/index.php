@@ -31,8 +31,8 @@
 	// ライブラリ読み込み
 	require (LIB_FILE);
 	require (LIB_ROOT . "clscache.php" );
-	require (SRC_ROOT . "sc/cmn/lib_scs.php");
-	require (SRC_ROOT . "sc/cmn/column.php");
+	require (SRC_ROOT . "sc/cmn/lib_scd.php");
+	require (SRC_ROOT . "sc/cmn/column_scd.php");
 	require (LIB_DEBUGFILE);
 
 	// DB接続
@@ -120,29 +120,32 @@
 	//////////////////////////////////////////////////////////////////////////
 	// 文字列チェック
 	//////////////////////////////////////////////////////////////////////////
+	//セッションID
 	$aryCheck["strSessionID"]			= "null:numenglish(32,32)";
-	$aryCheck["dtmInsertDateFrom"] 		= "date(/)";
-	$aryCheck["dtmInsertDateTo"]		= "date(/)";
-	$aryCheck["dtmSalesAppDateFrom"] 	= "date(/)";
-	$aryCheck["dtmSalesAppDateTo"]		= "date(/)";
-	$aryCheck["strSalesCodeFrom"]		= "ascii(0,10)";
-	$aryCheck["strSalesCodeTo"]			= "ascii(0,10)";
-	$aryCheck["strReceiveCodeFrom"]		= "ascii(0,10)";
-	$aryCheck["strReceiveCodeTo"]		= "ascii(0,10)";
-	$aryCheck["lngInputUserCode"]		= "numenglish(0,3)";
-	$aryCheck["strInputUserName"]		= "length(0,50)";
+	//顧客
 	$aryCheck["lngCustomerCode"]		= "numenglish(0,4)";
 	$aryCheck["strCustomerName"]		= "length(0,50)";
-	$aryCheck["lngInChargeGroupCode"]	= "numenglish(0,2)";
-	$aryCheck["strInChargeGroupName"]	= "length(0,50)";
-	$aryCheck["lngInChargeUserCode"]	= "numenglish(0,3)";
-	$aryCheck["strInChargeUserName"]	= "length(0,50)";
-//	$aryCheck["lngSalesStatusCode"]		= "length(0,50)";
-	$aryCheck["strProductCode"]			= "numenglish(0,5)";
-	$aryCheck["strProductName"]			= "length(0,100)";
-	$aryCheck["lngSalesClassCode"]		= "number(0,100)";
+	//課税区分
+	//TODO:仕様確認
+	//納品書NO.
+	//TODO:仕様確認
+	//納品日
 	$aryCheck["dtmDeliveryDateFrom"] 	= "date(/)";
 	$aryCheck["dtmDeliveryDateTo"]		= "date(/)";
+	//納品先
+	//TODO:仕様確認
+	//品名
+	$aryCheck["strProductCode"]			= "numenglish(0,5)";
+	$aryCheck["strProductName"]			= "length(0,100)";
+	//起票者
+	$aryCheck["lngInsertUserCode"]		= "numenglish(0,3)";
+	$aryCheck["strInsertUserName"]		= "length(0,50)";
+	//注文書NO
+	//TODO:仕様確認
+	//顧客品番
+	//TODO:仕様確認
+	//売上区分
+    $aryCheck["lngSalesClassCode"]		= "number(0,100)";
 
 	// 文字列チェック
 	$aryCheckResult = fncAllCheck( $aryData, $aryCheck );
@@ -196,9 +199,8 @@
 	}
 	reset($aryData);
 
-	// 検索条件に一致する売上コードを取得するSQL文の作成
-	$strQuery = fncGetSearchSalesSQL( $aryViewColumn, $arySearchColumn, $aryData, $objDB, "", 0, FALSE );
-	// 値をとる =====================================
+	// 検索SQLを実行し検索（ヒット）件数を取得する
+	$strQuery = fncGetSearchSlipSQL( $aryViewColumn, $arySearchColumn, $aryData, $objDB, "", 0, FALSE, $aryData["strSessionID"]);
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
 	if ( $lngResultNum )
@@ -271,7 +273,7 @@
 	}
 
 	// テーブル構成で検索結果を取得、ＨＴＭＬ形式で出力する
-	$aryHtml["strHtml"] = fncSetSalesTable ( $aryResult, $aryViewColumn, $aryData, $aryUserAuthority, $aryTytle, $objDB, $objCache, $aryTableViewName );
+	$aryHtml["strHtml"] = fncSetSlipTable ( $aryResult, $aryViewColumn, $arySearchColumn, $aryData, $aryUserAuthority, $aryTytle, $objDB, $objCache, $aryTableViewName);
 
 	// POSTされたデータをHiddenにて設定する
 	unset($ary_keys);
