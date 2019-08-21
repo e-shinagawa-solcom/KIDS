@@ -55,10 +55,35 @@ function fncGetSearchSlipSQL ( $aryViewColumn, $arySearchColumn, $arySearchDataC
 			$flgCustomerCompany = TRUE;
 		}
 
+		// 課税区分
+		if ( $strViewColumnName == "lngTaxClassCode" and !$bytAdminMode )
+		{
+			$arySelectQuery[] = ", s.strTaxClassName as strTaxClassName";
+		}		
+
 		// 納品伝票コード（納品書NO）
 		if ( $strViewColumnName == "strSlipCode" )
 		{
 			$arySelectQuery[] = ", s.strSlipCode as strSlipCode";
+		}
+
+		// 納品日
+		if ( $strViewColumnName == "dtmDeliveryDate" and !$bytAdminMode )
+		{
+			$arySelectQuery[] = ", to_char( s.dtmDeliveryDate, 'YYYY/MM/DD HH:MI:SS' ) as dtmDeliveryDate";
+		}		
+
+		// 納品先
+		if ( $strViewColumnName == "lngDeliveryPlaceCode" and !$bytAdminMode )
+		{                            
+			$arySelectQuery[] = " , s.strDeliveryPlaceName as strDeliveryPlaceName";
+		}
+
+		// 起票者
+		if ( $strViewColumnName == "lngInsertUserCode" and !$bytAdminMode )
+		{
+			$arySelectQuery[] = ", s.strInsertUserCode as strInsertUserCode";
+			$arySelectQuery[] = ", s.strInsertUserName as strInsertUserName";
 		}
 		
 		// 備考
@@ -188,12 +213,10 @@ function fncGetSearchSlipSQL ( $aryViewColumn, $arySearchColumn, $arySearchDataC
 				if ( $arySearchDataColumn["lngInsertUserCode"] )
 				{
 					$aryQuery[] = " AND insert_u.strUserDisplayCode ~* '" . $arySearchDataColumn["lngInsertUserCode"] . "'";
-					$flgInsertUser = TRUE;
 				}
 				if ( $arySearchDataColumn["strInsertUserName"] )
 				{
 					$aryQuery[] = " AND UPPER(insert_u.strInsertUserName) LIKE UPPER('%" . $arySearchDataColumn["strInsertUserName"] . "%')";
-					$flgInsertUser = TRUE;
 				}
 			}
 
@@ -217,7 +240,7 @@ function fncGetSearchSlipSQL ( $aryViewColumn, $arySearchColumn, $arySearchDataC
 						
 						$aryDetailWhereQuery[] = "AND ";
 					}
-					$aryDetailWhereQuery[] = "UPPER(p.strCustomerSalesCode) LIKE UPPER('%" . $arySearchDataColumn["strCustomerSalesCode"] . "%') ";
+					$aryDetailWhereQuery[] = "UPPER(sd.strCustomerSalesCode) LIKE UPPER('%" . $arySearchDataColumn["strCustomerSalesCode"] . "%') ";
 					$detailFlag = TRUE;
 				}
 			}
@@ -238,7 +261,7 @@ function fncGetSearchSlipSQL ( $aryViewColumn, $arySearchColumn, $arySearchDataC
 						
 						$aryDetailWhereQuery[] = "AND ";
 					}
-					$aryDetailWhereQuery[] = "UPPER(p.strGoodsCode) LIKE UPPER('%" . $arySearchDataColumn["strGoodsCode"] . "%') ";
+					$aryDetailWhereQuery[] = "UPPER(sd.strGoodsCode) LIKE UPPER('%" . $arySearchDataColumn["strGoodsCode"] . "%') ";
 					$detailFlag = TRUE;
 				}
 			}
@@ -271,17 +294,16 @@ function fncGetSearchSlipSQL ( $aryViewColumn, $arySearchColumn, $arySearchDataC
 	$aryDetailFrom[] = "	,sd1.lngSlipDetailNo";		      // 納品伝票明細番号
 	$aryDetailFrom[] = "	,sd1.lngSortKey as lngRecordNo";  // 明細行NO
 	$aryDetailFrom[] = "	,sd1.strCustomerSalesCode";	      // 注文書NO
-	$aryDetailFrom[] = "	,p.strGoodsCode";                 // 顧客品番
-	$aryDetailFrom[] = "	,p.strProductName";			      // 品名
-	$aryDetailFrom[] = "	,sd1.lngSalesClassCode";	// 売上区分
+	$aryDetailFrom[] = "	,sd1.strGoodsCode";                 // 顧客品番
+	$aryDetailFrom[] = "	,sd1.strProductName";			      // 品名
+	$aryDetailFrom[] = "	,sd1.strSalesClassName";	// 売上区分
 	$aryDetailFrom[] = "	,sd1.curProductPrice";		// 単価
 	$aryDetailFrom[] = "	,sd1.lngQuantity";	        // 入数
 	$aryDetailFrom[] = "	,sd1.lngProductQuantity";	// 数量
-	$aryDetailFrom[] = "	,sd1.lngProductUnitCode";	// 単位
+	$aryDetailFrom[] = "	,sd1.strProductUnitName";	// 単位
 	$aryDetailFrom[] = "	,sd1.curSubTotalPrice";		// 税抜金額
 	$aryDetailFrom[] = "	,sd1.strNote";				// 明細備考
 	$aryDetailFrom[] = "	FROM t_SlipDetail sd1 ";
-	$aryDetailFrom[] = "		LEFT JOIN m_Product p ON sd1.strProductCode = p.strProductCode";
 
 	$aryDetailWhereQuery[] = ") as sd";
 	// where句（明細行） クエリー連結
@@ -306,11 +328,11 @@ function fncGetSearchSlipSQL ( $aryViewColumn, $arySearchColumn, $arySearchDataC
 	$aryOutQuery[] = "	,sd.strCustomerSalesCode";	      // 注文書NO
 	$aryOutQuery[] = "	,sd.strGoodsCode";                // 顧客品番
 	$aryOutQuery[] = "	,sd.strProductName";			  // 品名
-	$aryOutQuery[] = "	,sd.lngSalesClassCode";	          // 売上区分
+	$aryOutQuery[] = "	,sd.strSalesClassName";	          // 売上区分
 	$aryOutQuery[] = "	,sd.curProductPrice";		      // 単価
 	$aryOutQuery[] = "	,sd.lngQuantity";	              // 入数
 	$aryOutQuery[] = "	,sd.lngProductQuantity";	      // 数量
-	$aryOutQuery[] = "	,sd.lngProductUnitCode";	      // 単位
+	$aryOutQuery[] = "	,sd.strProductUnitName";	      // 単位
 	$aryOutQuery[] = "	,sd.curSubTotalPrice";		      // 税抜金額
 	$aryOutQuery[] = "	,sd.strNote";				      // 明細備考
 
@@ -332,10 +354,9 @@ function fncGetSearchSlipSQL ( $aryViewColumn, $arySearchColumn, $arySearchDataC
 	{
 		$aryFromQuery[] = " LEFT JOIN m_MonetaryUnit mu ON s.lngMonetaryUnitCode = mu.lngMonetaryUnitCode";
 	}
-	if ( $flgInsertUser )
-	{
-		$aryFromQuery[] = " LEFT JOIN m_User insert_u ON s.strInsertUserCode = insert_u.strUserDisplayCode";
-	}
+
+	$aryFromQuery[] = " LEFT JOIN m_User insert_u ON s.strInsertUserCode = insert_u.strUserDisplayCode";
+	$aryFromQuery[] = " LEFT JOIN m_Company delv_c ON s.lngDeliveryPlaceCode = delv_c.lngCompanyCode";
 
 	// From句 クエリー連結
 	$aryOutQuery[] = implode("\n", $aryFromQuery);
@@ -508,23 +529,23 @@ function fncGetSlipToProductSQL ( $aryDetailViewColumn, $lngSlipNo, $aryData, $o
 		// 顧客品番
 		if ( $strViewColumnName == "strGoodsCode" )
 		{
-			$arySelectQuery[] = ", p.strGoodsCode as strGoodsCode";
-			$flgProductCode = TRUE;
+			$arySelectQuery[] = ", sd.strGoodsCode as strGoodsCode";
+			//$flgProductCode = TRUE;
 		}
 
 		// 品名
 		if ( $strViewColumnName == "strProductName" )
 		{
-			$arySelectQuery[] = ", p.strProductName as strProductName";
-			$flgProductCode = TRUE;
+			$arySelectQuery[] = ", sd.strProductName as strProductName";
+			//$flgProductCode = TRUE;
 		}
 
 		// 売上区分
-		if ( $strViewColumnName == "lngSalesClassCode" )
+		if ( $strViewColumnName == "strSalesClassName" )
 		{
 			$arySelectQuery[] = ", sd.lngSalesClassCode as lngSalesClassCode";
-			$arySelectQuery[] = ", sc.strSalesClassName as strSalesClassName";
-			$flgSalesClass = TRUE;
+			$arySelectQuery[] = ", sd.strSalesClassName as strSalesClassName";
+			//$flgSalesClass = TRUE;
 		}
 		
 		// 単価
@@ -546,11 +567,9 @@ function fncGetSlipToProductSQL ( $aryDetailViewColumn, $lngSlipNo, $aryData, $o
 		}
 		
 		// 単位
-		if ( $strViewColumnName == "lngProductUnitCode" )
+		if ( $strViewColumnName == "strProductUnitName" )
 		{
-			$arySelectQuery[] = ", sd.lngProductUnitCode as lngProductUnitCode";
-			$arySelectQuery[] = ", pu.strProductUnitName as strProductUnitName";
-			$flgProductUnit = TRUE;
+			$arySelectQuery[] = ", sd.strProductUnitName as strProductUnitName";
 		}
 
 		// 税抜金額
@@ -590,16 +609,14 @@ function fncGetSlipToProductSQL ( $aryDetailViewColumn, $lngSlipNo, $aryData, $o
 	$aryFromQuery[] = " FROM t_SlipDetail sd";
 
 	// 追加表示用の参照マスタ対応
-	$aryFromQuery[] = " LEFT JOIN m_Product p USING (strProductCode)";
-		 
-	if ( $flgSalesClass )
-	{
-		$aryFromQuery[] = " LEFT JOIN m_SalesClass sc USING (lngSalesClassCode)";
-	}
-	if ( $flgProductUnit )
-	{
-		$aryFromQuery[] = " LEFT JOIN m_ProductUnit pu ON sd.lngProductUnitCode = pu.lngProductUnitCode";
-	}
+	//if ( $flgSalesClass )
+	//{
+	//	$aryFromQuery[] = " LEFT JOIN m_SalesClass sc USING (lngSalesClassCode)";
+	//}
+	//if ( $flgProductUnit )
+	//{
+	//	$aryFromQuery[] = " LEFT JOIN m_ProductUnit pu ON sd.lngProductUnitCode = pu.lngProductUnitCode";
+	//}
 
 	// From句 クエリー連結
 	$aryOutQuery[] = implode("\n", $aryFromQuery);
@@ -771,10 +788,19 @@ function fncSetSlipHeadTable ( $lngColumnCount, $aryHeadResult, $aryDetailResult
 					$strText .= " " . $aryHeadResult["strcustomerdisplayname"];
 					$TdData .= $strText;
 				}
+				// 課税区分
+				else if ($strColumnName == "lngTaxClassCode"){
+					$TdData  .= $aryHeadResult["strtaxclassname"];
+				}
 				// 納品日
 				else if ( $strColumnName == "dtmDeliveryDate" )
 				{
 					$TdData .= str_replace( "-", "/", substr( $aryHeadResult["dtmdeliverydate"], 0, 19 ) );
+				}
+				// 納品先
+				else if ( $strColumnName == "lngDeliveryPlaceCode" )
+				{
+					$TdData  .= $aryHeadResult["strdeliveryplacename"];
 				}
 				// 納品伝票コード（納品書NO）
 				else if ( $strColumnName == "strSlipCode" )
@@ -789,15 +815,15 @@ function fncSetSlipHeadTable ( $lngColumnCount, $aryHeadResult, $aryDetailResult
 				// 起票者
 				else if ( $strColumnName == "lngInsertUserCode" )
 				{
-					if ( $aryHeadResult["strinsertuserdisplaycode"] )
+					if ( $aryHeadResult["strinsertusercode"] )
 					{
-						$strText .= "[" . $aryHeadResult["strinsertuserdisplaycode"] ."]";
+						$strText .= "[" . $aryHeadResult["strinsertusercode"] ."]";
 					}
 					else
 					{
 						$strText .= "     ";
 					}
-					$strText .= " " . $aryHeadResult["strinsertuserdisplayname"];
+					$strText .= " " . $aryHeadResult["strinsertusername"];
 					$TdData .= $strText;
 				}
 				// 合計金額
@@ -905,11 +931,11 @@ function fncSetSlipTable ( $aryResult, $aryViewColumn, $arySearchColumn, $aryDat
 			or $strColumnName == "strCustomerSalesCode"			//注文書NO
 			or $strColumnName == "strGoodsCode"					//顧客品番
 			or $strColumnName == "strProductName"				//品名
-			or $strColumnName == "lngSalesClassCode"			//売上区分
+			or $strColumnName == "strSalesClassName"			//売上区分
 			or $strColumnName == "curProductPrice"				//単価
 			or $strColumnName == "lngQuantity"					//入数
 			or $strColumnName == "lngProductQuantity"			//数量
-			or $strColumnName == "lngProductUnitCode"			//単位
+			or $strColumnName == "strProductUnitName"			//単位
 			or $strColumnName == "curSubTotalPrice"				//税抜金額
 			or $strColumnName == "strDetailNote"      )			//明細備考
 		{
