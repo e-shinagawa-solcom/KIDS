@@ -28,8 +28,8 @@ include_once('conf.inc');
 
 // ライブラリ読み込み
 require (LIB_FILE);
-require (SRC_ROOT . "sc/cmn/lib_scs.php");
-require (SRC_ROOT . "sc/cmn/lib_scs1.php");
+require (SRC_ROOT . "sc/cmn/lib_scd.php");
+require (SRC_ROOT . "sc/cmn/lib_scd1.php");
 require (SRC_ROOT . "sc/cmn/column.php");
 
 // DB接続
