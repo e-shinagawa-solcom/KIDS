@@ -27,94 +27,24 @@
 *
 *	納品書検索の検索項目から SQL文を作成する
 *
-*	@param  Array 	$aryViewColumn 			表示対象カラム名の配列
 *	@param  Array 	$arySearchColumn 		検索対象カラム名の配列
 *	@param  Array 	$arySearchDataColumn 	検索内容の配列
 *	@param  Object	$objDB       			DBオブジェクト
 *	@param	String	$strSlipCode			納品伝票コード	空白指定時:検索結果出力	納品伝票コード指定時:管理用、同じ納品書ＮＯの一覧取得
 *	@param	Integer	$lngSlipNo				納品伝票番号	0:検索結果出力	納品伝票番号指定時:管理用、同じ納品伝票コードとする時の対象外納品伝票番号
-*	@param	Boolean	$bytAdminMode			有効な削除データの取得用フラグ	FALSE:検索結果出力	TRUE:管理用、削除データ取得
 *	@return Array 	$strSQL 検索用SQL文 OR Boolean FALSE
 *	@access public
 */
-function fncGetSearchSlipSQL ( $aryViewColumn, $arySearchColumn, $arySearchDataColumn, $objDB, $strSlipCode, $lngSlipNo, $bytAdminMode, $strSessionID)
+function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $strSlipCode, $lngSlipNo, $strSessionID)
 {
-
-	// 表示用カラムに設定されている内容を検索用に文字列設定
-	for ( $i = 0; $i < count($aryViewColumn); $i++ )
-	{
-		$strViewColumnName = $aryViewColumn[$i];
-
-		// 表示項目　管理モードの過去リビジョンデータ、および、明細情報は検索結果より取得
-
-		// 顧客
-		if ( $strViewColumnName == "lngCustomerCode" and !$bytAdminMode )
-		{
-			$arySelectQuery[] = ", cust_c.strCompanyDisplayCode as strCustomerDisplayCode";
-			$arySelectQuery[] = ", cust_c.strCompanyDisplayName as strCustomerDisplayName";
-			$flgCustomerCompany = TRUE;
-		}
-
-		// 課税区分
-		if ( $strViewColumnName == "lngTaxClassCode" and !$bytAdminMode )
-		{
-			$arySelectQuery[] = ", s.strTaxClassName as strTaxClassName";
-		}		
-
-		// 納品伝票コード（納品書NO）
-		if ( $strViewColumnName == "strSlipCode" )
-		{
-			$arySelectQuery[] = ", s.strSlipCode as strSlipCode";
-		}
-
-		// 納品日
-		if ( $strViewColumnName == "dtmDeliveryDate" and !$bytAdminMode )
-		{
-			$arySelectQuery[] = ", to_char( s.dtmDeliveryDate, 'YYYY/MM/DD HH:MI:SS' ) as dtmDeliveryDate";
-		}		
-
-		// 納品先
-		if ( $strViewColumnName == "lngDeliveryPlaceCode" and !$bytAdminMode )
-		{                            
-			$arySelectQuery[] = " , s.strDeliveryPlaceName as strDeliveryPlaceName";
-		}
-
-		// 起票者
-		if ( $strViewColumnName == "lngInsertUserCode" and !$bytAdminMode )
-		{
-			$arySelectQuery[] = ", s.strInsertUserCode as strInsertUserCode";
-			$arySelectQuery[] = ", s.strInsertUserName as strInsertUserName";
-		}
-		
-		// 備考
-		if ( $strViewColumnName == "strNote" and !$bytAdminMode )
-		{
-			$arySelectQuery[] = ", s.strNote as strNote";
-		}
-
-		// 合計金額
-		if ( $strViewColumnName == "curTotalPrice" and !$bytAdminMode )
-		{
-			$arySelectQuery[] = ", To_char( s.curTotalPrice, '9,999,999,990.99' ) as curTotalPrice";
-		}
-	}
-
-	//// 売上Ｎｏ
-	//$arySelectQuery[] = ", s.strSalesCode as strSalesCode";
-
-	// 売上状態コード
-	$arySelectQuery[] = ", sa.lngSalesStatusCode as lngSalesStatusCode";
-	$arySelectQuery[] = ", ss.strSalesStatusName as strSalesStatusName";
-
-	// 通貨単位
-	$arySelectQuery[] = ", mu.strMonetaryUnitSign as strMonetaryUnitSign";
-	$flgMonetaryUnit = TRUE;
-
-	// 条件の追加
+	// -----------------------------
+	//  検索条件の動的設定
+	// -----------------------------
+	// 明細条件追加済みフラグ
 	$detailFlag = FALSE;
 
-	// 管理モードの検索時、同じ納品伝票コードのデータを取得する場合
-	if ( $strSlipCode or $bytAdminMode )
+	// 同じ納品伝票コードのデータを取得する場合
+	if ( $strSlipCode )
 	{
 		// 同じ納品伝票コードに対して指定の納品伝票番号のデータは除外する
 		if ( $lngSlipNo )
@@ -125,12 +55,6 @@ function fncGetSearchSlipSQL ( $aryViewColumn, $arySearchColumn, $arySearchDataC
 		{
 			fncOutputError( 3, "DEF_FATAL", "クエリー実行エラー" ,TRUE, "../sc/search2/index.php?strSessionID=".$strSessionID, $objDB );
 		}
-
-		// 削除データ取得時は条件追加
-		if ( $bytAdminMode )
-		{
-			$aryQuery[] = " AND s.lngRevisionNo < 0\n";
-		}
 	}
 	// 管理モードでの同じ納品伝票コードに対する検索モード以外の場合は検索条件を追加する
 	else
@@ -138,12 +62,14 @@ function fncGetSearchSlipSQL ( $aryViewColumn, $arySearchColumn, $arySearchDataC
 		// 絶対条件 無効フラグが設定されておらず、最新売上のみ
 		$aryQuery[] = " WHERE s.bytInvalidFlag = FALSE AND s.lngRevisionNo >= 0";
 
-		// 表示用カラムに設定されている内容を検索用に文字列設定
+		// 検索チェックボックスがONの項目のみ検索条件に追加
 		for ( $i = 0; $i < count($arySearchColumn); $i++ )
 		{
 			$strSearchColumnName = $arySearchColumn[$i];
-
-			// ////納品書マスタ内の検索条件////
+			
+			// ----------------------------------------------
+			//   納品書マスタ（ヘッダ部）の検索条件
+			// ----------------------------------------------
 			// 顧客（売上先）
 			if ( $strSearchColumnName == "lngCustomerCode" )
 			{
@@ -220,10 +146,9 @@ function fncGetSearchSlipSQL ( $aryViewColumn, $arySearchColumn, $arySearchDataC
 				}
 			}
 
-			//
-			// 明細テーブルの条件
-			//
-
+			// ----------------------------------------------
+			//   納品伝票明細テーブル（明細部）の検索条件
+			// ----------------------------------------------
 			// 注文書NO.
 			if ( $strSearchColumnName == "strCustomerSalesCode" )
 			{
@@ -240,7 +165,7 @@ function fncGetSearchSlipSQL ( $aryViewColumn, $arySearchColumn, $arySearchDataC
 						
 						$aryDetailWhereQuery[] = "AND ";
 					}
-					$aryDetailWhereQuery[] = "UPPER(sd.strCustomerSalesCode) LIKE UPPER('%" . $arySearchDataColumn["strCustomerSalesCode"] . "%') ";
+					$aryDetailWhereQuery[] = "UPPER(sd1.strCustomerSalesCode) LIKE UPPER('%" . $arySearchDataColumn["strCustomerSalesCode"] . "%') ";
 					$detailFlag = TRUE;
 				}
 			}
@@ -261,7 +186,7 @@ function fncGetSearchSlipSQL ( $aryViewColumn, $arySearchColumn, $arySearchDataC
 						
 						$aryDetailWhereQuery[] = "AND ";
 					}
-					$aryDetailWhereQuery[] = "UPPER(sd.strGoodsCode) LIKE UPPER('%" . $arySearchDataColumn["strGoodsCode"] . "%') ";
+					$aryDetailWhereQuery[] = "UPPER(sd1.strGoodsCode) LIKE UPPER('%" . $arySearchDataColumn["strGoodsCode"] . "%') ";
 					$detailFlag = TRUE;
 				}
 			}
@@ -286,41 +211,15 @@ function fncGetSearchSlipSQL ( $aryViewColumn, $arySearchColumn, $arySearchDataC
 		}
 	}
 
-	// 明細行の検索対応
 
-	// 明細検索用テーブル結合条件
-	$aryDetailFrom = array();
-	$aryDetailFrom[] = ", (SELECT distinct on ( sd1.lngSlipNo ) sd1.lngSlipNo ";
-	$aryDetailFrom[] = "	,sd1.lngSlipDetailNo";		      // 納品伝票明細番号
-	$aryDetailFrom[] = "	,sd1.lngSortKey as lngRecordNo";  // 明細行NO
-	$aryDetailFrom[] = "	,sd1.strCustomerSalesCode";	      // 注文書NO
-	$aryDetailFrom[] = "	,sd1.strGoodsCode";                 // 顧客品番
-	$aryDetailFrom[] = "	,sd1.strProductName";			      // 品名
-	$aryDetailFrom[] = "	,sd1.strSalesClassName";	// 売上区分
-	$aryDetailFrom[] = "	,sd1.curProductPrice";		// 単価
-	$aryDetailFrom[] = "	,sd1.lngQuantity";	        // 入数
-	$aryDetailFrom[] = "	,sd1.lngProductQuantity";	// 数量
-	$aryDetailFrom[] = "	,sd1.strProductUnitName";	// 単位
-	$aryDetailFrom[] = "	,sd1.curSubTotalPrice";		// 税抜金額
-	$aryDetailFrom[] = "	,sd1.strNote";				// 明細備考
-	$aryDetailFrom[] = "	FROM t_SlipDetail sd1 ";
 
-	$aryDetailWhereQuery[] = ") as sd";
-	// where句（明細行） クエリー連結
-	$strDetailQuery = implode("\n", $aryDetailFrom) . "\n";
-	// 明細行の条件が存在する場合
-	if ( $detailFlag )
-	{
-		$strDetailQuery .= implode("\n", $aryDetailTargetQuery) . "\n";
-	}
-	$strDetailQuery .= implode("\n", $aryDetailWhereQuery) . "\n";
-	
-
-	// SQL文の作成
+	// ---------------------------------
+	//   SQL文の作成
+	// ---------------------------------
 	$aryOutQuery = array();
-	$aryOutQuery[] = "SELECT distinct s.lngSlipNo as lngSlipNo";
-	$aryOutQuery[] = "	,s.lngRevisionNo as lngRevisionNo";
-	$aryOutQuery[] = "	,s.dtmInsertDate as dtmInsertDate";
+	$aryOutQuery[] = "SELECT distinct s.lngSlipNo as lngSlipNo";	//納品伝票番号
+	$aryOutQuery[] = "	,s.lngRevisionNo as lngRevisionNo";			//リビジョン番号
+	$aryOutQuery[] = "	,s.dtmInsertDate as dtmInsertDate";			//作成日
 
 	// 明細行の 'order by' 用に追加
 	$aryOutQuery[] = "	,sd.lngSlipDetailNo";		      // 納品伝票明細番号
@@ -336,6 +235,33 @@ function fncGetSearchSlipSQL ( $aryViewColumn, $arySearchColumn, $arySearchDataC
 	$aryOutQuery[] = "	,sd.curSubTotalPrice";		      // 税抜金額
 	$aryOutQuery[] = "	,sd.strNote";				      // 明細備考
 
+	// 顧客
+	$arySelectQuery[] = ", cust_c.strCompanyDisplayCode as strCustomerDisplayCode";
+	$arySelectQuery[] = ", cust_c.strCompanyDisplayName as strCustomerDisplayName";
+	// 課税区分
+	$arySelectQuery[] = ", s.strTaxClassName as strTaxClassName";
+	// 納品伝票コード（納品書NO）
+	$arySelectQuery[] = ", s.strSlipCode as strSlipCode";
+	// 納品日
+	$arySelectQuery[] = ", to_char( s.dtmDeliveryDate, 'YYYY/MM/DD HH:MI:SS' ) as dtmDeliveryDate";
+	// 納品先
+	$arySelectQuery[] = " , s.strDeliveryPlaceName as strDeliveryPlaceName";
+	$arySelectQuery[] = " , s.strDeliveryPlaceName as strDeliveryPlaceName";
+	// 起票者
+	$arySelectQuery[] = ", s.strInsertUserCode as strInsertUserCode";
+	$arySelectQuery[] = ", s.strInsertUserName as strInsertUserName";
+	// 備考
+	$arySelectQuery[] = ", s.strNote as strNote";
+	// 合計金額
+	$arySelectQuery[] = ", To_char( s.curTotalPrice, '9,999,999,990.99' ) as curTotalPrice";
+	//// 売上Ｎｏ
+	//$arySelectQuery[] = ", s.strSalesCode as strSalesCode";
+	// 売上状態コード
+	$arySelectQuery[] = ", sa.lngSalesStatusCode as lngSalesStatusCode";
+	$arySelectQuery[] = ", ss.strSalesStatusName as strSalesStatusName";
+	// 通貨単位
+	$arySelectQuery[] = ", mu.strMonetaryUnitSign as strMonetaryUnitSign";
+
 	// select句 クエリー連結
 	$aryOutQuery[] = implode("\n", $arySelectQuery);
 
@@ -344,27 +270,41 @@ function fncGetSearchSlipSQL ( $aryViewColumn, $arySearchColumn, $arySearchDataC
 	$aryFromQuery[] = " FROM m_Slip s";
 	$aryFromQuery[] = " LEFT JOIN m_Sales sa ON s.lngSalesNo = sa.lngSalesNo";
 	$aryFromQuery[] = " LEFT JOIN m_SalesStatus ss ON sa.lngSalesStatusCode = ss.lngSalesStatusCode";
-
-	// 追加表示用の参照マスタ対応
-	if ( $flgCustomerCompany )
-	{
-		$aryFromQuery[] = " LEFT JOIN m_Company cust_c ON s.strCustomerCode = cust_c.strCompanyDisplayCode";
-	}
-	if ( $flgMonetaryUnit )
-	{
-		$aryFromQuery[] = " LEFT JOIN m_MonetaryUnit mu ON s.lngMonetaryUnitCode = mu.lngMonetaryUnitCode";
-	}
-
+	$aryFromQuery[] = " LEFT JOIN m_Company cust_c ON s.strCustomerCode = cust_c.strCompanyDisplayCode";
+	$aryFromQuery[] = " LEFT JOIN m_MonetaryUnit mu ON s.lngMonetaryUnitCode = mu.lngMonetaryUnitCode";
 	$aryFromQuery[] = " LEFT JOIN m_User insert_u ON s.strInsertUserCode = insert_u.strUserDisplayCode";
 	$aryFromQuery[] = " LEFT JOIN m_Company delv_c ON s.lngDeliveryPlaceCode = delv_c.lngCompanyCode";
-
 	// From句 クエリー連結
 	$aryOutQuery[] = implode("\n", $aryFromQuery);
+
+	// 明細検索用テーブル結合条件
+	$aryDetailFrom = array();
+	$aryDetailFrom[] = ", (SELECT distinct on ( sd1.lngSlipNo ) sd1.lngSlipNo ";
+	$aryDetailFrom[] = "	,sd1.lngSlipDetailNo";				// 納品伝票明細番号
+	$aryDetailFrom[] = "	,sd1.lngSortKey as lngRecordNo";	// 明細行NO
+	$aryDetailFrom[] = "	,sd1.strCustomerSalesCode";			// 注文書NO
+	$aryDetailFrom[] = "	,sd1.strGoodsCode";					// 顧客品番
+	$aryDetailFrom[] = "	,sd1.strProductName";				// 品名
+	$aryDetailFrom[] = "	,sd1.strSalesClassName";	// 売上区分
+	$aryDetailFrom[] = "	,sd1.curProductPrice";		// 単価
+	$aryDetailFrom[] = "	,sd1.lngQuantity";	        // 入数
+	$aryDetailFrom[] = "	,sd1.lngProductQuantity";	// 数量
+	$aryDetailFrom[] = "	,sd1.strProductUnitName";	// 単位
+	$aryDetailFrom[] = "	,sd1.curSubTotalPrice";		// 税抜金額
+	$aryDetailFrom[] = "	,sd1.strNote";				// 明細備考
+	$aryDetailFrom[] = "	FROM t_SlipDetail sd1 ";
+	// where句（明細行） クエリー連結
+	$strDetailQuery = implode("\n", $aryDetailFrom) . "\n";
+	// 明細行の条件が存在する場合
+	if ( $detailFlag )
+	{
+		$strDetailQuery .= implode("\n", $aryDetailTargetQuery) . "\n";
+	}
+	$aryDetailWhereQuery[] = ") as sd";
+	$strDetailQuery .= implode("\n", $aryDetailWhereQuery) . "\n";
 	
 	// Where句 クエリー連結
 	$aryOutQuery[] = $strDetailQuery;
-
-	// Where句 クエリー連結
 	$aryOutQuery[] = implode("\n", $aryQuery);
 
 	// 明細行用の条件連結
@@ -372,8 +312,8 @@ function fncGetSearchSlipSQL ( $aryViewColumn, $arySearchColumn, $arySearchDataC
 
 
 	/////////////////////////////////////////////////////////////
-	//// 最新売上（リビジョン番号が最大、リバイズ番号が最大、////
-	//// かつリビジョン番号負の値で無効フラグがFALSEの       ////
+	//// 最新売上（リビジョン番号が最大、リバイズ番号が最大、     ////
+	//// かつリビジョン番号負の値で無効フラグがFALSEの           ////
 	//// 同じ納品伝票コードを持つデータが無い売上データ          ////
 	/////////////////////////////////////////////////////////////
 	// 納品伝票コードが指定されていない場合は検索条件を設定する
@@ -390,8 +330,8 @@ function fncGetSearchSlipSQL ( $aryViewColumn, $arySearchColumn, $arySearchDataC
 		}
 	}
 
-	// 管理モードの検索時、同じ納品伝票コードのデータを取得する場合
-	if ( $strSlipCode or $bytAdminMode )
+	// 同じ納品伝票コードのデータを取得する場合
+	if ($strSlipCode)
 	{
 		$aryOutQuery[] = " ORDER BY dtmInsertDate DESC";
 	}
@@ -400,7 +340,7 @@ function fncGetSearchSlipSQL ( $aryViewColumn, $arySearchColumn, $arySearchDataC
 		// ソート条件設定
 		$aryOutQuery[] = " ORDER BY lngSlipNo DESC";
 
-		// TODO:ソート機能必要か？（要確認）
+		// 特に定められたソート仕様は無いためコメントアウト
 		/*
 		if ( $arySearchDataColumn["strSortOrder"] == "ASC" )
 		{
@@ -504,126 +444,57 @@ function fncGetSearchSlipSQL ( $aryViewColumn, $arySearchColumn, $arySearchDataC
 *
 *	納品伝票番号から明細を取得するSQL文を作成する
 *
-*	@param  Array 	$aryDetailViewColumn 	表示対象明細カラム名の配列
 *	@param  String 	$lngSlipNo 			    対象納品伝票番号
 *	@param  Array 	$aryData 				POSTデータの配列
 *	@param  Object	$objDB       			DBオブジェクト
 *	@return Array 	$strSQL 検索用SQL文 OR Boolean FALSE
 *	@access public
 */
-function fncGetSlipToProductSQL ( $aryDetailViewColumn, $lngSlipNo, $aryData, $objDB )
+function fncGetSlipToProductSQL ( $lngSlipNo, $aryData, $objDB )
 {
-	reset( $aryDetailViewColumn );
-
-	// 表示用カラムに設定されている内容を検索用に文字列設定
-	for ( $i = 0; $i < count($aryDetailViewColumn); $i++ )
-	{
-		$strViewColumnName = $aryDetailViewColumn[$i];
-		
-		// 注文書NO.
-		if ( $strViewColumnName == "strCustomerSalesCode" )
-		{
-			$arySelectQuery[] = ", sd.strCustomerSalesCode as strCustomerSalesCode";
-		}
-
-		// 顧客品番
-		if ( $strViewColumnName == "strGoodsCode" )
-		{
-			$arySelectQuery[] = ", sd.strGoodsCode as strGoodsCode";
-			//$flgProductCode = TRUE;
-		}
-
-		// 品名
-		if ( $strViewColumnName == "strProductName" )
-		{
-			$arySelectQuery[] = ", sd.strProductName as strProductName";
-			//$flgProductCode = TRUE;
-		}
-
-		// 売上区分
-		if ( $strViewColumnName == "strSalesClassName" )
-		{
-			$arySelectQuery[] = ", sd.lngSalesClassCode as lngSalesClassCode";
-			$arySelectQuery[] = ", sd.strSalesClassName as strSalesClassName";
-			//$flgSalesClass = TRUE;
-		}
-		
-		// 単価
-		if ( $strViewColumnName == "curProductPrice" )
-		{
-			$arySelectQuery[] = ", To_char( sd.curProductPrice, '9,999,999,990.9999' )  as curProductPrice";
-		}
-
-		// 入数
-		if ( $strViewColumnName == "lngQuantity" )
-		{
-			$arySelectQuery[] = ", To_char( sd.lngQuantity, '9,999,999,990' )  as lngQuantity";
-		}
-
-		// 数量
-		if ( $strViewColumnName == "lngProductQuantity" )
-		{
-			$arySelectQuery[] = ", To_char( sd.lngProductQuantity, '9,999,999,990' )  as lngProductQuantity";
-		}
-		
-		// 単位
-		if ( $strViewColumnName == "strProductUnitName" )
-		{
-			$arySelectQuery[] = ", sd.strProductUnitName as strProductUnitName";
-		}
-
-		// 税抜金額
-		if ( $strViewColumnName == "curSubTotalPrice" )
-		{
-			$arySelectQuery[] = ", To_char( sd.curSubTotalPrice, '9,999,999,990.99' )  as curSubTotalPrice";
-		}
-
-		// 明細備考
-		if ( $strViewColumnName == "strDetailNote" )
-		{
-			$arySelectQuery[] = ", sd.strNote as strDetailNote";
-		}
-
-	}
-
-	// 絶対条件 対象納品伝票番号の指定
-	$aryQuery[] = " WHERE sd.lngSlipNo = " . $lngSlipNo . "";
-
-	// 条件の追加
-
-	// ////納品伝票マスタ内の検索条件////
-	// SQL文の作成
+	// ----------------------
+	//   SQL文の作成
+	// ----------------------
 	$aryOutQuery = array();
-	$aryOutQuery[] = "SELECT sd.lngSortKey as lngRecordNo";		//明細行NO
-	$aryOutQuery[] = "	,sd.lngSlipNo as lngSlipNo";			//納品伝票番号
-	$aryOutQuery[] = "	,sd.lngRevisionNo as lngRevisionNo";	//リビジョン番号
-	
-	// select句 クエリー連結
-	if( !empty($arySelectQuery) )
-	{
-		$aryOutQuery[] = implode("\n", $arySelectQuery);
-	}
+	//明細行NO
+	$aryOutQuery[] = "SELECT sd.lngSortKey as lngRecordNo";
+	//納品伝票番号
+	$aryOutQuery[] = "	,sd.lngSlipNo as lngSlipNo";
+	//リビジョン番号	
+	$aryOutQuery[] = "	,sd.lngRevisionNo as lngRevisionNo";
+	// 注文書NO.
+	$aryOutQuery[] = ", sd.strCustomerSalesCode as strCustomerSalesCode";
+	// 顧客品番
+	$aryOutQuery[] = ", sd.strGoodsCode as strGoodsCode";
+	// 品名
+	$aryOutQuery[] = ", sd.strProductName as strProductName";
+	// 売上区分
+	$aryOutQuery[] = ", sd.lngSalesClassCode as lngSalesClassCode";
+	$aryOutQuery[] = ", sd.strSalesClassName as strSalesClassName";
+	// 単価
+	$aryOutQuery[] = ", To_char( sd.curProductPrice, '9,999,999,990.9999' )  as curProductPrice";
+	// 入数
+	$aryOutQuery[] = ", To_char( sd.lngQuantity, '9,999,999,990' )  as lngQuantity";
+	// 数量
+	$aryOutQuery[] = ", To_char( sd.lngProductQuantity, '9,999,999,990' )  as lngProductQuantity";
+	// 単位
+	$aryOutQuery[] = ", sd.strProductUnitName as strProductUnitName";
+	// 税抜金額
+	$aryOutQuery[] = ", To_char( sd.curSubTotalPrice, '9,999,999,990.99' )  as curSubTotalPrice";
+	// 明細備考
+	$aryOutQuery[] = ", sd.strNote as strDetailNote";
 
-	// From句 の生成
-	$aryFromQuery = array();
-	$aryFromQuery[] = " FROM t_SlipDetail sd";
+	// From句
+	$aryOutQuery[] = " FROM t_SlipDetail sd";
 
-	// 追加表示用の参照マスタ対応
-	//if ( $flgSalesClass )
-	//{
-	//	$aryFromQuery[] = " LEFT JOIN m_SalesClass sc USING (lngSalesClassCode)";
-	//}
-	//if ( $flgProductUnit )
-	//{
-	//	$aryFromQuery[] = " LEFT JOIN m_ProductUnit pu ON sd.lngProductUnitCode = pu.lngProductUnitCode";
-	//}
+	// Where句
+	$aryOutQuery[] = " WHERE sd.lngSlipNo = " . $lngSlipNo . "";	// 対象納品伝票番号の指定
 
-	// From句 クエリー連結
-	$aryOutQuery[] = implode("\n", $aryFromQuery);
-	// Where句 クエリー連結
-	$aryOutQuery[] = implode("\n", $aryQuery);
+	// OrderBy句
+	$aryOutQuery[] = " ORDER BY sd.lngSortKey ASC";
 
-	// ソート条件指定
+	// 特に定められたソート仕様は無いためコメントアウト
+	/*
 	if ( $aryData["strSortOrder"] == "ASC" )
 	{
 		$strAsDs = "DESC";	// ヘッダ項目とは逆順にする
@@ -633,10 +504,6 @@ function fncGetSlipToProductSQL ( $aryDetailViewColumn, $lngSlipNo, $aryData, $o
 		$strAsDs = "ASC";	//降順
 	}
 
-	$aryOutQuery[] = " ORDER BY sd.lngSortKey ASC";
-
-	// TODO:ソート機能必要か？（要確認）
-	/*
 	switch($aryData["strSort"])
 	{
 		case "strDetailNote":
@@ -666,21 +533,20 @@ function fncGetSlipToProductSQL ( $aryDetailViewColumn, $lngSlipNo, $aryData, $o
 
 
 /**
-* 納品書検索結果表示関数（ヘッダ用）
+* 納品書検索結果表示関数
 *
 *	納品書検索結果からテーブル構成で結果を出力する関数
-*	ヘッダ行を表示する
+*	1レコード分のHTMLを取得
 *
 *	@param  Integer $lngColumnCount 		行数
 *	@param  Array 	$aryHeadResult 			ヘッダ行の検索結果が格納された配列
 *	@param  Array 	$aryDetailResult 		明細行の検索結果が格納された配列
 *	@param  Array 	$aryHeadViewColumn 		ヘッダ表示対象カラム名の配列
-*	@param  Array 	$aryDetailViewColumn 	明細表示対象カラム名の配列
 *	@param  Array 	$aryData 				ＰＯＳＴデータ群
 *	@param	Array	$aryUserAuthority		ユーザーの操作に対する権限が入った配列
 *	@access public
 */
-function fncSetSlipHeadTable ( $lngColumnCount, $aryHeadResult, $aryDetailResult, $aryDetailViewColumn, $aryHeadViewColumn, $aryData, $aryUserAuthority, $objDB, $objCache, $lngReviseTotalCount, $lngReviseCount, $bytDeleteFlag )
+function fncSetSlipTableRow ( $lngColumnCount, $aryHeadResult, $aryDetailResult, $aryHeadViewColumn, $aryData, $aryUserAuthority, $lngReviseTotalCount, $lngReviseCount, $bytDeleteFlag )
 {
 	for ( $i = 0; $i < count($aryDetailResult); $i++ )
 	{
@@ -888,118 +754,90 @@ function fncSetSlipHeadTable ( $lngColumnCount, $aryHeadResult, $aryDetailResult
 *	@param  Object	$objCache       	キャッシュオブジェクト
 *	@access public
 */
-function fncSetSlipTable ( $aryResult, $aryViewColumn, $arySearchColumn, $aryData, $aryUserAuthority, $aryTytle, $objDB, $objCache, $aryTableName)
+function fncSetSlipTableBody ( $aryResult, $arySearchColumn, $aryData, $aryUserAuthority, $aryTytle, $objDB, $objCache)
 {
-	// 準備
-
-	// 表示カラムのヘッダ部と明細部の分離処理
-	for ( $i = 0; $i < count($aryViewColumn); $i++ )
+	// 詳細ボタン（権限による表示/非表示切り替え）
+	if ( $aryUserAuthority["Detail"] )
 	{
-		$strColumnName = $aryViewColumn[$i];
-
-		// ボタンの場合ここで表示、非表示切り替え
-		if ( $strColumnName == "btnDetail" )
-		{
-			if ( $aryUserAuthority["Detail"] )
-			{
-				$aryHeadViewColumn[] = $strColumnName;
-			}
-		}
-		else if ( $strColumnName == "btnFix" )
-		{
-			if ( $aryUserAuthority["Fix"] )
-			{
-				$aryHeadViewColumn[] = $strColumnName;
-			}
-		}
-		else if ( $strColumnName == "btnDelete" )
-		{
-			if ( $aryUserAuthority["Delete"] )
-			{
-				$aryHeadViewColumn[] = $strColumnName;
-			}
-		}
-		else if ( $strColumnName == "btnInvalid" )
-		{
-			if ( $aryUserAuthority["Invalid"] )
-			{
-				$aryHeadViewColumn[] = $strColumnName;
-			}
-		}
-		// 詳細部
-		else if ( $strColumnName == "lngRecordNo"				//明細行NO
-			or $strColumnName == "strCustomerSalesCode"			//注文書NO
-			or $strColumnName == "strGoodsCode"					//顧客品番
-			or $strColumnName == "strProductName"				//品名
-			or $strColumnName == "strSalesClassName"			//売上区分
-			or $strColumnName == "curProductPrice"				//単価
-			or $strColumnName == "lngQuantity"					//入数
-			or $strColumnName == "lngProductQuantity"			//数量
-			or $strColumnName == "strProductUnitName"			//単位
-			or $strColumnName == "curSubTotalPrice"				//税抜金額
-			or $strColumnName == "strDetailNote"      )			//明細備考
-		{
-			$aryDetailViewColumn[] = $strColumnName;
-			$aryHeadViewColumn[] = $strColumnName;
-		}
-		// ヘッダ部
-		else
-		{
-			$aryHeadViewColumn[] = $strColumnName;
-		}
+		$aryHeadViewColumn[] = "btnDetail";
 	}
+
+	// 修正ボタン（権限による表示/非表示切り替え）
+	if ( $aryUserAuthority["Fix"] )
+	{
+		$aryHeadViewColumn[] = "btnFix";
+	}
+
+	// ヘッダ部
+	$aryHeadViewColumn[] = "lngCustomerCode";		//顧客
+	$aryHeadViewColumn[] = "lngTaxClassCode";		//課税区分
+	$aryHeadViewColumn[] = "strSlipCode";			//納品書NO
+	$aryHeadViewColumn[] = "dtmDeliveryDate";		//納品日
+	$aryHeadViewColumn[] = "lngDeliveryPlaceCode";	//納品先
+	$aryHeadViewColumn[] = "lngInsertUserCode";		//起票者
+	$aryHeadViewColumn[] = "strNote";				//備考
+	$aryHeadViewColumn[] = "curTotalPrice";			//合計金額
+	
+	// 明細部
+	$aryHeadViewColumn[] = "lngRecordNo";			//明細行NO
+	$aryHeadViewColumn[] = "strCustomerSalesCode";	//注文書NO
+	$aryHeadViewColumn[] = "strGoodsCode";			//顧客品番
+	$aryHeadViewColumn[] = "strProductName";		//品名
+	$aryHeadViewColumn[] = "strSalesClassName";		//売上区分
+	$aryHeadViewColumn[] = "curProductPrice";		//単価
+	$aryHeadViewColumn[] = "lngQuantity";			//入数
+	$aryHeadViewColumn[] = "lngProductQuantity";	//数量
+	$aryHeadViewColumn[] = "strProductUnitName";	//単位
+	$aryHeadViewColumn[] = "curSubTotalPrice";		//税抜金額
+	$aryHeadViewColumn[] = "strDetailNote";			//明細備考
+	
+	// 削除ボタン（権限による表示/非表示切り替え）
+	if ( $aryUserAuthority["Delete"] )
+	{
+		$aryHeadViewColumn[] = "btnDelete";
+	}
+
+	// 仕様に無いため非表示にする（2019/8/22 T.Miyata）
+	/*
+	// 無効ボタン（権限による表示/非表示切り替え）
+	if ( $aryUserAuthority["Invalid"] )
+	{
+		$aryHeadViewColumn[] = "btnInvalid";
+	}
+	*/
 
 	// テーブルの形成
 	$lngResultCount = count($aryResult);
-
 	$lngColumnCount = 1;
 	
-	// 項目名列の生成 start=========================================
+	// 項目名列（先頭行）の生成 start=========================================
 	$aryHtml[] = "<thead>";
 	$aryHtml[] = "<tr>";
 	$aryHtml[] = "\t<th class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/copy_off_bt.gif\" class=\"copy button\"></th>";
 
 	// 表示対象カラムの配列より項目設定
-	for ( $j = 0; $j < count($aryViewColumn); $j++ )
+	for ( $j = 0; $j < count($aryHeadViewColumn); $j++ )
 	{
 		$Addth = "\t<th>";
-		$strColumnName = $aryViewColumn[$j];
 		
-		// ソート項目以外の場合
-		if ( $strColumnName == "btnDetail" or $strColumnName == "btnFix" or $strColumnName == "btnDelete" )
-		{
-			// ソート項目以外の場合
-			if ( ( $strColumnName == "btnDetail" and $aryUserAuthority["Detail"] ) 
-			or ( $strColumnName == "btnFix" and $aryUserAuthority["Fix"] ) 
-			or ( $strColumnName == "btnDelete" and $aryUserAuthority["Delete"] ) )
-			{
-				$Addth .= $aryTytle[$strColumnName];
-			}
-		}
-		// ソート項目の場合
-		else
-		{
-			$Addth .= $aryTytle[$strColumnName];
-		}
-
+		$strColumnName = $aryHeadViewColumn[$j];
+		$Addth .= $aryTytle[$strColumnName];
+		
 		$Addth .= "</th>";
+
 		$aryHtml[] = $Addth;
 	}
 	$aryHtml[] = "</tr>";
 	$aryHtml[] = "</thead>";
-
-// 項目名列の生成 end=========================================
+	// 項目名列（先頭行）の生成 end=========================================
 
 	$aryHtml[] = "<tbody>";
 
 	for ( $i = 0; $i < $lngResultCount; $i++ )
 	{
-// 管理モード用過去リバイズ、削除データ出力start==================================
-		// 管理モードの場合　同じ納品伝票コードの一覧を取得し表示する
-
+		// 同じ納品伝票コードの一覧を取得し表示する
 		$strSlipCodeBase = $aryResult[$i]["strslipcode"];
-
-		$strSameSlipCodeQuery = fncGetSearchSlipSQL( $aryViewColumn, $arySearchColumn, $aryData, $objDB, $strSlipCodeBase, $aryResult[$i]["lngslipno"], FALSE, $aryData["strSessionID"]);
+		$strSameSlipCodeQuery = fncGetSearchSlipSQL( $arySearchColumn, $aryData, $objDB, $strSlipCodeBase, $aryResult[$i]["lngslipno"], $aryData["strSessionID"]);
 
 		// 値をとる =====================================
 		list ( $lngResultID, $lngResultNum ) = fncQuery( $strSameSlipCodeQuery, $objDB );
@@ -1013,49 +851,37 @@ function fncSetSlipTable ( $aryResult, $aryViewColumn, $arySearchColumn, $aryDat
 			{
 				$arySameSlipCodeResult[] = $objDB->fetchArray( $lngResultID, $j );
 			}
-			$lngSameSalesCount = $lngResultNum;
+			$lngSameSlipCount = $lngResultNum;
 		}
 		$objDB->freeResult( $lngResultID );
 
 		// 同じ納品伝票コードでの過去リバイズデータが存在すれば
 		if ( $lngResultNum )
 		{
-			for ( $j = 0; $j < $lngSameSalesCount; $j++ )
+			for ( $j = 0; $j < $lngSameSlipCount; $j++ )
 			{
 				// 検索結果部分の設定
-
 				reset( $arySameSlipCodeResult[$j] );
 
-				// 明細出力用の調査
-				$lngDetailViewCount = count( $aryDetailViewColumn );
-
-				if ( $lngDetailViewCount )
+				// 明細選択クエリー実行
+				$strDetailQuery = fncGetSlipToProductSQL ( $arySameSlipCodeResult[$j]["lngslipno"], $aryData, $objDB );
+				if ( !$lngDetailResultID = $objDB->execute( $strDetailQuery ) )
 				{
-					// 明細行数の調査
-					$strDetailQuery = fncGetSlipToProductSQL ( $aryDetailViewColumn, $arySameSlipCodeResult[$j]["lngslipno"], $aryData, $objDB );
-
-					// クエリー実行
-					if ( !$lngDetailResultID = $objDB->execute( $strDetailQuery ) )
-					{
-						$strMessage = fncOutputError( 3, "DEF_FATAL", "クエリー実行エラー" ,TRUE, "../sc/search2/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
-					}
-
-					$lngDetailCount = pg_num_rows( $lngDetailResultID );
-
-					// 配列のクリア
-					unset( $aryDetailResult );
-
-					// 結果の取得
-					if ( $lngDetailCount )
-					{
-						for ( $k = 0; $k < $lngDetailCount; $k++ )
-						{
-							$aryDetailResult[] = pg_fetch_array( $lngDetailResultID, $k, PGSQL_ASSOC );
-						}
-					}
-
-					$objDB->freeResult( $lngDetailResultID );
+					$strMessage = fncOutputError( 3, "DEF_FATAL", "クエリー実行エラー" ,TRUE, "../sc/search2/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
 				}
+
+				// 明細選択結果の取得
+				unset( $aryDetailResult );
+				$lngDetailCount = pg_num_rows( $lngDetailResultID );
+				if ( $lngDetailCount )
+				{
+					for ( $k = 0; $k < $lngDetailCount; $k++ )
+					{
+						$aryDetailResult[] = pg_fetch_array( $lngDetailResultID, $k, PGSQL_ASSOC );
+					}
+				}
+
+				$objDB->freeResult( $lngDetailResultID );
 
 				// 同じコードの売上データで一番上に表示されている売上データが削除データの場合
 				if ( $arySameSlipCodeResult[0]["lngrevisionno"] < 0 )
@@ -1068,7 +894,7 @@ function fncSetSlipTable ( $aryResult, $aryViewColumn, $arySearchColumn, $aryDat
 				}
 
 				// １レコード分の出力
-				$aryHtml_add = fncSetSlipHeadTable ( $lngColumnCount, $arySameSlipCodeResult[$j], $aryDetailResult, $aryDetailViewColumn, $aryHeadViewColumn, $aryData, $aryUserAuthority, $objDB, $objCache, $lngSameSalesCount, $j, $bytDeleteFlag );
+				$aryHtml_add = fncSetSlipTableRow ( $lngColumnCount, $arySameSlipCodeResult[$j], $aryDetailResult, $aryHeadViewColumn, $aryData, $aryUserAuthority, $lngSameSlipCount, $j, $bytDeleteFlag );
 				$lngColumnCount = $lngColumnCount + count($aryDetailResult);
 				
 				$strColBuff = '';
@@ -1079,9 +905,6 @@ function fncSetSlipTable ( $aryResult, $aryViewColumn, $arySearchColumn, $aryDat
 				$aryHtml[] =$strColBuff;
 			}
 		}
-
-// 管理モード用過去リバイズデータ出力end==================================
-
 	}
 
 	$aryHtml[] = "</tbody>";
