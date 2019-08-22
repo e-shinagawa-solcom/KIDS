@@ -1895,8 +1895,7 @@ function fncOutputError ( $lngErrorCode, $lngErrorClass, $aryErrorMessage, $bytO
 			</script>
 			";
 
-			#DEBUG:開発時のみエラー画面への遷移を止める
-			#echo $strRedirectHTML;
+			echo $strRedirectHTML;
 			exit;
 		}
 	}
