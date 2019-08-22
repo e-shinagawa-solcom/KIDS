@@ -32,7 +32,7 @@
 	require( LIB_FILE );
 	require( LIB_ROOT."libcalc.php" );
 	require( SRC_ROOT."po/cmn/lib_po.php" );
-	require( SRC_ROOT."pc/cmn/lib_pc.php" );
+	//require( SRC_ROOT."pc/cmn/lib_pc.php" );
 	require( SRC_ROOT."sc/cmn/lib_sc.php" );
 	require( SRC_ROOT."sc/cmn/lib_scp.php" );
 	require( LIB_DEBUGFILE );
