@@ -21,8 +21,6 @@
 */
 // ----------------------------------------------------------------------------
 
-
-
 	// 設定読み込み
 	include_once('conf.inc');
 	
@@ -46,15 +44,12 @@
 	//////////////////////////////////////////////////////////////////////////
 	// フォームデータから各カテゴリの振り分けを行う
 	$options = UtilSearchForm::extractArrayByOption($_REQUEST);
-	$isDisplay = UtilSearchForm::extractArrayByIsDisplay($_REQUEST);
 	$isSearch = UtilSearchForm::extractArrayByIsSearch($_REQUEST);
 	$from = UtilSearchForm::extractArrayByFrom($_REQUEST);
 	$to = UtilSearchForm::extractArrayByTo($_REQUEST);
 	$searchValue = $_REQUEST;
 	
-	$isDisplay=array_keys($isDisplay);
 	$isSearch=array_keys($isSearch);
-	$aryData['ViewColumn']=$isDisplay;
 	$aryData['SearchColumn']=$isSearch;
 	foreach($from as $key=> $item){
 		$aryData[$key.'From']=$item;
@@ -65,32 +60,7 @@
 	foreach($searchValue as $key=> $item){
 		$aryData[$key]=$item;
 	}
-	
-	
-	// 検索表示項目取得
-	if(empty($isDisplay))
-	{
-		$strMessage = fncOutputError( 9058, DEF_WARNING, "" ,FALSE, "../so/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
 
-		// [lngLanguageCode]書き出し
-		$aryHtml["lngLanguageCode"] = 1;
-
-		// [strErrorMessage]書き出し
-		$aryHtml["strErrorMessage"] = $strMessage;
-
-		// テンプレート読み込み
-		$objTemplate = new clsTemplate();
-		$objTemplate->getTemplate( "/result/error/parts.tmpl" );
-		
-		// テンプレート生成
-		$objTemplate->replace( $aryHtml );
-		$objTemplate->complete();
-		// HTML出力
-		echo $objTemplate->strTemplate;
-
-		exit;
-	}
-	
 	// 検索条件項目取得
 	// 検索条件 $arySearchColumnに格納
 	if( empty ( $isSearch ) )
@@ -108,14 +78,45 @@
 	// ログインユーザーコードの取得
 	$lngInputUserCode = $objAuth->UserCode;
 
-
-
 	// 権限確認
 	// 602 売上管理（売上検索）
 	if ( !fncCheckAuthority( DEF_FUNCTION_SC2, $objAuth ) )
 	{
 		fncOutputError ( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 	}
+	// 602 売上管理（売上検索）
+	if ( !fncCheckAuthority( DEF_FUNCTION_SC2, $objAuth ) )
+	{
+		fncOutputError ( 9052, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
+	}
+	// 603 売上管理（売上検索　管理モード）
+	if ( fncCheckAuthority( DEF_FUNCTION_SC3, $objAuth ) and isset( $aryData["Admin"]) )
+	{
+		$aryUserAuthority["Admin"] = 1;		// 603 管理モードでの検索
+	}
+	// 604 売上管理（詳細表示）
+	if ( fncCheckAuthority( DEF_FUNCTION_SC4, $objAuth ) )
+	{
+		$aryUserAuthority["Detail"] = 1;	// 604 詳細表示
+	}
+	// 607 売上管理（修正）
+	if ( fncCheckAuthority( DEF_FUNCTION_SC5, $objAuth ) )
+	{
+		$aryUserAuthority["Fix"] = 1;		// 605 修正
+	}
+	// 606 売上管理（削除）
+	if ( fncCheckAuthority( DEF_FUNCTION_SC6, $objAuth ) )
+	{
+		$aryUserAuthority["Delete"] = 1;	// 606 削除
+	}
+	// 無効化ボタンは仕様に無いため一旦コメントアウト（2019/8/22 T.Miyata）
+	/*
+	// 607 売上管理（無効化）
+	if ( fncCheckAuthority( DEF_FUNCTION_SC7, $objAuth ) and isset( $aryData["Admin"]) )
+	{
+		$aryUserAuthority["Invalid"] = 1;	// 607 無効化
+	}
+	*/
 
 	//////////////////////////////////////////////////////////////////////////
 	// 文字列チェック
@@ -150,41 +151,6 @@
 	// 文字列チェック
 	$aryCheckResult = fncAllCheck( $aryData, $aryCheck );
 	fncPutStringCheckError( $aryCheckResult, $objDB );
-
-	// 602 売上管理（売上検索）
-	if ( !fncCheckAuthority( DEF_FUNCTION_SC2, $objAuth ) )
-	{
-		fncOutputError ( 9052, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
-	}
-
-	// 603 売上管理（売上検索　管理モード）
-	if ( fncCheckAuthority( DEF_FUNCTION_SC3, $objAuth ) and isset( $aryData["Admin"]) )
-	{
-		$aryUserAuthority["Admin"] = 1;		// 603 管理モードでの検索
-	}
-	// 604 売上管理（詳細表示）
-	if ( fncCheckAuthority( DEF_FUNCTION_SC4, $objAuth ) )
-	{
-		$aryUserAuthority["Detail"] = 1;	// 604 詳細表示
-	}
-	// 607 売上管理（修正）
-	if ( fncCheckAuthority( DEF_FUNCTION_SC5, $objAuth ) )
-	{
-		$aryUserAuthority["Fix"] = 1;		// 605 修正
-	}
-	// 606 売上管理（削除）
-	if ( fncCheckAuthority( DEF_FUNCTION_SC6, $objAuth ) )
-	{
-		$aryUserAuthority["Delete"] = 1;	// 606 削除
-	}
-	// 607 売上管理（無効化）
-	if ( fncCheckAuthority( DEF_FUNCTION_SC7, $objAuth ) and isset( $aryData["Admin"]) )
-	{
-		$aryUserAuthority["Invalid"] = 1;	// 607 無効化
-	}
-	
-	// 表示項目  $aryViewColumnに格納
-	$aryViewColumn=$isDisplay;
 	
 	// 検索項目  $arySearchColumnに格納
 	$arySearchColumn=$isSearch;
@@ -192,7 +158,6 @@
 	// クッキー取得
 	$aryData["lngLanguageCode"] = 1;
 
-	reset($aryViewColumn);
 	if ( !$bytSearchFlag )
 	{
 		reset($arySearchColumn);
@@ -200,7 +165,7 @@
 	reset($aryData);
 
 	// 検索SQLを実行し検索（ヒット）件数を取得する
-	$strQuery = fncGetSearchSlipSQL( $aryViewColumn, $arySearchColumn, $aryData, $objDB, "", 0, FALSE, $aryData["strSessionID"]);
+	$strQuery = fncGetSearchSlipSQL( $arySearchColumn, $aryData, $objDB, "", 0, $aryData["strSessionID"]);
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
 	if ( $lngResultNum )
@@ -273,7 +238,7 @@
 	}
 
 	// テーブル構成で検索結果を取得、ＨＴＭＬ形式で出力する
-	$aryHtml["strHtml"] = fncSetSlipTable ( $aryResult, $aryViewColumn, $arySearchColumn, $aryData, $aryUserAuthority, $aryTytle, $objDB, $objCache, $aryTableViewName);
+	$aryHtml["strHtml"] = fncSetSlipTableBody ( $aryResult, $arySearchColumn, $aryData, $aryUserAuthority, $aryTytle, $objDB, $objCache);
 
 	// POSTされたデータをHiddenにて設定する
 	unset($ary_keys);
