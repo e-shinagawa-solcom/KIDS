@@ -1,13 +1,11 @@
 
 (function(){
     $('img.delete.button').on('click', function(){
-        url = '/mm/delete/confirm/confirm-delete.php';
-        sessionID = 'strSessionID=' + $.cookie('strSessionID');
-        moldNo = 'MoldNo=' + $(this).attr('id');
-        historyNo = 'HistoryNo=' + $(this).attr('historyno');
-        version = 'Version=' + $(this).attr('version');
+        url = '/sc/result2/index3.php';
+        lngslipno = 'lngSlipNo=' + $(this).attr('lngslipno');
+        sessionID = 'strSessionID=' + getUrlVars()["strSessionID"];
 
         // 別ウィンドウで表示
-        open(url + '?' + sessionID + '&' + moldNo + '&' + historyNo + '&' + version, 'display-delete', 'resizable=yes, scrollbars=yes, menubar=no');
+        open(url + '?' + lngslipno + '&' + sessionID, 'display-detail', 'resizable=yes, scrollbars=yes, menubar=no');
     });
 })();

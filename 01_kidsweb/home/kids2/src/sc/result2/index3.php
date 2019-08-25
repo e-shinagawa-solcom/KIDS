@@ -28,9 +28,8 @@ include_once('conf.inc');
 
 // ライブラリ読み込み
 require (LIB_FILE);
-require (SRC_ROOT . "sc/cmn/lib_scd.php");
 require (SRC_ROOT . "sc/cmn/lib_scd1.php");
-require (SRC_ROOT . "sc/cmn/column.php");
+require (SRC_ROOT . "sc/cmn/column_scd.php");
 require (LIB_DEBUGFILE);
 
 // DB接続
@@ -49,16 +48,14 @@ else if ( $_POST )
 {
 	$aryData = $_POST;
 }
-if ( !$aryData["lngSalesNo"] )
+if ( !$aryData["lngSlipNo"] )
 {
 	fncOutputError ( 9061, DEF_ERROR, "データ異常です。", TRUE, "", $objDB );
 }
 
 // 文字列チェック
 $aryCheck["strSessionID"] = "null:numenglish(32,32)";
-$aryCheck["lngSalesNo"]	  = "null:number(0,10)";
-// $aryResult = fncAllCheck( $aryData, $aryCheck );
-// fncPutStringCheckError( $aryResult, $objDB );
+$aryCheck["lngSlipNo"]	  = "null:number(0,10)";
 
 // セッション確認
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
@@ -75,8 +72,8 @@ if ( !fncCheckAuthority( DEF_FUNCTION_SC6, $objAuth ) )
 	fncOutputError ( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
 
-// 削除対象の売上NOの売上情報取得
-$strQuery = fncGetSalesHeadNoToInfoSQL ( $aryData["lngSalesNo"] );
+// 削除対象の納品伝票番号の納品情報取得
+$strQuery = fncGetSlipHeadNoToInfoSQL ( $aryData["lngSlipNo"] );
 
 list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 if ( $lngResultNum == 1 )
@@ -97,15 +94,24 @@ $objDB->freeResult( $lngResultID );
 ////////////////////////////////////////////////////////
 if( $aryData["strSubmit"] )
 {
+	// TODO:１．顧客の国が日本で、かつ納品書ヘッダに紐づく請求書明細が存在する（=紐づく売上ヘッダの請求書番号がnull以外）場合、削除エラー画面(U-06-06-2)で以下のメッセージを表示して処理を終了する。
+	//「請求書発行済みのため、削除できません」
+
+	// TODO:２．納品書明細に紐づく受注ステータスが「締済み」である場合、削除エラー画面(U-06-06-2)で以下のメッセージを表示して処理を終了する。
+	//「締済みのため、削除できません」
+
+	/* //参考
 	// 該当売上の状態が「締め済」の状態であれば
 	if ( $arySalesResult["lngsalesstatuscode"] == DEF_SALES_CLOSED )
 	{
 		fncOutputError( 606, DEF_WARNING, "", TRUE, "../sc/search2/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
 	}
+	*/
 
 	// トランザクション開始
 	$objDB->transactionBegin();
 
+	/*
 	// m_salesのシーケンスを取得
 	$sequence_m_sales = fncGetSequence( 'm_Sales.lngSalesNo', $objDB );
 
@@ -148,14 +154,13 @@ if( $aryData["strSubmit"] )
 		fncOutputError ( 602, DEF_FATAL, "削除処理に伴うマスタ処理失敗", TRUE, "", $objDB );
 	}
 	$objDB->freeResult( $lngResultID );
+	*/
 
-// 2004.03.10 suzukaze update start
 	// 該当売上削除による状態変更関数呼び出し
-	if ( fncSalesDeleteSetStatus( $arySalesResult, $objDB ) != 0 )
+	if ( fncDeleteSlipAndUpdateReceiveStatus( $arySalesResult, $objDB ) != 0 )
 	{
 		fncOutputError( 9051, DEF_ERROR, "データが異常です", TRUE, "../sc/search2/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
 	}
-// 2004.03.10 suzukaze update end
 
 	// トランザクションコミット
 	$objDB->transactionCommit();
@@ -165,11 +170,12 @@ if( $aryData["strSubmit"] )
 	$aryDeleteData["strAction"] = "/sc/search2/index.php?strSessionID=";
 	$aryDeleteData["strSessionID"] = $aryData["strSessionID"];
 
-	$aryDeleteData["lngLanguageCode"] = $_COOKIE["lngLanguageCode"];
+	//日本語のみになったので不要
+	//$aryDeleteData["lngLanguageCode"] = $_COOKIE["lngLanguageCode"];
 
 	// テンプレート読み込み
 	$objTemplate = new clsTemplate();
-	$objTemplate->getTemplate( "sc/finish/remove_parts.tmpl" );
+	$objTemplate->getTemplate( "sc/finish2/remove_parts.tmpl" );
 
 	// テンプレート生成
 	$objTemplate->replace( $aryDeleteData );
@@ -180,6 +186,7 @@ if( $aryData["strSubmit"] )
 
 	$objDB->close();
 
+	
 	return true;
 }
 
@@ -199,27 +206,17 @@ if ( $arySalesResult["lngsalesstatuscode"] == DEF_SALES_CLOSED )
 	fncOutputError( 606, DEF_WARNING, "", TRUE, "../sc/search2/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
 }
 
-$aryNewResult = fncSetSalesHeadTabelData ( $arySalesResult );
-
-// 言語の設定
-if ( isset($aryData["lngLanguageCode"]) and  $aryData["lngLanguageCode"] == 0 )
-{
-	$aryTytle = $aryTableTytleEng;
-}
-else
-{
-	$aryTytle = $aryTableTytle;
-}
-
-// カラム名の設定
-$aryHeadColumnNames = fncSetSalesTabelName ( $aryTableViewHead, $aryTytle );
-// カラム名の設定
-$aryDetailColumnNames = fncSetSalesTabelName ( $aryTableViewDetail, $aryTytle );
+// 取得データを表示用に整形
+$aryNewResult = fncSetSlipHeadTableData ( $arySalesResult );
+// ヘッダ部のカラム名の設定（キーの頭に"CN"を付与する）
+$aryHeadColumnNames_CN = fncAddColumnNameArrayKeyToCN ( $aryHeadColumnNames );
+// 詳細部のカラム名の設定（キーの頭に"CN"を付与する）
+$aryDetailColumnNames_CN = fncAddColumnNameArrayKeyToCN ( $aryDetailColumnNames );
 
 ////////// 明細行の取得 ////////////////////
 
 // 指定売上番号の売上明細データ取得用SQL文の作成
-$strQuery = fncGetSalesDetailNoToInfoSQL ( $aryData["lngSalesNo"] );
+$strQuery = fncGetSlipDetailNoToInfoSQL ( $aryData["lngSlipNo"] );
 
 // 明細データの取得
 list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
@@ -233,69 +230,20 @@ if ( $lngResultNum )
 }
 else
 {
-	$strMessage = fncOutputError( 603, DEF_WARNING, "売上番号に対する明細が存在しません", FALSE, "../sc/search2/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+	$strMessage = fncOutputError( 603, DEF_WARNING, "納品伝票番号に対する明細が存在しません", FALSE, "../sc/search2/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
 }
 $objDB->freeResult( $lngResultID );
 
 for ( $i = 0; $i < count($arySalesDetailResult); $i++)
 {
-	$aryNewDetailResult[$i] = fncSetSalesDetailTabelData ( $arySalesDetailResult[$i], $aryNewResult );
-
-	//-------------------------------------------------------------------------
-	// *v2* 部門・担当者の取得
-	//-------------------------------------------------------------------------
-	$aryQuery   = array();
-	$aryQuery[] = "SELECT DISTINCT";
-	$aryQuery[] = "	mg.strgroupdisplaycode";
-	$aryQuery[] = "	,mg.strgroupdisplayname";
-	$aryQuery[] = "	,mu.struserdisplaycode";
-	$aryQuery[] = "	,mu.struserdisplayname";
-	$aryQuery[] = "FROM";
-	$aryQuery[] = "	m_group mg";
-	$aryQuery[] = "	,m_user mu";
-	$aryQuery[] = "WHERE";
-	$aryQuery[] = "	mg.lnggroupcode =";
-	$aryQuery[] = "	(";
-	$aryQuery[] = "		SELECT mp1.lnginchargegroupcode";
-	$aryQuery[] = "		FROM m_product mp1";
-	$aryQuery[] = "		WHERE mp1.strproductcode = '" . $arySalesDetailResult[$i]["strproductcode"] . "'";
-	$aryQuery[] = "	)";
-	$aryQuery[] = "	AND mu.lngusercode =";
-	$aryQuery[] = "	(";
-	$aryQuery[] = "		SELECT mp2.lnginchargeusercode";
-	$aryQuery[] = "		FROM m_product mp2";
-	$aryQuery[] = "		WHERE mp2.strproductcode = '" . $arySalesDetailResult[$i]["strproductcode"] . "'";
-	$aryQuery[] = "	)";
-
-	$strQuery = "";
-	$strQuery = implode( "\n", $aryQuery );
-
-
-	// クエリー実行
-	list( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
-
-	if( $lngResultNum )
-	{
-		$objResult = $objDB->fetchObject( $lngResultID, 0 );
-
-		// 部門コード・名称
-		$aryNewDetailResult[$i]["strInChargeGroup"] = "[" . $objResult->strgroupdisplaycode . "] " . $objResult->strgroupdisplayname;
-		// 担当者コード・名称
-		$aryNewDetailResult[$i]["strInChargeUser"]  = "[" . $objResult->struserdisplaycode . "] " . $objResult->struserdisplayname;
-	}
-	else
-	{
-		fncOutputError( 9051, DEF_ERROR, "", TRUE, "", $objDB );
-	}
-	//-------------------------------------------------------------------------
-
+	$aryNewDetailResult[$i] = fncSetSlipDetailTableData ( $arySalesDetailResult[$i], $aryNewResult );
 
 	// テンプレート読み込み
 	$objTemplate = new clsTemplate();
 	$objTemplate->getTemplate( "sc/result2/parts_detail.tmpl" );
 
 	// テンプレート生成
-	$objTemplate->replace( $aryDetailColumnNames );
+	$objTemplate->replace( $aryDetailColumnNames_CN );
 	$objTemplate->replace( $aryNewDetailResult[$i] );
 	$objTemplate->complete();
 
@@ -319,7 +267,7 @@ $objTemplate->getTemplate( "sc/result2/parts2.tmpl" );
 
 // テンプレート生成
 $objTemplate->replace( $aryNewResult );
-$objTemplate->replace( $aryHeadColumnNames );
+$objTemplate->replace( $aryHeadColumnNames_CN );
 $objTemplate->complete();
 
 // HTML出力

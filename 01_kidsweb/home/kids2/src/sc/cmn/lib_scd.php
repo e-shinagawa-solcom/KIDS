@@ -606,7 +606,7 @@ function fncSetSlipTableRow ( $lngColumnCount, $aryHeadResult, $aryDetailResult,
 							and !$bytDeleteFlag )
 
 						{
-							$aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/remove_off_bt.gif\" lngslipno=\"" . $aryDetailResult[$i]["lngslipno"] . "\" class=\"detail button\"></td>\n";
+							$aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/remove_off_bt.gif\" lngslipno=\"" . $aryDetailResult[$i]["lngslipno"] . "\" class=\"delete button\"></td>\n";
 						}
 						else
 						{

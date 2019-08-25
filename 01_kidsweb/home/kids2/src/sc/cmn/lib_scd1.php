@@ -70,9 +70,6 @@ function fncGetSlipHeadNoToInfoSQL ( $lngSlipNo )
 
 	$strQuery = implode( "\n", $aryQuery );
 
-//fncDebug("lib_scs1.txt", $strQuery, __FILE__, __LINE__);
-//fncDebug("lib_scs1-1.txt", $arySalesResult, __FILE__, __LINE__);
-
 	return $strQuery;
 }
 
@@ -124,7 +121,6 @@ function fncGetSlipDetailNoToInfoSQL ( $lngSlipNo )
 	$aryQuery[] = " ORDER BY sd.lngSortKey ASC ";
 
 	$strQuery = implode( "\n", $aryQuery );
-//fncDebug("lib_scs1-1.txt", $strQuery, __FILE__, __LINE__);
 
 	return $strQuery;
 }
@@ -317,83 +313,22 @@ function fncAddColumnNameArrayKeyToCN ($aryColumnNames)
 }
 
 
-
-
 /**
-* 指定の売上データについて無効化することでどうなるかケースわけする
-*
-*	指定の売上データの状態を調査し、ケースわけする関数
+* 指定の納品書データとこれに紐づく売上データを削除し、受注明細のステータスを更新する
 *
 *	@param  Array 		$arySalesData 	売上データ
 *	@param  Object		$objDB			DBオブジェクト
-*	@return Integer 	$lngCase		状態のケース
-*										1: 対象売上データを無効化しても、最新の売上データが影響受けない
-*										2: 対象売上データを無効化することで、最新の売上データが入れ替わる
-*										3: 対象売上データが削除データで、売上が復活する
-*										4: 対象売上データを無効化することで、最新の売上データになりうる売上データがない
+*	@return Boolean 	0				実行成功
+*						1				実行失敗 情報取得失敗
 *	@access public
 */
-function fncGetInvalidCodeToMaster ( $arySalesData, $objDB )
+function fncDeleteSlipAndUpdateReceiveStatus ( $arySalesData, $objDB )
 {
-	// 削除対象売上と同じ売上コードの最新の売上Noを調べる
-	$strQuery = "SELECT s.lngSalesNo FROM m_Sales s WHERE s.strSalesCode = '" . $arySalesData["strsalescode"] . "' AND s.bytInvalidFlag = FALSE ";
-	$strQuery .= " AND s.lngRevisionNo >= 0";
-	$strQuery .= " AND s.lngRevisionNo = ( "
-		. "SELECT MAX( s1.lngRevisionNo ) FROM m_Sales s1 WHERE s1.strSalesCode = s.strSalesCode )";
 
-	// 検索クエリーの実行
-	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
-
-	if ( $lngResultNum == 1 )
-	{
-		$objResult = $objDB->fetchObject( $lngResultID, 0 );
-		$lngNewSalesNo = $objResult->lngsalesno;
-//fncDebug("lib_scs1.txt",$objResult, __FILE__, __LINE__);
-
-	}
-	else
-	{
-		$lngCase = 4;
-	}
-	$objDB->freeResult( $lngResultID );
-
-	// 削除対象が最新かどうかのチェック
-	if ( $lngCase != 4 )
-	{
-		if ( $lngNewSalesNo == $arySalesData["lngsalesno"] )
-		{
-			// 最新の場合
-			// 削除対象売上以外でと同じ売上コードの最新の売上Noを調べる
-			$strQuery = "SELECT s.lngSalesNo FROM m_Sales s WHERE s.strSalesCode = '" . $strSalesCode . "' AND s.bytInvalidFlag = FALSE ";
-			$strQuery .= " AND s.lngSalesNo <> " . $arySalesData["lngsalesno"] . " AND s.lngRevisionNo >= 0";
-
-			// 検索クエリーの実行
-			list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
-			if ( $lngResultNum >= 1 )
-			{
-				$lngCase = 2;
-			}
-			else
-			{
-				$lngCase = 4;
-			}
-			$objDB->freeResult( $lngResultID );
-		}
-		// 対象売上が削除データかどうかの確認
-		else if ( $arySalesData["lngrevisionno"] < 0 )
-		{
-			$lngCase = 3;
-		}
-		else
-		{
-			$lngCase = 1;
-		}
-	}
-
-	return $lngCase;
 }
 
-// 2004.03.09 suzukaze update start
+
+// TODO:不要になったら削除
 /**
 * 指定の売上データの削除に関して、その売上データを削除することでの状態変更関数
 *
@@ -408,12 +343,7 @@ function fncGetInvalidCodeToMaster ( $arySalesData, $objDB )
 */
 function fncSalesDeleteSetStatus ( $arySalesData, $objDB )
 {
-/*	// 削除対象売上は、受注Noを指定しない売上である
-	if ( $arySalesData["lngreceiveno"] == "" or $arySalesData["lngreceiveno"] == 0 )
-	{
-		return 0;
-	}
-*/
+
 	// 受注Noを指定している売上の場合は、指定している最新の受注のデータを取得する
 	$arySql = array();
 	$arySql[] = "SELECT";
@@ -451,7 +381,6 @@ function fncSalesDeleteSetStatus ( $arySalesData, $objDB )
 		for ( $a = 0; $a < $lngResultNum; $a++ )
 		{
 			$objResult1[$a]= $objDB->fetchArray( $lngResultID, $a );
-//fncDebug("lib_scs1.txt", $objResult1, __FILE__, __LINE__);
 		}
 	$objDB->freeResult( $lngResultID );
 	}else{
@@ -494,8 +423,8 @@ function fncSalesDeleteSetStatus ( $arySalesData, $objDB )
 				for ( $i = 0; $i < $lngResultNum; $i++ )
 				{
 					$arySalesResult1[$i] = $objDB->fetchArray( $lngResultID, $i );
-//fncDebug("lib_scs1-1.txt", $arySalesResult1, __FILE__, __LINE__);
-			// 売上参照受注の状態の状態を「納品中」とする
+
+					// 売上参照受注の状態の状態を「納品中」とする
 					// 同じ受注NOを指定している売上の状態に対しても「納品中」とする
 						// 更新対象売上データをロックする
 					if($arySalesResult1[$i]["lngsalesstatuscode"] != 99){

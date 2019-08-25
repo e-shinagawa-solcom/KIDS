@@ -2,11 +2,11 @@
 (function(){
     $('img.detail.button').on('click', function(){
         url = '/sc/result2/index2.php';
-        lngsalesno = 'lngSlipNo=' + $(this).attr('lngslipno');
+        lngslipno = 'lngSlipNo=' + $(this).attr('lngslipno');
         sessionID = 'strSessionID=' + getUrlVars()["strSessionID"];
 
         // 別ウィンドウで表示
-        open(url + '?' + lngsalesno + '&' + sessionID, 'display-detail', 'resizable=yes, scrollbars=yes, menubar=no');
+        open(url + '?' + lngslipno + '&' + sessionID, 'display-detail', 'resizable=yes, scrollbars=yes, menubar=no');
     });
 })();
 

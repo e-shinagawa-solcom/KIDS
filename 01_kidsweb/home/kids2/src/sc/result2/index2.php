@@ -95,20 +95,10 @@
 
 	$objDB->freeResult( $lngResultID );
 
-	// 取得データの調整
+	// 取得データを表示用に整形
 	$aryNewResult = fncSetSlipHeadTableData ( $aryResult );
 
 //fncDebug('sc_result_index2.txt', $aryNewResult, __FILE__, __LINE__);
-
-	// 言語の設定
-	if ( isset($aryData["lngLanguageCode"]) and  $aryData["lngLanguageCode"] == 0 )
-	{
-		$aryTytle = $aryTableTytleEng;
-	}
-	else
-	{
-		$aryTytle = $aryTableTytle;
-	}
 
 	// ヘッダ部のカラム名の設定（キーの頭に"CN"を付与する）
 	$aryHeadColumnNames_CN = fncAddColumnNameArrayKeyToCN ( $aryHeadColumnNames );
