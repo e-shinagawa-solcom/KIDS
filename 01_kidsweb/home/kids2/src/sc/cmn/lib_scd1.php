@@ -19,81 +19,54 @@
 *
 */
 
-
-
 /**
-* 指定された売上番号から売上ヘッダ情報を取得するＳＱＬ文を作成
+* 指定された納品伝票番号から納品書ヘッダ情報を取得するＳＱＬ文を作成
 *
-*	指定売上番号のヘッダ情報の取得用ＳＱＬ文作成関数
+*	指定納品伝票番号のヘッダ情報の取得用ＳＱＬ文作成関数
 *
-*	@param  Integer 	$lngSalesNo 			取得する売上番号
+*	@param  Integer 	$lngSlipNo 			取得する納品伝票番号
 *	@return strQuery 	$strQuery 検索用SQL文
 *	@access public
 */
-function fncGetSlipHeadNoToInfoSQL ( $lngSalesNo )
+function fncGetSlipHeadNoToInfoSQL ( $lngSlipNo )
 {
-	// SQL文の作成
-	$aryQuery[] = "SELECT distinct on (s.lngSalesNo) s.lngSalesNo as lngSalesNo, s.lngRevisionNo as lngRevisionNo";
-
-	// 登録日
-	$aryQuery[] = ", to_char( s.dtmInsertDate, 'YYYY/MM/DD HH:MI:SS' ) as dtmInsertDate";
-	// 計上日
-	$aryQuery[] = ", to_char( s.dtmAppropriationDate, 'YYYY/MM/DD' ) as dtmSalesAppDate";
-	// 売上No
-	$aryQuery[] = ", s.strSalesCode as strSalesCode";
-	// 受注No
-//	$aryQuery[] = ", r.strReceiveCode || '-' || r.strReviseCode as strReceiveCode";
-//	$aryQuery[] = ", s.lngReceiveNo as lngReceiveNo";
-	// 顧客受注番号
-	$aryQuery[] = ", r.strCustomerReceiveCode as strCustomerReceiveCode";
-	$aryQuery[] = ", tsd.lngReceiveNo as lngReceiveNo";
-	// 売上No
+	// 納品伝票番号、リビジョン番号
+	$aryQuery[] = "SELECT distinct on (s.lngSlipNo) s.lngSlipNo as lngSlipNo, s.lngRevisionNo as lngRevisionNo";
+	// 納品書No
 	$aryQuery[] = ", s.strSlipCode as strSlipCode";
-	// 入力者
-	$aryQuery[] = ", s.lngInputUserCode as lngInputUserCode";
-	$aryQuery[] = ", input_u.strUserDisplayCode as strInputUserDisplayCode";
-	$aryQuery[] = ", input_u.strUserDisplayName as strInputUserDisplayName";
 	// 顧客
-	$aryQuery[] = ", s.lngCustomerCompanyCode as lngCustomerCode";
-	$aryQuery[] = ", cust_c.strCompanyDisplayCode as strCustomerDisplayCode";
-	$aryQuery[] = ", cust_c.strCompanyDisplayName as strCustomerDisplayName";
-	// 部門
-	$aryQuery[] = ", s.lngGroupCode as lngInChargeGroupCode";
-	$aryQuery[] = ", inchg_g.strGroupDisplayCode as strInChargeGroupDisplayCode";
-	$aryQuery[] = ", inchg_g.strGroupDisplayName as strInChargeGroupDisplayName";
-	// 担当者
-	$aryQuery[] = ", s.lngUserCode as lngInChargeUserCode";
-	$aryQuery[] = ", inchg_u.strUserDisplayCode as strInChargeUserDisplayCode";
-	$aryQuery[] = ", inchg_u.strUserDisplayName as strInChargeUserDisplayName";
-	// 通貨
-	$aryQuery[] = ", s.lngMonetaryUnitCode as lngMonetaryUnitCode";
-	$aryQuery[] = ", mu.strMonetaryUnitName as strMonetaryUnitName";
-	$aryQuery[] = ", mu.strMonetaryUnitSign as strMonetaryUnitSign";
-	// レートタイプ
-	$aryQuery[] = ", s.lngMonetaryRateCode as lngMonetaryRateCode";
-	$aryQuery[] = ", mr.strMonetaryRateName as strMonetaryRateName";
-	// 換算レート
-	$aryQuery[] = ", s.curConversionRate as curConversionRate";
-	// 状態
-	$aryQuery[] = ", s.lngSalesStatusCode as lngSalesStatusCode";
-	$aryQuery[] = ", ss.strSalesStatusName as strSalesStatusName";
-	// 備考
-	$aryQuery[] = ", s.strNote as strNote";
+	$aryQuery[] = ", s.strCustomerCode as strCustomerCode";	//顧客コード
+	$aryQuery[] = ", s.strCustomerName as strCustomerName";	//顧客名
+	// 納品日
+	$aryQuery[] = ", to_char( s.dtmDeliveryDate, 'YYYY/MM/DD HH:MI:SS' ) as dtmDeliveryDate";
+	// 納品場所名
+	$aryQuery[] = ", s.strDeliveryPlaceName as strDeliveryPlaceName";
+	// 納品場所担当者名
+	$aryQuery[] = ", s.strDeliveryPlaceUserName as strDeliveryPlaceUserName";
+	// 課税区分
+	$aryQuery[] = ", s.strTaxClassName as strTaxClassName";
+	// 通貨記号。ヘッダ部の合計金額、明細部の単価と税抜価格に付与される
+	$aryQuery[] = ", s.strMonetaryUnitSign as strMonetaryUnitSign";
 	// 合計金額
 	$aryQuery[] = ", To_char( s.curTotalPrice, '9,999,999,990.99' ) as curTotalPrice";
+	// 通貨（この項目だけマスタを紐づけて取得）
+	$aryQuery[] = ", mu.strMonetaryUnitName as strMonetaryUnitName";
+	// 備考
+	$aryQuery[] = ", s.strNote as strNote";
+	// 入力日
+	$aryQuery[] = ", to_char( s.dtmInsertDate, 'YYYY/MM/DD HH:MI:SS' ) as dtmInsertDate";
+	// 入力者＝起票者
+	$aryQuery[] = ", s.strInsertUserCode as strInsertUserCode";	//入力者コード
+	$aryQuery[] = ", s.strInsertUserName as strInsertUserName";	//入力者名
+	// 印刷回数
+	$aryQuery[] = ", s.lngPrintCount as lngPrintCount";
 
-	$aryQuery[] = " FROM m_Sales s ";
-	$aryQuery[] = " left join t_salesdetail tsd on tsd.lngsalesno = s.lngsalesno ";
-	$aryQuery[] = " LEFT JOIN m_Receive r ON tsd.lngReceiveNo = r.lngReceiveNo";
-	$aryQuery[] = " LEFT JOIN m_User input_u ON s.lngInputUserCode = input_u.lngUserCode";
-	$aryQuery[] = " LEFT JOIN m_Company cust_c ON s.lngCustomerCompanyCode = cust_c.lngCompanyCode";
-	$aryQuery[] = " LEFT JOIN m_Group inchg_g ON s.lngGroupCode = inchg_g.lngGroupCode";
-	$aryQuery[] = " LEFT JOIN m_User inchg_u ON s.lngUserCode = inchg_u.lngUserCode";
-	$aryQuery[] = " LEFT JOIN m_SalesStatus ss USING (lngSalesStatusCode)";
+	// FROM句
+	$aryQuery[] = " FROM m_Slip s ";
 	$aryQuery[] = " LEFT JOIN m_MonetaryUnit mu ON s.lngMonetaryUnitCode = mu.lngMonetaryUnitCode";
-	$aryQuery[] = " LEFT JOIN m_MonetaryRateClass mr ON s.lngMonetaryRateCode = mr.lngMonetaryRateCode";
 
-	$aryQuery[] = " WHERE s.lngSalesNo = " . $lngSalesNo . "";
+	// WHERE句
+	$aryQuery[] = " WHERE s.lngSlipNo = " . $lngSlipNo . "";
 
 	$strQuery = implode( "\n", $aryQuery );
 
@@ -102,9 +75,6 @@ function fncGetSlipHeadNoToInfoSQL ( $lngSalesNo )
 
 	return $strQuery;
 }
-
-
-
 
 
 
@@ -117,59 +87,41 @@ function fncGetSlipHeadNoToInfoSQL ( $lngSalesNo )
 *	@return strQuery 	$strQuery 検索用SQL文
 *	@access public
 */
-function fncGetSlipDetailNoToInfoSQL ( $lngSalesNo )
+function fncGetSlipDetailNoToInfoSQL ( $lngSlipNo )
 {
-// 2004.03.30 suzukaze update start
-	// SQL文の作成
+	// ソートキー
 	$aryQuery[] = "SELECT distinct on (sd.lngSortKey) sd.lngSortKey as lngRecordNo, ";
-	$aryQuery[] = "sd.lngSalesNo as lngSalesNo, sd.lngRevisionNo as lngRevisionNo";
-// 2004.03.30 suzukaze update start
-
-	// 製品コード・名称
-	$aryQuery[] = ", sd.strProductCode as strProductCode";
-	$aryQuery[] = ", p.strProductName as strProductName";
+	// 納品伝票番号、リビジョン番号
+	$aryQuery[] = "sd.lngSlipNo as lngSlipNo, sd.lngRevisionNo as lngRevisionNo";
+	// 顧客受注番号
+	$aryQuery[] = ", sd.strCustomerSalesCode as strCustomerSalesCode";
 	// 売上区分
-	$aryQuery[] = ", sd.lngSalesClassCode as lngSalesClassCode";
-	$aryQuery[] = ", ss.strSalesClassName as strSalesClassName";
+	$aryQuery[] = ", sd.lngSalesClassCode as lngSalesClassCode";	//売上区分コード
+	$aryQuery[] = ", sd.strSalesClassName as strSalesClassName";	//売上区分名
 	// 顧客品番
-	$aryQuery[] = ", p.strGoodsCode as strGoodsCode";
-	// 納期
-	$aryQuery[] = ", to_char( sd.dtmDeliveryDate, 'YYYY/MM/DD' ) as dtmDeliveryDate";
-// 2004.03.17 suzukaze update start
+	$aryQuery[] = ", sd.strGoodsCode as strGoodsCode";
+	// 製品コード・名称
+	$aryQuery[] = ", sd.strProductCode as strProductCode";	//製品コード
+	$aryQuery[] = ", sd.strProductName as strProductName";	//製品名
+	// 名称（英語）
+	$aryQuery[] = ", sd.strProductEnglishName as strProductEnglishName";	//製品名（英語）
 	// 単価
 	$aryQuery[] = ", To_char( sd.curProductPrice, '9,999,999,990.9999' )  as curProductPrice";
-//	$aryQuery[] = ", To_char( sd.curProductPrice, '9,999,999,990.99' )  as curProductPrice";
-// 2004.03.17 suzukaze update end
-	// 単位
-	$aryQuery[] = ", sd.lngProductUnitCode as lngProductUnitCode";
-	$aryQuery[] = ", pu.strProductUnitName as strProductUnitName";
 	// 数量
 	$aryQuery[] = ", To_char( sd.lngProductQuantity, '9,999,999,990' )  as lngProductQuantity";
+	// 単位
+	$aryQuery[] = ", sd.strProductUnitName as strProductUnitName";
 	// 税抜金額
 	$aryQuery[] = ", To_char( sd.curSubTotalPrice, '9,999,999,990.99' )  as curSubTotalPrice";
-	// 税区分
-	$aryQuery[] = ", sd.lngTaxClassCode as lngTaxClassCode";
-	$aryQuery[] = ", tc.strTaxClassName as strTaxClassName";
-	// 税率
-	$aryQuery[] = ", sd.lngTaxCode as lngTaxCode";
-	$aryQuery[] = ", To_char( t.curTax, '9,999,999,990.9999' ) as curTax";
-	// 税額
-	$aryQuery[] = ", To_char( sd.curTaxPrice, '9,999,999,990.99' )  as curTaxPrice";
 	// 明細備考
 	$aryQuery[] = ", sd.strNote as strDetailNote";
 
-	// 明細行を表示する場合
-	$aryQuery[] = " FROM t_SalesDetail sd LEFT JOIN m_Product p USING (strProductCode)";
-	$aryQuery[] = " LEFT JOIN m_SalesClass ss USING (lngSalesClassCode)";
-	$aryQuery[] = " LEFT JOIN m_ProductUnit pu ON sd.lngProductUnitCode = pu.lngProductUnitCode";
-	$aryQuery[] = " LEFT JOIN m_TaxClass tc USING (lngTaxClassCode)";
-	$aryQuery[] = " LEFT JOIN m_Tax t USING (lngTaxCode)";
+	// FROM句
+	$aryQuery[] = " FROM t_SlipDetail sd";
 
-	$aryQuery[] = " WHERE sd.lngSalesNo = " . $lngSalesNo . "";
+	$aryQuery[] = " WHERE sd.lngSlipNo = " . $lngSlipNo . "";
 
-// 2004.03.30 suzukaze update start
 	$aryQuery[] = " ORDER BY sd.lngSortKey ASC ";
-// 2004.03.30 suzukaze update end
 
 	$strQuery = implode( "\n", $aryQuery );
 //fncDebug("lib_scs1-1.txt", $strQuery, __FILE__, __LINE__);
@@ -178,161 +130,93 @@ function fncGetSlipDetailNoToInfoSQL ( $lngSalesNo )
 }
 
 
-
-
-
-
 /**
-* 詳細表示関数（ヘッダ用）
+* ヘッダ部データ加工
 *
-*	テーブル構成で売上データ詳細を出力する関数
-*	ヘッダ行を表示する
+*	SQLで取得したヘッダ部の値を表示用に加工する
+*	※SQL取得結果のキー名はすべて小文字になることに注意
 *
 *	@param  Array 	$aryResult 				ヘッダ行の検索結果が格納された配列
 *	@access public
 */
 function fncSetSlipHeadTableData ( $aryResult )
 {
-	$aryColumnNames = array_keys($aryResult);
+	// 納品伝票番号
+	$aryNewResult["lngSlipNo"] = $aryResult["lngslipno"];
+	// リビジョン番号
+	$aryNewResult["lngRevisionNo"] = $aryResult["lngrevisionno"];
+	// 納品書No
+	$aryNewResult["strSlipCode"] = $aryResult["strslipcode"];
 
-	// 表示対象カラムの配列より結果の出力
-	for ( $i = 0; $i < count($aryColumnNames); $i++ )
+	// 顧客
+	if ( $aryResult["strcustomercode"] )
 	{
-		$strColumnName = $aryColumnNames[$i];
-
-		// 登録日
-		if ( $strColumnName == "dtminsertdate" )
-		{
-			$aryNewResult[$strColumnName] = str_replace( "-", "/", substr( $aryResult["dtminsertdate"], 0, 19 ) );
-		}
-
-		// 計上日
-		else if ( $strColumnName == "dtmsalesappdate" )
-		{
-			$aryNewResult[$strColumnName] = str_replace( "-", "/", $aryResult["dtmsalesappdate"] );
-		}
-
-		// 入力者
-		else if ( $strColumnName == "lnginputusercode" )
-		{
-			if ( $aryResult["strinputuserdisplaycode"] )
-			{
-				$aryNewResult[$strColumnName] = "[" . $aryResult["strinputuserdisplaycode"] ."]";
-			}
-			else
-			{
-				$aryNewResult[$strColumnName] = "     ";
-			}
-			$aryNewResult[$strColumnName] .= " " . $aryResult["strinputuserdisplayname"];
-		}
-
-		// 顧客
-		else if ( $strColumnName == "lngcustomercode" )
-		{
-			if ( $aryResult["strcustomerdisplaycode"] )
-			{
-				$aryNewResult[$strColumnName] = "[" . $aryResult["strcustomerdisplaycode"] ."]";
-			}
-			else
-			{
-				$aryNewResult[$strColumnName] = "      ";
-			}
-			$aryNewResult[$strColumnName] .= " " . $aryResult["strcustomerdisplayname"];
-		}
-
-		// 部門
-		else if ( $strColumnName == "lnginchargegroupcode" )
-		{
-			if ( $aryResult["strinchargegroupdisplaycode"] )
-			{
-				$aryNewResult[$strColumnName] = "[" . $aryResult["strinchargegroupdisplaycode"] ."]";
-			}
-			else
-			{
-				$aryNewResult[$strColumnName] = "    ";
-			}
-			$aryNewResult[$strColumnName] .= " " . $aryResult["strinchargegroupdisplayname"];
-		}
-
-		// 担当者
-		else if ( $strColumnName == "lnginchargeusercode" )
-		{
-			if ( $aryResult["strinchargeuserdisplaycode"] )
-			{
-				$aryNewResult[$strColumnName] = "[" . $aryResult["strinchargeuserdisplaycode"] ."]";
-			}
-			else
-			{
-				$aryNewResult[$strColumnName] = "     ";
-			}
-			$aryNewResult[$strColumnName] .= " " . $aryResult["strinchargeuserdisplayname"];
-		}
-
-		// 合計金額
-		else if ( $strColumnName == "curtotalprice" )
-		{
-			$aryNewResult[$strColumnName] = $aryResult["strmonetaryunitsign"] . " ";
-			if ( !$aryResult["curtotalprice"] )
-			{
-				$aryNewResult[$strColumnName] .= "0.00";
-			}
-			else
-			{
-				$aryNewResult[$strColumnName] .= $aryResult["curtotalprice"];
-			}
-		}
-
-		// 状態
-		else if ( $strColumnName == "lngsalesstatuscode" )
-		{
-			$aryNewResult[$strColumnName] = $aryResult["strsalesstatusname"];
-		}
-
-		// 通貨
-		else if ( $strColumnName == "lngmonetaryunitcode" )
-		{
-			$aryNewResult[$strColumnName] = $aryResult["strmonetaryunitname"];
-		}
-
-		// レートタイプ
-		else if ( $strColumnName == "lngmonetaryratecode" )
-		{
-			if ( $aryResult["lngmonetaryratecode"] and $aryResult["lngmonetaryunitcode"] != DEF_MONETARY_YEN )
-			{
-				$aryNewResult[$strColumnName] = $aryResult["strmonetaryratename"];
-			}
-			else
-			{
-				$aryNewResult[$strColumnName] = "";
-			}
-		}
-
-		// 備考
-		else if ( $strColumnName == "strnote" )
-		{
-			$aryNewResult[$strColumnName] = nl2br($aryResult["strnote"]);
-		}
-
-		// その他の項目はそのまま出力
-		else
-		{
-			$aryNewResult[$strColumnName] = $aryResult[$strColumnName];
-		}
+		$aryNewResult["strCustomer"] = "[" . $aryResult["strcustomercode"] ."]";
 	}
+	else
+	{
+		$aryNewResult["strCustomer"] = "      ";
+	}
+	$aryNewResult["strCustomer"] .= " " . $aryResult["strcustomername"];
+
+	// 納品日
+	$aryNewResult["dtmDeliveryDate"] = $aryResult["dtmdeliverydate"];
+	// 納品場所名
+	$aryNewResult["strDeliveryPlaceName"] = $aryResult["strdeliveryplacename"];
+	// 納品場所担当者名
+	$aryNewResult["strDeliveryPlaceUserName"] = $aryResult["strdeliveryplaceusername"];
+	// 課税区分
+	$aryNewResult["strTaxClassName"] = $aryResult["strtaxclassname"];
+
+	// 通貨記号。ヘッダ部の合計金額、明細部の単価と税抜価格に付与される
+	$aryNewResult["strMonetaryUnitSign"] = $aryResult["strmonetaryunitsign"];
+	// 合計金額
+	$aryNewResult["curTotalPrice"] = $aryNewResult["strMonetaryUnitSign"] . " ";
+	if ( !$aryResult["curtotalprice"] )
+	{
+		$aryNewResult["curTotalPrice"] .= "0.00";
+	}
+	else
+	{
+		$aryNewResult["curTotalPrice"] .= $aryResult["curtotalprice"];
+	}
+
+	// 通貨
+	$aryNewResult["strMonetaryUnitName"] = $aryResult["strmonetaryunitname"];
+
+	// 備考
+	$aryNewResult["strNote"] = nl2br($aryResult["strnote"]);
+
+	// 入力日
+	$aryNewResult["dtmInsertDate"] = $aryResult["dtminsertdate"];
+
+	// 入力者
+	if ( $aryResult["strinsertusercode"] )
+	{
+		$aryNewResult["strInsertUser"] = "[" . $aryResult["strinsertusercode"] ."]";
+	}
+	else
+	{
+		$aryNewResult["strInsertUser"] = "      ";
+	}
+	$aryNewResult["strInsertUser"] .= " " . $aryResult["strinsertusername"];
+
+	// 起票者＝入力者
+	$aryNewResult["strDrafter"] = $aryNewResult["strInsertUser"];
+
+	// 印刷回数
+	$aryNewResult["lngPrintCount"] = $aryResult["lngprintcount"];
 
 	return $aryNewResult;
 }
 
 
 
-
-
-
 /**
-* 詳細表示関数（明細用）
+* 詳細部データ加工
 *
-*	テーブル構成で売上データ詳細を出力する関数
-*	明細行を表示する
+*	SQLで取得した詳細部の値を表示用に加工する
+*	※SQL取得結果のキー名はすべて小文字になることに注意
 *
 *	@param  Array 	$aryDetailResult 	明細行の検索結果が格納された配列（１データ分）
 *	@param  Array 	$aryHeadResult 		ヘッダ行の検索結果が格納された配列（参照用）
@@ -340,170 +224,97 @@ function fncSetSlipHeadTableData ( $aryResult )
 */
 function fncSetSlipDetailTableData ( $aryDetailResult, $aryHeadResult )
 {
-	$aryColumnNames = array_keys($aryDetailResult);
 
-	// 表示対象カラムの配列より結果の出力
-	for ( $i = 0; $i < count($aryColumnNames); $i++ )
+	// ソートキー
+	$aryNewDetailResult["lngRecordNo"] = $aryDetailResult["lngrecordno"];
+	// 納品伝票番号
+	$aryNewDetailResult["lngSlipNo"] = $aryDetailResult["lngslipno"];
+	// リビジョン番号
+	$aryNewDetailResult["lngRevisionNo"] = $aryDetailResult["lngrevisionno"];
+	// 顧客受注番号
+	$aryNewDetailResult["strCustomerSalesCode"] = $aryDetailResult["strcustomersalescode"];
+	// 売上区分
+	if ( $aryDetailResult["lngsalesclasscode"] )
 	{
-		$strColumnName = $aryColumnNames[$i];
-
-		// 製品コード名称
-		if ( $strColumnName == "strproductcode" )
-		{
-			if ( $aryDetailResult["strproductcode"] )
-			{
-				$aryNewDetailResult[$strColumnName] = "[" . $aryDetailResult["strproductcode"] ."]";
-			}
-			else
-			{
-				$aryNewDetailResult[$strColumnName] = "      ";
-			}
-			$aryNewDetailResult[$strColumnName] .= " " . $aryDetailResult["strproductname"];
-		}
-
-		// 売上区分
-		else if ( $strColumnName == "lngsalesclasscode" )
-		{
-			if ( $aryDetailResult["lngsalesclasscode"] )
-			{
-				$aryNewDetailResult[$strColumnName] = "[" . $aryDetailResult["lngsalesclasscode"] ."]";
-			}
-			else
-			{
-				$aryNewDetailResult[$strColumnName] = "      ";
-			}
-			$aryNewDetailResult[$strColumnName] .= " " . $aryDetailResult["strsalesclassname"];
-		}
-
-		// 顧客品番
-		else if ( $strColumnName == "strgoodscode" )
-		{
-			$aryNewDetailResult[$strColumnName] = $aryDetailResult[$strColumnName];
-		}
-
-		// 納期
-		else if ( $strColumnName == "dtmdeliverydate" )
-		{
-			$aryNewDetailResult[$strColumnName] = str_replace( "-", "/", $aryDetailResult[$strColumnName] );
-		}
-
-		// 単価
-		else if ( $strColumnName == "curproductprice" )
-		{
-			$aryNewDetailResult[$strColumnName] = $aryHeadResult["strmonetaryunitsign"] . " ";
-			if ( !$aryDetailResult["curproductprice"] )
-			{
-				$aryNewDetailResult[$strColumnName] .= "0.00";
-			}
-			else
-			{
-				$aryNewDetailResult[$strColumnName] .= $aryDetailResult["curproductprice"];
-			}
-		}
-
-		// 単位
-		else if ( $strColumnName == "lngproductunitcode" )
-		{
-			$aryNewDetailResult[$strColumnName] = $aryDetailResult["strproductunitname"];
-		}
-
-		// 税抜金額
-		else if ( $strColumnName == "cursubtotalprice" )
-		{
-			$aryNewDetailResult[$strColumnName] = $aryHeadResult["strmonetaryunitsign"] . " ";
-			if ( !$aryDetailResult["cursubtotalprice"] )
-			{
-				$aryNewDetailResult[$strColumnName] .= "0.00";
-			}
-			else
-			{
-				$aryNewDetailResult[$strColumnName] .= $aryDetailResult["cursubtotalprice"];
-			}
-		}
-
-		// 税区分
-		else if ( $strColumnName == "lngtaxclasscode" )
-		{
-			$aryNewDetailResult[$strColumnName] = $aryDetailResult["strtaxclassname"];
-		}
-
-		// 税率
-		else if ( $strColumnName == "curtax" )
-		{
-			if ( !$aryDetailResult["curtax"] )
-			{
-				$aryNewDetailResult[$strColumnName] = "";
-			}
-			else
-			{
-				$aryNewDetailResult[$strColumnName] = $aryDetailResult["curtax"];
-			}
-		}
-
-		// 税額
-		else if ( $strColumnName == "curtaxprice" )
-		{
-			$aryNewDetailResult[$strColumnName] = $aryHeadResult["strmonetaryunitsign"] . " ";
-			if ( !$aryDetailResult["curtaxprice"] )
-			{
-				$aryNewDetailResult[$strColumnName] .= "0.00";
-			}
-			else
-			{
-				$aryNewDetailResult[$strColumnName] .= $aryDetailResult["curtaxprice"];
-			}
-		}
-
-		// 明細備考
-		else if ( $strColumnName == "strdetailnote" )
-		{
-			$aryNewDetailResult[$strColumnName] = nl2br($aryDetailResult[$strColumnName]);
-		}
-
-		// その他の項目はそのまま出力
-		else
-		{
-			$aryNewDetailResult[$strColumnName] = $aryDetailResult[$strColumnName];
-		}
+		$aryNewDetailResult["lngSalesClassCode"] = "[" . $aryDetailResult["lngsalesclasscode"] ."]";
 	}
+	else
+	{
+		$aryNewDetailResult["lngSalesClassCode"] = "      ";
+	}
+	$aryNewDetailResult["lngSalesClassCode"] .= " " . $aryDetailResult["strsalesclassname"];
+
+	// 顧客品番
+	$aryNewDetailResult["strGoodsCode"] = $aryDetailResult["strgoodscode"];
+	
+	// 製品コード・名称
+	if ( $aryDetailResult["strproductcode"] )
+	{
+		$aryNewDetailResult["strProductCode"] = "[" . $aryDetailResult["strproductcode"] ."]";
+	}
+	else
+	{
+		$aryNewDetailResult["strProductCode"] = "      ";
+	}
+	$aryNewDetailResult["strProductCode"] .= " " . $aryDetailResult["strproductname"];
+	
+	// 名称（英語）
+	$aryNewDetailResult["strProductEnglishName"] = $aryDetailResult["strproductenglishname"];
+
+	// 単価
+	$aryNewDetailResult["curProductPrice"] = $aryHeadResult["strMonetaryUnitSign"] . " ";
+	if ( !$aryDetailResult["curproductprice"] )
+	{
+		$aryNewDetailResult["curProductPrice"] .= "0.00";
+	}
+	else
+	{
+		$aryNewDetailResult["curProductPrice"] .= $aryDetailResult["curproductprice"];
+	}
+
+	// 数量
+	$aryNewDetailResult["lngProductQuantity"] = $aryDetailResult["lngproductquantity"];
+	// 単位
+	$aryNewDetailResult["strProductUnitName"] = $aryDetailResult["strproductunitname"];
+
+	// 税抜金額
+	$aryNewDetailResult["curSubTotalPrice"] = $aryHeadResult["strMonetaryUnitSign"] . " ";
+	if ( !$aryDetailResult["cursubtotalprice"] )
+	{
+		$aryNewDetailResult["curSubTotalPrice"] .= "0.00";
+	}
+	else
+	{
+		$aryNewDetailResult["curSubTotalPrice"] .= $aryDetailResult["cursubtotalprice"];
+	}
+
+	// 明細備考
+	$aryNewDetailResult["strDetailNote"] = nl2br($aryDetailResult["strdetailnote"]);
 
 	return $aryNewDetailResult;
 }
 
 
-
-
-
-
 /**
-* 詳細表示用カラム名セット関数
+* カラム名を格納する配列のキーに"CN"を付与する
 *
-*	詳細表示時のカラム名（日本語、英語）での設定関数
-*
-*	@param  Array 	$aryResult 		検索結果が格納された配列
-*	@param  Array 	$aryTytle 		カラム名が格納された配列
+*	@param  Array 	$aryColumnNames 		カラム名が格納された配列
 *	@access public
 */
-function fncSetSlipTableColumnName ( $aryResult, $aryTytle )
+function fncAddColumnNameArrayKeyToCN ($aryColumnNames)
 {
-	$aryColumnNames = array_values($aryResult);
+	$arrayKeys = array_keys($aryColumnNames);
 
 	// 表示対象カラムの配列より結果の出力
-	for ( $i = 0; $i < count($aryColumnNames); $i++ )
+	for ( $i = 0; $i < count($arrayKeys); $i++ )
 	{
-		$strColumnName = $aryColumnNames[$i];
-
-		if ( $aryTytle[$strColumnName] )
-		{
-			$strNewColumnName = "CN" . $strColumnName;
-			$aryNames[$strNewColumnName] = $aryTytle[$strColumnName];
-		}
+		$key = $arrayKeys[$i];
+		$strNewColumnName = "CN" . $key;
+		$aryNames[$strNewColumnName] = $aryColumnNames[$key];
 	}
 
 	return $aryNames;
 }
-
-
 
 
 

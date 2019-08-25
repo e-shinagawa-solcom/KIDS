@@ -29,7 +29,7 @@
 	// ライブラリ読み込み
 	require (LIB_FILE);
 	require (SRC_ROOT . "sc/cmn/lib_scd1.php");
-	require (SRC_ROOT . "sc/cmn/column.php");
+	require (SRC_ROOT . "sc/cmn/column_scd.php");
 	require( LIB_DEBUGFILE );
 	
 	// DB接続
@@ -71,7 +71,7 @@
 	//詳細画面の表示
 	$lngSlipNo = $aryData["lngSlipNo"];
 
-	// 指定納品伝票番号の売上データ取得用SQL文の作成
+	// 指定納品伝票番号の納品書データ取得用SQL文の作成
 	$strQuery = fncGetSlipHeadNoToInfoSQL ( $lngSlipNo );
 
 	// 詳細データの取得
@@ -111,9 +111,9 @@
 	}
 
 	// ヘッダ部のカラム名の設定（キーの頭に"CN"を付与する）
-	$aryHeadColumnNames = fncSetSlipTableColumnName ( $aryTableViewHead, $aryTytle );
+	$aryHeadColumnNames_CN = fncAddColumnNameArrayKeyToCN ( $aryHeadColumnNames );
 	// 詳細部のカラム名の設定（キーの頭に"CN"を付与する）
-	$aryDetailColumnNames = fncSetSlipTableColumnName ( $aryTableViewDetail, $aryTytle );
+	$aryDetailColumnNames_CN = fncAddColumnNameArrayKeyToCN ( $aryDetailColumnNames );
 
 	////////// 明細行の取得 ////////////////////
 
@@ -141,61 +141,12 @@
 	{
 		$aryNewDetailResult[$i] = fncSetSlipDetailTableData ( $aryDetailResult[$i], $aryNewResult );
 
-		//-------------------------------------------------------------------------
-		// *v2* 部門・担当者の取得
-		//-------------------------------------------------------------------------
-		$aryQuery   = array();
-		$aryQuery[] = "SELECT DISTINCT";
-		$aryQuery[] = "	mg.strgroupdisplaycode";
-		$aryQuery[] = "	,mg.strgroupdisplayname";
-		$aryQuery[] = "	,mu.struserdisplaycode";
-		$aryQuery[] = "	,mu.struserdisplayname";
-		$aryQuery[] = "FROM";
-		$aryQuery[] = "	m_group mg";
-		$aryQuery[] = "	,m_user mu";
-		$aryQuery[] = "WHERE";
-		$aryQuery[] = "	mg.lnggroupcode =";
-		$aryQuery[] = "	(";
-		$aryQuery[] = "		SELECT mp1.lnginchargegroupcode";
-		$aryQuery[] = "		FROM m_product mp1";
-		$aryQuery[] = "		WHERE mp1.strproductcode = '" . $aryDetailResult[$i]["strproductcode"] . "'";
-		$aryQuery[] = "	)";
-		$aryQuery[] = "	AND mu.lngusercode =";
-		$aryQuery[] = "	(";
-		$aryQuery[] = "		SELECT mp2.lnginchargeusercode";
-		$aryQuery[] = "		FROM m_product mp2";
-		$aryQuery[] = "		WHERE mp2.strproductcode = '" . $aryDetailResult[$i]["strproductcode"] . "'";
-		$aryQuery[] = "	)";
-
-		$strQuery = "";
-		$strQuery = implode( "\n", $aryQuery );
-
-
-		// クエリー実行
-		list( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
-
-		if( $lngResultNum )
-		{
-			$objResult = $objDB->fetchObject( $lngResultID, 0 );
-
-			// 部門コード・名称
-			$aryNewDetailResult[$i]["strInChargeGroup"] = "[" . $objResult->strgroupdisplaycode . "] " . $objResult->strgroupdisplayname;
-			// 担当者コード・名称
-			$aryNewDetailResult[$i]["strInChargeUser"]  = "[" . $objResult->struserdisplaycode . "] " . $objResult->struserdisplayname;
-		}
-		else
-		{
-			fncOutputError( 9051, DEF_ERROR, "", TRUE, "", $objDB );
-		}
-		//-------------------------------------------------------------------------
-
-
 		// テンプレート読み込み
 		$objTemplate = new clsTemplate();
 		$objTemplate->getTemplate( "sc/result2/parts_detail.tmpl" );
 
 		// テンプレート生成
-		$objTemplate->replace( $aryDetailColumnNames );
+		$objTemplate->replace( $aryDetailColumnNames_CN );
 		$objTemplate->replace( $aryNewDetailResult[$i] );
 		$objTemplate->complete();
 
@@ -214,7 +165,7 @@
 
 	// テンプレート生成
 	$objTemplate->replace( $aryNewResult );
-	$objTemplate->replace( $aryHeadColumnNames );
+	$objTemplate->replace( $aryHeadColumnNames_CN );
 	$objTemplate->complete();
 
 	// HTML出力

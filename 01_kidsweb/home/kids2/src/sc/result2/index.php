@@ -155,7 +155,7 @@
 	// 検索項目  $arySearchColumnに格納
 	$arySearchColumn=$isSearch;
 
-	// クッキー取得
+	// 言語は日本語で固定
 	$aryData["lngLanguageCode"] = 1;
 
 	if ( !$bytSearchFlag )
