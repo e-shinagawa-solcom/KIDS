@@ -1,8 +1,8 @@
 
 (function(){
     $('img.detail.button').on('click', function(){
-        url = '/sc/result/index2.php';
-        lngsalesno = 'lngSalesNo=' + $(this).attr('lngsalesno');
+        url = '/sc/result2/index2.php';
+        lngsalesno = 'lngSlipNo=' + $(this).attr('lngslipno');
         sessionID = 'strSessionID=' + getUrlVars()["strSessionID"];
 
         // 別ウィンドウで表示

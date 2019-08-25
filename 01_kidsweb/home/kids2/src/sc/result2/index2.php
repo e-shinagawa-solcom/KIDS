@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------------------
 /**
-*       売上管理  詳細
+*       納品書詳細
 *
 *
 *       @package    K.I.D.S.
@@ -14,7 +14,7 @@
 *
 *
 *       処理概要
-*         ・指定売上番号データの詳細表示処理
+*         ・指定納品伝票番号データの詳細表示処理
 *
 *       更新履歴
 *
@@ -28,7 +28,6 @@
 
 	// ライブラリ読み込み
 	require (LIB_FILE);
-	require (SRC_ROOT . "sc/cmn/lib_scd.php");
 	require (SRC_ROOT . "sc/cmn/lib_scd1.php");
 	require (SRC_ROOT . "sc/cmn/column.php");
 	require( LIB_DEBUGFILE );
@@ -52,9 +51,7 @@
 
 	// 文字列チェック
 	$aryCheck["strSessionID"] = "null:numenglish(32,32)";
-	$aryCheck["lngSalesNo"]	  = "null:number(0,10)";
-	// $aryResult = fncAllCheck( $aryData, $aryCheck );
-	// fncPutStringCheckError( $aryResult, $objDB );
+	$aryCheck["lngSlipNo"]	  = "null:number(0,10)";
 
 	// セッション確認
 	$objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
@@ -72,11 +69,10 @@
 	}
 
 	//詳細画面の表示
+	$lngSlipNo = $aryData["lngSlipNo"];
 
-	$lngSalesNo = $aryData["lngSalesNo"];
-
-	// 指定売上番号の売上データ取得用SQL文の作成
-	$strQuery = fncGetSalesHeadNoToInfoSQL ( $lngSalesNo );
+	// 指定納品伝票番号の売上データ取得用SQL文の作成
+	$strQuery = fncGetSlipHeadNoToInfoSQL ( $lngSlipNo );
 
 	// 詳細データの取得
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
@@ -100,7 +96,7 @@
 	$objDB->freeResult( $lngResultID );
 
 	// 取得データの調整
-	$aryNewResult = fncSetSalesHeadTabelData ( $aryResult );
+	$aryNewResult = fncSetSlipHeadTableData ( $aryResult );
 
 //fncDebug('sc_result_index2.txt', $aryNewResult, __FILE__, __LINE__);
 
@@ -114,15 +110,15 @@
 		$aryTytle = $aryTableTytle;
 	}
 
-	// カラム名の設定
-	$aryHeadColumnNames = fncSetSalesTabelName ( $aryTableViewHead, $aryTytle );
-	// カラム名の設定
-	$aryDetailColumnNames = fncSetSalesTabelName ( $aryTableViewDetail, $aryTytle );
+	// ヘッダ部のカラム名の設定（キーの頭に"CN"を付与する）
+	$aryHeadColumnNames = fncSetSlipTableColumnName ( $aryTableViewHead, $aryTytle );
+	// 詳細部のカラム名の設定（キーの頭に"CN"を付与する）
+	$aryDetailColumnNames = fncSetSlipTableColumnName ( $aryTableViewDetail, $aryTytle );
 
 	////////// 明細行の取得 ////////////////////
 
-	// 指定売上番号の売上明細データ取得用SQL文の作成
-	$strQuery = fncGetSalesDetailNoToInfoSQL ( $lngSalesNo );
+	// 指定納品伝票番号の売上明細データ取得用SQL文の作成
+	$strQuery = fncGetSlipDetailNoToInfoSQL ( $lngSlipNo );
 
 	// 明細データの取得
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
@@ -136,14 +132,14 @@
 	}
 	else
 	{
-		$strMessage = fncOutputError( 603, DEF_WARNING, "売上番号に対する明細情報が見つかりません。", FALSE, "../sc/search2/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+		$strMessage = fncOutputError( 603, DEF_WARNING, "納品伝票番号に対する明細情報が見つかりません。", FALSE, "../sc/search2/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
 	}
 
 	$objDB->freeResult( $lngResultID );
 
 	for ( $i = 0; $i < count($aryDetailResult); $i++)
 	{
-		$aryNewDetailResult[$i] = fncSetSalesDetailTabelData ( $aryDetailResult[$i], $aryNewResult );
+		$aryNewDetailResult[$i] = fncSetSlipDetailTableData ( $aryDetailResult[$i], $aryNewResult );
 
 		//-------------------------------------------------------------------------
 		// *v2* 部門・担当者の取得

@@ -30,7 +30,7 @@
 *	@return strQuery 	$strQuery 検索用SQL文
 *	@access public
 */
-function fncGetSalesHeadNoToInfoSQL ( $lngSalesNo )
+function fncGetSlipHeadNoToInfoSQL ( $lngSalesNo )
 {
 	// SQL文の作成
 	$aryQuery[] = "SELECT distinct on (s.lngSalesNo) s.lngSalesNo as lngSalesNo, s.lngRevisionNo as lngRevisionNo";
@@ -117,7 +117,7 @@ function fncGetSalesHeadNoToInfoSQL ( $lngSalesNo )
 *	@return strQuery 	$strQuery 検索用SQL文
 *	@access public
 */
-function fncGetSalesDetailNoToInfoSQL ( $lngSalesNo )
+function fncGetSlipDetailNoToInfoSQL ( $lngSalesNo )
 {
 // 2004.03.30 suzukaze update start
 	// SQL文の作成
@@ -191,7 +191,7 @@ function fncGetSalesDetailNoToInfoSQL ( $lngSalesNo )
 *	@param  Array 	$aryResult 				ヘッダ行の検索結果が格納された配列
 *	@access public
 */
-function fncSetSalesHeadTabelData ( $aryResult )
+function fncSetSlipHeadTableData ( $aryResult )
 {
 	$aryColumnNames = array_keys($aryResult);
 
@@ -338,7 +338,7 @@ function fncSetSalesHeadTabelData ( $aryResult )
 *	@param  Array 	$aryHeadResult 		ヘッダ行の検索結果が格納された配列（参照用）
 *	@access public
 */
-function fncSetSalesDetailTabelData ( $aryDetailResult, $aryHeadResult )
+function fncSetSlipDetailTableData ( $aryDetailResult, $aryHeadResult )
 {
 	$aryColumnNames = array_keys($aryDetailResult);
 
@@ -484,7 +484,7 @@ function fncSetSalesDetailTabelData ( $aryDetailResult, $aryHeadResult )
 *	@param  Array 	$aryTytle 		カラム名が格納された配列
 *	@access public
 */
-function fncSetSalesTabelName ( $aryResult, $aryTytle )
+function fncSetSlipTableColumnName ( $aryResult, $aryTytle )
 {
 	$aryColumnNames = array_values($aryResult);
 
