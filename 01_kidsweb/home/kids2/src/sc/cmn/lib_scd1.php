@@ -1,6 +1,6 @@
 <?
 /** 
-*	納品書　詳細、削除、無効化関数群
+*	納品書　詳細、削除関数群
 *
 *	@package   kuwagata
 *	@license   http://www.wiseknot.co.jp/ 
@@ -10,12 +10,10 @@
 *	@version   1.01
 *
 *	処理概要
-*	検索結果関連の関数
+*	　納品書検索結果からの詳細表示と削除に関する処理
 *
 *	修正履歴
 *
-*	2004.03.17	詳細表示時の単価部分の表示方式を小数点以下４桁に変更
-*	2004.03.30	詳細表示時の表示順を明細行番号順から表示用ソートキー順に変更
 *
 */
 
@@ -74,8 +72,6 @@ function fncGetSlipHeadNoToInfoSQL ( $lngSlipNo )
 
 	return $strQuery;
 }
-
-
 
 /**
 * 指定された納品伝票番号から納品伝票明細情報を取得するＳＱＬ文を作成
@@ -320,6 +316,103 @@ function fncAddColumnNameArrayKeyToCN ($aryColumnNames)
 	return $aryNames;
 }
 
+
+function fncJapaneseInvoiceExists($strCustomerCode, $lngSalesNo, $objDB)
+{
+	// 顧客の国が日本かどうか
+	$strCompanyQuery = "SELECT lngcompanycode FROM m_Company WHERE strcompanydisplaycode = '" . $strCustomerCode . "'";
+	list ( $lngResultID, $lngResultNum ) = fncQuery( $strCompanyQuery, $objDB );
+	if ( $lngResultNum )
+	{
+		$objResult = $objDB->fetchObject( $lngResultID, 0 );
+		$lngCompanyCode = $objResult->lngcompanycode;
+	}
+	else
+	{
+		// 国コード取得失敗（TODO:エラー画面に飛ばすべきかも。要確認）
+		return false;
+	}
+	$objDB->freeResult( $lngResultID );
+
+	if ($lngCompanyCode != 81){
+		// 国コードが日本以外
+		return false;
+	}
+
+	// 請求書明細が存在するか（=紐づく売上ヘッダの請求書番号がnull以外）
+	$strSalesQuery = "SELECT lnginvoiceno FROM m_Sales WHERE lngSalesNo = " . $lngSalesNo;
+	list ( $lngResultID, $lngResultNum ) = fncQuery( $strSalesQuery, $objDB );
+	if ( $lngResultNum )
+	{
+		$objResult = $objDB->fetchObject( $lngResultID, 0 );
+		$lngInvoiceNo = $objResult->lnginvoiceno;
+	}
+	else
+	{
+		// 請求書番号取得失敗（TODO:エラー画面に飛ばすべきかも。要確認）
+		return false;
+	}
+	$objDB->freeResult( $lngResultID );
+
+	if (!$lngInvoiceNo){
+		// 請求書明細は存在しない
+		return false;
+	}
+
+	return true;
+
+}
+
+function fncReceiveStatusIsClosed($lngSlipNo, $objDB)
+{
+	// 納品伝票明細データの取得
+	$strQuery = fncGetSlipDetailNoToInfoSQL ( $lngSlipNo );
+	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
+
+	if ( $lngResultNum )
+	{
+		for ( $i = 0; $i < $lngResultNum; $i++ )
+		{
+			$aryDetailResult[] = $objDB->fetchArray( $lngResultID, $i );
+		}
+	}
+	else
+	{
+		// 納品伝票番号に紐づく納品伝票明細が見つからない（TODO:エラー画面に飛ばすべきかも。要確認）
+		return false;
+	}
+
+	// 納品伝票明細に紐づく受注のステータスが「締め済」かどうか
+	for ( $i = 0; $i < count($aryDetailResult); $i++)
+	{
+		// 受注番号
+		$lngReceiveNo = $aryDetailResult[$i]["lngreceiveno"];
+
+		// 受注マスタより受注ステータスコードを取得
+		$strReceiveCodeQuery = "SELECT lngreceivestatuscode FROM m_Receive WHERE lngReceiveNo = " . $lngReceiveNo;
+		list ( $lngResultID, $lngResultNum ) = fncQuery( $strReceiveCodeQuery, $objDB );
+		if ( $lngResultNum )
+		{
+			$objResult = $objDB->fetchObject( $lngResultID, 0 );
+			$lngReceiveStatusCode = $objResult->lngreceivestatuscode;
+		}
+		else
+		{
+			// 受注ステータスコード取得失敗（TODO:エラー画面に飛ばすべきかも。要確認）
+			return false;
+		}
+		$objDB->freeResult( $lngResultID );
+
+		if ($lngReceiveStatusCode == DEF_RECEIVE_CLOSED){
+			// 受注ステータスコードが「締め済」
+			return false;
+		}
+	}
+
+	// 「締め済」のレコードは1件も無い
+	return true;
+}
+
 /**
  * 売上データの削除
  * 
@@ -332,7 +425,7 @@ function fncAddColumnNameArrayKeyToCN ($aryColumnNames)
 function fncDeleteSales($lngSalesNo, $objDB, $objAuth)
 {
 	// 売上番号をキーに売上コードを取得
-	$strSalesCodeQuery = "SELECT strSalesCode FROM m_Sales WHERE lngSalesNo = " . $lngSalesNo;
+	$strSalesCodeQuery = "SELECT strsalescode FROM m_Sales WHERE lngSalesNo = " . $lngSalesNo;
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strSalesCodeQuery, $objDB );
 	if ( $lngResultNum )
 	{
@@ -475,10 +568,8 @@ function fncDeleteSlip($strSlipCode, $objDB, $objAuth)
  */
 function fncUpdateReceiveStatus($lngSlipNo, $objDB)
 {
-	// 指定納品伝票番号の売上明細データ取得用SQL文の作成
-	$strQuery = fncGetSlipDetailNoToInfoSQL ( $lngSlipNo );
-
 	// 納品伝票明細データの取得
+	$strQuery = fncGetSlipDetailNoToInfoSQL ( $lngSlipNo );
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
 	if ( $lngResultNum )
@@ -500,7 +591,7 @@ function fncUpdateReceiveStatus($lngSlipNo, $objDB)
 		$lngReceiveNo = $aryDetailResult[$i]["lngreceiveno"];
 
 		// 受注マスタより受注コードを取得
-		$strReceiveCodeQuery = "SELECT strReceiveCode FROM m_Receive WHERE lngReceiveNo = " . $lngReceiveNo;
+		$strReceiveCodeQuery = "SELECT strreceivecode FROM m_Receive WHERE lngReceiveNo = " . $lngReceiveNo;
 		list ( $lngResultID, $lngResultNum ) = fncQuery( $strReceiveCodeQuery, $objDB );
 		if ( $lngResultNum )
 		{
@@ -539,169 +630,5 @@ function fncUpdateReceiveStatus($lngSlipNo, $objDB)
 	return true;
 
 }
-
-
-
-
-
-/**
-* 指定の納品書データとこれに紐づく売上データを削除し、受注明細のステータスを更新する
-*
-*	@param  Array 		$arySalesData 	売上データ
-*	@param  Object		$objDB			DBオブジェクト
-*	@return Boolean 	0				実行成功
-*						1				実行失敗 情報取得失敗
-*	@access public
-*/
-function fncDeleteSlipAndUpdateReceiveStatus ( $arySalesData, $objDB )
-{
-
-}
-
-
-
-
-// TODO:不要になったら削除
-/**
-* 指定の売上データの削除に関して、その売上データを削除することでの状態変更関数
-*
-*	売上の状態が「納品済」の場合、受注Noを指定していた場合、分納であった場合など
-*	各状態ごとにその売上に関するデータの状態を変更する
-*
-*	@param  Array 		$arySalesData 	売上データ
-*	@param  Object		$objDB			DBオブジェクト
-*	@return Boolean 	0				実行成功
-*						1				実行失敗 情報取得失敗
-*	@access public
-*/
-/*
-function fncSalesDeleteSetStatus ( $arySalesData, $objDB )
-{
-
-	// 受注Noを指定している売上の場合は、指定している最新の受注のデータを取得する
-	$arySql = array();
-	$arySql[] = "SELECT";
-	$arySql[] = "	r.lngReceiveNo";	//	as lngReceiveNo";
-	$arySql[] = "	,r.strReceiveCode";	//	as strReceiveCode";
-	$arySql[] = "	,r.lngReceiveStatusCode";	//	as lngReceiveStatusCode";
-	$arySql[] = "	,r.lngMonetaryUnitCode";	//	as lngMonetaryUnitCode";
-	$arySql[] = "	,r.strcustomerreceivecode";
-	$arySql[] = "FROM";
-	$arySql[] = "	m_Receive r";
-	$arySql[] = "WHERE";
-//	$arySql[] = "	r.strReceiveCode = (";
-//	$arySql[] = "	SELECT r1.strReceiveCode FROM m_Receive r1 WHERE r1.lngReceiveNo = " . $arySalesData["lngreceiveno"];
-	$arySql[] = "	r.strReceiveCode in (";
-	$arySql[] = "	SELECT r1.strReceiveCode FROM m_Receive r1 WHERE r1.lngReceiveNo IN (SELECT ts.lngreceiveno FROM t_Salesdetail ts WHERE ts.lngsalesno = " . $arySalesData["lngsalesno"];
-	$arySql[] = "	)";
-//	$arySql[] = "SELECT r1.strReceiveCode FROM m_Receive r1 WHERE r1.lngReceiveNo in (select ts.lngreceiveno from t_salesdetail ts where ts.lngsalesno = "  . $lngSalesNo .")";
-	$arySql[] = "	)";
-	$arySql[] = "	AND r.bytInvalidFlag = FALSE";
-	$arySql[] = "	AND r.lngRevisionNo >= 0";
-	$arySql[] = "	AND r.lngRevisionNo = (";
-	$arySql[] = "		SELECT MAX( r2.lngRevisionNo ) FROM m_Receive r2 WHERE r2.strReceiveCode = r.strReceiveCode";
-	$arySql[] = "		AND r2.strReviseCode = (";
-	$arySql[] = "		SELECT MAX( r3.strReviseCode ) FROM m_Receive r3 WHERE r3.strReceiveCode = r2.strReceiveCode )";
-	$arySql[] = "	)";
-	$arySql[] = "	AND 0 <= (";
-	$arySql[] = "		SELECT MIN( r4.lngRevisionNo ) FROM m_Receive r4 WHERE r4.bytInvalidFlag = false AND r4.strReceiveCode = r.strReceiveCode";
-	$arySql[] = "	)";
-	$strQuery = implode("\n", $arySql);
-
-	// 検索クエリーの実行
-	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
-	if ( $lngResultNum )
-	{
-		for ( $a = 0; $a < $lngResultNum; $a++ )
-		{
-			$objResult1[$a]= $objDB->fetchArray( $lngResultID, $a );
-		}
-	$objDB->freeResult( $lngResultID );
-	}else{
-		// 受注Noは指定しているが現在有効な最新受注が存在しない場合はそのまま削除可能とする
-			return 0;
-		}
-	for($k=0;$k<count($objResult1);$k++)
-		{
-//               削除対象売上と同じ受注Noを指定している最新売上を検索
-			$arySql = array();
-			$arySql[] = "SELECT distinct";
-			$arySql[] = "	s.lngSalesNo as lngSalesNo";
-			$arySql[] = "	,s.lngSalesStatusCode as lngSalesStatusCode";
-			$arySql[] = "	,s.lngMonetaryUnitCode as lngMonetaryUnitCode";
-//			$arySql[] = "	,r.lngreceiveno as lngreceiveno";
-			$arySql[] = "FROM";
-			$arySql[] = "	m_Sales s";
-			$arySql[] = "	left join t_salesdetail tsd";
-			$arySql[] = "		on s.lngsalesno = tsd.lngsalesno";
-			$arySql[] = "	,m_Receive r";
-			$arySql[] = "WHERE";
-			$arySql[] = "	r.lngreceiveno = " . $objResult1[$k]["lngreceiveno"];
-//			$arySql[] = "	AND r.lngReceiveNo = tsd.lngReceiveNo";
-			$arySql[] = "	AND tsd.lngReceiveNo in (select re1.lngReceiveNo from m_Receive re1 where re1.strreceivecode = (";
-			$arySql[] = "	select re2.strreceivecode from m_Receive re2 where re2.lngreceiveno = " . $objResult1[$k]["lngreceiveno"];
-			$arySql[] = "	))";
-			$arySql[] = "	AND s.bytInvalidFlag = FALSE";
-			$arySql[] = "	AND s.lngRevisionNo >= 0";
-			$arySql[] = "	AND s.lngRevisionNo = (";
-			$arySql[] = "		SELECT MAX( s2.lngRevisionNo ) FROM m_Sales s2 WHERE s2.strSalesCode = s.strSalesCode )";
-			$arySql[] = "		AND 0 <= (";
-			$arySql[] = "		SELECT MIN( s3.lngRevisionNo ) FROM m_Sales s3 WHERE s3.bytInvalidFlag = false AND s3.strSalesCode = s.strSalesCode";
-			$arySql[] = "		)";
-			$arySql[] = "	AND s.lngsalesno <> '"  . $arySalesData["lngsalesno"] . "'";
-			$strQuery = implode("\n", $arySql);			
-			list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
-			if ( $lngResultNum )
-			{
-				// 削除対象以外の売上データが存在する場合
-				for ( $i = 0; $i < $lngResultNum; $i++ )
-				{
-					$arySalesResult1[$i] = $objDB->fetchArray( $lngResultID, $i );
-
-					// 売上参照受注の状態の状態を「納品中」とする
-					// 同じ受注NOを指定している売上の状態に対しても「納品中」とする
-						// 更新対象売上データをロックする
-					if($arySalesResult1[$i]["lngsalesstatuscode"] != 99){
-							$strLockQuery = "SELECT lngSalesNo FROM m_Sales " 
-									. "WHERE lngSalesNo = " . $arySalesResult1[$i]["lngsalesno"] . " AND bytInvalidFlag = FALSE FOR UPDATE";
-							list ( $lngLockResultID, $lngLockResultNum ) = fncQuery( $strLockQuery, $objDB );
-							$objDB->freeResult( $lngLockResultID );
-							// 「納品中」状態への更新処理
-							$strUpdateQuery = "UPDATE m_Sales set lngSalesStatusCode = " . DEF_SALES_DELIVER 
-									. " WHERE lngSalesNo = " . $arySalesResult1[$i]["lngsalesno"];
-							list ( $lngUpdateResultID, $lngUpdateResultNum ) = fncQuery( $strUpdateQuery, $objDB );
-							$objDB->freeResult( $lngUpdateResultID );
-					}	
-				}
-				// 更新対象受注データをロックする
-				$strLockQuery = "SELECT lngReceiveNo FROM m_Receive WHERE lngReceiveNo = " . $objResult1[$k]["lngreceiveno"] . " AND bytInvalidFlag = FALSE FOR UPDATE";
-				list ( $lngLockResultID, $lngLockResultNum ) = fncQuery( $strLockQuery, $objDB );
-				$objDB->freeResult( $lngLockResultID );
-				// 「納品中」状態への更新処理
-				$strUpdateQuery = "UPDATE m_Receive set lngReceiveStatusCode = " . DEF_RECEIVE_DELIVER . " WHERE lngReceiveNo = " . $objResult1[$k]["lngreceiveno"];
-				list ( $lngUpdateResultID, $lngUpdateResultNum ) = fncQuery( $strUpdateQuery, $objDB );
-				$objDB->freeResult( $lngUpdateResultID );
-				}
-				else
-				{
-				// 削除対象以外の売上データが存在しない場合
-				// 売上の参照元最新受注の状態を「受注」に戻す
-				// 更新対象受注データをロックする
-				$strLockQuery = "SELECT lngReceiveNo FROM m_Receive WHERE lngReceiveNo = "  . $objResult1[$k]["lngreceiveno"] .  " AND bytInvalidFlag = FALSE FOR UPDATE";
-				list ( $lngLockResultID, $lngLockResultNum ) = fncQuery( $strLockQuery, $objDB );
-				if ( !$lngLockResultNum )
-				{
-					fncOutputError ( 9051, DEF_ERROR, "DB処理エラー", TRUE, "", $objDB );
-				}
-				$objDB->freeResult( $lngLockResultID );
-				// 「受注」状態への更新処理
-				$strUpdateQuery = "UPDATE m_Receive set lngReceiveStatusCode = " . DEF_RECEIVE_ORDER . " WHERE lngReceiveNo = "  . $objResult1[$k]["lngreceiveno"];
-				list ( $lngUpdateResultID, $lngUpdateResultNum ) = fncQuery( $strUpdateQuery, $objDB );
-				$objDB->freeResult( $lngUpdateResultID );
-			}
-		}
-	return 0;
-}
-*/
 
 ?>

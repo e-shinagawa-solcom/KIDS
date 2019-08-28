@@ -21,8 +21,6 @@
 */
 // ----------------------------------------------------------------------------
 
-
-
 // 設定読み込み
 include_once('conf.inc');
 
@@ -53,7 +51,7 @@ if ( !$aryData["lngSlipNo"] )
 	fncOutputError ( 9061, DEF_ERROR, "データ異常です。", TRUE, "", $objDB );
 }
 
-// 文字列チェック
+// 文字列チェック（TODO:要仕様確認）
 $aryCheck["strSessionID"] = "null:numenglish(32,32)";
 $aryCheck["lngSlipNo"]	  = "null:number(0,10)";
 
@@ -86,47 +84,50 @@ else
 }
 $objDB->freeResult( $lngResultID );
 
-// var_dump( $aryData );
-// exit;
-
-////////////////////////////////////////////////////////
-////////////////////// 削除処理実行 ////////////////////
-////////////////////////////////////////////////////////
+// *****************************************************
+//   削除処理実行（Submit時）
+// *****************************************************
 if( $aryData["strSubmit"] )
 {
-	// TODO:１．顧客の国が日本で、かつ納品書ヘッダに紐づく請求書明細が存在する（=紐づく売上ヘッダの請求書番号がnull以外）場合、削除エラー画面(U-06-06-2)で以下のメッセージを表示して処理を終了する。
-	//「請求書発行済みのため、削除できません」
+	
+	$lngSalesNo = $aryHeadResult["lngsalesno"];
+	$strSlipCode = $aryHeadResult["strslipcode"];
+	$lngSlipNo = $aryHeadResult["lngslipno"];
+	$strCustomerCode = $aryHeadResult["strcustomercode"];
 
-	// TODO:２．納品書明細に紐づく受注ステータスが「締済み」である場合、削除エラー画面(U-06-06-2)で以下のメッセージを表示して処理を終了する。
-	//「締済みのため、削除できません」
-
-	/* //参考
-	// 該当売上の状態が「締め済」の状態であれば
-	if ( $aryHeadResult["lngsalesstatuscode"] == DEF_SALES_CLOSED )
-	{
-		fncOutputError( 606, DEF_WARNING, "", TRUE, "../sc/search2/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+	// --------------------------------
+	//    削除可能かどうかのチェック
+	// --------------------------------
+	// 顧客の国が日本で、かつ納品書ヘッダに紐づく請求書明細が存在する場合は削除不可
+	if (fncJapaneseInvoiceExists($strCustomerCode, $lngSalesNo, $objDB)){
+		MoveToErrorPage("請求書発行済みのため、削除できません");
 	}
-	*/
 
+	// 納品書明細に紐づく受注ステータスが「締済み」の場合は削除不可
+	if (fncReceiveStatusIsClosed($lngSlipNo, $objDB))
+	{
+		MoveToErrorPage("締済みのため、削除できません");
+	}
+
+	// --------------------------------
+	//    削除処理
+	// --------------------------------
 	// トランザクション開始
 	$objDB->transactionBegin();
 
 	// 売上データの削除
-	$lngSalesNo = $aryHeadResult["lngsalesno"];
 	if (!fncDeleteSales($lngSalesNo, $objDB, $objAuth))
 	{
 		fncOutputError ( 602, DEF_FATAL, "削除処理に伴う売上マスタ処理失敗", TRUE, "", $objDB );
 	}
 
 	// 納品書データの削除
-	$strSlipCode = $aryHeadResult["strslipcode"];
 	if (!fncDeleteSlip($strSlipCode, $objDB, $objAuth))	
 	{
 		fncOutputError ( 602, DEF_FATAL, "削除処理に伴う納品書マスタ処理失敗", TRUE, "", $objDB );
 	}
 
 	// 納品伝票明細に紐づく受注明細のステータス更新
-	$lngSlipNo = $aryHeadResult["lngslipno"];
 	if (!fncUpdateReceiveStatus($lngSlipNo, $objDB))
 	{
 		fncOutputError ( 602, DEF_FATAL, "削除処理に伴う受注明細テーブル処理失敗", TRUE, "", $objDB );
@@ -140,8 +141,8 @@ if( $aryData["strSubmit"] )
 	$aryDeleteData["strAction"] = "/sc/search2/index.php?strSessionID=";
 	$aryDeleteData["strSessionID"] = $aryData["strSessionID"];
 
-	//日本語のみになったので不要
-	//$aryDeleteData["lngLanguageCode"] = $_COOKIE["lngLanguageCode"];
+	// 言語コード：日本語
+	$aryDeleteData["lngLanguageCode"] = 1;
 
 	// テンプレート読み込み
 	$objTemplate = new clsTemplate();
@@ -156,41 +157,26 @@ if( $aryData["strSubmit"] )
 
 	$objDB->close();
 
-	
 	return true;
 }
 
-
-////////////////////////////////////////////////////////
-//////////////////// 削除確認画面表示 //////////////////
-////////////////////////////////////////////////////////
-// 該当売上の状態が「申請中」の状態であれば
-if ( $aryHeadResult["lngsalesstatuscode"] == DEF_SALES_APPLICATE )
-{
-	fncOutputError( 608, DEF_WARNING, "", TRUE, "../sc/search2/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
-}
-
-// 該当売上の状態が「締め済」の状態であれば
-if ( $aryHeadResult["lngsalesstatuscode"] == DEF_SALES_CLOSED )
-{
-	fncOutputError( 606, DEF_WARNING, "", TRUE, "../sc/search2/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
-}
-
+// *****************************************************
+//   削除確認画面表示（Submit前）
+// *****************************************************
 // 取得データを表示用に整形
 $aryNewResult = fncSetSlipHeadTableData ( $aryHeadResult );
+
 // ヘッダ部のカラム名の設定（キーの頭に"CN"を付与する）
 $aryHeadColumnNames_CN = fncAddColumnNameArrayKeyToCN ( $aryHeadColumnNames );
+
 // 詳細部のカラム名の設定（キーの頭に"CN"を付与する）
 $aryDetailColumnNames_CN = fncAddColumnNameArrayKeyToCN ( $aryDetailColumnNames );
-
-////////// 明細行の取得 ////////////////////
 
 // 指定売上番号の売上明細データ取得用SQL文の作成
 $strQuery = fncGetSlipDetailNoToInfoSQL ( $aryData["lngSlipNo"] );
 
 // 明細データの取得
 list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
-
 if ( $lngResultNum )
 {
 	for ( $i = 0; $i < $lngResultNum; $i++ )
@@ -206,6 +192,7 @@ $objDB->freeResult( $lngResultID );
 
 for ( $i = 0; $i < count($arySalesDetailResult); $i++)
 {
+	// 明細データを表示用に加工
 	$aryNewDetailResult[$i] = fncSetSlipDetailTableData ( $arySalesDetailResult[$i], $aryNewResult );
 
 	// テンプレート読み込み
@@ -243,8 +230,30 @@ $objTemplate->complete();
 // HTML出力
 echo $objTemplate->strTemplate;
 
-
 $objDB->close();
 return true;
+
+// エラー画面への遷移
+function MoveToErrorPage($strMessage){
+	
+	// 言語コード：日本語
+	$aryHtml["lngLanguageCode"] = 1;
+
+	// エラーメッセージの設定
+	$aryHtml["strErrorMessage"] = $strMessage;
+
+	// テンプレート読み込み
+	$objTemplate = new clsTemplate();
+	$objTemplate->getTemplate( "/result/error/parts.tmpl" );
+	
+	// テンプレート生成
+	$objTemplate->replace( $aryHtml );
+	$objTemplate->complete();
+
+	// HTML出力
+	echo $objTemplate->strTemplate;
+
+	exit;
+}
 
 ?>
