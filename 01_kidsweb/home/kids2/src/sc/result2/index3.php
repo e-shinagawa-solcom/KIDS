@@ -78,7 +78,7 @@ $strQuery = fncGetSlipHeadNoToInfoSQL ( $aryData["lngSlipNo"] );
 list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 if ( $lngResultNum == 1 )
 {
-	$arySalesResult = $objDB->fetchArray( $lngResultID, 0 );
+	$aryHeadResult = $objDB->fetchArray( $lngResultID, 0 );
 }
 else
 {
@@ -102,7 +102,7 @@ if( $aryData["strSubmit"] )
 
 	/* //参考
 	// 該当売上の状態が「締め済」の状態であれば
-	if ( $arySalesResult["lngsalesstatuscode"] == DEF_SALES_CLOSED )
+	if ( $aryHeadResult["lngsalesstatuscode"] == DEF_SALES_CLOSED )
 	{
 		fncOutputError( 606, DEF_WARNING, "", TRUE, "../sc/search2/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
 	}
@@ -111,62 +111,32 @@ if( $aryData["strSubmit"] )
 	// トランザクション開始
 	$objDB->transactionBegin();
 
-	/*
-	// m_salesのシーケンスを取得
-	$sequence_m_sales = fncGetSequence( 'm_Sales.lngSalesNo', $objDB );
-
-	// 最小リビジョン番号の取得
-	$strSalesCode = $arySalesResult["strsalescode"];
-	$strRevisionGetQuery = "SELECT MIN(lngRevisionNo) as minrevision FROM m_Sales WHERE strSalesCode = '" . $strSalesCode . "'";
-	list ( $lngResultID, $lngResultNum ) = fncQuery( $strRevisionGetQuery, $objDB );
-	if ( $lngResultNum )
+	// 売上データの削除
+	$lngSalesNo = $aryHeadResult["lngsalesno"];
+	if (!fncDeleteSales($lngSalesNo, $objDB, $objAuth))
 	{
-		$objResult = $objDB->fetchObject( $lngResultID, 0 );
-		$lngMinRevisionNo = $objResult->minrevision;
-		if ( $lngMinRevisionNo > 0 )
-		{
-			$lngMinRevisionNo = 0;
-		}
+		fncOutputError ( 602, DEF_FATAL, "削除処理に伴う売上マスタ処理失敗", TRUE, "", $objDB );
 	}
-	else
+
+	// 納品書データの削除
+	$strSlipCode = $aryHeadResult["strslipcode"];
+	if (!fncDeleteSlip($strSlipCode, $objDB, $objAuth))	
 	{
-		$lngMinRevisionNo = 0;
+		fncOutputError ( 602, DEF_FATAL, "削除処理に伴う納品書マスタ処理失敗", TRUE, "", $objDB );
 	}
-	$objDB->freeResult( $lngResultID );
-	$lngMinRevisionNo--;
 
-	$aryQuery[] = "INSERT INTO m_sales (lngSalesNo, lngRevisionNo, ";					// 売上NO、リビジョン番号
-	$aryQuery[] = "strSalesCode, lngInputUserCode, bytInvalidFlag, dtmInsertDate";		// 売上コード、入力者コード、無効フラグ、登録日
-	$aryQuery[] = ") values (";
-	$aryQuery[] = $sequence_m_sales . ", ";		// 1:売上番号
-	$aryQuery[] = $lngMinRevisionNo . ", ";		// 2:リビジョン番号
-	$aryQuery[] = "'" . $strSalesCode . "', ";	// 3:売上コード．
-	$aryQuery[] = $objAuth->UserCode . ", ";	// 4:入力者コード
-	$aryQuery[] = "false, ";					// 5:無効フラグ
-	$aryQuery[] = "now()";						// 6:登録日
-	$aryQuery[] = ")";
-
-	unset($strQuery);
-	$strQuery = implode("\n", $aryQuery );
-
-	if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
+	// 納品伝票明細に紐づく受注明細のステータス更新
+	$lngSlipNo = $aryHeadResult["lngslipno"];
+	if (!fncUpdateReceiveStatus($lngSlipNo, $objDB))
 	{
-		fncOutputError ( 602, DEF_FATAL, "削除処理に伴うマスタ処理失敗", TRUE, "", $objDB );
-	}
-	$objDB->freeResult( $lngResultID );
-	*/
-
-	// 該当売上削除による状態変更関数呼び出し
-	if ( fncDeleteSlipAndUpdateReceiveStatus( $arySalesResult, $objDB ) != 0 )
-	{
-		fncOutputError( 9051, DEF_ERROR, "データが異常です", TRUE, "../sc/search2/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+		fncOutputError ( 602, DEF_FATAL, "削除処理に伴う受注明細テーブル処理失敗", TRUE, "", $objDB );
 	}
 
 	// トランザクションコミット
 	$objDB->transactionCommit();
 
 	// 削除確認画面の表示
-	$aryDeleteData = $arySalesResult;
+	$aryDeleteData = $aryHeadResult;
 	$aryDeleteData["strAction"] = "/sc/search2/index.php?strSessionID=";
 	$aryDeleteData["strSessionID"] = $aryData["strSessionID"];
 
@@ -195,19 +165,19 @@ if( $aryData["strSubmit"] )
 //////////////////// 削除確認画面表示 //////////////////
 ////////////////////////////////////////////////////////
 // 該当売上の状態が「申請中」の状態であれば
-if ( $arySalesResult["lngsalesstatuscode"] == DEF_SALES_APPLICATE )
+if ( $aryHeadResult["lngsalesstatuscode"] == DEF_SALES_APPLICATE )
 {
 	fncOutputError( 608, DEF_WARNING, "", TRUE, "../sc/search2/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
 }
 
 // 該当売上の状態が「締め済」の状態であれば
-if ( $arySalesResult["lngsalesstatuscode"] == DEF_SALES_CLOSED )
+if ( $aryHeadResult["lngsalesstatuscode"] == DEF_SALES_CLOSED )
 {
 	fncOutputError( 606, DEF_WARNING, "", TRUE, "../sc/search2/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
 }
 
 // 取得データを表示用に整形
-$aryNewResult = fncSetSlipHeadTableData ( $arySalesResult );
+$aryNewResult = fncSetSlipHeadTableData ( $aryHeadResult );
 // ヘッダ部のカラム名の設定（キーの頭に"CN"を付与する）
 $aryHeadColumnNames_CN = fncAddColumnNameArrayKeyToCN ( $aryHeadColumnNames );
 // 詳細部のカラム名の設定（キーの頭に"CN"を付与する）

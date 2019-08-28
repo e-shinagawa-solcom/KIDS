@@ -31,35 +31,37 @@
 function fncGetSlipHeadNoToInfoSQL ( $lngSlipNo )
 {
 	// 納品伝票番号、リビジョン番号
-	$aryQuery[] = "SELECT distinct on (s.lngSlipNo) s.lngSlipNo as lngSlipNo, s.lngRevisionNo as lngRevisionNo";
+	$aryQuery[] = "SELECT distinct on (s.lngSlipNo) s.lngSlipNo as lngslipno, s.lngRevisionNo as lngrevisionno";
 	// 納品書No
-	$aryQuery[] = ", s.strSlipCode as strSlipCode";
+	$aryQuery[] = ", s.strSlipCode as strslipcode";
 	// 顧客
-	$aryQuery[] = ", s.strCustomerCode as strCustomerCode";	//顧客コード
-	$aryQuery[] = ", s.strCustomerName as strCustomerName";	//顧客名
+	$aryQuery[] = ", s.strCustomerCode as strcustomercode";	//顧客コード
+	$aryQuery[] = ", s.strCustomerName as strcustomername";	//顧客名
 	// 納品日
-	$aryQuery[] = ", to_char( s.dtmDeliveryDate, 'YYYY/MM/DD HH:MI:SS' ) as dtmDeliveryDate";
+	$aryQuery[] = ", to_char( s.dtmDeliveryDate, 'YYYY/MM/DD HH:MI:SS' ) as dtmdeliverydate";
 	// 納品場所名
-	$aryQuery[] = ", s.strDeliveryPlaceName as strDeliveryPlaceName";
+	$aryQuery[] = ", s.strDeliveryPlaceName as strdeliveryplacename";
 	// 納品場所担当者名
-	$aryQuery[] = ", s.strDeliveryPlaceUserName as strDeliveryPlaceUserName";
+	$aryQuery[] = ", s.strDeliveryPlaceUserName as strdeliveryplaceusername";
 	// 課税区分
-	$aryQuery[] = ", s.strTaxClassName as strTaxClassName";
+	$aryQuery[] = ", s.strTaxClassName as strtaxclassname";
 	// 通貨記号。ヘッダ部の合計金額、明細部の単価と税抜価格に付与される
-	$aryQuery[] = ", s.strMonetaryUnitSign as strMonetaryUnitSign";
+	$aryQuery[] = ", s.strMonetaryUnitSign as strmonetaryunitsign";
 	// 合計金額
-	$aryQuery[] = ", To_char( s.curTotalPrice, '9,999,999,990.99' ) as curTotalPrice";
+	$aryQuery[] = ", To_char( s.curTotalPrice, '9,999,999,990.99' ) as curtotalprice";
 	// 通貨（この項目だけマスタを紐づけて取得）
-	$aryQuery[] = ", mu.strMonetaryUnitName as strMonetaryUnitName";
+	$aryQuery[] = ", mu.strMonetaryUnitName as strmonetaryunitname";
 	// 備考
-	$aryQuery[] = ", s.strNote as strNote";
+	$aryQuery[] = ", s.strNote as strnote";
 	// 入力日
-	$aryQuery[] = ", to_char( s.dtmInsertDate, 'YYYY/MM/DD HH:MI:SS' ) as dtmInsertDate";
+	$aryQuery[] = ", to_char( s.dtmInsertDate, 'YYYY/MM/DD HH:MI:SS' ) as dtminsertdate";
 	// 入力者＝起票者
-	$aryQuery[] = ", s.strInsertUserCode as strInsertUserCode";	//入力者コード
-	$aryQuery[] = ", s.strInsertUserName as strInsertUserName";	//入力者名
+	$aryQuery[] = ", s.strInsertUserCode as strinsertusercode";	//入力者コード
+	$aryQuery[] = ", s.strInsertUserName as strinsertusername";	//入力者名
 	// 印刷回数
-	$aryQuery[] = ", s.lngPrintCount as lngPrintCount";
+	$aryQuery[] = ", s.lngPrintCount as lngprintcount";
+	// 売上番号
+	$aryQuery[] = ", s.lngSalesNo as lngsalesno";
 
 	// FROM句
 	$aryQuery[] = " FROM m_Slip s ";
@@ -76,42 +78,48 @@ function fncGetSlipHeadNoToInfoSQL ( $lngSlipNo )
 
 
 /**
-* 指定された売上番号から売上明細情報を取得するＳＱＬ文を作成
+* 指定された納品伝票番号から納品伝票明細情報を取得するＳＱＬ文を作成
 *
-*	指定売上番号の明細情報の取得用ＳＱＬ文作成関数
+*	指定納品伝票番号の明細情報の取得用ＳＱＬ文作成関数
 *
-*	@param  Integer 	$lngSalesNo 			取得する売上番号
-*	@return strQuery 	$strQuery 検索用SQL文
+*	@param  Integer 	$lngSalesNo キーとなる納品伝票番号
+*	@return strQuery 	$strQuery 	検索用SQL文
 *	@access public
 */
 function fncGetSlipDetailNoToInfoSQL ( $lngSlipNo )
 {
 	// ソートキー
-	$aryQuery[] = "SELECT distinct on (sd.lngSortKey) sd.lngSortKey as lngRecordNo, ";
+	$aryQuery[] = "SELECT distinct on (sd.lngSortKey) sd.lngSortKey as lngrecordno, ";
 	// 納品伝票番号、リビジョン番号
-	$aryQuery[] = "sd.lngSlipNo as lngSlipNo, sd.lngRevisionNo as lngRevisionNo";
+	$aryQuery[] = "sd.lngSlipNo as lngslipno, sd.lngRevisionNo as lngrevisionno";
 	// 顧客受注番号
-	$aryQuery[] = ", sd.strCustomerSalesCode as strCustomerSalesCode";
+	$aryQuery[] = ", sd.strCustomerSalesCode as strcustomersalescode";
 	// 売上区分
-	$aryQuery[] = ", sd.lngSalesClassCode as lngSalesClassCode";	//売上区分コード
-	$aryQuery[] = ", sd.strSalesClassName as strSalesClassName";	//売上区分名
+	$aryQuery[] = ", sd.lngSalesClassCode as lngsalesclasscode";	//売上区分コード
+	$aryQuery[] = ", sd.strSalesClassName as strsalesclassname";	//売上区分名
 	// 顧客品番
-	$aryQuery[] = ", sd.strGoodsCode as strGoodsCode";
+	$aryQuery[] = ", sd.strGoodsCode as strgoodscode";
 	// 製品コード・名称
-	$aryQuery[] = ", sd.strProductCode as strProductCode";	//製品コード
-	$aryQuery[] = ", sd.strProductName as strProductName";	//製品名
+	$aryQuery[] = ", sd.strProductCode as strproductcode";	//製品コード
+	$aryQuery[] = ", sd.strProductName as strproductname";	//製品名
 	// 名称（英語）
-	$aryQuery[] = ", sd.strProductEnglishName as strProductEnglishName";	//製品名（英語）
+	$aryQuery[] = ", sd.strProductEnglishName as strproductenglishname";	//製品名（英語）
 	// 単価
-	$aryQuery[] = ", To_char( sd.curProductPrice, '9,999,999,990.9999' )  as curProductPrice";
+	$aryQuery[] = ", To_char( sd.curProductPrice, '9,999,999,990.9999' )  as curproductprice";
 	// 数量
-	$aryQuery[] = ", To_char( sd.lngProductQuantity, '9,999,999,990' )  as lngProductQuantity";
+	$aryQuery[] = ", To_char( sd.lngProductQuantity, '9,999,999,990' )  as lngproductquantity";
 	// 単位
-	$aryQuery[] = ", sd.strProductUnitName as strProductUnitName";
+	$aryQuery[] = ", sd.strProductUnitName as strproductunitname";
 	// 税抜金額
-	$aryQuery[] = ", To_char( sd.curSubTotalPrice, '9,999,999,990.99' )  as curSubTotalPrice";
+	$aryQuery[] = ", To_char( sd.curSubTotalPrice, '9,999,999,990.99' )  as cursubtotalprice";
 	// 明細備考
 	$aryQuery[] = ", sd.strNote as strDetailNote";
+	// 受注番号
+	$aryQuery[] = ", sd.lngReceiveNo as lngreceiveno";
+	// 受注明細番号
+	$aryQuery[] = ", sd.lngReceiveDetailNo as lngreceivedetailno";
+	// 受注リビジョン番号
+	$aryQuery[] = ", sd.lngReceiveRevisionNo as lngreceiverevisionno";
 
 	// FROM句
 	$aryQuery[] = " FROM t_SlipDetail sd";
@@ -312,6 +320,229 @@ function fncAddColumnNameArrayKeyToCN ($aryColumnNames)
 	return $aryNames;
 }
 
+/**
+ * 売上データの削除
+ * 
+ *	@param  Long 		$lngSalesNo 売上番号
+ *	@param  Object		$objDB		DBオブジェクト
+ *	@param  Object		$objAuth	権限オブジェクト
+ *	@return Boolean 	true		実行成功
+ *						false		実行失敗 情報取得失敗
+ */
+function fncDeleteSales($lngSalesNo, $objDB, $objAuth)
+{
+	// 売上番号をキーに売上コードを取得
+	$strSalesCodeQuery = "SELECT strSalesCode FROM m_Sales WHERE lngSalesNo = " . $lngSalesNo;
+	list ( $lngResultID, $lngResultNum ) = fncQuery( $strSalesCodeQuery, $objDB );
+	if ( $lngResultNum )
+	{
+		$objResult = $objDB->fetchObject( $lngResultID, 0 );
+		$strSalesCode = $objResult->strsalescode;
+	}
+	else
+	{
+		// 売上コード取得失敗
+		return false;
+	}
+	$objDB->freeResult( $lngResultID );
+	
+	// 売上マスタのシーケンスを取得
+	$sequence_m_sales = fncGetSequence( 'm_Sales.lngSalesNo', $objDB );
+
+	// 最小リビジョン番号の取得
+	$strRevisionGetQuery = "SELECT MIN(lngRevisionNo) as minrevision FROM m_Sales WHERE strSalesCode = '" . $strSalesCode . "'";
+	list ( $lngResultID, $lngResultNum ) = fncQuery( $strRevisionGetQuery, $objDB );
+	if ( $lngResultNum )
+	{
+		$objResult = $objDB->fetchObject( $lngResultID, 0 );
+		$lngMinRevisionNo = $objResult->minrevision;
+		if ( $lngMinRevisionNo > 0 )
+		{
+			$lngMinRevisionNo = 0;
+		}
+	}
+	else
+	{
+		$lngMinRevisionNo = 0;
+	}
+	$objDB->freeResult( $lngResultID );
+	// 基本ここで -1 になる
+	$lngMinRevisionNo--;
+
+	// 売上マスタにリビジョン番号が -1 のレコードを追加
+	$aryQuery[] = "INSERT INTO m_sales (";
+	$aryQuery[] = " lngSalesNo,";				// 1:売上番号
+	$aryQuery[] = " lngRevisionNo, ";			// 2:リビジョン番号
+	$aryQuery[] = " strSalesCode, ";    		// 3:売上コード
+	$aryQuery[] = " lngInputUserCode, ";		// 4:入力者コード
+	$aryQuery[] = " bytInvalidFlag, "; 			// 5:無効フラグ
+	$aryQuery[] = " dtmInsertDate";				// 6:登録日
+	$aryQuery[] = ") values (";
+	$aryQuery[] = $sequence_m_sales . ", ";		// 1:売上番号
+	$aryQuery[] = $lngMinRevisionNo . ", ";		// 2:リビジョン番号
+	$aryQuery[] = "'" . $strSalesCode . "', ";	// 3:売上コード．
+	$aryQuery[] = $objAuth->UserCode . ", ";	// 4:入力者コード
+	$aryQuery[] = "false, ";					// 5:無効フラグ
+	$aryQuery[] = "now()";						// 6:登録日
+	$aryQuery[] = ")";
+
+	unset($strQuery);
+	$strQuery = implode("\n", $aryQuery );
+
+	if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
+	{
+		// レコード追加失敗
+		return false;
+	}
+	$objDB->freeResult( $lngResultID );
+
+	// 処理成功
+	return true;
+}
+
+/**
+ * 納品書データの削除
+ * 
+ *	@param  String 		$strSlipCode	納品伝票コード
+ *	@param  Object		$objDB			DBオブジェクト
+ *	@param  Object		$objAuth		権限オブジェクト
+ *	@return Boolean 	true			実行成功
+ *						false			実行失敗 情報取得失敗
+ */
+function fncDeleteSlip($strSlipCode, $objDB, $objAuth)
+{
+	// 納品書マスタのシーケンスを取得
+	$sequence_m_slip = fncGetSequence( 'm_Slip.lngSlipNo', $objDB );
+
+	// 最小リビジョン番号の取得
+	$strRevisionGetQuery = "SELECT MIN(lngRevisionNo) as minrevision FROM m_Slip WHERE strSlipCode = '" . $strSlipCode . "'";
+	list ( $lngResultID, $lngResultNum ) = fncQuery( $strRevisionGetQuery, $objDB );
+	if ( $lngResultNum )
+	{
+		$objResult = $objDB->fetchObject( $lngResultID, 0 );
+		$lngMinRevisionNo = $objResult->minrevision;
+		if ( $lngMinRevisionNo > 0 )
+		{
+			$lngMinRevisionNo = 0;
+		}
+	}
+	else
+	{
+		$lngMinRevisionNo = 0;
+	}
+	$objDB->freeResult( $lngResultID );
+	// 基本ここで -1 になる
+	$lngMinRevisionNo--;
+
+	// 納品書マスタにリビジョン番号が -1 のレコードを追加
+	$aryQuery[] = "INSERT INTO m_slip (";
+	$aryQuery[] = " lngSlipNo,";					// 1:納品伝票番号
+	$aryQuery[] = " lngRevisionNo, ";				// 2:リビジョン番号
+	$aryQuery[] = " strSlipCode, ";    				// 3:納品伝票コード
+	$aryQuery[] = " strInsertUserCode, ";			// 4:入力者コード
+	$aryQuery[] = " bytInvalidFlag, "; 				// 5:無効フラグ
+	$aryQuery[] = " dtmInsertDate";					// 6:登録日
+	$aryQuery[] = ") values (";
+	$aryQuery[] = $sequence_m_slip . ", ";			// 1:納品伝票番号
+	$aryQuery[] = $lngMinRevisionNo . ", ";			// 2:リビジョン番号
+	$aryQuery[] = "'" . $strSlipCode . "', ";		// 3:納品伝票コード
+	$aryQuery[] = "'" . $objAuth->UserCode . "', ";	// 4:入力者コード
+	$aryQuery[] = "false, ";						// 5:無効フラグ
+	$aryQuery[] = "now()";							// 6:登録日
+	$aryQuery[] = ")";
+
+	unset($strQuery);
+	$strQuery = implode("\n", $aryQuery );
+
+	if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
+	{
+		// レコード追加失敗
+		return false;
+	}
+	$objDB->freeResult( $lngResultID );
+
+	// 処理成功
+	return true;
+}
+
+/**
+ * 受注明細のステータス更新
+ * 
+ *	@param  Long 		$lngSlipNo	納品伝票番号
+ *	@param  Object		$objDB		DBオブジェクト
+ *	@return Boolean 	true		実行成功
+ *						false		実行失敗 情報取得失敗
+ */
+function fncUpdateReceiveStatus($lngSlipNo, $objDB)
+{
+	// 指定納品伝票番号の売上明細データ取得用SQL文の作成
+	$strQuery = fncGetSlipDetailNoToInfoSQL ( $lngSlipNo );
+
+	// 納品伝票明細データの取得
+	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
+
+	if ( $lngResultNum )
+	{
+		for ( $i = 0; $i < $lngResultNum; $i++ )
+		{
+			$aryDetailResult[] = $objDB->fetchArray( $lngResultID, $i );
+		}
+	}
+	else
+	{
+		// 納品伝票番号に紐づく納品伝票明細が見つからない
+		return false;
+	}
+
+	for ( $i = 0; $i < count($aryDetailResult); $i++)
+	{
+		// 受注番号
+		$lngReceiveNo = $aryDetailResult[$i]["lngreceiveno"];
+
+		// 受注マスタより受注コードを取得
+		$strReceiveCodeQuery = "SELECT strReceiveCode FROM m_Receive WHERE lngReceiveNo = " . $lngReceiveNo;
+		list ( $lngResultID, $lngResultNum ) = fncQuery( $strReceiveCodeQuery, $objDB );
+		if ( $lngResultNum )
+		{
+			$objResult = $objDB->fetchObject( $lngResultID, 0 );
+			$strReceiveCode = $objResult->strreceivecode;
+		}
+		else
+		{
+			// 受注コード取得失敗
+			return false;
+		}
+		$objDB->freeResult( $lngResultID );
+
+		// 受注マスタの更新対象レコード選択条件
+		$strWhere = "WHERE ";
+		$strWhere .= "strReceiveCode = " . $strReceiveCode;
+		$strWhere .= " and lngRevisionNo = SELECT MAX(lngRevisionNo) FROM m_Receive WHERE strReceiveCode = " . $strReceiveCode;
+
+		// 更新対象レコードの行ロック（選択したレコードに対し現在のトランザクションを終了するまで他のトランザクションによるUPDATEを禁止する）
+		$strLockQuery = "SELECT * FROM m_Receive ";
+		$strLockQuery .= $strWhere;
+		list ( $lngLockResultID, $lngLockResultNum ) = fncQuery( $strLockQuery, $objDB );
+		if (!$lngLockResultID){ return false; }
+		$objDB->freeResult( $lngLockResultID );
+
+		// 更新対象レコードの受注状態コードを「受注」に更新
+		$strUpdateQuery = "UPDATE m_Receive ";
+		$strUpdateQuery .= "SET lngReceiveStatusCode = " . DEF_RECEIVE_ORDER;
+		$strUpdateQuery .= $strWhere;
+		list ( $lngUpdateResultID, $lngUpdateResultNum ) = fncQuery( $strUpdateQuery, $objDB );
+		if (!$lngUpdateResultID){ return false; }
+		$objDB->freeResult( $lngUpdateResultID );
+	}
+
+	// 処理成功
+	return true;
+
+}
+
+
+
+
 
 /**
 * 指定の納品書データとこれに紐づく売上データを削除し、受注明細のステータスを更新する
@@ -328,6 +559,8 @@ function fncDeleteSlipAndUpdateReceiveStatus ( $arySalesData, $objDB )
 }
 
 
+
+
 // TODO:不要になったら削除
 /**
 * 指定の売上データの削除に関して、その売上データを削除することでの状態変更関数
@@ -341,6 +574,7 @@ function fncDeleteSlipAndUpdateReceiveStatus ( $arySalesData, $objDB )
 *						1				実行失敗 情報取得失敗
 *	@access public
 */
+/*
 function fncSalesDeleteSetStatus ( $arySalesData, $objDB )
 {
 
@@ -468,4 +702,6 @@ function fncSalesDeleteSetStatus ( $arySalesData, $objDB )
 		}
 	return 0;
 }
+*/
+
 ?>
