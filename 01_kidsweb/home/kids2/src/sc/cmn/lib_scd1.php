@@ -319,27 +319,22 @@ function fncAddColumnNameArrayKeyToCN ($aryColumnNames)
 
 function fncJapaneseInvoiceExists($strCustomerCode, $lngSalesNo, $objDB)
 {
-	// 顧客の国が日本かどうか
-	$strCompanyQuery = "SELECT lngcompanycode FROM m_Company WHERE strcompanydisplaycode = '" . $strCustomerCode . "'";
+	// 顧客の国コード取得
+	$strCompanyQuery = "SELECT lngcountrycode FROM m_Company WHERE strcompanydisplaycode = '" . $strCustomerCode . "'";
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strCompanyQuery, $objDB );
 	if ( $lngResultNum )
 	{
 		$objResult = $objDB->fetchObject( $lngResultID, 0 );
-		$lngCompanyCode = $objResult->lngcompanycode;
+		$lngCountryCode = $objResult->lngcountrycode;
 	}
 	else
 	{
-		// 国コード取得失敗（TODO:エラー画面に飛ばすべきかも。要確認）
-		return false;
+		// 国コード取得失敗⇒DBエラー
+		fncOutputError ( 9501, DEF_FATAL, "削除前チェック処理に伴う国コード取得失敗", TRUE, "", $objDB );
 	}
 	$objDB->freeResult( $lngResultID );
 
-	if ($lngCompanyCode != 81){
-		// 国コードが日本以外
-		return false;
-	}
-
-	// 請求書明細が存在するか（=紐づく売上ヘッダの請求書番号がnull以外）
+	// 請求書明細番号取得
 	$strSalesQuery = "SELECT lnginvoiceno FROM m_Sales WHERE lngSalesNo = " . $lngSalesNo;
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strSalesQuery, $objDB );
 	if ( $lngResultNum )
@@ -349,17 +344,13 @@ function fncJapaneseInvoiceExists($strCustomerCode, $lngSalesNo, $objDB)
 	}
 	else
 	{
-		// 請求書番号取得失敗（TODO:エラー画面に飛ばすべきかも。要確認）
-		return false;
+		// 請求書番号取得失敗→チェック失敗⇒DBエラー
+		fncOutputError ( 9501, DEF_FATAL, "削除前チェック処理に伴う請求書番号取得失敗", TRUE, "", $objDB );
 	}
 	$objDB->freeResult( $lngResultID );
 
-	if (!$lngInvoiceNo){
-		// 請求書明細は存在しない
-		return false;
-	}
-
-	return true;
+	// 顧客の国が日本で、かつ納品書ヘッダに紐づく請求書明細が存在する
+	return ($lngCountryCode == 81) && ($lngInvoiceNo != null);
 
 }
 
@@ -378,8 +369,8 @@ function fncReceiveStatusIsClosed($lngSlipNo, $objDB)
 	}
 	else
 	{
-		// 納品伝票番号に紐づく納品伝票明細が見つからない（TODO:エラー画面に飛ばすべきかも。要確認）
-		return false;
+		// 納品伝票番号に紐づく納品伝票明細が見つからない⇒DBエラー
+		fncOutputError ( 9501, DEF_FATAL, "削除前チェック処理に伴う納品伝票番号取得失敗", TRUE, "", $objDB );
 	}
 
 	// 納品伝票明細に紐づく受注のステータスが「締め済」かどうか
@@ -388,7 +379,7 @@ function fncReceiveStatusIsClosed($lngSlipNo, $objDB)
 		// 受注番号
 		$lngReceiveNo = $aryDetailResult[$i]["lngreceiveno"];
 
-		// 受注マスタより受注ステータスコードを取得
+		// 受注マスタより受注状態コードを取得
 		$strReceiveCodeQuery = "SELECT lngreceivestatuscode FROM m_Receive WHERE lngReceiveNo = " . $lngReceiveNo;
 		list ( $lngResultID, $lngResultNum ) = fncQuery( $strReceiveCodeQuery, $objDB );
 		if ( $lngResultNum )
@@ -398,19 +389,19 @@ function fncReceiveStatusIsClosed($lngSlipNo, $objDB)
 		}
 		else
 		{
-			// 受注ステータスコード取得失敗（TODO:エラー画面に飛ばすべきかも。要確認）
-			return false;
+			// 受注状態コード取得失敗⇒DBエラー
+			fncOutputError ( 9051, DEF_FATAL, "削除前チェック処理に伴う受注状態コード取得失敗", TRUE, "", $objDB );
 		}
 		$objDB->freeResult( $lngResultID );
 
 		if ($lngReceiveStatusCode == DEF_RECEIVE_CLOSED){
-			// 受注ステータスコードが「締め済」
-			return false;
+			// 受注状態コードが「締め済」の明細が1件以上存在
+			return true;
 		}
 	}
 
-	// 「締め済」のレコードは1件も無い
-	return true;
+	// 受注状態コードが「締め済」の明細は1件も無い
+	return false;
 }
 
 /**
@@ -442,6 +433,7 @@ function fncDeleteSales($lngSalesNo, $objDB, $objAuth)
 	// 売上マスタのシーケンスを取得
 	$sequence_m_sales = fncGetSequence( 'm_Sales.lngSalesNo', $objDB );
 
+	/*
 	// 最小リビジョン番号の取得
 	$strRevisionGetQuery = "SELECT MIN(lngRevisionNo) as minrevision FROM m_Sales WHERE strSalesCode = '" . $strSalesCode . "'";
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strRevisionGetQuery, $objDB );
@@ -459,8 +451,10 @@ function fncDeleteSales($lngSalesNo, $objDB, $objAuth)
 		$lngMinRevisionNo = 0;
 	}
 	$objDB->freeResult( $lngResultID );
-	// 基本ここで -1 になる
 	$lngMinRevisionNo--;
+	*/
+	// リビジョン番号は-1固定（仕様書に準ずる）
+	$lngMinRevisionNo = -1;
 
 	// 売上マスタにリビジョン番号が -1 のレコードを追加
 	$aryQuery[] = "INSERT INTO m_sales (";
@@ -507,6 +501,7 @@ function fncDeleteSlip($strSlipCode, $objDB, $objAuth)
 	// 納品書マスタのシーケンスを取得
 	$sequence_m_slip = fncGetSequence( 'm_Slip.lngSlipNo', $objDB );
 
+	/*
 	// 最小リビジョン番号の取得
 	$strRevisionGetQuery = "SELECT MIN(lngRevisionNo) as minrevision FROM m_Slip WHERE strSlipCode = '" . $strSlipCode . "'";
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strRevisionGetQuery, $objDB );
@@ -526,6 +521,10 @@ function fncDeleteSlip($strSlipCode, $objDB, $objAuth)
 	$objDB->freeResult( $lngResultID );
 	// 基本ここで -1 になる
 	$lngMinRevisionNo--;
+	*/
+
+	// リビジョン番号は-1固定（仕様書に準ずる）
+	$lngMinRevisionNo = -1;
 
 	// 納品書マスタにリビジョン番号が -1 のレコードを追加
 	$aryQuery[] = "INSERT INTO m_slip (";
@@ -607,8 +606,8 @@ function fncUpdateReceiveStatus($lngSlipNo, $objDB)
 
 		// 受注マスタの更新対象レコード選択条件
 		$strWhere = "WHERE ";
-		$strWhere .= "strReceiveCode = " . $strReceiveCode;
-		$strWhere .= " and lngRevisionNo = SELECT MAX(lngRevisionNo) FROM m_Receive WHERE strReceiveCode = " . $strReceiveCode;
+		$strWhere .= "strReceiveCode = '" . $strReceiveCode . "'";
+		$strWhere .= " and lngRevisionNo = (SELECT MAX(lngRevisionNo) FROM m_Receive WHERE strReceiveCode = '" . $strReceiveCode . "')";
 
 		// 更新対象レコードの行ロック（選択したレコードに対し現在のトランザクションを終了するまで他のトランザクションによるUPDATEを禁止する）
 		$strLockQuery = "SELECT * FROM m_Receive ";

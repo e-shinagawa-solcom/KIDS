@@ -51,9 +51,10 @@ if ( !$aryData["lngSlipNo"] )
 	fncOutputError ( 9061, DEF_ERROR, "データ異常です。", TRUE, "", $objDB );
 }
 
-// 文字列チェック（TODO:要仕様確認）
+// 文字列チェック
 $aryCheck["strSessionID"] = "null:numenglish(32,32)";
-$aryCheck["lngSlipNo"]	  = "null:number(0,10)";
+// TODO:要仕様確認
+//$aryCheck["lngSlipNo"]	  = "null:number(0,10)";
 
 // セッション確認
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
@@ -118,25 +119,25 @@ if( $aryData["strSubmit"] )
 	// 売上データの削除
 	if (!fncDeleteSales($lngSalesNo, $objDB, $objAuth))
 	{
-		fncOutputError ( 602, DEF_FATAL, "削除処理に伴う売上マスタ処理失敗", TRUE, "", $objDB );
+		fncOutputError ( 9051, DEF_FATAL, "削除処理に伴う売上マスタ処理失敗", TRUE, "", $objDB );
 	}
 
 	// 納品書データの削除
 	if (!fncDeleteSlip($strSlipCode, $objDB, $objAuth))	
 	{
-		fncOutputError ( 602, DEF_FATAL, "削除処理に伴う納品書マスタ処理失敗", TRUE, "", $objDB );
+		fncOutputError ( 9051, DEF_FATAL, "削除処理に伴う納品書マスタ処理失敗", TRUE, "", $objDB );
 	}
 
-	// 納品伝票明細に紐づく受注明細のステータス更新
+	// 納品伝票明細に紐づく受注マスタの受注ステータスを「受注」に更新
 	if (!fncUpdateReceiveStatus($lngSlipNo, $objDB))
 	{
-		fncOutputError ( 602, DEF_FATAL, "削除処理に伴う受注明細テーブル処理失敗", TRUE, "", $objDB );
+		fncOutputError ( 9051, DEF_FATAL, "削除処理に伴う受注明細テーブル処理失敗", TRUE, "", $objDB );
 	}
 
 	// トランザクションコミット
 	$objDB->transactionCommit();
 
-	// 削除確認画面の表示
+	// 削除完了画面の表示
 	$aryDeleteData = $aryHeadResult;
 	$aryDeleteData["strAction"] = "/sc/search2/index.php?strSessionID=";
 	$aryDeleteData["strSessionID"] = $aryData["strSessionID"];
