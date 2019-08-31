@@ -208,6 +208,27 @@ table
 	text-align : center ;
 }
 
+.detail-footer
+{
+	text-align: center;
+	border-style:solid;
+	margin :6px;
+}
+.detail-footer .box-title
+{
+	text-align: center;
+	font-family : Arial , £Í£Ó¡¡£Ð¥´¥·¥Ã¥¯ ;
+	color : #ffffff ;
+	background : #555555 ;
+	padding : 4px 6px 3px 6px ;
+	text-align : center ;
+}
+.detail-footer .box-buttons
+{
+	padding: 8px;
+}
+
+
 #DummyTR
 {
 	font-size : 12px ;

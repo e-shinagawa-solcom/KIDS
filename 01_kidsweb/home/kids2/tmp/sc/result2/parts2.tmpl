@@ -11,7 +11,7 @@
 <link rel="stylesheet" type="text/css" media="screen" href="/result/cmn/layout.css">
 
 <script type="text/javascript" language="javascript" src="/cmn/processing_module.js"></script>
-<script type="text/javascript" language="javascript" src="/sc/cmn/resultexstr.js"></script>
+<script type="text/javascript" language="javascript" src="/sc/cmn/result2exstr.js"></script>
 
 </head>
 <body onload="fncChgEtoJ( '_%strMode%_' );">
@@ -94,29 +94,30 @@
 				</tr>
 				
 			</table>
-
-
 			<br>
-
-
 _%strDetailTable%_
-
-
 			<br>
-
-
 		</td>
 	</tr>
 </table>
+
+<div class="detail-footer">
+	<div id="MessageTitle" class="box-title"></div>
+	<div class="box-buttons">
+		<!-- 削除ボタン -->
+		<span id="DeleteBt" style="padding-right:20px;" onclick="form1.submit();"></span>	
+		<!-- 閉じるボタン -->
+		<span id="CloseBt" onclick="window.close();window.returnValue=Array( '_%strAction%_', '_%strSessionID%_' );return false;"></span>
+	</div>
+</div>
 
 
 <table cellpadding="5" cellspacing="0" border="0" bgcolor="#f1f1f1" align="center">
 	<tr>
 		<td>
-
 			<form name="form1" action="_%strAction%_" method="GET">
 				<span id="objQuery"></span>
-				<input type="hidden" name="lngSalesNo" value="_%lngsalesno%_">
+				<input type="hidden" name="lngSlipNo" value="_%lngSlipNo%_">
 				<input type="hidden" name="strSessionID" value="_%strSessionID%_">
 				<input type="hidden" name="strSubmit" value="_%strSubmit%_">
 			</form>

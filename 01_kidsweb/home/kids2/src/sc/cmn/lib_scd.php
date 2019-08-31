@@ -76,12 +76,10 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 				if ( $arySearchDataColumn["lngCustomerCode"] )
 				{
 					$aryQuery[] = " AND cust_c.strCompanyDisplayCode ~* '" . $arySearchDataColumn["lngCustomerCode"] . "'";
-					$flgCustomerCompany = TRUE;
 				}
 				if ( $arySearchDataColumn["strCustomerName"] )
 				{
 					$aryQuery[] = " AND UPPER(cust_c.strCompanyDisplayName) LIKE UPPER('%" . $arySearchDataColumn["strCustomerName"] . "%')";
-					$flgCustomerCompany = TRUE;
 				}
 			}
 
@@ -90,7 +88,7 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 			{
 				if ( $arySearchDataColumn["lngTaxClassCode"] )
 				{
-					$aryQuery[] = " AND s.strTaxClassName ~* '" . $arySearchDataColumn["lngTaxClassCode"] . "'";
+					$aryQuery[] = " AND s.lngTaxClassCode = '" . $arySearchDataColumn["lngTaxClassCode"] . "'";
 				}
 			}
 
@@ -99,7 +97,14 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 			{
 				if ( $arySearchDataColumn["strSlipCode"] )
 				{
-					$aryQuery[] = " AND UPPER(s.strSlipCode) LIKE UPPER('%" . $arySearchDataColumn["strSlipCode"] . "%')";
+					// カンマ区切りの入力値をOR条件に展開
+					$arySCValue = explode(",",$arySearchDataColumn["strSlipCode"]);
+					foreach($arySCValue as $strSCValue){
+						$arySCOr[] = "UPPER(s.strSlipCode) LIKE UPPER('%" . $strSCValue . "%')";
+					}
+					$aryQuery[] = " AND (";
+					$aryQuery[] = implode(" OR ", $arySCOr);
+					$aryQuery[] = ") ";
 				}
 			}
 
@@ -123,13 +128,12 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 			{
 				if ( $arySearchDataColumn["lngDeliveryPlaceCode"] )
 				{
-					$aryQuery[] = " AND s.strDeliveryPlaceCode ~* '" . $arySearchDataColumn["lngDeliveryPlaceCode"] . "'";
-					$flgCustomerCompany = TRUE;
+					//会社マスタと紐づけた値と比較
+					$aryQuery[] = " AND delv_c.strCompanyDisplayCode ~* '" . $arySearchDataColumn["lngDeliveryPlaceCode"] . "'";
 				}
 				if ( $arySearchDataColumn["strDeliveryPlaceName"] )
 				{
 					$aryQuery[] = " AND UPPER(s.strDeliveryPlaceName) LIKE UPPER('%" . $arySearchDataColumn["strDeliveryPlaceName"] . "%')";
-					$flgCustomerCompany = TRUE;
 				}
 			}
 
@@ -138,11 +142,11 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 			{
 				if ( $arySearchDataColumn["lngInsertUserCode"] )
 				{
-					$aryQuery[] = " AND insert_u.strUserDisplayCode ~* '" . $arySearchDataColumn["lngInsertUserCode"] . "'";
+					$aryQuery[] = " AND s.strInsertUserCode ~* '" . $arySearchDataColumn["lngInsertUserCode"] . "'";
 				}
 				if ( $arySearchDataColumn["strInsertUserName"] )
 				{
-					$aryQuery[] = " AND UPPER(insert_u.strInsertUserName) LIKE UPPER('%" . $arySearchDataColumn["strInsertUserName"] . "%')";
+					$aryQuery[] = " AND UPPER(s.strInsertUserName) LIKE UPPER('%" . $arySearchDataColumn["strInsertUserName"] . "%')";
 				}
 			}
 
@@ -165,7 +169,16 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 						
 						$aryDetailWhereQuery[] = "AND ";
 					}
-					$aryDetailWhereQuery[] = "UPPER(sd1.strCustomerSalesCode) LIKE UPPER('%" . $arySearchDataColumn["strCustomerSalesCode"] . "%') ";
+
+					// カンマ区切りの入力値をOR条件に展開
+					$aryCSCValue = explode(",",$arySearchDataColumn["strCustomerSalesCode"]);
+					foreach($aryCSCValue as $strCSCValue){
+						$aryCSCOr[] = "UPPER(sd1.strCustomerSalesCode) LIKE UPPER('%" . $strCSCValue . "%')";
+					}
+					$aryDetailWhereQuery[] = " (";
+					$aryDetailWhereQuery[] = implode(" OR ", $aryCSCOr);
+					$aryDetailWhereQuery[] = ") ";
+
 					$detailFlag = TRUE;
 				}
 			}
@@ -186,7 +199,16 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 						
 						$aryDetailWhereQuery[] = "AND ";
 					}
-					$aryDetailWhereQuery[] = "UPPER(sd1.strGoodsCode) LIKE UPPER('%" . $arySearchDataColumn["strGoodsCode"] . "%') ";
+
+					// カンマ区切りの入力値をOR条件に展開
+					$aryGCValue = explode(",",$arySearchDataColumn["strGoodsCode"]);
+					foreach($aryGCValue as $strGCValue){
+						$aryGCOr[] = "UPPER(sd1.strGoodsCode) LIKE UPPER('%" . $strGCValue . "%')";
+					}
+					$aryDetailWhereQuery[] = " (";
+					$aryDetailWhereQuery[] = implode(" OR ", $aryGCOr);
+					$aryDetailWhereQuery[] = ") ";
+
 					$detailFlag = TRUE;
 				}
 			}
@@ -236,8 +258,12 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 	$aryOutQuery[] = "	,sd.strNote";				      // 明細備考
 
 	// 顧客
-	$arySelectQuery[] = ", cust_c.strCompanyDisplayCode as strCustomerDisplayCode";
-	$arySelectQuery[] = ", cust_c.strCompanyDisplayName as strCustomerDisplayName";
+	$arySelectQuery[] = ", s.strCustomerCode as strCustomerDisplayCode";
+	$arySelectQuery[] = ", s.strCustomerName as strCustomerDisplayName";
+	// 顧客の国
+	$arySelectQuery[] = ", cust_c.lngCountryCode as lngcountrycode";
+	// 請求書番号
+	$arySelectQuery[] = ", sa.lngInvoiceNo as lnginvoiceno";
 	// 課税区分
 	$arySelectQuery[] = ", s.strTaxClassName as strTaxClassName";
 	// 納品伝票コード（納品書NO）
@@ -245,7 +271,6 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 	// 納品日
 	$arySelectQuery[] = ", to_char( s.dtmDeliveryDate, 'YYYY/MM/DD HH:MI:SS' ) as dtmDeliveryDate";
 	// 納品先
-	$arySelectQuery[] = " , s.strDeliveryPlaceName as strDeliveryPlaceName";
 	$arySelectQuery[] = " , s.strDeliveryPlaceName as strDeliveryPlaceName";
 	// 起票者
 	$arySelectQuery[] = ", s.strInsertUserCode as strInsertUserCode";
@@ -483,9 +508,12 @@ function fncGetSlipToProductSQL ( $lngSlipNo, $aryData, $objDB )
 	$aryOutQuery[] = ", To_char( sd.curSubTotalPrice, '9,999,999,990.99' )  as curSubTotalPrice";
 	// 明細備考
 	$aryOutQuery[] = ", sd.strNote as strDetailNote";
+	// 受注ステータスコード
+	$aryOutQuery[] = ", re.lngReceiveStatusCode as lngReceiveStatusCode";
 
 	// From句
 	$aryOutQuery[] = " FROM t_SlipDetail sd";
+	$aryOutQuery[] = "    LEFT JOIN m_Receive re ON sd.lngReceiveNo = re.lngReceiveNo";
 
 	// Where句
 	$aryOutQuery[] = " WHERE sd.lngSlipNo = " . $lngSlipNo . "";	// 対象納品伝票番号の指定
@@ -548,8 +576,14 @@ function fncGetSlipToProductSQL ( $lngSlipNo, $aryData, $objDB )
 */
 function fncSetSlipTableRow ( $lngColumnCount, $aryHeadResult, $aryDetailResult, $aryHeadViewColumn, $aryData, $aryUserAuthority, $lngReviseTotalCount, $lngReviseCount, $bytDeleteFlag )
 {
+	// 顧客の国が日本で、かつ納品書ヘッダに紐づく請求書明細が存在する
+	$japaneseInvoiceExists = ($aryHeadResult["lngcountrycode"] == 81) && ($aryHeadResult["lnginvoiceno"] != null);
+
 	for ( $i = 0; $i < count($aryDetailResult); $i++ )
 	{
+		// 納品伝票明細に紐づく受注ステータスが「締済み」である
+		$receiveStatusIsClosed = $aryDetailResult[$i]["lngreceivestatuscode"] == DEF_RECEIVE_CLOSED;
+
 		$aryHtml[] =  "<tr>";
 		$aryHtml[] =  "\t<td>" . ($lngColumnCount + $i) . "</td>";
 		
@@ -580,9 +614,10 @@ function fncSetSlipTableRow ( $lngColumnCount, $aryHeadResult, $aryDetailResult,
 				// 修正
 				if ( $strColumnName == "btnFix" and $aryUserAuthority["Fix"] )
 				{
-					// 売上データの状態により分岐  //// 状態が「締め済」、また削除対象の場合修正ボタンは選択不可
-					// 最新売上が削除データの場合も選択不可
-					if ( $aryHeadResult["lngsalesstatuscode"] == DEF_SALES_CLOSED 
+					// 納品書データの状態により分岐 
+					// 最新納品書が削除データの場合も選択不可
+					if ( $japaneseInvoiceExists
+					    or $receiveStatusIsClosed
 						or $aryHeadResult["lngrevisionno"] < 0 
 						or $bytDeleteFlag )
 					{
@@ -600,17 +635,17 @@ function fncSetSlipTableRow ( $lngColumnCount, $aryHeadResult, $aryDetailResult,
 					// 管理モードで無い場合もしくはリバイズが存在しない場合
 					if ( !$aryData["Admin"] or $lngReviseTotalCount == 1 )
 					{
-						// 売上データの状態により分岐  //// 状態が「締め済」の場合削除ボタンを選択不可
-						// 最新発注が削除データの場合も選択不可
-						if ( $aryHeadResult["lngsalesstatuscode"] != DEF_SALES_CLOSED 
-							and !$bytDeleteFlag )
-
+						// 納品書データの状態により分岐 
+						// 最新納品書が削除データの場合も選択不可
+						if ( $japaneseInvoiceExists
+						    or $receiveStatusIsClosed
+					        or $bytDeleteFlag )
 						{
-							$aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/remove_off_bt.gif\" lngslipno=\"" . $aryDetailResult[$i]["lngslipno"] . "\" class=\"detail button\"></td>\n";
+							$aryHtml[] = "\t<td></td>\n";
 						}
 						else
 						{
-							$aryHtml[] = "\t<td></td>\n";
+							$aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/remove_off_bt.gif\" lngslipno=\"" . $aryDetailResult[$i]["lngslipno"] . "\" class=\"delete button\"></td>\n";
 						}
 					}
 					// 管理モードで複数リバイズが存在する場合
@@ -619,16 +654,18 @@ function fncSetSlipTableRow ( $lngColumnCount, $aryHeadResult, $aryDetailResult,
 						// 最新受注の場合
 						if ( $lngReviseCount == 0 )
 						{
-							// 売上データの状態により分岐  //// 状態が「締め済」の場合削除ボタンを選択不可
-							// 最新売上が削除データの場合も選択不可
-							if ( $aryHeadResult["lngsalesstatuscode"] != DEF_SALES_CLOSED 
-								and !$bytDeleteFlag )
+							// 納品書データの状態により分岐 
+							// 最新納品書が削除データの場合も選択不可
+							if ( $japaneseInvoiceExists
+								or $receiveStatusIsClosed
+								or $bytDeleteFlag )
 							{
-								$aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/remove_off_bt.gif\" lngslipno=\"" . $aryDetailResult[$i]["lngslipno"] . "\" class=\"detail button\"></td>\n";
+								$aryHtml[] = "\t<td></td>\n";
 							}
 							else
 							{
-								$aryHtml[] = "\t<td></td>\n";
+								$aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/remove_off_bt.gif\" lngslipno=\"" . $aryDetailResult[$i]["lngslipno"] . "\" class=\"detail button\"></td>\n";
+								
 							}
 						}
 					}
@@ -756,13 +793,13 @@ function fncSetSlipTableRow ( $lngColumnCount, $aryHeadResult, $aryDetailResult,
 */
 function fncSetSlipTableBody ( $aryResult, $arySearchColumn, $aryData, $aryUserAuthority, $aryTytle, $objDB, $objCache)
 {
-	// 詳細ボタン（権限による表示/非表示切り替え）
+	// 詳細ボタンの表示制御
 	if ( $aryUserAuthority["Detail"] )
 	{
 		$aryHeadViewColumn[] = "btnDetail";
 	}
 
-	// 修正ボタン（権限による表示/非表示切り替え）
+	// 修正ボタンの表示制御
 	if ( $aryUserAuthority["Fix"] )
 	{
 		$aryHeadViewColumn[] = "btnFix";
