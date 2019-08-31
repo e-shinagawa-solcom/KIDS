@@ -76,12 +76,10 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 				if ( $arySearchDataColumn["lngCustomerCode"] )
 				{
 					$aryQuery[] = " AND cust_c.strCompanyDisplayCode ~* '" . $arySearchDataColumn["lngCustomerCode"] . "'";
-					$flgCustomerCompany = TRUE;
 				}
 				if ( $arySearchDataColumn["strCustomerName"] )
 				{
 					$aryQuery[] = " AND UPPER(cust_c.strCompanyDisplayName) LIKE UPPER('%" . $arySearchDataColumn["strCustomerName"] . "%')";
-					$flgCustomerCompany = TRUE;
 				}
 			}
 
@@ -90,7 +88,7 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 			{
 				if ( $arySearchDataColumn["lngTaxClassCode"] )
 				{
-					$aryQuery[] = " AND s.strTaxClassName ~* '" . $arySearchDataColumn["lngTaxClassCode"] . "'";
+					$aryQuery[] = " AND s.lngTaxClassCode = '" . $arySearchDataColumn["lngTaxClassCode"] . "'";
 				}
 			}
 
@@ -123,13 +121,12 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 			{
 				if ( $arySearchDataColumn["lngDeliveryPlaceCode"] )
 				{
-					$aryQuery[] = " AND s.strDeliveryPlaceCode ~* '" . $arySearchDataColumn["lngDeliveryPlaceCode"] . "'";
-					$flgCustomerCompany = TRUE;
+					//会社マスタと紐づけた値と比較
+					$aryQuery[] = " AND delv_c.strCompanyDisplayCode ~* '" . $arySearchDataColumn["lngDeliveryPlaceCode"] . "'";
 				}
 				if ( $arySearchDataColumn["strDeliveryPlaceName"] )
 				{
 					$aryQuery[] = " AND UPPER(s.strDeliveryPlaceName) LIKE UPPER('%" . $arySearchDataColumn["strDeliveryPlaceName"] . "%')";
-					$flgCustomerCompany = TRUE;
 				}
 			}
 
@@ -138,11 +135,11 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 			{
 				if ( $arySearchDataColumn["lngInsertUserCode"] )
 				{
-					$aryQuery[] = " AND insert_u.strUserDisplayCode ~* '" . $arySearchDataColumn["lngInsertUserCode"] . "'";
+					$aryQuery[] = " AND s.strInsertUserCode ~* '" . $arySearchDataColumn["lngInsertUserCode"] . "'";
 				}
 				if ( $arySearchDataColumn["strInsertUserName"] )
 				{
-					$aryQuery[] = " AND UPPER(insert_u.strInsertUserName) LIKE UPPER('%" . $arySearchDataColumn["strInsertUserName"] . "%')";
+					$aryQuery[] = " AND UPPER(s.strInsertUserName) LIKE UPPER('%" . $arySearchDataColumn["strInsertUserName"] . "%')";
 				}
 			}
 
@@ -246,7 +243,7 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 	$arySelectQuery[] = ", to_char( s.dtmDeliveryDate, 'YYYY/MM/DD HH:MI:SS' ) as dtmDeliveryDate";
 	// 納品先
 	$arySelectQuery[] = " , s.strDeliveryPlaceName as strDeliveryPlaceName";
-	$arySelectQuery[] = " , s.strDeliveryPlaceName as strDeliveryPlaceName";
+	$arySelectQuery[] = " , delv_c.strCompanyDisplayCode as strDeliveryCompanyDisplayCode";
 	// 起票者
 	$arySelectQuery[] = ", s.strInsertUserCode as strInsertUserCode";
 	$arySelectQuery[] = ", s.strInsertUserName as strInsertUserName";
