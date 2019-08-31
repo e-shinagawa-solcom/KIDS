@@ -11,7 +11,7 @@
 <link rel="stylesheet" type="text/css" media="screen" href="/result/cmn/layout.css">
 
 <script type="text/javascript" language="javascript" src="/cmn/processing_module.js"></script>
-<script type="text/javascript" language="javascript" src="/sc/cmn/resultexstr.js"></script>
+<script type="text/javascript" language="javascript" src="/sc/cmn/result2exstr.js"></script>
 
 </head>
 <body onload="fncChgEtoJ( '_%strMode%_' );">
@@ -102,7 +102,7 @@ _%strDetailTable%_
 </table>
 
 <div class="detail-footer">
-	<div class="box-title">削除しますか？</div>
+	<div id="MessageTitle" class="box-title"></div>
 	<div class="box-buttons">
 		<!-- 削除ボタン -->
 		<span id="DeleteBt" style="padding-right:20px;" onclick="form1.submit();"></span>	
