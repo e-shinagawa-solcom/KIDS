@@ -88,10 +88,9 @@
                 <span class="regist-label">
                     <span class="regist-label__text">売上区分</span>
                     <select name="lngSalesClassCode" class="Slt20">
-                        <option value="">−</option>
                         <OPTION value=1>本荷</OPTION>
-                        <OPTION value=3>セットサンプル</OPTION>
                         <OPTION value=2>テストロケ</OPTION> 
+                        <OPTION value=3>セットサンプル</OPTION>
                         <OPTION value=4>立替運賃</OPTION> 
                         <OPTION value=5>試作代</OPTION> 
                         <OPTION value=6>原型</OPTION> 
@@ -103,8 +102,9 @@
                         <OPTION value=12>Charge</OPTION> 
                         <OPTION value=13>関税</OPTION> 
                         <OPTION value=14>ツーリングマスター</OPTION>
+                        <OPTION value=15>Inkjet費用</OPTION>
+                        <OPTION value="99">−</OPTION>
                         <OPTION selected value=0></OPTION> 
-
                     </select>
                 </span>
             </div>
@@ -128,7 +128,7 @@
                 </span>
 				<span class="regist-label">
 					<span class="regist-label__text">納品書NO.</span>
-                    <input class="TxtStyle05L" name="strSlipCode" type="text" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);">
+                    <input class="TxtStyle06L" name="strSlipCode" type="text" onfocus="chColorOn(this);" onblur="chColorOff(this);">
 				</span>
 			</div>
             <div class="regist-line">
@@ -169,7 +169,7 @@
                 </span>
 				<span class="regist-label">
 					<span class="regist-label__text">注文書NO.</span>
-                    <input class="TxtStyle05L" name="strCustomerSalesCode" type="text" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);">
+                    <input class="TxtStyle06L" name="strCustomerSalesCode" type="text" onfocus="chColorOn(this);" onblur="chColorOff(this);">
 				</span>
 			</div>
             <div class="regist-line">
@@ -178,275 +178,10 @@
                 </span>
 				<span class="regist-label">
 					<span class="regist-label__text">顧客品番</span>
-                    <input class="TxtStyle05L" name="strGoodsCode" type="text" value="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="">
+                    <input class="TxtStyle06L" name="strGoodsCode" type="text" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="">
 				</span>
-            </div>
-            
-            <!--- （旧画面項目・削除予定） 
-            <div class="regist-line">
-                <span class="search-label--checkbox">
-                    <input name="IsSearch_btnDetail" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_btnDetail" class="is-display" type="checkbox" checked>
-                </span>
-                <span class="regist-label">
-                    <span class="regist-label--text-only">詳細</span>
-                </span>
-            </div>
-            <div class="regist-line">
-                <span class="search-label--checkbox">
-                    <input name="IsSearch_btnFix" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_btnFix" class="is-display" type="checkbox" checked>
-                </span>
-                <span class="regist-label">
-                    <span class="regist-label--text-only">修正</span>
-                </span>
-            </div>
-            <div class="regist-line">
-                <span class="search-label--checkbox">
-                    <input name="IsSearch_strNote" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_strNote" class="is-display" type="checkbox" checked>
-                </span>
-                <span class="regist-label">
-                    <span class="regist-label--text-only">備考</span>
-                </span>
-            </div>
-            <div class="regist-line">
-                <span class="search-label--checkbox">
-                    <input name="IsSearch_curTotalPrice" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_curTotalPrice" class="is-display" type="checkbox" checked>
-                </span>
-                <span class="regist-label">
-                    <span class="regist-label--text-only">合計金額</span>
-                </span>
-            </div>
-            <div class="regist-line">
-                <span class="search-label--checkbox">
-                    <input name="IsSearch_lngRecordNo" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_lngRecordNo" class="is-display" type="checkbox" checked>
-                </span>
-                <span class="regist-label">
-                    <span class="regist-label--text-only">明細行NO.</span>
-                </span>
-            </div>
-            <div class="regist-line">
-                <span class="search-label--checkbox">
-                    <input name="IsSearch_strProductName" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_strProductName" class="is-display" type="checkbox" checked>
-                </span>
-				<span class="regist-label">
-					<span class="regist-label__text">品名</span>
-				</span>
-			</div>
-            <div class="regist-line">
-                <span class="search-label--checkbox">
-                    <input name="IsSearch_curProductPrice" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_curProductPrice" class="is-display" type="checkbox" checked>
-                </span>
-                <span class="regist-label">
-                    <span class="regist-label--text-only">単価</span>
-                </span>
-            </div>
-            <div class="regist-line">
-                <span class="search-label--checkbox">
-                    <input name="IsSearch_lngQuantity" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_lngQuantity" class="is-display" type="checkbox" checked>
-                </span>
-                <span class="regist-label">
-                    <span class="regist-label--text-only">入数</span>
-                </span>
-            </div>
-            <div class="regist-line">
-                <span class="search-label--checkbox">
-                    <input name="IsSearch_lngProductQuantity" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_lngProductQuantity" class="is-display" type="checkbox" checked>
-                </span>
-                <span class="regist-label">
-                    <span class="regist-label--text-only">数量</span>
-                </span>
-            </div>
-            <div class="regist-line">
-                <span class="search-label--checkbox">
-                    <input name="IsSearch_strProductUnitName" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_strProductUnitName" class="is-display" type="checkbox" checked>
-                </span>
-                <span class="regist-label">
-                    <span class="regist-label--text-only">単位</span>
-                </span>
-            </div>
-            <div class="regist-line">
-                <span class="search-label--checkbox">
-                    <input name="IsSearch_curSubTotalPrice" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_curSubTotalPrice" class="is-display" type="checkbox" checked>
-                </span>
-                <span class="regist-label">
-                    <span class="regist-label--text-only">税抜金額</span>
-                </span>
-            </div>
-            <div class="regist-line">
-                <span class="search-label--checkbox">
-                    <input name="IsSearch_strDetailNote" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_strDetailNote" class="is-display" type="checkbox" checked>
-                </span>
-                <span class="regist-label">
-                    <span class="regist-label--text-only">明細備考</span>
-                </span>
-            </div>
-            <div class="regist-line">
-                <span class="search-label--checkbox">
-                    <input name="IsSearch_btnDelete" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_btnDelete" class="is-display" type="checkbox" checked>
-                </span>
-                <span class="regist-label">
-                    <span class="regist-label--text-only">削除</span>
-                </span>
             </div>
 
-            <div class="regist-line">
-                <span class="search-label--checkbox">
-                    <input name="IsSearch_dtmInsertDate" class="is-search" type="checkbox">
-                    <input name="IsDisplay_dtmInsertDate" class="is-display" type="checkbox">
-                </span>
-                <span class="regist-label">
-                    <span class="regist-label__text">登録日</span>
-                    FROM <input class="TxtStyle05L" name="From_dtmInsertDate" type="text" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate(this);fncCopyValue( this , document.all.To_dtmInsertDate );" tabindex="" maxlength="10">
-                    TO <input class="TxtStyle05L" name="To_dtmInsertDate" type="text" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate(this);" tabindex="" maxlength="10">
-                </span>
-            </div>
-            <div class="regist-line">
-                <span class="search-label--checkbox">
-                    <input name="IsSearch_dtmSalesAppDate" class="is-search" type="checkbox">
-                    <input name="IsDisplay_dtmSalesAppDate" class="is-display" type="checkbox">
-                </span>
-                <span class="regist-label">
-                    <span class="regist-label__text">請求日</span>
-                    FROM <input class="TxtStyle05L" name="From_dtmSalesAppDate" type="text" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate(this);fncCopyValue( this , document.all.To_dtmSalesAppDate );" tabindex="" maxlength="10">
-                    TO <input class="TxtStyle05L" name="To_dtmSalesAppDate" type="text" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate(this);" tabindex="" maxlength="10">
-                </span>
-            </div>
-            <div class="regist-line">
-                <span class="search-label--checkbox">
-                    <input name="IsSearch_strSalesCode" class="is-search" type="checkbox">
-                    <input name="IsDisplay_strSalesCode" class="is-display" type="checkbox">
-                </span>
-				<span class="regist-label">
-					<span class="regist-label__text">売上NO.</span>
-                    FROM <input class="TxtStyle05L" name="From_strSalesCode" type="text" maxlength="11" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCopyValue( this , document.all.To_strSalesCode );" tabindex="">
-                    TO <input class="TxtStyle05L" name="To_strSalesCode" type="text" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="">
-				</span>
-			</div>
-            <div class="regist-line">
-                <span class="search-label--checkbox">
-                    <input name="IsSearch_strCustomerReceiveCode" class="is-search" type="checkbox">
-                    <input name="IsDisplay_strCustomerReceiveCode" class="is-display" type="checkbox">
-                </span>
-				<span class="regist-label">
-					<span class="regist-label__text">顧客受注番号</span>
-                    FROM <input class="TxtStyle05L" name="From_strCustomerReceiveCode" type="text" maxlength="11" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCopyValue( this , document.all.To_strCustomerReceiveCode );" tabindex="">
-                    TO <input class="TxtStyle05L" name="To_strCustomerReceiveCode" type="text" maxlength="11" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="">
-				</span>
-			</div>
-
-            
-			<div class="regist-line">
-                <span class="search-label--checkbox">
-                    <input name="IsSearch_strProductCode" class="is-search" type="checkbox">
-                    <input name="IsDisplay_strProductCode" class="is-display" type="checkbox">
-                </span>
-				<span class="regist-label">
-					<span class="regist-label__text">製品コード</span>
-					FROM <input class="TxtStyle05L" name="From_strProductCode"  type="text" value="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCopyValue( this , document.all.To_strProductCode );" tabindex="">
-					TO <input class="TxtStyle05L" name="To_strProductCode"  type="text" value="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="">
-				</span>
-			</div>
-			<div class="regist-line">
-                <span class="search-label--checkbox">
-                    <input name="IsSearch_lngInputUserCode" class="is-search" type="checkbox">
-                    <input name="IsDisplay_lngInputUserCode" class="is-display" type="checkbox">
-                </span>
-                <span class="regist-label">
-                    <span class="regist-label__text">入力者</span>
-                    <input class="TxtStyle05L" name="lngInputUserCode"  type="text">
-                    <input class="disTxt46L" name="lngInputUserName"  type="text" readonly>
-                    <img class="msw-button button" invokeMSWName="msw-user" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
-                </span>
-            </div>
-            <div class="regist-line">
-                <span class="search-label--checkbox">
-                    <input name="IsSearch_lngSalesStatusCode" class="is-search" type="checkbox">
-                    <input name="IsDisplay_lngSalesStatusCode" class="is-display" type="checkbox">
-                </span>
-                <span class="regist-label">
-                    <span class="regist-label__text">状態</span>
-                    仮受注<input name="lngSalesStatusCode[]" class="is-state" type="checkbox" value="10">
-                    受注<input name="lngSalesStatusCode[]" class="is-state" type="checkbox" value="2">
-                    納品済<input name="lngSalesStatusCode[]" class="is-state" type="checkbox" value="4">
-                    締め済<input name="lngSalesStatusCode[]" class="is-state" type="checkbox" value="99">
-                </span>
-            </div>
-            <div class="regist-line">
-                <span class="search-label--checkbox">
-                    <input name="IsSearch_lngInChargeGroupCode" class="is-search" type="checkbox">
-                    <input name="IsDisplay_lngInChargeGroupCode" class="is-display" type="checkbox">
-                </span>
-                <span class="regist-label">
-                    <span class="regist-label__text">営業部署</span>
-                    <input class="TxtStyle05L" name="lngInChargeGroupCode" type="text">
-                    <input class="disTxt46L" name="strInChargeGroupName" type="text" readonly>
-                    <img class="msw-button button" invokeMSWName="msw-group" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
-                </span>
-            </div>
-            <div class="regist-line">
-                <span class="search-label--checkbox">
-                    <input name="IsSearch_lngInChargeUserCode" class="is-search" type="checkbox">
-                    <input name="IsDisplay_lngInChargeUserCode" class="is-display" type="checkbox">
-                </span>
-                <span class="regist-label">
-                    <span class="regist-label__text">開発担当者</span>
-                    <input class="TxtStyle05L" name="lngInChargeUserCode" type="text">
-                    <input class="disTxt46L" name="strInChargeUserName" type="text" readonly>
-                    <img class="msw-button button" invokeMSWName="msw-user" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
-                </span>
-            </div>
-
-			<div class="regist-line">
-                <span class="search-label--checkbox">
-                    <input name="IsSearch_dtmDeliveryDate" class="is-search" type="checkbox">
-                    <input name="IsDisplay_dtmDeliveryDate" class="is-display" type="checkbox">
-                </span>
-                <span class="regist-label">
-                    <span class="regist-label__text">納期</span>
-                    FROM <input name="From_dtmDeliveryDate" class="TxtStyle05L" type="text" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate( this );fncCopyValue( this , document.all.To_dtmDeliveryDate );" tabindex="" maxlength="10">
-                    TO <input name="To_dtmDeliveryDate" class="TxtStyle05L" type="text" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate(this);" tabindex="" maxlength="10">
-                </span>
-            </div>
-            <div class="regist-line">
-                <span class="search-label--checkbox">
-                    <input name="IsSearch_lngTaxClassCode" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_lngTaxClassCode" class="is-display" type="checkbox">
-                </span>
-                <span class="regist-label">
-                    <span class="regist-label--text-only">税区分</span>
-                </span>
-            </div>
-            <div class="regist-line">
-                <span class="search-label--checkbox">
-                    <input name="IsSearch_curTax" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_curTax" class="is-display" type="checkbox">
-                </span>
-                <span class="regist-label">
-                    <span class="regist-label--text-only">税率</span>
-                </span>
-            </div>
-            <div class="regist-line">
-                <span class="search-label--checkbox">
-                    <input name="IsSearch_curTaxPrice" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_curTaxPrice" class="is-display" type="checkbox">
-                </span>
-                <span class="regist-label">
-                    <span class="regist-label--text-only">税額</span>
-                </span>
-            </div>
-            --->
             <input type="hidden" name="ActionScriptName" value="/sc/result2/index.php">
             <input type="hidden" name="strSessionID" value="_%strSessionID%_">
 		</form>

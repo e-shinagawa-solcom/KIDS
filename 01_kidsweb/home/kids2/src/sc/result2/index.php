@@ -123,18 +123,21 @@
 	//////////////////////////////////////////////////////////////////////////
 	//セッションID
 	$aryCheck["strSessionID"]			= "null:numenglish(32,32)";
+
+	// TODO:要仕様確認
+	/*
 	//顧客
 	$aryCheck["lngCustomerCode"]		= "numenglish(0,4)";
 	$aryCheck["strCustomerName"]		= "length(0,50)";
 	//課税区分
-	//TODO:仕様確認
+	
 	//納品書NO.
-	//TODO:仕様確認
+	
 	//納品日
 	$aryCheck["dtmDeliveryDateFrom"] 	= "date(/)";
 	$aryCheck["dtmDeliveryDateTo"]		= "date(/)";
 	//納品先
-	//TODO:仕様確認
+
 	//品名
 	$aryCheck["strProductCode"]			= "numenglish(0,5)";
 	$aryCheck["strProductName"]			= "length(0,100)";
@@ -142,11 +145,12 @@
 	$aryCheck["lngInsertUserCode"]		= "numenglish(0,3)";
 	$aryCheck["strInsertUserName"]		= "length(0,50)";
 	//注文書NO
-	//TODO:仕様確認
+
 	//顧客品番
-	//TODO:仕様確認
+
 	//売上区分
     $aryCheck["lngSalesClassCode"]		= "number(0,100)";
+	*/
 
 	// 文字列チェック
 	$aryCheckResult = fncAllCheck( $aryData, $aryCheck );

@@ -97,7 +97,14 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 			{
 				if ( $arySearchDataColumn["strSlipCode"] )
 				{
-					$aryQuery[] = " AND UPPER(s.strSlipCode) LIKE UPPER('%" . $arySearchDataColumn["strSlipCode"] . "%')";
+					// カンマ区切りの入力値をOR条件に展開
+					$arySCValue = explode(",",$arySearchDataColumn["strSlipCode"]);
+					foreach($arySCValue as $strSCValue){
+						$arySCOr[] = "UPPER(s.strSlipCode) LIKE UPPER('%" . $strSCValue . "%')";
+					}
+					$aryQuery[] = " AND (";
+					$aryQuery[] = implode(" OR ", $arySCOr);
+					$aryQuery[] = ") ";
 				}
 			}
 
@@ -162,7 +169,16 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 						
 						$aryDetailWhereQuery[] = "AND ";
 					}
-					$aryDetailWhereQuery[] = "UPPER(sd1.strCustomerSalesCode) LIKE UPPER('%" . $arySearchDataColumn["strCustomerSalesCode"] . "%') ";
+
+					// カンマ区切りの入力値をOR条件に展開
+					$aryCSCValue = explode(",",$arySearchDataColumn["strCustomerSalesCode"]);
+					foreach($aryCSCValue as $strCSCValue){
+						$aryCSCOr[] = "UPPER(sd1.strCustomerSalesCode) LIKE UPPER('%" . $strCSCValue . "%')";
+					}
+					$aryDetailWhereQuery[] = " (";
+					$aryDetailWhereQuery[] = implode(" OR ", $aryCSCOr);
+					$aryDetailWhereQuery[] = ") ";
+
 					$detailFlag = TRUE;
 				}
 			}
@@ -183,7 +199,16 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 						
 						$aryDetailWhereQuery[] = "AND ";
 					}
-					$aryDetailWhereQuery[] = "UPPER(sd1.strGoodsCode) LIKE UPPER('%" . $arySearchDataColumn["strGoodsCode"] . "%') ";
+
+					// カンマ区切りの入力値をOR条件に展開
+					$aryGCValue = explode(",",$arySearchDataColumn["strGoodsCode"]);
+					foreach($aryGCValue as $strGCValue){
+						$aryGCOr[] = "UPPER(sd1.strGoodsCode) LIKE UPPER('%" . $strGCValue . "%')";
+					}
+					$aryDetailWhereQuery[] = " (";
+					$aryDetailWhereQuery[] = implode(" OR ", $aryGCOr);
+					$aryDetailWhereQuery[] = ") ";
+
 					$detailFlag = TRUE;
 				}
 			}
