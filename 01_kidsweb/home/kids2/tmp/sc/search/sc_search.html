@@ -1,0 +1,369 @@
+<config>
+    <header1>
+        <link rel="stylesheet" href="/search/cmn/form/css/forms.css">
+        <link rel="stylesheet" href="/search/cmn/form/css/tabs.css">
+        <link rel="stylesheet" href="/search/cmn/navigate/css/navigate.css">
+        <script src="/search/cmn/form/js/tab-function.js" defer></script>
+        <script src="/search/cmn/js/date.js" defer></script>
+        <script src="/search/cmn/form/js/util-selectbox.js" defer></script>
+        <!-- チェックボックスの切り替え処理 -->
+        <script src="/search/cmn/search/js/toggleCheckbox.js" defer></script>
+        <!-- 検索画面共通入力補助 -->
+        <script src="/search/cmn/search/js/input-assist.js" defer></script>
+        <!-- msw 表示 -->
+        <script src="/search/cmn/msw/cmn/js/msw.js" defer></script>
+        <!-- COOKIE関連の処理(検索画面) -->
+        <script src="/search/cmn/search/js/cookie-functions.js" defer></script>
+    </header1>
+
+    <header2>
+    </header2>
+
+    <header3>
+        <!-- datepickerの要素指定 -->
+        <script src="/search/cmn/js/datepicker.js" defer></script>
+        <!-- msw汎用スタイル -->
+        <link rel="stylesheet" href="/search/cmn/css/msw.css">
+        <!-- フォームボタン css -->
+        <link rel="stylesheet" href="/search/cmn/css/form-buttons.css">
+        <!-- フォーム ボタン -->
+        <script src="/sc/search/js/form-buttons.js" defer></script>
+        <!-- フォームバリデーション -->
+        <script src="/sc/search/js/validate-form.js" defer></script>
+        <!-- マスタ検索呼び出し -->
+        <script src="/p/cmn/js/invoke-master-search.js" defer></script>
+        <!-- キーバインド -->
+        <script src="/search/cmn/js/key-bind.js" defer></script>
+    </header3>
+
+    <bodyonload>
+    </bodyonload>
+</config>
+
+<!-- 左サイドバー ナビゲート -->
+<div class="navigation-loadpoint">
+    <script>
+        $('.navigation-loadpoint').load('/search/cmn/navigate/sc_navi.html');
+    </script>
+</div>
+
+<!-- 入力フォーム -->
+<div class="form-box--notabs-for-search">
+    <!-- フォームヘッダ -->
+    <div class="form-box__header">
+        <p class="form-box__header__title">売上検索</p>
+        <span class="form-box__header__buttons">
+            <img class="clear button" src="/img/type01/cmn/seg/sch_clear_off_ja_bt.gif">
+            <img class="search button" src="/img/type01/cmn/seg/sch_search_off_ja_bt.gif">
+        </span>
+    </div>
+    <!-- フォームコンテンツ -->
+    <div class="form-box__contents--with-scroll">
+        <form name="SearchMoldHistory" method="post">
+            <input type="submit">
+            <div class="option-box">
+                <div class="regist-line" _%AdminSet_visibility%_>
+                    <span class="regist-label">
+                        <span class="regist-label--text-only">管理者モード</span>
+                        <input name="Option_admin" type="checkbox">
+                    </span>
+                </div>
+            </div>
+            <div class="regist-line">
+                <img class="toggle-search button" src="/img/type01/cmn/seg/off_bt.gif" alt="toggle search">
+                <img class="toggle-display button" src="/img/type01/cmn/seg/off_bt.gif" alt="toggle display">
+            </div>
+            <div class="regist-line">
+                <img src="/img/type01/cmn/seg/view_search_ja.gif" alt="view search">
+            </div>
+            <div class="regist-line" _%btnDetail_visibility%_>
+                <span class="search-label--checkbox">
+                    <input name="IsSearch_btnDetail" class="is-search-header" type="checkbox" disabled>
+                    <input name="IsDisplay_btnDetail" class="is-display-header" type="checkbox" _%btnDetailVisible%_>
+                </span>
+                <span class="regist-label">
+                    <span class="regist-label--text-only">詳細</span>
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="search-label--checkbox">
+                    <input name="IsSearch_dtmInsertDate" class="is-search" type="checkbox">
+                    <input name="IsDisplay_dtmInsertDate" class="is-display" type="checkbox">
+                </span>
+                <span class="regist-label">
+                    <span class="regist-label__text">登録日</span>
+                    FROM
+                    <input class="TxtStyle05L is-from-date" name="From_dtmInsertDate" type="text" value="" alt="dtmInsertDate" tabindex="" maxlength="10"> TO
+                    <input class="TxtStyle05L" name="To_dtmInsertDate" type="text" value="" tabindex="" maxlength="10">
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="search-label--checkbox">
+                    <input name="IsSearch_dtmAppropriationDate" class="is-search" type="checkbox">
+                    <input name="IsDisplay_dtmAppropriationDate" class="is-display" type="checkbox">
+                </span>
+                <span class="regist-label">
+                    <span class="regist-label__text">請求日</span>
+                    FROM
+                    <input class="TxtStyle05L is-from-date" name="From_dtmAppropriationDate" type="text" value="" alt="dtmAppropriationDate" tabindex="" maxlength="10"> TO
+                    <input class="TxtStyle05L" name="To_dtmAppropriationDate" type="text" value="" tabindex="" maxlength="10">
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="search-label--checkbox">
+                    <input name="IsSearch_strSalesCode" class="is-search" type="checkbox">
+                    <input name="IsDisplay_strSalesCode" class="is-display" type="checkbox">
+                </span>
+                <span class="regist-label">
+                    <span class="regist-label__text">売上NO.</span>
+                    <input class="Txt46L" name="strSalesCode" type="text" tabindex="">
+                </span>
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="search-label--checkbox">
+                    <input name="IsSearch_strCustomerReceiveCode" class="is-search" type="checkbox">
+                    <input name="IsDisplay_strCustomerReceiveCode" class="is-display" type="checkbox">
+                </span>
+                <span class="regist-label">
+                    <span class="regist-label__text">顧客受注番号</span>
+                    <input class="Txt46L" name="strCustomerReceiveCode" type="text" tabindex="">
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="search-label--checkbox">
+                    <input name="IsSearch_strSlipCode" class="is-search" type="checkbox">
+                    <input name="IsDisplay_strSlipCode" class="is-display" type="checkbox">
+                </span>
+                <span class="regist-label">
+                    <span class="regist-label__text">納品書NO.</span>
+                    <input class="Txt46L" name="strSlipCode" type="text" maxlength="10">
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="search-label--checkbox">
+                    <input name="IsSearch_strProductCode" class="is-search" type="checkbox">
+                    <input name="IsDisplay_strProductCode" class="is-display" type="checkbox">
+                </span>
+                <span class="regist-label">
+                    <span class="regist-label__text">製品コード</span>
+                    <input class="Txt46L" name="strProductCode" type="text" maxlength="10">
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="search-label--checkbox">
+                    <input name="IsSearch_lngInputUserCode" class="is-search" type="checkbox">
+                    <input name="IsDisplay_lngInputUserCode" class="is-display" type="checkbox">
+                </span>
+                <span class="regist-label">
+                    <span class="regist-label__text">入力者</span>
+                    <input class="TxtStyle05L" name="lngInputUserCode" type="text" alt="InputUser">
+                    <input class="disTxt46L" name="lngInputUserName" type="text" readonly>
+                    <img class="msw-button button" invokeMSWName="msw-user" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="search-label--checkbox">
+                    <input name="IsSearch_lngCustomerCompanyCode" class="is-search" type="checkbox">
+                    <input name="IsDisplay_lngCustomerCompanyCode" class="is-display" type="checkbox">
+                </span>
+                <span class="regist-label">
+                    <span class="regist-label__text">顧客</span>
+                    <input class="TxtStyle05L" name="lngCustomerCompanyCode" type="text" alt="CustomerCompany">
+                    <input class="disTxt46L" name="strCustomerCompanyName" type="text" readonly>
+                    <img class="msw-button button" invokeMSWName="msw-customer" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="search-label--checkbox">
+                    <input name="IsSearch_lngSalesStatusCode" class="is-search" type="checkbox">
+                    <input name="IsDisplay_lngSalesStatusCode" class="is-display" type="checkbox">
+                </span>
+                <span class="regist-label">
+                    <span class="regist-label__text">状態</span>
+                    _%lngSalesStatusCode%_
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="search-label--checkbox">
+                    <input name="IsSearch_strNote" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_strNote" class="is-display" type="checkbox">
+                </span>
+                <span class="regist-label">
+                    <span class="regist-label--text-only">備考</span>
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="search-label--checkbox">
+                    <input name="IsSearch_curTotalPrice" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_curTotalPrice" class="is-display" type="checkbox">
+                </span>
+                <span class="regist-label">
+                    <span class="regist-label--text-only">合計金額</span>
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="search-label--checkbox">
+                    <input name="IsSearch_lngRecordNo" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_lngRecordNo" class="is-display" type="checkbox">
+                </span>
+                <span class="regist-label">
+                    <span class="regist-label--text-only">明細行番号</span>
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="search-label--checkbox">
+                    <input name="IsSearch_lngInChargeGroupCode" class="is-search" type="checkbox">
+                    <input name="IsDisplay_lngInChargeGroupCode" class="is-display" type="checkbox">
+                </span>
+                <span class="regist-label">
+                    <span class="regist-label__text">営業部署</span>
+                    <input class="TxtStyle05L" name="lngInChargeGroupCode" type="text" alt="InChargeGroup">
+                    <input class="disTxt46L" name="strInChargeGroupName" type="text" readonly>
+                    <img class="msw-button button" invokeMSWName="msw-group" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="search-label--checkbox">
+                    <input name="IsSearch_lngInChargeUserCode" class="is-search" type="checkbox">
+                    <input name="IsDisplay_lngInChargeUserCode" class="is-display" type="checkbox">
+                </span>
+                <span class="regist-label">
+                    <span class="regist-label__text">開発担当者</span>
+                    <input class="TxtStyle05L" name="lngInChargeUserCode" type="text" alt="InChargeUser">
+                    <input class="disTxt46L" name="strInChargeUserName" type="text" readonly>
+                    <img class="msw-button button" invokeMSWName="msw-user" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="search-label--checkbox">
+                    <input name="IsSearch_strProductName" class="is-search" type="checkbox">
+                    <input name="IsDisplay_strProductName" class="is-display" type="checkbox">
+                </span>
+                <span class="regist-label">
+                    <span class="regist-label__text">製品名</span>
+                    <input class="Txt46L" name="strProductName" type="text" maxlength="80" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this );"
+                        tabindex="">
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="search-label--checkbox">
+                    <input name="IsSearch_lngSalesClassCode" class="is-search" type="checkbox">
+                    <input name="IsDisplay_lngSalesClassCode" class="is-display" type="checkbox">
+                </span>
+                <span class="regist-label">
+                    <span class="regist-label__text">売上区分</span>
+                    <select name="lngSalesClassCode" class="Slt13">
+                        _%lngSalesClassCode%_
+                    </select>
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="search-label--checkbox">
+                    <input name="IsSearch_strGoodsCode" class="is-search" type="checkbox">
+                    <input name="IsDisplay_strGoodsCode" class="is-display" type="checkbox">
+                </span>
+                <span class="regist-label">
+                    <span class="regist-label__text">顧客品番</span>
+                    <input class="TxtStyle05L" name="strGoodsCode" type="text" value="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);"
+                        tabindex="">
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="search-label--checkbox">
+                    <input name="IsSearch_dtmDeliveryDate" class="is-search" type="checkbox">
+                    <input name="IsDisplay_dtmDeliveryDate" class="is-display" type="checkbox">
+                </span>
+                <span class="regist-label">
+                    <span class="regist-label__text">納期</span>
+                    FROM
+                    <input name="From_dtmDeliveryDate" class="TxtStyle05L is-from-date" type="text" value="" alt="dtmDeliveryDate" tabindex="" maxlength="10"> TO
+                    <input name="To_dtmDeliveryDate" class="TxtStyle05L" type="text" value="" tabindex="" maxlength="10">
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="search-label--checkbox">
+                    <input name="IsSearch_curProductPrice" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_curProductPrice" class="is-display" type="checkbox">
+                </span>
+                <span class="regist-label">
+                    <span class="regist-label--text-only">単価</span>
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="search-label--checkbox">
+                    <input name="IsSearch_lngProductUnitCode" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_lngProductUnitCode" class="is-display" type="checkbox">
+                </span>
+                <span class="regist-label">
+                    <span class="regist-label--text-only">単位</span>
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="search-label--checkbox">
+                    <input name="IsSearch_lngProductQuantity" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_lngProductQuantity" class="is-display" type="checkbox">
+                </span>
+                <span class="regist-label">
+                    <span class="regist-label--text-only">数量</span>
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="search-label--checkbox">
+                    <input name="IsSearch_curSubTotalPrice" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_curSubTotalPrice" class="is-display" type="checkbox">
+                </span>
+                <span class="regist-label">
+                    <span class="regist-label--text-only">税抜金額</span>
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="search-label--checkbox">
+                    <input name="IsSearch_lngTaxClassCode" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_lngTaxClassCode" class="is-display" type="checkbox">
+                </span>
+                <span class="regist-label">
+                    <span class="regist-label--text-only">税区分</span>
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="search-label--checkbox">
+                    <input name="IsSearch_curTax" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_curTax" class="is-display" type="checkbox">
+                </span>
+                <span class="regist-label">
+                    <span class="regist-label--text-only">税率</span>
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="search-label--checkbox">
+                    <input name="IsSearch_curTaxPrice" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_curTaxPrice" class="is-display" type="checkbox">
+                </span>
+                <span class="regist-label">
+                    <span class="regist-label--text-only">税額</span>
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="search-label--checkbox">
+                    <input name="IsSearch_strDetailNote" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_strDetailNote" class="is-display" type="checkbox">
+                </span>
+                <span class="regist-label">
+                    <span class="regist-label--text-only">明細備考</span>
+                </span>
+            </div>
+        </form>
+    </div>
+    <div class="msw-loadpoints">
+        <!-- MSW 顧客マスタ検索 -->
+        <iframe class="msw-customer" src="/search/cmn/msw/customer/mswcustomer.html" frameborder="0">
+        </iframe>
+        <!-- MSW 担当部署マスタ検索 -->
+        <iframe class="msw-group" src="/search/cmn/msw/group/mswgroup.html" frameborder="0">
+        </iframe>
+        <!-- MSW 担当者マスタ検索 -->
+        <iframe class="msw-user" src="/search/cmn/msw/user/mswuser.html" frameborder="0">
+        </iframe>
+    </div>
+</div>

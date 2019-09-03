@@ -190,7 +190,6 @@ function fncGetCopyFilePathQuery( $lngReportClassCode, $strReportKeyCode, $lngRe
 	{
 		$aryQuery[] = "SELECT r.strReportPathName ";
 		$aryQuery[] = "FROM m_Order o, t_Report r ";
-//		$aryQuery[] = " t_Workflow t, m_Workflow m ";
 
 		// 対象帳票(製品企画 or 発注)指定
 		$aryQuery[] = "WHERE r.lngReportClassCode = " . $lngReportClassCode;
@@ -199,73 +198,17 @@ function fncGetCopyFilePathQuery( $lngReportClassCode, $strReportKeyCode, $lngRe
 
 		// 帳票コード指定
 		$aryQuery[] = " AND r.strReportKeyCode = '" . $strReportKeyCode . "'";
-/*
-		$aryQuery[] = " AND to_number ( m.strWorkflowKeyCode, '9999999') = o.lngOrderNo";
-		$aryQuery[] = " AND m.lngFunctionCode = " . DEF_FUNCTION_PO1;
-		$aryQuery[] = " AND t.lngWorkflowStatusCode = " . DEF_STATUS_APPROVE;
-		$aryQuery[] = " AND m.bytInvalidFlag = FALSE";
-		$aryQuery[] = " AND t.lngWorkflowSubCode =";
-		$aryQuery[] = "(";
-		$aryQuery[] = "  SELECT MAX ( t2.lngWorkflowSubCode )";
-		$aryQuery[] = "  FROM t_Workflow t2";
-		$aryQuery[] = "  WHERE t.lngWorkflowCode = t2.lngWorkflowCode";
-		$aryQuery[] = ")";
-*/
+
 		// A:「発注」状態より大きい状態の発注データ
 		// B:「発注」状態のデータ
-		// C:ワークフローに存在しない(即認証案件)
-		// D:「承認」状態にある案件
-		// A OR ( B AND ( C OR D ) )
+		// A OR B
 		$aryQuery[] = " AND (";
-
 		// A:「発注」状態より大きい状態の発注データ
-		$aryQuery[] = "  o.lngOrderStatusCode > " . DEF_ORDER_ORDER;
-
-		$aryQuery[] = "  OR";
-		$aryQuery[] = "  (";
-
+		$aryQuery[] = " o.lngOrderStatusCode > " . DEF_ORDER_ORDER;
+		$aryQuery[] = " OR";
 		// B:「発注」状態のデータ
-		$aryQuery[] = "    o.lngOrderStatusCode = " . DEF_ORDER_ORDER;
-		$aryQuery[] = "     AND";
-		$aryQuery[] = "    (";
-
-		// C:ワークフローに存在しない(即認証案件)
-		$aryQuery[] = "      0 = ";
-		$aryQuery[] = "      (";
-		$aryQuery[] = "        SELECT COUNT ( mw.lngWorkflowCode ) ";
-		$aryQuery[] = "        FROM m_Workflow mw ";
-// レプリケーションサーバーで、Indexが作成出来ない障害対応 - to_number を消した
-//		$aryQuery[] = "        WHERE  to_number(mw.strWorkflowKeyCode, '9999999') = o.lngOrderNo";
-		$aryQuery[] = "        WHERE  mw.strWorkflowKeyCode = trim(to_char(o.lngOrderNo, '9999999'))";
-		$aryQuery[] = "         AND mw.lngFunctionCode = " . DEF_FUNCTION_PO1;
-		$aryQuery[] = "      )";
-
-		// D:「承認」状態にある案件
-		$aryQuery[] = "      OR " . DEF_STATUS_APPROVE . " = ";
-		$aryQuery[] = "      (";
-		$aryQuery[] = "        SELECT tw.lngWorkflowStatusCode";
-		$aryQuery[] = "        FROM m_Workflow mw2, t_Workflow tw";
-// レプリケーションサーバーで、Indexが作成出来ない障害対応 - to_number を消した
-//		$aryQuery[] = "        WHERE to_number(mw2.strWorkflowKeyCode, '9999999') = o.lngOrderNo";
-		$aryQuery[] = "        WHERE mw2.strWorkflowKeyCode  = trim(to_char(o.lngOrderNo, '9999999')) ";
-		$aryQuery[] = "         AND mw2.lngFunctionCode = " . DEF_FUNCTION_PO1;
-		$aryQuery[] = "         AND tw.lngWorkflowSubCode =";
-		$aryQuery[] = "        (";
-		$aryQuery[] = "          SELECT MAX ( tw2.lngWorkflowSubCode ) FROM t_Workflow tw2 WHERE tw.lngWorkflowCode = tw2.lngWorkflowCode";
-		$aryQuery[] = "        )";
-		$aryQuery[] = "         AND mw2.lngWorkflowCode = tw.lngWorkflowCode";
-		$aryQuery[] = "      )";
-		$aryQuery[] = "    )";
-		$aryQuery[] = "  )";
+		$aryQuery[] = " o.lngOrderStatusCode = " . DEF_ORDER_ORDER;
 		$aryQuery[] = ")";
-//=============================================================================================
-//　050413 by kouリビジョンにマイナスがなければ最大リバイズの物がとればいいと思う
-//		// 最大リビジョン
-//		$aryQuery[] = " AND o.lngRevisionNo = ";
-//		$aryQuery[] = "( ";
-//		$aryQuery[] = "  SELECT MAX( o1.lngRevisionNo ) FROM m_Order o1 WHERE o1.strOrderCode = o.strOrderCode ";
-//		$aryQuery[] = ")";
-//=============================================================================================
 		// 最大リバイズ
 		$aryQuery[] = " AND o.strReviseCode = ";
 		$aryQuery[] = "( ";
@@ -276,11 +219,6 @@ function fncGetCopyFilePathQuery( $lngReportClassCode, $strReportKeyCode, $lngRe
 		$aryQuery[] = "( ";
 		$aryQuery[] = "  SELECT MIN( o3.lngRevisionNo ) FROM m_Order o3 WHERE o3.bytInvalidFlag = false AND o3.strOrderCode = o.strOrderCode ";
 		$aryQuery[] = ")";
-//		$aryQuery[] = " AND t.lngWorkflowCode = m.lngWorkflowCode";
-
-		// 帳票コードと製品コードの結合
-// レプリケーションサーバーで、Indexが作成出来ない障害対応 - to_number を消した
-//		$aryQuery[] = " AND  to_number(r.strReportKeyCode, '9999999') = o.lngOrderNo";
 		$aryQuery[] = " AND  r.strReportKeyCode = trim(to_char(o.lngOrderNo, '9999999'))";
 	}
 
@@ -297,8 +235,6 @@ function fncGetCopyFilePathQuery( $lngReportClassCode, $strReportKeyCode, $lngRe
 		// 指定製品コード
 		$aryQuery[] = " AND e.lngEstimateNo = " . $strReportKeyCode;
 	}
-
-	//echo join ( "", $aryQuery );exit;
 	return join ( "", $aryQuery );
 }
 
@@ -357,6 +293,8 @@ function fncGetListOutputQuery( $lngClassCode, $lngKeyCode, $objDB )
 		$aryQuery[] = "SELECT DISTINCT ON (p.lngProductNo)";
 		$aryQuery[] = "   p.lngProductNo";
 		$aryQuery[] = " , p.lngInChargeGroupCode as lngGroupCode";
+		//  作成日
+		$aryQuery[] = " , To_Char( p.dtminsertdate, 'YYYY/MM/DD' ) as dtminsertdate";
 		//  更新日
 		$aryQuery[] = " , To_Char( p.dtmUpdateDate, 'YYYY/MM/DD' ) as dtmUpdateDate";
 		//  企画進行状況
@@ -374,12 +312,16 @@ function fncGetListOutputQuery( $lngClassCode, $lngKeyCode, $objDB )
 		//  入力者
 		$aryQuery[] = " , input_u.strUserDisplayCode as strInputUserDisplayCode";
 		$aryQuery[] = " , input_u.strUserDisplayName as strInputUserDisplayName";
+		$aryQuery[] = " , p.lnginputusercode";
 		//  部門
 		$aryQuery[] = " , inchg_g.strGroupDisplayCode as strInChargeGroupDisplayCode";
 		$aryQuery[] = " , inchg_g.strGroupDisplayName as strInChargeGroupDisplayName";
 		//  担当者
 		$aryQuery[] = " , inchg_u.strUserDisplayCode as strInChargeUserDisplayCode";
 		$aryQuery[] = " , inchg_u.strUserDisplayName as strInChargeUserDisplayName";
+		//  開発担当者
+		$aryQuery[] = " , devp_u.strUserDisplayCode as strDevelopUserDisplayCode";
+		$aryQuery[] = " , devp_u.strUserDisplayName as strDevelopUserDisplayName";
 		$aryQuery[] = " , category.strCategoryName as strCategoryName";
 		//  顧客品番
 		$aryQuery[] = " , p.strGoodsCode";
@@ -454,6 +396,7 @@ function fncGetListOutputQuery( $lngClassCode, $lngKeyCode, $objDB )
 		$aryQuery[] = " LEFT JOIN m_User input_u ON p.lngInputUserCode = input_u.lngUserCode";
 		$aryQuery[] = " LEFT JOIN m_Group inchg_g ON p.lngInChargeGroupCode = inchg_g.lngGroupCode";
 		$aryQuery[] = " LEFT JOIN m_User inchg_u ON p.lngInChargeUserCode = inchg_u.lngUserCode";
+		$aryQuery[] = " LEFT JOIN m_User devp_u ON p.lngdevelopusercode = devp_u.lngUserCode";
 		$aryQuery[] = " LEFT JOIN m_Company cust_c ON p.lngCustomerCompanyCode = cust_c.lngCompanyCode";
 		$aryQuery[] = " LEFT JOIN m_User cust_u ON p.lngCustomerUserCode = cust_u.lngUserCode";
 		$aryQuery[] = " LEFT JOIN m_ProductUnit packingunit ON p.lngPackingUnitCode = packingunit.lngProductUnitCode";

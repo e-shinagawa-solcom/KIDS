@@ -1,0 +1,231 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html lang="ja">
+
+<head>
+	<title>K.I.D.S.</title>
+	<meta http-equiv="content-type" content="text/html; charset=euc-jp">
+	<script type="text/javascript" language="javascript" src="/layout/type01/cmn/images.js"></script>
+	<script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
+	<script type="text/javascript" language="javascript" src="/result/cmn/functions.js" charset="utf-8"></script>
+	<script type="text/javascript" language="javascript" src="/list/result/cmn/functions.js"></script>
+	<link rel="stylesheet" type="text/css" media="screen" href="/result/cmn/layout.css">
+	<!-- ボタン画像の共通の振る舞い CSS -->
+	<link rel="stylesheet" href="/cmn/css/base/button-behaivior.css">
+</head>
+
+<body>
+	<table cellpadding="5" cellspacing="0" border="0" bgcolor="#6f8180" align="center">
+		<tr class="SegColumn">
+			<td id="ControlTitle">詳細確認</td>
+		</tr>
+	</table>
+	<br>
+	<table cellpadding="5" cellspacing="0" border="0" bgcolor="#f1f1f1" align="center">
+		<tr>
+			<td>
+				<table width="100%" cellpadding="0" cellspacing="1" border="0" bgcolor="#6f8180" align="center">
+					<tr>
+						<td id="CreationDate" class="SegColumn">作成日</td>
+						<td class="Segs">_%dtminsertdate%_</td>
+					</tr>
+					<tr>
+						<td id="GoodsPlanProgress" class="SegColumn" width="25%">企画進行状況</td>
+						<td class="Segs">_%lnggoodsplanprogresscode%_</td>
+					</tr>
+					<tr>
+						<td id="RevisionNo" class="SegColumn">再販コード</td>
+						<td class="Segs">_%strrevisecode%_</td>
+					</tr>
+					<tr>
+						<td id="RevisionNo" class="SegColumn">改訂番号</td>
+						<td class="Segs">_%lngrevisionno%_</td>
+					</tr>
+					<tr>
+						<td id="RevisionDate" class="SegColumn">改訂日時</td>
+						<td class="Segs">_%dtmrevisiondate%_</td>
+					</tr>
+				</table>
+				<br>
+				<table width="100%" cellpadding="0" cellspacing="1" border="0" bgcolor="#6f8180" align="center">
+					<tr>
+						<td id="ProductCode" class="SegColumn" width="25%">製品コード</td>
+						<td class="Segs">_%strproductcode%_</td>
+					</tr>
+					<tr>
+						<td id="ProductName" class="SegColumn">製品名称（日本語）</td>
+						<td class="Segs">_%strproductname%_</td>
+					</tr>
+					<tr>
+						<td id="ProductEnglishName" class="SegColumn">製品名称（英語）</td>
+						<td class="Segs">_%strproductenglishname%_</td>
+					</tr>
+					<tr>
+						<td id="InputUser" class="SegColumn">入力者</td>
+						<td class="Segs">_%lnginputusercode%_</td>
+					</tr>
+					<tr>
+						<td id="InChargeGroup" class="SegColumn">営業部署</td>
+						<td class="Segs">_%lnginchargegroupcode%_</td>
+					</tr>
+					<tr>
+						<td id="InChargeUser" class="SegColumn">担当者</td>
+						<td class="Segs">_%lnginchargeusercode%_</td>
+					</tr>
+					<tr>
+						<td id="DevelopUser" class="SegColumn">開発担当者</td>
+						<td class="Segs">_%lngdevelopusercode%_</td>
+					</tr>
+					<tr>
+						<td id="Category" class="SegColumn">カテゴリ</td>
+						<td class="Segs">_%lngcategorycode%_</td>
+					</tr>
+					<tr>
+						<td id="GoodsCode" class="SegColumn">顧客品番</td>
+						<td class="Segs">_%strgoodscode%_</td>
+					</tr>
+					<tr>
+						<td id="GoodsName" class="SegColumn">商品名称</td>
+						<td class="Segs">_%strgoodsname%_</td>
+					</tr>
+					<tr>
+						<td id="Customer" class="SegColumn">顧客</td>
+						<td class="Segs">_%lngcustomercompanycode%_</td>
+					</tr>
+					<tr>
+						<td id="CustomerUser" class="SegColumn">顧客担当者</td>
+						<td class="Segs">_%lngcustomerusercode%_</td>
+					</tr>
+					<tr>
+						<td id="PackingUnit" class="SegColumn">荷姿単位</td>
+						<td class="Segs">_%lngpackingunitcode%_</td>
+					</tr>
+					<tr>
+						<td id="ProductUnit" class="SegColumn">製品単位</td>
+						<td class="Segs">_%lngproductunitcode%_</td>
+					</tr>
+					<tr>
+						<td id="GoodsForm" class="SegColumn">商品形態</td>
+						<td class="Segs">_%lngproductformcode%_</td>
+					</tr>
+					<tr>
+						<td id="BoxQuantity" class="SegColumn">内箱（袋）入数</td>
+						<td class="Segs">_%lngboxquantity%_</td>
+					</tr>
+					<tr>
+						<td id="CartonQuantity" class="SegColumn">カートン入数</td>
+						<td class="Segs">_%lngcartonquantity%_</td>
+					</tr>
+					<tr>
+						<td id="RefoundQuantity" class="SegColumn">生産予定数</td>
+						<td class="Segs">_%lngproductionquantity%_</td>
+					</tr>
+					<tr>
+						<td id="FirstDeliveryQuantity" class="SegColumn">初回納品数</td>
+						<td class="Segs">_%lngfirstdeliveryquantity%_</td>
+					</tr>
+				</table>
+				<br>
+				<table width="100%" cellpadding="0" cellspacing="1" border="0" bgcolor="#6f8180" align="center">
+					<tr>
+						<td id="CreationFactory" class="SegColumn" width="25%">生産工場</td>
+						<td class="Segs">_%lngfactorycode%_</td>
+					</tr>
+					<tr>
+						<td id="AssemblyFactory" class="SegColumn">アッセンブリ工場</td>
+						<td class="Segs">_%lngassemblyfactorycode%_</td>
+					</tr>
+					<tr>
+						<td id="Location" class="SegColumn">納品場所</td>
+						<td class="Segs">_%lngdeliveryplacecode%_</td>
+					</tr>
+					<tr>
+						<td id="DeliveryLimitDate" class="SegColumn">納期</td>
+						<td class="Segs">_%dtmdeliverylimitdate%_</td>
+					</tr>
+					<tr>
+						<td id="SellingPrince" class="SegColumn">納価(pcs)</td>
+						<td class="Segs">_%curproductprice%_</td>
+					</tr>
+					<tr>
+						<td id="WholesalePrice" class="SegColumn">上代(pcs)</td>
+						<td class="Segs">_%curretailprice%_</td>
+					</tr>
+					<tr>
+						<td id="TargetAge" class="SegColumn">対象年齢</td>
+						<td class="Segs">_%lngtargetagecode%_</td>
+					</tr>
+					<tr>
+						<td id="Royalty" class="SegColumn">ロイヤリティ(%)</td>
+						<td class="Segs">_%lngroyalty%_</td>
+					</tr>
+					<tr>
+						<td id="Inspection" class="SegColumn">証紙</td>
+						<td class="Segs">_%lngcertificateclasscode%_</td>
+					</tr>
+					<tr>
+						<td id="Copyright" class="SegColumn">版権元</td>
+						<td class="Segs">_%lngcopyrightcode%_</td>
+					</tr>
+					<tr>
+						<td id="CopyrightNote" class="SegColumn">版権元備考</td>
+						<td class="Segs">_%strcopyrightnote%_</td>
+					</tr>
+					<tr>
+						<td id="CopyrightStamp" class="SegColumn">版権表示（刻印）</td>
+						<td class="Segs">_%strcopyrightdisplaystamp%_</td>
+					</tr>
+					<tr>
+						<td id="CopyrightPrint" class="SegColumn">版権表示（印刷物）</td>
+						<td class="Segs">_%strcopyrightdisplayprint%_</td>
+					</tr>
+					<tr>
+						<td id="ProductsInfo" class="SegColumn">製品構成</td>
+						<td class="Segs">_%strproductcomposition%_</td>
+					</tr>
+					<tr>
+						<td id="AssemblyInfo" class="SegColumn">アッセンブリ内容</td>
+						<td class="Segs">_%strassemblycontents%_</td>
+					</tr>
+					<tr>
+						<td id="Details" class="SegColumn">仕様詳細</td>
+						<td class="Segs">_%strspecificationdetails%_</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+
+	<br>
+
+	<table cellpadding="5" cellspacing="0" border="0" bgcolor="#f1f1f1" align="center" _%listview%_>
+		<tr>
+			<td>
+				<span id="PreviewBt">
+					<a href="#">
+						<img class="button" onclick="fncListOutput('_%strPreviewAction%_');return false;" src="/img/type01/cmn/querybt/graypreview_off_bt.gif"
+						 width="72" height="20" border="0" alt="PREVIEW">
+					</a>
+				</span>
+			</td>
+		</tr>
+	</table>
+	<table cellpadding="5" cellspacing="0" border="0" bgcolor="#f1f1f1" align="center">
+		<tr>
+			<td>
+				<span id="objQuery">
+					<table width="90%" cellpadding="5" cellspacing="1" border="0" bgcolor="#6f8180" align="center">
+						<tr>
+							<td bgcolor="#f1f1f1">
+								<a href="#" onclick="window.close();">
+									<img class="button" src="/img/type01/cmn/seg/close_off_ja_bt.gif" width="72" height="20" border="0" alt="CLOSE">
+								</a>
+							</td>
+						</tr>
+					</table>
+				</span>
+			</td>
+		</tr>
+	</table>
+</body>
+
+</html>

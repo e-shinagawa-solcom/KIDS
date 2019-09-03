@@ -434,6 +434,6 @@ function money_format(lngmonetaryunitcode, strmonetaryunitsign, price)
     if (lngmonetaryunitcode == 1) {
         return '\xA5' + " " + price;
     } else {
-        return toUTF8($strmonetaryunitsign + " " + $price);
+        return $strmonetaryunitsign + " " + $price;
     }
 }

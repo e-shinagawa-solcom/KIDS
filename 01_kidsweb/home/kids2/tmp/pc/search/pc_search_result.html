@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <!-- 互換表示OFFを強制させる -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    php domパース用メタ要素 コメントアウトしていてもphpのdomElement->loadHTMLで認識される
+    -->
+    <meta charset="euc-jp">
+
+    <title>K.I.D.S.</title>
+    <!-- jQuery -->
+    <script src="/cmn/jquery/jquery-3.1.0.js"></script>
+    <script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
+    <script src="/cmn/jquery/tablesorter/jquery.tablesorter.js"></script>
+    <script src="/cmn/jquery/tablesorter/jquery.tablesorter.widgets.js"></script>
+    <link rel="stylesheet" href="/cmn/jquery/tablesorter/themes/blue/style.css">
+    <!-- スタイル初期化 & 各種コントロールスタイル -->
+    <link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
+
+    <!-- ボタン画像の共通の振る舞い CSS -->
+    <link rel="stylesheet" href="/cmn/css/base/button-behaivior.css">
+
+    <!-- tablesorterのbind -->
+    <script src="/pc/search/result/js/tablesorter.js" defer></script>
+    <link rel="stylesheet" href="/pc/cmn/search/result/css/table.css">
+
+    <!-- 詳細画面表示 -->
+    <script src="/pc/search/result/js/display-detail.js" defer></script>
+    <!-- 修正画面表示 -->
+    <script src="/pc/search/result/js/display-fix.js" defer></script>
+    <!-- 削除画面表示 -->
+    <script src="/pc/search/result/js/display-delete.js" defer></script>
+    <!-- 無効画面表示 -->
+    <script src="/pc/search/result/js/display-invalid.js" defer></script>
+    <!-- 検索結果をクリップボードへコピーする処理 -->
+    <script src="/pc/search/result/js/clipboard.js" defer></script>
+</head>
+<body class="search-result-background">
+    <div class="result-table-wrap">
+        <table id="result" class="tablesorter">
+            <thead>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

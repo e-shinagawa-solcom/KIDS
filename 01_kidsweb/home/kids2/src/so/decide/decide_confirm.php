@@ -31,10 +31,6 @@ if ($aryData == null) {
     $aryData = $_POST;
 }
 
-
-// 文字列チェック
-$aryCheck["strSessionID"] = "null:numenglish(32,32)";
-
 // セッション確認
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 // 権限確認

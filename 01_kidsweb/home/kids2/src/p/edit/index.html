@@ -1,0 +1,360 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html lang="ja">
+
+<head>
+	<title>K.I.D.S.</title>
+	<meta http-equiv="content-type" content="text/html; charset=euc-jp">
+
+	<script src="/cmn/jquery/jquery-3.1.0.js"></script>
+	<script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
+	<script src="/cmn/jquery/ui/jquery-ui-1.12.0.js"></script>
+
+	<!-- START COMMON LAYOUT FILES -->
+	<script type="text/javascript" language="javascript" src="/layout/type01/cmn/images.js"></script>
+	<script type="text/javascript" language="javascript" src="/layout/type01/cmn/initlayoutcommon.js"></script>
+	<!-- END COMMON LAYOUT FILES -->
+
+
+	<!-- START COMMON FILES -->
+	<script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
+	<script type="text/javascript" language="javascript" src="/cmn/lngcheck.js"></script>
+	<link rel="stylesheet" type="text/css" media="screen" href="/cmn/layout.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
+	<!-- END COMMON FILES -->
+
+
+	<!-- START EXCLUSIVE USE LAYOUT FILES -->
+	<script type="text/javascript" language="javascript" src="/layout/type01/p/cmn/images.js"></script>
+	<script type="text/javascript" language="javascript" src="/layout/type01/p/edit/initlayout.js"></script>
+	<!-- END EXCLUSIVE USE LAYOUT FILES -->
+
+
+	<!-- START EXCLUSIVE USE FILES -->
+	<link rel="stylesheet" type="text/css" media="screen" href="/p/edit/layout.css">
+	<script type="text/javascript" language="javascript" src="/p/edit/htmleditor.js"></script>
+	<!-- END EXCLUSIVE USE FILES -->
+
+
+</head>
+
+<body id="Backs" onload="createIframeForImageLoad();" onclick="parent.Zchange( parent.EditFrame );">
+	<!-- <body id="Backs"> -->
+
+
+	<div id="EditHeader">
+		<img width="927" height="10" src="/img/type01/p/edit_header.gif" border="0">
+	</div>
+
+
+
+	<div id="EditBody" onMouseUp="fncEditHideAllMenu()">
+		<table id="htmlarea" name="htmlarea" class="edittable" unselectable="on" cellpadding=0 cellspacing=0 border=0 cols=1 style="border:0;"
+		 align="center">
+			<tr>
+				<td id="toolbar" name="toolbar">
+					<table border="0" cellpadding="0" cellspacing="0">
+						<tr>
+							<td style="width:40px;">
+								<button unselectable="on" id="btn0" class="toolicon" onMouseOver="fncEditBtnOver(this)" onMouseOut="fncEditBtnOut(this,0)"
+								 onClick='fncEditBtnOver(this); fncEditShowMenu( 0 )' title="フォントサイズ">
+									<img src="edit/html_fontsize36x25.gif" border=0>
+								</button>
+							</td>
+							<td style="width:40px;">
+								<button unselectable="off" class="toolicon" onMouseOver="fncEditBtnOver(this)" onMouseOut="fncEditBtnOut(this,-1)" onClick='fncEditDoCommand("Bold");'
+								 title="太字">
+									<img src="edit/html_bold25.gif" border=0>
+								</button>
+							</td>
+							<td style="width:40px;">
+								<button unselectable="off" class="toolicon" onMouseOver="fncEditBtnOver(this)" onMouseOut="fncEditBtnOut(this,-1)" onClick='fncEditDoCommand("Italic");'
+								 title="斜体">
+									<img src="edit/html_italic25.gif" border=0>
+								</button>
+							</td>
+							<td style="width:36px;">
+								<button unselectable="off" class="toolicon" onMouseOver="fncEditBtnOver(this)" onMouseOut="fncEditBtnOut(this,-1)" onClick='fncEditDoCommand("Underline");'
+								 title="下線">
+									<img src="edit/html_underline25.gif" border=0>
+								</button>
+							</td>
+							<td style="width:36px;">
+								<button unselectable="off" class="toolicon" onMouseOver="fncEditBtnOver(this)" onMouseOut="fncEditBtnOut(this,-1)" onClick='fncEditDoCommand("CreateLink");'
+								 title="ハイパーリンクの挿入">
+									<img src="edit/html_link25.gif" border=0>
+								</button>
+							</td>
+							<td style="width:36px;">
+								<button unselectable="off" class="toolicon" onMouseOver="fncEditBtnOver(this)" onMouseOut="fncEditBtnOut(this,-1)" onClick='fncEditDoCommand("JustifyLeft");'
+								 title="左揃え">
+									<img src="edit/html_left25.gif" border=0>
+								</button>
+							</td>
+							<td style="width:36px;">
+								<button unselectable="off" class="toolicon" onMouseOver="fncEditBtnOver(this)" onMouseOut="fncEditBtnOut(this,-1)" title="中央揃え">
+									<img src="edit/html_center25.gif" border=0 onClick='fncEditDoCommand("JustifyCenter");'>
+								</button>
+							</td>
+							<td style="width:36px;">
+								<button unselectable="off" class="toolicon" onMouseOver="fncEditBtnOver(this)" onMouseOut="fncEditBtnOut(this,-1)" onClick='fncEditDoCommand("JustifyRight");'
+								 title="右揃え">
+									<img src="edit/html_right25.gif" border=0>
+								</button>
+							</td>
+							<td style="width:36px;">
+								<button unselectable="on" id="btn1" class="toolicon" onMouseOver="fncEditBtnOver(this)" onMouseOut="fncEditBtnOut(this,1)"
+								 onClick='fncEditBtnOver(this); fncEditShowMenu( 1 )' title="文字色">
+
+									<!-- <button unselectable="on" id="btn1" class="toolicon" onMouseOver="fncEditBtnOver(this)" onMouseOut="fncEditBtnOut(this,1)"  title="文字色"> -->
+									<img src="edit/html_fontcolor36x25.gif" border=0>
+								</button>
+							</td>
+							<td style="width:36px;">
+								<button unselectable="on" id="btn2" class="toolicon" onMouseOver="fncEditBtnOver(this)" onMouseOut="fncEditBtnOut(this,2)"
+								 onClick='fncEditBtnOver(this); fncEditShowMenu( 2 )' title="背景色">
+									<img src="edit/html_bgcolor36x25.gif" border=0>
+								</button>
+							</td>
+							<td></td>
+						</tr>
+						<tr valign="top">
+							<td>
+								<div unselectable="off" id="drop0" style="font-size:12px; display:none; position: absolute; background-color:#FFFFFF; border:1 solid #000000; margin:0 0 0 0; padding:0 0 0 0;">
+									<table unselectable="on" id="sizetable" border=0 bordercolor=0 cellpadding=0 cellspacing=0 style="left:0">
+										<tr>
+											<td>
+												<div>
+													<img unselectable="on" class="sizeitem" id="fs1" src="edit/html_fontsize-2.gif" border=0 onClick='fncEditSetFontSize(1);'
+													 onMouseOver="fncEditBtnOver(this)" onMouseOut="fncEditBtnOut(this,2)">
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<div>
+													<img unselectable="on" class="sizeitem" id="fs1" src="edit/html_fontsize-1.gif" border=0 onClick='fncEditSetFontSize(2);'
+													 onMouseOver="fncEditBtnOver(this)" onMouseOut="fncEditBtnOut(this,2)" alt="やや小さいフォント">
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<div>
+													<img unselectable="on" class="sizeitem" id="fs1" src="edit/html_fontsize0.gif" border=0 onClick='fncEditSetFontSize(2);'
+													 onMouseOver="fncEditBtnOver(this)" onMouseOut="fncEditBtnOut(this,2)" alt="標準のフォント">
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<div>
+													<img unselectable="on" class="sizeitem" id="fs1" src="edit/html_fontsize1.gif" border=0 onClick='fncEditSetFontSize(4);'
+													 onMouseOver="fncEditBtnOver(this)" onMouseOut="fncEditBtnOut(this,2)" alt="やや大きいフォント">
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<div>
+													<img unselectable="on" class="sizeitem" id="fs1" src="edit/html_fontsize2.gif" border=0 onClick='fncEditSetFontSize(5);'
+													 onMouseOver="fncEditBtnOver(this)" onMouseOut="fncEditBtnOut(this,2)" alt="大きいフォント">
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<div>
+													<img unselectable="on" class="sizeitem" id="fs1" src="edit/html_fontsize3.gif" border=0 onClick='fncEditSetFontSize(6);'
+													 onMouseOver="fncEditBtnOver(this)" onMouseOut="fncEditBtnOut(this,2)" alt="かなり大きいフォント">
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<div>
+													<img unselectable="on" class="sizeitem" id="fs1" src="edit/html_fontsize4.gif" border=0 onClick='fncEditSetFontSize(7);'
+													 onMouseOver="fncEditBtnOver(this)" onMouseOut="fncEditBtnOut(this,2)" alt="最大のフォント">
+												</div>
+											</td>
+										</tr>
+									</table>
+								</div>
+							</td>
+							<td colspan="7"></td>
+							<td>
+								<table unselectable="off" id="drop1" border="1" cellspacing="3" style="border:1px solid black; background-color:#CCCCCC; display: none; position: absolute;">
+									<tr>
+										<td bgcolor="#0000FF">
+											<img unselectable="on" class="coloritem" border=0 onClick="fncEditSetColor(1,'#0000FF');">
+										</td>
+										<td bgcolor="#000080">
+											<img unselectable="on" class="coloritem" border=0 onClick="fncEditSetColor(1,'#000080');">
+										</td>
+										<td bgcolor="#800080">
+											<img unselectable="on" class="coloritem" border=0 onClick="fncEditSetColor(1,'#800080');">
+										</td>
+										<td bgcolor="#FF00FF">
+											<img unselectable="on" class="coloritem" border=0 onClick="fncEditSetColor(1,'#FF00FF');">
+										</td>
+									</tr>
+									<tr>
+										<td bgcolor="#00FF00">
+											<img unselectable="on" class="coloritem" border=0 onClick="fncEditSetColor(1,'#00FF00');">
+										</td>
+										<td bgcolor="#008000">
+											<img unselectable="on" class="coloritem" border=0 onClick="fncEditSetColor(1,'#008000');">
+										</td>
+										<td bgcolor="#008080">
+											<img unselectable="on" class="coloritem" border=0 onClick="fncEditSetColor(1,'#008080');">
+										</td>
+										<td bgcolor="#00FFFF">
+											<img unselectable="on" class="coloritem" border=0 onClick="fncEditSetColor(1,'#00FFFF');">
+										</td>
+									</tr>
+									<tr>
+										<td bgcolor="#FF0000">
+											<img unselectable="on" class="coloritem" border=0 onClick="fncEditSetColor(1,'#FF0000');">
+										</td>
+										<td bgcolor="#800000">
+											<img unselectable="on" class="coloritem" border=0 onClick="fncEditSetColor(1,'#800000');">
+										</td>
+										<td bgcolor="#808000">
+											<img unselectable="on" class="coloritem" border=0 onClick="fncEditSetColor(1,'#808000');">
+										</td>
+										<td bgcolor="#FFFF00">
+											<img unselectable="on" class="coloritem" border=0 onClick="fncEditSetColor(1,'#FFFF00');">
+										</td>
+									</tr>
+									<tr>
+										<td bgcolor="#000000">
+											<img unselectable="on" class="coloritem" border=0 onClick="fncEditSetColor(1,'#000000');">
+										</td>
+										<td bgcolor="#808080">
+											<img unselectable="on" class="coloritem" border=0 onClick="fncEditSetColor(1,'#808080');">
+										</td>
+										<td bgcolor="#C0C0C0">
+											<img unselectable="on" class="coloritem" border=0 onClick="fncEditSetColor(1,'#C0C0C0');">
+										</td>
+										<td bgcolor="#FFFFFF">
+											<img unselectable="on" class="coloritem" border=0 onClick="fncEditSetColor(1,'#FFFFFF');">
+										</td>
+									</tr>
+									<tr>
+										<td bgcolor="#FFFFFF" colspan="4">
+											<div>
+												<img unselectable="on" src="edit/html_colornone.gif" border=0 onClick="fncEditSetColor(1,'-1');">
+											</div>
+										</td>
+									</tr>
+								</table>
+							</td>
+							<td>
+								<table unselectable="off" id="drop2" border="1" cellspacing="3" style="border:1px solid black; background-color:#CCCCCC; display:none; position:absolute">
+									<tr>
+										<td bgcolor="#0000FF">
+											<img unselectable="on" class="coloritem" border=0 onClick="fncEditSetColor(2,'#0000FF');">
+										</td>
+										<td bgcolor="#000080">
+											<img unselectable="on" class="coloritem" border=0 onClick="fncEditSetColor(2,'#000080');">
+										</td>
+										<td bgcolor="#800080">
+											<img unselectable="on" class="coloritem" border=0 onClick="fncEditSetColor(2,'#800080');">
+										</td>
+										<td bgcolor="#FF00FF">
+											<img unselectable="on" class="coloritem" border=0 onClick="fncEditSetColor(2,'#FF00FF');">
+										</td>
+									</tr>
+									<tr>
+										<td bgcolor="#00FF00">
+											<img unselectable="on" class="coloritem" border=0 onClick="fncEditSetColor(2,'#00FF00');">
+										</td>
+										<td bgcolor="#008000">
+											<img unselectable="on" class="coloritem" border=0 onClick="fncEditSetColor(2,'#008000');">
+										</td>
+										<td bgcolor="#008080">
+											<img unselectable="on" class="coloritem" border=0 onClick="fncEditSetColor(2,'#008080');">
+										</td>
+										<td bgcolor="#00FFFF">
+											<img unselectable="on" class="coloritem" border=0 onClick="fncEditSetColor(2,'#00FFFF');">
+										</td>
+									</tr>
+									<tr>
+										<td bgcolor="#FF0000">
+											<img unselectable="on" class="coloritem" border=0 onClick="fncEditSetColor(2,'#FF0000');">
+										</td>
+										<td bgcolor="#800000">
+											<img unselectable="on" class="coloritem" border=0 onClick="fncEditSetColor(2,'#800000');">
+										</td>
+										<td bgcolor="#808000">
+											<img unselectable="on" class="coloritem" border=0 onClick="fncEditSetColor(2,'#808000');">
+										</td>
+										<td bgcolor="#FFFF00">
+											<img unselectable="on" class="coloritem" border=0 onClick="fncEditSetColor(2,'#FFFF00');">
+										</td>
+									</tr>
+									<tr>
+										<td bgcolor="#000000">
+											<img unselectable="on" class="coloritem" border=0 onClick="fncEditSetColor(2,'#000000');">
+										</td>
+										<td bgcolor="#808080">
+											<img unselectable="on" class="coloritem" border=0 onClick="fncEditSetColor(2,'#808080');">
+										</td>
+										<td bgcolor="#C0C0C0">
+											<img unselectable="on" class="coloritem" border=0 onClick="fncEditSetColor(2,'#C0C0C0');">
+										</td>
+										<td bgcolor="#FFFFFF">
+											<img unselectable="on" class="coloritem" border=0 onClick="fncEditSetColor(2,'#FFFFFF');">
+										</td>
+									</tr>
+									<tr>
+										<td bgcolor="#FFFFFF" colspan="4">
+											<img unselectable="on" src="edit/html_colornone.gif" border=0 onClick="fncEditSetColor(2,'-1');">
+										</td>
+									</tr>
+								</table>
+							</td>
+							<td></td>
+						</tr>
+					</table>
+				</td>
+				<td>
+					<a href="#">
+						<img onclick="fncEditHtmltextToParent();parent.document.all.EditOpenBtImg.focus();return false;" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="CloseJOn( this );" onmouseout="CloseJOff( this );fncAlphaOff( this );"
+						 src="/img/type01/cmn/seg/close_off_ja_bt.gif" width="72" height="20" border="0" alt="閉じる">
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div id="htmltext" class="htmltext" contenteditable="true" align="left" style="font-size:13px; border:2px inset; overflow-x:auto; overflow-y:scroll;"
+					 onfocus="document.execCommand('FormatBlock',false,'<div>');">
+					</div>
+				</td>
+				<td></td>
+			</tr>
+		</table>
+	</div>
+	<span id="imgLoadIframeContainer" style="z-index:1000;width:300px;height:300px;left:0px;top:0px;"></span>
+
+	<form id="form-uploadimage" name="form-uploadimage" enctype="multipart/form-data" method="post">
+		<span id="strImages">画像</span>
+		<span id="ImgSrc">
+			<input name="userfile" id="userfile" type="file" style="width:500px" />
+		</span>
+		<span id="EditInsertBt" onclick="checkAndSubmitImgUp();">
+			<a href="#">
+				<img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="fncInsertButton('onJ' , this);" onmouseout="fncInsertButton('offJ', this);fncAlphaOff( this );"
+				 src="/img/type01/p/insert_off_ja_bt.gif" width="72" height="20" border="0" alt="挿入">
+			</a>
+		</span>
+		<input name="array[]" type="hidden" value="" />
+	</form>
+	<br>
+	<br>
+
+	<div id="EditFooter">
+		<img width="927" height="10" src="/img/type01/p/edit_header.gif" border="0">
+	</div>
+</body>
+
+</html>

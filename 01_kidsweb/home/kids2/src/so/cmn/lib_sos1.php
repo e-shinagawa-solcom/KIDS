@@ -42,7 +42,7 @@ function fncGetReceiveHeadNoToInfoSQL ($lngReceiveNo, $lngreceivestatuscode)
 	// 顧客受注番号
 	$aryQuery[] = ", r.strCustomerReceiveCode as strCustomerReceiveCode";
 	// 受注No
-	$aryQuery[] = ", r.strReceiveCode || '-' || r.strReviseCode as strReceiveCode";
+	$aryQuery[] = ", r.strReceiveCode as strReceiveCode";
 	// 受注コード
 	$aryQuery[] = ", r.strReceiveCode as strReceiveCode2";
 	// 入力者

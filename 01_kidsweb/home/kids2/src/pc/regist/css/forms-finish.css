@@ -1,0 +1,52 @@
+/* 埋め込みパラメータ */
+input.finish-hidden
+{
+    display: none;
+}
+
+/* センタリング */
+html, body, div.centering
+{
+    height: 100%;
+}
+div.centering
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column nowrap;
+
+}
+
+/* 全体背景 */
+.finish-background
+{
+    background-color: #D6D0B1;
+    overflow-y: scroll;
+}
+
+/* div マージン設定 */
+.finish-background div
+{
+    margin: 15px;
+}
+
+/* 完了メッセージ */
+.finish-box__message
+{
+    padding: 5px 50px;
+    font-weight: bold;
+    background-color: #F1F1F1;
+    border: 1px solid #798787;
+    width: 300px;
+}
+
+
+/* 完了メッセージ */
+.finish-box__button
+{
+    width: 100px;
+    padding: 5px 50px;
+    font-weight: bold;
+    border: 1px solid #798787;
+}

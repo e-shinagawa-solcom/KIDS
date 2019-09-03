@@ -19,7 +19,7 @@
             // JQuery Validation Pluginで検知させる為イベントキック
             $(this).trigger('blur');
             // フォーカスをユーザ名に合わせる
-            $('input[name="lngInputUserName"]').focus();
+            $('input[name="strInputUserName"]').focus();
         }
     });
     // 担当グループ-表示グループコード イベント登録
@@ -49,17 +49,6 @@
             $('input[name="strInChargeUserName"]').focus();
         }
     });
-    // 起票者-表示ユーザコード イベント登録
-    $('input[name="lngInsertUserCode"]').on({
-        'change': function(){
-            // 表示名を索引
-            selectInsertUserName($(this));
-            // JQuery Validation Pluginで検知させる為イベントキック
-            $(this).trigger('blur');
-            // フォーカスをユーザ名に合わせる
-            $('input[name="strInsertUserName"]').focus();
-        }
-    });    
     // 事業部(顧客)-表示会社コード イベント登録
     $('input[name="lngCustomerCode"]').on({
         'change': function(){
@@ -71,17 +60,6 @@
             $('input[name="strCustomerName"]').focus();
         }
     });
-    // 事業部(納品先)-表示会社コード イベント登録
-    $('input[name="lngDeliveryPlaceCode"]').on({
-        'change': function(){
-            // 表示名を索引
-            selectDeliveryPlaceName($(this));
-            // JQuery Validation Pluginで検知させる為イベントキック
-            $(this).trigger('blur');
-            // フォーカスを事業部名に合わせる
-            $('input[name="strDeliveryPlaceName"]').focus();
-        }
-    });    
     // 仕入科目- イベント登録
     $('select[name="lngStockSubjectCode"]').on({
         'change': function(){
@@ -89,7 +67,7 @@
             var options = TargetPull.options;
             if (TargetPull.hasChildNodes()) {
                 while (TargetPull.childNodes.length > 0) {
-                    TargetPull.removeChild(TargetPull.firstChild)
+                    TargetPull.removeChild(TargetPull.firstChild);
                 }
             }
             var ItemCodeValue = $('input[name="lngStockItemCodeValue"]')[0].value.split(',,');
@@ -139,38 +117,6 @@
         });
     };
 
-    // --------------------------------------------------------------------------
-    // 起票者-表示ユーザコードによるデータ索引
-    // --------------------------------------------------------------------------
-    // 起票者-表示ユーザコードから表示名を索引
-    var selectInsertUserName = function(invoker){
-        console.log("起票者-表示ユーザコード->表示名 change");
-
-        // 検索条件
-        var condition = {
-            data: {
-                QueryName: 'selectUserName',
-                Conditions: {
-                    UserDisplayName: $(invoker).val()
-                }
-            }
-        };
-
-        // リクエスト送信
-        $.ajax($.extend({}, searchMaster, condition))
-        .done(function(response){
-            console.log("起票者-表示ユーザコード->表示名 done");
-            // 登録者-表示名に値をセット
-            $('input[name="strInsertUserName"]').val(response[0].userdisplayname);
-        })
-        .fail(function(response){
-            console.log("起票者-表示ユーザコード->表示名 fail");
-            console.log(response.responseText);
-            // 登録者-表示名の値をリセット
-            $(invoker).val('');
-            $('input[name="strInsertUserName"]').val('');
-        });
-    };
     // --------------------------------------------------------------------------
     // 担当グループ-表示グループコードによるデータ索引
     // --------------------------------------------------------------------------
@@ -269,38 +215,4 @@
             $('input[name="strCustomerName"]').val('');
         });
     };
-
-    // --------------------------------------------------------------------------
-    // 事業部(納品先)-表示会社コードによるデータ索引
-    // --------------------------------------------------------------------------
-    // 事業部(納品先)-表示会社コードから表示名を索引
-    var selectDeliveryPlaceName = function(invoker){
-        console.log("事業部(納品先)-表示会社コード->表示名 change");
-
-        // 検索条件
-        var condition = {
-            data: {
-                QueryName: 'selectCustomerName',
-                Conditions: {
-                    CompanyDisplayName: $(invoker).val()
-                }
-            }
-        };
-
-        // リクエスト送信
-        $.ajax($.extend({}, searchMaster, condition))
-        .done(function(response){
-            console.log("事業部(納品先)-表示会社コード->表示名 done");
-            // 事業部(納品先)-表示名に値をセット
-            $('input[name="strDeliveryPlaceName"]').val(response[0].companydisplayname);
-        })
-        .fail(function(response){
-            console.log("事業部(納品先)-表示会社コード->表示名 fail");
-            console.log(response.responseText);
-            // 事業部(納品先)-表示名の値をリセット
-            $(invoker).val('');
-            $('input[name="strDeliveryPlaceName"]').val('');
-        });
-    };
-
 })();

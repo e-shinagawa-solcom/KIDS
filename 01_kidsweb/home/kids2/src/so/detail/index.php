@@ -19,7 +19,7 @@ include_once('conf.inc');
 
 // ライブラリ読み込み
 require (LIB_FILE);
-require (SRC_ROOT . "so/cmn/lib_sos1.php");
+require (SRC_ROOT . "so/cmn/lib_so.php");
 // DB接続
 $objDB   = new clsDB();
 $objAuth = new clsAuth();
@@ -36,10 +36,6 @@ else if ( $_POST )
 {
 	$aryData = $_POST;
 }
-
-// 文字列チェック
-$aryCheck["strSessionID"] = "null:numenglish(32,32)";
-$aryCheck["lngReceiveNo"]	  = "null:number(0,10)";
 
 // セッション確認
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
@@ -84,6 +80,7 @@ $aryNewResult = fncSetReceiveHeadTabelData ( $aryResult );
 // $aryData["strreceivecode2"] = $aryResult["strreceivecode2"];
 // $aryData["lngrevisionno"] = $aryResult["lngrevisionno"];
 $strQuery = fncGetReceiveDetailNoToInfoSQL ($lngReceiveNo);
+
 // 明細データの取得
 list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 

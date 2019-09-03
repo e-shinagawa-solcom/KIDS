@@ -1,0 +1,68 @@
+/* センタリング */
+html, body, div.centering
+{
+    height: 100%;
+}
+div.centering
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column nowrap;
+    margin: 15px;
+
+}
+
+/* 全体背景 */
+.finish-background
+{
+    background-color: #D6D0B1;
+    overflow-y: scroll;
+}
+
+/* div マージン設定 */
+.finish-box
+{
+    margin: 15px;
+}
+
+/* 完了メッセージ */
+.finish-box__message
+{
+    padding: 5px 50px;
+    font-weight: bold;
+    background-color: #F1F1F1;
+    border: 1px solid #798787;
+    width: 200px;
+}
+
+
+/* 完了メッセージ */
+.finish-box__button
+{
+    margin-left: -5px;
+    width: 100px;
+    padding: 5px 50px;
+    font-weight: bold;
+    border: 1px solid #798787;
+}
+
+.SegColumn
+{
+    font-family : Arial , ＭＳ　Ｐゴシック ;
+    font-weight: bold;
+	color : black ;
+	background-color : #e8f0f1 ;
+    word-break : keep-all ;
+    height: 27px;
+    padding-left: 10px;
+}
+
+.Segs
+{
+	font-family : monospace ;
+	color : #555555 ;
+	background : #D6D0B1 ;
+	padding : 4px 6px 3px 6px ;
+	text-align : center ;
+}

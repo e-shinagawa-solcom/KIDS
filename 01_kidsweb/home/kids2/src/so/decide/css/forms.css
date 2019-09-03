@@ -54,12 +54,12 @@ img.toggle-display
 /* 入力フォーム共通背景枠 右サイドバータブ有り */
 .form-box
 {
-    position: relative;
-    top: 31px;
+    position: absolute;
+    top: 10px;
     left: 21px;
 
-    width: 927px;
-    height: 520px;
+    width: 947px;
+    height: 470px;
 
     border-style: solid;
     border-width: 1px;

@@ -14,7 +14,7 @@
 
 include 'conf.inc';
 require LIB_FILE;
-require (SRC_ROOT . "so/cmn/lib_sos1.php");
+require (SRC_ROOT . "so/cmn/lib_so.php");
 
 //////////////////////////////////////////////////////////////////////////
 // GETデータ取得

@@ -51,6 +51,16 @@ img.toggle-display
     margin: 0px 17px 0px 8px;
 }
 
+/* 検索/表示 全切り替えボタン */
+img.toggle-search-header
+{
+    margin: 0px 17px 0px 17px;
+}
+
+img.toggle-display-header
+{
+    margin: 0px 17px 0px 8px;
+}
 /* 入力フォーム共通背景枠 右サイドバータブ有り */
 .form-box
 {
@@ -243,7 +253,8 @@ img.toggle-display
 }
 
 /* 検索フォーム チェックボックス 位置調整 */
-.search-label--checkbox input[type="checkbox"].is-search
+.search-label--checkbox input[type="checkbox"].is-search,
+.search-label--checkbox input[type="checkbox"].is-search-header
 {
     margin-right: 15px;
 }

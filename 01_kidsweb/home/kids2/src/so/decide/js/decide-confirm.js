@@ -2,7 +2,6 @@
 
     // 登録ボタンのイベント
     $('img.regist').on('click', function () {
-        alert("test");
         var params = new Array();
         var len = 0;
         $("#table_decide_detail tbody tr").each(function (i, e) {

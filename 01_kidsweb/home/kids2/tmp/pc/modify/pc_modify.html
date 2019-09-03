@@ -1,0 +1,210 @@
+<config>
+	<header1>
+		<link rel="stylesheet" href="/mold/cmn/form/css/forms.css">
+		<link rel="stylesheet" href="/mold/cmn/form/css/forms-validation.css">
+		<link rel="stylesheet" href="/mold/cmn/form/css/tabs.css">
+		<link rel="stylesheet" href="/mold/cmn/navigate/css/navigate.css">
+
+
+		<!-- confirm iframe スタイル -->
+		<link rel="stylesheet" href="/mold/cmn/confirm/css/confirm-in-iframe.css">
+		<!-- タブ切り替え共通処理 -->
+		<script src="/mold/cmn/form/js/tab-function.js" defer></script>
+		<!-- セレクトボックス共通処理 -->
+		<script src="/mold/cmn/form/js/util-selectbox.js" defer></script>
+		<!-- msw表示切替 -->
+		<script src="/mold/cmn/msw/cmn/js/msw.js" defer></script>
+	</header1>
+
+	<header2>
+	</header2>
+
+	<header3>
+		<!-- msw汎用スタイル -->
+		<link rel="stylesheet" href="/pc/regist/css/msw.css">
+		<!-- 明細テーブル -->
+		<link rel="stylesheet" href="/pc/regist/css/table-description.css">
+		<!-- フォーム ボタン -->
+		<link rel="stylesheet" href="/pc/regist/css/form-buttons.css">
+		<link rel="stylesheet" href="/pc/regist/css/forms.css">
+		<!-- datepickerの要素指定 -->
+		<script src="/pc/regist/js/datepicker.js" defer></script>
+		<!-- マスタデータ検索 -->
+		<script src="/pc/regist/js/invoke-master-search.js" defer></script>
+		<!-- フォーム ボタン -->
+		<script src="/pc/regist/js/form-buttons.js" defer></script>
+		<!-- フォーム検証 -->
+		<script src="/pc/regist/js/validate-form.js" defer></script>
+		<!-- msw表示切替 -->
+		<script src="/pc/regist/js/msw.js" defer></script>
+	</header3>
+
+	<bodyonload>
+	</bodyonload>
+</config>
+
+<!-- 左サイドバー ナビゲート -->
+<div class="navigation-loadpoint">
+	<script>
+		$('.navigation-loadpoint').load('/search/cmn/navigate/pc_navi.html');
+	</script>
+</div>
+
+
+<form name="" action="_%actionUrl%_" method="post">
+	<input type="submit">
+	<!-- 入力フォーム -->
+	<div class="form-box--pc1">
+		<!-- フォームヘッダ -->
+		<div class="form-box__header">
+			<p class="form-box__header__title">ヘッダー</p>
+		</div>
+		<!-- フォームコンテンツ -->
+		<div class="form-box__contents">
+			<div class="regist-tab-header">
+				<div class="regist-line">
+					<span class="regist-label">
+						<span class="regist-label__required-mark">◎</span>
+						<span class="regist-label__required-text">仕入日</span>
+						<input style="ime-mode:disabled;" class="Txt10L" type="text" name="dtmStockAppDate" value="_%dtmstockappdate%_" maxlength="10"
+						 tabindex="1">
+					</span>
+					<span class="regist-label">
+						<span class="regist-label__required-mark">◎</span>
+						<span class="regist-label__required-text">発注NO.</span>
+						<input style="ime-mode:disabled;" class="disTxt10L" type="text" name="strOrderCode" value="_%strrealordercode%_" maxlength="10"
+						 tabindex="3" readonly>
+						<img class="getpoinfo button" tabindex="4" src="/img/type01/cmn/seg/dataopen_off_bt.gif">
+						<input type="hidden" name="lngrevisionno" value="_%lngrevisionno%_">						
+						<input type="hidden" name="lngOrderNo" value="_%lngorderno%_">						
+						<!-- <input type="hidden" name="strOrderCode" value="_%strrealordercode%_">			
+						<input type="hidden" name="strReviseCode" value="_%strrevisecode%_"> -->
+					</span>
+
+					<span class="regist-label regist-label--right">
+						<span class="regist-label__text">状態</span>
+						<input class="disTxt07L" type="text" name="lngStockStatusCode" value="_%strstockstatusname%_" size="7" maxlength="7" readonly>
+					</span>
+				</div>
+				<div class="regist-line">
+					<span class="regist-label">
+						<span class="regist-label__text">仕入NO.</span>
+						<input class="disTxt10L" type="text" name="strStockCode" value="_%strstockcode%_" maxlength="10" readonly>
+					</span>
+					<span class="regist-label" style="margin-left: 19px;">
+						<span class="regist-label__required-mark">◎</span>
+						<span class="regist-label__required-text">納品書NO.</span>
+						<input style="ime-mode:disabled;" class="Txt10L" type="text" name="strSlipCode" value="_%strslipcode%_" maxlength="10" tabindex="5">
+					</span>
+
+					<span class="regist-label regist-label--right">
+						<span class="regist-label__text">通貨</span>
+						<select name="lngMonetaryUnitCode" tabindex="13" class="Slt93">
+							_%lngMonetaryUnitCode%_
+						</select>
+					</span>
+				</div>
+				<div class="regist-line">
+					<span class="regist-label">
+						<span class="regist-label__required-mark">◎</span>
+						<span class="regist-label__required-text">仕入先</span>
+						<input class="TxtStyle05L" name="lngCustomerCode" type="text" value="_%strcustomerdisplaycode%_">
+						<input class="disTxt46L" name="strCustomerName" type="text"  value="_%strcustomerdisplayname%_" readonly>
+						<img class="msw-button button" invokeMSWName="msw-customer" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+					</span>
+					<span class="regist-label regist-label--right">
+						<span class="regist-label__text">レートタイプ</span>
+						<select name="lngMonetaryRateCode" tabindex="14" class="Slt93">
+							_%lngMonetaryRateCode%_
+						</select>
+					</span>
+				</div>
+				<div class="regist-line">
+					<span class="regist-label">
+						<span class="regist-label__required-mark">◎</span>
+						<span class="regist-label__required-text">納品場所</span>
+						<input class="TxtStyle05L" name="lngLocationCode" type="text" value="_%strdeliverydisplaycode%_">
+						<input class="disTxt46L" name="strLocationName" type="text"  value="_%strdeliverydisplayname%_" readonly>
+						<img class="msw-button button" invokeMSWName="msw-factory" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+					</span>
+					<span class="regist-label regist-label--right">
+						<span class="regist-label__text">適用レート</span>
+						<input style="ime-mode:disabled;" class="TxtStyle04R" type="text" name="curConversionRate" value="_%curconversionrate%_"
+						 tabindex="15" readonly>
+						<input type="hidden" name="curConversionRate" value="_%curConversionRate%_">
+					</span>
+				</div>
+				<div class="regist-line">
+					<span class="regist-label">
+						<span class="regist-label__text">製品到着日</span>
+						<input style="ime-mode:disabled;" class="Txt10L" type="text" name="dtmExpirationDate" value="_%dtmexpirationdate%_" maxlength="10"
+						 tabindex="1">
+					</span>
+					<span class="regist-label regist-label--right">
+						<span class="regist-label__text">支払条件</span>
+						<select name="lngPayConditionCode" tabindex="16" class="Slt93">
+							_%lngPayConditionCode%_
+						</select>
+					</span>
+				</div>
+				<div class="regist-line">
+					<span class="regist-label">
+						<span class="regist-label__text">備考</span>
+						<input class="Txt100L" type="text" name="strNote" value="_%strnote%_" tabindex="19">
+					</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 入力フォーム -->
+	<div class="form-box--pc2">
+		<!-- フォームヘッダ -->
+		<div class="form-box__header">
+			<p class="form-box__header__title">明細一覧</p>
+		</div>
+		<!-- フォームコンテンツ -->
+		<div class="form-box__contents">
+			<div class="regist-line" style="width: 100%;white-space: nowrap; overflow: auto;">
+				<table class="table-description">
+					<thead>
+						<tr>
+							<th></th>
+							<th>対象</th>
+							<th>製品</th>
+							<th>仕入科目</th>
+							<th>仕入部品</th>
+							<th>単価</th>
+							<th>単位</th>
+							<th>数量</th>
+							<th>税抜金額</th>
+							<th>消費税区分</th>
+							<th>消費税率</th>
+							<th>消費税額</th>
+							<th>納期</th>
+							<th>備考</th>
+						</tr>
+					</thead>
+					<tbody id="tbl_order_detail">
+					</tbody>
+					<tfoot>
+					</tfoot>
+				</table>
+			</div>
+			<div class="regist-line">
+			</div>
+		</div>
+	</div>
+</form>
+<div class="msw-loadpoints">
+	<!-- MSW 工場マスタ検索 -->
+	<iframe class="msw-factory" src="/mold/cmn/msw/factory/mswfactory.html" frameborder="0">
+	</iframe>
+	<!-- MSW 顧客マスタ検索 -->
+	<iframe class="msw-customer" src="/mold/cmn/msw/customer/mswcustomer.html" frameborder="0">
+	</iframe>
+</div>
+
+<!-- フォーム ボタン -->
+<div class="form-buttons">
+	<img class="regist button" src="/img/type01/cmn/querybt/reg_off_ja_bt.gif" alt="form regist">
+</div>

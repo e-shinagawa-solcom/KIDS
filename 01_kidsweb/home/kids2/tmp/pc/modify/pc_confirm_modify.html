@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<!-- 互換表示OFFを強制させる -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<!--
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    php domパース用メタ要素 コメントアウトしていてもphpのdomElement->loadHTMLで認識される
+    -->
+	<meta charset="euc-jp">
+
+	<title>K.I.D.S.</title>
+	<link rel="stylesheet" href="/cmn/css/base/base-general.css">
+
+	<!-- スタイル初期化 & 各種コントロールスタイル -->
+
+	<link rel="stylesheet" type="text/css" media="screen" href="/pc/regist/css/forms.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="/mold/cmn/confirm/css/confirm.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
+	<!-- <link rel="stylesheet" type="text/css" media="screen" href="/so/decide/css/table-confirm.css"> -->
+	<script src="/cmn/jquery/jquery-3.1.0.js"></script>
+	<script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
+	<script src="/cmn/jquery/ui/jquery-ui-1.12.0.js"></script>
+	<script src="/pc/modify/js/modify-confirm.js" defer></script>
+	<link rel="stylesheet" href="/pc/cmn/css/forms-finish.css">
+	<!-- ボタン画像の共通の振る舞い CSS -->
+	<link rel="stylesheet" href="/cmn/css/base/button-behaivior.css">
+</head>
+
+<body class="confirm-background">
+	<div class="confirm-title">
+		登録確認
+	</div>
+	<div class="confirm-box">
+		<div class="confirm-box__header">
+			下記の内容を登録しますか。
+		</div>
+		<div class="confirm-box__buttons">
+			<img class="close button" src="/img/type01/cmn/seg/close_off_ja_bt.gif" alt="close">
+			<img class="regist button" src="/img/type01/cmn/seg/regist_off_ja_bt.gif" alt="regist">
+		</div>
+	</div>
+	<div class="confirm-data">
+		<div class="confirm-data__section">
+			<div class="confirm-data__section__record">
+				<span>登録日</span>
+				<div>_%dtminsertdate%_</div>
+			</div>
+			<div class="confirm-data__section__record">
+				<span>仕入計上日</span>
+				<div>_%dtmstockappdate%_</div>
+			</div>
+			<div class="confirm-data__section__record">
+				<span>発注番号</span>
+				<div>_%strordercode%_</div>
+			</div>
+			<div class="confirm-data__section__record">
+				<span>発注有効期限日</span>
+				<div>_%dtmexpirationdate%_</div>
+			</div>
+			<div class="confirm-data__section__record">
+				<span>入力者</span>
+				<div>[_%lnginputusercode%_]&nbsp;_%strinputusername%_</div>
+			</div>
+			<div class="confirm-data__section__record">
+				<span>仕入先</span>
+				<div>[_%lngCustomerCode%_]&nbsp;_%strCustomername%_</div>
+			</div>
+			<div class="confirm-data__section__record">
+				<span>部門</span>
+				<div>[_%lngGroupCode%_]&nbsp;_%strGroupName%_</div>
+			</div>
+			<div class="confirm-data__section__record">
+				<span>担当者</span>
+				<div>[_%lngUserCode%_]&nbsp;_%strUserName%_</div>
+			</div>
+			<div class="confirm-data__section__record">
+				<span>通貨</span>
+				<div>_%strMonetaryUnitName%_</div>
+			</div>
+			<div class="confirm-data__section__record">
+				<span>レートタイプ</span>
+				<div>_%strMonetaryRateName%_</div>
+			</div>
+			<div class="confirm-data__section__record">
+				<span>換算レート</span>
+				<div>_%curconversionrate%_</div>
+			</div>
+			<div class="confirm-data__section__record">
+				<span>支払条件</span>
+				<div>_%strPayConditionName%_</div>
+			</div>
+			<div class="confirm-data__section__record">
+				<span>状態</span>
+				<div>_%lngOrderStatusCode%_</div>
+			</div>
+			<div class="confirm-data__section__record">
+				<span>備考</span>
+				<div>_%strNote%_</div>
+			</div>
+			<div class="confirm-data__section__record">
+				<span>合計金額</span>
+				<div>_%curTotalPrice%_</div>
+			</div>
+		</div>
+		_%strDetailTable%_
+	</div>
+
+	<table id="tbl_stock_info" align="center" style="display: none">
+		<tbody>
+		</tbody>
+	</table>
+</body>
+
+</html>

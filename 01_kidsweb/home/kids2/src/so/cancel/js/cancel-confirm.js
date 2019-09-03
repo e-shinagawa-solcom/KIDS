@@ -6,7 +6,6 @@
         // リクエスト送信
         $.ajax({
             url: '/so/cancel/cancel_finish.php',
-            type: 'post',
             type: 'POST',
             data: {
                 'strSessionID': $.cookie('strSessionID'),
