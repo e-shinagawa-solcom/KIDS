@@ -32,6 +32,8 @@
         <script src="/sc/search/js/validate-form.js" defer></script>
         <!-- マスタ検索呼び出し -->
         <script src="/p/cmn/js/invoke-master-search.js" defer></script>
+        <!-- COOKIE 表示チェックボックス 保存/復元 -->
+        <script src="/search/cmn/js/cookie-display-items.js" defer></script>
         <!-- キーバインド -->
         <script src="/search/cmn/js/key-bind.js" defer></script>
     </header3>
@@ -78,11 +80,20 @@
             </div>
             <div class="regist-line" _%btnDetail_visibility%_>
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_btnDetail" class="is-search-header" type="checkbox" disabled>
-                    <input name="IsDisplay_btnDetail" class="is-display-header" type="checkbox" _%btnDetailVisible%_>
+                    <input name="IsSearch_btnDetail" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_btnDetail" class="is-display" type="checkbox" _%btnDetailVisible%_>
                 </span>
                 <span class="regist-label">
                     <span class="regist-label--text-only">詳細</span>
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="search-label--checkbox">
+                    <input name="IsSearch_btnHistory" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_btnHistory" class="is-display" type="checkbox">
+                </span>
+                <span class="regist-label">
+                    <span class="regist-label--text-only">履歴</span>
                 </span>
             </div>
             <div class="regist-line">

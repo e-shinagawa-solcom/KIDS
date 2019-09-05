@@ -667,31 +667,24 @@ foreach ($records as $i => $record) {
     } else {
         $bgcolor = "background-color: #FFFFFF;";
     }
-    // インデックス設定
-    if ($maxProductInfo["lngproductno"] == $record["lngproductno"]) {
-        $index = $index + 1;
-        $subnum = 1;
-    } else {
-        $subindex = $index . "." . ($subnum++);
-    }
-
-    // $index = $i + 1;
 
     // tbody > tr要素作成
     $trBody = $doc->createElement("tr");
     $trBody->setAttribute("id", $record["strproductcode"]);
-    if ($maxProductInfo["lngproductno"] != $record["lngproductno"]) {
+    if (!$isMaxproduct) {
         $trBody->setAttribute("id", $record["strproductcode"] . "_" . $record["lngrevisionno"]);
         $trBody->setAttribute("style", "display: none;");
     }
 
     // 項番
-    if ($maxProductInfo["lngproductno"] == $record["lngproductno"]) {
+    if ($isMaxproduct) {
+        $index = $index + 1;
+        $subnum = 1;
         $tdIndex = $doc->createElement("td", $index);
     } else {
+        $subindex = $index . "." . ($subnum++);
         $tdIndex = $doc->createElement("td", $subindex);
     }
-
     $tdIndex->setAttribute("class", $exclude);
     $tdIndex->setAttribute("style", $bgcolor);
     $trBody->appendChild($tdIndex);
@@ -747,7 +740,7 @@ foreach ($records as $i => $record) {
         $tdHistory->setAttribute("class", $exclude);
         $tdHistory->setAttribute("style", $bgcolor);
 
-        if ($maxProductInfo["lngproductno"] == $record["lngproductno"] and $historyFlag) {
+        if ($isMaxproduct and $historyFlag) {
             // 履歴ボタン
             $imgHistory = $doc->createElement("img");
             $imgHistory->setAttribute("src", "/img/type01/so/renew_off_bt.gif");

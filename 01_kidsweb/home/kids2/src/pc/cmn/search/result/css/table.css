@@ -1,7 +1,11 @@
-table#result th,
-table#result td
+table#result th
 {
     text-align: center;
+    white-space: nowrap;
+}
+table#result td
+{
+    text-align: left;
     white-space: nowrap;
 }
 table.tablesorter thead tr th,

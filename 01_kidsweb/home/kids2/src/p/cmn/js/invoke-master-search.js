@@ -72,7 +72,7 @@
     $('input[name="lngInChargeUserCode"]').on({
         'change': function () {
             // 表示名を索引
-            selectGroupName($(this));
+            selectUserName($(this));
             // JQuery Validation Pluginで検知させる為イベントキック
             $(this).trigger('blur');
             // フォーカスを生産工場名に合わせる
@@ -220,5 +220,41 @@
                 $(targetCssSelector).val('');
                 $(targetCodeCssSelector).val('').focus();
             });
+    };
+
+    
+
+    // --------------------------------------------------------------------------
+    // 担当グループ-表示グループコードによるデータ索引
+    // --------------------------------------------------------------------------
+    // 担当グループ-表示グループコードから表示名を索引
+    var selectGroupName = function(invoker){
+        console.log("担当グループ-表示グループコード->表示名 change");
+        var targetCssSelector = 'input[name="str' + $(invoker).attr('alt') + 'Name"]';
+        // 索引結果0件の時のコード欄のCSSセレクタの作成
+        var targetCodeCssSelector = 'input[name="lng' + $(invoker).attr('alt') + 'Code"]';
+
+        // 検索条件
+        var condition = {
+            data: {
+                QueryName: 'selectGroupName',
+                Conditions: {
+                    GroupDisplayName: $(invoker).val()
+                }
+            }
+        };
+
+        // リクエスト送信
+        $.ajax($.extend({}, searchMaster, condition))
+        .done(function(response){
+            console.log("担当グループ-表示グループコード->表示名 done");
+            $(targetCssSelector).val(response[0].groupdisplayname);
+        })
+        .fail(function(response){
+            console.log("担当グループ-表示グループコード->表示名 fail");
+            console.log(response.responseText);
+            $(targetCssSelector).val('');
+            $(targetCodeCssSelector).val('').focus();
+        });
     };
 })();

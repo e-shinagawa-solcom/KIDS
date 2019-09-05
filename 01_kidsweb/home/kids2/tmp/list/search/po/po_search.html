@@ -1,0 +1,184 @@
+<config>
+    <header1>
+        <link rel="stylesheet" href="/search/cmn/form/css/forms.css">
+        <link rel="stylesheet" href="/list/cmn/forms.css">
+        <link rel="stylesheet" href="/search/cmn/form/css/tabs.css">
+        <link rel="stylesheet" href="/search/cmn/navigate/css/navigate.css">
+        <link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
+        <!-- <link rel="stylesheet" href="/list/cmn/forms_list.css"> -->
+        <script src="/search/cmn/form/js/tab-function.js" defer></script>
+        <script src="/search/cmn/js/date.js" defer></script>
+        <script src="/search/cmn/form/js/util-selectbox.js" defer></script>
+        <!-- チェックボックスの切り替え処理 -->
+        <script src="/search/cmn/search/js/toggleCheckbox.js" defer></script>
+        <!-- 検索画面共通入力補助 -->
+        <script src="/search/cmn/search/js/input-assist.js" defer></script>
+        <!-- msw 表示 -->
+        <script src="/search/cmn/msw/cmn/js/msw.js" defer></script>
+        <!-- COOKIE関連の処理(検索画面) -->
+        <script src="/search/cmn/search/js/cookie-functions.js" defer></script>
+    </header1>
+
+    <header2>
+    </header2>
+
+    <header3>
+        <!-- msw汎用スタイル -->
+        <link rel="stylesheet" href="/search/cmn/css/msw.css">
+        <!-- フォームボタン css -->
+        <link rel="stylesheet" href="/search/cmn/css/form-buttons.css">
+        <!-- フォーム ボタン -->
+        <script src="/list/search/po/form-buttons.js" defer></script>
+        <!-- フォームバリデーション -->
+        <script src="/list/search/po/validate-form.js" defer></script>
+        <!-- マスタ検索呼び出し -->
+        <script src="/p/cmn/js/invoke-master-search.js" defer></script>
+        <!-- COOKIE 表示チェックボックス 保存/復元 -->
+        <script src="/search/cmn/js/cookie-display-items.js" defer></script>
+        <!-- キーバインド -->
+        <script src="/search/cmn/js/key-bind.js" defer></script>
+        <!-- キーバインド -->
+        <script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
+    </header3>
+
+    <bodyonload>
+        Loading();
+    </bodyonload>
+</config>
+
+<!-- 左サイドバー ナビゲート -->
+<div class="navigation-loadpoint">
+    <script>
+        $('.navigation-loadpoint').load('/search/cmn/navigate/list_po_navi.html');
+    </script>
+</div>
+
+<!-- 入力フォーム -->
+<div class="form-box--notabs-for-search">
+    <!-- フォームヘッダ -->
+    <div class="form-box__header">
+        <p class="form-box__header__title">発注書　検索</p>
+        <span class="form-box__header__buttons">
+            <img class="clear button" src="/img/type01/cmn/seg/sch_clear_off_ja_bt.gif">
+            <img class="search button" src="/img/type01/cmn/seg/sch_search_off_ja_bt.gif">
+        </span>
+    </div>
+    <!-- フォームコンテンツ -->
+    <div class="form-box__contents--with-scroll">
+        <form name="SearchMoldHistory" method="post">
+            <input type="submit">
+            <div class="regist-line">
+                <img class="toggle-search button" src="/img/type01/cmn/seg/off_bt.gif" alt="toggle search">
+            </div>
+            <div class="regist-line">
+                <img src="/img/type01/cmn/seg/search_column_ja.gif" alt="view search">
+            </div>
+            <div class="regist-line">
+                <span class="search-label--checkbox">
+                    <input name="IsSearch_dtmInsertDate" class="is-search" type="checkbox">
+                </span>
+                <span class="regist-label">
+                    <span class="regist-label__text">登録日</span>
+                    FROM
+                    <input class="TxtStyle05L is-from-date" name="From_dtmInsertDate" type="text" value="" alt="dtmInsertDate" tabindex="" maxlength="10"> TO
+                    <input class="TxtStyle05L" name="To_dtmInsertDate" type="text" value="" tabindex="" maxlength="10">
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="search-label--checkbox">
+                    <input name="IsSearch_dtmOrderAppDate" class="is-search" type="checkbox">
+                </span>
+                <span class="regist-label">
+                    <span class="regist-label__text">仕入日</span>
+                    FROM
+                    <input class="TxtStyle05L is-from-date" name="From_dtmOrderAppDate" type="text" value="" alt="dtmOrderAppDate" tabindex=""
+                        maxlength="10"> TO
+                    <input class="TxtStyle05L" name="To_dtmOrderAppDate" type="text" value="" tabindex="" maxlength="10">
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="search-label--checkbox">
+                    <input name="IsSearch_strOrderCode" class="is-search" type="checkbox">
+                </span>
+                <span class="regist-label">
+                    <span class="regist-label__text">発注NO.</span>
+                    FROM
+                    <input class="TxtStyle05L" name="From_strOrderCode" type="text" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCopyValue( this , document.all.To_strOrderCode );"
+                        tabindex=""> TO
+                    <input class="TxtStyle05L" name="To_strOrderCode" type="text" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);"
+                        tabindex="">
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="search-label--checkbox">
+                    <input name="IsSearch_strProductCode" class="is-search" type="checkbox">
+                </span>
+                <span class="regist-label">
+                    <span class="regist-label__text">製品コード</span>
+                    FROM
+                    <input class="TxtStyle05L" name="From_strProductCode" type="text" value="" maxlength="10" onfocus="chColorOn(this);"
+                        onblur="chColorOff(this);" tabindex=""> TO
+                    <input class="TxtStyle05L" name="To_strProductCode" type="text" value="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);"
+                        tabindex="">
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="search-label--checkbox">
+                    <input name="IsSearch_lngInputUserCode" class="is-search" type="checkbox">
+                </span>
+                <span class="regist-label">
+                    <span class="regist-label__text">入力者</span>
+                    <input class="TxtStyle05L" name="lngInputUserCode" type="text" alt="InputUser">
+                    <input class="disTxt46L" name="strInputUserName" type="text" readonly>
+                    <img class="msw-button button" invokeMSWName="msw-user" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="search-label--checkbox">
+                    <input name="IsSearch_lngCustomerCompanyCode" class="is-search" type="checkbox">
+                </span>
+                <span class="regist-label">
+                    <span class="regist-label__text">仕入先</span>
+                    <input class="TxtStyle05L" name="lngCustomerCompanyCode" type="text" alt="CustomerCompany">
+                    <input class="disTxt46L" name="strCustomerCompanyName" type="text" readonly>
+                    <img class="msw-button button" invokeMSWName="msw-customer" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="search-label--checkbox">
+                    <input name="IsSearch_lngInChargeGroupCode" class="is-search" type="checkbox">
+                </span>
+                <span class="regist-label">
+                    <span class="regist-label__text">営業部署</span>
+                    <input class="TxtStyle05L" name="lngInChargeGroupCode" type="text" alt="InChargeGroup">
+                    <input class="disTxt46L" name="strInChargeGroupName" type="text" readonly>
+                    <img class="msw-button button" invokeMSWName="msw-group" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="search-label--checkbox">
+                    <input name="IsSearch_lngInChargeUserCode" class="is-search" type="checkbox">
+                </span>
+                <span class="regist-label">
+                    <span class="regist-label__text">担当者</span>
+                    <input class="TxtStyle05L" name="lngInChargeUserCode" type="text" alt="InChargeUser">
+                    <input class="disTxt46L" name="strInChargeUserName" type="text" readonly>
+                    <img class="msw-button button" invokeMSWName="msw-user" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                </span>
+            </div>
+            <input type="hidden" name="ActionScriptName" value="/list/po/result/index.php">
+            <input type="hidden" name="strSessionID" value="_%strSessionID%_">
+        </form>
+    </div>
+    <div class="msw-loadpoints">
+        <!-- MSW 顧客マスタ検索 -->
+        <iframe class="msw-customer" src="/search/cmn/msw/customer/mswcustomer.html" frameborder="0">
+        </iframe>
+        <!-- MSW 担当部署マスタ検索 -->
+        <iframe class="msw-group" src="/search/cmn/msw/group/mswgroup.html" frameborder="0">
+        </iframe>
+        <!-- MSW 担当者マスタ検索 -->
+        <iframe class="msw-user" src="/search/cmn/msw/user/mswuser.html" frameborder="0">
+        </iframe>
+    </div>
+</div>

@@ -193,7 +193,11 @@ $aryQuery[] = "        , sd1.curtaxprice";
 $aryQuery[] = "        , sd1.strNote ";
 $aryQuery[] = "      FROM";
 $aryQuery[] = "        t_SalesDetail sd1 ";
-$aryQuery[] = "        LEFT JOIN m_Product p ";
+$aryQuery[] = "        LEFT JOIN (";
+$aryQuery[] = "            select p1.*  from m_product p1 ";
+$aryQuery[] = "        	inner join (select max(lngproductno) lngproductno, strproductcode from m_Product group by strProductCode) p2";
+$aryQuery[] = "            on p1.lngproductno = p2.lngproductno";
+$aryQuery[] = "          ) p ";
 $aryQuery[] = "          ON sd1.strProductCode = p.strProductCode ";
 $aryQuery[] = "        left join m_group mg ";
 $aryQuery[] = "          on p.lnginchargegroupcode = mg.lnggroupcode ";
@@ -421,12 +425,10 @@ if (!array_key_exists("admin", $optionColumns)) {
     $aryQuery[] = "  ) ";
 }
 $aryQuery[] = "ORDER BY";
-$aryQuery[] = "  lngSalesNo DESC";
+$aryQuery[] = "  strSalesCode, lngsalesDetailNo, lngSalesNo DESC";
 
 // クエリを平易な文字列に変換
 $strQuery = implode("\n", $aryQuery);
-// echo $strQuery;
-// return;
 
 // 値をとる =====================================
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
@@ -502,6 +504,8 @@ $displayColumns = array_change_key_case($displayColumns, CASE_LOWER);
 // -------------------------------------------------------
 // 詳細カラムを表示
 $existsDetail = array_key_exists("btndetail", $displayColumns);
+// 履歴カラムを表示
+$existsHistory = array_key_exists("btnhistory", $displayColumns);
 
 // 詳細ボタンを表示
 $allowedDetail = fncCheckAuthority(DEF_FUNCTION_SC3, $objAuth);
@@ -534,6 +538,15 @@ if ($existsDetail) {
     $thDetail->setAttribute("class", $exclude);
     // ヘッダに追加
     $trHead->appendChild($thDetail);
+}
+
+// 履歴を表示
+if ($existsHistory) {
+    // 履歴カラム
+    $thHistory = $doc->createElement("th", toUTF8("履歴"));
+    $thHistory->setAttribute("class", $exclude);
+    // ヘッダに追加
+    $trHead->appendChild($thHistory);
 }
 
 $aryTableHeaderName = array();
@@ -588,16 +601,21 @@ foreach ($records as $i => $record) {
     unset($aryQuery);
     // 削除フラグ
     $deletedFlag = false;
-    // リバイズ有無フラグ
-    $revisedFlag = false;
+    // リビジョン番号
+    $revisionNos = "";
     // 最新売上かどうかのフラグ
     $isMaxSales = false;
+    // 履歴有無フラグ
+    $historyFlag = false;
 
     // 同じ売上NOの最新売上データのリビジョン番号を取得する
     $aryQuery[] = "SELECT";
-    $aryQuery[] = " lngsalesno, lngrevisionno ";
-    $aryQuery[] = "FROM m_sales ";
-    $aryQuery[] = "WHERE lngsalesno = (select max(lngsalesno) from m_sales where strsalescode='" . $record["strsalescode"] . "')";
+    $aryQuery[] = " s.lngsalesno, s.lngrevisionno ";
+    $aryQuery[] = "FROM m_sales s inner join t_salesdetail sd ";
+    $aryQuery[] = "on s.lngsalesno = sd.lngsalesno ";
+    $aryQuery[] = "WHERE strsalescode='" . $record["strsalescode"] . "' ";
+    $aryQuery[] = "and lngsalesdetailno=" . $record["lngsalesdetailno"] . " ";
+    $aryQuery[] = "order by s.lngsalesno desc";
 
     // クエリを平易な文字列に変換
     $strQuery = implode("\n", $aryQuery);
@@ -605,15 +623,29 @@ foreach ($records as $i => $record) {
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
     // 検索件数がありの場合
     if ($lngResultNum > 0) {
-        $maxSalesInfo = $objDB->fetchArray($lngResultID, 0);
-        // 該当仕入のリビジョン番号<0の場合、削除済となる
-        if ($maxSalesInfo["lngrevisionno"] < 0) {
-            $deletedFlag = true;
+        if ($lngResultNum > 1) {
+            $historyFlag = true;
         }
-        if ($maxSalesInfo["lngsalesno"] == $record["lngsalesno"]) {
-            $isMaxSales = true;
+        for ($j = 0; $j < $lngResultNum; $j++) {
+            if ($j == 0) {
+                $maxSalesInfo = $objDB->fetchArray($lngResultID, $j);
+                // 該当製品のリビジョン番号<0の場合、削除済となる
+                if ($maxSalesInfo["lngrevisionno"] < 0) {
+                    $deletedFlag = true;
+                }
+                if ($maxSalesInfo["lngsalesno"] == $record["lngsalesno"]) {
+                    $isMaxSales = true;
+                }
+            } else {
+                $salesInfo = $objDB->fetchArray($lngResultID, $j);
+                if ($revisionNos == "") {
+                    $revisionNos = $salesInfo["lngrevisionno"];
+                } else {
+                    $revisionNos = $revisionNos . "," . $salesInfo["lngrevisionno"];
+                }
+            }
         }
-    }
+    } 
 
     // 背景色設定
     if ($record["lngrevisionno"] < 0) {
@@ -624,13 +656,24 @@ foreach ($records as $i => $record) {
         $bgcolor = "background-color: #FEEF8B;";
     }
 
-    $index = $i + 1;
-
     // tbody > tr要素作成
     $trBody = $doc->createElement("tr");
+    if (!$isMaxSales) {
+        $trBody->setAttribute("id", $record["strsalescode"] . "_" . $record["lngsalesdetailno"]. "_" . $record["lngrevisionno"]);
+        $trBody->setAttribute("style", "display: none;");
+    } else {
+        $trBody->setAttribute("id", $record["strsalescode"]. "_" . $record["lngsalesdetailno"]);
+    }
 
     // 項番
-    $tdIndex = $doc->createElement("td", $index);
+    if ($isMaxSales) {
+        $index = $index + 1;
+        $subnum = 1;
+        $tdIndex = $doc->createElement("td", $index);
+    } else {
+        $subindex = $index . "." . ($subnum++);
+        $tdIndex = $doc->createElement("td", $subindex);
+    }
     $tdIndex->setAttribute("class", $exclude);
     $tdIndex->setAttribute("style", $bgcolor);
     $trBody->appendChild($tdIndex);
@@ -654,6 +697,27 @@ foreach ($records as $i => $record) {
         }
         // tr > td
         $trBody->appendChild($tdDetail);
+    }
+
+    // 履歴項目を表示
+    if ($existsHistory) {
+        // 履歴セル
+        $tdHistory = $doc->createElement("td");
+        $tdHistory->setAttribute("class", $exclude);
+        $tdHistory->setAttribute("style", $bgcolor);
+
+        if ($isMaxSales and $historyFlag) {
+            // 履歴ボタン
+            $imgHistory = $doc->createElement("img");
+            $imgHistory->setAttribute("src", "/img/type01/so/renew_off_bt.gif");
+            $imgHistory->setAttribute("id", $record["strsalescode"]. "_" . $record["lngsalesdetailno"]);
+            $imgHistory->setAttribute("revisionnos", $revisionNos);
+            $imgHistory->setAttribute("class", "history button");
+            // td > img
+            $tdHistory->appendChild($imgHistory);
+        }
+        // tr > td
+        $trBody->appendChild($tdHistory);
     }
 
     // TODO 要リファクタリング

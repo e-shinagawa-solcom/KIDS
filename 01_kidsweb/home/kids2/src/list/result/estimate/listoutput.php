@@ -103,8 +103,6 @@ else
 {
 	// 見積原価マスタデータ取得
 	$aryEstimateData = fncGetEstimate( $aryData["strReportKeyCode"], $objDB );
-
-
 	// コメント（バッファ）取得
 	$strBuffRemark	= $aryEstimateData["strRemark"];
 
@@ -113,9 +111,6 @@ else
 	//受注価額を出すために実績納価/curReceiveProductPriceを引数に追加
 	$aryDefaultValue = fncGetEstimateDefaultValue( $aryData["strReportKeyCode"], $aryEstimateData["lngReceiveProductQuantity"], 
 		$aryEstimateData["lngProductionQuantity"], $aryEstimateData["curProductPrice"], $aryRate, $objDB, $aryEstimateData["curReceiveProductPrice"]);
-	//old
-	//$aryDefaultValue = fncGetEstimateDefaultValue( $aryData["strReportKeyCode"], $aryEstimateData["lngReceiveProductQuantity"], 
-	//	$aryEstimateData["lngProductionQuantity"], $aryEstimateData["curProductPrice"], $aryRate, $objDB );
 
 	list ( $aryDetail, $aryOrderDetail ) = fncGetEstimateDetail( $aryData["strReportKeyCode"], $aryEstimateData["strProductCode"], $aryRate, $aryDefaultValue, $objDB );
 

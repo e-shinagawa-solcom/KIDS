@@ -409,12 +409,10 @@ if (!array_key_exists("admin", $optionColumns)) {
     $aryQuery[] = "  ) ";
 }
 $aryQuery[] = "ORDER BY";
-$aryQuery[] = "  lngStockNo DESC";
+$aryQuery[] = " strStockCode, lngstockDetailNo, lngStockNo DESC";
 
 // クエリを平易な文字列に変換
 $strQuery = implode("\n", $aryQuery);
-// echo $strQuery;
-// return;
 
 // 値をとる =====================================
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
@@ -492,6 +490,8 @@ $displayColumns = array_change_key_case($displayColumns, CASE_LOWER);
 $existsDetail = array_key_exists("btndetail", $displayColumns);
 // 修正カラムを表示
 $existsFix = array_key_exists("btnfix", $displayColumns);
+// 履歴カラムを表示
+$existsHistory = array_key_exists("btnhistory", $displayColumns);
 // 削除を表示
 $existsDelete = array_key_exists("btndelete", $displayColumns);
 // 無効カラムを表示
@@ -537,7 +537,6 @@ if ($existsDetail) {
     // ヘッダに追加
     $trHead->appendChild($thDetail);
 }
-
 // 修正を表示
 if ($existsFix) {
     // 確定カラム
@@ -546,7 +545,14 @@ if ($existsFix) {
     // ヘッダに追加
     $trHead->appendChild($thFix);
 }
-
+// 履歴を表示
+if ($existsHistory) {
+    // 履歴カラム
+    $thHistory = $doc->createElement("th", toUTF8("履歴"));
+    $thHistory->setAttribute("class", $exclude);
+    // ヘッダに追加
+    $trHead->appendChild($thHistory);
+}
 $aryTableHeaderName = array();
 $aryTableHeaderName["dtminsertdate"] = "登録日";
 $aryTableHeaderName["dtmappropriationdate"] = "仕入日";
@@ -623,31 +629,51 @@ foreach ($records as $i => $record) {
     $revisedFlag = false;
     // 最新仕入かどうかのフラグ
     $isMaxStock = false;
+    // 履歴有無フラグ
+    $historyFlag = false;
+    // リビジョン番号
+    $revisionNos = "";
 
     // 同じ仕入NOの最新仕入データのリビジョン番号を取得する
     $aryQuery[] = "SELECT";
-    $aryQuery[] = " lngstockno, lngrevisionno ";
-    $aryQuery[] = "FROM m_stock ";
-    $aryQuery[] = "WHERE lngstockno = (select max(lngstockno) from m_stock where strstockcode='" . $record["strstockcode"] . "')";
+    $aryQuery[] = " s.lngstockno, s.lngrevisionno ";
+    $aryQuery[] = "FROM m_stock s inner join t_stockdetail sd ";
+    $aryQuery[] = "on s.lngstockno = sd.lngstockno ";
+    $aryQuery[] = "WHERE strstockcode ='" . $record["strstockcode"] . "' ";
+    $aryQuery[] = "and lngstockdetailno =" . $record["lngstockdetailno"] . " ";
+    $aryQuery[] = "order by s.lngstockno desc ";
 
     // クエリを平易な文字列に変換
     $strQuery = implode("\n", $aryQuery);
-
+    
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
-    // 検索件数がありの場合
-    if ($lngResultNum > 0) {
-        $maxStockInfo = $objDB->fetchArray($lngResultID, 0);
-        // 該当仕入のリビジョン番号<0の場合、削除済となる
-        if ($maxStockInfo["lngrevisionno"] < 0) {
-            $deletedFlag = true;
+     // 検索件数がありの場合
+     if ($lngResultNum > 0) {
+        if ($lngResultNum > 1) {
+            $historyFlag = true;
         }
+        for ($j = 0; $j < $lngResultNum; $j++) {
+            if ($j == 0) {
+                $maxStockInfo = $objDB->fetchArray($lngResultID, $j);
+                // 該当製品のリビジョン番号<0の場合、削除済となる
+                if ($maxStockInfo["lngrevisionno"] < 0) {
+                    $deletedFlag = true;
+                }
 
-        if ($maxStockInfo["lngrevisionno"] != 0) {
-            $revisedFlag = true;
-        }
-
-        if ($maxStockInfo["lngstockno"] == $record["lngstockno"]) {
-            $isMaxStock = true;
+                if ($maxStockInfo["lngrevisionno"] != 0) {
+                    $revisedFlag = true;
+                }
+                if ($maxStockInfo["lngstockno"] == $record["lngstockno"]) {
+                    $isMaxStock = true;
+                }
+            } else {
+                $stockInfo = $objDB->fetchArray($lngResultID, $j);
+                if ($revisionNos == "") {
+                    $revisionNos = $stockInfo["lngrevisionno"];
+                } else {
+                    $revisionNos = $revisionNos . "," . $stockInfo["lngrevisionno"];
+                }
+            }
         }
     }
 
@@ -656,19 +682,30 @@ foreach ($records as $i => $record) {
     // 背景色設定
     if ($record["lngrevisionno"] < 0) {
         $bgcolor = "background-color: #B3E0FF;";
-    } else if ($isMaxSales) {
+    } else if ($isMaxStock) {
         $bgcolor = "background-color: #FFB2B2;";
     } else {
         $bgcolor = "background-color: #FEEF8B;";
     }
 
-    $index = $i + 1;
-
     // tbody > tr要素作成
     $trBody = $doc->createElement("tr");
+    if (!$isMaxStock) {
+        $trBody->setAttribute("id", $record["strstockcode"]. "_" . $record["lngstockdetailno"]. "_" . $record["lngrevisionno"]);
+        $trBody->setAttribute("style", "display: none;");
+    } else {
+        $trBody->setAttribute("id", $record["strstockcode"]. "_" . $record["lngstockdetailno"]);
+    }
 
     // 項番
-    $tdIndex = $doc->createElement("td", $index);
+    if ($isMaxStock) {
+        $index = $index + 1;
+        $subnum = 1;
+        $tdIndex = $doc->createElement("td", $index);
+    } else {
+        $subindex = $index . "." . ($subnum++);
+        $tdIndex = $doc->createElement("td", $subindex);
+    }
     $tdIndex->setAttribute("class", $exclude);
     $tdIndex->setAttribute("style", $bgcolor);
     $trBody->appendChild($tdIndex);
@@ -714,6 +751,28 @@ foreach ($records as $i => $record) {
         // tr > td
         $trBody->appendChild($tdFix);
     }
+    
+    // 履歴項目を表示
+    if ($existsHistory) {
+        // 履歴セル
+        $tdHistory = $doc->createElement("td");
+        $tdHistory->setAttribute("class", $exclude);
+        $tdHistory->setAttribute("style", $bgcolor);
+
+        if ($isMaxStock and $historyFlag) {
+            // 履歴ボタン
+            $imgHistory = $doc->createElement("img");
+            $imgHistory->setAttribute("src", "/img/type01/so/renew_off_bt.gif");
+            $imgHistory->setAttribute("id", $record["strstockcode"]. "_" . $record["lngstockdetailno"]);
+            $imgHistory->setAttribute("revisionnos", $revisionNos);
+            $imgHistory->setAttribute("class", "history button");
+            // td > img
+            $tdHistory->appendChild($imgHistory);
+        }
+        // tr > td
+        $trBody->appendChild($tdHistory);
+    }
+
     // TODO 要リファクタリング
     // 指定されたテーブル項目のセルを作成する
     foreach ($aryTableHeaderName as $key => $value) {

@@ -348,12 +348,10 @@ if (!array_key_exists("admin", $optionColumns)) {
     $aryQuery[] = "  ) ";
 }
 $aryQuery[] = "ORDER BY";
-$aryQuery[] = "  lngReceiveNo DESC";
+$aryQuery[] = " r.strReceiveCode, lngReceiveDetailNo, r.lngReceiveNo DESC";
 
 // クエリを平易な文字列に変換
 $strQuery = implode("\n", $aryQuery);
-// echo $strQuery;
-// return;
 // 値をとる =====================================
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 // 検索件数がありの場合
@@ -431,7 +429,7 @@ $existsDetail = array_key_exists("btndetail", $displayColumns);
 // 確定カラムを表示
 $existsDecide = array_key_exists("btndecide", $displayColumns);
 // 履歴カラムを表示
-$existsRecord = array_key_exists("btnrecord", $displayColumns);
+$existsHistory = array_key_exists("btnhistory", $displayColumns);
 // 確定取消カラムを表示
 $existsCancel = array_key_exists("btncancel", $displayColumns);
 
@@ -482,12 +480,12 @@ if ($existsDecide) {
 }
 
 // 履歴項目を表示
-if ($existsRecord) {
-    // プレビューカラム
-    $thRecord = $doc->createElement("th", toUTF8("履歴"));
-    $thRecord->setAttribute("class", $exclude);
+if ($existsHistory) {
+    // 履歴カラム
+    $thHistory = $doc->createElement("th", toUTF8("履歴"));
+    $thHistory->setAttribute("class", $exclude);
     // ヘッダに追加
-    $trHead->appendChild($thRecord);
+    $trHead->appendChild($thHistory);
 }
 
 $aryTableHeaderName = array();
@@ -545,52 +543,79 @@ foreach ($records as $i => $record) {
     $revisedFlag = false;
     // 最新受注かどうかのフラグ
     $isMaxReceive = false;
+    // 履歴有無フラグ
+    $historyFlag = false;
+    // リビジョン番号
+    $revisionNos = "";
 
     // 同じ受注NOの最新受注データのリビジョン番号を取得する
     $aryQuery[] = "SELECT";
-    $aryQuery[] = " lngreceiveno, lngrevisionno ";
-    $aryQuery[] = "FROM m_receive ";
-    $aryQuery[] = "WHERE lngreceiveno = (select max(lngreceiveno) from m_receive where strreceivecode='" . $record["strreceivecode"] . "')";
+    $aryQuery[] = " r.lngreceiveno, r.lngrevisionno ";
+    $aryQuery[] = "FROM m_receive r inner join t_receivedetail rd ";
+    $aryQuery[] = "on r.lngreceiveno = rd.lngreceiveno ";
+    $aryQuery[] = "WHERE strreceivecode='" . $record["strreceivecode"] . "' ";
+    $aryQuery[] = "and lngreceivedetailno=" . $record["lngreceivedetailno"] . " ";
+    $aryQuery[] = "order by r.lngreceiveno desc";
 
     // クエリを平易な文字列に変換
     $strQuery = implode("\n", $aryQuery);
-    // echo $strQuery;
-    // return;
-    
+
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
     // 検索件数がありの場合
     if ($lngResultNum > 0) {
-        $maxReceiveInfo = $objDB->fetchArray($lngResultID, 0);
-        // 該当仕入のリビジョン番号<0の場合、削除済となる
-        if ($maxReceiveInfo["lngrevisionno"] < 0) {
-            $deletedFlag = true;
+        if ($lngResultNum > 1) {
+            $historyFlag = true;
         }
-
-        if ($maxReceiveInfo["lngrevisionno"] != 0) {
-            $revisedFlag = true;
-        }
-
-        if ($maxReceiveInfo["lngreceiveno"] == $record["lngreceiveno"]) {
-            $isMaxReceive = true;
+        for ($j = 0; $j < $lngResultNum; $j++) {
+            if ($j == 0) {
+                $maxReceiveInfo = $objDB->fetchArray($lngResultID, $j);
+                // 該当製品のリビジョン番号<0の場合、削除済となる
+                if ($maxReceiveInfo["lngrevisionno"] < 0) {
+                    $deletedFlag = true;
+                }
+                if ($maxReceiveInfo["lngrevisionno"] != 0) {
+                    $revisedFlag = true;
+                }
+                if ($maxReceiveInfo["lngreceiveno"] == $record["lngreceiveno"]) {
+                    $isMaxReceive = true;
+                }
+            } else {
+                $receiveInfo = $objDB->fetchArray($lngResultID, $j);
+                if ($revisionNos == "") {
+                    $revisionNos = $receiveInfo["lngrevisionno"];
+                } else {
+                    $revisionNos = $revisionNos . "," . $receiveInfo["lngrevisionno"];
+                }
+            }
         }
     }
-    
+
     // 背景色設定
     if ($record["lngrevisionno"] < 0) {
         $bgcolor = "background-color: #B3E0FF;";
-    } else if ($isMaxSales) {
+    } else if ($isMaxReceive) {
         $bgcolor = "background-color: #FFB2B2;";
-    } else {        
+    } else {
         $bgcolor = "background-color: #FEEF8B;";
     }
 
-    $index = $i + 1;
-
     // tbody > tr要素作成
     $trBody = $doc->createElement("tr");
+    $trBody->setAttribute("id", $record["strreceivecode"]. "_" . $record["lngreceivedetailno"]);
+    if (!$isMaxReceive) {
+        $trBody->setAttribute("id", $record["strreceivecode"] . "_" . $record["lngreceivedetailno"]. "_" . $record["lngrevisionno"]);
+        $trBody->setAttribute("style", "display: none;");
+    }
 
     // 項番
-    $tdIndex = $doc->createElement("td", $index);
+    if ($isMaxReceive) {
+        $index = $index + 1;
+        $subnum = 1;
+        $tdIndex = $doc->createElement("td", $index);
+    } else {
+        $subindex = $index . "." . ($subnum++);
+        $tdIndex = $doc->createElement("td", $subindex);
+    }
     $tdIndex->setAttribute("class", $exclude);
     $tdIndex->setAttribute("style", $bgcolor);
     $trBody->appendChild($tdIndex);
@@ -638,27 +663,24 @@ foreach ($records as $i => $record) {
     }
 
     // 履歴項目を表示
-    if ($existsRecord) {
-        // 履歴ボタンの表示
-        if (array_key_exists("admin", $optionColumns)) {
-            // 履歴セル
-            $tdRecord = $doc->createElement("td");
-            $tdRecord->setAttribute("class", $exclude);
-            $tdRecord->setAttribute("style", $bgcolor);
+    if ($existsHistory) {
+        // 履歴セル
+        $tdHistory = $doc->createElement("td");
+        $tdHistory->setAttribute("class", $exclude);
+        $tdHistory->setAttribute("style", $bgcolor);
+
+        if ($isMaxReceive and $historyFlag) {
             // 履歴ボタン
-            $imgRecord = $doc->createElement("img");
-            $imgRecord->setAttribute("src", "/img/type01/so/renew_off_bt.gif");
-            $imgRecord->setAttribute("id", $record["lngreceiveno"]);
-            $imgRecord->setAttribute("class", "record button");
+            $imgHistory = $doc->createElement("img");
+            $imgHistory->setAttribute("src", "/img/type01/so/renew_off_bt.gif");
+            $imgHistory->setAttribute("id", $record["strreceivecode"]. "_". $record["lngreceivedetailno"]);
+            $imgHistory->setAttribute("revisionnos", $revisionNos);
+            $imgHistory->setAttribute("class", "history button");
             // td > img
-            $tdRecord->appendChild($imgRecord);
-            // tr > td
-            $trBody->appendChild($tdRecord);
-        } else {
-            $td = $doc->createElement("td", toUTF8("〇"));
-            $td->setAttribute("style", $bgcolor);
-            $trBody->appendChild($td);
+            $tdHistory->appendChild($imgHistory);
         }
+        // tr > td
+        $trBody->appendChild($tdHistory);
     }
 
     // TODO 要リファクタリング
