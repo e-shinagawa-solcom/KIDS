@@ -32,7 +32,7 @@
 	require (LIB_FILE);
 	require (LIB_ROOT . "clscache.php" );
 	require (SRC_ROOT . "po/cmn/lib_pos.php");
-	require (SRC_ROOT . "po/cmn/column.php");
+	require (SRC_ROOT . "po/cmn/column2.php");
 	require (LIB_DEBUGFILE);
 
 	// DB接続
@@ -51,13 +51,11 @@
 	$from = UtilSearchForm::extractArrayByFrom($_REQUEST);
 	$to = UtilSearchForm::extractArrayByTo($_REQUEST);
 	$searchValue = $_REQUEST;
-	// $adminMode = $_REQUEST["admin-mode"] ? true : false;
 	
 	$isDisplay=array_keys($isDisplay);
 	$isSearch=array_keys($isSearch);
 	$aryData['ViewColumn']=$isDisplay;
 	$aryData['SearchColumn']=$isSearch;
-	$aryData['Admin'] = $_REQUEST["IsDisplay_btnAdmin"];
 	foreach($from as $key=> $item){
 		$aryData[$key.'From']=$item;
 	}
@@ -108,8 +106,8 @@
 	$objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
 	// 権限確認
-	// 502 発注管理（発注検索）
-	if ( !fncCheckAuthority( DEF_FUNCTION_PO2, $objAuth ) )
+	// 510 発注管理（発注書検索）
+	if ( !fncCheckAuthority( DEF_FUNCRION_PO10, $objAuth ) )
 	{
 		fncOutputError ( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 	}
@@ -120,63 +118,43 @@
 	$aryCheck["strSessionID"]			= "null:numenglish(32,32)";
 	$aryCheck["dtmInsertDateFrom"] 		= "date(/)";
 	$aryCheck["dtmInsertDateTo"]		= "date(/)";
-	$aryCheck["dtmOrderAppDateFrom"] 	= "date(/)";
-	$aryCheck["dtmOrderAppDateTo"]		= "date(/)";
-	$aryCheck["strOrderCodeFrom"]		= "ascii(0,10)";
-	$aryCheck["strOrderCodeTo"]			= "ascii(0,10)";
 	$aryCheck["lngInputUserCode"]		= "numenglish(0,3)";
 	$aryCheck["strInputUserName"]		= "length(0,50)";
-	$aryCheck["lngCustomerCode"]		= "numenglish(0,4)";
-	$aryCheck["strCustomerName"]		= "length(0,50)";
+	$aryCheck["From_dtmExpirationDate"] = "date(/)";
+	$aryCheck["To_dtmExpirationDate"]	= "date(/)";
+	$aryCheck["strOrderCode"]			= "ascii(0,10)";
+	$aryCheck["strProductCode"]			= "numenglish(0,5)";
+	$aryCheck["strProductName"]			= "length(0,100)";
 	$aryCheck["lngInChargeGroupCode"]	= "numenglish(0,2)";
 	$aryCheck["strInChargeGroupName"]	= "length(0,50)";
 	$aryCheck["lngInChargeUserCode"]	= "numenglish(0,3)";
 	$aryCheck["strInChargeUserName"]	= "length(0,50)";
-	// 2004.04.14 suzukaze update start
-	//$aryCheck["lngOrderStatusCode"]		= "length(0,50)";
-	// 2004.04.14 suzukaze update end
+	$aryCheck["lngCustomerCode"]		= "numenglish(0,4)";
+	$aryCheck["strCustomerName"]		= "length(0,50)";
+	$aryCheck["lngDeliveryPlaceCode"]	= "numenglish(0,4)";
+	$aryCheck["strDeliveryPlaceName"]	= "length(0,50)";
+	$aryCheck["lngMonetaryunitCode"]	= "numenglish(0,3)";
+	$aryCheck["lngMonetaryrateCode"]	= "numenglish(0,3)";
 	$aryCheck["lngPayConditionCode"]	= "numenglish(0,3)";
-	$aryCheck["dtmExpirationDateFrom"] 	= "date(/)";
-	$aryCheck["dtmExpirationDateTo"]	= "date(/)";
-	$aryCheck["strProductCode"]			= "numenglish(0,5)";
-	$aryCheck["strProductName"]			= "length(0,100)";
-	$aryCheck["lngStockSubjectCode"]	= "ascii(0,7)";
-	$aryCheck["lngStockItemCode"]		= "ascii(0,7)";
 
 	// 文字列チェック
 	$aryCheckResult = fncAllCheck( $aryData, $aryCheck );
 	fncPutStringCheckError( $aryCheckResult, $objDB );
 
-	// 502 発注管理（発注検索）
-	if ( !fncCheckAuthority( DEF_FUNCTION_PO2, $objAuth ) )
+	// 511 発注管理（発注書検索　管理モード）
+	if ( fncCheckAuthority( DEF_FUNCRION_PO11, $objAuth ) and isset( $aryData["Admin"]) )
 	{
-		fncOutputError ( 9052, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
+		$aryUserAuthority["Admin"] = 1;		// 511 管理モードでの検索
 	}
-
-	// 503 発注管理（発注検索　管理モード）
-	if ( fncCheckAuthority( DEF_FUNCTION_PO3, $objAuth ) and isset( $aryData["Admin"]) )
+	// 512 発注管理（発注書修正）
+	if ( fncCheckAuthority( DEF_FUNCRION_PO12, $objAuth ) )
 	{
-		$aryUserAuthority["Admin"] = 1;		// 503 管理モードでの検索
-	}
-	// 504 発注管理（詳細表示）
-	if ( fncCheckAuthority( DEF_FUNCTION_PO4, $objAuth ) )
-	{
-		$aryUserAuthority["Detail"] = 1;	// 504 詳細表示
-	}
-	// 505 発注管理（修正）
-	if ( fncCheckAuthority( DEF_FUNCTION_PO5, $objAuth ) )
-	{
-		$aryUserAuthority["Fix"] = 1;		// 505 修正
-	}
-	// 506 発注管理（削除）
-	if ( fncCheckAuthority( DEF_FUNCTION_PO6, $objAuth ) )
-	{
-		$aryUserAuthority["Delete"] = 1;	// 506 削除
+		$aryUserAuthority["Edit"] = 1;		// 512 修正
 	}
 	
 	// 表示項目  $aryViewColumnに格納
 	// $aryViewColumn=$isDisplay;
-	$aryViewColumn=fncResortSearchColumn($isDisplay);
+	$aryViewColumn=fncResortSearchColumn2($isDisplay);
 	// 検索項目  $arySearchColumnに格納
 	$arySearchColumn=$isSearch;
 
@@ -191,7 +169,7 @@
 	reset($aryData);
 	
 	// 検索条件に一致する発注コードを取得するSQL文の作成
-	$strQuery = fncGetSearchPurchaseSQL( $aryViewColumn, $arySearchColumn, $aryData, $objDB, "", 0, FALSE );
+	$strQuery = fncGetSearchPurcheseOrderSQL( $aryViewColumn, $arySearchColumn, $aryData, $objDB, "", 0, FALSE );
 	// 値をとる =====================================
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
@@ -265,7 +243,7 @@
 	}
 
 	// テーブル構成で検索結果を取得、ＨＴＭＬ形式で出力する
-	$aryHtml["strHtml"] = fncSetPurchaseTable ( $aryResult, $aryViewColumn, $aryData, $aryUserAuthority, $aryTytle, $objDB, $objCache, $aryTableViewName );
+	$aryHtml["strHtml"] = fncSetPurchaseOrderTable ( $aryResult, $aryViewColumn, $aryData, $aryUserAuthority, $aryTytle, $objDB, $objCache, $aryTableViewName );
 
 	// POSTされたデータをHiddenにて設定する
 	unset($ary_keys);
@@ -317,7 +295,7 @@
 
 	// テンプレート読み込み
 	$objTemplate = new clsTemplate();
-	$objTemplate->getTemplate( "/po/result/po_search_result.html" );
+	$objTemplate->getTemplate( "/po/result2/po_search_result.html" );
 	
 	// テンプレート生成
 	$objTemplate->replace( $aryHtml );

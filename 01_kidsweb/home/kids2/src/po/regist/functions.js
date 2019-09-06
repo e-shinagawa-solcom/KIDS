@@ -60,7 +60,7 @@ function ShowTaxStatus(obj1)
 
 ////////////////////////// AUTO FOCUS //////////////////////////
 function autoFocus1() {
-  document.all.dtmOrderAppDate.focus();
+  document.all.dtmExpirationDate.focus();
 }
 
 function autoFocus2() {

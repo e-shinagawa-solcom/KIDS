@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------------------
 /**
-*       発注管理  検索画面
+*       発注管理  発注書検索画面
 *
 *
 *       @package    K.I.D.S.
@@ -63,11 +63,11 @@ if ( !fncCheckAuthority( DEF_FUNCTION_PO0, $objAuth ) )
     fncOutputError ( 9052, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
 
-// // 501 発注管理（発注登録）
-// if ( fncCheckAuthority( DEF_FUNCTION_PO1, $objAuth ) )
-// {
-// 	$aryData["strRegistURL"]   = "regist/index.php?strSessionID=" . $aryData["strSessionID"];
-// }
+// 501 発注管理（発注登録）
+if ( fncCheckAuthority( DEF_FUNCTION_PO1, $objAuth ) )
+{
+	$aryData["strRegistURL"]   = "regist/index.php?strSessionID=" . $aryData["strSessionID"];
+}
 
 // 502 発注管理（発注検索）
 if ( fncCheckAuthority( DEF_FUNCTION_PO2, $objAuth ) )
@@ -107,13 +107,6 @@ else
 {
 	$aryData["btnDetail_visibility"] = "hidden";
 	$aryData["btnDetailVisible"] = "";
-}
-
-// 管理者モード
-if($objAuth->AuthorityGroupCode <= 3){
-	$aryData["displayMode"] = "inline";
-} else {
-	$aryData["displayMode"] = "none";
 }
 
 // 仕入科目
@@ -160,7 +153,7 @@ fncPutStringCheckError( $aryResult, $objDB );
 $aryData["lngFunctionCode"] = DEF_FUNCTION_PO2;
 
 // テンプレート読み込み
-echo fncGetReplacedHtmlWithBase("search/base_search.html", "po/search/po_search.tmpl", $aryData ,$objAuth );
+echo fncGetReplacedHtmlWithBase("search/base_search.html", "po/search2/po_search.tmpl", $aryData ,$objAuth );
 
 $objDB->close();
 

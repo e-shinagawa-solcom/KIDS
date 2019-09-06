@@ -17,6 +17,8 @@
 	xxxxx
 --------------------------------------------------------------------------- -->
 <header1>
+<script src="/cmn/jquery/jquery-3.1.0.js"></script>
+<script src="/cmn/jquery/ui/jquery-ui.min-1.12.0.js"></script>
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/images.js"></script>
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutbase.js"></script>
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutcommon.js"></script>
@@ -41,75 +43,7 @@
 <link rel="stylesheet" type="text/css" media="screen" href="_%strCssName%_">
 <link rel="stylesheet" type="text/css" media="screen" href="_%strErrorCssName%_">
 <script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
-<script type="text/javascript" language="javascript">
-	function fncPOSubmit( obj )
-	{
-		window.DLwin.fncDtRegistRecord();
-
-		return false;
-/*
-		// 「承認なし」の場合の判定 -> 「承認なし」の場合はボタン押下禁止
-		for( i=0; i < obj.options.length; i++ )
-		{
-			if( obj.options[i].text == '承認なし' && i == 0)
-			{
-				break;
-			}
-			else
-			{
-				window.DLwin.fncDtRegistRecord();
-				break;
-			}
-		}
-*/
-	}
-
-
-
-	var WinCnt = 0;
-
-	// 承認ルートボタン押下処理
-	function fncOpenWFRoot( obj )
-	{
-		// 「承認なし」の場合の判定 -> 「承認なし」の場合はボタン押下禁止
-		for( i=0; i < obj.options.length; i++ )
-		{
-			if( obj.options[i].text == '承認なし' )
-			{
-				if( i == 0 ) return false;
-			}
-		}
-
-		if( WinCnt == 0 )
-		{
-			WFRootFrame.style.visibility = 'visible';
-			WFrootBt.innerHTML = darkgrayOpenBt3;
-			WinCnt = 1;
-		}
-		else if( WinCnt == 1 )
-		{
-			WFRootFrame.style.visibility = 'hidden';
-			WFrootBt.innerHTML = darkgrayOpenBt1;
-			WinCnt = 0;
-		}
-
-		return false;
-	}
-
-	function fncRedirectOpen( obj )
-	{
-		if( WinCnt == 1 )
-		{
-			fncOpenWFRoot();
-		}
-	}
-	
-	function fncOnloadPayConditionCode( _%lngCustomerCode%_ )//ロード時に仕入先コードがセットされた場合
-	{
-		this.objDataSourceSetting.ondatasetcomplete();
-	}
-
-</script>
+<script type="text/javascript" language="javascript" src="/po/regist/regist.js"></script>
 </header3>
 
 
@@ -117,7 +51,6 @@
 initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutMsw(); initLayoutPunit(); initLayoutDate(); autoFocus1(); initLayoutError1( ErrInputA ); initLayoutError2( ErrInputB ); fncRegistrationConfirm( window.HSO , window.DSO , '/result/common.html' , '/result/regist_ifrm.html' , 'ResultIframeRenew' , 'NO' , _%lngLanguageCode%_ , document.all.lngRegistConfirm.value ); GetlngLanguageCode( _%lngLanguageCode%_ ); fncDetailErrorOpen( '_%strErrorMessage%_' ); Loading();
 </bodyonload>
 </config>
-
 
 <p id="Preload">
 	<iframe id="PreloadFrm" name="PreloadWin" frameborder="0" src="/preload/index.html" onload="fncObjectResize( this , 0 , 0 );"></iframe>
@@ -153,195 +86,17 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutMsw(); initLayout
 <!-- //////////////////////////////////// END MAIN TITLE //////////////////////////////////// -->
 
 
-<OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting" WIDTH="0" HEIGHT="0"></OBJECT>
-<Script for="objDataSourceSetting" event="ondatasetcomplete">
-subLoadMasterSetting(this.recordset,0); // /cmn/masterlib.js内
-// 20070905 matsuki update start
-// 仕入先が海外企業である場合には通貨をドルにセット
-// this.recordset.Fields('name2') は m_company の bytcompanyforeignflag が収納されている
-	if(document.all.strCustomerName.value == '')
-	{ // 検索結果がない場合
-		strMessage_J = "入力された仕入先コードは無効です。\n再入力するか、検索フォームを利用して任意の仕入先を選択して下さい。";
-		strMessage_E = "This 'Supplier' code is not avaiable. \nPlease comfirm the code or use [SUPPLIER SEARCH].";
-		
-		if( lngClickCode == 1 ) strAlert = strMessage_E; // 英語モード
-		if( lngClickCode == 0 ) strAlert = strMessage_J; // 日本語モード
-			 
-		alert(strAlert);
-	}
-	else
-	{
-		if (g_objLoadMasterOutForm[0].name == 'strCustomerName' )
-		{
-			//PayConditionDisabledFlg = new Boolean(); // 支払条件選択可能／不可能フラグ
-			//StockSubjectOptionDisabledFlg = new Boolean(); // 支払科目選択肢有効／無能フラグ
-			//デバッグ用document.all.strNote.value = location.href;
-			
-
-			if (this.recordset.Fields('name2') != '81') //81は日本
-			{
-				ChengelngMonetaryUnitCode = 1;//ドルに指定
-				PayConditionDisabledFlg = false; // 支払条件選択可能
-			}
-			else
-			{
-				ChengelngMonetaryUnitCode = 0; // 円に指定
-				PayConditionDisabledFlg = true; // 支払条件選択不可能
-			}
-
-			/* 通貨の設定 20080221 仕様取消
-			if( document.all.lngMonetaryUnitCode.selectedIndex != ChengelngMonetaryUnitCode ){
-				document.all.lngMonetaryUnitCode.selectedIndex = ChengelngMonetaryUnitCode;
-				document.all.lngMonetaryUnitCode.onchange();
-			}
-			*/
-
-
-			// 支払条件の設定
-			if( PayConditionDisabledFlg == true){
-				//PayConditionDisabledFlgが真、すなわち支払条件が固定される。その前に支払条件を - にセットしなおす
-				if( document.all.lngPayConditionCode.selectedIndex != 0 ){
-							document.all.lngPayConditionCode.selectedIndex = 0;
-							//document.all.lngPayConditionCode.selected = true;
-							document.all.lngPayConditionCode.fireEvent('onChange');
-				}
-			}
-
-			// 支払条件の設定
-			// 新規登録の場合のみ
-			if(document.all.strOrderCode.value == "")
-			{
-				document.all.lngPayConditionCode.outerHTML = objPayConditionDefault; // 一度初期状態に
-			}
-
-			o = new Array(document.all.lngPayConditionCode.options.length);
-			o =  document.all.lngPayConditionCode.options;
-
-
-			if(this.recordset.Fields('name2') != '81')
-			{ //海外企業
-				for( i=0; i < o.length; i++)
-				{
-					// [99 その他] を消す処理
-					if(o[i].value == '99'){
-//alert(o[i].value + '->'+ o[i].outerHTML);
-						// IE、Safari に対して
-						var c = document.createComment (); // コメントノードの作成
-						c.data = o[i].outerHTML;
-						o[i].parentNode.replaceChild (c, o[i]);
-						
-					}
-				}
-			}
-
-			// 支払条件選択可能／不可能切り替え
-			if(document.all.lngPayConditionCode.disabled != PayConditionDisabledFlg)
-				document.all.lngPayConditionCode.disabled = PayConditionDisabledFlg;
-
-
-
-
-			// 海外企業なら支払科目＝402 or 433
-			// そうでないなら支払科目から402と433を除く
-			// IE5まではoptions[i].disabled=trueでよかったがIE6sp2以降対応
-			// よってDOMで該当箇所をコメントで飛ばす
-			// 詳しくはhttp://www.tagindex.com/kakolog/q1bbs/2501/2988.html
-			
-			document.all.strStockSubjectCode.outerHTML = StockSubjectDefault; // 一度初期状態に
-			// innerだと先頭の<option>が欠けるのでouterごとhttp://chaichan.web.infoseek.co.jp/qa5500/qa5944.htm
-
-			o = new Array(document.all.strStockSubjectCode.options.length);
-
-			for( i=0; i < document.all.strStockSubjectCode.options.length; i++)
-			{
-				o[i] =  document.all.strStockSubjectCode.options[i]; // C
-			}
-
-			for( i=0; i < o.length; i++)
-			{
-				
-				if(this.recordset.Fields('name2') != '81')
-				{ //海外企業
-					if(o[i].value != '0' && o[i].value != '402' && o[i].value != '433'){
-						// IE、Safari に対して
-						var c = document.createComment (); // コメントノードの作成
-						c.data = o[i].outerHTML;
-						o[i].parentNode.replaceChild (c, o[i]);
-						
-					}
-				}
-				else if(this.recordset.Fields('name2') == '81')
-				{ //海外企業でない
-					if(o[i].value == '402' || o[i].value == '433'){
-						// IE、Safari に対して
-						var c = document.createComment (); // コメントノードの作成
-						c.data = o[i].outerHTML;
-						o[i].parentNode.replaceChild (c, o[i]);
-					}
-				}
-			} // 仕入科目の設定完了
-
-			// 海外企業の場合、初期値402となるのでonchangeを呼び出し
-			// ↓必要無いのでコメントアウト
-			// document.all.strStockSubjectCode.onchange();
-
-		}
-	}
-
-// 20070905 matsuki update end
-</Script>
-
-<OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSettingProductInfo" WIDTH="0" HEIGHT="0"></OBJECT>
-<Script for="objDataSourceSettingProductInfo" event="ondatasetcomplete">subLoadMasterSettings(this.recordset,1, window.DSO);
-</Script>
-
-<!--
-<OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting1" WIDTH="0" HEIGHT="0"></OBJECT>
-<Script for="objDataSourceSetting1" event="ondatasetcomplete">subLoadMasterSetting(this.recordset,1);
-</Script>
-
-<OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting2" WIDTH="0" HEIGHT="0"></OBJECT>
-<Script for="objDataSourceSetting2" event="ondatasetcomplete">subLoadMasterSetting(this.recordset,2);
-</Script>
--->
-
-<!-- 通貨＆仕入科目 チェック警告用オブジェクト、ロジック -->
-<OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSettingCheckAlert" WIDTH="0" HEIGHT="0"></OBJECT>
-<Script for="objDataSourceSettingCheckAlert" event="ondatasetcomplete">
-	subLoadMasterSetting(this.recordset, 20);
-	subLoadMasterCheckAlert(document.all.check_alert);
-</Script>
-
-<!-- 仕入科目 チェック警告用オブジェクト、ロジック 
-<OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSettingCheckAlert1" WIDTH="0" HEIGHT="0"></OBJECT>
-<Script for="objDataSourceSettingCheckAlert1" event="ondatasetcomplete">
-	subLoadMasterSetting(this.recordset, 21);
-	subLoadMasterCheckAlert(document.all.check_alert1);
-	if(document.all.strStockSubjectCode.value == 401) document.all.strStockItemCode.value = 99;
-</Script>
--->
 <!-- 通貨＆仕入科目 チェック警告 -->
 <input type="hidden" name="check_alert" value="">
 <input type="hidden" name="check_alert1" value="">
 
-<!-- 計上日・締め済み チェック警告用オブジェクト、ロジック -->
-<OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSettingCheckAlertAppDate" WIDTH="0" HEIGHT="0"></OBJECT>
-<Script for="objDataSourceSettingCheckAlertAppDate" event="ondatasetcomplete">
-	subLoadMasterSetting(this.recordset, 9);
-	subLoadMasterCheckAlert(document.all.check_alert_appdate);
-	if(document.all.check_alert_appdate.value)
-	{
-		document.all.HSO.dtmOrderAppDate.value='';
-		document.all.HSO.dtmOrderAppDate.focus();
-	}
-</Script>
 <!-- 計上日・締め済み チェック警告 -->
 <input type="hidden" name="check_alert_appdate" value="">
 
 <!-- /////////////////////////////////// START NAVIGATION /////////////////////////////////// -->
-<span id="NaviButton" style="visibility:_%strBaseVisibilityName%_;"></span>
+<span id="NaviButton" style="left:10px;top:96px;visibility:_%strBaseVisibilityName%_;"></span>
 
-<p id="Navigations" onmouseout="NavigationOFF( Navigations , NaviButton );">
+<p id="Navigations" style="left: 27px;top: 96px;" onmouseout="NavigationOFF( Navigations , NaviButton );">
 <span id="Navi">
 	<iframe id="NaviIfrm" name="NAVIwin" frameborder="0" scrolling="no" src="/navi/index.php?strSessionID=_%strSessionID%_&strNaviCode=po-31111"></iframe>
 </span>
@@ -366,108 +121,245 @@ subLoadMasterSetting(this.recordset,0); // /cmn/masterlib.js内
 <!-- END BOTTOM -->
 
 <!-- START QUERY BUTTON -->
-<span id="SegAClearBt" onclick="fncResetFrm( window.HSO );"></span>
+<!-- <span id="SegAClearBt" onclick="fncResetFrm( window.HSO );"></span> -->
 <!-- END QUERY BUTTON -->
+
+<!-- 検索条件入力ボタン -->
+<!--
+<span id="SearchBt">
+	<a href="#">
+		<img  src="/img/type01/cmn/querybt/blown_process_off_ja_bt(1).gif" alt="" style="width: 78px; height: 20px;">
+	</a> 
+</span>
+-->
+
+<!-- 確定ボタン -->
+<span id="FixBt">
+	<a href="#">
+		<img src="/img/type01/cmn/querybt/add_blown_off_ja_bt(2).gif" alt="" style="width: 78px; height: 20px;">
+	</a>
+</span>
+
+<!-- 削除ボタン -->
+<span id="AddBt">
+	<a href="#">
+		<img src="/img/type01/cmn/querybt/delete_blown_off_ja_bt.gif" alt="" style="width: 78px; height: 20px;">
+	</a>
+</span>
+
+<!-- 全削除ボタン -->
+<span id="AlladdBt">
+	<a href="#">
+		<img  src="/img/type01/cmn/querybt/all_delete_blown_off_ja_bt.gif" alt="" style="width: 78px; height: 20px;">
+	</a>
+</span>
+
+<!-- 明細行替えボタン -->
+<!-- 最上行へ移動 -->
+<span id="selectup">
+	<img onclick="" src="/img/type01/cmn/querybt/select_changeup.gif"  alt="" style="width: 25px; height: 25px;">
+</span>
+<!-- 上の行へ移動 -->
+<span id="selectup1">
+	<img onclick="" src="/img/type01/cmn/querybt/select_changeup1.gif" alt="" style="width: 41px; height: 25px;">
+</span>
+<!-- 下の行へ移動 -->
+<span id="selectdown1">
+	<img onclick="" src="/img/type01/cmn/querybt/select_changedown1.gif" alt="" style="width: 41px; height: 25px;">
+</span>
+<!-- 最下行へ移動 -->
+<span id="selectdown">
+	<img onclick="" src="/img/type01/cmn/querybt/select_changedown.gif" alt="" style="width: 25px; height: 25px;">
+</span>
+
+<!-- 確定登録ボタン -->
+<span id="FixEntryBtn">
+	<img src="/img/type01/cmn/querybt/blown_process_off_ja_bt.gif" alt="">
+</span>
+<!-- クリアボタン -->
+<span id="ClearBtn">
+	<img src="/img/type01/cmn/querybt/grayclear_off_ja_bt.gif" alt="">
+</span>
+
+
+
+
+
 
 
 <!-- START SEGMENTS -->
-<span id="SegA01">計上日</span>
-<span id="SegA02">発注ＮＯ．</span>
-<span id="SegA03">仕入先</span>
+<!-- ヘッダ -->
+<!-- 発注有効期限日 -->
+<span id="SegA01">発注有効期限日</span>
+<span id="VarsA01">
+	<input style="ime-mode:disabled;" class="TxtStyle05L" type="text" name="dtmExpirationDate" value="_%dtmExpirationDate%_" maxlength="10" 
+		onfocus="chColorOn(this);" 
+		onblur="chColorOff(this);fncCheckDate( this );" 
+		tabindex="1">
+</span>
+<span id="DateBtB" onclick="window.MDateBwin.fncCalendar( window.HSO.dtmExpirationDate, 'DateB' );DisplayerM10_2( '' , document.all.Mdata10_2 );ExchangeM10_2( 0 , window.self );return false;"></span>
+
+<!-- 製品コード -->
+<span id="SegA02">製品コード</span>
+<span id="VarsA02">
+	<input style="ime-mode:disabled;" class="disTxt07L" type="text" name="strProductCode" value="_%strProductCode%_" maxlength="5" contenteditable="false">
+</span>
+
+<!-- 備考 -->
+<span id="SegA05">備考</span>
+<span id="VarsA05">
+	<input style="ime-mode:enabled;" class="TxtStyle10L" name="strNote">
+</span>
+
+<!-- 営業部署 -->
+<span id="SegA11">営業部署</span>
+<span id="VarsA11">
+	<input style="ime-mode:disabled;" class="disTxt03L" type="text" name="strGroupDisplayCode" value="_%strGroupDisplayCode%_" maxlength="2" contenteditable="false">&nbsp;<input style="ime-mode:disabled;" class="disTxt46L" tyepe="text" name="strGroupDisplayName" value="_%strGroupDisplayName%_" contenteditable="false">
+</span>
+
+<!-- 製品名 -->
+<span id="SegA12">製品名</span>
+<span id="VarsA12">
+	<input style="ime-mode:disabled;" class="disTxt46L" type="text" name="strProductName" value="_%strProductName%_" contenteditable="false">
+</span>
+
+<!-- 製品名(英語) -->
+<span id="SegA13">製品名(英語)</span>
+<span id="VarsA13">
+	<input style="ime-mode:disabled;" class="disTxt46L" type="text" name="strProductEnglishName" value="_%strProductEnglishName%_" contenteditable="false">
+</span>
+
+<!-- 納品場所 -->
+<span id="SegA14">納品場所</span>
+<span id="VarsA14">
+	<input style="ime-mode:disabled;" class="TxtStyle03L" type="text" name="lngLocationCode" value="_%lngLocationCode%_">&nbsp;<input style="ime-mode:disabled;" class="disTxt46L" type="text" name="strLocationName" value="_%strLocationName%_" contenteditable="false">
+</span>
+<span id="MSWBt04" onclick="fncGetObjectName( window.MLwin , window.HSO.lngLocationCode , window.HSO.strLocationName );DisplayerM04( '' , document.all.Mdata04 , window.MLwin.document.all.strLocationCode  );ExchangeM04( 0 , window.self );fncFocusType( window.MLwin , 'locationTop' );return false;"></span>
+
+<!-- 確定対象明細行選択部 -->
+<span id="SegDetailIN">
+  <table id="DetailTable" cellpadding="0" cellspacing="1" border="0">
+    <thead id="DetailTableHead">
+	  <tr class="TrSegs">
+	  	<th style="width:20px;"><input type="checkbox" id="DetailTableBodyAllCheck"></th>
+	  	<th>発注NO.</th>
+	  	<th>明細行番号</th>
+	  	<th>仕入科目</th>
+	  	<th>仕入部品</th>
+		<th>仕入先</th>
+	  	<th>単価</th>
+	  	<th>数量</th>
+	  	<th>税抜金額</th>
+	  	<th>納期</th>
+	  	<th>備考</th>
+		<th class="forEdit"></th>
+	  </tr>
+	</thead>
+	<tbody id="DetailTableBody">_%strOrderDetail%_</tbody>
+  </table>
+</span>
 
 
-<!-- *v1*
-<span id="SegA04">部門</span>
-<span id="SegA05">担当者</span>
-<span id="SegA0405"></span>
+
+<!-- 明細情報入力部 -->
+<span id="SegEditIN">
+  <table id="EditTable" cellpadding="0" cellspacing="1" border="0">
+	<thead id="EditTableHead">
+	  <tr class="TrSegs">
+		<th>NO.</th>
+		<th>発注NO.</th>
+		<th>明細行番号</th>
+		<th>仕入科目</th>
+		<th>仕入部品</th>
+		<th>仕入先</th>
+		<th>運搬方法</th>
+		<th>単価</th>
+		<th>数量</th>
+		<th>税抜価格</th>
+		<th>納期</th>
+		<th>明細備考</th>
+	  </tr>
+	</thead>
+    <tbody id="EditTableBody"></tbody>
+  </table>
+</span>
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+<span id="SegA06">備考</span>
+<span id="VarsA06">
+	<input class="Txt100L" type="text" name="strNote" value="_%strNote%_" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this , 90 );" maxlength="160" tabindex="16">
+</span>
 -->
 
 
-<span id="SegA11">納品場所</span>
-<span id="SegA12">発注有効期限日</span>
-<span id="SegA13">備考</span>
-<span id="SegA06">状態</span>
-<span id="SegA07">通貨</span>
-<span id="SegA08">レートタイプ</span>
-<span id="SegA09">換算レート</span>
-<span id="SegA10">支払条件</span>
+
+
+
+
+
+<!-- span id="SegA12">発注有効期限日</span -->
+<!-- span id="SegA06">状態</span -->
+<!-- span id="SegA07">通貨</span -->
+<!-- span id="SegA08">レートタイプ</span -->
+<!-- span id="SegA09">換算レート</span -->
+<!-- span id="SegA10">支払条件</span -->
 <!-- END SEGMENTS -->
 
 
 <!-- START VARS -->
-<!-- 計上日 -->
-<span id="VarsA01">
-	<input style="ime-mode:disabled;" class="TxtStyle05L" type="text" name="dtmOrderAppDate" value="_%dtmOrderAppDate%_" maxlength="10" 
-		onfocus="chColorOn(this);" 
-		onblur="chColorOff(this);fncCheckDate( this );
-				window.DLwin.fncCalConversionRate(); subLoadMasterHidden('caCheckClosedOrder', 0, document.all.check_alert_appdate, Array ( this.value ), objDataSourceSettingCheckAlertAppDate, 9);" 
-		tabindex="1">
-</span>
 
-<!-- 発注ＮＯ．  -->
-<span id="VarsA02">
-	<input class="disTxt10L" type="text" name="strOrderCode" value="_%strOrderCode%_" contenteditable="false">-&nbsp;&nbsp;<input class="disTxt02L" type="text" name="strReviseCode" value="_%strReviseCode%_" onfocus="chColorOn(this);" onblur="chColorOff(this);" contenteditable="false">
-</span>
 
-<!-- 仕入先  -->
-<span id="VarsA03">
-	<input style="ime-mode:disabled;" class="TxtStyle05L" type="text" name="lngCustomerCode" value="_%lngCustomerCode%_" maxlength="4" 
-			onfocus="chColorOn(this);" onblur="chColorOff(this);subLoadMasterCheck(this);" tabindex="3" 
-			onChange="subLoadMasterText('cnSupplier', this, strCustomerName, Array(this.value,lngCustomerCode.value), objDataSourceSetting); ">&nbsp;<input class="disTxt46L" type="text" name="strCustomerName" value="_%strCustomerName%_" contenteditable="false">
-</span>
 
 <!-- 20080221 matsuki confirm画面からregist画面に戻ってきた場合のバグ回避
 →海外企業でない場合、支払条件に - が強制セットされるが、支払条件がアクティブだと登録出来ない-->
+<!--
 <script type="text/javascript" language="javascript">
 if ( document.all.lngCustomerCode.value != '' )
 	document.all.lngCustomerCode.onchange();
 
 </script>
-
-
-<!-- *v1* 部門コード & 部門の名称
-<span id="VarsA04">
-	<input style="ime-mode:disabled;" class="TxtStyle02L" type="text" name="lngInChargeGroupCode" value="_%lngInChargeGroupCode%_" maxlength="2" 
-			onfocus="chColorOn(this);" onblur="chColorOff(this);subLoadMasterCheck(this);" tabindex="5" 
-			onChange="subLoadMasterText('cnGroup', this, strInChargeGroupName, Array(this.value), objDataSourceSetting);lngInChargeUserCode.value='';strInChargeUserName.value='';">&nbsp;<input class="disTxt46L" type="text" name="strInChargeGroupName" value="_%strInChargeGroupName%_" contenteditable="false">
-</span>
 -->
-
-
-<!-- *v1* 担当者 & 担当者の名称
-<span id="VarsA05">
-	<input style="ime-mode:disabled;" class="TxtStyle02L" type="text" name="lngInChargeUserCode" value="_%lngInChargeUserCode%_" maxlength="3" 
-			onfocus="chColorOn(this);" onblur="chColorOff(this);subLoadMasterCheck(this);" tabindex="6" 
-			onChange="subLoadMasterText('cnUser', this, strInChargeUserName, Array(this.value,lngInChargeGroupCode.value), objDataSourceSetting);">&nbsp;<input class="disTxt46L" type="text" name="strInChargeUserName" value="_%strInChargeUserName%_" contenteditable="false">
-</span>
--->
-
 
 <!-- 納品場所 & 納品場所の名称 -->
+<!-- 
 <span id="VarsA11">
 	<input style="ime-mode:disabled;" class="Txt04L" type="text" name="lngLocationCode" value="_%lngLocationCode%_" size="3" maxlength="4" 
 			onfocus="chColorOn(this);" onblur="chColorOff(this);subLoadMasterCheck(this);" tabindex="8" 
 			onChange="subLoadMasterText('cnLocation', this, strLocationName, Array(this.value), objDataSourceSetting)">&nbsp;<input class="disTxt46L" type="text" name="strLocationName" value="_%strLocationName%_" size="25" contenteditable="false">
 </span>
+-->
 
 <!-- 発注有効期限日 -->
+<!--
 <span id="VarsA12">
 	<input style="ime-mode:disabled;" class="TxtStyle05L" type="text" name="dtmExpirationDate" value="_%dtmExpirationDate%_" 
 			onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate( this );" maxlength="10" tabindex="14">
 </span>
+-->
 
 <!-- 備考 -->
-<span id="VarsA13">
-	<input class="Txt100L" type="text" name="strNote" value="_%strNote%_" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this , 90 );" maxlength="160" tabindex="16">
-</span>
 
 <!-- 状態 -->
+<!--
 <span id="VarsA06">
 	<input class="disTxt07L" type="text" name="lngOrderStatusCode_Display" value="_%lngOrderStatusCode_Display%_" size="7" contenteditable="false">
 	<input type="hidden" name="lngOrderStatusCode" value="_%lngOrderStatusCode%_">
 </span>
+-->
 
 <!-- 通貨 -->
+<!--
 <span id="VarsA07">
 	<select name="lngMonetaryUnitCode" _%MonetaryUnitDisabled%_ tabindex="10" 
 			onchange="fncCheckNumberCurrencySign( this.value );
@@ -477,52 +369,54 @@ if ( document.all.lngCustomerCode.value != '' )
 		_%lngMonetaryUnitCode%_
 	</select>
 </span>
+-->
 
 <!-- レートタイプ -->
+<!--
 <span id="VarsA08">
 	<select   name="lngMonetaryRateCode" tabindex="11" disabled 
 			onChange="window.DLwin.fncCalConversionRate();">
 		_%lngMonetaryRateCode%_
 	</select> 
 </span>
+-->
 
 <!-- 換算レート -->
+<!--
 <span id="VarsA09">
 	<input style="ime-mode:disabled;" class="TxtStyle04R" type="text" name="curConversionRate" value="_%curConversionRate%_" size="7" maxlength="10" 
 			onfocus="chColorOn(this);" 
 			onblur="chColorOff(this);fncCheckNumber( this , 6 , false );" 
 			tabindex="12" contenteditable="false">
 </span>
+-->
 
 <!-- 支払条件 -->
+<!--
 <span id="VarsA10">
 	<select name="lngPayConditionCode"_%PayConditionDisabled%_ tabindex="13">
 		_%lngPayConditionCode%_
 	</select>
 </span>
+-->
 <!-- END VARS -->
 
 
 <!-- START [SUPPLIER] BUTTON -->
-<span id="MSWBt08" onclick="fncGetObjectName( window.SUPwin , lngCustomerCode , strCustomerName );DisplayerM08( '' , document.all.Mdata08 , window.SUPwin.document.all.strCustomerCode  );ExchangeM08( 0 , window.self );fncFocusType( window.SUPwin , 'supplierTop' );return false;"></span>
+<!-- <span id="MSWBt08" onclick="fncGetObjectName( window.SUPwin , lngCustomerCode , strCustomerName );DisplayerM08( '' , document.all.Mdata08 , window.SUPwin.document.all.strCustomerCode  );ExchangeM08( 0 , window.self );fncFocusType( window.SUPwin , 'supplierTop' );return false;"></span> -->
 <!-- END [SUPPLIER] BUTTON -->
 
 
-<!-- *v1* START [DEPT & IN CHARGE NAME] BUTTON
-<span id="MSWBt02" onclick="fncGetObjectName( window.MDwin , lngInChargeGroupCode , strInChargeGroupName , lngInChargeUserCode , strInChargeUserName );DisplayerM02( '' , document.all.Mdata02 , window.MDwin.document.all.strGroupCode , window.MDwin.document.all.strUserCode );ExchangeM02( 0 , window.self );fncFocusType( window.MDwin , 'deptTop' );return false;"></span>
-END [DEPT & IN CHARGE NAME] BUTTON -->
-
-
 <!-- START [LOCATION] BUTTON -->
-<span id="MSWBt04" onclick="fncGetObjectName( window.MLwin , lngLocationCode , strLocationName );DisplayerM04( '' , document.all.Mdata04 , window.MLwin.document.all.strLocationCode  );ExchangeM04( 0 , window.self );fncFocusType( window.MLwin , 'locationTop' );return false;"></span>
+<!-- <span id="MSWBt04" onclick="fncGetObjectName( window.MLwin , lngLocationCode , strLocationName );DisplayerM04( '' , document.all.Mdata04 , window.MLwin.document.all.strLocationCode  );ExchangeM04( 0 , window.self );fncFocusType( window.MLwin , 'locationTop' );return false;"></span> -->
 <!-- END [LOCATION] BUTTON -->
 
 <!-- START DATE BUTTON -->
-<span id="DateBtA" onclick="window.MDatewin.fncCalendar( window.HSO.dtmOrderAppDate , 'DateA');DisplayerM10( '' , document.all.Mdata10 );ExchangeM10( 0 , window.self );return false;"></span>
+<!-- <span id="DateBtA" onclick="window.MDatewin.fncCalendar( window.HSO.dtmOrderAppDate , 'DateA');DisplayerM10( '' , document.all.Mdata10 );ExchangeM10( 0 , window.self );return false;"></span> -->
 <!-- END DATE BUTTON -->
 
 <!-- START DATEB BUTTON -->
-<span id="DateBtB" onclick="window.MDateBwin.fncCalendar( window.HSO.dtmExpirationDate, 'DateB' );DisplayerM10_2( '' , document.all.Mdata10_2 );ExchangeM10_2( 0 , window.self );return false;"></span>
+<!-- <span id="DateBtB" onclick="window.MDateBwin.fncCalendar( window.HSO.dtmExpirationDate, 'DateB' );DisplayerM10_2( '' , document.all.Mdata10_2 );ExchangeM10_2( 0 , window.self );return false;"></span> -->
 <!-- END DATEB BUTTON -->
 
 <!-- 明細枠の情報 -->
@@ -566,7 +460,6 @@ _%strDetailHidden%_
 <span id="DelRowBt" onclick="window.DLwin.fncDtDelRecord();return false;"></span>
 <span id="CommitBt" onclick="window.DLwin.fncDtCommitRecord();subLoadMasterHidden('caMonetaryUnitStockSubject', 0, document.all.check_alert, Array ( document.all.HSO.lngMonetaryUnitCode.value, strStockSubjectCode.value ), objDataSourceSettingCheckAlert, 20);return false;"></span>
 <span id="RegistBt" onclick="fncPOSubmit( document.DSO.lngWorkflowOrderCode ); return false;"></span>
-<!-- *v1* <span id="RegistBt" onclick="fncPOSubmit( document.DSO.lngWorkflowOrderCode ); return false;"></span> -->
 <span id="SegBClearBt" onclick="fncResetFrm( window.DSO );window.DLwin.fncDtClearRecord();return false;"></span>
 <!-- END QUERY BUTTON -->
 
@@ -615,6 +508,7 @@ _%strDetailHidden%_
 	</select>
 </span>
 
+<!--
 <script type="text/javascript" language="javascript">
 
 	// グローバル定数の宣言
@@ -626,6 +520,7 @@ _%strDetailHidden%_
 	StockSubjectDefault = document.all.strStockSubjectCode.outerHTML; // 仕入科目
 
 </script>
+-->
 
 <!-- 仕入部品 -->
 <span id="VarsB10">
@@ -787,11 +682,12 @@ _%strDetailHidden%_
 
 
 <!-- ワークフロールート表示ボタン -->
+<!--
 <span id="WFrootBt" onclick="fncOpenWFRoot( document.DSO.lngWorkflowOrderCode ); return false;"></span>
 <span id="WFRootFrame">
 	<iframe id="WFroot" name="WFrootWin" frameborder="0" scrolling="no" src="/po/wf/index.php?strSessionID=_%strSessionID%_"></iframe>
 </span>
-
+-->
 
 
 <!-- START DATEC BUTTON -->
@@ -806,7 +702,6 @@ _%strDetailHidden%_
 	v2 tomita update
 -------------------------------------------------------------------------->
 <!-- 明細顧客表示 -->
-<span id="SegDetailIN"></span>
 <span id="SegDetailINBtn" onclick="fncSetDINBtn( this ); fncViewDIN( 'SegDetailIN' ); return false;"></span>
 <span id="SegDept">部門</span>
 <span id="SegIncharge">担当者</span>
@@ -875,9 +770,11 @@ _%strDetailHidden%_
 
 
 <!-- START SEGMENTS -->
+<!--
 <span id="SegC01">
 	<iframe id="SegCIFrm" name="DLwin" frameborder="0" src="/dlist/po/index.html"></iframe>
 </span>
+-->
 <!-- END SEGMENTS -->
 
 
@@ -893,6 +790,7 @@ _%strDetailHidden%_
 
 <!-- //////////////////////////////////// START MSW //////////////////////////////////// -->
 <!-- START [SUPPLIER] -->
+<!--
 <p id="MiFrame08" onclick="Zchange(this);">
 <iframe id="Mdata08" name="SUPwin" frameborder="0" scrolling="no" src="/msw/supplier/index.html"></iframe>
 <span id="DummyDrag08" onmousedown="pickup08('MiFrame08',event);return false;" 
@@ -900,10 +798,12 @@ _%strDetailHidden%_
 	ondblclick="fncTitlebar( document.all.Mdata08 , document.all.MiFrame08 );"></span>
 <span id="DummyClose08" onclick="DisplayerM08( '' , document.all.Mdata08 );ExchangeM08( 0 , window.Pwin );return false;"></span>
 </p>
+-->
 <!-- END [SUPPLIER] -->
 
 
 <!-- START [DEPT & IN CHARGE NAME] -->
+<!--
 <p id="MiFrame02" onclick="Zchange(this);">
 <iframe id="Mdata02" name="MDwin" frameborder="0" scrolling="no" src="/msw/dept/index.html"></iframe>
 <span id="DummyDrag02" onmousedown="pickup02('MiFrame02',event);return false;" 
@@ -911,10 +811,12 @@ _%strDetailHidden%_
 	ondblclick="fncTitlebar( document.all.Mdata02 , document.all.MiFrame02 );"></span>
 <span id="DummyClose02" onclick="DisplayerM02( '' , document.all.Mdata02 );ExchangeM02( 0 , window.Pwin );return false;"></span>
 </p>
+-->
 <!-- END [DEPT & IN CHARGE NAME] -->
 
 
 <!-- START [PRODUCTS] -->
+<!--
 <p id="MiFrame03" onclick="Zchange(this);">
 <iframe id="Mdata03" name="MGwin" frameborder="0" scrolling="no" src="/msw/products/index.html"></iframe>
 <span id="DummyDrag03" onmousedown="pickup03('MiFrame03',event);return false;" 
@@ -922,6 +824,7 @@ _%strDetailHidden%_
 	ondblclick="fncTitlebar( document.all.Mdata03 , document.all.MiFrame03 );"></span>
 <span id="DummyClose03" onclick="DisplayerM03( '' , document.all.Mdata03 );ExchangeM03( 0 , window.Pwin );return false;"></span>
 </p>
+-->
 <!-- END [PRODUCTS] -->
 
 <!-- START [LOCATION] -->
@@ -936,6 +839,7 @@ _%strDetailHidden%_
 
 
 <!-- START [DATE] -->
+<!--
 <p id="MiFrame10" onclick="Zchange(this);">
 <iframe id="Mdata10" name="MDatewin" frameborder="0" scrolling="no" src="/msw/date/index.html"></iframe>
 <span id="DummyDrag10" onmousedown="pickup10('MiFrame10',event);return false;" 
@@ -943,6 +847,7 @@ _%strDetailHidden%_
 	ondblclick="fncTitlebar( document.all.Mdata10 , document.all.MiFrame10 );"></span>
 <span id="DummyClose10" onclick="DisplayerM10( '' , document.all.Mdata10 );ExchangeM10( 0 , window.Pwin );return false;"></span>
 </p>
+-->
 
 
 <!-- START [DATEB] -->
@@ -956,6 +861,7 @@ _%strDetailHidden%_
 
 
 <!-- START [DATEC] -->
+<!--
 <p id="MiFrame10_3" onclick="Zchange(this);">
 <iframe id="Mdata10_3" name="MDateCwin" frameborder="0" scrolling="no" src="/msw/date/indexc.html"></iframe>
 <span id="DummyDrag10_3" onmousedown="pickup10_3('MiFrame10_3',event);return false;" 
@@ -963,6 +869,7 @@ _%strDetailHidden%_
 	ondblclick="fncTitlebar( document.all.Mdata10_3 , document.all.MiFrame10_3 );"></span>
 <span id="DummyClose10_3" onclick="DisplayerM10_3( '' , document.all.Mdata10_3 );ExchangeM10_3( 0 , window.Pwin );return false;"></span>
 </p>
+-->
 <!-- ///////////////////////////////////// END MSW ///////////////////////////////////// -->
 
 
@@ -980,8 +887,8 @@ _%strDetailHidden%_
 
 
 <!-- //////////////////////////////////// START TAB //////////////////////////////////// -->
-<span id="TabA"></span>
-<span id="TabB"></span>
+<!-- <span id="TabA"></span> -->
+<!-- <span id="TabB"></span> -->
 <!-- ///////////////////////////////////// END TAB ///////////////////////////////////// -->
 
 
@@ -998,7 +905,7 @@ _%strDetailHidden%_
 
 
 <!-- //////////////////////////////////// START E TO J //////////////////////////////////// -->
-<span id="EtoJ" style="visibility:_%strBaseVisibilityName%_;"></span>
+<!-- <span id="EtoJ" style="visibility:_%strBaseVisibilityName%_;"></span> -->
 <!-- ///////////////////////////////////// END E TO J ///////////////////////////////////// -->
 
 
@@ -1013,7 +920,6 @@ _%strDetailHidden%_
 <span id="ErrorMessageFrame">
 	<iframe id="ErrorMessage" name="errorWin" frameborder="0" scrolling="no" src="/error/error.html"></iframe>
 </span>
-
 
 
 <p id="ErrInputA">
@@ -1051,4 +957,6 @@ _%strDetailHidden%_
 <!-- 入力者コード -->
 <input type="hidden" name="lngInputUserCode" value="_%lngSelfLoginUserCode%_">
 
+<!-- -->
 <span id="OverLayer"></span>
+<!-- -->

@@ -1,12 +1,15 @@
-
+//
+// display-regist.js
+//
 (function(){
-    $('img.remove.button').on('click', function(){
-        url = '/po/result/index3.php';
+    $('img.fix.button').on('click',function(){
+        url='/po/regist/index.php';
+        // lngorderno = 'lngOrderNo=' + $(this).attr('lngorderno') + ',4840';
         lngorderno = 'lngOrderNo=' + $(this).attr('lngorderno');
         sessionID = 'strSessionID=' + getUrlVars()["strSessionID"];
 
         // 別ウィンドウで表示
-        open(url + '?' + lngorderno + '&' + sessionID, 'display-detail', 'resizable=yes, scrollbars=yes, menubar=no');
+        open(url + '?' + lngorderno + '&' + sessionID, 'display-regist', 'width=996, height=689, resizable=yes, scrollbars=yes, menubar=no');
     });
 })();
 

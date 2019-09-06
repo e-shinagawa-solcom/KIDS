@@ -1,7 +1,7 @@
 
 (function(){
-    $('img.remove.button').on('click', function(){
-        url = '/po/result/index3.php';
+    $('img.detail.button').on('click', function(){
+        url = '/po/result/index2.php';
         lngorderno = 'lngOrderNo=' + $(this).attr('lngorderno');
         sessionID = 'strSessionID=' + getUrlVars()["strSessionID"];
 

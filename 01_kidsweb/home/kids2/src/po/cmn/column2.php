@@ -26,48 +26,54 @@
 // 検索用表示タイトル
 
 // 日本語コード
-$arySearchTableTytle["btnDetail"]				= "詳細";
-$arySearchTableTytle["btnFix"]					= "確定";
-$arySearchTableTytle["Record"]					= "履歴";
-$arySearchTableTytle["Resale"]					= "再販";
-$arySearchTableTytle["btnAdmin"]                = "削除済";
+$arySearchTableTytle["btnPreview"]				= "プレビュー";
+$arySearchTableTytle["btnEdit"]					= "修正";
+$arySearchTableTytle["btnRecord"]				= "履歴";
+$arySearchTableTytle["btnDelete"]				= "削除済";
 $arySearchTableTytle["dtmInsertDate"]			= "登録日";
-$arySearchTableTytle["dtmOrderAppDate"]			= "計上日";
-$arySearchTableTytle["strOrderCode"]			= "発注ＮＯ.";
 $arySearchTableTytle["lngInputUserCode"]		= "入力者";
+$arySearchTableTytle["dtmExpirationDate"]		= "発注有効期限日";
+$arySearchTableTytle["strOrderCode"]			= "発注ＮＯ.";
+$arySearchTableTytle["strProductCode"]			= "製品コード";
+$arySearchTableTytle["strProductName"]          = "製品名";
+$arySearchTableTytle["strProductEnglishName"]   = "製品名(英語)";
+$arySearchTableTytle["lngInChargeGroupCode"]	= "営業部署";
+$arySearchTableTytle["lngInChargeUserCode"]		= "開発担当者";
 $arySearchTableTytle["lngCustomerCode"]			= "仕入先";
-$arySearchTableTytle["lngInChargeGroupCode"]	= "部門";
-$arySearchTableTytle["lngInChargeUserCode"]		= "担当者";
 $arySearchTableTytle["lngDeliveryPlaceCode"]	= "納品場所";
 $arySearchTableTytle["lngMonetaryUnitCode"]		= "通貨";
-$arySearchTableTytle["lngMonetaryRateCode"]		= "レートタイプ";
-$arySearchTableTytle["curConversionRate"]		= "換算レート";
-$arySearchTableTytle["lngOrderStatusCode"]		= "状態";
-$arySearchTableTytle["lngWorkflowStatusCode"]	= "ワークフロー状態";
+$arySearchTableTytle["lngMonetaryRateCode"]		= "通貨レート";
 $arySearchTableTytle["lngPayConditionCode"]		= "支払条件";
-$arySearchTableTytle["dtmExpirationDate"]		= "発注有効期限日";
+$arySearchTableTytle["curTotalPrice"]			= "税抜金額";
 $arySearchTableTytle["strNote"]					= "備考";
-$arySearchTableTytle["curTotalPrice"]			= "合計金額";
-$arySearchTableTytle["lngRecordNo"]				= "明細行番号";
-$arySearchTableTytle["strProductCode"]			= "製品コード";
-$arySearchTableTytle["strProductName"]			= "製品名";
-$arySearchTableTytle["strProductEnglishName"]	= "製品名称（英語）";
-$arySearchTableTytle["lngStockSubjectCode"]		= "仕入科目";
-$arySearchTableTytle["lngStockItemCode"]		= "仕入部品";
-$arySearchTableTytle["strMoldNo"]				= "Ｎｏ．";
-$arySearchTableTytle["strGoodsCode"]			= "顧客品番";
-$arySearchTableTytle["lngDeliveryMethodCode"]	= "運搬方法";
-$arySearchTableTytle["dtmDeliveryDate"]			= "納期";
-$arySearchTableTytle["curProductPrice"]			= "単価";
-$arySearchTableTytle["lngProductUnitCode"]		= "単位";
-$arySearchTableTytle["lngProductQuantity"]		= "数量";
-$arySearchTableTytle["curSubTotalPrice"]		= "税抜金額";
-$arySearchTableTytle["strDetailNote"]			= "明細備考";
-// $arySearchTableTytle["btnDelete"]				= "削除";
-$arySearchTableTytle["btnDelete"]				= "確定取消";
-$arySearchTableTytle["btnInvalid"]				= "無効";
-$arySearchTableTytle["lngRevisionNo"]			= "リビジョン番号";
-$arySearchTableTytle["lngWorkFlowStatusCode"]	= "ワークフロー状態";
+$arySearchTableTytle["lngPrintCount"]			= "印刷回数";
+
+// $arySearchTableTytle["Resale"]					= "再販";
+// $arySearchTableTytle["dtmOrderAppDate"]			= "計上日";
+// $arySearchTableTytle["lngDeliveryPlaceCode"]	= "納品場所";
+// $arySearchTableTytle["lngMonetaryRateCode"]		= "レートタイプ";
+// $arySearchTableTytle["curConversionRate"]		= "換算レート";
+// $arySearchTableTytle["lngOrderStatusCode"]		= "状態";
+// $arySearchTableTytle["lngWorkflowStatusCode"]	= "ワークフロー状態";
+// $arySearchTableTytle["lngRecordNo"]				= "明細行番号";
+// $arySearchTableTytle["strProductName"]			= "製品名";
+// $arySearchTableTytle["strProductEnglishName"]	= "製品名称（英語）";
+// $arySearchTableTytle["lngStockSubjectCode"]		= "仕入科目";
+// $arySearchTableTytle["lngStockItemCode"]		= "仕入部品";
+// $arySearchTableTytle["strMoldNo"]				= "Ｎｏ．";
+// $arySearchTableTytle["strGoodsCode"]			= "顧客品番";
+// $arySearchTableTytle["lngDeliveryMethodCode"]	= "運搬方法";
+// $arySearchTableTytle["dtmDeliveryDate"]			= "納期";
+// $arySearchTableTytle["curProductPrice"]			= "単価";
+// $arySearchTableTytle["lngProductUnitCode"]		= "単位";
+// $arySearchTableTytle["lngProductQuantity"]		= "数量";
+// $arySearchTableTytle["curSubTotalPrice"]		= "税抜金額";
+// $arySearchTableTytle["strDetailNote"]			= "明細備考";
+// // $arySearchTableTytle["btnDelete"]				= "削除";
+// $arySearchTableTytle["btnDelete"]				= "確定取消";
+// $arySearchTableTytle["btnInvalid"]				= "無効";
+// $arySearchTableTytle["lngRevisionNo"]			= "リビジョン番号";
+// $arySearchTableTytle["lngWorkFlowStatusCode"]	= "ワークフロー状態";
 
 // 英語コード
 $arySearchTableTytleEng["btnDetail"]				= "Detail";
@@ -122,7 +128,7 @@ $aryTableTytle["lngInChargeGroupCode"]	= "部門";
 $aryTableTytle["lngInChargeUserCode"]	= "担当者";
 $aryTableTytle["lngDeliveryPlaceCode"]	= "納品場所";
 $aryTableTytle["lngMonetaryUnitCode"]	= "通貨";
-$aryTableTytle["lngMonetaryRateCode"]	= "レートタイプ";
+$aryTableTytle["lngMonetaryRateCode"]	= "通貨レート";
 $aryTableTytle["curConversionRate"]		= "換算レート";
 $aryTableTytle["lngOrderStatusCode"]	= "状態";
 $aryTableTytle["lngWorkFlowStatusCode"]	= "ワークフロー状態";
@@ -144,10 +150,15 @@ $aryTableTytle["lngProductQuantity"]	= "数量";
 $aryTableTytle["curSubTotalPrice"]		= "税抜金額";
 $aryTableTytle["strDetailNote"]			= "明細備考";
 $aryTableTytle["btnFix"]				= "修正";
+$aryTableTytle["btnEdit"]				= "修正";
+$aryTableTytle["btnRecord"]				= "履歴";
 $aryTableTytle["btnDelete"]				= "削除";
 $aryTableTytle["btnInvalid"]			= "無効";
 $aryTableTytle["lngRevisionNo"]			= "リビジョン番号";
 $aryTableTytle["lngWorkFlowStatusCode"]	= "ワークフロー状態";
+$aryTableTytle["strDeliveryPlaceName"]  = "納品場所";
+$aryTableTytle["lngPrintCount"]         = "印刷回数";
+
 
 // 英語コード
 $aryTableTytleEng["btnDetail"]				= "Detail";
@@ -222,6 +233,8 @@ $aryTableViewDetail[] = "lngProductUnitCode";
 $aryTableViewDetail[] = "lngProductQuantity";
 $aryTableViewDetail[] = "curSubTotalPrice";
 $aryTableViewDetail[] = "strDetailNote";
+$aryTableViewDetail[] = "strDeliveryPlaceName";
+$aryTableViewDetail[] = "lngPrintCount";
 
 
 // 設定カラム名とマスタ内カラム名取得用
@@ -258,6 +271,8 @@ $aryTableViewName["lngProductUnitCode"] 	= "lngProductUnitCode";
 $aryTableViewName["lngProductQuantity"] 	= "lngProductQuantity";
 $aryTableViewName["curSubTotalPrice"] 		= "curSubTotalPrice";
 $aryTableViewName["strDetailNote"] 			= "strDetailNote";
+$aryTableViewName["strDeliveryPlaceName"]   = "strDeliveryPlaceName";
+$aryTableViewName["lngPrintCount"]          = "lngPrintCount";
 
 
 ?>
