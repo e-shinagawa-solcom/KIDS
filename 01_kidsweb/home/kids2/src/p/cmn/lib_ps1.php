@@ -123,12 +123,8 @@ function fncGetProductNoToInfoSQL ( $lngProductNo )
 	$aryQuery[] = ", p.strAssemblyContents as strAssemblyContents\n";
 	// 仕様詳細
 	$aryQuery[] = ", p.strSpecificationDetails as strSpecificationDetails\n";
-
-
-	// 製品状態
-	$aryQuery[] = ", p.lngproductstatuscode as lngproductstatuscode\n";
 	// リーバイスコード
-	$aryQuery[] = ", p.strrevisecode as lngproductstatuscode\n";
+	$aryQuery[] = ", p.strrevisecode as strrevisecode\n";
 
 
 	$aryQuery[] = " FROM m_Product p\n";

@@ -89,7 +89,24 @@ foreach ($isSearch as $key => $flag) {
         $searchColumns[$key] = $key;
     }
 }
-
+// 明細表示フラグ
+$isDisplayDetail = false;
+if (array_key_exists("strProductCode", $displayColumns) or
+    array_key_exists("lngInChargeGroupCode", $displayColumns) or
+    array_key_exists("lngInChargeUserCode", $displayColumns) or
+    array_key_exists("lngRecordNo", $displayColumns) or
+    array_key_exists("lngSalesClassCode", $displayColumns) or
+    array_key_exists("strGoodsCode", $displayColumns) or
+    array_key_exists("dtmDeliveryDate", $displayColumns) or
+    array_key_exists("curProductPrice", $displayColumns) or
+    array_key_exists("lngProductUnitCode", $displayColumns) or
+    array_key_exists("lngProductQuantity", $displayColumns) or
+    array_key_exists("curSubTotalPrice", $displayColumns) or
+    array_key_exists("strDetailNote", $displayColumns) or
+    array_key_exists("strProductName", $displayColumns) or
+    array_key_exists("strProductEnglishName", $displayColumns)) {
+    $isDisplayDetail = true;
+}
 // 明細検索条件数
 $detailConditionCount = 0;
 // クエリの組立て
@@ -111,24 +128,21 @@ $aryQuery[] = "  , rd.strGoodsCode";
 $aryQuery[] = "  , rd.curProductPrice";
 $aryQuery[] = "  , rd.lngProductUnitCode";
 $aryQuery[] = "  , rd.strproductunitname";
-$aryQuery[] = "  , rd.lngProductQuantity";
+$aryQuery[] = "  , to_char(rd.lngProductQuantity, '9,999,999,990') as lngProductQuantity";
 $aryQuery[] = "  , rd.curSubTotalPrice";
-$aryQuery[] = "  , rd.lngTaxClassCode";
-$aryQuery[] = "  , rd.curTax";
-$aryQuery[] = "  , rd.curTaxPrice";
 $aryQuery[] = "  , rd.strNote as strDetailNote";
-$aryQuery[] = "  , to_char(r.dtmInsertDate, 'YYYY/MM/DD HH:MI:SS') as dtmInsertDate";
+$aryQuery[] = "  , to_char(r.dtmInsertDate, 'YYYY/MM/DD HH24:MI:SS') as dtmInsertDate";
 $aryQuery[] = "  , input_u.strUserDisplayCode as strInputUserDisplayCode";
 $aryQuery[] = "  , input_u.strUserDisplayName as strInputUserDisplayName";
 $aryQuery[] = "  , r.strCustomerReceiveCode as strCustomerReceiveCode";
-$aryQuery[] = "  , r.strReceiveCode || '-' || r.strReviseCode as strReceiveCode";
+$aryQuery[] = "  , r.strReceiveCode";
 $aryQuery[] = "  , cust_c.strCompanyDisplayCode as strCustomerDisplayCode";
 $aryQuery[] = "  , cust_c.strCompanyDisplayName as strCustomerDisplayName";
 $aryQuery[] = "  , to_char(rd.dtmDeliveryDate, 'YYYY/MM/DD') as dtmDeliveryDate";
 $aryQuery[] = "  , r.lngReceiveStatusCode as lngReceiveStatusCode";
 $aryQuery[] = "  , rs.strReceiveStatusName as strReceiveStatusName";
-$aryQuery[] = "  , r.strNote as strNote";
-$aryQuery[] = "  , To_char(r.curTotalPrice, '9,999,999,990.99') as curTotalPrice";
+// $aryQuery[] = "  , r.strNote as strNote";
+// $aryQuery[] = "  , To_char(r.curTotalPrice, '9,999,999,990.99') as curTotalPrice";
 $aryQuery[] = "  , mu.strMonetaryUnitSign as strMonetaryUnitSign ";
 $aryQuery[] = "  , mu.lngmonetaryunitcode as lngmonetaryunitcode ";
 $aryQuery[] = "FROM";
@@ -142,8 +156,12 @@ $aryQuery[] = "    USING (lngReceiveStatusCode) ";
 $aryQuery[] = "  LEFT JOIN m_MonetaryUnit mu ";
 $aryQuery[] = "    ON r.lngMonetaryUnitCode = mu.lngMonetaryUnitCode";
 $aryQuery[] = "  , ( ";
-$aryQuery[] = "      SELECT distinct";
-$aryQuery[] = "          on (rd1.lngReceiveNo) rd1.lngReceiveNo";
+if ($isDisplayDetail) {
+    $aryQuery[] = "      SELECT rd1.lngReceiveNo";
+} else {
+    $aryQuery[] = "      SELECT distinct";
+    $aryQuery[] = "          on (rd1.lngReceiveNo) rd1.lngReceiveNo";
+}
 $aryQuery[] = "        , rd1.lngReceiveDetailNo";
 $aryQuery[] = "        , p.strProductCode";
 $aryQuery[] = "        , mg.strGroupDisplayCode";
@@ -161,20 +179,19 @@ $aryQuery[] = "        , mp.lngProductUnitCode";
 $aryQuery[] = "        , mp.strproductunitname";
 $aryQuery[] = "        , rd1.lngProductQuantity";
 $aryQuery[] = "        , to_char(rd1.curSubTotalPrice, '9,999,999,990.99') as curSubTotalPrice";
-$aryQuery[] = "        , rd1.lngTaxClassCode";
-$aryQuery[] = "        , mt.curTax";
-$aryQuery[] = "        , rd1.curTaxPrice";
 $aryQuery[] = "        , rd1.strNote ";
 $aryQuery[] = "      FROM";
 $aryQuery[] = "        t_ReceiveDetail rd1 ";
-$aryQuery[] = "        LEFT JOIN m_Product p ";
+$aryQuery[] = "        LEFT JOIN (";
+$aryQuery[] = "            select p1.*  from m_product p1 ";
+$aryQuery[] = "        	inner join (select max(lngproductno) lngproductno, strproductcode from m_Product group by strProductCode) p2";
+$aryQuery[] = "            on p1.lngproductno = p2.lngproductno";
+$aryQuery[] = "          ) p ";
 $aryQuery[] = "          ON rd1.strProductCode = p.strProductCode ";
 $aryQuery[] = "        left join m_group mg ";
 $aryQuery[] = "          on p.lnginchargegroupcode = mg.lnggroupcode ";
 $aryQuery[] = "        left join m_user mu ";
 $aryQuery[] = "          on p.lnginchargeusercode = mu.lngusercode ";
-$aryQuery[] = "        left join m_tax mt ";
-$aryQuery[] = "          on mt.lngtaxcode = rd1.lngtaxcode ";
 $aryQuery[] = "        left join m_salesclass ms ";
 $aryQuery[] = "          on ms.lngsalesclasscode = rd1.lngsalesclasscode ";
 $aryQuery[] = "        left join m_productunit mp ";
@@ -247,83 +264,78 @@ if (array_key_exists("dtmDeliveryDate", $searchColumns) &&
 $aryQuery[] = "    ) as rd ";
 $aryQuery[] = "WHERE";
 $aryQuery[] = "  r.bytInvalidFlag = FALSE ";
-// 管理者モード
-if (array_key_exists("admin", $optionColumns)) {
-    $aryQuery[] = "  AND r.lngRevisionNo < 0 ";
-} else {
-    $aryQuery[] = " AND r.lngRevisionNo >= 0";
+$aryQuery[] = " AND r.lngRevisionNo >= 0";
 
-    // 登録日
-    if (array_key_exists("dtmInsertDate", $searchColumns) &&
-        array_key_exists("dtmInsertDate", $from) &&
-        array_key_exists("dtmInsertDate", $to)) {
-        $aryQuery[] = "AND r.dtmInsertDate" .
-            " between '" . $from["dtmInsertDate"] . " 00:00:00'" .
-            " AND " . "'" . $to["dtmInsertDate"] . " 23:59:59.99999'";
-    }
-
-    // 顧客受注番号
-    if (array_key_exists("strCustomerReceiveCode", $searchColumns) &&
-        array_key_exists("strCustomerReceiveCode", $from) &&
-        array_key_exists("strCustomerReceiveCode", $to)) {
-        $aryQuery[] = "AND r.strCustomerReceiveCode" .
-            " between '" . $from["strCustomerReceiveCode"] . "'" .
-            " AND " . "'" . $to["strCustomerReceiveCode"] . "'";
-    }
-
-    // 受注Ｎｏ
-    if (array_key_exists("strReceiveCode", $searchColumns) &&
-        array_key_exists("strReceiveCode", $from) &&
-        array_key_exists("strReceiveCode", $to)) {
-        $fromstrReceiveCode = strpos($from["strReceiveCode"], "-") ? preg_replace(strrchr($from["strReceiveCode"], "-"), "", $from["strReceiveCode"]) : $from["strReceiveCode"];
-        $tostrReceiveCode = strpos($to["strReceiveCode"], "-") ? preg_replace(strrchr($to["strReceiveCode"], "-"), "", $to["strReceiveCode"]) : $to["strReceiveCode"];
-
-        $aryQuery[] = "AND r.strReceiveCode" .
-            " between '" . $fromstrReceiveCode . "'" .
-            " AND " . "'" . $tostrReceiveCode . "'";
-    }
-
-    // 入力者
-    if (array_key_exists("lngInputUserCode", $searchColumns) &&
-        array_key_exists("lngInputUserCode", $searchValue)) {
-        $aryQuery[] = " AND input_u.strUserDisplayCode = '" . $searchValue["lngInputUserCode"] . "'";
-    }
-
-    // 顧客
-    if (array_key_exists("lngCustomerCode", $searchColumns) &&
-        array_key_exists("lngCustomerCode", $searchValue)) {
-        $aryQuery[] = " AND cust_c.strCompanyDisplayCode = '" . $searchValue["lngCustomerCode"] . "'";
-    }
-
-    // 状態
-    if (array_key_exists("lngReceiveStatusCode", $searchColumns) &&
-        array_key_exists("lngReceiveStatusCode", $searchValue)) {
-        if (is_array($searchValue["lngReceiveStatusCode"])) {
-            $searchStatus = implode(",", $searchValue["lngReceiveStatusCode"]);
-            $aryQuery[] = " AND r.lngReceiveStatusCode in (" . $searchStatus . ")";
-        }
-    }
-
+// 登録日
+if (array_key_exists("dtmInsertDate", $searchColumns) &&
+    array_key_exists("dtmInsertDate", $from) &&
+    array_key_exists("dtmInsertDate", $to)) {
+    $aryQuery[] = "AND r.dtmInsertDate" .
+        " between '" . $from["dtmInsertDate"] . " 00:00:00'" .
+        " AND " . "'" . $to["dtmInsertDate"] . " 23:59:59.99999'";
 }
+
+// 顧客受注番号
+if (array_key_exists("strCustomerReceiveCode", $searchColumns) &&
+    array_key_exists("strCustomerReceiveCode", $from) &&
+    array_key_exists("strCustomerReceiveCode", $to)) {
+    $aryQuery[] = "AND r.strCustomerReceiveCode" .
+        " between '" . $from["strCustomerReceiveCode"] . "'" .
+        " AND " . "'" . $to["strCustomerReceiveCode"] . "'";
+}
+
+// 受注Ｎｏ
+if (array_key_exists("strReceiveCode", $searchColumns) &&
+    array_key_exists("strReceiveCode", $from) &&
+    array_key_exists("strReceiveCode", $to)) {
+    $fromstrReceiveCode = strpos($from["strReceiveCode"], "-") ? preg_replace(strrchr($from["strReceiveCode"], "-"), "", $from["strReceiveCode"]) : $from["strReceiveCode"];
+    $tostrReceiveCode = strpos($to["strReceiveCode"], "-") ? preg_replace(strrchr($to["strReceiveCode"], "-"), "", $to["strReceiveCode"]) : $to["strReceiveCode"];
+
+    $aryQuery[] = "AND r.strReceiveCode" .
+        " between '" . $fromstrReceiveCode . "'" .
+        " AND " . "'" . $tostrReceiveCode . "'";
+}
+
+// 入力者
+if (array_key_exists("lngInputUserCode", $searchColumns) &&
+    array_key_exists("lngInputUserCode", $searchValue)) {
+    $aryQuery[] = " AND input_u.strUserDisplayCode = '" . $searchValue["lngInputUserCode"] . "'";
+}
+
+// 顧客
+if (array_key_exists("lngCustomerCode", $searchColumns) &&
+    array_key_exists("lngCustomerCode", $searchValue)) {
+    $aryQuery[] = " AND cust_c.strCompanyDisplayCode = '" . $searchValue["lngCustomerCode"] . "'";
+}
+
+// 状態
+if (array_key_exists("lngReceiveStatusCode", $searchColumns) &&
+    array_key_exists("lngReceiveStatusCode", $searchValue)) {
+    if (is_array($searchValue["lngReceiveStatusCode"])) {
+        $searchStatus = implode(",", $searchValue["lngReceiveStatusCode"]);
+        $aryQuery[] = " AND r.lngReceiveStatusCode in (" . $searchStatus . ")";
+    }
+}
+
 $aryQuery[] = "  AND rd.lngReceiveNo = r.lngReceiveNo ";
-$aryQuery[] = "  AND r.lngRevisionNo = ( ";
-$aryQuery[] = "    SELECT";
-$aryQuery[] = "      MAX(r1.lngRevisionNo) ";
-$aryQuery[] = "    FROM";
-$aryQuery[] = "      m_Receive r1 ";
-$aryQuery[] = "    WHERE";
-$aryQuery[] = "      r1.strReceiveCode = r.strReceiveCode ";
-$aryQuery[] = "      AND r1.bytInvalidFlag = false ";
-$aryQuery[] = "      AND r1.strReviseCode = ( ";
-$aryQuery[] = "        SELECT";
-$aryQuery[] = "          MAX(r2.strReviseCode) ";
-$aryQuery[] = "        FROM";
-$aryQuery[] = "          m_Receive r2 ";
-$aryQuery[] = "        WHERE";
-$aryQuery[] = "          r2.strReceiveCode = r1.strReceiveCode ";
-$aryQuery[] = "          AND r2.bytInvalidFlag = false";
-$aryQuery[] = "      )";
-$aryQuery[] = "  ) ";
+// $aryQuery[] = "  AND r.lngRevisionNo = ( ";
+// $aryQuery[] = "    SELECT";
+// $aryQuery[] = "      MAX(r1.lngRevisionNo) ";
+// $aryQuery[] = "    FROM";
+// $aryQuery[] = "      m_Receive r1 ";
+// $aryQuery[] = "    WHERE";
+// $aryQuery[] = "      r1.strReceiveCode = r.strReceiveCode ";
+// $aryQuery[] = "      AND r1.bytInvalidFlag = false ";
+// $aryQuery[] = "      AND r1.strReviseCode = ( ";
+// $aryQuery[] = "        SELECT";
+// $aryQuery[] = "          MAX(r2.strReviseCode) ";
+// $aryQuery[] = "        FROM";
+// $aryQuery[] = "          m_Receive r2 ";
+// $aryQuery[] = "        WHERE";
+// $aryQuery[] = "          r2.strReceiveCode = r1.strReceiveCode ";
+// $aryQuery[] = "          AND r2.bytInvalidFlag = false";
+// $aryQuery[] = "      )";
+// $aryQuery[] = "  ) ";
 if (!array_key_exists("admin", $optionColumns)) {
     $aryQuery[] = "  AND 0 <= ( ";
     $aryQuery[] = "    SELECT";
@@ -336,11 +348,10 @@ if (!array_key_exists("admin", $optionColumns)) {
     $aryQuery[] = "  ) ";
 }
 $aryQuery[] = "ORDER BY";
-$aryQuery[] = "  lngReceiveNo DESC";
+$aryQuery[] = " r.strReceiveCode, lngReceiveDetailNo, r.lngReceiveNo DESC";
 
 // クエリを平易な文字列に変換
 $strQuery = implode("\n", $aryQuery);
-
 // 値をとる =====================================
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 // 検索件数がありの場合
@@ -353,7 +364,7 @@ if ($lngResultNum > 0) {
     }
 } else {
     $errorFlag = true;
-    $lngErrorCode = 9057;
+    $lngErrorCode = 403;
     $aryErrorMessage = "";
 }
 
@@ -417,10 +428,8 @@ $displayColumns = array_change_key_case($displayColumns, CASE_LOWER);
 $existsDetail = array_key_exists("btndetail", $displayColumns);
 // 確定カラムを表示
 $existsDecide = array_key_exists("btndecide", $displayColumns);
-// 再販を表示
-$existsResale = array_key_exists("btnresale", $displayColumns);
 // 履歴カラムを表示
-$existsRecord = array_key_exists("btnrecord", $displayColumns);
+$existsHistory = array_key_exists("btnhistory", $displayColumns);
 // 確定取消カラムを表示
 $existsCancel = array_key_exists("btncancel", $displayColumns);
 
@@ -428,10 +437,8 @@ $existsCancel = array_key_exists("btncancel", $displayColumns);
 $allowedDetail = fncCheckAuthority(DEF_FUNCTION_SO3, $objAuth);
 // 確定ボタンを表示
 $allowedDecide = fncCheckAuthority(DEF_FUNCTION_SO4, $objAuth);
-// 再販カラムを表示
-$allowedResale = fncCheckAuthority(DEF_FUNCTION_SO5, $objAuth);
 // 確定取消カラムを表示
-$allowedCancel = fncCheckAuthority(DEF_FUNCTION_SO6, $objAuth);
+$allowedCancel = fncCheckAuthority(DEF_FUNCTION_SO5, $objAuth);
 
 // -------------------------------------------------------
 // テーブルヘッダ作成
@@ -473,21 +480,12 @@ if ($existsDecide) {
 }
 
 // 履歴項目を表示
-if ($existsRecord) {
-    // プレビューカラム
-    $thRecord = $doc->createElement("th", toUTF8("履歴"));
-    $thRecord->setAttribute("class", $exclude);
+if ($existsHistory) {
+    // 履歴カラム
+    $thHistory = $doc->createElement("th", toUTF8("履歴"));
+    $thHistory->setAttribute("class", $exclude);
     // ヘッダに追加
-    $trHead->appendChild($thRecord);
-}
-
-// 再販項目を表示
-if ($existsResale) {
-    // プレビューカラム
-    $thResale = $doc->createElement("th", toUTF8("再販"));
-    $thResale->setAttribute("class", $exclude);
-    // ヘッダに追加
-    $trHead->appendChild($thResale);
+    $trHead->appendChild($thHistory);
 }
 
 $aryTableHeaderName = array();
@@ -505,7 +503,7 @@ $aryTableHeaderName["strgoodscode"] = "顧客品番";
 $aryTableHeaderName["lngcustomercode"] = "顧客";
 $aryTableHeaderName["dtmdeliverydate"] = "納期";
 $aryTableHeaderName["lngreceivestatuscode"] = "状態";
-$aryTableHeaderName["strnote"] = "備考";
+// $aryTableHeaderName["strnote"] = "備考";
 $aryTableHeaderName["lngrecordno"] = "明細行番号";
 $aryTableHeaderName["curproductprice"] = "単価";
 $aryTableHeaderName["lngproductunitcode"] = "単位";
@@ -538,14 +536,88 @@ $thead->appendChild($trHead);
 // -------------------------------------------------------
 // 検索結果件数分走査
 foreach ($records as $i => $record) {
-    $index = $i + 1;
+    unset($aryQuery);
+    // 削除フラグ
+    $deletedFlag = false;
+    // リバイズ有無フラグ
+    $revisedFlag = false;
+    // 最新受注かどうかのフラグ
+    $isMaxReceive = false;
+    // 履歴有無フラグ
+    $historyFlag = false;
+    // リビジョン番号
+    $revisionNos = "";
+
+    // 同じ受注NOの最新受注データのリビジョン番号を取得する
+    $aryQuery[] = "SELECT";
+    $aryQuery[] = " r.lngreceiveno, r.lngrevisionno ";
+    $aryQuery[] = "FROM m_receive r inner join t_receivedetail rd ";
+    $aryQuery[] = "on r.lngreceiveno = rd.lngreceiveno ";
+    $aryQuery[] = "WHERE strreceivecode='" . $record["strreceivecode"] . "' ";
+    $aryQuery[] = "and lngreceivedetailno=" . $record["lngreceivedetailno"] . " ";
+    $aryQuery[] = "order by r.lngreceiveno desc";
+
+    // クエリを平易な文字列に変換
+    $strQuery = implode("\n", $aryQuery);
+
+    list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
+    // 検索件数がありの場合
+    if ($lngResultNum > 0) {
+        if ($lngResultNum > 1) {
+            $historyFlag = true;
+        }
+        for ($j = 0; $j < $lngResultNum; $j++) {
+            if ($j == 0) {
+                $maxReceiveInfo = $objDB->fetchArray($lngResultID, $j);
+                // 該当製品のリビジョン番号<0の場合、削除済となる
+                if ($maxReceiveInfo["lngrevisionno"] < 0) {
+                    $deletedFlag = true;
+                }
+                if ($maxReceiveInfo["lngrevisionno"] != 0) {
+                    $revisedFlag = true;
+                }
+                if ($maxReceiveInfo["lngreceiveno"] == $record["lngreceiveno"]) {
+                    $isMaxReceive = true;
+                }
+            } else {
+                $receiveInfo = $objDB->fetchArray($lngResultID, $j);
+                if ($revisionNos == "") {
+                    $revisionNos = $receiveInfo["lngrevisionno"];
+                } else {
+                    $revisionNos = $revisionNos . "," . $receiveInfo["lngrevisionno"];
+                }
+            }
+        }
+    }
+
+    // 背景色設定
+    if ($record["lngrevisionno"] < 0) {
+        $bgcolor = "background-color: #B3E0FF;";
+    } else if ($isMaxReceive) {
+        $bgcolor = "background-color: #FFB2B2;";
+    } else {
+        $bgcolor = "background-color: #FEEF8B;";
+    }
 
     // tbody > tr要素作成
     $trBody = $doc->createElement("tr");
+    $trBody->setAttribute("id", $record["strreceivecode"]. "_" . $record["lngreceivedetailno"]);
+    if (!$isMaxReceive) {
+        $trBody->setAttribute("id", $record["strreceivecode"] . "_" . $record["lngreceivedetailno"]. "_" . $record["lngrevisionno"]);
+        $trBody->setAttribute("style", "display: none;");
+    }
 
     // 項番
-    $tdIndex = $doc->createElement("td", $index);
+    if ($isMaxReceive) {
+        $index = $index + 1;
+        $subnum = 1;
+        $tdIndex = $doc->createElement("td", $index);
+    } else {
+        $subindex = $index . "." . ($subnum++);
+        $tdIndex = $doc->createElement("td", $subindex);
+    }
     $tdIndex->setAttribute("class", $exclude);
+    $tdIndex->setAttribute("style", $bgcolor);
     $trBody->appendChild($tdIndex);
 
     // 詳細を表示
@@ -553,9 +625,10 @@ foreach ($records as $i => $record) {
         // 詳細セル
         $tdDetail = $doc->createElement("td");
         $tdDetail->setAttribute("class", $exclude);
+        $tdDetail->setAttribute("style", $bgcolor);
 
         // 詳細ボタンの表示
-        if ($allowedDetail) {
+        if ($allowedDetail and $record["lngrevisionno"] >= 0) {
             // 詳細ボタン
             $imgDetail = $doc->createElement("img");
             $imgDetail->setAttribute("src", "/img/type01/so/detail_off_bt.gif");
@@ -573,9 +646,10 @@ foreach ($records as $i => $record) {
         // 確定セル
         $tdDecide = $doc->createElement("td");
         $tdDecide->setAttribute("class", $exclude);
+        $tdDecide->setAttribute("style", $bgcolor);
 
         // 確定ボタンの表示
-        if ($allowedDecide) {
+        if ($allowedDecide and $record["lngrevisionno"] >= 0 and $record["lngreceivestatuscode"] == DEF_RECEIVE_PREORDER and !$deletedFlag) {
             // 確定ボタン
             $imgDecide = $doc->createElement("img");
             $imgDecide->setAttribute("src", "/img/type01/so/renew_off_bt.gif");
@@ -589,46 +663,25 @@ foreach ($records as $i => $record) {
     }
 
     // 履歴項目を表示
-    if ($existsRecord) {
-        // 履歴ボタンの表示
-        if (array_key_exists("admin", $optionColumns)) {
-            // 履歴セル
-            $tdRecord = $doc->createElement("td");
-            $tdRecord->setAttribute("class", $exclude);
+    if ($existsHistory) {
+        // 履歴セル
+        $tdHistory = $doc->createElement("td");
+        $tdHistory->setAttribute("class", $exclude);
+        $tdHistory->setAttribute("style", $bgcolor);
+
+        if ($isMaxReceive and $historyFlag) {
             // 履歴ボタン
-            $imgRecord = $doc->createElement("img");
-            $imgRecord->setAttribute("src", "/img/type01/so/renew_off_bt.gif");
-            $imgRecord->setAttribute("id", $record["lngreceiveno"]);
-            $imgRecord->setAttribute("class", "record button");
+            $imgHistory = $doc->createElement("img");
+            $imgHistory->setAttribute("src", "/img/type01/so/renew_off_bt.gif");
+            $imgHistory->setAttribute("id", $record["strreceivecode"]. "_". $record["lngreceivedetailno"]);
+            $imgHistory->setAttribute("revisionnos", $revisionNos);
+            $imgHistory->setAttribute("class", "history button");
             // td > img
-            $tdRecord->appendChild($imgRecord);
-            // tr > td
-            $trBody->appendChild($tdRecord);
-        } else {
-            $td = $doc->createElement("td",  toUTF8("〇"));
-            $trBody->appendChild($td);
-        }
-    }
-
-    // 再販項目を表示
-    if ($existsResale) {
-        // 再販セル
-        $tdResale = $doc->createElement("td");
-        $tdResale->setAttribute("class", $exclude);
-
-        // 再販ボタンの表示
-        if ($allowedResale) {
-            // 再販ボタン
-            $imgResale = $doc->createElement("img");
-            $imgResale->setAttribute("src", "/img/type01/so/renew_off_bt.gif");
-            $imgResale->setAttribute("id", $record["lngreceiveno"]);
-            $imgResale->setAttribute("class", "resale button");
-            // td > img
-            $tdResale->appendChild($imgResale);
+            $tdHistory->appendChild($imgHistory);
         }
         // tr > td
-        $trBody->appendChild($tdResale);
-	}
+        $trBody->appendChild($tdHistory);
+    }
 
     // TODO 要リファクタリング
     // 指定されたテーブル項目のセルを作成する
@@ -640,111 +693,126 @@ foreach ($records as $i => $record) {
                 // 登録日
                 case "dtminsertdate":
                     $td = $doc->createElement("td", $record["dtminsertdate"]);
+                    $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
                 // [入力者表示コード] 入力者表示名
                 case "lnginputusercode":
                     $textContent = "[" . $record["strinputuserdisplaycode"] . "]" . " " . $record["strinputuserdisplayname"];
                     $td = $doc->createElement("td", toUTF8($textContent));
+                    $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
                 // 顧客受注番号
                 case "strcustomerreceivecode":
                     $td = $doc->createElement("td", $record["strcustomerreceivecode"]);
+                    $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
                 // 受注ＮＯ.
                 case "strreceivecode":
                     $td = $doc->createElement("td", toUTF8($record["strreceivecode"]));
+                    $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
                 // 製品コード
                 case "strproductcode":
                     $td = $doc->createElement("td", $record["strproductcode"]);
+                    $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
                 // 製品マスタ.製品コード(日本語)
                 case "strproductname":
                     $td = $doc->createElement("td", toUTF8($record["strproductname"]));
+                    $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
                 // 製品マスタ.製品名称(英語)
                 case "strproductenglishname":
                     $td = $doc->createElement("td", toUTF8($record["strproductenglishname"]));
+                    $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
                 // [営業部署表示コード] 営業部署表示名
-				case "lnginchargegroupcode":
-					$textContent = "[" . $record["strgroupdisplaycode"] . "]" . " " . $record["strgroupdisplayname"];
-					$td = $doc->createElement("td", toUTF8($textContent));
+                case "lnginchargegroupcode":
+                    $textContent = "[" . $record["strgroupdisplaycode"] . "]" . " " . $record["strgroupdisplayname"];
+                    $td = $doc->createElement("td", toUTF8($textContent));
+                    $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
                 // [開発担当者表示コード] 開発担当者表示名
                 case "lnginchargeusercode":
                     $textContent = "[" . $record["struserdisplaycode"] . "]" . " " . $record["struserdisplayname"];
                     $td = $doc->createElement("td", toUTF8($textContent));
+                    $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
-					break;
-				// 売上区分
-				case "lngsalesclasscode":					
+                    break;
+                // 売上区分
+                case "lngsalesclasscode":
                     $textContent = "[" . $record["lngsalesclasscode"] . "]" . " " . $record["strsalesclassname"];
                     $td = $doc->createElement("td", toUTF8($textContent));
+                    $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
                 // 顧客品番
                 case "strgoodscode":
                     $td = $doc->createElement("td", toUTF8($record["strgoodscode"]));
+                    $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
                 // [顧客表示コード] 顧客表示名
                 case "lngcustomercode":
                     $textContent = "[" . $record["strcustomerdisplaycode"] . "]" . " " . $record["strcustomerdisplayname"];
                     $td = $doc->createElement("td", toUTF8($textContent));
+                    $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
                 // 納期
                 case "dtmdeliverydate":
                     $td = $doc->createElement("td", toUTF8($record["dtmdeliverydate"]));
+                    $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
                 // 状態
                 case "lngreceivestatuscode":
                     $td = $doc->createElement("td", toUTF8($record["strreceivestatusname"]));
-                    $trBody->appendChild($td);
-                    break;
-                // 備考
-                case "strnote":
-                    $td = $doc->createElement("td", toUTF8($record["strnote"]));
+                    $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
                 // 明細行番号
-				case "lngrecordno":
+                case "lngrecordno":
                     $td = $doc->createElement("td", $record["lngreceivedetailno"]);
+                    $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
                 // 単価
                 case "curproductprice":
-                    $td = $doc->createElement("td", money_format($record["lngmonetaryunitcode"],$record["strmonetaryunitsign"],$record["curproductprice"]));
+                    $td = $doc->createElement("td", money_format($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], $record["curproductprice"]));
+                    $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
                 // 単位
                 case "lngproductunitcode":
                     $td = $doc->createElement("td", toUTF8($record["lngproductunitname"]));
+                    $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
                 // 数量
                 case "lngproductquantity":
                     $td = $doc->createElement("td", toUTF8($record["lngproductquantity"]));
+                    $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
                 // 税抜金額
                 case "cursubtotalprice":
-                    $td = $doc->createElement("td", money_format($record["lngmonetaryunitcode"],$record["strmonetaryunitsign"],$record["cursubtotalprice"]));
+                    $td = $doc->createElement("td", money_format($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], $record["cursubtotalprice"]));
+                    $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
                 // 明細備考
                 case "strdetailnote":
                     $td = $doc->createElement("td", toUTF8($record["strdetailnote"]));
+                    $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
             }
@@ -753,13 +821,14 @@ foreach ($records as $i => $record) {
 
     // 確定取消項目を表示
     if ($existsCancel) {
-        // 削除セル
+        // 確定取消セル
         $tdCancel = $doc->createElement("td");
         $tdCancel->setAttribute("class", $exclude);
+        $tdCancel->setAttribute("style", $bgcolor);
 
-        // 削除ボタンの表示
-        if ($allowedCancel) {
-            // 削除ボタン
+        // 確定取消ボタンの表示
+        if ($allowedCancel and $record["lngrevisionno"] >= 0 and $record["lngreceivestatuscode"] == DEF_RECEIVE_ORDER and !$deletedFlag) {
+            // 確定取消ボタン
             $imgCancel = $doc->createElement("img");
             $imgCancel->setAttribute("src", "/img/type01/so/cancel_off_bt.gif");
             $imgCancel->setAttribute("id", $record["lngreceiveno"]);
@@ -789,6 +858,6 @@ function money_format($lngmonetaryunitcode, $strmonetaryunitsign, $price)
     if ($lngmonetaryunitcode == 1) {
         return "&yen;" . " " . $price;
     } else {
-        return toUTF8($strmonetaryunitsign . " ". $price);
+        return toUTF8($strmonetaryunitsign . " " . $price);
     }
 }

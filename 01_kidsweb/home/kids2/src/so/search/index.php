@@ -60,12 +60,66 @@ if ( !fncCheckAuthority( DEF_FUNCTION_SO2, $objAuth ) )
 {
 	fncOutputError ( 9052, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
+// 403 受注管理（受注検索　管理モード）
+if ( fncCheckAuthority( DEF_FUNCTION_SO3, $objAuth ) )
+{
+	$aryData["AdminSet_visibility"] = "visible";
+}
+else
+{
+	$aryData["AdminSet_visibility"] = "hidden";
+}
+// 404 受注管理（詳細表示）
+if ( fncCheckAuthority( DEF_FUNCTION_SO4, $objAuth ) )
+{
+	$aryData["btnDetail_visibility"] = "visible";
+	$aryData["btnDetailVisible"] = "checked";
+}
+else
+{
+	$aryData["btnDetail_visibility"] = "hidden";
+	$aryData["btnDetailVisible"] = "";
+}
+// 405 受注管理（確定）
+if ( fncCheckAuthority( DEF_FUNCTION_SO4, $objAuth ) )
+{
+	$aryData["btnDecide_visibility"] = "visible";
+	$aryData["btnDecideVisible"] = "checked";
+}
+else
+{
+	$aryData["btnDecide_visibility"] = "hidden";
+	$aryData["btnDecideVisible"] = "";
+}
+// 406 受注管理（確定取消）
+if ( fncCheckAuthority( DEF_FUNCTION_SO5, $objAuth ) )
+{
+	$aryData["btnCancel_visibility"] = "visible";
+	$aryData["btnCancelVisible"] = "checked";
+}
+else
+{
+	$aryData["btnCancel_visibility"] = "hidden";
+	$aryData["btnCancelVisible"] = "";
+}
+
+// 受注ステータス
+$aryData["lngReceiveStatusCode"] 	= fncGetCheckBoxObject( "m_receivestatus", "lngreceivestatuscode", "strreceivestatusname", "lngReceiveStatusCode[]", 'where lngReceiveStatusCode not in (1)', $objDB );
+
+// 売上区分
+$aryData["lngSalesClassCode"] = fncGetPulldown( "m_salesclass", "lngsalesclasscode", "lngsalesclasscode, strsalesclassname", 1, '', $objDB );
+
+//　プルダウンリストの取得に失敗した場合エラー表示
+if ( !$aryData["lngReceiveStatusCode"] or !$aryData["lngSalesClassCode"] )
+{
+    fncOutputError ( 9055, DEF_WARNING, "システム管理者にお問い合わせ下さい。", TRUE, "", $objDB );
+}
 
 // ヘルプ対応
 $aryData["lngFunctionCode"] = DEF_FUNCTION_SO2;
 
 // テンプレート読み込み
-echo fncGetReplacedHtmlWithBase("search/base_search.html", "so/search/so_search.tmpl", $aryData ,$objAuth );
+echo fncGetReplacedHtmlWithBase("search/base_search.html", "so/search/so_search.html", $aryData ,$objAuth );
 
 $objDB->close();
 

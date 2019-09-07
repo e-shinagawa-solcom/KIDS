@@ -28,23 +28,24 @@
 	// 読み込み
 	include('conf.inc');
 	require (LIB_FILE);
-	require (SRC_ROOT."po/cmn/lib_po.php");
-	require (SRC_ROOT."po/cmn/lib_pop.php");
-
+	// require (SRC_ROOT."po/cmn/lib_po.php");
+	// require (SRC_ROOT."po/cmn/lib_pop.php");
+	require (SRC_ROOT."po/cmn/lib_por.php");
 	
 	$objDB		= new clsDB();
 	$objAuth	= new clsAuth();
 	
 	if( strcmp( $_GET["strSessionID"],"" ) != 0 )
 	{
-		$aryData["strSessionID"]	= $_GET["strSessionID"];
+		$aryData["strSessionID"] = $_GET["strSessionID"];
+		$aryData["lngOrderNo"]   = $_GET["lngOrderNo"];
 	}
 	else
 	{
-		$aryData["strSessionID"]	= $_POST["strSessionID"];
+		$aryData["strSessionID"] = $_POST["strSessionID"];
+		$aryData["lngOrderNo"]   = $_POST["lngOrderNo"];
 	}
 	$aryData["lngLanguageCode"]	= $_COOKIE["lngLanguageCode"];
-	
 
 	
 	$objDB->open("", "", "", "");
@@ -80,8 +81,84 @@
 		$aryData["popenview"] = 'hidden';
 	}
 
+	// 更新モード
+	if($_POST["strMode"] == "update"){
+		// 更新データ取得
+		$aryUpdate["lngorderno"]           = $_POST["lngOrderNo"];
+		$aryUpdate["lngrevisionno"]        = $_POST["lngRevisionNo"];
+		$aryUpdate["dtmexpirationdate"]    = $_POST["dtmExpirationDate"];
+		$aryUpdate["lngpayconditioncode"]  = $_POST["lngPayConditionCode"];
+		$aryUpdate["lngdeliveryplacecode"] = $_POST["lngLocationCode"];
+		$aryUpdate["lngorderstatuscode"]   = DEF_ORDER_ORDER;
+		for($i = 0; $i < count($_POST["aryDetail"]); $i++){
+			$aryUpdateDetail[$i]["lngorderdetailno"]      = $_POST["aryDetail"][$i]["lngOrderDetailNo"];
+			$aryUpdateDetail[$i]["lngsortkey"]            = $_POST["aryDetail"][$i]["lngSortKey"];
+			$aryUpdateDetail[$i]["lngdeliverymethodcode"] = $_POST["aryDetail"][$i]["lngDeliveryMethodCode"];
+		}
+
+		$objDB->transactionBegin();
+		// 発注マスタ更新
+		if(!fncUpdateOrder($aryUpdate, $aryUpdateDetail, $objDB)) { return false; }
+		// 更新後発注マスタ/発注明細取得
+		$aryOrder = fncGetOrder($aryUpdate["lngorderno"], $objDB)[0];
+		$aryDetail = fncGetOrderDetail($aryUpdate["lngorderno"], $objDB);
+		// 発注書マスタ更新
+		if(!fncUpdatePurchaseOrder($aryOrder, $aryDetail, $objAuth, $objDB)){ return false; }
+
+		$objDB->transactionRollback();
+
+		echo fncGetReplacedHtml( "po/regist/parts2.tmpl", $aryData ,$objAuth);
+
+		return true;
+	}
 
 
+
+	$aryOrderNo = explode(",", $aryData["lngOrderNo"]);
+
+	// ヘッダ・フッダ部
+	$aryOrderHeader = fncGetOrder($aryData["lngOrderNo"], $objDB)[0];
+
+
+
+
+
+
+
+
+	$aryData["strOrderCode"]          = $aryOrderHeader["strordercode"];
+	$aryData["strReviseCode"]         = str_pad($aryOrderHeader["lngrevisionno"],2,"0",STR_PAD_LEFT);
+	$aryData["dtmExpirationDate"]     = str_replace("-", "/", $aryOrderHeader["dtmexpirationdate"]);
+	$aryData["strProductCode"]        = $aryOrderHeader["strproductcode"];
+	$aryData["strNote"]               = $aryOrderHeader["strnote"];
+	$aryData["lngCustomerCode"]       = $aryOrderHeader["strcompanydisplaycode"];
+	$aryData["strCustomerName"]       = $aryOrderHeader["strcompanydisplayname"];
+	$aryData["strGroupDisplayCode"]   = $aryOrderHeader["strgroupdisplaycode"];
+	$aryData["strGroupDisplayName"]   = $aryOrderHeader["strgroupdisplayname"];
+	$aryData["strProductName"]        = $aryOrderHeader["strproductname"];
+	$aryData["strProductEnglishName"] = $aryOrderHeader["strproductenglishname"];
+	$aryData["lngCountryCode"]        = $aryOrderHeader["lngcountrycode"];
+	$aryData["lngLocationCode"]       = $aryOrderHeader["strcompanydisplaycode2"];
+	$aryData["strLocationName"]       = $aryOrderHeader["strcompanydisplayname2"];
+	$aryData["lngRevisionNo"]         = $aryOrderHeader["lngrevisionno"];
+	
+	// 明細
+	$aryDetail = fncGetOrderDetail($aryData["lngOrderNo"], $objDB);
+	// 支払条件プルダウン
+	$strPulldownPaycondition = fncPulldownMenu(0, 0, "", $objDB);
+	$aryData["optPayCondition"] = $strPulldownPaycondition;
+	// 通貨プルダウン
+	$strPulldownMonetaryUnit = fncPulldownMenu(1, $aryOrderHeader["lngmonetaryunitcode"], "", $objDB);
+	$aryData["optMonetaryUnit"] = $strPulldownMonetaryUnit;
+	// 運搬方法プルダウン
+	$strPulldownDeliveryMethod = fncPulldownMenu(2, null, "", $objDB);
+
+	$aryData["strOrderDetail"] = fncGetOrderDetailHtml($aryDetail, $strPulldownDeliveryMethod);
+
+
+
+
+	if(false){
 	if($_POST["strMode"] == "check")
 	{
 
@@ -136,14 +213,14 @@
 			$aryDetailErrorMessage[] = fncOutputError ( 9001, "", "", FALSE, "", $objDB );
 		}
 
-// 2004.03.30 suzukaze update start
+		// 2004.03.30 suzukaze update start
 		// 明細行のデータに対して、製品コードが違うデータが存在しないかどうかのチェック
 		$bytCheck = fncCheckOrderDetailProductCode ( $_POST["aryPoDitail"], $objDB );
 		if ( $bytCheck == 99 )
 		{
 			$aryDetailErrorMessage[] = fncOutputError( 506, "", "", FALSE, "", $objDB );
 		}
-// 2004.03.30 suzukaze update end
+		// 2004.03.30 suzukaze update end
 
 		// エラーがあった場合 ==============================================================================
 		if( $errorCount != 0 || is_array( $aryDetailErrorMessage ))
@@ -210,13 +287,13 @@
 			$aryData["lngRegistConfirm"] = 0;
 			$aryData["strMode"] = "check";
 			
-// 2004.04.08 suzukaze update start
+			// 2004.04.08 suzukaze update start
 			$aryData["lngCalcCode"] = DEF_CALC_KIRISUTE;
-// 2004.04.08 suzukaze update end
+			// 2004.04.08 suzukaze update end
 
-// 2004.04.19 suzukaze update start
+			// 2004.04.19 suzukaze update start
 			$aryData["strPageCondition"] = "regist";
-// 2004.04.19 suzukaze update end
+			// 2004.04.19 suzukaze update end
 
 
 			$aryData["lngSelfLoginUserCode"] = $lngUserCode; // 入力者コード
@@ -286,20 +363,20 @@
 
 
 
-//			$aryData["strButton"] = "<input type=\"button\" value=\"やり直し\" onClick=\"fncPageback( 'index.php' )\">&nbsp;&nbsp;<input type=\"button\" value=\"登録\" onClick=\"fncPagenext( 'index2.php' )\">";
+			//	$aryData["strButton"] = "<input type=\"button\" value=\"やり直し\" onClick=\"fncPageback( 'index.php' )\">&nbsp;&nbsp;<input type=\"button\" value=\"登録\" onClick=\"fncPagenext( 'index2.php' )\">";
 
 			$objDB->close();
 			
 			$aryData["strurl"] = "/po/confirm/index.php?strSessionID=".$aryData["strSessionID"];
 			$aryData["strActionURL"] = "index.php";
 			
-// 2004.04.08 suzukaze update start
+			// 2004.04.08 suzukaze update start
 			$aryData["lngCalcCode"] = DEF_CALC_KIRISUTE;
-// 2004.04.08 suzukaze update end
+			// 2004.04.08 suzukaze update end
 
-// 2004.04.19 suzukaze update start
+			// 2004.04.19 suzukaze update start
 			$aryData["strPageCondition"] = "regist";
-// 2004.04.19 suzukaze update end
+			// 2004.04.19 suzukaze update end
 
 
 			$aryData["lngSelfLoginUserCode"] = $lngUserCode; // 入力者コード
@@ -310,9 +387,9 @@
 			return true;
 			
 		}
+	
 	}
-	
-	
+
 	// 最初の画面
 	// プルダウンメニューの生成
 	// 通貨
@@ -330,8 +407,6 @@
 	// 荷姿単位
 	$aryData["lngProductUnitCode_ps"]		= fncPulldownMenu( 8, 0, '', $objDB );
 
-
-
 	// 権限グループコードの取得
 	$lngAuthorityGroupCode = fncGetUserAuthorityGroupCode( $lngUserCode, $aryData["strSessionID"], $objDB );
 
@@ -345,10 +420,11 @@
 	{
 		$aryData["lngWorkflowOrderCode"] = fncWorkFlow( $lngUserCode , $objDB ,"" );
 	}
+	}
 
 
 
-	$aryData["strMode"] = "check";				// モード（次の動作）check→renew
+	$aryData["strMode"] = "update";				// モード（次の動作）check→renew
 	$aryData["strActionUrl"] = "index.php";		// formのaction
 	
 	//echo "value :".$aryData["lngWorkflowOrderCode"]."<br>";
@@ -360,13 +436,13 @@
 	
 	$aryData["curConversionRate"] = "1.000000";
 	
-// 2004.04.08 suzukaze update start
+	// 2004.04.08 suzukaze update start
 	$aryData["lngCalcCode"] = DEF_CALC_KIRISUTE;
-// 2004.04.08 suzukaze update end
+	// 2004.04.08 suzukaze update end
 
-// 2004.04.19 suzukaze update start
+	// 2004.04.19 suzukaze update start
 	$aryData["strPageCondition"] = "regist";
-// 2004.04.19 suzukaze update end
+	// 2004.04.19 suzukaze update end
 
 
 	$aryData["lngSelfLoginUserCode"] = $lngUserCode; // 入力者コード

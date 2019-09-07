@@ -1,7 +1,7 @@
 
 (function(){
     // フォーム
-    var form = $('form[name="RegistMoldReport"]');
+    var form = $('form');
     // ヘッダタブ
     var header = $('div.regist-tab-header');
     // 詳細タブ
@@ -10,48 +10,24 @@
     var classNameErrorIcon = 'error-icon';
     // エラーアイコンリソースURL
     var urlErrorIcon = '/img/type01/cmn/seg/seg_error_mark.gif';
-    // 選択中の金型リストのラベル
-    var labelChoosenMoldList = $('table.mold-selection')
-                                    .find('tr:nth-of-type(1)')
-                                    .find('th:nth-of-type(3)');
 
     // エラーメッセージ(必須項目)
     var msgRequired = "入力必須項目です。";
     // エラーメッセージ(日付)
     var msgDateFormat = "yyyy/mm/dd形式かつ有効な日付を入力してください。";
-    var msgGreaterThanToday = "現在より先の日付しか入力できません。";
-    var msgGreaterThanRequestDate = "希望日より先の日付しか入力できません。";
-    // エラーメッセージ(移動先が保管元と同一工場)
-    var msgSameFactory = "移動先工場に保管元工場と同じ工場を指定することはできません。";
     // 帳票その他欄の最大入力可能文字数
     var noteMaxLen = 38;
     // エラーメッセージ(その他の最大文字数まで)
     var msgNote = noteMaxLen + "文字までしか入力できません。"
 
-    var regDate = /(19[0-9]{2}|2[0-9]{3})\/(0[1-9]|1[0-2])\/([0-2][0-9]|3[0-1])/;
+    var regDate = /(19[0-9]{2}|2[0-9]{3})\/(0[1-9]|1[0-2])/;
 
     // validationキック
     $('.hasDatepicker').on({
         'change': function(){
             $(this).blur();
         }
-    })
-
-    // 希望日変更時、返却予定日のvalidationキック
-    $('input[name="ActionRequestDate"]').on({
-        'blur': function(){
-            $('input[name="ReturnSchedule"]').blur();
-        }
-    })
-
-    // 保管工場と移動先工場が不一致かどうか
-    $.validator.addMethod(
-        "difFactory",
-        function(value, element, params) {
-            return value != params.val();
-        },
-        msgSameFactory
-    );
+    });
 
     // 日付がyyyy/mm/dd形式にマッチしているか,有効な日付か
     $.validator.addMethod(
@@ -66,7 +42,7 @@
                 var regResult = regDate.exec(value);
                 var yyyy = regResult[1];
                 var mm = regResult[2];
-                var dd = regResult[3];
+                var dd = "01";
                 var di = new Date(yyyy, mm - 1, dd);
                 // 日付の有効性チェック
                 if (di.getFullYear() == yyyy && di.getMonth() == mm - 1 && di.getDate() == dd) {
@@ -78,98 +54,6 @@
         msgDateFormat
     );
 
-    // 日付が過去でないか 当日不可
-    $.validator.addMethod(
-        "isGreaterThanToday",
-        function(value, element, params) {
-            if(params){
-                var regResult = regDate.exec(value);
-                var yyyy = regResult[1];
-                var mm = regResult[2];
-                var dd = regResult[3];
-                var di = new Date(yyyy, mm - 1, dd);
-                // 現在の日時と比較
-                var nowDi = new Date();
-                // 入力した年が現在より小さければエラー
-                if (nowDi.getFullYear() > di.getFullYear()){
-                    return false;
-                // 入力した年が現在より大きければ正
-                } else if (nowDi.getFullYear() < di.getFullYear()) {
-                    return true;
-                // 入力した年が現在と同じ場合
-                } else if (nowDi.getFullYear() == di.getFullYear()) {
-                    // 入力した月が現在より小さければエラー
-                    if (nowDi.getMonth() > di.getMonth()){
-                        return false;
-                    // 入力した月が現在より大きければ正
-                    } else if (nowDi.getMonth() < di.getMonth()){
-                        return true;
-                    // 入力した月が現在と同じ場合
-                    } else if (nowDi.getMonth() == di.getMonth()){
-                        // 入力した日が現在と同じかそれより小さければエラー
-                        if (nowDi.getDate() >= di.getDate()) {
-                            return false;
-                        }
-                    }
-                    return true;
-                }
-            }
-            return true;
-        },
-        msgGreaterThanToday
-    );
-
-    // 返却予定日が希望日より大きいか(同日不可)
-    $.validator.addMethod(
-        "isGreaterThanRequestDate",
-        function (value, element, params) {
-            // 生産後の処理が20の場合チェック
-            if(params){
-                // 希望日が入力されている場合チェック
-                if ($('input[name="ActionRequestDate"]').val() != "") {
-                    var actionRequestDate = $('input[name="ActionRequestDate"]').val();
-                    var regResult = regDate.exec(actionRequestDate);
-                    var yyyy = regResult[1];
-                    var mm = regResult[2];
-                    var dd = regResult[3];
-                    var RequestDate = new Date(yyyy, mm - 1, dd);
-
-                    regResult = regDate.exec(value);
-                    yyyy = regResult[1];
-                    mm = regResult[2];
-                    dd = regResult[3];
-                    var di = new Date(yyyy, mm - 1, dd);
-                    // 希望日の日時と比較
-                    // 入力した年が希望日より小さければエラー
-                    if (RequestDate.getFullYear() > di.getFullYear()) {
-                        return false;
-                    // 入力した年が希望日より大きければ正
-                    } else if (RequestDate.getFullYear() < di.getFullYear()) {
-                        return true;
-                    // 入力した年が現在と同じ場合
-                    } else if (RequestDate.getFullYear() == di.getFullYear()) {
-                        // 入力した月が現在より小さければエラー
-                        if (RequestDate.getMonth() > di.getMonth()){
-                            return false;
-                        // 入力した月が現在より大きければ正
-                        } else if (RequestDate.getMonth() < di.getMonth()){
-                            return true;
-                        // 入力した月が現在と同じ場合
-                        } else if (RequestDate.getMonth() == di.getMonth()){
-                            // 入力した日が現在と同じかそれより小さければエラー
-                            if (RequestDate.getDate() >= di.getDate()) {
-                                return false;
-                            }
-                        }
-                        return true;
-                    }
-                }
-            }
-            return true;
-        },
-        msgGreaterThanRequestDate
-    );
-
     $.validator.addMethod(
         "maxlength",
         function (value, element, params) {
@@ -177,16 +61,6 @@
             return !value ? true : (value.length <= params) ? true : false;
         },
         msgNote
-    );
-
-    // 返却予定日をチェックするかの条件
-    $.validator.addMethod(
-        "requiredWhenFinalKeepIsReturn",
-        function (value, element, params) {
-            // 生産後の処理が[20:返却]の場合必須
-            return (($('select[name="FinalKeep"]')).val() != 20) ? true : value ? true : false;
-        },
-        msgRequired
     );
 
     // 検証設定
@@ -236,148 +110,130 @@
         // 検証ルール
         // -----------------------------------------------
         rules:{
-            // 製品コード
-            ProductCode: {
+            // 製品名称（日本語）
+            strProductName: {
                 required: true
             },
-            // 顧客品番
-            GoodsCode: {
+            // 製品名称（英語）
+            strProductEnglishName: {
                 required: true
             },
-            // 帳票区分
-            ReportCategory: {
+            // 営業部署
+            lngInchargeGroupCode: {
                 required: true
             },
-            // 依頼日
-            RequestDate: {
-                checkDateFormat: true,
+            // 担当者
+            lngInchargeUserCode: {
                 required: true
             },
-            // 依頼区分
-            RequestCategory: {
+            // 開発担当者
+            lngDevelopUserCode: {
                 required: true
             },
-            // 希望日
-            ActionRequestDate: {
-                checkDateFormat: true,
-                isGreaterThanToday: true,
+            // 顧客
+            lngCustomerCompanyCode: {
                 required: true
             },
-            // 移動方法
-            TransferMethod: {
+            // 顧客担当者
+            lngCustomerUserCode: {
                 required: true
             },
-            // 指示区分
-            InstructionCategory: {
+            // 商品形態
+            lngProductFormCode: {
                 required: true
             },
-            // 事業部(顧客)
-            CustomerCode: {
+            // カートン入数
+            lngCartonQuantity: {
                 required: true
             },
-            // KWG担当部署
-            KuwagataGroupCode: {
+            // 生産予定数
+            lngProductionQuantity: {
                 required: true
             },
-            // KWG担当者
-            KuwagataUserCode: {
+            // 初回納品数
+            lngFirstDeliveryQuantity: {
                 required: true
             },
-            // 生産後の処理
-            FinalKeep: {
-                required: true
-            },
-            // 返却予定日 生産後の処理が返却の場合
-            ReturnSchedule: {
-                requiredWhenFinalKeepIsReturn: true,
-                checkDateFormat: true,
-                isGreaterThanToday: true,
-                isGreaterThanRequestDate: true
-            },
-            // その他
-            Note: {
-                maxlength: noteMaxLen
-            },
-            // 選択済みの金型リスト
-            // ChoosenMoldList: {
-            //    required: true
-            //},
-            // 保管工場
-            SourceFactory: {
-                required: true
-            },
-            // 移動先工場
-            DestinationFactory: {
+            // 納期
+            dtmDeliveryLimitDate: {
                 required: true,
-                difFactory: $('input[name="SourceFactory"]')
+                checkDateFormat: true
+            },
+            // 納価(pcs単価)
+            curProductPrice: {
+                required: true
+            },
+            // 上代(pcs単価)
+            curretailPrice: {
+                required: true
+            },
+            // 製品構成
+            strProductComposition: {
+                required: true
             }
         },
         // -----------------------------------------------
         // エラーメッセージ
         // -----------------------------------------------
         messages: {
-            // 製品コード
-            ProductCode: {
+            // 製品名称（日本語）
+            strProductName: {
                 required: msgRequired
             },
-            // 顧客品番
-            GoodsCode: {
+            // 製品名称（英語）
+            strProductEnglishName: {
                 required: msgRequired
             },
-            // 帳票区分
-            ReportCategory: {
+            // 営業部署
+            lngInchargeGroupCode: {
                 required: msgRequired
             },
-            // 依頼日
-            RequestDate: {
+            // 担当者
+            lngInchargeUserCode: {
                 required: msgRequired
             },
-            // 依頼区分
-            RequestCategory: {
+            // 開発担当者
+            lngDevelopUserCode: {
                 required: msgRequired
             },
-            // 希望日
-            ActionRequestDate: {
+            // 顧客
+            lngCustomerCompanyCode: {
                 required: msgRequired
             },
-            // 移動方法
-            TransferMethod: {
+            // 顧客担当者
+            lngCustomerUserCode: {
                 required: msgRequired
             },
-            // 指示区分
-            InstructionCategory: {
+            // 商品形態
+            lngProductFormCode: {
                 required: msgRequired
             },
-            // 事業部(顧客)
-            CustomerCode: {
+            // カートン入数
+            lngCartonQuantity: {
                 required: msgRequired
             },
-            // KWG担当部署
-            KuwagataGroupCode: {
+            // 生産予定数
+            lngProductionQuantity: {
                 required: msgRequired
             },
-            // KWG担当者
-            KuwagataUserCode: {
+            // 初回納品数
+            lngFirstDeliveryQuantity: {
                 required: msgRequired
             },
-            // 生産後の処理
-            FinalKeep: {
+            // 納期
+            dtmDeliveryLimitDate: {
                 required: msgRequired
             },
-            // 返却予定日 生産後の処理が返却の場合
-            ReturnSchedule: {
+            // 納価(pcs単価)
+            curProductPrice: {
                 required: msgRequired
             },
-            // 選択済みの金型リスト
-            // ChoosenMoldList: {
-            //    required: true
-            //},
-            // 保管工場
-            SourceFactory: {
+            // 上代(pcs単価)
+            curretailPrice: {
                 required: msgRequired
             },
-            // 移動先工場
-            DestinationFactory: {
+            // 製品構成
+            strProductComposition: {
                 required: msgRequired
             }
         }

@@ -1,0 +1,16 @@
+
+/* フォーム ボタン */
+.form-buttons
+{
+    position: relative;
+    top: -30px;
+    left: 21px;
+
+    width: 927px;
+}
+
+/* 登録ボタン */
+.form-buttons img
+{
+    float: right;
+}

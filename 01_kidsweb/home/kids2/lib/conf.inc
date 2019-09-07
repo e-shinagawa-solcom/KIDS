@@ -312,8 +312,7 @@ define ( "DEF_FUNCTION_SO1",	401 );     //  401 受注管理（受注検索）
 define ( "DEF_FUNCTION_SO2",	402 );     //  402 受注管理（受注検索　管理モード）
 define ( "DEF_FUNCTION_SO3",	403 );     //  403 受注管理（受注詳細表示）
 define ( "DEF_FUNCTION_SO4",	404 );     //  404 受注管理（受注確定）
-define ( "DEF_FUNCTION_SO5",	405 );     //  405 受注管理（受注再販）
-define ( "DEF_FUNCTION_SO6",	406 );     //  405 受注管理（受注確定取消）
+define ( "DEF_FUNCTION_SO5",	405 );     //  405 受注管理（受注確定取消）
 
 define ( "DEF_FUNCTION_PO0",	500 );     //  500 発注管理
 define ( "DEF_FUNCTION_PO1",	501 );     //  501 発注管理（発注登録）

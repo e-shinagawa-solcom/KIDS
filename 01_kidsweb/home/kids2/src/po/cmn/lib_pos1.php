@@ -39,7 +39,7 @@ function fncGetPurchaseHeadNoToInfoSQL ( $lngOrderNo )
 	// 計上日
 	$aryQuery[] = ", to_char( o.dtmAppropriationDate, 'YYYY/MM/DD' ) as dtmOrderAppDate";
 	// 発注No
-	$aryQuery[] = ", o.strOrderCode || '-' || o.strReviseCode as strOrderCode";
+	$aryQuery[] = ", o.strOrderCode || '_' || to_char(o.lngRevisionNo, 'FM00') as strOrderCode";
 	// 発注コード
 	$aryQuery[] = ", o.strOrderCode as strRealOrderCode";
 	// 入力者
@@ -79,10 +79,13 @@ function fncGetPurchaseHeadNoToInfoSQL ( $lngOrderNo )
 	$aryQuery[] = ", pc.strPayConditionName as strPayConditionName";
 	// 発注有効期限日
 	$aryQuery[] = ", to_char( o.dtmExpirationDate, 'YYYY/MM/DD' ) as dtmExpirationDate";
-	// 備考
-	$aryQuery[] = ", o.strNote as strNote";
+	// // 備考
+	// $aryQuery[] = ", o.strNote as strNote";
 	// 合計金額
-	$aryQuery[] = ", To_char( o.curTotalPrice, '9,999,999,990.99' ) as curTotalPrice";
+	$aryQuery[] = ", To_char( ot.curSubTotalPrice, '9,999,999,990.99' ) as curSubTotalPrice";
+	// 製品コード・製品名
+	$aryQuery[] = ", ot.strProductCode as strProductCode";
+	$aryQuery[] = ", p.strProductName as strProductName";
 
 	$aryQuery[] = " FROM m_Order o LEFT JOIN t_OrderDetail ot USING (lngOrderNo)";
 	$aryQuery[] = " LEFT JOIN m_Product p ON ot.strproductCode = p.strproductCode";
@@ -119,11 +122,11 @@ function fncGetPurchaseHeadNoToInfoSQL ( $lngOrderNo )
 */
 function fncGetPurchaseDetailNoToInfoSQL ( $lngOrderNo )
 {
-// 2004.03.29 suzukaze update start
+	// 2004.03.29 suzukaze update start
 	// SQL文の作成
-//	$aryQuery[] = "SELECT distinct on (od.lngOrderDetailNo) od.lngOrderDetailNo as lngRecordNo, ";
+	//	$aryQuery[] = "SELECT distinct on (od.lngOrderDetailNo) od.lngOrderDetailNo as lngRecordNo, ";
 	$aryQuery[] = "SELECT distinct on (od.lngSortKey) od.lngSortKey as lngRecordNo, ";
-// 2004.03.29 suzukaze update end
+	// 2004.03.29 suzukaze update end
 	$aryQuery[] = "od.lngOrderNo as lngOrderNo, od.lngRevisionNo as lngRevisionNo";
 
 	// 製品コード・名称
@@ -143,12 +146,12 @@ function fncGetPurchaseDetailNoToInfoSQL ( $lngOrderNo )
 	$aryQuery[] = ", od.lngDeliveryMethodCode as lngDeliveryMethodCode";
 	$aryQuery[] = ", dm.strDeliveryMethodName as strDeliveryMethodName";
 	// 納期
-	$aryQuery[] = ", od.dtmDeliveryDate as dtmDeliveryDate";
-// 2004.03.17 suzukaze update start
+	$aryQuery[] = ", to_char(od.dtmDeliveryDate, 'YYYY/MM/DD' ) as dtmDeliveryDate";
+	// 2004.03.17 suzukaze update start
 	// 単価
 	$aryQuery[] = ", To_char( od.curProductPrice, '9,999,999,990.9999' )  as curProductPrice";
-//	$aryQuery[] = ", To_char( od.curProductPrice, '9,999,999,990.99' )  as curProductPrice";
-// 2004.03.17 suzukaze update start
+	//	$aryQuery[] = ", To_char( od.curProductPrice, '9,999,999,990.99' )  as curProductPrice";
+	// 2004.03.17 suzukaze update start
 	// 単位
 	$aryQuery[] = ", od.lngProductUnitCode as lngProductUnitCode";
 	$aryQuery[] = ", pu.strProductUnitName as strProductUnitName";
@@ -158,11 +161,12 @@ function fncGetPurchaseDetailNoToInfoSQL ( $lngOrderNo )
 	$aryQuery[] = ", To_char( od.curSubTotalPrice, '9,999,999,990.99' )  as curSubTotalPrice";
 	// 明細備考
 	$aryQuery[] = ", od.strNote as strDetailNote";
+	$aryQuery[] = ", od.lngOrderDetailNo as lngOrderDetailNo";
 
 	// 明細行を表示する場合
 	$aryQuery[] = " FROM t_OrderDetail od LEFT JOIN m_Product p USING (strProductCode)";
 	$aryQuery[] = " LEFT JOIN m_StockSubject ss USING (lngStockSubjectCode)";
-//	$aryQuery[] = " LEFT JOIN m_StockItem si USING (lngStockItemCode)";
+	//	$aryQuery[] = " LEFT JOIN m_StockItem si USING (lngStockItemCode)";
 	$aryQuery[] = " LEFT JOIN m_DeliveryMethod dm USING (lngDeliveryMethodCode)";
 	$aryQuery[] = " LEFT JOIN m_ProductUnit pu ON od.lngProductUnitCode = pu.lngProductUnitCode";
 	$aryQuery[] = ", m_StockItem si ";
@@ -170,9 +174,9 @@ function fncGetPurchaseDetailNoToInfoSQL ( $lngOrderNo )
 	$aryQuery[] = "AND si.lngStockSubjectCode = ss.lngStockSubjectCode ";
 	$aryQuery[] = "AND od.lngStockItemCode = si.lngStockItemCode ";
 
-// 2004.03.29 suzukaze update start
+	// 2004.03.29 suzukaze update start
 	$aryQuery[] = " ORDER BY od.lngSortKey ASC ";
-// 2004.03.29 suzukaze update end
+	// 2004.03.29 suzukaze update end
 
 	$strQuery = implode( "\n", $aryQuery );
 
@@ -423,7 +427,7 @@ function fncSetPurchaseDetailTabelData ( $aryDetailResult, $aryHeadResult )
 		// 金型番号
 		else if ( $strColumnName == "strmoldno" )
 		{
-// 2004.05.31 suzukaze update start
+	// 2004.05.31 suzukaze update start
 			// 仕入科目が４３３　金型海外償却　仕入部品が１ Injection Moldの場合
 			// 仕入科目が４３１　金型償却高　　仕入部品が８ 金型の場合
 			if ( $aryDetailResult["strmoldno"] 
@@ -432,7 +436,7 @@ function fncSetPurchaseDetailTabelData ( $aryDetailResult, $aryHeadResult )
 			{
 				$aryNewDetailResult[$strColumnName] = $aryDetailResult["strmoldno"];
 			}
-// 2004.05.31 suzukaze update end
+	// 2004.05.31 suzukaze update end
 		}
 
 		// 顧客品番
@@ -567,7 +571,7 @@ function fncGetDeleteCodeToMaster ( $strCode, $lngMode, $objDB )
 	{
 		case 1:		// 発注コードから仕入マスタの検索時
 			$strQuery .= "s.strStockCode) s.strStockCode as lngSearchNo FROM m_Stock s, m_Order o ";
-			$strQuery .= "WHERE s.lngOrderNo = o.lngOrderNo AND s.bytInvalidFlag = FALSE AND o.strOrderCode = '";
+			$strQuery .= "WHERE s.lngStockNo = o.lngOrderNo AND s.bytInvalidFlag = FALSE AND o.strOrderCode = '";
 			break;
 	}
 	$strQuery .= $strCode . "'";
@@ -726,9 +730,124 @@ function fncGetInvalidCodeToMaster ( $aryOrderData, $objDB )
 	return $lngCase;
 }
 
+function fncGetCancelOrderSQL($lngOrderNo, $lngRevisionNo){
+	$arySql[] = "UPDATE m_order SET lngorderstatuscode = " . DEF_ORDER_TEMPORARY . " ";
+	$arySql[] = "WHERE lngorderno = " . intval($lngOrderNo) . " ";
+	$arySql[] = "AND   lngrevisionno = " . intval($lngRevisionNo) . " ";
 
+	return implode("\n", $arySql);
+}
 
+function fncGetPurchaseOrderSQL($strOrderCode, $lngRevisionNo){
+	$arySql[] = "SELECT";
+	$arySql[] = "   lngpurchaseorderno";
+	$arySql[] = "  ,lngrevisionno";
+	$arySql[] = "  ,strordercode"; 
+	$arySql[] = "  ,lngcustomercode"; 
+	$arySql[] = "  ,strcustomername"; 
+	$arySql[] = "  ,strcustomercompanyaddreess"; 
+	$arySql[] = "  ,strcustomercompanytel"; 
+	$arySql[] = "  ,strcustomercompanyfax"; 
+	$arySql[] = "  ,strproductcode"; 
+	$arySql[] = "  ,strrevisecode"; 
+	$arySql[] = "  ,strproductname"; 
+	$arySql[] = "  ,strproductenglishname"; 
+	$arySql[] = "  ,dtmexpirationdate"; 
+	$arySql[] = "  ,lngmonetaryunitcode"; 
+	$arySql[] = "  ,strmonetaryunitsign"; 
+	$arySql[] = "  ,lngmonetaryratecode"; 
+	$arySql[] = "  ,strmonetaryratename";
+	$arySql[] = "  ,lngpayconditioncode";
+	$arySql[] = "  ,strpayconditionname";
+	$arySql[] = "  ,lnggroupcode";
+	$arySql[] = "  ,strgroupname";
+	$arySql[] = "  ,txtsignaturefilename";
+	$arySql[] = "  ,lngusercode";
+	$arySql[] = "  ,strusername";
+	$arySql[] = "  ,lngdeliveryplacecode";
+	$arySql[] = "  ,strdeliveryplacename";
+	$arySql[] = "  ,curtotalprice";
+	$arySql[] = "  ,dtminsertdate";
+	$arySql[] = "  ,lnginsertusercode";
+	$arySql[] = "  ,strinsertusername"; 
+	$arySql[] = "  ,strnote"; 
+	$arySql[] = "  ,lngprintcount"; 
+	$arySql[] = "FROM m_purchaseorder";
+	$arySql[] = "WHERE strordercode = '" . $strOrderCode . "'";
+	$arySql[] = "AND   lngrevisionno = " . intval($lngRevisionNo);
 
+	return implode("\n", $arySql);
+}
 
+function fncGetPurchaseOrderDetailSQL($lngOrderNo, $lngRevisionNo){
+	$arySql[] = "SELECT";
+	$arySql[] = "   lngpurchaseorderno";
+	$arySql[] = "  ,lngpurchaseorderdetailno";
+	$arySql[] = "  ,lngrevisionno";
+	$arySql[] = "  ,lngorderno";
+	$arySql[] = "  ,lngorderdetailno";
+	$arySql[] = "  ,lngorderrevisionno";
+	$arySql[] = "  ,lngstockitemcode";
+	$arySql[] = "  ,strstockitemname";
+	$arySql[] = "  ,lngdeliverymethodcode";
+	$arySql[] = "  ,strdeliverymethodname";
+	$arySql[] = "  ,curproductprice";
+	$arySql[] = "  ,lngproductquantity";
+	$arySql[] = "  ,lngproductunitcode";
+	$arySql[] = "  ,strproductunitname";
+	$arySql[] = "  ,cursubtotalprice";
+	$arySql[] = "  ,to_char(dtmdeliverydate, 'YYYY/MM/DD') AS dtmdeliverydate";
+	$arySql[] = "  ,strnote";
+	$arySql[] = "  ,lngsortkey";
+	$arySql[] = "FROM t_purchaseorderdetail";
+	$arySql[] = "WHERE lngpurchaseorderno = " . intval($lngOrderNo);
+	$arySql[] = "AND   lngrevisionno = " . intval($lngRevisionNo);
+
+	return implode("\n", $arySql);
+}
+
+function fncInsertPurchaseOrderDetailSQL($aryPurchaseOrderDetail){
+	$arySql[] = "INSERT INTO t_purchaseorderdetail (";
+	$arySql[] = "   lngpurchaseorderno";
+	$arySql[] = "  ,lngpurchaseorderdetailno";
+	$arySql[] = "  ,lngrevisionno";
+	$arySql[] = "  ,lngorderno";
+	$arySql[] = "  ,lngorderdetailno";
+	$arySql[] = "  ,lngorderrevisionno";
+	$arySql[] = "  ,lngstockitemcode";
+	$arySql[] = "  ,strstockitemname";
+	$arySql[] = "  ,lngdeliverymethodcode";
+	$arySql[] = "  ,strdeliverymethodname";
+	$arySql[] = "  ,curproductprice";
+	$arySql[] = "  ,lngproductquantity";
+	$arySql[] = "  ,lngproductunitcode";
+	$arySql[] = "  ,strproductunitname";
+	$arySql[] = "  ,cursubtotalprice";
+	$arySql[] = "  ,dtmdeliverydate";
+	$arySql[] = "  ,strnote";
+	$arySql[] = "  ,lngsortkey";
+	$arySql[] = ") VALUES (";
+	$arySql[] = "   "  . intval($aryPurchaseOrderDetail["lngpurchaseorderno"]);
+	$arySql[] = "  ,"  . intval($aryPurchaseOrderDetail["lngpurchaseorderdetailno"]);
+	$arySql[] = "  ,"  . intval($aryPurchaseOrderDetail["lngrevisionno"]);
+	$arySql[] = "  ,"  . intval($aryPurchaseOrderDetail["lngorderno"]);
+	$arySql[] = "  ,"  . intval($aryPurchaseOrderDetail["lngorderdetailno"]);
+	$arySql[] = "  ,"  . intval($aryPurchaseOrderDetail["lngorderrevisionno"]);
+	$arySql[] = "  ,"  . intval($aryPurchaseOrderDetail["lngstockitemcode"]);
+	$arySql[] = "  ,'" . $aryPurchaseOrderDetail["strstockitemname"] . "'";
+	$arySql[] = "  ,"  . intval($aryPurchaseOrderDetail["lngdeliverymethodcode"]);
+	$arySql[] = "  ,'" . $aryPurchaseOrderDetail["strdeliverymethodname"] . "'";
+	$arySql[] = "  ,"  . floatval($aryPurchaseOrderDetail["curproductprice"]);
+	$arySql[] = "  ,"  . intval($aryPurchaseOrderDetail["lngproductquantity"]);
+	$arySql[] = "  ,"  . intval($aryPurchaseOrderDetail["lngproductunitcode"]);
+	$arySql[] = "  ,'" . $aryPurchaseOrderDetail["strproductunitname"] . "'";
+	$arySql[] = "  ,"  . floatval($aryPurchaseOrderDetail["cursubtotalprice"]);
+	$arySql[] = "  ,'" . $aryPurchaseOrderDetail["dtmdeliverydate"] . "'";
+	$arySql[] = "  ,'" . $aryPurchaseOrderDetail["strnote"] . "'";
+	$arySql[] = "  ,"  . intval($aryPurchaseOrderDetail["lngsortkey"]);
+	$arySql[] = ")";
+
+	return implode("\n", $arySql);
+}
 
 ?>

@@ -1,0 +1,26 @@
+
+/* 検索フォーム チェックボックス input */
+.search-label--checkbox
+{
+    display: inline-block;
+
+    box-sizing: border-box;
+    padding: 3px 5px 3px 15px;
+
+    border-style: solid;
+    border-width: 1px;
+    border-color: #798787;
+
+    background-color: #e8f0f1;
+}
+/* 検索フォーム チェックボックス 位置調整 */
+.search-label--checkbox input[type="checkbox"].is-search
+{
+    margin-right: 10px;
+}
+
+/* 検索/表示 全切り替えボタン */
+img.toggle-search
+{
+    margin: 0px 0px 0px 20px;
+}

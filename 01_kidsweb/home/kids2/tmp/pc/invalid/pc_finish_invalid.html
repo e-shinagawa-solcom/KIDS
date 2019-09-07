@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <!-- 互換表示OFFを強制させる -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    php domパース用メタ要素 コメントアウトしていてもphpのdomElement->loadHTMLで認識される
+    -->
+    <meta charset="euc-jp">
+
+    <title>K.I.D.S.</title>
+    <!-- jQuery -->
+    <script src="/cmn/jquery/jquery-3.1.0.js"></script>
+    <script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
+
+    <!-- 完了画面共通  CSS -->
+    <link rel="stylesheet" href="/pc/cmn/css/forms-finish.css">
+
+    <!-- スタイル初期化 & 各種コントロールスタイル -->
+    <link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
+    <!-- ボタン画像の共通の振る舞い CSS -->
+    <link rel="stylesheet" href="/cmn/css/base/button-behaivior.css">
+
+    <!-- 閉じるボタンの挙動 -->
+    <script src="/pc/cmn/js/finish.js" defer></script>
+</head>
+
+<body class="finish-background">
+    <div class="centering">
+        <span>
+            
+        </span>
+        <div class="finish-box">
+            <span class="finish-box__message">無効完了
+            </span>
+            <span class="finish-box__button">
+                <img class="close button" style="position: relative;top: 6px;" src="/img/type01/cmn/querybt/close_blown_off_ja_bt.gif" alt="close">
+            </span>
+        </div>
+    </div>
+</body>
+
+</html>

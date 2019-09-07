@@ -17,7 +17,7 @@ include_once 'conf.inc';
 
 // ライブラリ読み込み
 require LIB_FILE;
-require SRC_ROOT . "so/cmn/lib_sos1.php";
+require SRC_ROOT . "so/cmn/lib_so.php";
 // DB接続
 $objDB = new clsDB();
 $objAuth = new clsAuth();
@@ -89,16 +89,16 @@ if ($lngResultNum) {
 $objDB->freeResult($lngResultID);
 
 // テンプレート読み込み
-$objTemplate = new clsTemplate();
-$objTemplate->getTemplate("/so/decide/so_decide.html");
-$objTemplate->replace($aryNewResult);
-
+// $objTemplate = new clsTemplate();
+// $objTemplate->getTemplate("/so/decide/so_decide.html");
+// $objTemplate->replace($aryNewResult);
+$strTemplate = fncGetReplacedHtmlWithBase("pc/base.html", "so/decide/so_decide.html", $aryNewResult, $objAuth);
 // 検索結果テーブル生成の為DOMDocumentを使用
 $doc = new DOMDocument();
 // パースエラー抑制
 libxml_use_internal_errors(true);
 // DOMパース
-$doc->loadHTML(mb_convert_encoding($objTemplate->strTemplate, "utf8", "eucjp-win"));
+$doc->loadHTML(mb_convert_encoding($strTemplate, "utf8", "eucjp-win"));
 // パースエラークリア
 libxml_clear_errors();
 // パースエラー抑制解除

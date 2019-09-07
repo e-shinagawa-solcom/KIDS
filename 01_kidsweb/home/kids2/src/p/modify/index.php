@@ -111,8 +111,8 @@ $aryQuery[] = "strSpecificationDetails, "; //38:仕様詳細()
 $aryQuery[] = "strNote, "; //39:備考
 $aryQuery[] = "To_char(dtmInsertDate,'YYYY/MM/DD HH24:MI') as dtmInsertDate, "; //41:登録日
 $aryQuery[] = "strcopyrightnote, "; //43:版権元備考
-$aryQuery[] = "lngProductStatusCode, "; // 商品状態
-$aryQuery[] = "lngCategoryCode "; // カテゴリー
+$aryQuery[] = "lngCategoryCode, "; // カテゴリー
+$aryQuery[] = "strrevisecode "; // 再販コード
 
 $aryQuery[] = "FROM m_product ";
 $aryQuery[] = "WHERE  bytinvalidflag = false AND ";
@@ -165,12 +165,20 @@ if ($lngUserCode) {
     // 担当者の名称
     $aryResult["strinchargeusername"] = fncGetMasterValue("m_user", "lngusercode", "struserdisplayname", $lngUserCode, '', $objDB);
 }
+
+// 開発担当者のコード
+$lngDevelopUserCode = $aryResult["lngdevelopusercode"];
+if ($lngDevelopUserCode) {
+    $aryResult["lngdevelopusercode"] = fncGetMasterValue("m_user", "lngusercode", "struserdisplaycode", $lngDevelopUserCode, '', $objDB);
+    // 開発担当者の名称
+    $aryResult["strdevelopusername"] = fncGetMasterValue("m_user", "lngusercode", "struserdisplayname", $lngDevelopUserCode, '', $objDB);
+}
 // 顧客の名称コード
 $lngCustomerCompanyCode = $aryResult["lngcustomercompanycode"];
 if ($lngCustomerCompanyCode) {
-    $aryResult["lngcompanycode"] = fncGetMasterValue("m_company", "lngcompanycode", "strcompanydisplaycode", $lngCustomerCompanyCode, '', $objDB);
+    $aryResult["lngcustomercompanycode"] = fncGetMasterValue("m_company", "lngcompanycode", "strcompanydisplaycode", $lngCustomerCompanyCode, '', $objDB);
     // 顧客の名称
-    $aryResult["strcustomername"] = fncGetMasterValue("m_company", "lngcompanycode", "strcompanydisplayname", $lngCustomerCompanyCode, '', $objDB);
+    $aryResult["strcustomercompanyname"] = fncGetMasterValue("m_company", "lngcompanycode", "strcompanydisplayname", $lngCustomerCompanyCode, '', $objDB);
     // :顧客識別コード
     $aryResult["strcustomerdistinctcode"] = fncGetMasterValue("m_company", "lngcompanycode", "strdistinctcode", $aryResult["lngcustomercompanycode"], '', $objDB);
 }
@@ -268,16 +276,6 @@ $aryResult["lngRevisionNo"] = $aryResult2["lngrevisionno"];
 $aryResult["dtmRevisionData"] = $aryResult2["dtmrevisiondate"];
 //goodsplancode
 $aryResult["lnGgoodsPlanCode"] = $aryResult2["lnggoodsplancode"];
-$aryResult["strProcess"] = "check";
-
-//-------------------------------------------------------------------------
-// 商品状態のチェック
-//-------------------------------------------------------------------------
-// 申請中の場合
-if ($aryResult["lngproductstatuscode"] == DEF_PRODUCT_APPLICATE) {
-    fncOutputError(307, DEF_WARNING, "", true, "", $objDB);
-}
-
 //-------------------------------------------------------------------------
 // イメージファイルの取得処理
 //-------------------------------------------------------------------------
@@ -326,11 +324,8 @@ if ($lngImageCnt) {
     $aryResult["re_editordir"] = '<input type="hidden" name="strTempImageDir" value="' . $aryImageInfo['strTempImageDir'][0] . '" />';
 }
 
-
-
 // テンプレート読み込み
 echo fncGetReplacedHtmlWithBase("base_mold.html", "p/modify/p_modify.html", $aryResult ,$objAuth );
-// echo fncGetReplacedHtml("p/modify/p_modify.tmpl", $aryResult, $objAuth);
 
 $objDB->close();
 return true;

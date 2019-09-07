@@ -1894,6 +1894,7 @@ function fncOutputError ( $lngErrorCode, $lngErrorClass, $aryErrorMessage, $bytO
 			window.location='/error/index.php?ref=' + openerLocation + '&path=". rawurlencode($strReturnPath) ."&strMessage=". rawurlencode($strErrorMessage)."';
 			</script>
 			";
+
 			echo $strRedirectHTML;
 			exit;
 		}

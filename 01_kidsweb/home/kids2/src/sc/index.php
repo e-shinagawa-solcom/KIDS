@@ -5,14 +5,6 @@
 *       売上管理  メニュー画面
 *
 *
-*       @package    K.I.D.S.
-*       @license    http://www.kuwagata.co.jp/
-*       @copyright  KUWAGATA CO., LTD.
-*       @author     K.I.D.S. Groups <info@kids-groups.com>
-*       @access     public
-*       @version    2.00
-*
-*
 *       処理概要
 *         ・メニュー画面を表示
 *
@@ -61,41 +53,10 @@
 		$aryData["strSearchURL"]   = "search/index.php?strSessionID=" . $aryData["strSessionID"];
 	}
 
-	//echo "button : ".$aryData["strRegist"]."<br>";
-	//echo "button : ".$aryData["strSearch"]."<br>";
-
 	// ヘルプ対応
 	$aryData["lngFunctionCode"] = DEF_FUNCTION_SC0;
 
-
-
-	// ユーザーコード取得
-	$lngUserCode = $objAuth->UserCode;
-
-	// 権限グループコード(ユーザー以下)チェック
-	$blnAG = fncCheckUserAuthorityGroupCode( $lngUserCode, $aryData["strSessionID"], $objDB );
-
-	// 「ユーザー」以下の場合
-	if( $blnAG )
-	{
-		// 承認ルート存在チェック
-		$blnWF = fncCheckWorkFlowRoot( $lngUserCode, $aryData["strSessionID"], $objDB );
-
-		// 承認ルートが存在しない場合
-		if( !$blnWF )
-		{
-			$aryData["registview"] = 'hidden';
-		}
-		else
-		{
-			$aryData["registview"] = 'visible';
-		}
-	}
-
-
-
 	echo fncGetReplacedHtml( "sc/parts.tmpl", $aryData ,$objAuth );
-//	echo $_COOKIE["lngLanguageCode"];
 
 	$objDB->close();
 	return true;

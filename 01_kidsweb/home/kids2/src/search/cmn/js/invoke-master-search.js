@@ -19,7 +19,7 @@
             // JQuery Validation Pluginで検知させる為イベントキック
             $(this).trigger('blur');
             // フォーカスをユーザ名に合わせる
-            $('input[name="lngInputUserName"]').focus();
+            $('input[name="strInputUserName"]').focus();
         }
     });
     // 担当グループ-表示グループコード イベント登録
@@ -67,7 +67,7 @@
             var options = TargetPull.options;
             if (TargetPull.hasChildNodes()) {
                 while (TargetPull.childNodes.length > 0) {
-                    TargetPull.removeChild(TargetPull.firstChild)
+                    TargetPull.removeChild(TargetPull.firstChild);
                 }
             }
             var ItemCodeValue = $('input[name="lngStockItemCodeValue"]')[0].value.split(',,');

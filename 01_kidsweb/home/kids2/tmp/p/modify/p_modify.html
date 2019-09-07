@@ -27,24 +27,18 @@
 		<!-- フォーム ボタン -->
 		<link rel="stylesheet" href="/p/modify/css/form-buttons.css">
 		<link rel="stylesheet" href="/p/modify/css/layout.css">
-		<!-- タブ切り替え時の処理 -->
-		<script src="/p/modify/js/switch-tab.js" defer></script>
 		<!-- datepickerの要素指定 -->
 		<script src="/p/modify/js/datepicker.js" defer></script>
 		<!-- マスタデータ検索 -->
-		<script src="/p/modify/js/invoke-master-search.js" defer></script>
+		<script src="/p/cmn/js/invoke-master-search.js" defer></script>
 		<!-- フォーム ボタン -->
 		<script src="/p/modify/js/form-buttons.js" defer></script>
-		<!-- 要素フォーカス時の挙動 -->
-		<script src="/p/modify/js/focus-elements.js" defer></script>
 		<!-- フォーム検証 -->
 		<script src="/p/modify/js/validate-form.js" defer></script>
-		<!-- フォーム操作 -->
-		<script src="/p/modify/js/form-change-action.js" defer></script>
 		<!-- msw表示切替 -->
 		<script src="/p/modify/js/msw.js" defer></script>
-		<!-- フォーム初期化 -->
-		<script src="/p/modify/js/init-form.js" defer></script>
+		<!-- タブ切り替え時の処理 -->
+		<script src="/p/modify/js/switch-tab.js" defer></script>
 	</header3>
 
 	<bodyonload>
@@ -66,17 +60,20 @@
 	</div>
 	<!-- フォームコンテンツ -->
 	<div class="form-box__contents">
-		<form name="" action="javascript:void(0);" method="post">
+		<form name="PPP" action="javascript:void(0);" method="post">
 			<input type="submit">
 			<div class="regist-tab-header">
 				<div class="regist-line">
 					<span class="regist-label">
 						<span class="regist-label__text">製品コード</span>
-						<input class="extends-disTxt05L" name="strProductCode" value="_%strproductcode%_"　readonly>
+						<input class="disTxt05L" name="strProductCode" value="_%strproductcode%_" readonly>
+						<input class="disTxt02R" type="text" name="strReviseCode" value="_%strrevisecode%_" readonly>
+						<input type="hidden" name="lngProductNo" value="_%lngproductno%_">
+						<input type="hidden" name="dtmInsertDate" value="_%dtminsertdate%_">
 					</span>
 					<span class="regist-label" style="float: right;">
 						<span class="regist-label__text">作成日時</span>
-						<input class="disTxt19L" name="dtmInsertDate" value="_%dtminsertdate%_"　readonly>
+						<input class="disTxt19L" name="dtmInsertDate" value="_%dtminsertdate%_" readonly>
 						<img class="button" src="/img/type01/cmn/seg/showwin_off_bt.gif">
 					</span>
 				</div>
@@ -84,23 +81,22 @@
 					<span class="regist-label">
 						<span class="regist-label__required-mark">◎</span>
 						<span class="regist-label__required-text">製品名称（日本語）</span>
-						<input class="TxtStyle07L" name="strProductName" value="_%strproductname%_">
+						<input class="disTxt80L" name="strProductName" value="_%strproductname%_" readonly>
 					</span>
 				</div>
 				<div class="regist-line--remora">
 					<span class="regist-label">
 						<span class="regist-label__required-mark">◎</span>
 						<span class="regist-label__required-text">製品名称（英語）</span>
-						<input class="TxtStyle07L" name="strProductEnglishName" value="_%strproductenglishname%_">
+						<input class="disTxt80L" name="strProductEnglishName" value="_%strproductenglishname%_" readonly>
 					</span>
 				</div>
 				<div class="regist-line--stage">
 					<span class="regist-label">
 						<span class="regist-label__required-mark">◎</span>
 						<span class="regist-label__required-text">営業部署</span>
-						<input class="TxtStyle05L" name="lngInchargeGroupCode" value="_%lnginchargegroupcode%_">
+						<input class="disTxt05L" name="lngInchargeGroupCode" value="_%lnginchargegroupcode%_" readonly>
 						<input class="disTxt46L" name="strInchargeGroupName" value="_%strinchargegroupname%_" readonly>
-						<img class="msw-button button" invokeMSWName="msw-group" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
 					</span>
 					</span>
 				</div>
@@ -108,10 +104,8 @@
 					<span class="regist-label">
 						<span class="regist-label__required-mark">◎</span>
 						<span class="regist-label__required-text">担当者</span>
-						<input class="TxtStyle05L" name="lngInchargeUserCode" value="_%lnginchargeusercode%_">
-						<input class="disTxt46L" name="strInchargeUserName" value="_%lnginchargeusername%_" readonly>
-						<img class="msw-button button" invokeMSWName="msw-user" msw-before="pickupGroupCode" src="/img/type01/msw/cmn/open_off_bt.gif"
-						 alt="msw">
+						<input class="disTxt05L" name="lngInchargeUserCode" value="_%lnginchargeusercode%_" readonly>
+						<input class="disTxt46L" name="strInchargeUserName" value="_%strinchargeusername%_" readonly>
 					</span>
 				</div>
 
@@ -119,20 +113,19 @@
 					<span class="regist-label">
 						<span class="regist-label__required-mark">◎</span>
 						<span class="regist-label__required-text">開発担当者</span>
-						<input class="TxtStyle05L" name="lngDevelopUserCode" value="_%lngdevelopusercode%_">
-						<input class="disTxt46L" name="strDevelopUserName" value="_%lngdevelopusername%_" readonly>
-						<img class="msw-button button" invokeMSWName="msw-user" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+						<input class="disTxt05L" name="lngDevelopUserCode" value="_%lngdevelopusercode%_" readonly>
+						<input class="disTxt46L" name="strDevelopUserName" value="_%strdevelopusername%_" readonly>
 					</span>
 				</div>
 				<div class="regist-line--stage">
 					<span class="regist-label">
 						<span class="regist-label__text">顧客品番</span>
-						<input class="disTxt02R" type="text" name="strCustomerDistinctCode" value="_%strCustomerDistinctCode%_" maxlength="" readonly>&nbsp;
-						<input name="stGroupGoodsCode" value="_%strgoodscode%_" class="TxtStyle05L">
+						<input class="disTxt02R" type="text" name="strCustomerDistinctCode" value="_%strcustomerdistinctcode%_" maxlength="" readonly>&nbsp;
+						<input name="strGoodsCode" value="_%strgoodscode%_" class="TxtStyle05L">
 					</span>
 					<span class="regist-label">
 						<span class="regist-label__text">カテゴリ</span>
-						<select name="lngCategoryCode" class="Slt30" init-value="_%lngcategorycode%_">
+						<select name="lngCategoryCode" class="Slt30">
 							_%lngcategorycode%_
 						</select>
 					</span>
@@ -147,7 +140,7 @@
 					<span class="regist-label">
 						<span class="regist-label__required-mark">◎</span>
 						<span class="regist-label__required-text">顧客</span>
-						<input class="TxtStyle05L" name="lngCustomerCompanyCode" value="_%lngcustomercompanycode%_">
+						<input class="TxtStyle05L" name="lngCustomerCompanyCode" value="_%lngcustomercompanycode%_" alt="CustomerCompany">
 						<input class="disTxt46L" name="strCustomerCompanyName" value="_%strcustomercompanyname%_" readonly>
 						<img class="msw-button button" invokeMSWName="msw-customer" msw-before="pickupGroupCode" src="/img/type01/msw/cmn/open_off_bt.gif"
 						 alt="msw">
@@ -157,26 +150,22 @@
 					<span class="regist-label">
 						<span class="regist-label__required-mark">◎</span>
 						<span class="regist-label__required-text">顧客担当者</span>
-						<input class="TxtStyle05L" name="lngCustomerUserCode" value="_%lngcustomerusercode%_">
+						<input class="TxtStyle05L" name="lngCustomerUserCode" value="_%strcustomerusercode%_" alt="CustomerUser">
 						<input class="disTxt46L" name="strCustomerUserName" value="_%strcustomerusername%_" readonly>
-						<img class="msw-button button" invokeMSWName="msw-group" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+						<img class="msw-button button" invokeMSWName="msw-user" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
 					</span>
 				</div>
 				<div class="regist-line--stage">
 					<span class="regist-label">
 						<span class="regist-label__text">荷姿単位</span>
-						<select name="lngPackingUnitCode" class="Slt13" init-value="_%lngpackingunitcode%_">
-							<option value="">−</option>
-							<option value="10">顧客指示</option>
-							<option value="20">KWG指示</option>
+						<select name="lngPackingUnitCode" class="Slt13">
+							_%lngpackingunitcode%_
 						</select>
 					</span>
 					<span class="regist-label">
 						<span class="regist-label__text">製品単位</span>
-						<select name="lngProductUnitCode" class="Slt13" init-value="_%lngproductunitcode%_">
-							<option value="">−</option>
-							<option value="10">顧客指示</option>
-							<option value="20">KWG指示</option>
+						<select name="lngProductUnitCode" class="Slt13">
+							_%lngproductunitcode%_
 						</select>
 					</span>
 				</div>
@@ -184,31 +173,27 @@
 					<span class="regist-label">
 						<span class="regist-label__required-mark">◎</span>
 						<span class="regist-label__required-text">商品形態</span>
-						<select name="lngProductFormCode" class="Slt13" init-value="_%lngproductformcode%_">
-							<option value="">−</option>
-							<option value="10">顧客指示</option>
-							<option value="20">KWG指示</option>
+						<select name="lngProductFormCode" class="Slt13">
+							_%lngproductformcode%_
 						</select>
 					</span>
 					<span class="regist-label">
 						<span class="regist-label__text">内箱（袋）入数</span>
-						<input class="TxtStyle14R" name="lngBoxQuantity" value="_%lngboxquantity%_">
+						<input class="TxtStyle05R" name="lngBoxQuantity" value="_%lngboxquantity%_">
 					</span>
 					<span class="regist-label">
 						<span class="regist-label__required-mark">◎</span>
 						<span class="regist-label__required-text">カートン入数</span>
-						<input class="TxtStyle14R" name="lngCartonQuantity" value="_%lngcartonquantity%_">
+						<input class="disTxt14R" name="lngCartonQuantity" value="_%lngcartonquantity%_" readonly>
 					</span>
 				</div>
 				<div class="regist-line--stage">
 					<span class="regist-label">
 						<span class="regist-label__required-mark">◎</span>
 						<span class="regist-label__required-text">生産予定数</span>
-						<input class="TxtStyle14R" name="lngProductionQuantity" value="_%lngproductionquantity%_">
-						<select name="lngProductionUnitCode" class="Slt13" init-value="_%lngproductionunitcode%_">
-							<option value="">−</option>
-							<option value="10">顧客指示</option>
-							<option value="20">KWG指示</option>
+						<input class="TxtStyle05R" name="lngProductionQuantity" value="_%lngproductionquantity%_">
+						<select name="lngProductionUnitCode" class="Slt13">
+							_%lngproductionunitcode%_
 						</select>
 					</span>
 				</div>
@@ -216,11 +201,9 @@
 					<span class="regist-label">
 						<span class="regist-label__required-mark">◎</span>
 						<span class="regist-label__required-text">初回納品数</span>
-						<input class="TxtStyle14R" name="lngFirstDeliveryQuantity" value="_%lngfirstdeliveryquantity%_">
-						<select name="lngFirstDeliveryUnitCode" class="Slt13" init-value="_%lngfirstdeliveryunitcode%_">
-							<option value="">−</option>
-							<option value="10">顧客指示</option>
-							<option value="20">KWG指示</option>
+						<input class="TxtStyle05R" name="lngFirstDeliveryQuantity" value="_%lngfirstdeliveryquantity%_">
+						<select name="lngFirstDeliveryUnitCode" class="Slt13">
+							_%lngfirstdeliveryunitcode%_
 						</select>
 					</span>
 				</div>
@@ -229,7 +212,7 @@
 				<div class="regist-line">
 					<span class="regist-label">
 						<span class="regist-label__text">生産工場</span>
-						<input class="TxtStyle05L" name="lngFactoryCode" value="_%lngfactorycode%_" readonly>
+						<input class="TxtStyle05L" name="lngFactoryCode" value="_%lngfactorycode%_" readonly alt="Factory">
 						<input class="disTxt46L" name="strFactoryName" value="_%strfactoryname%_" readonly>
 						<img class="msw-button button" invokeMSWName="msw-factory" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
 					</span>
@@ -237,7 +220,7 @@
 				<div class="regist-line">
 					<span class="regist-label">
 						<span class="regist-label__text">アッセンブリ工場</span>
-						<input class="TxtStyle05L" name="lngAssemblyFactoryCode" value="_%lngassemblyfactorycode%_">
+						<input class="TxtStyle05L" name="lngAssemblyFactoryCode" value="_%lngassemblyfactorycode%_" alt="AssemblyFactory">
 						<input class="disTxt46L" name="strAssemblyFactoryName" value="_%strassemblyfactoryname%_" readonly>
 						<img class="msw-button button" invokeMSWName="msw-factory" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
 					</span>
@@ -245,7 +228,7 @@
 				<div class="regist-line">
 					<span class="regist-label">
 						<span class="regist-label__text">納品場所</span>
-						<input class="TxtStyle05L" name="lngDeliveryPlaceCode" value="_%lngdeliveryplacecode%_">
+						<input class="TxtStyle05L" name="lngDeliveryPlaceCode" value="_%lngdeliveryplacecode%_" alt="DeliveryPlace">
 						<input class="disTxt46L" name="strDeliveryPlaceName" value="_%strdeliveryplacename%_" readonly>
 						<img class="msw-button button" invokeMSWName="msw-factory" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
 					</span>
@@ -264,16 +247,14 @@
 					<span class="regist-label">
 						<span class="regist-label__required-mark">◎</span>
 						<span class="regist-label__required-text">上代（pcs単価）</span>
-						<input class="Txt23R" name="curretailPrice" value="_%curretailprice%_">
+						<input class="disTxt23R" name="curretailPrice" value="_%curretailprice%_" readonly>
 					</span>
 				</div>
 				<div class="regist-line">
 					<span class="regist-label">
 						<span class="regist-label__text">対象年齢</span>
-						<select name="lngTargetAgeCode" class="Slt13" init-value="_%lngtargetagecode%_">
-							<option value="">−</option>
-							<option value="10">顧客指示</option>
-							<option value="20">KWG指示</option>
+						<select name="lngTargetAgeCode" class="Slt13">
+							_%lngtargetagecode%_
 						</select>
 					</span>
 					<span class="regist-label">
@@ -282,37 +263,33 @@
 					</span>
 					<span class="regist-label">
 						<span class="regist-label__text">証紙</span>
-						<select name="lngCertificateClassCode" class="Slt13" init-value="_%lngcertificateclasscode%_">
-							<option value="">−</option>
-							<option value="10">顧客指示</option>
-							<option value="20">KWG指示</option>
+						<select name="lngCertificateClassCode" class="Slt13">
+							_%lngcertificateclasscode%_
 						</select>
 					</span>
 				</div>
 				<div class="regist-line">
 					<span class="regist-label">
 						<span class="regist-label__text">版権元</span>
-						<select name="lngCopyRightCode" class="Slt20" init-value="_%lngcopyrightcode%_">
-							<option value="">−</option>
-							<option value="10">顧客指示</option>
-							<option value="20">KWG指示</option>
+						<select name="lngCopyrightCode" class="Slt20">
+							_%lngcopyrightcode%_
 						</select>
 					</span>
 					<span class="regist-label">
 						<span class="regist-label__text">版権元備考</span>
-						<input class="Txt41L" name="strCopyRightNote" value="_%strcopyrightnote%_">
+						<input class="Txt41L" name="strCopyrightNote" value="_%strcopyrightnote%_">
 					</span>
 				</div>
 				<div class="regist-line">
 					<span class="regist-label">
 						<span class="regist-label__text">版権表示（刻印）</span>
-						<input class="Txt90L" name="strCopyRightDisplayStamp" value="_%strcopyrightdisplaystamp%_">
+						<input class="Txt90L" name="strCopyrightDisplayStamp" value="_%strcopyrightdisplaystamp%_">
 					</span>
 				</div>
 				<div class="regist-line">
 					<span class="regist-label">
 						<span class="regist-label__text">版権表示（印刷物）</span>
-						<input class="Txt90L" name="strCopyRightDisplayPrint" value="_%strcopyrightdisplayprint%_">
+						<input class="Txt90L" name="strCopyrightDisplayPrint" value="_%strcopyrightdisplayprint%_">
 					</span>
 				</div>
 				<div class="regist-line">
@@ -321,7 +298,7 @@
 						<span class="regist-label__required-text">製品構成</span>
 						<span class="regist-label__spec-text">
 							&nbsp;全&nbsp;
-						<input class="Txt02L" name="strProductComposition" value="_%strproductcomposition%_">種アッセンブリ
+							<input class="Txt02L" name="strProductComposition" value="_%strproductcomposition%_">種アッセンブリ
 						</span>
 					</span>
 					<span class="regist-label">
@@ -333,7 +310,7 @@
 					<span class="regist-label">
 						<span class="regist-label__text">仕様詳細</span>
 						<textarea name="strSpecificationDetails" rows="10">_%strspecificationdetails%_</textarea>
-						<img class="button" src="/img/type01/p/edit_off_bt.gif">
+						<img class="edit button" src="/img/type01/p/edit_off_bt.gif">
 					</span>
 				</div>
 			</div>
@@ -353,6 +330,16 @@
 		<iframe class="msw-user" src="/mold/cmn/msw/user/mswuser.html" frameborder="0">
 		</iframe>
 	</div>
+	<span id="EditFrame">
+		<iframe id="Edit" name="editWin" frameborder="0" scrolling="no" src="/p/edit/index.html"></iframe>
+	</span>
+	<span id="EditorRecord">
+		_%re_uploadimages%_
+	</span>
+
+	<span id="EditorDir">
+		_%re_editordir%_
+	</span>
 </div>
 
 <!-- フォーム ボタン -->

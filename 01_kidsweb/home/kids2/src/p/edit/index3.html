@@ -1,0 +1,207 @@
+<!DOCTYPE html> 
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head> 
+<meta http-equiv="Content-Type" lang="ja" content="text/html;charset=utf-8"/> 
+    <title></title> 
+    <script> 
+    //innerText をサポートしない Web ブラウザと共通で使用するための 
+    //setText 関数を定義        
+    function setAlter_innerText(element) {        
+       if (element.innerText) {        
+          element.setText = function (text) {           
+              element.innerText = text; }        
+       } else {        
+          element.setText = function (text) { 
+           element.textContent = text; }        
+       }        
+       return element;        
+    }
+    //getElementById の短縮        
+    var $id = function (id) {        
+        return document.getElementById(id); };
+    //コンテンツのロードが完了したら        
+    window.onload = function () {        
+       var editArea = $id('editArea');        
+       var ritchTextHtmlArea = $id('ritchTextHtmlArea');        
+             
+       //innerText を設定するためのメソッドを追加        
+       setAlter_innerText(editArea);        
+       setAlter_innerText(ritchTextHtmlArea);
+       //[編集の開始] ボタンのイベントハンドラ        
+       $id('startEditButton')        
+          .addEventListener('click', function () {        
+             editArea.style.color = 'black';         
+             editArea.style.backgroundColor = 'white';        
+             editArea.contentEditable = true;        
+             editArea.setText('(※)入力と編集が可能になりました');        
+             editArea.focus();         
+         });
+        //[編集の終了] ボタンのイベントハンドラ        
+        $id('endEditButton')        
+           .addEventListener('click', function () {        
+             editArea.contentEditable = false;        
+        });
+        //フォントサイズを指定するドロップダウンリストのイベントハンドラ        
+        $id('fontSizeSelecter')        
+            .addEventListener('change', function () {        
+               if (checkSelectionText()) {        
+                  document.execCommand('fontSize',        
+                     false, this.value);        
+               }        
+         });
+         //フォント名を指定するドロップダウンリストのイベントハンドラ        
+         $id('fontNameSelecter')        
+            .addEventListener('change', function () {        
+                if (checkSelectionText()) {        
+                   document.execCommand('fontName',        
+                     false, this.value); 
+                 }        
+          });
+         //フォントカラーを指定するドロップダウンリストのイベントハンドラ        
+         $id('fontColorSelecter')        
+            .addEventListener('change', function () {        
+               if (checkSelectionText()) {        
+                  document.execCommand('ForeColor', 
+                     false, this.value);        
+               }        
+          });
+         //背景色を指定するドロップダウンリストのイベントハンドラ        
+         $id('bgColorSelecter')        
+            .addEventListener('change', function () {        
+               if (checkSelectionText()) {        
+                  document.execCommand('backColor',        
+                     false, this.value);        
+               }        
+         });
+         //リンクを生成するボタンのイベントハンドラ        
+         $id('mkLinkButton') 
+             .addEventListener('click', function () { 
+                if (checkSelectionText()) {        
+                   var url = $id('urlText').value;        
+                   document.execCommand('createLink', false, url);        
+                }        
+          });
+         //画像を挿入するボタンのイベントハンドラ        
+         $id('isertImageButton') 
+             .addEventListener('click', function () { 
+                if (checkSelectionText()) {        
+                   var url = $id('imageUrlText').value;        
+                   document.execCommand('insertImage', false, url); 
+                }        
+          });
+          //[太字] ボタン        
+          $id('boldButton') 
+             .addEventListener('click', function () { 
+                if (checkSelectionText()) {        
+                   document.execCommand('bold', false); 
+                }        
+          });
+          //[下線] ボタン        
+          $id('underLineButton') 
+             .addEventListener('click', function () {        
+                if (checkSelectionText()) {        
+                   document.execCommand('underline', false); 
+                } 
+            });
+           //[イタリック] ボタン        
+           $id('ialicBotton') 
+             .addEventListener('click', function () { 
+                if (checkSelectionText()) { 
+                    document.execCommand('italic', false); 
+                } 
+            });
+            //[生成された HTMLの取得] ボタン 
+            $id('getHtmlButton') 
+             .addEventListener('click', function () { 
+                ritchTextHtmlArea.setText(editArea.innerHTML); 
+            });
+            //文字が選択されているか判断 
+            function checkSelectionText() { 
+                var selectionFlag = ( 
+                    document.getSelection().toString().length > 0); 
+                 if (!selectionFlag) { 
+                    alert('文字が選択されていません。\n文字を選択してください。'); 
+                } 
+                return selectionFlag; 
+            } 
+        } 
+    </script> 
+</head> 
+<body>       
+    <p> 
+        <button id="startEditButton">編集の開始</button> 
+        <button id="endEditButton">編集の終了</button> 
+    </p> 
+    <label>フォント名:</label> 
+    <select id="fontNameSelecter"> 
+        <option value="ＭＳゴシック">ＭＳゴシック</option> 
+        <option value="ＭＳ明朝">ＭＳ明朝</option> 
+        <option value="メイリオ">メイリオ</option> 
+        <option value="游ゴシック">游ゴシック</option> 
+        <option value="游明朝">游明朝</option> 
+        <option value="ＭＳ Ｐゴシック">ＭＳ Ｐゴシック</option> 
+         <option value="ＭＳ Ｐ明朝">ＭＳ Ｐ明朝</option> 
+    </select> 
+    <br /> 
+    <label>フォントサイズ:</label> 
+    <select id="fontSizeSelecter"> 
+        <option value="1">1</option> 
+        <option value="2">2</option> 
+        <option value="3" selected>3</option> 
+         <option value="4">4</option> 
+        <option value="5">5</option> 
+        <option value="6">6</option> 
+        <option value="7">7</option> 
+    </select> 
+    <br /> 
+    <label>フォントカラー:</label> 
+    <select id="fontColorSelecter"> 
+        <option value="#2980b9">黒</option> 
+        <option value="blue">青</option> 
+         <option value="red">赤</option> 
+        <option value="yellow">黄</option> 
+        <option value="green">緑</option> 
+        <option value="violet">紫</option> 
+    </select> 
+    <br /> 
+    <label>背景色:</label> 
+    <select id="bgColorSelecter"> 
+        <option value="white">白</option> 
+        <option value="black">黒</option> 
+        <option value="blue">青</option> 
+        <option value="red">赤</option> 
+        <option value="yellow">黄</option> 
+         <option value="green">緑</option> 
+        <option value="violet">紫</option> 
+    </select> 
+    <br /> 
+    <label>リンクの生成:</label> 
+    <input id="urlText"       
+     type="url"  value="https://blogs.msdn.microsoft.com/osamum" /> 
+     <button id="mkLinkButton">作成</button> 
+    <br /> 
+    <label>画像の挿入:</label> 
+    <input id="imageUrlText" type="url"  
+          value="https://1.gravatar.com/avatar/aeaed3b18248eab4afbae793fe5824b1?s=56&d=mm&r=g" />  
+    <button id="isertImageButton">作成</button> 
+    <br /> 
+    <p> 
+        <button id="boldButton">太字</button>   
+        <button id="underLineButton">下線</button> 
+        <button id="ialicBotton">イタリック</button> 
+        <div id="editArea" 
+           style="height:300px; 
+                      width:300px; 
+                      border-style:inset; 
+                      border-color:red; 
+                      background-color:gainsboro; 
+                      color:gray"> 
+            (※)編集可能ではありません。[編集の開始]ボタンをクリックしてください。 
+        </div> 
+        <button id="getHtmlButton">生成された HTML の取得</button> 
+    <p>        
+   <textarea id="ritchTextHtmlArea"            
+        style='height: 300px; width: 300px'></textarea> 
+    </p> 
+</body> 
+</html>

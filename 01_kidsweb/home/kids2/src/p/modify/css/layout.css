@@ -1533,8 +1533,8 @@
 #EditFrame {
 	position : absolute ;
 	left : 34px ;
-	top : 111px ;
-	z-index : 8 ;
+	top : -50px ;
+	z-index : 1 ;
 	display : none ;
 	border-width: 0px ;
 	border-style: none ;
@@ -1546,7 +1546,7 @@
 {
 	position : absolute ;
 	width : 927px ;
-	height : 528px ;
+	height : 548px ;
 	border-width: 0px ;
 	border-style: none ;
 	background-color: transparent ;

@@ -19,7 +19,7 @@ include_once('conf.inc');
 
 // ライブラリ読み込み
 require (LIB_FILE);
-require (SRC_ROOT . "so/cmn/lib_sos1.php");
+require (SRC_ROOT . "so/cmn/lib_so.php");
 // DB接続
 $objDB   = new clsDB();
 $objAuth = new clsAuth();
