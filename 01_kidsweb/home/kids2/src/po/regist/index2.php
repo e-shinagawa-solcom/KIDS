@@ -28,8 +28,9 @@
 	// 読み込み
 	include('conf.inc');
 	require (LIB_FILE);
-	require(SRC_ROOT."po/cmn/lib_po.php");
-	require(SRC_ROOT."po/cmn/lib_pop.php");
+	// require(SRC_ROOT."po/cmn/lib_po.php");
+	// require(SRC_ROOT."po/cmn/lib_pop.php");
+	require (SRC_ROOT."po/cmn/lib_por.php");
 
 	//var_dump($_POST);
 	$objDB		= new clsDB();
@@ -69,7 +70,52 @@
 		fncOutputError ( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 	}
 	
+	// 508 発注管理（商品マスタダイレクト修正）
+	if( !fncCheckAuthority( DEF_FUNCTION_PO8, $objAuth ) )
+	{
+		$aryData["popenview"] = 'hidden';
+	}
+
+	// 更新データ取得
+	$aryUpdate["lngorderno"]           = $_POST["lngOrderNo"];
+	$aryUpdate["lngrevisionno"]        = $_POST["lngRevisionNo"];
+	$aryUpdate["dtmexpirationdate"]    = $_POST["dtmExpirationDate"];
+	$aryUpdate["lngpayconditioncode"]  = $_POST["lngPayConditionCode"];
+	$aryUpdate["lngdeliveryplacecode"] = $_POST["lngLocationCode"];
+	$aryUpdate["lngorderstatuscode"]   = 2;
+	for($i = 0; $i < count($_POST["aryDetail"]); $i++){
+		$aryUpdateDetail[$i]["lngorderdetailno"]       = $_POST["aryDetail"][$i]["lngOrderDetailNo"];
+		$aryUpdateDetail[$i]["lngsortkey"]             = $_POST["aryDetail"][$i]["lngSortKey"];
+		$aryUpdateDetail[$i]["lngdeliverymethodcode"]  = $_POST["aryDetail"][$i]["lngDeliveryMethodCode"];
+		$aryUpdateDetail[$i]["lngproductunitcode"]     = $_POST["aryDetail"][$i]["lngProductUnitCode"];
+		$aryUpdateDetail[$i]["lngorderno"]             = $_POST["aryDetail"][$i]["lngOrderNo"];
+		$aryUpdateDetail[$i]["lngrevisionno"]          = $_POST["aryDetail"][$i]["lngRevisionNo"];
+		$aryUpdateDetail[$i]["lngstocksubjectcode"]    = $_POST["aryDetail"][$i]["lngStockSubjectCode"];
+		$aryUpdateDetail[$i]["lngstockitemcode"]       = $_POST["aryDetail"][$i]["lngStockItemCode"];
+		$aryUpdateDetail[$i]["lngmonetaryunitcode"]    = $_POST["aryDetail"][$i]["lngMonetaryUnitCode"];
+		$aryUpdateDetail[$i]["lngcustomercompanycode"] = $_POST["aryDetail"][$i]["lngCustomerCompanyCode"];
+	}
 	
+	$objDB->transactionBegin();
+	// 発注マスタ更新
+	if(!fncUpdateOrder($aryUpdate, $aryUpdateDetail, $objDB)) { return false; }
+	// 発注明細更新
+	if(!fncUpdateOrderDetail($aryUpdate, $aryUpdateDetail, $objDB)) { return false; }
+	// 更新後発注マスタ/発注明細取得
+	
+	// $aryOrder = fncGetOrder($aryUpdate["lngorderno"], $objDB)[0];
+	// $aryDetail = fncGetOrderDetail($aryUpdate["lngorderno"], $objDB);
+	// 発注書マスタ更新
+	if(!fncUpdatePurchaseOrder($aryUpdate, $aryUpdateDetail, $objAuth, $objDB)){ return false; }
+
+	// TODO:あとでコミットに変更する
+	$objDB->transactionRollback();
+	echo fncGetReplacedHtml( "po/regist/parts2.tmpl", $aryData ,$objAuth);
+	
+
+
+
+
 	// 明細行を除く
 	for( $i = 0; $i < count( $_POST ); $i++ )
 	{
@@ -216,7 +262,7 @@
 		$strOrderCode = $aryNewData["strOrderCode"];
 
 		// 修正の場合同じ発注に対してリビジョン番号、リバイズコードの最大値を取得する
-/////   リビジョン番号、リバイズコードを現在の最大値をとるように修正する　その際にSELECT FOR UPDATEを使用して、同じ発注に対してロック状態にする
+		/////   リビジョン番号、リバイズコードを現在の最大値をとるように修正する　その際にSELECT FOR UPDATEを使用して、同じ発注に対してロック状態にする
 
 		$strLockQuery = "SELECT lngRevisionNo, strReviseCode FROM m_Order WHERE strOrderCode = '" . $strOrderCode . "' FOR UPDATE";
 
@@ -314,7 +360,7 @@
 	{
 		$aryQuery[] = "null, ";														// 6:会社コード(仕入先)
 	}
-/*
+	/*
 	if ( $aryNewData["lngInChargeGroupCode"] != "" )
 	{
 		$aryQuery[] = $aryNewData["lngInChargeGroupCode"].", ";						// 7:グループコード（部門）
@@ -331,7 +377,7 @@
 	{
 		$aryQuery[] = "null, ";														// 8:ユーザコード（担当者）
 	}
-*/
+	*/
 	if ( $lngorderstatuscode != "" )
 	{
 		$aryQuery[] = "$lngorderstatuscode, ";										// 9:発注状態
@@ -401,7 +447,7 @@
 	}
 	$objDB->freeResult( $lngResultID );
 	
-// 2004.03.29 suzukaze update start
+	// 2004.03.29 suzukaze update start
 	////////////////////////////////////
 	//// 明細行番号が不明な行の対処 ////
 	////////////////////////////////////
@@ -422,7 +468,7 @@
 	{
 		$lngMaxDetailNo = $lngMaxDetailNo + 100;
 	}
-// 2004.03.29 suzukaze update end
+	// 2004.03.29 suzukaze update end
 
 	// t_orderDetail HEADER情報のインサート
 	for( $i = 0 ; $i < count( $aryNewData["aryPoDitail"] ); $i++ )
@@ -431,8 +477,8 @@
 		$lngConversionClassCode = ( $aryNewData["aryPoDitail"][$i]["lngConversionClassCode"] == "gs" ) ? 1 : 2;
 		$strDetailNote = ( $aryNewData["aryPoDitail"][$i]["strDetailNote"] == "null" ) ? "null" : "'".$aryNewData["aryPoDitail"][$i]["strDetailNote"]."'";
 
-// 2004.03.25 suzukaze update start
-// 2004.05.31 suzukaze update start
+	// 2004.03.25 suzukaze update start
+	// 2004.05.31 suzukaze update start
 		// 金型番号の設定内容を取得（設定がない場合で金型指定だった場合は新規に金型番号を取得）
 		if( $aryNewData["aryPoDitail"][$i]["strSerialNo"] == "null" or $aryNewData["aryPoDitail"][$i]["strSerialNo"] == "" )
 		{
@@ -506,10 +552,10 @@
 		}
 		// SQL文対応
 		$strSerialNo = ( $strSerialNo != "" ) ? "'$strSerialNo'" : "null";
-// 2004.03.25 suzukaze update end
-// 2004.05.31 suzukaze update end
+		// 2004.03.25 suzukaze update end
+		// 2004.05.31 suzukaze update end
 
-// 2004.03.29 suzukaze update start
+		// 2004.03.29 suzukaze update start
 		// 仕入明細番号
 		// 明細行番号がない場合（仕入で追加された明細行の場合）
 		if ( $aryNewData["aryPoDitail"][$i]["lngOrderDetailNo"] == "null" 
@@ -522,7 +568,7 @@
 
 		// ソート番号
 		$lngSortKey = $i + 1;
-// 2004.03.29 suzukaze update end
+		// 2004.03.29 suzukaze update end
 
 		$aryQuery	= array();
 		$aryQuery[] = "INSERT INTO t_orderdetail (";
@@ -612,7 +658,7 @@
 		$strQuery = "";
 		$strQuery = implode( $aryQuery );
 		
-//echo "<br><br>$strQuery<br>";
+		//echo "<br><br>$strQuery<br>";
 
 		if ( !$lngResultID = $objDB->execute( $strQuery ) )
 		{
@@ -624,12 +670,12 @@
 		
 	}
 
-// 2004.04.01 suzukaze update start
+	// 2004.04.01 suzukaze update start
 	if ( !fncCheckSetProduct ( $aryNewData["aryPoDitail"], $lngmonetaryunitcode, $objDB ) )
 	{
 		fncOutputError ( 9051, DEF_ERROR, "", TRUE, "", $objDB );
 	}
-// 2004.04.01 suzukaze update end
+	// 2004.04.01 suzukaze update end
 
 
 
@@ -715,9 +761,9 @@
 		$aryQuery[] = DEF_T_WORKFLOW_SUBCODE.", ";					// ワークフローサブコード
 		$aryQuery[] = DEF_T_WORKFLOW_ORDERNO.", ";					// ワークフロー順序番号
 		$aryQuery[] = DEF_T_WORKFLOW_STATUS.", ";					// ワークフロー状態コード
-// 2004.03.24 suzukaze update start
+		// 2004.03.24 suzukaze update start
 		$aryQuery[] = "'" . $aryNewData["strWorkflowMessage"] . "',";	// 11:備考
-// 2004.03.24 suzukaze update end
+		// 2004.03.24 suzukaze update end
 		$aryQuery[] = "now(), ";									// 登録日
 		$aryQuery[] = "now() + (interval '$lngLimitDate day' )";	// 期限日
 		$aryQuery[] = ")";
@@ -764,7 +810,7 @@
 		// メール文面に必要なデータを配列$aryMailDataに格納
 		$aryMailData["strmailaddress"] = $aryResult[0]["strmailaddress"];				// 承認者メールアドレス
 
-// 2004.03.23 suzukaze update start
+		// 2004.03.23 suzukaze update start
 		// 入力者メールアドレスの取得
 		$strUserMailQuery = "SELECT bytMailTransmitFlag, strMailAddress FROM m_User WHERE lngUserCode = " . $objAuth->UserCode;
 
@@ -787,13 +833,13 @@
 		{
 			$strMailAddress = $aryResult[0]["strmailaddress"];								// 承認者メールアドレス
 			$aryMailData["strWorkflowName"] = $strworkflowname;								// 案件名
-//			$aryMailData["strUserDisplayName"] = $aryResult[0]["struserdisplayname"];		// 承認依頼者
+			//			$aryMailData["strUserDisplayName"] = $aryResult[0]["struserdisplayname"];		// 承認依頼者
 			$aryMailData["strUserDisplayName"] = $objAuth->UserDisplayName;					// 入力者（申請者）表示名
 			$aryMailData["strURL"] = LOGIN_URL;												// URL
-// 2004.03.24 suzukaze update start
+			// 2004.03.24 suzukaze update start
 			// 確認画面上のメッセージをメール内の備考欄として送信
 			$aryMailData["strNote"] = $aryNewData["strWorkflowMessage"];
-// 2004.03.24 suzukaze update end
+			// 2004.03.24 suzukaze update end
 
 			// メールメッセージ取得関数
 			list ( $strSubject, $strTemplate ) = fncGetMailMessage( 807, $aryMailData, $objDB );
@@ -804,7 +850,7 @@
 			// メール送信
 			fncSendMail( $strMailAddress, $strSubject, $strTemplate, "From: $strInputUserMailAddress\nReturn-Path: " . $strAdminMailAddress . "\n" );
 		}
-// 2004.03.23 suzukaze update end
+		// 2004.03.23 suzukaze update end
 
 		// 帳票出力表示切替
 		$aryData["PreviewVisible"] = "hidden";

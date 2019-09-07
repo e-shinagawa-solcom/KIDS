@@ -55,6 +55,20 @@ jQuery(function($){
         $(editTr).append($(td));
         td = $(tr).find($('td.detailNote')).clone();
         $(editTr).append($(td));
+        td = $(tr).find($('td.detailProductUnitCode')).clone();
+        $(editTr).append($(td));
+        td = $(tr).find($('td.detailOrderNo')).clone();
+        $(editTr).append($(td));
+        td = $(tr).find($('td.detailRevisionNo')).clone();
+        $(editTr).append($(td));
+        td = $(tr).find($('td.detailStockSubjectCode')).clone();
+        $(editTr).append($(td));
+        td = $(tr).find($('td.detailStockItemCode')).clone();
+        $(editTr).append($(td));
+        td = $(tr).find($('td.detailMonetaryUnitCode')).clone();
+        $(editTr).append($(td));
+        td = $(tr).find($('td.detailCustomerCompanyCode')).clone();
+        $(editTr).append($(td));
         
         $(tbody).append($(editTr));
         $(editTable).append($(tbody));
@@ -184,6 +198,13 @@ jQuery(function($){
                 lngOrderDetailNo: $(tr).children('.detailOrderDetailNo').text(),
                 lngSortKey: i + 1,
                 lngDeliveryMethodCode: $(tr).find('option:selected').val(),
+                lngProductUnitCode: $(tr).find('.detailProductUnitCode').text(),
+                lngOrderNo: $(tr).find('.detailOrderNo').text(),
+                lngRevisionNo: $(tr).find('.detailRevisionNo').text(),
+                lngStockSubjectCode: $(tr).find('.detailStockSubjectCode').text(),
+                lngStockItemCode: $(tr).find('.detailStockItemCode').text(),
+                lngMonetaryUnitCode: $(tr).find('.detailMonetaryUnitCode').text(),
+                lngCustomerCompanyCode: $(tr).find('.detailCustomerCompanyCode').text(),
             };
             result.push(param);
         });
@@ -260,7 +281,7 @@ jQuery(function($){
             return false;
         }
         // $('form[name="HSO"]').submit();
-        $.post('index.php',
+        $.post('index2.php',
             {
                 strSessionID:         $('input[name="strSessionID"]').val(),
                 lngOrderNo:           $('input[name="lngOrderNo"]').val(),
@@ -269,6 +290,7 @@ jQuery(function($){
                 lngPayConditionCode:  $('select[name="optPayCondition"]').children('option:selected').val(),
                 dtmExpirationDate:    $('input[name="dtmExpirationDate"]').val(),
                 lngLocationCode:      $('input[name="lngLocationCode"]').val(),
+                strNote:              $('input[name="strNote"]').text(),
                 aryDetail:            getUpdateDetail(),
             }).done(function(data){
                 console.log("done");

@@ -112,38 +112,32 @@
 		return true;
 	}
 
-
-
-	$aryOrderNo = explode(",", $aryData["lngOrderNo"]);
-
 	// ヘッダ・フッダ部
-	$aryOrderHeader = fncGetOrder($aryData["lngOrderNo"], $objDB)[0];
+	$aryOrderHeader = fncGetOrder($aryData["lngOrderNo"], $objDB);
 
-
-
-
-
-
-
-
-	$aryData["strOrderCode"]          = $aryOrderHeader["strordercode"];
-	$aryData["strReviseCode"]         = str_pad($aryOrderHeader["lngrevisionno"],2,"0",STR_PAD_LEFT);
-	$aryData["dtmExpirationDate"]     = str_replace("-", "/", $aryOrderHeader["dtmexpirationdate"]);
-	$aryData["strProductCode"]        = $aryOrderHeader["strproductcode"];
-	$aryData["strNote"]               = $aryOrderHeader["strnote"];
-	$aryData["lngCustomerCode"]       = $aryOrderHeader["strcompanydisplaycode"];
-	$aryData["strCustomerName"]       = $aryOrderHeader["strcompanydisplayname"];
-	$aryData["strGroupDisplayCode"]   = $aryOrderHeader["strgroupdisplaycode"];
-	$aryData["strGroupDisplayName"]   = $aryOrderHeader["strgroupdisplayname"];
-	$aryData["strProductName"]        = $aryOrderHeader["strproductname"];
-	$aryData["strProductEnglishName"] = $aryOrderHeader["strproductenglishname"];
-	$aryData["lngCountryCode"]        = $aryOrderHeader["lngcountrycode"];
-	$aryData["lngLocationCode"]       = $aryOrderHeader["strcompanydisplaycode2"];
-	$aryData["strLocationName"]       = $aryOrderHeader["strcompanydisplayname2"];
-	$aryData["lngRevisionNo"]         = $aryOrderHeader["lngrevisionno"];
+	// $aryData["strOrderCode"]          = $aryOrderHeader[0]["strordercode"];
+	// $aryData["strReviseCode"]         = str_pad($aryOrderHeader[0]["lngrevisionno"],2,"0",STR_PAD_LEFT);
+	$aryData["dtmExpirationDate"]     = str_replace("-", "/", $aryOrderHeader[0]["dtmexpirationdate"]);
+	$aryData["strProductCode"]        = $aryOrderHeader[0]["strproductcode"];
+	$aryData["strNote"]               = $aryOrderHeader[0]["strnote"];
+	// $aryData["lngCustomerCode"]       = $aryOrderHeader[0]["strcompanydisplaycode"];
+	// $aryData["strCustomerName"]       = $aryOrderHeader[0]["strcompanydisplayname"];
+	$aryData["strGroupDisplayCode"]   = $aryOrderHeader[0]["strgroupdisplaycode"];
+	$aryData["strGroupDisplayName"]   = $aryOrderHeader[0]["strgroupdisplayname"];
+	$aryData["strProductName"]        = $aryOrderHeader[0]["strproductname"];
+	$aryData["strProductEnglishName"] = $aryOrderHeader[0]["strproductenglishname"];
+	$aryData["lngCountryCode"]        = $aryOrderHeader[0]["lngcountrycode"];
+	$aryData["lngLocationCode"]       = $aryOrderHeader[0]["strcompanydisplaycode2"];
+	$aryData["strLocationName"]       = $aryOrderHeader[0]["strcompanydisplayname2"];
+	$aryData["lngRevisionNo"]         = $aryOrderHeader[0]["lngrevisionno"];
 	
 	// 明細
+	// $aryDetail = [];
+	// for($i = 0; $i < count($aryOrderHeader); $i++){
+	// 	$aryDetail[] = fncGetOrderDetail($aryOrderHeader[$i], $objDB);
+	// }
 	$aryDetail = fncGetOrderDetail($aryData["lngOrderNo"], $objDB);
+
 	// 支払条件プルダウン
 	$strPulldownPaycondition = fncPulldownMenu(0, 0, "", $objDB);
 	$aryData["optPayCondition"] = $strPulldownPaycondition;
