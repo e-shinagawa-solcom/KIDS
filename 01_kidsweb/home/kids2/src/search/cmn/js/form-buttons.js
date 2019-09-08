@@ -69,6 +69,13 @@
         	// サブミット
         	workForm.submit();
         }
+        else if(baseURI.indexOf('/search2/index.php') > 0){
+        	var windowResult = open('about:blank', windowName, 'scrollbars=yes, resizable=yes');
+        	var screen = baseURI.slice(baseURI.lastIndexOf('/',baseURI.indexOf('/search2/index.php')-1)+1,baseURI.indexOf('/search2/index.php'))
+        	workForm.get(0).action = '/' + screen + '/result2/index.php?strSessionID=' + $.cookie('strSessionID');
+        	// サブミット
+        	workForm.submit();
+        }
         
     });
 })();
