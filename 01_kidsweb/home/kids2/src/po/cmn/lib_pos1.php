@@ -78,7 +78,8 @@ function fncGetPurchaseHeadNoToInfoSQL ( $lngOrderNo )
 	$aryQuery[] = ", o.lngPayConditionCode as lngPayConditionCode";
 	$aryQuery[] = ", pc.strPayConditionName as strPayConditionName";
 	// 発注有効期限日
-	$aryQuery[] = ", to_char( o.dtmExpirationDate, 'YYYY/MM/DD' ) as dtmExpirationDate";
+	//$aryQuery[] = ", to_char( o.dtmExpirationDate, 'YYYY/MM/DD' ) as dtmExpirationDate";
+	$aryQuery[] = ", to_char( mp.dtmExpirationDate, 'YYYY/MM/DD' ) as dtmExpirationDate";
 	// // 備考
 	// $aryQuery[] = ", o.strNote as strNote";
 	// 合計金額
@@ -98,6 +99,8 @@ function fncGetPurchaseHeadNoToInfoSQL ( $lngOrderNo )
 	$aryQuery[] = " LEFT JOIN m_PayCondition pc ON o.lngPayConditionCode = pc.lngPayConditionCode";
 	$aryQuery[] = " LEFT JOIN m_MonetaryUnit mu ON o.lngMonetaryUnitCode = mu.lngMonetaryUnitCode";
 	$aryQuery[] = " LEFT JOIN m_MonetaryRateClass mr ON o.lngMonetaryRateCode = mr.lngMonetaryRateCode";
+	$aryQuery[] = " LEFT JOIN t_purchaseorderdetail tp ON ot.lngorderno = tp.lngorderno AND ot.lngorderdetailno = tp.lngorderdetailno and ot.lngrevisionno = tp.lngrevisionno";
+	$aryQuery[] = " LEFT JOIN m_purchaseorder mp on  tp.lngpurchaseorderno = mp.lngpurchaseorderno and tp.lngrevisionno = mp.lngrevisionno";
 
 	$aryQuery[] = " WHERE o.lngOrderNo = " . $lngOrderNo . "";
 
