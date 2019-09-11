@@ -3,6 +3,7 @@
     $('img.remove.button').on('click', function(){
         url = '/po/result/index3.php';
         lngorderno = 'lngOrderNo=' + $(this).attr('lngorderno');
+        // lngorderno = 'lngOrderNo=1018,437';
         sessionID = 'strSessionID=' + getUrlVars()["strSessionID"];
 
         // 別ウィンドウで表示

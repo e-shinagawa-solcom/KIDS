@@ -29,13 +29,13 @@
 *	@return strQuery 	$strQuery 検索用SQL文
 *	@access public
 */
-function fncGetPurchaseHeadNoToInfoSQL ( $lngOrderNo )
+function fncGetPurchaseHeadNoToInfo ( $lngOrderNo, $objDB )
 {
 	// SQL文の作成
 	$aryQuery[] = "SELECT distinct on (o.lngOrderNo) o.lngOrderNo as lngOrderNo, o.lngRevisionNo as lngRevisionNo";
 
 	// 登録日
-	$aryQuery[] = ", to_char( o.dtmInsertDate, 'YYYY/MM/DD HH:MI:SS' ) as dtmInsertDate";
+	$aryQuery[] = ", to_char( o.dtmInsertDate, 'YYYY/MM/DD' ) as dtmInsertDate";
 	// 計上日
 	$aryQuery[] = ", to_char( o.dtmAppropriationDate, 'YYYY/MM/DD' ) as dtmOrderAppDate";
 	// 発注No
@@ -106,7 +106,18 @@ function fncGetPurchaseHeadNoToInfoSQL ( $lngOrderNo )
 
 	$strQuery = implode( "\n", $aryQuery );
 
-	return $strQuery;
+	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
+	if ( $lngResultNum == 1 )
+	{
+		$aryOrderResult = $objDB->fetchArray( $lngResultID, 0 );
+	}
+	else
+	{
+		fncOutputError( 503, DEF_ERROR, "データが異常です", TRUE, "../po/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+	}
+	$objDB->freeResult( $lngResultID );
+
+	return $aryOrderResult;
 }
 
 
@@ -123,7 +134,7 @@ function fncGetPurchaseHeadNoToInfoSQL ( $lngOrderNo )
 *	@return strQuery 	$strQuery 検索用SQL文
 *	@access public
 */
-function fncGetPurchaseDetailNoToInfoSQL ( $lngOrderNo )
+function fncGetPurchaseDetailNoToInfo ( $lngOrderNo, $objDB )
 {
 	// 2004.03.29 suzukaze update start
 	// SQL文の作成
@@ -183,12 +194,84 @@ function fncGetPurchaseDetailNoToInfoSQL ( $lngOrderNo )
 
 	$strQuery = implode( "\n", $aryQuery );
 
-	return $strQuery;
+	// 明細データの取得
+	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
+
+	if ( $lngResultNum )
+	{
+		$aryDetailResult = $objDB->fetchArray( $lngResultID, 0 );
+	}
+
+	$objDB->freeResult( $lngResultID );
+
+	return $aryDetailResult;
 }
 
 
+function fncDeletePurchaseOrderHtml($aryOrder, $aryOrderDetail){
+	$aryHtml[] = "<table cellpadding=\"5\" cellspacing=\"0\" border=\"0\" bgcolor=\"#6f8180\" align=\"center\">";
+	$aryHtml[] = "  <tr>";
+	$aryHtml[] = "    <td class=\"SegColumn\">登録日</td>";
+	$aryHtml[] = "    <td class=\"Segs\">" . $aryOrder["dtminsertdate"] . "</td>";
+	$aryHtml[] = "  </tr>";
+	$aryHtml[] = "  <tr>";
+	$aryHtml[] = "    <td class=\"SegColumn\">発注有効期限日</td>";
+	$aryHtml[] = "    <td class=\"Segs\">" . $aryOrder["dtmexpirationdate"] . "</td>";
+	$aryHtml[] = "  </tr>";
+	$aryHtml[] = "  <tr>";
+	$aryHtml[] = "    <td class=\"SegColumn\">発注NO.</td>";
+	$aryHtml[] = "    <td class=\"Segs\">" . $aryOrder["strordercode"] . "</td>";
+	$aryHtml[] = "  </tr>";
+	$aryHtml[] = "  <tr>";
+	$aryHtml[] = "    <td class=\"SegColumn\">製品コード</td>";
+	$aryHtml[] = "    <td class=\"Segs\">[" . $aryOrder["strproductcode"] . "]</td>";
+	$aryHtml[] = "  </tr>";
+	$aryHtml[] = "  <tr>";
+	$aryHtml[] = "    <td class=\"SegColumn\">製品名</td>";
+	$aryHtml[] = "    <td class=\"Segs\">" . $aryOrder["strproductname"] . "</td>";
+	$aryHtml[] = "  </tr>";
+	$aryHtml[] = "  <tr>";
+	$aryHtml[] = "    <td class=\"SegColumn\">営業部門</td>";
+	$aryHtml[] = "    <td class=\"Segs\">[" . $aryOrder["strinchargegroupdisplaycode"] . "] " . $aryOrder["strinchargegroupdisplayname"] . "</td>";
+	$aryHtml[] = "  </tr>";
+	$aryHtml[] = "  <tr>";
+	$aryHtml[] = "    <td class=\"SegColumn\">開発担当者</td>";
+	$aryHtml[] = "    <td class=\"Segs\">[" . $aryOrder["strinchargeuserdisplaycode"] . "] " . $aryOrder["strinchargeUserdisplayname"] . "</td>";
+	$aryHtml[] = "  </tr>";
+	$aryHtml[] = "  <tr>";
+	$aryHtml[] = "    <td class=\"SegColumn\">仕入部品</td>";
+	$aryHtml[] = "    <td class=\"Segs\">[" . $aryOrderDetail["lngstocksubjectcode"] . "] " . $aryOrderDetail["strstocksubjectname"] . "</td>";
+	$aryHtml[] = "  </tr>";
+	$aryHtml[] = "  <tr>";
+	$aryHtml[] = "    <td class=\"SegColumn\">仕入先</td>";
+	$aryHtml[] = "    <td class=\"Segs\">[" . $aryOrder["strcustomerdisplaycode"] . "] " . $aryOrder["strcustomerdisplayname"] . "</td>";
+	$aryHtml[] = "  </tr>";
+	$aryHtml[] = "  <tr>";
+	$aryHtml[] = "    <td class=\"SegColumn\">納期</td>";
+	$aryHtml[] = "    <td class=\"Segs\">" . $aryOrderDetail["dtmdeliverddate"] . "</td>";
+	$aryHtml[] = "  </tr>";
+	$aryHtml[] = "  <tr>";
+	$aryHtml[] = "    <td class=\"SegColumn\">単価</td>";
+	$aryHtml[] = "    <td class=\"Segs\">" . $aryOrder["strmonetaryunitsign"] . $aryOrderDetail["curproductprice"] . "</td>";
+	$aryHtml[] = "  </tr>";
+	$aryHtml[] = "  <tr>";
+	$aryHtml[] = "    <td class=\"SegColumn\">数量</td>";
+	$aryHtml[] = "    <td class=\"Segs\">" . $aryOrderDetail["lngproductquantity"] . "</td>";
+	$aryHtml[] = "  </tr>";
+	$aryHtml[] = "  <tr>";
+	$aryHtml[] = "    <td class=\"SegColumn\">税抜金額</td>";
+	$aryHtml[] = "    <td class=\"Segs\">" . $aryOrder["strmonetaryunitsign"] . $aryOrderDetail["cursubtotalprice"] . "</td>";
+	$aryHtml[] = "  </tr>";
+	$aryHtml[] = "  <tr>";
+	$aryHtml[] = "    <td class=\"SegColumn\">明細備考</td>";
+	$aryHtml[] = "    <td class=\"Segs\">" . $aryOrderDetail["strdetailnote"] . "</td>";
+	$aryHtml[] = "  </tr>";
+	$aryHtml[] = "</table>";
+	$aryHtml[] = "<br>";
 
-
+	$strHtml = implode("\n", $aryHtml);
+	return $strHtml;
+}
 
 
 /**
@@ -733,15 +816,22 @@ function fncGetInvalidCodeToMaster ( $aryOrderData, $objDB )
 	return $lngCase;
 }
 
-function fncGetCancelOrderSQL($lngOrderNo, $lngRevisionNo){
-	$arySql[] = "UPDATE m_order SET lngorderstatuscode = " . DEF_ORDER_TEMPORARY . " ";
+function fncGetCancelOrder($lngOrderNo, $lngRevisionNo, $objDB){
+	$arySql[] = "UPDATE m_order SET lngorderstatuscode = 1 ";
 	$arySql[] = "WHERE lngorderno = " . intval($lngOrderNo) . " ";
 	$arySql[] = "AND   lngrevisionno = " . intval($lngRevisionNo) . " ";
 
-	return implode("\n", $arySql);
+	$strQuery = implode("\n", $arySql);
+	if ( !$lngResultID = $objDB->execute( $strSql ) )
+	{
+		//fncOutputError ( 9051, DEF_ERROR, "データベースの更新に失敗しました。", TRUE, "", $objDB );
+		return FALSE;
+	}
+	$objDB->freeResult( $lngResultID );
+	return true;
 }
 
-function fncGetPurchaseOrderSQL($strOrderCode, $lngRevisionNo){
+function fncGetPurchaseOrder($strOrderCode, $lngRevisionNo, $objDB){
 	$arySql[] = "SELECT";
 	$arySql[] = "   lngpurchaseorderno";
 	$arySql[] = "  ,lngrevisionno";
@@ -779,7 +869,16 @@ function fncGetPurchaseOrderSQL($strOrderCode, $lngRevisionNo){
 	$arySql[] = "WHERE strordercode = '" . $strOrderCode . "'";
 	$arySql[] = "AND   lngrevisionno = " . intval($lngRevisionNo);
 
-	return implode("\n", $arySql);
+	$strQuery = implode("\n", $arySql);
+
+	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
+	if ( $lngResultNum == 1 )
+	{
+		$aryPurchaseOrder = $objDB->fetchArray( $lngResultID, 0 );
+	}
+	$objDB->freeResult( $lngResultID );
+
+	return $aryPurchaseOrder;
 }
 
 function fncGetPurchaseOrderDetailSQL($lngOrderNo, $lngRevisionNo){

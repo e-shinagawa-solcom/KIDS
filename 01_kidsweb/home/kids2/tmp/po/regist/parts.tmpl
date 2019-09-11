@@ -234,7 +234,7 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutMsw(); initLayout
 <span id="VarsA14">
 	<input style="ime-mode:disabled;" class="TxtStyle03L" type="text" name="lngLocationCode" value="_%lngLocationCode%_">&nbsp;<input style="ime-mode:disabled;" class="disTxt46L" type="text" name="strLocationName" value="_%strLocationName%_" contenteditable="false">
 </span>
-<span id="MSWBt04" onclick="fncGetObjectName( window.MLwin , window.HSO.lngLocationCode , window.HSO.strLocationName );DisplayerM04( '' , document.all.Mdata04 , window.MLwin.document.all.strLocationCode  );ExchangeM04( 0 , window.self );fncFocusType( window.MLwin , 'locationTop' );return false;"></span>
+<span id="MSWBt04" onclick="fncGetObjectName( window.MLwin , window.HSO.lngLocationCode , window.HSO.strLocationName );DisplayerM04( '' , document.all.Mdata04 , window.MLwin.document.all.lngLocationCode  );ExchangeM04( 0 , window.self );fncFocusType( window.MLwin , 'locationTop' );return false;"></span>
 
 <!-- 確定対象明細行選択部 -->
 <span id="SegDetailIN">
@@ -299,7 +299,8 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutMsw(); initLayout
   </table>
 </span>
 
-
+<span id="SegHidden">
+</span>
 
 
 
@@ -427,7 +428,6 @@ if ( document.all.lngCustomerCode.value != '' )
 <!-- END [LOCATION] BUTTON -->
 
 <!-- START DATE BUTTON -->
-<!-- <span id="DateBtA" onclick="window.MDatewin.fncCalendar( window.HSO.dtmOrderAppDate , 'DateA');DisplayerM10( '' , document.all.Mdata10 );ExchangeM10( 0 , window.self );return false;"></span> -->
 <!-- END DATE BUTTON -->
 
 <!-- START DATEB BUTTON -->

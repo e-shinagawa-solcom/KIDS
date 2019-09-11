@@ -89,25 +89,69 @@
 		$aryUpdate["dtmexpirationdate"]    = $_POST["dtmExpirationDate"];
 		$aryUpdate["lngpayconditioncode"]  = $_POST["lngPayConditionCode"];
 		$aryUpdate["lngdeliveryplacecode"] = $_POST["lngLocationCode"];
-		$aryUpdate["lngorderstatuscode"]   = DEF_ORDER_ORDER;
+		$aryUpdate["lngorderstatuscode"]   = 2;
 		for($i = 0; $i < count($_POST["aryDetail"]); $i++){
-			$aryUpdateDetail[$i]["lngorderdetailno"]      = $_POST["aryDetail"][$i]["lngOrderDetailNo"];
-			$aryUpdateDetail[$i]["lngsortkey"]            = $_POST["aryDetail"][$i]["lngSortKey"];
-			$aryUpdateDetail[$i]["lngdeliverymethodcode"] = $_POST["aryDetail"][$i]["lngDeliveryMethodCode"];
+			$aryUpdateDetail[$i]["lngorderdetailno"]       = $_POST["aryDetail"][$i]["lngOrderDetailNo"];
+			$aryUpdateDetail[$i]["lngsortkey"]             = $_POST["aryDetail"][$i]["lngSortKey"];
+			$aryUpdateDetail[$i]["lngdeliverymethodcode"]  = $_POST["aryDetail"][$i]["lngDeliveryMethodCode"];
+			$aryUpdateDetail[$i]["strdeliverymethodname"]  = $_POST["aryDetail"][$i]["strDeliveryMethodName"];
+			$aryUpdateDetail[$i]["lngproductunitcode"]     = $_POST["aryDetail"][$i]["lngProductUnitCode"];
+			$aryUpdateDetail[$i]["lngorderno"]             = $_POST["aryDetail"][$i]["lngOrderNo"];
+			$aryUpdateDetail[$i]["lngrevisionno"]          = $_POST["aryDetail"][$i]["lngRevisionNo"];
+			$aryUpdateDetail[$i]["lngstocksubjectcode"]    = $_POST["aryDetail"][$i]["lngStockSubjectCode"];
+			$aryUpdateDetail[$i]["lngstockitemcode"]       = $_POST["aryDetail"][$i]["lngStockItemCode"];
+			$aryUpdateDetail[$i]["lngmonetaryunitcode"]    = $_POST["aryDetail"][$i]["lngMonetaryUnitCode"];
+			$aryUpdateDetail[$i]["lngcustomercompanycode"] = $_POST["aryDetail"][$i]["lngCustomerCompanyCode"];
+			$aryUpdateDetail[$i]["curproductprice"]        = $_POST["aryDetail"][$i]["curProductPrice"];
+			$aryUpdateDetail[$i]["lngproductquantity"]     = $_POST["aryDetail"][$i]["lngProductQuantity"];
+			$aryUpdateDetail[$i]["cursubtotalprice"]       = $_POST["aryDetail"][$i]["curSubtotalPrice"];
+			$aryUpdateDetail[$i]["dtmseliverydate"]        = $_POST["aryDetail"][$i]["dtmDeliveryDate"];
 		}
-
+		
+		
 		$objDB->transactionBegin();
 		// 発注マスタ更新
 		if(!fncUpdateOrder($aryUpdate, $aryUpdateDetail, $objDB)) { return false; }
-		// 更新後発注マスタ/発注明細取得
-		$aryOrder = fncGetOrder($aryUpdate["lngorderno"], $objDB)[0];
-		$aryDetail = fncGetOrderDetail($aryUpdate["lngorderno"], $objDB);
+		// 発注明細更新
+		if(!fncUpdateOrderDetail($aryUpdate, $aryUpdateDetail, $objDB)) { return false; }
 		// 発注書マスタ更新
-		if(!fncUpdatePurchaseOrder($aryOrder, $aryDetail, $objAuth, $objDB)){ return false; }
-
+		//if(!fncUpdatePurchaseOrder($aryUpdate, $aryUpdateDetail, $objAuth, $objDB)){ return false; }
+		$aryResult = fncUpdatePurchaseOrder($aryUpdate, $aryUpdateDetail, $objAuth, $objDB);
+		//echo implode(",", $aryResult);
+		// TODO:あとでコミットに変更する
 		$objDB->transactionRollback();
+		// $objDB->transactionCommit();
+		// echo fncGetReplacedHtml( "po/regist/parts2.tmpl", $aryData ,$objAuth);
 
-		echo fncGetReplacedHtml( "po/regist/parts2.tmpl", $aryData ,$objAuth);
+		// 更新後発注書データ取得
+		//$aryPurchaseOrderNo = explode(",", $aryResult);
+		// for($i = 0; $i < count($aryResult); $i++){
+		// 	//$arr = explode("-", $aryPurchaseOrderNo[$i]);
+		// 	$aryKey[$i]["purchaseorderno"] = $aryResult[$i]["lngpurchaseorderno"];
+		// 	$aryKey[$i]["revisionno"] = $aryResult[$i]["lngrevisionno"];
+		// }
+		// $aryPurcharseOrder = fncGetPurchaseOrder($aryKey, $objDB);
+		$aryPurcharseOrder = fncGetPurchaseOrder($aryResult, $objDB);
+		if(!$aryPurcharseOrder){
+			fncOutputError ( 9051, DEF_ERROR, "発注書の取得に失敗しました。", TRUE, "", $objDB );
+			return FALSE;
+		}
+		
+		$strHtml = fncCreatePurchaseOrderHtml($aryPurcharseOrder);
+		$aryData["aryPurchaseOrder"] = $strHtml;
+
+		// テンプレート読み込み
+		$objTemplate = new clsTemplate();
+		
+		header("Content-type: text/plain; charset=EUC-JP");
+		$objTemplate->getTemplate( "po/finish/parts.tmpl" );
+		
+		// テンプレート生成
+		$objTemplate->replace( $aryData );
+		// $objTemplate->complete();
+
+		// HTML出力
+		echo $objTemplate->strTemplate;
 
 		return true;
 	}
@@ -251,7 +295,7 @@
 			$aryData["lngProductUnitCode_ps"]		= fncPulldownMenu( 8, $aryData["lngPackingUnitCode"], '', $objDB );
 			
 			$aryData["strMode"]			= "check";			// モード（次の動作）check→insert
-			$aryData["strActionUrl"]	= "index.php";		// formのaction
+			$aryData["strActionUrl"]	= "index2.php";		// formのaction
 
 
 
@@ -419,7 +463,7 @@
 
 
 	$aryData["strMode"] = "update";				// モード（次の動作）check→renew
-	$aryData["strActionUrl"] = "index.php";		// formのaction
+	$aryData["strActionUrl"] = "index2.php";		// formのaction
 	
 	//echo "value :".$aryData["lngWorkflowOrderCode"]."<br>";
 	$dtmNowDate = date( 'Y/m/d', time());

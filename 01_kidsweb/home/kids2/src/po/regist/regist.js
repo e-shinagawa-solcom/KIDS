@@ -72,6 +72,47 @@ jQuery(function($){
         
         $(tbody).append($(editTr));
         $(editTable).append($(tbody));
+        //addHiddenValue(i, $(editTr));
+    }
+    function addHiddenValue(i, tr){
+        var hidden = $('#SegHidden');
+        var orderNo = $(tr).find($('td.detailOrderCode')).text();
+        $(hidden).append($("<input>").attr("type", "hidden").attr("name","detail["+ (i + 1) +"][orderNo]").val(orderNo));
+        var orderDetailNo = $(tr).find($('td.detailOrderDetailNo')).text();
+        $(hidden).append($("<input>").attr("type", "hidden").attr("name","detail["+ (i + 1) +"][orderDetailNo]").val(orderDetailNo));
+        var stockSubjectName = $(tr).find($('td.detailStockSubjectName')).text();
+        $(hidden).append($("<input>").attr("type", "hidden").attr("name","detail["+ (i + 1) +"][stockSubjectName]").val(stockSubjectName));
+        var stockItenName = $(tr).find($('td.detailStockItemName')).text();
+        $(hidden).append($("<input>").attr("type", "hidden").attr("name","detail["+ (i + 1) +"][stockItenName]").val(stockItenName));
+        var companyDisplayCode = $(tr).find($('td.detailCompanyDisplayCode')).text();
+        $(hidden).append($("<input>").attr("type", "hidden").attr("name","detail["+ (i + 1) +"][companyDisplayCode]").val(companyDisplayCode));
+        var deliveryMethod = $(tr).find('option:selected').val();
+        $(hidden).append($("<input>").attr("type", "hidden").attr("name","detail["+ (i + 1) +"][deliveryMethod]").val(deliveryMethod));
+        var productPrice = $(tr).find($('td.detailProductPrice')).text();
+        $(hidden).append($("<input>").attr("type", "hidden").attr("name","detail["+ (i + 1) +"][productPrice]").val(productPrice));
+        var productQuantity = $(tr).find($('td.detailProductQuantity')).text();
+        $(hidden).append($("<input>").attr("type", "hidden").attr("name","detail["+ (i + 1) +"][productQuantity]").val(productQuantity));
+        var subTotalPrice = $(tr).find($('td.detailSubtotalPrice')).text();
+        $(hidden).append($("<input>").attr("type", "hidden").attr("name","detail["+ (i + 1) +"][subTotalPrice]").val(subTotalPrice));
+        var deliveryDate = $(tr).find($('td.detailDeliveryDate')).text();
+        $(hidden).append($("<input>").attr("type", "hidden").attr("name","detail["+ (i + 1) +"][deliveryDate]").val(deliveryDate));
+        var detailNote = $(tr).find($('td.detailNote')).text();
+        $(hidden).append($("<input>").attr("type", "hidden").attr("name","detail["+ (i + 1) +"][detailNote]").val(detailNote));
+        var productUnitCode = $(tr).find($('td.detailProductUnitCode')).text();
+        $(hidden).append($("<input>").attr("type", "hidden").attr("name","detail["+ (i + 1) +"][productUnitCode]").val(productUnitCode));
+        var orderNo = $(tr).find($('td.detailOrderNo')).text();
+        $(hidden).append($("<input>").attr("type", "hidden").attr("name","detail["+ (i + 1) +"][orderNo]").val(orderNo));
+        var revisionNo = $(tr).find($('td.detailRevisionNo')).text();
+        $(hidden).append($("<input>").attr("type", "hidden").attr("name","detail["+ (i + 1) +"][revisionNo]").val(revisionNo));
+        var subjectCode = $(tr).find($('td.detailStockSubjectCode')).text();
+        $(hidden).append($("<input>").attr("type", "hidden").attr("name","detail["+ (i + 1) +"][subjectCode]").val(subjectCode));
+        var stockItemCode = $(tr).find($('td.detailStockItemCode')).text();
+        $(hidden).append($("<input>").attr("type", "hidden").attr("name","detail["+ (i + 1) +"][stockItemCode]").val(stockItemCode));
+        var monetaryUnitCode = $(tr).find($('td.detailMonetaryUnitCode')).text();
+        $(hidden).append($("<input>").attr("type", "hidden").attr("name","detail["+ (i + 1) +"][monetaryUnitCode]").val(monetaryUnitCode));
+        var customerCompanyCode = $(tr).find($('td.detailCustomerCompanyCode')).text();
+        $(hidden).append($("<input>").attr("type", "hidden").attr("name","detail["+ (i + 1) +"][customerCompanyCode]").val(customerCompanyCode));
+
     }
     function getCheckedRows(){
         var selected = getSelectedRows();
@@ -198,6 +239,7 @@ jQuery(function($){
                 lngOrderDetailNo: $(tr).children('.detailOrderDetailNo').text(),
                 lngSortKey: i + 1,
                 lngDeliveryMethodCode: $(tr).find('option:selected').val(),
+                strDeliveryMethodName: $(tr).find('option:selected').text(),
                 lngProductUnitCode: $(tr).find('.detailProductUnitCode').text(),
                 lngOrderNo: $(tr).find('.detailOrderNo').text(),
                 lngRevisionNo: $(tr).find('.detailRevisionNo').text(),
@@ -205,6 +247,10 @@ jQuery(function($){
                 lngStockItemCode: $(tr).find('.detailStockItemCode').text(),
                 lngMonetaryUnitCode: $(tr).find('.detailMonetaryUnitCode').text(),
                 lngCustomerCompanyCode: $(tr).find('.detailCustomerCompanyCode').text(),
+                curProductPrice: $(tr).find('.detailProductPrice').text(),
+                lngProductQuantity: $(tr).find('.detailProductQuantity').text(),
+                curSubtotalPrice: $(tr).find('.detailSubtotalPrice').text(),
+                dtmDeliveryDate: $(tr).find('.detailDeliveryDate').text(),
             };
             result.push(param);
         });
@@ -280,9 +326,10 @@ jQuery(function($){
         if(!validationCheck2()){
             return false;
         }
-        // $('form[name="HSO"]').submit();
-        $.post('index2.php',
-            {
+        $.ajax({
+            type: 'POST',
+            url: 'index.php',
+            data: {
                 strSessionID:         $('input[name="strSessionID"]').val(),
                 lngOrderNo:           $('input[name="lngOrderNo"]').val(),
                 strMode:              $('input[name="strMode"]').val(),
@@ -292,12 +339,16 @@ jQuery(function($){
                 lngLocationCode:      $('input[name="lngLocationCode"]').val(),
                 strNote:              $('input[name="strNote"]').text(),
                 aryDetail:            getUpdateDetail(),
-            }).done(function(data){
-                console.log("done");
-                console.log(data);
-            }).fail(function(error){
-                console.log("fail");
-                console.log(error);
-            });
+            },
+            async: true,
+        }).done(function(data){
+            console.log("done");
+            console.log(data);
+            //$('html').html(data);
+            document.write(data);
+        }).fail(function(error){
+            console.log("fail");
+            console.log(error);
+        });
     });
 });
