@@ -133,23 +133,29 @@
         // 検証ルール
         // -----------------------------------------------
         rules: {
-            // 作成日時
-            From_dtmInsertDate: {
+            // 納品日
+            From_dtmDeliveryDate: {
                 required: function () {
-                    return $('input[name="IsSearch_dtmInsertDate"]').get(0).checked && $('input[name="To_dtmInsertDate"]').val() == "";
+                    return $('input[name="IsSearch_dtmDeliveryDate"]').get(0).checked && $('input[name="To_dtmDeliveryDate"]').val() == "";
                 },
                 checkDateFormat: function () {
-                    return $('input[name="IsSearch_dtmInsertDate"]').get(0).checked;
+                    return $('input[name="IsSearch_dtmDeliveryDate"]').get(0).checked;
                 }
             },
-            To_dtmInsertDate: {
+            To_dtmDeliveryDate: {
                 required: function () {
-                    return $('input[name="IsSearch_dtmInsertDate"]').get(0).checked && $('input[name="From_dtmInsertDate"]').val() == "";
+                    return $('input[name="IsSearch_dtmDeliveryDate"]').get(0).checked && $('input[name="From_dtmDeliveryDate"]').val() == "";
                 },
                 checkDateFormat: function () {
-                    return $('input[name="IsSearch_dtmInsertDate"]').get(0).checked;
+                    return $('input[name="IsSearch_dtmDeliveryDate"]').get(0).checked;
                 }
                 
+            },
+            // 顧客            
+            lngCustomerCompanyCode: {
+                required: function () {
+                    return $('input[name="IsSearch_lngCustomerCompanyCode"]').get(0).checked;
+                }
             },
             // 入力者            
             lngInputUserCode: {
@@ -157,50 +163,46 @@
                     return $('input[name="IsSearch_lngInputUserCode"]').get(0).checked;
                 }
             },
-            // 発注NO.            
-            From_strOrderCode: {
-                required: function () {
-                    return $('input[name="IsSearch_strOrderCode"]').get(0).checked;
+            // 売上区分            
+            lngSalesClassCode: {
+                checkSelect: function () {
+                    return $('input[name="IsSearch_lngSalesClassCode"]').get(0).checked;
                 }
             },
-            To_strOrderCode: {
-                required: function () {
-                    return $('input[name="IsSearch_strOrderCode"]').get(0).checked;
+            // 消費税区分            
+            lngTaxClassCode: {
+                checkSelect: function () {
+                    return $('input[name="IsSearch_lngTaxClassCode"]').get(0).checked;
                 }
             },
-            // 製品コード            
-            From_strProductCode: {
+            // 納品書NO.            
+            strSlipCode: {
                 required: function () {
-                    return $('input[name="IsSearch_strProductCode"]').get(0).checked;
-                },
-                checkStrProductCode: function() {
-                    return $('input[name="IsSearch_strProductCode"]').get(0).checked;
+                    return $('input[name="IsSearch_strSlipCode"]').get(0).checked;
                 }
             },
-            To_strProductCode: {
+            // 納品先
+            lngDeliveryPlaceCode: {
                 required: function () {
-                    return $('input[name="IsSearch_strProductCode"]').get(0).checked;
-                },
-                checkStrProductCode: function() {
-                    return $('input[name="IsSearch_strProductCode"]').get(0).checked;
+                    return $('input[name="IsSearch_lngDeliveryPlaceCode"]').get(0).checked;
                 }
             },
-            // 営業部署            
-            lngInChargeGroupCode: {
+            // 起票者            
+            lngInsertUserCode: {
                 required: function () {
-                    return $('input[name="IsSearch_lngInChargeGroupCode"]').get(0).checked;
+                    return $('input[name="IsSearch_lngInsertUserCode"]').get(0).checked;
                 }
             },
-            // 担当者            
-            lngInChargeUserCode: {
+            // 注文書NO.            
+            strCustomerSalesCode: {
                 required: function () {
-                    return $('input[name="IsSearch_lngInChargeUserCode"]').get(0).checked;
+                    return $('input[name="IsSearch_strCustomerSalesCode"]').get(0).checked;
                 }
             },
-            // 仕入先            
-            lngCustomerCompanyCode: {
+            // 顧客品番            
+            strGoodsCode: {
                 required: function () {
-                    return $('input[name="IsSearch_lngCustomerCompanyCode"]').get(0).checked;
+                    return $('input[name="IsSearch_strGoodsCode"]').get(0).checked;
                 }
             },
         },
@@ -208,41 +210,39 @@
         // エラーメッセージ
         // -----------------------------------------------
         messages: {
-            // 登録日
-            From_dtmInsertDate: {
+            // 納品日
+            From_dtmDeliveryDate: {
                 required: msgRequired
             },
-            To_dtmInsertDate: {
+            To_dtmDeliveryDate: {
+                required: msgRequired               
+            },
+            // 顧客            
+            lngCustomerCompanyCode: {
                 required: msgRequired
             },
             // 入力者            
             lngInputUserCode: {
                 required: msgRequired
             },
-            // 製品コード            
-            From_strProductCode: {
+            // 納品書NO.            
+            strSlipCode: {
                 required: msgRequired
             },
-            To_strProductCode: {
+            // 納品先
+            lngDeliveryPlaceCode: {
                 required: msgRequired
             },
-            // 発注NO.            
-            From_strOrderCode: {
+            // 起票者            
+            lngInsertUserCode: {
                 required: msgRequired
             },
-            To_strOrderCode: {
+            // 注文書NO.            
+            strCustomerSalesCode: {
                 required: msgRequired
             },
-            // 営業部署            
-            lngInChargeGroupCode: {
-                required: msgRequired
-            },
-            // 担当者            
-            lngInChargeUserCode: {
-                required: msgRequired
-            },
-            // 仕入先            
-            lngCustomerCompanyCode: {
+            // 顧客品番            
+            strGoodsCode: {
                 required: msgRequired
             }
         }

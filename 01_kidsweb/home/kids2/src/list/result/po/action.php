@@ -79,12 +79,6 @@ if ( $lngResultNum === 1 )
 // 帳票が存在しない場合、コピー帳票ファイルを生成、保存
 elseif ( $lngResultNum === 0 )
 {
-	// 指定した発注データの承認状態が「承認」ではなかった場合、エラー
-	if ( fncCheckApprovalProductOrder( $aryData["strReportKeyCode"], $objDB ) == FALSE )
-	{
-		fncOutputError ( 502, DEF_WARNING, "未承認案件の可能性があります。", TRUE, "", $objDB );
-	}
-
 	// データ取得クエリ
 	$strQuery = fncGetListOutputQuery( DEF_REPORT_ORDER, $aryData["strReportKeyCode"], $objDB );
 
@@ -94,60 +88,30 @@ elseif ( $lngResultNum === 0 )
 
 	$aryParts =& $objMaster->aryData[0];
 
-	/////////////////////////////////////////////////////////////////
-	// 特殊処理
-	/////////////////////////////////////////////////////////////////
-	// 海外・国内用宛名処理
-	if ( $aryParts["lngorganizationcode"] == DEF_ORGANIZATION_FOREIGN )
-	{
-		// 宛名
-// 2004.03.04 suzukaze update start
-		$aryParts["strcustomerdisplayname"] = "TO: " . $aryParts["strcustomerdisplayname"];
-// 2004.03.04 suzukaze update end
-
-		// 仕入先住所
-		$aryParts["strAddress"] = $objMaster->aryData[0]["strcustomeraddress4"] . $objMaster->aryData[0]["strcustomeraddress3"] . "<br>" . $objMaster->aryData[0]["strcustomeraddress2"] . $objMaster->aryData[0]["strcustomeraddress1"];
-	}
-	else
-	{
-		// 宛名
-		$aryParts["strcustomerdisplayname"] .= " 様";
-
-		// 仕入先住所
-		$aryParts["strAddress"] = $objMaster->aryData[0]["strcustomeraddress1"] . $objMaster->aryData[0]["strcustomeraddress2"] . "<br>" . $objMaster->aryData[0]["strcustomeraddress3"] . $objMaster->aryData[0]["strcustomeraddress4"];
-	}
-
 	// 詳細取得
-	$aryQuery[] = "SELECT p.strProductName, p.strProductEnglishName,";
-	$aryQuery[] = " p.strProductCode, p.lngCartonQuantity,";
-// 2004.03.30 suzukaze update start
-	$aryQuery[] = " od.lngSortKey AS lngOrderDetailNo, od.strNote,";
-// 2004.03.30 suzukaze update end
-	$aryQuery[] = " od.lngConversionClassCode,";
-	$aryQuery[] = " TO_CHAR( od.lngProductQuantity, '9,999,999,990' ) AS lngProductQuantity,";
-	$aryQuery[] = " TO_CHAR( od.dtmDeliveryDate, 'YYYY/MM/DD' ) AS dtmDeliveryDate,";
-	$aryQuery[] = " TO_CHAR( od.curProductPrice, '9,999,999,990.9999' ) AS curProductPrice,";
-	$aryQuery[] = " TO_CHAR( od.curSubTotalPrice, '9,999,999,990.99' ) AS curSubTotalPrice,";
-	$aryQuery[] = " si.strStockItemName, dm.strDeliveryMethodName,";
-	$aryQuery[] = " pu.strProductUnitName, od.strMoldNo ";
-	$aryQuery[] = "FROM t_OrderDetail od, m_Product p,";
-	$aryQuery[] = " m_StockItem si, m_DeliveryMethod dm, m_ProductUnit pu ";
-	$aryQuery[] = "WHERE od.lngOrderNo = " . $aryData["strReportKeyCode"];
-	$aryQuery[] = " AND od.lngRevisionNo = ";
-	$aryQuery[] = "(";
-	$aryQuery[] = "  SELECT MAX ( od2.lngRevisionNo )";
-	$aryQuery[] = "  FROM t_OrderDetail od2";
-	$aryQuery[] = "  WHERE od.lngOrderNo = od2.lngOrderNo";
-	$aryQuery[] = "   AND od.lngOrderDetailNo = od2.lngOrderDetailNo";
-	$aryQuery[] = ")";
-	$aryQuery[] = " AND od.strProductCode = p.strProductCode";
-	$aryQuery[] = " AND od.lngStockItemCode = si.lngStockItemCode";
-	$aryQuery[] = " AND od.lngStockSubjectCode = si.lngStockSubjectCode";
-	$aryQuery[] = " AND od.lngDeliveryMethodCode = dm.lngDeliveryMethodCode";
-	$aryQuery[] = " AND od.lngProductUnitCode = pu.lngProductUnitCode ";
-// 2004.03.30 suzukaze update start
-	$aryQuery[] = "ORDER BY od.lngSortKey";
-// 2004.03.30 suzukaze update end
+    $aryQuery[] = "select";
+    $aryQuery[] = "pod.lngpurchaseorderno,";
+    $aryQuery[] = "pod.lngpurchaseorderdetailno,";
+    $aryQuery[] = "pod.lngrevisionno,";
+    $aryQuery[] = "pod.lngorderno,";
+    $aryQuery[] = "pod.lngorderdetailno,";
+    $aryQuery[] = "pod.lngorderrevisionno,";
+    $aryQuery[] = "pod.lngstocksubjectcode,";
+    $aryQuery[] = "pod.lngstockitemcode,";
+    $aryQuery[] = "pod.strstockitemname,";
+    $aryQuery[] = "pod.lngdeliverymethodcode,";
+    $aryQuery[] = "pod.strdeliverymethodname,";
+    $aryQuery[] = "pod.curproductprice,";
+    $aryQuery[] = "pod.lngproductquantity,";
+    $aryQuery[] = "pod.lngproductunitcode,";
+    $aryQuery[] = "pod.strproductunitname,";
+    $aryQuery[] = "pod.cursubtotalprice,";
+    $aryQuery[] = "pod.dtmdeliverydate,";
+    $aryQuery[] = "pod.strnote,";
+    $aryQuery[] = "pod.lngsortkey";
+    $aryQuery[] = "t_purchaseorderdetail pod";
+    $aryQuery[] = "WHERE pod.lngpurchaseorderno = " . $aryData["strReportKeyCode"];
+    $aryQuery[] = "ORDER BY pod.lngSortKey";
 
 	$strQuery = join ( "", $aryQuery );
 	unset ( $aryQuery );

@@ -1,6 +1,6 @@
 <?
 /**
- *    帳票出力 発注書 印刷プレビュー画面
+ *    帳票出力 納品書 印刷プレビュー画面
  *
  *    @package   KIDS
  *    @license   http://www.wiseknot.co.jp/
@@ -8,10 +8,6 @@
  *    @author    Kenji Chiba <k-chiba@wiseknot.co.jp>
  *    @access    public
  *    @version   1.00
- *
- *    更新履歴
- *    2004.03.05    海外の会社の宛先に付ける TO の横に : を追加するように修正する
- *    2004.03.30    明細行のソート順を表示用ソートキーの順序で表示するように変更（明細行番号の項目も表示用ソートキーに変更）
  *
  */
 // 帳票出力 印刷プレビュー画面
@@ -52,14 +48,14 @@ fncPutStringCheckError($aryResult, $objDB);
 $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 
 // 権限確認
-if (!fncCheckAuthority(DEF_FUNCTION_LO0, $objAuth) || !fncCheckAuthority(DEF_FUNCTION_PO0, $objAuth)) {
+if (!fncCheckAuthority(DEF_FUNCTION_LO0, $objAuth) || !fncCheckAuthority(DEF_FUNCTION_SO0, $objAuth)) {
     fncOutputError(9052, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
 
 // 帳票出力コピーファイルパス取得クエリ生成
 //===================================================================
 
-$strQuery = fncGetCopyFilePathQuery(DEF_REPORT_ORDER, $aryData["strReportKeyCode"], $aryData["lngReportCode"]);
+$strQuery = fncGetCopyFilePathQuery(DEF_REPORT_SLIP, $aryData["strReportKeyCode"], $aryData["lngReportCode"]);
 
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
@@ -75,7 +71,7 @@ $copyDisabled = "visible";
 // 帳票コードが無い または コピーフラグが偽(コピー選択ではない) かつ
 // コピー解除権限がある場合、
 // コピーマークの非表示
-if (!$strReportPathName || (!($aryData["lngReportCode"] || $aryData["bytCopyFlag"]) && fncCheckAuthority(DEF_FUNCTION_LO4, $objAuth))) {
+if (!$strReportPathName || (!($aryData["lngReportCode"] || $aryData["bytCopyFlag"]) && fncCheckAuthority(DEF_FUNCTION_LO6, $objAuth))) {
     $copyDisabled = "hidden";
 }
 
@@ -98,7 +94,7 @@ if ($aryData["lngReportCode"]) {
 ///////////////////////////////////////////////////////////////////////////
 else {
     // データ取得クエリ
-    $strQuery = fncGetListOutputQuery(DEF_REPORT_ORDER, $aryData["strReportKeyCode"], $objDB);
+    $strQuery = fncGetListOutputQuery(DEF_REPORT_SLIP, $aryData["strReportKeyCode"], $objDB);
 
     $objMaster = new clsMaster();
     $objMaster->setMasterTableData($strQuery, $objDB);
@@ -108,34 +104,36 @@ else {
 
     // 詳細取得
     $aryQuery[] = "select";
-    $aryQuery[] = "  pod.lngpurchaseorderno";
-    $aryQuery[] = "  , pod.lngpurchaseorderdetailno";
-    $aryQuery[] = "  , pod.lngrevisionno";
-    $aryQuery[] = "  , pod.lngorderno";
-    $aryQuery[] = "  , pod.lngorderdetailno";
-    $aryQuery[] = "  , pod.lngorderrevisionno";
-    $aryQuery[] = "  , pod.lngstocksubjectcode";
-    $aryQuery[] = "  , pod.lngstockitemcode";
-    $aryQuery[] = "  , pod.strstockitemname";
-    $aryQuery[] = "  , pod.lngdeliverymethodcode";
-    $aryQuery[] = "  , pod.strdeliverymethodname";
-    $aryQuery[] = "  , to_char(pod.curproductprice, '9,999,999,990') AS curproductprice";
-    $aryQuery[] = "  , to_char(pod.lngproductquantity, '9,999,999,990') AS lngproductquantity";
-    $aryQuery[] = "  , pod.lngproductunitcode";
-    $aryQuery[] = "  , pod.strproductunitname";
-    $aryQuery[] = "  , to_char(pod.cursubtotalprice, '9,999,999,990') AS cursubtotalprice";
-    $aryQuery[] = "  , to_char(pod.dtmdeliverydate, 'YYYY/MM/DD') AS dtmdeliverydate";
-    $aryQuery[] = "  , pod.strnote";
-    $aryQuery[] = "  , pod.lngsortkey ";
+    $aryQuery[] = "  lngslipno";
+    $aryQuery[] = "  , lngslipdetailno";
+    $aryQuery[] = "  , lngrevisionno";
+    $aryQuery[] = "  , strcustomersalescode";
+    $aryQuery[] = "  , lngsalesclasscode";
+    $aryQuery[] = "  , strsalesclassname";
+    $aryQuery[] = "  , strgoodscode";
+    $aryQuery[] = "  , strproductcode";
+    $aryQuery[] = "  , strrevisecode";
+    $aryQuery[] = "  , strproductname";
+    $aryQuery[] = "  , strproductenglishname";
+    $aryQuery[] = "  , to_char(curproductprice, '9,999,999,990') AS curproductprice";
+    $aryQuery[] = "  , lngquantity";
+    $aryQuery[] = "  , to_char(lngproductquantity, '9,999,999,990') AS lngproductquantity";
+    $aryQuery[] = "  , lngproductunitcode";
+    $aryQuery[] = "  , strproductunitname";
+    $aryQuery[] = "  , to_char(cursubtotalprice, '9,999,999,990') AS cursubtotalprice";
+    $aryQuery[] = "  , strnote";
+    $aryQuery[] = "  , lngreceiveno";
+    $aryQuery[] = "  , lngreceivedetailno";
+    $aryQuery[] = "  , lngreceiverevisionno";
+    $aryQuery[] = "  , lngsortkey ";
     $aryQuery[] = "from";
-    $aryQuery[] = "  t_purchaseorderdetail pod ";
-    $aryQuery[] = "WHERE";
-    $aryQuery[] = "  pod.lngpurchaseorderno = " . $aryData["strReportKeyCode"];
-    $aryQuery[] = "ORDER BY";
-    $aryQuery[] = "  pod.lngSortKey";
+    $aryQuery[] = "  t_slipdetail ";
+    $aryQuery[] = "where";
+    $aryQuery[] = "  lngslipno = " . $aryData["strReportKeyCode"];
+    $aryQuery[] = " ORDER BY";
+    $aryQuery[] = "  lngSortKey";
 
     $strQuery = join("", $aryQuery);
-    
     unset($aryQuery);
 
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
@@ -149,35 +147,57 @@ else {
         $aryKeys[] = pg_field_name($lngResultID, $i);
     }
 
+    $rowNum = $aryParts["lngmaxline"];
+    // テンプレートパス設定
+    if ($aryParts["lngslipkindcode"] == DEF_SLIP_KIND_EXCLUSIVE) {
+        $strTemplateHeaderPath = "list/result/slip_exc_header.html";
+        $strTemplatePath = "list/result/slip_exc.html";
+        $strTemplateFooterPath = "list/result/slip_exc_footer.html";
+    } else if ($aryParts["lngslipkindcode"] == DEF_SLIP_KIND_COMM) {
+        $strTemplateHeaderPath = "list/result/slip_comm_header.html";
+        $strTemplatePath = "list/result/slip_comm.html";
+        $strTemplateFooterPath = "list/result/slip_comm_footer.html";
+    } else if ($aryParts["lngslipkindcode"] == DEF_SLIP_KIND_DEBIT) {
+        $strTemplateHeaderPath = "list/result/slip_debit_header.html";
+        $strTemplatePath = "list/result/slip_debit.html";
+        $strTemplateFooterPath = "list/result/slip_debit_footer.html";
+    }
+
     // 行数だけデータ取得、配列に代入
     for ($i = 0; $i < $lngResultNum; $i++) {
         $aryResult = $objDB->fetchArray($lngResultID, $i);
         for ($j = 3; $j < count($aryKeys); $j++) {
-            $aryDetail[$i][$aryKeys[$j] . (($i + 5) % 5)] = $aryResult[$j];
+            $aryDetail[$i][$aryKeys[$j] . (($i + $rowNum) % $rowNum)] = $aryResult[$j];
         }
     }
     $objDB->freeResult($lngResultID);
 
     // 合計金額処理(最後のページだけに表示)別変数に保存
-    $curTotalPrice = $aryParts["strmonetaryunitsign"] . " " . $aryParts["curtotalprice"];
+    $curTotalPrice = ($aryParts["lngmonetaryunitcode"] == 1 ? "&yen; " : $aryParts["strmonetaryunitsign"] )  . " " . $aryParts["curtotalprice"];
     unset($aryParts["curtotalprice"]);
 
     // ページ処理
     $aryParts["lngNowPage"] = 1;
-    $aryParts["lngAllPage"] = ceil($lngResultNum / 5);
+    $aryParts["lngAllPage"] = ceil($lngResultNum / $rowNum);
     $objDB->close();
+
+    // 顧客電話番号
+    $aryParts["strcustomertel"] = "Tel:" .$aryParts["strcustomertel1"] . " " . $aryParts["strcustomertel2"];
+
+    // 顧客FAX番号
+    $aryParts["strcustomerfax"] = "Fax.:" .$aryParts["strcustomerfax1"] . " " . $aryParts["strcustomerfax2"];
 
     // HTML出力
     $objTemplateHeader = new clsTemplate();
-    $objTemplateHeader->getTemplate("list/result/po_header.tmpl");
+    $objTemplateHeader->getTemplate($strTemplateHeaderPath);
     $strTemplateHeader = $objTemplateHeader->strTemplate;
 
     $objTemplateFooter = new clsTemplate();
-    $objTemplateFooter->getTemplate("list/result/po_footer.tmpl");
+    $objTemplateFooter->getTemplate($strTemplateFooterPath);
     $strTemplateFooter = $objTemplateFooter->strTemplate;
 
     $objTemplate = new clsTemplate();
-    $objTemplate->getTemplate("list/result/po.tmpl");
+    $objTemplate->getTemplate($strTemplatePath);
     $strTemplate = $objTemplate->strTemplate;
 
     // ページ数分テンプレートを繰り返し読み込み
@@ -188,7 +208,7 @@ else {
         // 合計金額を代入(発注書出力特別処理)
         if ($aryParts["lngNowPage"] == $aryParts["lngAllPage"]) {
             $aryParts["curTotalPrice"] = $curTotalPrice;
-            $aryParts["strTotalAmount"] = "Total Amount";
+            $aryParts["strTotalAmount"] = "Total Amount :";
         }
 
         // 置き換え
@@ -196,37 +216,27 @@ else {
 
         // 詳細行を５行表示(発注書出力特別処理)
         $lngRecordCount = 0;
-        for ($j = ($aryParts["lngNowPage"] - 1) * 5; $j < ($aryParts["lngNowPage"] * 5); $j++) {
+        for ($j = ($aryParts["lngNowPage"] - 1) * $rowNum; $j < ($aryParts["lngNowPage"] * $rowNum); $j++) {
             $aryDetail[$j]["record" . $lngRecordCount] = $j + 1;
+            $index = ($j + $rowNum) % $rowNum;
 
             // 単価が存在すれば、それに通貨単位をつける
-            if ($aryDetail[$j]["curproductprice" . (($j + 5) % 5)] > 0) {
-                $aryDetail[$j]["curproductprice" . (($j + 5) % 5)] = $aryParts["strmonetaryunitsign"] . " " . $aryDetail[$j]["curproductprice" . (($j + 5) % 5)];
+            if ($aryDetail[$j]["curproductprice" . ($index)] > 0) {
+                $aryDetail[$j]["curproductprice" . ($index)] = $aryDetail[$j]["curproductprice" . ($index)];
             }
 
             // 小計が存在すれば、それに通貨単位をつける
-            if ($aryDetail[$j]["cursubtotalprice" . (($j + 5) % 5)] > 0) {
-                $aryDetail[$j]["cursubtotalprice" . (($j + 5) % 5)] = $aryParts["strmonetaryunitsign"] . " " . $aryDetail[$j]["cursubtotalprice" . (($j + 5) % 5)];
+            if ($aryDetail[$j]["cursubtotalprice" . ($index)] > 0) {
+                $aryDetail[$j]["cursubtotalprice" . ($index)] = $aryDetail[$j]["cursubtotalprice" . ($index)];
             }
 
             // 製品数量が存在すれば、それに製品単位をつける
-            if ($aryDetail[$j]["lngproductquantity" . (($j + 5) % 5)] > 0) {
-                $aryDetail[$j]["lngproductquantity" . (($j + 5) % 5)] .= "(" . $aryDetail[$j]["strproductunitname" . (($j + 5) % 5)] . ")";
+            if ($aryDetail[$j]["lngproductquantity" . ($index)] > 0) {
+                $aryDetail[$j]["lngproductquantity" . ($index)] .= "(" . $aryDetail[$j]["strproductunitname" . ($index)] . ")";
             }
 
-            // カートン入数が存在すれば、それに製品単位をつける
-            if ($aryDetail[$j]["lngconversionclasscode" . (($j + 5) % 5)] == 2) {
-                $aryDetail[$j]["lngcartonquantity" . (($j + 5) % 5)] = "1(c/t) = " . $aryDetail[$j]["lngcartonquantity" . (($j + 5) % 5)] . "(pcs)";
-            } else {
-                unset($aryDetail[$j]["lngcartonquantity" . (($j + 5) % 5)]);
-            }
-
-            // 金型番号が存在すれば、それに()をつける
-            if ($aryDetail[$j]["strmoldno" . (($j + 5) % 5)] != "") {
-                $aryDetail[$j]["strmoldno" . (($j + 5) % 5)] = "(" . $aryDetail[$j]["strmoldno" . (($j + 5) % 5)] . ")";
-            } else {
-                unset($aryDetail[$j]["strmoldno" . (($j + 5) % 5)]);
-            }
+            // 入数
+            $aryDetail[$j]["lngquantity" . ($index)] = "";
 
             $objTemplate->replace($aryDetail[$j]);
             $lngRecordCount++;

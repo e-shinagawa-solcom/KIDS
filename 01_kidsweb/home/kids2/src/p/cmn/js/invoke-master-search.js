@@ -44,6 +44,18 @@
         }
     });
 
+    // 起票者-表示ユーザーコード イベント登録
+    $('input[name="lngInsertUserCode"]').on({
+        'change': function () {
+            // 表示名を索引
+            selectUserName($(this));
+            // JQuery Validation Pluginで検知させる為イベントキック
+            $(this).trigger('blur');
+            // フォーカスを生産工場名に合わせる
+            $('input[name="strInsertUserName"]').focus();
+        }
+    });
+
     // 開発担当者-表示ユーザーコード イベント登録
     $('input[name="lngDevelopUsercode"]').on({
         'change': function () {

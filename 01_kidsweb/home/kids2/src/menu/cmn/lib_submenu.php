@@ -78,8 +78,8 @@
 		$aryData["lngSubRef_list_0"]	= '/list/index.php?strSessionID=' . $aryData["strSessionID"] . '&strListMode=p';
 		$aryData["lngSubRef_list_1"]	= '/list/index.php?strSessionID=' . $aryData["strSessionID"] . '&strListMode=po';
 		$aryData["lngSubRef_list_2"]	= '/list/index.php?strSessionID=' . $aryData["strSessionID"] . '&strListMode=es';
-		$aryData["lngSubRef_list_3"]	= '/list/index.php?strSessionID=' . $aryData["strSessionID"] . '&strListMode=??';
-		$aryData["lngSubRef_list_4"]	= '/list/index.php?strSessionID=' . $aryData["strSessionID"] . '&strListMode=??';
+		$aryData["lngSubRef_list_3"]	= '/list/index.php?strSessionID=' . $aryData["strSessionID"] . '&strListMode=mr';
+		$aryData["lngSubRef_list_4"]	= '/list/index.php?strSessionID=' . $aryData["strSessionID"] . '&strListMode=slp';
 		$aryData["lngSubRef_list_5"]	= '/list/index.php?strSessionID=' . $aryData["strSessionID"] . '&strListMode=inv';
 
 		// ¶â·¿´ÉÍý
@@ -249,6 +249,11 @@
 		if( !fncCheckAuthority( DEF_FUNCTION_E0, $objAuth ) )
 		{
 			$aryData["lngSubFlag_list_2"] = 0;
+		}
+		// Ç¼ÉÊ½ñ
+		if( !fncCheckAuthority( DEF_FUNCTION_LO5, $objAuth ) )
+		{
+			$aryData["lngSubFlag_list_4"] = 0;
 		}
 		//-------------------------------------------------------------------------
 

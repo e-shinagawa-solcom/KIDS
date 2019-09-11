@@ -72,6 +72,11 @@ if ( fncCheckAuthority( DEF_FUNCTION_E0, $objAuth ) )
 	// ¸«ÀÑ¸¶²Á·×»»Ä¢É¼½ÐÎÏ²ÄÇ½
 	$aryParts["strEstimateURL"] =  "/list/index.php?strSessionID=" . $aryData["strSessionID"] . "&strListMode=es";
 }
+if ( fncCheckAuthority( DEF_FUNCTION_E0, $objAuth ) )
+{
+	// Ç¼ÉÊ½ñÄ¢É¼½ÐÎÏ²ÄÇ½
+	$aryParts["strSlipURL"] =  "/list/index.php?strSessionID=" . $aryData["strSessionID"] . "&strListMode=slp";
+}
 
 
 
@@ -80,7 +85,7 @@ $objDB->close();
 
 // HTML½ÐÎÏ
 $objTemplate = new clsTemplate();
-$objTemplate->getTemplate( "/list/list/select.tmpl" );
+$objTemplate->getTemplate( "/list/list/select.html" );
 $objTemplate->replace( $aryParts );
 $objTemplate->replace( $aryData );
 $objTemplate->complete();
