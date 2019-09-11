@@ -175,16 +175,16 @@ $aryNewResult["strDetailTable"] = implode ("\n", $aryDetailTable );
 if ( $aryResult["lngrevisionno"] >= 0 and $aryResult["lngorderstatuscode"] != DEF_ORDER_APPLICATE and fncCheckAuthority( DEF_FUNCTION_LO2, $objAuth ))
 {
 	// 表示対象が、否認データ、申請取消データの場合はプレビューボタンを表示しない
-	if ( fncCheckApprovalProductOrder( $aryData["lngOrderNo"], $objDB ) )
-	{
-		$aryNewResult["strPreviewAction"] = "../../list/result/frameset.php?strSessionID=" . $aryData["strSessionID"] . "&lngReportClassCode=" . DEF_REPORT_ORDER . "&strReportKeyCode=" . $aryData["lngOrderNo"] . "&bytCopyFlag=TRUE";
+	// if ( fncCheckApprovalProductOrder( $aryData["lngOrderNo"], $objDB ) )
+	// {
+	// 	$aryNewResult["strPreviewAction"] = "../../list/result/frameset.php?strSessionID=" . $aryData["strSessionID"] . "&lngReportClassCode=" . DEF_REPORT_ORDER . "&strReportKeyCode=" . $aryData["lngOrderNo"] . "&bytCopyFlag=TRUE";
 
 		$aryNewResult["listview"] = 'visible';
-	}
-	else
-	{
-		$aryNewResult["listview"] = 'hidden';
-	}
+	// }
+	// else
+	// {
+		// $aryNewResult["listview"] = 'hidden';
+	// }
 }
 else
 {

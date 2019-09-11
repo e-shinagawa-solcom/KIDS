@@ -63,7 +63,7 @@
 
 		// È¯Ãí´ÉÍý
 		$aryData["lngSubRef_po_0"]		= '/po/search/index.php?strSessionID=' . $aryData["strSessionID"];
-		$aryData["lngSubRef_po_1"]		= '/po/search/index.php?strSessionID=' . $aryData["strSessionID"];
+		$aryData["lngSubRef_po_1"]		= '/po/search2/index.php?strSessionID=' . $aryData["strSessionID"];
 
 		// Çä¾å´ÉÍý
 		$aryData["lngSubRef_sc_0"]		= '/sc/regist/index.php?strSessionID=' . $aryData["strSessionID"];

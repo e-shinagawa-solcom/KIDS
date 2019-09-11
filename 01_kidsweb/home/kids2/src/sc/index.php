@@ -53,6 +53,12 @@
 		$aryData["strSearchURL"]   = "search/index.php?strSessionID=" . $aryData["strSessionID"];
 	}
 
+	// 602 売上管理（ 納品書検索）
+	if ( fncCheckAuthority( DEF_FUNCTION_SC2, $objAuth ) )
+	{
+		$aryData["strSearch2URL"]   = "search2/index.php?strSessionID=" . $aryData["strSessionID"];
+	}
+
 	// ヘルプ対応
 	$aryData["lngFunctionCode"] = DEF_FUNCTION_SC0;
 

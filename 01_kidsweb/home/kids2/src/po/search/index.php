@@ -63,11 +63,11 @@ if ( !fncCheckAuthority( DEF_FUNCTION_PO0, $objAuth ) )
     fncOutputError ( 9052, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
 
-// 501 発注管理（発注登録）
-if ( fncCheckAuthority( DEF_FUNCTION_PO1, $objAuth ) )
-{
-	$aryData["strRegistURL"]   = "regist/index.php?strSessionID=" . $aryData["strSessionID"];
-}
+// // 501 発注管理（発注登録）
+// if ( fncCheckAuthority( DEF_FUNCTION_PO1, $objAuth ) )
+// {
+// 	$aryData["strRegistURL"]   = "regist/index.php?strSessionID=" . $aryData["strSessionID"];
+// }
 
 // 502 発注管理（発注検索）
 if ( fncCheckAuthority( DEF_FUNCTION_PO2, $objAuth ) )
@@ -109,6 +109,13 @@ else
 	$aryData["btnDetailVisible"] = "";
 }
 
+// 管理者モード
+if($objAuth->AuthorityGroupCode <= 3){
+	$aryData["displayMode"] = "inline";
+} else {
+	$aryData["displayMode"] = "none";
+}
+
 // 仕入科目
 $aryData["lngStockSubjectCode"]		= fncGetPulldown( "m_stocksubject", "lngstocksubjectcode", "lngstocksubjectcode,	strstocksubjectname", 1, '', $objDB );
 // 仕入部品
@@ -141,8 +148,8 @@ if ( !$aryData["lngStockSubjectCode"] or !$aryData["lngStockItemCode"] )
 	fncOutputError ( 9055, DEF_WARNING, "システム管理者にお問い合わせ下さい。", TRUE, "", $objDB );
 }
 
-$aryData["lngStockItemCodeValue"]	= "<input type=\"hidden\" name=\"lngStockItemCodeValue\" value=\"" . $aryData["lngStockItemCodeValue"] . "\"</option>";
-$aryData["lngStockItemCodeDisp"]	= mb_convert_encoding("<input type=\"hidden\" name=\"lngStockItemCodeDisp\" value=\"" . $aryData["lngStockItemCodeDisp"] . "\"</option>","EUC-JP","auto");
+$aryData["lngStockItemCodeValue"]	= "<input type=\"hidden\" name=\"lngStockItemCodeValue\" value=\"" . $aryData["lngStockItemCodeValue"] . "\"></option>";
+$aryData["lngStockItemCodeDisp"]	= mb_convert_encoding("<input type=\"hidden\" name=\"lngStockItemCodeDisp\" value=\"" . $aryData["lngStockItemCodeDisp"] . "\"></option>","EUC-JP","ASCII,JIS,UTF-8,EUC-JP,SJIS");
 
 // 文字列チェック
 $aryCheck["strSessionID"]          = "null:numenglish(32,32)";

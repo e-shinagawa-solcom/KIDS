@@ -51,11 +51,13 @@
 	$from = UtilSearchForm::extractArrayByFrom($_REQUEST);
 	$to = UtilSearchForm::extractArrayByTo($_REQUEST);
 	$searchValue = $_REQUEST;
+	// $adminMode = $_REQUEST["admin-mode"] ? true : false;
 	
 	$isDisplay=array_keys($isDisplay);
 	$isSearch=array_keys($isSearch);
 	$aryData['ViewColumn']=$isDisplay;
 	$aryData['SearchColumn']=$isSearch;
+	$aryData['Admin'] = $_REQUEST["IsDisplay_btnAdmin"];
 	foreach($from as $key=> $item){
 		$aryData[$key.'From']=$item;
 	}
@@ -173,8 +175,8 @@
 	}
 	
 	// 表示項目  $aryViewColumnに格納
-	$aryViewColumn=$isDisplay;
-	
+	// $aryViewColumn=$isDisplay;
+	$aryViewColumn=fncResortSearchColumn($isDisplay);
 	// 検索項目  $arySearchColumnに格納
 	$arySearchColumn=$isSearch;
 
@@ -316,7 +318,7 @@
 	// テンプレート読み込み
 	$objTemplate = new clsTemplate();
 	$objTemplate->getTemplate( "/po/result/po_search_result.html" );
-
+	
 	// テンプレート生成
 	$objTemplate->replace( $aryHtml );
 	$objTemplate->complete();
