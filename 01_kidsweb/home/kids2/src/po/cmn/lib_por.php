@@ -426,10 +426,10 @@ function fncGetPurchaseOrder($aryPurchaseOrderNo, $objDB){
         $aryQuery[] = "INNER JOIN t_purchaseorderdetail tp";
         $aryQuery[] = "  ON  mp.lngpurchaseorderno = tp.lngpurchaseorderno";
         $aryQuery[] = "  AND mp.lngrevisionno = tp.lngrevisionno";
-        // $aryQuery[] = "WHERE mp.lngpurchaseorderno = " . $aryPurchaseOrderNo[$i]["lngpurchaseorderno"];
-        // $aryQuery[] = "AND   mp.lngrevisionno = " . $aryPurchaseOrderNo[$i]["lngrevisionno"];
-        $aryQuery[] = "WHERE mp.lngpurchaseorderno = 6";
-        $aryQuery[] = "AND   mp.lngrevisionno = 4";
+        $aryQuery[] = "WHERE mp.lngpurchaseorderno = " . $aryPurchaseOrderNo[$i]["lngpurchaseorderno"];
+        $aryQuery[] = "AND   mp.lngrevisionno = " . $aryPurchaseOrderNo[$i]["lngrevisionno"];
+        // $aryQuery[] = "WHERE mp.lngpurchaseorderno = 6";
+        // $aryQuery[] = "AND   mp.lngrevisionno = 4";
         $aryQuery[] = "ORDER BY";
         $aryQuery[] = "   mp.lngpurchaseorderno";
         $aryQuery[] = "  ,mp.lngrevisionno";
@@ -587,10 +587,12 @@ function fncUpdatePurchaseOrder($aryOrder, $aryOrderDetail, $objAuth, $objDB){
                     $aryQuery[] = "  ,strcustomercompanytel";
                     $aryQuery[] = "  ,strcustomercompanyfax";
                     $aryQuery[] = "  ,strproductcode";
+                    $aryQuery[] = "  ,strrevisecode";
                     $aryQuery[] = "  ,strproductname";
                     $aryQuery[] = "  ,strproductenglishname";
                     $aryQuery[] = "  ,dtmexpirationdate";
                     $aryQuery[] = "  ,lngmonetaryunitcode";
+                    $aryQuery[] = "  ,strmonetaryunitname";
                     $aryQuery[] = "  ,strmonetaryunitsign";
                     $aryQuery[] = "  ,lngpayconditioncode";
                     $aryQuery[] = "  ,strpayconditionname";
@@ -617,10 +619,12 @@ function fncUpdatePurchaseOrder($aryOrder, $aryOrderDetail, $objAuth, $objDB){
                     $aryQuery[] = "  ,'" . $customer["strtel1"] . "'";
                     $aryQuery[] = "  ,'" . $customer["strfax1"] . "'";
                     $aryQuery[] = "  ,'" . $aryOrderDetailUpdate[$i]["strproductcode"] . "'";
+                    $aryQuery[] = "  ,'" . sprintf("%02d", $lngrevisionno) . "'";
                     $aryQuery[] = "  ,'" . $aryOrderDetailUpdate[$i]["strproductname"] . "'";
                     $aryQuery[] = "  ,'" . $aryOrderDetailUpdate[$i]["strproductenglishname"] . "'";
                     $aryQuery[] = "  ,'" . $aryOrder["dtmexpirationdate"] . "'";
                     $aryQuery[] = "  ,"  . $aryOrderDetailUpdate[$i]["lngmonetaryunitcode"];
+                    $aryQuery[] = "  ,'" . $aryOrderDetailUpdate[$i]["strmonetaryunitname"] . "'";
                     $aryQuery[] = "  ,'" . $aryOrderDetailUpdate[$i]["strmonetaryunitsign"] . "'";
                     $aryQuery[] = "  ,"  . $payconditioncode;
                     $aryQuery[] = "  ,'" . $paycondition["strpayconditionname"] . "'";
@@ -863,10 +867,10 @@ function fncCreatePurchaseOrderHtml($aryPurchaseOrder){
     }
     
     foreach($aryOrderNo as $orderno){
+        $aryHtml[] = "<p class=\"caption\">発注確定が完了し、以下の発注書が作成されました。</p>";
         for($i = 0; $i < count($aryPurchaseOrder); $i++){
             if($aryPurchaseOrder[$i]["lngpurchaseorderno"] != $orderno){ continue;}
             if($i == 0){
-                $aryHtml[] = "<p class=\"caption\">発注確定が完了し、以下の発注書が作成されました。</p>";
                 $aryHtml[] = "<table class=\"ordercode\">";
                 $aryHtml[] = "  <tr>";
                 $aryHtml[] = "    <td class=\"ordercodetd\">" . sprintf("%s_%02d", $aryPurchaseOrder[$i]["strordercode"], $aryPurchaseOrder[$i]["lngrevisionno"]) . "</td>";

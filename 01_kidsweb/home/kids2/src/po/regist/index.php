@@ -119,18 +119,10 @@
 		$aryResult = fncUpdatePurchaseOrder($aryUpdate, $aryUpdateDetail, $objAuth, $objDB);
 		//echo implode(",", $aryResult);
 		// TODO:あとでコミットに変更する
-		$objDB->transactionRollback();
-		// $objDB->transactionCommit();
-		// echo fncGetReplacedHtml( "po/regist/parts2.tmpl", $aryData ,$objAuth);
+		// $objDB->transactionRollback();
+		$objDB->transactionCommit();
 
 		// 更新後発注書データ取得
-		//$aryPurchaseOrderNo = explode(",", $aryResult);
-		// for($i = 0; $i < count($aryResult); $i++){
-		// 	//$arr = explode("-", $aryPurchaseOrderNo[$i]);
-		// 	$aryKey[$i]["purchaseorderno"] = $aryResult[$i]["lngpurchaseorderno"];
-		// 	$aryKey[$i]["revisionno"] = $aryResult[$i]["lngrevisionno"];
-		// }
-		// $aryPurcharseOrder = fncGetPurchaseOrder($aryKey, $objDB);
 		$aryPurcharseOrder = fncGetPurchaseOrder($aryResult, $objDB);
 		if(!$aryPurcharseOrder){
 			fncOutputError ( 9051, DEF_ERROR, "発注書の取得に失敗しました。", TRUE, "", $objDB );
