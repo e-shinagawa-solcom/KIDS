@@ -65,38 +65,43 @@ $strCopyQuery = "SELECT strReportKeyCode, lngReportCode FROM t_Report WHERE lngR
 
 // 発注書取得クエリ生成
 $aryQuery[] = "SELECT distinct";
-$aryQuery[] = "	o.strOrderCode AS strOrderNo";
-$aryQuery[] = "	,u1.strUserDisplayCode	AS strInputUserDisplayCode";
-$aryQuery[] = "	,u1.strUserDisplayName	AS strInputUserDisplayName";
-$aryQuery[] = "	,c.strCompanyDisplayCode";
-$aryQuery[] = "	,c.strCompanyDisplayName";
-$aryQuery[] = "	,g.strGroupDisplayCode AS strInChargeGroupDisplayCode";
-$aryQuery[] = "	,g.strGroupDisplayName AS strInChargeGroupDisplayName";
-$aryQuery[] = "	,u2.strUserDisplayCode";
-$aryQuery[] = "	,u2.strUserDisplayName";
-$aryQuery[] = "	,o.lngOrderNo	AS strReportKeyCode";
+$aryQuery[] = "  po.strOrderCode AS strOrderNo";
+$aryQuery[] = "  , po.lnginsertusercode";
+$aryQuery[] = "  , po.strinsertusername";
+$aryQuery[] = "  , c.strCompanyDisplayCode";
+$aryQuery[] = "  , c.strCompanyDisplayName";
+$aryQuery[] = "  , g.strgroupdisplaycode";
+$aryQuery[] = "  , g.strgroupdisplayname";
+$aryQuery[] = "  , u2.struserdisplaycode";
+$aryQuery[] = "  , u2.struserdisplayname";
+$aryQuery[] = "  , po.lngpurchaseorderno AS strReportKeyCode ";
 $aryQuery[] = "FROM";
-$aryQuery[] = "	m_Order o";
-$aryQuery[] = "	left join t_orderdetail tod";
-$aryQuery[] = "	on tod.lngorderno = o.lngorderno";
-$aryQuery[] = "	left join ( ";
-$aryQuery[] = " select p1.*  from m_product p1 ";
-$aryQuery[] = " inner join (select max(lngproductno) lngproductno, strproductcode from m_Product group by strProductCode) p2";
-$aryQuery[] = " on p1.lngproductno = p2.lngproductno";
-$aryQuery[] = " ) mp on mp.strproductcode = tod.strproductcode";
-$aryQuery[] = "	,m_User u1";
-$aryQuery[] = "	,m_User u2";
-$aryQuery[] = "	,m_Group g";
-$aryQuery[] = "	,m_Company c";
-
-// 発注関連条件
-// リビジョンナンバーが最大 かつ リバイズコードが最大 かつ リビジョンナンバー最小値が0以上
+$aryQuery[] = "  m_purchaseorder po ";
+$aryQuery[] = "  LEFT JOIN m_user u1 ";
+$aryQuery[] = "    on u1.lngusercode = po.lnginsertusercode ";
+$aryQuery[] = "  LEFT JOIN m_user u2 ";
+$aryQuery[] = "    on u2.lngusercode = po.lngusercode ";
+$aryQuery[] = "  LEFT JOIN m_Company c ";
+$aryQuery[] = "    ON po.lngcustomercode = c.lngCompanyCode ";
+$aryQuery[] = "  LEFT JOIN m_group g ";
+$aryQuery[] = "    ON po.lnggroupcode = g.lnggroupcode ";
 $aryQuery[] = "WHERE";
-$aryQuery[] = "	o.lngRevisionNo = ( ";
-$aryQuery[] = "		SELECT MAX( o1.lngRevisionNo ) FROM m_Order o1 WHERE o1.strOrderCode = o.strOrderCode AND o1.bytInvalidFlag = false )";
-$aryQuery[] = "			AND 0 <= ( ";
-$aryQuery[] = "		SELECT MIN( o3.lngRevisionNo ) FROM m_Order o3 WHERE o3.bytInvalidFlag = false AND o3.strOrderCode = o.strOrderCode )";
-
+$aryQuery[] = "  po.lngRevisionNo = ( ";
+$aryQuery[] = "    SELECT";
+$aryQuery[] = "      MAX(po1.lngRevisionNo) ";
+$aryQuery[] = "    FROM";
+$aryQuery[] = "      m_purchaseorder po1 ";
+$aryQuery[] = "    WHERE";
+$aryQuery[] = "      po1.strOrderCode = po.strOrderCode";
+$aryQuery[] = "  ) ";
+$aryQuery[] = "  AND 0 <= ( ";
+$aryQuery[] = "    SELECT";
+$aryQuery[] = "      MIN(po2.lngRevisionNo) ";
+$aryQuery[] = "    FROM";
+$aryQuery[] = "      m_purchaseorder po2 ";
+$aryQuery[] = "    WHERE";
+$aryQuery[] = "      po2.strOrderCode = po.strOrderCode";
+$aryQuery[] = "  ) ";
 /////////////////////////////////////////////////////////////////
 // 検索条件
 /////////////////////////////////////////////////////////////////
@@ -104,23 +109,15 @@ $aryQuery[] = "		SELECT MIN( o3.lngRevisionNo ) FROM m_Order o3 WHERE o3.bytInva
 if (array_key_exists("dtmInsertDate", $searchColumns) &&
     array_key_exists("dtmInsertDate", $from) &&
     array_key_exists("dtmInsertDate", $to)) {
-    $aryQuery[] = " AND date_trunc('day', o.dtmInsertDate )" .
+    $aryQuery[] = " AND date_trunc('day', po.dtmInsertDate )" .
     " between '" . pg_escape_string($from["dtmInsertDate"]) . "'" .
     " AND " . "'" . pg_escape_string($to["dtmInsertDate"]) . "'";
 }
-// 計上日
-if (array_key_exists("dtmOrderAppDate", $searchColumns) &&
-    array_key_exists("dtmOrderAppDate", $from) &&
-    array_key_exists("dtmOrderAppDate", $to)) {
-    $aryQuery[] = " AND date_trunc('day', o.dtmAppropriationDate )" .
-    " between '" . pg_escape_string($from["dtmOrderAppDate"]) . "'" .
-    " AND " . "'" . pg_escape_string($to["dtmOrderAppDate"]) . "'";
-}
-// 発注ＮＯ.
+// 発注書ＮＯ.
 if (array_key_exists("strOrderCode", $searchColumns) &&
     array_key_exists("strOrderCode", $from) &&
     array_key_exists("strOrderCode", $to)) {
-    $aryQuery[] = " AND o.strOrderCode" .
+    $aryQuery[] = " AND po.strOrderCode" .
     " between '" . pg_escape_string($from["strOrderCode"]) . "'" .
     " AND " . "'" . pg_escape_string($to["strOrderCode"]) . "'";
 }
@@ -128,14 +125,14 @@ if (array_key_exists("strOrderCode", $searchColumns) &&
 if (array_key_exists("strProductCode", $searchColumns) &&
     array_key_exists("strProductCode", $from) &&
     array_key_exists("strProductCode", $to)) {
-    $aryQuery[] = " AND tod.strProductCode" .
+    $aryQuery[] = " AND po.strProductCode" .
     " between '" . pg_escape_string($from["strProductCode"]) . "'" .
     " AND " . "'" . pg_escape_string($to["strProductCode"]) . "'";
 }
 // 入力者
 if (array_key_exists("lngInputUserCode", $searchColumns) &&
     array_key_exists("lngInputUserCode", $searchValue)) {
-    $aryQuery[] = " AND u1.strUserDisplayCode = '" . $searchValue["lngInputUserCode"] . "'";
+    $aryQuery[] = " AND u1.struserdisplaycode = '" . $searchValue["lngInputUserCode"] . "'";
 }
 // 仕入先
 if (array_key_exists("lngCustomerCompanyCode", $searchColumns) &&
@@ -145,18 +142,13 @@ if (array_key_exists("lngCustomerCompanyCode", $searchColumns) &&
 // 部門
 if (array_key_exists("lngInChargeGroupCode", $searchColumns) &&
     array_key_exists("lngInChargeGroupCode", $searchValue)) {
-    $aryQuery[] = " AND mp.lngInchargeGroupCode = (select lngGroupCode from m_group where strGroupDisplayCode = '" . $searchValue["lngInChargeGroupCode"] . "')";
+    $aryQuery[] = " AND g.strgroupdisplaycode = '" . $searchValue["lngInChargeGroupCode"] . "'";
 }
 // 担当者
 if (array_key_exists("lngInChargeUserCode", $searchColumns) &&
     array_key_exists("lngInChargeUserCode", $searchValue)) {
-    $aryQuery[] = " AND mp.lngInchargeUserCode = (select lngUserCode from m_user where strUserDisplayCode = '" . $aryData["lngInChargeUserCode"] . "')";
+    $aryQuery[] = " AND u2.struserdisplaycode = '" . $searchValue["lngInChargeUserCode"] . "'";
 }
-$aryQuery[] = " AND o.lngOrderStatusCode >= " . DEF_ORDER_ORDER;
-$aryQuery[] = " AND o.lngInputUserCode = u1.lngUserCode";
-$aryQuery[] = " AND mp.lngInchargeGroupCode = g.lngGroupCode";
-$aryQuery[] = " AND mp.lngInchargeUserCode  = u2.lngUserCode";
-$aryQuery[] = " AND o.lngCustomerCompanyCode = c.lngCompanyCode ";
 $aryQuery[] = "ORDER BY strOrderNo DESC";
 
 // ナンバーをキーとする連想配列に帳票コードを取得
@@ -181,9 +173,9 @@ for ($i = 0; $i < $lngResultNum; $i++) {
     $aryParts["strResult"] .= "<tr class=\"Segs\">\n";
 
     $aryParts["strResult"] .= "<td>" . $objResult->strorderno . "</td>\n";
-    $aryParts["strResult"] .= "<td>" . $objResult->strinputuserdisplaycode . ":" . $objResult->strinputuserdisplayname . "</td>\n";
+    $aryParts["strResult"] .= "<td>" . $objResult->strinsertusercode . ":" . $objResult->strinsertusername . "</td>\n";
     $aryParts["strResult"] .= "<td>" . $objResult->strcompanydisplaycode . ":" . $objResult->strcompanydisplayname . "</td>\n";
-    $aryParts["strResult"] .= "<td>" . $objResult->strinchargegroupdisplaycode . ":" . $objResult->strinchargegroupdisplayname . "</td>\n";
+    $aryParts["strResult"] .= "<td>" . $objResult->strgroupdisplaycode . ":" . $objResult->strgroupdisplayname . "</td>\n";
     $aryParts["strResult"] .= "<td>" . $objResult->struserdisplaycode . ":" . $objResult->struserdisplayname . "</td>\n";
 
     $aryParts["strResult"] .= "<td align=center>";

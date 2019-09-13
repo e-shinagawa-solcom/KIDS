@@ -37,7 +37,6 @@ if ($_POST) {
     $aryData = $_GET;
 }
 
-
 setcookie("strSessionID", $aryData["strSessionID"], 0, "/");
 
 // セッション確認
@@ -55,6 +54,10 @@ if (fncCheckAuthority(DEF_FUNCTION_LO1, $objAuth)) {
 if (fncCheckAuthority(DEF_FUNCTION_LO2, $objAuth)) {
     // 発注書（P.O）帳票出力可能
     $aryParts["strManagementMenu"] .= "<a href=search/" . $aryListOutputMenu[DEF_REPORT_ORDER]["file"] . ".php?strSessionID=" . $aryData["strSessionID"] . ">" . $aryListOutputMenu[DEF_REPORT_ORDER]["name"] . "</a>\n";
+}
+if (fncCheckAuthority(DEF_FUNCTION_LO5, $objAuth)) {
+    // 納品書帳票出力可能
+    $aryParts["strManagementMenu"] .= "<a href=search/" . $aryListOutputMenu[DEF_REPORT_SLIP]["file"] . ".php?strSessionID=" . $aryData["strSessionID"] . ">" . $aryListOutputMenu[DEF_REPORT_SLIP]["name"] . "</a>\n";
 }
 
 // ヘルプリンク用機能コードをセット
@@ -91,6 +94,18 @@ if (!$aryData["strListMode"]) {
             $aryData["lngAttributeCode"] = "<option value=\"\"></option>\n";
             $aryData["lngAttributeCode"] .= fncGetPulldown("m_Attribute", "lngAttributeCode", "strAttributeName", "", "", $objDB);
             $strTemplatePath = "list/search/estimate/es_search.html";
+            break;
+
+        // 納品書 検索ページ
+        case 'slp':
+            // 売上区分プルダウンメニュー 生成
+            $aryData["lngSalesClassCode"] = "<option value=\"\"></option>\n";
+            $aryData["lngSalesClassCode"] .= fncGetPulldown("m_salesclass", "lngsalesclasscode", "lngsalesclasscode, strsalesclassname", "", '', $objDB);
+
+            // 消費税区分プルダウンメニュー 生成
+            $aryData["lngTaxClassCode"] = "<option value=\"\"></option>\n";
+            $aryData["lngTaxClassCode"] .= fncGetPulldown("m_taxClass", "lngTaxClassCode", "lngTaxClassCode, strtaxclassname", "", '', $objDB);
+            $strTemplatePath = "list/search/slip/slp_search.html";
             break;
 
         default:

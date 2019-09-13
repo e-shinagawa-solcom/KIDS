@@ -288,6 +288,7 @@ define ( "DEF_REPORT_PRODUCT",	1 );	// 商品化企画書
 define ( "DEF_REPORT_ORDER",	2 );	// PurchaseOrder(発注)
 define ( "DEF_REPORT_ESTIMATE",	3 );	// 見積原価計算
 define ( "DEF_REPORT_MOLD",	4 );		// 金型依頼書
+define ( "DEF_REPORT_SLIP",	5 );		// 納品書
 
 // m_Organization.lngOrganizationCode
 define ( "DEF_ORGANIZATION_FOREIGN",	11 ); // 海外
@@ -361,6 +362,8 @@ define ( "DEF_FUNCTION_LO1",	901 );     //  901 帳票出力(商品化企画書)
 define ( "DEF_FUNCTION_LO2",	902 );     //  902 帳票出力(発注書ＰＯ)
 define ( "DEF_FUNCTION_LO3",	903 );     //  903 帳票出力(商品化企画書)コピー解除権限
 define ( "DEF_FUNCTION_LO4",	904 );     //  904 帳票出力(発注書ＰＯ)コピー解除権限
+define ( "DEF_FUNCTION_LO5",	905 );     //  905 帳票出力(納品書)
+define ( "DEF_FUNCTION_LO6",	906 );     //  906 帳票出力(納品書)コピー解除権限
 
 define ( "DEF_FUNCTION_DE0",	1000 );    // 1000 データエクスポート
 define ( "DEF_FUNCTION_DE1",	1001 );    // 1001 データエクスポート(発注管理/L/C 予定表)
@@ -559,6 +562,11 @@ define ( "DEF_MONETARY_RATE_CODE_COMPANY_LOCAL", 2); // 社内
 define ("DEF_STOCK_CLASS_CODE_PARTS",      1); // 材料費
 define ("DEF_STOCK_CLASS_CODE_PRODUCTION", 2); // 製造費用
 define ("DEF_STOCK_CLASS_CODE_TEST",       3); // テスト費用
+
+// 納品伝票種類マスタコード
+define ("DEF_SLIP_KIND_EXCLUSIVE", 1);   // 専用帳票
+define ("DEF_SLIP_KIND_COMM",      2);   // 市販帳票
+define ("DEF_SLIP_KIND_DEBIT",     3);   // DEBIT NOTE
 
 // 仕入科目マスタコード
 define ("DEF_STOCK_SUBJECT_CODE_OVERSEA_MANUFACTURE",       420); // 外注加工費

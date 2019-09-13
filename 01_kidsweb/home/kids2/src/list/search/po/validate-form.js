@@ -151,24 +151,6 @@
                 }
                 
             },
-            // 仕入日
-            From_dtmOrderAppDate: {
-                required: function () {
-                    return $('input[name="IsSearch_dtmOrderAppDate"]').get(0).checked && $('input[name="To_dtmOrderAppDate"]').val() == "";
-                },
-                checkDateFormat: function () {
-                    return $('input[name="IsSearch_dtmOrderAppDate"]').get(0).checked;
-                }
-            },
-            To_dtmOrderAppDate: {
-                required: function () {
-                    return $('input[name="IsSearch_dtmOrderAppDate"]').get(0).checked && $('input[name="From_dtmOrderAppDate"]').val() == "";
-                },
-                checkDateFormat: function () {
-                    return $('input[name="IsSearch_dtmOrderAppDate"]').get(0).checked;
-                }
-                
-            },
             // 入力者            
             lngInputUserCode: {
                 required: function () {
@@ -232,13 +214,6 @@
             },
             To_dtmInsertDate: {
                 required: msgRequired
-            },
-            // 仕入日
-            From_dtmOrderAppDate: {
-                required: msgRequired
-            },
-            To_dtmOrderAppDate: {
-                required: msgRequired                
             },
             // 入力者            
             lngInputUserCode: {

@@ -33,6 +33,12 @@ $aryListOutputMenu = array
         "name" => "見積原価管理",
         "file" => "estimate",
     ),
+
+    DEF_REPORT_SLIP => array
+    (
+        "name" => "受注管理 納品書",
+        "file" => "slip",
+    ),
 );
 
 // -----------------------------------------------------------------
@@ -181,7 +187,7 @@ function fncGetCopyFilePathQuery($lngReportClassCode, $strReportKeyCode, $lngRep
     // 発注帳票出力コピーファイル取得クエリ生成
     elseif ($lngReportClassCode == DEF_REPORT_ORDER) {
         $aryQuery[] = "SELECT r.strReportPathName ";
-        $aryQuery[] = "FROM m_Order o, t_Report r ";
+        $aryQuery[] = "FROM m_purchaseorder po, t_Report r ";
 
         // 対象帳票(製品企画 or 発注)指定
         $aryQuery[] = "WHERE r.lngReportClassCode = " . $lngReportClassCode;
@@ -190,23 +196,31 @@ function fncGetCopyFilePathQuery($lngReportClassCode, $strReportKeyCode, $lngRep
 
         // 帳票コード指定
         $aryQuery[] = " AND r.strReportKeyCode = '" . $strReportKeyCode . "'";
-
-        // A:「発注」状態より大きい状態の発注データ
-        // B:「発注」状態のデータ
-        // A OR B
-        $aryQuery[] = " AND (";
-        // A:「発注」状態より大きい状態の発注データ
-        $aryQuery[] = " o.lngOrderStatusCode > " . DEF_ORDER_ORDER;
-        $aryQuery[] = " OR";
-        // B:「発注」状態のデータ
-        $aryQuery[] = " o.lngOrderStatusCode = " . DEF_ORDER_ORDER;
-        $aryQuery[] = ")";
         // リビジョンにマイナスの無い
         $aryQuery[] = " AND 0 <= ";
         $aryQuery[] = "( ";
-        $aryQuery[] = "  SELECT MIN( o3.lngRevisionNo ) FROM m_Order o3 WHERE o3.bytInvalidFlag = false AND o3.strOrderCode = o.strOrderCode ";
+        $aryQuery[] = "  SELECT MIN( po1.lngRevisionNo ) FROM m_purchaseorder po1 WHERE po1.strOrderCode = po.strOrderCode ";
         $aryQuery[] = ")";
-        $aryQuery[] = " AND  r.strReportKeyCode = trim(to_char(o.lngOrderNo, '9999999'))";
+        $aryQuery[] = " AND  r.strReportKeyCode = trim(to_char(po.lngpurchaseorderno, '9999999'))";
+    }    
+    // 納品書帳票出力コピーファイル取得クエリ生成
+    elseif ($lngReportClassCode == DEF_REPORT_SLIP) {
+        $aryQuery[] = "SELECT r.strReportPathName ";
+        $aryQuery[] = "FROM m_slip s, t_Report r ";
+
+        // 対象帳票(製品企画 or 発注)指定
+        $aryQuery[] = "WHERE r.lngReportClassCode = " . $lngReportClassCode;
+
+        $aryQuery[] = $strReportCodeConditions;
+
+        // 帳票コード指定
+        $aryQuery[] = " AND r.strReportKeyCode = '" . $strReportKeyCode . "'";
+        // リビジョンにマイナスの無い
+        $aryQuery[] = " AND 0 <= ";
+        $aryQuery[] = "( ";
+        $aryQuery[] = "  SELECT MIN( s1.lngRevisionNo ) FROM m_slip s1 WHERE s1.bytInvalidFlag = false AND s1.strslipcode = s.strslipcode ";
+        $aryQuery[] = ")";
+        $aryQuery[] = " AND  r.strReportKeyCode = trim(to_char(s.lngslipno, '9999999'))";
     }
 
     // 見積原価帳票出力コピーファイル取得クエリ生成
@@ -404,105 +418,123 @@ function fncGetListOutputQuery($lngClassCode, $lngKeyCode, $objDB)
     /////////////////////////////////////////////////////////////////////////
     // 発注書
     /////////////////////////////////////////////////////////////////////////
-    // 登録日            dtmInsertDate
-    // 計上日            dtmOrderAppDate
-    // 発注No            strOrderCode
-    // 入力者            strInputUserDisplayName
-    // 仕入先            strCustomerDisplayName
-    // 仕入先(住所)        strAddress*
-    // 仕入先(TEL)        strTel1
-    // 仕入先(FAX)        strFax1
-    // 仕入先(組織)        lngOrganizationCode
-    // 部門                strInChargeGroupDisplayName
-    // 担当者            strInChargeUserDisplayName
-    // 納品場所            strDeliveryDisplayName
-    // 通貨                strMonetaryUnitSign
-    // レートタイプ        strMonetaryRateName
-    // 換算レート        curConversionRate
-    // 状態                strOrderStatusName
-    // 支払条件            strPayConditionName
-    // 発注有効期限日    dtmExpirationDate
-    // 備考                o.strNote
-    // 合計金額            curTotalPrice
-    // 最終承認者名        strInChargeUserName
     elseif ($lngClassCode == DEF_REPORT_ORDER) {
-        $aryQuery[] = "SELECT distinct on (o.lngOrderNo) o.lngOrderNo, o.lngRevisionNo";
-
-        // 登録日
-        $aryQuery[] = ", To_Char( o.dtmInsertDate, 'YYYY/MM/DD' ) as dtmInsertDate";
-        // 計上日
-        $aryQuery[] = ", To_Char( o.dtmAppropriationDate, 'YYYY/MM/DD' ) as dtmOrderAppDate";
-        // 発注No
-        $aryQuery[] = ", o.strOrderCode as strOrderCode";
-        // 仕入先
-        $aryQuery[] = ", cust_c.strCompanyDisplayCode as strCustomerDisplayCode";
-        $aryQuery[] = ", CASE";
-        $aryQuery[] = "    WHEN cust_c.bytOrganizationFront = TRUE AND cust_c.lngOrganizationCode < 10";
-        $aryQuery[] = "      THEN org.strOrganizationName || cust_c.strCompanyName";
-        $aryQuery[] = "    WHEN cust_c.bytOrganizationFront = FALSE AND cust_c.lngOrganizationCode < 10";
-        $aryQuery[] = "      THEN cust_c.strCompanyName || org.strOrganizationName";
-        $aryQuery[] = "    ELSE cust_c.strCompanyName";
-        $aryQuery[] = "  END AS strCustomerDisplayName";
-        $aryQuery[] = ", cust_c.strAddress1 as strCustomerAddress1";
-        $aryQuery[] = ", cust_c.strAddress2 as strCustomerAddress2";
-        $aryQuery[] = ", cust_c.strAddress3 as strCustomerAddress3";
-        $aryQuery[] = ", cust_c.strAddress4 as strCustomerAddress4";
-        $aryQuery[] = ", cust_c.strTel1";
-        $aryQuery[] = ", cust_c.strFax1";
-        $aryQuery[] = ", cust_c.lngOrganizationCode";
-        // 部門
-        $aryQuery[] = ", inchg_g.strGroupDisplayCode as strInChargeGroupDisplayCode";
-        $aryQuery[] = ", inchg_g.strGroupDisplayName as strInChargeGroupDisplayName";
-        // 担当者
-        $aryQuery[] = ", inchg_u.strUserDisplayCode as strInChargeUserDisplayCode";
-        // 担当者→Group名称使用
-        $aryQuery[] = ", inchg_g.strGroupDisplayName as strInChargeUserDisplayName";
-        // 納品場所
-        $aryQuery[] = ", delv_c.strCompanyDisplayCode as strDeliveryDisplayCode";
-        $aryQuery[] = ", delv_c.strCompanyDisplayName as strDeliveryDisplayName";
-        // 通貨
-        $aryQuery[] = ", mu.strMonetaryUnitName";
-        $aryQuery[] = ", mu.strMonetaryUnitSign";
-        // レートタイプ
-        $aryQuery[] = ", mr.strMonetaryRateName";
-        // 換算レート
-        $aryQuery[] = ", o.curConversionRate";
-        // 状態
-        $aryQuery[] = ", os.strOrderStatusName";
-        // 支払条件
-        $aryQuery[] = ", pc.strPayConditionName";
-        // 発注有効期限日
-        $aryQuery[] = ", To_Char( o.dtmExpirationDate, 'YYYY/MM/DD' ) as dtmExpirationDate";
-        $aryQuery[] = " FROM m_Order o";
-        // 発注-会社
-        $aryQuery[] = " LEFT JOIN m_Company cust_c ON o.lngCustomerCompanyCode = cust_c.lngCompanyCode";
-        // 発注-会社
-        $aryQuery[] = " LEFT JOIN m_Company delv_c ON o.lngDeliveryPlaceCode = delv_c.lngCompanyCode";
-        $aryQuery[] = " LEFT JOIN m_OrderStatus os USING (lngOrderStatusCode)";
-        // 発注-支払条件
-        $aryQuery[] = " LEFT JOIN m_PayCondition pc ON o.lngPayConditionCode = pc.lngPayConditionCode";
-        // 発注-通貨レート
-        $aryQuery[] = " LEFT JOIN m_MonetaryUnit mu ON o.lngMonetaryUnitCode = mu.lngMonetaryUnitCode";
-        // 発注-通貨レート種類
-        $aryQuery[] = " LEFT JOIN m_MonetaryRateClass mr ON o.lngMonetaryRateCode = mr.lngMonetaryRateCode";
-        // 発注-発注詳細
-        $aryQuery[] = " LEFT JOIN t_OrderDetail od ON o.lngOrderNo = od.lngOrderNo";
-        //発注-製品
-        $aryQuery[] = " LEFT JOIN ( ";
-        $aryQuery[] = " select p1.*  from m_product p1 ";
-        $aryQuery[] = " inner join (select max(lngproductno) lngproductno, strproductcode from m_Product group by strProductCode) p2";
-        $aryQuery[] = " on p1.lngproductno = p2.lngproductno";
-        $aryQuery[] = " ) p ON od.strProductcode = p.strProductcode";
-        // グループ-発注
-        $aryQuery[] = " LEFT JOIN m_Group inchg_g ON p.lnginchargegroupcode = inchg_g.lngGroupCode";
-        // ユーザー-発注
-        $aryQuery[] = " LEFT JOIN m_User inchg_u ON p.lnginchargeusercode = inchg_u.lngUserCode";
-        // 組織
-        $aryQuery[] = " LEFT JOIN m_Organization org ON cust_c.lngOrganizationCode = org.lngOrganizationCode";
-
-        $aryQuery[] = " WHERE o.lngOrderNo = " . $lngKeyCode;
-        // A:「発注」状態より大きい状態の発注データ
-        $aryQuery[] = " AND o.lngOrderStatusCode >= " . DEF_ORDER_ORDER;
+        $aryQuery[] = "select";
+        $aryQuery[] = "  po.lngpurchaseorderno";
+        $aryQuery[] = "  , po.lngrevisionno";
+        $aryQuery[] = "  , po.strordercode";
+        $aryQuery[] = "  , po.lngcustomercode";
+        $aryQuery[] = "  , po.strcustomername";
+        $aryQuery[] = "  , po.strcustomercompanyaddreess";
+        $aryQuery[] = "  , po.strcustomercompanytel";
+        $aryQuery[] = "  , po.strcustomercompanyfax";
+        $aryQuery[] = "  , po.strproductcode";
+        $aryQuery[] = "  , po.strrevisecode";
+        $aryQuery[] = "  , po.strproductname";
+        $aryQuery[] = "  , po.strproductenglishname";
+        $aryQuery[] = "  , po.dtmexpirationdate";
+        $aryQuery[] = "  , po.lngmonetaryunitcode";
+        $aryQuery[] = "  , po.strmonetaryunitname";
+        $aryQuery[] = "  , po.strmonetaryunitsign";
+        $aryQuery[] = "  , po.lngmonetaryratecode";
+        $aryQuery[] = "  , po.strmonetaryratename";
+        $aryQuery[] = "  , po.lngpayconditioncode";
+        $aryQuery[] = "  , po.strpayconditionname";
+        $aryQuery[] = "  , po.lnggroupcode";
+        $aryQuery[] = "  , po.strgroupname";
+        $aryQuery[] = "  , po.txtsignaturefilename";
+        $aryQuery[] = "  , po.lngusercode";
+        $aryQuery[] = "  , po.strusername";
+        $aryQuery[] = "  , po.lngdeliveryplacecode";
+        $aryQuery[] = "  , po.strdeliveryplacename";
+        $aryQuery[] = "  , po.curtotalprice";
+        $aryQuery[] = "  , po.dtminsertdate";
+        $aryQuery[] = "  , po.lnginsertusercode";
+        $aryQuery[] = "  , po.strinsertusername";
+        $aryQuery[] = "  , po.strnote";
+        $aryQuery[] = "  , po.lngprintcount ";
+        $aryQuery[] = "from";
+        $aryQuery[] = "  m_purchaseorder po ";
+        $aryQuery[] = "WHERE po.lngpurchaseorderno = " . $lngKeyCode;
+    } else if ($lngClassCode == DEF_REPORT_SLIP) {
+        $aryQuery[] = "select";
+        $aryQuery[] = "  s.lngslipno";
+        $aryQuery[] = "  , s.lngrevisionno";
+        $aryQuery[] = "  , s.strslipcode";
+        $aryQuery[] = "  , s.lngsalesno";
+        $aryQuery[] = "  , s.strcustomercode";
+        $aryQuery[] = "  , s.strcustomername";
+        $aryQuery[] = "  , s.strcustomerusername";
+        $aryQuery[] = "  , s.dtmdeliverydate";
+        $aryQuery[] = "  , s.lngdeliveryplacecode";
+        $aryQuery[] = "  , s.strdeliveryplacename";
+        $aryQuery[] = "  , s.strdeliveryplaceusername";
+        $aryQuery[] = "  , s.lngpaymentmethodcode";
+        $aryQuery[] = "  , pm.strpaymentmethodname";
+        $aryQuery[] = "  , to_char(s.dtmpaymentlimit, 'DD ,Mon YYYY') as dtmpaymentlimit";
+        $aryQuery[] = "  , s.lngtaxclasscode";
+        $aryQuery[] = "  , s.strtaxclassname";
+        $aryQuery[] = "  , s.curtax";
+        $aryQuery[] = "  , s.strusercode";
+        $aryQuery[] = "  , s.strusername";
+        $aryQuery[] = "  , to_char(s.curtotalprice, '9,999,999,990') AS curtotalprice";
+        $aryQuery[] = "  , s.lngmonetaryunitcode";
+        $aryQuery[] = "  , s.strmonetaryunitsign";
+        $aryQuery[] = "  , s.dtminsertdate";
+        $aryQuery[] = "  , s.strinsertusercode";
+        $aryQuery[] = "  , s.strinsertusername";
+        $aryQuery[] = "  , s.strnote";
+        $aryQuery[] = "  , s.lngprintcount";
+        $aryQuery[] = "  , s.bytinvalidflag";
+        $aryQuery[] = "  , c.straddress1 as strcustomeraddress1";
+        $aryQuery[] = "  , c.straddress2 as strcustomeraddress2";
+        $aryQuery[] = "  , c.straddress3 as strcustomeraddress3";
+        $aryQuery[] = "  , c.straddress4 as strcustomeraddress4";
+        $aryQuery[] = "  , c.strtel1 as strcustomertel1";
+        $aryQuery[] = "  , c.strtel2 as strcustomertel2";
+        $aryQuery[] = "  , c.strfax1 as strcustomerfax1";
+        $aryQuery[] = "  , c.strfax2 as strcustomerfax2";
+        $aryQuery[] = "  , sc.straddress1 as strstockcomanyaddress1";
+        $aryQuery[] = "  , sc.straddress2 as strstockcomanyaddress2";
+        $aryQuery[] = "  , sc.straddress3 as strstockcomanyaddress3";
+        $aryQuery[] = "  , sc.straddress4 as strstockcomanyaddress4";
+        $aryQuery[] = "  , sc.strtel1 as strstockcomanytel1";
+        $aryQuery[] = "  , sc.strtel2 as strstockcomanytel2";
+        $aryQuery[] = "  , sc.strfax1 as strstockcomanyfax1";
+        $aryQuery[] = "  , sc.strfax2 as strstockcomanyfax2";
+        $aryQuery[] = "  , sc.lngslipkindcode";
+        $aryQuery[] = "  , sc.lngmaxline";
+        $aryQuery[] = " from";
+        $aryQuery[] = "  m_slip s ";
+        $aryQuery[] = "  left join ( ";
+        $aryQuery[] = "    select";
+        $aryQuery[] = "      c1.straddress1";
+        $aryQuery[] = "      , c1.straddress2";
+        $aryQuery[] = "      , c1.straddress3";
+        $aryQuery[] = "      , c1.straddress4";
+        $aryQuery[] = "      , c1.strtel1";
+        $aryQuery[] = "      , c1.strtel2";
+        $aryQuery[] = "      , c1.strfax1";
+        $aryQuery[] = "      , c1.strfax2";
+        $aryQuery[] = "      , sc1.strstockcompanycode";
+        $aryQuery[] = "      , sk.lngslipkindcode";
+        $aryQuery[] = "      , sk.strslipkindname";
+        $aryQuery[] = "      , sk.lngmaxline ";
+        $aryQuery[] = "    from";
+        $aryQuery[] = "      m_stockcompanycode sc1 ";
+        $aryQuery[] = "      inner join m_company c1 ";
+        $aryQuery[] = "        on sc1.lngcompanyno = c1.lngcompanycode ";
+        $aryQuery[] = "      inner join m_slipkindrelation skr ";
+        $aryQuery[] = "        on sc1.lngcompanyno = skr.lngcompanycode ";
+        $aryQuery[] = "      inner join m_slipkind sk ";
+        $aryQuery[] = "        on sk.lngslipkindcode = skr.lngslipkindcode";
+        $aryQuery[] = "  ) sc ";
+        $aryQuery[] = "    on s.strcustomercode = sc.strstockcompanycode ";
+        $aryQuery[] = "  left join m_company c ";
+        $aryQuery[] = "    on to_number(s.strcustomercode, '999999') = c.lngcompanycode ";
+        $aryQuery[] = "  left join m_paymentmethod pm ";
+        $aryQuery[] = "    on s.lngpaymentmethodcode = pm.lngpaymentmethodcode ";
+        $aryQuery[] = "WHERE s.lngslipno = " . $lngKeyCode;
     }
 
     return join("", $aryQuery);

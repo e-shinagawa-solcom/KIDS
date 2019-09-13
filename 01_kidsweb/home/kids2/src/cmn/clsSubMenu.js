@@ -32,8 +32,8 @@
 
 			with( this )
 			{
-				g_aryMenuPos['p']		= new Array();
 				g_aryMenuPos['es']		= new Array();
+				g_aryMenuPos['p']		= new Array();
 				g_aryMenuPos['so']		= new Array();
 				g_aryMenuPos['po']		= new Array();
 				g_aryMenuPos['sc']		= new Array();
@@ -45,11 +45,11 @@
 				g_aryMenuPos['mr']		= new Array();
 				g_aryMenuPos['lc']		= new Array();
 
-				g_aryMenuPos['p'][0]	= 24;
-				g_aryMenuPos['p'][1]	= 354;
-
-				g_aryMenuPos['es'][0]	= 184;
+				g_aryMenuPos['es'][0]	= 24;
 				g_aryMenuPos['es'][1]	= 354;
+
+				g_aryMenuPos['p'][0]	= 184;
+				g_aryMenuPos['p'][1]	= 354;
 
 				g_aryMenuPos['so'][0]	= 344;
 				g_aryMenuPos['so'][1]	= 354;
@@ -96,8 +96,8 @@
 
 			with( this )
 			{
-				g_arySubMenu['p']		= new Array();
 				g_arySubMenu['es']		= new Array();
+				g_arySubMenu['p']		= new Array();
 				g_arySubMenu['so']		= new Array();
 				g_arySubMenu['po']		= new Array();
 				g_arySubMenu['sc']		= new Array();
