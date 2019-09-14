@@ -1,5 +1,5 @@
 //
-// revision.js
+// revision2.js
 //
 $(window).on('load', function(){
     var records = $('tbody tr');

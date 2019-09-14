@@ -107,7 +107,7 @@
 
 	// 権限確認
 	// 510 発注管理（発注書検索）
-	if ( !fncCheckAuthority( DEF_FUNCRION_PO10, $objAuth ) )
+	if ( !fncCheckAuthority( DEF_FUNCTION_PO10, $objAuth ) )
 	{
 		fncOutputError ( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 	}
@@ -142,12 +142,12 @@
 	fncPutStringCheckError( $aryCheckResult, $objDB );
 
 	// 511 発注管理（発注書検索　管理モード）
-	if ( fncCheckAuthority( DEF_FUNCRION_PO11, $objAuth ) and isset( $aryData["Admin"]) )
+	if ( fncCheckAuthority( DEF_FUNCTION_PO11, $objAuth ) and isset( $aryData["Admin"]) )
 	{
 		$aryUserAuthority["Admin"] = 1;		// 511 管理モードでの検索
 	}
 	// 512 発注管理（発注書修正）
-	if ( fncCheckAuthority( DEF_FUNCRION_PO12, $objAuth ) )
+	if ( fncCheckAuthority( DEF_FUNCTION_PO12, $objAuth ) )
 	{
 		$aryUserAuthority["Edit"] = 1;		// 512 修正
 	}
@@ -243,6 +243,7 @@
 	}
 
 	// テーブル構成で検索結果を取得、ＨＴＭＬ形式で出力する
+	// $aryHtml["strHtml"] = fncSetPurchaseTable ( $aryResult, $arySearchColumn, $aryViewColumn, $aryData, $aryUserAuthority, $aryTytle, $objDB, $objCache, $aryTableViewName );
 	$aryHtml["strHtml"] = fncSetPurchaseOrderTable ( $aryResult, $aryViewColumn, $aryData, $aryUserAuthority, $aryTytle, $objDB, $objCache, $aryTableViewName );
 
 	// POSTされたデータをHiddenにて設定する
