@@ -73,11 +73,6 @@ function fncCheckOrderDetailProductCode ( $aryOrderDetail, $objDB )
 	return 0;
 }
 
-
-
-
-
-
 /**
 * 発注登録時に製品価格マスタ、製品テーブルの情報確認、登録関数
 *
@@ -257,8 +252,6 @@ function fncCheckSetProduct ( $aryOrderDetail, $lngMonetaryUnitCode, $objDB )
 	return TRUE;
 }
 
-
-
 //2007.07.23 matsuki update start
 function fncPayConditionCodeMatch($aryData , $aryHeadColumnNames , $aryPoDitail , $objDB )
 {
@@ -270,10 +263,10 @@ function fncPayConditionCodeMatch($aryData , $aryHeadColumnNames , $aryPoDitail 
 	$flgForeignTable = false;//該当テーブルに存在するかどうか
 		
 	
-			//関数内での支払条件を判断
-			$arystockitemcode = array("1", "2", "3" ,"7","9","11");
-			//$bytcompanyforeignflag	= fncGetMasterValue( "m_company", "strcompanydisplaycode", "bytcompanyforeignflag", $aryData["lngCustomerCode"] , '', $objDB);
-			$strCountryCode = fncGetMasterValue( "m_company", "strcompanydisplaycode", "lngcountrycode", $aryData["lngCustomerCode"] . ":str", '', $objDB);
+	//関数内での支払条件を判断
+	$arystockitemcode = array("1", "2", "3" ,"7","9","11");
+	//$bytcompanyforeignflag	= fncGetMasterValue( "m_company", "strcompanydisplaycode", "bytcompanyforeignflag", $aryData["lngCustomerCode"] , '', $objDB);
+	$strCountryCode = fncGetMasterValue( "m_company", "strcompanydisplaycode", "lngcountrycode", $aryData["lngCustomerCode"] . ":str", '', $objDB);
 				
 				
 	//2008.02.21 matsuki update start
@@ -369,7 +362,7 @@ function fncPayConditionCodeMatch($aryData , $aryHeadColumnNames , $aryPoDitail 
 	else //海外取引先でない場合は上記の処理を行わない
 		$frmPayConditionTable = $aryData["strPayConditionName"];
 			
-//2007.12.14 matsuki update end
+	//2007.12.14 matsuki update end
 
 	$aryData["strPayConditionTable"]='<tr> 
 										<td id="PayCondition" class="SegColumn">'.$aryHeadColumnNames["CNlngPayConditionCode"].'</td>

@@ -78,365 +78,113 @@ if ( !fncCheckAuthority( DEF_FUNCTION_PO6, $objAuth ) )
 	fncOutputError ( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
 
-
-
-// //-------------------------------------------------------------------------
-// // ■「製品」にログインユーザーが属しているかチェック
-// //-------------------------------------------------------------------------
-// $strFncFlag = "PO";
-// $blnCheck = fncCheckInChargeProduct( $aryData["lngOrderNo"], $lngInputUserCode, $strFncFlag, $objDB );
-
-// // ユーザーが対象製品に属していない場合
-// if( !$blnCheck )
-// {
-// 	fncOutputError( 9060, DEF_WARNING, "", TRUE, "", $objDB );
-// }
-
-
-
-// 削除対象の発注NOの発注情報取得
-$strQuery = fncGetPurchaseHeadNoToInfoSQL ( $aryData["lngOrderNo"] );
-
-list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
-if ( $lngResultNum == 1 )
-{
-	$aryOrderResult = $objDB->fetchArray( $lngResultID, 0 );
-}
-else
-{
-	fncOutputError( 503, DEF_ERROR, "データが異常です", TRUE, "../po/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
-}
-$objDB->freeResult( $lngResultID );
-
-// 指定発注番号の発注明細データ取得用SQL文の作成
-$strQuery = fncGetPurchaseDetailNoToInfoSQL ( $aryData["lngOrderNo"] );
-
-// 明細データの取得
-list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
-
-if ( $lngResultNum )
-{
-	$aryDetailResult = $objDB->fetchArray( $lngResultID, 0 );
-}
-
-$objDB->freeResult( $lngResultID );
+$aryOrderNo = explode(",", $aryData["lngOrderNo"]);
 
 if($_POST){
-	// トランザクション開始
-	$objDB->transactionBegin();
+	for($i = 0; $i < count($aryOrderNo); $i++){
+		$lngorderno = intval(explode("_", $aryOrderNo[$i])[0]);
+		$lngrevisionno = intval(explode("_", $aryOrderNo[$i])[1]);
+	
+		// 確定取消対象となった発注明細に基づく発注書明細を取得
+		$aryPurchaseOrderDetail = fncGetDeletePurchaseOrderDetail($lngorderno, $lngrevisionno, $objDB);
+	
+		$objDB->transactionBegin();
+		// 確定取り消しとなった発注明細に基づく発注マスタの発注ステータスを「仮発注」へ戻す
+		if(!fncCancelOrder($lngorderno, $lngrevisionno, $objDB)){ return false; }
+	
+		// 確定取り消しとなった発注明細を取得
+		$aryOrderDetail = fncGetDeleteOrderDetail($lngorderno, $lngrevisionno, $objDB);
+	
+		// 取得した発注書番号、リビジョン番号に該当し、かつ確定取消となった発注明細に該当しない発注書明細を
+		// 表示用ソートキーの昇順に取得した結果を基に、以下の仕様で新規の発注書明細を新規に登録する
+		$aryInsertPurchaseOrderDetail = [];
+		$aryDetailNo = array_column($aryOrderDetail, "lngorderdetailno");
+		for($j = 0; $j < count($aryPurchaseOrderDetail); $j++){
+			if(!in_array($aryOrderDetail[$j]["lngorderdetailno"], $aryDetailNo, true)){
+				$aryInsertPurchaseOrderDetail[$j]["lngpurchaseorderno"] = $aryPurchaseOrderDetail[$j]["lngpurchaseorderno"];
+				$aryInsertPurchaseOrderDetail[$j]["lngpurchaseorderdetailno"] = $aryPurchaseOrderDetail[$j]["lngpurchaseorderdetailno"];
+				$aryInsertPurchaseOrderDetail[$j]["lngrevisionno"] = intval($aryPurchaseOrderDetail[$j]["lngrevisionno"]) + 1;
+				$aryInsertPurchaseOrderDetail[$j]["lngorderno"] = $aryPurchaseOrderDetail[$j]["lngorderno"];
+				$aryInsertPurchaseOrderDetail[$j]["lngorderdetailno"] = $aryPurchaseOrderDetail[$j]["lngorderdetailno"];
+				$aryInsertPurchaseOrderDetail[$j]["lngorderrevisionno"] = $aryPurchaseOrderDetail[$j]["lngorderrevisionno"];
+				$aryInsertPurchaseOrderDetail[$j]["lngstocksubjectcode"] = $aryPurchaseOrderDetail[$j]["lngstocksubjectcode"];
+				$aryInsertPurchaseOrderDetail[$j]["lngstockitemcode"] = $aryPurchaseOrderDetail[$j]["lngstockitemcode"];
+				$aryInsertPurchaseOrderDetail[$j]["strstockitemname"] = $aryPurchaseOrderDetail[$j]["strstockitemname"];
+				$aryInsertPurchaseOrderDetail[$j]["lngdeliverymethodcode"] = $aryPurchaseOrderDetail[$j]["lngdeliverymethodcode"];
+				$aryInsertPurchaseOrderDetail[$j]["strdeliverymethodname"] = $aryPurchaseOrderDetail[$j]["strdeliverymethodname"];
+				$aryInsertPurchaseOrderDetail[$j]["curproductprice"] = $aryPurchaseOrderDetail[$j]["curproductprice"];
+				$aryInsertPurchaseOrderDetail[$j]["lngproductquantity"] = $aryPurchaseOrderDetail[$j]["lngproductquantity"];
+				$aryInsertPurchaseOrderDetail[$j]["lngproductunitcode"] = $aryPurchaseOrderDetail[$j]["lngproductunitcode"];
+				$aryInsertPurchaseOrderDetail[$j]["strproductunitname"] = $aryPurchaseOrderDetail[$j]["strproductunitname"];
+				$aryInsertPurchaseOrderDetail[$j]["cursubtotalprice"] = $aryPurchaseOrderDetail[$j]["cursubtotalprice"];
+				$aryInsertPurchaseOrderDetail[$j]["dtmdeliverydate"] = $aryPurchaseOrderDetail[$j]["dtmdeliverydate"];
+				$aryInsertPurchaseOrderDetail[$j]["strnote"] = $aryPurchaseOrderDetail[$j]["strnote"];
+				$aryInsertPurchaseOrderDetail[$j]["lngsortkey"] = $j + 1;
+			}
+		}
+	
+		if($aryInsertPurchaseOrderDetail){
+			// 発注書明細を新規に登録する
+			foreach($aryInsertPurchaseOrderDetail as $row){
+				if(!fncInsertPurchaseOrderDetail($row, $objDB)) { return false; }
+			}
+	
+			// 発注書マスタを更新する
+			$aryOrder = fncGetPurchaseOrder2($aryPurchaseOrderDetail[0]["lngpurchaseorderno"], $aryPurchaseOrderDetail[0]["lngrevisionno"], $objDB);
+			$aryOrder["lngrevisionno"] = intval($aryPurchaseOrderDetail[0]["lngrevisionno"]) + 1;
+			$aryOrder["lngprintcount"] = 0;
+			if(!fncInsertPurchaseOrder($aryOrder, $objDB)) { return false; }
+		}
+	
+		// $objDB->transactionRollback();
+		$objDB->transactionCommit();
 
-	// 確定取消対象となった発注明細に紐づく発注書マスタの発注書番号、リビジョン番号を取得する。
-	$strSql = fncGetPurchaseOrderSQL(explode("_", $aryOrderResult["strordercode"])[0], $aryOrderResult["lngrevisionno"]);
-
-	list ( $lngResultID, $lngResultNum ) = fncQuery( $strSql, $objDB );
-	if ( $lngResultNum == 1 )
-	{
-		$aryPurchaseOrder = $objDB->fetchArray( $lngResultID, 0 );
+		if($aryInsertPurchaseOrderDetail){
+			$aryHtml[] = "<p class=\"caption\">発注確定取消に伴い、以下の発注書を修正しました。</p>";
+			$aryHtml[] = fncCancelPurchaseOrderHtml($aryOrder, $aryInsertPurchaseOrderDetail);
+		}
 	}
-    $objDB->freeResult( $lngResultID );
 
-
-	// 発注マスタを「仮受注」に変更する
-	$strSql = fncGetCancelOrderSQL($aryOrderResult["lngorderno"], $aryOrderResult["lngrevisionno"]);
-
-    if ( !$lngResultID = $objDB->execute( $strSql ) )
-    {
-        fncOutputError ( 9051, DEF_ERROR, "発注マスタへの更新処理に失敗しました。", TRUE, "", $objDB );
-        return FALSE;
-    }
-    $objDB->freeResult( $lngResultID );
-
-	// 発注書明細を取得する
-	$strSql = fncGetPurchaseOrderDetailSQL($aryPurchaseOrder["lngpurchaseorderno"], $aryPurchaseOrder["lngrevisionno"]);
-
-	list ( $lngResultID, $lngResultNum ) = fncQuery( $strSql, $objDB );
-	if ( $lngResultNum == 1 )
-	{
-		$aryPurchaseOrderDetail = $objDB->fetchArray( $lngResultID, 0 );
+	if($aryHtml){
+		$aryResult["aryPurchaseOrder"] = implode("\n", $aryHtml);
+		$objTemplate = new clsTemplate();
+		$objTemplate->getTemplate("po/finish/remove_parts.tmpl");
+		$objTemplate->replace($aryResult);
+		$objTemplate->complete();
+		echo $objTemplate->strTemplate;
+	} else {
+		fncOutputError ( 9051, DEF_ERROR, "更新対象の発注書マスタがありません。", TRUE, "", $objDB );
+		return FALSE;
 	}
-	else if ( !$lngResultID = $objDB->execute( $strSql ) )
-    {
-        fncOutputError ( 9051, DEF_ERROR, "発注書明細への取得処理に失敗しました。", TRUE, "", $objDB );
-        return FALSE;
-    }
-    $objDB->freeResult( $lngResultID );
-
-	// 発注書明細を登録
-	$aryPurchaseOrderDetail["lngpurchaseorderno"] = $aryPurchaseOrder["lngpurchaseorderno"];
-	$aryPurchaseOrderDetail["lngrevisionno"] = intval($aryPurchaseOrder["lngrevisionno"]) + 1;
-	$aryPurchaseOrderDetail["lngsortkey"] = intval($aryPurchaseOrderDetail["lngsortkey"]) + 1;
-
-	$strSql = fncInsertPurchaseOrderDetailSQL($aryPurchaseOrderDetail);
-
-    if ( !$lngResultID = $objDB->execute( $strSql ) )
-    {
-        fncOutputError ( 9051, DEF_ERROR, "発注書明細への登録処理に失敗しました。", TRUE, "", $objDB );
-        return FALSE;
-    }
-    $objDB->freeResult( $lngResultID );
-
-	// 発注書マスタを新規登録する
-
-
-	$objDB->transactionRollback();
+	
+	$objDB->close();
+	return true;
 }
 
+for($i = 0; $i < count($aryOrderNo); $i++){
+	$lngorderno = intval(explode("_", $aryOrderNo[$i])[0]);
+	$lngrevisionno = intval(explode("_", $aryOrderNo[$i])[1]);
 
-// // var_dump( $aryData );
-// // exit;
+	$aryOrder[] = fncGetOrder($lngorderno, $lngrevisionno, $objDB);
+}
 
-// ////////////////////////////////////////////////////////
-// ////////////////////// 削除確認処理 ////////////////////
-// ////////////////////////////////////////////////////////
-// // 仕入データの確認
-// $strOrderCode = $aryOrderResult["strrealordercode"];
-// $aryCode = fncGetDeleteCodeToMaster ( $strOrderCode, 1, $objDB );
-// if ( $aryCode )
-// {
-// 	$lngStockCount = count($aryCode);
-// }
-// else
-// {
-// 	$lngStockCount = 0;
-// }
+$aryResult["strResult"] = fncCancelOrderHtml($aryOrder);
+$aryResult["lngOrderNo"] = $aryData["lngOrderNo"];
+$aryResult["strSessionID"] = $aryData["strSessionID"];
+//$aryResult["strResult"] = implode("\n", $aryHtml);
+//$aryResult["strOrderCode"] = implode(",", $aryOrderCode);
+//$aryResult["lngRevisionNo"] = implode(",", $aryRevisionNo);
 
-// ////////////////////////////////////////////////////////
-// ////////////////////// 削除処理実行 ////////////////////
-// ////////////////////////////////////////////////////////
-// // 該当発注Ｎｏを指定している仕入データが存在しなければ
-// if ( $aryData["strSubmit"] == "submit" and $lngStockCount == 0 )
-// {
-// 	// 該当発注の状態が「申請中」「締め済」の状態であれば
-// 	if ( $aryOrderResult["lngorderstatuscode"] == DEF_ORDER_APPLICATE or $aryOrderResult["lngorderstatuscode"] == DEF_ORDER_CLOSED )
-// 	{
-// 		fncOutputError( 505, DEF_WARNING, "", TRUE, "../po/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
-// 	}
-
-// 	// トランザクション開始
-// 	$objDB->transactionBegin();
-
-// 	// m_orderのシーケンスを取得
-// 	$sequence_m_order = fncGetSequence( 'm_Order.lngOrderNo', $objDB );
-
-// 	// 最小リビジョン番号の取得
-// 	$strOrderCode = $aryOrderResult["strrealordercode"];
-// 	$strRevisionGetQuery = "SELECT MIN(lngRevisionNo) as minrevision FROM m_Order WHERE strOrderCode = '" . $strOrderCode . "'";
-// 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strRevisionGetQuery, $objDB );
-// 	if ( $lngResultNum )
-// 	{
-// 		$objResult = $objDB->fetchObject( $lngResultID, 0 );
-// 		$lngMinRevisionNo = $objResult->minrevision;
-// 		if ( $lngMinRevisionNo > 0 )
-// 		{
-// 			$lngMinRevisionNo = 0;
-// 		}
-// 	}
-// 	else
-// 	{
-// 		$lngMinRevisionNo = 0;
-// 	}
-// 	$objDB->freeResult( $lngResultID );
-// 	$lngMinRevisionNo--;
-
-// 	// 最大リバイズコードの取得
-// 	$strReviseGetQuery = "SELECT MAX(strReviseCode) as maxrevise FROM m_Order WHERE strOrderCode = '" . $strOrderCode . "' AND bytInvalidFlag = FALSE";
-// 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strReviseGetQuery, $objDB );
-// 	if ( $lngResultNum )
-// 	{
-// 		$objResult = $objDB->fetchObject( $lngResultID, 0 );
-// 		$strMaxReviseCode = $objResult->maxrevise;
-// 	}
-// 	else
-// 	{
-// 		$strMaxReviseCode = "00";
-// 	}
-// 	$objDB->freeResult( $lngResultID );
-
-// 	$aryQuery[] = "INSERT INTO m_order (lngOrderNo, lngRevisionNo, strReviseCode, ";	// 発注NO、リビジョン番号、リバイズ番号
-// 	$aryQuery[] = "strOrderCode, lngInputUserCode, bytInvalidFlag, dtmInsertDate";		// 発注コード、入力者コード、無効フラグ、登録日
-// 	$aryQuery[] = ") values (";
-// 	$aryQuery[] = $sequence_m_order . ", ";		// 1:発注番号
-// 	$aryQuery[] = $lngMinRevisionNo . ", ";		// 2:リビジョン番号
-// 	$aryQuery[] = "'" . $strMaxReviseCode . "', ";	// 3:リバイスコード
-// 	$aryQuery[] = "'" . $strOrderCode . "', ";	// 4:発注コード．
-// 	$aryQuery[] = $objAuth->UserCode . ", ";	// 5:入力者コード
-// 	$aryQuery[] = "false, ";					// 6:無効フラグ
-// 	$aryQuery[] = "now()";						// 7:登録日
-// 	$aryQuery[] = ")";
-
-// 	unset($strQuery);
-// 	$strQuery = implode("\n", $aryQuery );
-
-// 	if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
-// 	{
-// 		fncOutputError ( 502, DEF_FATAL, "削除処理に伴うマスタ処理失敗", TRUE, "", $objDB );
-// 	}
-// 	$objDB->freeResult( $lngResultID );
-
-// 	// トランザクションコミット
-// 	$objDB->transactionCommit();
-
-// 	// 削除確認画面の表示
-// 	$aryDeleteData = $aryOrderResult;
-// 	$aryDeleteData["strAction"] = "/po/search/index.php?strSessionID=";
-// 	$aryDeleteData["strSessionID"] = $aryData["strSessionID"];
-
-// 	$aryDeleteData["lngLanguageCode"] = $_COOKIE["lngLanguageCode"];
-
-// 	// テンプレート読み込み
-// 	$objTemplate = new clsTemplate();
-// 	$objTemplate->getTemplate( "po/finish/remove_parts.tmpl" );
-
-// 	// テンプレート生成
-// 	$objTemplate->replace( $aryDeleteData );
-// 	$objTemplate->complete();
-
-// 	// HTML出力
-// 	echo $objTemplate->strTemplate;
-
-// 	$objDB->close();
-
-// 	return true;
-// }
-
-// ////////////////////////////////////////////////////////
-// ////////////////////// 削除できない ////////////////////
-// ////////////////////////////////////////////////////////
-// if ( $lngStockCount )
-// {
-// 	// 置換用文字列の設定
-// 	for( $i = 0; $i < $lngStockCount; $i++ )
-// 	{
-// 		$aryDetailData["strFuncType"] = "仕入管理";
-// 		$aryDetailData["strCode"] = $aryCode[$i]["lngsearchno"];
-
-// 		// テンプレート読み込み
-// 		$objTemplate = new clsTemplate();
-// 		$objTemplate->getTemplate( "error/use/parts_detail.tmpl" );
-
-// 		// テンプレート生成
-// 		$objTemplate->replace( $aryDetailData );
-// 		$objTemplate->complete();
-		
-// 		// HTML出力
-// 		$aryDetail[] = $objTemplate->strTemplate;
-// 	}
-
-// 	$aryData["strMessageDetail"] = implode ("\n", $aryDetail );
-// 	$aryData["lngLanguageCode"] = $_COOKIE["lngLanguageCode"];
-
-// 	// テンプレート読み込み
-// 	$objTemplate = new clsTemplate();
-// 	$objTemplate->getTemplate( "error/use/parts.tmpl" );
-
-// 	// テンプレート生成
-// 	$objTemplate->replace( $aryData );
-// 	$objTemplate->complete();
-
-// 	// HTML出力
-// 	echo $objTemplate->strTemplate;
-
-// 	$objDB->close();
-
-// 	return true;
-
-// }
-
-// ////////////////////////////////////////////////////////
-// //////////////////// 削除確認画面表示 //////////////////
-// ////////////////////////////////////////////////////////
-// // 該当発注の状態が「申請中」「締め済」の状態であれば
-// if ( $aryOrderResult["lngorderstatuscode"] == DEF_ORDER_APPLICATE or $aryOrderResult["lngorderstatuscode"] == DEF_ORDER_CLOSED )
-// {
-// 	fncOutputError( 505, DEF_WARNING, "", TRUE, "../po/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
-// }
-
-// // 取得データの調整
-// // レートタイプ
-// if ( $aryOrderResult["lngmonetaryratecode"] and $aryOrderResult["lngmonetaryratecode"] != DEF_MONETARY_YEN )
-// {
-// 	$aryOrderResult["strmonetaryratename"] = fncGetMasterValue(m_monetaryrateclass, lngMonetaryRateCode, strMonetaryRateName, $aryOrderResult["lngmonetaryratecode"], '', $objDB);
-// }
-
-// $aryNewResult = fncSetPurchaseHeadTabelData ( $aryOrderResult );
-
-// // 言語の設定
-// if ( isset($aryData["lngLanguageCode"]) and  $aryData["lngLanguageCode"] == 0 )
-// {
-// 	$aryTytle = $aryTableTytleEng;
-// }
-// else
-// {
-// 	$aryTytle = $aryTableTytle;
-// }
-
-// // カラム名の設定
-// $aryHeadColumnNames = fncSetPurchaseTabelName ( $aryTableViewHead, $aryTytle );
-// // カラム名の設定
-// $aryDetailColumnNames = fncSetPurchaseTabelName ( $aryTableViewDetail, $aryTytle );
-
-// ////////// 明細行の取得 ////////////////////
-
-// // 指定発注番号の発注明細データ取得用SQL文の作成
-// $strQuery = fncGetPurchaseDetailNoToInfoSQL ( $aryData["lngOrderNo"] );
-
-// // 明細データの取得
-// list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
-
-// if ( $lngResultNum )
-// {
-// 	for ( $i = 0; $i < $lngResultNum; $i++ )
-// 	{
-// 		$aryOrderDetailResult[] = $objDB->fetchArray( $lngResultID, $i );
-// 	}
-// }
-// else
-// {
-// 	$strMessage = fncOutputError( 503, DEF_WARNING, "発注番号に対する明細が存在しません", FALSE, "../po/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
-// }
-// $objDB->freeResult( $lngResultID );
-
-// for ( $i = 0; $i < count($aryOrderDetailResult); $i++)
-// {
-// 	$aryNewDetailResult[$i] = fncSetPurchaseDetailTabelData ( $aryOrderDetailResult[$i], $aryNewResult );
-
-// 	// テンプレート読み込み
-// 	$objTemplate = new clsTemplate();
-// 	$objTemplate->getTemplate( "po/result/parts_detail.tmpl" );
-
-// 	// テンプレート生成
-// 	$objTemplate->replace( $aryDetailColumnNames );
-// 	$objTemplate->replace( $aryNewDetailResult[$i] );
-// 	$objTemplate->complete();
-
-// 	// HTML出力
-// 	$aryDetailTable[] = $objTemplate->strTemplate;
-// }
-
-// $aryNewResult["strSessionID"] = $aryData["strSessionID"];
-// if ( count($aryOrderDetailResult) )
-// {
-// 	$aryNewResult["strDetailTable"] = implode ("\n", $aryDetailTable );
-// }
-
-// $aryNewResult["strAction"] = "index3.php";
-// $aryNewResult["strSubmit"] = "submit";
-// $aryNewResult["strMode"] = "delete";
-
-// // テンプレート読み込み
-// $objTemplate = new clsTemplate();
-// $objTemplate->getTemplate( "po/result/parts2.tmpl" );
 
 // テンプレート読み込み
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate( "po/result/parts3.tmpl" );
 
 // テンプレート生成
-// $objTemplate->replace( $aryNewResult );
-// $objTemplate->replace( $aryHeadColumnNames );
-$objTemplate->replace( $aryOrderResult );
-$objTemplate->replace( $aryDetailResult );
-$objTemplate->replace( $aryData );
+$objTemplate->replace( $aryResult );
+// $objTemplate->replace( $aryOrderResult );
+// $objTemplate->replace( $aryDetailResult );
+//$objTemplate->replace( $aryData );
 $objTemplate->complete();
 
 // HTML出力
