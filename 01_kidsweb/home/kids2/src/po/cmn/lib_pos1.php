@@ -883,39 +883,41 @@ function fncGetPurchaseOrder($strOrderCode, $lngRevisionNo, $objDB){
 
 function fncGetPurchaseOrder2($lngPurchaseOrderCode, $lngRevisionNo, $objDB){
 	$arySql[] = "SELECT";
-	$arySql[] = "   lngpurchaseorderno";
-	$arySql[] = "  ,lngrevisionno";
-	$arySql[] = "  ,strordercode"; 
-	$arySql[] = "  ,lngcustomercode"; 
-	$arySql[] = "  ,strcustomername"; 
-	$arySql[] = "  ,strcustomercompanyaddreess"; 
-	$arySql[] = "  ,strcustomercompanytel"; 
-	$arySql[] = "  ,strcustomercompanyfax"; 
-	$arySql[] = "  ,strproductcode"; 
-	$arySql[] = "  ,strrevisecode"; 
-	$arySql[] = "  ,strproductname"; 
-	$arySql[] = "  ,strproductenglishname"; 
-	$arySql[] = "  ,TO_CHAR(dtmexpirationdate, 'YYYY/MM/DD')"; 
-	$arySql[] = "  ,lngmonetaryunitcode"; 
-	$arySql[] = "  ,strmonetaryunitsign"; 
-	$arySql[] = "  ,lngmonetaryratecode"; 
-	$arySql[] = "  ,strmonetaryratename";
-	$arySql[] = "  ,lngpayconditioncode";
-	$arySql[] = "  ,strpayconditionname";
-	$arySql[] = "  ,lnggroupcode";
-	$arySql[] = "  ,strgroupname";
-	$arySql[] = "  ,txtsignaturefilename";
-	$arySql[] = "  ,lngusercode";
-	$arySql[] = "  ,strusername";
-	$arySql[] = "  ,lngdeliveryplacecode";
-	$arySql[] = "  ,strdeliveryplacename";
-	$arySql[] = "  ,curtotalprice";
-	$arySql[] = "  ,TO_CHAR(dtminsertdate, 'YYYY/MM/DD')";
-	$arySql[] = "  ,lnginsertusercode";
-	$arySql[] = "  ,strinsertusername"; 
-	$arySql[] = "  ,strnote"; 
-	$arySql[] = "  ,lngprintcount"; 
-	$arySql[] = "FROM m_purchaseorder";
+	$arySql[] = "   mp.lngpurchaseorderno";
+	$arySql[] = "  ,mp.lngrevisionno";
+	$arySql[] = "  ,mp.strordercode"; 
+	$arySql[] = "  ,mp.lngcustomercode"; 
+	$arySql[] = "  ,mp.strcustomername"; 
+	$arySql[] = "  ,mp.strcustomercompanyaddreess"; 
+	$arySql[] = "  ,mp.strcustomercompanytel"; 
+	$arySql[] = "  ,mp.strcustomercompanyfax"; 
+	$arySql[] = "  ,mp.strproductcode"; 
+	$arySql[] = "  ,mp.strrevisecode"; 
+	$arySql[] = "  ,mp.strproductname"; 
+	$arySql[] = "  ,mp.strproductenglishname"; 
+	$arySql[] = "  ,TO_CHAR(mp.dtmexpirationdate, 'YYYY/MM/DD') AS dtmexpirationdate"; 
+	$arySql[] = "  ,mp.lngmonetaryunitcode"; 
+	$arySql[] = "  ,mp.strmonetaryunitsign"; 
+	$arySql[] = "  ,mp.lngmonetaryratecode"; 
+	$arySql[] = "  ,mp.strmonetaryratename";
+	$arySql[] = "  ,mp.lngpayconditioncode";
+	$arySql[] = "  ,mp.strpayconditionname";
+	$arySql[] = "  ,mp.lnggroupcode";
+	$arySql[] = "  ,mp.strgroupname";
+	$arySql[] = "  ,mp.txtsignaturefilename";
+	$arySql[] = "  ,mp.lngusercode";
+	$arySql[] = "  ,mp.strusername";
+	$arySql[] = "  ,mp.lngdeliveryplacecode";
+	$arySql[] = "  ,mp.strdeliveryplacename";
+	$arySql[] = "  ,mp.curtotalprice";
+	$arySql[] = "  ,TO_CHAR(mp.dtminsertdate, 'YYYY/MM/DD') AS dtminsertdate";
+	$arySql[] = "  ,mp.lnginsertusercode";
+	$arySql[] = "  ,mp.strinsertusername"; 
+	$arySql[] = "  ,mp.strnote"; 
+	$arySql[] = "  ,mp.lngprintcount"; 
+	$arySql[] = "  ,mc.strcompanydisplaycode";
+	$arySql[] = "FROM m_purchaseorder mp";
+	$arySql[] = "LEFT JOIN m_company mc ON mp.lngcustomercode = mc.lngcompanycode";
 	$arySql[] = "WHERE lngpurchaseorderno = " . intval($lngPurchaseOrderCode);
 	$arySql[] = "AND   lngrevisionno = " . intval($lngRevisionNo);
 
@@ -1362,5 +1364,67 @@ function fncCancelOrderHtml($aryOrder){
 
 	$strHtml = implode("\n", $aryHtml);
 	return $strHtml;
+}
+
+function fncCancelPurchaseOrderHtml($aryOrder, $aryDetail){
+	for($i = 0; $i < count($aryDetail); $i++) {
+		$aryHtml[] = "<table class=\"ordercode\">";
+		$aryHtml[] = "  <tr>";
+		$aryHtml[] = "    <td class=\"ordercodetd\">" . sprintf("%s_%02d", $aryOrder["strordercode"], $aryOrder["lngrevisionno"]) . "</td>";
+		$aryHtml[] = "    <td class=\"orderbuttontd\"><img src=\"/img/type01/cmn/querybt/preview_off_ja_bt.gif\" alt=\"preview\"></td>";
+		$aryHtml[] = "  </tr>";
+		$aryHtml[] = "</table>";
+		$aryHtml[] = "<p class=\"caption\">取消対象</p>";
+		$aryHtml[] = "<table class=\"orderdetail\">";
+		$aryHtml[] = "  <tr>";
+		$aryHtml[] = "    <th class=\"SegColumn\">登録日</th>";
+		$aryHtml[] = "    <td class=\"Segs\">" . $aryOrder["dtminsertdate"] . "</td>";
+		$aryHtml[] = "    <th class=\"SegColumn\">発注有効期限日</th>";
+		$aryHtml[] = "    <td class=\"Segs\">" . $aryOrder["dtmexpirationdate"] . "</td>";
+		$aryHtml[] = "  </tr>";
+		$aryHtml[] = "  <tr>";
+		$aryHtml[] = "    <th class=\"SegColumn\">発注NO.</th>";
+		$aryHtml[] = "    <td class=\"Segs\">" . sprintf("%s_%02d", $aryOrder["strordercode"], $aryOrder["lngrevisionno"]) . "</td>";
+		$aryHtml[] = "    <th class=\"SegColumn\">仕入部品</th>";
+		$aryHtml[] = "    <td class=\"Segs\">" . sprintf("[%s] %s", $aryDetail[$i]["lngstockitemcode"], $aryDetail[$i]["strstockitemname"]) . "</td>";
+		$aryHtml[] = "  </tr>";
+		$aryHtml[] = "  <tr>";
+		$aryHtml[] = "    <th class=\"SegColumn\">製品名</th>";
+		$aryHtml[] = "    <td colspan=\"3\" class=\"Segs\">" . sprintf("[%s] %s", $aryOrder["strproductcode"], $aryOrder["strproductname"]) . "</td>";
+		$aryHtml[] = "  </tr>";
+		$aryHtml[] = "  <tr>";
+		$aryHtml[] = "    <th class=\"SegColumn\">営業部門</th>";
+		$aryHtml[] = "    <td class=\"Segs\">" . sprintf("[%s] %s", $aryOrder["lnggroupcode"], $aryOrder["strgroupname"]) . "</td>";
+		$aryHtml[] = "    <th class=\"SegColumn\">開発担当者</th>";
+		$aryHtml[] = "    <td class=\"Segs\">" . sprintf("[%s] %s", $aryOrder["lngusercode"], $aryOrder["strusername"]) . "</td>";
+		$aryHtml[] = "  </tr>";
+		$aryHtml[] = "  <tr>";
+		$aryHtml[] = "    <th class=\"SegColumn\">仕入先</th>";
+		$aryHtml[] = "    <td colspan=\"3\" class=\"Segs\">". sprintf("[%s] %s", $aryOrder["strcompanydisplaycode"], $aryOrder["strcustomername"]) . "</td>";
+		$aryHtml[] = "  </th>";
+		$aryHtml[] = "  <tr>";
+		$aryHtml[] = "    <th class=\"SegColumn\">納期</th>";
+		$aryHtml[] = "    <td class=\"Segs\">" . $aryDetail[$i]["dtmdeliverydate"] . "</td>";
+		$aryHtml[] = "    <th class=\"SegColumn\">単価</th>";
+		$aryHtml[] = "    <td class=\"Segs\">" . sprintf("%s %.4f", $aryOrder["strmonetaryunitsign"], $aryDetail[$i]["curproductprice"]) . "</td>";
+		$aryHtml[] = "  </tr>";
+		$aryHtml[] = "  <tr>";
+		$aryHtml[] = "    <th class=\"SegColumn\">数量</th>";
+		$aryHtml[] = "    <td class=\"Segs\">" . $aryDetail[$i]["lngproductquantity"] . "</td>";
+		$aryHtml[] = "    <th class=\"SegColumn\">税抜価格</th>";
+		$aryHtml[] = "    <td class=\"Segs\">" . sprintf("%s %.2f", $aryOrder["strmonetaryunitsign"], $aryDetail[$i]["cursubtotalprice"]) . "</td>";
+		$aryHtml[] = "  </tr>";
+		$aryHtml[] = "  <tr>";
+		$aryHtml[] = "    <th class=\"SegColumn\">明細備考</th>";
+		$aryHtml[] = "    <td colspan=\"3\" class=\"Segs\">" . $aryDetail[$i]["strnote"] . "</td>";
+		$aryHtml[] = "  </tr>";
+		$aryHtml[] = "</table>";
+		$aryHtml[] = "<br>";
+	}
+
+    $strHtml = "";
+    $strHtml = implode("\n", $aryHtml);
+
+    return $strHtml;
 }
 ?>

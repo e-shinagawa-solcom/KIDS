@@ -81,72 +81,6 @@ if ( !fncCheckAuthority( DEF_FUNCTION_PO6, $objAuth ) )
 $aryOrderNo = explode(",", $aryData["lngOrderNo"]);
 
 if($_POST){
-	// // トランザクション開始
-	// $objDB->transactionBegin();
-
-	// $aryOrderCode = explode(",", $aryData["strOrderCode"]);
-	// $aryRevisionNo = explode(",", $aryData["lngRevisionNo"]);
-
-	// for($i = 0; $i < count($aryRevisionNo); $i++){
-	// 	//$strOrderCode = explode("_", $aryOrderCode[$i])[0];
-	// 	$lngRevisionNo = explode("_", $aryRevisionNo[$i])[1];
-	// 	// 確定取消対象となった発注明細に紐づく発注書マスタの発注書番号、リビジョン番号を取得する。
-	// 	$aryPurchaseOrder = fncGetPurchaseOrder($aryOrderNo[$i], $lngRevisionNo, $objDB);
-
-	// 	// list ( $lngResultID, $lngResultNum ) = fncQuery( $strSql, $objDB );
-	// 	// if ( $lngResultNum == 1 )
-	// 	// {
-	// 	// 	$aryPurchaseOrder = $objDB->fetchArray( $lngResultID, 0 );
-	// 	// }
-	// 	// $objDB->freeResult( $lngResultID );
-
-	// 	// 発注マスタを「仮受注」に変更する
-	// 	if(!fncGetCancelOrder($aryOrderNo[$i], $lngRevisionNo, $objDB)){
-	// 		fncOutputError ( 9051, DEF_ERROR, "データベースの更新に失敗しました。", TRUE, "", $objDB );
-	// 		return FALSE;
-	// 	}
-
-	// 	if($aryPurchaseOrder){
-	// 		// 発注書明細を取得する
-	// 		$strSql = fncGetPurchaseOrderDetailSQL($aryPurchaseOrder["lngpurchaseorderno"], $aryPurchaseOrder["lngrevisionno"]);
-
-	// 		list ( $lngResultID, $lngResultNum ) = fncQuery( $strSql, $objDB );
-	// 		if ( $lngResultNum == 1 )
-	// 		{
-	// 			$aryPurchaseOrderDetail = $objDB->fetchArray( $lngResultID, 0 );
-	// 		}
-	// 		else if ( !$lngResultID = $objDB->execute( $strSql ) )
-	// 		{
-	// 			fncOutputError ( 9051, DEF_ERROR, "データベースの更新に失敗しました。", TRUE, "", $objDB );
-	// 			return FALSE;
-	// 		}
-	// 		$objDB->freeResult( $lngResultID );
-
-	// 		// 発注書明細を登録
-	// 		$aryPurchaseOrderDetail["lngpurchaseorderno"] = $aryPurchaseOrder["lngpurchaseorderno"];
-	// 		$aryPurchaseOrderDetail["lngrevisionno"] = intval($aryPurchaseOrder["lngrevisionno"]) + 1;
-	// 		$aryPurchaseOrderDetail["lngsortkey"] = intval($aryPurchaseOrderDetail["lngsortkey"]) + 1;
-
-	// 		$strSql = fncInsertPurchaseOrderDetailSQL($aryPurchaseOrderDetail);
-
-	// 		if ( !$lngResultID = $objDB->execute( $strSql ) )
-	// 		{
-	// 			fncOutputError ( 9051, DEF_ERROR, "発注書明細への登録処理に失敗しました。", TRUE, "", $objDB );
-	// 			return FALSE;
-	// 		}
-	// 		$objDB->freeResult( $lngResultID );
-
-	// 		// 発注書マスタを新規登録する
-
-	// 	}
-
-
-
-
-
-	// 	$objDB->transactionRollback();
-
-	// }
 	for($i = 0; $i < count($aryOrderNo); $i++){
 		$lngorderno = intval(explode("_", $aryOrderNo[$i])[0]);
 		$lngrevisionno = intval(explode("_", $aryOrderNo[$i])[1]);
@@ -166,7 +100,7 @@ if($_POST){
 		$aryInsertPurchaseOrderDetail = [];
 		$aryDetailNo = array_column($aryOrderDetail, "lngorderdetailno");
 		for($j = 0; $j < count($aryPurchaseOrderDetail); $j++){
-			//if(!in_array($aryOrderDetail[$j]["lngorderdetailno"], $aryDetailNo, true)){
+			if(!in_array($aryOrderDetail[$j]["lngorderdetailno"], $aryDetailNo, true)){
 				$aryInsertPurchaseOrderDetail[$j]["lngpurchaseorderno"] = $aryPurchaseOrderDetail[$j]["lngpurchaseorderno"];
 				$aryInsertPurchaseOrderDetail[$j]["lngpurchaseorderdetailno"] = $aryPurchaseOrderDetail[$j]["lngpurchaseorderdetailno"];
 				$aryInsertPurchaseOrderDetail[$j]["lngrevisionno"] = intval($aryPurchaseOrderDetail[$j]["lngrevisionno"]) + 1;
@@ -186,7 +120,7 @@ if($_POST){
 				$aryInsertPurchaseOrderDetail[$j]["dtmdeliverydate"] = $aryPurchaseOrderDetail[$j]["dtmdeliverydate"];
 				$aryInsertPurchaseOrderDetail[$j]["strnote"] = $aryPurchaseOrderDetail[$j]["strnote"];
 				$aryInsertPurchaseOrderDetail[$j]["lngsortkey"] = $j + 1;
-			//}
+			}
 		}
 	
 		if($aryInsertPurchaseOrderDetail){
@@ -202,10 +136,29 @@ if($_POST){
 			if(!fncInsertPurchaseOrder($aryOrder, $objDB)) { return false; }
 		}
 	
-		$objDB->transactionRollback();
-		// $objDB->transactionCommit();
+		// $objDB->transactionRollback();
+		$objDB->transactionCommit();
+
+		if($aryInsertPurchaseOrderDetail){
+			$aryHtml[] = "<p class=\"caption\">発注確定取消に伴い、以下の発注書を修正しました。</p>";
+			$aryHtml[] = fncCancelPurchaseOrderHtml($aryOrder, $aryInsertPurchaseOrderDetail);
+		}
+	}
+
+	if($aryHtml){
+		$aryResult["aryPurchaseOrder"] = implode("\n", $aryHtml);
+		$objTemplate = new clsTemplate();
+		$objTemplate->getTemplate("po/finish/remove_parts.tmpl");
+		$objTemplate->replace($aryResult);
+		$objTemplate->complete();
+		echo $objTemplate->strTemplate;
+	} else {
+		fncOutputError ( 9051, DEF_ERROR, "更新対象の発注書マスタがありません。", TRUE, "", $objDB );
+		return FALSE;
 	}
 	
+	$objDB->close();
+	return true;
 }
 
 for($i = 0; $i < count($aryOrderNo); $i++){
