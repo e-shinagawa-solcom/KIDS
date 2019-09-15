@@ -344,7 +344,6 @@ jQuery(function($){
         }).done(function(data){
             console.log("done");
             console.log(data);
-            //$('html').html(data);
             document.write(data);
         }).fail(function(error){
             console.log("fail");

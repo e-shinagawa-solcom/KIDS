@@ -37,7 +37,8 @@
 	if( strcmp( $_GET["strSessionID"],"" ) != 0 )
 	{
 		$aryData["strSessionID"] = $_GET["strSessionID"];
-		$aryData["lngOrderNo"]   = $_GET["lngOrderNo"];
+		//$aryData["lngOrderNo"]   = $_GET["lngOrderNo"];
+		$aryData["lngOrderNo"]   = 1;
 	}
 	else
 	{
@@ -46,7 +47,7 @@
 	}
 	$aryData["lngLanguageCode"]	= $_COOKIE["lngLanguageCode"];
 
-	
+
 	$objDB->open("", "", "", "");
 	
 	// 文字列チェック

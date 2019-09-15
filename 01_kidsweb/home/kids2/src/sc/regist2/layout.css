@@ -92,7 +92,7 @@
 	}
 	/**********************************************************************/
 
-	/* クエリボタン */
+	/* ??????????????��?? */
 	#Preview{
 		position: absolute;
 		top: 520px;
@@ -101,35 +101,35 @@
 
 	#SearchBt{
 		position: absolute;
-		top: 180px;
+		top: 220px;
 		left: 830px;
 	}
 	#FixBt{
 		position: absolute;
-		top: 250px;
+		top: 280px;
 		left: 830px;
 	}
 	#AddBt{
 		position: absolute;
-		top: 330px;
+		top: 355px;
 		left: 830px;
 	}
 	#AlladdBt{
 		position: absolute;
-		top: 445px;
+		top: 425px;
 		left: 830px;
 	}
 	#FixEntryBtn {
 		position: absolute;
-		top: 470px;
-		left: 715px;
+		top: 475px;
+		left: 840px;
 	}
 	#ClearBtn{
 		position: absolute;
-		top: 470px;
-		left: 830px;
+		top: 474px;
+		left: 730px;
 	}
-	/* 明細行替えボタン */
+	/* ???細�????��???????��?? */
 	#selectup{
 		position: absolute;
 		top: 330px;
@@ -151,7 +151,7 @@
 		left: 777px;
 	}
 
-	/* 明細行表示テーブル */
+	/* ???細�??�?示�????��????? */
 	#DetailTable {
 		table-layout: fixed;
 	}
@@ -344,7 +344,7 @@
 	left : 0px ;
 	top : 30px ;
 	width : 925px; ;
-	height : 450px ;
+	height : 440px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #cdcdcd ;
@@ -357,7 +357,7 @@
 #SegABottom {
 	position : absolute ;
 	left : 0px ;
-	top : 480px ;
+	top : 460px ;
 	width : 766px ;
 	height : 7px ;
 	border-width: 0px ;

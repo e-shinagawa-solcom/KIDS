@@ -8,7 +8,11 @@
 	var roothead = '/img/type01/po/wfroot_header.gif';
 	//-------------------------------------------------------------------------
 
+	///// GOODS PLAN HEADER IMAGE /////
+	var taxhead = '/img/type01/cmn/seg/tax_header.gif';
 
+	///// GOODS PLAN BOTTOM IMAGE /////
+	var taxbottom = '/img/type01/cmn/seg/tax_header.gif';
 
 	///// MAIN MTITLE IMAGE /////
 	var titleJ = '/img/type01/sc/title_ja.gif';
