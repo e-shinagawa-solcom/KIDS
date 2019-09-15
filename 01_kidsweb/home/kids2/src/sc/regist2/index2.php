@@ -23,13 +23,11 @@
 */
 // ----------------------------------------------------------------------------
 
-
-
 	// 読み込み
 	include('conf.inc');
 	require (LIB_FILE);
 	require (SRC_ROOT."sc/cmn/lib_scr.php");
-
+/*
 	$objDB		= new clsDB();
 	$objAuth	= new clsAuth();
 	
@@ -96,9 +94,9 @@
 	
 	$objDB->close();
 
-
 	// 成功時戻り先のアドレス指定
 	$aryData["strAction"] = "/sc/regist2/index.php?strSessionID=";
+*/
 
 	// テンプレート読み込み
 	$objTemplate = new clsTemplate();

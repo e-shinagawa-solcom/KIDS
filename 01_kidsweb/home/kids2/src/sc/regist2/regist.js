@@ -323,15 +323,16 @@ jQuery(function($){
         $('#EditTableBody').empty();
     });
     $('#PreviewBtn').on('click', function(){
-        if(!validationCheck2()){
-            return false;
-        }
+        //if(!validationCheck2()){
+        //    return false;
+        //}
         $.ajax({
             type: 'POST',
-            url: 'index.php',
+            url: 'index2.php',
             data: {
-                strSessionID:         $('input[name="strSessionID"]').val(),
-                lngOrderNo:           $('input[name="lngOrderNo"]').val(),
+                strSessionID:         $('input[name="strSessionID"]').val()
+                /*
+                ,lngOrderNo:           $('input[name="lngOrderNo"]').val(),
                 strMode:              $('input[name="strMode"]').val(),
                 lngRevisionNo:        $('input[name="lngRevisionNo"]').val(),
                 lngPayConditionCode:  $('select[name="optPayCondition"]').children('option:selected').val(),
@@ -339,12 +340,17 @@ jQuery(function($){
                 lngLocationCode:      $('input[name="lngLocationCode"]').val(),
                 strNote:              $('input[name="strNote"]').text(),
                 aryDetail:            getUpdateDetail(),
+                */
             },
-            async: true,
+            async: false,
         }).done(function(data){
             console.log("done");
             console.log(data);
-            document.write(data);
+
+            var previewWin = window.open('' , 'previewWin' , 'width=800,height=600,top=10,left=10,status=yes,scrollbars=yes,directories=no,menubar=yes,resizable=yes,location=no,toolbar=no' );
+            previewWin.document.write(data);
+            previewWin.document.close();
+            
         }).fail(function(error){
             console.log("fail");
             console.log(error);
