@@ -19,18 +19,19 @@
 <header1>
 <script src="/cmn/jquery/jquery-3.1.0.js"></script>
 <script src="/cmn/jquery/ui/jquery-ui.min-1.12.0.js"></script>
+<script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/images.js"></script>
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutbase.js"></script>
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutcommon.js"></script>
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayouterror.js"></script>
+<script src="/search/cmn/msw/cmn/js/msw.js" defer></script>
 </header1>
-
 
 <header2>
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/sc/cmn/images.js"></script>
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/sc/regist2/initlayout.js"></script>
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutquery.js"></script>
-<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutmsw.js"></script>
+<!--<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutmsw.js"></script>-->
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutpunit.js"></script>
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutdate.js"></script>
 </header2>
@@ -42,14 +43,16 @@
 <script type="text/javascript" language="javascript" src="/sc/regist2/exstr.js"></script>
 <link rel="stylesheet" type="text/css" media="screen" href="_%strCssName%_">
 <link rel="stylesheet" type="text/css" media="screen" href="_%strErrorCssName%_">
+<link rel="stylesheet" type="text/css" media="screen" href="/search/cmn/css/msw.css">
 <script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
 <script type="text/javascript" language="javascript" src="/sc/regist2/regist.js"></script>
+<script src="/search/cmn/js/invoke-master-search.js" defer></script>
 </header3>
 
-
 <bodyonload>
-initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutMsw(); initLayoutPunit(); initLayoutDate(); autoFocus1(); initLayoutError1( ErrInputA ); initLayoutError2( ErrInputB ); fncRegistrationConfirm( window.HSO , window.DSO , '/result/common.html' , '/result/regist_ifrm.html' , 'ResultIframeRenew' , 'NO' , _%lngLanguageCode%_ , document.all.lngRegistConfirm.value ); GetlngLanguageCode( _%lngLanguageCode%_ ); fncDetailErrorOpen( '_%strErrorMessage%_' ); Loading();
+initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutPunit(); initLayoutDate(); autoFocus1(); initLayoutError1( ErrInputA ); initLayoutError2( ErrInputB ); fncRegistrationConfirm( window.HSO , window.DSO , '/result/common.html' , '/result/regist_ifrm.html' , 'ResultIframeRenew' , 'NO' , _%lngLanguageCode%_ , document.all.lngRegistConfirm.value ); GetlngLanguageCode( _%lngLanguageCode%_ ); fncDetailErrorOpen( '_%strErrorMessage%_' ); Loading();
 </bodyonload>
+
 </config>
 
 <p id="Preload">
@@ -176,9 +179,13 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutMsw(); initLayout
 
 <span id="SegADrafter">起票者</span>
 <span id="VarsADrafter">
-	<input style="ime-mode:disabled;" class="TxtStyle03L" type="text" name="lngLocationCode" value="_%lngLocationCode%_">&nbsp;<input style="ime-mode:disabled;" class="disTxt23L" type="text" name="strLocationName" value="_%strLocationName%_" contenteditable="false">
+	<input style="ime-mode:disabled;" class="TxtStyle03L" type="text" name="lngInsertUserCode" value="_%lngInsertUserCode%_">
+	<input style="ime-mode:disabled;" class="disTxt23L" type="text" name="strInsertUserName" value="_%strInsertUserName%_" contenteditable="false">
 </span>
-<span id="MSWBt04" onclick="fncGetObjectName( window.MLwin , window.HSO.lngLocationCode , window.HSO.strLocationName );DisplayerM04( '' , document.all.Mdata04 , window.MLwin.document.all.lngLocationCode  );ExchangeM04( 0 , window.self );fncFocusType( window.MLwin , 'locationTop' );return false;"></span>
+<span id="MSWBtDrafter" class="regist-line">
+	<img class="msw-button button" invokeMSWName="msw-user" inputCodeMSWName="lngInsertUserCode" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+</span>
+<!--<span id="MSWBt04" onclick="fncGetObjectName( window.MLwin , window.HSO.lngLocationCode , window.HSO.strLocationName );DisplayerM04( '' , document.all.Mdata04 , window.MLwin.document.all.lngLocationCode  );ExchangeM04( 0 , window.self );fncFocusType( window.MLwin , 'locationTop' );return false;"></span>-->
 
 <span id="SegACustomer">顧客</span>
 <span id="VarsACustomer">
@@ -201,9 +208,13 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutMsw(); initLayout
 
 <span id="SegADeliveryPlaceName">納品先</span>
 <span id="VarsADeliveryPlaceName">
-	<input style="ime-mode:disabled;" class="TxtStyle03L" type="text" name="lngLocationCode" value="_%lngLocationCode%_">&nbsp;<input style="ime-mode:disabled;" class="disTxt32L" type="text" name="strLocationName" value="_%strLocationName%_" contenteditable="false">
+	<input style="ime-mode:disabled;" class="TxtStyle03L" type="text" name="lngDeliveryPlaceCode" value="_%lngDeliveryPlaceCode%_">
+	<input style="ime-mode:disabled;" class="disTxt32L" type="text" name="strDeliveryPlaceName" value="_%strDeliveryPlaceName%_" contenteditable="false">
 </span>
-<span id="MSWBt03" onclick="fncGetObjectName( window.MGwin , strProductCode , strProductName );DisplayerM03( '' , document.all.Mdata03 , window.MGwin.document.all.strProductCode  );ExchangeM03( 0 , window.self );fncFocusType( window.MGwin , 'productsTop' );return false;"></span>
+<span id="MSWBtDeliveryPlaceName" class="regist-line">
+	<img class="msw-button button" invokeMSWName="msw-customer" inputCodeMSWName="lngDeliveryPlaceCode" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+</span>
+<!--<span id="MSWBt03" onclick="fncGetObjectName( window.MGwin , strProductCode , strProductName );DisplayerM03( '' , document.all.Mdata03 , window.MGwin.document.all.strProductCode  );ExchangeM03( 0 , window.self );fncFocusType( window.MGwin , 'productsTop' );return false;"></span>-->
 
 <span id="SegADeliveryDestResponder">納品先担当者</span>
 <span id="VarsADeliveryDestResponder">
@@ -259,56 +270,6 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutMsw(); initLayout
 	<input style="ime-mode:disabled;" class="disTxt20R" type="text" name="strTaxAmount" value="_%strTaxAmount%_" >
 </span>
 
-
-
-
-<!-- 発注有効期限日 
-<span id="SegA01">発注有効期限日</span>
-<span id="VarsA01">
-	<input style="ime-mode:disabled;" class="TxtStyle05L" type="text" name="dtmExpirationDate" value="_%dtmExpirationDate%_" maxlength="10" 
-		onfocus="chColorOn(this);" 
-		onblur="chColorOff(this);fncCheckDate( this );" 
-		tabindex="1">
-</span>
-<span id="DateBtB" onclick="window.MDateBwin.fncCalendar( window.HSO.dtmExpirationDate, 'DateB' );DisplayerM10_2( '' , document.all.Mdata10_2 );ExchangeM10_2( 0 , window.self );return false;"></span>
--->
-
-<!-- 製品コード
-<span id="SegA02">製品コード</span>
-<span id="VarsA02">
-	<input style="ime-mode:disabled;" class="disTxt07L" type="text" name="strProductCode" value="_%strProductCode%_" maxlength="5" contenteditable="false">
-</span>
- -->
-
-
-<!-- 営業部署 
-<span id="SegA11">営業部署</span>
-<span id="VarsA11">
-	<input style="ime-mode:disabled;" class="disTxt03L" type="text" name="strGroupDisplayCode" value="_%strGroupDisplayCode%_" maxlength="2" contenteditable="false">&nbsp;<input style="ime-mode:disabled;" class="disTxt46L" tyepe="text" name="strGroupDisplayName" value="_%strGroupDisplayName%_" contenteditable="false">
-</span>
--->
-
-<!-- 製品名 
-<span id="SegA12">製品名</span>
-<span id="VarsA12">
-	<input style="ime-mode:disabled;" class="disTxt46L" type="text" name="strProductName" value="_%strProductName%_" contenteditable="false">
-</span>
--->
-
-<!-- 製品名(英語) 
-<span id="SegA13">製品名(英語)</span>
-<span id="VarsA13">
-	<input style="ime-mode:disabled;" class="disTxt46L" type="text" name="strProductEnglishName" value="_%strProductEnglishName%_" contenteditable="false">
-</span>
--->
-
-<!-- 納品場所
-<span id="SegA14">納品場所</span>
-<span id="VarsA14">
-	<input style="ime-mode:disabled;" class="TxtStyle03L" type="text" name="lngLocationCode" value="_%lngLocationCode%_">&nbsp;<input style="ime-mode:disabled;" class="disTxt46L" type="text" name="strLocationName" value="_%strLocationName%_" contenteditable="false">
-</span>
-<span id="MSWBt04" onclick="fncGetObjectName( window.MLwin , window.HSO.lngLocationCode , window.HSO.strLocationName );DisplayerM04( '' , document.all.Mdata04 , window.MLwin.document.all.lngLocationCode  );ExchangeM04( 0 , window.self );fncFocusType( window.MLwin , 'locationTop' );return false;"></span>
- -->
 
 <!-- 明細選択エリア -->
 <span id="SegDetailIN">
@@ -850,9 +811,17 @@ _%strDetailHidden%_
 </p>
 <!-- ///////////////////////////////////// END INPUT C SEGMENTS ///////////////////////////////////// -->
 
-
-
-
+<div class="msw-loadpoints">
+		<!-- MSW 顧客マスタ検索 -->
+		<iframe class="msw-customer" src="/search/cmn/msw/customer/mswcustomer.html" frameborder="0">
+		</iframe>
+		<!-- MSW 担当部署マスタ検索 -->
+		<iframe class="msw-group" src="/search/cmn/msw/group/mswgroup.html" frameborder="0">
+		</iframe>
+		<!-- MSW 担当者マスタ検索 -->
+		<iframe class="msw-user" src="/search/cmn/msw/user/mswuser.html" frameborder="0">
+		</iframe>
+</div>
 
 
 

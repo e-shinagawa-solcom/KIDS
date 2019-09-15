@@ -29,10 +29,10 @@
 	include('conf.inc');
 	require (LIB_FILE);
 	require (SRC_ROOT."sc/cmn/lib_scr.php");
-
 	
 	$objDB		= new clsDB();
 	$objAuth	= new clsAuth();
+
 	/*
 	if( strcmp( $_GET["strSessionID"],"" ) != 0 )
 	{
@@ -46,8 +46,19 @@
 		$aryData["lngOrderNo"]   = $_POST["lngOrderNo"];
 	}
 	$aryData["lngLanguageCode"]	= $_COOKIE["lngLanguageCode"];
+*/
+	if ( $_POST )
+	{
+		$aryData = $_POST;
+	}
+	elseif ( $_GET )
+	{
+		$aryData = $_GET;
+	}
 
+	setcookie("strSessionID", $aryData["strSessionID"], 0, "/");
 
+	/*
 	$objDB->open("", "", "", "");
 	
 	// 文字列チェック
