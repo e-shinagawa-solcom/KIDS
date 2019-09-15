@@ -28,18 +28,20 @@
 	// 読み込み
 	include('conf.inc');
 	require(LIB_FILE);
-	require(SRC_ROOT."po/cmn/lib_po.php");
-	require(SRC_ROOT."po/cmn/lib_pop.php");
-	require(SRC_ROOT."po/cmn/lib_pos1.php");
+	// require(SRC_ROOT."po/cmn/lib_po.php");
+	// require(SRC_ROOT."po/cmn/lib_pop.php");
+	// require(SRC_ROOT."po/cmn/lib_pos1.php");
+	require(SRC_ROOT."po/cmn/lib_por.php");
 	require(SRC_ROOT."po/cmn/column.php");
 
 
 	$objDB		= new clsDB();
 	$objAuth	= new clsAuth();
 	
-	$aryData["strSessionID"]    = $_REQUEST["strSessionID"];
-	$aryData["lngOrderNo"]      = $_REQUEST["lngOrderNo"];
-	$aryData["lngLanguageCode"] = $_COOKIE["lngLanguageCode"];
+	$aryData["strSessionID"]       = $_REQUEST["strSessionID"];
+	$aryData["lngPurchaseOrderNo"] = $_REQUEST["lngPurchaseOrderNo"];
+	$aryData["lngRevisionNo"]      = $_REQUEST["lngRevisionNo"];
+	$aryData["lngLanguageCode"]    = $_COOKIE["lngLanguageCode"];
 	
 
 	$objDB->open("", "", "", "");
@@ -63,48 +65,43 @@
 	}
 	
 	
-	// 505 発注管理（発注修正）
-	if ( !fncCheckAuthority( DEF_FUNCTION_PO5, $objAuth ) )
+	// // 505 発注管理（発注修正）
+	// if ( !fncCheckAuthority( DEF_FUNCTION_PO5, $objAuth ) )
+	// {
+	// 	fncOutputError ( 9052, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
+	// }
+
+
+
+	// 512 発注管理（発注書修正）
+	if( !fncCheckAuthority( DEF_FUNCTION_PO12, $objAuth ) )
 	{
 		fncOutputError ( 9052, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 	}
 
+	// //-------------------------------------------------------------------------
+	// // ■「製品」にログインユーザーが属しているかチェック
+	// //-------------------------------------------------------------------------
+	// $strFncFlag = "PO";
+	// $blnCheck = fncCheckInChargeProduct( $aryData["lngOrderNo"], $lngUserCode, $strFncFlag, $objDB );
+
+	// // ユーザーが対象製品に属していない場合
+	// if( !$blnCheck )
+	// {
+	// 	fncOutputError( 9060, DEF_WARNING, "", TRUE, "", $objDB );
+	// }
 
 
-	// 508 発注管理（商品マスタダイレクト修正）
-	if( !fncCheckAuthority( DEF_FUNCTION_PO8, $objAuth ) )
-	{
-		$aryData["popenview"] = 'hidden';
-	}
-
-
-
-
-	//-------------------------------------------------------------------------
-	// ■「製品」にログインユーザーが属しているかチェック
-	//-------------------------------------------------------------------------
-	$strFncFlag = "PO";
-	$blnCheck = fncCheckInChargeProduct( $aryData["lngOrderNo"], $lngUserCode, $strFncFlag, $objDB );
-
-	// ユーザーが対象製品に属していない場合
-	if( !$blnCheck )
-	{
-		fncOutputError( 9060, DEF_WARNING, "", TRUE, "", $objDB );
-	}
-
-
-
-
-// 2005.07.14 K.Saito update start
-	//
-	// 「発注データ」の有効性チェックを行う
-	//
-	include "../statuscheck.php";
-	if( !fncPoDataStatusCheck( $aryData["lngOrderNo"], $objDB) )
-	{
-		return false;
-	}
-// 2005.07.14 K.Saito update end
+	// // 2005.07.14 K.Saito update start
+	// //
+	// // 「発注データ」の有効性チェックを行う
+	// //
+	// include "../statuscheck.php";
+	// if( !fncPoDataStatusCheck( $aryData["lngOrderNo"], $objDB) )
+	// {
+	// 	return false;
+	// }
+	// // 2005.07.14 K.Saito update end
 
 
 	// check
@@ -285,13 +282,13 @@
 			$aryData["strMode"] = "check";
 			$aryData["RENEW"] = TRUE;
 			
-// 2004.04.08 suzukaze update start
+			// 2004.04.08 suzukaze update start
 			$aryData["lngCalcCode"] = DEF_CALC_KIRISUTE;
-// 2004.04.08 suzukaze update end
+			// 2004.04.08 suzukaze update end
 
-// 2004.04.19 suzukaze update start
+			// 2004.04.19 suzukaze update start
 			$aryData["strPageCondition"] = "renew";
-// 2004.04.19 suzukaze update end
+			// 2004.04.19 suzukaze update end
 
 			// submit関数
 			$aryData["lngRegistConfirm"] = 0;
@@ -457,9 +454,9 @@
 
 			$aryData["strActionURL"] = "/po/regist/index2.php?strSessionID=".$aryData["strSessionID"];
 
-// 2004.04.08 suzukaze update start
+			// 2004.04.08 suzukaze update start
 			$aryData["lngCalcCode"] = DEF_CALC_KIRISUTE;
-// 2004.04.08 suzukaze update end
+			// 2004.04.08 suzukaze update end
 
 
 
@@ -512,216 +509,222 @@
 
 	}
 
+	// 発注書
+	$aryResult = fncGetPurchaseOrderEdit($aryData["lngPurchaseOrderNo"], $aryData["lngRevisionNo"], $objDB);
+	if(!$aryResult) { return false; }
+
+	// ヘッダ
+	$aryNewResult["strOrderCode"]          = $aryResult[0]["strordercode"];
+	$aryNewResult["lngRevisionNo"]         = sprintf("%02d", $aryResult[0]["lngrevisionno"]);
+	$aryNewResult["dtmExpirationDate"]     = $aryResult[0]["dtmexpirationdate"];
+	$aryNewResult["strProductCode"]        = $aryResult[0]["strproductcode"];
+	$aryNewResult["PayConditionDisabled"]  = fncPulldownMenu(0, $aryResult[0]["lngpayconditioncode"], "", $objDB);
+	$aryNewResult["MonetaryUnitDisabled"]  = fncPulldownMenu(1, $aryResult[0]["lngmonetaryunitcode"], "", $objDB);
+	$aryNewResult["strCustomerCode"]       = $aryResult[0]["strcustomercode"];
+	$aryNewResult["strCustomerName"]       = $aryResult[0]["strcustomername"];
+	$aryNewResult["strGroupDisplayCode"]   = $aryResult[0]["strgroupdisplaycode"];
+	$aryNewResult["strGroupDisplayName"]   = $aryResult[0]["strgroupdisplayname"];
+	$aryNewResult["strProductName"]        = $aryResult[0]["strproductname"];
+	$aryNewResult["strProductEnglishName"] = $aryResult[0]["strproductenglishname"];
+	$aryNewResult["lngLocationCode"]       = $aryResult[0]["strcustomercode"];
+	$aryNewResult["strLocationName"]       = $aryResult[0]["strcustomername"];
+	$aryNewResult["strNote"]               = $aryResult[0]["strnote"];
+
+	// 明細
+	$aryNewResult["strPurchaseOrderDetail"] = fncGetPurchaseOrderDetailHtml($aryResult, $objDB);
 
 
 
 
-	// 権限グループコード(ユーザー以下)チェック
-	$blnAG = fncCheckUserAuthorityGroupCode( $lngUserCode, $aryData["strSessionID"], $objDB );
-
-	// 「ユーザー」以下の場合
-	if( $blnAG )
-	{
-		// 承認ルート存在チェック
-		$blnWF = fncCheckWorkFlowRoot( $lngUserCode, $aryData["strSessionID"], $objDB );
-
-		// 承認ルートが存在しない場合
-		if( !$blnWF )
-		{
-			fncOutputError( 9060, DEF_WARNING, "", TRUE, "", $objDB );
-		}
-	}
 
 
 
+	// // 最初のページ
+	// $aryQuery   = array();
+	// $aryQuery[] = "SELECT ";
+	// $aryQuery[] = "lngrevisionno, ";								// リビジョン番号
+	// $aryQuery[] = "strordercode, ";									// 発注コード
+	// $aryQuery[] = "strrevisecode as strReviseCode, ";				// リバイズコード
+	// $aryQuery[] = "To_char( dtmAppropriationDate, 'YYYY/mm/dd') as dtmOrderAppDate,";	// 計上日
+	// $aryQuery[] = "lngcustomercompanycode as lngCustomerCode, ";	// 会社コード（仕入先）
+	// //$aryQuery[] = "lnggroupcode as lngInChargeGroupCode, ";		// 部門
+	// //$aryQuery[] = "lngusercode as lngInChargeUserCode, ";			// 担当者
+	// $aryQuery[] = "lngorderstatuscode, ";							// 発注状態コード
+	// $aryQuery[] = "lngmonetaryunitcode, ";							// 通貨単位コード
+	// $aryQuery[] = "lngmonetaryratecode, ";							// 通貨レートコード
+	// $aryQuery[] = "curconversionrate, ";							// 換算レート
+	// $aryQuery[] = "lngpayconditioncode, ";							// 支払条件コード
+	// $aryQuery[] = "curtotalprice, ";								// 合計金額
+	// $aryQuery[] = "lngdeliveryplacecode as lngLocationCode, ";		// 納品場所コード / 会社コード
+	// $aryQuery[] = "To_char( dtmexpirationdate, 'YYYY/mm/dd') as dtmexpirationdate, ";		// 発注有効期限日
+	// $aryQuery[] = "strNote ";										// 備考
+	// $aryQuery[] = "FROM m_order ";
+	// $aryQuery[] = "WHERE ";
+	// $aryQuery[] = "lngorderno = ". $aryData["lngOrderNo"];
 
 
-	// 最初のページ
-	$aryQuery   = array();
-	$aryQuery[] = "SELECT ";
-	$aryQuery[] = "lngrevisionno, ";								// リビジョン番号
-	$aryQuery[] = "strordercode, ";									// 発注コード
-	$aryQuery[] = "strrevisecode as strReviseCode, ";				// リバイズコード
-	$aryQuery[] = "To_char( dtmAppropriationDate, 'YYYY/mm/dd') as dtmOrderAppDate,";	// 計上日
-	$aryQuery[] = "lngcustomercompanycode as lngCustomerCode, ";	// 会社コード（仕入先）
-	//$aryQuery[] = "lnggroupcode as lngInChargeGroupCode, ";		// 部門
-	//$aryQuery[] = "lngusercode as lngInChargeUserCode, ";			// 担当者
-	$aryQuery[] = "lngorderstatuscode, ";							// 発注状態コード
-	$aryQuery[] = "lngmonetaryunitcode, ";							// 通貨単位コード
-	$aryQuery[] = "lngmonetaryratecode, ";							// 通貨レートコード
-	$aryQuery[] = "curconversionrate, ";							// 換算レート
-	$aryQuery[] = "lngpayconditioncode, ";							// 支払条件コード
-	$aryQuery[] = "curtotalprice, ";								// 合計金額
-	$aryQuery[] = "lngdeliveryplacecode as lngLocationCode, ";		// 納品場所コード / 会社コード
-	$aryQuery[] = "To_char( dtmexpirationdate, 'YYYY/mm/dd') as dtmexpirationdate, ";		// 発注有効期限日
-	$aryQuery[] = "strNote ";										// 備考
-	$aryQuery[] = "FROM m_order ";
-	$aryQuery[] = "WHERE ";
-	$aryQuery[] = "lngorderno = ". $aryData["lngOrderNo"];
+	// $strQuery = implode("\n", $aryQuery );
 
 
-	$strQuery = implode("\n", $aryQuery );
+	// // クエリー実行
+	// $objDB->freeResult( $lngResultID );
 
+	// if ( !$lngResultID = $objDB->execute( $strQuery ) )
+	// {
+	// 	fncOutputError ( 9051, DEF_ERROR, "", TRUE, "", $objDB );
+	// }
 
-	// クエリー実行
-	$objDB->freeResult( $lngResultID );
-
-	if ( !$lngResultID = $objDB->execute( $strQuery ) )
-	{
-		fncOutputError ( 9051, DEF_ERROR, "", TRUE, "", $objDB );
-	}
-
-	$aryQueryResult = pg_fetch_array( $lngResultID, 0, PGSQL_ASSOC );
+	// $aryQueryResult = pg_fetch_array( $lngResultID, 0, PGSQL_ASSOC );
 
 
 
-	//-------------------------------------------------------------------------
-	// 発注状態のチェック
-	//-------------------------------------------------------------------------
-	// 申請中の場合
-	if( $aryQueryResult["lngorderstatuscode"] == DEF_ORDER_APPLICATE )
-	{
-		fncOutputError( 505, DEF_WARNING, "", TRUE, "", $objDB );
-	}
+	// //-------------------------------------------------------------------------
+	// // 発注状態のチェック
+	// //-------------------------------------------------------------------------
+	// // 申請中の場合
+	// if( $aryQueryResult["lngorderstatuscode"] == DEF_ORDER_APPLICATE )
+	// {
+	// 	fncOutputError( 505, DEF_WARNING, "", TRUE, "", $objDB );
+	// }
 
 
-	//-------------------------------------------------------------------------
-	// 状態コードが「 null / "" 」の場合、「0」を再設定
-	//-------------------------------------------------------------------------
-	$aryQueryResult["lngorderstatuscode"] = fncCheckNullStatus( $aryQueryResult["lngorderstatuscode"] );
+	// //-------------------------------------------------------------------------
+	// // 状態コードが「 null / "" 」の場合、「0」を再設定
+	// //-------------------------------------------------------------------------
+	// $aryQueryResult["lngorderstatuscode"] = fncCheckNullStatus( $aryQueryResult["lngorderstatuscode"] );
 
 
 
 
-	$aryQuery   = array();
-	$aryQuery[] = "SELECT ";
-	$aryQuery[] = "lngorderdetailno, ";								// 発注明細番号
-	$aryQuery[] = "lngrevisionno, ";								// リビジョン番号
-	$aryQuery[] = "strproductcode, ";								// 製品コード
-	$aryQuery[] = "lngstocksubjectcode, ";							// 仕入科目コード
-	$aryQuery[] = "lngstockitemcode, ";								// 仕入部品コード
-	$aryQuery[] = "To_char( dtmdeliverydate, 'YYYY/mm/dd' ) as dtmdeliverydate,";	// 納品日
-	$aryQuery[] = "lngdeliverymethodcode, ";						// 運搬方法コード
-	$aryQuery[] = "lngconversionclasscode, ";						// 換算区分コード / 1：単位計上/ 2：荷姿単位計上
-	$aryQuery[] = "curproductprice, ";								// 製品価格
-	$aryQuery[] = "lngproductquantity, ";							// 製品数量
-	$aryQuery[] = "lngproductunitcode, ";							// 製品単位コード
-	$aryQuery[] = "lngtaxclasscode, ";								// 消費税区分コード
-	$aryQuery[] = "lngtaxcode, ";									// 消費税コード
-	$aryQuery[] = "curtaxprice, ";									// 消費税金額
-	$aryQuery[] = "cursubtotalprice, ";								// 小計金額
-	$aryQuery[] = "strnote, ";										// 備考
-	$aryQuery[] = "strmoldno as strserialno ";						// シリアル番号
-	$aryQuery[] = "FROM t_orderdetail ";
-	$aryQuery[] = "WHERE ";
-	$aryQuery[] = "lngorderno = ". $aryData["lngOrderNo"];
-	$aryQuery[] = " ORDER BY lngSortKey ASC";
-	$strQuery = "";
-	$strQuery = implode("\n", $aryQuery );
+	// $aryQuery   = array();
+	// $aryQuery[] = "SELECT ";
+	// $aryQuery[] = "lngorderdetailno, ";								// 発注明細番号
+	// $aryQuery[] = "lngrevisionno, ";								// リビジョン番号
+	// $aryQuery[] = "strproductcode, ";								// 製品コード
+	// $aryQuery[] = "lngstocksubjectcode, ";							// 仕入科目コード
+	// $aryQuery[] = "lngstockitemcode, ";								// 仕入部品コード
+	// $aryQuery[] = "To_char( dtmdeliverydate, 'YYYY/mm/dd' ) as dtmdeliverydate,";	// 納品日
+	// $aryQuery[] = "lngdeliverymethodcode, ";						// 運搬方法コード
+	// $aryQuery[] = "lngconversionclasscode, ";						// 換算区分コード / 1：単位計上/ 2：荷姿単位計上
+	// $aryQuery[] = "curproductprice, ";								// 製品価格
+	// $aryQuery[] = "lngproductquantity, ";							// 製品数量
+	// $aryQuery[] = "lngproductunitcode, ";							// 製品単位コード
+	// $aryQuery[] = "lngtaxclasscode, ";								// 消費税区分コード
+	// $aryQuery[] = "lngtaxcode, ";									// 消費税コード
+	// $aryQuery[] = "curtaxprice, ";									// 消費税金額
+	// $aryQuery[] = "cursubtotalprice, ";								// 小計金額
+	// $aryQuery[] = "strnote, ";										// 備考
+	// $aryQuery[] = "strmoldno as strserialno ";						// シリアル番号
+	// $aryQuery[] = "FROM t_orderdetail ";
+	// $aryQuery[] = "WHERE ";
+	// $aryQuery[] = "lngorderno = ". $aryData["lngOrderNo"];
+	// $aryQuery[] = " ORDER BY lngSortKey ASC";
+	// $strQuery = "";
+	// $strQuery = implode("\n", $aryQuery );
 
 
 
 
-	$objDB->freeResult( $lngResultID );
+	// $objDB->freeResult( $lngResultID );
 
-	if ( !$lngResultID = $objDB->execute( $strQuery ) )
-	{
-		fncOutputError ( 9051, DEF_ERROR, "", TRUE, "", $objDB );
-	}
+	// if ( !$lngResultID = $objDB->execute( $strQuery ) )
+	// {
+	// 	fncOutputError ( 9051, DEF_ERROR, "", TRUE, "", $objDB );
+	// }
 	
-	if( !$lngResultNum = pg_num_rows( $lngResultID ) )
-	{
-		fncOutputError ( 9051, DEF_ERROR, "", TRUE, "", $objDB );
-	}
-	else
-	{
-		for( $i = 0; $i < $lngResultNum; $i++ )
-		{
-			$aryQueryResult2[] = pg_fetch_array( $lngResultID, $i, PGSQL_ASSOC );
-		}
-	}
+	// if( !$lngResultNum = pg_num_rows( $lngResultID ) )
+	// {
+	// 	fncOutputError ( 9051, DEF_ERROR, "", TRUE, "", $objDB );
+	// }
+	// else
+	// {
+	// 	for( $i = 0; $i < $lngResultNum; $i++ )
+	// 	{
+	// 		$aryQueryResult2[] = pg_fetch_array( $lngResultID, $i, PGSQL_ASSOC );
+	// 	}
+	// }
 
 
 
-	$lngWorkflowOrderCode = fncGetMasterValue( "m_workflow", "strworkflowkeycode", "lngworkflowordercode", $aryData["lngOrderNo"] . ":str", '', $objDB );
+	// $lngWorkflowOrderCode = fncGetMasterValue( "m_workflow", "strworkflowkeycode", "lngworkflowordercode", $aryData["lngOrderNo"] . ":str", '', $objDB );
 
 
-	// 関数 fncChangeDisplayNameで表示用データに変換(HEADER）
-	$aryNewResult = fncChangeData2( $aryQueryResult , $objDB );
+	// // 関数 fncChangeDisplayNameで表示用データに変換(HEADER）
+	// $aryNewResult = fncChangeData2( $aryQueryResult , $objDB );
 
 
-	// 明細行をhidden値に変換する
-	$aryNewResult["strDetailHidden"] = fncDetailHidden( $aryQueryResult2 ,"", $objDB );
-
-
-
-	// プルダウンメニューの生成
-	// 通貨
-	$lngMonetaryUnitCode = fncGetMasterValue("m_monetaryunit", "lngmonetaryunitcode","strmonetaryunitsign", $aryQueryResult["lngmonetaryunitcode"], '', $objDB );
-
-	$aryNewResult["lngmonetaryunitcode"] 		= fncPulldownMenu( 0, $lngMonetaryUnitCode, '', $objDB );
-
-	// レートタイプ
-	$aryNewResult["lngmonetaryratecode"]		= fncPulldownMenu( 1, $aryQueryResult["lngmonetaryratecode"], '', $objDB );
-	// 支払条件
-	$aryNewResult["lngpayconditioncode"]		= fncPulldownMenu( 2, $aryQueryResult["lngpayconditioncode"], '', $objDB );
-	// 仕入科目
-	$aryNewResult["strStockSubjectCode"]		= fncPulldownMenu( 3, $aryQueryResult["strStockSubjectCode"], '', $objDB );
-	// 運搬方法
-	$aryNewResult["lngCarrierCode"]				= fncPulldownMenu( 6, $aryQueryResult["lngCarrierCode"], '', $objDB );
-	// 製品単位
-	$aryNewResult["lngProductUnitCode_gs"]		= fncPulldownMenu( 7, $aryQueryResult["lngProductUnitCode"], '', $objDB );
-	// 荷姿単位
-	$aryNewResult["lngProductUnitCode_ps"]		= fncPulldownMenu( 8, $aryQueryResult["lngPackingUnitCode"], '', $objDB );
-
-
-	//-------------------------------------------------------------------------
-	// 発注状態(表示用)の取得
-	//-------------------------------------------------------------------------
-	$aryNewResult["lngOrderStatusCode_Display"] = fncGetMasterValue( "m_orderstatus", "lngorderstatuscode", "strorderstatusname", $aryNewResult["lngorderstatuscode"],'', $objDB );
+	// // 明細行をhidden値に変換する
+	// $aryNewResult["strDetailHidden"] = fncDetailHidden( $aryQueryResult2 ,"", $objDB );
 
 
 
-	$aryNewResult["strMode"] = "check";									// モード（次の動作）check→renew
-	$aryNewResult["strSessionID"] = $aryData["strSessionID"];			// セッション
-	$aryNewResult["strActionUrl"] = "renew.php"; 						// formのaction
-	$aryNewResult["lngOrderNo"] = $aryData["lngOrderNo"];				// オーダ番号
+	// // プルダウンメニューの生成
+	// // 通貨
+	// $lngMonetaryUnitCode = fncGetMasterValue("m_monetaryunit", "lngmonetaryunitcode","strmonetaryunitsign", $aryQueryResult["lngmonetaryunitcode"], '', $objDB );
+
+	// $aryNewResult["lngmonetaryunitcode"] 		= fncPulldownMenu( 0, $lngMonetaryUnitCode, '', $objDB );
+
+	// // レートタイプ
+	// $aryNewResult["lngmonetaryratecode"]		= fncPulldownMenu( 1, $aryQueryResult["lngmonetaryratecode"], '', $objDB );
+	// // 支払条件
+	// $aryNewResult["lngpayconditioncode"]		= fncPulldownMenu( 2, $aryQueryResult["lngpayconditioncode"], '', $objDB );
+	// // 仕入科目
+	// $aryNewResult["strStockSubjectCode"]		= fncPulldownMenu( 3, $aryQueryResult["strStockSubjectCode"], '', $objDB );
+	// // 運搬方法
+	// $aryNewResult["lngCarrierCode"]				= fncPulldownMenu( 6, $aryQueryResult["lngCarrierCode"], '', $objDB );
+	// // 製品単位
+	// $aryNewResult["lngProductUnitCode_gs"]		= fncPulldownMenu( 7, $aryQueryResult["lngProductUnitCode"], '', $objDB );
+	// // 荷姿単位
+	// $aryNewResult["lngProductUnitCode_ps"]		= fncPulldownMenu( 8, $aryQueryResult["lngPackingUnitCode"], '', $objDB );
+
+
+	// //-------------------------------------------------------------------------
+	// // 発注状態(表示用)の取得
+	// //-------------------------------------------------------------------------
+	// $aryNewResult["lngOrderStatusCode_Display"] = fncGetMasterValue( "m_orderstatus", "lngorderstatuscode", "strorderstatusname", $aryNewResult["lngorderstatuscode"],'', $objDB );
+
+
+
+	// $aryNewResult["strMode"] = "check";									// モード（次の動作）check→renew
+	// $aryNewResult["strSessionID"] = $aryData["strSessionID"];			// セッション
+	// $aryNewResult["strActionUrl"] = "renew.php"; 						// formのaction
+	// $aryNewResult["lngOrderNo"] = $aryData["lngOrderNo"];				// オーダ番号
 	
-	if( is_array( $aryQueryResult2 ) )
-	{
-		$aryNewResult["MonetaryUnitDisabled"] = " disabled";
-	}
+	// if( is_array( $aryQueryResult2 ) )
+	// {
+	// 	$aryNewResult["MonetaryUnitDisabled"] = " disabled";
+	// }
 
 
 
-	// 権限グループコードの取得
-	$lngAuthorityGroupCode = fncGetUserAuthorityGroupCode( $lngUserCode, $aryData["strSessionID"], $objDB );
+	// // 権限グループコードの取得
+	// $lngAuthorityGroupCode = fncGetUserAuthorityGroupCode( $lngUserCode, $aryData["strSessionID"], $objDB );
 
-	// 承認ルートの生成
-	// 「マネージャー」以上の場合
-	if( $lngAuthorityGroupCode <= DEF_DIRECT_REGIST_AUTHORITY_CODE )
-	{
-		$aryNewResult["lngWorkflowOrderCode"] = '<option value="0">承認なし</option>';
-	}
-	else
-	{
-		$aryNewResult["lngWorkflowOrderCode"] = fncWorkFlow( $lngUserCode , $objDB , $lngWorkflowOrderCode );
-	}
-
-
-	//ヘッダ備考の特殊文字変換
-	$aryNewResult["strnote"] = fncHTMLSpecialChars( $aryNewResult["strnote"] );
-
-// 2004.04.08 suzukaze update start
-	$aryNewResult["lngCalcCode"] = DEF_CALC_KIRISUTE;
-// 2004.04.08 suzukaze update end
-
-// 2004.04.19 suzukaze update start
-	$aryData["strPageCondition"] = "renew";
-// 2004.04.19 suzukaze update end
+	// // 承認ルートの生成
+	// // 「マネージャー」以上の場合
+	// if( $lngAuthorityGroupCode <= DEF_DIRECT_REGIST_AUTHORITY_CODE )
+	// {
+	// 	$aryNewResult["lngWorkflowOrderCode"] = '<option value="0">承認なし</option>';
+	// }
+	// else
+	// {
+	// 	$aryNewResult["lngWorkflowOrderCode"] = fncWorkFlow( $lngUserCode , $objDB , $lngWorkflowOrderCode );
+	// }
 
 
-	$aryNewResult["lngSelfLoginUserCode"] = $lngUserCode; // 入力者コード
+	// //ヘッダ備考の特殊文字変換
+	// $aryNewResult["strnote"] = fncHTMLSpecialChars( $aryNewResult["strnote"] );
+
+	// // 2004.04.08 suzukaze update start
+	// $aryNewResult["lngCalcCode"] = DEF_CALC_KIRISUTE;
+	// // 2004.04.08 suzukaze update end
+
+	// // 2004.04.19 suzukaze update start
+	// $aryData["strPageCondition"] = "renew";
+	// // 2004.04.19 suzukaze update end
+
+
+	// $aryNewResult["lngSelfLoginUserCode"] = $lngUserCode; // 入力者コード
 
 
 	$objDB->close();
@@ -732,7 +735,7 @@
 	// ヘルプ対応
 	$aryNewResult["lngFunctionCode"] = DEF_FUNCTION_PO5;
 	
-	echo fncGetReplacedHtml( "po/regist/parts.tmpl", $aryNewResult ,$objAuth );
+	echo fncGetReplacedHtml( "po/regist/renew.tmpl", $aryNewResult ,$objAuth );
 	
 	return true;
 	

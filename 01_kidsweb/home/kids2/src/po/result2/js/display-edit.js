@@ -3,10 +3,11 @@
     $('img.edit.button').on('click', function(){
         url = '/po/regist/renew.php';
         lngorderno = 'lngPurchaseOrderNo=' + $(this).attr('lngpurchaseorderno');
+        lngrevisionno = 'lngRevisionNo=' + $(this).attr('lngrevisionno');
         sessionID = 'strSessionID=' + getUrlVars()["strSessionID"];
 
         // 別ウィンドウで表示
-        open(url + '?' + lngorderno + '&' + sessionID, 'display-detail', 'resizable=yes, scrollbars=yes, menubar=no');
+        open(url + '?' + lngorderno + '&' + lngrevisionno + '&' + sessionID, 'display-detail', 'resizable=yes, scrollbars=yes, menubar=no');
     });
 })();
 

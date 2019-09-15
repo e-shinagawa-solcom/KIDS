@@ -922,3 +922,88 @@ function fncCreatePurchaseOrderHtml($aryPurchaseOrder){
 
     return $strHtml;
 }
+
+function fncGetPurchaseOrderEdit($lngpurchaseorderno, $lngrevisionno, $objDB){
+	$aryQuery[] = "SELECT";
+	$aryQuery[] = "   mp.lngpurchaseorderno";
+	$aryQuery[] = "  ,mp.lngrevisionno";
+	$aryQuery[] = "  ,mp.strrevisecode";
+	$aryQuery[] = "  ,mp.strordercode";
+	$aryQuery[] = "  ,TO_CHAR(mp.dtmexpirationdate, 'YYYY/MM/DD') as dtmexpirationdate";
+	$aryQuery[] = "  ,mp.strproductcode";
+	$aryQuery[] = "  ,mp.strproductname";
+	$aryQuery[] = "  ,mp.strproductenglishname";
+	$aryQuery[] = "  ,TO_CHAR(mp.dtminsertdate, 'YYYY/MM/DD') as dtminsertdate";
+	$aryQuery[] = "  ,mp.lnggroupcode";
+	$aryQuery[] = "  ,mg.strgroupdisplaycode";
+	$aryQuery[] = "  ,mg.strgroupdisplayname";
+	$aryQuery[] = "  ,mp.lngcustomercode";
+	$aryQuery[] = "  ,mc1.strcompanydisplaycode as strcustomercode";
+	$aryQuery[] = "  ,mc1.strcompanydisplayname as strcustomername";
+	$aryQuery[] = "  ,mp.lngdeliveryplacecode";
+	$aryQuery[] = "  ,mc2.strcompanydisplaycode as strdeliveryplacecode";
+	$aryQuery[] = "  ,mc2.strcompanydisplayname as strdeliveryplacename";
+	$aryQuery[] = "  ,mp.lngpayconditioncode";
+    $aryQuery[] = "  ,mp.lngmonetaryunitcode";
+    $aryQuery[] = "  ,mp.strmonetaryunitsign";
+	$aryQuery[] = "  ,mp.curtotalprice";
+	$aryQuery[] = "  ,mp.strnote";
+	$aryQuery[] = "  ,pd.lngpurchaseorderdetailno";
+	$aryQuery[] = "  ,pd.lngstocksubjectcode";
+	$aryQuery[] = "  ,mss.strstocksubjectname";
+	$aryQuery[] = "  ,pd.lngstockitemcode";
+	$aryQuery[] = "  ,msi.strstockitemname";
+	$aryQuery[] = "  ,pd.lngdeliverymethodcode";
+	$aryQuery[] = "  ,pd.curproductprice";
+	$aryQuery[] = "  ,pd.lngproductquantity";
+    $aryQuery[] = "  ,pd.cursubtotalprice";
+    $aryQuery[] = "  ,TO_CHAR(pd.dtmdeliverydate, 'YYYY/MM/DD') AS dtmdeliverydate";
+	$aryQuery[] = "  ,pd.strnote as strdetailnote";
+	$aryQuery[] = "FROM m_purchaseorder mp";
+	$aryQuery[] = "LEFT JOIN t_purchaseorderdetail pd ON mp.lngpurchaseorderno = pd.lngpurchaseorderno AND mp.lngrevisionno = pd.lngrevisionno";
+	$aryQuery[] = "LEFT JOIN m_group mg ON mp.lnggroupcode = mg.lnggroupcode";
+	$aryQuery[] = "LEFT JOIN m_company mc1 ON mp.lngcustomercode = mc1.lngcompanycode";
+	$aryQuery[] = "LEFT JOIN m_company mc2 ON mp.lngdeliveryplacecode = mc2.lngcompanycode";
+	$aryQuery[] = "LEFT JOIN m_stocksubject mss ON pd.lngstocksubjectcode = mss.lngstocksubjectcode";
+	$aryQuery[] = "LEFT JOIN m_stockitem msi ON pd.lngstockitemcode = msi.lngstockitemcode AND pd.lngstocksubjectcode = msi.lngstocksubjectcode";
+	$aryQuery[] = "WHERE mp.lngpurchaseorderno = " . $lngpurchaseorderno;
+	$aryQuery[] = "AND   mp.lngrevisionno = " . $lngrevisionno;
+
+	$srtQuery = "";
+	$strQuery = implode("\n", $aryQuery);
+
+	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
+	if ( !$lngResultNum )
+	{
+		return FALSE;
+	}
+
+	for ( $i = 0; $i < $lngResultNum; $i++ ) {
+		$aryResult[] = $objDB->fetchArray( $lngResultID, $i );
+	}
+
+	$objDB->freeResult( $lngResultID );
+
+	return $aryResult;
+}
+
+function fncGetPurchaseOrderDetailHtml($aryResult, $objDB){
+    for($i = 0; $i < count($aryResult); $i++){
+        $aryHtml[] = "  <tr>";
+        $aryHtml[] = "      <td name=\"rownum\">" . ($i + 1) . "</td>";
+        $aryHtml[] = "      <td class=\"detailOrderCode\">" . sprintf("%s_%02d", $aryResult[$i]["strordercode"], $aryResult[$i]["lngrevisionno"]) . "</td>";
+        $aryHtml[] = "      <td class=\"detailPurchaseorderdetailno\">" . $aryResult[$i]["lngpurchaseorderdetailno"] . "</td>";
+        $aryHtml[] = "      <td class=\"detailStockSubjectCode\">" . sprintf("[%s] %s", $aryResult[$i]["lngstocksubjectcode"], $aryResult[$i]["strstocksubjectname"]) . "</td>";
+        $aryHtml[] = "      <td class=\"detailStockItemCode\">" . sprintf("[%s] %s", $aryResult[$i]["lngstockitemcode"], $aryResult[$i]["strstockitemname"]) . "</td>";
+        $aryHtml[] = "      <td class=\"detailDeliveryMethodCode\"><select name=\"lngdeliverymethodcode\">" . fncPulldownMenu(2, $aryResult[$i]["lngdeliverymethodcode"], "", $objDB) ."</select></td>";
+        $aryHtml[] = "      <td class=\"detailProductPrice\">" . sprintf("%s %s", $aryResult[$i]["strmonetaryunitsign"], number_format($aryResult[$i]["curproductprice"], 4)) . "</td>";
+        $aryHtml[] = "      <td class=\"detailProductQuantity\">" . number_format($aryResult[$i]["lngproductquantity"], 0) . "</td>";
+        $aryHtml[] = "      <td class=\"detailSubtotalPrice\">" . sprintf("%s %s", $aryResult[$i]["strmonetaryunitsign"], number_format($aryResult[$i]["cursubtotalprice"], 2)) . "</td>";
+        $aryHtml[] = "      <td class=\"detailDeliveryDate\">" . $aryResult[$i]["dtmdeliverydate"] . "</td>";
+        $aryHtml[] = "      <td class=\"detailDetailNote\">" . $aryResult[$i]["strdetailnote"] . "</td>";
+        $aryHtml[] = "      <td>" . "</td>";
+        $aryHtml[] = "  </tr>";
+    }
+
+    return implode("\n", $aryHtml);
+}

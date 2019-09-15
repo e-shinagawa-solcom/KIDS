@@ -265,7 +265,7 @@
 	}
 
 	// テーブル構成で検索結果を取得、ＨＴＭＬ形式で出力する
-	$aryHtml["strHtml"] = fncSetPurchaseTable ( $aryResult, $aryViewColumn, $aryData, $aryUserAuthority, $aryTytle, $objDB, $objCache, $aryTableViewName );
+	$aryHtml["strHtml"] = fncSetPurchaseTable ( $aryResult, $arySearchColumn, $aryViewColumn, $aryData, $aryUserAuthority, $aryTytle, $objDB, $objCache, $aryTableViewName );
 
 	// POSTされたデータをHiddenにて設定する
 	unset($ary_keys);

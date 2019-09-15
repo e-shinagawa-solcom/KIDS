@@ -1624,7 +1624,7 @@ function fncSetPurchaseOrderHtml($aryViewColumn, $aryResult, $aryUserAuthority){
 					if($aryResult[$i]["lngrevisionno"] == -1){
 						$aryHtml[] = "  <td></td>";
 					} else {
-						$aryHtml[] = "  <td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/detail_off_bt.gif\" lngpurchaseorderno=\"" . $aryResult[$i]["lngpurchaseorderno"] . "\" class=\"edit button\"></td>";
+						$aryHtml[] = "  <td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/detail_off_bt.gif\" lngpurchaseorderno=\"" . $aryResult[$i]["lngpurchaseorderno"] . "\" lngrevisionno=\"" . $aryResult[$i]["lngrevisionno"] . "\" class=\"edit button\"></td>";
 					}
 				}
 				// ÍúÎò¥Ü¥¿¥ó
@@ -2122,4 +2122,5 @@ function fncResortSearchColumn2($aryViewColumn){
 
 	return $aryResult;
 }
+
 ?>
