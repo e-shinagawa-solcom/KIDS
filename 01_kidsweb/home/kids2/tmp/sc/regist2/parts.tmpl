@@ -120,10 +120,6 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutMsw(); initLayout
 <span id="SegABottom"></span>
 <!-- END BOTTOM -->
 
-<!-- START QUERY BUTTON -->
-<!-- <span id="SegAClearBt" onclick="fncResetFrm( window.HSO );"></span> -->
-<!-- END QUERY BUTTON -->
-
 <!-- 検索条件入力ボタン -->
 <span id="SearchBt">
 	<a href="#">
@@ -170,20 +166,103 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutMsw(); initLayout
 	<img onclick="" src="/img/type01/cmn/querybt/select_changedown.gif" alt="" style="width: 25px; height: 25px;">
 </span>
 
-<!-- 確定登録ボタン -->
-<span id="FixEntryBtn">
+<!-- プレビューボタン -->
+<span id="PreviewBtn">
 	<img src="/img/type01/cmn/querybt/preview_off_ja_bt.gif" alt="">
 </span>
-<!-- クリアボタン -->
-<!--<span id="ClearBtn">
-	<img src="/img/type01/cmn/querybt/grayclear_off_ja_bt.gif" alt="">
-</span>-->
-
-
 
 <!-- START SEGMENTS -->
 <!-- ヘッダ -->
-<!-- 発注有効期限日 -->
+
+<span id="SegADrafter">起票者</span>
+<span id="VarsADrafter">
+	<input style="ime-mode:disabled;" class="TxtStyle03L" type="text" name="lngLocationCode" value="_%lngLocationCode%_">&nbsp;<input style="ime-mode:disabled;" class="disTxt23L" type="text" name="strLocationName" value="_%strLocationName%_" contenteditable="false">
+</span>
+<span id="MSWBt04" onclick="fncGetObjectName( window.MLwin , window.HSO.lngLocationCode , window.HSO.strLocationName );DisplayerM04( '' , document.all.Mdata04 , window.MLwin.document.all.lngLocationCode  );ExchangeM04( 0 , window.self );fncFocusType( window.MLwin , 'locationTop' );return false;"></span>
+
+<span id="SegACustomer">顧客</span>
+<span id="VarsACustomer">
+	<input style="ime-mode:disabled;" class="TxtStyle03L" type="text" name="lngLocationCode" value="_%lngLocationCode%_">&nbsp;<input style="ime-mode:disabled;" class="disTxt32L" type="text" name="strLocationName" value="_%strLocationName%_" contenteditable="false">
+</span>
+
+<span id="SegACustomerResponder">顧客側担当者</span>
+<span id="VarsACustomerResponder">
+	<input style="ime-mode:disabled;" class="disTxt19L" type="text" name="strCustomerResponder" value="_%strCustomerResponder%_" >様
+</span>
+
+<span id="SegADeliveryDate">納品日</span>
+<span id="VarsADeliveryDate">
+	<input style="ime-mode:disabled;" class="TxtStyle05L" type="text" name="dtmDeliveryDate" value="_%dtmDeliveryDate%_" maxlength="10" 
+		onfocus="chColorOn(this);" 
+		onblur="chColorOff(this);fncCheckDate( this );" 
+		tabindex="1">
+</span>
+<span id="DateBtB" onclick="window.MDateBwin.fncCalendar( window.HSO.dtmDeliveryDate, 'DateB' );DisplayerM10_2( '' , document.all.Mdata10_2 );ExchangeM10_2( 0 , window.self );return false;"></span>
+
+<span id="SegADeliveryPlaceName">納品先</span>
+<span id="VarsADeliveryPlaceName">
+	<input style="ime-mode:disabled;" class="TxtStyle03L" type="text" name="lngLocationCode" value="_%lngLocationCode%_">&nbsp;<input style="ime-mode:disabled;" class="disTxt32L" type="text" name="strLocationName" value="_%strLocationName%_" contenteditable="false">
+</span>
+<span id="MSWBt03" onclick="fncGetObjectName( window.MGwin , strProductCode , strProductName );DisplayerM03( '' , document.all.Mdata03 , window.MGwin.document.all.strProductCode  );ExchangeM03( 0 , window.self );fncFocusType( window.MGwin , 'productsTop' );return false;"></span>
+
+<span id="SegADeliveryDestResponder">納品先担当者</span>
+<span id="VarsADeliveryDestResponder">
+	<input style="ime-mode:disabled;" class="disTxt19L" type="text" name="strDeliveryDestResponder" value="_%strDeliveryDestResponder%_" >様
+</span>
+
+<span id="SegANote">備考</span>
+<span id="VarsANote">
+	<textarea name="strNote"></textarea>
+</span>
+
+<span id="SegATaxClass">消費税区分</span>
+<span id="VarsATaxClass">
+	<select name="lngTaxClassCode" class="Slt13">
+		<OPTION value=1>1:非課税</OPTION>
+		<OPTION value=2>2:課税</OPTION> 
+	</select>
+</span>
+
+<span id="SegATaxRate">消費税率</span>
+<span id="VarsATaxRate">
+	<select name="lngTaxClassRate" class="Slt5">
+		<OPTION value=1>10</OPTION>
+		<OPTION value=2>8</OPTION> 
+	</select>
+	&percnt;
+</span>
+
+<span id="SegATaxAmount">消費税額</span>
+<span id="VarsATaxAmount">
+	<input style="ime-mode:disabled;" class="disTxt20R" type="text" name="strTaxAmount" value="_%strTaxAmount%_" >
+</span>
+
+<span id="SegAPaymentDueDate">支払期限</span>
+<span id="VarsAPaymentDueDate">
+	<input style="ime-mode:disabled;" class="TxtStyle05L" type="text" name="dtmPaymentDueDate" value="_%dtmPaymentDueDate%_" maxlength="10" 
+		onfocus="chColorOn(this);" 
+		onblur="chColorOff(this);fncCheckDate( this );" 
+		tabindex="1">
+</span>
+<span id="DateBtC" onclick="window.MDateCwin.fncCalendar( window.HSO.dtmPaymentDueDate, 'DateC' );DisplayerM10_3( '' , document.all.Mdata10_3 );ExchangeM10_3( 0 , window.self );return false;"></span>
+
+<span id="SegAPaymentMethod">支払方法</span>
+<span id="VarsAPaymentMethod">
+	<select name="lngPaymentMethodCode" class="Slt5">
+		<OPTION value=0>T/T</OPTION>
+		<OPTION value=1>相殺</OPTION>
+	</select>
+</span>
+
+<span id="SegATotalAmount">合計金額</span>
+<span id="VarsATotalAmount">
+	<input style="ime-mode:disabled;" class="disTxt20R" type="text" name="strTaxAmount" value="_%strTaxAmount%_" >
+</span>
+
+
+
+
+<!-- 発注有効期限日 
 <span id="SegA01">発注有効期限日</span>
 <span id="VarsA01">
 	<input style="ime-mode:disabled;" class="TxtStyle05L" type="text" name="dtmExpirationDate" value="_%dtmExpirationDate%_" maxlength="10" 
@@ -192,60 +271,65 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutMsw(); initLayout
 		tabindex="1">
 </span>
 <span id="DateBtB" onclick="window.MDateBwin.fncCalendar( window.HSO.dtmExpirationDate, 'DateB' );DisplayerM10_2( '' , document.all.Mdata10_2 );ExchangeM10_2( 0 , window.self );return false;"></span>
+-->
 
-<!-- 製品コード -->
+<!-- 製品コード
 <span id="SegA02">製品コード</span>
 <span id="VarsA02">
 	<input style="ime-mode:disabled;" class="disTxt07L" type="text" name="strProductCode" value="_%strProductCode%_" maxlength="5" contenteditable="false">
 </span>
+ -->
 
-<!-- 備考 -->
-<span id="SegA05">備考</span>
-<span id="VarsA05">
-	<input style="ime-mode:enabled;" class="TxtStyle10L" name="strNote">
-</span>
 
-<!-- 営業部署 -->
+<!-- 営業部署 
 <span id="SegA11">営業部署</span>
 <span id="VarsA11">
 	<input style="ime-mode:disabled;" class="disTxt03L" type="text" name="strGroupDisplayCode" value="_%strGroupDisplayCode%_" maxlength="2" contenteditable="false">&nbsp;<input style="ime-mode:disabled;" class="disTxt46L" tyepe="text" name="strGroupDisplayName" value="_%strGroupDisplayName%_" contenteditable="false">
 </span>
+-->
 
-<!-- 製品名 -->
+<!-- 製品名 
 <span id="SegA12">製品名</span>
 <span id="VarsA12">
 	<input style="ime-mode:disabled;" class="disTxt46L" type="text" name="strProductName" value="_%strProductName%_" contenteditable="false">
 </span>
+-->
 
-<!-- 製品名(英語) -->
+<!-- 製品名(英語) 
 <span id="SegA13">製品名(英語)</span>
 <span id="VarsA13">
 	<input style="ime-mode:disabled;" class="disTxt46L" type="text" name="strProductEnglishName" value="_%strProductEnglishName%_" contenteditable="false">
 </span>
+-->
 
-<!-- 納品場所 -->
+<!-- 納品場所
 <span id="SegA14">納品場所</span>
 <span id="VarsA14">
 	<input style="ime-mode:disabled;" class="TxtStyle03L" type="text" name="lngLocationCode" value="_%lngLocationCode%_">&nbsp;<input style="ime-mode:disabled;" class="disTxt46L" type="text" name="strLocationName" value="_%strLocationName%_" contenteditable="false">
 </span>
 <span id="MSWBt04" onclick="fncGetObjectName( window.MLwin , window.HSO.lngLocationCode , window.HSO.strLocationName );DisplayerM04( '' , document.all.Mdata04 , window.MLwin.document.all.lngLocationCode  );ExchangeM04( 0 , window.self );fncFocusType( window.MLwin , 'locationTop' );return false;"></span>
+ -->
 
-<!-- 確定対象明細行選択部 -->
+<!-- 明細選択エリア -->
 <span id="SegDetailIN">
   <table id="DetailTable" cellpadding="0" cellspacing="1" border="0">
     <thead id="DetailTableHead">
 	  <tr class="TrSegs">
 	  	<th style="width:20px;"><input type="checkbox" id="DetailTableBodyAllCheck"></th>
-	  	<th>発注NO.</th>
-	  	<th>明細行番号</th>
-	  	<th>仕入科目</th>
-	  	<th>仕入部品</th>
-		<th>仕入先</th>
+	  	<th>No.</th>
+	  	<th>顧客発注番号</th>
+	  	<th>受注番号</th>
+	  	<th>顧客品番</th>
+	  	<th>製品コード</th>
+		<th>製品名</th>
+	  	<th>製品名（英語）</th>
+	  	<th>営業部署</th>
+	  	<th>売上区分</th>
+	  	<th>納期</th>
 	  	<th>単価</th>
+	  	<th>単位</th>
 	  	<th>数量</th>
 	  	<th>税抜金額</th>
-	  	<th>納期</th>
-	  	<th>備考</th>
 		<th class="forEdit"></th>
 		<th class="forEdit"></th>
 		<th class="forEdit"></th>
@@ -262,24 +346,26 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutMsw(); initLayout
 
 
 
-<!-- 明細情報入力部 -->
+<!-- 出力明細一覧エリア -->
 <span id="SegEditIN">
   <table id="EditTable" cellpadding="0" cellspacing="1" border="0">
 	<thead id="EditTableHead">
 	  <tr class="TrSegs">
-		<th>NO.</th>
-		<th>発注NO.</th>
-		<th>明細行番号</th>
-		<th>仕入科目</th>
-		<th>仕入部品</th>
-		<th>仕入先</th>
-		<th>運搬方法</th>
-		<th>単価</th>
-		<th>数量</th>
-		<th>税抜価格</th>
+		<th>No.</th>
+		<th>顧客受注番号</th>
+		<th>受注番号</th>
+		<th>顧客品番</th>
+		<th>製品コード</th>
+		<th>製品名</th>
+		<th>製品名（英語）</th>
+		<th>営業部署</th>
+		<th>売上区分</th>
 		<th>納期</th>
-		<th>明細備考</th>
-		<th class="forEdit"></th>
+		<th>単価</th>
+		<th>単位</th>
+		<th>数量</th>
+		<th>税抜金額</th>
+	  <th class="forEdit"></th>
 		<th class="forEdit"></th>
 		<th class="forEdit"></th>
 		<th class="forEdit"></th>
@@ -295,23 +381,6 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutMsw(); initLayout
 
 <span id="SegHidden">
 </span>
-
-
-
-
-
-
-
-
-
-
-<!--
-<span id="SegA06">備考</span>
-<span id="VarsA06">
-	<input class="Txt100L" type="text" name="strNote" value="_%strNote%_" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this , 90 );" maxlength="160" tabindex="16">
-</span>
--->
-
 
 
 
@@ -437,6 +506,7 @@ if ( document.all.lngCustomerCode.value != '' )
 
 
 </form>
+
 <form name="DSO" action="" method="post">
 
 _%strDetailHidden%_
@@ -672,7 +742,7 @@ _%strDetailHidden%_
 
 
 <!-- START [PRODUCTS] BUTTON -->
-<span id="MSWBt03" onclick="fncGetObjectName( window.MGwin , strProductCode , strProductName );DisplayerM03( '' , document.all.Mdata03 , window.MGwin.document.all.strProductCode  );ExchangeM03( 0 , window.self );fncFocusType( window.MGwin , 'productsTop' );return false;"></span>
+
 <!-- END [PRODUCTS] BUTTON -->
 
 <!-- START PACKING UNIT BUTTON -->
@@ -692,11 +762,6 @@ _%strDetailHidden%_
 	<iframe id="WFroot" name="WFrootWin" frameborder="0" scrolling="no" src="/po/wf/index.php?strSessionID=_%strSessionID%_"></iframe>
 </span>
 -->
-
-
-<!-- START DATEC BUTTON -->
-<span id="DateBtC" onclick="window.MDateCwin.fncCalendar( window.DSO.dtmDeliveryDate, 'DateC' );DisplayerM10_3( '' , document.all.Mdata10_3 );ExchangeM10_3( 0 , window.self );return false;"></span>
-<!-- END DATEC BUTTON -->
 
 
 
@@ -853,7 +918,6 @@ _%strDetailHidden%_
 </p>
 -->
 
-
 <!-- START [DATEB] -->
 <p id="MiFrame10_2" onclick="Zchange(this);">
 <iframe id="Mdata10_2" name="MDateBwin" frameborder="0" scrolling="no" src="/msw/date/indexb.html"></iframe>
@@ -863,9 +927,7 @@ _%strDetailHidden%_
 <span id="DummyClose10_2" onclick="DisplayerM10_2( '' , document.all.Mdata10_2 );ExchangeM10_2( 0 , window.Pwin );return false;"></span>
 </p>
 
-
 <!-- START [DATEC] -->
-<!--
 <p id="MiFrame10_3" onclick="Zchange(this);">
 <iframe id="Mdata10_3" name="MDateCwin" frameborder="0" scrolling="no" src="/msw/date/indexc.html"></iframe>
 <span id="DummyDrag10_3" onmousedown="pickup10_3('MiFrame10_3',event);return false;" 
@@ -873,7 +935,6 @@ _%strDetailHidden%_
 	ondblclick="fncTitlebar( document.all.Mdata10_3 , document.all.MiFrame10_3 );"></span>
 <span id="DummyClose10_3" onclick="DisplayerM10_3( '' , document.all.Mdata10_3 );ExchangeM10_3( 0 , window.Pwin );return false;"></span>
 </p>
--->
 <!-- ///////////////////////////////////// END MSW ///////////////////////////////////// -->
 
 

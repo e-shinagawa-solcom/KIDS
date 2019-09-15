@@ -22,5 +22,8 @@
 	var sosheadtitleAJ = '/img/type01/sc/scs_title_ja.gif';
 	var sosheadtitleAE = '/img/type01/sc/scs_title_en.gif';
 
+	// Çä¾å¡ÊÇ¼ÉÊ½ñ¡ËÅÐÏ¿²èÌÌ¤Î¥Ø¥Ã¥À¡¼²èÁü
+	var scdheadtitleAJ = '/img/type01/sc/scr_title_ja.gif';
+
 
 //-->

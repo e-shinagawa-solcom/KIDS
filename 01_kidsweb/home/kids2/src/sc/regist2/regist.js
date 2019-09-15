@@ -322,7 +322,7 @@ jQuery(function($){
     $('#AlladdBt').on('click', function(){
         $('#EditTableBody').empty();
     });
-    $('#FixEntryBtn').on('click', function(){
+    $('#PreviewBtn').on('click', function(){
         if(!validationCheck2()){
             return false;
         }

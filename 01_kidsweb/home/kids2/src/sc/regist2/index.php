@@ -33,7 +33,7 @@
 	
 	$objDB		= new clsDB();
 	$objAuth	= new clsAuth();
-	
+	/*
 	if( strcmp( $_GET["strSessionID"],"" ) != 0 )
 	{
 		$aryData["strSessionID"] = $_GET["strSessionID"];
@@ -483,7 +483,7 @@
 
 	// ヘルプ対応
 	$aryData["lngFunctionCode"] = DEF_FUNCTION_PO1;
-
+*/
 	echo fncGetReplacedHtml( "sc/regist2/parts.tmpl", $aryData ,$objAuth);
 	
 	return true;

@@ -71,7 +71,7 @@
 	{
 		position         : absolute ;
 		left             : 10px ;
-		top              : 190px ;
+		top              : 170px ;
 		width            : 800px;
 		height           : 135px;
 		border           : 1px solid #798787;
@@ -83,12 +83,13 @@
 	{
 		position         : absolute ;
 		left             : 10px ;
-		top              : 330px ;
+		top              : 320px ;
 		width            : 775px;
 		height           : 135px;
 		border           : 1px solid #798787;
 		background       : #ffffff ;
 		overflow         : auto;
+		z-index: 2;
 	}
 	/**********************************************************************/
 
@@ -101,54 +102,52 @@
 
 	#SearchBt{
 		position: absolute;
-		top: 220px;
+		top: 200px;
 		left: 830px;
 	}
 	#FixBt{
 		position: absolute;
-		top: 280px;
+		top: 260px;
 		left: 830px;
 	}
 	#AddBt{
 		position: absolute;
-		top: 355px;
+		top: 350px;
 		left: 830px;
 	}
 	#AlladdBt{
 		position: absolute;
-		top: 425px;
+		top: 420px;
 		left: 830px;
 	}
-	#FixEntryBtn {
+	#PreviewBtn {
 		position: absolute;
 		top: 475px;
 		left: 840px;
 	}
-	#ClearBtn{
-		position: absolute;
-		top: 474px;
-		left: 730px;
-	}
+
 	/* ???ç´°è????¿ã???????¿ã?? */
 	#selectup{
 		position: absolute;
-		top: 330px;
+		top: 318px;
 		left: 785px;
 	}
 	#selectup1{
 		position: absolute;
-		top: 353px;
+		top: 345px;
+		left: 777px;
+	}
+	#selectdown1{
+		z-index: 1;
+		position: absolute;
+		top: 405px;
 		left: 777px;
 	}
 	#selectdown{
+		padding :0;
 		position: absolute;
-		top: 444px;
+		top: 434px;
 		left: 785px;
-	}
-	#selectdown1{
-		position: absolute;
-		top: 421px;
-		left: 777px;
 	}
 
 	/* ???ç´°è??è¡?ç¤ºã????¼ã????? */
@@ -367,8 +366,8 @@
 /* END BOTTOM */
 
 
-/* START SEGMENTS */
-#SegA01 {
+/* µ¯É¼¼Ô */
+#SegADrafter {
 	font-weight : bold ;
 	color : #666666 ;
 	position : absolute ;
@@ -378,12 +377,36 @@
 	height : 20px ;
 	border-width: 1px ;
 	border-style: solid ;
-	border-color: #798787 #ffffff #798787 #798787 ;
-	background-color: #ffffff ;
+	border-color: #798787 #e8f0f1 #798787 #798787;
+	background-color: #e8f0f1 ;
 	padding : 5px 0px 0px 8px ;
 }
+#VarsADrafter {
+	position : absolute ;
+	left : 60px ;
+	top : 40px ;
+	height : 22px ;
+	width: 235px;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #798787 #798787 #e8f0f1;
+	background-color: #e8f0f1 ;
+	padding : 3px 0px 0px 8px ;
+}
+/* µ¯É¼¼ÔÁªÂò¥Ü¥¿¥ó */
+#MSWBt04 {
+	position : absolute ;
+	left : 280px ;
+	top : 43px ;
+	width : 19px ;
+	height : 19px ;
+	border-width : 0px ;
+	border-style : none ;
+	background-color : #ffffff ;
+}
 
-#SegA02 {
+/* Ç¼ÉÊÆü */
+#SegADeliveryDate {
 	font-weight : bold ;
 	color : #666666 ;
 	position : absolute ;
@@ -393,417 +416,383 @@
 	height : 20px ;
 	border-width: 1px ;
 	border-style: solid ;
-	border-color: #798787 #ffffff #798787 #798787 ;
-	background-color: #ffffff ;
+	border-color: #798787 #e8f0f1 #798787 #798787;
+	background-color: #e8f0f1 ;
 	padding : 5px 0px 0px 8px ;
 }
+#VarsADeliveryDate{
+	position : absolute ;
+	left : 60px ;
+	top : 70px ;
+	height : 22px ;
+	width: 110px;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #798787 #798787 #e8f0f1;
+	background-color: #e8f0f1 ;
+	padding : 3px 0px 0px 8px ;
+}
+/* Ç¼ÉÊÆüÁªÂò¥Ü¥¿¥ó */
+#DateBtB {
+	position : absolute ;
+	left : 154px ;
+	top : 73px ;
+	width : 19px ;
+	height : 19px ;
+	border-width : 0px ;
+	border-style : none ;
+	background-color : #ffffff ;
+}
 
-#SegA03 {
+/* ¸ÜµÒ */
+#SegACustomer {
+	font-weight : bold ;
+	position : absolute ;
+	left : 310px ;
+	top : 40px ;
+	width : 170px ;
+	height : 20px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #e8f0f1 #798787 #798787;
+	background-color: #e8f0f1 ;
+	padding : 5px 0px 0px 8px ;
+}
+#VarsACustomer {
+	position : absolute ;
+	left : 360px ;
+	top : 40px ;
+	height : 22px ;
+	width: 295px;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #798787 #798787 #e8f0f1;
+	background-color: #e8f0f1 ;
+	padding : 3px 0px 0px 10px ;
+}
+
+/* ¸ÜµÒÂ¦Ã´Åö¼Ô */
+#SegACustomerResponder {
+	font-weight : bold ;
+	position : absolute ;
+	left : 672px ;
+	top : 40px ;
+	width : 170px ;
+	height : 20px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #e8f0f1 #798787 #798787;
+	background-color: #e8f0f1 ;
+	padding : 5px 0px 0px 8px ;
+}
+#VarsACustomerResponder {
+	font-weight : bold ;
+	position : absolute ;
+	left : 762px ;
+	top : 40px ;
+	height : 22px ;
+	width: 160px;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #798787 #798787 #e8f0f1;
+	background-color: #e8f0f1 ;
+	padding : 3px 0px 0px 0px ;
+}
+
+/* Ç¼ÉÊÀè */
+#SegADeliveryPlaceName {
+	font-weight : bold ;
+	position : absolute ;
+	left : 310px ;
+	top : 70px ;
+	width : 170px ;
+	height : 20px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #e8f0f1 #798787 #798787;
+	background-color: #e8f0f1 ;
+	padding : 5px 0px 0px 8px ;
+}
+#VarsADeliveryPlaceName {
+	position : absolute ;
+	left : 360px ;
+	top : 70px ;
+	height : 22px ;
+	width: 295px;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #798787 #798787 #e8f0f1;
+	background-color: #e8f0f1 ;
+	padding : 3px 0px 0px 10px ;
+}
+/* Ç¼ÉÊÀèÁªÂò¥Ü¥¿¥ó */
+#MSWBt03 {
+	position : absolute ;
+	left : 644px ;
+	top : 73px ;
+	width : 19px ;
+	height : 19px ;
+	border-width : 0px ;
+	border-style : none ;
+	background-color : #ffffff ;
+}
+
+/* Ç¼ÉÊÀèÃ´Åö¼Ô */
+#SegADeliveryDestResponder {
+	font-weight : bold ;
+	position : absolute ;
+	left : 672px ;
+	top : 70px ;
+	width : 170px ;
+	height : 20px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #e8f0f1 #798787 #798787;
+	background-color: #e8f0f1 ;
+	padding : 5px 0px 0px 8px ;
+}
+#VarsADeliveryDestResponder {
+	font-weight : bold ;
+	position : absolute ;
+	left : 762px ;
+	top : 70px ;
+	height : 22px ;
+	width: 160px;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #798787 #798787 #e8f0f1;
+	background-color: #e8f0f1 ;
+	padding : 3px 0px 0px 0px ;
+}
+
+/* È÷¹Í */ 
+#SegANote {
 	font-weight : bold ;
 	position : absolute ;
 	left : 10px ;
 	top : 100px ;
-	width : 120px ;
-	height : 20px ;
+	width : 100px ;
+	height : 50px ;
 	border-width: 1px ;
 	border-style: solid ;
-	border-color: #798787 #ffffff #798787 #798787 ;
-	background-color: #ffffff ;
+	border-color: #798787 #e8f0f1 #798787 #798787;
+	background-color: #e8f0f1 ;
 	padding : 5px 0px 0px 8px ;
 }
-
-#SegA04 {
-	font-weight : bold ;
+#VarsANote {
 	position : absolute ;
-	left : 10px ;
-	top : 130px ;
-	width : 120px ;
-	height : 20px ;
+	left : 60px ;
+	top : 100px ;
+	height : 52px ;
+	width: 235px;
 	border-width: 1px ;
 	border-style: solid ;
-	border-color: #798787 #ffffff #798787 #798787 ;
-	background-color: #ffffff ;
-	padding : 5px 0px 0px 8px ;
+	border-color: #798787 #798787 #798787 #e8f0f1;
+	background-color: #e8f0f1 ;
+	padding : 3px 0px 0px 8px ;
+}
+#VarsANote textarea {
+	width: 230px;
+	height: 47px;
+	text-align : left;
+	ime-mode:enabled;
+	resize:none;
 }
 
-#SegA05 {
+/* ¾ÃÈñÀÇ¶èÊ¬ */
+#SegATaxClass {
 	font-weight : bold ;
 	position : absolute ;
-	left : 10px ;
-	top : 160px ;
-	width : 120px ;
-	height : 20px ;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #798787 #ffffff #798787 #798787 ;
-	background-color: #ffffff ;
-	padding : 5px 0px 0px 8px ;
-}
-
-#SegA0405 {
-	position : absolute ;
-	left : 562px ;
-	top : 144px ;
-	width : 33 ;
-	height : 53px ;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #798787 #798787 #798787 #798787 ;
-	background-color: transparent ;
-}
-
-#SegA11 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 270px ;
-	top : 40px ;
-	width : 170px ;
-	height : 20px ;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #798787 #ffffff #798787 #798787 ;
-	background-color: #ffffff ;
-	padding : 5px 0px 0px 8px ;
-}
-
-#SegA12 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 270px ;
-	top : 70px ;
-	width : 170px ;
-	height : 20px ;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #798787 #ffffff #798787 #798787 ;
-	background-color: #ffffff ;
-	padding : 5px 0px 0px 8px ;
-}
-
-#SegA13 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 270px ;
+	left : 310px ;
 	top : 100px ;
 	width : 170px ;
 	height : 20px ;
 	border-width: 1px ;
 	border-style: solid ;
-	border-color: #798787 #ffffff #798787 #798787 ;
-	background-color: #ffffff ;
+	border-color: #798787 #e8f0f1 #798787 #798787;
+	background-color: #e8f0f1 ;
 	padding : 5px 0px 0px 8px ;
 }
+#VarsATaxClass {
+	position : absolute ;
+	left : 390px ;
+	top : 100px ;
+	height : 22px ;
+	width: 110px;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #798787 #798787 #e8f0f1;
+	background-color: #e8f0f1 ;
+	padding : 3px 0px 0px 0px ;
+}
 
-#SegA14 {
+/* ¾ÃÈñÀÇÎ¨ */
+#SegATaxRate {
 	font-weight : bold ;
 	position : absolute ;
-	left : 270px ;
+	left : 507px ;
+	top : 100px ;
+	width : 100px ;
+	height : 20px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #e8f0f1 #798787 #798787;
+	background-color: #e8f0f1 ;
+	padding : 5px 0px 0px 8px ;
+}
+#VarsATaxRate {
+	position : absolute ;
+	left : 576px ;
+	top : 100px ;
+	height : 22px ;
+	width: 89px;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #798787 #798787 #e8f0f1;
+	background-color: #e8f0f1 ;
+	padding : 3px 0px 0px 0px ;
+}
+
+/* ¾ÃÈñÀÇ³Û */
+#SegATaxAmount {
+	font-weight : bold ;
+	position : absolute ;
+	left : 672px ;
+	top : 100px ;
+	width : 170px ;
+	height : 20px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #e8f0f1 #798787 #798787;
+	background-color: #e8f0f1 ;
+	padding : 5px 0px 0px 8px ;
+}
+#VarsATaxAmount {
+	position : absolute ;
+	left : 762px ;
+	top : 100px ;
+	height : 22px ;
+	width: 160px;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #798787 #798787 #e8f0f1;
+	background-color: #e8f0f1 ;
+	padding : 3px 0px 0px 0px ;
+}
+
+
+/* »ÙÊ§´ü¸Â */
+#SegAPaymentDueDate {
+	font-weight : bold ;
+	position : absolute ;
+	left : 310px ;
 	top : 130px ;
 	width : 170px ;
 	height : 20px ;
 	border-width: 1px ;
 	border-style: solid ;
-	border-color: #798787 #ffffff #798787 #798787 ;
-	background-color: #ffffff ;
+	border-color: #798787 #e8f0f1 #798787 #798787;
+	background-color: #e8f0f1 ;
 	padding : 5px 0px 0px 8px ;
 }
+#VarsAPaymentDueDate {
+	position : absolute ;
+	left : 390px ;
+	top : 130px ;
+	height : 22px ;
+	width: 90px;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #798787 #798787 #e8f0f1;
+	background-color: #e8f0f1 ;
+	padding : 3px 20px 0px 0px ;
+}
+/* »ÙÊ§´ü¸ÂÁªÂò¥Ü¥¿¥ó */
+#DateBtC {
+	position : absolute ;
+	left : 475px ;
+	top : 133px ;
+	width : 19px ;
+	height : 19px ;
+	border-width : 0px ;
+	border-style : none ;
+	background-color : #ffffff ;
+}
 
-#SegA15 {
+/* »ÙÊ§ÊýË¡ */
+#SegAPaymentMethod {
 	font-weight : bold ;
 	position : absolute ;
-	left : 270px ;
-	top : 160px ;
+	left : 507px ;
+	top : 130px ;
+	width : 100px ;
+	height : 20px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #e8f0f1 #798787 #798787;
+	background-color: #e8f0f1 ;
+	padding : 5px 0px 0px 8px ;
+}
+#VarsAPaymentMethod {
+	position : absolute ;
+	left : 576px ;
+	top : 130px ;
+	height : 22px ;
+	width: 89px;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #798787 #798787 #e8f0f1;
+	background-color: #e8f0f1 ;
+	padding : 3px 0px 0px 0px ;
+}
+
+/* ¹ç·×¶â³Û */
+#SegATotalAmount {
+	font-weight : bold ;
+	position : absolute ;
+	left : 672px ;
+	top : 130px ;
 	width : 170px ;
 	height : 20px ;
 	border-width: 1px ;
 	border-style: solid ;
-	border-color: #798787 #ffffff #798787 #798787 ;
-	background-color: #ffffff ;
+	border-color: #798787 #e8f0f1 #798787 #798787;
+	background-color: #e8f0f1 ;
 	padding : 5px 0px 0px 8px ;
 }
-
-
-
-
-#SegA06 {
-	font-weight : bold ;
+#VarsATotalAmount {
 	position : absolute ;
-	left : 712px ;
-	top : 40px ;
-	width : 100px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #798787 #ffffff #798787 #798787 ;
-	background-color: #ffffff ;
-	padding : 8px 0px 0px 8px ;
-}
-
-#SegA07 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 712px ;
-	top : 70px ;
-	width : 100px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #798787 #ffffff #798787 #798787 ;
-	background-color: #ffffff ;
-	padding : 8px 0px 0px 8px ;
-}
-
-#SegA08 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 712px ;
-	top : 100px ;
-	width : 100px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #798787 #ffffff #798787 #798787 ;
-	background-color: #ffffff ;
-	padding : 8px 0px 0px 8px ;
-}
-
-#SegA09 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 712px ;
-	top : 130px ;
-	width : 100px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #798787 #ffffff #798787 #798787 ;
-	background-color: #ffffff ;
-	padding : 8px 0px 0px 8px ;
-}
-
-#SegA10 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 712px ;
-	top : 160px ;
-	width : 100px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #798787 #ffffff #798787 #798787 ;
-	background-color: #ffffff ;
-	padding : 8px 0px 0px 8px ;
-}
-/* END SEGMENTS */
-
-
-/* START VARS */
-#VarsA01 {
-	position : absolute ;
-	left : 130px ;
-	top : 40px ;
-	height : 22px ;
-	width: 120px;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #798787 #798787 #798787 #ffffff ;
-	background-color: #ffffff ;
-	padding : 3px 0px 0px 8px ;
-}
-
-#VarsA02 {
-	position : absolute ;
-	left : 130px ;
-	top : 70px ;
-	height : 22px ;
-	width: 120px;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #798787 #ffffff #798787 #ffffff ;
-	background-color: #ffffff ;
-	padding : 3px 0px 0px 8px ;
-}
-
-
-#VarsA03 {
-	position : absolute ;
-	left : 130px ;
-	top : 100px ;
-	height : 22px ;
-	width: 98px;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #798787 #ffffff #798787 #ffffff ;
-	background-color: #ffffff ;
-	padding : 3px 0px 0px 30px ;
-}
-
-
-#VarsA04 {
-	position : absolute ;
-	left : 130px ;
+	left : 762px ;
 	top : 130px ;
 	height : 22px ;
-	width: 98px;
+	width: 160px;
 	border-width: 1px ;
 	border-style: solid ;
-	border-color: #798787 #ffffff #798787 #ffffff ;
-	background-color: #ffffff ;
-	padding : 3px 0px 0px 30px ;
+	border-color: #798787 #798787 #798787 #e8f0f1;
+	background-color: #e8f0f1 ;
+	padding : 3px 0px 0px 0px ;
 }
 
-
-#VarsA05 {
-	position : absolute ;
-	left : 130px ;
-	top : 160px ;
-	height : 22px ;
-	width: 750px;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #798787 #ffffff #798787 #ffffff ;
-	background-color: #ffffff ;
-	padding : 3px 0px 0px 30px ;
-}
-.TxtStyle10L { /* 100byte */
-	width : 740px ;
-	text-align : left ;
-}
-
-
-#VarsA11 {
-	position : absolute ;
-	left : 380px ;
-	top : 40px ;
-	height : 22px ;
-	width: 380px;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #798787 #ffffff #798787 #ffffff ;
-	background-color: #ffffff ;
-	padding : 3px 0px 0px 50px ;
-}
-
-
-#VarsA12 {
-	position : absolute ;
-	left : 380px ;
-	top : 70px ;
-	height : 22px ;
-	width: 345px;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #798787 #ffffff #798787 #ffffff ;
-	background-color: #ffffff ;
-	padding : 3px 0px 0px 85px ;
-}
-
-#VarsA13 {
-	position : absolute ;
-	left : 380px ;
-	top : 100px ;
-	height : 22px ;
-	width: 345px;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #798787 #ffffff #798787 #ffffff ;
-	background-color: #ffffff ;
-	padding : 3px 0px 0px 85px ;
-}
-
-#VarsA14 {
-	position : absolute ;
-	left : 380px ;
-	top : 130px ;
-	height : 22px ;
-	width: 390px;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #798787 #ffffff #798787 #ffffff ;
-	background-color: #ffffff ;
-	padding : 3px 20px 0px 20px ;
-}
-
-#VarsA15 {
-	position : absolute ;
-	left : 380px ;
-	top : 160px ;
-	height : 22px ;
-	width: 425px;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #798787 #ffffff #798787 #ffffff ;
-	background-color: #ffffff ;
-	padding : 3px 0px 0px 8px ;
-}
-
-
-
-
-
-#VarsA06 {
-	position : absolute ;
-	left : 811px ;
-	top : 40px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #798787 #798787 #798787 #ffffff ;
-	background-color: #ffffff ;
-	padding : 3px 0px 0px 8px ;
-}
-
-#VarsA07 {
-	position : absolute ;
-	left : 811px ;
-	top : 70px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #798787 #798787 #798787 #ffffff ;
-	background-color: #ffffff ;
-	padding : 3px 0px 0px 8px ;
-}
-
-#VarsA08 {
-	position : absolute ;
-	left : 811px ;
-	top : 100px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #798787 #798787 #798787 #ffffff ;
-	background-color: #ffffff ;
-	padding : 3px 0px 0px 8px ;
-}
-
-#VarsA09 {
-	position : absolute ;
-	left : 811px ;
-	top : 130px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #798787 #798787 #798787 #ffffff ;
-	background-color: #ffffff ;
-	padding : 3px 0px 0px 8px ;
-}
-
-#VarsA10 {
-	position : absolute ;
-	left : 811px ;
-	top : 160px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #798787 #798787 #798787 #ffffff ;
-	background-color: #ffffff ;
-	padding : 3px 0px 0px 8px ;
-}
 /* END VARS */
 /************************************** END INPUT A **************************************/
 
+/********************* START DATE BUTTON *********************/
+#DateBtA {
+	position : absolute ;
+	left : 227px ;
+	top : 95px ;
+	width : 19px ;
+	height : 19px ;
+	border-width : 0px ;
+	border-style : none ;
+	background-color : #ffffff ;
+}
+/********************** END DATE BUTTON **********************/
 
+
+/********************* START MSW BUTTON *********************/
+
+/********************** END MSW BUTTON **********************/
 
 
 
@@ -1686,51 +1675,6 @@
 
 
 
-/********************* START DATE BUTTON *********************/
-#DateBtA {
-	position : absolute ;
-	left : 227px ;
-	top : 75px ;
-	width : 19px ;
-	height : 19px ;
-	border-width : 0px ;
-	border-style : none ;
-	background-color : #ffffff ;
-}
-
-#DateBtB {
-	position : absolute ;
-	left : 227px ;
-	top : 45px ;
-	width : 19px ;
-	height : 19px ;
-	border-width : 0px ;
-	border-style : none ;
-	background-color : #ffffff ;
-}
-
-#DateBtC {
-	position : absolute ;
-	left : 889px ;
-	top : 104px ;
-	width : 19px ;
-	height : 19px ;
-	border-width : 0px ;
-	border-style : none ;
-	background-color : #ffffff ;
-}
-/********************** END DATE BUTTON **********************/
-
-
-
-
-
-
-
-
-
-
-
 
 /********************* START PACKING UNIT BUTTON *********************/
 #PunitBt {
@@ -1788,62 +1732,6 @@
 
 
 
-/********************* START MSW BUTTON *********************/
-/* START [SUPPLIER] BUTTON */
-#MSWBt08 {
-	position : absolute ;
-	left : 569px ;
-	top : 114px ;
-	width : 19px ;
-	height : 19px ;
-	border-width : 0px ;
-	border-style : none ;
-	background-color : #ffffff ;
-}
-/* END [SUPPLIER] BUTTON */
-
-
-/* START [DEPT & IN CHARGE NAME] BUTTON */
-#MSWBt02 {
-	position : absolute ;
-	left : 569px ;
-	top : 160px ;
-	width : 19px ;
-	height : 19px ;
-	border-width : 0px ;
-	border-style : none ;
-	background-color : #ffffff ;
-}
-/* END [DEPT & IN CHARGE NAME] BUTTON */
-
-
-/* START [GOODS] BUTTON */
-#MSWBt03 {
-	position : absolute ;
-	left : 895px ;
-	top : 44px ;
-	width : 19px ;
-	height : 19px ;
-	border-width : 0px ;
-	border-style : none ;
-	background-color : #ffffff ;
-}
-/* END [GOODS] BUTTON */
-
-
-/* START [LOCATION] BUTTON */
-#MSWBt04 {
-	position : absolute ;
-	left : 790px ;
-	top : 133px ;
-	width : 19px ;
-	height : 19px ;
-	border-width : 0px ;
-	border-style : none ;
-	background-color : #ffffff ;
-}
-/* END [GOODS] BUTTON */
-/********************** END MSW BUTTON **********************/
 
 
 

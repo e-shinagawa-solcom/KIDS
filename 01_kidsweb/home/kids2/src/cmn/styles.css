@@ -187,6 +187,18 @@ textarea {
 	background-color : #f1f1f1 ;
 }
 
+.Slt5 /* 6byte */
+{
+	font-family  : monospace ;
+	width        : 58px ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #7f7f7f #dfdfdf #dfdfdf #7f7f7f ;
+	margin       : 0 4px 0 0 ;
+	color        : #666666 ;
+	background   : #ffffff ;
+}
+
 .Slt13 /* 13byte */
 {
 	font-family  : monospace ;
@@ -926,6 +938,18 @@ textarea {
 
 .disTxt23L { /* 23byte */
 	width : 163px ;
+	font-family : monospace ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #cdcdcd ;
+	margin : 0 4px 0 0 ;
+	color : #666666 ;
+	background-color : #ffffff ;
+	text-align : left ;
+}
+
+.disTxt32L { /* 30byte */
+	width : 227px ;
 	font-family : monospace ;
 	border-width : 1px ;
 	border-style : solid ;
