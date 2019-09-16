@@ -33,11 +33,9 @@
 	$objDB		= new clsDB();
 	$objAuth	= new clsAuth();
 
-	/*
 	if( strcmp( $_GET["strSessionID"],"" ) != 0 )
 	{
 		$aryData["strSessionID"] = $_GET["strSessionID"];
-		//$aryData["lngOrderNo"]   = $_GET["lngOrderNo"];
 		$aryData["lngOrderNo"]   = 1;
 	}
 	else
@@ -46,32 +44,24 @@
 		$aryData["lngOrderNo"]   = $_POST["lngOrderNo"];
 	}
 	$aryData["lngLanguageCode"]	= $_COOKIE["lngLanguageCode"];
-*/
-	if ( $_POST )
-	{
-		$aryData = $_POST;
-	}
-	elseif ( $_GET )
-	{
-		$aryData = $_GET;
-	}
+
 
 	setcookie("strSessionID", $aryData["strSessionID"], 0, "/");
 
-	/*
 	$objDB->open("", "", "", "");
-	
+
+
 	// 文字列チェック
 	$aryCheck["strSessionID"]          = "null:numenglish(32,32)";
 	$aryResult = fncAllCheck( $aryData, $aryCheck );
 	fncPutStringCheckError( $aryResult, $objDB );
 
-
-
 	// セッション確認
 	$objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 	
 	$lngUserCode = $objAuth->UserCode;
+	
+	/*
 	
 	// 500	発注管理
 	if ( !fncCheckAuthority( DEF_FUNCTION_PO0, $objAuth ) )
@@ -496,6 +486,7 @@
 	$aryData["lngFunctionCode"] = DEF_FUNCTION_PO1;
 */
 	echo fncGetReplacedHtml( "sc/regist2/parts.tmpl", $aryData ,$objAuth);
+	
 	
 	return true;
 

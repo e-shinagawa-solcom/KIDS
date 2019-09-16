@@ -1,0 +1,197 @@
+<config>
+<header1>
+	<link rel="stylesheet" href="/search/cmn/form/css/forms.css">
+	<link rel="stylesheet" href="/search/cmn/form/css/tabs.css">
+	<link rel="stylesheet" href="/search/cmn/navigate/css/navigate.css">
+	<script src="/search/cmn/form/js/tab-function.js" defer></script>
+	<script src="/search/cmn/form/js/util-selectbox.js" defer></script>
+    <!-- チェックボックスの切り替え処理 -->
+    <script src="/search/cmn/search/js/toggleCheckbox.js" defer></script>
+    <!-- 検索画面共通入力補助 -->
+    <script src="/search/cmn/search/js/input-assist.js" defer></script>
+	<!-- msw 表示 -->
+	<script src="/search/cmn/msw/cmn/js/msw.js" defer></script>
+    <!-- COOKIE関連の処理(検索画面) -->
+    <script src="/search/cmn/search/js/cookie-functions.js" defer></script>
+</header1>
+
+<header2>
+</header2>
+
+<header3>
+	<!-- datepickerの要素指定 -->
+	<script src="/search/cmn/js/datepicker.js" defer></script>
+	<!-- msw汎用スタイル -->
+	<link rel="stylesheet" href="/search/cmn/css/msw.css">
+    <!-- フォームボタン css -->
+    <link rel="stylesheet" href="/search/cmn/css/form-buttons.css">
+    <!-- フォーム ボタン -->
+	<script src="/search/cmn/js/form-buttons.js" defer></script>
+    <!-- フォームバリデーション -->
+    <script src="/search/cmn/js/validate-form.js" defer></script>
+    <!-- マスタ検索呼び出し -->
+	<script src="/search/cmn/js/invoke-master-search.js" defer></script>
+    <!-- COOKIE 表示チェックボックス 保存/復元 -->
+	<script src="/search/cmn/js/cookie-display-items.js" defer></script>
+    <!-- キーバインド -->
+    <script src="/search/cmn/js/key-bind.js" defer></script>
+
+    <link rel="stylesheet" href="/sc/regist2/condition.css">
+    <script src="/sc/regist2/condition.js" defer></script>
+</header3>
+
+<bodyonload>
+</bodyonload>
+</config>
+
+<!-- 入力フォーム -->
+<div class="form-box--notabs-for-condition">
+	<!-- フォームヘッダ -->
+	<div class="form-box__header">
+		<p class="form-box__header__title">納品書明細検索条件入力</p>
+	</div>
+	<!-- フォームコンテンツ -->
+	<div class="form-box__contents">
+		<form name="SearchMoldHistory" method="post">
+            <input type="submit">
+            
+            <div class="regist-line">
+                <span class="regist-label">
+                    <span class="regist-label__text">顧客</span>
+                    <input class="TxtStyle05L" name="lngCustomerCode" type="text">
+                    <input class="disTxt46L" name="strCustomerName" type="text" readonly>
+                    <img class="msw-button button" invokeMSWName="msw-customer" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                </span>
+            </div>
+
+            <div class="regist-line">
+                <span class="regist-label">
+                    <span class="regist-label__text">顧客受注番号</span>
+                    <input class="TxtStyle06L" name="strSlipCode" type="text" onfocus="chColorOn(this);" onblur="chColorOff(this);">
+                </span>
+            </div>
+
+            <div class="regist-line">
+                <span class="regist-label">
+                    <span class="regist-label__text">受注番号</span>
+                    <input class="TxtStyle06L" name="strSlipCode" type="text" onfocus="chColorOn(this);" onblur="chColorOff(this);">
+                </span>
+            </div>
+
+            <div class="regist-line">
+                <span class="regist-label">
+                    <span class="regist-label__text">製品コード</span>
+                    <input class="TxtStyle06L" name="strCustomerSalesCode" type="text" onfocus="chColorOn(this);" onblur="chColorOff(this);">
+                </span>
+            </div>
+        
+            <div class="regist-line">
+                <span class="regist-label">
+                    <span class="regist-label__text">社内製品コード</span>
+                    <input class="TxtStyle06L" name="strCustomerSalesCode" type="text" onfocus="chColorOn(this);" onblur="chColorOff(this);">
+                </span>
+            </div>
+
+            <div class="regist-line">
+                <span class="regist-label">
+                    <span class="regist-label__text">営業部署</span>
+                    <input class="TxtStyle05L" name="lngInChargeGroupCode"  type="text">
+                    <input class="disTxt46L" name="strInChargeGroupName"  type="text" readonly>
+                    <img class="msw-button button" invokeMSWName="msw-group" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                </span>
+            </div>
+                
+            <div class="regist-line">
+                <span class="regist-label">
+                    <span class="regist-label__text">売上区分</span>
+                    <select name="lngSalesClassCode" class="Slt20">
+                        <OPTION value=1>本荷</OPTION>
+                        <OPTION value=2>テストロケ</OPTION> 
+                        <OPTION value=3>セットサンプル</OPTION>
+                        <OPTION value=4>立替運賃</OPTION> 
+                        <OPTION value=5>試作代</OPTION> 
+                        <OPTION value=6>原型</OPTION> 
+                        <OPTION value=7>金型</OPTION> 
+                        <OPTION value=8>マスク</OPTION> 
+                        <OPTION value=9>サンプル代</OPTION> 
+                        <OPTION value=10>商品化費用</OPTION> 
+                        <OPTION value=11>I C</OPTION> 
+                        <OPTION value=12>Charge</OPTION> 
+                        <OPTION value=13>関税</OPTION> 
+                        <OPTION value=14>ツーリングマスター</OPTION>
+                        <OPTION value=15>Inkjet費用</OPTION>
+                        <OPTION value="99">−</OPTION>
+                        <OPTION selected value=0></OPTION> 
+                    </select>
+                </span>
+            </div>
+
+            <div class="regist-line">
+                <span class="regist-label">
+                    <span class="regist-label__text">顧客品番</span>
+                    <input class="TxtStyle06L" name="strCustomerSalesCode" type="text" onfocus="chColorOn(this);" onblur="chColorOff(this);">
+                </span>
+            </div>
+
+            <div class="regist-line">
+                <span class="regist-label">
+                    <span class="regist-label__text">納期</span>
+                    FROM <input class="TxtStyle05L" name="From_dtmDeliveryDate" type="text" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate(this);fncCopyValue( this , document.all.To_dtmDeliveryDate );" tabindex="" maxlength="10">
+                    TO <input class="TxtStyle05L" name="To_dtmDeliveryDate" type="text" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate(this);" tabindex="" maxlength="10">
+                </span>
+            </div>
+    
+            <div class="regist-line">
+                <span class="regist-label">
+                    <span class="regist-label__text">通貨</span>
+                    <select name="lngTaxClassCode" class="Slt13">
+                        <option value=""></option>
+                        <OPTION value=1>非課税</OPTION>
+                        <OPTION value=2>外税</OPTION> 
+                        <OPTION value=3>内税</OPTION> 
+                    </select>
+                </span>
+            </div>
+
+            <div class="regist-line">
+                <span class="regist-label">
+                    <span class="regist-label__text">明細備考</span>
+                    <input class="TxtStyle06L" name="strCustomerSalesCode" type="text" onfocus="chColorOn(this);" onblur="chColorOff(this);">
+                </span>
+            </div>
+
+            <div class="regist-line">
+                <span class="regist-label">
+                    <span class="regist-label__text">再販を含む</span>
+                    <input name="IsSearch_lngCustomerCode" class="is-search" type="checkbox">
+                </span>
+            </div>
+
+            <input type="hidden" name="ActionScriptName" value="/sc/result2/index.php">
+            <input type="hidden" name="strSessionID" value="_%strSessionID%_">
+		</form>
+    </div>
+    <div>
+        <span id="OkBt">
+            <a href="#">
+                <img src="/img/type01/cmn/querybt/search_off_ja_bt.gif" alt="">
+            </a> 
+        </span>
+        <span id="CancelBt">
+                <a href="#">
+                    <img src="/img/type01/cmn/querybt/close_dark_off_ja_bt.gif" alt="">
+                </a> 
+        </span>
+    </div>
+    <div class="msw-loadpoints">
+		<!-- MSW 顧客マスタ検索 -->
+		<iframe class="msw-customer" src="/search/cmn/msw/customer/mswcustomer.html" frameborder="0">
+		</iframe>
+		<!-- MSW 担当部署マスタ検索 -->
+		<iframe class="msw-group" src="/search/cmn/msw/group/mswgroup.html" frameborder="0">
+		</iframe>
+		<!-- MSW 担当者マスタ検索 -->
+		<iframe class="msw-user" src="/search/cmn/msw/user/mswuser.html" frameborder="0">
+		</iframe>
+	</div>
+</div>

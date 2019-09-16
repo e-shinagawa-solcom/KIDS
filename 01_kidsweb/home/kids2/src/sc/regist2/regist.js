@@ -257,13 +257,51 @@ jQuery(function($){
         return result;
     }
 
+    // 別ウィンドウを開いてPOSTする
+    function post_open(url, data, target, features) {
 
+        window.open('', target, features);
+       
+        // フォームを動的に生成
+        var html = '<form id="temp_form" style="display:none;">';
+        for(var x in data) {
+          if(data[x] == undefined || data[x] == null) {
+            continue;
+          }
+          var _val = data[x].replace(/'/g, '\'');
+          html += "<input type='hidden' name='" + x + "' value='" + _val + "' >";
+        }
+        html += '</form>';
+        $("body").append(html);
+       
+        $('#temp_form').attr("action",url);
+        $('#temp_form').attr("target",target);
+        $('#temp_form').attr("method","POST");
+        $('#temp_form').submit();
+       
+        // フォームを削除
+        $('#temp_form').remove();
+    }
+ 
     // events
     $('#DetailTableBodyAllCheck').on('change', function(){
         $('input[name="edit"]').prop('checked', this.checked);
     });
-    $('#FixBt').on('click', function(){
-        //console.log("ぽちっとな");
+    $('#SearchBt').on('click', function(){
+        
+        var url = "/sc/regist2/condition.php" + "?strSessionID=" + $('input[name="strSessionID"]').val();
+        var data = {
+            'strSessionID': $('input[name="strSessionID"]').val()
+           ,'param1': 'test'
+          };
+        
+        var features = "width=710,height=460,top=10,left=10,status=yes,scrollbars=yes,directories=no,menubar=yes,resizable=yes,location=no,toolbar=no";
+        // デバッグ終わるまではオプションなしで開く
+        post_open(url, data, "conditionWin", features);
+        //post_open(url, data, "conditionWin");
+
+    });    
+    $('#AddBt').on('click', function(){
         var cb = $('#DetailTableBody').find('input[name="edit"]');
         var checked = false;
         var trArray = [];
@@ -313,25 +351,27 @@ jQuery(function($){
         if(!selected){ return false; }
         executeSort(3);
     });
-    $("#AddBt").on('click', function(){
+    $("#DeleteBt").on('click', function(){
         var selected = getSelectedRows();
         if(!selected.length) { return false; }
         $(selected).remove();
         changeRowNum();
     });
-    $('#AlladdBt').on('click', function(){
+    $('#AllDeleteBt').on('click', function(){
         $('#EditTableBody').empty();
     });
-    $('#PreviewBtn').on('click', function(){
+    $('#PreviewBt').on('click', function(){
+        alert("Preview Clicked");
+        
         //if(!validationCheck2()){
         //    return false;
         //}
+        /*
         $.ajax({
             type: 'POST',
             url: 'index2.php',
             data: {
                 strSessionID:         $('input[name="strSessionID"]').val()
-                /*
                 ,lngOrderNo:           $('input[name="lngOrderNo"]').val(),
                 strMode:              $('input[name="strMode"]').val(),
                 lngRevisionNo:        $('input[name="lngRevisionNo"]').val(),
@@ -340,9 +380,8 @@ jQuery(function($){
                 lngLocationCode:      $('input[name="lngLocationCode"]').val(),
                 strNote:              $('input[name="strNote"]').text(),
                 aryDetail:            getUpdateDetail(),
-                */
             },
-            async: false,
+            async: true,
         }).done(function(data){
             console.log("done");
             console.log(data);
@@ -355,5 +394,6 @@ jQuery(function($){
             console.log("fail");
             console.log(error);
         });
+                */
     });
 });

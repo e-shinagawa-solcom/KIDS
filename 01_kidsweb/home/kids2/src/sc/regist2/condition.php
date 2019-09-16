@@ -98,25 +98,27 @@
 	$aryData["strAction"] = "/sc/regist2/index.php?strSessionID=";
 */
 
+	echo fncGetReplacedHtmlWithBase("base_mold_noframes.html", "sc/regist2/condition.tmpl", $aryData ,$objAuth );
+
 	// テンプレート読み込み
-	$objTemplate = new clsTemplate();
+	//$objTemplate = new clsTemplate();
 	
 	// テンプレートに反映する文字列
-	$aryData["lngPONo"] = "$strOrderCode - $strReviseCode";
+	//$aryData["lngPONo"] = "$strOrderCode - $strReviseCode";
 
 	//header("Content-type: text/plain; charset=EUC-JP");
-	$objTemplate->getTemplate( "sc/finish2/parts.tmpl" );
+	//$objTemplate->getTemplate( "sc/finish2/parts.tmpl" );
 	
 
 	
 
 
 	// テンプレート生成
-	$objTemplate->replace( $aryData );
-	$objTemplate->complete();
+	//$objTemplate->replace( $aryData );
+	//$objTemplate->complete();
 
 	// HTML出力
-	echo $objTemplate->strTemplate;
+	//echo $objTemplate->strTemplate;
 			
 	return true;
 ?>

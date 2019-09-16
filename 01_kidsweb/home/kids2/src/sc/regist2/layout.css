@@ -93,40 +93,42 @@
 	}
 	/**********************************************************************/
 
-	/* ??????????????帥?? */
 	#Preview{
 		position: absolute;
 		top: 520px;
 		left: 822px;
 	}
-
+	/* 検索条件入力ボタン */
 	#SearchBt{
 		position: absolute;
 		top: 200px;
 		left: 830px;
 	}
-	#FixBt{
+	/* 追加ボタン */
+	#AddBt{
 		position: absolute;
 		top: 260px;
 		left: 830px;
 	}
-	#AddBt{
+	/* 削除ボタン */
+	#DeleteBt{
 		position: absolute;
 		top: 350px;
 		left: 830px;
 	}
-	#AlladdBt{
+	/* 全削除ボタン */
+	#AllDeleteBt{
 		position: absolute;
 		top: 420px;
 		left: 830px;
 	}
-	#PreviewBtn {
+	/* プレビューボタン */
+	#PreviewBt {
 		position: absolute;
 		top: 475px;
 		left: 840px;
 	}
 
-	/* ???膣域????帥???????帥?? */
 	#selectup{
 		position: absolute;
 		top: 318px;
