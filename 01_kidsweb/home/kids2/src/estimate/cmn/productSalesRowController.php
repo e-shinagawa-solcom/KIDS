@@ -16,9 +16,9 @@ class productSalesRowController extends estimateRowController {
     public $columnNumberList; // 列の番号リスト
     protected $columnDisplayNameList; // 列の表示名リスト
 
-    public function __construct() {
+    public function __construct($objDB) {
         $this->areaCode = DEF_AREA_PRODUCT_SALES; // エリアコードのセット
-        parent::__construct();        
+        parent::__construct($objDB);        
     }
 
     protected function setNameList() {
@@ -33,9 +33,8 @@ class productSalesRowController extends estimateRowController {
     // 売上分類のマスターのデータを取得する
     protected function setDivisionSubjectCodeMaster() {
         if (!static::$divisionSubjectCodeMaster) {
-            global $objDB;
             $areaCode = $this->areaCode;
-            $masterData = $objDB->getDivisionCodeList($areaCode);
+            $masterData = $this->objDB->getDivisionCodeList($areaCode);
             static::$divisionSubjectCodeMaster = $masterData;
         }
     }

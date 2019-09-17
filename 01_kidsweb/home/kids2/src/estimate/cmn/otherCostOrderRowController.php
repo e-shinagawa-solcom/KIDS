@@ -17,10 +17,10 @@ class otherCostOrderRowController extends estimateRowController {
 
     protected $stockClassCode; // 仕入区分
 
-    public function __construct() {
+    public function __construct($objDB) {
         $this->areaCode = DEF_AREA_OTHER_COST_ORDER; // エリアコードのセット
-        $this->stockClassCode = DEF_STOCK_CLASS_CODE_PARTS; // 仕入区分のセット
-        parent::__construct();        
+        $this->stockClassCode = workSheetConst::AREA_ATTRIBUTE_TO_STOCK_CLASS_CODE[$this->areaCode]; // 仕入区分のセット
+        parent::__construct($objDB);        
     }
 
     protected function setNameList() {
@@ -35,10 +35,9 @@ class otherCostOrderRowController extends estimateRowController {
     // 売上分類のマスターのデータを取得する
     protected function setDivisionSubjectCodeMaster() {
         if (!static::$divisionSubjectCodeMaster) {
-            global $objDB;
             $areaCode = $this->areaCode;
             $stockClassCode = $this->stockClassCode;
-            $masterData = $objDB->getSubjectCodeList($areaCode);
+            $masterData = $this->objDB->getSubjectCodeList($areaCode);
             foreach ($masterData as $classCode => $data) {
                 if ($classCode == $stockClassCode) {
                     $newMasterData = $data;
@@ -47,5 +46,37 @@ class otherCostOrderRowController extends estimateRowController {
             }
             static::$divisionSubjectCodeMaster = $newMasterData;
         }
+    }
+
+    // 通貨レートマスターから納期に対応する通貨レートを取得する
+    protected function getConversionRateForDelivery() {
+        $monetary = $this->monetary;
+        $delivery = $this->delivery;
+        
+        if (!$monetary) {
+            $acquiredRate = null;
+        } else if ($monetary == DEF_MONETARY_YEN) {
+            $acquiredRate = 1;
+        } else {
+            if(!$delivery) {
+                $acquiredRate = null;
+            } else {
+                $conversionRateMaster = self::$conversionRateMaster;
+                if (!$conversionRateMaster[$monetary]) {
+                    $acquiredRate = null;
+                } else {
+                    foreach ($conversionRateMaster[$monetary] as $data) {
+                        // 納品日に対応する通貨レートを取得する（DBから取得したリスト内の検索）
+                        if (strtotime($delivery) <= strtotime($data['endDate']) 
+                            && strtotime($data['startDate']) <= strtotime($delivery)) {
+                            $acquiredRate = $data['conversionRate'];
+                        } else {
+                            $acquiredRate = null;
+                        }
+                    }
+                }
+            }
+        }
+        return $acquiredRate;
     }
 }

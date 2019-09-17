@@ -6,9 +6,6 @@ require_once (SRC_ROOT. "/estimate/cmn/const/workSheetConst.php");
 /**
 *	ワークシートヘッダーのデータチェッククラス
 *	
-*	以下のグローバル変数を定義すること
-*   @param object $objDB        データベース接続オブジェクト(clsDBまたは継承クラス)
-*   @param object $sheet        phpSpreadSheetのシートオブジェクト
 *   
 */
 
@@ -40,8 +37,9 @@ class estimateHeaderController {
 
     protected $cellAddressList; // セル名称に対応したセル位置のリスト
 
-    public function __construct() {
-
+    protected function __construct() {
+        $this->setNameList();
+        $this->setTitleNameList();
     }
 
     protected function setNameList() {
@@ -54,52 +52,6 @@ class estimateHeaderController {
         if (!self::$titleNameList) {
             self::$titleNameList = workSheetConst::WORK_SHEET_HEADER_TITLE_CELL;
         }
-    }
-
-    // セル名称に対応したセルのリストと行番号による初期データ作成
-    public function initialize($cellAddressList, $loginUserCode) {
-        $this->cellAddressList = $cellAddressList;
-        $this->setNameList();
-        $this->setTitleNameList();
-        $params = $this->getCellParams();
-        $this->params = $params;
-        $this->setCellParams($params);
-        $this->setCellTitleParams();
-        $this->loginUserCode = $loginUserCode;
-        return true;
-    }
-
-    // 各項目のデータを取得する
-    protected function getCellParams() {
-        $nameList = self::$nameList;
-        $cellAddressList = $this->cellAddressList;
-        global $sheet;
-        if ($nameList) {
-            foreach ($nameList as $key => $cellName) {
-                $cellAdress = $cellAddressList[$cellName];
-                $param[$key] = $sheet->getCell($cellAdress)->getCalculatedValue();
-            }
-        } else {
-            return false;
-        }
-        return $param;
-    }
-
-    // 各項目のタイトル名を取得する
-    protected function setCellTitleParams() {
-        $nameList = self::$titleNameList;
-        $cellAddressList = $this->cellAddressList;
-        global $sheet;
-        if ($nameList) {
-            foreach ($nameList as $key => $cellName) {
-                $cellAdress = $cellAddressList[$cellName];
-                $param[$key] = $sheet->getCell($cellAdress)->getCalculatedValue();
-            }
-        } else {
-            return false;
-        }
-        $this->headerTitleNameList = $param;
-        return true;
     }
 
     // 配列内のデータを各定数にセットする
@@ -145,16 +97,13 @@ class estimateHeaderController {
         $this->validateCartonQuantity(); // カートン入り数
         $this->validateProductionQuantity(); // 償却数
         
-        // グローバルのDBオブジェクトを取得する
-        global $objDB;
-
         $loginUserCode = $this->loginUserCode;
         $inchargeGroupCodeNumber = $this->inchargeGroupCodeNumber;
         $inchargeUserCodeNumber = $this->inchargeUserCodeNumber;
 
         // ログインユーザーが営業部署に所属するかチェックする
         if (!$this->messageCode['inchargeGroupCode']) {
-            $result = $objDB->userCodeAffiliateCheck($loginUserCode, $inchargeGroupCodeNumber);
+            $result = $this->objDB->userCodeAffiliateCheck($loginUserCode, $inchargeGroupCodeNumber);
             if (!$result) {
                 $this->messageCode['loginUser'] = 9202;
             }
@@ -162,7 +111,7 @@ class estimateHeaderController {
 
         // 担当者が営業部署に所属するかチェックする
         if (!$this->messageCode['inchargeGroupCode'] && !$this->messageCode['inchargeUserCode']) {
-            $result = $objDB->userDisplayCodeAffiliateCheck($inchargeUserCodeNumber, $inchargeGroupCodeNumber);
+            $result = $this->objDB->userDisplayCodeAffiliateCheck($inchargeUserCodeNumber, $inchargeGroupCodeNumber);
             if (!$result) {
                 $this->messageCode['loginUser'] = 9202;
             }
@@ -170,7 +119,7 @@ class estimateHeaderController {
 
         if (!$this->messageCode['productCode'] && $this->productCode) {
             // 製品マスタとシートの営業部署が一致するか確認する
-            $currentRecord = $objDB->getCurrentRecordForProductCode($this->productCode);
+            $currentRecord = $this->objDB->getCurrentRecordForProductCode($this->productCode);
             if($currentRecord !== false) {
                 $groupDisplayCode = $currentRecord->strgroupdisplaycode;
                 if ($groupDisplayCode != $inchargeGroupCodeNumber) {
@@ -207,7 +156,7 @@ class estimateHeaderController {
                         break;    
                 }
 
-                $message = fncOutputError($messageCode, DEF_WARNING, $str, FALSE, '', $objDB);
+                $message = fncOutputError($messageCode, DEF_WARNING, $str, FALSE, '', $this->objDB);
 
                 if ($message) {
                     $errorMessage[] = $message;
@@ -237,8 +186,7 @@ class estimateHeaderController {
                 // エラー処理
                 $this->messageCode['productCode'] = 9201;
             } else {
-                global $objDB;
-                $record = $objDB->getRecordValue('m_product', 'strproductcode', $productCode);
+                $record = $this->objDB->getRecordValue('m_product', 'strproductcode', $productCode);
                 if ($record == false) {
                     // マスターチェックエラー
                     $this->messageCode['productCode'] = 9202;
@@ -278,9 +226,13 @@ class estimateHeaderController {
     protected function validateRetailPrice() {
         $retailPrice = $this->retailPrice;
         if (isset($retailPrice) && $retailPrice !=='') {
-            if(!preg_match("/\A[0-9]+\z/", $retailPrice)) {
+            if(!is_numeric($retailPrice)) {
                 // エラー処理
                 $this->messageCode['retailPrice'] = 9201;
+            } else {
+                // 小数点以下第3位を四捨五入
+                $formattedValue = number_format(round($retailPrice, 2), 2, '.', '');
+                $this->retailPrice = $formattedValue;
             }
         } else {
             $this->messageCode['retailPrice'] = 9001; // 必須チェック
@@ -295,8 +247,7 @@ class estimateHeaderController {
         if (isset($inchargeGroupCode) && $inchargeGroupCode !=='') {
             if (preg_match("/\A[0-9]+:.+\z/", $inchargeGroupCode)) {
                 list ($inchargeGroupCodeNumber, $inchargeGroupCodeName) = explode(':', $inchargeGroupCode);
-                global $objDB; // グローバルのデータベースオブジェクト取得
-                $result = $objDB->getGroupRecordForDisplay($inchargeGroupCodeNumber);
+                $result = $this->objDB->getGroupRecordForDisplay($inchargeGroupCodeNumber);
                 // マスターチェック
                 if (!$result) {
                     // レコードが取得できなかった場合
@@ -322,8 +273,7 @@ class estimateHeaderController {
         if (isset($inchargeUserCode) && $inchargeUserCode !=='') {
             if (preg_match("/\A[0-9]+:.+\z/", $inchargeUserCode)) {
                 list ($inchargeUserCodeNumber, $inchargeUserCodeName) = explode(':', $inchargeUserCode);
-                global $objDB; // グローバルのデータベースオブジェクト取得
-                $result = $objDB->getUserRecordForDisplay($inchargeUserCodeNumber);
+                $result = $this->objDB->getUserRecordForDisplay($inchargeUserCodeNumber);
                 // マスターチェック
                 if (!$result) {
                     // レコードが取得できなかった場合
@@ -349,8 +299,7 @@ class estimateHeaderController {
         if (isset($developUserCode) && $developUserCode !=='') {
             if (preg_match("/\A[0-9]+:.+\z/", $developUserCode)) {
                 list ($developUserCodeNumber, $developUserCodeName) = explode(':', $developUserCode);
-                global $objDB; // グローバルのデータベースオブジェクト取得
-                $result = $objDB->getUserRecordForDisplay($developUserCodeNumber);
+                $result = $this->objDB->getUserRecordForDisplay($developUserCodeNumber);
                 // マスターチェック
                 if (!$result) {
                     // レコードが取得できなかった場合

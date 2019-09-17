@@ -1,50 +1,25 @@
 <?php
 
 require_once ('conf.inc');
-require_once ( LIB_ROOT . "lib.php");
+require_once ( LIB_FILE );
 
 require_once ( SRC_ROOT . "estimate/cmn/const/workSheetConst.php");
+require_once ( SRC_ROOT . "estimate/cmn/estimateInsertData.php");
 
 // 登録用データ作成クラス
-class estimateRegistData {
-    protected $headerData;
-    protected $rowDataList;
-    protected $calculatedData;
-
-    protected $inputUserCode;
-    protected $inchargeUserCode;
-    protected $developUserCode;
-    protected $groupCode;
-    protected $productNo;
-    protected $productCode;
-    protected $reviseCode;
-    protected $estimateNo;
-    protected $goodsPlanCode;
-    protected $revisionNo;
-
-
-    protected $objDB;
-
-    protected $companyCodeList;
-
+class registInsertData extends estimateInsertData {
+    
     public function __construct() {
-
+        parent::__construct();
     }
     
 
     // 必要なパラメータをクラスにセットする
-    public function setParam($regist, $inputUserCode, $objDB) {
+    public function setRegistParam($regist, $inputUserCode, $objDB) {
         if (is_array($regist)) {
-            // 登録用のパラメータをセット
-            $this->headerData = $regist['headerData'];
-            $this->rowDataList = $regist['rowDataList'];
-            $this->calculatedData = $regist['calculatedData'];
 
-            // 入力者のユーザーコードをセット
-            $this->inputUserCode = $inputUserCode;
-
-            // DBクラスのセット
-            $this->objDB = $objDB;
+            // 入力値、ユーザーコード、DBクラスのセット
+            $this->setParam($regist, $inputUserCode, $objDB);
 
             // グループコードの取得
             $groupRecord = $this->objDB->getGroupRecordForDisplay($this->headerData[workSheetConst::INCHARGE_GROUP_CODE]);
@@ -64,6 +39,7 @@ class estimateRegistData {
         } else {
             return false;
         }
+
         return true;
     }
 
@@ -119,51 +95,9 @@ class estimateRegistData {
 
 		// リビジョンNoの設定
         $this->revisionNo = 0;
+        $this->productRevisionNo = 0;
         
         return true;        
-    }
-
-    // 製品コードを出力する
-    public function getProductCode() {
-        return $this->productCode;
-    }
-
-    // リバイスコードを出力する
-    public function getReviseCode() {
-        return $this->reviseCode;
-    }
-
-    /**
-    * DB登録用関数
-    *
-    *	登録用のINSERT文を生成する
-    *   
-    *   @param array $array 登録データ（キーにカラム名を持つデータ配列）
-    *	@return boolean
-    *	@access protected
-    */
-    protected function makeInsertQuery($table, $array) {
-        foreach ($array as $key => $value) {
-            // 列情報のセット
-            if (!isset($columns)) {
-                $columns = $key;
-            } else {
-                $columns = $columns. ", ". $key;
-            }
-            
-            $type = gettype($value);
-            if ($type == 'boolean' || $type == 'NULL') {
-                $value = var_export($value, true);
-            }
-
-            if (!isset($values)) {
-                $values = $value; 
-            } else {
-                $values = $values. ", ". $value;
-            }
-        }
-        $sqlQuery = "INSERT INTO ". $table. " (". $columns. ") VALUES (". $values. ")";
-        return $sqlQuery;
     }
 
     /**
@@ -276,7 +210,7 @@ class estimateRegistData {
             'bytinvalidflag' => 'false',
             'dtminsertdate' => 'NOW()',
             'dtmupdatedate' => 'NOW()',
-            'lngrevisionno' => $this->revisionNo,
+            'lngrevisionno' => $this->productRevisionNo,
             'strrevisecode' => "'". $this->reviseCode. "'"
         );
         // クエリの生成
@@ -326,6 +260,7 @@ class estimateRegistData {
             'lngproductionquantity' => $productionQuantity,
             'lngtempno' => 'NULL',
             'strnote' => 'NULL',
+            'lngproductrevisionno' => $this->productRevisionNo,
         );
 
         // クエリの生成
@@ -376,23 +311,23 @@ class estimateRegistData {
             'lngrevisionno' => $this->revisionNo,
             'lngstocksubjectcode'=> $stockSubjectCode,
             'lngstockitemcode' => $stockItemCode,
-            'lngcustomercompanycode' => $rowData['customerCompanyCode'],
+            'lngcustomercompanycode' => $this->companyCodeList[$rowData['customerCompany']],
+            'dtmdelivery' => $rowData['delivery'] ? "TO_TIMESTAMP('". $rowData['delivery']. "', 'YYYY/MM/DD')" : 'null',
             'bytpayofftargetflag' => $rowData['payoff'] == '○' ? 'true' : 'false',
             'bytpercentinputflag'=> $rowData['percentInputFlag'],
-            'dblpercent' => $rowData['percentInputFlag'] === true ? $rowData['percent'] : 'null',
+            'curproductrate' => $rowData['percentInputFlag'] === true ? $rowData['percent'] : 'null',
             'lngmonetaryunitcode' => $rowData['monetary'],
             'lngmonetaryratecode' => DEF_MONETARY_RATE_CODE_COMPANY_LOCAL,
-            'curconversionrate' => $rowData['acqiredRate'],
+            'curconversionrate' => $rowData['conversionRate'],
             'lngproductquantity' => $rowData['quantity'],
-            'curproductprice' => $rowData['percentInputFlag'] === 'false' ? $rowData['price'] : 'null',
-            'curproductrate' => $rowData['percentInputFlag'] === 'true' ? $rowData['price'] : 'null',
-            'cursubtotalprice' => $rowData['calculatedSubtotal'],
+            'curproductprice' => $rowData['percentInputFlag'] === false ? $rowData['price'] : 'null',
+            'cursubtotalprice' => $rowData['subtotal'],
             'strnote' => "'". $rowData['note']. "'",
             'lngsortkey' => $estimateDetailNo,
             'lngsalesdivisioncode' => $salesDivisionCode,
             'lngsalesclasscode' => $salesClassCode
         );
-        
+
         // クエリの生成
         $strQuery = $this->makeInsertQuery($table, $data);
         // クエリの実行
@@ -427,10 +362,10 @@ class estimateRegistData {
             'lngcustomercompanycode' => $this->companyCodeList[$rowData['customerCompany']],
             'lnggroupcode' => $this->groupCode,
             'lngusercode' => $this->inchargeUserCode,
-            'lngreceivestatuscode' => DEF_RECEIVE_PREORDER,
+            'lngreceivestatuscode' => DEF_RECEIVE_APPLICATE,
             'lngmonetaryunitcode' => $rowData['monetary'],
             'lngmonetaryratecode' => DEF_MONETARY_RATE_CODE_COMPANY_LOCAL,
-            'curconversionrate' => $rowData['acqiredRate'],
+            'curconversionrate' => $rowData['conversionRate'],
             'lnginputusercode' => $this->inputUserCode,
             'bytinvalidflag' => 'false',
             'dtminsertdate' => 'NOW()',
@@ -468,21 +403,19 @@ class estimateRegistData {
             'lngreceivedetailno' => $receiveDetailNo,
             'lngrevisionno' => $this->revisionNo,
             'strproductcode' => "'". $this->productCode. "'",
-            'strrevisecode' => "'". $this->revisecode. "'",
-            'lngsalesclasscode' => $rowData['classItemCode'],
+            'strrevisecode' => "'". $this->reviseCode. "'",
+            'lngsalesclasscode' => $rowData['classItem'],
             'dtmdeliverydate' => "TO_TIMESTAMP('". $rowData['delivery']. "', 'YYYY/MM/DD')",
             'lngconversionclasscode' => 'NULL',
             'curproductprice' => $rowData['price'],
             'lngproductquantity' => $rowData['quantity'],
             'lngproductunitcode' => 'NULL',
-            'lngtaxclasscode' => 'NULL',
-            'lngtaxcode' => 'NULL',
-            'curtaxprice' => 'NULL',
-            'cursubtotalprice' => $rowData['calculatedSubtotal'],
+            'cursubtotalprice' => $rowData['subtotal'],
             'strnote' => "'". $rowData['note']. "'",
             'lngsortkey' => $receiveDetailNo,
             'lngestimateno' => $this->estimateNo,
-            'lngestimatedetailno' => $estimateDetailNo
+            'lngestimatedetailno' => $estimateDetailNo,
+            'lngestimaterevisionno' => $this->revisionNo
         );
 
         // クエリの生成
@@ -512,18 +445,16 @@ class estimateRegistData {
             'lngorderno' => $orderNo,
             'lngrevisionno' => $this->revisionNo,
             'strordercode' => "'". $orderCode. "'",
-            'strrevisecode' => "'". $this->reviseCode. "'",
             'dtmappropriationdate' => 'NOW()',
             'lngcustomercompanycode' => $this->companyCodeList[$rowData['customerCompany']],
             'lnggroupcode' => $this->groupCode,
             'lngusercode' => $this->inchargeUserCode,
-            'lngorderstatuscode' => DEF_ORDER_TEMPORARY,
+            'lngorderstatuscode' => DEF_ORDER_APPLICATE,
             'lngmonetaryunitcode' => $rowData['monetary'],
             'lngmonetaryratecode' => DEF_MONETARY_RATE_CODE_COMPANY_LOCAL,
-            'curconversionrate' => $rowData['acqiredRate'],
+            'curconversionrate' => $rowData['conversionRate'],
             'lngpayconditioncode' => 'NULL',
             'lngdeliveryplacecode' => 'NULL',
-            'dtmexpirationdate' => 'NULL',
             'lnginputusercode' => $this->inputUserCode,
             'bytinvalidflag' => 'false',
             'dtminsertdate' => 'NOW()'
@@ -560,7 +491,7 @@ class estimateRegistData {
             'lngrevisionno' => $this->revisionNo,
             'strproductcode' => "'". $this->productCode. "'",
             'strrevisecode' => "'". $this->reviseCode. "'",
-            'lngstocksubjectcode' => $rowData['divisionSubjectCode'],
+            'lngstocksubjectcode' => $rowData['divisionSubject'],
             'lngstockitemcode' => $rowData['classItem'],
             'dtmdeliverydate' => "TO_TIMESTAMP('". $rowData['delivery']. "', 'YYYY/MM/DD')",
             'lngdeliverymethodcode' => 'NULL',
@@ -571,12 +502,13 @@ class estimateRegistData {
             'lngtaxclasscode' => 'NULL',
             'lngtaxcode' => 'NULL',
             'curtaxprice' => 'NULL',
-            'cursubtotalprice' => $rowData['calculatedSubtotal'],
+            'cursubtotalprice' => $rowData['subtotal'],
             'strnote' => "'". $rowData['note']. "'",
             'strmoldno' => 'NULL',
             'lngsortkey' => $orderDetailNo,
             'lngestimateno' => $this->estimateNo,
-            'lngestimatedetailno' => $estimateDetailNo
+            'lngestimatedetailno' => $estimateDetailNo,
+            'lngestimaterevisionno' => $this->revisionNo
         );
         // クエリの生成
         $strQuery = $this->makeInsertQuery($table, $data);
@@ -603,8 +535,9 @@ class estimateRegistData {
             'lnggoodsplancode' => $this->goodsPlanCode,
             'lngrevisionno' => $this->revisionNo,
             'lngproductno' => $this->productNo,
+            'strrevisecode' => $this->reviseCode,
             'dtmcreationdate' => 'NOW()',
-            'dtmrevisiondate' => 'NOW()',
+            'dtmrevisiondate' => 'NULL',
             'lnggoodsplanprogresscode' => DEF_GOODSPLAN_AFOOT,
             'lnginputusercode' => $this->inputUserCode
         );

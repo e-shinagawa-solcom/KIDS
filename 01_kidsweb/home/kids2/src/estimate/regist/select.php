@@ -133,7 +133,7 @@ if ($fileCheckResult) {
 			$objSheet = new estimateSheetController();
 	
 			// オブジェクトにデータをセットする
-			$objSheet->dataInitialize($sheetInfo);
+			$objSheet->dataInitialize($sheetInfo, $objDB);
 	
 			// phpSpreadSheetで生成したシートオブジェクトをグローバル参照用にセットする
 			$sheet = $objSheet->sheet;
@@ -155,19 +155,19 @@ if ($fileCheckResult) {
 					// 対象エリアによってインスタンス作成時のクラスを指定する
 					switch ($rowAttribute) {
 						case DEF_AREA_PRODUCT_SALES:
-							$objRow = new productSalesRowController();
+							$objRow = new productSalesRowController($objDB);
 							break;
 						case DEF_AREA_FIXED_COST_SALES:
-							$objRow = new fixedCostSalesRowController();
+							$objRow = new fixedCostSalesRowController($objDB);
 							break;
 						case DEF_AREA_FIXED_COST_ORDER:
-							$objRow = new fixedCostOrderRowController();
+							$objRow = new fixedCostOrderRowController($objDB);
 							break;
 						case DEF_AREA_PARTS_COST_ORDER:
-							$objRow = new partsCostOrderRowController();
+							$objRow = new partsCostOrderRowController($objDB);
 							break;
 						case DEF_AREA_OTHER_COST_ORDER;
-							$objRow = new otherCostOrderRowController();
+							$objRow = new otherCostOrderRowController($objDB);
 							break;
 						default:
 							break;

@@ -255,10 +255,38 @@ class workSheetConst {
     // 欄外に設定されたセルリスト（行に紐付くデータ除く）
     // 関税計算用セル
     const CALCULATION_TARIFF = 'calculation_tariff';
+    // 関税合計セル(輸入費用計算用)
+    const TARIFF_TOTAL = 'tariff_total';
+    // 輸入費用計算用セル
+    const CALCULATION_IMPORT_COST = 'calculation_import_cost';
     // 償却選択肢：○
     const HIDDEN_PAYOFF_CIRCLE = 'hdn_payoff_circle';
     // 本荷参照セル
     const HIDDEN_MAIN_PRODUCT = 'hdn_main_product';
+    // 通貨レート貼り付け位置決めセル
+    const MONETARY_RATE_LIST = 'monetary_rate_list_header';
+
+    // 製品売上の売上分類ドロップダウンリストのタイトルセル
+    const RECEIVE_PRODUCT_SALES_DIVISION_DROPDOWN = 'receive_p_salesdivision_dropdown';
+    // 固定費売上の売上分類ドロップダウンリストのタイトルセル
+    const RECEIVE_FIXED_COST_SALES_DIVISION_DROPDOWN = 'receive_f_salesdivision_dropdown';
+    // 固定費の仕入科目ドロップダウンリストのタイトルセル
+    const ORDER_FIXED_COST_STOCK_SUBJECT_DROPDOWN = 'order_f_stocksubject_dropdown';
+    // 部材費の仕入科目ドロップダウンリストのタイトルセル
+    const ORDER_ELEMENT_COST_STOCK_SUBJECT_DROPDOWN = 'order_e_stocksubject_dropdown';
+    // その他費用の仕入科目ドロップダウンリストのタイトルセル
+    const ORDER_OTHER_COST_STOCK_SUBJECT_DROPDOWN = 'order_o_stocksubject_dropdown';
+
+    // 製品売上の売上区分ドロップダウンリストのタイトルセル
+    const RECEIVE_PRODUCT_SALES_CLASS_DROPDOWN = 'receive_p_salesclass_dropdown';
+    // 固定費売上の売上区分ドロップダウンリストのタイトルセル
+    const RECEIVE_FIXED_COST_SALES_CLASS_DROPDOWN = 'receive_f_salesclass_dropdown';
+    // 固定費の仕入部品ドロップダウンリストのタイトルセル
+    const ORDER_FIXED_COST_STOCK_ITEM_DROPDOWN = 'order_f_stockitem_dropdown';
+    // 部材費の仕入部品ドロップダウンリストのタイトルセル
+    const ORDER_ELEMENT_COST_STOCK_ITEM_DROPDOWN = 'order_e_stockitem_dropdown';
+    // その他費用の仕入部品ドロップダウンリストのタイトルセル
+    const ORDER_OTHER_COST_STOCK_ITEM_DROPDOWN = 'order_o_stockitem_dropdown';
     
     // ----------------------------------------------------------------------------------------------------
 
@@ -296,30 +324,38 @@ class workSheetConst {
         DEF_AREA_OTHER_COST_ORDER => 'その他明細部',
     ];
 
+    // 受注または発注の振り分け
+    // 受注に属するエリアコード
+    const RECEIVE_AREA_CODE = [
+        DEF_AREA_PRODUCT_SALES => true,
+        DEF_AREA_FIXED_COST_SALES => true
+    ];
+    // 発注に属するエリアコード
+    const ORDER_AREA_CODE = [
+        DEF_AREA_FIXED_COST_ORDER => true,
+        DEF_AREA_PARTS_COST_ORDER => true,
+        DEF_AREA_OTHER_COST_ORDER => true
+    ];
+
     // 対象エリアで使用する顧客先、仕入先の分類
     const ORDER_ATTRIBUTE_FOR_TARGET_AREA = [
         // 顧客先を使用するエリア
-        DEF_ATTRIBUTE_CLIENT => array(
-            DEF_AREA_PRODUCT_SALES => true,
-            DEF_AREA_FIXED_COST_SALES => true
-        ),
+        DEF_ATTRIBUTE_CLIENT => self::RECEIVE_AREA_CODE,
         // 仕入先を使用するエリア
-        DEF_ATTRIBUTE_SUPPLIER => array(
-            DEF_AREA_FIXED_COST_ORDER => true,
-            DEF_AREA_PARTS_COST_ORDER => true,
-            DEF_AREA_OTHER_COST_ORDER => true
-        )
+        DEF_ATTRIBUTE_SUPPLIER => self::ORDER_AREA_CODE
     ];
+
 
 
     // 名称リスト（項目別の括り) -------------------------------------------------------------------------------------------
 
-    // ヘッダーセル名称リスト
+    // 明細部ヘッダーセル名称リスト
     const DETAIL_HEADER_CELL_NAME_LIST = [
         DEF_AREA_PRODUCT_SALES => self::PRODUCT_SALES_HEADER_NAME_LIST,
         DEF_AREA_FIXED_COST_SALES => self::RECEIVE_FIXED_COST_HEADER_CELL,
         DEF_AREA_FIXED_COST_ORDER => self::RECEIVE_FIXED_COST_HEADER_CELL,
-        DEF_AREA_PARTS_COST_ORDER => self::ORDER_ELEMENT_COST_HEADER_CELL
+        DEF_AREA_PARTS_COST_ORDER => self::ORDER_ELEMENT_COST_HEADER_CELL,
+        DEF_AREA_OTHER_COST_ORDER => self::ORDER_ELEMENT_COST_HEADER_CELL
     ];
 
     // 製品売上ヘッダー名称リスト
@@ -495,8 +531,11 @@ class workSheetConst {
     // 欄外セルの名称リスト(行ごとのデータ除く)
     const HIDDEN_NAME_LIST= [
         'calculationTariff' => self::CALCULATION_TARIFF,
+        'tariffTotal' => self::TARIFF_TOTAL,
+        'calculationImportCost' => self::CALCULATION_IMPORT_COST,
         'hiddenPayoffCircle' => self::HIDDEN_PAYOFF_CIRCLE,
-        'hiddenMainProduct' => self::HIDDEN_MAIN_PRODUCT
+        'hiddenMainProduct' => self::HIDDEN_MAIN_PRODUCT,
+        'monetaryRateList' => self::MONETARY_RATE_LIST
     ];
 
 
@@ -554,6 +593,10 @@ class workSheetConst {
                 $headerList = self::ORDER_ELEMENT_COST_HEADER_CELL;
                 $resultList = self::ORDER_ELEMENT_COST_RESULT_CELL;
                 break;
+            case DEF_AREA_OTHER_COST_ORDER:
+                $headerList = self::ORDER_ELEMENT_COST_HEADER_CELL;
+                $resultList = self::ORDER_ELEMENT_COST_RESULT_CELL;
+                break;
             default:
                 break;
         }
@@ -573,6 +616,20 @@ class workSheetConst {
         'm_monetaryrate' => '通貨レートマスタ'
     ];
 
+    // 対象エリアの属する仕入区分
+    const AREA_ATTRIBUTE_TO_STOCK_CLASS_CODE = [
+        DEF_AREA_FIXED_COST_ORDER => DEF_STOCK_CLASS_CODE_PRODUCTION,
+        DEF_AREA_PARTS_COST_ORDER => DEF_STOCK_CLASS_CODE_PARTS,
+        DEF_AREA_OTHER_COST_ORDER => DEF_STOCK_CLASS_CODE_PARTS
+    ];
+
+    // 通貨の表示コード
+    const MONETARY_DISPLAY_CODE = [
+        DEF_MONETARY_YEN => 'JP',
+        DEF_MONETARY_USD => 'US',
+        DEF_MONETARY_HKD => 'HK',
+    ];
+
     // その他の定数 -------------------------------------------------------------------------------------------
     // ワークシートの行数（表示部分）
     const WORK_SHEET_COLUMN_NUMBER = 16;
@@ -584,4 +641,183 @@ class workSheetConst {
         DEF_MONETARY_HKD => 4,
     ];
 
+
+    // ワークシート情報のデフォルト値
+    // 値
+    const WORK_SHEET_CELL_VALUE_DEFAULT = '';
+
+    // 書式
+    const WORK_SHEET_FONT_FAMILY_DEFAULT = 'ＭＳ Ｐゴシック';
+
+    // 文字サイズ
+    const WORK_SHEET_FONT_SIZE_DEFAULT = 9;
+
+    // 背景色
+    const WORK_SHEET_BACKGROUND_COLOR_DEFAULT = 'FFFFFF';
+
+    // 文字色
+    const WORK_SHEET_FONT_COLOR_DEFAULT = '000000';
+
+    // 罫線の色
+    const WORK_SHEET_BORDER_COLOR_DEFAULT = '000000';
+
+    // エクセルの罫線書式
+    const WORK_SHEET_EXCEL_BORDER_STYLE_DEFAULT = 'none';
+
+    // 罫線書式(css)
+    const WORK_SHEET_BORDER_STYLE_DEFAULT = 'none';
+
+    // 罫線の幅
+    const WORK_SHEET_BORDER_WIDTH_DEFAULT = 0;
+
+    // 罫線
+    const WORK_SHEET_BORDER_DEFAULT = [
+        'color' => self::WORK_SHEET_BORDER_COLOR_DEFAULT,
+        'excelStyle' => self::WORK_SHEET_EXCEL_BORDER_STYLE_DEFAULT,
+        'style' => self::WORK_SHEET_BORDER_STYLE_DEFAULT,
+        'width' => self::WORK_SHEET_BORDER_WIDTH_DEFAULT
+    ];
+
+    // 罫線情報(部位別)
+    const WORK_SHEET_BORDER_INFO_DEFAULT = [
+        'left' => self::WORK_SHEET_BORDER_DEFAULT,
+        'right' => self::WORK_SHEET_BORDER_DEFAULT,
+        'top' => self::WORK_SHEET_BORDER_DEFAULT,
+        'bottom' => self::WORK_SHEET_BORDER_DEFAULT
+    ];
+
+    // 垂直配置
+    const WORK_SHEET_VARTICAL_POSITION_DEFAULT = 'bottom';
+
+    // 水平配置
+    const WORK_SHEET_HORIZONTAL_POSITION = 'center';
+    
+    // 太字
+    const WORK_SHEET_EMPHASIS_BOLD_DEFAULT = false;
+
+    // 斜体
+    const WORK_SHEET_EMPHASIS_ITALIC_DEFAULT = false;
+
+    // 文字の強調
+    const WORK_SHEET_EMPHASIS_DEFAULT = [
+        'bold' => self::WORK_SHEET_EMPHASIS_BOLD_DEFAULT,
+        'italic' => self::WORK_SHEET_EMPHASIS_ITALIC_DEFAULT
+    ];
+
+    // セルのデフォルト値
+    const WORK_SHEET_CELL_DEFAULT = [
+        'value' => self::WORK_SHEET_CELL_VALUE_DEFAULT,
+        'fontFamily' => self::WORK_SHEET_FONT_FAMILY_DEFAULT,
+        'fontSize' => self::WORK_SHEET_FONT_SIZE_DEFAULT,
+        'backgroundColor' => self::WORK_SHEET_BACKGROUND_COLOR_DEFAULT,
+        'fontColor' => self::WORK_SHEET_FONT_COLOR_DEFAULT,
+        'border' => self::WORK_SHEET_BORDER_INFO_DEFAULT,
+        'varticalPosition' => self::WORK_SHEET_VARTICAL_POSITION_DEFAULT,
+        'horizontalPosition' => self::WORK_SHEET_HORIZONTAL_POSITION,
+        'emphasis' => self::WORK_SHEET_EMPHASIS_DEFAULT
+    ];
+
+    /**
+    * 編集可能なセルリスト(対象エリア)
+    * 
+    * @param array   $areaCode  対象エリアのコード
+    * 
+    * @return array  $editableKeys
+    */
+    public static function getEditableKeys($areaCode) {
+        $editableKeys = array(
+            'divisionSubject' => true,
+            'classItem' => true,
+            'customerCompany' => true,
+            'payoff' => true,
+            'quantity' => ($areaCode == DEF_AREA_PARTS_COST_ORDER || $areaCode == DEF_AREA_OTHER_COST_ORDER) ? false : true,
+            'monetaryDisplay' => true,
+            'price' => true,
+            'conversionRate' => false,
+            'subtotal' => false,
+            'delivery' => true,
+            'note' => true
+        );
+        return $editableKeys;
+    }
+
+    // 編集可能なセルリスト(対象エリア以外)
+    const EDITABLE_KEY_EXPECT_FOR_TARGET_AREA = [
+        self::PRODUCT_CODE => true,
+        self::PRODUCT_NAME => true,
+        self::PRODUCT_ENGLISH_NAME => true,
+        self::RETAIL_PRICE => true,
+        self::INCHARGE_GROUP_CODE => true,
+        self::INCHARGE_USER_CODE => true,
+        self::DEVELOP_USER_CODE => true,
+        self::CARTON_QUANTITY => true,
+        self::PRODUCTION_QUANTITY => false
+    ];
+    
+
+    // 円マーク表示セルのリスト
+    const JPY_MARK_DISPLAY_CELLS = [
+        self::RETAIL_PRICE => true,
+        self::RECEIVE_PRODUCT_TOTAL_PRICE => true,
+        self::RECEIVE_FIXED_COST_TOTAL_PRICE => true,
+        self::ORDER_FIXED_COST_FIXED_COST => true,
+        self::ORDER_FIXED_COST_COST_NOT_DEPRECIATION => true,
+        self::PRODUCT_TOTAL_PRICE => true,
+        self::FIXED_COST_TOTAL_PRICE => true,
+        self::SALES_AMOUNT => true,
+        self::PRODUCT_PROFIT => true,
+        self::FIXED_COST_PROFIT => true,
+        self::PROFIT => true,
+        self::INDIRECT_COST => true,
+        self::OPERATING_PROFIT => true,
+        self::MEMBER_UNIT_COST => true,
+        self::MEMBER_COST => true,
+        self::DEPRECIATION_UNIT_COST => true,
+        self::DEPRECIATION_COST => true,
+        self::MANUFACTURING_UNIT_COST => true,
+        self::MANUFACTURING_COST => true,
+        self::COST_NOT_DEPRECIATION => true
+    ];
+
+    // 数量、単価関連のセル(円マークのつかないカンマ区切りの数値)
+    const QUANTITY_OR_PRICE_CELLS = [
+        self::CARTON_QUANTITY => true,
+        self::PRODUCTION_QUANTITY => true,
+        self::RECEIVE_PRODUCT_TOTAL_QUANTITY => false,
+        self::RECEIVE_FIXED_COST_TOTAL_QUANTITY => false,
+        self::MEMBER_QUANTITY => true,
+        self::DEPRECIATION_QUANTITY => true,
+        self::MANUFACTURING_QUANTITY => true
+    ];
+
+    // クラス名を表す文字列
+    const AREA_CLASS_STRING = 'area';      // 対象エリアコードとセットで使用
+    const DETAIL_CLASS_STRING = 'detail';  // 明細行の場合に与えるクラス名
+
+    // 通貨コード変換用定数(ワークシート)
+    const MONETARY_UNIT_WORKSHEET = [
+      'JP' => DEF_MONETARY_YEN,
+      'US' => DEF_MONETARY_USD,
+      'HK' => DEF_MONETARY_HKD
+    ];
+
+    // 償却記号
+    const PAYOFF_CIRCLE_SIGN = '○';
+
+    // 売上分類、仕入科目ドロップダウンリストのタイトルセルリスト
+    const DIVISION_SUBJECT_DROPDOWN_CELL_NAME = [
+        DEF_AREA_PRODUCT_SALES => self::RECEIVE_PRODUCT_SALES_DIVISION_DROPDOWN,
+        DEF_AREA_FIXED_COST_SALES => self::RECEIVE_FIXED_COST_SALES_DIVISION_DROPDOWN,
+        DEF_AREA_FIXED_COST_ORDER => self::ORDER_FIXED_COST_STOCK_SUBJECT_DROPDOWN,
+        DEF_AREA_PARTS_COST_ORDER => self::ORDER_ELEMENT_COST_STOCK_SUBJECT_DROPDOWN,
+        DEF_AREA_OTHER_COST_ORDER => self::ORDER_OTHER_COST_STOCK_SUBJECT_DROPDOWN
+    ];
+
+    const CLASS_ITEM_DROPDOWN_CELL_NAME = [
+        DEF_AREA_PRODUCT_SALES => self::RECEIVE_PRODUCT_SALES_CLASS_DROPDOWN,
+        DEF_AREA_FIXED_COST_SALES => self::RECEIVE_FIXED_COST_SALES_CLASS_DROPDOWN,
+        DEF_AREA_FIXED_COST_ORDER => self::ORDER_FIXED_COST_STOCK_ITEM_DROPDOWN,
+        DEF_AREA_PARTS_COST_ORDER => self::ORDER_ELEMENT_COST_STOCK_ITEM_DROPDOWN,
+        DEF_AREA_OTHER_COST_ORDER => self::ORDER_OTHER_COST_STOCK_ITEM_DROPDOWN
+    ];
 }
