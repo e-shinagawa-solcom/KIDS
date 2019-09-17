@@ -4,8 +4,8 @@
 require_once ('conf.inc');
 require_once ( LIB_ROOT . "/mapping/conf_mapping_common.inc");
 
-// PHPSpreadSheetライブラリのオートロードファイル読み込み
-require_once ( LIB_ROOT . "/phpspreadsheet/autoload.php" );
+// Composerのオートロードファイル読み込み
+require_once ( LIB_COMPOSER_FILE );
 
 // 定数ファイルの読み込み
 require_once ( SRC_ROOT . "/estimate/cmn/const/workSheetConst.php");
