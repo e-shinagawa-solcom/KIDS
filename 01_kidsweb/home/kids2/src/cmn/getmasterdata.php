@@ -64,7 +64,7 @@
 
 	$fp = fopen ( SQLLOG_ROOT . "$lngProcessID.txt", "w" );
 	fwrite ( $fp, $strQuery . "\n" );
-
+	
 	// データ文字列取得(***,***\n)
 	if ( $strMasterData = fncGetMasterData( $strQuery ) )
 	{

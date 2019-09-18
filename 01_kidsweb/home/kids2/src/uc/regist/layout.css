@@ -50,7 +50,7 @@
 	top: 30px;
 	left: 0px;
 	width: 931px;
-	height: 467px;
+	height: 455px;
     padding-top: 3px;
     box-sizing: border-box;
 }
@@ -185,7 +185,7 @@
 #SegAClearBt
 {
 	position : absolute ;
-	top : 515px ;
+	top : 480px ;
 	left : 745px ;
 	border-width: 0px ;
 	border-style: none ;

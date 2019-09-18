@@ -65,7 +65,7 @@ $strCopyQuery = "SELECT strReportKeyCode, lngReportCode FROM t_Report WHERE lngR
 
 // 納品書取得クエリ生成
 $aryQuery[] = "SELECT";
-$aryQuery[] = "  s.strslipcode";
+$aryQuery[] = "  distinct s.strslipcode";
 $aryQuery[] = "  , u1.strUserDisplayCode AS strinsertuserdisplaycode";
 $aryQuery[] = "  , u1.strUserDisplayName AS strinsertuserdisplayname";
 $aryQuery[] = "  , s.strcustomercode";

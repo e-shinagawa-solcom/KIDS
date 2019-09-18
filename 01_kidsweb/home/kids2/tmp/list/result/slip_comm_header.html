@@ -1,0 +1,633 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
+    <meta name="generator" content="PhpSpreadsheet, https://github.com/PHPOffice/PhpSpreadsheet">
+    <meta name="author" content="solcom" />
+    <script>
+        var reprint = parent.button.document.getElementById('rePrint');
+        reprint.style.display = "inline-block";
+
+
+        parent.button.document.getElementById('print').onclick = function () {
+            // ファイルダウンロード処理を行う
+            location.href = '/list/result/slip/download.php?strSessionID=_%strSessionID%_' +
+                '&strReportKeyCode=_%strReportKeyCode%_' +
+                '&lngReportCode=_%lngReportCode%_';
+            exit;
+        };
+
+
+        parent.button.document.getElementById('rePrintChk').onclick = function () {
+            if (this.checked) {
+                document.getElementById('reprintMsg').innerHTML = "再印刷";
+            } else {
+                document.getElementById('reprintMsg').innerHTML = "";
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <style type="text/css">
+        html {
+            font-family: Calibri, Arial, Helvetica, sans-serif;
+            font-size: 11pt;
+            background-color: white
+        }
+
+        a.comment-indicator:hover+div.comment {
+            background: #ffd;
+            position: absolute;
+            display: block;
+            border: 1px solid black;
+            padding: 0.5em
+        }
+
+        a.comment-indicator {
+            background: red;
+            display: inline-block;
+            border: 1px solid black;
+            width: 0.5em;
+            height: 0.5em
+        }
+
+        div.comment {
+            display: none
+        }
+
+        table {
+            border-collapse: collapse;
+            page-break-after: always
+        }
+
+        .gridlines td {
+            border: 1px dotted black
+        }
+
+        .gridlines th {
+            border: 1px dotted black
+        }
+
+        .b {
+            text-align: center
+        }
+
+        .e {
+            text-align: center
+        }
+
+        .f {
+            text-align: right
+        }
+
+        .inlineStr {
+            text-align: left
+        }
+
+        .n {
+            text-align: right
+        }
+
+        .s {
+            text-align: left
+        }
+
+        td.style0 {
+            vertical-align: bottom;
+            border-bottom: none #000000;
+            border-top: none #000000;
+            border-left: none #000000;
+            border-right: none #000000;
+            color: #000000;
+            font-family: 'ＭＳ Ｐゴシック';
+            font-size: 11pt;
+            background-color: white
+        }
+
+        th.style0 {
+            vertical-align: bottom;
+            border-bottom: none #000000;
+            border-top: none #000000;
+            border-left: none #000000;
+            border-right: none #000000;
+            color: #000000;
+            font-family: 'ＭＳ Ｐゴシック';
+            font-size: 11pt;
+            background-color: white
+        }
+
+        td.style1 {
+            vertical-align: bottom;
+            border-bottom: 1px solid #000000 !important;
+            border-top: 1px solid #000000 !important;
+            border-left: 1px solid #000000 !important;
+            border-right: 1px solid #000000 !important;
+            color: #000000;
+            font-family: 'ＭＳ Ｐゴシック';
+            font-size: 11pt;
+            background-color: white
+        }
+
+        th.style1 {
+            vertical-align: bottom;
+            border-bottom: 1px solid #000000 !important;
+            border-top: 1px solid #000000 !important;
+            border-left: 1px solid #000000 !important;
+            border-right: 1px solid #000000 !important;
+            color: #000000;
+            font-family: 'ＭＳ Ｐゴシック';
+            font-size: 11pt;
+            background-color: white
+        }
+
+        td.style2 {
+            vertical-align: bottom;
+            border-bottom: 1px solid #000000 !important;
+            border-top: 1px solid #000000 !important;
+            border-left: 1px solid #000000 !important;
+            border-right: 1px solid #000000 !important;
+            color: #000000;
+            font-family: 'ＭＳ Ｐゴシック';
+            font-size: 11pt;
+            background-color: white
+        }
+
+        th.style2 {
+            vertical-align: bottom;
+            border-bottom: 1px solid #000000 !important;
+            border-top: 1px solid #000000 !important;
+            border-left: 1px solid #000000 !important;
+            border-right: 1px solid #000000 !important;
+            color: #000000;
+            font-family: 'ＭＳ Ｐゴシック';
+            font-size: 11pt;
+            background-color: white
+        }
+
+        td.style3 {
+            vertical-align: bottom;
+            text-align: center;
+            border-bottom: 1px solid #000000 !important;
+            border-top: 1px solid #000000 !important;
+            border-left: 1px solid #000000 !important;
+            border-right: 1px solid #000000 !important;
+            color: #000000;
+            font-family: 'ＭＳ Ｐゴシック';
+            font-size: 11pt;
+            background-color: white
+        }
+
+        th.style3 {
+            vertical-align: bottom;
+            text-align: center;
+            border-bottom: 1px solid #000000 !important;
+            border-top: 1px solid #000000 !important;
+            border-left: 1px solid #000000 !important;
+            border-right: 1px solid #000000 !important;
+            color: #000000;
+            font-family: 'ＭＳ Ｐゴシック';
+            font-size: 11pt;
+            background-color: white
+        }
+
+        td.style4 {
+            vertical-align: bottom;
+            border-bottom: 1px solid #000000 !important;
+            border-top: 1px solid #000000 !important;
+            border-left: 1px solid #000000 !important;
+            border-right: 1px solid #000000 !important;
+            color: #000000;
+            font-family: 'ＭＳ Ｐゴシック';
+            font-size: 8pt;
+            background-color: white
+        }
+
+        th.style4 {
+            vertical-align: bottom;
+            border-bottom: 1px solid #000000 !important;
+            border-top: 1px solid #000000 !important;
+            border-left: 1px solid #000000 !important;
+            border-right: 1px solid #000000 !important;
+            color: #000000;
+            font-family: 'ＭＳ Ｐゴシック';
+            font-size: 8pt;
+            background-color: white
+        }
+
+        td.style5 {
+            vertical-align: bottom;
+            border-bottom: 1px solid #000000 !important;
+            border-top: 1px solid #000000 !important;
+            border-left: 1px solid #000000 !important;
+            border-right: 1px solid #000000 !important;
+            color: #000000;
+            font-family: 'ＭＳ Ｐゴシック';
+            font-size: 8pt;
+            background-color: white
+        }
+
+        th.style5 {
+            vertical-align: bottom;
+            border-bottom: 1px solid #000000 !important;
+            border-top: 1px solid #000000 !important;
+            border-left: 1px solid #000000 !important;
+            border-right: 1px solid #000000 !important;
+            color: #000000;
+            font-family: 'ＭＳ Ｐゴシック';
+            font-size: 8pt;
+            background-color: white
+        }
+
+        td.style6 {
+            vertical-align: bottom;
+            text-align: center;
+            border-bottom: 1px solid #000000 !important;
+            border-top: 1px solid #000000 !important;
+            border-left: 1px solid #000000 !important;
+            border-right: 1px solid #000000 !important;
+            color: #000000;
+            font-family: 'ＭＳ Ｐゴシック';
+            font-size: 11pt;
+            background-color: white
+        }
+
+        th.style6 {
+            vertical-align: bottom;
+            text-align: center;
+            border-bottom: 1px solid #000000 !important;
+            border-top: 1px solid #000000 !important;
+            border-left: 1px solid #000000 !important;
+            border-right: 1px solid #000000 !important;
+            color: #000000;
+            font-family: 'ＭＳ Ｐゴシック';
+            font-size: 11pt;
+            background-color: white
+        }
+
+        td.style7 {
+            vertical-align: bottom;
+            text-align: center;
+            border-bottom: 1px solid #000000 !important;
+            border-top: 1px solid #000000 !important;
+            border-left: 1px solid #000000 !important;
+            border-right: none #000000;
+            color: #000000;
+            font-family: 'ＭＳ Ｐゴシック';
+            font-size: 11pt;
+            background-color: white
+        }
+
+        th.style7 {
+            vertical-align: bottom;
+            text-align: center;
+            border-bottom: 1px solid #000000 !important;
+            border-top: 1px solid #000000 !important;
+            border-left: 1px solid #000000 !important;
+            border-right: none #000000;
+            color: #000000;
+            font-family: 'ＭＳ Ｐゴシック';
+            font-size: 11pt;
+            background-color: white
+        }
+
+        td.style8 {
+            vertical-align: bottom;
+            border-bottom: 1px solid #000000 !important;
+            border-top: 1px solid #000000 !important;
+            border-left: 1px solid #000000 !important;
+            border-right: 1px solid #000000 !important;
+            color: #000000;
+            font-family: 'ＭＳ Ｐゴシック';
+            font-size: 11pt;
+            background-color: white
+        }
+
+        th.style8 {
+            vertical-align: bottom;
+            border-bottom: 1px solid #000000 !important;
+            border-top: 1px solid #000000 !important;
+            border-left: 1px solid #000000 !important;
+            border-right: 1px solid #000000 !important;
+            color: #000000;
+            font-family: 'ＭＳ Ｐゴシック';
+            font-size: 11pt;
+            background-color: white
+        }
+
+        td.style9 {
+            vertical-align: bottom;
+            border-bottom: 1px solid #000000 !important;
+            border-top: 1px solid #000000 !important;
+            border-left: none #000000;
+            border-right: 1px solid #000000 !important;
+            color: #000000;
+            font-family: 'ＭＳ Ｐゴシック';
+            font-size: 11pt;
+            background-color: white
+        }
+
+        th.style9 {
+            vertical-align: bottom;
+            border-bottom: 1px solid #000000 !important;
+            border-top: 1px solid #000000 !important;
+            border-left: none #000000;
+            border-right: 1px solid #000000 !important;
+            color: #000000;
+            font-family: 'ＭＳ Ｐゴシック';
+            font-size: 11pt;
+            background-color: white
+        }
+
+        td.style10 {
+            vertical-align: bottom;
+            text-align: center;
+            border-bottom: 1px solid #000000 !important;
+            border-top: 1px solid #000000 !important;
+            border-left: 1px solid #000000 !important;
+            border-right: 1px solid #000000 !important;
+            color: #000000;
+            font-family: 'ＭＳ Ｐゴシック';
+            font-size: 11pt;
+            background-color: white
+        }
+
+        th.style10 {
+            vertical-align: bottom;
+            text-align: center;
+            border-bottom: 1px solid #000000 !important;
+            border-top: 1px solid #000000 !important;
+            border-left: 1px solid #000000 !important;
+            border-right: 1px solid #000000 !important;
+            color: #000000;
+            font-family: 'ＭＳ Ｐゴシック';
+            font-size: 11pt;
+            background-color: white
+        }
+
+        td.style11 {
+            vertical-align: bottom;
+            text-align: center;
+            border-bottom: 1px solid #000000 !important;
+            border-top: 1px solid #000000 !important;
+            border-left: 1px solid #000000 !important;
+            border-right: none #000000;
+            color: #000000;
+            font-family: 'ＭＳ Ｐゴシック';
+            font-size: 11pt;
+            background-color: white
+        }
+
+        th.style11 {
+            vertical-align: bottom;
+            text-align: center;
+            border-bottom: 1px solid #000000 !important;
+            border-top: 1px solid #000000 !important;
+            border-left: 1px solid #000000 !important;
+            border-right: none #000000;
+            color: #000000;
+            font-family: 'ＭＳ Ｐゴシック';
+            font-size: 11pt;
+            background-color: white
+        }
+
+        td.style12 {
+            vertical-align: bottom;
+            border-bottom: none #000000;
+            border-top: none #000000;
+            border-left: none #000000;
+            border-right: none #000000;
+            color: #000000;
+            font-family: 'ＭＳ Ｐゴシック';
+            font-size: 11pt;
+            background-color: white
+        }
+
+        th.style12 {
+            vertical-align: bottom;
+            border-bottom: none #000000;
+            border-top: none #000000;
+            border-left: none #000000;
+            border-right: none #000000;
+            color: #000000;
+            font-family: 'ＭＳ Ｐゴシック';
+            font-size: 11pt;
+            background-color: white
+        }
+
+        td.style13 {
+            vertical-align: bottom;
+            text-align: center;
+            border-bottom: none #000000;
+            border-top: 1px solid #000000 !important;
+            border-left: none #000000;
+            border-right: none #000000;
+            color: #000000;
+            font-family: 'ＭＳ Ｐゴシック';
+            font-size: 11pt;
+            background-color: white
+        }
+
+        th.style13 {
+            vertical-align: bottom;
+            text-align: center;
+            border-bottom: none #000000;
+            border-top: 1px solid #000000 !important;
+            border-left: none #000000;
+            border-right: none #000000;
+            color: #000000;
+            font-family: 'ＭＳ Ｐゴシック';
+            font-size: 11pt;
+            background-color: white
+        }
+
+        td.style14 {
+            vertical-align: bottom;
+            border-bottom: none #000000;
+            border-top: none #000000;
+            border-left: none #000000;
+            border-right: none #000000;
+            color: #000000;
+            font-family: 'ＭＳ Ｐゴシック';
+            font-size: 11pt;
+            background-color: white
+        }
+
+        th.style14 {
+            vertical-align: bottom;
+            border-bottom: none #000000;
+            border-top: none #000000;
+            border-left: none #000000;
+            border-right: none #000000;
+            color: #000000;
+            font-family: 'ＭＳ Ｐゴシック';
+            font-size: 11pt;
+            background-color: white
+        }
+
+        table.sheet0 col.col0 {
+            width: 8.13333324pt;
+            visibility: collapse;
+            *display: none
+        }
+
+        table.sheet0 col.col1 {
+            width: 48.79999944pt
+        }
+
+        table.sheet0 col.col2 {
+            width: 203.333331pt
+        }
+
+        table.sheet0 col.col3 {
+            width: 71.16666585pt
+        }
+
+        table.sheet0 col.col4 {
+            width: 71.16666585pt
+        }
+
+        table.sheet0 col.col5 {
+            width: 24.39999972pt
+        }
+
+        table.sheet0 col.col6 {
+            width: 17.62222202pt
+        }
+
+        table.sheet0 col.col7 {
+            width: 17.62222202pt
+        }
+
+        table.sheet0 col.col8 {
+            width: 17.62222202pt
+        }
+
+        table.sheet0 col.col9 {
+            width: 17.62222202pt
+        }
+
+        table.sheet0 col.col10 {
+            width: 17.62222202pt
+        }
+
+        table.sheet0 col.col11 {
+            width: 17.62222202pt
+        }
+
+        table.sheet0 col.col12 {
+            width: 28.46666634pt
+        }
+
+        table.sheet0 col.col13 {
+            width: 111.83333205pt
+        }
+
+        table.sheet0 col.col14 {
+            width: 16.94444425pt
+        }
+
+        table.sheet0 tr {
+            height: 15pt
+        }
+
+        table.sheet0 tr.row1 {
+            height: 70.05pt
+        }
+
+        table.sheet0 tr.row2 {
+            height: 26.55pt
+        }
+
+        table.sheet0 tr.row3 {
+            height: 60.45pt
+        }
+
+        table.sheet0 tr.row4 {
+            height: 27.45pt
+        }
+
+        table.sheet0 tr.row5 {
+            height: 19.8pt
+        }
+
+        table.sheet0 tr.row6 {
+            height: 19.8pt
+        }
+
+        table.sheet0 tr.row7 {
+            height: 19.8pt
+        }
+
+        table.sheet0 tr.row8 {
+            height: 19.8pt
+        }
+
+        table.sheet0 tr.row9 {
+            height: 19.8pt
+        }
+
+        table.sheet0 tr.row10 {
+            height: 19.8pt
+        }
+
+        table.sheet0 tr.row11 {
+            height: 19.8pt
+        }
+
+        table.sheet0 tr.row12 {
+            height: 19.8pt
+        }
+
+        table.sheet0 tr.row13 {
+            height: 19.8pt
+        }
+
+        table.sheet0 tr.row14 {
+            height: 19.8pt
+        }
+
+        table.sheet0 tr.row15 {
+            height: 19.8pt
+        }
+
+        table.sheet0 tr.row16 {
+            height: 19.8pt
+        }
+
+        table.sheet0 tr.row17 {
+            height: 19.8pt
+        }
+
+        table.sheet0 tr.row18 {
+            height: 19.8pt
+        }
+
+        table.sheet0 tr.row19 {
+            height: 39pt
+        }
+
+        table.sheet0 tr.row20 {
+            height: 39.45pt
+        }
+
+        table.sheet0 tr.row21 {
+            height: 18pt
+        }
+    </style>
+    <style>
+        @page {
+            margin-left: 0in;
+            margin-right: 0in;
+            margin-top: 0in;
+            margin-bottom: 0in;
+        }
+
+        body {
+            margin-left: 0in;
+            margin-right: 0in;
+            margin-top: 0in;
+            margin-bottom: 0in;
+        }
+    </style>
