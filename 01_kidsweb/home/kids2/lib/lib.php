@@ -1460,9 +1460,9 @@ function getArrayTable( $aryData, $strExpressMode )
 	$keys = array_keys ( $aryData );
 	foreach ( $keys as $key )
 	{
-		$strTable = "<tr><th>$key</th><td>$aryData[$key]</td></tr>\n";
+		$strTable .= "<tr><th>$key</th><td>$aryData[$key]</td></tr>\n";
 
-		$strHidden = "<input type=\"hidden\" name=\"$key\" value=\"$aryData[$key]\">\n";
+		$strHidden .= "<input type=\"hidden\" name=\"$key\" value=\"$aryData[$key]\">\n";
 	}
 
 	$strTable .= "</table>\n";

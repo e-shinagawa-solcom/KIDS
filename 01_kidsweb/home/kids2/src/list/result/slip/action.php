@@ -77,30 +77,33 @@ elseif ($lngResultNum === 0) {
 
     // 詳細取得
     $aryQuery[] = "select";
-    $aryQuery[] = "  lngpurchaseorderno";
-    $aryQuery[] = "  , lngpurchaseorderdetailno";
+    $aryQuery[] = "  lngslipno";
+    $aryQuery[] = "  , lngslipdetailno";
     $aryQuery[] = "  , lngrevisionno";
-    $aryQuery[] = "  , lngorderno";
-    $aryQuery[] = "  , lngorderdetailno";
-    $aryQuery[] = "  , lngorderrevisionno";
-    $aryQuery[] = "  , lngstocksubjectcode";
-    $aryQuery[] = "  , lngstockitemcode";
-    $aryQuery[] = "  , strstockitemname";
-    $aryQuery[] = "  , lngdeliverymethodcode";
-    $aryQuery[] = "  , strdeliverymethodname";
+    $aryQuery[] = "  , strcustomersalescode";
+    $aryQuery[] = "  , lngsalesclasscode";
+    $aryQuery[] = "  , strsalesclassname";
+    $aryQuery[] = "  , strgoodscode";
+    $aryQuery[] = "  , strproductcode";
+    $aryQuery[] = "  , strrevisecode";
+    $aryQuery[] = "  , strproductname";
+    $aryQuery[] = "  , strproductenglishname";
     $aryQuery[] = "  , to_char(curproductprice, '9,999,999,990') AS curproductprice";
+    $aryQuery[] = "  , lngquantity";
     $aryQuery[] = "  , to_char(lngproductquantity, '9,999,999,990') AS lngproductquantity";
     $aryQuery[] = "  , lngproductunitcode";
     $aryQuery[] = "  , strproductunitname";
     $aryQuery[] = "  , to_char(cursubtotalprice, '9,999,999,990') AS cursubtotalprice";
-    $aryQuery[] = "  , to_char(dtmdeliverydate, 'YYYY/MM/DD') AS dtmdeliverydate";
     $aryQuery[] = "  , strnote";
+    $aryQuery[] = "  , lngreceiveno";
+    $aryQuery[] = "  , lngreceivedetailno";
+    $aryQuery[] = "  , lngreceiverevisionno";
     $aryQuery[] = "  , lngsortkey ";
     $aryQuery[] = "from";
-    $aryQuery[] = "  t_purchaseorderdetail ";
-    $aryQuery[] = "WHERE";
-    $aryQuery[] = "  lngpurchaseorderno = " . $aryData["strReportKeyCode"];
-    $aryQuery[] = "ORDER BY";
+    $aryQuery[] = "  t_slipdetail ";
+    $aryQuery[] = "where";
+    $aryQuery[] = "  lngslipno = " . $aryData["strReportKeyCode"];
+    $aryQuery[] = " ORDER BY";
     $aryQuery[] = "  lngSortKey";
 
     $strQuery = join("", $aryQuery);
@@ -178,7 +181,6 @@ elseif ($lngResultNum === 0) {
         // 置き換え
         $objTemplate->replace($aryParts);
 
-        // 詳細行を５行表示(発注書出力特別処理)
         $lngRecordCount = 0;
         for ($j = ($aryParts["lngNowPage"] - 1) * $rowNum; $j < ($aryParts["lngNowPage"] * $rowNum); $j++) {
             $aryDetail[$j]["record" . $lngRecordCount] = $j + 1;
@@ -186,12 +188,12 @@ elseif ($lngResultNum === 0) {
 
             // 単価が存在すれば、それに通貨単位をつける
             if ($aryDetail[$j]["curproductprice" . ($index)] > 0) {
-                $aryDetail[$j]["curproductprice" . ($index)] = $aryParts["strmonetaryunitsign"] . " " . $aryDetail[$j]["curproductprice" . ($index)];
+                $aryDetail[$j]["curproductprice" . ($index)] = $aryDetail[$j]["curproductprice" . ($index)];
             }
 
             // 小計が存在すれば、それに通貨単位をつける
             if ($aryDetail[$j]["cursubtotalprice" . ($index)] > 0) {
-                $aryDetail[$j]["cursubtotalprice" . ($index)] = $aryParts["strmonetaryunitsign"] . " " . $aryDetail[$j]["cursubtotalprice" . ($index)];
+                $aryDetail[$j]["cursubtotalprice" . ($index)] = $aryDetail[$j]["cursubtotalprice" . ($index)];
             }
 
             // 製品数量が存在すれば、それに製品単位をつける

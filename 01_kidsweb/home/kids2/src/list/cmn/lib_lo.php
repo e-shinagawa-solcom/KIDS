@@ -202,7 +202,7 @@ function fncGetCopyFilePathQuery($lngReportClassCode, $strReportKeyCode, $lngRep
         $aryQuery[] = "  SELECT MIN( po1.lngRevisionNo ) FROM m_purchaseorder po1 WHERE po1.strOrderCode = po.strOrderCode ";
         $aryQuery[] = ")";
         $aryQuery[] = " AND  r.strReportKeyCode = trim(to_char(po.lngpurchaseorderno, '9999999'))";
-    }    
+    }
     // 納品書帳票出力コピーファイル取得クエリ生成
     elseif ($lngReportClassCode == DEF_REPORT_SLIP) {
         $aryQuery[] = "SELECT r.strReportPathName ";
@@ -458,83 +458,41 @@ function fncGetListOutputQuery($lngClassCode, $lngKeyCode, $objDB)
         $aryQuery[] = "WHERE po.lngpurchaseorderno = " . $lngKeyCode;
     } else if ($lngClassCode == DEF_REPORT_SLIP) {
         $aryQuery[] = "select";
-        $aryQuery[] = "  s.lngslipno";
-        $aryQuery[] = "  , s.lngrevisionno";
-        $aryQuery[] = "  , s.strslipcode";
-        $aryQuery[] = "  , s.lngsalesno";
-        $aryQuery[] = "  , s.strcustomercode";
-        $aryQuery[] = "  , s.strcustomername";
-        $aryQuery[] = "  , s.strcustomerusername";
-        $aryQuery[] = "  , s.dtmdeliverydate";
-        $aryQuery[] = "  , s.lngdeliveryplacecode";
-        $aryQuery[] = "  , s.strdeliveryplacename";
-        $aryQuery[] = "  , s.strdeliveryplaceusername";
-        $aryQuery[] = "  , s.lngpaymentmethodcode";
-        $aryQuery[] = "  , pm.strpaymentmethodname";
-        $aryQuery[] = "  , to_char(s.dtmpaymentlimit, 'DD ,Mon YYYY') as dtmpaymentlimit";
-        $aryQuery[] = "  , s.lngtaxclasscode";
-        $aryQuery[] = "  , s.strtaxclassname";
-        $aryQuery[] = "  , s.curtax";
-        $aryQuery[] = "  , s.strusercode";
-        $aryQuery[] = "  , s.strusername";
-        $aryQuery[] = "  , to_char(s.curtotalprice, '9,999,999,990') AS curtotalprice";
-        $aryQuery[] = "  , s.lngmonetaryunitcode";
-        $aryQuery[] = "  , s.strmonetaryunitsign";
-        $aryQuery[] = "  , s.dtminsertdate";
-        $aryQuery[] = "  , s.strinsertusercode";
-        $aryQuery[] = "  , s.strinsertusername";
-        $aryQuery[] = "  , s.strnote";
-        $aryQuery[] = "  , s.lngprintcount";
-        $aryQuery[] = "  , s.bytinvalidflag";
-        $aryQuery[] = "  , c.straddress1 as strcustomeraddress1";
-        $aryQuery[] = "  , c.straddress2 as strcustomeraddress2";
-        $aryQuery[] = "  , c.straddress3 as strcustomeraddress3";
-        $aryQuery[] = "  , c.straddress4 as strcustomeraddress4";
-        $aryQuery[] = "  , c.strtel1 as strcustomertel1";
-        $aryQuery[] = "  , c.strtel2 as strcustomertel2";
-        $aryQuery[] = "  , c.strfax1 as strcustomerfax1";
-        $aryQuery[] = "  , c.strfax2 as strcustomerfax2";
-        $aryQuery[] = "  , sc.straddress1 as strstockcomanyaddress1";
-        $aryQuery[] = "  , sc.straddress2 as strstockcomanyaddress2";
-        $aryQuery[] = "  , sc.straddress3 as strstockcomanyaddress3";
-        $aryQuery[] = "  , sc.straddress4 as strstockcomanyaddress4";
-        $aryQuery[] = "  , sc.strtel1 as strstockcomanytel1";
-        $aryQuery[] = "  , sc.strtel2 as strstockcomanytel2";
-        $aryQuery[] = "  , sc.strfax1 as strstockcomanyfax1";
-        $aryQuery[] = "  , sc.strfax2 as strstockcomanyfax2";
-        $aryQuery[] = "  , sc.lngslipkindcode";
-        $aryQuery[] = "  , sc.lngmaxline";
-        $aryQuery[] = " from";
-        $aryQuery[] = "  m_slip s ";
-        $aryQuery[] = "  left join ( ";
-        $aryQuery[] = "    select";
-        $aryQuery[] = "      c1.straddress1";
-        $aryQuery[] = "      , c1.straddress2";
-        $aryQuery[] = "      , c1.straddress3";
-        $aryQuery[] = "      , c1.straddress4";
-        $aryQuery[] = "      , c1.strtel1";
-        $aryQuery[] = "      , c1.strtel2";
-        $aryQuery[] = "      , c1.strfax1";
-        $aryQuery[] = "      , c1.strfax2";
-        $aryQuery[] = "      , sc1.strstockcompanycode";
-        $aryQuery[] = "      , sk.lngslipkindcode";
-        $aryQuery[] = "      , sk.strslipkindname";
-        $aryQuery[] = "      , sk.lngmaxline ";
-        $aryQuery[] = "    from";
-        $aryQuery[] = "      m_stockcompanycode sc1 ";
-        $aryQuery[] = "      inner join m_company c1 ";
-        $aryQuery[] = "        on sc1.lngcompanyno = c1.lngcompanycode ";
-        $aryQuery[] = "      inner join m_slipkindrelation skr ";
-        $aryQuery[] = "        on sc1.lngcompanyno = skr.lngcompanycode ";
-        $aryQuery[] = "      inner join m_slipkind sk ";
-        $aryQuery[] = "        on sk.lngslipkindcode = skr.lngslipkindcode";
-        $aryQuery[] = "  ) sc ";
-        $aryQuery[] = "    on s.strcustomercode = sc.strstockcompanycode ";
-        $aryQuery[] = "  left join m_company c ";
-        $aryQuery[] = "    on to_number(s.strcustomercode, '999999') = c.lngcompanycode ";
-        $aryQuery[] = "  left join m_paymentmethod pm ";
-        $aryQuery[] = "    on s.lngpaymentmethodcode = pm.lngpaymentmethodcode ";
-        $aryQuery[] = "WHERE s.lngslipno = " . $lngKeyCode;
+        $aryQuery[] = "  lngslipno";
+        $aryQuery[] = "  , lngrevisionno";
+        $aryQuery[] = "  , strslipcode";
+        $aryQuery[] = "  , lngsalesno";
+        $aryQuery[] = "  , strcustomercode";
+        $aryQuery[] = "  , strcustomercompanyname";
+        $aryQuery[] = "  , strcustomername";
+        $aryQuery[] = "  , strcustomeraddress1";
+        $aryQuery[] = "  , strcustomeraddress2";
+        $aryQuery[] = "  , strcustomeraddress3";
+        $aryQuery[] = "  , strcustomeraddress4";
+        $aryQuery[] = "  , strcustomerphoneno";
+        $aryQuery[] = "  , strcustomerfaxno";
+        $aryQuery[] = "  , strcustomerusername";
+        $aryQuery[] = "  , to_char(dtmdeliverydate, 'yyyy/mm/dd') as dtmdeliverydate";
+        $aryQuery[] = "  , lngdeliveryplacecode";
+        $aryQuery[] = "  , strdeliveryplacename";
+        $aryQuery[] = "  , strdeliveryplaceusername";
+        $aryQuery[] = "  , strusercode";
+        $aryQuery[] = "  , strusername";
+        $aryQuery[] = "  , to_char(curtotalprice, '9,999,999,990') AS curtotalprice";
+        $aryQuery[] = "  , trunc(curtotalprice) AS curtotalprice_comm";
+        $aryQuery[] = "  , lngmonetaryunitcode";
+        $aryQuery[] = "  , strmonetaryunitsign";
+        $aryQuery[] = "  , lngtaxclasscode";
+        $aryQuery[] = "  , strtaxclassname";
+        $aryQuery[] = "  , curtax";
+        $aryQuery[] = "  , lngpaymentmethodcode";
+        $aryQuery[] = "  , to_char(dtmpaymentlimit, 'dd/mm/yyyy') as dtmpaymentlimit";
+        $aryQuery[] = "  , dtminsertdate";
+        $aryQuery[] = "  , strnote";
+        $aryQuery[] = "  , strshippercode ";
+        $aryQuery[] = "from";
+        $aryQuery[] = "  m_slip ";
+        $aryQuery[] = "WHERE lngslipno = " . $lngKeyCode;
     }
 
     return join("", $aryQuery);
@@ -576,4 +534,147 @@ function fncSignatureCheckFile($strPath, $lnguc)
     return $bl;
 }
 
+/**
+ * 仕入先コードにより納品伝票種別取得クエリの生成
+ *
+ * @param [type] $strShipperCode
+ * @return void
+ */
+function fncGetSlipKindQuery($strShipperCode)
+{
+    $aryQuery[] = "select";
+    $aryQuery[] = "  sk.lngslipkindcode";
+    $aryQuery[] = "  , sk.strslipkindname";
+    $aryQuery[] = "  , sk.lngmaxline ";
+    $aryQuery[] = "from";
+    $aryQuery[] = "  m_stockcompanycode sc ";
+    $aryQuery[] = "  inner join m_slipkindrelation skr ";
+    $aryQuery[] = "    on sc.lngcompanyno = skr.lngcompanycode ";
+    $aryQuery[] = "  inner join m_slipkind sk ";
+    $aryQuery[] = "    on sk.lngslipkindcode = skr.lngslipkindcode ";
+    $aryQuery[] = "where";
+    $aryQuery[] = "  sc.strstockcompanycode = '" . $strShipperCode . "'";
+    return join("", $aryQuery);
+}
+
+/**
+ * 納品詳細取得クエリの生成
+ *
+ * @param [type] $strReportKeyCode
+ * @return void
+ */
+function fncGetSlipDetailQuery($strReportKeyCode)
+{
+    $aryQuery[] = "select";
+    $aryQuery[] = "  lngslipno";
+    $aryQuery[] = "  , lngslipdetailno";
+    $aryQuery[] = "  , lngrevisionno";
+    $aryQuery[] = "  , strcustomersalescode";
+    $aryQuery[] = "  , lngsalesclasscode";
+    $aryQuery[] = "  , strsalesclassname";
+    $aryQuery[] = "  , strgoodscode";
+    $aryQuery[] = "  , strproductcode";
+    $aryQuery[] = "  , strrevisecode";
+    $aryQuery[] = "  , strproductname";
+    $aryQuery[] = "  , strproductenglishname";
+    $aryQuery[] = "  , to_char(curproductprice, '9,999,999,990') AS curproductprice";
+    $aryQuery[] = "  , lngquantity";
+    $aryQuery[] = "  , to_char(lngproductquantity, '9,999,999,990') AS lngproductquantity";
+    $aryQuery[] = "  , lngproductunitcode";
+    $aryQuery[] = "  , strproductunitname";
+    $aryQuery[] = "  , to_char(cursubtotalprice, '9,999,999,990') AS cursubtotalprice";
+    $aryQuery[] = "  , trunc(cursubtotalprice) AS cursubtotalprice_comm";
+    $aryQuery[] = "  , strnote ";
+    $aryQuery[] = "from";
+    $aryQuery[] = "  t_slipdetail ";
+    $aryQuery[] = "where";
+    $aryQuery[] = "  lngslipno = " . $strReportKeyCode;
+    $aryQuery[] = " ORDER BY";
+    $aryQuery[] = "  lngSortKey";
+
+    return join("", $aryQuery);
+}
+
+/**
+ * 納品詳細取得クエリの生成
+ *
+ * @param [type] $strReportKeyCode
+ * @return void
+ */
+function fncGetSlipDetailForDownloadQuery($strReportKeyCode)
+{
+    $aryQuery[] = "select";
+    $aryQuery[] = "  lngslipno";
+    $aryQuery[] = "  , lngslipdetailno";
+    $aryQuery[] = "  , lngrevisionno";
+    $aryQuery[] = "  , strcustomersalescode";
+    $aryQuery[] = "  , lngsalesclasscode";
+    $aryQuery[] = "  , strsalesclassname";
+    $aryQuery[] = "  , strgoodscode";
+    $aryQuery[] = "  , strproductcode";
+    $aryQuery[] = "  , strrevisecode";
+    $aryQuery[] = "  , strproductname";
+    $aryQuery[] = "  , strproductenglishname";
+    $aryQuery[] = "  , curproductprice";
+    $aryQuery[] = "  , lngquantity";
+    $aryQuery[] = "  , lngproductquantity";
+    $aryQuery[] = "  , lngproductunitcode";
+    $aryQuery[] = "  , strproductunitname";
+    $aryQuery[] = "  , cursubtotalprice";
+    $aryQuery[] = "  , strnote ";
+    $aryQuery[] = "from";
+    $aryQuery[] = "  t_slipdetail ";
+    $aryQuery[] = "where";
+    $aryQuery[] = "  lngslipno = " . $strReportKeyCode;
+    $aryQuery[] = " ORDER BY";
+    $aryQuery[] = "  lngSortKey";
+
+    return join("", $aryQuery);
+}
+
+/**
+ * 納品詳細取得クエリの生成
+ *
+ * @param [type] $strReportKeyCode
+ * @return void
+ */
+function fncGetSlipForDownloadQuery($strReportKeyCode)
+{
+    $aryQuery[] = "select";
+    $aryQuery[] = "  lngslipno";
+    $aryQuery[] = "  , lngrevisionno";
+    $aryQuery[] = "  , strslipcode";
+    $aryQuery[] = "  , lngsalesno";
+    $aryQuery[] = "  , strcustomercode";
+    $aryQuery[] = "  , strcustomercompanyname";
+    $aryQuery[] = "  , strcustomername";
+    $aryQuery[] = "  , strcustomeraddress1";
+    $aryQuery[] = "  , strcustomeraddress2";
+    $aryQuery[] = "  , strcustomeraddress3";
+    $aryQuery[] = "  , strcustomeraddress4";
+    $aryQuery[] = "  , strcustomerphoneno";
+    $aryQuery[] = "  , strcustomerfaxno";
+    $aryQuery[] = "  , strcustomerusername";
+    $aryQuery[] = "  , dtmdeliverydate";
+    $aryQuery[] = "  , lngdeliveryplacecode";
+    $aryQuery[] = "  , strdeliveryplacename";
+    $aryQuery[] = "  , strdeliveryplaceusername";
+    $aryQuery[] = "  , strusercode";
+    $aryQuery[] = "  , strusername";
+    $aryQuery[] = "  , curtotalprice";
+    $aryQuery[] = "  , lngmonetaryunitcode";
+    $aryQuery[] = "  , strmonetaryunitsign";
+    $aryQuery[] = "  , lngtaxclasscode";
+    $aryQuery[] = "  , strtaxclassname";
+    $aryQuery[] = "  , curtax";
+    $aryQuery[] = "  , lngpaymentmethodcode";
+    $aryQuery[] = "  , to_char(dtmpaymentlimit, 'dd/mm/yyyy') as dtmpaymentlimit";
+    $aryQuery[] = "  , dtminsertdate";
+    $aryQuery[] = "  , strnote";
+    $aryQuery[] = "  , strshippercode ";
+    $aryQuery[] = "from";
+    $aryQuery[] = "  m_slip ";
+    $aryQuery[] = "WHERE lngslipno = " . $strReportKeyCode;
+    return join("", $aryQuery);
+}
 return true;

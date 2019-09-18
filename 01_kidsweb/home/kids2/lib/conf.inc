@@ -592,6 +592,12 @@ define ( "REPORT_TMPDIR",	PATH_HOME . "/report_tmp/" );
 define ( "REPORT_LC_TMPFILE",	"帳票テンプレート.xls" );
 // L/C帳票テンプレートファイル
 define ( "REPORT_LC_OUTPUTFILE",	"帳票テンプレート_copy.xls" );
+// 納品書ー専用帳票テンプレートファイル
+define("REPORT_SLIP_EXCLUSIVE", "slip_exclusive.xlsx");
+// 納品書ー市販帳票テンプレートファイル
+define("REPORT_SLIP_COMM", "slip_comm.xlsx");
+// 納品書ーDEBIT NOTEテンプレートファイル
+define("REPORT_SLIP_DEBIT", "slip_debitnote.xlsx");
 
 // ワークシートテンプレートディレクトリパス
 define ( "EXCEL_TMP_ROOT", PATH_HOME . "/excel_tmp/");
