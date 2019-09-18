@@ -172,6 +172,7 @@ define ( "LIB_ROOT",	PATH_HOME . "/lib/" );
 define ( "CLS_ROOT",	PATH_HOME . "/lib/" );
 define ( "SRC_ROOT",	PATH_HOME . "/src/" );
 define ( "SQLLOG_ROOT",	PATH_HOME . "/temp/" );
+define ( "VENDOR_ROOT",	PATH_HOME . "/vendor/" );
 
 // クラス・ライブラリパス
 define ( "LIB_FILE",			LIB_ROOT . "lib.php" );
@@ -184,7 +185,7 @@ define ( "CLS_CACHE_FILE",		LIB_ROOT . "clscache.php" );
 define ( "CLS_EXCELMAP_FILE",		LIB_ROOT . "mapping/clsMapping.php" );		// Excel Mapping Object
 define ( "CLS_TABLETEMP_FILE",		LIB_ROOT . "tabletemp/clstabletemp.php" );	// Temporary DB Object
 define ( "CLS_IMAGELO_FILE",		LIB_ROOT . "clsImageLo.php" );
-define ( "LIB_COMPOSER_FILE",		SRC_ROOT . "vendor/autoload.php" ); // Composerのautoloadのパス
+define ( "VENDOR_AUTOLOAD_FILE",	VENDOR_ROOT . "autoload.php" ); // Composerのautoloadのパス
 
 // 画像ディレクトリパス
 define ( "USER_IMAGE_TMPDIR",		PATH_HOME . "/image_tmp/" );	// 仮保存場所
@@ -592,12 +593,6 @@ define ( "REPORT_TMPDIR",	PATH_HOME . "/report_tmp/" );
 define ( "REPORT_LC_TMPFILE",	"帳票テンプレート.xls" );
 // L/C帳票テンプレートファイル
 define ( "REPORT_LC_OUTPUTFILE",	"帳票テンプレート_copy.xls" );
-// 納品書ー専用帳票テンプレートファイル
-define("REPORT_SLIP_EXCLUSIVE", "slip_exclusive.xlsx");
-// 納品書ー市販帳票テンプレートファイル
-define("REPORT_SLIP_COMM", "slip_comm.xlsx");
-// 納品書ーDEBIT NOTEテンプレートファイル
-define("REPORT_SLIP_DEBIT", "slip_debitnote.xlsx");
 
 // ワークシートテンプレートディレクトリパス
 define ( "EXCEL_TMP_ROOT", PATH_HOME . "/excel_tmp/");

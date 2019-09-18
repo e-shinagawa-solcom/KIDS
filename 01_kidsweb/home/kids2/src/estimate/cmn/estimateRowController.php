@@ -4,7 +4,7 @@ require_once ('conf.inc');
 require_once (SRC_ROOT. "/estimate/cmn/const/workSheetConst.php");
 
 // Composerのオートロードファイル読み込み
-require_once ( LIB_COMPOSER_FILE );
+require_once ( VENDOR_AUTOLOAD_FILE );
 
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
 

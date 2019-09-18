@@ -5,7 +5,7 @@ require_once ('conf.inc');
 require_once ( LIB_ROOT . "/mapping/conf_mapping_common.inc");
 
 // Composerのオートロードファイル読み込み
-require_once ( LIB_COMPOSER_FILE );
+require_once ( VENDOR_AUTOLOAD_FILE );
 
 // 定数ファイルの読み込み
 require_once ( SRC_ROOT . "/estimate/cmn/const/workSheetConst.php");
