@@ -86,28 +86,29 @@ if ( !fncCheckAuthority( DEF_FUNCTION_PO4, $objAuth ) )
 $lngOrderNo = $aryData["lngOrderNo"];
 
 // 指定発注番号の発注データ取得用SQL文の作成
-$strQuery = fncGetPurchaseHeadNoToInfoSQL ( $lngOrderNo );
+// $strQuery = fncGetPurchaseHeadNoToInfoSQL ( $lngOrderNo );
+$aryResult = fncGetPurchaseHeadNoToInfo ( $lngOrderNo, $objDB );
 
 // 詳細データの取得
-list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
+// list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
-if ( $lngResultNum )
-{
-	if ( $lngResultNum == 1 )
-	{
-		$aryResult = $objDB->fetchArray( $lngResultID, 0 );
-	}
-	else
-	{
-		fncOutputError( 503, DEF_ERROR, "該当データの取得に失敗しました", TRUE, "../po/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
-	}
-}
-else
-{
-	fncOutputError( 503, DEF_ERROR, "データが異常です", TRUE, "../po/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
-}
+// if ( $lngResultNum )
+// {
+// 	if ( $lngResultNum == 1 )
+// 	{
+// 		$aryResult = $objDB->fetchArray( $lngResultID, 0 );
+// 	}
+// 	else
+// 	{
+// 		fncOutputError( 503, DEF_ERROR, "該当データの取得に失敗しました", TRUE, "../po/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+// 	}
+// }
+// else
+// {
+// 	fncOutputError( 503, DEF_ERROR, "データが異常です", TRUE, "../po/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+// }
 
-$objDB->freeResult( $lngResultID );
+// $objDB->freeResult( $lngResultID );
 
 // 取得データの調整
 $aryNewResult = fncSetPurchaseHeadTabelData ( $aryResult );
@@ -131,24 +132,25 @@ $aryDetailColumnNames = fncSetPurchaseTabelName ( $aryTableViewDetail, $aryTytle
 ////////// 明細行の取得 ////////////////////
 
 // 指定発注番号の発注明細データ取得用SQL文の作成
-$strQuery = fncGetPurchaseDetailNoToInfoSQL ( $lngOrderNo );
+// $strQuery = fncGetPurchaseDetailNoToInfoSQL ( $lngOrderNo );
+$aryDetailResult[] = fncGetPurchaseDetailNoToInfo ( $lngOrderNo, $objDB );
 
 // 明細データの取得
-list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
+// list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
-if ( $lngResultNum )
-{
-	for ( $i = 0; $i < $lngResultNum; $i++ )
-	{
-		$aryDetailResult[] = $objDB->fetchArray( $lngResultID, $i );
-	}
-}
-else
-{
-	fncOutputError( 503, DEF_WARNING, "発注番号に対する明細情報が見つかりません。", TRUE, "../po/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
-}
+// if ( $lngResultNum )
+// {
+// 	for ( $i = 0; $i < $lngResultNum; $i++ )
+// 	{
+// 		$aryDetailResult[] = $objDB->fetchArray( $lngResultID, $i );
+// 	}
+// }
+// else
+// {
+// 	fncOutputError( 503, DEF_WARNING, "発注番号に対する明細情報が見つかりません。", TRUE, "../po/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+// }
 
-$objDB->freeResult( $lngResultID );
+// $objDB->freeResult( $lngResultID );
 
 for ( $i = 0; $i < count($aryDetailResult); $i++)
 {

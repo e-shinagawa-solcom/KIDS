@@ -358,7 +358,7 @@ function fncCheckString( $str, $strCheckMode )
 			// 複数制定を許可している場合、IPアドレスを分解する
 			if ( $lngRange[3] != "''" )
 			{
-				$lngRange[3] = preg_replace ( "'", "", $lngRange[3] );
+				$lngRange[3] = str_replace ( "'", "", $lngRange[3] );
 				$aryStr = explode ( $lngRange[3], $str );
 			}
 			else

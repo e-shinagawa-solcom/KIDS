@@ -184,6 +184,7 @@ define ( "CLS_CACHE_FILE",		LIB_ROOT . "clscache.php" );
 define ( "CLS_EXCELMAP_FILE",		LIB_ROOT . "mapping/clsMapping.php" );		// Excel Mapping Object
 define ( "CLS_TABLETEMP_FILE",		LIB_ROOT . "tabletemp/clstabletemp.php" );	// Temporary DB Object
 define ( "CLS_IMAGELO_FILE",		LIB_ROOT . "clsImageLo.php" );
+define ( "LIB_COMPOSER_FILE",		SRC_ROOT . "vendor/autoload.php" ); // Composerのautoloadのパス
 
 // 画像ディレクトリパス
 define ( "USER_IMAGE_TMPDIR",		PATH_HOME . "/image_tmp/" );	// 仮保存場所

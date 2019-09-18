@@ -676,12 +676,12 @@
 	left : 380px ;
 	top : 40px ;
 	height : 22px ;
-	width: 425px;
+	width: 380px;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #ffffff ;
 	background-color: #ffffff ;
-	padding : 3px 0px 0px 8px ;
+	padding : 3px 0px 0px 50px ;
 }
 
 
@@ -690,12 +690,12 @@
 	left : 380px ;
 	top : 70px ;
 	height : 22px ;
-	width: 425px;
+	width: 345px;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #ffffff ;
 	background-color: #ffffff ;
-	padding : 3px 0px 0px 8px ;
+	padding : 3px 0px 0px 85px ;
 }
 
 #VarsA13 {
@@ -703,12 +703,12 @@
 	left : 380px ;
 	top : 100px ;
 	height : 22px ;
-	width: 390px;
+	width: 345px;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #ffffff ;
 	background-color: #ffffff ;
-	padding : 3px 0px 0px 40px ;
+	padding : 3px 0px 0px 85px ;
 }
 
 #VarsA14 {
@@ -721,7 +721,7 @@
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #ffffff ;
 	background-color: #ffffff ;
-	padding : 3px 0px 0px 40px ;
+	padding : 3px 20px 0px 20px ;
 }
 
 #VarsA15 {
@@ -1701,7 +1701,7 @@
 #DateBtB {
 	position : absolute ;
 	left : 227px ;
-	top : 75px ;
+	top : 45px ;
 	width : 19px ;
 	height : 19px ;
 	border-width : 0px ;

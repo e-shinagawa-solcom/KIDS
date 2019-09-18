@@ -234,7 +234,7 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutMsw(); initLayout
 <span id="VarsA14">
 	<input style="ime-mode:disabled;" class="TxtStyle03L" type="text" name="lngLocationCode" value="_%lngLocationCode%_">&nbsp;<input style="ime-mode:disabled;" class="disTxt46L" type="text" name="strLocationName" value="_%strLocationName%_" contenteditable="false">
 </span>
-<span id="MSWBt04" onclick="fncGetObjectName( window.MLwin , window.HSO.lngLocationCode , window.HSO.strLocationName );DisplayerM04( '' , document.all.Mdata04 , window.MLwin.document.all.strLocationCode  );ExchangeM04( 0 , window.self );fncFocusType( window.MLwin , 'locationTop' );return false;"></span>
+<span id="MSWBt04" onclick="fncGetObjectName( window.MLwin , window.HSO.lngLocationCode , window.HSO.strLocationName );DisplayerM04( '' , document.all.Mdata04 , window.MLwin.document.all.lngLocationCode  );ExchangeM04( 0 , window.self );fncFocusType( window.MLwin , 'locationTop' );return false;"></span>
 
 <!-- ³ÎÄêÂÐ¾ÝÌÀºÙ¹ÔÁªÂòÉô -->
 <span id="SegDetailIN">
@@ -252,6 +252,13 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutMsw(); initLayout
 	  	<th>ÀÇÈ´¶â³Û</th>
 	  	<th>Ç¼´ü</th>
 	  	<th>È÷¹Í</th>
+		<th class="forEdit"></th>
+		<th class="forEdit"></th>
+		<th class="forEdit"></th>
+		<th class="forEdit"></th>
+		<th class="forEdit"></th>
+		<th class="forEdit"></th>
+		<th class="forEdit"></th>
 		<th class="forEdit"></th>
 	  </tr>
 	</thead>
@@ -278,13 +285,22 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutMsw(); initLayout
 		<th>ÀÇÈ´²Á³Ê</th>
 		<th>Ç¼´ü</th>
 		<th>ÌÀºÙÈ÷¹Í</th>
+		<th class="forEdit"></th>
+		<th class="forEdit"></th>
+		<th class="forEdit"></th>
+		<th class="forEdit"></th>
+		<th class="forEdit"></th>
+		<th class="forEdit"></th>
+		<th class="forEdit"></th>
+		<th class="forEdit"></th>
 	  </tr>
 	</thead>
     <tbody id="EditTableBody"></tbody>
   </table>
 </span>
 
-
+<span id="SegHidden">
+</span>
 
 
 
@@ -412,7 +428,6 @@ if ( document.all.lngCustomerCode.value != '' )
 <!-- END [LOCATION] BUTTON -->
 
 <!-- START DATE BUTTON -->
-<!-- <span id="DateBtA" onclick="window.MDatewin.fncCalendar( window.HSO.dtmOrderAppDate , 'DateA');DisplayerM10( '' , document.all.Mdata10 );ExchangeM10( 0 , window.self );return false;"></span> -->
 <!-- END DATE BUTTON -->
 
 <!-- START DATEB BUTTON -->
