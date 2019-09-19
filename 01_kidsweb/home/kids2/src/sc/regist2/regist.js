@@ -1,6 +1,35 @@
 //
 // regist.js
 //
+
+// 明細検索
+function SearchReceiveDetail(search_condition) {
+    
+    console.log(search_condition);
+    
+    // 部分書き換えのためajaxでPOST
+    $.ajax({
+        type: 'POST',
+        url: 'index.php',
+        data: {
+            strSessionID: $('input[name="strSessionID"]').val(),
+            strMode : "search-detail",      //サーバーサイドの動作モード
+            condition: search_condition,
+        },
+        async: true,
+    }).done(function(data){
+        console.log(data);
+
+        // 検索結果をテーブルにセット
+        $('#DetailTableBody').html(data);
+
+    }).fail(function(error){
+        console.log("fail");
+        console.log(error);
+    });
+    
+}
+
 jQuery(function($){
     $("#EditTableBody").sortable();
     $("#EditTableBody").on('sortstop', function(){
@@ -21,9 +50,11 @@ jQuery(function($){
         return result;
     }
     function setEdit(tr){
-        if(checkPresentRow(tr)){
-            return false;
-        }
+
+        //DEBUG:一旦重複チェック外す
+        //if(checkPresentRow(tr)){
+        //   return false;
+        //}
 
         var editTable = $('#EditTable');
         var tbody = $('#EditTableBody');
@@ -33,46 +64,37 @@ jQuery(function($){
         var td = $('<td></td>').text(i + 1);
         $(td).attr('name', 'rownum');
         $(editTr).append($(td));
-        td = $(tr).find($('td.detailOrderCode')).clone();
+        td = $(tr).find($('td.detailCustomerReceiveCode')).clone();
         $(editTr).append($(td));
-        td = $(tr).find($('td.detailOrderDetailNo')).clone();
+
+        td = $(tr).find($('td.detailReceiveCode')).clone();
         $(editTr).append($(td));
-        td = $(tr).find($('td.detailStockSubjectName')).clone();
+        td = $(tr).find($('td.detailGoodsCode')).clone();
         $(editTr).append($(td));
-        td = $(tr).find($('td.detailStockItemName')).clone();
+        td = $(tr).find($('td.detailProductCode')).clone();
         $(editTr).append($(td));
-        td = $(tr).find($('td.detailCompanyDisplayCode')).clone();
+        td = $(tr).find($('td.detailProductName')).clone();
         $(editTr).append($(td));
-        td = $(tr).find($('td.detailDeliveryMethod')).clone();
-        $(editTr).append($(td).removeClass('forEdit'));
-        td = $(tr).find($('td.detailProductPrice')).clone();
+        td = $(tr).find($('td.detailProductEnglishName')).clone();
         $(editTr).append($(td));
-        td = $(tr).find($('td.detailProductQuantity')).clone();
+        
+        td = $(tr).find($('td.detailSalesDeptName')).clone();
         $(editTr).append($(td));
-        td = $(tr).find($('td.detailSubtotalPrice')).clone();
+        td = $(tr).find($('td.detailSalesClassName')).clone();
         $(editTr).append($(td));
         td = $(tr).find($('td.detailDeliveryDate')).clone();
         $(editTr).append($(td));
-        td = $(tr).find($('td.detailNote')).clone();
+        td = $(tr).find($('td.detailProductPrice')).clone();
         $(editTr).append($(td));
-        td = $(tr).find($('td.detailProductUnitCode')).clone();
+        td = $(tr).find($('td.detailProductUnitName')).clone();
         $(editTr).append($(td));
-        td = $(tr).find($('td.detailOrderNo')).clone();
+        td = $(tr).find($('td.detailProductQuantity')).clone();
         $(editTr).append($(td));
-        td = $(tr).find($('td.detailRevisionNo')).clone();
-        $(editTr).append($(td));
-        td = $(tr).find($('td.detailStockSubjectCode')).clone();
-        $(editTr).append($(td));
-        td = $(tr).find($('td.detailStockItemCode')).clone();
-        $(editTr).append($(td));
-        td = $(tr).find($('td.detailMonetaryUnitCode')).clone();
-        $(editTr).append($(td));
-        td = $(tr).find($('td.detailCustomerCompanyCode')).clone();
+        td = $(tr).find($('td.detailSubTotalPrice')).clone();
         $(editTr).append($(td));
         
         $(tbody).append($(editTr));
         $(editTable).append($(tbody));
-        //addHiddenValue(i, $(editTr));
     }
     function addHiddenValue(i, tr){
         var hidden = $('#SegHidden');
@@ -291,8 +313,8 @@ jQuery(function($){
         
         var url = "/sc/regist2/condition.php" + "?strSessionID=" + $('input[name="strSessionID"]').val();
         var data = {
-            'strSessionID': $('input[name="strSessionID"]').val()
-           ,'param1': 'test'
+            strSessionID: $('input[name="strSessionID"]').val(),
+            param1: 'test'
           };
         
         var features = "width=710,height=460,top=10,left=10,status=yes,scrollbars=yes,directories=no,menubar=yes,resizable=yes,location=no,toolbar=no";
@@ -302,6 +324,7 @@ jQuery(function($){
 
     });    
     $('#AddBt').on('click', function(){
+        
         var cb = $('#DetailTableBody').find('input[name="edit"]');
         var checked = false;
         var trArray = [];
@@ -360,13 +383,16 @@ jQuery(function($){
     $('#AllDeleteBt').on('click', function(){
         $('#EditTableBody').empty();
     });
+
+
     $('#PreviewBt').on('click', function(){
-        alert("Preview Clicked");
-        
+        var url = "/sc/regist2/preview.php" + "?strSessionID=" + $('input[name="strSessionID"]').val();
+        post_open(url,"","previewWin");
         //if(!validationCheck2()){
         //    return false;
         //}
         /*
+            
         $.ajax({
             type: 'POST',
             url: 'index2.php',

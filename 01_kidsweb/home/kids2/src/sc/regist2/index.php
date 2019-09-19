@@ -23,13 +23,10 @@
 */
 // ----------------------------------------------------------------------------
 
-
-
-	// 読み込み
 	include('conf.inc');
 	require (LIB_FILE);
 	require (SRC_ROOT."sc/cmn/lib_scr.php");
-	
+
 	$objDB		= new clsDB();
 	$objAuth	= new clsAuth();
 
@@ -45,22 +42,31 @@
 	}
 	$aryData["lngLanguageCode"]	= $_COOKIE["lngLanguageCode"];
 
-
 	setcookie("strSessionID", $aryData["strSessionID"], 0, "/");
-
 	$objDB->open("", "", "", "");
 
-
 	// 文字列チェック
-	$aryCheck["strSessionID"]          = "null:numenglish(32,32)";
+	$aryCheck["strSessionID"]  = "null:numenglish(32,32)";
 	$aryResult = fncAllCheck( $aryData, $aryCheck );
 	fncPutStringCheckError( $aryResult, $objDB );
 
 	// セッション確認
 	$objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
+
 	
+	// 明細検索
+	if($_POST["strMode"] == "search-detail"){
+
+		$aryReceiveDetail = fncGetReceiveDetail($_POST["condition"], $objDB);
+		$strHtml = fncGetReceiveDetailHtml($aryReceiveDetail);
+
+		echo $strHtml;
+
+		return true;
+	}
+
+	// 権限チェック
 	$lngUserCode = $objAuth->UserCode;
-	
 	/*
 	
 	// 500	発注管理

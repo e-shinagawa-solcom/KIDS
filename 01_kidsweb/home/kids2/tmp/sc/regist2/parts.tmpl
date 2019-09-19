@@ -106,8 +106,6 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutPunit(); initLayo
 </p>
 <!-- //////////////////////////////////// END NAVIGATION //////////////////////////////////// -->
 
-
-
 <!-- /////////////////////////////////// START INPUT A SEGMENTS /////////////////////////////////// -->
 <p id="InputA">
 
@@ -173,6 +171,7 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutPunit(); initLayo
 <span id="PreviewBt">
 	<img src="/img/type01/cmn/querybt/preview_off_ja_bt.gif" alt="">
 </span>
+	
 
 <!-- START SEGMENTS -->
 <!-- ¥Ø¥Ã¥À -->
@@ -291,14 +290,6 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutPunit(); initLayo
 	  	<th>Ã±°Ì</th>
 	  	<th>¿ôÎÌ</th>
 	  	<th>ÀÇÈ´¶â³Û</th>
-		<th class="forEdit"></th>
-		<th class="forEdit"></th>
-		<th class="forEdit"></th>
-		<th class="forEdit"></th>
-		<th class="forEdit"></th>
-		<th class="forEdit"></th>
-		<th class="forEdit"></th>
-		<th class="forEdit"></th>
 	  </tr>
 	</thead>
 	<tbody id="DetailTableBody">_%strOrderDetail%_</tbody>
@@ -326,14 +317,6 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutPunit(); initLayo
 		<th>Ã±°Ì</th>
 		<th>¿ôÎÌ</th>
 		<th>ÀÇÈ´¶â³Û</th>
-	  <th class="forEdit"></th>
-		<th class="forEdit"></th>
-		<th class="forEdit"></th>
-		<th class="forEdit"></th>
-		<th class="forEdit"></th>
-		<th class="forEdit"></th>
-		<th class="forEdit"></th>
-		<th class="forEdit"></th>
 	  </tr>
 	</thead>
     <tbody id="EditTableBody"></tbody>
@@ -807,10 +790,10 @@ _%strDetailHidden%_
 -->
 <!-- END SEGMENTS -->
 
-
 </p>
 <!-- ///////////////////////////////////// END INPUT C SEGMENTS ///////////////////////////////////// -->
 
+<!-- //////////////////////////////////// START MSW //////////////////////////////////// -->
 <div class="msw-loadpoints">
 		<!-- MSW ¸ÜµÒ¥Þ¥¹¥¿¸¡º÷ -->
 		<iframe class="msw-customer" src="/search/cmn/msw/customer/mswcustomer.html" frameborder="0">
@@ -822,59 +805,6 @@ _%strDetailHidden%_
 		<iframe class="msw-user" src="/search/cmn/msw/user/mswuser.html" frameborder="0">
 		</iframe>
 </div>
-
-
-
-
-<!-- //////////////////////////////////// START MSW //////////////////////////////////// -->
-<!-- START [SUPPLIER] -->
-<!--
-<p id="MiFrame08" onclick="Zchange(this);">
-<iframe id="Mdata08" name="SUPwin" frameborder="0" scrolling="no" src="/msw/supplier/index.html"></iframe>
-<span id="DummyDrag08" onmousedown="pickup08('MiFrame08',event);return false;" 
-	onmouseup="ShowValue( window.SUPwin );fncMswPositionCheck( document.all.Mdata08 , document.all.MiFrame08 );" 
-	ondblclick="fncTitlebar( document.all.Mdata08 , document.all.MiFrame08 );"></span>
-<span id="DummyClose08" onclick="DisplayerM08( '' , document.all.Mdata08 );ExchangeM08( 0 , window.Pwin );return false;"></span>
-</p>
--->
-<!-- END [SUPPLIER] -->
-
-
-<!-- START [DEPT & IN CHARGE NAME] -->
-<!--
-<p id="MiFrame02" onclick="Zchange(this);">
-<iframe id="Mdata02" name="MDwin" frameborder="0" scrolling="no" src="/msw/dept/index.html"></iframe>
-<span id="DummyDrag02" onmousedown="pickup02('MiFrame02',event);return false;" 
-	onmouseup="ShowHideValueDept( window.MDwin );fncMswPositionCheck( document.all.Mdata02 , document.all.MiFrame02 );" 
-	ondblclick="fncTitlebar( document.all.Mdata02 , document.all.MiFrame02 );"></span>
-<span id="DummyClose02" onclick="DisplayerM02( '' , document.all.Mdata02 );ExchangeM02( 0 , window.Pwin );return false;"></span>
-</p>
--->
-<!-- END [DEPT & IN CHARGE NAME] -->
-
-
-<!-- START [PRODUCTS] -->
-<!--
-<p id="MiFrame03" onclick="Zchange(this);">
-<iframe id="Mdata03" name="MGwin" frameborder="0" scrolling="no" src="/msw/products/index.html"></iframe>
-<span id="DummyDrag03" onmousedown="pickup03('MiFrame03',event);return false;" 
-	onmouseup="ShowValue( window.MGwin );fncMswPositionCheck( document.all.Mdata03 , document.all.MiFrame03 );" 
-	ondblclick="fncTitlebar( document.all.Mdata03 , document.all.MiFrame03 );"></span>
-<span id="DummyClose03" onclick="DisplayerM03( '' , document.all.Mdata03 );ExchangeM03( 0 , window.Pwin );return false;"></span>
-</p>
--->
-<!-- END [PRODUCTS] -->
-
-<!-- START [LOCATION] -->
-<p id="MiFrame04" onclick="Zchange(this);">
-<iframe id="Mdata04" name="MLwin" frameborder="0" scrolling="no" src="/msw/location/index.html"></iframe>
-<span id="DummyDrag04" onmousedown="pickup04('MiFrame04',event);return false;" 
-	onmouseup="ShowValue( window.MLwin );fncMswPositionCheck( document.all.Mdata04 , document.all.MiFrame04 );" 
-	ondblclick="fncTitlebar( document.all.Mdata04 , document.all.MiFrame04 );"></span>
-<span id="DummyClose04" onclick="DisplayerM04( '' , document.all.Mdata04 );ExchangeM04( 0 , window.Pwin );return false;"></span>
-</p>
-<!-- END [LOCATION] -->
-
 
 <!-- START [DATE] -->
 <!--

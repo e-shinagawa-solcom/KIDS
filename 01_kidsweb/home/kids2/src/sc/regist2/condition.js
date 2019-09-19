@@ -33,8 +33,31 @@ jQuery(function($){
     // ------------------------------------
     // OKボタン
     $('#OkBt').on('click', function(){
-        alert("OK Clicked");
-        //window.opener.$("#PreviewBt").trigger("click");
+        
+        // 検索条件を変数にセット
+        var search_condition = {
+            lngCustomerCode: $('input[name="lngCustomerCode"]').val(),
+            strCustomerName: $('input[name="strCustomerName"]').val(),
+            strCustomerReceiveCode: $('input[name="strCustomerReceiveCode"]').val(),
+            lngReceiveNo: $('input[name="lngReceiveNo"]').val(),
+            strReceiveDetailProductCode: $('input[name="strReceiveDetailProductCode"]').val(),
+            strGoodsCode: $('input[name="strGoodsCode"]').val(),
+            lngInChargeGroupCode: $('input[name="lngInChargeGroupCode"]').val(),
+            strInChargeGroupName: $('input[name="strInChargeGroupName"]').val(),
+            lngSalesClassCode: $('select[name="lngSalesClassCode"]').children('option:selected').val(),
+            strProductCode: $('input[name="strProductCode"]').val(),
+            From_dtmDeliveryDate: $('input[name="From_dtmDeliveryDate"]').val(),
+            To_dtmDeliveryDate: $('input[name="To_dtmDeliveryDate"]').val(),
+            lngMonetaryUnitCode: $('select[name="lngMonetaryUnitCode"]').children('option:selected').val(),
+            strNote: $('input[name="strNote"]').val(),
+            IsIncludingResale: $('input[name="IsIncludingResale"]').prop("checked"),
+        };
+
+        // 親画面の詳細検索ファンクションを呼び出す
+        window.opener.SearchReceiveDetail(search_condition);
+
+        // 子画面を閉じる
+        window.close();
     });
 
     // 閉じるボタン
