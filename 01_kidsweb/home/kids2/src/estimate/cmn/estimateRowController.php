@@ -183,6 +183,7 @@ abstract class estimateRowController {
         } else {
             return false;
         }
+
         return $param;
     }
 
@@ -301,7 +302,7 @@ abstract class estimateRowController {
         // 通貨レートのチェックを行う
         $this->validateConversionRate();
 
-        if ($this->messageCode['conversionRate'] === 9203) {
+        if ($this->messageCode['conversionRate'] === DEF_MESSAGE_CODE_RATE_DIFFER) {
             // 通貨レートが取得できなかった場合
             return true;
         }
@@ -577,15 +578,15 @@ abstract class estimateRowController {
                 list ($year, $month, $day) = explode('/', $delivery);
                 if (!checkdate($month, $day, $year)) {
                     // 存在しない日付エラー
-                    $this->messageCode['delivery'] = 9201;
+                    $this->messageCode['delivery'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
                 }
             } else {
                 // 入力形式不正
-                $this->messageCode['delivery'] = 9201;
+                $this->messageCode['delivery'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
             }
         } else {
             // 必須エラー
-            $this->messageCode['delivery'] = 9001;
+            $this->messageCode['delivery'] = DEF_MESSAGE_CODE_NOT_ENTRY_ERROR;
         }
         return true;
     }
@@ -597,12 +598,12 @@ abstract class estimateRowController {
         if (isset($quantity) && $quantity !=='') {
             if(!preg_match("/\A[1-9][0-9]*\z/", $quantity)) {
                 // エラー処理
-                $this->messageCode['quantity'] = 9201;
+                $this->messageCode['quantity'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
             } else if ((int)$quantity > 2147483647) {
-                $this->messageCode['quantity'] = 9201;
+                $this->messageCode['quantity'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
             }
         } else {
-            $this->messageCode['quantity'] = 9001; // 必須チェック
+            $this->messageCode['quantity'] = DEF_MESSAGE_CODE_NOT_ENTRY_ERROR; // 必須チェック
         }
         return true;
     }
@@ -614,11 +615,10 @@ abstract class estimateRowController {
         if (isset($price) && $price !=='') {
             if(!preg_match("/\A-?[0-9]*\.?[0-9]\z/", $price)) { // 小数点以下の桁数によって判断
                 // エラー処理
-                $this->messageCode['price'] = 9201;
+                $this->messageCode['price'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
             }
         } else {
-            // エラーメッセージorエラーコード出力（必須エラー）
-            $this->messageCode['price'] = 9001; // 必須
+            $this->price = 0;
         }
         return true;
     }
@@ -647,16 +647,16 @@ abstract class estimateRowController {
                 // マスターチェック
                 if (!isset($masterData[(int)$divisionSubjectCode])) {
                     // マスターチェックエラー
-                    $this->messageCode['divisionSubject'] = 9202;
+                    $this->messageCode['divisionSubject'] = DEF_MESSAGE_CODE_MASTER_CHECK_ERROR;
                 }
 
             } else {
                 // 書式エラー
-                $this->messageCode['divisionSubject'] = 9201;
+                $this->messageCode['divisionSubject'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
             }
         } else {
             // 必須エラー
-            $this->messageCode['divisionSubject'] = 9001;
+            $this->messageCode['divisionSubject'] = DEF_MESSAGE_CODE_NOT_ENTRY_ERROR;
         }
         return true;
     }
@@ -673,15 +673,15 @@ abstract class estimateRowController {
                 $this->classItemCode = (int)$classItemCode;
                 // マスターチェック
                 if (!isset($masterData[$divisionSubjectCode][(int)$classItemCode])) {
-                    $this->messageCode['classItem'] = 9202;
+                    $this->messageCode['classItem'] = DEF_MESSAGE_CODE_MASTER_CHECK_ERROR;
                 }
             } else {
                 // 入力形式不正
-                $this->messageCode['classItem'] = 9201;
+                $this->messageCode['classItem'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
             }
         } else {
             // 必須エラー
-            $this->messageCode['classItem'] = 9001;
+            $this->messageCode['classItem'] = DEF_MESSAGE_CODE_NOT_ENTRY_ERROR;
         }
         return true;
     }
@@ -695,11 +695,11 @@ abstract class estimateRowController {
             $this->acquiredRate = $acquiredRate;
             if ($acquiredRate !== DEF_MONETARY_YEN  && $conversionRate !== $acquiredRate) {
                 // DBから取得した通貨レートとシートから取得した通貨レートが異なる場合
-                $this->messageCode['conversionRate'] = 9206;
+                $this->messageCode['conversionRate'] = DEF_MESSAGE_CODE_RATE_DIFFER;
             }
         } else {
             // DBから通貨レートが取得できなかった場合
-            $this->messageCode['conversionRate'] = 9203;
+            $this->messageCode['conversionRate'] = DEF_MESSAGE_CODE_RATE_DIFFER;
         }
         return true;
     }
@@ -708,70 +708,27 @@ abstract class estimateRowController {
     protected function validateCustomerCompany() {
         $customerCompany = $this->customerCompany;
         if (isset($customerCompany) && $customerCompany !=='') {
-            if (preg_match("/\A[0-9]+:.+\z/", $customerCompany)) {
+            if (preg_match("/\A[0-9]+:.*\z/", $customerCompany)) {
                 list ($customerCompanyCode, $customerCompanyName) = explode(':', $customerCompany);
                 $masterData = static::$customerCompanyCodeMaster;
                 $this->customerCompanyCode = (string)$customerCompanyCode;
                 // マスターチェック
                 if (!isset($masterData[$customerCompanyCode])) {
-                    $this->messageCode['customerCompany'] = 9202;
+                    $this->messageCode['customerCompany'] = DEF_MESSAGE_CODE_MASTER_CHECK_ERROR;
                 }
-                $display = $masterData[$customerCompanyCode]['shortName'] ? $masterData[$customerCompanyCode]['shortName'] : $masterData[$customerCompanyCode]['displayName'];
+                $display = $masterData[$customerCompanyCode]['shortName'];
                 $this->customerCompany = $customerCompanyCode. ':'. $display;
             } else {
                 // 入力形式不正
-                $this->messageCode['customerCompany'] = 9201;
+                $this->messageCode['customerCompany'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
             }
         } else {
-            if ($this->salesOrder === DEF_ATTRIBUTE_CLIENT) {
-                // 受注の場合必須エラーを出力
-                $this->messageCode['customerCompany'] = 9001;
-            } else if ($this->salesOrder === DEF_ATTRIBUTE_SUPPLIER) {
-                // 発注の場合は'0000'をセット
-                $customerCompanyCode = (string)DEF_DISPLAY_COMPANY_CODE_OTHERS;
-                $this->customerCompanyCode = $customerCompanyCode;
-                $masterData = static::$customerCompanyCodeMaster;
-                $display = $masterData[$customerCompanyCode]['shortName'] ? $masterData[$customerCompanyCode]['shortName'] : $masterData[$customerCompanyCode]['displayName'];
-                $this->customerCompany = $customerCompanyCode. ':'. $display;
-            }
-        }
-        return true;
-    }
-
-    // 小計のチェックを行う
-    protected function validateSubtotal() {
-        $subtotal = $this->subtotal;
-        $acquiredRate = $this->acquiredRate; // DBから取得した通貨レート
-        $quantity = $this->quantity;
-        $price = $this->price;
-
-        if ($acquiredRate && $quantity && $price) {
-            $calculatedSubtotal = $quantity * $price * $acquiredRate;
-        }
-
-        if (!isset($calculatedSubtotal) || !is_numeric($calculatedSubtotal)) {
-            // 数量、単価、通貨レートのチェックが行われていれば基本的には通らない処理
-            $this->messageCode['subtotal'] = 9204;
-            return false;
-        } else {
-            if ($subtotal != $calculatedSubtotal) {
-                // 計算結果とシートから取得した小計（計画原価）が異なる場合
-                if ($this->messageCode['conversionRate'] !== 9206) {
-                    // 通貨レートの変更がなければメッセージコードをセット
-                    $this->messageCode['subtotal'] = 9205;
-                }
-            }
-            $this->calculatedSubtotal = $calculatedSubtotal;
-            return true;
-        }
-    }
-    
-    // 償却
-    protected function validatePayoffFlag() {
-        $payoff = $this->payoff;
-        // 入力形式不正
-        if (!$payoff == '○' && !$payoff == '') {
-            $this->messageCode['payoff'] = 9201;
+            // 空欄の場合は'0000'をセット
+            $customerCompanyCode = (string)DEF_DISPLAY_COMPANY_CODE_OTHERS;
+            $this->customerCompanyCode = $customerCompanyCode;
+            $masterData = static::$customerCompanyCodeMaster;
+            $display = $masterData[$customerCompanyCode]['shortName'];
+            $this->customerCompany = $customerCompanyCode. ':'. $display;
         }
         return true;
     }

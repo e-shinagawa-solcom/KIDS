@@ -548,14 +548,13 @@ define ( "DEF_AREA_OTHER_COST_ORDER",  5);  // その他費用
 define ( "DEF_MONETARY_RATE_CODE_TTM",           1); // TTM
 define ( "DEF_MONETARY_RATE_CODE_COMPANY_LOCAL", 2); // 社内
 
-// // メッセージコード　※メッセージ見直しの為保留
-// define ( "DEF_MESSAGE_CODE_REQUIRED_ERROR",         9001);
-// define ( "DEF_MESSAGE_CODE_FORMAT_ERROR",           9201);
-// define ( "DEF_MESSAGE_CODE_MASTER_CHECK_ERROR",     9202);
-// define ( "DEF_MESSAGE_CODE_RATE_UNCAUGHT_WARNING",  9203);
-// define ( "DEF_MESSAGE_CODE_SUBTOTAL_CALC_ERROR",    9204);
-// define ( "DEF_MESSAGE_CODE_SUBTOTAL_CALC_DIFFER",   9205);
-// define ( "DEF_MESSAGE_CODE_RATE_DIFFER",            9206);
+// // メッセージコード
+define ( "DEF_MESSAGE_CODE_RATE_UNCAUGHT_WARNING",  9201); // 通貨レート取得不可
+define ( "DEF_MESSAGE_CODE_RATE_DIFFER",            9202); // 通貨レート差異
+define ( "DEF_MESSAGE_CODE_NOT_ENTRY_ERROR",        9203); // 未入力エラー
+define ( "DEF_MESSAGE_CODE_FORMAT_ERROR",           9204); // 形式エラー
+define ( "DEF_MESSAGE_CODE_MASTER_CHECK_ERROR",     9205); // マスターチェックエラー
+define ( "DEF_MESSAGE_CODE_PRODUCT_CODE_ERROR",     9206); // 製品コードチェックエラー
 
 // 仕入区分マスタコード
 define ("DEF_STOCK_CLASS_CODE_PARTS",      1); // 材料費

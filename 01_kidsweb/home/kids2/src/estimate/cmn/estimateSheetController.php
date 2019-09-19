@@ -181,6 +181,8 @@ class estimateSheetController {
         $separate = array();
         // シート数取得
         $sheetCount = $spreadSheet->getSheetCount();
+
+        $sheetInfo = [];
         
         for ($count = 0; $count < $sheetCount; ++$count) {
             $displayInvalid = false; // 表示無効フラグ
@@ -409,45 +411,35 @@ class estimateSheetController {
                 } else {
                     $cellValue = '';
                 }
-                
-                // セルのスタイルを取得する
-                $style = $sheet->getStyle($cellAddress);
+
                 // セルのフォント情報を取得する
-                $font = $style->getFont();
-                // セルの書体を取得する
-                $fontFamily = $font->getName();
-                // セルの文字サイズを取得する 
-                $fontSize = $font->getSize();
+                $fontInfo = $this->getFontInfo($cellAddress);
+      
                 // セルの背景色を取得する
                 if ($hiddenRowList[$workSheetRow] !== true) {
-                    $backgroundColor = $style->getFill()->getStartColor()->getRGB();
+                    $backgroundColor = $this->sheet->getStyle($cellAddress)->getFill()->getStartColor()->getRGB();
                 } else {
                     $backgroundColor = 'CCCCCC';
                 }
-                // セルの文字色を取得する
-                $fontColor = $font->getColor()->getRGB();
+
                 // セルの罫線情報を取得する
-                $border = $this->getBorderInfo($style);
+                $border = $this->getBorderInfo($cellAddress);
 
                 // セルの配置情報を取得する
-                $alignmentInfo = $style->getAlignment();
-                $verticalPosition = $this->getVerticalPosition($alignmentInfo);
-                $horizontalPosition = $alignmentInfo->getHorizontal();
-
-                // セルの書式情報(太字、斜体）を取得する
-                $emphasis = $this->getEmphasizedStyle($font);
+                $verticalPosition = $this->getVerticalPosition($cellAddress);
+                $horizontalPosition = $this->getHorizontalPosition($cellAddress);
 
                 // セル情報の配列に取得したパラメータを格納する
                 $cellData[$tableRow][$tableColumn] = array(
                     'value' => (array_search($cellValue, $this->excelErrorList)) ? '#ERROR!' : $cellValue,
-                    'fontFamily' => $fontFamily,
-                    'fontSize' => $fontSize,
+                    'fontFamily' => $fontInfo['fontFamily'],
+                    'fontSize' => $fontInfo['fontSize'],
                     'backgroundColor' => $backgroundColor,
-                    'fontColor' => $fontColor,
+                    'fontColor' => $fontInfo['fontColor'],
                     'border' => $border,
                     'verticalPosition' => $verticalPosition,
                     'horizontalPosition' => $horizontalPosition,
-                    'emphasis' => $emphasis
+                    'emphasis' => $fontInfo['emphasis']
                 );
 
                 // Html描画時に線が重複して表示されないよう罫線情報を補正する
@@ -1114,12 +1106,12 @@ class estimateSheetController {
     /**
      * 罫線情報を取得する
      *
-     * @param $cell 行番号と列番号を抽出するセル位置
+     * @param $cellAddress 行番号と列番号を抽出するセル位置
      *
      * @return array $borders セルの罫線情報
      */
-    function getBorderInfo($style) {
-        $borderInfoData = $style->getBorders();
+    public function getBorderInfo($cellAddress) {
+        $borderInfoData = $this->sheet->getStyle($cellAddress)->getBorders();
         // 罫線情報の中から部位別の情報を取得する
         $border = array();
         $border['left'] = $borderInfoData->getLeft();
@@ -1137,26 +1129,26 @@ class estimateSheetController {
     }
 
     // 配置情報を取得する
-    function getAlignmentInfo($style) {
+    public function getAlignmentInfo($style) {
         $alignmentInfo = $style->getAlignment();
         return $alignmentInfo;
     }
 
     // テキストの折り返し状態を取得する
-    function getWrapTextInfo($alignment) {
+    public function getWrapTextInfo($alignment) {
         $textWrapInfo = $alignment->getWrapText();
         return $textWrapInfo;
     }
 
     // テキストの水平方向の配置を取得する
-    function getHorizontalPosition ($alignment) {
-        $horizontalPosition = $alignment->getHorizontal();
+    public function getHorizontalPosition ($cellAddress) {
+        $horizontalPosition = $this->sheet->getStyle($cellAddress)->getAlignment()->getHorizontal();
         return $horizontalPosition;
     }
 
     // テキストの垂直方向の配置を取得する
-    function getVerticalPosition ($alignment) {
-        $verticalPosition = $alignment->getVertical();
+    public function getVerticalPosition ($cellAddress) {
+        $verticalPosition = $this->sheet->getStyle($cellAddress)->getAlignment()->getVertical();
         //centerの場合はcss用にmiddleに置換する
         if ($verticalPosition == 'center') {
             $verticalPosition = 'middle';
@@ -1165,31 +1157,25 @@ class estimateSheetController {
     }
 
     // セルのフォント情報を取得する
-    function getFontInfo($style) {
-        $font = $style->getFont();
-        return $font;
-    }
-
-    // セルの書体を取得する
-    function getFontFamilyInfo($font) {
+    public function getFontInfo($cellAddress) {
+        $font = $this->sheet->getStyle($cellAddress)->getFont();
         $fontFamily = $font->getName();
-        return $fontFamily;
-    }
-
-    // セルのフォントサイズを取得する
-    function getFontSizeInfo($font) {
         $fontSize = $font->getSize();
-        return $fontSize;
-    }
-
-    // セルの文字色を取得する
-    function getFontColorInfo($font) {
         $fontColor = $font->getColor()->getRGB();
-        return $fontColor;
+        $emphasis = $this->getEmphasizedStyle($font);
+
+        $fontInfo = array(
+            'fontFamily' => $fontFamily,
+            'fontSize' => $fontSize,
+            'fontColor' => $fontColor,
+            'emphasis' => $emphasis
+        );
+        
+        return $fontInfo;
     }
 
     // セルの太字、斜体情報を取得する
-    function getEmphasizedStyle($font) {
+    public function getEmphasizedStyle($font) {
         $bold = $font->getBold();
         $italic = $font->getItalic();
         $emphasis = array(
@@ -1253,20 +1239,6 @@ class estimateSheetController {
             return $columnIndex;
         }
     }
-
-    /**
-     * 範囲の開始行又は開始列を移動する場合のセル位置を補正する
-     * 
-     * @param string $startRowOrColumn 開始行または開始列
-     * @param integer  $number 開始行または開始列の設定先（デフォルトが0に出力するか1に出力するかで変更する）
-     * 
-     * @return $corrected 補正後の行または列番号
-     */
-    function correctPosition($cellRowOrColumn, $startRowOrColumn, $number) {
-        $corrected = $cellRowOrColumn - $startRowOrColumn + $number;
-        return $corrected;
-    }
-
 
     /**
      * クラス情報をセットする
@@ -1897,6 +1869,11 @@ class estimateSheetController {
         }
         
         return true;
+    }
+
+    // セルを右寄せにする
+    public function setHorizontalRight($cellAddress) {
+        $this->sheet->getStyle($cellAddress)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);
     }
 }
 
