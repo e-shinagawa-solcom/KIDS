@@ -35,8 +35,8 @@ define ( "EXECUTE_HOST_NAME_KWG_WEBv2",	"192.168.10.228" );
 define ( "EXECUTE_HOST_NAME_KWG_WEBv1",	"192.168.10.235" );
 define ( "EXECUTE_HOST_NAME_KWG_BACK",	"192.168.10.230" );
 // define ( "EXECUTE_HOST_NAME_KWG_DB",	"192.168.1.82" );
-// define ( "EXECUTE_HOST_NAME_KWG_DB",	"192.168.1.113" );
-define ( "EXECUTE_HOST_NAME_KWG_DB",	"127.0.0.1" ); // ローカル確認用
+define ( "EXECUTE_HOST_NAME_KWG_DB",	"192.168.1.113" );
+// define ( "EXECUTE_HOST_NAME_KWG_DB",	"127.0.0.1" ); // ローカル確認用
 
 // 実行サーバー名称の取得
 $strExcuteHttpHostName = $_SERVER["HTTP_HOST"];
@@ -135,13 +135,11 @@ switch( $strExcuteHttpHostName )
 		define ( "LC_DB_LOGIN_PASSWORD", "x7zv1jid" );
 		define ( "LC_DB_NAME", "ackids" );
 		// エラーメール送信先
-		//define ( "ERROR_MAIL_TO", "kids@kuwagata.co.jp" );
-		define ( "ERROR_MAIL_TO", "miyata@testdomain.local" );
+		define ( "ERROR_MAIL_TO", "kids@kuwagata.co.jp" );
 		define ( "SEND_MAIL_FLAG", true);
 		// 各ルートパス
-		// define ( "PATH_HOME",	"/Users/solcom/Desktop/Git/KIDS/01_kidsweb/home/kids2" );
+		define ( "PATH_HOME",	"/Users/solcom/Desktop/Git/KIDS/01_kidsweb/home/kids2" );
 		// define ( "PATH_HOME",	"/Users/solcom-ad/Desktop/Git/KIDS/01_kidsweb/home/kids2" ); // ローカル確認用
-		define ( "PATH_HOME",	"E:/Source/Repos/solcom-net/KIDS/01_kidsweb/home/kids2" );
 		break;
 }
 
@@ -174,6 +172,7 @@ define ( "LIB_ROOT",	PATH_HOME . "/lib/" );
 define ( "CLS_ROOT",	PATH_HOME . "/lib/" );
 define ( "SRC_ROOT",	PATH_HOME . "/src/" );
 define ( "SQLLOG_ROOT",	PATH_HOME . "/temp/" );
+define ( "VENDOR_ROOT",	PATH_HOME . "/vendor/" );
 
 // クラス・ライブラリパス
 define ( "LIB_FILE",			LIB_ROOT . "lib.php" );
@@ -186,6 +185,7 @@ define ( "CLS_CACHE_FILE",		LIB_ROOT . "clscache.php" );
 define ( "CLS_EXCELMAP_FILE",		LIB_ROOT . "mapping/clsMapping.php" );		// Excel Mapping Object
 define ( "CLS_TABLETEMP_FILE",		LIB_ROOT . "tabletemp/clstabletemp.php" );	// Temporary DB Object
 define ( "CLS_IMAGELO_FILE",		LIB_ROOT . "clsImageLo.php" );
+define ( "VENDOR_AUTOLOAD_FILE",	VENDOR_ROOT . "autoload.php" ); // Composerのautoloadのパス
 
 // 画像ディレクトリパス
 define ( "USER_IMAGE_TMPDIR",		PATH_HOME . "/image_tmp/" );	// 仮保存場所
@@ -236,13 +236,11 @@ define ( "DEF_ESTIMATE_CANCELL",	3 );	// 申請取消
 define ( "DEF_ESTIMATE_APPROVE",	4 );	// 承認
 define ( "DEF_ESTIMATE_DENIAL",		5 );	// 否認
 
-// m_Receive.lngReceiveStatusCode
-define ( "DEF_RECEIVE_APPLICATE",	1 );	// 申請中
+// m_receivestatus.lngReceiveStatusCode
+define ( "DEF_RECEIVE_APPLICATE",	1 );	// 仮受注
 define ( "DEF_RECEIVE_ORDER",		2 );	// 受注
 define ( "DEF_RECEIVE_DELIVER",		3 );	// 納品中
 define ( "DEF_RECEIVE_END",			4 );	// 納品済
-define ( "DEF_RECEIVE_DENIAL",		5 );	// 否認
-define ( "DEF_RECEIVE_PREORDER",	10 );	// 仮受注
 define ( "DEF_RECEIVE_CLOSED",		99 );	// 締め済
 
 // m_Sales.lngSalesStatusCode
@@ -254,13 +252,11 @@ define ( "DEF_SALES_END",		4 );	// 納品済
 define ( "DEF_SALES_DENIAL",	5 );	// 否認
 define ( "DEF_SALES_CLOSED",	99 );	// 締め済
 
-// m_Order.lngOrderStatusCode
-define ( "DEF_ORDER_APPLICATE",	1 );	// 申請中
+// m_orderstatus.lngOrderStatusCode
+define ( "DEF_ORDER_APPLICATE",	1 );	// 仮受注
 define ( "DEF_ORDER_ORDER",		2 );	// 発注
 define ( "DEF_ORDER_DELIVER",	3 );	// 納品中
 define ( "DEF_ORDER_END",		4 );	// 納品済
-define ( "DEF_ORDER_DENIAL",	5 );	// 否認
-define ( "DEF_ORDER_TEMPORARY",	10);	// 仮発注
 define ( "DEF_ORDER_CLOSED",	99 );	// 締め済
 
 // m_Stock.lngStockStatusCode
@@ -440,8 +436,8 @@ define ( "DEF_FATAL",		3 );           //  3 システムエラーレベル
 define ( "DEF_ANNOUNCE",	99 );          //  99 システムアナウンス
 
 // デバッグモード
-//define ( "DEF_DEBUG_MODE",	0 );         //  本稼動モード　　エラー画面表示
-define ( "DEF_DEBUG_MODE",	1 );      //  デバッグモード　エラー画面非表示
+define ( "DEF_DEBUG_MODE",	0 );         //  本稼動モード　　エラー画面表示
+//define ( "DEF_DEBUG_MODE",	1 );      //  デバッグモード　エラー画面非表示
 
 // 発注登録
 define ("DEF_M_WORKFLOW_FUNCTIONCODE",	1);		// 機能コード
@@ -546,6 +542,7 @@ define ( "DEF_AREA_PRODUCT_SALES",     1);  // 製品売上
 define ( "DEF_AREA_FIXED_COST_SALES",  2);  // 固定費売上
 define ( "DEF_AREA_FIXED_COST_ORDER",  3);  // 固定費
 define ( "DEF_AREA_PARTS_COST_ORDER",  4);  // 部材費
+define ( "DEF_AREA_OTHER_COST_ORDER",  5);  // その他費用
 
 // 通貨レート区分
 define ( "DEF_MONETARY_RATE_CODE_TTM",           1); // TTM
@@ -570,6 +567,13 @@ define ("DEF_SLIP_KIND_EXCLUSIVE", 1);   // 専用帳票
 define ("DEF_SLIP_KIND_COMM",      2);   // 市販帳票
 define ("DEF_SLIP_KIND_DEBIT",     3);   // DEBIT NOTE
 
+// 売上分類マスタコード
+define ("DEF_SALES_DIVISION_CODE_FIXED_COST_SALES",    1); // 固定費売上
+define ("DEF_SALES_DIVISION_CODE_PRODUCT_SALES",       2); // 製品売上
+
+// 売上区分マスタコード
+define ("DEF_SALES_CLASS_CODE_MAIN_PRODUCT",    1); // 本荷
+
 // 仕入科目マスタコード
 define ("DEF_STOCK_SUBJECT_CODE_OVERSEA_MANUFACTURE",       420); // 外注加工費
 define ("DEF_STOCK_SUBJECT_CODE_MOLD_DEPRECIATION",         431); // 金型償却高
@@ -590,5 +594,13 @@ define ( "REPORT_LC_TMPFILE",	"帳票テンプレート.xls" );
 // L/C帳票テンプレートファイル
 define ( "REPORT_LC_OUTPUTFILE",	"帳票テンプレート_copy.xls" );
 
+// ワークシートテンプレートディレクトリパス
+define ( "EXCEL_TMP_ROOT", PATH_HOME . "/excel_tmp/");
+
+// 会社コード
+define ( "DEF_COMPANY_CODE_OTHERS", 0); // その他
+
+// 表示用会社コード
+define ( "DEF_DISPLAY_COMPANY_CODE_OTHERS", '0000'); // その他
 
 ?>

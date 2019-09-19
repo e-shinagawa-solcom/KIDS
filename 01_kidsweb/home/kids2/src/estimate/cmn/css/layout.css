@@ -143,5 +143,160 @@ table.temporaryTable > tbody > tr > td
 	text-align: right;
 }
 
+.sheetPreviewHeader
+{
+	position: relative;
+	left: 80px;
+	width: 981px;
+	vertical-align: middle;
+	display: table;
+}
+
+#btnSelected p
+{
+	position: absolute;
+	top: 8px;
+	left: 35px;
+	color: red;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+#btnSwitch p
+{
+	position: absolute;
+	top: 8px;
+	left: 35px;
+	color: black;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.data-buttons
+{
+	margin-left: 80px;
+	display: table-cell;
+	width: 57%;
+}
+
+.data-buttons div
+{
+	display: inline-block;
+	width: auto;
+}
+
+.action-buttons
+{
+	display: table-cell;
+	vertical-align: middle;
+	width: 42%;
+}
+
+
+div.action-buttons > button
+{
+	display: inline-block;
+	width: auto;
+	border: none;
+	background-color: transparent;
+	cursor: pointer;
+	cursor: hand;
+	padding: 0px;
+	margin: 5px;
+}
+
+.status_applicate
+{
+	border: thin solid #000000;
+	border-radius: 5px;
+	color: #000000;
+	text-align: center;
+}
+
+.status_order
+{
+	border: thin solid #000000;
+	border-radius: 5px;
+	color: #2dda66;
+	text-align: center;
+}
+
+.checkbox_applicate
+{
+	width: auto;
+	vertical-align: middle;
+}
+
+.checkbox_order
+{
+	width: auto;
+	vertical-align: middle;
+}
+
+.btn_confirm
+{
+	width: auto;
+	vertical-align: middle;
+	box-shadow: 1px 1px 2px;
+	padding: 3px;
+	cursor: pointer;
+    cursor: hand;
+}
+
+.btn_cancel
+{
+	width: auto;
+	vertical-align: middle;
+	box-shadow: 1px 1px 2px;
+	border-width: thin;
+	border-color: red;
+	color: red;
+	padding: 3px;
+	cursor: pointer;
+    cursor: hand;
+}
+
+#header
+{
+	background-color: #f1f1f1;
+	position: fixed;
+	z-index: 2;
+}
+
+#header, .header
+{
+	left: 100px;
+	top: 0;
+	width: 982px;
+	height: auto;
+}
+
+#sideMenu
+{
+	position:fixed;
+	background-color: #f1f1f1;
+	z-index: 1;
+	left:0;
+	top:0;
+	width:100px;
+	height:100vh;
+}
+
+.sideMenu
+{
+	float: left;
+}
+
+.sideMenuButton > button
+{
+	display: inline-block;
+	width: auto;
+	border: none;
+	background-color: transparent;
+	cursor: pointer;
+	cursor: hand;
+}
+
+
 
 -->

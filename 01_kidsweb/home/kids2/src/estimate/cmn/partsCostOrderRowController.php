@@ -17,10 +17,10 @@ class partsCostOrderRowController extends estimateRowController {
 
     protected $stockClassCode; // 仕入区分
 
-    public function __construct() {
+    public function __construct($objDB) {
         $this->areaCode = DEF_AREA_PARTS_COST_ORDER; // エリアコードのセット
-        $this->stockClassCode = DEF_STOCK_CLASS_CODE_PARTS; // 仕入区分のセット
-        parent::__construct();        
+        $this->stockClassCode = workSheetConst::AREA_ATTRIBUTE_TO_STOCK_CLASS_CODE[$this->areaCode];
+        parent::__construct($objDB);
     }
 
     protected function setNameList() {
@@ -35,10 +35,9 @@ class partsCostOrderRowController extends estimateRowController {
     // 売上分類のマスターのデータを取得する
     protected function setDivisionSubjectCodeMaster() {
         if (!static::$divisionSubjectCodeMaster) {
-            global $objDB;
             $areaCode = $this->areaCode;
             $stockClassCode = $this->stockClassCode;
-            $masterData = $objDB->getSubjectCodeList($areaCode);
+            $masterData = $this->objDB->getSubjectCodeList($areaCode);
             foreach ($masterData as $classCode => $data) {
                 if ($classCode == $stockClassCode) {
                     $newMasterData = $data;

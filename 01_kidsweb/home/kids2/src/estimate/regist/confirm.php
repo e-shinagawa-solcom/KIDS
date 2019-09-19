@@ -23,9 +23,9 @@
 	require_once (SRC_ROOT. "/estimate/cmn/partsCostOrderRowController.php");
 	require_once (SRC_ROOT. "/estimate/cmn/otherCostOrderRowController.php");
 
-	require_once (SRC_ROOT. "/estimate/cmn/estimateHeaderController.php");
+	require_once (SRC_ROOT. "/estimate/cmn/registHeaderController.php");
 
-	require_once (SRC_ROOT. "/estimate/cmn/estimateTotalCalculationController.php");
+	require_once (SRC_ROOT. "/estimate/cmn/registOtherCellsController.php");
 
 	require_once ( SRC_ROOT . "/estimate/cmn/estimateDB.php");
 	
@@ -36,21 +36,8 @@
 	$objTemplate	= new clsTemplate();								// テンプレートオブジェクト生成
 
 	$charset = 'EUC-JP';
-
-    // $objMap			= new clsMapping();									// マッピングオブジェクト生成
     
 	$objReader      = new XlsxReader();
-	
-	$objMaster;
-	$aryProductHeader	= array();	// ワークシート製品データ取得配列
-	$aryMaster			= array();	// 製品マスタデータ取得配列
-	$arySystemRate		= array();	// システムレート配列
-	$aryExcelRate		= array();	// Excelレート配列
-	$aryDiff			= array();	// 差異取得配列
-	$aryBuff			= array();	// 表示用データ取得配列バッファ
-	$strDiff			= "";
-
-	$aryError			= array();	// エラーチェック配列
 
 
 	//-------------------------------------------------------------------------
@@ -65,7 +52,6 @@
 	$aryData	= array();
 	$aryData	= $_REQUEST;
 
-	$aryData["CHAR_SET"]			= TMP_CHARSET;					// テンプレート文字コード
 	$aryData["lngLanguageCode"]		= $_COOKIE["lngLanguageCode"];	// 言語コード
 
     // シート番号取得
@@ -136,15 +122,15 @@
 		$objSheet = new estimateSheetController();
 
 		// オブジェクトにデータをセットする
-		$objSheet->dataInitialize($sheetInfo);
+		$objSheet->dataInitialize($sheetInfo, $objDB);
 
-		// phpSpreadSheetで生成したシートオブジェクトをグローバル参照用にセットする
+		// シート情報を取得する
 		$sheet = $sheetInfo['sheet'];
 		$cellAddressList = $sheetInfo['cellAddress'];
 
 		// ヘッダ部のバリデーションを行う
-		$objHeader = new estimateHeaderController();
-		$objHeader->initialize($sheetInfo['cellAddress'], $lngUserCode);
+		$objHeader = new registHeaderController();
+		$objHeader->initialize($sheetInfo['cellAddress'], $lngUserCode, $sheet, $objDB);
 		$message = $objHeader->validate();
 
 		if ($message) {
@@ -176,19 +162,19 @@
 				// 対象エリアによってインスタンス作成時のクラスを指定する
 				switch ($rowAttribute) {
 					case DEF_AREA_PRODUCT_SALES:
-						$objRow = new productSalesRowController();
+						$objRow = new productSalesRowController($objDB);
 						break;
 					case DEF_AREA_FIXED_COST_SALES:
-						$objRow = new fixedCostSalesRowController();
+						$objRow = new fixedCostSalesRowController($objDB);
 						break;
 					case DEF_AREA_FIXED_COST_ORDER:
-						$objRow = new fixedCostOrderRowController();
+						$objRow = new fixedCostOrderRowController($objDB);
 						break;
 					case DEF_AREA_PARTS_COST_ORDER:
-						$objRow = new partsCostOrderRowController();
+						$objRow = new partsCostOrderRowController($objDB);
 						break;
 					case DEF_AREA_OTHER_COST_ORDER;
-						$objRow = new otherCostOrderRowController();
+						$objRow = new otherCostOrderRowController($objDB);
 						break;
 					default:
 						break;
@@ -230,58 +216,60 @@
 		$importCost = $tariff;
 
 		// 関税の処理
-		foreach ($tariffRowList as $rowIndex) {
-			$tariffObjRow = &$objRowList[$rowIndex];
-			$tariffObjRow->chargeCalculate($tariff);
-
-			if ($tariffObjRow->invalidFlag === false) {
-				// 単価出力
-			    $price = $tariffObjRow->price;
-				$priceColumn = $tariffObjRow->columnNumberList['price'];
-				$priceCell =  $priceColumn. $rowIndex;
-
-				$subtotalColumn = $tariffObjRow->columnNumberList['subtotal'];
-				$subtotalCell =  $subtotalColumn. $rowIndex;
-
-				$deliveryColumn = $tariffObjRow->columnNumberList['delivery'];
-				$deliveryCell = $deliveryColumn. $rowIndex;
-
-				// 計算後の単価、小計をsheetオブジェクトに挿入
-				$objSheet->sheet->getCell($priceCell)->setValue($price);
-				$objSheet->sheet->getCell($subtotalCell)->setValue($tariffObjRow->calculatedSubtotalJP);
-
-				$objSheet->sheet->getCell($deliveryCell)->setValue(null);
-
-				// 輸入費用計算用変数に計算結果を加算
-				$importCost += $tariffObjRow->calculatedSubtotalJP;
+		if ($tariffRowList) {
+			foreach ($tariffRowList as $rowIndex) {
+				$tariffObjRow = &$objRowList[$rowIndex];
+				$tariffObjRow->chargeCalculate($tariff);
+	
+				if ($tariffObjRow->invalidFlag === false) {
+					// 単価出力
+					$price = $tariffObjRow->price;
+					$priceColumn = $tariffObjRow->columnNumberList['price'];
+					$priceCell =  $priceColumn. $rowIndex;
+	
+					$subtotalColumn = $tariffObjRow->columnNumberList['subtotal'];
+					$subtotalCell =  $subtotalColumn. $rowIndex;
+	
+					$deliveryColumn = $tariffObjRow->columnNumberList['delivery'];
+					$deliveryCell = $deliveryColumn. $rowIndex;
+	
+					// 計算後の単価、小計をsheetオブジェクトに挿入
+					$objSheet->sheet->getCell($priceCell)->setValue($price);
+					$objSheet->sheet->getCell($subtotalCell)->setValue($tariffObjRow->calculatedSubtotalJP);
+	
+					// 輸入費用計算用変数に計算結果を加算
+					$importCost += $tariffObjRow->calculatedSubtotalJP;
+				}
 			}
 		}
+
 
 		// 輸入費用の処理
-		foreach ($importCostRowList as $rowIndex) {
-			$importCostObjRow = &$objRowList[$rowIndex];
-			$importCostObjRow->chargeCalculate($importCost);
-
-			if ($importCostObjRow->invalidFlag === false) {
-				// 単価出力
-				$price = $importCostObjRow->price;
-
-				$priceColumn =  $importCostObjRow->columnNumberList['price'];
-				$priceCell =  $priceColumn. $rowIndex;
-
-				$subtotalColumn = $importCostObjRow->columnNumberList['subtotal'];
-				$subtotalCell =  $subtotalColumn. $rowIndex;
-
-				$deliveryColumn = $importCostObjRow->columnNumberList['delivery'];
-				$deliveryCell = $deliveryColumn. $rowIndex;
-
-				// 計算後の単価をsheetオブジェクトに挿入
-				$objSheet->sheet->getCell($priceCell)->setValue($price);
-				$objSheet->sheet->getCell($subtotalCell)->setValue($importCostObjRow->calculatedSubtotalJP);
-
-				$objSheet->sheet->getCell($deliveryCell)->setValue(null);
+		if ($importCostRowList) {
+			foreach ($importCostRowList as $rowIndex) {
+				$importCostObjRow = &$objRowList[$rowIndex];
+				$importCostObjRow->chargeCalculate($importCost);
+	
+				if ($importCostObjRow->invalidFlag === false) {
+					// 単価出力
+					$price = $importCostObjRow->price;
+	
+					$priceColumn =  $importCostObjRow->columnNumberList['price'];
+					$priceCell =  $priceColumn. $rowIndex;
+	
+					$subtotalColumn = $importCostObjRow->columnNumberList['subtotal'];
+					$subtotalCell =  $subtotalColumn. $rowIndex;
+	
+					$deliveryColumn = $importCostObjRow->columnNumberList['delivery'];
+					$deliveryCell = $deliveryColumn. $rowIndex;
+	
+					// 計算後の単価をsheetオブジェクトに挿入
+					$objSheet->sheet->getCell($priceCell)->setValue($price);
+					$objSheet->sheet->getCell($subtotalCell)->setValue($importCostObjRow->calculatedSubtotalJP);
+				}
 			}
 		}
+
 
 		// 標準割合のチェック
 		$standardRateCell = $cellAddressList[workSheetConst::STANDARD_RATE];
@@ -311,19 +299,24 @@
 				if ($messageOfConversionRate === 9206) {
 					// ブックオブジェクトの通貨レートの置換
 					$column = $columnList['conversionRate'];
-					$cellAddress = $column.$row;
+					$convarsionRateCell = $column.$row;
 					$acquiredRate = $objRow->acquiredRate;
-					$objSheet->sheet->getCell($cellAddress)->setValue($acquiredRate);
-					
+					$objSheet->sheet->getCell($convarsionRateCell)->setValue($acquiredRate);
 				}
 
 				// ブックオブジェクトの小計の置換
 				$column = $columnList['subtotal'];
-				$cellAddress = $column.$row;
+				$subtotalCell = $column.$row;
 				$calculatedSubtotalJP = $objRow->calculatedSubtotalJP;
 
-				$objSheet->sheet->getCell($cellAddress)->setValue($calculatedSubtotalJP);
+				$objSheet->sheet->getCell($subtotalCell)->setValue($calculatedSubtotalJP);
 			}
+
+			// DBの情報に置換後（仕入の空欄はその他）の顧客先、仕入先情報をセットする
+			$column = $columnList['customerCompany'];
+			$customerCompany = $objRow->customerCompany;
+			$companyCell = $column.$row;
+			$objSheet->sheet->getCell($companyCell)->setValue($customerCompany);
 		}
 
 		// バリデーションでエラーが発生した場合はエラーメッセージを表示する
@@ -337,7 +330,7 @@
 						$strMessage .= "<br>";
 						$strMessage .= "<div>". $message. "</div>";
 					}
-				}			
+				}
 			}
 
 			// [lngLanguageCode]書き出し
@@ -360,7 +353,7 @@
 			exit;
 		}
 
-		$objCal = new estimateTotalCalculationController();
+		$objCal = new registOtherCellsController();
 		$objCal->calculateParam($objRowList, $objHeader, $sheetInfo['cellAddress'], $standardRateMaster);
 		$calcData = $objCal->outputParam();
 
@@ -396,7 +389,7 @@
 				$rowDataList[$index] = $rowData;
 			}
 		}
-		
+	
 		// 登録用データの整形
 		$registData = array(
 			'headerData' => $headerData,
@@ -435,7 +428,6 @@
 		$aryData["TABLEDATA"]	= $json;
 		$aryData["FORM_NAME"]	= FORM_NAME;
 		$aryData["FORM"]	    = $form;
-		$aryData["TEMPORARY"]	= $strTemporary;
 
 		// テンプレート読み込み
 		$objTemplate->getTemplate( "estimate/regist/confirm.tmpl" );

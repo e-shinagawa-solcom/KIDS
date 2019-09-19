@@ -62,10 +62,12 @@ if (!fncCheckAuthority(DEF_FUNCTION_LO0, $objAuth) || !fncCheckAuthority(DEF_FUN
 <div>
 	
 <div align="right" style="width: 50%; display: inline-block;">
-	<a href="<?echo $aryListOutputMenu[$aryData["lngReportClassCode"]]["file"]; ?>/action.php?strSessionID=<?echo $aryData["strSessionID"]; ?>&strReportKeyCode=<?echo $aryData["strReportKeyCode"]; ?>&lngReportCode=<?echo $aryData["lngReportCode"]; ?>" onclick="fncPrintFrame( parent.list )"><img onmouseover="fncPrintButton( 'on' , this );" onmouseout="fncPrintButton( 'off' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="/img/type01/list/print_off_bt.gif" width="72" height="20" border="0" alt="PRINT"></a>
+	<!--<a id="print" href="<?echo $aryListOutputMenu[$aryData["lngReportClassCode"]]["file"]; ?>/action.php?strSessionID=<?echo $aryData["strSessionID"]; ?>&strReportKeyCode=<?echo $aryData["strReportKeyCode"]; ?>&lngReportCode=<?echo $aryData["lngReportCode"]; ?>" onclick="fncPrintFrame( parent.list )"><img onmouseover="fncPrintButton( 'on' , this );" onmouseout="fncPrintButton( 'off' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="/img/type01/list/print_off_bt.gif" width="72" height="20" border="0" alt="PRINT"></a> -->
+	<a id="print" href=""><img onmouseover="fncPrintButton( 'on' , this );" onmouseout="fncPrintButton( 'off' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="/img/type01/list/print_off_bt.gif" width="72" height="20" border="0" alt="PRINT"></a>
+
 </div>
 <div align="right" style="width: 45%;font-size: 9pt;display: none" id="rePrint">
-	<input name="rePrintFlag" type="checkbox">ºÆ°õºþ¤òÈ÷¹Í¤Ë°õ»ú¤¹¤ë
+	<input id="rePrintChk" type="checkbox">ºÆ°õºþ¤òÈ÷¹Í¤Ë°õ»ú¤¹¤ë
 </div>
 </div>
 

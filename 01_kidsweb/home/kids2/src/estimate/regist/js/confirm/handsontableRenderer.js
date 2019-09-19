@@ -1,6 +1,7 @@
 // データの取得
 var script = $('#script').attr('data-param');
 var result = JSON.parse(script);
+$('#script').remove();
 
 // シート数の取得
 var sheetNumber = Object.keys(result).length;

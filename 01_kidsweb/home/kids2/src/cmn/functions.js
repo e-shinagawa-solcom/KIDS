@@ -1768,7 +1768,8 @@ function fncShowDialogCommon( strUrl , ObjFrm , strID , strScroll , lngLanguageC
 	args[0][4] = strMode; // 'detail' ¤Þ¤¿¤Ï 'delete'
 
 
-	retval = window.showModalDialog( '/result/common.html' , args , "dialogHeight:679px;dialogWidth:696px;center:yes;status:no;edge:raised;help:no;scroll:no;" );
+	// retval = window.showModalDialog( '/result/common.html' , args , "dialogHeight:679px;dialogWidth:696px;center:yes;status:no;edge:raised;help:no;scroll:no;" );
+	retval = window.open( '/result/common.html' , args , "dialogHeight:679px;dialogWidth:696px;center:yes;status:no;edge:raised;help:no;scroll:no;" );
 
 	if( retval )
 	{
@@ -1811,7 +1812,7 @@ function fncShowDialogRenew( strUrl , ObjFrm , strID , strScroll , lngLanguageCo
 	args[0][3] = lngLanguageCode;
 
 	//retval = window.showModalDialog( '/result/renew.html' , args , "dialogHeight:580px;dialogWidth:970px;center:yes;status:no;edge:raised;help:no;scroll:no;" );
-	retval = window.showModalDialog( '/result/renew.html' , args , "dialogHeight:600px;dialogWidth:970px;center:yes;status:no;edge:raised;help:no;scroll:no;" );
+	retval = window.open( '/result/renew.html' , args , "dialogHeight:600px;dialogWidth:970px;center:yes;status:no;edge:raised;help:no;scroll:no;" );
 
 	if( retval )
 	{

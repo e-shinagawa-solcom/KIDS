@@ -3,8 +3,8 @@
 require_once ('conf.inc');
 require_once (SRC_ROOT. "/estimate/cmn/const/workSheetConst.php");
 
-// PHPSpreadSheetライブラリのオートロードファイル読み込み
-require_once ( LIB_ROOT . "/phpspreadsheet/autoload.php" );
+// Composerのオートロードファイル読み込み
+require_once ( VENDOR_AUTOLOAD_FILE );
 
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
 
@@ -23,6 +23,8 @@ abstract class estimateRowController {
 
     abstract protected function setNameList(); // 対象エリアごとのセル名称の指定
 
+    protected $objDB;
+
     protected $errorMessage; // エラーメッセージ
 
     // 取り込み値
@@ -33,14 +35,16 @@ abstract class estimateRowController {
     public $delivery;
     public $quantity;
     public $price;
-    public $divisionSubject;
+    protected $divisionSubject;
     public $classItem;
-    public $subtotal;
+    protected $subtotal;
     public $conversionRate;
-    public $monetaryDisplay;
+    protected $monetaryDisplay;
     public $monetary;
     public $customerCompany;
-    public $note;
+    protected $note;
+
+    protected $row;
 
     // 登録用にセットする値
     public $divisionSubjectCode;
@@ -67,8 +71,10 @@ abstract class estimateRowController {
     protected static $resultNameList; // 対象エリアの計算結果のセル名称(明細最終行の次の行)
 
 
-    protected function __construct() {
+    protected function __construct($objDB) {
         // マスターデータ読み込み
+        $this->objDB = $objDB;
+        $this->setSalesOrder();
         $this->setCustomerCompanyCodeMaster();
         $this->setDivisionSubjectCodeMaster();
         $this->setConversionRateMaster();
@@ -77,18 +83,16 @@ abstract class estimateRowController {
     // 顧客先、仕入先のマスターのデータを取得する
     protected function setCustomerCompanyCodeMaster() {
         if (!static::$customerCompanyCodeMaster) {
-            global $objDB; // データベース処理クラス
             $areaCode = $this->areaCode;
-            $masterData = $objDB->getCustomerCompanyCodeList($areaCode);
+            $masterData = $this->objDB->getCustomerCompanyCodeList($areaCode);
             static::$customerCompanyCodeMaster = $masterData;
-        }
+        }        
     }
     
     // 通貨レートマスターのデータを取得する
-    protected function setConversionRateMaster () {
+    protected function setConversionRateMaster() {
         if (!self::$conversionRateMaster) {
-            global $objDB; // データベース処理クラス
-            $masterData = $objDB->getTemporaryRateList();
+            $masterData = $this->objDB->getTemporaryRateList();
             self::$conversionRateMaster = $masterData;
         }
     }
@@ -124,8 +128,13 @@ abstract class estimateRowController {
         $params = $this->getRowParams();
         $this->setRowParams($params);
         $this->setRowDataType();
-        $this->setSalesOrder();
         return true;
+    }
+
+    public function editInitialize ($params, $row) {
+        $this->row = $row;
+        $this->setNameList();
+        $this->setRowParams($params);
     }
 
     // 各項目の列番号を取得する
@@ -246,14 +255,12 @@ abstract class estimateRowController {
         // 輸入費用、関税フラグを設定する
         $this->setDistinctionFlag();
 
-        if (!$this->importCostFlag && !$this->tariffFlag) {
-            // 輸入費用、関税でなければ納期のチェック
-            $this->validateDelivery();
+        // 納期のチェック
+        $this->validateDelivery();
 
-            if ($this->messageCode['delivery']) {
-                // 納期の入力が正確でない場合は非表示にする
-                return true;
-            }
+        if ($this->messageCode['delivery']) {
+            // 納期の入力が正確でない場合は非表示にする
+            return true;
         }
 
         $quantity = $this->quantity; // 数量
@@ -270,14 +277,11 @@ abstract class estimateRowController {
             return true;
         }
         
+
         if ($this->importCostFlag || $this->tariffFlag) {
-            // JP以外は表示しない
-            $monetary = $this->monetary;
-            if ($monetary != DEF_MONETARY_YEN) {
-                return true;
-            }
+            // 入力書式を取得する
             $dataType = $this->dataType;
-            if ($dataType['price'] === DataType::TYPE_FORMULA) {
+            if (!$dataType || $dataType['price'] === DataType::TYPE_FORMULA) {
                 if (is_numeric($this->customerCompany)) {
                     $this->percentInputFlag = true;
                 } else {
@@ -285,9 +289,6 @@ abstract class estimateRowController {
                     return true;
                 }
             }
-            // 輸入費用、関税の場合は補正後のレートを1に設定する
-            $this->acquiredRate = 1;
-
         } else {
             // 顧客先のチェックを行う
             $this->validateCustomerCompany();
@@ -295,16 +296,16 @@ abstract class estimateRowController {
                 // 顧客先の入力が正確でない場合非表示
                 return true;
             }
-
-            // 通貨レートのチェックを行う
-            $this->validateConversionRate();
-
-            if ($this->messageCode['conversionRate'] === 9203) {
-                // 通貨レートが取得できなかった場合
-                return true;
-            }
         }
 
+        // 通貨レートのチェックを行う
+        $this->validateConversionRate();
+
+        if ($this->messageCode['conversionRate'] === 9203) {
+            // 通貨レートが取得できなかった場合
+            return true;
+        }
+ 
         return false;
     }
 
@@ -376,8 +377,14 @@ abstract class estimateRowController {
             'customerCompany' => $this->customerCompanyCode,
             'payoff' => $this->payoff,
             'percentInputFlag' => $this->percentInputFlag,
+            'percent' => $this->percent
         );
         return $registData;
+    }
+
+    // 行番号を出力する
+    public function outputRow() {
+        return $this->row;
     }
     
 
@@ -518,7 +525,6 @@ abstract class estimateRowController {
             $this->invalidFlag = true;
             return false;
         }
-        global $sheet;
 
         $quantity = $this->quantity; // 数量
 
@@ -550,9 +556,6 @@ abstract class estimateRowController {
         $calculatedSubtotal = $price * $conversionRate * $quantity;
         $this->calculatedSubtotal = $calculatedSubtotal;
         $this->calculatedSubtotalJP = $calculatedSubtotal;
-
-        // 納期を空欄にする
-        $this->delivery = null;
 
         return true;
     }
@@ -669,7 +672,7 @@ abstract class estimateRowController {
                 $divisionSubjectCode = $this->divisionSubjectCode;
                 $this->classItemCode = (int)$classItemCode;
                 // マスターチェック
-                if (!in_array((int)$classItemCode, $masterData[$divisionSubjectCode])) {
+                if (!isset($masterData[$divisionSubjectCode][(int)$classItemCode])) {
                     $this->messageCode['classItem'] = 9202;
                 }
             } else {
@@ -703,23 +706,33 @@ abstract class estimateRowController {
 
     // 顧客先
     protected function validateCustomerCompany() {
+        $customerCompany = $this->customerCompany;
         if (isset($customerCompany) && $customerCompany !=='') {
             if (preg_match("/\A[0-9]+:.+\z/", $customerCompany)) {
                 list ($customerCompanyCode, $customerCompanyName) = explode(':', $customerCompany);
                 $masterData = static::$customerCompanyCodeMaster;
-                $this->customerCompanyCode = (int)$customerCompanyCode;
+                $this->customerCompanyCode = (string)$customerCompanyCode;
                 // マスターチェック
-                if (!in_array((int)$customerCompanyCode, $masterData)) {
+                if (!isset($masterData[$customerCompanyCode])) {
                     $this->messageCode['customerCompany'] = 9202;
                 }
+                $display = $masterData[$customerCompanyCode]['shortName'] ? $masterData[$customerCompanyCode]['shortName'] : $masterData[$customerCompanyCode]['displayName'];
+                $this->customerCompany = $customerCompanyCode. ':'. $display;
             } else {
                 // 入力形式不正
                 $this->messageCode['customerCompany'] = 9201;
             }
         } else {
-            if ($this->$salesOrder === DEF_ATTRIBUTE_CLIENT) {
+            if ($this->salesOrder === DEF_ATTRIBUTE_CLIENT) {
                 // 受注の場合必須エラーを出力
                 $this->messageCode['customerCompany'] = 9001;
+            } else if ($this->salesOrder === DEF_ATTRIBUTE_SUPPLIER) {
+                // 発注の場合は'0000'をセット
+                $customerCompanyCode = (string)DEF_DISPLAY_COMPANY_CODE_OTHERS;
+                $this->customerCompanyCode = $customerCompanyCode;
+                $masterData = static::$customerCompanyCodeMaster;
+                $display = $masterData[$customerCompanyCode]['shortName'] ? $masterData[$customerCompanyCode]['shortName'] : $masterData[$customerCompanyCode]['displayName'];
+                $this->customerCompany = $customerCompanyCode. ':'. $display;
             }
         }
         return true;
@@ -801,6 +814,7 @@ abstract class estimateRowController {
                     if (strtotime($delivery) <= strtotime($data['endDate']) 
                         && strtotime($data['startDate']) <= strtotime($delivery)) {
                         $acquiredRate = $data['conversionRate'];
+                        break;
                     } else {
                         $acquiredRate = null;
                     }
