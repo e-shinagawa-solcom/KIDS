@@ -706,7 +706,34 @@
 	padding : 3px 0px 0px 8px ;
 }
 /* END VARS */
-/* æ˜Žç´°è¡Œè¡¨ç¤ºãƒ†ãƒ¼ãƒ–ãƒ« */
+/* ÌÀºÙ¹ÔÂØ¤¨¥Ü¥¿¥ó */
+#selectup{
+	position: absolute;
+	top: 220px;
+	left: 860px;
+}
+#selectup1{
+	position: absolute;
+	top: 270px;
+	left: 852px;
+}
+#selectdown{
+	position: absolute;
+	top: 512px;
+	left: 860px;
+}
+#selectdown1{
+	position: absolute;
+	top: 460px;
+	left: 852px;
+}
+#FixEntryBtn{
+	position: absolute;
+	top: 570px;
+	left: 780px;
+}
+
+/* ÌÀºÙ¹ÔÉ½¼¨¥Æ¡¼¥Ö¥ë */
 #DetailTable {
 	table-layout: fixed;
 }
@@ -722,6 +749,9 @@ tr.TrSegs th {
 	font-size: 9pt;
 	color: #666666;
 	white-space: nowrap;
+}
+.selected {
+	background-color: #87cefa;
 }
 /************************************** END INPUT A **************************************/
 

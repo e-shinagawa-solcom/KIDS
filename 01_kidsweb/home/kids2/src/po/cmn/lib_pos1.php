@@ -29,7 +29,7 @@
 *	@return strQuery 	$strQuery 検索用SQL文
 *	@access public
 */
-function fncGetPurchaseHeadNoToInfo ( $lngOrderNo, $lngRevisionNo, $objDB )
+function fncGetPurchaseHeadNoToInfo ( $lngOrderNo, $objDB )
 {
 	// SQL文の作成
 	$aryQuery[] = "SELECT distinct on (o.lngOrderNo) o.lngOrderNo as lngOrderNo, o.lngRevisionNo as lngRevisionNo";
@@ -102,7 +102,7 @@ function fncGetPurchaseHeadNoToInfo ( $lngOrderNo, $lngRevisionNo, $objDB )
 	$aryQuery[] = " LEFT JOIN m_purchaseorder mp on  tp.lngpurchaseorderno = mp.lngpurchaseorderno and tp.lngrevisionno = mp.lngrevisionno";
 
 	$aryQuery[] = " WHERE o.lngOrderNo = " . $lngOrderNo;
-	$aryQuery[] = " AND   o.lngRevisionNo = " . $lngRevisionNo;
+	//$aryQuery[] = " AND   o.lngRevisionNo = " . $lngRevisionNo;
 
 	$strQuery = implode( "\n", $aryQuery );
 

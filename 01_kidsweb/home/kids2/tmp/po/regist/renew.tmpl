@@ -26,7 +26,7 @@
 <link rel="stylesheet" type="text/css" media="screen" href="_%strCssName%_">
 <link rel="stylesheet" type="text/css" media="screen" href="_%strErrorCssName%_">
 <script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
-<script type="text/javascript" language="javascript" src="/po/regist/regist.js"></script>
+<script type="text/javascript" language="javascript" src="/po/regist/regist2.js"></script>
 </header3>
 
 
@@ -57,6 +57,29 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutMsw(); initLayout
         <span id="SegABottom"></span>
         <!-- END BOTTOM -->
 
+        <!-- 明細行替えボタン -->
+        <!-- 最上行へ移動 -->
+        <span id="selectup">
+            <img onclick="" src="/img/type01/cmn/querybt/select_changeup.gif"  alt="" style="width: 25px; height: 50px;">
+        </span>
+        <!-- 上の行へ移動 -->
+        <span id="selectup1">
+            <img onclick="" src="/img/type01/cmn/querybt/select_changeup1.gif" alt="" style="width: 41px; height: 50px;">
+        </span>
+        <!-- 下の行へ移動 -->
+        <span id="selectdown1">
+            <img onclick="" src="/img/type01/cmn/querybt/select_changedown1.gif" alt="" style="width: 41px; height: 50px;">
+        </span>
+        <!-- 最下行へ移動 -->
+        <span id="selectdown">
+            <img onclick="" src="/img/type01/cmn/querybt/select_changedown.gif" alt="" style="width: 25px; height: 50px;">
+        </span>
+        <!-- 確定登録ボタン -->
+        <span id="FixEntryBtn">
+            <a href="#">
+                <img src="/img/type01/cmn/querybt/regist_blown_off_ja_bt.gif" alt="" style="width: 78px; height: 20px;">
+            </a>
+        </span>
 
         <!-- 発注NO -->
         <span id="SegA01">発注NO</span>
@@ -89,7 +112,7 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutMsw(); initLayout
         <!-- 通貨 -->
         <span id="SegA05">通貨</span>
         <span id="VarsA05">
-            <select name="lngMonetaryUnitCode" _%MonetaryUnitDisabled%_ disabled>
+            <select name="lngMonetaryUnitCode" _%MonetaryUnitDisabled%_>
                 _%lngMonetaryUnitCode%_
             </select>
         </span>
@@ -118,7 +141,7 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutMsw(); initLayout
         <!-- 納品場所 -->
         <span id="SegA15">納品場所</span>
         <span id="VarsA15">
-        	<input style="ime-mode:disabled;" class="TxtStyle05L" type="text" name="lngLocationCode" value="_%lngLocationCode%_">&nbsp;
+        	<input style="ime-mode:disabled;" class="TxtStyle05L" type="text" name="strLocationCode" value="_%strLocationCode%_">&nbsp;
             <input style="ime-mode:disabled;" class="disTxt40L" type="text" name="strLocationName" value="_%strLocationName%_" contenteditable="false">
         </span>
         <!-- 備考 -->
@@ -126,6 +149,11 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutMsw(); initLayout
         <span id="VarsA16">
         	<input style="ime-mode:enabled" class="Txt100L" type="text" name="strNote" value="_%strNote%_" maxlength="160" tabindex="16">
         </span>
+        <!-- hidden values -->
+        <input type="hidden" name="strSessionID" value="_%strSessionID%_"> 
+        <input type="hidden" name="lngPurchaseOrderNo" value="_%lngPurchaseOrderNo%_">
+        <input type="hidden" name="lngRevisionNo" value="_%lngRevisionNo%_">
+        <input type="hidden" name="lngPayConditionCodeOrign" value="_%lngPayConditionCodeOrign%_">
     </div>
 
     <div id="InputDetail">
@@ -148,7 +176,6 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutMsw(); initLayout
         	<tbody id="DetailTableBody">_%strPurchaseOrderDetail%_</tbody>
         </table>
     </div>
-
 </form>
 
 
