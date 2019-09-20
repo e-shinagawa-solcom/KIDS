@@ -19,42 +19,75 @@
 */
 // ----------------------------------------------------------------------------
 
-//include('conf.inc');
-//require (LIB_FILE);
-//require (SRC_ROOT."sc/cmn/lib_scr.php");
+include('conf.inc');
+require (LIB_FILE);
+require (SRC_ROOT."sc/cmn/lib_scr.php");
+require PATH_HOME . "/vendor/autoload.php";
+/*
+$json = json_encode($_POST["headerData"], JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
+$json = htmlspecialchars($json, ENT_QUOTES, 'UTF-8');
+$aryData["HEADER_DATA"] = $json;
 
+if ($_POST["jsonHeaderData"]){
+	$jsonDecode = json_decode($_POST["jsonHeaderData"], true);
+	$data1 = $jsonDecode["data1"];
+	header("Content-Type: text/plain");
+	echo mb_convert_encoding($data1, 'EUC-JP', 'UTF-8');
+	return true;
+}
+*/
+// ------------------------
+//   POSTパラメータ退避
+// ------------------------
+
+
+
+// ------------------------
+//   帳票表示
+// ------------------------
 // 日本語に対応する場合、この1行が必要
 ini_set('default_charset', 'UTF-8');
 
 // 読み込み
-include 'conf.inc';
-require LIB_FILE;
-require PATH_HOME . "/vendor/autoload.php";
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Writer\Html;
 
-// spreadsheetに渡す値は必ずUTF-8で渡すため、
-// EUC-JPで記述されたソースの場合は渡す値のコード変換が必要
-// ※phpソース自身をUTF-8にすれば変換処理は不要）
-$file = mb_convert_encoding('納品書temple_B社_連絡書付.xlsx', 'UTF-8','EUC-JP' );
+
+$file = mb_convert_encoding('template\納品書temple_B社_連絡書付.xlsx', 'UTF-8','EUC-JP' );
 $sheetname = mb_convert_encoding('B社専用', 'UTF-8','EUC-JP' );
 $cellValue = mb_convert_encoding('個別に値をセット', 'UTF-8','EUC-JP' );
 $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($file);
 
-//
 // ブックに値を設定する
 $spreadsheet->GetSheetByName($sheetname)->GetCell('C3')->SetValue($cellValue);
-//
 
 $writer = new \PhpOffice\PhpSpreadsheet\Writer\Html($spreadsheet);
-$output = $writer->generateHTMLHeader();
-$output .= $writer->generateStyles(true);
-$output .= $writer->generateSheetData();
-$output .= $writer->generateHTMLFooter();
+//$outHeader = $writer->generateHTMLHeader();
+$outStyle = $writer->generateStyles(true);
+$outSheetData = $writer->generateSheetData();
+//$outFooter .= $writer->generateHTMLFooter();
 
-// phpソース自身をUTF-8の場合は変換必要
-// echo mb_convert_encoding($output, 'EUC-JP', 'UTF-8');
-echo $output;
+//TODO:明細の数だけ繰り返す
+$outStyle = mb_convert_encoding($outStyle, 'EUC-JP', 'UTF-8');
+$outSheetData = mb_convert_encoding($outSheetData, 'EUC-JP', 'UTF-8');
+$aryData["PREVIEW_STYLE"] = $outStyle;
+$aryData["PREVIEW_DATA"] = $outSheetData;
+
+//$out2 = mb_convert_encoding($output, 'EUC-JP', 'UTF-8');
+
+
+// テンプレート読み込み
+$objTemplate = new clsTemplate();
+$objTemplate->getTemplate( "sc/regist2/preview.tmpl" );
+// テンプレート生成
+$objTemplate->replace( $aryData );
+$objTemplate->complete();
+
+//header("Content-Type: text/plain");
+echo $objTemplate->strTemplate;
+
+return true;
+
 
 
 
@@ -142,6 +175,7 @@ if($_POST["strMode"] == "regist"){
 
 return true;
 
+
 // エラー画面への遷移
 function MoveToErrorPage($strMessage){
 	
@@ -164,7 +198,6 @@ function MoveToErrorPage($strMessage){
 
 	exit;
 }
-
 */
 
 ?>

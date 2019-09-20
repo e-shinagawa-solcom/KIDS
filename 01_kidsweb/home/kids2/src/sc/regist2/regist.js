@@ -12,8 +12,8 @@ function SearchReceiveDetail(search_condition) {
         type: 'POST',
         url: 'index.php',
         data: {
-            strSessionID: $('input[name="strSessionID"]').val(),
             strMode : "search-detail",      //サーバーサイドの動作モード
+            strSessionID: $('input[name="strSessionID"]').val(),
             condition: search_condition,
         },
         async: true,
@@ -290,7 +290,7 @@ jQuery(function($){
           if(data[x] == undefined || data[x] == null) {
             continue;
           }
-          var _val = data[x].replace(/'/g, '\'');
+          var _val = data[x].replace(/'/g, "\'");
           html += "<input type='hidden' name='" + x + "' value='" + _val + "' >";
         }
         html += '</form>';
@@ -386,8 +386,66 @@ jQuery(function($){
 
 
     $('#PreviewBt').on('click', function(){
-        var url = "/sc/regist2/preview.php" + "?strSessionID=" + $('input[name="strSessionID"]').val();
-        post_open(url,"","previewWin");
+
+        
+        var tempdata = {
+            data1: '日本語データ１',
+            data2: '日本語データ２',
+            data3: 'value3'
+        };
+        
+        var target = "previewWin";
+        var features = "width=800,height=800,top=10,left=10,status=yes,scrollbars=yes,directories=no,menubar=yes,resizable=yes,location=no,toolbar=no";
+        // 先に空のウィンドウを開いておく
+        var emptyWin = window.open('', target, features);
+
+        var data = {
+            headerData: tempdata,
+            strSessionID:         $('input[name="strSessionID"]').val(),
+            lngOrderNo:           $('input[name="lngOrderNo"]').val(),
+            strMode:              $('input[name="strMode"]').val(),
+            lngRevisionNo:        $('input[name="lngRevisionNo"]').val(),
+            lngPayConditionCode:  $('select[name="optPayCondition"]').children('option:selected').val(),
+            dtmExpirationDate:    $('input[name="dtmExpirationDate"]').val(),
+            lngLocationCode:      $('input[name="lngLocationCode"]').val(),
+            strNote:              $('input[name="strNote"]').text(),
+            aryDetail:            getUpdateDetail(),
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: 'preview.php',
+            data: data,
+            async: true,
+        }).done(function(data){
+            console.log("done");
+            console.log(data);
+            
+            var url = "/sc/regist2/preview.php" + "?strSessionID=" + $('input[name="strSessionID"]').val();
+            var previewWin = window.open('' , target , features );
+            previewWin.document.write(data);
+            previewWin.document.close();
+            
+            //再読み込みなしでアドレスバーのURLのみ変更
+            previewWin.history.pushState(null,null,url);
+            
+        }).fail(function(error){
+            console.log("fail");
+            console.log(error);
+            emptyWin.close();
+        });
+
+            
+           /*
+        var data = {
+            strSessionID: $('input[name="strSessionID"]').val(),
+            param1: 'test'
+        };   
+        */
+
+        //var features = "width=800,height=800,top=10,left=10,status=yes,scrollbars=yes,directories=no,menubar=yes,resizable=yes,location=no,toolbar=no";
+        //post_open(url, data, "previewWin", features);
+
         //if(!validationCheck2()){
         //    return false;
         //}
