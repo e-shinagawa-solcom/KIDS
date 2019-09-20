@@ -35,8 +35,8 @@ define ( "EXECUTE_HOST_NAME_KWG_WEBv2",	"192.168.10.228" );
 define ( "EXECUTE_HOST_NAME_KWG_WEBv1",	"192.168.10.235" );
 define ( "EXECUTE_HOST_NAME_KWG_BACK",	"192.168.10.230" );
 // define ( "EXECUTE_HOST_NAME_KWG_DB",	"192.168.1.82" );
-// define ( "EXECUTE_HOST_NAME_KWG_DB",	"192.168.1.113" );
-define ( "EXECUTE_HOST_NAME_KWG_DB",	"127.0.0.1" ); // ローカル確認用
+define ( "EXECUTE_HOST_NAME_KWG_DB",	"192.168.1.113" );
+// define ( "EXECUTE_HOST_NAME_KWG_DB",	"127.0.0.1" ); // ローカル確認用
 
 // 実行サーバー名称の取得
 $strExcuteHttpHostName = $_SERVER["HTTP_HOST"];
@@ -57,8 +57,8 @@ switch( $strExcuteHttpHostName )
 		define ( "DB_LOGIN_PASSWORD", "kids" );
 		define ( "DB_NAME", "kidscore2" );
 		// エラーメール送信先
-		//define ( "ERROR_MAIL_TO", "devs.biz@gmail.com" );
-		define ( "ERROR_MAIL_TO", "miyata@testdomain.local" );
+		define ( "ERROR_MAIL_TO", "devs.biz@gmail.com" );
+		//define ( "ERROR_MAIL_TO", "miyata@testdomain.local" );
 		define ( "SEND_MAIL_FLAG", true);
 		// 各ルートパス
 		define ( "PATH_HOME",	"/home/kids2/" );
@@ -439,8 +439,8 @@ define ( "DEF_FATAL",		3 );           //  3 システムエラーレベル
 define ( "DEF_ANNOUNCE",	99 );          //  99 システムアナウンス
 
 // デバッグモード
-//define ( "DEF_DEBUG_MODE",	0 );         //  本稼動モード　　エラー画面表示
-define ( "DEF_DEBUG_MODE",	1 );      //  デバッグモード　エラー画面非表示
+define ( "DEF_DEBUG_MODE",	0 );         //  本稼動モード　　エラー画面表示
+//define ( "DEF_DEBUG_MODE",	1 );      //  デバッグモード　エラー画面非表示
 
 // 発注登録
 define ("DEF_M_WORKFLOW_FUNCTIONCODE",	1);		// 機能コード
