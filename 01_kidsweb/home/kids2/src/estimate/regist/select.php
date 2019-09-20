@@ -218,7 +218,7 @@ if ($file["exc_tmp_name"]) {
 									'temporaryRate' => $acquiredRate ? $acquiredRate : '-',
 									'sheetRate' => $conversionRate ? $conversionRate : '-',
 								);
-							} else if ($messageOfConversionRate === DEF_MESSAGE_CODE_RATE_DIFFER) {
+							} else if ($messageOfConversionRate === DEF_MESSAGE_CODE_RATE_UNCAUGHT_WARNING) {
 								$notFound[] = array(
 									'delivery' => $delivery,
 									'monetary' => $monetaryUnit,

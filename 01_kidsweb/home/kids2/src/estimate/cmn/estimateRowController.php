@@ -302,7 +302,7 @@ abstract class estimateRowController {
         // 通貨レートのチェックを行う
         $this->validateConversionRate();
 
-        if ($this->messageCode['conversionRate'] === DEF_MESSAGE_CODE_RATE_DIFFER) {
+        if ($this->messageCode['conversionRate'] === DEF_MESSAGE_CODE_RATE_UNCAUGHT_WARNING) {
             // 通貨レートが取得できなかった場合
             return true;
         }
@@ -699,7 +699,7 @@ abstract class estimateRowController {
             }
         } else {
             // DBから通貨レートが取得できなかった場合
-            $this->messageCode['conversionRate'] = DEF_MESSAGE_CODE_RATE_DIFFER;
+            $this->messageCode['conversionRate'] = DEF_MESSAGE_CODE_RATE_UNCAUGHT_WARNING;
         }
         return true;
     }
