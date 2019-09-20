@@ -187,10 +187,22 @@ textarea {
 	background-color : #f1f1f1 ;
 }
 
-.Slt5 /* 6byte */
+.Slt5
 {
 	font-family  : monospace ;
 	width        : 58px ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #7f7f7f #dfdfdf #dfdfdf #7f7f7f ;
+	margin       : 0 4px 0 0 ;
+	color        : #666666 ;
+	background   : #ffffff ;
+}
+
+.Slt6
+{
+	font-family  : monospace ;
+	width        : 68px ;
 	border-width : 1px ;
 	border-style : solid ;
 	border-color : #7f7f7f #dfdfdf #dfdfdf #7f7f7f ;

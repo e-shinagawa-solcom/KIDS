@@ -2,11 +2,48 @@
 // regist.js
 //
 
-// 明細検索
+// 検索条件入力画面で入力された値の設定（検索条件入力画面より呼び出される）
+function SetSearchConditionWindowValue(search_condition) {
+    // 顧客
+    $('input[name="lngCustomerCode"]').val(search_condition.lngCustomerCode);
+    $('input[name="strCustomerName"]').val(search_condition.strCustomerName);
+
+    // 顧客に紐づく国コードによって消費税区分のプルダウンを変更する
+    if(search_condition.lngCustomerCode != ""){
+        $.ajax({
+            type: 'POST',
+            url: 'index.php',
+            data: {
+                strMode : "get-lngcountrycode",
+                strSessionID: $('input[name="strSessionID"]').val(),
+                strcompanydisplaycode: search_condition.lngCustomerCode,
+            },
+            async: true,
+        }).done(function(data){
+            console.log("done:get-lngcountrycode");
+            if (data == "81"){
+                // 81：空白を選択（他の項目も選択可能）
+                $("select[name='lngTaxClassCode'] option:not(:selected)").prop('disabled', false);
+                $("select[name='lngTaxClassCode']").val("");
+    
+            }else{
+                // 81以外：「非課税」固定
+                $("select[name='lngTaxClassCode']").val("1");
+                $("select[name='lngTaxClassCode'] option:not(:selected)").prop('disabled', true);
+            }
+        }).fail(function(error){
+            console.log("fail:get-lngcountrycode");
+            console.log(error);
+        });
+    }else{
+        // 顧客コードが空なら固定解除
+        $("select[name='lngTaxClassCode'] option:not(:selected)").prop('disabled', false);
+    }
+}
+
+// 明細検索（検索条件入力画面より呼び出される）
 function SearchReceiveDetail(search_condition) {
-    
-    console.log(search_condition);
-    
+ 
     // 部分書き換えのためajaxでPOST
     $.ajax({
         type: 'POST',
@@ -18,13 +55,12 @@ function SearchReceiveDetail(search_condition) {
         },
         async: true,
     }).done(function(data){
-        console.log(data);
-
+        console.log("done:search-detail");
         // 検索結果をテーブルにセット
         $('#DetailTableBody').html(data);
 
     }).fail(function(error){
-        console.log("fail");
+        console.log("fail:search-detail");
         console.log(error);
     });
     

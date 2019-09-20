@@ -184,11 +184,11 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutPunit(); initLayo
 <span id="MSWBtDrafter" class="regist-line">
 	<img class="msw-button button" invokeMSWName="msw-user" inputCodeMSWName="lngInsertUserCode" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
 </span>
-<!--<span id="MSWBt04" onclick="fncGetObjectName( window.MLwin , window.HSO.lngLocationCode , window.HSO.strLocationName );DisplayerM04( '' , document.all.Mdata04 , window.MLwin.document.all.lngLocationCode  );ExchangeM04( 0 , window.self );fncFocusType( window.MLwin , 'locationTop' );return false;"></span>-->
 
 <span id="SegACustomer">∏‹µ“</span>
 <span id="VarsACustomer">
-	<input style="ime-mode:disabled;" class="TxtStyle03L" type="text" name="lngLocationCode" value="_%lngLocationCode%_">&nbsp;<input style="ime-mode:disabled;" class="disTxt32L" type="text" name="strLocationName" value="_%strLocationName%_" contenteditable="false">
+	<input style="ime-mode:disabled;" class="TxtStyle03L" type="text" name="lngCustomerCode" value="_%llngCustomerCode%_" readonly>
+	<input style="ime-mode:disabled;" class="disTxt32L" type="text" name="strCustomerName" value="_%strCustomerName%_" contenteditable="false" readonly>
 </span>
 
 <span id="SegACustomerResponder">∏‹µ“¬¶√¥≈ˆº‘</span>
@@ -228,16 +228,14 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutPunit(); initLayo
 <span id="SegATaxClass">æ√»Ò¿«∂Ë ¨</span>
 <span id="VarsATaxClass">
 	<select name="lngTaxClassCode" class="Slt13">
-		<OPTION value=1>1:»Û≤›¿«</OPTION>
-		<OPTION value=2>2:≤›¿«</OPTION> 
+		_%optTaxClass%_
 	</select>
 </span>
 
 <span id="SegATaxRate">æ√»Ò¿«Œ®</span>
 <span id="VarsATaxRate">
-	<select name="lngTaxClassRate" class="Slt5">
-		<OPTION value=1>10</OPTION>
-		<OPTION value=2>8</OPTION> 
+	<select name="lngTaxClassRate" class="Slt6">
+		_%optTaxRate%_
 	</select>
 	&percnt;
 </span>
@@ -258,7 +256,7 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutPunit(); initLayo
 
 <span id="SegAPaymentMethod">ªŸ ß ˝À°</span>
 <span id="VarsAPaymentMethod">
-	<select name="lngPaymentMethodCode" class="Slt5">
+	<select name="lngPaymentMethodCode" class="Slt6">
 		<OPTION value=0>T/T</OPTION>
 		<OPTION value=1>¡Íª¶</OPTION>
 	</select>
@@ -266,7 +264,7 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutPunit(); initLayo
 
 <span id="SegATotalAmount">πÁ∑◊∂‚≥€</span>
 <span id="VarsATotalAmount">
-	<input style="ime-mode:disabled;" class="disTxt20R" type="text" name="strTaxAmount" value="_%strTaxAmount%_" >
+	<input style="ime-mode:disabled;" class="disTxt20R" type="text" name="strTaxAmount" value="_%strTotalAmount%_" >
 </span>
 
 

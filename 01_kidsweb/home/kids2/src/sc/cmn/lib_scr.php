@@ -20,6 +20,45 @@
 */
 // ----------------------------------------------------------------------------
 
+function fncGetTaxRatePullDown($dtmDeliveryDate, $objDB)
+{
+    // DBからデータ取得
+    $strQuery = "SELECT lngtaxcode, curtax "
+        . " FROM m_tax "
+        . " WHERE dtmapplystartdate <= '$dtmDeliveryDate' "
+        . "   AND dtmapplyenddate >= '$dtmDeliveryDate' "
+        . " ORDER BY lngpriority ";
+    list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
+    if ( $lngResultNum ) {
+        for ( $i = 0; $i < $lngResultNum; $i++ ) {
+            $aryResult[] = $objDB->fetchArray( $lngResultID, $i );
+        }
+    } else {
+        fncOutputError ( 9501, DEF_FATAL, "消費税情報の取得に失敗", TRUE, "", $objDB );
+    }
+    $objDB->freeResult( $lngResultID );
+
+    // 選択項目作成
+    $strHtml = "";
+    for ( $i = 0; $i < count($aryResult); $i++)
+	{
+        $optionValue =  $aryResult[$i]["lngtaxcode"];
+        $displayText =  $aryResult[$i]["curtax"];
+        
+        if ($i == 0)
+        {
+            // 1件目をデフォルトで選択
+            $strHtml .= "<OPTION VALUE=\"$optionValue\" SELECTED>$displayText</OPTION>\n";
+        }
+        else
+        {
+            $strHtml .= "<OPTION VALUE=\"$optionValue\">$displayText</OPTION>\n";
+        }
+    }
+
+    return $strHtml;    
+}
+
 function fncGetReceiveDetail($aryCondition, $objDB)
 {
     // -------------------
@@ -155,6 +194,205 @@ function fncGetReceiveDetailHtml($aryReceiveDetail){
     }
     return $strHtml;
 }
+
+
+function fncRegistSales ($aryNewData, $strProcMode, $objDB, $objAuth) {
+
+    // 同じ「仕入科目」「仕入部品」の場合に同じ単価があるか
+    // m_productPriceに同じ値があるか？在った場合は配列に行番号を記憶！！
+    /*
+	for( $i = 0; $i < count( $aryNewData["aryPoDitail"] ); $i++ )
+	{
+		$aryNewData["lngMonetaryUnitCode"] = ( $aryNewData["lngMonetaryUnitCode"] == "\\" ) ? "\\\\" : $aryNewData["lngMonetaryUnitCode"];
+
+		$lngmonetaryunitcode = "";
+		$lngmonetaryunitcode = fncGetMasterValue("m_monetaryunit", "strmonetaryunitsign", "lngmonetaryunitcode", $aryNewData["lngMonetaryUnitCode"] . ":str", '', $objDB );
+		$strProductCode = "";
+		$strProductCode = fncGetMasterValue( "m_product", "strproductcode", "lngproductno", $aryNewData["aryPoDitail"][$i]["strProductCode"]. ":str", '', $objDB );
+
+		$arySelect = array();
+		$arySelect[] = "SELECT ";
+		$arySelect[] = "lngproductpricecode ";
+		$arySelect[] = "FROM ";
+		$arySelect[] = "m_productprice ";
+		$arySelect[] = "WHERE ";
+		$arySelect[] = "lngproductno = $strProductCode AND ";
+		$arySelect[] = "lngsalesclasscode = ".$aryNewData["aryPoDitail"][$i]["lngSalesClassCode"]." AND ";
+		$arySelect[] = "lngmonetaryunitcode = $lngmonetaryunitcode AND ";
+		$arySelect[] = "curproductprice = ".$aryNewData["aryPoDitail"][$i]["curProductPrice"];
+
+		$strSelect = implode("\n", $arySelect );
+
+		if ( $lngResultID = $objDB->execute( $strSelect ) )
+		{
+			// 同一製品価格が見つからない場合、もしくは単位計上が製品単位計上の場合のみ行番号を記憶する
+			if( pg_num_rows( $lngResultID ) == 0 and $aryNewData["aryPoDitail"][$i]["lngConversionClassCode"] == "gs" )
+			{
+				$aryM_ProductPrice[] = $i;		//行番号を記憶
+			}
+		}
+		$objDB->freeResult( $lngResultID );
+
+    }
+    //↑成果物：$aryM_ProductPrice
+    */
+
+    //-------------------------------------------------------------------------
+	// m_Sales のシーケンス番号を取得
+	//-------------------------------------------------------------------------
+    $sequence_m_sales = fncGetSequence( 'm_sales.lngSalesNo', $objDB );
+    
+    // //-------------------------------------------------------------------------
+	// // 売上に紐づく受注データの取得
+	// //-------------------------------------------------------------------------
+	// // 受注番号
+	// $strReceiveCode = $aryNewData["strReceiveCode"];
+
+	// if( $strReceiveCode != "null" )
+	// {
+	// 	$aryQuery = array();
+	// 	$aryQuery[] = "SELECT "; 
+	// 	$aryQuery[] = "r.lngReceiveNo, ";										// 1:受注番号
+	// 	$aryQuery[] = "r.lngReceiveStatusCode as lngSalesStatusCode ";			// 9:受注状態コード
+	// 	$aryQuery[] = "FROM m_Receive r ";
+	// 	$aryQuery[] = "WHERE r.strReceiveCode = '". $strReceiveCode . "' ";
+	// 	$aryQuery[] = "AND r.bytInvalidFlag = FALSE ";
+	// 	$aryQuery[] = "AND r.lngRevisionNo >= 0 ";
+	// 	$aryQuery[] = "AND r.lngRevisionNo = ( ";
+	// 	$aryQuery[] = "SELECT MAX( r2.lngRevisionNo ) FROM m_Receive r2 WHERE r2.strReceiveCode = r.strReceiveCode  ";
+	// 	$aryQuery[] = "AND r2.strReviseCode = ( ";
+	// 	$aryQuery[] = "SELECT MAX( r3.strReviseCode ) FROM m_Receive r3 WHERE r3.strReceiveCode = r2.strReceiveCode ) ) ";
+	// 	$aryQuery[] = "AND 0 <= ( ";
+	// 	$aryQuery[] = "SELECT MIN( r4.lngRevisionNo ) FROM m_Receive r4 WHERE r4.bytInvalidFlag = false AND r4.strReceiveCode = r.strReceiveCode ) ";
+
+	// 	$strQuery = "";
+	// 	$strQuery = implode( "\n", $aryQuery );
+
+	// 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
+	// 	if ( $lngResultNum == 1 )
+	// 	{
+	// 		$aryReceiveResult = $objDB->fetchArray( $lngResultID, 0 );
+	// 	}
+	// 	// 指定された発注が存在しない場合
+	// 	else
+	// 	{
+	// 		fncOutputError ( 403, DEF_ERROR, "", TRUE, "sc/regist/index.php?strSessionID=" . $_POST["strSessionID"], $objDB );
+	// 	}
+	// 	$objDB->freeResult( $lngResultID );
+
+	// 	$lngReceiveCode = $aryReceiveResult["lngreceiveno"];
+	// }
+	// else
+	// {
+	// 	$lngReceiveCode = "null";
+    // }
+
+	//-------------------------------------------------------------------------
+	// 売上マスタに登録する値の取得
+	//-------------------------------------------------------------------------
+    // 現在日付
+    $dtmNowDate     = date( 'Y/m/d', time() );  
+    // TODO:顧客コードを取得
+    $lngCustomerCompanyCode = fncGetMasterValue( "m_company", "strcompanydisplaycode", "lngcompanycode", $aryNewData["lngCustomerCode"] . ":str", '', $objDB );
+    // TODO:グループコードを取得
+    $lngInChargeGroupCode = "";
+    // TODO:ユーザーコードを取得
+    $lngInChargeUserCode = "";
+    // TODO:通貨単位コードの取得
+    $lngMonetaryUnitCode = ""; //fncGetMasterValue("m_monetaryunit", "strmonetaryunitsign", "lngmonetaryunitcode", $aryNewData["lngMonetaryUnitCode"] . ":str", '', $objDB );
+    // TODO:通貨レートコードの取得
+    $lngMonetaryRateCode = "";
+    // TODO:換算レートの取得
+    $curConversionRate = "";
+    // 売上状態コードの取得
+    $lngSalesStatusCode = DEF_SALES_ORDER;
+    // TODO:合計金額の取得
+    $curAllTotalPrice = 0;
+	// 備考
+    $strNote = ( $aryNewData["strNote"] != "null" ) ? "'".$aryNewData["strNote"]."'" : "null";
+    // 入力者コード
+    $lngInputUserCode = $objAuth->UserCode;
+
+    if ($strProcMode == "new-record"){
+    // ■ 処理モードが「登録」の場合
+    
+        // リビジョン番号を初期化
+		$lngrevisionno = 0;
+        
+        // 当月の売上番号の取得
+		$strsalsecode = fncGetDateSequence( date( 'Y', strtotime( $dtmNowDate ) ), date( 'm',strtotime( $dtmNowDate ) ), "m_sales.lngSalesNo", $objDB );
+        
+        // TODO:伝票番号の取得
+        $strSlipCode = "";
+
+    } else if ($strProcMode == "modify-record"){
+    // ■ 処理モードが「修正」の場合
+        // TODO:既存リビジョン番号+1で最大値を取得
+        $lngrevisionno = 999;
+
+        // TODO:修正対象レコードに紐づく売上番号の取得
+        $strsalsecode = "";
+    
+        // TODO:伝票番号の取得
+        $strSlipCode = "";
+    }
+
+	//-------------------------------------------------------------------------
+	// 売上マスタ登録処理（m_salesへのINSERT）
+	//-------------------------------------------------------------------------
+	$aryQuery = array();
+	$aryQuery[] = "INSERT INTO m_sales ( ";
+	$aryQuery[] = "lngsalesno, ";											// 1:売上番号
+	$aryQuery[] = "lngrevisionno, ";										// 2:リビジョン番号
+	$aryQuery[] = "strsalescode, ";											// 3:売上コード(yymmxxx 年月連番で構成された7桁の番号)
+	$aryQuery[] = "dtmappropriationdate, ";									// 4:計上日
+	$aryQuery[] = "lngcustomercompanycode, ";								// 5:顧客
+	$aryQuery[] = "lnggroupcode, ";									    	// 6:グループコード
+	$aryQuery[] = "lngusercode, ";										    // 7:ユーザコード
+	$aryQuery[] = "lngsalesstatuscode, ";									// 8:売上状態コード
+	$aryQuery[] = "lngmonetaryunitcode, ";									// 9:通貨単位コード
+	$aryQuery[] = "lngmonetaryratecode, ";									// 10:通貨レートコード
+	$aryQuery[] = "curconversionrate, ";									// 11:換算レート
+	$aryQuery[] = "strslipcode, ";											// 12:納品書NO 
+	$aryQuery[] = "lnginvoiceno, ";											// 13:請求書番号
+	$aryQuery[] = "curtotalprice, ";										// 14:合計金額
+	$aryQuery[] = "strnote, ";												// 15:備考
+	$aryQuery[] = "lnginputusercode, ";										// 16:入力者コード
+	$aryQuery[] = "bytinvalidflag, ";										// 17:無効フラグ
+	$aryQuery[] = "dtminsertdate";											// 18:登録日
+	$aryQuery[] = " ) values ( ";
+	$aryQuery[] = "$sequence_m_sales,";										// 1:売上番号
+	$aryQuery[] = "$lngrevisionno, ";										// 2:リビジョン番号
+	$aryQuery[] = "'$strsalsecode', ";										// 3:売上コード
+	$aryQuery[] = "'".$dtmNowDate."',";										// 4:計上日
+	$aryQuery[] = $lngCustomerCompanyCode.", ";						        // 5:顧客コード
+	$aryQuery[] = $lngInChargeGroupCode.", ";								// 6:グループコード
+	$aryQuery[] = $lngInChargeUserCode.", ";								// 7:ユーザコード
+	$aryQuery[] = $lngSalesStatusCode . ", ";								// 8:売上状態コード
+	$aryQuery[] = "$lngMonetaryUnitCode, ";									// 9:通貨単位コード
+	$aryQuery[] = $lngMonetaryRateCode.", ";					            // 10:通貨レートコード
+	$aryQuery[] = "'".$curConversionRate."', ";				                // 11:換算レート
+    $aryQuery[] = "$strSlipCode, ";											// 12:納品書NO
+    $aryQuery[] = "null, ";													// 13:請求書番号
+	$aryQuery[] = "'".$curAllTotalPrice."', ";								// 14:合計金額
+	$aryQuery[] = "$strNote, ";												// 15:備考
+	$aryQuery[] = "$lngInputUserCode, ";									// 16:入力者コード
+	$aryQuery[] = "false, ";												// 17:無効フラグ
+	$aryQuery[] = "now() ";													// 18:登録日
+	$aryQuery[] = ")";
+
+	$strQuery = "";
+	$strQuery = implode( "\n", $aryQuery );
+
+	if( !$lngResultID = $objDB->execute( $strQuery ) )
+	{
+		fncOutputError ( 9051, DEF_ERROR, "", TRUE, "", $objDB );
+	}
+
+	$objDB->freeResult( $lngResultID );
+}
+
+
 
 
 ?>

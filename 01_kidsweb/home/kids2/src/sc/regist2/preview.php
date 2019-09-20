@@ -112,13 +112,12 @@ echo mb_convert_encoding($output, 'EUC-JP', 'UTF-8');
 // --------------------------------
 //    登録処理
 // --------------------------------
-/*
 if($_POST["strMode"] == "regist"){
 	// トランザクション開始
 	$objDB->transactionBegin();
 
-	// 売上マスタ登録
-	if (!fncRegistSales($lngSalesNo, $objDB, $objAuth))
+	// 売上マスタ、売上明細の登録
+	if (!fncRegistSales())
 	{
 		fncOutputError ( 9051, DEF_FATAL, "売上マスタ登録失敗", TRUE, "", $objDB );
 	}
@@ -198,6 +197,6 @@ function MoveToErrorPage($strMessage){
 
 	exit;
 }
-*/
+
 
 ?>

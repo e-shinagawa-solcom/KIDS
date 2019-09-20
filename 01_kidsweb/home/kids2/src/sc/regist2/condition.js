@@ -53,7 +53,12 @@ jQuery(function($){
             IsIncludingResale: $('input[name="IsIncludingResale"]').prop("checked"),
         };
 
-        // 親画面の詳細検索ファンクションを呼び出す
+        // ------------------------------------------
+        // 親画面のファンクションを呼び出す
+        // ------------------------------------------
+        // 検索条件値設定
+        window.opener.SetSearchConditionWindowValue(search_condition);
+        // 明細検索実行
         window.opener.SearchReceiveDetail(search_condition);
 
         // 子画面を閉じる
