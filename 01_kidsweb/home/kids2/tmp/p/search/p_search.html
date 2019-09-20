@@ -1,70 +1,72 @@
 <config>
-<header1>
-	<link rel="stylesheet" href="/search/cmn/form/css/forms.css">
-	<link rel="stylesheet" href="/search/cmn/form/css/tabs.css">
-	<link rel="stylesheet" href="/search/cmn/navigate/css/navigate.css">
-	<script src="/search/cmn/form/js/tab-function.js" defer></script>
-	<script src="/search/cmn/form/js/util-selectbox.js" defer></script>
-	<script src="/search/cmn/js/date.js" defer></script>
-    <!-- チェックボックスの切り替え処理 -->
-    <script src="/search/cmn/search/js/toggleCheckbox.js" defer></script>
-	<!-- msw 表示 -->
-	<script src="/search/cmn/msw/cmn/js/msw.js" defer></script>
-    <!-- COOKIE関連の処理(検索画面) -->
-    <script src="/search/cmn/search/js/cookie-functions.js" defer></script>
-</header1>
+    <header1>
+        <link rel="stylesheet" href="/search/cmn/form/css/forms.css">
+        <link rel="stylesheet" href="/search/cmn/form/css/tabs.css">
+        <link rel="stylesheet" href="/search/cmn/navigate/css/navigate.css">
+        <script src="/search/cmn/form/js/tab-function.js" defer></script>
+        <script src="/search/cmn/form/js/util-selectbox.js" defer></script>
+        <script src="/search/cmn/js/date.js" defer></script>
+        <!-- チェックボックスの切り替え処理 -->
+        <script src="/search/cmn/search/js/toggleCheckbox.js" defer></script>
+        <!-- msw 表示 -->
+        <script src="/search/cmn/msw/cmn/js/msw.js" defer></script>
+        <!-- COOKIE関連の処理(検索画面) -->
+        <script src="/search/cmn/search/js/cookie-functions.js" defer></script>
+    </header1>
 
-<header2>
-</header2>
+    <header2>
+    </header2>
 
-<header3>
-	<!-- datepickerの要素指定 -->
-	<script src="/search/cmn/js/datepicker.js" defer></script>
-	<!-- msw汎用スタイル -->
-	<link rel="stylesheet" href="/search/cmn/css/msw.css">
-    <!-- フォームボタン css -->
-    <link rel="stylesheet" href="/search/cmn/css/form-buttons.css">
-    <!-- フォーム ボタン -->
-	<script src="/p/search/js/form-buttons.js" defer></script>
-    <!-- フォームバリデーション -->
-    <script src="/p/search/js/validate-form.js" defer></script>
-    <!-- チェックボックスの切り替え処理 -->
-    <script src="/p/search/js/toggleCheckbox.js" defer></script>
-    <!-- マスタ検索呼び出し -->
-	<script src="/p/cmn/js/invoke-master-search.js" defer></script>
-    <!-- COOKIE 表示チェックボックス 保存/復元 -->
-    <script src="/search/cmn/js/cookie-display-items.js" defer></script>
-    <!-- キーバインド -->
-	<script src="/search/cmn/js/key-bind.js" defer></script>
-	<!-- キーバインド -->
-	<script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
-</header3>
+    <header3>
+        <!-- datepickerの要素指定 -->
+        <script src="/search/cmn/js/datepicker.js" defer></script>
+        <!-- msw汎用スタイル -->
+        <link rel="stylesheet" href="/search/cmn/css/msw.css">
+        <!-- フォームボタン css -->
+        <link rel="stylesheet" href="/search/cmn/css/form-buttons.css">
+        <!-- フォーム ボタン -->
+        <script src="/p/search/js/form-buttons.js" defer></script>
+        <!-- フォームバリデーション -->
+        <script src="/p/search/js/validate-form.js" defer></script>
+        <!-- チェックボックスの切り替え処理 -->
+        <script src="/p/search/js/toggleCheckbox.js" defer></script>
+        <!-- マスタ検索呼び出し -->
+        <script src="/p/cmn/js/invoke-master-search.js" defer></script>
+        <!-- マスタ検索呼び出し -->
+        <script src="/p/cmn/js/msw.js" defer></script>
+        <!-- COOKIE 表示チェックボックス 保存/復元 -->
+        <script src="/search/cmn/js/cookie-display-items.js" defer></script>
+        <!-- キーバインド -->
+        <script src="/search/cmn/js/key-bind.js" defer></script>
+        <!-- キーバインド -->
+        <script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
+    </header3>
 
-<bodyonload>
-Loading();
-</bodyonload>
+    <bodyonload>
+        Loading();
+    </bodyonload>
 </config>
 
 <!-- 左サイドバー ナビゲート -->
 <div class="navigation-loadpoint">
-	<script>
-		$('.navigation-loadpoint').load('/search/cmn/navigate/p_navi.html');
-	</script>
+    <script>
+        $('.navigation-loadpoint').load('/search/cmn/navigate/p_navi.html');
+    </script>
 </div>
 
 <!-- 入力フォーム -->
 <div class="form-box--notabs-for-search">
-	<!-- フォームヘッダ -->
-	<div class="form-box__header">
-		<p class="form-box__header__title">商品検索</p>
+    <!-- フォームヘッダ -->
+    <div class="form-box__header">
+        <p class="form-box__header__title">商品検索</p>
         <span class="form-box__header__buttons">
             <img class="clear button" src="/img/type01/cmn/seg/sch_clear_off_ja_bt.gif">
             <img class="search button" src="/img/type01/cmn/seg/sch_search_off_ja_bt.gif">
         </span>
-	</div>
-	<!-- フォームコンテンツ -->
-	<div class="form-box__contents--with-scroll">
-		<form name="SearchMoldHistory" method="post">
+    </div>
+    <!-- フォームコンテンツ -->
+    <div class="form-box__contents--with-scroll">
+        <form name="SearchMoldHistory" method="post">
             <input type="submit">
             <div class="regist-line">
                 <img class="toggle-search-header button" src="/img/type01/cmn/seg/off_bt.gif" alt="toggle search">
@@ -107,8 +109,9 @@ Loading();
                 </span>
                 <span class="regist-label">
                     <span class="regist-label__text">作成日時</span>
-                    FROM <input class="TxtStyle05L is-from-date" name="From_dtmInsertDate" type="text" tabindex="" maxlength="10" alt="dtmInsertDate">
-                    TO <input class="TxtStyle05L" name="To_dtmInsertDate" type="text" tabindex="" maxlength="10">
+                    FROM
+                    <input class="TxtStyle05L is-from-date" name="From_dtmInsertDate" type="text" tabindex="" maxlength="10" alt="dtmInsertDate"> TO
+                    <input class="TxtStyle05L" name="To_dtmInsertDate" type="text" tabindex="" maxlength="10">
                 </span>
             </div>
             <div class="regist-line">
@@ -120,7 +123,7 @@ Loading();
                     <span class="regist-label__text">企画進行状況</span>
                     <select name="lngGoodsPlanProgressCode" tabindex="" class="Slt15">
                         _%lngGoodsPlanProgressCode%_
-                        </select>
+                    </select>
                 </span>
             </div>
             <div class="regist-line">
@@ -130,8 +133,9 @@ Loading();
                 </span>
                 <span class="regist-label">
                     <span class="regist-label__text">改訂日時</span>
-                    FROM <input class="TxtStyle05L is-from-date" name="From_dtmUpdateDate" type="text" tabindex="" maxlength="10" alt="dtmUpdateDate">
-                    TO <input class="TxtStyle05L" name="To_dtmUpdateDate" type="text" tabindex="" maxlength="10">
+                    FROM
+                    <input class="TxtStyle05L is-from-date" name="From_dtmUpdateDate" type="text" tabindex="" maxlength="10" alt="dtmUpdateDate"> TO
+                    <input class="TxtStyle05L" name="To_dtmUpdateDate" type="text" tabindex="" maxlength="10">
                 </span>
             </div>
             <div class="regist-line">
@@ -146,31 +150,33 @@ Loading();
                     <input name="IsSearch_strProductCode" class="is-search" type="checkbox">
                     <input name="IsDisplay_strProductCode" class="is-display" type="checkbox">
                 </span>
-				<span class="regist-label">
-					<span class="regist-label__text">製品コード</span>
-					<input class="Txt46L" name="strProductCode"  type="text" value="" tabindex="">
-				</span>
-			</div>            
+                <span class="regist-label">
+                    <span class="regist-label__text">製品コード</span>
+                    <input class="Txt46L" name="strProductCode" type="text" value="" tabindex="">
+                </span>
+            </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
                     <input name="IsSearch_strProductName" class="is-search" type="checkbox">
                     <input name="IsDisplay_strProductName" class="is-display" type="checkbox">
                 </span>
-				<span class="regist-label">
-					<span class="regist-label__text">製品名称（日本語）</span>
-                    <input class="Txt46L" name="strProductName"  type="text" value="" maxlength="80" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this );" tabindex="">
-				</span>
-			</div>
+                <span class="regist-label">
+                    <span class="regist-label__text">製品名称（日本語）</span>
+                    <input class="Txt46L" name="strProductName" type="text" value="" maxlength="80" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this );"
+                        tabindex="">
+                </span>
+            </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
                     <input name="IsSearch_strProductEnglishName" class="is-search" type="checkbox">
                     <input name="IsDisplay_strProductEnglishName" class="is-display" type="checkbox">
                 </span>
-				<span class="regist-label">
-					<span class="regist-label__text">製品名称（英語）</span>
-                    <input class="Txt46L" name="strProductEnglishName"  type="text" value="" maxlength="80" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this );" tabindex="">
-				</span>
-			</div>
+                <span class="regist-label">
+                    <span class="regist-label__text">製品名称（英語）</span>
+                    <input class="Txt46L" name="strProductEnglishName" type="text" value="" maxlength="80" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this );"
+                        tabindex="">
+                </span>
+            </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
                     <input name="IsSearch_lngInputUserCode" class="is-search" type="checkbox">
@@ -178,9 +184,9 @@ Loading();
                 </span>
                 <span class="regist-label">
                     <span class="regist-label__text">入力者</span>
-                    <input class="TxtStyle05L" name="lngInputUserCode"  type="text" alt="InputUser">
-                    <input class="disTxt46L" name="strInputUserName"  type="text" readonly>
-                    <img class="msw-button button" invokeMSWName="msw-user" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                    <input class="TxtStyle05L" name="lngInputUserCode" type="text" alt="InputUser">
+                    <input class="disTxt46L" name="strInputUserName" type="text" readonly>
+                    <img class="msw-button button" invokeMSWName="msw-user" msw-before="pickupGroupCodeToNull" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
                 </span>
             </div>
             <div class="regist-line">
@@ -204,7 +210,7 @@ Loading();
                     <span class="regist-label__text">担当者</span>
                     <input class="TxtStyle05L" name="lngInChargeUserCode" type="text" alt="InChargeUser">
                     <input class="disTxt46L" name="strInChargeUserName" type="text" readonly>
-                    <img class="msw-button button" invokeMSWName="msw-user" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                    <img class="msw-button button" invokeMSWName="msw-user" msw-before="pickupGroupCode" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
                 </span>
             </div>
             <div class="regist-line">
@@ -225,7 +231,7 @@ Loading();
                     <input name="IsDisplay_lngcategorycode" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
-                    <span class="regist-label__text">カテゴリ</span>                    
+                    <span class="regist-label__text">カテゴリ</span>
                     <select name="lngInChargeGroupCodeSelect" class="Slt15">
                         _%lngInChargeGroupCodeSelect%_
                     </select>
@@ -251,8 +257,8 @@ Loading();
                 </span>
                 <span class="regist-label">
                     <span class="regist-label__text">商品名称</span>
-                    <input class="Txt46L" name="strGoodsName"  type="text" value="" maxlength="80" tabindex="">
-				</span>
+                    <input class="Txt46L" name="strGoodsName" type="text" value="" maxlength="80" tabindex="">
+                </span>
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
@@ -263,7 +269,7 @@ Loading();
                     <span class="regist-label__text">顧客</span>
                     <input class="TxtStyle05L" name="lngCustomerCompanyCode" type="text" alt="CustomerCompany">
                     <input class="disTxt46L" name="strCustomerCompanyName" type="text" readonly>
-                    <img class="msw-button button" invokeMSWName="msw-customer" msw-before="pickupGroupCode" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                    <img class="msw-button button" invokeMSWName="msw-customer" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
                 </span>
             </div>
             <div class="regist-line">
@@ -384,8 +390,9 @@ Loading();
                 </span>
                 <span class="regist-label">
                     <span class="regist-label__text">納期</span>
-                    FROM <input class="TxtStyle05L is-from-date" name="From_dtmDeliveryLimitDate" type="text" tabindex="" maxlength="10" alt="dtmDeliveryLimitDate">
-                    TO <input class="TxtStyle05L" name="To_dtmDeliveryLimitDate" type="text" tabindex="" maxlength="10">
+                    FROM
+                    <input class="TxtStyle05L is-from-date" name="From_dtmDeliveryLimitDate" type="text" tabindex="" maxlength="10" alt="dtmDeliveryLimitDate"> TO
+                    <input class="TxtStyle05L" name="To_dtmDeliveryLimitDate" type="text" tabindex="" maxlength="10">
                 </span>
             </div>
             <div class="regist-line">
@@ -430,7 +437,7 @@ Loading();
                     <input name="IsDisplay_lngCertificateClassCode" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
-                    <span class="regist-label__text">証紙</span>                      
+                    <span class="regist-label__text">証紙</span>
                     <select name="lngCertificateClassCode" class="Slt13">
                         _%lngcertificateclasscode%_
                     </select>
@@ -445,7 +452,7 @@ Loading();
                     <span class="regist-label__text">版権元</span>
                     <select name="lngCopyrightCode" class="Slt20">
                         _%lngCopyrightCode%_
-					</select>
+                    </select>
                 </span>
             </div>
             <div class="regist-line">
@@ -502,14 +509,20 @@ Loading();
                     <span class="regist-label--text-only">仕様詳細</span>
                 </span>
             </div>
-		</form>
-	</div>
+        </form>
+    </div>
     <div class="msw-loadpoints">
-		<!-- MSW 担当部署マスタ検索 -->
-		<iframe class="msw-group" src="/search/cmn/msw/group/mswgroup.html" frameborder="0">
-		</iframe>
-		<!-- MSW 担当者マスタ検索 -->
-		<iframe class="msw-user" src="/search/cmn/msw/user/mswuser.html" frameborder="0">
-		</iframe>
-	</div>
+        <!-- MSW 顧客マスタ検索 -->
+        <iframe class="msw-customer" src="/search/cmn/msw/customer/mswcustomer.html" frameborder="0">
+        </iframe>
+        <!-- MSW 工場マスタ検索 -->
+        <iframe class="msw-factory" src="/mold/cmn/msw/factory/mswfactory.html" frameborder="0">
+        </iframe>
+        <!-- MSW 担当部署マスタ検索 -->
+        <iframe class="msw-group" src="/search/cmn/msw/group/mswgroup.html" frameborder="0">
+        </iframe>
+        <!-- MSW 担当者マスタ検索 -->
+        <iframe class="msw-user" src="/search/cmn/msw/user/mswuser.html" frameborder="0">
+        </iframe>
+    </div>
 </div>

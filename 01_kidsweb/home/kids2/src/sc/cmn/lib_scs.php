@@ -138,8 +138,6 @@ function fncGetSalesDetailNoToInfoSQL ( $lngSalesNo )
 	$aryQuery[] = ", mu.struserdisplayname as strinchargeuserName";
 	// ∏‹µ“… »÷
 	$aryQuery[] = ", p.strGoodsCode as strGoodsCode";
-	// «º¥¸
-	$aryQuery[] = ", to_char( sd.dtmDeliveryDate, 'YYYY/MM/DD' ) as dtmDeliveryDate";
 	// √±≤¡
 	$aryQuery[] = ", To_char( sd.curProductPrice, '9,999,999,990.9999' )  as curProductPrice";
 	// √±∞Ã

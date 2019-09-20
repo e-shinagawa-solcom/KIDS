@@ -551,14 +551,15 @@ define ( "DEF_AREA_OTHER_COST_ORDER",  5);  // その他費用
 define ( "DEF_MONETARY_RATE_CODE_TTM",           1); // TTM
 define ( "DEF_MONETARY_RATE_CODE_COMPANY_LOCAL", 2); // 社内
 
-// // メッセージコード　※メッセージ見直しの為保留
-// define ( "DEF_MESSAGE_CODE_REQUIRED_ERROR",         9001);
-// define ( "DEF_MESSAGE_CODE_FORMAT_ERROR",           9201);
-// define ( "DEF_MESSAGE_CODE_MASTER_CHECK_ERROR",     9202);
-// define ( "DEF_MESSAGE_CODE_RATE_UNCAUGHT_WARNING",  9203);
-// define ( "DEF_MESSAGE_CODE_SUBTOTAL_CALC_ERROR",    9204);
-// define ( "DEF_MESSAGE_CODE_SUBTOTAL_CALC_DIFFER",   9205);
-// define ( "DEF_MESSAGE_CODE_RATE_DIFFER",            9206);
+// // メッセージコード
+define ( "DEF_MESSAGE_CODE_RATE_UNCAUGHT_WARNING",    9201); // 通貨レート取得不可
+define ( "DEF_MESSAGE_CODE_RATE_DIFFER",              9202); // 通貨レート差異
+define ( "DEF_MESSAGE_CODE_NOT_ENTRY_ERROR",          9203); // 未入力エラー
+define ( "DEF_MESSAGE_CODE_FORMAT_ERROR",             9204); // 形式エラー
+define ( "DEF_MESSAGE_CODE_MASTER_CHECK_ERROR",       9205); // マスターチェックエラー
+define ( "DEF_MESSAGE_CODE_PRODUCT_CODE_ERROR",       9206); // 製品コードチェックエラー
+define ( "DEF_MESSAGE_CODE_FILE_UPLOAD_ERROR",        9207); // ファイルアップロードエラー
+define ( "DEF_MESSAGE_CODE_VALID_SHEET_ABSENT_ERROR", 9208); // 有効シート非存在エラー
 
 // 仕入区分マスタコード
 define ("DEF_STOCK_CLASS_CODE_PARTS",      1); // 材料費
@@ -605,5 +606,12 @@ define ( "DEF_COMPANY_CODE_OTHERS", 0); // その他
 
 // 表示用会社コード
 define ( "DEF_DISPLAY_COMPANY_CODE_OTHERS", '0000'); // その他
+
+// グループ属性コード
+define ( "DEF_GROUP_ATTRIBUTE_CODE_SALES_GROUP",              1);  // 営業部門
+define ( "DEF_GROUP_ATTRIBUTE_CODE_DEVELOP_GROUP",            2);  // 開発部門
+define ( "DEF_GROUP_ATTRIBUTE_CODE_SALES_SUPPORT",            3);  // 営業サポート
+define ( "DEF_GROUP_ATTRIBUTE_CODE_ACCOUNTING",               4);  // 経理
+define ( "DEF_GROUP_ATTRIBUTE_CODE_QUALITY_ASSURANCE",        5);  // 品質保証
 
 ?>

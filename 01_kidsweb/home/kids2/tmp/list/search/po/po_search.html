@@ -33,6 +33,7 @@
         <script src="/list/search/po/validate-form.js" defer></script>
         <!-- マスタ検索呼び出し -->
         <script src="/p/cmn/js/invoke-master-search.js" defer></script>
+        <script src="/p/cmn/js/msw.js" defer></script>
         <!-- COOKIE 表示チェックボックス 保存/復元 -->
         <script src="/search/cmn/js/cookie-display-items.js" defer></script>
         <!-- キーバインド -->
@@ -151,7 +152,7 @@
                     <span class="regist-label__text">担当者</span>
                     <input class="TxtStyle05L" name="lngInChargeUserCode" type="text" alt="InChargeUser">
                     <input class="disTxt46L" name="strInChargeUserName" type="text" readonly>
-                    <img class="msw-button button" invokeMSWName="msw-user" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                    <img class="msw-button button" invokeMSWName="msw-user" msw-before="pickupGroupCode" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
                 </span>
             </div>
             <input type="hidden" name="ActionScriptName" value="/list/po/result/index.php">

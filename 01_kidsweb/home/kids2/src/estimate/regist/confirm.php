@@ -54,7 +54,7 @@
 
 	$aryData["lngLanguageCode"]		= $_COOKIE["lngLanguageCode"];	// 言語コード
 
-    // シート番号取得
+    // シート名取得
     $sheetName = mb_convert_encoding($aryData['sheetname'], 'UTF-8', 'EUC-JP');
 
 	//-------------------------------------------------------------------------
@@ -97,9 +97,8 @@
 	// DBから標準割合を取得
 	$standardRateMaster = $objDB->getEstimateStandardRate();
     
-	// ブックのロード
 	if ($fileCheckResult) {
-
+        // ブックのロード(phpSpreadSheetオブジェクトにブックの情報をセットする)
 		$spreadSheet = $objReader->load($fileCheckResult);
 
 		// 必要な定数を取得する
@@ -118,7 +117,7 @@
 		$difference = array();
 		$hiddenList = array();
 
-		// シートが表示無効でない場合はワークシート処理オブジェクトのインスタンス生成
+		// ワークシート処理オブジェクトのインスタンス生成
 		$objSheet = new estimateSheetController();
 
 		// オブジェクトにデータをセットする
@@ -291,32 +290,33 @@
 			
 			// メッセージコードの取得
 			$messageOfConversionRate = $objRow->messageCode['conversionRate'];
-			$messageOfSubtotal = $objRow->messageCode['subtotal'];
 
 			// ブックの適用レートがDBの通貨レートと異なる場合、またはブックの小計が計算結果と異なる場合
-			if ($messageOfConversionRate === 9206 || $messageOfSubtotal === 9205) {
-			// ブックの適用レートがDBの通貨レートと異なる場合は差分表のデータを作成する
-				if ($messageOfConversionRate === 9206) {
-					// ブックオブジェクトの通貨レートの置換
-					$column = $columnList['conversionRate'];
-					$convarsionRateCell = $column.$row;
-					$acquiredRate = $objRow->acquiredRate;
-					$objSheet->sheet->getCell($convarsionRateCell)->setValue($acquiredRate);
-				}
-
-				// ブックオブジェクトの小計の置換
-				$column = $columnList['subtotal'];
-				$subtotalCell = $column.$row;
-				$calculatedSubtotalJP = $objRow->calculatedSubtotalJP;
-
-				$objSheet->sheet->getCell($subtotalCell)->setValue($calculatedSubtotalJP);
+			if ($messageOfConversionRate === DEF_MESSAGE_CODE_RATE_DIFFER) {
+				// ブックオブジェクトの通貨レートの置換
+				$column = $columnList['conversionRate'];
+				$convarsionRateCell = $column.$row;
+				$acquiredRate = $objRow->acquiredRate;
+				$objSheet->sheet->getCell($convarsionRateCell)->setValue($acquiredRate);
 			}
 
-			// DBの情報に置換後（仕入の空欄はその他）の顧客先、仕入先情報をセットする
-			$column = $columnList['customerCompany'];
-			$customerCompany = $objRow->customerCompany;
-			$companyCell = $column.$row;
-			$objSheet->sheet->getCell($companyCell)->setValue($customerCompany);
+			// ブックオブジェクトの小計の置換
+			$column = $columnList['subtotal'];
+			$subtotalCell = $column.$row;
+			$calculatedSubtotalJP = $objRow->calculatedSubtotalJP;
+
+			$objSheet->sheet->getCell($subtotalCell)->setValue($calculatedSubtotalJP);
+			
+			if ($objRow->percentInputFlag !== true) {
+				// DBの情報に置換後（仕入の空欄はその他）の顧客先、仕入先情報をセットする
+				$column = $columnList['customerCompany'];
+				$customerCompany = $objRow->customerCompany;
+				$companyCell = $column.$row;
+				$objSheet->sheet->getCell($companyCell)->setValue($customerCompany);
+			} else {
+				// パーセント入力されている場合は右寄せにする
+				$objSheet->setHorizontalRight($companyCell);
+			}
 		}
 
 		// バリデーションでエラーが発生した場合はエラーメッセージを表示する

@@ -238,9 +238,6 @@ class registInsertData extends estimateInsertData {
         // ½þµÑ¿ô
         $productionQuantity = $this->headerData[workSheetConst::PRODUCTION_QUANTITY];
 
-        // ¹ç·×¶â³Û¤Î·×»»
-        $totalPrice = $retailPrice * $productionQuantity;
-
         $data = array(
             'lngestimateno' => $this->estimateNo,
             'lngrevisionno'=> $this->revisionNo,
@@ -248,12 +245,12 @@ class registInsertData extends estimateInsertData {
             'strrevisecode' => "'". $this->reviseCode. "'",
             'bytdecisionflag' => 'true',
             'lngestimatestatuscode'=> DEF_ESTIMATE_APPROVE,
-            'curfixedcost' => $this->calculatedData[workSheetConst::ORDER_FIXED_COST_FIXED_COST],
+            'curfixedcost' => $this->calculatedData[workSheetConst::DEPRECIATION_COST],
             'curmembercost' => $this->calculatedData[workSheetConst::MEMBER_COST],
-            'curtotalprice' => $totalPrice,
+            'curtotalprice' => $this->calculatedData[workSheetConst::PROFIT],
             'curmanufacturingcost' => $this->calculatedData[workSheetConst::MANUFACTURING_COST],
-            'cursalesamount' => $this->calculatedData[workSheetConst::SALES_AMOUNT],
-            'curprofit' => $this->calculatedData[workSheetConst::PROFIT],
+            'cursalesamount' => $this->calculatedData[workSheetConst::PRODUCT_TOTAL_PRICE],
+            'curprofit' => $this->calculatedData[workSheetConst::OPERATING_PROFIT],
             'lnginputusercode'=> $this->inputUserCode,
             'bytinvalidflag' => 'false',
             'dtminsertdate' => 'NOW()',

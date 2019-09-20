@@ -76,221 +76,235 @@ $lngAuthorityGroupCode = fncGetUserAuthorityGroupCode( $lngUserCode, $aryData["s
 
 if( $_FILES )
 {
-    $file = array();
-    // テンポラリファイル作成、ファイル名取得
-    $strTmpFileName	= getTempFileName($_FILES['excel_file']['tmp_name'] );
-
-    // ファイル情報の取得
-    $file["exc_name"]			= $_FILES['excel_file']['name'];
-    $file["exc_type"]			= $_FILES['excel_file']['type'];
-    $file["exc_tmp_name"]		= $strTmpFileName;
-    $file["exc_error"]			= $_FILES['excel_file']['error'];
-    $file["exc_size"]			= $_FILES['excel_file']['size'];
-
-    $file["lngRegistConfirm"]	= 1;	// 確認画面表示フラグ
+	$file = array();
+	
+	$file["exc_error"] = $_FILES['excel_file']['error'];
+	if ($file["exc_error"] !== 0) {
+		$str = $file["exc_error"];
+	    $strMessage = fncOutputError(DEF_MESSAGE_CODE_FILE_UPLOAD_ERROR, DEF_WARNING, $str, FALSE, '', $objDB);
+	} else {
+		// ファイル情報の取得
+		$file["exc_name"] = $_FILES['excel_file']['name'];
+		$file["exc_type"] = $_FILES['excel_file']['type'];
+		$file["exc_size"] = $_FILES['excel_file']['size'];
+		
+		// テンポラリファイル作成、ファイル名取得
+		$strTmpFileName	= getTempFileName($_FILES['excel_file']['tmp_name'] );
+		$file["exc_tmp_name"] = $strTmpFileName;
+	
+		$file["lngRegistConfirm"] = 1;	// 確認画面表示フラグ
+	}
 }
 
-// ファイルチェック
-$fileCheckResult = estimateSheetController::checkFileFormat($file);
+if ($file["exc_tmp_name"]) {
+	// ファイルチェック
+	$fileCheckResult = estimateSheetController::checkFileFormat($file);
 
-// DBから通貨の表示名取得
-$monetaryUnitList = $objDB->getMonetaryUnitList();
+	// DBから通貨の表示名取得
+	$monetaryUnitList = $objDB->getMonetaryUnitList();
 
-// DBから標準割合を取得
-$standardRateMaster = $objDB->getEstimateStandardRate();
+	// DBから標準割合を取得
+	$standardRateMaster = $objDB->getEstimateStandardRate();
 
-// エクセルファイルのロード
-if ($fileCheckResult) {
-	// ブックのデータをphpSpreadSheetオブジェクトに展開
-	$spreadSheet = $objReader->load($fileCheckResult);
+	// エクセルファイルのロード
+	if ($fileCheckResult) {
+		// ブックのデータをphpSpreadSheetオブジェクトに展開
+		$spreadSheet = $objReader->load($fileCheckResult);
 
-	// 必要な定数を取得する
-	$nameList = workSheetConst::getAllNameList();	
-	$rowCheckNameList = workSheetConst::DETAIL_HEADER_CELL_NAME_LIST;
-	$targetAreaList = workSheetConst::TARGET_AREA_DISPLAY_NAME_LIST;
+		// 必要な定数を取得する
+		$nameList = workSheetConst::getAllNameList();	
+		$rowCheckNameList = workSheetConst::DETAIL_HEADER_CELL_NAME_LIST;
+		$targetAreaList = workSheetConst::TARGET_AREA_DISPLAY_NAME_LIST;
 
-    // phpSpreadSheetオブジェクトからシートの情報を取得
-	$allSheetInfo = estimateSheetController::getSheetInfo($spreadSheet, $nameList, $rowCheckNameList);
+		// phpSpreadSheetオブジェクトからシートの情報を取得
+		$allSheetInfo = estimateSheetController::getSheetInfo($spreadSheet, $nameList, $rowCheckNameList);
 
-    // シート番号の初期値を0に設定する
-	$sheetNumber = 0;
+		$sheetExistFlag = false;
 
-	// エラーチェック等
-	foreach ($allSheetInfo as $sheetName => $sheetInfo) {
-		$objSheet = null;
-		$outputMessage = array(); // 出力メッセージ
+		if ($allSheetInfo) {
+			// シート番号の初期値を0に設定する
+			$sheetNumber = 0;
+			// エラーチェック等
+			foreach ($allSheetInfo as $sheetName => $sheetInfo) {
+				$objSheet = null;
+				$outputMessage = array(); // 出力メッセージ
 
-		$difference = array();
-		$hiddenList = array();
-		
-		if ($sheetInfo['displayInvalid']) {
-			continue;
-		} else {
-			// 輸入費用計算用変数（関税の小計の合計）
-			$tariffTotal = 0;
-			
-			// シートが表示無効でない場合はワークシート処理オブジェクトのインスタンス生成
-			$objSheet = new estimateSheetController();
-	
-			// オブジェクトにデータをセットする
-			$objSheet->dataInitialize($sheetInfo, $objDB);
-	
-			// phpSpreadSheetで生成したシートオブジェクトをグローバル参照用にセットする
-			$sheet = $objSheet->sheet;
-
-			$cellAddressList = $sheetInfo['cellAddress'];
-
-			// 対象エリアの範囲を取得する
-			$targetAreaRows = $objSheet->outputTargetAreaRows();
-			$startRowOfDetail = $targetAreaRows[DEF_AREA_PRODUCT_SALES]['firstRow']; // 明細の開始行
-			$endRowOfDetail = $targetAreaRows[DEF_AREA_OTHER_COST_ORDER]['lastRow']; // 明細の終了行
-		
-			for ($row = $startRowOfDetail; $row <= $endRowOfDetail; ++$row) {
-	
-				$objRow = null;
-				// 現在の行がどの対象エリアに属するか判定を行う
-				$rowAttribute = $objSheet->checkAttributeRow($row);
+				$difference = array();
+				$hiddenList = array();
 				
-				if ($rowAttribute) {
-					// 対象エリアによってインスタンス作成時のクラスを指定する
-					switch ($rowAttribute) {
-						case DEF_AREA_PRODUCT_SALES:
-							$objRow = new productSalesRowController($objDB);
-							break;
-						case DEF_AREA_FIXED_COST_SALES:
-							$objRow = new fixedCostSalesRowController($objDB);
-							break;
-						case DEF_AREA_FIXED_COST_ORDER:
-							$objRow = new fixedCostOrderRowController($objDB);
-							break;
-						case DEF_AREA_PARTS_COST_ORDER:
-							$objRow = new partsCostOrderRowController($objDB);
-							break;
-						case DEF_AREA_OTHER_COST_ORDER;
-							$objRow = new otherCostOrderRowController($objDB);
-							break;
-						default:
-							break;
-					}
-	                if ($objRow) {
-						$objRow->initialize($cellAddressList, $row);
-						$objRow->workSheetSelectCheck();
+				if ($sheetInfo['displayInvalid']) {
+					continue;
+				} else {
+					$sheetExistFlag = true;
 
-						$objRowList[$row] = $objRow;
-						if ($objRow->invalidFlag === true) {
-							$hiddenList[$row] = true;
-						}							
-					}
-				}
-			}
+					// 輸入費用計算用変数（関税の小計の合計）
+					$tariffTotal = 0;
+					
+					// シートが表示無効でない場合はワークシート処理オブジェクトのインスタンス生成
+					$objSheet = new estimateSheetController();
 
-			// 行オブジェクトを基にした処理
-			foreach ($objRowList as $row => $objRow) {
-				$columnList = $objRow->columnNumberList;
+					// オブジェクトにデータをセットする
+					$objSheet->dataInitialize($sheetInfo, $objDB);
+
+					// phpSpreadSheetで生成したシートオブジェクトをグローバル参照用にセットする
+					$sheet = $objSheet->sheet;
+
+					$cellAddressList = $sheetInfo['cellAddress'];
+
+					// 対象エリアの範囲を取得する
+					$targetAreaRows = $objSheet->outputTargetAreaRows();
+					$startRowOfDetail = $targetAreaRows[DEF_AREA_PRODUCT_SALES]['firstRow']; // 明細の開始行
+					$endRowOfDetail = $targetAreaRows[DEF_AREA_OTHER_COST_ORDER]['lastRow']; // 明細の終了行
 				
-				// メッセージコードの取得
-				$messageOfConversionRate = $objRow->messageCode['conversionRate'];
+					for ($row = $startRowOfDetail; $row <= $endRowOfDetail; ++$row) {
 
-				// ブックの適用レートがDBの通貨レートと異なる場合、またはブックの小計が計算結果と異なる場合
-				if ($messageOfConversionRate) {
-				// ブックの適用レートがDBの通貨レートと異なる場合は差分表のデータを作成する
-					$delivery = $objRow->delivery;
-					$monetary = $objRow->monetary;
-					$acquiredRate = $objRow->acquiredRate;
-					$conversionRate = $objRow->conversionRate;
-					$monetaryUnit = $monetaryUnitList[$monetary];
-					if ($messageOfConversionRate === 9206) {
-						// 通貨レート差分表のデータ生成
+						$objRow = null;
+						// 現在の行がどの対象エリアに属するか判定を行う
+						$rowAttribute = $objSheet->checkAttributeRow($row);
+						
+						if ($rowAttribute) {
+							// 対象エリアによってインスタンス作成時のクラスを指定する
+							switch ($rowAttribute) {
+								case DEF_AREA_PRODUCT_SALES:
+									$objRow = new productSalesRowController($objDB);
+									break;
+								case DEF_AREA_FIXED_COST_SALES:
+									$objRow = new fixedCostSalesRowController($objDB);
+									break;
+								case DEF_AREA_FIXED_COST_ORDER:
+									$objRow = new fixedCostOrderRowController($objDB);
+									break;
+								case DEF_AREA_PARTS_COST_ORDER:
+									$objRow = new partsCostOrderRowController($objDB);
+									break;
+								case DEF_AREA_OTHER_COST_ORDER;
+									$objRow = new otherCostOrderRowController($objDB);
+									break;
+								default:
+									break;
+							}
+							if ($objRow) {
+								$objRow->initialize($cellAddressList, $row);
+								$objRow->workSheetSelectCheck();
+
+								$objRowList[$row] = $objRow;
+								if ($objRow->invalidFlag === true) {
+									$hiddenList[$row] = true;
+								}							
+							}
+						}
+					}
+
+					// 行オブジェクトを基にした処理
+					foreach ($objRowList as $row => $objRow) {
+						$columnList = $objRow->columnNumberList;
+						
+						// メッセージコードの取得
+						$messageOfConversionRate = $objRow->messageCode['conversionRate'];
+
+						// ブックの適用レートがDBの通貨レートと異なる場合、またはブックの小計が計算結果と異なる場合
+						if ($messageOfConversionRate) {
+						// ブックの適用レートがDBの通貨レートと異なる場合は差分表のデータを作成する
+							$delivery = $objRow->delivery;
+							$monetary = $objRow->monetary;
+							$acquiredRate = $objRow->acquiredRate;
+							$conversionRate = $objRow->conversionRate;
+							$monetaryUnit = $monetaryUnitList[$monetary];
+							if ($messageOfConversionRate === DEF_MESSAGE_CODE_RATE_DIFFER) {
+								// 通貨レート差分表のデータ生成
+								$difference[] = array(
+									'delivery' => $delivery,
+									'monetary' => $monetaryUnit,
+									'temporaryRate' => $acquiredRate ? $acquiredRate : '-',
+									'sheetRate' => $conversionRate ? $conversionRate : '-',
+								);
+							} else if ($messageOfConversionRate === DEF_MESSAGE_CODE_RATE_UNCAUGHT_WARNING) {
+								$notFound[] = array(
+									'delivery' => $delivery,
+									'monetary' => $monetaryUnit,
+									'sheetRate' => $conversionRate ? $conversionRate : '-',
+								);						                        
+							}
+						}
+					}
+
+					// 標準割合のチェック
+					$standardRateCell = $cellAddressList[workSheetConst::STANDARD_RATE];
+					$standardRate = $objSheet->sheet->getCell($standardRateCell)->getCalculatedValue();
+					if ($standardRateMaster != $standardRate) {
+						$companyLocalRate = $standardRateMaster ? number_format(($standardRateMaster * 100), 2, '.', ''). "%" : '-';
+						$sheetRate = $standardRate ? number_format(($standardRate * 100), 2, '.', ''). "%" : '-';
 						$difference[] = array(
-							'delivery' => $delivery,
-							'monetary' => $monetaryUnit,
-							'temporaryRate' => $acquiredRate ? $acquiredRate : '-',
-							'sheetRate' => $conversionRate ? $conversionRate : '-',
+							'delivery' => '-',
+							'monetary' => '標準割合',
+							'temporaryRate' => $companyLocalRate,
+							'sheetRate' => $sheetRate
 						);
-					} else if ($messageOfConversionRate === 9203) {
-						$notFound[] = array(
-							'delivery' => $delivery,
-							'monetary' => $monetaryUnit,
-							'sheetRate' => $conversionRate ? $conversionRate : '-',
-						);						                        
 					}
+					
+					// 重複するデータを削除する
+					if ($difference) {
+						$difference = array_unique($difference, SORT_REGULAR);
+						$differenceMessage = fncOutputError ( DEF_MESSAGE_CODE_RATE_DIFFER, DEF_WARNING, "", false, "", $objDB );
+					}
+					
+					if ($notFound) {
+						$notFound = array_unique($notFound, SORT_REGULAR);
+						$notFoundMessage = fncOutputError ( DEF_MESSAGE_CODE_RATE_DIFFER, DEF_WARNING, "", false, "", $objDB );
+					}
+				
+					// 非表示リスト（無効リスト）を追加する
+					$objSheet->setHiddenRowList($hiddenList);
+
+					// ワークシート表示用のデータを出力する
+					$viewData = $objSheet->makeDataOfSheet();
+
+					// ワークシート名を'EUC-JP'にエンコードする
+					$strWSName = mb_convert_encoding($sheetName, "EUC-JP", "UTF-8");
+
+					$strExcel       .= "<div class=\"sheetHeader\" id=\"sheet". $sheetNumber. "\">";
+					$strExcel       .= makeHTML::makeDifferenceRateTable($difference, $differenceMessage);
+					$strExcel       .= "<br>";
+					$strExcel       .= makeHTML::makeNotFoundRateTable($notFound, $notFoundMessage);
+					$strExcel       .= "<br>";
+					// $strExcel       .= makeHTML::makeWarningHTML($outputMessage);
+					$strExcel       .= "<br>";
+					$strExcel		.= makeHTML::getWorkSheet2HTML($strWSName, $sheetNumber, "select"); // ヘッダー
+					$strExcel       .= "</div>";
+
+					$strExcel		.= makeHTML::getGridTable($sheetNumber); // データ挿入タグ
+
+					$css_rowstyle .= '.rowstyle'. $sheetNumber.' { display:none;}'."\n";
+				}
+				
+				if ($objSheet) {
+					$sheetDataList[$sheetName] = array(
+						'objSheet' => $objSheet,
+						'objRowList' => $objRowList
+					);
+					$sheetNameList[] = $sheetName;
+					$viewDataList[] = $viewData;
+
+					++$sheetNumber;
 				}
 			}
-
-			// 標準割合のチェック
-			$standardRateCell = $cellAddressList[workSheetConst::STANDARD_RATE];
-			$standardRate = $objSheet->sheet->getCell($standardRateCell)->getCalculatedValue();
-			if ($standardRateMaster != $standardRate) {
-				$companyLocalRate = $standardRateMaster ? number_format(($standardRateMaster * 100), 2, '.', ''). "%" : '-';
-				$sheetRate = $standardRate ? number_format(($standardRate * 100), 2, '.', ''). "%" : '-';
-				$difference[] = array(
-					'delivery' => '-',
-					'monetary' => '標準割合',
-					'temporaryRate' => $companyLocalRate,
-					'sheetRate' => $sheetRate
-				);
-			}
-			
-			// 重複するデータを削除する
-			if ($difference) {
-				$difference = array_unique($difference, SORT_REGULAR);
-			}
-			
-			if ($notFound) {
-				$notFound = array_unique($notFound, SORT_REGULAR);
-			}
-			
-
-			// メッセージを取得する
-			$differenceMessage = fncOutputError ( 9206, DEF_WARNING, "", false, "", $objDB );
-			$notFoundMessage = fncOutputError ( 9203, DEF_WARNING, "", false, "", $objDB );
-		
-			// 非表示リスト（無効リスト）を追加する
-			$objSheet->setHiddenRowList($hiddenList);
-
-			// ワークシート表示用のデータを出力する
-			$viewData = $objSheet->makeDataOfSheet();
-
-			// ワークシート名を'EUC-JP'にエンコードする
-			$strWSName = mb_convert_encoding($sheetName, "EUC-JP", "UTF-8");
-
-			$strExcel       .= "<div class=\"sheetHeader\" id=\"sheet". $sheetNumber. "\">";
-			$strExcel       .= makeHTML::makeDifferenceRateTable($difference, $differenceMessage);
-			$strExcel       .= "<br>";
-			$strExcel       .= makeHTML::makeNotFoundRateTable($notFound, $notFoundMessage);
-			$strExcel       .= "<br>";
-			// $strExcel       .= makeHTML::makeWarningHTML($outputMessage);
-			$strExcel       .= "<br>";
-			$strExcel		.= makeHTML::getWorkSheet2HTML($strWSName, $sheetNumber, "select"); // ヘッダー
-			$strExcel       .= "</div>";
-
-			$strExcel		.= makeHTML::getGridTable($sheetNumber); // データ挿入タグ
-
-			$css_rowstyle .= '.rowstyle'. $sheetNumber.' { display:none;}'."\n";
-		}
-		
-		if ($objSheet) {
-			$sheetDataList[$sheetName] = array(
-				'objSheet' => $objSheet,
-				'objRowList' => $objRowList
-			);
-			$sheetNameList[] = $sheetName;
-			$viewDataList[] = $viewData;
-
-			++$sheetNumber;
-		}
+		}	
 	}
+}
+
+// 有効なシートが存在しない場合はエラーメッセージを表示する
+if ($sheetExistFlag === false) {
+	$strMessage = fncOutputError ( DEF_MESSAGE_CODE_VALID_SHEET_ABSENT_ERROR, DEF_WARNING, "", false, "", $objDB );
 }
 
 //-------------------------------------------------------------------------
 // DB Close
 //-------------------------------------------------------------------------
+
 $objDB->close();
 $objDB->freeResult( $lngResultID );
 
-// 有効なシートが存在しない場合はエラーメッセージを表示する
-if ( !$sheetDataList ) {
-	$strMessage = '有効なシートが存在しません。';
+if ($strMessage) {
 
 	// [lngLanguageCode]書き出し
 	$aryHtml["lngLanguageCode"] = $aryData["lngLanguageCode"];

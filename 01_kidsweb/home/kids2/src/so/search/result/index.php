@@ -337,14 +337,23 @@ $aryQuery[] = "  AND rd.lngReceiveNo = r.lngReceiveNo ";
 // $aryQuery[] = "      )";
 // $aryQuery[] = "  ) ";
 if (!array_key_exists("admin", $optionColumns)) {
-    $aryQuery[] = "  AND 0 <= ( ";
-    $aryQuery[] = "    SELECT";
-    $aryQuery[] = "      MIN(r3.lngRevisionNo) ";
-    $aryQuery[] = "    FROM";
-    $aryQuery[] = "      m_Receive r3 ";
-    $aryQuery[] = "    WHERE";
-    $aryQuery[] = "      r3.bytInvalidFlag = false ";
-    $aryQuery[] = "      AND r3.strReceiveCode = r.strReceiveCode";
+    $aryQuery[] = "  AND r.strReceiveCode not in ( ";
+    $aryQuery[] = "    select";
+    $aryQuery[] = "      r1.strReceiveCode ";
+    $aryQuery[] = "    from";
+    $aryQuery[] = "      ( ";
+    $aryQuery[] = "        SELECT";
+    $aryQuery[] = "          min(lngRevisionNo) lngRevisionNo";
+    $aryQuery[] = "          , strReceiveCode ";
+    $aryQuery[] = "        FROM";
+    $aryQuery[] = "          m_Receive ";
+    $aryQuery[] = "        where";
+    $aryQuery[] = "          bytInvalidFlag = false ";
+    $aryQuery[] = "        group by";
+    $aryQuery[] = "          strReceiveCode";
+    $aryQuery[] = "      ) as r1 ";
+    $aryQuery[] = "    where";
+    $aryQuery[] = "      r1.lngRevisionNo < 0";
     $aryQuery[] = "  ) ";
 }
 $aryQuery[] = "ORDER BY";
@@ -352,6 +361,7 @@ $aryQuery[] = " r.strReceiveCode, lngReceiveDetailNo, r.lngReceiveNo DESC";
 
 // クエリを平易な文字列に変換
 $strQuery = implode("\n", $aryQuery);
+
 // 値をとる =====================================
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 // 検索件数がありの場合

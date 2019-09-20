@@ -100,7 +100,7 @@ if (array_key_exists("strProductCode", $displayColumns) or
     array_key_exists("curTax", $displayColumns) or
     array_key_exists("curTaxPrice", $displayColumns) or
     array_key_exists("strDetailNote", $displayColumns) or
-    array_key_exists("dtmDeliveryDate", $displayColumns) or
+    // array_key_exists("dtmDeliveryDate", $displayColumns) or
     array_key_exists("strProductName", $displayColumns) or
     array_key_exists("strProductEnglishName", $displayColumns)) {
     $isDisplayDetail = true;
@@ -148,7 +148,6 @@ $aryQuery[] = "  , s.strStockCode as strStockCode";
 $aryQuery[] = "  , s.strslipcode as strslipcode";
 $aryQuery[] = "  , cust_c.strCompanyDisplayCode as strCustomerDisplayCode";
 $aryQuery[] = "  , cust_c.strCompanyDisplayName as strCustomerDisplayName";
-$aryQuery[] = "  , to_char(sd.dtmDeliveryDate, 'YYYY/MM/DD') as dtmDeliveryDate";
 $aryQuery[] = "  , s.lngStockStatusCode as lngStockStatusCode";
 $aryQuery[] = "  , rs.strStockStatusName as strStockStatusName";
 $aryQuery[] = "  , s.lngpayconditioncode as lngpayconditioncode";
@@ -193,7 +192,6 @@ $aryQuery[] = "        , sd1.strMoldNo";
 $aryQuery[] = "        , p.strGoodsCode";
 $aryQuery[] = "        , sd1.lngDeliveryMethodCode";
 $aryQuery[] = "        , dm.strDeliveryMethodName";
-$aryQuery[] = "        , sd1.dtmDeliveryDate";
 $aryQuery[] = "        , sd1.curProductPrice";
 $aryQuery[] = "        , sd1.lngProductUnitCode";
 $aryQuery[] = "        , pu.strProductUnitName";
@@ -307,14 +305,14 @@ if (array_key_exists("lngDeliveryMethodCode", $searchColumns) &&
     $aryQuery[] = $detailConditionCount == 1 ? "WHERE " : "AND ";
     $aryQuery[] = "sd1.lngDeliveryMethodCode = " . $searchValue["lngDeliveryMethodCode"] . "";
 }
-// 納期
-if (array_key_exists("dtmDeliveryDate", $searchColumns) &&
-    array_key_exists("dtmDeliveryDate", $from) &&
-    array_key_exists("dtmDeliveryDate", $to)) {
-    $aryQuery[] = "AND sd1.dtmdeliverydate" .
-        " between '" . $from["dtmDeliveryDate"] . "'" .
-        " AND " . "'" . $to["dtmDeliveryDate"] . "'";
-}
+// // 納期
+// if (array_key_exists("dtmDeliveryDate", $searchColumns) &&
+//     array_key_exists("dtmDeliveryDate", $from) &&
+//     array_key_exists("dtmDeliveryDate", $to)) {
+//     $aryQuery[] = "AND sd1.dtmdeliverydate" .
+//         " between '" . $from["dtmDeliveryDate"] . "'" .
+//         " AND " . "'" . $to["dtmDeliveryDate"] . "'";
+// }
 $aryQuery[] = "    ) as sd ";
 $aryQuery[] = "WHERE";
 $aryQuery[] = "  s.bytInvalidFlag = FALSE ";
@@ -398,14 +396,23 @@ $aryQuery[] = "  AND sd.lngStockNo = s.lngStockNo ";
 // $aryQuery[] = "      AND s1.bytInvalidFlag = false";
 // $aryQuery[] = "  ) ";
 if (!array_key_exists("admin", $optionColumns)) {
-    $aryQuery[] = "  AND 0 <= ( ";
-    $aryQuery[] = "    SELECT";
-    $aryQuery[] = "      MIN(s2.lngRevisionNo) ";
-    $aryQuery[] = "    FROM";
-    $aryQuery[] = "      m_Stock s2 ";
-    $aryQuery[] = "    WHERE";
-    $aryQuery[] = "      s2.bytInvalidFlag = false ";
-    $aryQuery[] = "      AND s2.strStockCode = s.strStockCode";
+    $aryQuery[] = "  AND s.strStockCode not in ( ";
+    $aryQuery[] = "    select";
+    $aryQuery[] = "      s2.strStockCode ";
+    $aryQuery[] = "    from";
+    $aryQuery[] = "      ( ";
+    $aryQuery[] = "        SELECT";
+    $aryQuery[] = "          min(lngRevisionNo) lngRevisionNo";
+    $aryQuery[] = "          , strStockCode ";
+    $aryQuery[] = "        FROM";
+    $aryQuery[] = "          m_Stock ";
+    $aryQuery[] = "        where";
+    $aryQuery[] = "          bytInvalidFlag = false ";
+    $aryQuery[] = "        group by";
+    $aryQuery[] = "          strStockCode";
+    $aryQuery[] = "      ) as s2 ";
+    $aryQuery[] = "    where";
+    $aryQuery[] = "      s2.lngRevisionNo < 0";
     $aryQuery[] = "  ) ";
 }
 $aryQuery[] = "ORDER BY";
@@ -413,7 +420,8 @@ $aryQuery[] = " strStockCode, lngstockDetailNo, lngStockNo DESC";
 
 // クエリを平易な文字列に変換
 $strQuery = implode("\n", $aryQuery);
-
+// echo $strQuery;
+// return;
 // 値をとる =====================================
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 // 検索件数がありの場合
@@ -576,7 +584,7 @@ $aryTableHeaderName["lngstockitemcode"] = "仕入部品";
 $aryTableHeaderName["strmoldno"] = "Ｎｏ．";
 $aryTableHeaderName["strgoodscode"] = "顧客品番";
 $aryTableHeaderName["lngdeliverymethodcode"] = "運搬方法";
-$aryTableHeaderName["dtmdeliverydate"] = "納期";
+// $aryTableHeaderName["dtmdeliverydate"] = "納期";
 $aryTableHeaderName["curproductprice"] = "単価";
 $aryTableHeaderName["lngproductunitcode"] = "単位";
 $aryTableHeaderName["lngproductquantity"] = "数量";
@@ -915,12 +923,6 @@ foreach ($records as $i => $record) {
                 // 運搬方法
                 case "lngdeliverymethodcode":
                     $td = $doc->createElement("td", toUTF8($record["strdeliverymethodname"]));
-                    $td->setAttribute("style", $bgcolor);
-                    $trBody->appendChild($td);
-                    break;
-                // 納期
-                case "dtmdeliverydate":
-                    $td = $doc->createElement("td", toUTF8($record["dtmdeliverydate"]));
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;

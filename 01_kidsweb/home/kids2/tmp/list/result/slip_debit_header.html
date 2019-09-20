@@ -8,15 +8,6 @@
     <script>
         var reprint = parent.button.document.getElementById('rePrint');
         reprint.style.display = "none";
-
-        parent.button.document.getElementById('print').onclick = function () {
-            // ファイルダウンロード処理を行う
-            location.href = '/list/result/slip/download.php?strSessionID=_%strSessionID%_' +
-                '&strReportKeyCode=_%strReportKeyCode%_' +
-                '&lngReportCode=_%lngReportCode%_';
-            exit;
-        };
-
     </script>
 </head>
 

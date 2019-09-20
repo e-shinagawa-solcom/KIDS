@@ -1769,7 +1769,7 @@ function fncShowDialogCommon( strUrl , ObjFrm , strID , strScroll , lngLanguageC
 
 
 	// retval = window.showModalDialog( '/result/common.html' , args , "dialogHeight:679px;dialogWidth:696px;center:yes;status:no;edge:raised;help:no;scroll:no;" );
-	retval = window.open( '/result/common.html' , args , "dialogHeight:679px;dialogWidth:696px;center:yes;status:no;edge:raised;help:no;scroll:no;" );
+	retval = window.open( '/result/common.html' , args , "height:679px;width:696px;center:yes;status:no;edge:raised;help:no;scroll:no;" );
 
 	if( retval )
 	{
@@ -1812,7 +1812,7 @@ function fncShowDialogRenew( strUrl , ObjFrm , strID , strScroll , lngLanguageCo
 	args[0][3] = lngLanguageCode;
 
 	//retval = window.showModalDialog( '/result/renew.html' , args , "dialogHeight:580px;dialogWidth:970px;center:yes;status:no;edge:raised;help:no;scroll:no;" );
-	retval = window.open( '/result/renew.html' , args , "dialogHeight:600px;dialogWidth:970px;center:yes;status:no;edge:raised;help:no;scroll:no;" );
+	retval = window.open( '/result/renew.html' , args , "height:600px;width:970px;center:yes;status:no;edge:raised;help:no;scroll:no;" );
 
 	if( retval )
 	{
@@ -1857,7 +1857,7 @@ function fncShowDialogCommonMaster( strUrl , ObjFrm , strID , strScroll , lngLan
 	args[0][4] = strMode; // 'fix' , 'add' , 'delete'
 
 	// retval = window.showModalDialog( '/result/remove_master.html' , args , "dialogHeight:510px;dialogWidth:600px;center:yes;status:no;edge:raised;help:no;scroll:no;" );
-	retval = window.open( '/result/remove_master.html' , args , "dialogHeight:510px;dialogWidth:600px;center:yes;status:no;edge:raised;help:no;scroll:no;" );
+	retval = window.open( '/result/remove_master.html' , args , "height:510px;width:600px;center:yes;status:no;edge:raised;help:no;scroll:no;" );
 
 
 	if( retval )
