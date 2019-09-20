@@ -75,43 +75,22 @@ elseif ($lngResultNum === 0) {
 
     $aryParts = &$objMaster->aryData[0];
 
-    // 詳細取得
-    $aryQuery[] = "select";
-    $aryQuery[] = "  lngslipno";
-    $aryQuery[] = "  , lngslipdetailno";
-    $aryQuery[] = "  , lngrevisionno";
-    $aryQuery[] = "  , strcustomersalescode";
-    $aryQuery[] = "  , lngsalesclasscode";
-    $aryQuery[] = "  , strsalesclassname";
-    $aryQuery[] = "  , strgoodscode";
-    $aryQuery[] = "  , strproductcode";
-    $aryQuery[] = "  , strrevisecode";
-    $aryQuery[] = "  , strproductname";
-    $aryQuery[] = "  , strproductenglishname";
-    $aryQuery[] = "  , to_char(curproductprice, '9,999,999,990') AS curproductprice";
-    $aryQuery[] = "  , lngquantity";
-    $aryQuery[] = "  , to_char(lngproductquantity, '9,999,999,990') AS lngproductquantity";
-    $aryQuery[] = "  , lngproductunitcode";
-    $aryQuery[] = "  , strproductunitname";
-    $aryQuery[] = "  , to_char(cursubtotalprice, '9,999,999,990') AS cursubtotalprice";
-    $aryQuery[] = "  , strnote";
-    $aryQuery[] = "  , lngreceiveno";
-    $aryQuery[] = "  , lngreceivedetailno";
-    $aryQuery[] = "  , lngreceiverevisionno";
-    $aryQuery[] = "  , lngsortkey ";
-    $aryQuery[] = "from";
-    $aryQuery[] = "  t_slipdetail ";
-    $aryQuery[] = "where";
-    $aryQuery[] = "  lngslipno = " . $aryData["strReportKeyCode"];
-    $aryQuery[] = " ORDER BY";
-    $aryQuery[] = "  lngSortKey";
+    // 納品伝票種別取得
+    $strQuery = fncGetSlipKindQuery($aryParts["strshippercode"]);
+    list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
+    if ($lngResultNum < 1) {
+        fncOutputError(9051, DEF_FATAL, "納品伝票種別データが存在しませんでした。", true, "", $objDB);
+    } else {
+        $slipKidObj = $objDB->fetchArray($lngResultID, 0);
+    }
 
-    $strQuery = join("", $aryQuery);
+    $objDB->freeResult($lngResultID);
 
     unset($aryQuery);
 
+    // 詳細取得
+    $strQuery = fncGetSlipDetailQuery($aryData["strReportKeyCode"]);
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
-
     if ($lngResultNum < 1) {
         fncOutputError(9051, DEF_FATAL, "帳票詳細データが存在しませんでした。", true, "", $objDB);
     }
@@ -120,43 +99,83 @@ elseif ($lngResultNum === 0) {
     for ($i = 0; $i < pg_num_fields($lngResultID); $i++) {
         $aryKeys[] = pg_field_name($lngResultID, $i);
     }
-    $rowNum = $aryParts["lngmaxline"];
+
+    // 行数だけデータ取得、配列に代入
+    for ($i = 0; $i < $lngResultNum; $i++) {
+        $aryResult = $objDB->fetchArray($lngResultID, $i);
+        for ($j = 0; $j < count($aryKeys); $j++) {
+            $aryDetail[$i][$aryKeys[$j] . $i] = $aryResult[$j];
+        }
+    }
+    $objDB->freeResult($lngResultID);
+
+    $rowNum = $slipKidObj["lngmaxline"];
+
     // テンプレートパス設定
-    if ($aryParts["lngslipkindcode"] == DEF_SLIP_KIND_EXCLUSIVE) {
+    if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_EXCLUSIVE) {
         $strTemplateHeaderPath = "list/result/slip_exc_header.html";
         $strTemplatePath = "list/result/slip_exc.html";
         $strTemplateFooterPath = "list/result/slip_exc_footer.html";
-    } else if ($aryParts["lngslipkindcode"] == DEF_SLIP_KIND_COMM) {
+    } else if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_COMM) {
         $strTemplateHeaderPath = "list/result/slip_comm_header.html";
         $strTemplatePath = "list/result/slip_comm.html";
         $strTemplateFooterPath = "list/result/slip_comm_footer.html";
-    } else if ($aryParts["lngslipkindcode"] == DEF_SLIP_KIND_DEBIT) {
+    } else if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_DEBIT) {
         $strTemplateHeaderPath = "list/result/slip_debit_header.html";
         $strTemplatePath = "list/result/slip_debit.html";
         $strTemplateFooterPath = "list/result/slip_debit_footer.html";
     }
 
-    // 行数だけデータ取得、配列に代入
-    for ($i = 0; $i < $lngResultNum; $i++) {
-        $aryResult = $objDB->fetchArray($lngResultID, $i);
-        for ($j = 3; $j < count($aryKeys); $j++) {
-            $aryDetail[$i][$aryKeys[$j] . (($i + $rowNum) % $rowNum)] = $aryResult[$j];
+    // 市販の場合
+    if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_COMM) {
+        // 消費税設定
+        $lngtaxclasscode = $aryParts["lngtaxclasscode"];
+        $curtotalprice = $aryParts["curtotalprice_comm"];
+        $curtax = $aryParts["curtax"];
+        $curtaxprice = $lngtaxclasscode != 1 ? 0 : ($lngtaxclasscode = 1 ? ($curtotalprice * $curtax) : ($curtotalprice / (1 + $curtax) * $curtax));
+        $aryParts["curtaxprice"] = round($curtaxprice);
+
+        // 合計金額
+        $curtotalprice = str_pad(round($curtotalprice), 8, " ", STR_PAD_LEFT);
+        for ($k = 0; $k < 8; $k++) {
+            $aryParts["curtotalprice" . $k] = substr($curtotalprice, $k, 1);
         }
+
+        // 税込金額
+        $curprice = $curtotalprice + $curtaxprice;
+        $curprice = str_pad(round($curprice), 8, " ", STR_PAD_LEFT);
+        $len = strlen($curprice);
+        for ($k = 0; $k < 8; $k++) {
+            $aryParts["curprice" . $k] = substr($curprice, $k, 1);
+        }
+
+        // DEBIT　NOTEの場合
+    } else if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_DEBIT) {
+
+        // 顧客電話番号
+        $aryParts["strcustomertel"] = "Tel:" . $aryParts["strcustomertel1"] . " " . $aryParts["strcustomertel2"];
+
+        // 顧客FAX番号
+        $aryParts["strcustomerfax"] = "Fax.:" . $aryParts["strcustomerfax1"] . " " . $aryParts["strcustomerfax2"];
+
+        // 合計金額
+        $curTotalPrice = ($aryParts["lngmonetaryunitcode"] == 1 ? "&yen; " : $aryParts["strmonetaryunitsign"]) . " " . $aryParts["curtotalprice"];
+
+        $aryParts["curtotalprice"] = $curTotalPrice;
+        $aryParts["nameofbank"] = $aryParts["lngpaymentmethodcode"] == 1 ? "MUFG BANK, LTD." : "";
+        $aryParts["nameofbranch"] = $aryParts["lngpaymentmethodcode"] == 1 ? "ASAKUSA BRANCH" : "";
+        $aryParts["addressofbank1"] = $aryParts["lngpaymentmethodcode"] == 1 ? "4-2, ASAKUSA 1-CHOME, " : "";
+        $aryParts["addressofbank2"] = $aryParts["lngpaymentmethodcode"] == 1 ? " TAITO-KU, TOKYO 111-0032, JAPAN" : "";
+        $aryParts["swiftcode"] = $aryParts["lngpaymentmethodcode"] == 1 ? "BOTKJPJT" : "";
+        $aryParts["accountname"] = $aryParts["lngpaymentmethodcode"] == 1 ? "KUWAGATA CO.,LTD." : "";
+        $aryParts["accountno"] = $aryParts["lngpaymentmethodcode"] == 1 ? "1063143" : "";
     }
-    $objDB->freeResult($lngResultID);
-
-    // 合計金額処理(最後のページだけに表示)別変数に保存
-    $curTotalPrice = $aryParts["strmonetaryunitsign"] . " " . $aryParts["curtotalprice"];
-    unset($aryParts["curtotalprice"]);
-
-    // ページ処理
-    $aryParts["lngNowPage"] = 1;
-    $aryParts["lngAllPage"] = ceil($lngResultNum / $rowNum);
-    $objDB->close();
 
     // HTML出力
     $objTemplateHeader = new clsTemplate();
     $objTemplateHeader->getTemplate($strTemplateHeaderPath);
+    $objTemplateHeader->replace($aryData);
+    $objTemplateHeader->complete();
     $strTemplateHeader = $objTemplateHeader->strTemplate;
 
     $objTemplateFooter = new clsTemplate();
@@ -167,51 +186,34 @@ elseif ($lngResultNum === 0) {
     $objTemplate->getTemplate($strTemplatePath);
     $strTemplate = $objTemplate->strTemplate;
 
-    // ページ数分テンプレートを繰り返し読み込み
-    for (; $aryParts["lngNowPage"] < ($aryParts["lngAllPage"] + 1); $aryParts["lngNowPage"]++) {
-        $objTemplate->strTemplate = $strTemplate;
+    $objTemplate->strTemplate = $strTemplate;
 
-        // 表示しようとしているページが最後のページの場合、
-        // 合計金額を代入(発注書出力特別処理)
-        if ($aryParts["lngNowPage"] == $aryParts["lngAllPage"]) {
-            $aryParts["curTotalPrice"] = $curTotalPrice;
-            $aryParts["strTotalAmount"] = "Total Amount";
+    // 置き換え
+    $objTemplate->replace($aryParts);
+
+    for ($i = 0; $i < $lngResultNum; $i++) {
+        // 合計金額
+        if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_COMM) {
+            // 金額設定
+            $cursubtotalprice = str_pad($aryDetail[$i]["cursubtotalprice_comm" . ($i)], 8, " ", STR_PAD_LEFT);
+            for ($k = 0; $k < 8; $k++) {
+                $aryDetail[$i]["cursubtotalprice" . $i . $k] = substr($cursubtotalprice, $k, 1);
+            }
+            // 入数
+            $aryDetail[$i]["lngquantity" . ($i)] = "";
+        } else if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_DEBIT) {
+            // 顧客受注番号
+            if ($aryDetail[$i]["strcustomersalescode" . ($i)] != "") {
+                $aryDetail[$i]["strcustomersalescode" . ($i)] = "(PO No:" . $aryDetail[$i]["strcustomersalescode" . ($i)] . ")";
+            }
         }
 
         // 置き換え
-        $objTemplate->replace($aryParts);
-
-        $lngRecordCount = 0;
-        for ($j = ($aryParts["lngNowPage"] - 1) * $rowNum; $j < ($aryParts["lngNowPage"] * $rowNum); $j++) {
-            $aryDetail[$j]["record" . $lngRecordCount] = $j + 1;
-            $index = ($j + $rowNum) % $rowNum;
-
-            // 単価が存在すれば、それに通貨単位をつける
-            if ($aryDetail[$j]["curproductprice" . ($index)] > 0) {
-                $aryDetail[$j]["curproductprice" . ($index)] = $aryDetail[$j]["curproductprice" . ($index)];
-            }
-
-            // 小計が存在すれば、それに通貨単位をつける
-            if ($aryDetail[$j]["cursubtotalprice" . ($index)] > 0) {
-                $aryDetail[$j]["cursubtotalprice" . ($index)] = $aryDetail[$j]["cursubtotalprice" . ($index)];
-            }
-
-            // 製品数量が存在すれば、それに製品単位をつける
-            if ($aryDetail[$j]["lngproductquantity" . ($index)] > 0) {
-                $aryDetail[$j]["lngproductquantity" . ($index)] .= "(" . $aryDetail[$j]["strproductunitname" . ($index)] . ")";
-            }
-
-            // 入数
-            $aryDetail[$j]["lngquantity" . ($index)] = "";
-
-            $objTemplate->replace($aryDetail[$j]);
-            $lngRecordCount++;
-        }
-
-        $objTemplate->complete();
-        $aryHtml[] = $objTemplate->strTemplate;
-
+        $objTemplate->replace($aryDetail[$i]);
     }
+
+    $objTemplate->complete();
+    $aryHtml[] = $objTemplate->strTemplate;
 
     $strBodyHtml = join("<br style=\"page-break-after:always;\">\n", $aryHtml);
 
@@ -223,7 +225,7 @@ elseif ($lngResultNum === 0) {
     $lngSequence = fncGetSequence("t_Report.lngReportCode", $objDB);
 
     // 帳票テーブルにINSERT
-    $strQuery = "INSERT INTO t_Report VALUES ( $lngSequence, " . DEF_REPORT_SLIP . ", " . $aryParts["lngorderno"] . ", '', '$lngSequence' )";
+    $strQuery = "INSERT INTO t_Report VALUES ( $lngSequence, " . DEF_REPORT_SLIP . ", " . $aryParts["lngslipno"] . ", '', '$lngSequence' )";
 
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
@@ -241,8 +243,14 @@ elseif ($lngResultNum === 0) {
 
     $objDB->transactionCommit();
 }
-echo "<script language=javascript>parent.window.close();</script>";
 
 $objDB->close();
+
+
+
+header("location: /list/result/slip/download.php?strSessionID=" . $aryData["strSessionID"]
+. "&strReportKeyCode=" . $aryData["strReportKeyCode"]
+    . "&lngReportCode=" . $aryData["lngReportCode"]
+    . "&reprintFlag=" . $aryData["reprintFlag"]);
 
 return true;

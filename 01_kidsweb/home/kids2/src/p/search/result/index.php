@@ -258,7 +258,7 @@ if (array_key_exists("dtmInsertDate", $searchColumns) &&
 // 企画進行状況
 if (array_key_exists("lngGoodsPlanProgressCode", $searchColumns) &&
     array_key_exists("lngGoodsPlanProgressCode", $searchValue)) {
-    $aryQuery[] = " AND gp.lnggoodsplanprogresscode = " . $lngGoodsPlanProgressCode . "";
+    $aryQuery[] = " AND gp.lnggoodsplanprogresscode = " . $searchValue["lngGoodsPlanProgressCode"] . "";
 }
 // 改訂日時
 if (array_key_exists("dtmUpdateDate", $searchColumns) &&
@@ -405,8 +405,8 @@ $aryQuery[] = "  p.strProductCode, p.lngProductNo Desc";
 
 // クエリを平易な文字列に変換
 $strQuery = implode("\n", $aryQuery);
-// echo $strQuery;
-// return;
+echo $strQuery;
+return;
 // 値をとる =====================================
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 

@@ -45,26 +45,40 @@ $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 if (!fncCheckAuthority(DEF_FUNCTION_LO0, $objAuth) || !fncCheckAuthority(DEF_FUNCTION_PO0, $objAuth)) {
     fncOutputError(9052, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
+
+if ($aryListOutputMenu[$aryData["lngReportClassCode"]]["file"] == "slip") {
+	$function = "fncDownload('slip/action.php?strSessionID=" . $aryData["strSessionID"]
+	 . "&strReportKeyCode=" . $aryData["strReportKeyCode"]
+	 . "&lngReportCod=" . $aryData["lngReportCode"] ."')";
+	 $url = "#";
+} else {
+	$function = "fncPrintFrame( parent.list )";
+	$url = $aryListOutputMenu[$aryData["lngReportClassCode"]]["file"] . "/action.php?strSessionID=" . $aryData["strSessionID"]
+	. "&strReportKeyCode=" . $aryData["strReportKeyCode"]
+	. "&lngReportCod=" . $aryData["lngReportCode"];
+}
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html lang="ja">
-<head>
-<title>K.I.D.S.</title>
-<meta http-equiv="content-type" content="text/html; charset=euc-jp">
+	<head>
+	<title>K.I.D.S.</title>
+	<meta http-equiv="content-type" content="text/html; charset=euc-jp">
 
-<script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
-<script type="text/javascript" language="javascript" src="/list/printset/functions.js"></script>
-<link rel="stylesheet" type="text/css" media="screen" href="/list/printset/layout.css">
-
+	<script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
+	<script type="text/javascript" language="javascript" src="/list/printset/functions.js"></script>
+	<link rel="stylesheet" type="text/css" media="screen" href="/list/printset/layout.css">
+	<!-- <script src="/cmn/jquery/jquery-3.1.0.js"></script>
+	<script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
+	<script src="/cmn/jquery/ui/jquery-ui-1.12.0.js"></script> -->
+	<script src="/list/result/slip/functions.js"></script>
 </head>
 <body id="Backs" oncontextmenu="return false;">
-
 <div>
-	
 <div align="right" style="width: 50%; display: inline-block;">
-	<!--<a id="print" href="<?echo $aryListOutputMenu[$aryData["lngReportClassCode"]]["file"]; ?>/action.php?strSessionID=<?echo $aryData["strSessionID"]; ?>&strReportKeyCode=<?echo $aryData["strReportKeyCode"]; ?>&lngReportCode=<?echo $aryData["lngReportCode"]; ?>" onclick="fncPrintFrame( parent.list )"><img onmouseover="fncPrintButton( 'on' , this );" onmouseout="fncPrintButton( 'off' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="/img/type01/list/print_off_bt.gif" width="72" height="20" border="0" alt="PRINT"></a> -->
-	<a id="print" href=""><img onmouseover="fncPrintButton( 'on' , this );" onmouseout="fncPrintButton( 'off' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="/img/type01/list/print_off_bt.gif" width="72" height="20" border="0" alt="PRINT"></a>
 
+	<!-- <a id="print" href="<?echo $aryListOutputMenu[$aryData["lngReportClassCode"]]["file"]; ?>/action.php?strSessionID=<?echo $aryData["strSessionID"]; ?>&strReportKeyCode=<?echo $aryData["strReportKeyCode"]; ?>&lngReportCode=<?echo $aryData["lngReportCode"]; ?>" onclick="<?echo $function; ?>"> -->
+	<a id="print" href="<?echo $url; ?>" onclick="<?echo $function; ?>">
+	<img onmouseover="fncPrintButton( 'on' , this );" onmouseout="fncPrintButton( 'off' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="/img/type01/list/print_off_bt.gif" width="72" height="20" border="0" alt="PRINT"></a>
 </div>
 <div align="right" style="width: 45%;font-size: 9pt;display: none" id="rePrint">
 	<input id="rePrintChk" type="checkbox">再印刷を備考に印字する
