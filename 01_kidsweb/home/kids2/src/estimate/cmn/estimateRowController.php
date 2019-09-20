@@ -35,14 +35,14 @@ abstract class estimateRowController {
     public $delivery;
     public $quantity;
     public $price;
-    protected $divisionSubject;
+    public $divisionSubject;
     public $classItem;
-    protected $subtotal;
+    public $subtotal;
     public $conversionRate;
-    protected $monetaryDisplay;
+    public $monetaryDisplay;
     public $monetary;
     public $customerCompany;
-    protected $note;
+    public $note;
 
     protected $row;
 
