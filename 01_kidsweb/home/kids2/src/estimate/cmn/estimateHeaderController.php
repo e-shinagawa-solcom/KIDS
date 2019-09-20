@@ -6,9 +6,6 @@ require_once (SRC_ROOT. "/estimate/cmn/const/workSheetConst.php");
 /**
 *	ワークシートヘッダーのデータチェッククラス
 *	
-*	以下のグローバル変数を定義すること
-*   @param object $objDB        データベース接続オブジェクト(clsDBまたは継承クラス)
-*   @param object $sheet        phpSpreadSheetのシートオブジェクト
 *   
 */
 
@@ -40,8 +37,9 @@ class estimateHeaderController {
 
     protected $cellAddressList; // セル名称に対応したセル位置のリスト
 
-    public function __construct() {
-
+    protected function __construct() {
+        $this->setNameList();
+        $this->setTitleNameList();
     }
 
     protected function setNameList() {
@@ -54,52 +52,6 @@ class estimateHeaderController {
         if (!self::$titleNameList) {
             self::$titleNameList = workSheetConst::WORK_SHEET_HEADER_TITLE_CELL;
         }
-    }
-
-    // セル名称に対応したセルのリストと行番号による初期データ作成
-    public function initialize($cellAddressList, $loginUserCode) {
-        $this->cellAddressList = $cellAddressList;
-        $this->setNameList();
-        $this->setTitleNameList();
-        $params = $this->getCellParams();
-        $this->params = $params;
-        $this->setCellParams($params);
-        $this->setCellTitleParams();
-        $this->loginUserCode = $loginUserCode;
-        return true;
-    }
-
-    // 各項目のデータを取得する
-    protected function getCellParams() {
-        $nameList = self::$nameList;
-        $cellAddressList = $this->cellAddressList;
-        global $sheet;
-        if ($nameList) {
-            foreach ($nameList as $key => $cellName) {
-                $cellAdress = $cellAddressList[$cellName];
-                $param[$key] = $sheet->getCell($cellAdress)->getCalculatedValue();
-            }
-        } else {
-            return false;
-        }
-        return $param;
-    }
-
-    // 各項目のタイトル名を取得する
-    protected function setCellTitleParams() {
-        $nameList = self::$titleNameList;
-        $cellAddressList = $this->cellAddressList;
-        global $sheet;
-        if ($nameList) {
-            foreach ($nameList as $key => $cellName) {
-                $cellAdress = $cellAddressList[$cellName];
-                $param[$key] = $sheet->getCell($cellAdress)->getCalculatedValue();
-            }
-        } else {
-            return false;
-        }
-        $this->headerTitleNameList = $param;
-        return true;
     }
 
     // 配列内のデータを各定数にセットする
@@ -145,36 +97,33 @@ class estimateHeaderController {
         $this->validateCartonQuantity(); // カートン入り数
         $this->validateProductionQuantity(); // 償却数
         
-        // グローバルのDBオブジェクトを取得する
-        global $objDB;
-
         $loginUserCode = $this->loginUserCode;
         $inchargeGroupCodeNumber = $this->inchargeGroupCodeNumber;
         $inchargeUserCodeNumber = $this->inchargeUserCodeNumber;
 
         // ログインユーザーが営業部署に所属するかチェックする
         if (!$this->messageCode['inchargeGroupCode']) {
-            $result = $objDB->userCodeAffiliateCheck($loginUserCode, $inchargeGroupCodeNumber);
+            $result = $this->objDB->userCodeAffiliateCheck($loginUserCode, $inchargeGroupCodeNumber);
             if (!$result) {
-                $this->messageCode['loginUser'] = 9202;
+                $this->messageCode['loginUser'] = DEF_MESSAGE_CODE_MASTER_CHECK_ERROR;
             }
         }
 
         // 担当者が営業部署に所属するかチェックする
         if (!$this->messageCode['inchargeGroupCode'] && !$this->messageCode['inchargeUserCode']) {
-            $result = $objDB->userDisplayCodeAffiliateCheck($inchargeUserCodeNumber, $inchargeGroupCodeNumber);
+            $result = $this->objDB->userDisplayCodeAffiliateCheck($inchargeUserCodeNumber, $inchargeGroupCodeNumber);
             if (!$result) {
-                $this->messageCode['loginUser'] = 9202;
+                $this->messageCode['loginUser'] = DEF_MESSAGE_CODE_MASTER_CHECK_ERROR;
             }
         }
 
         if (!$this->messageCode['productCode'] && $this->productCode) {
             // 製品マスタとシートの営業部署が一致するか確認する
-            $currentRecord = $objDB->getCurrentRecordForProductCode($this->productCode);
+            $currentRecord = $this->objDB->getCurrentRecordForProductCode($this->productCode);
             if($currentRecord !== false) {
                 $groupDisplayCode = $currentRecord->strgroupdisplaycode;
                 if ($groupDisplayCode != $inchargeGroupCodeNumber) {
-                    $this->messageCode['inchargeGroupCode'] = 9202;
+                    $this->messageCode['inchargeGroupCode'] = DEF_MESSAGE_CODE_MASTER_CHECK_ERROR;
                 }                
             }
         }
@@ -183,31 +132,34 @@ class estimateHeaderController {
         $headerTitleNameList = $this->headerTitleNameList;
 
         if ($messageCodeList) {
+            $str = '';
             // メッセージに出力する項目をセットする
             foreach ($messageCodeList as $key => $messageCode) {
                 $message = '';
                 switch ($messageCode) {
-                    case 9001:
-                        $str = "ヘッダ部：". mb_convert_encoding($headerTitleNameList[$key], 'EUC-JP', 'UTF-8');
-                        break;
-                    case 9201:
+                    case DEF_MESSAGE_CODE_NOT_ENTRY_ERROR:
                         $str = array(
                             "ヘッダ部",
                             mb_convert_encoding($headerTitleNameList[$key], 'EUC-JP', 'UTF-8')
                         );
                         break;
-                    case 9202:
+                    case DEF_MESSAGE_CODE_FORMAT_ERROR:
+                        $str = array(
+                            "ヘッダ部",
+                            mb_convert_encoding($headerTitleNameList[$key], 'EUC-JP', 'UTF-8')
+                        );
+                        break;
+                    case DEF_MESSAGE_CODE_MASTER_CHECK_ERROR:
                         $str = array(
                             "ヘッダ部",
                             mb_convert_encoding($headerTitleNameList[$key], 'EUC-JP', 'UTF-8'),
-                            $this->params[$key],
                         );
                         break;
                     default:
                         break;    
                 }
 
-                $message = fncOutputError($messageCode, DEF_WARNING, $str, FALSE, '', $objDB);
+                $message = fncOutputError($messageCode, DEF_WARNING, $str, FALSE, '', $this->objDB);
 
                 if ($message) {
                     $errorMessage[] = $message;
@@ -235,13 +187,12 @@ class estimateHeaderController {
         if (isset($productCode) && $productCode !=='') {
             if(!preg_match("/\A[0-9]{5}\z/", $productCode)) {
                 // エラー処理
-                $this->messageCode['productCode'] = 9201;
+                $this->messageCode['productCode'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
             } else {
-                global $objDB;
-                $record = $objDB->getRecordValue('m_product', 'strproductcode', $productCode);
+                $record = $this->objDB->getRecordValue('m_product', 'strproductcode', $productCode);
                 if ($record == false) {
                     // マスターチェックエラー
-                    $this->messageCode['productCode'] = 9202;
+                    $this->messageCode['productCode'] = DEF_MESSAGE_CODE_PRODUCT_CODE_ERROR;
                 }
             }
         }
@@ -254,7 +205,7 @@ class estimateHeaderController {
         // バリデーション条件
         if (!isset($productName) || $productName ==='') {
             // エラーメッセージorエラーコード出力（必須エラー）
-            $this->messageCode['productName'] = 9001; // 必須
+            $this->messageCode['productName'] = DEF_MESSAGE_CODE_NOT_ENTRY_ERROR; // 必須
         }
         return true;
     }
@@ -266,10 +217,10 @@ class estimateHeaderController {
         if (isset($productEnglishName) && $productEnglishName !=='') {
             if(!preg_match("/\A[ -~]+\z/", $productEnglishName)) {
                 // エラー処理
-                $this->messageCode['productEnglishName'] = 9201;
+                $this->messageCode['productEnglishName'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
             }
         } else {
-            $this->messageCode['productEnglishName'] = 9001; // 必須チェック
+            $this->messageCode['productEnglishName'] = DEF_MESSAGE_CODE_NOT_ENTRY_ERROR; // 必須チェック
         }
         return true;
     }
@@ -278,12 +229,16 @@ class estimateHeaderController {
     protected function validateRetailPrice() {
         $retailPrice = $this->retailPrice;
         if (isset($retailPrice) && $retailPrice !=='') {
-            if(!preg_match("/\A[0-9]+\z/", $retailPrice)) {
+            if(!is_numeric($retailPrice)) {
                 // エラー処理
-                $this->messageCode['retailPrice'] = 9201;
+                $this->messageCode['retailPrice'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
+            } else {
+                // 小数点以下第3位を四捨五入
+                $formattedValue = number_format(round($retailPrice, 2), 2, '.', '');
+                $this->retailPrice = $formattedValue;
             }
         } else {
-            $this->messageCode['retailPrice'] = 9001; // 必須チェック
+            $this->messageCode['retailPrice'] = DEF_MESSAGE_CODE_NOT_ENTRY_ERROR; // 必須チェック
         }
         return true;
     }
@@ -295,22 +250,21 @@ class estimateHeaderController {
         if (isset($inchargeGroupCode) && $inchargeGroupCode !=='') {
             if (preg_match("/\A[0-9]+:.+\z/", $inchargeGroupCode)) {
                 list ($inchargeGroupCodeNumber, $inchargeGroupCodeName) = explode(':', $inchargeGroupCode);
-                global $objDB; // グローバルのデータベースオブジェクト取得
-                $result = $objDB->getGroupRecordForDisplay($inchargeGroupCodeNumber);
+                $result = $this->objDB->getGroupRecordForDisplay($inchargeGroupCodeNumber);
                 // マスターチェック
                 if (!$result) {
                     // レコードが取得できなかった場合
-                    $this->messageCode['inchargeGroupCode'] = 9202;
+                    $this->messageCode['inchargeGroupCode'] = DEF_MESSAGE_CODE_MASTER_CHECK_ERROR;
                 } else {
                     $this->inchargeGroupCodeNumber = $inchargeGroupCodeNumber; // グループコードをセットする
                 }
             } else {
                 // 入力形式不正
-                $this->messageCode['inchargeGroupCode'] = 9201;
+                $this->messageCode['inchargeGroupCode'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
             }
         } else {
             // 必須エラー
-            $this->messageCode['inchargeGroupCode'] = 9001;
+            $this->messageCode['inchargeGroupCode'] = DEF_MESSAGE_CODE_NOT_ENTRY_ERROR;
         }
         return true;
     }
@@ -322,22 +276,21 @@ class estimateHeaderController {
         if (isset($inchargeUserCode) && $inchargeUserCode !=='') {
             if (preg_match("/\A[0-9]+:.+\z/", $inchargeUserCode)) {
                 list ($inchargeUserCodeNumber, $inchargeUserCodeName) = explode(':', $inchargeUserCode);
-                global $objDB; // グローバルのデータベースオブジェクト取得
-                $result = $objDB->getUserRecordForDisplay($inchargeUserCodeNumber);
+                $result = $this->objDB->getUserRecordForDisplay($inchargeUserCodeNumber);
                 // マスターチェック
                 if (!$result) {
                     // レコードが取得できなかった場合
-                    $this->messageCode['inchargeUserCode'] = 9202;
+                    $this->messageCode['inchargeUserCode'] = DEF_MESSAGE_CODE_MASTER_CHECK_ERROR;
                 } else {
                     $this->inchargeUserCodeNumber = $inchargeUserCodeNumber; // 表示上のユーザーコードをセットする
                 }
             } else {
                 // 入力形式不正
-                $this->messageCode['inchargeUserCode'] = 9201;
+                $this->messageCode['inchargeUserCode'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
             }
         } else {
             // 必須エラー
-            $this->messageCode['inchargeUserCode'] = 9001;
+            $this->messageCode['inchargeUserCode'] = DEF_MESSAGE_CODE_NOT_ENTRY_ERROR;
         }
         return true;
     }
@@ -349,22 +302,21 @@ class estimateHeaderController {
         if (isset($developUserCode) && $developUserCode !=='') {
             if (preg_match("/\A[0-9]+:.+\z/", $developUserCode)) {
                 list ($developUserCodeNumber, $developUserCodeName) = explode(':', $developUserCode);
-                global $objDB; // グローバルのデータベースオブジェクト取得
-                $result = $objDB->getUserRecordForDisplay($developUserCodeNumber);
+                $result = $this->objDB->getUserRecordForDisplay($developUserCodeNumber);
                 // マスターチェック
                 if (!$result) {
                     // レコードが取得できなかった場合
-                    $this->messageCode['developUserCode'] = 9202;
+                    $this->messageCode['developUserCode'] = DEF_MESSAGE_CODE_MASTER_CHECK_ERROR;
                 } else {
                     $this->developUserCodeNumber = $developUserCodeNumber; // 表示上のユーザーコードをセットする
                 }
             } else {
                 // 入力形式不正
-                $this->messageCode['developUserCode'] = 9201;
+                $this->messageCode['developUserCode'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
             }
         } else {
             // 必須エラー
-            $this->messageCode['developUserCode'] = 9001;
+            $this->messageCode['developUserCode'] = DEF_MESSAGE_CODE_NOT_ENTRY_ERROR;
         }
         return true;
     }
@@ -375,11 +327,11 @@ class estimateHeaderController {
         if (isset($cartonQuantity) && $cartonQuantity !=='') {
             if (!preg_match("/\A[1-9][0-9]*\z/", $cartonQuantity)) {
                 // 入力形式不正
-                $this->messageCode['cartonQuantity'] = 9201;
+                $this->messageCode['cartonQuantity'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
             }
         } else {
             // 必須エラー
-            $this->messageCode['cartonQuantity'] = 9001;
+            $this->messageCode['cartonQuantity'] = DEF_MESSAGE_CODE_NOT_ENTRY_ERROR;
         }
         return true;
     }
@@ -390,11 +342,11 @@ class estimateHeaderController {
         if (isset($productionQuantity) && $productionQuantity !=='') {
             if (!preg_match("/\A[1-9][0-9]*\z/", $productionQuantity)) {
                 // 入力形式不正
-                $this->messageCode['productionQuantity'] = 9201;
+                $this->messageCode['productionQuantity'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
             }
         } else {
             // 必須エラー
-            $this->messageCode['productionQuantity'] = 9001;
+            $this->messageCode['productionQuantity'] = DEF_MESSAGE_CODE_NOT_ENTRY_ERROR;
         }
         return true;
     }

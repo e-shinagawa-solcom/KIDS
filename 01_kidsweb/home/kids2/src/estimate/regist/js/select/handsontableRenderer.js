@@ -1,6 +1,7 @@
 
 var script = $('#script').attr('data-param');
 var result = JSON.parse(script);
+$('#script').remove();
 
 var sheetNumber = Object.keys(result).length;
 
@@ -88,7 +89,6 @@ for (var sNum = 0; sNum < sheetNumber; sNum++) {
   });
 }
 
-
 // Handsontable¤Îtd¥¿¥°CSS
 function firstRenderer(instance, td, row, col, prop, value, cellProperties) {
   var id = instance.rootElement.id;
@@ -114,6 +114,8 @@ function firstRenderer(instance, td, row, col, prop, value, cellProperties) {
   var borderColor = '#' + border['top']['color'] + ' #' + border['right']['color'] + ' #' + border['bottom']['color'] + ' #' + border['left']['color'];
   var borderStyle = border['top']['style'] + ' ' + border['right']['style'] + ' ' + border['bottom']['style'] + ' ' + border['left']['style'];
   var borderWidth = border['top']['width'] + ' ' + border['right']['width'] + ' ' + border['bottom']['width'] + ' ' + border['left']['width'];
+  var clsRow = 'row' + row;
+  var clsCol = 'col' + col;
   td.style.background = background;
   td.style.fontSize = fontSize;
   td.style.fontFamily = fontFamily;
@@ -125,6 +127,8 @@ function firstRenderer(instance, td, row, col, prop, value, cellProperties) {
   td.style.borderColor = borderColor;
   td.style.borderStyle = borderStyle;
   td.style.height = rowHeightCell;
+  td.classList.add(clsRow);
+  td.classList.add(clsCol);
  
   if (viewFlag[number] !== true && hidden[row] === true) {
     td.style.padding = '0px';

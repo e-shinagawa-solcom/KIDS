@@ -110,7 +110,7 @@ class makeHTML {
 	*/
 	//-------------------------------------------------------------------------
     public static function getGridTable($sheetNum) {
-        $gridHTML = "<div id=\"grid".$sheetNum."\"></div>\n";
+        $gridHTML = "<div id=\"grid".$sheetNum."\" class=\"grid\"></div>\n";
         return $gridHTML;
 	}
 	
@@ -334,6 +334,93 @@ class makeHTML {
 		$strHTML	= implode( "", $aryHTML );
 
 		unset( $aryHTML );
+		return $strHTML;
+	}
+
+	public function getPreviewHeader($maxRevisionNo, $revisionNo = null) {
+		if (!isset($revisionNo)) {
+			$revisionNo = $maxRevisionNo;
+		}
+		$strHTML = "<div class = \"sheetPreviewHeader\" id = \"preview\">\n";
+		$strHTML .= "<div class = \"data-buttons\">\n";
+		for ($i = $maxRevisionNo; $i >= 0; --$i) {
+			if ($i == $revisionNo) {
+				$strHTML .= "<a href= \"#\">\n";
+				$strHTML .= "<div id=\"btnSelected\">\n";
+				$strHTML .= "<img class= \"selected_button\" src=\"/img/type01/estimate/preview/data_selected_preview.gif\">\n";
+				$strHTML .= "<p>データ".$revisionNo ."</p>";
+				$strHTML .=	"</div>\n</a>\n";
+			} else {
+				$strHTML .= "<a href= \"#\">\n";
+				$strHTML .= "<div id=\"btnSwitch\">\n";
+				$strHTML .= "<img class= \"switch_button\" src=\"/img/type01/estimate/preview/data_others_preview.gif\">\n";
+				$strHTML .= "<p>データ".$revisionNo ."</p>";
+				$strHTML .=	"</div>\n</a>\n";
+			}
+		}
+		$strHTML .=	"</div>\n";
+		
+		$strHTML .= "<div class = \"action-buttons\">\n";
+
+		$strHTML .= "<button type=\"button\" id=\"url_copy\" onclick=\"urlCopy();\">\n";
+		$strHTML .= "<img class= \"url_copy_button\" src=\"/img/type01/estimate/preview/url_copy.gif\">\n";
+		$strHTML .=	"</button>\n";
+
+		$strHTML .= "<button type=\"button\" id=\"download\" onclick=\"fileDownload();\">\n";
+		$strHTML .= "<img class= \"download_button\" src=\"/img/type01/estimate/preview/download.gif\">\n";
+		$strHTML .=	"</button>\n";
+
+		$strHTML .= "<button type=\"button\" id=\"print\" onclick=\"sheetPrint();\">\n";
+		$strHTML .= "<img class= \"print_button\" src=\"/img/type01/estimate/preview/print.gif\">\n";
+		$strHTML .=	"</button>\n";
+
+		if ($revisionNo == $maxRevisionNo) {
+			$strHTML .= "<button type=\"button\" id=\"edit\" onclick=\"editModeTransition();\">\n";
+			$strHTML .= "<img class= \"edit_button\" src=\"/img/type01/estimate/preview/edit.gif\">\n";
+			$strHTML .=	"</button>\n";
+		}		
+		
+		$strHTML .=	"</div>\n";
+		$strHTML .=	"</div>\n";
+		return $strHTML;
+	}
+
+	// 編集モードのヘッダ生成Html
+	public function getEditHeader($maxRevisionNo, $revisionNo = null) {
+		if (!isset($revisionNo)) {
+			$revisionNo = $maxRevisionNo;
+		}
+		$strHTML = "<div class = \"sheetEditHeader\" id = \"edit\">\n";
+		$strHTML .= "<div class = \"data-buttons\">\n";
+		for ($i = $maxRevisionNo; $i >= 0; --$i) {
+			if ($i == $revisionNo) {
+				$strHTML .= "<a href= \"#\">\n";
+				$strHTML .= "<div id=\"btnSelected\">\n";
+				$strHTML .= "<img class= \"selected_button\" src=\"/img/type01/estimate/preview/data_selected_preview.gif\">\n";
+				$strHTML .= "<p>データ".$revisionNo ."</p>";
+				$strHTML .=	"</div>\n</a>\n";
+			} else {
+				$strHTML .= "<a href= \"#\">\n";
+				$strHTML .= "<div id=\"btnSwitch\">\n";
+				$strHTML .= "<img class= \"switch_button\" src=\"/img/type01/estimate/preview/data_others_preview.gif\">\n";
+				$strHTML .= "<p>データ".$revisionNo ."</p>";
+				$strHTML .=	"</div>\n</a>\n";
+			}
+		}
+		$strHTML .=	"</div>\n";
+		
+		$strHTML .= "<div class = \"action-buttons\">\n";
+
+		$strHTML .= "<button type=\"button\" id=\"cancel_edit\" onclick=\"cancelEdit();\">\n";
+		$strHTML .= "<img class= \" cancel_edit_button\" src=\"/img/type01/estimate/preview/cancel.gif\">\n";
+		$strHTML .=	"</button>\n";
+
+		$strHTML .= "<button type=\"button\" id=\"update_regist\">\n";
+		$strHTML .= "<img class= \"update_regist_button\" src=\"/img/type01/estimate/preview/regist.gif\">\n";
+		$strHTML .=	"</button>\n";
+		
+		$strHTML .=	"</div>\n";
+		$strHTML .=	"</div>\n";
 		return $strHTML;
 	}
 

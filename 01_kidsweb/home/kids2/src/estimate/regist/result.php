@@ -1,4 +1,4 @@
-<?
+<?php
 /** 
 *	見積原価管理 実行画面
 *
@@ -21,7 +21,7 @@
 
 	// 見積原価用クラス読み込み
 	require_once ( SRC_ROOT . "estimate/cmn/const/workSheetConst.php");
-	require_once ( SRC_ROOT . "estimate/cmn/estimateRegistData.php");
+	require_once ( SRC_ROOT . "estimate/cmn/registInsertData.php");
 
 	// 見積原価DBクラス読み込み
     require_once ( SRC_ROOT . "estimate/cmn/estimateDB.php");
@@ -77,10 +77,10 @@ mb_convert_variables('EUC-JP', 'UTF-8', $regist);
 unset($aryData['registJson']);
 unset($registJson);
 
-$objRegist = new estimateRegistData();
+$objRegist = new registInsertData();
 
 // 登録に必要なデータをセットする
-$objRegist->setParam($regist, $objAuth->UserCode, $objDB);
+$objRegist->setRegistParam($regist, $objAuth->UserCode, $objDB);
 
 // 見積原価登録の場合、INSERT
 if ( $aryData["lngFunctionCode"] == DEF_FUNCTION_E1 ) {
@@ -109,7 +109,7 @@ if( $aryData["lngFunctionCode"] == DEF_FUNCTION_E1 )
 	$postData = array(
 		'strSessionID' => $sessionID,
 		'productCode' => $productCode,
-		'reviceCode' => $reviceCode,
+		'reviseCode' => $reviseCode,
 		'completeMessage' => $completeMessage
 	);
 

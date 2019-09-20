@@ -34,6 +34,10 @@
 	});
 	// 請求書検索
 	$('.navi-inv-search').on('click', function(){
-		$(location).attr('href', '/inv/index.php?strSessionID=' + sessionId);
+		$(location).attr('href', '/inv/search/index.php?strSessionID=' + sessionId);
+	});
+	// 請求書登録
+	$('.navi-inv-regits').on('click', function(){
+		$(location).attr('href', '/inv/regist/index.php?strSessionID=' + sessionId);
 	});
 })($.cookie('strSessionID'));

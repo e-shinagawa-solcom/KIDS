@@ -1644,7 +1644,8 @@ class Xlsx extends BaseReader
                 if ($style->fill->patternFill->fgColor) {
                     $docStyle->getFill()->getStartColor()->setARGB(self::readColor($style->fill->patternFill->fgColor, true));
                 } else {
-                    $docStyle->getFill()->getStartColor()->setARGB('FF000000');
+                    // 背景色の指定がない場合は白にする（デフォルト値：'FF000000')
+                    $docStyle->getFill()->getStartColor()->setARGB('FFFFFFFF');
                 }
                 if ($style->fill->patternFill->bgColor) {
                     $docStyle->getFill()->getEndColor()->setARGB(self::readColor($style->fill->patternFill->bgColor, true));

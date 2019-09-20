@@ -4,7 +4,7 @@ require_once ('conf.inc');
 require_once (SRC_ROOT. "/estimate/cmn/const/workSheetConst.php");
 
 // Composerのオートロードファイル読み込み
-require_once ( LIB_COMPOSER_FILE );
+require_once ( VENDOR_AUTOLOAD_FILE );
 
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
 
@@ -23,6 +23,8 @@ abstract class estimateRowController {
 
     abstract protected function setNameList(); // 対象エリアごとのセル名称の指定
 
+    protected $objDB;
+
     protected $errorMessage; // エラーメッセージ
 
     // 取り込み値
@@ -33,14 +35,16 @@ abstract class estimateRowController {
     public $delivery;
     public $quantity;
     public $price;
-    public $divisionSubject;
+    protected $divisionSubject;
     public $classItem;
-    public $subtotal;
+    protected $subtotal;
     public $conversionRate;
-    public $monetaryDisplay;
+    protected $monetaryDisplay;
     public $monetary;
     public $customerCompany;
-    public $note;
+    protected $note;
+
+    protected $row;
 
     // 登録用にセットする値
     public $divisionSubjectCode;
@@ -67,8 +71,10 @@ abstract class estimateRowController {
     protected static $resultNameList; // 対象エリアの計算結果のセル名称(明細最終行の次の行)
 
 
-    protected function __construct() {
+    protected function __construct($objDB) {
         // マスターデータ読み込み
+        $this->objDB = $objDB;
+        $this->setSalesOrder();
         $this->setCustomerCompanyCodeMaster();
         $this->setDivisionSubjectCodeMaster();
         $this->setConversionRateMaster();
@@ -77,18 +83,16 @@ abstract class estimateRowController {
     // 顧客先、仕入先のマスターのデータを取得する
     protected function setCustomerCompanyCodeMaster() {
         if (!static::$customerCompanyCodeMaster) {
-            global $objDB; // データベース処理クラス
             $areaCode = $this->areaCode;
-            $masterData = $objDB->getCustomerCompanyCodeList($areaCode);
+            $masterData = $this->objDB->getCustomerCompanyCodeList($areaCode);
             static::$customerCompanyCodeMaster = $masterData;
-        }
+        }        
     }
     
     // 通貨レートマスターのデータを取得する
-    protected function setConversionRateMaster () {
+    protected function setConversionRateMaster() {
         if (!self::$conversionRateMaster) {
-            global $objDB; // データベース処理クラス
-            $masterData = $objDB->getTemporaryRateList();
+            $masterData = $this->objDB->getTemporaryRateList();
             self::$conversionRateMaster = $masterData;
         }
     }
@@ -124,8 +128,13 @@ abstract class estimateRowController {
         $params = $this->getRowParams();
         $this->setRowParams($params);
         $this->setRowDataType();
-        $this->setSalesOrder();
         return true;
+    }
+
+    public function editInitialize ($params, $row) {
+        $this->row = $row;
+        $this->setNameList();
+        $this->setRowParams($params);
     }
 
     // 各項目の列番号を取得する
@@ -174,6 +183,7 @@ abstract class estimateRowController {
         } else {
             return false;
         }
+
         return $param;
     }
 
@@ -246,14 +256,12 @@ abstract class estimateRowController {
         // 輸入費用、関税フラグを設定する
         $this->setDistinctionFlag();
 
-        if (!$this->importCostFlag && !$this->tariffFlag) {
-            // 輸入費用、関税でなければ納期のチェック
-            $this->validateDelivery();
+        // 納期のチェック
+        $this->validateDelivery();
 
-            if ($this->messageCode['delivery']) {
-                // 納期の入力が正確でない場合は非表示にする
-                return true;
-            }
+        if ($this->messageCode['delivery']) {
+            // 納期の入力が正確でない場合は非表示にする
+            return true;
         }
 
         $quantity = $this->quantity; // 数量
@@ -270,14 +278,11 @@ abstract class estimateRowController {
             return true;
         }
         
+
         if ($this->importCostFlag || $this->tariffFlag) {
-            // JP以外は表示しない
-            $monetary = $this->monetary;
-            if ($monetary != DEF_MONETARY_YEN) {
-                return true;
-            }
+            // 入力書式を取得する
             $dataType = $this->dataType;
-            if ($dataType['price'] === DataType::TYPE_FORMULA) {
+            if (!$dataType || $dataType['price'] === DataType::TYPE_FORMULA) {
                 if (is_numeric($this->customerCompany)) {
                     $this->percentInputFlag = true;
                 } else {
@@ -285,9 +290,6 @@ abstract class estimateRowController {
                     return true;
                 }
             }
-            // 輸入費用、関税の場合は補正後のレートを1に設定する
-            $this->acquiredRate = 1;
-
         } else {
             // 顧客先のチェックを行う
             $this->validateCustomerCompany();
@@ -295,16 +297,16 @@ abstract class estimateRowController {
                 // 顧客先の入力が正確でない場合非表示
                 return true;
             }
-
-            // 通貨レートのチェックを行う
-            $this->validateConversionRate();
-
-            if ($this->messageCode['conversionRate'] === 9203) {
-                // 通貨レートが取得できなかった場合
-                return true;
-            }
         }
 
+        // 通貨レートのチェックを行う
+        $this->validateConversionRate();
+
+        if ($this->messageCode['conversionRate'] === DEF_MESSAGE_CODE_RATE_DIFFER) {
+            // 通貨レートが取得できなかった場合
+            return true;
+        }
+ 
         return false;
     }
 
@@ -376,8 +378,14 @@ abstract class estimateRowController {
             'customerCompany' => $this->customerCompanyCode,
             'payoff' => $this->payoff,
             'percentInputFlag' => $this->percentInputFlag,
+            'percent' => $this->percent
         );
         return $registData;
+    }
+
+    // 行番号を出力する
+    public function outputRow() {
+        return $this->row;
     }
     
 
@@ -518,7 +526,6 @@ abstract class estimateRowController {
             $this->invalidFlag = true;
             return false;
         }
-        global $sheet;
 
         $quantity = $this->quantity; // 数量
 
@@ -551,9 +558,6 @@ abstract class estimateRowController {
         $this->calculatedSubtotal = $calculatedSubtotal;
         $this->calculatedSubtotalJP = $calculatedSubtotal;
 
-        // 納期を空欄にする
-        $this->delivery = null;
-
         return true;
     }
 
@@ -574,15 +578,15 @@ abstract class estimateRowController {
                 list ($year, $month, $day) = explode('/', $delivery);
                 if (!checkdate($month, $day, $year)) {
                     // 存在しない日付エラー
-                    $this->messageCode['delivery'] = 9201;
+                    $this->messageCode['delivery'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
                 }
             } else {
                 // 入力形式不正
-                $this->messageCode['delivery'] = 9201;
+                $this->messageCode['delivery'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
             }
         } else {
             // 必須エラー
-            $this->messageCode['delivery'] = 9001;
+            $this->messageCode['delivery'] = DEF_MESSAGE_CODE_NOT_ENTRY_ERROR;
         }
         return true;
     }
@@ -594,12 +598,12 @@ abstract class estimateRowController {
         if (isset($quantity) && $quantity !=='') {
             if(!preg_match("/\A[1-9][0-9]*\z/", $quantity)) {
                 // エラー処理
-                $this->messageCode['quantity'] = 9201;
+                $this->messageCode['quantity'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
             } else if ((int)$quantity > 2147483647) {
-                $this->messageCode['quantity'] = 9201;
+                $this->messageCode['quantity'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
             }
         } else {
-            $this->messageCode['quantity'] = 9001; // 必須チェック
+            $this->messageCode['quantity'] = DEF_MESSAGE_CODE_NOT_ENTRY_ERROR; // 必須チェック
         }
         return true;
     }
@@ -611,11 +615,10 @@ abstract class estimateRowController {
         if (isset($price) && $price !=='') {
             if(!preg_match("/\A-?[0-9]*\.?[0-9]\z/", $price)) { // 小数点以下の桁数によって判断
                 // エラー処理
-                $this->messageCode['price'] = 9201;
+                $this->messageCode['price'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
             }
         } else {
-            // エラーメッセージorエラーコード出力（必須エラー）
-            $this->messageCode['price'] = 9001; // 必須
+            $this->price = 0;
         }
         return true;
     }
@@ -644,16 +647,16 @@ abstract class estimateRowController {
                 // マスターチェック
                 if (!isset($masterData[(int)$divisionSubjectCode])) {
                     // マスターチェックエラー
-                    $this->messageCode['divisionSubject'] = 9202;
+                    $this->messageCode['divisionSubject'] = DEF_MESSAGE_CODE_MASTER_CHECK_ERROR;
                 }
 
             } else {
                 // 書式エラー
-                $this->messageCode['divisionSubject'] = 9201;
+                $this->messageCode['divisionSubject'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
             }
         } else {
             // 必須エラー
-            $this->messageCode['divisionSubject'] = 9001;
+            $this->messageCode['divisionSubject'] = DEF_MESSAGE_CODE_NOT_ENTRY_ERROR;
         }
         return true;
     }
@@ -669,16 +672,16 @@ abstract class estimateRowController {
                 $divisionSubjectCode = $this->divisionSubjectCode;
                 $this->classItemCode = (int)$classItemCode;
                 // マスターチェック
-                if (!in_array((int)$classItemCode, $masterData[$divisionSubjectCode])) {
-                    $this->messageCode['classItem'] = 9202;
+                if (!isset($masterData[$divisionSubjectCode][(int)$classItemCode])) {
+                    $this->messageCode['classItem'] = DEF_MESSAGE_CODE_MASTER_CHECK_ERROR;
                 }
             } else {
                 // 入力形式不正
-                $this->messageCode['classItem'] = 9201;
+                $this->messageCode['classItem'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
             }
         } else {
             // 必須エラー
-            $this->messageCode['classItem'] = 9001;
+            $this->messageCode['classItem'] = DEF_MESSAGE_CODE_NOT_ENTRY_ERROR;
         }
         return true;
     }
@@ -692,73 +695,40 @@ abstract class estimateRowController {
             $this->acquiredRate = $acquiredRate;
             if ($acquiredRate !== DEF_MONETARY_YEN  && $conversionRate !== $acquiredRate) {
                 // DBから取得した通貨レートとシートから取得した通貨レートが異なる場合
-                $this->messageCode['conversionRate'] = 9206;
+                $this->messageCode['conversionRate'] = DEF_MESSAGE_CODE_RATE_DIFFER;
             }
         } else {
             // DBから通貨レートが取得できなかった場合
-            $this->messageCode['conversionRate'] = 9203;
+            $this->messageCode['conversionRate'] = DEF_MESSAGE_CODE_RATE_DIFFER;
         }
         return true;
     }
 
     // 顧客先
     protected function validateCustomerCompany() {
+        $customerCompany = $this->customerCompany;
         if (isset($customerCompany) && $customerCompany !=='') {
-            if (preg_match("/\A[0-9]+:.+\z/", $customerCompany)) {
+            if (preg_match("/\A[0-9]+:.*\z/", $customerCompany)) {
                 list ($customerCompanyCode, $customerCompanyName) = explode(':', $customerCompany);
                 $masterData = static::$customerCompanyCodeMaster;
-                $this->customerCompanyCode = (int)$customerCompanyCode;
+                $this->customerCompanyCode = (string)$customerCompanyCode;
                 // マスターチェック
-                if (!in_array((int)$customerCompanyCode, $masterData)) {
-                    $this->messageCode['customerCompany'] = 9202;
+                if (!isset($masterData[$customerCompanyCode])) {
+                    $this->messageCode['customerCompany'] = DEF_MESSAGE_CODE_MASTER_CHECK_ERROR;
                 }
+                $display = $masterData[$customerCompanyCode]['shortName'];
+                $this->customerCompany = $customerCompanyCode. ':'. $display;
             } else {
                 // 入力形式不正
-                $this->messageCode['customerCompany'] = 9201;
+                $this->messageCode['customerCompany'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
             }
         } else {
-            if ($this->$salesOrder === DEF_ATTRIBUTE_CLIENT) {
-                // 受注の場合必須エラーを出力
-                $this->messageCode['customerCompany'] = 9001;
-            }
-        }
-        return true;
-    }
-
-    // 小計のチェックを行う
-    protected function validateSubtotal() {
-        $subtotal = $this->subtotal;
-        $acquiredRate = $this->acquiredRate; // DBから取得した通貨レート
-        $quantity = $this->quantity;
-        $price = $this->price;
-
-        if ($acquiredRate && $quantity && $price) {
-            $calculatedSubtotal = $quantity * $price * $acquiredRate;
-        }
-
-        if (!isset($calculatedSubtotal) || !is_numeric($calculatedSubtotal)) {
-            // 数量、単価、通貨レートのチェックが行われていれば基本的には通らない処理
-            $this->messageCode['subtotal'] = 9204;
-            return false;
-        } else {
-            if ($subtotal != $calculatedSubtotal) {
-                // 計算結果とシートから取得した小計（計画原価）が異なる場合
-                if ($this->messageCode['conversionRate'] !== 9206) {
-                    // 通貨レートの変更がなければメッセージコードをセット
-                    $this->messageCode['subtotal'] = 9205;
-                }
-            }
-            $this->calculatedSubtotal = $calculatedSubtotal;
-            return true;
-        }
-    }
-    
-    // 償却
-    protected function validatePayoffFlag() {
-        $payoff = $this->payoff;
-        // 入力形式不正
-        if (!$payoff == '○' && !$payoff == '') {
-            $this->messageCode['payoff'] = 9201;
+            // 空欄の場合は'0000'をセット
+            $customerCompanyCode = (string)DEF_DISPLAY_COMPANY_CODE_OTHERS;
+            $this->customerCompanyCode = $customerCompanyCode;
+            $masterData = static::$customerCompanyCodeMaster;
+            $display = $masterData[$customerCompanyCode]['shortName'];
+            $this->customerCompany = $customerCompanyCode. ':'. $display;
         }
         return true;
     }
@@ -801,6 +771,7 @@ abstract class estimateRowController {
                     if (strtotime($delivery) <= strtotime($data['endDate']) 
                         && strtotime($data['startDate']) <= strtotime($delivery)) {
                         $acquiredRate = $data['conversionRate'];
+                        break;
                     } else {
                         $acquiredRate = null;
                     }
