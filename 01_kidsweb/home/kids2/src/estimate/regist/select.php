@@ -42,11 +42,10 @@ $objDB->open( "", "", "", "" );
 //-------------------------------------------------------------------------
 // パラメータ取得
 //-------------------------------------------------------------------------
-// $aryData	= $_REQUEST; POST、GETで通信するデータがないためコメントアウト
 
 $aryData["lngLanguageCode"]		= $_COOKIE["lngLanguageCode"];	// 言語コード
 $aryData["lngFunctionCode"]		= DEF_FUNCTION_E1;				// 管理コード（見積原価）
-$aryData["strSessionID"]        = $_COOKIE["strSessionID"];
+$aryData["strSessionID"]        = $_POST["strSessionID"];
 
 setcookie("strSessionID", $aryData["strSessionID"], 0, "/");
 //-------------------------------------------------------------------------
@@ -250,7 +249,7 @@ if ($file["exc_tmp_name"]) {
 					
 					if ($notFound) {
 						$notFound = array_unique($notFound, SORT_REGULAR);
-						$notFoundMessage = fncOutputError ( DEF_MESSAGE_CODE_RATE_DIFFER, DEF_WARNING, "", false, "", $objDB );
+						$notFoundMessage = fncOutputError ( DEF_MESSAGE_CODE_RATE_UNCAUGHT_WARNING, DEF_WARNING, "", false, "", $objDB );
 					}
 				
 					// 非表示リスト（無効リスト）を追加する
