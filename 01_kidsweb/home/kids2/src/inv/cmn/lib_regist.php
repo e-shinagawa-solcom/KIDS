@@ -134,15 +134,17 @@ function fncGetSearchMSlipSQL ( $aryCondtition = array(), $renew = false, $objDB
 
         // 納品書番号
         if($column == 'strSlipCode') {
-            if(is_array($value)) {
-                // 複数渡し
-//                  $aryOutQuery[] = " AND strslipcode = " .$value ." " ;
+            // カンマ区切りの入力値をOR条件に展開
+            $arySCValue = preg_split('/[,\s]/', $value);
+            foreach($arySCValue as $strSCValue){
+                if(empty(trim($strSCValue)))
+                    continue;
+
+                    $arySCOr[] = "UPPER(strslipcode) LIKE UPPER('%" . trim($strSCValue) . "%')";
             }
-            else
-           {
-               // 単数
-               $aryOutQuery[] = " AND strslipcode = '" .$value ."' " ;
-            }
+            $aryOutQuery[] = " AND (";
+            $aryOutQuery[] = implode(" OR ", $arySCOr);
+            $aryOutQuery[] = ") ";
         }
 
         // 納品日 FROM
@@ -155,11 +157,14 @@ function fncGetSearchMSlipSQL ( $aryCondtition = array(), $renew = false, $objDB
             $aryOutQuery[] = " AND dtmdeliverydate <= '" .$value ." 23:59:59" ."' " ;
         }
 
-        // 納品場所 ?
+        // 納品場所コード
         if($column == 'deliveryPlaceCode') {
-
+            $aryOutQuery[] = " AND ms.lngdeliveryplacecode = ( SELECT lngcompanycode FROM m_company WHERE strcompanydisplaycode = '" .$value ."') ";
         }
-
+        // 納品場所名
+        if($column == 'deliveryPlaceName') {
+            $aryOutQuery[] = " AND ms.strdeliveryplacename LIKE '%" .$value ."%' " ;
+        }
         // 通貨
         if($column == 'moneyClassCode') {
             $aryOutQuery[] = " AND lngmonetaryunitcode = " .$value ." " ;
@@ -452,6 +457,66 @@ function fncGetCompanyPrintName( $companyDisplayCode ,$objDB)
 
 
 /**
+ * 指定した表示用顧客コード・日付から 締め日を返す
+ *
+ *
+ *    @param  String    $companyDisplayCode  表示用顧客コード
+ *    @param  date      $targetDate          指定日(なければシステムDATE)
+ *    @param  Object    $objDB               DBオブジェクト
+ *    @return date      $closedDay           締め日
+ *    @access public
+ */
+function fncGetCompanyClosedDay($companyDisplayCode , $targetDate=null, $objDB)
+{
+    $closedDay = null;
+    if( empty($companyDisplayCode) )
+    {
+        return false;
+    }
+    if(empty($targetDate)) {
+        $targetDate = date('Y-m-d');
+    }
+
+    $strQuery = [];
+    $strQuery[] = "select ";
+    $strQuery[] = "close.strcloseddaycode ,";
+    $strQuery[] = "close.lngclosedday ";
+    $strQuery[] = "FROM m_company mc ";
+    $strQuery[] = "LEFT JOIN m_closedday close ";
+    $strQuery[] = "ON (mc.lngcloseddaycode = close.lngcloseddaycode) ";
+    $strQuery[] = "WHERE mc.strcompanydisplaycode = '"  .$companyDisplayCode ."' ";
+
+    // クエリを平易な文字列に変換
+    $query = implode("\n",$strQuery);
+
+    // クエリ実行
+    list ( $lngResultID, $lngResultNum ) = fncQuery( $query, $objDB );
+
+    // レコードあれば顧客名・顧客社名を設定する
+    if ( $lngResultNum )
+    {
+        // 検索結果連想配列を取得
+        $result = pg_fetch_assoc($lngResultID);
+        $lngClosedDay = (int)$result['lngclosedday'];
+        // 日付の比較
+        $dateTime = new DateTime($targetDate);
+
+        $day = (int)$dateTime->format('d');
+
+        if($day > $lngClosedDay)
+        {
+            // 来月
+            $dateTime->add(DateInterval::createFromDateString('1 month'));
+        }
+        $objDB->freeResult($lngResultID);
+        $closedDay = $dateTime->format('Y-m-').$lngClosedDay;
+    }
+    return $closedDay;
+}
+
+
+
+/**
  * 指定した通貨単位コードから 通貨単位名を返す
  *
  *
@@ -488,12 +553,10 @@ function fncGetMonetaryunitSign( $monetaryUnitCode ,$objDB)
  *    @param  Array     $arySearchColumn         検索対象カラム名の配列
  *    @param  Array     $arySearchDataColumn     検索内容の配列
  *    @param  Object    $objDB                   DBオブジェクト
- *    @param    String    $strSlipCode            納品伝票コード    空白指定時:検索結果出力    納品伝票コード指定時:管理用、同じ納品書ＮＯの一覧取得
- *    @param    Integer    $lngSlipNo                納品伝票番号    0:検索結果出力    納品伝票番号指定時:管理用、同じ納品伝票コードとする時の対象外納品伝票番号
  *    @return Array     $strSQL 検索用SQL文 OR Boolean FALSE
  *    @access public
  */
-function fncGetSearchInvoiceSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $strSlipCode, $lngSlipNo, $strSessionID)
+function fncGetSearchInvoiceSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $strSessionID)
 {
     // -----------------------------
     //  検索条件の動的設定
@@ -519,7 +582,6 @@ function fncGetSearchInvoiceSQL ( $arySearchColumn, $arySearchDataColumn, $objDB
     {
         // 絶対条件 無効フラグが設定されておらず、最新売上のみ
         $aryQuery[] = " WHERE inv.bytinvalidflag = FALSE AND inv.lngrevisionno >= 0";
-
         // 検索チェックボックスがONの項目のみ検索条件に追加
         for ( $i = 0; $i < count($arySearchColumn); $i++ )
         {
@@ -551,18 +613,21 @@ function fncGetSearchInvoiceSQL ( $arySearchColumn, $arySearchDataColumn, $objDB
             }
 
             // 納品伝票コード（納品書NO）請求書明細テーブルから引く
-            if ( $strSearchColumnName == "strSlipCode" )
+            if ( $strSearchColumnName == "lngInvoiceNo" )
             {
-                if ( $arySearchDataColumn["strSlipCode"] )
+                if ( $arySearchDataColumn["lngInvoiceNo"] )
                 {
                     // カンマ区切りの入力値をOR条件に展開
-                    $arySCValue = explode(",",$arySearchDataColumn["strSlipCode"]);
+                    $arySCValue = preg_split('/[,\s]/', $arySearchDataColumn["lngInvoiceNo"]);
                     foreach($arySCValue as $strSCValue){
-                        $arySCOr[] = "UPPER(s.strSlipCode) LIKE UPPER('%" . $strSCValue . "%')";
+                        if(empty(trim($strSCValue)))
+                            continue;
+
+                        $arySCOr[] = "UPPER(inv.strinvoicecode) LIKE UPPER('%" . trim($strSCValue) . "%')";
                     }
-//                     $aryQuery[] = " AND (";
-//                     $aryQuery[] = implode(" OR ", $arySCOr);
-//                     $aryQuery[] = ") ";
+                    $aryQuery[] = " AND (";
+                    $aryQuery[] = implode(" OR ", $arySCOr);
+                    $aryQuery[] = ") ";
                 }
             }
 

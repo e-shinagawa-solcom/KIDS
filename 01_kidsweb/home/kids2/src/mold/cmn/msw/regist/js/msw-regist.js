@@ -179,8 +179,6 @@
             return;
         }
 
-        //$('select').find('option').remove();
-
         switch (isEmpty(customerCode.val()) + isEmpty(customerName.val())) {
             // どちらも未入力
             case '00':
@@ -250,20 +248,13 @@
         var billingEnd   = $('input[name="dtmchargeternend"]');
         var dateLength   = splitDate(billingDate.val());
 
-//        // -1の挙動が不明のため仮の値
-//        if(close < 1){
-//            close = 15;
-//        }
-
         // 請求日が未入力
         if(isEmpty(billingDate.val()) == '0') {
-            console.log('none 請求日');
             return [false, false];
         }
 
         // 請求日の形式がおかしい
         if(dateLength == false) {
-            console.log('日づけ false');
             return [false, false];
         }
 
@@ -349,8 +340,6 @@
             'click': function() {
                 // validationキック
                 var form = $('form[name="Invoice"]');
-                console.log('valid : ' + form.valid());
-
                 // From/Toが入力されていたらチェック
                 let $dtmFrom = $('input[name="From_dtmDeliveryDate"]').val();
                 let $dtmTo   = $('input[name="To_dtmDeliveryDate"]').val();
@@ -392,8 +381,6 @@
                         bReset     = true;
                         changeCode = true;
                     }
-
-
                     let taxClassCode = $('select[name="lngTaxClassCode"]').val();
                     if(taxClassCode != parentTaxCode){
                         bReset = true;
@@ -429,7 +416,6 @@
                             inChargeUserName:    $('input[name="strInChargeUserName"]').val(),
                             inputUserCode:       $('input[name="lngInputUserCode"]').val(),
                             inputUserName:       $('input[name="lngInputUserName"]').val()
-
                         }
                     }
 
@@ -443,8 +429,6 @@
 
                 $.ajax( search )
                 .done(function(response){
-//                    console.log(response);
-
                     // 親ウィンドウの存在チェック
                     if (!window.opener || window.opener.closed)
                     {
@@ -475,17 +459,13 @@
                             window.opener.$('input[name="lngCustomerCode"]').val(customerCode);
                             window.opener.$('input[name="strCustomerName"]').val(customerName);
                         }
-
                         window.close();
                     }
-
                 })
                 .fail(function(response){
                     alert('検索に失敗しました。\n条件を変更して下さい。');
-
                     return;
                 });
-
                 return false;
             }
     });
@@ -512,7 +492,6 @@
                 }
             }
         }
-//        console.log('消費税率 : ' + tax);
 
         // 前月請求残額
         // 納品日が「自」以前である明細の税抜金額の合計+その合計に対して課税区分に応じて計算された消費税
@@ -543,10 +522,6 @@
 
             startStamp = new Date(chargeternstart);
             endStamp   = new Date(chargeternend);
-//            console.log('自 : ' + chargeternstart);
-//            console.log(startStamp);
-//            console.log('至 : ' + chargeternend);
-//            console.log(endStamp);
 
             for (var i = 0, rowlen = tableB_row.length; i < rowlen; i++) {
                 let deliverydate = false;
@@ -563,34 +538,20 @@
                         // 税抜金
                         price = tableB_row[i].cells[j].innerText;
                     }
-
                 }
 
                 if(!deliverydate || !price) continue;
-
                 date = splitDate(deliverydate);
                 deliverydateStamp = new Date(deliverydate);
 
-//                console.log('納品日   : ' + deliverydate);
-//                console.log('税抜金額 : ' + price);
-//                console.log('date : ');
-//                console.log(date);
-//                console.log('deliverydateStamp : ' + deliverydateStamp);
-//                console.log('------------     --------------');
                 if(deliverydateStamp <= startStamp) {
                     // 前月請求残額
                     lastMonthBalance += Number(price);
                 } else {
                     // 当月請求額
                     thisMonthAmount  += Number(price);
-
                 }
-
             }
-
-//            console.log('前月請求残額  : ' + lastMonthBalance);
-//            console.log('当月請求額    : ' + thisMonthAmount);
-//            console.log('消費税率 : ' + tax);
 
             // 前月請求残額(消費税込み)
             curLastMonthBalance = lastMonthBalance+(lastMonthBalance * (tax*100))/100;
@@ -600,16 +561,12 @@
             // 差引合計額
             // 前月請求残額 + 当月請求額 + 消費税
             noTaxMonthAmount  = curLastMonthBalance + thisMonthAmount + taxPrice;
-//            console.log('消費税 : ' + taxPrice);
-//            console.log('差引合計額 : ' + noTaxMonthAmount);
             // 結果を繁栄
             $('input[name="curlastmonthbalance"]').val(Math.round(curLastMonthBalance)).change();
             $('input[name="curthismonthamount"]').val(thisMonthAmount).change();
             $('input[name="curtaxprice"]').val(Math.round(taxPrice)).change();
             $('input[name="notaxcurthismonthamount"]').val(Math.round(noTaxMonthAmount)).change();
-
         };
-
         var result = setTimeout(chargetern, 500);
 
     }
@@ -617,17 +574,15 @@
     // PREVIEWボタン押下処理 (preview)
     $('img.preview-button').on({
         'click': function() {
-
             // validationキック
-            console.log('valid : ' + $('form[name="Invoice"]').valid());
-
+            if($('form[name="Invoice"]').valid()==false)
+            {
+                return;
+            }
             // 金額計算
             billingAmount();
-
             // プレビュー画面呼び出し (遅延させないとINPUT取得できない)
             var prev = setTimeout(previewDrow, 800);
-
-
         }
     });
 
@@ -721,6 +676,7 @@
         let end   = new Date(sysEndDate.getTime());
         end.setMonth(end.getMonth() + 1);
         let isDeliveryDate = true;
+
         // 請求月
         let invoicemonth = $('option:selected').val();
         let isSameMonth = true;
@@ -830,7 +786,6 @@
             var tax = false;
 
             for (var i = 0, rowlen = tableB_row.length; i < rowlen; i++) {
-//                console.log('-------- ' + i + ' ----------');
                 for (var j = 0, collen = tableB_row[i].cells.length; j < collen; j++) {
                     if(!tableB_row[i].cells[j].innerText) continue;
 
@@ -891,32 +846,24 @@
             document.Invoice.appendChild(ele4);
 
             var invForm = $('form[name="Invoice"]');
-
             if(invForm.valid()){
 
                 var windowName = 'registPreview';
                 url = '/inv/regist/index.php?strSessionID=' + $.cookie('strSessionID');
-
                 // フォーム設定
                 var windowPrev = open('about:blank', windowName, 'scrollbars=yes, resizable=yes');
                 invForm.attr('action', url);
                 invForm.attr('method', 'post');
                 invForm.attr('target', windowName);
-
-
                 // サブミット
                 invForm.submit();
-
                 return false;
-
             }
             else {
                 // バリデーションのキック
                 form.find(':submit').click();
             }
-
             return true;
-
         };
 
 })();
