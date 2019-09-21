@@ -70,7 +70,7 @@ function fncGetReceiveDetail($aryCondition, $objDB)
     $arySelect[] = "  r.strreceivecode,";                          //受注番号
     $arySelect[] = "  p2.strgoodscode,";                           //顧客品番
     $arySelect[] = "  rd.strproductcode,";                         //製品コード
-    $arySelect[] = "  rd.strrevisecode,";                          //リバイズコード
+    $arySelect[] = "  rd.strrevisecode,";                          //リバイズコード（再販コード）
     $arySelect[] = "  p.strproductname,";                          //製品名
     $arySelect[] = "  p.strproductenglishname,";                   //製品名（英語）
     $arySelect[] = "  g.strgroupdisplayname as strsalesdeptname,"; //営業部署（名称）
@@ -82,7 +82,11 @@ function fncGetReceiveDetail($aryCondition, $objDB)
     $arySelect[] = "  rd.lngproductunitcode,";                     //単位コード
     $arySelect[] = "  pu.strproductunitname,";                     //単位（名称）
     $arySelect[] = "  rd.lngproductquantity,";                     //数量
-    $arySelect[] = "  rd.cursubtotalprice";                        //税抜金額
+    $arySelect[] = "  rd.cursubtotalprice,";                       //税抜金額
+    $arySelect[] = "  rd.lngreceiveno,";                           //受注番号（明細登録用）
+    $arySelect[] = "  rd.lngreceivedetailno,";                     //受注明細番号（明細登録用）
+    $arySelect[] = "  rd.lngrevisionno,";                          //リビジョン番号（明細登録用）
+    $arySelect[] = "  rd.strnote";                                 //備考（明細登録用）
     $arySelect[] = " FROM";
     $arySelect[] = "  t_receivedetail rd ";
     $arySelect[] = "    LEFT JOIN m_receive r ON rd.lngreceiveno=r.lngreceiveno";
@@ -249,6 +253,27 @@ function fncGetReceiveDetailHtml($aryReceiveDetail){
         //税抜金額
         $strDisplayValue = htmlspecialchars($aryReceiveDetail[$i]["cursubtotalprice"]);
         $strHtml .= "<td class='detailSubTotalPrice' style='text-align:right;'>" . number_format($strDisplayValue) . "</td>";
+        //受注番号（明細登録用）
+        $strDisplayValue = htmlspecialchars($aryReceiveDetail[$i]["lngreceiveno"]);
+        $strHtml .= "<td class='forEdit detailReceiveNo'>" . $strDisplayValue . "</td>";
+        //受注明細番号（明細登録用）
+        $strDisplayValue = htmlspecialchars($aryReceiveDetail[$i]["lngreceivedetailno"]);
+        $strHtml .= "<td class='forEdit detailReceiveDetailNo'>" . $strDisplayValue . "</td>";
+        //リビジョン番号（明細登録用）
+        $strDisplayValue = htmlspecialchars($aryReceiveDetail[$i]["lngrevisionno"]);
+        $strHtml .= "<td class='forEdit detailRevisionNo'>" . $strDisplayValue . "</td>";
+        //再販コード（明細登録用）
+        $strDisplayValue = htmlspecialchars($aryReceiveDetail[$i]["strrevisecode"]);
+        $strHtml .= "<td class='forEdit detailReviseCode'>" . $strDisplayValue . "</td>";
+        //売上区分コード（明細登録用）
+        $strDisplayValue = htmlspecialchars($aryReceiveDetail[$i]["lngsalesclasscode"]);
+        $strHtml .= "<td class='forEdit detailSalesClassCode'>" . $strDisplayValue . "</td>";
+        //製品単位コード（明細登録用）
+        $strDisplayValue = htmlspecialchars($aryReceiveDetail[$i]["lngproductunitcode"]);
+        $strHtml .= "<td class='forEdit detailProductUnitCode'>" . $strDisplayValue . "</td>";
+        //備考（明細登録用）
+        $strDisplayValue = htmlspecialchars($aryReceiveDetail[$i]["strnote"]);
+        $strHtml .= "<td class='forEdit detailNote'>" . $strDisplayValue . "</td>";
         
         $strHtml .= "</tr>";
     }

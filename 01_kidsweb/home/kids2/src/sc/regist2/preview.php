@@ -122,8 +122,6 @@
 		$objTemplate->getTemplate( "sc/finish2/parts.tmpl" );
 		$objTemplate->replace( $aryData );
 		$objTemplate->complete();
-
-		// HTML½ĞÎÏ
 		echo $objTemplate->strTemplate;
 
 		return true;

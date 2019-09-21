@@ -150,6 +150,27 @@ jQuery(function($){
         // 税抜金額
         td = $(tr).find($('td.detailSubTotalPrice')).clone();
         $(editTr).append($(td));
+        //受注番号（明細登録用）
+        td = $(tr).find($('td.detailReceiveNo')).clone();
+        $(editTr).append($(td));
+        //受注明細番号（明細登録用）
+        td = $(tr).find($('td.detailReceiveDetailNo')).clone();
+        $(editTr).append($(td));
+        //リビジョン番号（明細登録用）
+        td = $(tr).find($('td.detailRevisionNo')).clone();
+        $(editTr).append($(td));
+        //再販コード（明細登録用）
+        td = $(tr).find($('td.detailReviseCode')).clone();
+        $(editTr).append($(td));
+        //売上区分コード（明細登録用）
+        td = $(tr).find($('td.detailSalesClassCode')).clone();
+        $(editTr).append($(td));
+        //製品単位コード（明細登録用）
+        td = $(tr).find($('td.detailProductUnitCode')).clone();
+        $(editTr).append($(td));
+        //備考（明細登録用）
+        td = $(tr).find($('td.detailNote')).clone();
+        $(editTr).append($(td));
         
         // 出力明細テーブルに明細を追加
         $(tbody).append($(editTr));
@@ -214,46 +235,6 @@ jQuery(function($){
         $('input[name="strTaxAmount"]').val(taxAmount);
     }
 
-    function addHiddenValue(i, tr){
-        var hidden = $('#SegHidden');
-        var orderNo = $(tr).find($('td.detailOrderCode')).text();
-        $(hidden).append($("<input>").attr("type", "hidden").attr("name","detail["+ (i + 1) +"][orderNo]").val(orderNo));
-        var orderDetailNo = $(tr).find($('td.detailOrderDetailNo')).text();
-        $(hidden).append($("<input>").attr("type", "hidden").attr("name","detail["+ (i + 1) +"][orderDetailNo]").val(orderDetailNo));
-        var stockSubjectName = $(tr).find($('td.detailStockSubjectName')).text();
-        $(hidden).append($("<input>").attr("type", "hidden").attr("name","detail["+ (i + 1) +"][stockSubjectName]").val(stockSubjectName));
-        var stockItenName = $(tr).find($('td.detailStockItemName')).text();
-        $(hidden).append($("<input>").attr("type", "hidden").attr("name","detail["+ (i + 1) +"][stockItenName]").val(stockItenName));
-        var companyDisplayCode = $(tr).find($('td.detailCompanyDisplayCode')).text();
-        $(hidden).append($("<input>").attr("type", "hidden").attr("name","detail["+ (i + 1) +"][companyDisplayCode]").val(companyDisplayCode));
-        var deliveryMethod = $(tr).find('option:selected').val();
-        $(hidden).append($("<input>").attr("type", "hidden").attr("name","detail["+ (i + 1) +"][deliveryMethod]").val(deliveryMethod));
-        var productPrice = $(tr).find($('td.detailProductPrice')).text();
-        $(hidden).append($("<input>").attr("type", "hidden").attr("name","detail["+ (i + 1) +"][productPrice]").val(productPrice));
-        var productQuantity = $(tr).find($('td.detailProductQuantity')).text();
-        $(hidden).append($("<input>").attr("type", "hidden").attr("name","detail["+ (i + 1) +"][productQuantity]").val(productQuantity));
-        var subTotalPrice = $(tr).find($('td.detailSubtotalPrice')).text();
-        $(hidden).append($("<input>").attr("type", "hidden").attr("name","detail["+ (i + 1) +"][subTotalPrice]").val(subTotalPrice));
-        var deliveryDate = $(tr).find($('td.detailDeliveryDate')).text();
-        $(hidden).append($("<input>").attr("type", "hidden").attr("name","detail["+ (i + 1) +"][deliveryDate]").val(deliveryDate));
-        var detailNote = $(tr).find($('td.detailNote')).text();
-        $(hidden).append($("<input>").attr("type", "hidden").attr("name","detail["+ (i + 1) +"][detailNote]").val(detailNote));
-        var productUnitCode = $(tr).find($('td.detailProductUnitCode')).text();
-        $(hidden).append($("<input>").attr("type", "hidden").attr("name","detail["+ (i + 1) +"][productUnitCode]").val(productUnitCode));
-        var orderNo = $(tr).find($('td.detailOrderNo')).text();
-        $(hidden).append($("<input>").attr("type", "hidden").attr("name","detail["+ (i + 1) +"][orderNo]").val(orderNo));
-        var revisionNo = $(tr).find($('td.detailRevisionNo')).text();
-        $(hidden).append($("<input>").attr("type", "hidden").attr("name","detail["+ (i + 1) +"][revisionNo]").val(revisionNo));
-        var subjectCode = $(tr).find($('td.detailStockSubjectCode')).text();
-        $(hidden).append($("<input>").attr("type", "hidden").attr("name","detail["+ (i + 1) +"][subjectCode]").val(subjectCode));
-        var stockItemCode = $(tr).find($('td.detailStockItemCode')).text();
-        $(hidden).append($("<input>").attr("type", "hidden").attr("name","detail["+ (i + 1) +"][stockItemCode]").val(stockItemCode));
-        var monetaryUnitCode = $(tr).find($('td.detailMonetaryUnitCode')).text();
-        $(hidden).append($("<input>").attr("type", "hidden").attr("name","detail["+ (i + 1) +"][monetaryUnitCode]").val(monetaryUnitCode));
-        var customerCompanyCode = $(tr).find($('td.detailCustomerCompanyCode')).text();
-        $(hidden).append($("<input>").attr("type", "hidden").attr("name","detail["+ (i + 1) +"][customerCompanyCode]").val(customerCompanyCode));
-
-    }
     function getCheckedRows(){
         var selected = getSelectedRows();
         var cnt = $(selected).length;
@@ -444,6 +425,20 @@ jQuery(function($){
                 lngproductquantity: $(tr).children('.detailProductQuantity').text(),
                 //税抜金額
                 cursubtotalprice: $(tr).children('.detailSubTotalPrice').text(),
+                //受注番号（明細登録用）
+                lngreceiveno: $(tr).children('.detailReceiveNo').text(),
+                //受注明細番号（明細登録用）
+                lngreceivedetailno: $(tr).children('.detailReceiveDetailNo').text(),
+                //リビジョン番号（明細登録用）
+                lngrevisionno: $(tr).children('.detailRevisionNo').text(),
+                //再販コード（明細登録用）
+                strrevisecode: $(tr).children('.detailReviseCode').text(),
+                //売上区分コード（明細登録用）
+                lngsalesclasscode: $(tr).children('.detailSalesClassCode').text(),
+                //製品単位コード（明細登録用）
+                lngproductunitcode: $(tr).children('.detailProductUnitCode').text(),
+                //備考（明細登録用）
+                strnote: $(tr).children('.detailNote').text(),
             };
             result.push(param);
         });
