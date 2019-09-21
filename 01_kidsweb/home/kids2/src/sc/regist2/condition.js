@@ -45,10 +45,8 @@ jQuery(function($){
             lngInChargeGroupCode: $('input[name="lngInChargeGroupCode"]').val(),
             strInChargeGroupName: $('input[name="strInChargeGroupName"]').val(),
             lngSalesClassCode: $('select[name="lngSalesClassCode"]').children('option:selected').val(),
-            strProductCode: $('input[name="strProductCode"]').val(),
             From_dtmDeliveryDate: $('input[name="From_dtmDeliveryDate"]').val(),
             To_dtmDeliveryDate: $('input[name="To_dtmDeliveryDate"]').val(),
-            lngMonetaryUnitCode: $('select[name="lngMonetaryUnitCode"]').children('option:selected').val(),
             strNote: $('input[name="strNote"]').val(),
             IsIncludingResale: $('input[name="IsIncludingResale"]').prop("checked"),
         };

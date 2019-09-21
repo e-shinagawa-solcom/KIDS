@@ -235,22 +235,16 @@ function initLayoutPO()
 	///// MAIN TITLE /////
 	MainTitle.innerHTML = maintitleJ;
 
-	///// TAX BUTTON /////
-	TaxBt.innerHTML = showTaxbt1;
-
 	///// INPUT A BODYS COLOR /////
 	SegABodys.style.background = segbody;
-	SegBBodys.style.background = segbody;
 	SegCBodys.style.background = segbody;
 
 	///// INPUT A,B,C HEADER TITLE IMAGE /////
 	SegAHeader.innerHTML = headerAJ;
-	SegBHeader.innerHTML = headerBJ;
 	SegCHeader.innerHTML = headerCJ;
 
 	///// INPUT A,B,C BOTTOM IMAGE /////
 	SegABottom.innerHTML = bottom01;
-	SegBBottom.innerHTML = bottom01;
 	SegCBottom.innerHTML = bottom01;
 
 	///// TAX WINDOW /////
@@ -277,6 +271,7 @@ function initLayoutPO()
 	//-------------------------------------------------------------------------
 	// v2 tomita update
 	//-------------------------------------------------------------------------
+	/*
 	SegDept.style.color            = fcolor;
 	SegDept.style.background       = '#f1f1f1';
 	SegDept.style.borderColor      = '#798787 #f1f1f1 #798787 #798787';
@@ -310,16 +305,12 @@ function initLayoutPO()
 			WFrootBt.innerHTML = darkgrayOpenBt1;
 		}
 	}
-
+*/
 
 	// Debug
 	//WFrootBt.innerHTML = darkgrayOpenBtNotActive;
 	//fncAlphaOn( document.all.WFrootBt );
 	//-------------------------------------------------------------------------
-
-
-
-
 
 	return false;
 }

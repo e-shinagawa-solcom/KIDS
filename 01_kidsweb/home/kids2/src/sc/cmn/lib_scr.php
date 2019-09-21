@@ -64,49 +64,103 @@ function fncGetReceiveDetail($aryCondition, $objDB)
     // -------------------
     // SELECT句,FROM句
     // -------------------
-    $aryQuery[] = " SELECT";
-    $aryQuery[] = "  rd.lngsortkey,";
-    $aryQuery[] = "  r.strcustomerreceivecode,";
-    $aryQuery[] = "  r.strreceivecode,";
-    $aryQuery[] = "  p.strgoodscode,";
-    $aryQuery[] = "  rd.strproductcode,";
-    $aryQuery[] = "  p.strproductname,";
-    $aryQuery[] = "  p.strproductenglishname,";
-    $aryQuery[] = "  p.lnginchargeusercode,";
-    $aryQuery[] = "  u.struserdisplayname as strsalesdeptname,"; //営業部署（TODO:後でこのクエリ自体修正）
-    $aryQuery[] = "  rd.lngsalesclasscode,";
-    $aryQuery[] = "  sc.strsalesclassname,";
-    $aryQuery[] = "  rd.dtmdeliverydate,";
-    $aryQuery[] = "  rd.curproductprice,";
-    $aryQuery[] = "  rd.lngproductunitcode,";
-    $aryQuery[] = "  pu.strproductunitname,";
-    $aryQuery[] = "  rd.lngproductquantity,";
-    $aryQuery[] = "  rd.cursubtotalprice,";
-    $aryQuery[] = "  rd.lngsortkey";
-    $aryQuery[] = " FROM";
-    $aryQuery[] = "  t_receivedetail rd ";
-    $aryQuery[] = "    LEFT JOIN m_receive r ON rd.lngreceiveno=r.lngreceiveno";
-    $aryQuery[] = "    LEFT JOIN m_product p ON rd.strproductcode = p.strproductcode and rd.strrevisecode = p.strrevisecode";
-    $aryQuery[] = "    LEFT JOIN m_user u ON p.lnginchargeusercode = u.lngusercode";
-    $aryQuery[] = "    LEFT JOIN m_salesclass sc ON rd.lngsalesclasscode = sc.lngsalesclasscode";
-    $aryQuery[] = "    LEFT JOIN m_productunit pu ON rd.lngproductunitcode = pu.lngproductunitcode";
+    $arySelect[] = " SELECT";
+    $arySelect[] = "  rd.lngsortkey,";                             //No.
+    $arySelect[] = "  r.strcustomerreceivecode,";                  //顧客受注番号
+    $arySelect[] = "  r.strreceivecode,";                          //受注番号
+    $arySelect[] = "  p2.strgoodscode,";                           //顧客品番
+    $arySelect[] = "  rd.strproductcode,";                         //製品コード
+    $arySelect[] = "  rd.strrevisecode,";                          //リバイズコード
+    $arySelect[] = "  p.strproductname,";                          //製品名
+    $arySelect[] = "  p.strproductenglishname,";                   //製品名（英語）
+    $arySelect[] = "  g.strgroupdisplayname as strsalesdeptname,"; //営業部署（名称）
+    $arySelect[] = "  rd.lngsalesclasscode,";                      //売上区分コード
+    $arySelect[] = "  sc.strsalesclassname,";                      //売上区分（名称）
+    $arySelect[] = "  rd.dtmdeliverydate,";                        //納期
+    $arySelect[] = "  rd.lngunitquantity,";                        //入数
+    $arySelect[] = "  rd.curproductprice,";                        //単価
+    $arySelect[] = "  rd.lngproductunitcode,";                     //単位コード
+    $arySelect[] = "  pu.strproductunitname,";                     //単位（名称）
+    $arySelect[] = "  rd.lngproductquantity,";                     //数量
+    $arySelect[] = "  rd.cursubtotalprice";                        //税抜金額
+    $arySelect[] = " FROM";
+    $arySelect[] = "  t_receivedetail rd ";
+    $arySelect[] = "    LEFT JOIN m_receive r ON rd.lngreceiveno=r.lngreceiveno";
+    $arySelect[] = "    LEFT JOIN m_product p ON rd.strproductcode = p.strproductcode";
+    $arySelect[] = "    LEFT JOIN m_salesclass sc ON rd.lngsalesclasscode = sc.lngsalesclasscode";
+    $arySelect[] = "    LEFT JOIN m_productunit pu ON rd.lngproductunitcode = pu.lngproductunitcode";
+    $arySelect[] = "    LEFT JOIN m_product p2 ON rd.strproductcode = p2.strproductcode and rd.strrevisecode = p2.strrevisecode";
+    $arySelect[] = "    LEFT JOIN m_group g ON p2.lnginchargegroupcode = g.lnggroupcode";
   
     // -------------------
-    //  WHERE句
+    //  検索条件設定
     // -------------------
     $aryWhere[] = " WHERE";
     $aryWhere[] = "  r.lngreceivestatuscode = 2";   //受注ステータス=2:受注
 
-    if ($aryCondition["lngReceiveNo"]){
-        $aryWhere[] = " AND r.receiveno = " . $aryCondition["lngReceiveNo"];
-    }
+    // 顧客（コードで検索）
+    if ($aryCondition["lngCustomerCode"]){
+        $aryWhere[] = " AND r.lngcustomercompanycode = '" . $aryCondition["lngCustomerCode"] . "'";
+    }    
 
+    // 顧客受注番号
     if ($aryCondition["strCustomerReceiveCode"]){
         $aryWhere[] = " AND r.strcustomerreceivecode = '" . $aryCondition["strCustomerReceiveCode"] . "'";
     }
 
+    // 受注番号
+    if ($aryCondition["lngReceiveNo"]){
+        $aryWhere[] = " AND r.lngreceiveno = " . $aryCondition["lngReceiveNo"];
+    }
+
+    // 製品コード
+    if ($aryCondition["strReceiveDetailProductCode"]){
+        $aryWhere[] = " AND rd.strproductcode = '" . $aryCondition["strReceiveDetailProductCode"] ."'";
+    }
+    
+    // 営業部署（コードで検索）
+    if ($aryCondition["lngInChargeGroupCode"]){
+        $aryWhere[] = " AND g.lnggroupcode = " . $aryCondition["lngInChargeGroupCode"];
+    }
+
+    // 売上区分（コードで検索）
+    if ($aryCondition["lngSalesClassCode"]){
+        $aryWhere[] = " AND rd.lngsalesclasscode = " . $aryCondition["lngSalesClassCode"];
+    }
+
+    // 顧客品番
+    if ($aryCondition["strGoodsCode"]){
+        $aryWhere[] = " AND p2.strgoodscode = " . $aryCondition["strGoodsCode"];
+    }
+
+    // 納品日(FROM)
+    if ( $aryCondition["From_dtmDeliveryDate"] )
+    {
+        $dtmSearchDate = $aryCondition["From_dtmDeliveryDate"] . " 00:00:00";
+        $aryWhere[] = " AND rd.dtmdeliverydate >= '" . $dtmSearchDate . "'";
+    }
+
+    // 納品日(TO)
+    if ( $aryCondition["To_dtmDeliveryDate"] )
+    {
+        $dtmSearchDate = $aryCondition["To_dtmDeliveryDate"] . " 23:59:59";
+        $aryWhere[] = " AND rd.dtmdeliverydate <= '" . $dtmSearchDate . "'";
+    }
+
+    // 明細備考
+    if ( $aryCondition["strNote"] )
+    {
+        $aryWhere[] = " AND rd.strNote LIKE '%" . $aryCondition["strNote"] . "%'";
+    }
+    
+    // 再販を含む（offの場合、t_receivedetail.strrevisecode='00'のみを対象）
+    if ( $aryCondition["IsIncludingResale"] != "true")
+    {
+        $aryWhere[] = " AND rd.strrevisecode = '00'";
+    }
+
     // -------------------
-    //  ORDER BY句
+    //  並び順定義
     // -------------------
     $aryOrder[] = " ORDER BY";
     $aryOrder[] = "  rd.lngsortkey";
@@ -115,7 +169,7 @@ function fncGetReceiveDetail($aryCondition, $objDB)
     // クエリ作成
     // -------------------
     $strQuery = "";
-    $strQuery .= implode("\n", $aryQuery);
+    $strQuery .= implode("\n", $arySelect);
     $strQuery .= "\n";
     $strQuery .= implode("\n", $aryWhere);
     $strQuery .= "\n";
@@ -127,8 +181,8 @@ function fncGetReceiveDetail($aryCondition, $objDB)
     list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
     // 結果を配列に格納
-    unset( $aryResult );
-    if ( $lngResultNum )
+    $aryResult = [];    //空の配列で初期化
+    if ( 0 < $lngResultNum )
     {
         for ( $j = 0; $j < $lngResultNum; $j++ )
         {
@@ -149,7 +203,8 @@ function fncGetReceiveDetailHtml($aryReceiveDetail){
         //選択チェックボックス
         $strHtml .= "<td class='detailCheckbox'><input type='checkbox' name='edit'></td>";
         //NO.
-        $strHtml .= "<td class='detailSortKey'>" . ($i+1) . "</td>";
+        $strDisplayValue = htmlspecialchars($aryReceiveDetail[$i]["lngsortkey"]);
+        $strHtml .= "<td class='detailSortKey'>" . $strDisplayValue . "</td>";
         //顧客発注番号
         $strDisplayValue = htmlspecialchars($aryReceiveDetail[$i]["strcustomerreceivecode"]);
         $strHtml .= "<td class='detailCustomerReceiveCode'>" . $strDisplayValue . "</td>";
@@ -161,6 +216,8 @@ function fncGetReceiveDetailHtml($aryReceiveDetail){
         $strHtml .= "<td class='detailGoodsCode'>" . $strDisplayValue . "</td>";
         //製品コード
         $strDisplayValue = htmlspecialchars($aryReceiveDetail[$i]["strproductcode"]);
+        $strDisplayValue .= "_";
+        $strDisplayValue .= htmlspecialchars($aryReceiveDetail[$i]["strrevisecode"]);
         $strHtml .= "<td class='detailProductCode'>" . $strDisplayValue . "</td>";
         //製品名
         $strDisplayValue = htmlspecialchars($aryReceiveDetail[$i]["strproductname"]);
@@ -177,6 +234,9 @@ function fncGetReceiveDetailHtml($aryReceiveDetail){
         //納期
         $strDisplayValue = htmlspecialchars($aryReceiveDetail[$i]["dtmdeliverydate"]);
         $strHtml .= "<td class='detailDeliveryDate'>" . $strDisplayValue . "</td>";
+        //入数
+        $strDisplayValue = htmlspecialchars($aryReceiveDetail[$i]["lngunitquantity"]);
+        $strHtml .= "<td class='detailQuantity'>" . $strDisplayValue . "</td>";
         //単価
         $strDisplayValue = htmlspecialchars($aryReceiveDetail[$i]["curproductprice"]);
         $strHtml .= "<td class='detailProductPrice' style='text-align:right;'>" . number_format($strDisplayValue, 4) . "</td>";
