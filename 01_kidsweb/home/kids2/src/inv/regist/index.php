@@ -166,15 +166,16 @@
         $dtminvoicedate = $insertData['dtminvoicedate'];
         // 納品日の月
         $baseMonth = date('m', strtotime($dtminvoicedate));
-        // システム日付のdatetime
-        $baseDateTime = new DateTime();
+        // システム日付で算出した締め日の前後1ヶ月以内
+        $closeDay = fncGetCompanyClosedDay($insertData['strcustomercode'], null, $objDB);
+        $baseDateTime = new DateTime($closeDay);
         foreach($aryDeliveryDate as $date){
             $deliveryDateTiem = new DateTime($date);
             $diff = $baseDateTime->diff($deliveryDateTiem);
             // 納品日がシステム日付の1か月前後でない場合
             if($diff->format('%a') > 30)
             {
-                MoveToErrorPage("納品日は今月の前後1ヶ月の間を指定してください");
+                MoveToErrorPage("納品日は当月度の前後1ヶ月の間を指定してください");
             }
             // 納品日と異なる月の明細の場合
             $deliveryDateMonth = date('m', strtotime($date));

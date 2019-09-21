@@ -303,6 +303,7 @@ class makeHTML {
         return $strHTML;
     }
 
+	// 選択画面のヘッダ部のHtmlを生成する
     public static function getFileConfirmScript2HTML( $strWSName, $sn, $strMode )
 	{
 		$aryHTML	=	array();
@@ -316,7 +317,7 @@ class makeHTML {
 			case "select":
 				$aryHTML[]	= "\t<button type=\"submit\" name=\"sheetname\" value=\"". $strWSName. "\">選択</button>";
 				$aryHTML[]	= "\t<button type=\"button\" onclick=\"viewInvalidData(". $sn. ");\" data-column=\"0\" class=\"toggle\"> 情報表示 </button>&nbsp;&nbsp;&nbsp;\n";
-				$aryHTML[]	= "\t<button onclick=\"window.close();\"> 閉じる </button>&nbsp;&nbsp;&nbsp;\n";
+				$aryHTML[]	= "\t<button type=\"button\" onclick=\"fncWindowClose();\"> 閉じる </button>&nbsp;&nbsp;&nbsp;\n";
 				$aryHTML[]	= "\t<a id=\"excHref\" href=\"#\" onclick=\"scrollTop();\"><b>↑Page Top</b></a>&nbsp;&nbsp;\n";
 				break;
 
