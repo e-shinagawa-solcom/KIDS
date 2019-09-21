@@ -42,11 +42,10 @@ $objDB->open( "", "", "", "" );
 //-------------------------------------------------------------------------
 // パラメータ取得
 //-------------------------------------------------------------------------
-// $aryData	= $_REQUEST; POST、GETで通信するデータがないためコメントアウト
 
 $aryData["lngLanguageCode"]		= $_COOKIE["lngLanguageCode"];	// 言語コード
 $aryData["lngFunctionCode"]		= DEF_FUNCTION_E1;				// 管理コード（見積原価）
-$aryData["strSessionID"]        = $_COOKIE["strSessionID"];
+$aryData["strSessionID"]        = $_POST["strSessionID"];
 
 setcookie("strSessionID", $aryData["strSessionID"], 0, "/");
 //-------------------------------------------------------------------------
