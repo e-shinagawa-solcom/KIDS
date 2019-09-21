@@ -250,7 +250,7 @@ if ($file["exc_tmp_name"]) {
 					
 					if ($notFound) {
 						$notFound = array_unique($notFound, SORT_REGULAR);
-						$notFoundMessage = fncOutputError ( DEF_MESSAGE_CODE_RATE_DIFFER, DEF_WARNING, "", false, "", $objDB );
+						$notFoundMessage = fncOutputError ( DEF_MESSAGE_CODE_RATE_UNCAUGHT_WARNING, DEF_WARNING, "", false, "", $objDB );
 					}
 				
 					// 非表示リスト（無効リスト）を追加する
