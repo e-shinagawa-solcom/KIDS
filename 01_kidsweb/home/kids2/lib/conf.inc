@@ -58,6 +58,7 @@ switch( $strExcuteHttpHostName )
 		define ( "DB_NAME", "kidscore2" );
 		// エラーメール送信先
 		define ( "ERROR_MAIL_TO", "devs.biz@gmail.com" );
+		//define ( "ERROR_MAIL_TO", "miyata@testdomain.local" );
 		define ( "SEND_MAIL_FLAG", true);
 		// 各ルートパス
 		define ( "PATH_HOME",	"/home/kids2/" );
@@ -138,8 +139,10 @@ switch( $strExcuteHttpHostName )
 		define ( "ERROR_MAIL_TO", "kids@kuwagata.co.jp" );
 		define ( "SEND_MAIL_FLAG", true);
 		// 各ルートパス
-		define ( "PATH_HOME",	"/Users/solcom/Desktop/Git/KIDS/01_kidsweb/home/kids2" );
+		// define ( "PATH_HOME",	"/Users/solcom/Desktop/Git/KIDS/01_kidsweb/home/kids2" );
 		// define ( "PATH_HOME",	"/Users/solcom-ad/Desktop/Git/KIDS/01_kidsweb/home/kids2" ); // ローカル確認用
+		define ( "PATH_HOME",	"E:/Source/Repos/solcom-net/KIDS/01_kidsweb/home/kids2" );
+
 		break;
 }
 

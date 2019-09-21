@@ -36,7 +36,14 @@
                 'z-index': '9999'
             });
 
+            //【注意】2つ前の要素がマスタのコード値を持つinput要素でないとうまく動かない
             var handleName = $(this).prev().prev().attr('name');
+
+            // handleNameが取れなかったらinputCodeMSWNameにセットされた値をinput要素のname属性とみなす（2019/9/15 追加）
+            if (!handleName){
+                handleName = $(this).attr('inputCodeMSWName');
+            }
+
             ifmMsw.get(0).handler = handleName;
 
             docMsw.off('click', 'img.apply');
