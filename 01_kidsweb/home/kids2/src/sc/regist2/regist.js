@@ -372,25 +372,78 @@ jQuery(function($){
         }
         return true;
     }
+
+    // ヘッダ部・フッタ部入力エリアのPOST用データ作成
+    function getUpdateHeader(){
+        
+        var result = {
+            //起票者
+            lngInsertUserCode:         $('input[name="lngInsertUserCode"]').val(),
+            strInsertUserName:         $('input[name="strInsertUserName"]').val(),
+            //顧客
+            lngCustomerCode:           $('input[name="lngCustomerCode"]').val(),
+            strCustomerName:           $('input[name="strCustomerName"]').val(),
+            //顧客担当者
+            strCustomerResponder:      $('input[name="strCustomerResponder"]').val(),
+            //納品日
+            dtmDeliveryDate:           $('input[name="dtmDeliveryDate"]').val(),
+            //納品先
+            lngDeliveryPlaceCode:      $('input[name="lngDeliveryPlaceCode"]').val(),
+            strDeliveryPlaceName:      $('input[name="strDeliveryPlaceName"]').val(),
+            //納品先担当者
+            strDeliveryDestResponder:  $('input[name="strDeliveryDestResponder"]').val(),
+            //備考
+            strNote:                   $('input[name="strNote"]').val(),
+            //消費税区分
+            lngTaxClassCode:           $('select[name="lngTaxClassCode"]').children('option:selected').val(),
+            //消費税率
+            lngTaxRate:                $('select[name="lngTaxRate"]').children('option:selected').text(),
+            //消費税額
+            strTaxAmount:              $('input[name="strTaxAmount"]').val(),
+            //支払期限
+            dtmPaymentDueDate:         $('input[name="dtmPaymentDueDate"]').val(),
+            //支払方法
+            lngPaymentMethodCode:      $('select[name="lngPaymentMethodCode"]').children('option:selected').val(),
+            //合計金額
+            strTotalAmount:            $('input[name="strTotalAmount"]').val(),
+        };
+
+        return result;
+    }
+
+    // 出力明細一覧エリアのPOST用データ作成
     function getUpdateDetail(){
         var result = [];
-        $.each(getSelectedRows(), function(i, tr){
+        $.each($('#EditTableBody tr'), function(i, tr){
             var param ={
-                lngOrderDetailNo: $(tr).children('.detailOrderDetailNo').text(),
-                lngSortKey: i + 1,
-                lngDeliveryMethodCode: $(tr).find('option:selected').val(),
-                strDeliveryMethodName: $(tr).find('option:selected').text(),
-                lngProductUnitCode: $(tr).find('.detailProductUnitCode').text(),
-                lngOrderNo: $(tr).find('.detailOrderNo').text(),
-                lngRevisionNo: $(tr).find('.detailRevisionNo').text(),
-                lngStockSubjectCode: $(tr).find('.detailStockSubjectCode').text(),
-                lngStockItemCode: $(tr).find('.detailStockItemCode').text(),
-                lngMonetaryUnitCode: $(tr).find('.detailMonetaryUnitCode').text(),
-                lngCustomerCompanyCode: $(tr).find('.detailCustomerCompanyCode').text(),
-                curProductPrice: $(tr).find('.detailProductPrice').text(),
-                lngProductQuantity: $(tr).find('.detailProductQuantity').text(),
-                curSubtotalPrice: $(tr).find('.detailSubtotalPrice').text(),
-                dtmDeliveryDate: $(tr).find('.detailDeliveryDate').text(),
+                //顧客発注番号
+                strcustomerreceivecode: $(tr).children('.detailCustomerReceiveCode').text(),
+                //受注番号
+                strreceivecode: $(tr).children('.detailReceiveCode').text(),
+                //顧客品番
+                strgoodscode: $(tr).children('.detailGoodsCode').text(),
+                //製品コード
+                strproductcode: $(tr).children('.detailProductCode').text(),
+                //製品名
+                strproductname: $(tr).children('.detailProductName').text(),
+                //製品名（英語）
+                strproductenglishname: $(tr).children('.detailProductEnglishName').text(),
+                //営業部署
+                strsalesdeptname: $(tr).children('.detailSalesDeptName').text(),
+                //売上区分
+                strsalesclassname: $(tr).children('.detailSalesClassName').text(),
+                //納期
+                dtmdeliverydate: $(tr).children('.detailDeliveryDate').text(),
+                //入数
+                lngunitquantity: $(tr).children('.detailUnitQuantity').text(),
+                //単価
+                curproductprice: $(tr).children('.detailProductPrice').text(),
+                //単位
+                strproductunitname: $(tr).children('.detailProductUnitName').text(),
+                //数量
+                lngproductquantity: $(tr).children('.detailProductQuantity').text(),
+                //税抜金額
+                cursubtotalprice: $(tr).children('.detailSubTotalPrice').text(),
             };
             result.push(param);
         });
@@ -550,31 +603,21 @@ jQuery(function($){
     });
 
 
+    // プレビューボタン押下
     $('#PreviewBt').on('click', function(){
-
-        
-        var tempdata = {
-            data1: '日本語データ１',
-            data2: '日本語データ２',
-            data3: 'value3'
-        };
-        
+       
         var target = "previewWin";
         var features = "width=800,height=800,top=10,left=10,status=yes,scrollbars=yes,directories=no,menubar=yes,resizable=yes,location=no,toolbar=no";
+
         // 先に空のウィンドウを開いておく
         var emptyWin = window.open('', target, features);
 
+        // POSTデータ構築
         var data = {
-            headerData: tempdata,
-            strSessionID:         $('input[name="strSessionID"]').val(),
-            lngOrderNo:           $('input[name="lngOrderNo"]').val(),
-            strMode:              $('input[name="strMode"]').val(),
-            lngRevisionNo:        $('input[name="lngRevisionNo"]').val(),
-            lngPayConditionCode:  $('select[name="optPayCondition"]').children('option:selected').val(),
-            dtmExpirationDate:    $('input[name="dtmExpirationDate"]').val(),
-            lngLocationCode:      $('input[name="lngLocationCode"]').val(),
-            strNote:              $('input[name="strNote"]').text(),
-            aryDetail:            getUpdateDetail(),
+            strMode :      "display-preview",
+            strSessionID:  $('input[name="strSessionID"]').val(),
+            aryHeader:     getUpdateHeader(),
+            aryDetail:     getUpdateDetail(),
         };
 
         $.ajax({
@@ -584,7 +627,6 @@ jQuery(function($){
             async: true,
         }).done(function(data){
             console.log("done");
-            console.log(data);
             
             var url = "/sc/regist2/preview.php" + "?strSessionID=" + $('input[name="strSessionID"]').val();
             var previewWin = window.open('' , target , features );
