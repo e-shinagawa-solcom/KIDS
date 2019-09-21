@@ -134,18 +134,9 @@ jQuery(function($){
         $.each(getSelectedRows(), function(i, tr){
             var param = {
                 lngSortKey:               $(tr).find('td[name="rownum"]').text(),
-                // strOrderCode:             $(tr).find('.detailOrderCode').text(),
                 lngPurchaseOrderDetailNo: $(tr).find('.detailPurchaseorderDetailNo').text(),
-                // strStockSubject:          $(tr).find('.detailStockSubjectCode').text(),
-                // strStockItem:             $(tr).find('.detailStockItemCode').text(),
                 lngDeliveryMethodCode:    $(tr).find('option:selected').val(),
                 strDeliveryMethodName:    $(tr).find('option:selected').text(),
-                // strProductPrice:          $(tr).find('.detailProductPrice').text(),
-                // strProductQuantity:       $(tr).find('.detailProductQuantity').text(),
-                // strSubtotalPrice:         $(tr).find('.detailSubtotalPrice').text(),
-                // strDeliveryDate:          $(tr).find('.detailDeliveryDate').text(),
-                // strDetailNote:            $(tr).find('.detailDetailNote').text(),
-                // strProductUnitName:       $(tr).find('input[name="strProductUnitName"]').val(),
             };
             result.push(param);
         });
@@ -211,10 +202,6 @@ jQuery(function($){
                 strLocationName:     encodeURIComponent($('input[name="strLocationName"]').val()),
                 strNote:             encodeURIComponent($('input[name="strNote"]').val()),
                 strOrderCode:        $('input[name="strOrderCode"]').val(),
-                // strProductCode:      $('input[name="strProductCode"]').val(),
-                // strProductName:      encodeURIComponent($('input[name="strProductName"]').val()),
-                // strCustomerCode:     $('input[name="strCustomerCode"]').val(),
-                // strCustomerName:     encodeURIComponent($('input[name="strCustomerName"]').val()),
                 aryDetail:           getUpdateDetail(),
             }
         }).done(function(data){

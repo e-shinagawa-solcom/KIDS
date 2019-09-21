@@ -98,8 +98,8 @@
 		$strHtml = fncCreatePurchaseOrderUpdateHtml($updatedPurchaseOrder, $aryData["strSessionID"]);
 		$aryData["aryPurchaseOrder"] = $strHtml;
 
-		$objDB->transactionRollback();
-		// $objDB->transactionCommit();
+		// $objDB->transactionRollback();
+		$objDB->transactionCommit();
 
 		// テンプレート読み込み
 		$objTemplate = new clsTemplate();

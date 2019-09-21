@@ -56,6 +56,7 @@
 	$isSearch=array_keys($isSearch);
 	$aryData['ViewColumn']=$isDisplay;
 	$aryData['SearchColumn']=$isSearch;
+	$aryData['Admin'] = $_REQUEST["IsDisplay_btnAdmin"];
 	foreach($from as $key=> $item){
 		$aryData[$key.'From']=$item;
 	}
