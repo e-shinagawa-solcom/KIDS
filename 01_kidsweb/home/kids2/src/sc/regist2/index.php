@@ -108,6 +108,17 @@
 	}
 
 	//-------------------------------------------------------------------------
+	// 【ajax】納品日変更時の消費税率選択項目再設定
+	//-------------------------------------------------------------------------
+	if($strMode == "change-deliverydate"){
+		// 変更後の納品日に対応する消費税率の選択項目を取得
+		$optTaxRate = fncGetTaxRatePullDown($_POST["dtmDeliveryDate"], $objDB);
+		// データ返却
+		echo $optTaxRate;
+		return true;
+	}
+
+	//-------------------------------------------------------------------------
 	// フォーム初期値設定
 	//-------------------------------------------------------------------------
 	// ヘッダ・フッダ部
@@ -121,7 +132,6 @@
 	$aryData["dtmPaymentDueDate"] = $oneMonthLater->format('Y/m/d');
 
 	// 消費税区分プルダウン
-	$optTaxClass = '<option value=""></option>';
 	$optTaxClass .= fncGetPulldown("m_taxclass","lngtaxclasscode","strtaxclassname", "", "", $objDB);
 	$aryData["optTaxClass"] = $optTaxClass;
 

@@ -62,7 +62,7 @@ function fncGetTaxRatePullDown($dtmDeliveryDate, $objDB)
 function fncGetReceiveDetail($aryCondition, $objDB)
 {
     // -------------------
-    // SELECT¶ç,FROM¶ç
+    //  ÁªÂò¹àÌÜ
     // -------------------
     $arySelect[] = " SELECT";
     $arySelect[] = "  rd.lngsortkey,";                             //No.
@@ -236,7 +236,7 @@ function fncGetReceiveDetailHtml($aryReceiveDetail){
         $strHtml .= "<td class='detailDeliveryDate'>" . $strDisplayValue . "</td>";
         //Æþ¿ô
         $strDisplayValue = htmlspecialchars($aryReceiveDetail[$i]["lngunitquantity"]);
-        $strHtml .= "<td class='detailQuantity'>" . $strDisplayValue . "</td>";
+        $strHtml .= "<td class='detailUnitQuantity'>" . $strDisplayValue . "</td>";
         //Ã±²Á
         $strDisplayValue = htmlspecialchars($aryReceiveDetail[$i]["curproductprice"]);
         $strHtml .= "<td class='detailProductPrice' style='text-align:right;'>" . number_format($strDisplayValue, 4) . "</td>";

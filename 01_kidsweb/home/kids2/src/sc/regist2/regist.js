@@ -22,9 +22,9 @@ function SetSearchConditionWindowValue(search_condition) {
         }).done(function(data){
             console.log("done:get-lngcountrycode");
             if (data == "81"){
-                // 81：空白を選択（他の項目も選択可能）
+                // 81：「外税」を選択（他の項目も選択可能）
                 $("select[name='lngTaxClassCode'] option:not(:selected)").prop('disabled', false);
-                $("select[name='lngTaxClassCode']").val("");
+                $("select[name='lngTaxClassCode']").val("2");
     
             }else{
                 // 81以外：「非課税」固定
@@ -49,7 +49,7 @@ function SearchReceiveDetail(search_condition) {
         type: 'POST',
         url: 'index.php',
         data: {
-            strMode : "search-detail",      //サーバーサイドの動作モード
+            strMode : "search-detail",
             strSessionID: $('input[name="strSessionID"]').val(),
             condition: search_condition,
         },
@@ -72,6 +72,10 @@ jQuery(function($){
         changeRowNum();
     });
     // $('input[name="dtmExpirationDate"]').datepicker();
+
+    // ------------------------------------------
+    //   functions
+    // ------------------------------------------
     function checkPresentRow(tr){
         var orderNo = $(tr).children('td.detailOrderCode').text();
         var orderDetailNo = $(tr).children('td.detailOrderDetailNo').text();
@@ -85,6 +89,8 @@ jQuery(function($){
         });
         return result;
     }
+    
+    //出力明細一覧エリアに選択した明細を追加
     function setEdit(tr){
 
         //DEBUG:一旦重複チェック外す
@@ -98,40 +104,116 @@ jQuery(function($){
         
         var editTr = $('<tr></tr>');
         var td = $('<td></td>').text(i + 1);
+        
+        // No.
         $(td).attr('name', 'rownum');
         $(editTr).append($(td));
+        // 顧客受注番号
         td = $(tr).find($('td.detailCustomerReceiveCode')).clone();
         $(editTr).append($(td));
-
+        // 受注番号
         td = $(tr).find($('td.detailReceiveCode')).clone();
         $(editTr).append($(td));
+        // 顧客品番
         td = $(tr).find($('td.detailGoodsCode')).clone();
         $(editTr).append($(td));
+        // 製品コード
         td = $(tr).find($('td.detailProductCode')).clone();
         $(editTr).append($(td));
+        // 製品名
         td = $(tr).find($('td.detailProductName')).clone();
         $(editTr).append($(td));
+        // 製品名（英語）
         td = $(tr).find($('td.detailProductEnglishName')).clone();
         $(editTr).append($(td));
-        
+        // 営業部署
         td = $(tr).find($('td.detailSalesDeptName')).clone();
         $(editTr).append($(td));
+        // 売上区分
         td = $(tr).find($('td.detailSalesClassName')).clone();
         $(editTr).append($(td));
+        // 納期
         td = $(tr).find($('td.detailDeliveryDate')).clone();
         $(editTr).append($(td));
+        // 入数
+        td = $(tr).find($('td.detailUnitQuantity')).clone();
+        $(editTr).append($(td));
+        // 単価
         td = $(tr).find($('td.detailProductPrice')).clone();
         $(editTr).append($(td));
+        // 単位
         td = $(tr).find($('td.detailProductUnitName')).clone();
         $(editTr).append($(td));
+        // 数量
         td = $(tr).find($('td.detailProductQuantity')).clone();
         $(editTr).append($(td));
+        // 税抜金額
         td = $(tr).find($('td.detailSubTotalPrice')).clone();
         $(editTr).append($(td));
         
+        // 出力明細テーブルに明細を追加
         $(tbody).append($(editTr));
         $(editTable).append($(tbody));
     }
+
+    
+    // 合計金額・消費税額の更新
+    function updateAmount(){
+
+        // 税抜金額を取得して配列に格納
+        var aryPrice = [];
+        $("#EditTableBody tr").each(function() {
+            //カンマをはじいてから数値に変換
+            var price = Number($(this).find($('td.detailSubTotalPrice')).html().split(',').join(''));
+            aryPrice.push(price);
+        });
+
+        // ----------------
+        // 合計金額の算出
+        // ----------------
+        var totalAmount = 0;
+        aryPrice.forEach(function(price) {
+            totalAmount += price;
+        });
+
+        // ----------------
+        // 消費税額の算出
+        // ----------------
+        // 消費税区分を取得
+        var taxClassCode = $('select[name="lngTaxClassCode"]').children('option:selected').val();
+
+        // 消費税率を取得
+        var taxRate = Number($('select[name="lngTaxRate"]').children('option:selected').text());
+
+        console.log(taxRate);
+
+        // 消費税額の計算
+        var taxAmount = 0;
+        if (taxClassCode == "1")
+        {
+            // 1:非課税
+            taxAmount = 0;
+        }
+        else if (taxClassCode == "2")
+        {
+            // 2:外税
+            taxAmount = Math.floor(totalAmount * taxRate);
+        }
+        else if (taxClassCode == "3")
+        {
+            // 3:内税
+            aryPrice.forEach(function(price) {
+                taxAmount += Math.floor( (price / (1+taxRate)) * taxRate );
+            });
+        }
+
+        // ------------------
+        // フォームに値を設定
+        // ------------------
+        $('input[name="strTotalAmount"]').val(totalAmount);
+        $('input[name="strTaxAmount"]').val(taxAmount);
+    }
+
     function addHiddenValue(i, tr){
         var hidden = $('#SegHidden');
         var orderNo = $(tr).find($('td.detailOrderCode')).text();
@@ -315,6 +397,7 @@ jQuery(function($){
         return result;
     }
 
+
     // 別ウィンドウを開いてPOSTする
     function post_open(url, data, target, features) {
 
@@ -340,8 +423,46 @@ jQuery(function($){
         // フォームを削除
         $('#temp_form').remove();
     }
- 
-    // events
+    
+    // ------------------------------------------
+    //   events
+    // ------------------------------------------
+    $("select[name='lngTaxClassCode']").on('change', function(){
+        updateAmount();
+    });
+
+    $('select[name="lngTaxRate"]').on('change', function(){
+        updateAmount();
+    });
+
+    $('input[name="dtmDeliveryDate"]').on('change', function(){
+        //TODO:changeイベントを拾えないので要問題解決。素直に日付入力をdateTimePickerに替えたほうがいい
+        
+        //消費税率の選択項目変更
+        $.ajax({
+            type: 'POST',
+            url: 'index.php',
+            data: {
+                strMode : "change-deliverydate",
+                strSessionID: $('input[name="strSessionID"]').val(),
+                dtmDeliveryDate: $(this).val(),
+            },
+            async: true,
+        }).done(function(data){
+            console.log("done:change-deliverydate");
+            //TODO:消費税率の選択項目更新
+            console.log(data);
+            
+            //金額の更新
+            updateAmount();
+
+        }).fail(function(error){
+            console.log("fail:change-deliverydate");
+            console.log(error);
+        });
+
+    });
+
     $('#DetailTableBodyAllCheck').on('change', function(){
         $('input[name="edit"]').prop('checked', this.checked);
     });
@@ -354,11 +475,11 @@ jQuery(function($){
           };
         
         var features = "width=710,height=460,top=10,left=10,status=yes,scrollbars=yes,directories=no,menubar=yes,resizable=yes,location=no,toolbar=no";
-        // デバッグ終わるまではオプションなしで開く
         post_open(url, data, "conditionWin", features);
-        //post_open(url, data, "conditionWin");
 
-    });    
+    });
+    
+    // 追加ボタン
     $('#AddBt').on('click', function(){
         
         var cb = $('#DetailTableBody').find('input[name="edit"]');
@@ -371,14 +492,20 @@ jQuery(function($){
             }
         });
         if(!checked){
-            alert("発注確定する明細行が選択されていません。");
+            //alert("明細行が選択されていません。");
             return false;
         }
         
+        // 出力明細追加
         $.each($(trArray), function(i, v){
             setEdit($(v));
         });
+
+        // 合計金額・消費税額の更新
+        updateAmount();
     });
+
+
     $('body').on('click', '#EditTableBody tr', function(e){
         var tds = $(e.currentTarget).children('td');
         var checked = $(tds).hasClass('selected');
@@ -415,9 +542,11 @@ jQuery(function($){
         if(!selected.length) { return false; }
         $(selected).remove();
         changeRowNum();
+        updateAmount();
     });
     $('#AllDeleteBt').on('click', function(){
         $('#EditTableBody').empty();
+        updateAmount();
     });
 
 
@@ -471,49 +600,5 @@ jQuery(function($){
             emptyWin.close();
         });
 
-            
-           /*
-        var data = {
-            strSessionID: $('input[name="strSessionID"]').val(),
-            param1: 'test'
-        };   
-        */
-
-        //var features = "width=800,height=800,top=10,left=10,status=yes,scrollbars=yes,directories=no,menubar=yes,resizable=yes,location=no,toolbar=no";
-        //post_open(url, data, "previewWin", features);
-
-        //if(!validationCheck2()){
-        //    return false;
-        //}
-        /*
-            
-        $.ajax({
-            type: 'POST',
-            url: 'index2.php',
-            data: {
-                strSessionID:         $('input[name="strSessionID"]').val()
-                ,lngOrderNo:           $('input[name="lngOrderNo"]').val(),
-                strMode:              $('input[name="strMode"]').val(),
-                lngRevisionNo:        $('input[name="lngRevisionNo"]').val(),
-                lngPayConditionCode:  $('select[name="optPayCondition"]').children('option:selected').val(),
-                dtmExpirationDate:    $('input[name="dtmExpirationDate"]').val(),
-                lngLocationCode:      $('input[name="lngLocationCode"]').val(),
-                strNote:              $('input[name="strNote"]').text(),
-                aryDetail:            getUpdateDetail(),
-            },
-            async: true,
-        }).done(function(data){
-            console.log("done");
-            console.log(data);
-
-            var previewWin = window.open('' , 'previewWin' , 'width=800,height=600,top=10,left=10,status=yes,scrollbars=yes,directories=no,menubar=yes,resizable=yes,location=no,toolbar=no' );
-            previewWin.document.write(data);
-            previewWin.document.close();
-            
-        }).fail(function(error){
-            console.log("fail");
-            console.log(error);
-        });
-                */
     });
 });
