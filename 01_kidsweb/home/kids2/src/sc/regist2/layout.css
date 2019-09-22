@@ -479,7 +479,7 @@
 }
 
 /* ¸ÜµÒÂ¦Ã´Åö¼Ô */
-#SegACustomerResponder {
+#SegACustomerUserName {
 	font-weight : bold ;
 	position : absolute ;
 	left : 672px ;
@@ -492,7 +492,7 @@
 	background-color: #e8f0f1 ;
 	padding : 5px 0px 0px 8px ;
 }
-#VarsACustomerResponder {
+#VarsACustomerUserName {
 	font-weight : bold ;
 	position : absolute ;
 	left : 762px ;
@@ -545,7 +545,7 @@
 }
 
 /* Ç¼ÉÊÀèÃ´Åö¼Ô */
-#SegADeliveryDestResponder {
+#SegADeliveryPlaceUserName {
 	font-weight : bold ;
 	position : absolute ;
 	left : 672px ;
@@ -558,7 +558,7 @@
 	background-color: #e8f0f1 ;
 	padding : 5px 0px 0px 8px ;
 }
-#VarsADeliveryDestResponder {
+#VarsADeliveryPlaceUserName {
 	font-weight : bold ;
 	position : absolute ;
 	left : 762px ;
@@ -689,7 +689,7 @@
 
 
 /* »ÙÊ§´ü¸Â */
-#SegAPaymentDueDate {
+#SegAPaymentLimit {
 	font-weight : bold ;
 	position : absolute ;
 	left : 310px ;
@@ -702,7 +702,7 @@
 	background-color: #e8f0f1 ;
 	padding : 5px 0px 0px 8px ;
 }
-#VarsAPaymentDueDate {
+#VarsAPaymentLimit {
 	position : absolute ;
 	left : 390px ;
 	top : 130px ;

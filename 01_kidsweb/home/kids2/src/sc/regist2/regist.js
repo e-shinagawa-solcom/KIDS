@@ -157,7 +157,7 @@ jQuery(function($){
         td = $(tr).find($('td.detailReceiveDetailNo')).clone();
         $(editTr).append($(td));
         //リビジョン番号（明細登録用）
-        td = $(tr).find($('td.detailRevisionNo')).clone();
+        td = $(tr).find($('td.detailReceiveRevisionNo')).clone();
         $(editTr).append($(td));
         //再販コード（明細登録用）
         td = $(tr).find($('td.detailReviseCode')).clone();
@@ -374,25 +374,26 @@ jQuery(function($){
             strcompanydisplaycode:     $('input[name="lngCustomerCode"]').val(),
             strcompanydisplayname:     $('input[name="strCustomerName"]').val(),
             //顧客担当者
-            strcustomerresponder:      $('input[name="strCustomerResponder"]').val(),
+            strcustomerusername:       $('input[name="strCustomerUserName"]').val(),
             //納品日
             dtmdeliverydate:           $('input[name="dtmDeliveryDate"]').val(),
             //納品先
             lngdeliveryplacecode:      $('input[name="lngDeliveryPlaceCode"]').val(),
             strdeliveryplacename:      $('input[name="strDeliveryPlaceName"]').val(),
             //納品先担当者
-            strdeliverydestresponder:  $('input[name="strDeliveryDestResponder"]').val(),
+            strdeliveryplaceusername:  $('input[name="strDeliveryPlaceUserName"]').val(),
             //備考
             strnote:                   $('input[name="strNote"]').val(),
             //消費税区分
             lngtaxclasscode:           $('select[name="lngTaxClassCode"]').children('option:selected').val(),
             strtaxclassname:           $('select[name="lngTaxClassCode"]').children('option:selected').text(),
             //消費税率
+            lngtaxcode:                $('select[name="lngTaxRate"]').children('option:selected').val(),
             lngtaxrate:                $('select[name="lngTaxRate"]').children('option:selected').text(),
             //消費税額
             strtaxamount:              $('input[name="strTaxAmount"]').val(),
             //支払期限
-            dtmpaymentduedate:         $('input[name="dtmPaymentDueDate"]').val(),
+            dtmpaymentlimit:           $('input[name="dtmPaymentLimit"]').val(),
             //支払方法
             lngpaymentmethodcode:      $('select[name="lngPaymentMethodCode"]').children('option:selected').val(),
             //合計金額
@@ -407,6 +408,8 @@ jQuery(function($){
         var result = [];
         $.each($('#EditTableBody tr'), function(i, tr){
             var param ={
+                //No.（行番号）
+                rownumber: $(tr).children('td[name="rownum"]').text(),
                 //顧客発注番号
                 strcustomerreceivecode: $(tr).children('.detailCustomerReceiveCode').text(),
                 //受注番号
@@ -440,7 +443,7 @@ jQuery(function($){
                 //受注明細番号（明細登録用）
                 lngreceivedetailno: $(tr).children('.detailReceiveDetailNo').text(),
                 //リビジョン番号（明細登録用）
-                lngrevisionno: $(tr).children('.detailRevisionNo').text(),
+                lngreceiverevisionno: $(tr).children('.detailReceiveRevisionNo').text(),
                 //再販コード（明細登録用）
                 strrevisecode: $(tr).children('.detailReviseCode').text(),
                 //売上区分コード（明細登録用）
