@@ -71,7 +71,6 @@ $objDB->open( "", "", "", "" );
 $aryData = $_POST;
 
 
-
 $aryCheck["strSessionID"]           = "null:numenglish(32,32)";
 $aryCheck["lngFunctionCode"]        = "null:number(" . DEF_FUNCTION_UC1 . "," . DEF_FUNCTION_UC5 . ")";
 $aryCheck["bytInvalidFlag"]         = "english(1,7)";
@@ -188,15 +187,9 @@ if ( $aryData["lngAttributeCode"] > 0 )
 	// 強制設定
 	unset ( $aryData["bytInvalidFlag"] );
 	unset ( $aryData["bytMailTransmitFlag"] );
-// 2004.04.14 suzukaze update start
-//	$aryData["bytUserDisplayFlag"]            = "checked";
-// 2004.04.14 suzukaze update end
 	$aryData["lngAuthorityGroupCode"]         = 6;
 	$aryData["bytInvalidFlagDisabled"]        = "disabled";
 	$aryData["bytMailTransmitFlagDisabled"]   = "disabled";
-// 2004.04.14 suzukaze update start
-//	$aryData["bytUserDisplayFlagDisabled"]    = "disabled";
-// 2004.04.14 suzukaze update end
 	$aryData["lngAuthorityGroupCodeDisabled"] = "disabled";
 	if ( !$aryData["lngGroupCode"] )
 	{
@@ -243,7 +236,6 @@ $lngErrorCount += $bytErrorFlag;
 
 // 文字列チェック
 $aryCheckResult = fncAllCheck( $aryData, $aryCheck );
-//fncPutStringCheckError( $aryCheckResult, $objDB );
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -386,59 +378,7 @@ if ( $aryData["lngFunctionCode"] == DEF_FUNCTION_UC1 || $aryData["lngFunctionCod
 		$flgMatchDelete = 0;
 	}
 	$objDB->freeResult( $lngResultID );
-/*
-	// 所属を離れたグループがワークフローオーダーに存在していた場合、エラー
-	if ( $flgMatchArray )
-	{
-		$strQuery = "SELECT lngWorkflowOrderGroupCode FROM m_WorkflowOrder WHERE lngInChargeCode = " . $aryUserData["lngUserCode"] . " AND (" . join ( " OR", $aryGroupCodeDelete ) . ") AND bytWorkflowOrderDisplayFlag = TRUE\n";
-
-		list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
-		if ( $lngResultNum > 0 )
-		{
-			$aryData["lngGroupCode_Error"] = "visibility:visible;";
-			$aryData["lngGroupCode_Error_Message"] = "解除したグループがワークフローに存在しています。";
-			$objDB->freeResult( $lngResultID );
-
-			$lngErrorCount++;
-		}
-	}
-*/
 }
-
-//////////////////////////////////////////////////////////////////////////
-// ユーザー修正の場合、ログイン許可・権限グループ変更チェック
-// ログイン許可を外し、ワークフロー順番に含まれていてた場合
-// または
-// 権限グループを変更し、ワークフロー順番に含まれていた場合
-// エラーとする
-//////////////////////////////////////////////////////////////////////////
-/*
-if ( $aryData["lngFunctionCode"] == DEF_FUNCTION_UC5 && ( ( $aryData["bytInvalidFlag"] != $aryUserData["bytInvalidFlag"] && $aryData["bytInvalidFlag"] == "" ) || ( $aryData["lngAuthorityGroupCode"] != $aryUserData["lngAuthorityGroupCode"] && ( $aryData["lngAuthorityGroupCode"] > 2 && $aryData["lngAuthorityGroupCode"] < 6 ) ) ) )
-{
-	$strQuery = "SELECT lngWorkflowOrderCode FROM m_WorkflowOrder WHERE lngInChargeCode = " . $aryData["lngUserCode"];
-	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
-	if ( $lngResultNum > 0 )
-	{
-		// ログイン許可を外したことによるエラーだった場合
-		if ( $aryData["bytInvalidFlag"] != $aryUserData["bytInvalidFlag"] && $aryData["bytInvalidFlag"] == "t" )
-		{
-			$aryData["bytInvalidFlag_Error"] = "visibility:visible;";
-			$aryData["bytInvalidFlag_Error_Message"] = "ログイン許可を外したユーザーがワークフローに存在します。";
-		}
-
-		// グループを外したことによるエラーだった場合
-		if ( ( $aryData["lngAuthorityGroupCode"] != $aryUserData["lngAuthorityGroupCode"] && ( $aryData["lngAuthorityGroupCode"] > 2 && $aryData["lngAuthorityGroupCode"] < 6 ) ) )
-		{
-			$aryData["lngGroupCode_Error"] = "visibility:visible;";
-			$aryData["lngGroupCode_Error_Message"] = "権限設定に問題があります。";
-		}
-
-		$objDB->freeResult( $lngResultID );
-
-		$lngErrorCount++;
-	}
-}
-*/
 
 
 // パスワードチェック
@@ -482,7 +422,6 @@ if ( $aryData["bytUserDisplayFlag"] == "t" )
 	$aryData["bytUserDisplayFlag"] = "checked";
 }
 
-
 // エラー項目表示処理
 list ( $aryData, $bytErrorFlag ) = getArrayErrorVisibility( $aryData, $aryCheckResult, $objDB );
 $lngErrorCount += $bytErrorFlag;
@@ -508,7 +447,6 @@ if ( $_FILES['binUserPic']['name'] != "" && preg_match ( "/image\/(" . USER_IMAG
 // 文字列チェックにエラーがある場合、入力画面に戻る
 
 
-
 //エラーがあったら
 if( $lngErrorCount > 0 )
 {
@@ -528,37 +466,8 @@ else
 	echo getArrayTable( fncToHTMLString( $aryData ), "HIDDEN" );
 	echo "</form>\n";
 	echo "<script language=\"javascript\">document.forms[0].submit();</script>";
+
 }
-
-
-/*
-if ( $lngErrorCount > 0 )
-{
-	//echo getArrayTable( $aryData, "TABLE" );exit;
-	//echo fncGetReplacedHtml( "uc/regist/edit.tmpl", $aryData, $objAuth );
-
-	echo "<form action=\"/uc/regist/edit.php\" method=\"POST\">\n";
-	echo getArrayTable( fncToHTMLString( $aryData ), "HIDDEN" );
-	echo "</form>\n";
-	echo "<script language=\"javascript\">document.forms[0].submit();</script>";
-}
-
-// 文字列チェックにエラーがない場合、確認画面生成
-else
-{
-
-	$aryData["filename"] = "action.php";
-	array_push ( $aryData, $aryData );
-	echo "<form action=\"" . $aryData["filename"] . "\" method=\"POST\">\n";
-	echo "<input type=\"submit\">\n";
-	$aryData[0] = "";
-	echo getArrayTable( fncToHTMLString( $aryData ), "MIX" );
-	echo "</form>\n";
-}
-
-*/
-
-
 
 $objDB->close();
 

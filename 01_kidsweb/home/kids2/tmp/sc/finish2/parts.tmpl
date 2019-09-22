@@ -4,47 +4,81 @@
 <title>K.I.D.S.</title>
 <meta http-equiv="content-type" content="text/html; charset=euc-jp">
 
-
 <script type="text/javascript" language="javascript" src="/layout/type01/cmn/images.js"></script>
 <script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
 
 <link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
 <link rel="stylesheet" type="text/css" media="screen" href="/result/cmn/layout.css">
-<link rel="stylesheet" type="text/css" media="screen" href="/sc/finish/layout.css">
+<link rel="stylesheet" type="text/css" media="screen" href="/sc/finish2/layout.css">
 
 <script type="text/javascript" language="javascript" src="/cmn/processing_module.js"></script>
-<script type="text/javascript" language="javascript" src="/sc/finish/functions.js"></script>
-<script type="text/javascript" language="javascript" src="/sc/finish/exstr.js"></script>
+<script type="text/javascript" language="javascript" src="/sc/finish2/functions.js"></script>
+<script type="text/javascript" language="javascript" src="/sc/finish2/exstr.js"></script>
 
+<style>
+.regist-result {
+    position : absolute;
+    top : 200px;
+    left :200px;
+    width: 400px;
+    border-collapse: collapse;
+}
+.regist-result,tr,td{
+    font-weight: bold;
+    line-height: 1.5;
+    padding: 5px;
+}
+.message-header {
+    font-size : 13px;
+}
+.item-header {
+    border: 1px solid black;
+    background : #e8f0f1;
+    text-align: left;
+    width: 200px;
+}
+.item-value {
+    border: 1px solid black;
+    background : #e8f0f1;
+    text-align: left;
+}
+.button-bottom {
+    border: 1px solid black;
+    padding:10px;
+}
+.close-footer {
+    padding:10px;
+}
+
+</style>
 
 </head>
 
-<body id="Backs" oncontextmenu="return false;" onload="fncChgEtoJ();" onunload="window.returnValue=Array( '_%strAction%_', '_%strSessionID%_' );return false;">
-
-
-
-
-<p id="ProductInfo">
-<span id="ColumnProductsNo"></span>
-
-<span id="strPONo">_%lngPONo%_</span>
-</p>
-
-
-
-
-
-<p id="CompleteSet">
-<span id="FinishRegist">登録完了</span>
-<span id="BackSpace"></span>
-
-<!-- 閉じるボタン -->
-<span id="CloseBt" onclick="window.close();window.returnValue=Array( '_%strAction%_', '_%strSessionID%_' );return false;"></span>
-</p>
-
-
-
-
+<body id="Backs" oncontextmenu="return false;">
+ 
+    <table class="regist-result">
+        <tr><td class="message-header" colspan="2">登録が完了しました</td></tr>
+        <tr><td class="item-header">登録日時</td><td class="item-value">_%dtmRegistDate%_</td></tr>
+        <tr><td class="item-header">納品書No.</td><td class="item-value">_%lngSlipNo%_</td></tr>
+        <tr><td class="button-bottom" colspan="2">
+            <span id="DownloadBt">
+                （ダウンロード）
+            </span>            
+        </td></tr>
+        <tr><td class="close-footer" colspan="2">
+            <span id="CloseBt" onclick="window.close();return false;">
+                    <a href="#">
+                        <img onmousedown="fncAlphaOn( this );" 
+                            onmouseup="fncAlphaOff( this );" 
+                            onmouseover="BlownCloseJOn(this);" 
+                            onmouseout="BlownCloseJOff(this);"
+                            src="/img/type01/cmn/querybt/close_blown_off_ja_bt.gif" 
+                            width="72" height="20" border="0" alt="閉じる">
+                    </a>
+            </span>
+        </td></tr>
+    </table>
 
 </body>
+
 </html>

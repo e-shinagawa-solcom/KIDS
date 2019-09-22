@@ -8,7 +8,11 @@
 	var roothead = '/img/type01/po/wfroot_header.gif';
 	//-------------------------------------------------------------------------
 
+	///// GOODS PLAN HEADER IMAGE /////
+	var taxhead = '/img/type01/cmn/seg/tax_header.gif';
 
+	///// GOODS PLAN BOTTOM IMAGE /////
+	var taxbottom = '/img/type01/cmn/seg/tax_header.gif';
 
 	///// MAIN MTITLE IMAGE /////
 	var titleJ = '/img/type01/sc/title_ja.gif';
@@ -17,6 +21,9 @@
 	///// [PRODUCTS SEARCH] INPUT A HEADER IMAGE /////
 	var sosheadtitleAJ = '/img/type01/sc/scs_title_ja.gif';
 	var sosheadtitleAE = '/img/type01/sc/scs_title_en.gif';
+
+	// Çä¾å¡ÊÇ¼ÉÊ½ñ¡ËÅÐÏ¿²èÌÌ¤Î¥Ø¥Ã¥À¡¼²èÁü
+	var scdheadtitleAJ = '/img/type01/sc/scr_title_ja.gif';
 
 
 //-->

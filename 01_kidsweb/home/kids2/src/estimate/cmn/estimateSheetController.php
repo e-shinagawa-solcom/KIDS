@@ -4,15 +4,17 @@
 require_once ('conf.inc');
 require_once ( LIB_ROOT . "/mapping/conf_mapping_common.inc");
 
-// PHPSpreadSheetライブラリのオートロードファイル読み込み
-require_once ( LIB_ROOT . "/phpspreadsheet/autoload.php" );
+// Composerのオートロードファイル読み込み
+require_once ( VENDOR_AUTOLOAD_FILE );
 
 // 定数ファイルの読み込み
 require_once ( SRC_ROOT . "/estimate/cmn/const/workSheetConst.php");
 
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx as XlsxReader;
 use PhpOffice\PhpSpreadsheet\Shared\Drawing as XlsxDrawing;
-
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
 
 
 /**
@@ -40,20 +42,19 @@ class estimateSheetController {
 
     public $errorMessage;
     public $difference;
+    
 
     // 仕入科目 1224:チャージ計算用変数
     protected $overSeasMoldDepreciation;       // 仕入科目 403:海外金型償却の合計
     protected $importPartsCosts;               // 仕入科目 402:輸入パーツ仕入高の合計
     protected $tariff;
 
-    // 登録用データ
-
-
     public function __construct() {
         $this->setExcelErrorList();
     }
 
-    public function dataInitialize($sheetInfo) {
+    public function dataInitialize($sheetInfo, $objDB) {
+        $this->setObjectDatabase($objDB);
         $this->setSheetInfo($sheetInfo);
         $this->setRowRangeOfTargetArea();
     }
@@ -76,6 +77,13 @@ class estimateSheetController {
     }    
 
     //-----------------------------------------------------------------------------------
+
+
+    // データベースオブジェクトをセットする
+    protected function setObjectDatabase($objDB) {
+        $this->objDB = $objDB;
+        return true;
+    }
 
     /**
     *	概要	: Excelファイルフォーマットチェック
@@ -140,7 +148,7 @@ class estimateSheetController {
 
 
     
-    // ワークシートとセル名称リストの情報を登録する
+    // ワークシートとセル名称リストの情報をインスタンスにセットする
     public function setSheetInfo($sheetInfo) {
         $sheet = $sheetInfo['sheet'];
         $displayInvalid = $sheetInfo['displayInvalid'];
@@ -173,6 +181,8 @@ class estimateSheetController {
         $separate = array();
         // シート数取得
         $sheetCount = $spreadSheet->getSheetCount();
+
+        $sheetInfo = [];
         
         for ($count = 0; $count < $sheetCount; ++$count) {
             $displayInvalid = false; // 表示無効フラグ
@@ -241,88 +251,21 @@ class estimateSheetController {
     }
 
     /**
-     * View用のデータを生成する
-     *
-     * @param array $spreadSheet Loadしたブック内のデータ
-     *
-     * @return string $sheet シート内のデータ
-     */
-    function makeViewData($spreadSheet, $action, $sheetName = false) {
-        $cellAddressList = null;
-        $cellAddressListRowAndColumn = null;
-
-        $nameList = $this->nameList;
-        foreach ($nameList as $areaCellNameList) {
-            if ($cellNameList) {
-                $cellNameList = array_merge($areaCellNameList);
-            } else {
-                $cellNameList = $areaCellNameList;
-            }            
-        }
-
-        $mergedCellsList = array();
-        $startRow = null;
-        $startColumn = null;
-        $endRow = null;
-        $endColumn = null;
-        $aryData = array();
-
-        if ($sheetName) {
-            $sheet[0] = $spreadSheet->getSheetByName($sheetName);
-            // セル名称リストにある名称のセルを取得する
-            $data = $this->getCellAddressForCellName($spreadSheet, $sheet, $cellNameList, $rowCheckNameList);
-            if (empty($data)) {
-                $errorMessage = '選択可能なワークシートが存在しません';
-                return $errorMessage;
-            }
-
-            $sheetData[0] = $this->makeDataOfSheet($data[0], $action);
-            $difference[0] = $this->difference;
-            $this->initializeDifference();
-
-        } else {
-            // シート情報を取得
-            $allSheets = $this->getSheetInfo($spreadSheet);
-            // セル名称リストにある名称のセルを取得する
-            $datas = $this->getCellAddressForCellName($spreadSheet, $allSheets, $cellNameList, $rowCheckNameList);
-
-            if (empty($datas)) {
-                $errorMessage = '選択可能なワークシートが存在しません';
-                return $errorMessage;
-            }
-
-            foreach ($datas as $key => $data) {
-                $sheetData[$key] = $this->makeDataOfSheet($data, $action);
-                $difference[$key] = $this->difference;
-                $this->initializeDifference();
-                $warning[$key] = $this->warning;
-            } 
-
-            $sheetData = array_merge($sheetData);
-            $difference = array_merge($difference);
-        }
-
-        $retData = array(
-            'sheetData' => $sheetData,
-            'difference' => $difference,
-            'warning' => $warning
-        );
-
-        return $retData;
-    }
-
-
-    /**
      * シートのデータを生成する
      *
-     * @param array $sheetData シートデータのphpSpreadSheetオブジェクト
+     * @return string $mode 処理モード
      *
-     * @return array $aryData 出力データ配列
+     * @return array $viewData 出力データ配列
      */
-    function makeDataOfSheet() {
+    public function makeDataOfSheet($mode = null) {
         $sheet = $this->sheet;
 
         $areaNameList = workSheetConst::TARGET_AREA_DISPLAY_NAME_LIST;
+
+        // エリアごとに列の入力項目を取得する（売上分類はどの列にあるか等）
+        foreach($areaNameList as $areaCode => $name) {
+            $columnNumberList[$areaCode] = $this->setColumnNumberList($areaCode);
+        }
 
         // 標準のフォントを取得
         $defaultFont = $sheet->getParent()->getDefaultStyle()->getFont();
@@ -330,104 +273,243 @@ class estimateSheetController {
         // シート名を取得
         $sheetName = $sheet->getTitle();
 
-        // 開始行列、終了行列をセットする(列は数値に変換する)
+        // ワークシートの開始行列、終了行列をセットする(列は数値に変換する)
         $startRow = $this->startRow;
         $endRow = $this->endRow;
         $startColumn = $this->startColumn;
         $endColumn = $this->endColumn;
 
-        // 行高さと列幅の情報を取得する
+        // ワークシートの行高さと列幅の情報を取得する
         // 行高さ
-        $rowHeight = $this->getRowHeight($sheet, $startRow, $endRow);
+        $rowHeight = $this->getRowHeight();
         // 列幅
-        $columnWidth = $this->getColumnWidth($sheet, $startColumn, $endColumn, $defaultFont);
+        $columnWidth = $this->getColumnWidth();
 
-        // 開始行、開始列をHandsontable用に(0,0)に設定する
+        // Handsontable用に開始行、開始列(デフォルトは(0,0))を設定する
         // 表示用のデータを作るときのみ、補正した開始行、開始列を使用する
         //（Excelからデータを取得する場合に使用すると参照セルがずれます)
-        $adjustedStartRow = 0;
-        $adjustedStartColumn = 0;
+        $tableStartRow = 0;
+        $tableStartColumn = 0;
 
-        $rowShiftValue = $startRow - $adjustedStartRow; // Rowのシフト量
-        $adjustedEndRow = $endRow - $rowShiftValue;     // シフト分を終了行に補正
-        $columnShiftValue = $startColumn - $adjustedStartColumn; // Columnのシフト量
-        $adjustedEndColumn = $endColumn - $columnShiftValue;  // シフト分を終了列に補正
+        // ワークシートとHandsontableの開始行、開始列を比較してシフト量を算出する（補正用）
+        $rowShiftValue = $startRow - $tableStartRow; // Rowのシフト量
+        $tableEndRow = $endRow - $rowShiftValue;     // シフト分を補正し、Handsontableの終了行を算出
+        $columnShiftValue = $startColumn - $tableStartColumn; // Columnのシフト量
+        $tableEndColumn = $endColumn - $columnShiftValue;  // シフト分を補正し、Handsontableの終了列を算出
 
         // マージされたセルのリストを取得する
-        $mergedCellsList = $this->getMergedCellsList($sheet, $startRow, $endRow, $startColumn, $endColumn);
-        $adjMergedResult = $this->adjustMergedCellsList($mergedCellsList, $rowShiftValue, $columnShiftValue); // セル位置補正
+        $mergedCellsList = $this->getMergedCellsList();
+        // マージセルリストをHandsontable用に補正する
+        $shiftResult = $this->shiftMergedCellsList($mergedCellsList, $rowShiftValue, $columnShiftValue); 
 
         // ワークシート上の非表示行の取得
         $hiddenRowList = $this->hiddenRowList;
 
-        // パラメータの設定
-        for ($i = $adjustedStartRow; $i <= $adjustedEndRow; ++$i) {
+        // セル位置からセル名称を取得する配列を生成
+        $nameListForCellAddress = array_flip($this->cellAddressList);
 
-            $adjustedRow = $i + $startRow; // セル位置復元用の行番号($adjustedRowはエクセルの行番号、$iはhandsontable用の行番号)
+        // DBからの入力データの取得
+        if ($this->inputData) $inputData = $this->inputData;
+
+        // パラメータの設定
+        for ($tableRow = $tableStartRow; $tableRow <= $tableEndRow; ++$tableRow) {
+
+            $workSheetRow = $tableRow + $rowShiftValue; // ワークシートの行番号
+
+            // エリアコードを取得
+            $areaCode = $this->checkAttributeRow($workSheetRow);
+
+            // 列番号リストの取得
+            if ($areaCode) {
+                $columnNumberList = $this->setColumnNumberList($areaCode);
+            }
 
             // 情報表示押下時のセル高さリスト作成
-            if ($hiddenRowList[$adjustedRow] !== true) {
+            if ($hiddenRowList[$workSheetRow] !== true) {
                 // セルの背景色を取得する
-                $hiddenRowHeight[$i] = $rowHeight[$i];
+                $hiddenRowHeight[$tableRow] = $rowHeight[$tableRow];
             } else {
-                $hiddenRowHeight[$i] = 0.1;
+                $hiddenRowHeight[$tableRow] = 0.1;
             }
-            
-            for ($j = $adjustedStartColumn; $j <= $adjustedEndColumn; ++$j) {
+
+            // readOnly行のセット
+            if ($inputData) { // DBから見積原価明細のデータを取得している場合
+                // 受発注の分類を取得(受注 or 発注)
+                $receiveAreaCodeList = workSheetConst::RECEIVE_AREA_CODE;
+                $orderAreaCodeList = workSheetConst::ORDER_AREA_CODE;
+                if ($areaCode) {
+                    $data = $inputData[$workSheetRow]['data']; // 行データの取得
+                    $status = $data['statusCode']; // ステータスコードの取得
+                    $estimateDetailNo = $data['estimateDetailNo']; // 見積原価明細番号
+
+                    $detailNoList[$tableRow] = $estimateDetailNo;
+
+                    if ($receiveAreaCodeList[$areaCode] === true) { // 受注の場合
+    
+                        if ($status == DEF_RECEIVE_ORDER || $status == DEF_RECEIVE_END) { // 受注確定ないし納品済の場合
+                            $readOnlyDetailRow[] = $tableRow;
+                        }
+    
+                    } else if ($orderAreaCodeList[$areaCode] === true) { // 発注の場合
+    
+                        if ($status == DEF_ORDER_ORDER || $status == DEF_ORDER_END) { // 発注確定ないし納品済の場合
+                            $readOnlyDetailRow[] = $tableRow;
+                        }
+
+                    }
+                }
+
+            }
+           
+            for ($tableColumn = $tableStartColumn; $tableColumn <= $tableEndColumn; ++$tableColumn) {
                 // 初期化
                 $cellAddress = null;
-                $cellInfo = null;
                 $style = null;
-                $adjustedColumn = $j + $startColumn; // セル位置復元用の列番号
+                $workSheetColumn = $tableColumn + $startColumn; // ワークシートの列番号
                 // セル位置を復元する
-                $cellAddress = $this->combineRowAndColumnIndex($adjustedRow, $this->getAlphabetForColumnIndex($adjustedColumn));    
-                // セルの値を取得する
-                $cellInfo = $this->getCellInfo($sheet, $cellAddress);
-                $cellValue = $this->getCellValue($cellInfo);
-                $cellData[$i][$j]['value'] = (array_search($cellValue, $this->excelErrorList)) ? '#ERROR!' : $cellValue;
-                
-                // セルのスタイルを取得する
-                $style = $sheet->getStyle($cellAddress);
-                // セルのフォント情報を取得する
-                $font = $style->getFont();
-                // セルの書体を取得する
-                $cellData[$i][$j]['fontFamily'] = $font->getName();
-                // セルの文字サイズを取得する
-                $cellData[$i][$j]['fontSize'] = $font->getSize();
+                $cellAddress = self::combineRowAndColumnIndex($workSheetRow, self::getAlphabetForColumnIndex($workSheetColumn));
 
-                if ($hiddenRowList[$adjustedRow] !== true) {
-                    // セルの背景色を取得する
-                    $cellData[$i][$j]['backgroundColor'] = $style->getFill()->getStartColor()->getRGB();
-                } else {
-                    $cellData[$i][$j]['backgroundColor'] = 'CCCCCC';
+                // 列番号を数字からアルファベットに変換
+                $colAlphabet = $this->getAlphabetForColumnIndex($workSheetColumn);
+
+
+                $setFormatFlag = true; // フォーマットセットフラグ
+
+                // 編集モード時の書式の設定
+                if ($mode === 'edit') {
+                    if ($areaCode) {
+                        // 各入力項目のヘッダに対する列番号リストの取得
+                        $columnNoList = $this->setColumnNumberList($areaCode);
+                        if ($columnNoList['quantity'] == $colAlphabet
+                        || $columnNoList['price'] == $colAlphabet) { // 数量又は単価の場合
+                            $setFormatFlag = false;
+                        }
+
+                        if ($areaCode == DEF_AREA_OTHER_COST_ORDER) {
+                            if ($columnNoList['customerCompany'] == $colAlphabet) { // その他費用の顧客先（パーセント入力)
+                                $setFormatFlag = 'percent';
+                            }
+                        }
+                    } else {
+                        $targetCells= workSheetConst::QUANTITY_OR_PRICE_CELLS;
+                        if ($targetCells[$nameListForCellAddress[$cellAddress]] === true) { // 明細以外の数量又は単価の場合
+                            $setFormatFlag = false;
+                        }
+                    }
                 }
-                // セルの文字色を取得する
-                $cellData[$i][$j]['fontColor'] = $font->getColor()->getRGB();
+
+                // セルの値を取得する
+                if ($sheet->getCell($cellAddress)->getCalculatedValue()) {
+                    if ($setFormatFlag === true) {
+                        $cellValue = trim($sheet->getCell($cellAddress)->getFormattedValue());
+                    } else { // フォーマットセットフラグがfalseの時は計算値を直接与える（入力可能セルの一部について入力後にもセルの書式を反映させるため、書式をHandsontableで設定するための対応）
+                        $cellValue = $sheet->getCell($cellAddress)->getCalculatedValue();
+                        if ($setFormatFlag === 'percent' && $cellValue) {
+                            $cellValue = $cellValue * 100;
+                        }
+                    }                    
+                } else {
+                    $cellValue = '';
+                }
+
+                // セルのフォント情報を取得する
+                $fontInfo = $this->getFontInfo($cellAddress);
+      
+                // セルの背景色を取得する
+                if ($hiddenRowList[$workSheetRow] !== true) {
+                    $backgroundColor = $this->sheet->getStyle($cellAddress)->getFill()->getStartColor()->getRGB();
+                } else {
+                    $backgroundColor = 'CCCCCC';
+                }
 
                 // セルの罫線情報を取得する
-                $cellData[$i][$j]['border'] = $this->getBorderInfo($style);
-                if ($i > $adjustedStartRow) {
-                    $beforeRow = $i -1;
-                    $this->setAvailableBorderInfo($cellData[$i][$j]['border']['top'], $cellData[$beforeRow][$j]['border']['bottom']);
-                }
-                if ($j > $adjustedStartColumn) {
-                    $beforeColumn = $j -1;
-                    $this->setAvailableBorderInfo($cellData[$i][$j]['border']['left'], $cellData[$i][$beforeColumn]['border']['right']);
-                }
+                $border = $this->getBorderInfo($cellAddress);
+
                 // セルの配置情報を取得する
-                $alignmentInfo = $style->getAlignment();
-                $cellData[$i][$j]['verticalPosition'] = $this->getVerticalPosition($alignmentInfo);
-                $cellData[$i][$j]['horizontalPosition'] = $alignmentInfo->getHorizontal();
-                // セルの書式情報(太字、斜体）を取得する
-                $cellData[$i][$j]['emphasis'] = $this->getEmphasizedStyle($font);
+                $verticalPosition = $this->getVerticalPosition($cellAddress);
+                $horizontalPosition = $this->getHorizontalPosition($cellAddress);
+
+                // セル情報の配列に取得したパラメータを格納する
+                $cellData[$tableRow][$tableColumn] = array(
+                    'value' => (array_search($cellValue, $this->excelErrorList)) ? '#ERROR!' : $cellValue,
+                    'fontFamily' => $fontInfo['fontFamily'],
+                    'fontSize' => $fontInfo['fontSize'],
+                    'backgroundColor' => $backgroundColor,
+                    'fontColor' => $fontInfo['fontColor'],
+                    'border' => $border,
+                    'verticalPosition' => $verticalPosition,
+                    'horizontalPosition' => $horizontalPosition,
+                    'emphasis' => $fontInfo['emphasis']
+                );
+
+                // Html描画時に線が重複して表示されないよう罫線情報を補正する
+                if ($tableRow > $tableStartRow) {
+                    $beforeRow = $tableRow -1;
+                    $this->setAvailableBorderInfo($cellData[$tableRow][$tableColumn]['border']['top'], $cellData[$beforeRow][$tableColumn]['border']['bottom']);
+                }
+                if ($tableColumn > $tableStartColumn) {
+                    $beforeColumn = $tableColumn -1;
+                    $this->setAvailableBorderInfo($cellData[$tableRow][$tableColumn]['border']['left'], $cellData[$tableRow][$beforeColumn]['border']['right']);
+                }
 
                 // 情報表示押下時のデータを作成する
-                if ($hiddenRowList[$adjustedRow] !== true) {
-                    $hiddenCellValue[$i][$j] = $cellData[$i][$j]['value'];
+                if ($hiddenRowList[$workSheetRow] !== true) {
+                    $hiddenCellValue[$tableRow][$tableColumn] = $cellData[$tableRow][$tableColumn]['value'];
                 } else {
-                    $hiddenCellValue[$i][$j] = null;
+                    $hiddenCellValue[$tableRow][$tableColumn] = null;
                 }
-                
+
+                // クラス名の初期化
+                $className = null;
+
+                // クラス名のセット
+                if ($areaCode) {
+                    $className = workSheetConst::DETAIL_CLASS_STRING. ' '. workSheetConst::AREA_CLASS_STRING. $areaCode;
+                    // 各入力項目のヘッダに対する列番号リストの取得
+                    $columnNoList = $this->setColumnNumberList($areaCode);
+
+                    foreach($columnNoList as $key => $columnNo) {
+                        if ($columnNo === $colAlphabet) {
+                            $className .= ' ';
+                            $className .= $key;
+                            break;
+                        }
+                    }
+                } else if ($nameListForCellAddress[$cellAddress]) {
+                    // セルにセル名称が存在する場合はセル名称をクラスにセットする
+                    $className = $nameListForCellAddress[$cellAddress];
+                }
+
+                if ($className) {
+                    // クラス情報にクラス名を追加する
+                    $cellClass[] = $this->setCellClass($tableRow, $tableColumn, $className);
+                }
+
+                // readOnlyセルの設定
+                if ($mode === 'edit') {                    
+                    if ($areaCode) {
+                        // 列番号を数字からアルファベットに変換
+                        // $colAlphabet = $this->getAlphabetForColumnIndex($workSheetColumn);
+                        // foreach($columnNoList as $key => $columnNo) {
+                        //     if ($columnNo === $colAlphabet) {
+                        //         break;
+                        //     }
+                        // }
+
+                        // 対象エリアに応じた編集可能なセルのリストを取得 
+                        $editableKeys = workSheetConst::getEditableKeys($areaCode);
+
+                    } else if ($nameListForCellAddress[$cellAddress]) {
+                        $key = $nameListForCellAddress[$cellAddress];
+                        $editableKeys = workSheetConst::EDITABLE_KEY_EXPECT_FOR_TARGET_AREA;
+                    }
+                    // readOnlyをセットする
+                    if ($editableKeys[$key] === true) {
+                        $cellData[$tableRow][$tableColumn]['readOnly'] = false;
+                    } else {
+                        $cellData[$tableRow][$tableColumn]['readOnly'] = true;
+                    }
+                }
             }
         }
 
@@ -436,39 +518,210 @@ class estimateSheetController {
         $resultSetBorder = $this->setBorderInfoForMergedCell($mergedCellsList, $cellData);
         
         // 罫線情報をCSSのborder-styleに対応させる
-        for ($i = $adjustedStartRow; $i <= $adjustedEndRow; $i++) {
-            $adjustedRow = $i + $startRow;
-            for ($j = $adjustedStartColumn; $j <= $adjustedEndColumn; $j++) {
-                foreach($cellData[$i][$j]['border'] as $position => $borderData) {
-                    $cellData[$i][$j]['border'][$position] += $this->setBorderForCss($borderData['excelStyle']);
+        for ($tableRow = $tableStartRow; $tableRow <= $tableEndRow; $tableRow++) {
+            $workSheetRow = $tableRow + $startRow;
+            for ($tableColumn = $tableStartColumn; $tableColumn <= $tableEndColumn; ++$tableColumn) {
+                foreach($cellData[$tableRow][$tableColumn]['border'] as $position => $borderData) {
+                    $cellData[$tableRow][$tableColumn]['border'][$position] += $this->setBorderForCss($borderData['excelStyle']);
                 }
             }
         }
 
         // Rowのシフト量を非表示行に反映させる
-        foreach ($hiddenRowList as $key => $val) {
-            $viewKey = $key - $rowShiftValue;
-            $viewHiddenRowList[$viewKey] = $val;
+        if ($hiddenRowList) {
+            foreach ($hiddenRowList as $key => $val) {
+                $viewKey = $key - $rowShiftValue;
+                $viewHiddenRowList[$viewKey] = $val;
+            }
         }
 
-        // データを配列に格納する
+        // previewの場合
+        if ($mode === 'preview') {
+
+            // 発注状態マスタの取得
+            $receiveStatusMaster = $this->objDB->getMasterToArray('m_receivestatus', 'lngreceivestatuscode', 'strreceivestatusname');
+            // 受注状態マスタの取得
+            $orderStatusMaster = $this->objDB->getMasterToArray('m_orderstatus', 'lngorderstatuscode', 'strorderstatusname');
+
+            // 追加列のデフォルト値をセットする
+            $defaultCellData = workSheetConst::WORK_SHEET_CELL_DEFAULT;
+            mb_convert_variables('UTF-8', 'EUC-JP', $defaultCellData); // UTF-8に変換
+
+            $targetAreaRows = $this->targetAreaRows;
+
+            foreach ($targetAreaRows as $areaCode => $workSheetRows) {
+                if ($areaCode === DEF_AREA_OTHER_COST_ORDER) {
+                    continue;
+                }
+                // タイトル行の取得(対象エリア開始行の1つ前の行)
+                $titleRow = $workSheetRows['firstRow'] - 1;
+                // タイトル行がどの対象エリアに属するかを判定する配列の生成
+                $titleRowAttribute[$titleRow] = $areaCode;
+            }
+            
+
+            // 列の挿入処理
+            $shiftResult = $this->shiftMergedCellsList($mergedCellsList, 0, -3); // セル位置補正
+            array_unshift($columnWidth, 30, 25, 40);
+            $tableEndColumn += 3;
+
+            // クラス情報の更新
+            foreach ($cellClass as &$classData) {
+                $classData['col'] += 3;
+            }
+
+            foreach ($cellData as $tableRow => $rowData) {
+                $workSheetRow = $tableRow + $rowShiftValue; // ワークシートの行番号
+
+                $ColumnData1 = $defaultCellData;
+                $ColumnData2 = $defaultCellData;
+                $ColumnData3 = $defaultCellData;
+
+                $areaCode = $this->checkAttributeRow($workSheetRow);
+
+                $receiveConfirm = mb_convert_encoding('確定', 'UTF-8', 'EUC-JP');
+                $orderConfirm = mb_convert_encoding('確', 'UTF-8', 'EUC-JP');
+                $orderCancel = mb_convert_encoding('消', 'UTF-8', 'EUC-JP');
+
+                // ボタン生成処理
+                if ($receiveAreaCodeList[$areaCode]) {
+                    // 受注の場合
+                    $data = $inputData[$workSheetRow]['data'];
+                    $statusCode = $data['statusCode'];
+                    $estimateDetailNo = $data['estimateDetailNo'];
+                    switch($statusCode) {
+                        case DEF_RECEIVE_APPLICATE:
+                            $name = "confirm". $areaCode;
+                            $htmlValue1 = "<div class=\"applicate\">";
+                            $htmlValue1 .= "<input type=\"checkbox\" class=\"checkbox_applicate\" name=\"". $name. "\" value=\"".$estimateDetailNo . "\">";
+                            $htmlValue1 .= "</div>";
+                            $mergedCellsList[] = array(
+                                'row' => $tableRow,
+                                'col' => 0,
+                                'rowspan' => 1,
+                                'colspan' => 2,
+                            );
+                            
+                            $value3 = $receiveStatusMaster[$statusCode]['strreceivestatusname'];
+                            $htmlValue3 = "<div class=\"status_applicate\">". $value3. "</div>";
+
+                            $ColumnData1['value'] = $htmlValue1;
+                            $ColumnData3['value'] = $htmlValue3;
+                            break;
+                        case DEF_RECEIVE_ORDER:
+                            $value = $receiveStatusMaster[$statusCode]['strreceivestatusname'];
+                            $htmlValue = "<div class=\"status_order\">". $value. "</div>";
+                            $ColumnData3['value'] = $htmlValue;
+                            break;
+                        case DEF_RECEIVE_END:
+                            $ColumnData1['value'] = $receiveStatusMaster[$statusCode]['strreceivestatusname'];
+                            $mergedCellsList[] = array(
+                                'row' => $tableRow,
+                                'col' => 0,
+                                'rowspan' => 1,
+                                'colspan' => 3,
+                            );
+                            break;
+                        default:
+                            break;
+                    }                
+                } else if ($orderAreaCodeList[$areaCode]) {
+                    // 発注の場合
+                    $data = $inputData[$workSheetRow]['data'];
+                    $statusCode = $data['statusCode'];
+                    $estimateDetailNo = $data['estimateDetailNo'];
+                    switch($statusCode) {
+                        case DEF_ORDER_APPLICATE:
+                            $name = "confirm". $areaCode;
+                            $htmlValue1 = "<div class=\"applicate\">";
+                            $htmlValue1 .= "<input type=\"checkbox\" class=\"checkbox_applicate\" name=\"". $name. "\" value=\"".$estimateDetailNo . "\">";
+                            $htmlValue1 .= "</div>";
+                            $value3 = $orderStatusMaster[$statusCode]['strorderstatusname'];
+                            $htmlValue3 = "<div class=\"status_applicate\">". $value3. "</div>";
+                            $ColumnData1['value'] = $htmlValue1;
+                            $ColumnData3['value'] = $htmlValue3;
+                            break;
+                        case DEF_ORDER_ORDER:
+                            $name = "cancel". $areaCode;
+                            $htmlValue2 = "<div class=\"order\">";
+                            $htmlValue2 .= "<input type=\"checkbox\" class=\"checkbox_order\" name=\"". $name. "\" value=\"".$estimateDetailNo . "\">";
+                            $htmlValue2 .= "</div>";
+                            $value3 = $orderStatusMaster[$statusCode]['strorderstatusname'];
+                            $htmlValue3 = "<div class=\"status_applicate\">". $value3. "</div>";
+                            $ColumnData2['value'] = $htmlValue1;
+                            $ColumnData3['value'] = $htmlValue3;
+                            break;
+                        case DEF_ORDER_END:
+                            break;
+                        default:
+                            break;
+                    }
+    
+                } else if ($titleRowAttribute[$workSheetRow]) {
+                    // 確定、取消ボタンの生成
+                    $areaCode = $titleRowAttribute[$workSheetRow];
+                    if ($receiveAreaCodeList[$areaCode]) {
+                        // 受注エリアの場合
+                        $name = "'confirm". $areaCode. "'";
+                        $htmlValue1 = "<div>";
+                        $htmlValue1 .= "<button type=\"button\" class=\"btn_confirm\" value=\"". $areaCode. "\" onclick=\"receiveConfirm(" .$name. ")\">". $receiveConfirm. "</button>";
+                        $htmlValue1 .= "</div>";
+                        $mergedCellsList[] = array(
+                            'row' => $tableRow,
+                            'col' => 0,
+                            'rowspan' => 1,
+                            'colspan' => 2,
+                        );
+                        $ColumnData1['value'] = $htmlValue1;
+                    } else if ($orderAreaCodeList[$areaCode]) {
+                        $name1 = "'confirm". $areaCode. "'";
+                        $name2 = "'cancel". $areaCode. "'";
+                        // 発注エリアの場合
+                        $htmlValue1 = "<div>";
+                        $htmlValue1 .= "<button type=\"button\" class=\"btn_confirm\" value=\"order_confirm\" onclick=\"orderConfirm(" .$name1. ")\">". $orderConfirm. "</button>";
+                        $htmlValue1 .= "</div>";
+                        $htmlValue2 = "<div>";
+                        $htmlValue2 .= "<button type=\"button\" class=\"btn_cancel\" value=\"order_cancel\" onclick=\"orderCancel(" .$name2. ")\">". $orderCancel. "</button>";
+                        $htmlValue2 .= "</div>";
+                        $ColumnData1['value'] = $htmlValue1;
+                        $ColumnData2['value'] = $htmlValue2;
+                    }
+                }
+                array_unshift($cellData[$tableRow], $ColumnData1, $ColumnData2, $ColumnData3);
+            }
+        }
+
+        // データを配列にセットする
         $viewData = array(
             'sheetName' => $sheetName,              // シート名
             'mergedCellsList' => $mergedCellsList,  // マージされたセルのリスト
-            'startRow' => $adjustedStartRow,        // 開始行
-            'endRow' => $adjustedEndRow,            // 終了行
-            'startColumn' => $adjustedStartColumn,  // 開始列
-            'endColumn' => $adjustedEndColumn,      // 終了列
+            'startRow' => $tableStartRow,           // 開始行
+            'endRow' => $tableEndRow,               // 終了行
+            'startColumn' => $tableStartColumn,     // 開始列
+            'endColumn' => $tableEndColumn,         // 終了列
             'rowHeight' => $rowHeight,              // 行高さ
             'columnWidth' => $columnWidth,          // 列幅
             'cellData' => $cellData,                // セルのデータ(値、文字フォント、罫線、背景色)
+            'cellClass' => $cellClass,
             'hiddenList' => $viewHiddenRowList,
             'hiddenRowHeight' => $hiddenRowHeight,  // 情報表示押下時用行高さ
             'hiddenCellValue' => $hiddenCellValue     // 情報表示押下時用セル入力値
         );
+
+        // readOnlyの明細行情報が存在する場合はセットする
+        if ($readOnlyDetailRow) {
+            $viewData['readOnlyDetailRow'] = $readOnlyDetailRow;
+        }
+
+        // 見積原価明細番号リストが存在する場合はセットする
+        if ($detailNoList) {
+            $viewData['detailNoList'] = $detailNoList;
+        }
+        
         return $viewData;
     }
 
+    // 無効行を削除する
     public function deleteInvalidRow($viewData) {
         $hiddenList = $viewData['hiddenList'];
         $cellData = $viewData['cellData'];
@@ -598,7 +851,7 @@ class estimateSheetController {
                     break;
                 }
             }
-            if($draftCellAddressListRowAndColumn) {
+            if ($draftCellAddressListRowAndColumn) {
                 $startRow = intval($draftCellAddressListRowAndColumn['top_left']['row']);
                 $endRow = intval($draftCellAddressListRowAndColumn['bottom_left']['row']);
                 $startColumn = $this->getIndexForColumnAlphabet($draftCellAddressListRowAndColumn['top_left']['column']);
@@ -665,17 +918,21 @@ class estimateSheetController {
     /**
      * マージされたセルのリストを取得する
      *
-     * @param array $sheet シート情報
-     * @param string $startRow 開始行
-     * @param string $endRow 終了行
-     *
      * @return array $mergedCellsRowAndColumnInfo マージされたセルリスト
      */
-    function getMergedCellsList($sheet, $areaStartRow, $areaEndRow, $areaStartColumn, $areaEndColumn) {
+    protected function getMergedCellsList() {
+        $sheet = $this->sheet;
+        // ワークシートの開始行列、終了行列（有効範囲）
+        $areaStartRow = $this->startRow;
+        $areaEndRow = $this->endRow;
+        $areaStartColumn = $this->startColumn;
+        $areaEndColumn = $this->endColumn;
+
         $mergedCellsList =  $sheet->getMergeCells();
         $address = array();
         foreach($mergedCellsList as $value) {
             $address = $this->getRowAndColumnStartToEnd($value);
+            // マージセルの開始行列と終了行列
             $startRow = intval($address['start']['row']);
             $endRow = intval($address['end']['row']);
             $startColumn = $this->getIndexForColumnAlphabet($address['start']['column']);
@@ -713,14 +970,12 @@ class estimateSheetController {
     /**
      * シートの行高さを取得する
      *
-     * @param array $sheet シート情報
-     * @param string $startRow 開始行
-     * @param string $endRow 終了行
-     * @param array $defaultFont シートのフォント情報
-     *
      * @return array $rowHeightPixel 各行の高さ
      */
-    function getRowHeight($sheet, $startRow, $endRow) {
+    protected function getRowHeight() {
+        $sheet = $this->sheet;
+        $startRow = $this->startRow;
+        $endRow = $this->endRow;
         if (is_integer($startRow) && is_integer($endRow)) {
             if ($startRow <= $endRow) {
                 for ($i = $startRow; $i <= $endRow; $i++) {
@@ -738,14 +993,14 @@ class estimateSheetController {
     /**
      * シートの列幅を取得する
      *
-     * @param array $sheet シート情報
-     * @param string $startColumn 開始列
-     * @param string $endColumn 終了列
-     * @param array $defaultFont シートのフォント情報
-     *
      * @return array $columnWidthPixel 各列の幅
      */
-    function getColumnWidth($sheet, $startColumn, $endColumn, $defaultFont) {
+    protected function getColumnWidth() {
+        $sheet = $this->sheet;
+        $startColumn = $this->startColumn;
+        $endColumn = $this->endColumn;
+        // 標準のフォントを取得
+        $defaultFont = $sheet->getParent()->getDefaultStyle()->getFont();
         if ($startColumn <= $endColumn) {
             for ($i = $startColumn; $i <= $endColumn; $i++) {
                 $column = self::getAlphabetForColumnIndex($i);
@@ -757,18 +1012,6 @@ class estimateSheetController {
         }
         return false;
     }
-    /**
-     * 印刷範囲（ページとして有効な範囲）を取得する
-     *
-     * @param array $spreadSheet シート情報
-     *
-     * @return string $printArea 開始セル位置及び終了セル位置
-     * （開始セル位置：終了セル位置　の形で取得）
-     */
-    function selectPickUpArea($sheet) {
-        $printArea = $sheet->getPageSetup()->getPrintArea();
-        return $printArea;
-    }
 
     /**
      * 指定したセル範囲の最初及び最後の行と列を取得する
@@ -777,11 +1020,11 @@ class estimateSheetController {
      *
      * @return array $cellAddress 開始セル及び終了セルの行番号と列番号
      */
-    function getRowAndColumnStartToEnd($area) {
+    protected function getRowAndColumnStartToEnd($area) {
         $cell = array();
         $cell['start'] = strstr($area, ':', true);
         $cell['end'] = str_replace(':', '', strstr($area, ':'));
-        $cellAddress = $this->separateRowAndColumn($cell);
+        $cellAddress = self::separateRowAndColumn($cell);
         return $cellAddress;
     }
 
@@ -792,7 +1035,7 @@ class estimateSheetController {
      *
      * @return array $cellAddress セル位置に対応する行番号と列番号
      */
-    protected static function separateRowAndColumn($cell) {
+    public static function separateRowAndColumn($cell) {
         $cellAddress = array();
         if (is_array($cell)) {
             foreach ($cell as $key => $value) {
@@ -805,7 +1048,8 @@ class estimateSheetController {
         }
         return $cellAddress;
     }
-
+    
+    
     /**
      * 行番号と列番号を結合する
      *
@@ -814,9 +1058,9 @@ class estimateSheetController {
      *
      * @return array $cell セル位置
      */
-    function combineRowAndColumnIndex($row, $column) {
+    protected static function combineRowAndColumnIndex($row, $column) {
         if (!preg_match('/[A-Z]+/', $column)) {
-            $column = $this->getAlphabetForColumnIndex($column);
+            $column = self::getAlphabetForColumnIndex($column);
         }
         if (is_integer($row) && preg_match('/[A-Z]+/', $column)) {
             $cell = $column . $row;
@@ -824,6 +1068,26 @@ class estimateSheetController {
         } else {
             return false;
         }
+    }
+
+    /**
+     * 指定した行数と列数を移動したセル位置を返却する
+     *
+     * @param $cell 移動前のセル位置
+     * @param $rowMove 移動する行数（下方向が＋）
+     * @param $colMove 移動する列数（右方向が＋）
+     *
+     * @return $movedCell 移動後のセル位置
+     */
+    public static function getMoveCell($cell, $rowMove, $colMove) {
+        $separate = self::separateRowAndColumn($cell);
+        $row = $separate['row'];
+        $col = $separate['column'];
+        $colNumber = self::getIndexForColumnAlphabet($col);
+        $movedRow = $row + $rowMove;
+        $movedCol = $colNumber + $colMove;
+        $movedCell = self::combineRowAndColumnIndex($movedRow, $movedCol);
+        return $movedCell;
     }
 
     /**
@@ -842,12 +1106,12 @@ class estimateSheetController {
     /**
      * 罫線情報を取得する
      *
-     * @param $cell 行番号と列番号を抽出するセル位置
+     * @param $cellAddress 行番号と列番号を抽出するセル位置
      *
      * @return array $borders セルの罫線情報
      */
-    function getBorderInfo($style) {
-        $borderInfoData = $style->getBorders();
+    public function getBorderInfo($cellAddress) {
+        $borderInfoData = $this->sheet->getStyle($cellAddress)->getBorders();
         // 罫線情報の中から部位別の情報を取得する
         $border = array();
         $border['left'] = $borderInfoData->getLeft();
@@ -865,26 +1129,26 @@ class estimateSheetController {
     }
 
     // 配置情報を取得する
-    function getAlignmentInfo($style) {
+    public function getAlignmentInfo($style) {
         $alignmentInfo = $style->getAlignment();
         return $alignmentInfo;
     }
 
     // テキストの折り返し状態を取得する
-    function getWrapTextInfo($alignment) {
+    public function getWrapTextInfo($alignment) {
         $textWrapInfo = $alignment->getWrapText();
         return $textWrapInfo;
     }
 
     // テキストの水平方向の配置を取得する
-    function getHorizontalPosition ($alignment) {
-        $horizontalPosition = $alignment->getHorizontal();
+    public function getHorizontalPosition ($cellAddress) {
+        $horizontalPosition = $this->sheet->getStyle($cellAddress)->getAlignment()->getHorizontal();
         return $horizontalPosition;
     }
 
     // テキストの垂直方向の配置を取得する
-    function getVerticalPosition ($alignment) {
-        $verticalPosition = $alignment->getVertical();
+    public function getVerticalPosition ($cellAddress) {
+        $verticalPosition = $this->sheet->getStyle($cellAddress)->getAlignment()->getVertical();
         //centerの場合はcss用にmiddleに置換する
         if ($verticalPosition == 'center') {
             $verticalPosition = 'middle';
@@ -893,31 +1157,25 @@ class estimateSheetController {
     }
 
     // セルのフォント情報を取得する
-    function getFontInfo($style) {
-        $font = $style->getFont();
-        return $font;
-    }
-
-    // セルの書体を取得する
-    function getFontFamilyInfo($font) {
+    public function getFontInfo($cellAddress) {
+        $font = $this->sheet->getStyle($cellAddress)->getFont();
         $fontFamily = $font->getName();
-        return $fontFamily;
-    }
-
-    // セルのフォントサイズを取得する
-    function getFontSizeInfo($font) {
         $fontSize = $font->getSize();
-        return $fontSize;
-    }
-
-    // セルの文字色を取得する
-    function getFontColorInfo($font) {
         $fontColor = $font->getColor()->getRGB();
-        return $fontColor;
+        $emphasis = $this->getEmphasizedStyle($font);
+
+        $fontInfo = array(
+            'fontFamily' => $fontFamily,
+            'fontSize' => $fontSize,
+            'fontColor' => $fontColor,
+            'emphasis' => $emphasis
+        );
+        
+        return $fontInfo;
     }
 
     // セルの太字、斜体情報を取得する
-    function getEmphasizedStyle($font) {
+    public function getEmphasizedStyle($font) {
         $bold = $font->getBold();
         $italic = $font->getItalic();
         $emphasis = array(
@@ -983,30 +1241,20 @@ class estimateSheetController {
     }
 
     /**
-     * 範囲の開始行又は開始列を移動する場合のセル位置を補正する
+     * クラス情報をセットする
      * 
-     * @param string $startRowOrColumn 開始行または開始列
-     * @param integer  $number 開始行または開始列の設定先（デフォルトが0に出力するか1に出力するかで変更する）
+     * @param integer $row クラスをセットする行
+     * @param integer $col クラスをセットする列
+     * @param string  $className クラス名
      * 
-     * @return $corrected 補正後の行または列番号
+     * @return クラス情報の配列
      */
-    function correctPosition($cellRowOrColumn, $startRowOrColumn, $number) {
-        $corrected = $cellRowOrColumn - $startRowOrColumn + $number;
-        return $corrected;
-    }
-
-
-    // 行番号と列番号を持つクラスを設定する
-    function setCellClass($startRow, $endRow, $startColumn, $endColumn) {
-        for($i = $startRow; $i <= $endRow; $i++) {
-            for($j = $startColumn; $j <= $endColumn; $j++) {
-                $cellClass[] = array(
-                    'row' => $i,
-                    'col' => $j,
-                    'className' => 'row'.$i.' col'.$j
-                );
-            }
-        }
+    function setCellClass($row, $col, $className) {
+        $cellClass = array(
+            'row' => $row,
+            'col' => $col,
+            'className' => $className
+        );
         return $cellClass;
     }
 
@@ -1096,7 +1344,7 @@ class estimateSheetController {
         }
     }
 
-    function adjustMergedCellsList(&$mergedCellsList, $rowShift, $columnShift) {
+    protected function shiftMergedCellsList(&$mergedCellsList, $rowShift, $columnShift) {
         foreach ($mergedCellsList as &$value) {
             $value['row'] = $value['row'] - $rowShift;
             $value['col'] = $value['col'] - $columnShift;
@@ -1120,9 +1368,9 @@ class estimateSheetController {
                 $endMergedRow = $value['row'] + $value['rowspan'] -1;
                 $endMergedColumn = $value['col'] + $value['colspan'] -1;
                 // 結合セルの一番左の罫線情報に、結合セルの一番右の罫線情報を入れる
-                $cellData[$value['row']][$value['col']]['border']['right'] =  $cellData[$value['row']][$endMergedColumn]['border']['right'];
+                $cellData[$value['row']][$value['col']]['border']['right'] = $cellData[$value['row']][$endMergedColumn]['border']['right'];
                 // 結合セルの一番上の罫線情報に、結合セルの一番下の罫線情報を入れる
-                $cellData[$value['row']][$value['col']]['border']['bottom'] =  $cellData[$endMergedRow][$value['col']]['border']['bottom'];
+                $cellData[$value['row']][$value['col']]['border']['bottom'] = $cellData[$endMergedRow][$value['col']]['border']['bottom'];
             } 
         }
         return true;
@@ -1164,6 +1412,9 @@ class estimateSheetController {
         // 部材費エリアの仕入科目の列番号を取得する
         $subjectCellName = workSheetConst::ORDER_ELEMENTS_COST_STOCK_SUBJECT_CODE;
         $cellAddress = $this->cellAddressList[$subjectCellName];
+        if (!$cellAddress) {
+            return false;
+        }
         $ret = self::separateRowAndColumn($cellAddress);
         $column = $ret['column'];
         
@@ -1218,6 +1469,9 @@ class estimateSheetController {
     // セル名称から行番号、列番号を取得する
     protected function getRowAndColumnFromCellName($cellName) {
         $cellAddressList = $this->cellAddressList;
+        if (!$cellAddressList) {
+            return false;
+        }
         $cellAddress = $cellAddressList[$cellName];
         $rowAndColumn = self::separateRowAndColumn($cellAddress);
         return $rowAndColumn;
@@ -1233,6 +1487,393 @@ class estimateSheetController {
     protected function getColumnNumberFromCellName($cellName) {
         $rowAndColumn = $this->getRowAndColumnFromCellName($cellName);
         return $rowAndColumn['column'];
+    }
+
+    public function setDBEstimateData($productData, $estimateData) {
+        $this->setMonetaryRate(); // 通貨レートのセット
+        $this->inputHeaderData($productData); // 製品情報のセット（ヘッダ部）
+        $this->inputStandardRate(); // 標準割合のセット
+        $this->inputEstimateDetailData($estimateData); // 見積原価明細のセット
+        // $this->inputDropdownList();
+    }
+
+    // ヘッダ部に値をセットする
+    public function inputHeaderData($productData) {
+        $cellAddressList = $this->cellAddressList;
+        foreach ($productData as $key => $param) {
+            if (isset($param)) {
+                $cell = $cellAddressList[$key];
+                $this->sheet->getCell($cell)->setValue($param);
+            }
+        }
+    }
+
+    // 標準割合をセットする
+    public function inputStandardRate() {
+        // DBから標準割合を取得
+	    $standardRate = $this->objDB->getEstimateStandardRate();
+        $cellAddressList = $this->cellAddressList;
+        $cell = $cellAddressList[workSheetConst::STANDARD_RATE];
+        $this->sheet->getCell($cell)->setValue($standardRate);
+    }
+
+    // 明細部に値をセットする
+    public function inputEstimateDetailData($estimateData) {
+        $targetAreaRows = $this->targetAreaRows;
+        foreach ($estimateData as $areaCode => $data) {
+            $this->inputEstimateDetailToTargetArea($areaCode, $data);
+        }
+        return true;
+    }
+
+
+    // 対象エリアに見積原価明細情報をセットする
+    protected function inputEstimateDetailToTargetArea($areaCode, $datas) {
+        $targetAreaRows = $this->targetAreaRows;
+        $columnNumber = $this->setColumnNumberList($areaCode);
+        $row = $targetAreaRows[$areaCode]['firstRow'];
+        
+        foreach($datas as $sorKey => $data) {
+            // 輸入費用判定(その他費用の場合のみ行う)
+            if ($areaCode == DEF_AREA_OTHER_COST_ORDER) {
+                list($divisionSubjectCode, $divisionSubjectName) = explode(':', $data['divisionSubject']);
+                if ($divisionSubjectCode == DEF_STOCK_SUBJECT_CODE_CHARGE) {
+                    list($classItemCode, $classItemName) = explode(':', $data['classItem']);
+                    if ($classItemCode == DEF_STOCK_ITEM_CODE_IMPORT_COST) {
+                        $importCostList[$sorKey] = $data;
+                        break;
+                    } else if ($classItemCode == DEF_STOCK_ITEM_CODE_TARIFF) {
+                        // 関税の行番号取得
+                        $tariffRowList[] = $row;
+                    }
+                }
+            }
+
+            foreach($data as $name => $value) {
+                $column = $columnNumber[$name];
+                if (isset($row) && isset($column)) {
+                    $cell = $column. $row;
+                    $this->sheet->getCell($cell)->setValue($value);
+                    // パーセント入力の場合、書式を変更する
+                    if ($name == 'customerCompany' && is_numeric($value)) {
+                        $style = $this->sheet->getStyle($cell);
+                        $style->getNumberFormat()->setFormatCode(NumberFormat::FORMAT_PERCENTAGE_00);
+                        $style->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);
+                    }
+                    // データ書き込み情報の作成
+                    $inputData[$row] = array(
+                        'areaCode' => $areaCode,
+                        'sortKey' => $sorKey,
+                        'data' => $data
+                    );
+                }
+            }
+            ++$row;
+        }
+
+        // 関税が存在する場合
+        if ($tariffRowList) {
+            foreach($tariffRowList as $tariffRow) {
+                // 事前に計算していないとセルの計算結果が消える対策(PhpSpreadSheetの不具合と思われる)
+                $column = $columnNumber['subtotal'];
+                $cell = $column. $row;
+                $this->sheet->getCell($cell)->getCalculatedValue();
+            }
+        }
+
+        // 輸入費用が存在する場合
+        if ($importCostList) {
+            $importCount = count($importCostList);
+            // 入力範囲の最終行を取得
+            $lastInputAreaRow = $targetAreaRows[$areaCode]['lastRow'];
+            // 輸入費用を入力する開始行を取得
+            $firstImportCostRow = $lastInputAreaRow - $importCount + 1;
+
+            $row = $firstImportCostRow;
+
+            // 輸入費用の値の入力
+            foreach($importCostList as $sorKey => $data) {
+                foreach($data as $name => $value) {
+                    $column = $columnNumber[$name];
+                    if (isset($row) && isset($column)) {
+                        $cell = $column. $row;
+                        $this->sheet->getCell($cell)->setValue($value);
+                        if ($name == 'customerCompany' && is_numeric($value)) {
+                            $style = $this->sheet->getStyle($cell);
+                            $style->getNumberFormat()->setFormatCode(NumberFormat::FORMAT_PERCENTAGE_00);
+                            $style->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);
+                        }
+                        // データ書き込み情報の作成
+                        $inputData[$row] = array(
+                            'areaCode' => $areaCode,
+                            'sortKey' => $sorKey,
+                            'data' => $data
+                        );
+                    }
+                }
+                ++$row;
+            }
+            
+            // 関税検索の開始セルと終了セルを取得
+            $tariffSearchColumn = $columnNumber['classItem'];          // 検索列
+            $tariffTotalColumn = $columnNumber['subtotal'];            // 合計列
+            $tariffStartRow = $targetAreaRows[$areaCode]['firstRow'];  // 開始行
+            $tariffEndRow = $firstImportCostRow - 1;                   // 終了行
+
+            // エクセルの範囲の設定する文字列生成
+            $tariffSearchStartCell = $tariffSearchColumn. $tariffStartRow;  // 検索開始セル
+            $tariffSearchEndCell = $tariffSearchColumn. $tariffEndRow;      // 検索終了セル
+            $tariffTotalStartCell = $tariffTotalColumn. $tariffStartRow;    // 合計開始セル
+            $tariffTotalEndCell = $tariffTotalColumn. $tariffEndRow;        // 合計終了セル
+
+            $tariffSearchArea = $tariffSearchStartCell. ':'. $tariffSearchEndCell;  // 検索範囲
+            $tariffTotalArea = $tariffTotalStartCell. ':'. $tariffTotalEndCell;     // 合計範囲
+
+            // 関税の合計値を入力するセルを取得
+            $cellAddressList = $this->cellAddressList;
+            $tariffTotalCell = $cellAddressList[workSheetConst::CALCULATION_TARIFF];  // 関税合計セル
+            
+            // 入力された式を取得
+            $inputParam = $this->sheet->getCell($tariffTotalCell)->getValue();
+            // sumif()のカッコ内を抽出
+            preg_match('/(?<=sumif\()[^\)]+(?=\))/i', $inputParam, $match);
+            // ,(カンマ）で区切られた条件を取得する
+            list($searchArea, $searchCondition, $totalArea) = explode(',', $match[0]);
+
+            // sumifの条件を再設定
+            $sumifParam = $tariffSearchArea. ','. $searchCondition. ','. $tariffTotalArea;
+
+            // 元の式を置換する
+            $newFomula = str_replace($match, $sumifParam, $inputParam);
+            
+            // セルに代入
+            $this->sheet->getCell($tariffTotalCell)->setValue($newFomula);
+       }
+
+
+        // ワークシートへのデータ書き込み情報を保持
+        if ($this->inputData) {
+            $this->inputData += $inputData;
+        } else {
+            $this->inputData = $inputData;
+        }
+        
+        return true;
+    }
+
+
+    // ドロップダウンリストをワークシートオブジェクト内のセルに入力する
+    protected function inputDropdownList() {
+        // ドロップダウンリストの取得
+        $this->setDropdownList();
+
+        // ドロップダウンリストの切り分けを行う
+        $dropdownDSCI = $this->dropdownDSCI;
+        $dropdownCompany = $this->dropdownCompany;
+        $dropdownGU = $this->dropdownGU;
+
+        $cellAdrresList = $this->cellAddressList;
+
+        $divSubDropdownCellList = workSheetConst::DIVISION_SUBJECT_DROPDOWN_CELL_NAME;
+        $clsItmDropdownCellList = workSheetConst::CLASS_ITEM_DROPDOWN_CELL_NAME;
+        
+        foreach ($dropdownDSCI as $areaCode => $dropdownList) {
+            $divSubCellName = $divSubDropdownCellList[$areaCode];
+            $divSubCellAddress = $cellAdrresList[$divSubCellName];
+            $divSubSeparate = $this->separateRowAndColumn($divSubCellAddress);
+            $divSubRow = $divSubSeparate['row'];
+            $divSubCol = $divSubSeparate['col'];
+
+            $clsItmCellName = $clsItmDropdownCellList[$areaCode];
+            $clsItmCellAddress = $cellAdrresList[$clsItmCellName];
+            $clsItmseparate = $this->separateRowAndColumn($clsItmCellAddress);
+            $clsItmRow = $divSubSeparate['row'];
+            $clsItmCol = $divSubSeparate['col'];
+
+            foreach ($dropdownList as $params) {
+                // 代入用の配列を生成
+                $newList[$params['divisionsubject']][] = $params['classItem'];
+            }
+
+            foreach ($newList as $divSub => $clsItmList) {
+                ++$divSubRow;
+                $inputDivSubCell = $divSubCol.$divSubRow;
+                $this->sheet->getCell($cell)->setValue($divSub);
+                foreach ($clsItmList as $classItem) {
+                    ++$clsItmRow;
+                    $inputClsItmCell = $clsItmCol.$clsItmRow;
+
+                    // ダウンロード用　保留                    
+                }
+            }
+        }
+    }
+
+    // ドロップダウンリストをオブジェクトにセットする
+    protected function setDropdownList() {
+        if (!$this->dropdownDSCI) {
+            $this->setDropdownForDivSubAndClsItm();
+        }
+        if (!$this->dropdownCompany) {
+            $this->setDropdownForDivSubAndClsItm();
+        }
+        if (!$this->dropdownGU) {
+            $this->setDropdownForGroupAndUser();
+        }
+        return;
+    }
+
+    protected function setDropdownForDivSubAndClsItm() {
+        $this->dropdownDSCI = $this->objDB->getDropdownForDivSubAndClsItm();
+        return;
+    }
+
+    protected function setDropdownForCompany() {
+        $this->dropdownCompany = $this->objDB->getDropdownForCompany();
+        return;
+    }
+
+    protected function setDropdownForGroupAndUser() {
+        $this->dropdownGU = $this->objDB->getDropdownForGroupAndUser();
+        return;
+    }
+
+
+
+    // 各項目の列番号を取得する
+    protected function setColumnNumberList($areaCode) {
+        $cellNameList = workSheetConst::getCellNameOfTargetArea($areaCode);
+        $headerNameList = $cellNameList['headerList'];
+        $cellAddressList = $this->cellAddressList;
+        foreach ($headerNameList as $key => $name) {
+            if (preg_match("/\A[A-Z]+[1-9][0-9]*\z/", $cellAddressList[$name])) {
+                // セル位置の数値部分を除去する
+                $columnNumber[$key] = preg_replace("/[1-9][0-9]*/", '', $cellAddressList[$name]);
+            } else {
+                return false;
+            }
+        }
+        return $columnNumber;
+    }
+
+    // 取得した通貨レートをワークシートにセットする
+    public function setMonetaryRate() {
+        if (!$this->objDB) {
+            return false;
+        }
+
+        $sheet = $this->sheet;
+
+        $cellAddressList = $this->cellAddressList;
+        $monetaryHeaderCell = $cellAddressList[WorkSheetConst::MONETARY_RATE_LIST]; 
+     
+        $monetaryRateMaster = $this->objDB->getTemporaryRateList();
+
+        $firstRowMove = 2; // 最初は2行下に挿入
+        // 通貨レートをワークシートにセットする
+        foreach ($monetaryRateMaster as $monetaryUnitCode => $monetaryData) {
+            foreach ($monetaryData as $item => $value) {
+                if (!$rowMove) {
+                    $rowMove = $firstRowMove;
+                } else {
+                    ++$rowMove;
+                }
+                $monetaryRateCode = $value['monetaryRateCode'];
+                $rate = $value['conversionRate'];
+                $startDate = $value['startDate'];
+                $endDate = $value['endDate'];
+
+                // 配列順に列に代入する
+                $setArray = array(
+                    $monetaryRateCode,
+                    $monetaryUnitCode,
+                    $rate,
+                    $startDate,
+                    $endDate
+                );
+
+                foreach ($setArray as $index => $setValue) {
+                    $cell = self::getMoveCell($monetaryHeaderCell, $rowMove, $index);
+                    // 要調査（条件分岐必須かも）
+                    // if ($index === 3 || $index === 4 ) {
+                    //     $date = new DateTime($setValue);
+                    //     $setValue = Date::dateTimeToExcel($date);
+                    // }
+                    $sheet->getCell($cell)->setValue($setValue);
+                }
+            }
+        }
+
+        $colCount = count($setArray);
+
+        // 絶対参照置換用配列
+        $patterns = '/([A-z]+|[0-9]+)/';  // 検索正規表現
+        $replace = '$$1';                 // 置換正規表現
+
+        // 通貨レート取得範囲のセット
+        for ($colIndex = 0; $colIndex < $colCount; ++$colIndex) {
+            $rangeStart = self::getMoveCell($monetaryHeaderCell, $firstRowMove, $colIndex);
+            $rangeEnd = self::getMoveCell($monetaryHeaderCell, $rowMove, $colIndex);
+            $rangeStart = preg_replace($patterns, $replace, $rangeStart);
+            $rangeEnd = preg_replace($patterns, $replace, $rangeEnd);
+            $range[$colIndex] = $rangeStart. ':'. $rangeEnd;
+        }
+
+        $targetAreaRows = $this->targetAreaRows;
+        foreach($targetAreaRows as $areaCode => $rows) {
+            // 対象エリアの開始行と終了行取得
+            $firstRow = $rows['firstRow'];
+            $lastRow = $rows['lastRow'];
+
+            // 対象エリアのセル名称リストを取得
+            $nameList = workSheetConst::getCellNameOfTargetArea($areaCode);
+
+            // 適用レートの列を抽出
+            $rateHeaderName = $nameList['headerList']['conversionRate'];
+            $rateHeaderCell = $cellAddressList[$rateHeaderName];
+            $separate = self::separateRowAndColumn($rateHeaderCell);
+            $rateCol = $separate['column']; // 適用レートの列番号(アルファベット)
+
+            for ($row = $firstRow; $row <= $lastRow; ++$row) {
+                $cell = $rateCol. $row;
+                $inputParam = $sheet->getCell($cell)->getValue();
+                // sumifs()のカッコ内を抽出
+                preg_match('/(?<=sumifs\()[^\)]+(?=\))/i', $inputParam, $match);
+                // ,(カンマ）で区切られた条件を取得する
+                $conditions = explode(',', $match[0]);
+
+                // $conditions内訳(詳細はエクセルの式参照のこと)
+                // $totalRange = $conditions[0];        // 合計範囲
+                // $rateCodeRange = $conditions[1];     // 通貨レートコード検索範囲
+                // $rateCodeValue = $conditions[2];     // 通貨レートコード検索条件
+                // $unitCodeRange = $conditions[3];     // 通貨単位コード検索範囲
+                // $unitCodeValue = $conditions[4];     // 通貨単位コード検索条件
+                // $startDateRange = $conditions[5];    // 適用開始日検索範囲
+                // $startDateValue = $conditions[6];    // 適用開始日検索条件
+                // $endDateRange = $conditions[7];      // 適用終了日検索範囲
+                // $endDateValue = $conditions[8];      // 適用終了日検索条件
+
+                $sumifsParam = $range[2];
+                $sumifsParam .= ','.$range[0];
+                $sumifsParam .= ','.$conditions[2];
+                $sumifsParam .= ','.$range[1];
+                $sumifsParam .= ','.$conditions[4];
+                $sumifsParam .= ','.$range[3];
+                $sumifsParam .= ','.$conditions[6];
+                $sumifsParam .= ','.$range[4];
+                $sumifsParam .= ','.$conditions[8];
+
+                $newFomula = str_replace($match, $sumifsParam, $inputParam);
+                $sheet->getCell($cell)->getValue($newFomula);
+            }
+        }
+        
+        return true;
+    }
+
+    // セルを右寄せにする
+    public function setHorizontalRight($cellAddress) {
+        $this->sheet->getStyle($cellAddress)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);
     }
 }
 

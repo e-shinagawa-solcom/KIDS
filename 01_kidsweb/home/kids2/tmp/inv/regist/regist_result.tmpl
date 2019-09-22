@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html lang="ja">
+<head>
+<title>K.I.D.S.</title>
+<meta http-equiv="content-type" content="text/html; charset=euc-jp">
+
+
+<script type="text/javascript" language="javascript" src="/layout/type01/cmn/images.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
+<link rel="stylesheet" type="text/css" media="screen" href="/inv/cmn/form/css/regist-result.css">
+<
+<script type="text/javascript" language="javascript" src="/cmn/processing_module.js"></script>
+
+
+</head>
+
+<body id="Backs" oncontextmenu="return false;" >
+
+    <div class="parent">
+        <div class="inner">
+            <div style="text-align:center; font-weight: bold; padding:13px;">登録が完了しました。</div>
+            <div class="tablecell"  style="padding: 5px 0 5px 10px;">
+                <p class="p-contents">
+                    <span class="margin: 5px;">登録日時</span>
+                </p>
+                <p class="p-contents">
+                    <span  class="margin: 5px;">納品NO</span>
+                </p>
+            </div>
+            <div class="tablecell" style="padding: 5px 10px 5px 0;">
+                <p class="p-contents">
+                    <span>_%time%_</span>
+                </p>
+                <p class="p-contents">
+                    <span>_%strinvoicecode%_</span>
+                </p>
+            </div>
+            <div style="margin-top: 10px;">
+                <!-- previewボタン -->
+                <span class="p-btn" id="Prev" onclick="window.opener.location.reload();window.close();window.returnValue=Array( '_%strAction%_', '_%strSessionID%_' );return false;"><a href="#"><img  src="/img/type01/cmn/querybt/blownpreview_off_bt.gif" width="72" height="20" border="0" alt="閉じる"></a></span>
+                <!-- 閉じるボタン -->
+                <span class="p-btn" id="Close" onclick="window.opener.location.reload();window.close();window.returnValue=Array( '_%strAction%_', '_%strSessionID%_' );return false;"><a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="BlownCloseJOn(this);" onmouseout="BlownCloseJOff(this);" src="/img/type01/cmn/querybt/close_blown_off_ja_bt.gif" width="72" height="20" border="0" alt="閉じる"></a></span>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

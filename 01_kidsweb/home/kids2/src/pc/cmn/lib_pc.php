@@ -140,7 +140,7 @@ function fncGetStockDetailNoToInfoSQL($lngStockNo)
     $aryQuery[] = ", sd.lngDeliveryMethodCode as lngDeliveryMethodCode";
     $aryQuery[] = ", dm.strDeliveryMethodName as strDeliveryMethodName";
     // 納期
-    $aryQuery[] = ", sd.dtmDeliveryDate as dtmDeliveryDate";
+    // $aryQuery[] = ", sd.dtmDeliveryDate as dtmDeliveryDate";
     // 単価
     $aryQuery[] = ", To_char( sd.curProductPrice, '9,999,999,990.9999' )  as curProductPrice";
     // 単位
@@ -848,7 +848,6 @@ function fncGetPoInfoSQL($strOrderCode, $objDB)
     $aryQuery[] = "od.lngstockitemcode, "; // 仕入部品コード
     $aryQuery[] = "si.strstockitemname, "; // 仕入部品名称
     $aryQuery[] = "To_char( od.dtmdeliverydate, 'YYYY/mm/dd' ) as dtmdeliverydate, "; // 納品日
-    $aryQuery[] = "To_char( o.dtmexpirationdate, 'YYYY/mm/dd' ) as dtmexpirationdate, "; // 製品到着日
     $aryQuery[] = "od.lngdeliverymethodcode as lngCarrierCode, "; // 運搬方法コード
     $aryQuery[] = "od.lngconversionclasscode, "; // 換算区分コード / 1：単位計上/ 2：荷姿単位計上
     $aryQuery[] = "od.curproductprice as curproductprice, "; // 製品価格
@@ -874,7 +873,7 @@ function fncGetPoInfoSQL($strOrderCode, $objDB)
     $aryQuery[] = "(";
     $aryQuery[] = "select";
     $aryQuery[] = " lngorderno, lngorderstatuscode, lngmonetaryunitcode,";
-    $aryQuery[] = " lngmonetaryratecode, lngcustomercompanycode, lngpayconditioncode, lngdeliveryplacecode, dtmexpirationdate ";
+    $aryQuery[] = " lngmonetaryratecode, lngcustomercompanycode, lngpayconditioncode, lngdeliveryplacecode ";
     $aryQuery[] = "FROM";
     $aryQuery[] = "  m_order ";
     $aryQuery[] = "WHERE";

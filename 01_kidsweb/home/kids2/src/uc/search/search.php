@@ -53,16 +53,6 @@ $aryParts["strHiddenForm"] = "
 <input type=\"hidden\" name=\"lngFunctionCode\" value=\"" . DEF_FUNCTION_UC3 . "\">
 ";
 
-
-
-// lngWorkflowStatusCode SELECTタグ生成
-$aryParts["workflowStatusCodeMenu"] = "
-<option value=\"\"></option>
-<option value=\"" . DEF_STATUS_ORDER . "\">申請中</option>
-<option value=\"" . DEF_STATUS_APPROVE . "\">承認</option>
-<option value=\"" . DEF_STATUS_DENIAL . "\">否認</option>
-";
-
 if ( $bytCancellFlag )
 {
 	$aryParts["workflowStatusCodeMenu"] .= "<option value=\"" . DEF_STATUS_CANCELL . "\">申請取消</option>\n";
@@ -82,7 +72,7 @@ $aryParts["lngFunctionCode"] = DEF_FUNCTION_UC3;
 
 // HTML出力
 $objTemplate = new clsTemplate();
-$objTemplate->getTemplate( "uc/search/search.tmpl" );
+$objTemplate->getTemplate( "uc/search/search.html" );
 $objTemplate->replace( $aryParts );
 $objTemplate->complete();
 echo $objTemplate->strTemplate;

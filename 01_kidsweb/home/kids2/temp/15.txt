@@ -1,15 +1,13 @@
  SELECT DISTINCT ON ( mg.lngGroupCode ) mg.lngGroupCode, (mg.strGroupDisplayCode || ' ' || mg.strGroupDisplayName) AS strgroupdisplaycodename FROM m_group mg, m_attributerelation mar WHERE mg.lngcompanycode = mar.lngcompanycode  AND mar.lngattributecode <> 0  AND mg.bytGroupDisplayFlag = TRUE  AND mg.lngCompanyCode = 1  ORDER BY mg.lnggroupcode 
  SELECT DISTINCT ON ( mg.lngGroupCode ) mg.lngGroupCode, (mg.strGroupDisplayCode || ' ' || mg.strGroupDisplayName) AS strgroupdisplaycodename FROM m_group mg, m_attributerelation mar WHERE mg.lngcompanycode = mar.lngcompanycode  AND mar.lngattributecode <> 0  AND mg.bytGroupDisplayFlag = TRUE  AND mg.lngCompanyCode = 1  ORDER BY mg.lnggroupcode 
 id	name1
-2	20 営業1早川
-3	30 営業1片桐
 4	40 営業2小林
-5	50 営業2吉澤
+5	50 新規企画
 6	96 品質管理
 7	01 System
 9	03 経理
 10	04 管理責任者
-30	99 マイク
-31	ts KTS
-36	hk KHK
-44	70 トイ２
+27	41 トイコレクターズ
+28	42 トイバンダイ他
+45	31 ライフカプセル
+46	32 ライフキャンディ

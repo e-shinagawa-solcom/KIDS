@@ -1,0 +1,2474 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta http-equiv=Content-Type content="text/html; charset=EUC-JP">
+	<meta name=ProgId content=Excel.Sheet>
+	<meta name=Generator content="Microsoft Excel 15">
+    <!-- jQuery -->
+	<script src="/cmn/jquery/jquery-3.1.0.js"></script>
+    <!-- ボタン画像の共通の振る舞い CSS -->
+	<link rel="stylesheet" href="/mold/cmn/button/css/button-behaivior.css">
+    <!-- 請求書プレビュー 画面CSS -->
+    <link rel="stylesheet" media="screen" href="/inv/cmn/form/css/print-invoice-preview.css">
+
+    <!-- 帳票表示切り替え処理 -->
+    <!-- <script src="/mold/list/js/display-control.js" defer></script> -->
+    <!-- COPY オーバーレイ表示 -->
+    <!--  script src="/mold/list/js/display-copy-overlay.js" defer></script>-->
+    <script language="JavaScript">
+        function closed(){
+        //	console.log(window.opener);
+        	window.close();
+        };
+
+        function regist() {
+        	console.log('regist');
+        	document.invInsert.submit();
+        }
+    </script>
+
+    <title>K.I.D.S - 請求管理登録</title>
+
+    <style id="請求書temple_13302_Styles">
+    <!--table
+        {mso-displayed-decimal-separator:"\.";
+        mso-displayed-thousand-separator:"\,";}
+    .xl6313302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:11.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:general;
+        vertical-align:middle;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl6413302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:12.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:center;
+        vertical-align:middle;
+        border-top:.5pt solid windowtext;
+        border-right:none;
+        border-bottom:.5pt solid windowtext;
+        border-left:1.0pt solid windowtext;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl6513302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:12.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:"General\0022月\0022";
+        text-align:right;
+        vertical-align:middle;
+        border-top:.5pt solid windowtext;
+        border-right:none;
+        border-bottom:.5pt solid windowtext;
+        border-left:none;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl6613302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:12.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:center;
+        vertical-align:middle;
+        border-top:.5pt solid windowtext;
+        border-right:.5pt solid windowtext;
+        border-bottom:1.0pt solid windowtext;
+        border-left:1.0pt solid windowtext;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl6713302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:11.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:center;
+        vertical-align:bottom;
+        border:.5pt solid windowtext;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl6813302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:11.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:general;
+        vertical-align:bottom;
+        border:.5pt solid windowtext;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl6913302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:9.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:"0\;0\;";
+        text-align:general;
+        vertical-align:top;
+        border-top:1.0pt solid windowtext;
+        border-right:none;
+        border-bottom:none;
+        border-left:none;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:normal;}
+    .xl7013302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:14.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:right;
+        vertical-align:middle;
+        border-top:.5pt solid windowtext;
+        border-right:none;
+        border-bottom:none;
+        border-left:.5pt solid windowtext;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl7113302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:14.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:right;
+        vertical-align:middle;
+        border-top:.5pt solid windowtext;
+        border-right:none;
+        border-bottom:none;
+        border-left:none;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl7213302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:14.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:right;
+        vertical-align:middle;
+        border-top:.5pt solid windowtext;
+        border-right:1.0pt solid windowtext;
+        border-bottom:none;
+        border-left:none;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl7313302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:14.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:right;
+        vertical-align:middle;
+        border-top:none;
+        border-right:none;
+        border-bottom:.5pt solid windowtext;
+        border-left:.5pt solid windowtext;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl7413302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:14.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:right;
+        vertical-align:middle;
+        border-top:none;
+        border-right:none;
+        border-bottom:.5pt solid windowtext;
+        border-left:none;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl7513302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:14.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:right;
+        vertical-align:middle;
+        border-top:none;
+        border-right:1.0pt solid windowtext;
+        border-bottom:.5pt solid windowtext;
+        border-left:none;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl7613302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:12.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:center;
+        vertical-align:middle;
+        border-top:.5pt solid windowtext;
+        border-right:none;
+        border-bottom:none;
+        border-left:1.0pt solid windowtext;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl7713302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:12.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:center;
+        vertical-align:middle;
+        border-top:.5pt solid windowtext;
+        border-right:none;
+        border-bottom:none;
+        border-left:none;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl7813302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:12.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:center;
+        vertical-align:middle;
+        border-top:none;
+        border-right:none;
+        border-bottom:1.0pt solid windowtext;
+        border-left:1.0pt solid windowtext;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl7913302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:12.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:center;
+        vertical-align:middle;
+        border-top:none;
+        border-right:none;
+        border-bottom:1.0pt solid windowtext;
+        border-left:none;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl8013302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:12.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:center;
+        vertical-align:middle;
+        border-top:.5pt solid windowtext;
+        border-right:1.0pt solid windowtext;
+        border-bottom:none;
+        border-left:none;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl8113302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:12.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:center;
+        vertical-align:middle;
+        border-top:none;
+        border-right:1.0pt solid windowtext;
+        border-bottom:1.0pt solid windowtext;
+        border-left:none;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl8213302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:12.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:center;
+        vertical-align:middle;
+        border-top:.5pt solid windowtext;
+        border-right:.5pt solid windowtext;
+        border-bottom:none;
+        border-left:1.0pt solid windowtext;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl8313302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:12.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:center;
+        vertical-align:middle;
+        border-top:none;
+        border-right:.5pt solid windowtext;
+        border-bottom:.5pt solid windowtext;
+        border-left:1.0pt solid windowtext;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl8413302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:9.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:"0\;0\;";
+        text-align:general;
+        vertical-align:top;
+        border-top:none;
+        border-right:none;
+        border-bottom:.5pt solid windowtext;
+        border-left:none;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:normal;}
+    .xl8513302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:11.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:"0\;0\;";
+        text-align:general;
+        vertical-align:top;
+        border-top:none;
+        border-right:none;
+        border-bottom:.5pt solid windowtext;
+        border-left:none;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:normal;}
+    .xl8613302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:14.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:right;
+        vertical-align:middle;
+        border-top:.5pt solid windowtext;
+        border-right:none;
+        border-bottom:1.0pt solid windowtext;
+        border-left:.5pt solid windowtext;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl8713302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:14.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:right;
+        vertical-align:middle;
+        border-top:.5pt solid windowtext;
+        border-right:none;
+        border-bottom:1.0pt solid windowtext;
+        border-left:none;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl8813302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:14.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:right;
+        vertical-align:middle;
+        border-top:.5pt solid windowtext;
+        border-right:1.0pt solid windowtext;
+        border-bottom:1.0pt solid windowtext;
+        border-left:none;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl8913302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:12.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:center;
+        vertical-align:middle;
+        border-top:1.0pt solid windowtext;
+        border-right:.5pt solid windowtext;
+        border-bottom:.5pt solid windowtext;
+        border-left:1.0pt solid windowtext;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl9013302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:12.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:center;
+        vertical-align:middle;
+        border-top:1.0pt solid windowtext;
+        border-right:none;
+        border-bottom:.5pt solid windowtext;
+        border-left:none;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl9113302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:12.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:center;
+        vertical-align:middle;
+        border-top:1.0pt solid windowtext;
+        border-right:1.0pt solid windowtext;
+        border-bottom:.5pt solid windowtext;
+        border-left:.5pt solid windowtext;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl9213302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:12.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:"m\0022月\0022";
+        text-align:right;
+        vertical-align:middle;
+        border-top:1.0pt solid windowtext;
+        border-right:none;
+        border-bottom:.5pt solid windowtext;
+        border-left:1.0pt solid windowtext;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl9313302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:12.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:"m\0022月\0022";
+        text-align:right;
+        vertical-align:middle;
+        border-top:1.0pt solid windowtext;
+        border-right:none;
+        border-bottom:.5pt solid windowtext;
+        border-left:none;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl9413302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:12.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:general;
+        vertical-align:middle;
+        border-top:1.0pt solid windowtext;
+        border-right:none;
+        border-bottom:.5pt solid windowtext;
+        border-left:none;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl9513302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:12.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:general;
+        vertical-align:middle;
+        border-top:1.0pt solid windowtext;
+        border-right:1.0pt solid windowtext;
+        border-bottom:.5pt solid windowtext;
+        border-left:none;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl9613302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:12.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:"d\0022日\0022";
+        text-align:center;
+        vertical-align:middle;
+        border-top:.5pt solid windowtext;
+        border-right:none;
+        border-bottom:.5pt solid windowtext;
+        border-left:none;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl9713302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:12.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:"d\0022日\0022";
+        text-align:center;
+        vertical-align:middle;
+        border-top:.5pt solid windowtext;
+        border-right:1.0pt solid windowtext;
+        border-bottom:.5pt solid windowtext;
+        border-left:none;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl9813302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:12.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:center;
+        vertical-align:middle;
+        border-top:none;
+        border-right:none;
+        border-bottom:.5pt solid windowtext;
+        border-left:1.0pt solid windowtext;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl9913302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:12.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:"General\0022月\0022";
+        text-align:right;
+        vertical-align:middle;
+        border-top:.5pt solid windowtext;
+        border-right:none;
+        border-bottom:none;
+        border-left:none;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl10013302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:12.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:"General\0022月\0022";
+        text-align:right;
+        vertical-align:middle;
+        border-top:none;
+        border-right:none;
+        border-bottom:.5pt solid windowtext;
+        border-left:none;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl10113302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:12.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:"d\0022日\0022";
+        text-align:center;
+        vertical-align:middle;
+        border-top:.5pt solid windowtext;
+        border-right:none;
+        border-bottom:none;
+        border-left:none;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl10213302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:12.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:"d\0022日\0022";
+        text-align:center;
+        vertical-align:middle;
+        border-top:.5pt solid windowtext;
+        border-right:1.0pt solid windowtext;
+        border-bottom:none;
+        border-left:none;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl10313302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:12.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:"d\0022日\0022";
+        text-align:center;
+        vertical-align:middle;
+        border-top:none;
+        border-right:none;
+        border-bottom:.5pt solid windowtext;
+        border-left:none;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl10413302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:12.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:"d\0022日\0022";
+        text-align:center;
+        vertical-align:middle;
+        border-top:none;
+        border-right:1.0pt solid windowtext;
+        border-bottom:.5pt solid windowtext;
+        border-left:none;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl10513302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:16.0pt;
+        font-weight:700;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:center;
+        vertical-align:middle;
+        border-top:1.0pt solid windowtext;
+        border-right:.5pt solid windowtext;
+        border-bottom:1.0pt solid windowtext;
+        border-left:1.0pt solid windowtext;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl10613302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:16.0pt;
+        font-weight:700;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:center;
+        vertical-align:middle;
+        border-top:1.0pt solid windowtext;
+        border-right:.5pt solid windowtext;
+        border-bottom:1.0pt solid windowtext;
+        border-left:.5pt solid windowtext;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl10713302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:16.0pt;
+        font-weight:700;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:center;
+        vertical-align:middle;
+        border-top:1.0pt solid windowtext;
+        border-right:none;
+        border-bottom:1.0pt solid windowtext;
+        border-left:.5pt solid windowtext;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl10813302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:16.0pt;
+        font-weight:700;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:center;
+        vertical-align:middle;
+        border-top:1.0pt solid windowtext;
+        border-right:none;
+        border-bottom:1.0pt solid windowtext;
+        border-left:none;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl10913302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:16.0pt;
+        font-weight:700;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:center;
+        vertical-align:middle;
+        border-top:1.0pt solid windowtext;
+        border-right:1.0pt solid windowtext;
+        border-bottom:1.0pt solid windowtext;
+        border-left:none;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl11013302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:12.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:"General\0022日\0022";
+        text-align:center;
+        vertical-align:middle;
+        border-top:.5pt solid windowtext;
+        border-right:none;
+        border-bottom:.5pt solid windowtext;
+        border-left:none;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl11113302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:12.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:"General\0022日\0022";
+        text-align:center;
+        vertical-align:middle;
+        border-top:.5pt solid windowtext;
+        border-right:1.0pt solid windowtext;
+        border-bottom:.5pt solid windowtext;
+        border-left:none;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl11213302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:12.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:"General\0022日\0022";
+        text-align:center;
+        vertical-align:middle;
+        border-top:.5pt solid windowtext;
+        border-right:none;
+        border-bottom:none;
+        border-left:none;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl11313302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:12.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:"General\0022日\0022";
+        text-align:center;
+        vertical-align:middle;
+        border-top:.5pt solid windowtext;
+        border-right:1.0pt solid windowtext;
+        border-bottom:none;
+        border-left:none;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl11413302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:12.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:"General\0022日\0022";
+        text-align:center;
+        vertical-align:middle;
+        border-top:none;
+        border-right:none;
+        border-bottom:.5pt solid windowtext;
+        border-left:none;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl11513302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:12.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:"General\0022日\0022";
+        text-align:center;
+        vertical-align:middle;
+        border-top:none;
+        border-right:1.0pt solid windowtext;
+        border-bottom:.5pt solid windowtext;
+        border-left:none;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl11613302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:11.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:general;
+        vertical-align:bottom;
+        border-top:.5pt solid windowtext;
+        border-right:none;
+        border-bottom:.5pt solid windowtext;
+        border-left:none;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl11713302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:13.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:general;
+        vertical-align:bottom;
+        border-top:.5pt solid windowtext;
+        border-right:none;
+        border-bottom:.5pt solid windowtext;
+        border-left:none;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        mso-protection:unlocked visible;
+        white-space:nowrap;}
+    .xl11813302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:13.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:general;
+        vertical-align:bottom;
+        border-top:.5pt solid windowtext;
+        border-right:none;
+        border-bottom:.5pt solid windowtext;
+        border-left:none;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl11913302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:11.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:general;
+        vertical-align:middle;
+        border-top:1.0pt solid windowtext;
+        border-right:none;
+        border-bottom:none;
+        border-left:1.0pt solid windowtext;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl12013302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:11.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:general;
+        vertical-align:bottom;
+        border-top:1.0pt solid windowtext;
+        border-right:none;
+        border-bottom:none;
+        border-left:none;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl12113302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:11.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:general;
+        vertical-align:bottom;
+        border-top:1.0pt solid windowtext;
+        border-right:1.0pt solid windowtext;
+        border-bottom:none;
+        border-left:none;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl12213302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:11.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:general;
+        vertical-align:bottom;
+        border-top:none;
+        border-right:none;
+        border-bottom:none;
+        border-left:1.0pt solid windowtext;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl12313302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:11.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:right;
+        vertical-align:bottom;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl12413302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:11.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:general;
+        vertical-align:bottom;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        mso-protection:unlocked visible;
+        white-space:nowrap;}
+    .xl12513302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:11.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:general;
+        vertical-align:bottom;
+        border-top:none;
+        border-right:1.0pt solid windowtext;
+        border-bottom:none;
+        border-left:none;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl12613302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:20.0pt;
+        font-weight:700;
+        font-style:normal;
+        text-decoration:underline;
+        text-underline-style:single;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:"Short Time";
+        text-align:center;
+        vertical-align:bottom;
+        border-top:none;
+        border-right:none;
+        border-bottom:none;
+        border-left:1.0pt solid windowtext;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl12713302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:20.0pt;
+        font-weight:700;
+        font-style:normal;
+        text-decoration:underline;
+        text-underline-style:single;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:"Short Time";
+        text-align:center;
+        vertical-align:bottom;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl12813302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:20.0pt;
+        font-weight:700;
+        font-style:normal;
+        text-decoration:underline;
+        text-underline-style:single;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:center;
+        vertical-align:bottom;
+        border-top:none;
+        border-right:none;
+        border-bottom:none;
+        border-left:1.0pt solid windowtext;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl12913302
+        {padding:0px;
+        mso-ignore:padding;
+        color:red;
+        font-size:24.0pt;
+        font-weight:700;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:center;
+        vertical-align:top;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl13013302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:12.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:"\[JPN\]gggy\0022年\0022m\0022月\0022";
+        text-align:general;
+        vertical-align:bottom;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl13113302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:12.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:"d\0022日\0022";
+        text-align:left;
+        vertical-align:bottom;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl13213302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:20.0pt;
+        font-weight:700;
+        font-style:normal;
+        text-decoration:underline;
+        text-underline-style:single;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:center;
+        vertical-align:bottom;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl13313302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:15.0pt;
+        font-weight:700;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:general;
+        vertical-align:bottom;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl13413302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:14.0pt;
+        font-weight:700;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:general;
+        vertical-align:bottom;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;
+        mso-text-control:shrinktofit;}
+    .xl13513302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:12.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:general;
+        vertical-align:bottom;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;
+        mso-text-control:shrinktofit;}
+    .xl13613302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:14.0pt;
+        font-weight:700;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:general;
+        vertical-align:bottom;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl13713302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:8.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:general;
+        vertical-align:bottom;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;
+        mso-text-control:shrinktofit;}
+    .xl13813302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:11.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:center;
+        vertical-align:top;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl13913302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:11.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:general;
+        vertical-align:top;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:normal;}
+    .xl14013302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:14.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:general;
+        vertical-align:bottom;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;
+        mso-text-control:shrinktofit;}
+    .xl14113302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:15.0pt;
+        font-weight:700;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:general;
+        vertical-align:bottom;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;
+        mso-text-control:shrinktofit;}
+    .xl14213302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:11.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:general;
+        vertical-align:bottom;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;
+        mso-text-control:shrinktofit;}
+    .xl14313302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:9.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:general;
+        vertical-align:top;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:normal;}
+    .xl14413302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:9.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:"0\;0\;";
+        text-align:general;
+        vertical-align:top;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:normal;}
+    .xl14513302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:11.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:"0\;0\;";
+        text-align:general;
+        vertical-align:top;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:normal;}
+    .xl14613302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:9.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:"\[JPN\]\[$-411\]gy\\\.m\\\.d";
+        text-align:general;
+        vertical-align:bottom;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl14713302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:11.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:general;
+        vertical-align:bottom;
+        border-top:none;
+        border-right:none;
+        border-bottom:1.0pt solid windowtext;
+        border-left:1.0pt solid windowtext;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl14813302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:11.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:general;
+        vertical-align:bottom;
+        border-top:none;
+        border-right:none;
+        border-bottom:1.0pt solid windowtext;
+        border-left:none;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    .xl14913302
+        {padding:0px;
+        mso-ignore:padding;
+        color:windowtext;
+        font-size:11.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-number-format:General;
+        text-align:general;
+        vertical-align:bottom;
+        border-top:none;
+        border-right:1.0pt solid windowtext;
+        border-bottom:1.0pt solid windowtext;
+        border-left:none;
+        mso-background-source:auto;
+        mso-pattern:auto;
+        white-space:nowrap;}
+    ruby
+        {ruby-align:left;}
+    rt
+        {color:windowtext;
+        font-size:6.0pt;
+        font-weight:400;
+        font-style:normal;
+        text-decoration:none;
+        font-family:"ＭＳ Ｐゴシック", monospace;
+        mso-font-charset:128;
+        mso-char-type:katakana;}
+    -->
+
+    </style>
+</head>
+
+<body>
+
+    <div class="box_area">
+        <div class="form-box__header__box-title">請求書プレビュー</div>
+        <div style="width:100%; display:inline-flex;">
+            <div class="col-sm-2 mt-2"  style="width:130px; margin: 5px 5px 5px 300px; ">
+                <button type="button" id="btnClosePrev" class="btnprev"  onclick="closed();">
+                    閉じる
+                </button>
+            </div>
+            <div class="col-sm-2 mt-2"  style="width:130px; margin: 5px;">
+                <button type="button" id="btnRegist" class="btnprev"  onclick="regist();">
+                確定
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <form name="invInsert" method="POST" action="_%actionName%_">
+        <!-- 請求日 -->
+        <input type="hidden" name="dtminvoicedate"             value="_%dtmInvoiceDate%_"  >
+        <!-- 顧客コード -->
+        <input type="hidden" name="strcustomercode"            value="_%strCustomerCode%_"  >
+        <!-- 顧客名 -->
+        <input type="hidden" name="strcustomername"            value="_%strCustomerName%_"  >
+        <!-- 顧客社名 -->
+        <input type="hidden" name="strcustomercompanyname"     value="_%printCompanyName%_"  >
+        <!-- 請求期間 自 -->
+        <input type="hidden" name="dtmchargeternstart"         value="_%dtmChargeternStart%_"  >
+        <!-- 請求期間 至 -->
+        <input type="hidden" name="dtmchargeternend"           value="_%dtmChargeternEnd%_"  >
+        <!-- 前月請求残額 -->
+        <input type="hidden" name="curlastmonthbalance"        value="_%curLastMonthBalance%_"  >
+        <!-- 御請求金額 -->
+        <input type="hidden" name="curthismonthamount"         value="_%curThisMonthAmount%_"  >
+        <!-- 課税区分コード -->
+        <input type="hidden" name="lngtaxclasscode"            value="_%lngTaxClassCode%_"  >
+        <!-- 課税区分名 -->
+        <input type="hidden" name="strtaxclassname"            value="_%strTaxClassName%_"  >
+        <!-- 税抜金額 -->
+        <input type="hidden" name="cursubtotal1"                value="_%curSubTotal1%_"  >
+        <!-- 消費税額 -->
+        <input type="hidden" name="curtaxprice"                value="_%curTaxPrice1%_"  >
+        <!-- 消費税率 -->
+        <input type="hidden" name="curtax1"                    value="_%curTax1%_"  >
+        <!-- 担当者名 -->
+        <input type="hidden" name="strusername"                value="_%strUserName%_"  >
+        <!-- 担当者コード -->
+        <input type="hidden" name="strusercode"                value="_%strUserCode%_"  >
+        <!-- 備考 -->
+        <input type="hidden" name="strnote"                    value="_%strnote%_"  >
+        <!-- 明細伝票番号リスト -->
+        <input type="hidden" name="slipCodeList"               value="_%slipCodeList%_"  >
+        <!-- 差し引き合計額 -->
+        <input type="hidden" name="notaxcurthismonthamount"    value="_%curThisMonthAmount%_"  >
+        <!-- SESSION_ID -->
+        <input type="hidden" name="strSessionID"               value="_%strSessionID%_"  >
+        <!-- lnginvoiceno -->
+        <input type="hidden" name="lngInvoiceNo"               value="_%lngInvoiceNo%_"  >
+        <!-- MODE -->
+        <input type="hidden" name="strMode"                    value="_%strMode%_"  >
+
+    </form>
+
+    <div>
+    <!--
+    <div class="copy-overlay">
+        <img class="copy" src="/list/result/po/rogo_copy.gif">
+    </div>
+    -->
+    <!--[if !excel]>　　<![endif]-->
+    <!--次の情報は、Excel の Web ページとして発行ウィザードで生成されました。-->
+    <!--同じアイテムが Excel から再発行されるとき、DIV タグ間のすべての情報が置き換えられます。-->
+    <!----------------------------->
+    <!--Excel の Web ページとして発行 ウィザードのアウトプットの始まり-->
+    <!----------------------------->
+
+    <div id="請求書temple_13302" align=center x:publishsource="Excel">
+
+    <table border=0 cellpadding=0 cellspacing=0 width=879 class=xl6553513302
+     style='border-collapse:collapse;table-layout:fixed;width:662pt'>
+     <col class=xl6553513302 width=53 style='mso-width-source:userset;mso-width-alt:
+     1696;width:40pt'>
+     <col class=xl6553513302 width=37 style='mso-width-source:userset;mso-width-alt:
+     1184;width:28pt'>
+     <col class=xl6553513302 width=171 style='mso-width-source:userset;mso-width-alt:
+     5472;width:128pt'>
+     <col class=xl6553513302 width=69 style='mso-width-source:userset;mso-width-alt:
+     2208;width:52pt'>
+     <col class=xl6553513302 width=85 style='mso-width-source:userset;mso-width-alt:
+     2720;width:64pt'>
+     <col class=xl6553513302 width=37 style='mso-width-source:userset;mso-width-alt:
+     1184;width:28pt'>
+     <col class=xl6553513302 width=21 style='mso-width-source:userset;mso-width-alt:
+     672;width:16pt'>
+     <col class=xl6553513302 width=42 style='mso-width-source:userset;mso-width-alt:
+     1344;width:32pt'>
+     <col class=xl6553513302 width=69 style='mso-width-source:userset;mso-width-alt:
+     2208;width:52pt'>
+     <col class=xl6553513302 width=40 style='mso-width-source:userset;mso-width-alt:
+     1280;width:30pt'>
+     <col class=xl6553513302 width=66 style='mso-width-source:userset;mso-width-alt:
+     2112;width:50pt'>
+     <col class=xl6553513302 width=61 span=2 style='mso-width-source:userset;
+     mso-width-alt:1952;width:46pt'>
+     <col class=xl6553513302 width=67 style='mso-width-source:userset;mso-width-alt:
+     2144;width:50pt'>
+    <tr height=18 style='height:13.5pt'>
+        <td height=18 class=xl11913302 width=53 style='height:13.5pt;width:40pt'>　</td>
+        <td class=xl12013302 width=37 style='width:28pt'>　</td>
+        <td class=xl12013302 width=171 style='width:128pt'>　</td>
+        <td class=xl12013302 width=69 style='width:52pt'>　</td>
+        <td class=xl12013302 width=85 style='width:64pt'>　</td>
+        <td class=xl12013302 width=37 style='width:28pt'>　</td>
+        <td class=xl12013302 width=21 style='width:16pt'>　</td>
+        <td class=xl12013302 width=42 style='width:32pt'>　</td>
+        <td class=xl12013302 width=69 style='width:52pt'>　</td>
+        <td class=xl12013302 width=40 style='width:30pt'>　</td>
+        <td class=xl12013302 width=66 style='width:50pt'>　</td>
+        <td class=xl12013302 width=61 style='width:46pt'>　</td>
+        <td class=xl12013302 width=61 style='width:46pt'>　</td>
+        <td class=xl12113302 width=67 style='width:50pt'>　</td>
+    </tr>
+    <tr height=18 style='height:13.5pt'>
+        <td height=18 class=xl12213302 style='height:13.5pt'><a name="RANGE!A2:M49">　</a></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl12313302></td>
+        <td colspan=2 class=xl12413302  style="text-decoration: underline">№ _%strInvoiceCode%_</td>
+        <td class=xl12513302>　</td>
+    </tr>
+    <tr height=32 style='mso-height-source:userset;height:24.0pt'>
+        <td colspan=13 height=32 width=812 style='height:24.0pt;width:612pt'
+        align=left valign=top><span
+        style='mso-ignore:vglayout2'>
+        <table cellpadding=0 cellspacing=0>
+        <tr>
+            <td colspan=13 height=32 class=xl12613302 width=812 style='height:24.0pt;
+            width:612pt'>御　　請　　求　　書</td>
+        </tr>
+        </table>
+        </span></td>
+        <td class=xl12513302>　</td>
+    </tr>
+    <tr height=32 style='mso-height-source:userset;height:24.0pt'>
+        <td height=32 class=xl12813302 style='height:24.0pt'><u style='visibility:
+        hidden;mso-ignore:visibility'>　</u></td>
+        <td colspan=2 rowspan=2 class=xl12913302></td>
+        <td colspan=1 class=xl13013302 align=center></td>
+        <td colspan=3 class=xl13113302 align=left>_%printInvDate%_</td>
+        <td class=xl13213302></td>
+        <td class=xl13213302></td>
+        <td class=xl13213302></td>
+        <td class=xl13213302></td>
+        <td class=xl12713302></td>
+        <td class=xl13213302></td>
+        <td class=xl12513302>　</td>
+    </tr>
+    <tr height=18 style='mso-height-source:userset;height:14.1pt'>
+        <td height=18 class=xl12813302 style='height:14.1pt'><u style='visibility:
+        hidden;mso-ignore:visibility'>　</u></td>
+        <td class=xl13213302></td>
+        <td class=xl13213302></td>
+        <td class=xl13213302></td>
+        <td class=xl13213302></td>
+        <td class=xl13213302></td>
+        <td class=xl13213302></td>
+        <td class=xl13213302></td>
+        <td class=xl13213302></td>
+        <td class=xl13213302></td>
+        <td class=xl13213302></td>
+        <td class=xl12513302>　</td>
+    </tr>
+    <tr height=31 style='mso-height-source:userset;height:23.25pt'>
+        <td height=31 class=xl12213302 style='height:23.25pt'>　</td>
+        <td colspan=4 class=xl13313302>_%printCompanyName%_</td>
+        <td class=xl13413302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl12513302>　</td>
+    </tr>
+    <tr height=31 style='mso-height-source:userset;height:23.25pt'>
+        <td height=31 class=xl12213302 style='height:23.25pt'>　</td>
+        <td colspan=3 class=xl13513302>_%printCustomerName%_</td>
+        <td class=xl13513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td colspan=5 class=xl13613302>株 式 会 社　　ク ワ ガ タ</td>
+        <td class=xl12513302>　</td>
+    </tr>
+    <tr height=23 style='mso-height-source:userset;height:17.25pt'>
+        <td height=23 class=xl12213302 style='height:17.25pt'>　</td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td colspan=5 class=xl13713302>〒111-0043　東京都台東区駒形１-１２-１４　日本生命浅草ビル７Ｆ</td>
+        <td class=xl12513302>　</td>
+    </tr>
+    <tr height=19 style='height:14.25pt'>
+        <td height=19 class=xl12213302 style='height:14.25pt'>　</td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td colspan=5 class=xl13713302>TEL　03-3845-5990　ＦＡＸ　03-3845-1132</td>
+        <td class=xl12513302>　</td>
+    </tr>
+    <tr height=46 style='mso-height-source:userset;height:35.1pt'>
+        <td height=46 class=xl12213302 style='height:35.1pt'>　</td>
+        <td colspan=2 class=xl10513302>御請求金額</td>
+        <td colspan=4 class=xl10713302 style='border-right:1.0pt solid black;
+        border-left:none'>_%curThisMonthAmount%_</td>
+        <td class=xl6313302></td>
+        <td colspan=5 class=xl13813302></td>
+        <td class=xl12513302>　</td>
+    </tr>
+    <tr height=20 style='mso-height-source:userset;height:15.0pt'>
+        <td height=20 class=xl12213302 style='height:15.0pt'>　</td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl12513302>　</td>
+    </tr>
+    <tr height=26 style='mso-height-source:userset;height:20.1pt'>
+        <td height=26 class=xl12213302 style='height:20.1pt'>　</td>
+        <td class=xl6553513302></td>
+        <td colspan=4 class=xl8913302 style='border-right:1.0pt solid black'>内　　　　　　　　　　　　　　　訳</td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td colspan=2 class=xl9213302>_%printTernStartM%_月</td>
+        <td colspan=2 class=xl9413302 style='border-right:1.0pt solid black'>　分</td>
+        <td class=xl12513302>　</td>
+    </tr>
+    <tr height=26 style='mso-height-source:userset;height:19.5pt'>
+        <td height=26 class=xl12213302 style='height:19.5pt'>　</td>
+        <td class=xl6553513302></td>
+        <td rowspan=2 class=xl8213302 style='border-bottom:.5pt solid black;
+        border-top:none'>前月請求残額（税込み）</td>
+        <td colspan=3 rowspan=2 class=xl7013302 style='border-right:1.0pt solid black;
+        border-bottom:.5pt solid black'>_%curLastMonthBalance%_</td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6413302 style='border-top:none'>自</td>
+        <td class=xl6513302 style='border-top:none'>_%printTernStartM%_月</td>
+        <td colspan=2 class=xl11013302 style='border-right:1.0pt solid black'>_%printTernStartD%_日</td>
+        <td class=xl12513302></td>
+    </tr>
+    <tr height=8 style='mso-height-source:userset;height:6.0pt'>
+        <td height=8 class=xl12213302 style='height:6.0pt'>　</td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td rowspan=2 class=xl7613302 style='border-bottom:.5pt solid black;
+        border-top:none'>至</td>
+        <td rowspan=2 class=xl9913302 style='border-bottom:.5pt solid black;
+        border-top:none'>_%printTernEndM%_月</td>
+        <td colspan=2 rowspan=2 class=xl11213302 style='border-right:1.0pt solid black;
+        border-bottom:.5pt solid black'>_%printTernEndD%_日</td>
+        <td class=xl12513302>　</td>
+    </tr>
+    <tr height=18 style='mso-height-source:userset;height:14.1pt'>
+        <td height=18 class=xl12213302 style='height:14.1pt'>　</td>
+        <td class=xl6553513302></td>
+        <td rowspan=2 class=xl8213302 style='border-bottom:.5pt solid black;
+        border-top:none'>当月請求額</td>
+        <td colspan=3 rowspan=2 class=xl7013302 style='border-right:1.0pt solid black;
+        border-bottom:.5pt solid black'>_%curSubTotal1%_</td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl12513302>　</td>
+    </tr>
+    <tr height=16 style='mso-height-source:userset;height:12.0pt'>
+        <td height=16 class=xl12213302 style='height:12.0pt'>　</td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td colspan=2 rowspan=2 class=xl7613302 style='border-bottom:1.0pt solid black'>請求明細枚数</td>
+        <td colspan=2 rowspan=2 class=xl7713302 style='border-right:1.0pt solid black;
+        border-bottom:1.0pt solid black'>_%slipCodeCount%_枚</td>
+        <td class=xl12513302>　</td>
+    </tr>
+    <tr height=10 style='mso-height-source:userset;height:8.1pt'>
+        <td height=10 class=xl12213302 style='height:8.1pt'>　</td>
+        <td class=xl6553513302></td>
+        <td rowspan=2 class=xl8213302 style='border-bottom:.5pt solid black;
+        border-top:none'>消費税(_%curTax1%_%)</td>
+        <td colspan=3 rowspan=2 class=xl7013302 style='border-right:1.0pt solid black;
+        border-bottom:.5pt solid black'>_%curTaxPrice1%_</td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl12513302>　</td>
+    </tr>
+    <tr height=24 style='mso-height-source:userset;height:18.0pt'>
+        <td height=24 class=xl12213302 style='height:18.0pt'>　</td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl12513302>　</td>
+    </tr>
+    <tr height=32 style='mso-height-source:userset;height:24.0pt'>
+        <td height=32 class=xl12213302 style='height:24.0pt'>　</td>
+        <td class=xl6553513302></td>
+        <td class=xl6613302 style='border-top:none'>差引合計額</td>
+        <td colspan=3 class=xl8613302 style='border-right:1.0pt solid black;
+        border-left:none'>_%curThisMonthAmount%_</td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl12513302>　</td>
+    </tr>
+    <tr height=15 style='mso-height-source:userset;height:11.25pt'>
+        <td height=15 class=xl12213302 style='height:11.25pt'>　</td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl12513302>　</td>
+    </tr>
+    <tr height=16 style='mso-height-source:userset;height:12.0pt'>
+        <td height=16 class=xl12213302 style='height:12.0pt'>　</td>
+        <td class=xl6553513302></td>
+        <td colspan=6 rowspan=2 class=xl13913302 width=425 style='width:320pt'>上記の通りご請求申し上げます。<br>
+            お振込の場合は下記口座へお願いします。<br>
+            三菱東京ＵＦＪ銀行(0005)／浅草支店(336)　　当座／303672</td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6713302>担当</td>
+        <td class=xl6813302 style='border-left:none'>　</td>
+        <td class=xl12513302>　</td>
+    </tr>
+    <tr height=53 style='mso-height-source:userset;height:39.95pt'>
+        <td height=53 class=xl12213302 style='height:39.95pt'>　</td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6813302 style='border-top:none'>　</td>
+        <td class=xl6813302 style='border-top:none;border-left:none'>　</td>
+        <td class=xl12513302>　</td>
+    </tr>
+    <tr height=26 style='mso-height-source:userset;height:20.1pt'>
+        <td height=26 class=xl12213302 style='height:20.1pt'>　</td>
+        <td class=xl6553513302></td>
+        <td colspan=10 class=xl14013302>_%strNote%_</td>
+        <td class=xl6553513302></td>
+        <td class=xl12513302>　</td>
+    </tr>
+    <tr height=26 style='mso-height-source:userset;height:20.1pt'>
+        <td height=26 class=xl12213302 style='height:20.1pt'>　</td>
+        <td class=xl11613302>　</td>
+        <td colspan=10 class=xl11713302>　</td>
+        <td class=xl6553513302></td>
+        <td class=xl12513302>　</td>
+    </tr>
+    <tr height=93 style='mso-height-source:userset;height:69.95pt'>
+        <td height=93 class=xl12213302 style='height:69.95pt'>　</td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl12513302>　</td>
+    </tr>
+    <tr height=18 style='height:13.5pt'>
+        <td height=18 class=xl12213302 style='height:13.5pt'>　</td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl12313302></td>
+        <td colspan=2 class=xl6553513302 style="text-decoration: underline">№ _%strInvoiceCode%_</td>
+
+        <td class=xl12513302>　</td>
+    </tr>
+    <tr height=32 style='mso-height-source:userset;height:24.0pt'>
+        <td colspan=13 height=32 width=812 style='height:24.0pt;width:612pt'
+        align=left valign=top><span
+        style='mso-ignore:vglayout2'>
+        <table cellpadding=0 cellspacing=0>
+        <tr>
+            <td colspan=13 height=32 class=xl12613302 width=812 style='height:24.0pt;
+            width:612pt'>御　　請　　求　　書（控）</td>
+        </tr>
+        </table>
+        </span></td>
+        <td class=xl12513302>　</td>
+    </tr>
+    <tr height=32 style='mso-height-source:userset;height:24.0pt'>
+        <td height=32 class=xl12813302 style='height:24.0pt'><u style='visibility:
+        hidden;mso-ignore:visibility'>　</u></td>
+        <td colspan=2 rowspan=2 class=xl12913302></td>
+        <td colspan=1 class=xl13013302></td>
+        <td colspan=3 class=xl13113302 align=right>_%printInvDate%_</td>
+        <td class=xl13213302></td>
+        <td class=xl13213302></td>
+        <td class=xl13213302></td>
+        <td class=xl13213302></td>
+        <td class=xl13213302></td>
+        <td class=xl13213302></td>
+        <td class=xl12513302>　</td>
+    </tr>
+    <tr height=18 style='mso-height-source:userset;height:14.1pt'>
+        <td height=18 class=xl12813302 style='height:14.1pt'><u style='visibility:
+        hidden;mso-ignore:visibility'>　</u></td>
+        <td class=xl13213302></td>
+        <td class=xl13213302></td>
+        <td class=xl13213302></td>
+        <td class=xl13213302></td>
+        <td class=xl13213302></td>
+        <td class=xl13213302></td>
+        <td class=xl13213302></td>
+        <td class=xl13213302></td>
+        <td class=xl13213302></td>
+        <td class=xl13213302></td>
+        <td class=xl12513302>　</td>
+    </tr>
+    <tr height=31 style='mso-height-source:userset;height:23.25pt'>
+        <td height=31 class=xl12213302 style='height:23.25pt'>　</td>
+        <td colspan=4 class=xl14113302>_%printCompanyName%_</td>
+        <td class=xl13413302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl12513302>　</td>
+    </tr>
+    <tr height=31 style='mso-height-source:userset;height:23.25pt'>
+        <td height=31 class=xl12213302 style='height:23.25pt'>　</td>
+        <td colspan=3 class=xl13513302>_%printCustomerName%_</td>
+        <td class=xl13513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td colspan=5 class=xl13613302>株 式 会 社　　ク ワ ガ タ</td>
+        <td class=xl12513302>　</td>
+    </tr>
+    <tr height=23 style='mso-height-source:userset;height:17.25pt'>
+        <td height=23 class=xl12213302 style='height:17.25pt'>　</td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td colspan=5 class=xl13713302>〒111-0043　東京都台東区駒形１-１２-１４　日本生命浅草ビル７Ｆ</td>
+        <td class=xl12513302>　</td>
+    </tr>
+    <tr height=19 style='height:14.25pt'>
+        <td height=19 class=xl12213302 style='height:14.25pt'>　</td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td colspan=5 class=xl13713302>TEL　03-3845-5990　ＦＡＸ　03-3845-1132</td>
+        <td class=xl12513302>　</td>
+    </tr>
+    <tr height=46 style='mso-height-source:userset;height:35.1pt'>
+        <td height=46 class=xl12213302 style='height:35.1pt'>　</td>
+        <td colspan=2 class=xl10513302>御請求金額</td>
+        <td colspan=4 class=xl10713302 style='border-right:1.0pt solid black;
+        border-left:none'>_%curThisMonthAmount%_</td>
+        <td class=xl6313302></td>
+        <td colspan=5 class=xl13813302></td>
+        <td class=xl12513302>　</td>
+    </tr>
+    <tr height=20 style='mso-height-source:userset;height:15.0pt'>
+        <td height=20 class=xl12213302 style='height:15.0pt'>　</td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl12513302>　</td>
+    </tr>
+    <tr height=26 style='mso-height-source:userset;height:20.1pt'>
+        <td height=26 class=xl12213302 style='height:20.1pt'>　</td>
+        <td class=xl6553513302></td>
+        <td colspan=4 class=xl8913302 style='border-right:1.0pt solid black'>内　　　　　　　　　　　　　　　訳</td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td colspan=2 class=xl9213302>_%printTernStartM%_月</td>
+        <td colspan=2 class=xl9413302 style='border-right:1.0pt solid black'>　分</td>
+        <td class=xl12513302>　</td>
+    </tr>
+    <tr height=26 style='mso-height-source:userset;height:19.5pt'>
+        <td height=26 class=xl12213302 style='height:19.5pt'>　</td>
+        <td class=xl6553513302></td>
+        <td rowspan=2 class=xl8213302 style='border-bottom:.5pt solid black;
+        border-top:none'>前月請求残額（税込み）</td>
+        <td colspan=3 rowspan=2 class=xl7013302 style='border-right:1.0pt solid black;
+        border-bottom:.5pt solid black'>_%curLastMonthBalance%_</td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6413302 style='border-top:none'>自</td>
+        <td class=xl6513302 style='border-top:none'>_%printTernStartM%_月</td>
+        <td colspan=2 class=xl9613302 style='border-right:1.0pt solid black'>_%printTernStartD%_日</td>
+        <td class=xl12513302></td>
+    </tr>
+    <tr height=8 style='mso-height-source:userset;height:6.0pt'>
+        <td height=8 class=xl12213302 style='height:6.0pt'>　</td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td rowspan=2 class=xl7613302 style='border-bottom:.5pt solid black;
+        border-top:none'>至</td>
+        <td rowspan=2 class=xl9913302 style='border-bottom:.5pt solid black;
+        border-top:none'>_%printTernEndM%_月</td>
+        <td colspan=2 rowspan=2 class=xl10113302 style='border-right:1.0pt solid black;
+        border-bottom:.5pt solid black'>_%printTernEndD%_日</td>
+        <td class=xl12513302>　</td>
+    </tr>
+    <tr height=18 style='mso-height-source:userset;height:14.1pt'>
+        <td height=18 class=xl12213302 style='height:14.1pt'>　</td>
+        <td class=xl6553513302></td>
+        <td rowspan=2 class=xl8213302 style='border-bottom:.5pt solid black;
+        border-top:none'>当月請求額</td>
+        <td colspan=3 rowspan=2 class=xl7013302 style='border-right:1.0pt solid black;
+        border-bottom:.5pt solid black'>_%curSubTotal1%_</td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl12513302>　</td>
+    </tr>
+    <tr height=16 style='mso-height-source:userset;height:12.0pt'>
+        <td height=16 class=xl12213302 style='height:12.0pt'>　</td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td colspan=2 rowspan=2 class=xl7613302 style='border-bottom:1.0pt solid black'>請求明細枚数</td>
+        <td colspan=2 rowspan=2 class=xl7713302 style='border-right:1.0pt solid black;
+        border-bottom:1.0pt solid black'>_%slipCodeCount%_枚</td>
+        <td class=xl12513302>　</td>
+    </tr>
+    <tr height=10 style='mso-height-source:userset;height:8.1pt'>
+        <td height=10 class=xl12213302 style='height:8.1pt'>　</td>
+        <td class=xl6553513302></td>
+        <td rowspan=2 class=xl8213302 style='border-bottom:.5pt solid black;
+        border-top:none'>消費税(_%curTax1%_%)</td>
+        <td colspan=3 rowspan=2 class=xl7013302 style='border-right:1.0pt solid black;
+        border-bottom:.5pt solid black'>_%curTaxPrice1%_</td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl12513302>　</td>
+    </tr>
+    <tr height=24 style='mso-height-source:userset;height:18.0pt'>
+        <td height=24 class=xl12213302 style='height:18.0pt'>　</td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6913302 width=40 style='border-top:none;width:30pt'>　</td>
+        <td rowspan=5 class=xl6913302 width=66 style='border-top:none;width:50pt'>　</td>
+        <td rowspan=3 class=xl6913302 width=61 style='border-bottom:.5pt solid black;
+        border-top:none;width:46pt'>　</td>
+        <td rowspan=3 class=xl6913302 width=61 style='border-bottom:.5pt solid black;
+        border-top:none;width:46pt'>　</td>
+        <td class=xl12513302>　</td>
+    </tr>
+    <tr height=32 style='mso-height-source:userset;height:24.0pt'>
+        <td height=32 class=xl12213302 style='height:24.0pt'>　</td>
+        <td class=xl6553513302></td>
+        <td class=xl6613302 style='border-top:none'>差引合計額</td>
+        <td colspan=3 class=xl8613302 style='border-right:1.0pt solid black;
+        border-left:none'>_%curThisMonthAmount%_</td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl14313302 width=40 style='width:30pt'></td>
+        <td class=xl12513302>　</td>
+    </tr>
+    <tr height=15 style='mso-height-source:userset;height:11.25pt'>
+        <td height=15 class=xl12213302 style='height:11.25pt'>　</td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl14313302 width=40 style='width:30pt'></td>
+        <td class=xl12513302>　</td>
+    </tr>
+    <tr height=16 style='mso-height-source:userset;height:12.0pt'>
+        <td height=16 class=xl12213302 style='height:12.0pt'>　</td>
+        <td class=xl6553513302></td>
+        <td colspan=6 rowspan=2 class=xl13913302 width=425 style='width:320pt'>上記の通りご請求申し上げます。<br>
+            お振込の場合は下記口座へお願いします。<br>
+            三菱東京ＵＦＪ銀行(0005)／浅草支店(336)　　当座／303672</td>
+        <td class=xl6553513302></td>
+        <td class=xl13913302 width=40 style='width:30pt'></td>
+        <td class=xl6713302 style='border-top:none'>担当</td>
+        <td class=xl6813302 style='border-top:none;border-left:none'>　</td>
+        <td class=xl12513302>　</td>
+    </tr>
+    <tr height=53 style='mso-height-source:userset;height:39.95pt'>
+        <td height=53 class=xl12213302 style='height:39.95pt'>　</td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl13913302 width=40 style='width:30pt'></td>
+        <td class=xl6813302 style='border-top:none'>　</td>
+        <td class=xl6813302 style='border-top:none;border-left:none'>　</td>
+        <td class=xl12513302>　</td>
+    </tr>
+    <tr height=26 style='mso-height-source:userset;height:20.1pt'>
+        <td height=26 class=xl12213302 style='height:20.1pt'>　</td>
+        <td class=xl6553513302></td>
+        <td colspan=10 class=xl14013302>_%strNote%_</td>
+        <td class=xl6553513302></td>
+        <td class=xl12513302>　</td>
+    </tr>
+    <tr height=26 style='mso-height-source:userset;height:20.1pt'>
+        <td height=26 class=xl12213302 style='height:20.1pt'>　</td>
+        <td class=xl11613302>　</td>
+        <td colspan=10 class=xl11813302>　</td>
+        <td class=xl6553513302></td>
+        <td class=xl12513302>　</td>
+    </tr>
+    <tr height=18 style='height:13.5pt'>
+        <td height=18 class=xl12213302 style='height:13.5pt'>　</td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl14613302>　　作成日：</td>
+        <td class=xl14613302 align=right>_%prevDate%_</td>
+        <td class=xl12513302>　</td>
+    </tr>
+    <tr height=19 style='height:14.25pt'>
+        <td height=19 class=xl14713302 style='height:14.25pt'>　</td>
+        <td class=xl14813302>　</td>
+        <td class=xl14813302>　</td>
+        <td class=xl14813302>　</td>
+        <td class=xl14813302>　</td>
+        <td class=xl14813302>　</td>
+        <td class=xl14813302>　</td>
+        <td class=xl14813302>　</td>
+        <td class=xl14813302>　</td>
+        <td class=xl14813302>　</td>
+        <td class=xl14813302>　</td>
+        <td class=xl14813302>　</td>
+        <td class=xl14813302>　</td>
+        <td class=xl14913302>　</td>
+    </tr>
+     <![if supportMisalignedColumns]>
+    <tr height=0 style='display:none'>
+        <td width=53 style='width:40pt'></td>
+        <td width=37 style='width:28pt'></td>
+        <td width=171 style='width:128pt'></td>
+        <td width=69 style='width:52pt'></td>
+        <td width=85 style='width:64pt'></td>
+        <td width=37 style='width:28pt'></td>
+        <td width=21 style='width:16pt'></td>
+        <td width=42 style='width:32pt'></td>
+        <td width=69 style='width:52pt'></td>
+        <td width=40 style='width:30pt'></td>
+        <td width=66 style='width:50pt'></td>
+        <td width=61 style='width:46pt'></td>
+        <td width=61 style='width:46pt'></td>
+        <td width=67 style='width:50pt'></td>
+    </tr>
+     <![endif]>
+    </table><br><br>
+
+    </div>
+
+
+    <!----------------------------->
+    <!--Excel の Web ページとして発行 ウィザードのアウトプットの終わり-->
+    <!----------------------------->
+</body>
+
+</html>

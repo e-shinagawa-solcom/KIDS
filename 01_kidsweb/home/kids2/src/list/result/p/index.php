@@ -77,11 +77,21 @@ $aryQuery[] = " g.strGroupDisplayName AS strInChargeGroupDisplayName,";
 $aryQuery[] = " u2.strUserDisplayCode AS strInChargeUserDisplayCode,";
 $aryQuery[] = " u2.strUserDisplayName AS strInChargeUserDisplayName,";
 $aryQuery[] = " gp.lngProductNo AS strReportKeyCode ";
-$aryQuery[] = "FROM ( ";
-$aryQuery[] = " select p1.*  from m_product p1 ";
-$aryQuery[] = " inner join (select max(lngproductno) lngproductno, strproductcode from m_Product group by strProductCode) p2";
-$aryQuery[] = " on p1.lngproductno = p2.lngproductno";
-$aryQuery[] = " ) p ";
+$aryQuery[] = "FROM";
+$aryQuery[] = "  m_product p ";
+$aryQuery[] = "  inner join ( ";
+$aryQuery[] = "    select";
+$aryQuery[] = "      max(lngrevisionno) lngrevisionno";
+$aryQuery[] = "      , strproductcode ";
+$aryQuery[] = "    from";
+$aryQuery[] = "      m_Product ";
+$aryQuery[] = "    where";
+$aryQuery[] = "      bytInvalidFlag = false ";
+$aryQuery[] = "    group by";
+$aryQuery[] = "      strProductCode";
+$aryQuery[] = "  ) p1 ";
+$aryQuery[] = "    on p.strProductCode = p1.strProductCode ";
+$aryQuery[] = "    and p.lngrevisionno = p1.lngrevisionno ";
 $aryQuery[] = " LEFT JOIN m_User u1 ON p.lngInputUserCode = u1.lngUserCode";
 $aryQuery[] = " LEFT JOIN m_User u2 ON p.lngInChargeUserCode = u2.lngUserCode";
 $aryQuery[] = " LEFT JOIN m_Group g ON p.lngInChargeGroupCode = g.lngGroupCode";
@@ -103,6 +113,24 @@ $aryQuery[] = "          on gp1.lngProductNo = gp2.lngProductNo ";
 $aryQuery[] = "          and gp1.lngRevisionNo = gp2.lngRevisionNo";
 $aryQuery[] = "    ) gp ";
 $aryQuery[] = " WHERE p.lngProductNo = gp.lngProductNo";
+$aryQuery[] = "  AND p.strproductcode not in ( ";
+$aryQuery[] = "    select";
+$aryQuery[] = "      p1.strproductcode ";
+$aryQuery[] = "    from";
+$aryQuery[] = "      ( ";
+$aryQuery[] = "        SELECT";
+$aryQuery[] = "          min(lngRevisionNo) lngRevisionNo";
+$aryQuery[] = "          , strproductcode ";
+$aryQuery[] = "        FROM";
+$aryQuery[] = "          m_product ";
+$aryQuery[] = "        where";
+$aryQuery[] = "          bytInvalidFlag = false ";
+$aryQuery[] = "        group by";
+$aryQuery[] = "          strproductcode";
+$aryQuery[] = "      ) as p1 ";
+$aryQuery[] = "    where";
+$aryQuery[] = "      p1.lngRevisionNo < 0";
+$aryQuery[] = "  ) ";
 /////////////////////////////////////////////////////////////////
 // 検索条件
 /////////////////////////////////////////////////////////////////
@@ -176,7 +204,8 @@ if ($lngResultNum > 0) {
 
 // 帳票データ取得クエリ実行・テーブル生成
 $strQuery = join("\n", $aryQuery);
-
+echo $strQuery;
+return;
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 for ($i = 0; $i < $lngResultNum; $i++) {
     $objResult = $objDB->fetchObject($lngResultID, $i);

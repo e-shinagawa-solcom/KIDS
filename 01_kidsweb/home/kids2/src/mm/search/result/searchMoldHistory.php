@@ -91,7 +91,7 @@ $query[] = "SELECT";
 $query[] = "      tmrr.moldreportid";
 $query[] = "    , tmrr.revision";
 $query[] = "    , ms.dtmappropriationdate";   // 仕入マスタ.仕入計上日
-$query[] = "    , mo.strOrderCode || '-' || mo.strReviseCode AS strOrderCode";   // 発注マスタ.発注コード-発注マスタ.修正コード
+$query[] = "    , mo.strOrderCode AS strOrderCode";   // 発注マスタ.発注コード
 $query[] = "    , '[' || mc.strCompanyDisplayCode || ']' || mc.strCompanyDisplayname AS strCompanyDisplayCode";   // [会社マスタ.表示会社コード] 会社マスタ.表示会社名称
 $query[] = "    , mp.strproductcode";            // 製品マスタ.製品コード
 $query[] = "    , mp.strproductname";            // 製品マスタ.製品コード(日本語)
@@ -101,48 +101,28 @@ $query[] = "    , '[' || mg.strgroupdisplaycode || ']' || mg.strgroupdisplayname
 $query[] = "    , '[' || mu.struserdisplaycode || ']' || mu.struserdisplayname as struserdisplaycode";   // [ユーザマスタ.表示ユーザコード] ユーザマスタ.表示ユーザ名
 $query[] = "    , tmh.moldno";                // 金型履歴.金型NO
 $query[] = "    , tmh.historyno";             // 金型履歴.履歴番号
-$query[] = "    , tsd.lngProductQuantity";    // 仕入詳細.数量
-$query[] = "    , mou.strMonetaryUnitSign || tsd.curSubTotalPrice as strMonetaryUnitSign"; // 通貨単位マスタ.通貨単位 || 仕入詳細.サブトータル価格
+$query[] = "    , ms.lngProductQuantity";    // 仕入詳細.数量
+$query[] = "    , mou.strMonetaryUnitSign || ms.curSubTotalPrice as strMonetaryUnitSign"; // 通貨単位マスタ.通貨単位 || 仕入詳細.サブトータル価格
 $query[] = "    , tmh.status";                // 金型履歴.金型ステータス
 $query[] = "    , tmh.actiondate";            // 金型履歴.実施日
-$query[] = "    , tmh.sourcefactory";         // 金型履歴.保管工場
-$query[] = "    , tmh.destinationfactory";    // 金型履歴.移動先工場
-$query[] = "    , tmh.created::date";         // 金型履歴.登録日
-$query[] = "    , tmh.createby";              // 金型履歴.登録者
-$query[] = "    , tmh.updated::date";         // 金型履歴.登録日
-$query[] = "    , tmh.updateby";              // 金型履歴.更新者
+$query[] = "  , mc_sf.strcompanydisplaycode as strsourfacdisplaycode";
+$query[] = "  , mc_sf.strcompanydisplayname as strsourfacdisplayname";
+$query[] = "  , tmh.sourcefactory";
+$query[] = "  , tmh.destinationfactory";
+$query[] = "  , mc_df.strcompanydisplaycode as strdescfacdisplaycode";
+$query[] = "  , mc_df.strcompanydisplayname as strdescfacdisplayname";
+$query[] = "  , tmh.created ::date";
+$query[] = "  , tmh.createby";
+$query[] = "  , mu_c.struserdisplaycode as strcreateuserdisplaycode";
+$query[] = "  , mu_c.struserdisplayname as strcreateuserdisplayname";
+$query[] = "  , tmh.updated ::date";
+$query[] = "  , tmh.updateby";
+$query[] = "  , mu_u.struserdisplaycode as strupdateuserdisplaycode";
+$query[] = "  , mu_u.struserdisplayname as strupdateuserdisplayname";
 $query[] = "    , tmh.version";               // 金型履歴.バージョン
 $query[] = "    , tmh.deleteflag";            // 金型履歴.削除フラグ
 $query[] = "FROM";
-// 履歴の全件出力
-if (array_key_exists("IsDetail", $optionColumns))
-{
-	$query[] = "    t_moldhistory tmh";
-}
-// 最新の履歴のみを表示する
-else
-{
-	$query[] = "(";
-	$query[] = "    SELECT";
-	$query[] = "        *";
-	$query[] = "    FROM";
-	$query[] = "        t_moldhistory";
-	$query[] = "    WHERE";
-	$query[] = "    (moldno, historyno) in";
-	$query[] = "    (";
-	$query[] = "        SELECT";
-	$query[] = "              itmh.moldno";
-	$query[] = "            , itmh.historyno";
-	$query[] = "        FROM";
-	$query[] = "            t_moldhistory itmh";
-	$query[] = "        WHERE";
-	$query[] = "            deleteflag = false";
-	$query[] = "        group by";
-	$query[] = "              itmh.moldno";
-	$query[] = "            , itmh.historyno";
-	$query[] = "    )";
-	$query[] = ") as tmh";
-}
+$query[] = "    t_moldhistory tmh";
 $query[] = "INNER JOIN";
 $query[] = "    m_mold mm";
 $query[] = "  ON";
@@ -155,95 +135,114 @@ $query[] = "    AND tmh.historyno = tmrr.historyno";
 // $query[] = "----------------------------------------------";
 // $query[] = "--  仕入詳細 - 税 ⇔ 製品 - グループ - ユーザ";
 // $query[] = "----------------------------------------------";
-$query[] = "LEFT OUTER JOIN";
-$query[] = "(";
-$query[] = "    SELECT";
-$query[] = "        itsd.*";
-$query[] = "    FROM";
-$query[] = "        t_stockdetail itsd";
-$query[] = "    WHERE";
-$query[] = "        (itsd.strmoldno, itsd.lngstockno, itsd.lngstockdetailno) IN";
-$query[] = "        (";
-$query[] = "        	SELECT";
-$query[] = "            	iitsd.strmoldno";
-$query[] = "                , max(iitsd.lngstockno)";
-$query[] = "                , max(iitsd.lngstockdetailno)";
+$query[] = "  LEFT OUTER JOIN ( ";
+$query[] = "    select";
+$query[] = "      tsd.*";
+$query[] = "      , s.dtmappropriationdate";
+$query[] = "      , s.lngcustomercompanycode";
+$query[] = "      , s.lngmonetaryunitcode ";
+$query[] = "    from";
+$query[] = "      t_stockdetail tsd ";
+$query[] = "      inner join ( ";
+$query[] = "        SELECT";
+$query[] = "          ims.* ";
+$query[] = "        FROM";
+$query[] = "          m_stock ims ";
+$query[] = "          inner join ( ";
+$query[] = "            SELECT";
+$query[] = "              MAX(lngRevisionNo) lngrevisionno";
+$query[] = "              , strStockCode ";
 $query[] = "            FROM";
-$query[] = "                t_stockdetail iitsd";
+$query[] = "              m_Stock ";
 $query[] = "            WHERE";
-$query[] = "                (";
-$query[] = "                	(iitsd.lngStockSubjectCode = 433 AND iitsd.lngStockItemCode = 1)";
-$query[] = "                    OR (iitsd.lngStockSubjectCode = 431 AND iitsd.lngStockItemCode = 8)";
-$query[] = "                 )";
-$query[] = "            GROUP BY";
-$query[] = "            	iitsd.strmoldno";
+$query[] = "              bytInvalidFlag = false ";
+$query[] = "            group by";
+$query[] = "              strStockCode";
+$query[] = "          ) s ";
+$query[] = "            on ims.lngrevisionno = s.lngrevisionno ";
+$query[] = "            and ims.strstockcode = s.strStockCode ";
+$query[] = "        where";
+$query[] = "          ims.strstockcode not in ( ";
+$query[] = "            select";
+$query[] = "              s1.strStockCode ";
+$query[] = "            from";
+$query[] = "              ( ";
+$query[] = "                SELECT";
+$query[] = "                  min(lngRevisionNo) lngRevisionNo";
+$query[] = "                  , strStockCode ";
+$query[] = "                FROM";
+$query[] = "                  m_Stock ";
+$query[] = "                where";
+$query[] = "                  bytInvalidFlag = false ";
+$query[] = "                group by";
+$query[] = "                  strStockCode";
+$query[] = "              ) as s1 ";
+$query[] = "            where";
+$query[] = "              s1.lngRevisionNo < 0";
+$query[] = "          )";
+$query[] = "      ) s ";
+$query[] = "        on tsd.lngstockno = s.lngstockno ";
+$query[] = "        and ( ";
+$query[] = "          ( ";
+$query[] = "            tsd.lngStockSubjectCode = 433 ";
+$query[] = "            AND tsd.lngStockItemCode = 1";
+$query[] = "          ) ";
+$query[] = "          OR ( ";
+$query[] = "            tsd.lngStockSubjectCode = 431 ";
+$query[] = "            AND tsd.lngStockItemCode = 8";
+$query[] = "          )";
 $query[] = "        )";
-$query[] = ") tsd";
-$query[] = "  ON";
-$query[] = "    mm.moldno = tsd.strmoldno";
+$query[] = "  ) ms ";
+$query[] = "    ON tmh.moldno = ms.strmoldno ";
 $query[] = "LEFT JOIN";
 $query[] = "    m_tax   mt";
 $query[] = "  ON";
-$query[] = "    tsd.lngtaxcode = mt.lngtaxcode";
-$query[] = "LEFT OUTER JOIN";
-$query[] = "    m_product mp";
-$query[] = "  ON";
-$query[] = "     tsd.strproductcode = mp.strproductcode";
-$query[] = "LEFT JOIN ";
-$query[] = "    m_group mg";
-$query[] = "  ON";
-$query[] = "    mp.lnginchargegroupcode = mg.lnggroupcode";
-$query[] = "LEFT JOIN";
-$query[] = "    m_user  mu";
-$query[] = "  ON";
-$query[] = "    mp.lnginchargeusercode = mu.lngusercode";
-// $query[] = "----------------------------------------------";
-// $query[] = "--  仕入マスタ ⇔ 発注 - 会社 - 通貨単位";
-// $query[] = "----------------------------------------------";
-$query[] = "LEFT OUTER JOIN";
-$query[] = "(";
+$query[] = "    ms.lngtaxcode = mt.lngtaxcode";
+$query[] = "  LEFT OUTER JOIN ( ";
 $query[] = "    SELECT";
-$query[] = "        ims.*";
+$query[] = "      p.* ";
 $query[] = "    FROM";
-$query[] = "        m_stock ims";
-$query[] = "    WHERE";
-$query[] = "        ims.lngRevisionNo = ";
-$query[] = "        (";
-$query[] = "            SELECT";
-$query[] = "                MAX( s1.lngRevisionNo )";
-$query[] = "            FROM";
-$query[] = "                m_Stock s1";
-$query[] = "            WHERE";
-$query[] = "                    s1.strStockCode = ims.strStockCode";
-$query[] = "                AND s1.bytInvalidFlag = false";
-$query[] = "        )";
-$query[] = "    AND 0 <= ";
-$query[] = "        ( ";
-$query[] = "            SELECT";
-$query[] = "                MIN( s2.lngRevisionNo )";
-$query[] = "            FROM";
-$query[] = "                m_Stock s2";
-$query[] = "            WHERE";
-$query[] = "                    s2.bytInvalidFlag = false";
-$query[] = "                AND s2.strStockCode = ims.strStockCode";
-$query[] = "        )";
-$query[] = ") ms";
+$query[] = "      m_product p ";
+$query[] = "      inner join ( ";
+$query[] = "        SELECT";
+$query[] = "          MAX(lngproductno) lngproductno";
+$query[] = "          , strproductcode ";
+$query[] = "        FROM";
+$query[] = "          m_product ";
+$query[] = "        WHERE";
+$query[] = "          bytInvalidFlag = false ";
+$query[] = "        group by";
+$query[] = "          strproductcode";
+$query[] = "      ) p1 ";
+$query[] = "        on p.lngproductno = p1.lngproductno ";
+$query[] = "    where";
+$query[] = "      lngrevisionno >= 0";
+$query[] = "  ) mp ";
 $query[] = "  ON";
-$query[] = "    tsd.lngstockno = ms.lngstockno";
-$query[] = "LEFT OUTER JOIN";
-$query[] = "    m_order mo";
-$query[] = "  ON";
-$query[] = "    ms.lngorderno = mo.lngorderno";
-$query[] = "LEFT JOIN";
-$query[] = "    m_Company mc";
-$query[] = "  ON";
-$query[] = "    ms.lngCustomerCompanyCode = mc.lngCompanyCode";
-$query[] = "LEFT JOIN";
-$query[] = "    m_MonetaryUnit mou";
-$query[] = "  ON";
-$query[] = "    ms.lngMonetaryUnitCode = mou.lngMonetaryUnitCode";
-$query[] = "WHERE";
+$query[] = "     ms.strproductcode = mp.strproductcode";
+$query[] = "  LEFT JOIN m_group mg ";
+$query[] = "    ON mp.lnginchargegroupcode = mg.lnggroupcode ";
+$query[] = "  LEFT JOIN m_user mu ";
+$query[] = "    ON mp.lnginchargeusercode = mu.lngusercode ";
+$query[] = "  LEFT JOIN m_user mu_u";
+$query[] = "    ON tmh.updateby = mu_u.lngusercode ";
+$query[] = "  LEFT JOIN m_user mu_c";
+$query[] = "    ON tmh.createby = mu_c.lngusercode ";
+$query[] = "  LEFT OUTER JOIN m_order mo ";
+$query[] = "    ON ms.lngorderno = mo.lngorderno ";
+$query[] = "  LEFT JOIN m_Company mc ";
+$query[] = "    ON ms.lngCustomerCompanyCode = mc.lngCompanyCode ";
+$query[] = "  LEFT JOIN m_Company mc_sf";
+$query[] = "    ON tmh.sourcefactory = mc_sf.lngCompanyCode ";
+$query[] = "  LEFT JOIN m_Company mc_df";
+$query[] = "    ON tmh.destinationfactory = mc_df.lngCompanyCode ";
+$query[] = "  LEFT JOIN m_MonetaryUnit mou ";
+$query[] = "    ON ms.lngMonetaryUnitCode = mou.lngMonetaryUnitCode ";
+$query[] = "WHERE";// 履歴の全件出力
+if (!array_key_exists("IsDetail", $optionColumns))
+{
 $query[] = "    tmh.deleteflag = false";
+}
 $query[] = "AND mm.deleteflag = false";
 
 // ユーティリティのインスタンス取得
@@ -465,31 +464,42 @@ $query = implode("\n",$query);
 // クエリ実行
 $lngResultID = pg_query($query);
 
+$lngResultNum = pg_num_rows($lngResultID);
 
+// 検索件数がありの場合
+if ($lngResultNum > 0) {
+    // 指定数以上の場合エラーメッセージを表示する
+    // if ($lngResultNum > DEF_SEARCH_MAX) {
+    //     $errorFlag = true;
+    //     $lngErrorCode = 9068;
+    //     $aryErrorMessage = DEF_SEARCH_MAX;
+    // }
+} else {
+    $errorFlag = true;
+    $lngErrorCode = 603;
+    $aryErrorMessage = "";
+}
+if ($errorFlag) {
+    // エラー画面の戻り先
+    $strReturnPath = "../mm/search/index.php?strSessionID=" . $aryData["strSessionID"];
 
-// 検索結果が得られなかった場合
-if (!pg_num_rows($lngResultID))
-{
-	// 該当帳票データなし
-	$strMessage = fncOutputError(9068, DEF_WARNING, "" ,FALSE, "", $objDB );
+    $strMessage = fncOutputError($lngErrorCode, DEF_WARNING, $aryErrorMessage, false, $strReturnPath, $objDB);
 
-	// [lngLanguageCode]書き出し
-	$aryHtml["lngLanguageCode"] = $aryData["lngLanguageCode"];
+    // [strErrorMessage]書き出し
+    $aryHtml["strErrorMessage"] = $strMessage;
 
-	// [strErrorMessage]書き出し
-	$aryHtml["strErrorMessage"] = $strMessage;
+    // テンプレート読み込み
+    $objTemplate = new clsTemplate();
+    $objTemplate->getTemplate("/result/error/parts.tmpl");
 
-	// テンプレート読み込み
-	$objTemplate = new clsTemplate();
-	$objTemplate->getTemplate( "/result/error/parts.tmpl" );
+    // テンプレート生成
+    $objTemplate->replace($aryHtml);
+    $objTemplate->complete();
 
-	// テンプレート生成
-	$objTemplate->replace( $aryHtml );
-	$objTemplate->complete();
+    // HTML出力
+    echo $objTemplate->strTemplate;
 
-	// HTML出力
-	echo $objTemplate->strTemplate;
-	exit;
+    exit;
 }
 
 // 検索結果連想配列を取得
@@ -800,7 +810,6 @@ foreach ($records as $i => $record)
 		// tr > td
 		$trBody->appendChild($tdModify);
 	}
-
 	// プレビュー項目を表示(履歴はコピー兼用)
 	if ($existsPreview)
 	{
@@ -934,9 +943,7 @@ foreach ($records as $i => $record)
 				case TableMoldHistory::SourceFactory:
 					if ($record[TableMoldHistory::SourceFactory] || $record[TableMoldHistory::DestinationFactory] === "0")
 					{
-						$displayCode = $utilCompany->selectDisplayCodeByCompanyCode($record[TableMoldHistory::SourceFactory]);
-						$displayName = $utilCompany->selectDisplayNameByCompanyCode($record[TableMoldHistory::SourceFactory]);
-						$textContent = "[".$displayCode."]"." ".$displayName;
+						$textContent = "[".$record["strsourfacdisplaycode"]."]"." ".$record["strsourfacdisplayname"];
 						$td = $doc->createElement("td", toUTF8($textContent));
 					}
 					else
@@ -949,9 +956,7 @@ foreach ($records as $i => $record)
 				case TableMoldHistory::DestinationFactory:
 					if ($record[TableMoldHistory::DestinationFactory] || $record[TableMoldHistory::DestinationFactory] === "0")
 					{
-						$displayCode = $utilCompany->selectDisplayCodeByCompanyCode($record[TableMoldHistory::DestinationFactory]);
-						$displayName = $utilCompany->selectDisplayNameByCompanyCode($record[TableMoldHistory::DestinationFactory]);
-						$textContent = "[".$displayCode."]"." ".$displayName;
+						$textContent = "[".$record["strdescfacdisplaycode"]."]"." ".$record["strdescfacdisplayname"];
 						$td = $doc->createElement("td", toUTF8($textContent));
 					}
 					else
@@ -969,9 +974,7 @@ foreach ($records as $i => $record)
 				case TableMoldHistory::CreateBy :
 					if ($record[TableMoldHistory::CreateBy])
 					{
-						$displayCode = $utilUser->selectDisplayCodeByUserCode($record[TableMoldHistory::CreateBy]);
-						$displayName = $utilUser->selectDisplayNameByUserCode($record[TableMoldHistory::CreateBy]);
-						$textContent = "[".$displayCode."]"." ".$displayName;
+						$textContent = "[".$record["strcreateuserdisplaycode"]."]"." ".$record["strcreateuserdisplayname"];
 						$td = $doc->createElement("td", toUTF8($textContent));
 					}
 					else
@@ -989,9 +992,7 @@ foreach ($records as $i => $record)
 				case TableMoldHistory::UpdateBy :
 					if ($record[TableMoldHistory::UpdateBy])
 					{
-						$displayCode = $utilUser->selectDisplayCodeByUserCode($record[TableMoldHistory::UpdateBy]);
-						$displayName = $utilUser->selectDisplayNameByUserCode($record[TableMoldHistory::UpdateBy]);
-						$textContent = "[".$displayCode."]"." ".$displayName;
+						$textContent = "[".$record["strupdateuserdisplaycode"]."]"." ".$record["strupdateuserdisplayname"];
 						$td = $doc->createElement("td", toUTF8($textContent));
 					}
 					else

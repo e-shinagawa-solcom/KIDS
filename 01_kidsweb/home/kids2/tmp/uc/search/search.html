@@ -1,0 +1,284 @@
+<config>
+	<header1>
+		<link rel="stylesheet" href="/search/cmn/form/css/forms.css">
+		<link rel="stylesheet" href="/list/cmn/forms.css">
+		<link rel="stylesheet" href="/search/cmn/form/css/tabs.css">
+		<link rel="stylesheet" href="/search/cmn/navigate/css/navigate.css">
+		<link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
+		<script src="/search/cmn/form/js/tab-function.js" defer></script>
+		<script src="/search/cmn/js/date.js" defer></script>
+		<script src="/search/cmn/form/js/util-selectbox.js" defer></script>
+		<!-- チェックボックスの切り替え処理 -->
+		<script src="/search/cmn/search/js/toggleCheckbox.js" defer></script>
+		<!-- 検索画面共通入力補助 -->
+		<script src="/search/cmn/search/js/input-assist.js" defer></script>
+		<!-- msw 表示 -->
+		<script src="/search/cmn/msw/cmn/js/msw.js" defer></script>
+		<!-- COOKIE関連の処理(検索画面) -->
+		<script src="/search/cmn/search/js/cookie-functions.js" defer></script>
+	</header1>
+
+	<header2>
+	</header2>
+
+	<header3>
+		<!-- msw汎用スタイル -->
+		<link rel="stylesheet" href="/search/cmn/css/msw.css">
+		<!-- フォームボタン css -->
+		<link rel="stylesheet" href="/search/cmn/css/form-buttons.css">
+		<!-- フォーム ボタン -->
+		<script src="/uc/search/form-buttons.js" defer></script>
+		<!-- フォームバリデーション -->
+		<script src="/uc/search/validate-form.js" defer></script>
+		<!-- マスタ検索呼び出し -->
+		<script src="/p/cmn/js/invoke-master-search.js" defer></script>
+		<!-- COOKIE 表示チェックボックス 保存/復元 -->
+		<script src="/search/cmn/js/cookie-display-items.js" defer></script>
+		<!-- キーバインド -->
+		<script src="/search/cmn/js/key-bind.js" defer></script>
+		<!-- キーバインド -->
+		<script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
+	</header3>
+
+	<bodyonload>
+		Loading();
+	</bodyonload>
+</config>
+
+<!-- 左サイドバー ナビゲート -->
+<div class="navigation-loadpoint">
+	<script>
+		$('.navigation-loadpoint').load('/search/cmn/navigate/list_es_navi.html');
+	</script>
+</div>
+
+<!-- 入力フォーム -->
+<div class="form-box--notabs-for-search">
+	<!-- フォームヘッダ -->
+	<div class="form-box__header">
+		<p class="form-box__header__title">ユーザー　検索</p>
+		<span class="form-box__header__buttons">
+			<img class="clear button" src="/img/type01/cmn/seg/sch_clear_off_ja_bt.gif">
+			<img class="search button" src="/img/type01/cmn/seg/sch_search_off_ja_bt.gif">
+		</span>
+	</div>
+	<!-- フォームコンテンツ -->
+	<div class="form-box__contents--with-scroll">
+		<form name="SearchMoldHistory" method="post">
+			<input type="submit">
+			<input type="hidden" name="strSessionID" value="_%strSessionID%_">
+			<input type="hidden" name="lngFunctionCode" value="_%lngFunctionCode%_">
+			<div class="toggle-line">
+				<img class="toggle-search button" src="/img/type01/cmn/seg/off_bt.gif" alt="toggle search">
+				<img class="toggle-display button" src="/img/type01/cmn/seg/off_bt.gif" alt="toggle display">
+			</div>
+			<div class="regist-line">
+				<span id="ViewSearch1">
+					<img src="/img/type01/cmn/seg/view_search_ja.gif" width="90" height="25" border="0">
+				</span>
+			</div>
+			<div class="regist-line">
+				<span class="search-label--checkbox">
+					<input class="is-search" type="checkbox" name="IsSearch_detailConditions" disabled>
+					<input class="is-display" type="checkbox" name="IsDisplay_detailVisible" _%detailVisible%_>
+				</span>
+				<span class="regist-label">
+					<span class="regist-label__text" id="DetailSegs">詳細</span>
+					<span class="VarText" id="DetailVars"></span>
+				</span>
+			</div>
+			<div class="regist-line">
+				<span class="search-label--checkbox">
+					<input class="is-search" type="checkbox" name="IsSearch_bytInvalidFlagConditions" _%bytInvalidFlagConditions%_>
+					<input class="is-display" type="checkbox" name="IsDisplay_bytInvalidFlagVisible" _%bytInvalidFlagVisible%_>
+				</span>
+				<span class="regist-label">
+					<span class="regist-label__text" id="LoginPermissionSegs">ログイン許可</span>
+					<span class="VarText" id="LoginPermissionVars">
+						<input class="CheckBox14" type="checkbox" name="bytInvalidFlag" value="FALSE">
+					</span>
+				</span>
+			</div>
+			<div class="regist-line">
+				<span class="search-label--checkbox">
+					<input class="is-search" type="checkbox" name="IsSearch_lngUserCodeConditions" _%lngUserCodeConditions%_>
+					<input class="is-display" type="checkbox" name="IsDisplay_lngUserCodeVisible" _%lngUserCodeVisible%_>
+				</span>
+				<span class="regist-label">
+					<span class="regist-label__text" id="UserCodeSegs">ユーザーコード</span>
+					<span class="VarText" id="UserCodeVars">
+						<input style="ime-mode:disabled;" class="Txt10L" type="text" name="lngUserCode" value="" maxlength="10" onfocus="chColorOn(this);"
+						 onblur="chColorOff(this);">
+					</span>
+				</span>
+			</div>
+			<div class="regist-line">
+				<span class="search-label--checkbox">
+					<input class="is-search" type="checkbox" name="IsSearch_strUserIDConditions" _%strUserIDConditions%_>
+					<input class="is-display" type="checkbox" name="IsDisplay_strUserIDVisible" checked disabled>
+				</span>
+				<span class="regist-label">
+					<span class="regist-label__text" id="UserIDSegs">ユーザーID</span>
+					<span class="VarText" id="UserIDVars">
+						<input style="ime-mode:disabled;" class="Txt20L" type="text" name="strUserID" value="" maxlength="20" onfocus="chColorOn(this);"
+						 onblur="chColorOff(this);">
+					</span>
+				</span>
+			</div>
+			<div class="regist-line">
+				<span class="search-label--checkbox">
+					<input class="is-search" type="checkbox" name="IsSearch_bytMailTransmitFlagConditions" _%bytMailTransmitFlagConditions%_>
+					<input class="is-display" type="checkbox" name="IsDisplay_bytMailTransmitFlagVisible" _%bytMailTransmitFlagVisible%_>
+				</span>
+				<span class="regist-label">
+					<span class="regist-label__text" id="EmailPermissionSegs">メール配信許可</span>
+					<span class="VarText" id="EmailPermissionVars">
+						<input class="CheckBox14" type="checkbox" name="bytMailTransmitFlag" value="TRUE">
+					</span>
+				</span>
+			</div>
+			<div class="regist-line">
+				<span class="search-label--checkbox">
+					<input class="is-search" type="checkbox" name="IsSearch_strMailAddressConditions" _%strMailAddressConditions%_>
+					<input class="is-display" type="checkbox" name="IsDisplay_strMailAddressVisible" _%strMailAddressVisible%_>
+				</span>
+				<span class="regist-label">
+					<span class="regist-label__text" id="EmailSegs">メールアドレス</span>
+					<span class="VarText" id="EmailVars">
+						<input style="ime-mode:disabled;" class="Txt52L" type="text" name="strMailAddress" value="" maxlength="40" onfocus="chColorOn(this);"
+						 onblur="chColorOff(this);">
+					</span>
+				</span>
+			</div>
+			<div class="regist-line">
+				<span class="search-label--checkbox">
+					<input class="is-search" type="checkbox" name="IsSearch_bytUserDisplayFlagConditions" _%bytUserDisplayFlagConditions%_>
+					<input class="is-display" type="checkbox" name="IsDisplay_bytUserDisplayFlagVisible" _%bytUserDisplayFlagVisible%_>
+				</span>
+				<span class="regist-label">
+					<span class="regist-label__text" id="DisplayUserSegs">ユーザー表示</span>
+					<span class="VarText" id="DisplayUserVars">
+						<input class="CheckBox14" type="checkbox" name="bytUserDisplayFlag" value="TRUE">
+					</span>
+				</span>
+			</div>
+			<div class="regist-line">
+				<span class="search-label--checkbox">
+					<input class="is-search" type="checkbox" name="IsSearch_strUserDisplayCodeConditions" _%strUserDisplayCodeConditions%_>
+					<input class="is-display" type="checkbox" name="IsDisplay_strUserDisplayCodeVisible" _%strUserDisplayCodeVisible%_>
+				</span>
+				<span class="regist-label">
+					<span class="regist-label__text" id="DisplayUserCodeSegs">表示ユーザーコード</span>
+					<span class="VarText" id="DisplayUserCodeVars">
+						<input style="ime-mode:disabled;" class="Txt03L" type="text" name="strUserDisplayCode" value="" maxlength="3" onfocus="chColorOn(this);"
+						 onblur="chColorOff(this);">
+					</span>
+				</span>
+			</div>
+			<div class="regist-line">
+				<span class="search-label--checkbox">
+					<input class="is-search" type="checkbox" name="IsSearch_strUserDisplayNameConditions" _%strUserDisplayNameConditions%_>
+					<input class="is-display" type="checkbox" name="IsDisplay_strUserDisplayNameVisible" checked disabled>
+				</span>
+				<span class="regist-label">
+					<span class="regist-label__text" id="DisplayUserNameSegs">表示ユーザー名</span>
+					<span class="VarText" id="DisplayUserNameVars">
+						<input class="Txt52L" type="text" name="strUserDisplayName" value="" maxlength="20" onfocus="chColorOn(this);" onblur="chColorOff(this);">
+					</span>
+				</span>
+			</div>
+			<div class="regist-line">
+				<span class="search-label--checkbox">
+					<input class="is-search" type="checkbox" name="IsSearch_strUserFullNameConditions" _%strUserFullNameConditions%_>
+					<input class="is-display" type="checkbox" name="IsDisplay_strUserFullNameVisible" _%strUserFullNameVisible%_>
+				</span>
+				<span class="regist-label">
+					<span class="regist-label__text" id="UserFullNameSegs">フルネーム</span>
+					<span class="VarText" id="UserFullNameVars">
+						<input class="Txt52L" type="text" name="strUserFullName" value="" maxlength="40" onfocus="chColorOn(this);" onblur="chColorOff(this);">
+					</span>
+				</span>
+			</div>
+			<div class="regist-line">
+				<span class="search-label--checkbox">
+					<input class="is-search" type="checkbox" name="IsSearch_lngCompanyCodeConditions" _%lngCompanyCodeConditions%_>
+					<input class="is-display" type="checkbox" name="IsDisplay_lngCompanyCodeVisible" _%lngCompanyCodeVisible%_>
+				</span>
+				<span class="regist-label">
+					<span class="regist-label__text" id="CompanySegs">会社</span>
+					<span class="VarText" id="CompanyVars">
+						<select class="Slt51" name="lngCompanyCode">
+							<option value="0"></option>
+							_%lngCompanyCode%_
+						</select>
+					</span>
+				</span>
+			</div>
+			<div class="regist-line">
+				<span class="search-label--checkbox">
+					<input class="is-search" type="checkbox" name="IsSearch_lngGroupCodeConditions" _%lngGroupCodeConditions%_>
+					<input class="is-display" type="checkbox" name="IsDisplay_lngGroupCodeVisible" _%lngGroupCodeVisible%_>
+				</span>
+				<span class="regist-label">
+					<span class="regist-label__text" id="GroupSegs">グループ</span>
+					<span class="VarText" id="GroupVars">
+						<select class="Slt51" name="lngGroupCode">
+							<option value="0"></option>
+							_%lngGroupCode%_
+						</select>
+					</span>
+				</span>
+			</div>
+			<div class="regist-line">
+				<span class="search-label--checkbox">
+					<input class="is-search" type="checkbox" name="IsSearch_lngAuthorityGroupCodeConditions" _%lngAuthorityGroupCodeConditions%_>
+					<input class="is-display" type="checkbox" name="IsDisplay_lngAuthorityGroupCodeVisible" _%lngAuthorityGroupCodeVisible%_>
+				</span>
+				<span class="regist-label">
+					<span class="regist-label__text" id="AuthorityGroupSegs">権限グループ</span>
+					<span class="VarText" id="AuthorityGroupVars">
+						<select class="Slt15" name="lngAuthorityGroupCode">
+							<option value=""></option>
+							_%lngAuthorityGroupCode%_
+						</select>
+					</span>
+				</span>
+			</div>
+			<div class="regist-line">
+				<span class="search-label--checkbox">
+					<input class="is-search" type="checkbox" name="IsSearch_lngAccessIPAddressCodeConditions" _%lngAccessIPAddressCodeConditions%_>
+					<input class="is-display" type="checkbox" name="IsDisplay_lngAccessIPAddressCodeVisible" _%lngAccessIPAddressCodeVisible%_>
+				</span>
+				<span class="regist-label">
+					<span class="regist-label__text" id="AccessIPAddressSegs">アクセスIPアドレス</span>
+					<span class="VarText" id="AccessIPAddressVars">
+						<select class="Slt51" name="lngAccessIPAddressCode" tabindex="" onblur="fncDefaultTabindex( document.all.bytInvalidFlag );">
+							<option value=""></option>
+							_%lngAccessIPAddressCode%_
+						</select>
+					</span>
+				</span>
+			</div>
+			<div class="regist-line">
+				<span class="search-label--checkbox">
+					<input class="is-search" type="checkbox" name="IsSearch_strNoteConditions" _%strNoteConditions%_ disabled>
+					<input class="is-display" type="checkbox" name="IsDisplay_strNoteVisible" _%strNoteVisible%_>
+				</span>
+				<span class="regist-label">
+					<span class="regist-label__text" id="RemarkSegs">備考</span>
+					<span class="VarText" id="RemarkVars"></span>
+				</span>
+			</div>
+			<div class="regist-line">
+				<span class="search-label--checkbox">
+					<input class="is-search" type="checkbox" name="IsSearch_updateConditions" disabled>
+					<input class="is-display" type="checkbox" name="IsDisplay_updateVisible" _%updateVisible%_>
+				</span>
+				<span class="regist-label">
+					<span class="regist-label__text" id="FixSegs">修正</span>
+					<span class="VarText" id="FixVars"></span>
+				</span>
+			</div>
+		</form>
+	</div>
+</div>

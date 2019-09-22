@@ -44,7 +44,7 @@
 	// 601 Çä¾å´ÉÍý¡Ê Çä¾åÅÐÏ¿¡Ë
 	if ( fncCheckAuthority( DEF_FUNCTION_SC1, $objAuth ) )
 	{
-		$aryData["strRegistURL"]   = "regist/index.php?strSessionID=" . $aryData["strSessionID"];
+		$aryData["strRegistURL"]   = "regist2/index.php?strSessionID=" . $aryData["strSessionID"];
 	}
 	
 	// 602 Çä¾å´ÉÍý¡Ê Çä¾å¸¡º÷¡Ë

@@ -13,7 +13,7 @@ $(function() {
 		args[0][2] = 'YES'; // IFrameスクロールの許可・不許可
 		args[0][3] = 1; // $lngLanguageCode
 		args[0][4] = 'add'; // 'fix' , 'add' , 'delete'
-		var win = window.open('/result/remove_master.html' , args , 'height=510,width=600,centerscreen=yes,resizable=no,scrollbars=yes,chrome=yes');
+		var win = window.open('/result/remove_master.html' , args , 'height=520,width=600,centerscreen=yes,resizable=no,scrollbars=yes,chrome=yes');
 
 		$(win).on('load', function(){
 			$(win).on('unload', function () {
@@ -41,7 +41,7 @@ $(function() {
 		args[0][2] = 'YES'; // IFrameスクロールの許可・不許可
 		args[0][3] = 1; // $lngLanguageCode
 		args[0][4] = name; // 'fix' , 'add' , 'delete'
-		var win = window.open('/result/remove_master.html' , args , 'height=510,width=600,centerscreen=yes,resizable=no,scrollbars=yes,chrome=yes');
+		var win = window.open('/result/remove_master.html' , args , 'height=520,width=600,centerscreen=yes,resizable=no,scrollbars=yes,chrome=yes');
 		$(win).on('load', function(){
 			$(win).on('unload', function () {
 				$("#objForm").submit();

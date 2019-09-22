@@ -65,7 +65,7 @@ $strCopyQuery = "SELECT strReportKeyCode, lngReportCode FROM t_Report WHERE lngR
 
 // 納品書取得クエリ生成
 $aryQuery[] = "SELECT";
-$aryQuery[] = "  s.strslipcode";
+$aryQuery[] = "  distinct s.strslipcode";
 $aryQuery[] = "  , u1.strUserDisplayCode AS strinsertuserdisplaycode";
 $aryQuery[] = "  , u1.strUserDisplayName AS strinsertuserdisplayname";
 $aryQuery[] = "  , s.strcustomercode";
@@ -77,6 +77,19 @@ $aryQuery[] = "  , u2.strUserDisplayName AS strUserDisplayName";
 $aryQuery[] = "  , s.lngslipno AS strReportKeyCode ";
 $aryQuery[] = "FROM";
 $aryQuery[] = "  m_slip s ";
+$aryQuery[] = "  inner join ( ";
+$aryQuery[] = "    SELECT";
+$aryQuery[] = "      MAX(lngRevisionNo) lngRevisionNo";
+$aryQuery[] = "      , strslipcode ";
+$aryQuery[] = "    FROM";
+$aryQuery[] = "      m_slip ";
+$aryQuery[] = "    where";
+$aryQuery[] = "      bytInvalidFlag = false ";
+$aryQuery[] = "    group by";
+$aryQuery[] = "      strslipcode";
+$aryQuery[] = "  ) s1 ";
+$aryQuery[] = "    on s.strslipcode = s1.strslipcode ";
+$aryQuery[] = "    AND s.lngrevisionno = s1.lngRevisionNo ";
 $aryQuery[] = "  left join t_slipdetail sd ";
 $aryQuery[] = "    on s.lngslipno = sd.lngslipno ";
 $aryQuery[] = "  left join m_Company c ";
@@ -101,23 +114,23 @@ $aryQuery[] = "      and gr.bytdefaultflag = true";
 $aryQuery[] = "  ) u2 ";
 $aryQuery[] = "    on s.strusercode = trim(to_char(u2.lngUserCode, '9999999')) ";
 $aryQuery[] = "WHERE";
-$aryQuery[] = "  s.lngRevisionNo = ( ";
-$aryQuery[] = "    SELECT";
-$aryQuery[] = "      MAX(s1.lngRevisionNo) ";
-$aryQuery[] = "    FROM";
-$aryQuery[] = "      m_slip s1 ";
-$aryQuery[] = "    WHERE";
-$aryQuery[] = "      s1.strslipcode = s.strslipcode ";
-$aryQuery[] = "      AND s1.bytInvalidFlag = false";
-$aryQuery[] = "  ) ";
-$aryQuery[] = "  AND 0 <= ( ";
-$aryQuery[] = "    SELECT";
-$aryQuery[] = "      MIN(s2.lngRevisionNo) ";
-$aryQuery[] = "    FROM";
-$aryQuery[] = "      m_slip s2 ";
-$aryQuery[] = "    WHERE";
-$aryQuery[] = "      s2.bytInvalidFlag = false ";
-$aryQuery[] = "      AND s2.strslipcode = s.strslipcode";
+$aryQuery[] = "  s.strslipcode not in ( ";
+$aryQuery[] = "    select";
+$aryQuery[] = "      s1.strslipcode ";
+$aryQuery[] = "    from";
+$aryQuery[] = "      ( ";
+$aryQuery[] = "        SELECT";
+$aryQuery[] = "          min(lngRevisionNo) lngRevisionNo";
+$aryQuery[] = "          , strslipcode ";
+$aryQuery[] = "        FROM";
+$aryQuery[] = "          m_slip ";
+$aryQuery[] = "        where";
+$aryQuery[] = "          bytInvalidFlag = false ";
+$aryQuery[] = "        group by";
+$aryQuery[] = "          strslipcode";
+$aryQuery[] = "      ) as s1 ";
+$aryQuery[] = "    where";
+$aryQuery[] = "      s1.lngRevisionNo < 0";
 $aryQuery[] = "  ) ";
 /////////////////////////////////////////////////////////////////
 // 検索条件
@@ -234,7 +247,8 @@ if ($lngResultNum > 0) {
 
 // 帳票データ取得クエリ実行・テーブル生成
 $strQuery = implode("\n", $aryQuery);
-
+echo $strQuery;
+return;
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 for ($i = 0; $i < $lngResultNum; $i++) {
     $objResult = $objDB->fetchObject($lngResultID, $i);

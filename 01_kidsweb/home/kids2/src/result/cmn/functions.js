@@ -322,6 +322,4 @@ function fncObjectResize( objId , lngWidth , lngHeight )
 
 	return false;
 }
-
-
 //-->

@@ -1,0 +1,167 @@
+<config>
+<header1>
+    <link rel="stylesheet" href="/search/cmn/form/css/forms.css">
+    <link rel="stylesheet" href="/search/cmn/form/css/tabs.css">
+    <link rel="stylesheet" href="/search/cmn/navigate/css/navigate.css">
+    <link rel="stylesheet" href="/inv/cmn/form/css/forms.css">
+    <script src="/search/cmn/form/js/tab-function.js" defer></script>
+    <script src="/search/cmn/form/js/util-selectbox.js" defer></script>
+    <!-- チェックボックスの切り替え処理 -->
+    <script src="/search/cmn/search/js/toggleCheckbox.js" defer></script>
+    <!-- 検索画面共通入力補助 -->
+    <script src="/search/cmn/search/js/input-assist.js" defer></script>
+    <!-- msw 表示 -->
+    <script src="/search/cmn/msw/cmn/js/msw.js" defer></script>
+    <!-- COOKIE関連の処理(検索画面) -->
+    <script src="/search/cmn/search/js/cookie-functions.js" defer></script>
+    <!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.0/js/jquery.tablesorter.min.js"></script> -->
+</header1>
+
+<header2>
+</header2>
+
+<header3>
+    <!-- datepickerの要素指定 -->
+    <script src="/search/cmn/js/datepicker.js" defer></script>
+    <!-- msw汎用スタイル -->
+    <link rel="stylesheet" href="/search/cmn/css/msw.css">
+    <!-- フォームバリデーション -->
+    <script src="/inv/cmn/js/validate-condition-form.js" defer></script>
+    <!-- マスタ検索呼び出し -->
+    <script src="/search/cmn/js/invoke-master-search.js" defer></script>
+    <script src="/mold/lib/js/queryMasterData.js" defer></script>
+    <!-- COOKIE 表示チェックボックス 保存/復元 -->
+    <script src="/search/cmn/js/cookie-display-items.js" defer></script>
+    <!-- キーバインド -->
+    <script src="/search/cmn/js/key-bind.js" defer></script>
+    <!-- 請求日設定 -->
+    <script src="/mold/cmn/msw/regist/js/msw-regist.js" defer></script>
+    <script>
+    $(function(){
+    	// 親ウィンドウの情報取得
+        if (window.opener && !window.opener.closed)
+        {
+        	// 顧客コード  lngCustomerCode
+            var parentCustomerCode = window.opener.document.getElementsByClassName('input-code')[0].value;
+            $('input[name="lngCustomerCode"]').val(parentCustomerCode);
+            // 顧客名
+            var parentCustomerName = window.opener.document.getElementsByClassName('input-name')[0].value;
+            $('input[name="strCustomerName"]').val(parentCustomerName);
+            // From(システム日付の月初) To(システム日付の月末)
+            var toDay = new Date();
+            var start = toDay.getFullYear() + '/' + (toDay.getMonth()+1) + '/01';
+            var lastDay = new Date(toDay.getFullYear(), toDay.getMonth() + 1, 0);
+            var end = toDay.getFullYear() + '/' + (toDay.getMonth()+1) + '/' + lastDay.getDate();
+            $('input[name="From_dtmDeliveryDate"]').val(start);
+            $('input[name="To_dtmDeliveryDate"]').val(end);
+
+        }
+
+    });
+    </script>
+</header3>
+
+<bodyonload>
+</bodyonload>
+</config>
+
+
+<!-- 検索フォーム -->
+<div class="form-box--notabs-for-condition">
+    <!-- フォームヘッダ -->
+    <div class="form-box__header">
+        <p class="form-box__header__title">納品書明細検索条件入力</p>
+    </div>
+    <!-- フォームコンテンツ -->
+    <div class="form-box__contents--with-scroll">
+        <form name="Invoice" method="post"  onsubmit="return false;">
+            <input type="submit">
+
+            <div class="regist-line">
+                <span class="regist-label">
+                    <span class="regist-label__text">顧客</span>
+                    <input class="TxtStyle05L"  name="lngCustomerCode"  type="text">
+                    <input class="disTxt46L"    name="strCustomerName"  type="text" readonly>
+                    <img class="msw-button button" invokeMSWName="msw-customer" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="regist-label">
+                    <span class="regist-label__text">納品書NO.</span>
+                    <input class="disTxt5xL" name="strSlipCode" type="text" maxlength="50" onfocus="chColorOn(this);" onblur="chColorOff(this);">
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="regist-label">
+                    <span class="regist-label__text">納品日</span>
+                    FROM <input class="TxtStyle05L"   name="From_dtmDeliveryDate"  type="text"  onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="" maxlength="10">
+                    TO <input   class="TxtStyle05L"   name="To_dtmDeliveryDate"    type="text"  onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="" maxlength="10">
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="regist-label">
+                    <span class="regist-label__text">納品場所</span>
+                    <input class="TxtStyle05L" name="lngDeliveryPlaceCode"  type="text">
+                    <input class="disTxt46L"   name="strDeliveryPlaceName"  type="text" readonly>
+                    <img class="msw-button button" invokeMSWName="msw-customer" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="regist-label">
+                    <span class="regist-label__text">通貨</span>
+                    <select name="lngMoneyClassCode" class="Slt13">
+                        _%monetaryunitList%_
+                    </select>
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="regist-label">
+                    <span class="regist-label__text">課税区分</span>
+                    <select name="lngTaxClassCode" class="Slt13">
+                        _%taxclassList%_
+                    </select>
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="regist-label">
+                    <span class="regist-label__text">担当者</span>
+                    <input class="TxtStyle05L" name="lngInChargeUserCode"  type="text">
+                    <input class="disTxt46L"   name="strInChargeUserName"  type="text" readonly>
+                    <img class="msw-button button" invokeMSWName="msw-user" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="regist-label">
+                    <span class="regist-label__text">作成者</span>
+                    <input class="TxtStyle05L" name="lngInputUserCode" type="text">
+                    <input class="disTxt46L"   name="lngInputUserName" type="text" readonly>
+                    <img class="msw-button button" invokeMSWName="msw-user" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                </span>
+            </div>
+
+
+            <input type="hidden" name="ActionScriptName" value="/inv/resist/condition.php">
+            <input type="hidden" name="strSessionID" value="_%strSessionID%_">
+
+            <div class="form-box__button">
+                <span>
+                    <img class="button search-condition margin-30pxL" src="/img/type01/so/search_brown_off_ja_bt.gif">
+                    <img class="clear button" src="/img/type01/cmn/querybt/close_blown_off_on_ja_bt.gif" onclick="window.close();">
+                </span>
+            </div>
+        </form>
+    </div>
+    <div class="msw-loadpoints">
+        <!-- MSW 顧客マスタ検索 -->
+        <iframe class="msw-customer" src="/search/cmn/msw/customer/mswcustomer.html" frameborder="0">
+        </iframe>
+        <!-- MSW 担当部署マスタ検索 -->
+        <iframe class="msw-group" src="/search/cmn/msw/group/mswgroup.html" frameborder="0">
+        </iframe>
+        <!-- MSW 担当者マスタ検索 -->
+        <iframe class="msw-user" src="/search/cmn/msw/user/mswuser.html" frameborder="0">
+        </iframe>
+    </div>
+
+
+</div>

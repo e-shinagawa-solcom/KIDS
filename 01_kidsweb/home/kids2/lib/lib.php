@@ -358,7 +358,7 @@ function fncCheckString( $str, $strCheckMode )
 			// 複数制定を許可している場合、IPアドレスを分解する
 			if ( $lngRange[3] != "''" )
 			{
-				$lngRange[3] = preg_replace ( "'", "", $lngRange[3] );
+				$lngRange[3] = str_replace ( "'", "", $lngRange[3] );
 				$aryStr = explode ( $lngRange[3], $str );
 			}
 			else
@@ -1460,9 +1460,9 @@ function getArrayTable( $aryData, $strExpressMode )
 	$keys = array_keys ( $aryData );
 	foreach ( $keys as $key )
 	{
-		$strTable = "<tr><th>$key</th><td>$aryData[$key]</td></tr>\n";
+		$strTable .= "<tr><th>$key</th><td>$aryData[$key]</td></tr>\n";
 
-		$strHidden = "<input type=\"hidden\" name=\"$key\" value=\"$aryData[$key]\">\n";
+		$strHidden .= "<input type=\"hidden\" name=\"$key\" value=\"$aryData[$key]\">\n";
 	}
 
 	$strTable .= "</table>\n";

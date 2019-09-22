@@ -1,0 +1,31 @@
+/* 入力フォーム共通背景枠 右サイドバータブ無し 検索条件入力 */
+.form-box--notabs-for-condition
+{
+    position: absolute;
+    top: 10px;
+    left: 21px;
+
+    width: 650px;
+    height: 400px;
+
+    border-style: solid;
+    border-width: 1px;
+    border-color: #cdcdcd;
+    border-radius: 15px;
+
+    background-color: #d6d0b1;
+}
+
+/* OKボタン */
+#OkBt{
+	position: absolute;
+	top: 405px;
+	left: 230px;
+}
+
+/* キャンセルボタン */
+#CancelBt{
+	position: absolute;
+	top: 405px;
+	left: 350px;
+}

@@ -255,7 +255,6 @@
 		// デバック
 		subLoadMasterDebug(location.protocol + '//' + location.hostname + strURL);
 		// --------------------------------------------
-alert(strURL);
 		
 		// データソースを取得
 		objDataSource.charset = document.charset;

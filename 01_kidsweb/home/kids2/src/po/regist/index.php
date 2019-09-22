@@ -38,7 +38,9 @@
 	if( strcmp( $_GET["strSessionID"],"" ) != 0 )
 	{
 		$aryData["strSessionID"] = $_GET["strSessionID"];
-		$aryData["lngOrderNo"]   = $_GET["lngOrderNo"];
+		//$aryData["lngOrderNo"]   = $_GET["lngOrderNo"];
+		// TESTCODE
+		$aryData["lngOrderNo"]   = 1;
 	}
 	else
 	{

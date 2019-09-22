@@ -1,0 +1,484 @@
+<config>
+<!-- --------------------------------------------------------------------------
+《改定履歴》
+2004/03/05 K.Saito
+	objDataSourceSettingCheckAlert 機能の追加
+
+2004/03/30 K.Saito
+	objDataSourceSettingCheckAlert1 機能の追加
+
+2004/04/19 K.Suzukaze
+	strPageCondition 登録画面か修正画面かを示す　Hidden値 の追加
+
+2004/04/20 K.Saito
+	SegB04_1、SegB05_1 のクリック時の動作を変更
+
+2004/../.. xxxxxxx
+	xxxxx
+--------------------------------------------------------------------------- -->
+<header1>
+<script src="/cmn/jquery/jquery-3.1.0.js"></script>
+<script src="/cmn/jquery/ui/jquery-ui.min-1.12.0.js"></script>
+<script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/images.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutbase.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutcommon.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayouterror.js"></script>
+<script src="/search/cmn/msw/cmn/js/msw.js" defer></script>
+</header1>
+
+<header2>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/sc/cmn/images.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/sc/regist2/initlayout.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutquery.js"></script>
+<!--<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutmsw.js"></script>-->
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutpunit.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutdate.js"></script>
+</header2>
+
+
+<header3>
+<script type="text/javascript" language="javascript" src="/sc/cmn/subloadmastersettings.js"></script>
+<script type="text/javascript" language="javascript" src="/sc/regist2/functions.js"></script>
+<script type="text/javascript" language="javascript" src="/sc/regist2/exstr.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="_%strCssName%_">
+<link rel="stylesheet" type="text/css" media="screen" href="_%strErrorCssName%_">
+<link rel="stylesheet" type="text/css" media="screen" href="/search/cmn/css/msw.css">
+<script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
+<script type="text/javascript" language="javascript" src="/sc/regist2/regist.js"></script>
+<script src="/search/cmn/js/invoke-master-search.js" defer></script>
+</header3>
+
+<bodyonload>
+initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutPunit(); initLayoutDate(); autoFocus1(); initLayoutError1( ErrInputA ); initLayoutError2( ErrInputB ); fncRegistrationConfirm( window.HSO , window.DSO , '/result/common.html' , '/result/regist_ifrm.html' , 'ResultIframeRenew' , 'NO' , _%lngLanguageCode%_ , document.all.lngRegistConfirm.value ); GetlngLanguageCode( _%lngLanguageCode%_ ); fncDetailErrorOpen( '_%strErrorMessage%_' ); Loading();
+</bodyonload>
+
+</config>
+
+<p id="Preload">
+	<iframe id="PreloadFrm" name="PreloadWin" frameborder="0" src="/preload/index.html" onload="fncObjectResize( this , 0 , 0 );"></iframe>
+</p>
+
+<span id="objCheckWorkFlowRoot"></span>
+
+
+
+<!-- 確認画面表示フラグ -->
+<input type="hidden" name="lngRegistConfirm" value="_%lngRegistConfirm%_">
+
+
+<bgsound id="BeepSound" src="/error/dummy.aif" loop="1" balance="0" volume="-100">
+<form name="HSO" action="_%strActionUrl%_" method="post">
+
+<input type="hidden" name="ActionScriptName" value="_%strurl%_">
+
+
+<input type="hidden" name="strSessionID" value="_%strSessionID%_">
+<input type="hidden" name="strMode" value="_%strMode%_">
+<input type="hidden" name="strProcMode" value="_%strProcMode%_">
+<input type="hidden" name="lngOrderNo" value="_%lngOrderNo%_">
+<input type="hidden" name="lngRevisionNo" value="_%lngRevisionNo%_">
+
+<input type="hidden" name="strPageCondition" value="_%strPageCondition%_">
+
+<!--発注管理であることを表すフラグ-->
+<input type="hidden" name="POFlg" value="true">
+
+<!-- /////////////////////////////////// START MAIN TITLE /////////////////////////////////// -->
+<span id="MainTitle" style="visibility:_%strBaseVisibilityName%_;"></span>
+<!-- //////////////////////////////////// END MAIN TITLE //////////////////////////////////// -->
+
+
+<!-- 通貨＆仕入科目 チェック警告 -->
+<input type="hidden" name="check_alert" value="">
+<input type="hidden" name="check_alert1" value="">
+
+<!-- 計上日・締め済み チェック警告 -->
+<input type="hidden" name="check_alert_appdate" value="">
+
+<!-- /////////////////////////////////// START NAVIGATION /////////////////////////////////// -->
+<span id="NaviButton" style="left:10px;top:96px;visibility:_%strBaseVisibilityName%_;"></span>
+
+<p id="Navigations" style="left: 27px;top: 96px;" onmouseout="NavigationOFF( Navigations , NaviButton );">
+<span id="Navi">
+	<iframe id="NaviIfrm" name="NAVIwin" frameborder="0" scrolling="no" src="/navi/index.php?strSessionID=_%strSessionID%_&strNaviCode=po-31111"></iframe>
+</span>
+</p>
+<!-- //////////////////////////////////// END NAVIGATION //////////////////////////////////// -->
+
+<!-- /////////////////////////////////// START INPUT A SEGMENTS /////////////////////////////////// -->
+<p id="InputA">
+
+<!-- START BODYS -->
+<span id="SegABodys"></span>
+<!-- END BODYS -->
+
+<!-- START HEADER -->
+<span id="SegAHeader"></span>
+<!-- END HEADER -->
+
+<!-- START BOTTOM -->
+<span id="SegABottom"></span>
+<!-- END BOTTOM -->
+
+<!-- 検索条件入力ボタン -->
+<span id="SearchBt">
+	<a href="#">
+		<img  src="/img/type01/cmn/querybt/blown_process_off_ja_bt(1).gif" alt="" style="width: 78px; height: 20px;">
+	</a> 
+</span>
+
+<!-- 追加ボタン -->
+<span id="AddBt">
+	<a href="#">
+		<img src="/img/type01/cmn/querybt/add_blown_off_ja_bt(2).gif" alt="" style="width: 78px; height: 20px;">
+	</a>
+</span>
+
+<!-- 削除ボタン -->
+<span id="DeleteBt">
+	<a href="#">
+		<img src="/img/type01/cmn/querybt/delete_blown_off_ja_bt.gif" alt="" style="width: 78px; height: 20px;">
+	</a>
+</span>
+
+<!-- 全削除ボタン -->
+<span id="AllDeleteBt">
+	<a href="#">
+		<img  src="/img/type01/cmn/querybt/all_delete_blown_off_ja_bt.gif" alt="" style="width: 78px; height: 20px;">
+	</a>
+</span>
+
+<!-- 明細行替えボタン -->
+<!-- 最上行へ移動 -->
+<span id="selectup">
+	<img onclick="" src="/img/type01/cmn/querybt/select_changeup.gif"  alt="" style="width: 25px; height: 25px;">
+</span>
+<!-- 上の行へ移動 -->
+<span id="selectup1">
+	<img onclick="" src="/img/type01/cmn/querybt/select_changeup1.gif" alt="" style="width: 41px; height: 25px;">
+</span>
+<!-- 下の行へ移動 -->
+<span id="selectdown1">
+	<img onclick="" src="/img/type01/cmn/querybt/select_changedown1.gif" alt="" style="width: 41px; height: 25px;">
+</span>
+<!-- 最下行へ移動 -->
+<span id="selectdown">
+	<img onclick="" src="/img/type01/cmn/querybt/select_changedown.gif" alt="" style="width: 25px; height: 25px;">
+</span>
+
+<!-- プレビューボタン -->
+<span id="PreviewBt">
+	<img src="/img/type01/cmn/querybt/preview_off_ja_bt.gif" alt="">
+</span>
+	
+
+<!-- START SEGMENTS -->
+<!-- ヘッダ -->
+
+<span id="SegADrafter">起票者</span>
+<span id="VarsADrafter">
+	<input style="ime-mode:disabled;" class="TxtStyle03L" type="text" name="lngInsertUserCode" value="_%lngInsertUserCode%_">
+	<input style="ime-mode:disabled;" class="disTxt23L" type="text" name="strInsertUserName" value="_%strInsertUserName%_" contenteditable="false">
+</span>
+<span id="MSWBtDrafter" class="regist-line">
+	<img class="msw-button button" invokeMSWName="msw-user" inputCodeMSWName="lngInsertUserCode" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+</span>
+
+<span id="SegACustomer">顧客</span>
+<span id="VarsACustomer">
+	<input style="ime-mode:disabled;" class="TxtStyle03L" type="text" name="lngCustomerCode" value="_%llngCustomerCode%_" readonly>
+	<input style="ime-mode:disabled;" class="disTxt32L" type="text" name="strCustomerName" value="_%strCustomerName%_" contenteditable="false" readonly>
+</span>
+
+<span id="SegACustomerResponder">顧客側担当者</span>
+<span id="VarsACustomerResponder">
+	<input style="ime-mode:disabled;" class="disTxt19L" type="text" name="strCustomerResponder" value="_%strCustomerResponder%_" >様
+</span>
+
+<span id="SegADeliveryDate">納品日</span>
+<span id="VarsADeliveryDate">
+	<input style="ime-mode:disabled;" class="TxtStyle05L" type="text" name="dtmDeliveryDate" value="_%dtmDeliveryDate%_" maxlength="10" 
+		onfocus="chColorOn(this);" 
+		onblur="chColorOff(this);fncCheckDate( this );" 
+		tabindex="1">
+</span>
+<span id="DateBtB" onclick="window.MDateBwin.fncCalendar( window.HSO.dtmDeliveryDate, 'DateB' );DisplayerM10_2( '' , document.all.Mdata10_2 );ExchangeM10_2( 0 , window.self );return false;"></span>
+
+<span id="SegADeliveryPlaceName">納品先</span>
+<span id="VarsADeliveryPlaceName">
+	<input style="ime-mode:disabled;" class="TxtStyle03L" type="text" name="lngDeliveryPlaceCode" value="_%lngDeliveryPlaceCode%_">
+	<input style="ime-mode:disabled;" class="disTxt32L" type="text" name="strDeliveryPlaceName" value="_%strDeliveryPlaceName%_" contenteditable="false">
+</span>
+<span id="MSWBtDeliveryPlaceName" class="regist-line">
+	<img class="msw-button button" invokeMSWName="msw-customer" inputCodeMSWName="lngDeliveryPlaceCode" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+</span>
+
+<span id="SegADeliveryDestResponder">納品先担当者</span>
+<span id="VarsADeliveryDestResponder">
+	<input style="ime-mode:disabled;" class="disTxt19L" type="text" name="strDeliveryDestResponder" value="_%strDeliveryDestResponder%_" >様
+</span>
+
+<span id="SegANote">備考</span>
+<span id="VarsANote">
+	<textarea name="strNote"></textarea>
+</span>
+
+<span id="SegATaxClass">消費税区分</span>
+<span id="VarsATaxClass">
+	<select name="lngTaxClassCode" class="Slt13">
+		_%optTaxClass%_
+	</select>
+</span>
+
+<span id="SegATaxRate">消費税率</span>
+<span id="VarsATaxRate">
+	<select name="lngTaxRate" class="Slt6">
+		_%optTaxRate%_
+	</select>
+	&percnt;
+</span>
+
+<span id="SegATaxAmount">消費税額</span>
+<span id="VarsATaxAmount">
+	<input style="ime-mode:disabled;" class="disTxt20R" type="text" name="strTaxAmount" value="_%strTaxAmount%_" readonly>
+</span>
+
+<span id="SegAPaymentDueDate">支払期限</span>
+<span id="VarsAPaymentDueDate">
+	<input style="ime-mode:disabled;" class="TxtStyle05L" type="text" name="dtmPaymentDueDate" value="_%dtmPaymentDueDate%_" maxlength="10" 
+		onfocus="chColorOn(this);" 
+		onblur="chColorOff(this);fncCheckDate( this );" 
+		tabindex="1">
+</span>
+<span id="DateBtC" onclick="window.MDateCwin.fncCalendar( window.HSO.dtmPaymentDueDate, 'DateC' );DisplayerM10_3( '' , document.all.Mdata10_3 );ExchangeM10_3( 0 , window.self );return false;"></span>
+
+<span id="SegAPaymentMethod">支払方法</span>
+<span id="VarsAPaymentMethod">
+	<select name="lngPaymentMethodCode" class="Slt6">
+		<OPTION value=0>T/T</OPTION>
+		<OPTION value=1>相殺</OPTION>
+	</select>
+</span>
+
+<span id="SegATotalAmount">合計金額</span>
+<span id="VarsATotalAmount">
+	<input style="ime-mode:disabled;" class="disTxt20R" type="text" name="strTotalAmount" value="_%strTotalAmount%_" readonly>
+</span>
+
+
+<!-- 明細選択エリア -->
+<span id="SegDetailIN">
+  <table id="DetailTable" cellpadding="0" cellspacing="1" border="0">
+    <thead id="DetailTableHead">
+	  <tr class="TrSegs">
+	  	<th style="width:20px;"><input type="checkbox" id="DetailTableBodyAllCheck"></th>
+	  	<th>No.</th>
+	  	<th>顧客発注番号</th>
+	  	<th>受注番号</th>
+	  	<th>顧客品番</th>
+	  	<th>製品コード</th>
+		<th>製品名</th>
+	  	<th>製品名（英語）</th>
+	  	<th>営業部署</th>
+	  	<th>売上区分</th>
+	  	<th>納期</th>
+	  	<th>入数</th>
+	  	<th>単価</th>
+	  	<th>単位</th>
+	  	<th>数量</th>
+		<th>税抜金額</th>
+		<th class="forEdit">受注番号（非表示）</th>
+		<th class="forEdit">受注明細番号（非表示）</th>
+		<th class="forEdit">リビジョン番号（非表示）</th>
+		<th class="forEdit">再販コード（非表示）</th>
+		<th class="forEdit">売上区分コード（非表示）</th>
+		<th class="forEdit">製品単位コード（非表示）</th>
+		<th class="forEdit">備考（非表示）</th>
+		<th class="forEdit">通貨単位コード（非表示）</th>
+		<th class="forEdit">通貨レートコード（非表示）</th>
+		<th class="forEdit">通貨単位記号（非表示）</th>
+	  </tr>
+	</thead>
+	<tbody id="DetailTableBody">_%strOrderDetail%_</tbody>
+  </table>
+</span>
+
+<!-- 出力明細一覧エリア -->
+<span id="SegEditIN">
+  <table id="EditTable" cellpadding="0" cellspacing="1" border="0">
+	<thead id="EditTableHead">
+	  <tr class="TrSegs">
+		<th>No.</th>
+		<th>顧客受注番号</th>
+		<th>受注番号</th>
+		<th>顧客品番</th>
+		<th>製品コード</th>
+		<th>製品名</th>
+		<th>製品名（英語）</th>
+		<th>営業部署</th>
+		<th>売上区分</th>
+		<th>納期</th>
+		<th>入数</th>
+		<th>単価</th>
+		<th>単位</th>
+		<th>数量</th>
+		<th>税抜金額</th>
+		<th class="forEdit">受注番号（非表示）</th>
+		<th class="forEdit">受注明細番号（非表示）</th>
+		<th class="forEdit">リビジョン番号（非表示）</th>
+		<th class="forEdit">再販コード（非表示）</th>
+		<th class="forEdit">売上区分コード（非表示）</th>
+		<th class="forEdit">製品単位コード（非表示）</th>
+		<th class="forEdit">備考（非表示）</th>
+		<th class="forEdit">通貨単位コード（非表示）</th>
+		<th class="forEdit">通貨レートコード（非表示）</th>
+		<th class="forEdit">通貨単位記号（非表示）</th>
+	  </tr>
+	</thead>
+    <tbody id="EditTableBody"></tbody>
+  </table>
+</span>
+
+<span id="SegHidden">
+</span>
+
+<!-- 明細枠の情報 -->
+<span id="DtHiddenRecord"></span>
+
+</p>
+<!-- //////////////////////////////////// END INPUT A SEGMENTS //////////////////////////////////// -->
+</form>
+
+<form name="DSO" action="" method="post">
+_%strDetailHidden%_
+<input type="hidden" name="lngCalcCode" value="_%lngCalcCode%_">
+
+<!-- //////////////////////////////////// START INPUT B SEGMENTS //////////////////////////////////// -->
+<p id="InputB">
+</p>
+<!-- ///////////////////////////////////// END INPUT B SEGMENTS ///////////////////////////////////// -->
+
+<!-- ////////// START GOODS PLAN WINDOW ////////// -->
+<p id="TaxStatus">
+<span id="TaxBodys"></span>
+<span id="TaxHeader"></span>
+<span id="TaxBottom"></span>
+<span id="Tax">税額</span>
+<span id="TotalStdAmt">合計金額</span>
+
+<!--  -->
+<span id="TaxVars">
+	<input class="disTxt17R" type="text" name="curSubTaxPrice" value="" readonly>
+</span>
+
+<!--  -->
+<span id="TotalStdAmtVars">
+	<input class="disTxt17R" type="text" name="curTotalStdAmt" value="" readonly>
+</span>
+</p>
+<!-- ////////// END GOODS PLAN WINDOW ////////// -->
+
+
+<!-- //////////////////////////////////// START INPUT C SEGMENTS //////////////////////////////////// -->
+<p id="InputC">
+
+<!-- START BODYS -->
+<span id="SegCBodys"></span>
+<!-- END BODYS -->
+
+<!-- START HEADER -->
+<span id="SegCHeader"></span>
+<!-- END HEADER -->
+
+<!-- START BOTTOM -->
+<span id="SegCBottom"></span>
+<!-- END BOTTOM -->
+
+</p>
+<!-- ///////////////////////////////////// END INPUT C SEGMENTS ///////////////////////////////////// -->
+
+<!-- //////////////////////////////////// START MSW //////////////////////////////////// -->
+<div class="msw-loadpoints">
+		<!-- MSW 顧客マスタ検索 -->
+		<iframe class="msw-customer" src="/search/cmn/msw/customer/mswcustomer.html" frameborder="0">
+		</iframe>
+		<!-- MSW 担当部署マスタ検索 -->
+		<iframe class="msw-group" src="/search/cmn/msw/group/mswgroup.html" frameborder="0">
+		</iframe>
+		<!-- MSW 担当者マスタ検索 -->
+		<iframe class="msw-user" src="/search/cmn/msw/user/mswuser.html" frameborder="0">
+		</iframe>
+</div>
+
+<!-- START [DATE] -->
+<!--
+<p id="MiFrame10" onclick="Zchange(this);">
+<iframe id="Mdata10" name="MDatewin" frameborder="0" scrolling="no" src="/msw/date/index.html"></iframe>
+<span id="DummyDrag10" onmousedown="pickup10('MiFrame10',event);return false;" 
+	onmouseup="fncMswPositionCheck(document.all.Mdata10, document.all.MiFrame10 );" 
+	ondblclick="fncTitlebar( document.all.Mdata10 , document.all.MiFrame10 );"></span>
+<span id="DummyClose10" onclick="DisplayerM10( '' , document.all.Mdata10 );ExchangeM10( 0 , window.Pwin );return false;"></span>
+</p>
+-->
+
+<!-- START [DATEB] -->
+<p id="MiFrame10_2" onclick="Zchange(this);">
+<iframe id="Mdata10_2" name="MDateBwin" frameborder="0" scrolling="no" src="/msw/date/indexb.html"></iframe>
+<span id="DummyDrag10_2" onmousedown="pickup10_2('MiFrame10_2',event);return false;" 
+	onmouseup="fncMswPositionCheck(document.all.Mdata10_2,document.all.MiFrame10_2);" 
+	ondblclick="fncTitlebar( document.all.Mdata10_2 , document.all.MiFrame10_2 );"></span>
+<span id="DummyClose10_2" onclick="DisplayerM10_2( '' , document.all.Mdata10_2 );ExchangeM10_2( 0 , window.Pwin );return false;"></span>
+</p>
+
+<!-- START [DATEC] -->
+<p id="MiFrame10_3" onclick="Zchange(this);">
+<iframe id="Mdata10_3" name="MDateCwin" frameborder="0" scrolling="no" src="/msw/date/indexc.html"></iframe>
+<span id="DummyDrag10_3" onmousedown="pickup10_3('MiFrame10_3',event);return false;" 
+	onmouseup="fncMswPositionCheck(document.all.Mdata10_3,document.all.MiFrame10_3);" 
+	ondblclick="fncTitlebar( document.all.Mdata10_3 , document.all.MiFrame10_3 );"></span>
+<span id="DummyClose10_3" onclick="DisplayerM10_3( '' , document.all.Mdata10_3 );ExchangeM10_3( 0 , window.Pwin );return false;"></span>
+</p>
+<!-- ///////////////////////////////////// END MSW ///////////////////////////////////// -->
+
+<!-- ERROR MESSAGE -->
+<span id="ErrorMessageFrame">
+	<iframe id="ErrorMessage" name="errorWin" frameborder="0" scrolling="no" src="/error/error.html"></iframe>
+</span>
+
+
+<p id="ErrInputA">
+<span id="ErrSegA01" style="_%dtmOrderAppDate_Error%_" onmouseover="ShowComment( Comments , '_%dtmOrderAppDate_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegA02" style="_%strOrderCode_Error%_" onmouseover="ShowComment( Comments , '_%strOrderCode_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegA03" style="_%lngCustomerCode_Error%_" onmouseover="ShowComment( Comments , '_%lngCustomerCode_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegA04" style="_%lngInChargeGroupCode_Error%_" onmouseover="ShowComment( Comments , '_%lngInChargeGroupCode_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegA05" style="_%lngInChargeUserCode_Error%_" onmouseover="ShowComment( Comments , '_%lngInChargeUserCode_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegA09" style="_%curConversionRate_Error%_" onmouseover="ShowComment( Comments , '_%curConversionRate_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+
+<span id="ErrSegA10" style="_%lngPayConditionCode_Error%_" onmouseover="ShowComment( Comments , '_%lngPayConditionCode_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+
+<span id="ErrSegA11" style="_%lngLocationCode_Error%_" onmouseover="ShowComment( Comments , '_%lngLocationCode_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegA12" style="_%dtmExpirationDate_Error%_" onmouseover="ShowComment( Comments , '_%dtmExpirationDate_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegA13" style="_%strNote_Error%_" onmouseover="ShowComment( Comments , '_%strNote_Error_Message%_' );" onmouseout="HideComment( Comments );"></span>
+</p>
+
+<p id="ErrInputB">
+<span id="ErrSegB02" style="_%strProductName_Error%_" onmouseover="ShowComment( Comments , '_%strErrComments%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegB04_2" style="_%strProductName_Error%_" onmouseover="ShowComment( Comments , '_%strErrComments%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegB04_4" style="_%strProductName_Error%_" onmouseover="ShowComment( Comments , '_%strErrComments%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegB04_5" style="_%strProductName_Error%_" onmouseover="ShowComment( Comments , '_%strErrComments%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegB05_2" style="_%strProductName_Error%_" onmouseover="ShowComment( Comments , '_%strErrComments%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegB05_4" style="_%strProductName_Error%_" onmouseover="ShowComment( Comments , '_%strErrComments%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegB05_5" style="_%strProductName_Error%_" onmouseover="ShowComment( Comments , '_%strErrComments%_' );" onmouseout="HideComment( Comments );"></span>
+<span id="ErrSegB07" style="_%strProductName_Error%_" onmouseover="ShowComment( Comments , '_%strErrComments%_' );" onmouseout="HideComment( Comments );"></span>
+</p>
+
+<span id="Comments"></span>
+</form>
+
+<!-- 入力者コード -->
+<input type="hidden" name="lngInputUserCode" value="_%lngSelfLoginUserCode%_">
+
+<!-- -->
+<span id="OverLayer"></span>
+<!-- -->

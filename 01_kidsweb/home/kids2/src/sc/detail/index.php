@@ -71,8 +71,6 @@ $aryNewResult = fncSetSalesHeadTabelData($aryResult);
 ////////// 明細行の取得 ////////////////////
 // 指定売上番号の売上明細データ取得用SQL文の作成
 $strQuery = fncGetSalesDetailNoToInfoSQL($lngSalesNo);
-// echo $strQuery;
-// return;
 // 明細データの取得
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 

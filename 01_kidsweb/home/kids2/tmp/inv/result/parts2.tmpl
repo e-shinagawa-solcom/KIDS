@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html lang="ja">
+<head>
+<title>K.I.D.S.</title>
+<meta http-equiv="content-type" content="text/html; charset=euc-jp">
+
+<script type="text/javascript" language="javascript" src="/layout/type01/cmn/images.js"></script>
+<script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
+
+<script type="text/javascript" language="javascript" src="/result/cmn/functions.js" charset="utf-8"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="/result/cmn/layout.css">
+
+</head>
+<body>
+
+<table cellpadding="5" cellspacing="0" border="0" bgcolor="#6f8180" align="center">
+	<tr class="SegColumn">
+		<td>_%Title%_</td>
+	</tr>
+</table>
+
+
+<br>
+
+
+<table cellpadding="5" cellspacing="0" border="0" bgcolor="#f1f1f1" align="center">
+	<tr>
+		<td>
+
+
+			<table width="100%" cellpadding="0" cellspacing="1" border="0" bgcolor="#6f8180" align="center">
+				<tr>
+					<td id="" class="SegColumn">_%CNlngInvoiceNo%_</td>
+					<td class="Segs">_%lngInvoiceNo%_</td>
+				</tr>
+				<tr>
+					<td id="RevisionNo" class="SegColumn" width="25%">_%CNlngRevisionNo%_</td>
+					<td class="Segs">_%lngRevisionNo%_</td>
+				</tr>
+				<tr>
+					<td id="InvoiceCode" class="SegColumn">_%CNstrInvoiceCode%_</td>
+					<td class="Segs">_%strInvoiceCode%_</td>
+				</tr>
+				<tr>
+					<td id="Customer" class="SegColumn">_%CNstrCustomer%_</td>
+					<td class="Segs">_%strCustomer%_</td>
+				</tr>
+				<tr>
+					<td id="InvoiceDate" class="SegColumn">_%CNdtmInvoiceDate%_</td>
+					<td class="Segs">_%dtmInvoiceDate%_</td>
+				</tr>
+				<tr>
+					<td id="Chargetern" class="SegColumn">_%CNdtmChargetern%_</td>
+					<td class="Segs">_%dtmChargeternStart%_~_%dtmChargeternEnd%_</td>
+				</tr>
+				<tr>
+					<td id="detailCount" class="SegColumn">_%CNdetailCount%_</td>
+					<td class="Segs">_%detailCount%_</td>
+				</tr>
+                <tr>
+                    <td id="LastMonthBalance" class="SegColumn">_%CNcurLastMonthBalance%_</td>
+                    <td class="Segs">\ _%curLastMonthBalance%_</td>
+                </tr>
+                <tr>
+                    <td id="ThisMonthAmount" class="SegColumn">_%CNcurThisMonthAmount%_</td>
+                    <td class="Segs">\ _%curThisMonthAmount%_</td>
+                </tr>
+				<tr>
+					<td id="TaxPrice1" class="SegColumn">_%CNcurTaxPrice1%_</td>
+					<td class="Segs">\ _%curTaxPrice1%_</td>
+				</tr>
+                <tr>
+                    <td id="InsertDate" class="SegColumn">_%CNdtmInsertDate%_</td>
+                    <td class="Segs">_%dtmInsertDate%_</td>
+                </tr>
+                <tr>
+                    <td id="strUser" class="SegColumn">_%CNstrUser%_</td>
+                    <td class="Segs">_%strUser%_</td>
+                </tr>
+                <tr>
+                    <td id="InsertUser" class="SegColumn">_%CNstrInsertUser%_</td>
+                    <td class="Segs">_%strInsertUser%_</td>
+                </tr>
+                <tr>
+                    <td id="Note" class="SegColumn">_%CNstrNote%_</td>
+                    <td class="Segs">_%strNote%_</td>
+                </tr>
+                <tr>
+                    <td id="PrintCount" class="SegColumn">_%CNlngPrintCount%_</td>
+                    <td class="Segs">_%lngPrintCount%_</td>
+                </tr>
+			</table>
+			<br>
+_%strDetailTable%_
+			<br>
+		</td>
+	</tr>
+</table>
+
+<div class="detail-footer">
+	<div id="MessageTitle" class="box-title"></div>
+	<div class="box-buttons">
+		<!-- 削除ボタン -->
+		<!-- <span id="DeleteBt" style="padding-right:20px;" onclick="form1.submit();"></span> -->
+		<!-- 閉じるボタン -->
+		<span id="CloseBt" onclick="window.close();window.returnValue=Array( '_%strAction%_', '_%strSessionID%_' );return false;"><img src="/img/type01/cmn/seg/close_off_ja_bt.gif"></span>
+	</div>
+</div>
+
+
+<table cellpadding="5" cellspacing="0" border="0" bgcolor="#f1f1f1" align="center">
+	<tr>
+		<td>
+			<form name="form1" action="_%strAction%_" method="GET">
+				<span id="objQuery"></span>
+				<input type="hidden" name="lngInvoiceNo" value="_%lngInvoiceNo%_">
+				<input type="hidden" name="strSessionID" value="_%strSessionID%_">
+				<input type="hidden" name="strSubmit" value="_%strSubmit%_">
+			</form>
+
+		</td>
+	</tr>
+</table>
+
+
+<br>
+
+
+</body>
+
+<script language=javascript>
+fncShowHidePreload( 1 );
+</script>
+
+
+</html>

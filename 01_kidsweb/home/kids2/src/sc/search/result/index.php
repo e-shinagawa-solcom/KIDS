@@ -89,7 +89,6 @@ if (array_key_exists("strProductCode", $displayColumns) or
     array_key_exists("lngRecordNo", $displayColumns) or
     array_key_exists("lngSalesClassCode", $displayColumns) or
     array_key_exists("strGoodsCode", $displayColumns) or
-    array_key_exists("dtmDeliveryDate", $displayColumns) or
     array_key_exists("curProductPrice", $displayColumns) or
     array_key_exists("lngProductUnitCode", $displayColumns) or
     array_key_exists("lngProductQuantity", $displayColumns) or
@@ -119,7 +118,6 @@ $aryQuery[] = "  , sd.strProductEnglishName";
 $aryQuery[] = "  , sd.lngSalesClassCode";
 $aryQuery[] = "  , sd.strSalesClassName";
 $aryQuery[] = "  , sd.strGoodsCode";
-$aryQuery[] = "  , sd.dtmDeliveryDate";
 $aryQuery[] = "  , To_char(sd.curProductPrice, '9,999,999,990.99') as curProductPrice";
 $aryQuery[] = "  , sd.lngProductUnitCode";
 $aryQuery[] = "  , sd.strProductUnitName";
@@ -180,7 +178,6 @@ $aryQuery[] = "        , p.strProductEnglishName";
 $aryQuery[] = "        , sd1.lngSalesClassCode";
 $aryQuery[] = "        , ms.strSalesClassName";
 $aryQuery[] = "        , p.strGoodsCode";
-$aryQuery[] = "        , sd1.dtmDeliveryDate";
 $aryQuery[] = "        , sd1.curProductPrice";
 $aryQuery[] = "        , sd1.lngProductUnitCode";
 $aryQuery[] = "        , mp.strproductunitname";
@@ -282,15 +279,6 @@ if (array_key_exists("lngSalesClassCode", $searchColumns) &&
     $detailConditionCount += 1;
     $aryQuery[] = $detailConditionCount == 1 ? "WHERE " : "AND ";
     $aryQuery[] = "rd1.lngSalesClassCode = '" . pg_escape_string($searchValue["lngSalesClassCode"]) . "'";
-}
-
-// 納期
-if (array_key_exists("dtmDeliveryDate", $searchColumns) &&
-    array_key_exists("dtmDeliveryDate", $from) &&
-    array_key_exists("dtmDeliveryDate", $to)) {
-    $aryQuery[] = "AND rd1.dtmdeliverydate" .
-        " between '" . $from["dtmDeliveryDate"] . "'" .
-        " AND " . "'" . $to["dtmDeliveryDate"] . "'";
 }
 
 $aryQuery[] = "    ) as sd ";
@@ -414,14 +402,23 @@ if (array_key_exists("lngSalesStatusCode", $searchColumns) &&
 
 $aryQuery[] = "  AND sd.lngSalesNo = s.lngSalesNo ";
 if (!array_key_exists("admin", $optionColumns)) {
-    $aryQuery[] = "  AND 0 <= ( ";
-    $aryQuery[] = "    SELECT";
-    $aryQuery[] = "      MIN(s3.lngRevisionNo) ";
-    $aryQuery[] = "    FROM";
-    $aryQuery[] = "      m_sales s3 ";
-    $aryQuery[] = "    WHERE";
-    $aryQuery[] = "      s3.bytInvalidFlag = false ";
-    $aryQuery[] = "      AND s3.strSalesCode = s.strSalesCode";
+    $aryQuery[] = "  AND s.strSalesCode not in ( ";
+    $aryQuery[] = "    select";
+    $aryQuery[] = "      s1.strSalesCode ";
+    $aryQuery[] = "    from";
+    $aryQuery[] = "      ( ";
+    $aryQuery[] = "        SELECT";
+    $aryQuery[] = "          min(lngRevisionNo) lngRevisionNo";
+    $aryQuery[] = "          , strSalesCode ";
+    $aryQuery[] = "        FROM";
+    $aryQuery[] = "          m_sales ";
+    $aryQuery[] = "        where";
+    $aryQuery[] = "          bytInvalidFlag = false ";
+    $aryQuery[] = "        group by";
+    $aryQuery[] = "          strSalesCode";
+    $aryQuery[] = "      ) as s1 ";
+    $aryQuery[] = "    where";
+    $aryQuery[] = "      s1.lngRevisionNo < 0";
     $aryQuery[] = "  ) ";
 }
 $aryQuery[] = "ORDER BY";
@@ -429,7 +426,6 @@ $aryQuery[] = "  strSalesCode, lngsalesDetailNo, lngSalesNo DESC";
 
 // クエリを平易な文字列に変換
 $strQuery = implode("\n", $aryQuery);
-
 // 値をとる =====================================
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 // 検索件数がありの場合
@@ -567,7 +563,6 @@ $aryTableHeaderName["lnginchargeusercode"] = "開発担当者";
 $aryTableHeaderName["strproductname"] = "製品名";
 $aryTableHeaderName["lngsalesclasscode"] = "売上区分";
 $aryTableHeaderName["strgoodscode"] = "顧客品番";
-$aryTableHeaderName["dtmdeliverydate"] = "納期";
 $aryTableHeaderName["curproductprice"] = "単価";
 $aryTableHeaderName["lngproductunitcode"] = "単位";
 $aryTableHeaderName["lngproductquantity"] = "数量";
@@ -841,12 +836,6 @@ foreach ($records as $i => $record) {
                 // 顧客品番
                 case "strgoodscode":
                     $td = $doc->createElement("td", toUTF8($record["strgoodscode"]));
-                    $td->setAttribute("style", $bgcolor);
-                    $trBody->appendChild($td);
-                    break;
-                // 納期
-                case "dtmdeliverydate":
-                    $td = $doc->createElement("td", toUTF8($record["dtmdeliverydate"]));
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
