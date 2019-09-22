@@ -105,19 +105,40 @@
 		return true;
 	}
 
+	//-------------------------------------------------------------------------
+	//  登録処理
+	//-------------------------------------------------------------------------
 	if ($strMode == "regist-test"){
+		// --------------------------
+		//  登録データ復元
+		// --------------------------
 		// プレビュー表示前に退避した登録データをjsonから復元する
 		$aryHeader = DecodeFromJson($_POST["aryHeaderJson"]);
 		$aryDetail = DecodeFromJson($_POST["aryDetailJson"]);
 
-		//TODO:登録処理
+		// --------------------------
+		//  データベース登録
+		// --------------------------
+		// トランザクション開始
+		$objDB->transactionBegin();
+
+		if (!fncRegisterSalesAndSlip($aryHeader , $aryDetail, $objDB, $objAuth))
+		{
+			fncOutputError ( 9051, DEF_FATAL, "売上（納品書）登録失敗", TRUE, "", $objDB );
+		}
 
 
-		// 登録結果画面に表示するパラメータの設定
+		// コミット
+		$objDB->transactionCommit();
+
+		// --------------------------
+		//  登録結果画面表示
+		// --------------------------
+		// 画面に表示するパラメータの設定
 		$aryData["dtmRegistDate"] = "2019/5/27 12:34:56";
 		$aryData["lngSlipNo"] = "KWG19527-01-01";
 
-		// 登録結果画面表示
+		// テンプレートから構築したHTMLを出力
 		$objTemplate = new clsTemplate();
 		$objTemplate->getTemplate( "sc/finish2/parts.tmpl" );
 		$objTemplate->replace( $aryData );
