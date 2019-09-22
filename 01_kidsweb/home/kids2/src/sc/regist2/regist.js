@@ -368,35 +368,35 @@ jQuery(function($){
         
         var result = {
             //µØ…ºº‘
-            lngInsertUserCode:         $('input[name="lngInsertUserCode"]').val(),
-            strInsertUserName:         $('input[name="strInsertUserName"]').val(),
+            lnginsertusercode:         $('input[name="lngInsertUserCode"]').val(),
+            strinsertusername:         $('input[name="strInsertUserName"]').val(),
             //∏‹µ“
-            strCompanyDisplayCode:     $('input[name="lngCustomerCode"]').val(),
-            strCompanyDisplayName:     $('input[name="strCustomerName"]').val(),
+            strcompanydisplaycode:     $('input[name="lngCustomerCode"]').val(),
+            strcompanydisplayname:     $('input[name="strCustomerName"]').val(),
             //∏‹µ“√¥≈ˆº‘
-            strCustomerResponder:      $('input[name="strCustomerResponder"]').val(),
+            strcustomerresponder:      $('input[name="strCustomerResponder"]').val(),
             //«º… ∆¸
-            dtmDeliveryDate:           $('input[name="dtmDeliveryDate"]').val(),
+            dtmdeliverydate:           $('input[name="dtmDeliveryDate"]').val(),
             //«º… ¿Ë
-            lngDeliveryPlaceCode:      $('input[name="lngDeliveryPlaceCode"]').val(),
-            strDeliveryPlaceName:      $('input[name="strDeliveryPlaceName"]').val(),
+            lngdeliveryplacecode:      $('input[name="lngDeliveryPlaceCode"]').val(),
+            strdeliveryplacename:      $('input[name="strDeliveryPlaceName"]').val(),
             //«º… ¿Ë√¥≈ˆº‘
-            strDeliveryDestResponder:  $('input[name="strDeliveryDestResponder"]').val(),
+            strdeliverydestresponder:  $('input[name="strDeliveryDestResponder"]').val(),
             //»˜πÕ
-            strNote:                   $('input[name="strNote"]').val(),
+            strnote:                   $('input[name="strNote"]').val(),
             //æ√»Ò¿«∂Ë ¨
-            lngTaxClassCode:           $('select[name="lngTaxClassCode"]').children('option:selected').val(),
-            strTaxClassName:           $('select[name="lngTaxClassCode"]').children('option:selected').text(),
+            lngtaxclasscode:           $('select[name="lngTaxClassCode"]').children('option:selected').val(),
+            strtaxclassname:           $('select[name="lngTaxClassCode"]').children('option:selected').text(),
             //æ√»Ò¿«Œ®
-            lngTaxRate:                $('select[name="lngTaxRate"]').children('option:selected').text(),
+            lngtaxrate:                $('select[name="lngTaxRate"]').children('option:selected').text(),
             //æ√»Ò¿«≥€
-            strTaxAmount:              $('input[name="strTaxAmount"]').val(),
+            strtaxamount:              $('input[name="strTaxAmount"]').val(),
             //ªŸ ß¥¸∏¬
-            dtmPaymentDueDate:         $('input[name="dtmPaymentDueDate"]').val(),
+            dtmpaymentduedate:         $('input[name="dtmPaymentDueDate"]').val(),
             //ªŸ ß ˝À°
-            lngPaymentMethodCode:      $('select[name="lngPaymentMethodCode"]').children('option:selected').val(),
+            lngpaymentmethodcode:      $('select[name="lngPaymentMethodCode"]').children('option:selected').val(),
             //πÁ∑◊∂‚≥€
-            strTotalAmount:            $('input[name="strTotalAmount"]').val(),
+            curtotalprice:             $('input[name="strTotalAmount"]').val(),
         };
 
         return result;

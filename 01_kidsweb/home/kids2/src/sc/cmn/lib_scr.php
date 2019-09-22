@@ -314,7 +314,8 @@ function fncRegisterSalesAndSlip($aryHeader, $aryDetail, $objDB, $objAuth)
 
     for ( $page = 1; $page <= $maxPageCount; $page++ ){
 
-        // 現在のページ数と1ページあたりの明細数から登録する明細のインデックスの最小値と最大値を求める
+        // 現在のページ数と1ページあたりの明細数から、
+        // 登録する明細のインデックスの最小値と最大値を求める
         $itemMinIndex = ($page-1) * $maxItemPerPage ;
         $itemMaxIndex = $page * $maxItemPerPage - 1;
         if ($itemMaxIndex > $totalItemCount - 1){
@@ -367,9 +368,53 @@ function fncRegisterSalesAndSlip($aryHeader, $aryDetail, $objDB, $objAuth)
     return true;
 }
 
+// --------------------------------
+// パラメータバインド用ヘルパ関数
+// --------------------------------
+// シングルクォートで囲む
+function withQuote($source)
+{
+    return "'" . $source . "'";
+}
+
+/*
+// 直接置換
+function bindDirect($parameterName, $bindValue, $strQuery)
+{
+    return str_replace($parameterName, $bindValue, $strQuery);
+}
+*/
+/*
+// 日付型
+function bindToDate($parameterName, $bindValue, $strQuery)
+{
+    $text = "TO_DATE('" . $bindValue . "', 'yyyy/mm/dd')";
+    return str_replace($parameterName, $text, $strQuery);
+}
+*/
 // 売上マスタ登録
 function fncRegisterSalesMaster($lngSalesNo, $lngRevisionNo, $strSlipCode, $strSalesCode, $aryHeader , $aryDetail, $objDB, $objAuth)
 {
+    // 登録データ設定
+    $v_lngsalesno = $lngSalesNo;                                        //1:売上番号
+    $v_lngrevisionno = $lngRevisionNo;                                  //2:リビジョン番号
+    $v_strsalescode = withQuote($strSalesCode);                         //3:売上コード
+    $v_dtmappropriationdate = "CURRENT_DATE";                           //4:計上日
+    $v_lngcustomercompanycode = $value;                                 //5:顧客コード
+    $v_lnggroupcode = $value;                                           //6:グループコード
+    $v_lngusercode = $value;                                            //7:ユーザコード
+    $v_lngsalesstatuscode = "4";                                        //8:売上状態コード
+    $v_lngmonetaryunitcode = $aryDetail[0]["lngmonetaryunitcode"];      //9:通貨単位コード
+    $v_lngmonetaryratecode = $aryDetail[0]["lngmonetaryratecode"];      //10:通貨レートコード
+    $v_curconversionrate = $value;                                      //11:換算レート
+    $v_strslipcode = withQuote($strSlipCode);                           //12:納品書NO
+    $v_lnginvoiceno = "Null";                                           //13:請求書番号
+    $v_curtotalprice = $aryHeader["curtotalprice"];                     //14:合計金額
+    $v_strnote = withQuote($aryHeader["strnote"]);                      //15:備考
+    $v_lnginputusercode = $objAuth->UserCode;                           //16:入力者コード
+    $v_bytinvalidflag = "FALSE";                                        //17:無効フラグ
+    $v_dtminsertdate = "now()";                                         //18:登録日
+
     // 登録クエリ作成
     $aryInsert = [];
     $aryInsert[] = "INSERT  ";
@@ -394,47 +439,27 @@ function fncRegisterSalesMaster($lngSalesNo, $lngRevisionNo, $strSlipCode, $strS
     $aryInsert[] = "  , dtminsertdate ";                 //18:登録日
     $aryInsert[] = ")  ";                                
     $aryInsert[] = "VALUES (  ";                         
-    $aryInsert[] = "  :lngsalesno ";                     //1:売上番号
-    $aryInsert[] = "  , :lngrevisionno ";                //2:リビジョン番号
-    $aryInsert[] = "  , :strsalescode ";                 //3:売上コード
-    $aryInsert[] = "  , :dtmappropriationdate ";         //4:計上日
-    $aryInsert[] = "  , :lngcustomercompanycode ";       //5:顧客コード
-    $aryInsert[] = "  , :lnggroupcode ";                 //6:グループコード
-    $aryInsert[] = "  , :lngusercode ";                  //7:ユーザコード
-    $aryInsert[] = "  , :lngsalesstatuscode ";           //8:売上状態コード
-    $aryInsert[] = "  , :lngmonetaryunitcode ";          //9:通貨単位コード
-    $aryInsert[] = "  , :lngmonetaryratecode ";          //10:通貨レートコード
-    $aryInsert[] = "  , :curconversionrate ";            //11:換算レート
-    $aryInsert[] = "  , :strslipcode ";                  //12:納品書NO
-    $aryInsert[] = "  , :lnginvoiceno ";                 //13:請求書番号
-    $aryInsert[] = "  , :curtotalprice ";                //14:合計金額
-    $aryInsert[] = "  , :strnote ";                      //15:備考
-    $aryInsert[] = "  , :lnginputusercode ";             //16:入力者コード
-    $aryInsert[] = "  , :bytinvalidflag ";               //17:無効フラグ
-    $aryInsert[] = "  , :dtminsertdate ";                //18:登録日
+    $aryInsert[] = "  " . $v_lngsalesno;                 //1:売上番号
+    $aryInsert[] = " ," . $v_lngrevisionno;              //2:リビジョン番号
+    $aryInsert[] = " ," . $v_strsalescode;               //3:売上コード
+    $aryInsert[] = " ," . $v_dtmappropriationdate;       //4:計上日
+    $aryInsert[] = " ," . $v_lngcustomercompanycode;     //5:顧客コード
+    $aryInsert[] = " ," . $v_lnggroupcode;               //6:グループコード
+    $aryInsert[] = " ," . $v_lngusercode;                //7:ユーザコード
+    $aryInsert[] = " ," . $v_lngsalesstatuscode;         //8:売上状態コード
+    $aryInsert[] = " ," . $v_lngmonetaryunitcode;        //9:通貨単位コード
+    $aryInsert[] = " ," . $v_lngmonetaryratecode;        //10:通貨レートコード
+    $aryInsert[] = " ," . $v_curconversionrate;          //11:換算レート
+    $aryInsert[] = " ," . $v_strslipcode;                //12:納品書NO
+    $aryInsert[] = " ," . $v_lnginvoiceno;               //13:請求書番号
+    $aryInsert[] = " ," . $v_curtotalprice;              //14:合計金額
+    $aryInsert[] = " ," . $v_strnote;                    //15:備考
+    $aryInsert[] = " ," . $v_lnginputusercode;           //16:入力者コード
+    $aryInsert[] = " ," . $v_bytinvalidflag;             //17:無効フラグ
+    $aryInsert[] = " ," . $v_dtminsertdate;              //18:登録日
     $aryInsert[] = ") ";
     $strQuery = "";
     $strQuery .= implode("\n", $aryInsert);
-
-    // TODO:文字列置換による疑似パラメータバインド
-    $strQuery = str_replace(":lngsalesno", $value, $strQuery);                     //1:売上番号
-    $strQuery = str_replace(":lngrevisionno", $value, $strQuery);                  //2:リビジョン番号
-    $strQuery = str_replace(":strsalescode", $value, $strQuery);                   //3:売上コード
-    $strQuery = str_replace(":dtmappropriationdate", $value, $strQuery);           //4:計上日
-    $strQuery = str_replace(":lngcustomercompanycode", $value, $strQuery);         //5:顧客コード
-    $strQuery = str_replace(":lnggroupcode", $value, $strQuery);                   //6:グループコード
-    $strQuery = str_replace(":lngusercode", $value, $strQuery);                    //7:ユーザコード
-    $strQuery = str_replace(":lngsalesstatuscode", $value, $strQuery);             //8:売上状態コード
-    $strQuery = str_replace(":lngmonetaryunitcode", $value, $strQuery);            //9:通貨単位コード
-    $strQuery = str_replace(":lngmonetaryratecode", $value, $strQuery);            //10:通貨レートコード
-    $strQuery = str_replace(":curconversionrate", $value, $strQuery);              //11:換算レート
-    $strQuery = str_replace(":strslipcode", $value, $strQuery);                    //12:納品書NO
-    $strQuery = str_replace(":lnginvoiceno", $value, $strQuery);                   //13:請求書番号
-    $strQuery = str_replace(":curtotalprice", $value, $strQuery);                  //14:合計金額
-    $strQuery = str_replace(":strnote", $value, $strQuery);                        //15:備考
-    $strQuery = str_replace(":lnginputusercode", $value, $strQuery);               //16:入力者コード
-    $strQuery = str_replace(":bytinvalidflag", $value, $strQuery);                 //17:無効フラグ
-    $strQuery = str_replace(":dtminsertdate", $value, $strQuery);                  //18:登録日
 
 
     // 登録実行
@@ -455,6 +480,30 @@ function fncRegisterSalesDetail($itemMinIndex, $itemMaxIndex, $lngSalesNo, $lngR
 {
     for ( $i = $itemMinIndex; $i <= $itemMaxIndex; $i++ )
     {
+        $d = $aryDetail[$i];
+
+        // 登録データ設定
+        $v_lngsalesno = $value;                   //1:売上番号
+        $v_lngsalesdetailno = $value;             //2:売上明細番号
+        $v_lngrevisionno = $value;                //3:リビジョン番号
+        $v_strproductcode = $value;               //4:製品コード
+        $v_strrevisecode = $value;                //5:再販コード
+        $v_lngsalesclasscode = $value;            //6:売上区分コード
+        $v_lngconversionclasscode = $value;       //7:換算区分コード
+        $v_lngquantity = $value;                  //8:入数
+        $v_curproductprice = $value;              //9:製品価格
+        $v_lngproductquantity = $value;           //10:製品数量
+        $v_lngproductunitcode = $value;           //11:製品単位コード
+        $v_lngtaxclasscode = $value;              //12:消費税区分コード
+        $v_lngtaxcode = $value;                   //13:消費税率コード
+        $v_curtaxprice = $value;                  //14:消費税金額
+        $v_cursubtotalprice = $value;             //15:小計金額
+        $v_strnote = $value;                      //16:備考
+        $v_lngsortkey = $value;                   //17:表示用ソートキー
+        $v_lngreceiveno = $value;                 //18:受注番号
+        $v_lngreceivedetailno = $value;           //19:受注明細番号
+        $v_lngreceiverevisionno = $value;         //20:受注リビジョン番号
+
         // 登録クエリ作成
         $aryInsert = [];
         $aryInsert[] ="INSERT  ";
@@ -481,51 +530,29 @@ function fncRegisterSalesDetail($itemMinIndex, $itemMaxIndex, $lngSalesNo, $lngR
         $aryInsert[] ="  , lngreceiverevisionno ";        //20:受注リビジョン番号
         $aryInsert[] =")  ";                              
         $aryInsert[] ="VALUES (  ";                       
-        $aryInsert[] ="  :lngsalesno ";                   //1:売上番号
-        $aryInsert[] ="  , :lngsalesdetailno ";           //2:売上明細番号
-        $aryInsert[] ="  , :lngrevisionno ";              //3:リビジョン番号
-        $aryInsert[] ="  , :strproductcode ";             //4:製品コード
-        $aryInsert[] ="  , :strrevisecode ";              //5:再販コード
-        $aryInsert[] ="  , :lngsalesclasscode ";          //6:売上区分コード
-        $aryInsert[] ="  , :lngconversionclasscode ";     //7:換算区分コード
-        $aryInsert[] ="  , :lngquantity ";                //8:入数
-        $aryInsert[] ="  , :curproductprice ";            //9:製品価格
-        $aryInsert[] ="  , :lngproductquantity ";         //10:製品数量
-        $aryInsert[] ="  , :lngproductunitcode ";         //11:製品単位コード
-        $aryInsert[] ="  , :lngtaxclasscode ";            //12:消費税区分コード
-        $aryInsert[] ="  , :lngtaxcode ";                 //13:消費税率コード
-        $aryInsert[] ="  , :curtaxprice ";                //14:消費税金額
-        $aryInsert[] ="  , :cursubtotalprice ";           //15:小計金額
-        $aryInsert[] ="  , :strnote ";                    //16:備考
-        $aryInsert[] ="  , :lngsortkey ";                 //17:表示用ソートキー
-        $aryInsert[] ="  , :lngreceiveno ";               //18:受注番号
-        $aryInsert[] ="  , :lngreceivedetailno ";         //19:受注明細番号
-        $aryInsert[] ="  , :lngreceiverevisionno ";       //20:受注リビジョン番号
+        $aryInsert[] = "  " . $v_lngsalesno;                //1:売上番号
+        $aryInsert[] = " ," . $v_lngsalesdetailno;          //2:売上明細番号
+        $aryInsert[] = " ," . $v_lngrevisionno;             //3:リビジョン番号
+        $aryInsert[] = " ," . $v_strproductcode;            //4:製品コード
+        $aryInsert[] = " ," . $v_strrevisecode;             //5:再販コード
+        $aryInsert[] = " ," . $v_lngsalesclasscode;         //6:売上区分コード
+        $aryInsert[] = " ," . $v_lngconversionclasscode;    //7:換算区分コード
+        $aryInsert[] = " ," . $v_lngquantity;               //8:入数
+        $aryInsert[] = " ," . $v_curproductprice;           //9:製品価格
+        $aryInsert[] = " ," . $v_lngproductquantity;        //10:製品数量
+        $aryInsert[] = " ," . $v_lngproductunitcode;        //11:製品単位コード
+        $aryInsert[] = " ," . $v_lngtaxclasscode;           //12:消費税区分コード
+        $aryInsert[] = " ," . $v_lngtaxcode;                //13:消費税率コード
+        $aryInsert[] = " ," . $v_curtaxprice;               //14:消費税金額
+        $aryInsert[] = " ," . $v_cursubtotalprice;          //15:小計金額
+        $aryInsert[] = " ," . $v_strnote;                   //16:備考
+        $aryInsert[] = " ," . $v_lngsortkey;                //17:表示用ソートキー
+        $aryInsert[] = " ," . $v_lngreceiveno;              //18:受注番号
+        $aryInsert[] = " ," . $v_lngreceivedetailno;        //19:受注明細番号
+        $aryInsert[] = " ," . $v_lngreceiverevisionno;      //20:受注リビジョン番号
         $aryInsert[] =") ";
         $strQuery = "";
         $strQuery .= implode("\n", $aryInsert);
-
-        // TODO:文字列置換による疑似パラメータバインド
-        $strQuery = str_replace(":lngsalesno", $value, $strQuery);                    //1:売上番号
-        $strQuery = str_replace(":lngsalesdetailno", $value, $strQuery);              //2:売上明細番号
-        $strQuery = str_replace(":lngrevisionno", $value, $strQuery);                 //3:リビジョン番号
-        $strQuery = str_replace(":strproductcode", $value, $strQuery);                //4:製品コード
-        $strQuery = str_replace(":strrevisecode", $value, $strQuery);                 //5:再販コード
-        $strQuery = str_replace(":lngsalesclasscode", $value, $strQuery);             //6:売上区分コード
-        $strQuery = str_replace(":lngconversionclasscode", $value, $strQuery);        //7:換算区分コード
-        $strQuery = str_replace(":lngquantity", $value, $strQuery);                   //8:入数
-        $strQuery = str_replace(":curproductprice", $value, $strQuery);               //9:製品価格
-        $strQuery = str_replace(":lngproductquantity", $value, $strQuery);            //10:製品数量
-        $strQuery = str_replace(":lngproductunitcode", $value, $strQuery);            //11:製品単位コード
-        $strQuery = str_replace(":lngtaxclasscode", $value, $strQuery);               //12:消費税区分コード
-        $strQuery = str_replace(":lngtaxcode", $value, $strQuery);                    //13:消費税率コード
-        $strQuery = str_replace(":curtaxprice", $value, $strQuery);                   //14:消費税金額
-        $strQuery = str_replace(":cursubtotalprice", $value, $strQuery);              //15:小計金額
-        $strQuery = str_replace(":strnote", $value, $strQuery);                       //16:備考
-        $strQuery = str_replace(":lngsortkey", $value, $strQuery);                    //17:表示用ソートキー
-        $strQuery = str_replace(":lngreceiveno", $value, $strQuery);                  //18:受注番号
-        $strQuery = str_replace(":lngreceivedetailno", $value, $strQuery);            //19:受注明細番号
-        $strQuery = str_replace(":lngreceiverevisionno", $value, $strQuery);          //20:受注リビジョン番号
         
         // 登録実行
         if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
@@ -543,6 +570,44 @@ function fncRegisterSalesDetail($itemMinIndex, $itemMaxIndex, $lngSalesNo, $lngR
 // 納品伝票マスタ登録
 function fncRegisterSlipMaster($lngSlipNo, $lngRevisionNo, $lngSalesNo, $strSlipCode, $aryHeader , $aryDetail, $objDB, $objAuth)
 {
+    // 登録データ設定
+    $v_lngslipno = $value;                    //1:納品伝票番号
+    $v_lngrevisionno = $value;                //2:リビジョン番号
+    $v_strslipcode = $value;                  //3:納品伝票コード
+    $v_lngsalesno = $value;                   //4:売上番号
+    $v_strcustomercode = $value;              //5:顧客コード
+    $v_strcustomercompanyname = $value;       //6:顧客社名
+    $v_strcustomername = $value;              //7:顧客名
+    $v_strcustomeraddress1 = $value;          //8:顧客住所1
+    $v_strcustomeraddress2 = $value;          //9:顧客住所2
+    $v_strcustomeraddress3 = $value;          //10:顧客住所3
+    $v_strcustomeraddress4 = $value;          //11:顧客住所4
+    $v_strcustomerphoneno = $value;           //12:顧客電話番号
+    $v_strcustomerfaxno = $value;             //13:顧客FAX番号
+    $v_strcustomerusername = $value;          //14:顧客担当者名
+    $v_strshippercode = $value;               //15:仕入先コード（出荷者）
+    $v_dtmdeliverydate = $value;              //16:納品日
+    $v_lngdeliveryplacecode = $value;         //17:納品場所コード
+    $v_strdeliveryplacename = $value;         //18:納品場所名
+    $v_strdeliveryplaceusername = $value;     //19:納品場所担当者名
+    $v_lngpaymentmethodcode = $value;         //20:支払方法コード
+    $v_dtmpaymentlimit = $value;              //21:支払期限
+    $v_lngtaxclasscode = $value;              //22:課税区分コード
+    $v_strtaxclassname = $value;              //23:課税区分
+    $v_curtax = $value;                       //24:消費税率
+    $v_strusercode = $value;                  //25:担当者コード
+    $v_strusername = $value;                  //26:担当者名
+    $v_curtotalprice = $value;                //27:合計金額
+    $v_lngmonetaryunitcode = $value;          //28:通貨単位コード
+    $v_strmonetaryunitsign = $value;          //29:通貨単位
+    $v_dtminsertdate = $value;                //30:作成日
+    $v_strinsertusercode = $value;            //31:入力者コード
+    $v_strinsertusername = $value;            //32:入力者名
+    $v_strnote = $value;                      //33:備考
+    $v_lngprintcount = $value;                //34:印刷回数
+    $v_bytinvalidflag = $value;               //35:無効フラグ
+
+    
     // 登録クエリ作成
     $aryInsert = [];
     $aryInsert[] ="INSERT  ";
@@ -584,82 +649,44 @@ function fncRegisterSlipMaster($lngSlipNo, $lngRevisionNo, $lngSalesNo, $strSlip
     $aryInsert[] ="  , bytinvalidflag ";                 //35:無効フラグ
     $aryInsert[] =")  ";                                 
     $aryInsert[] ="VALUES (  ";                          
-    $aryInsert[] ="  :lngslipno ";                       //1:納品伝票番号
-    $aryInsert[] ="  , :lngrevisionno ";                 //2:リビジョン番号
-    $aryInsert[] ="  , :strslipcode ";                   //3:納品伝票コード
-    $aryInsert[] ="  , :lngsalesno ";                    //4:売上番号
-    $aryInsert[] ="  , :strcustomercode ";               //5:顧客コード
-    $aryInsert[] ="  , :strcustomercompanyname ";        //6:顧客社名
-    $aryInsert[] ="  , :strcustomername ";               //7:顧客名
-    $aryInsert[] ="  , :strcustomeraddress1 ";           //8:顧客住所1
-    $aryInsert[] ="  , :strcustomeraddress2 ";           //9:顧客住所2
-    $aryInsert[] ="  , :strcustomeraddress3 ";           //10:顧客住所3
-    $aryInsert[] ="  , :strcustomeraddress4 ";           //11:顧客住所4
-    $aryInsert[] ="  , :strcustomerphoneno ";            //12:顧客電話番号
-    $aryInsert[] ="  , :strcustomerfaxno ";              //13:顧客FAX番号
-    $aryInsert[] ="  , :strcustomerusername ";           //14:顧客担当者名
-    $aryInsert[] ="  , :strshippercode ";                //15:仕入先コード（出荷者）
-    $aryInsert[] ="  , :dtmdeliverydate ";               //16:納品日
-    $aryInsert[] ="  , :lngdeliveryplacecode ";          //17:納品場所コード
-    $aryInsert[] ="  , :strdeliveryplacename ";          //18:納品場所名
-    $aryInsert[] ="  , :strdeliveryplaceusername ";      //19:納品場所担当者名
-    $aryInsert[] ="  , :lngpaymentmethodcode ";          //20:支払方法コード
-    $aryInsert[] ="  , :dtmpaymentlimit ";               //21:支払期限
-    $aryInsert[] ="  , :lngtaxclasscode ";               //22:課税区分コード
-    $aryInsert[] ="  , :strtaxclassname ";               //23:課税区分
-    $aryInsert[] ="  , :curtax ";                        //24:消費税率
-    $aryInsert[] ="  , :strusercode ";                   //25:担当者コード
-    $aryInsert[] ="  , :strusername ";                   //26:担当者名
-    $aryInsert[] ="  , :curtotalprice ";                 //27:合計金額
-    $aryInsert[] ="  , :lngmonetaryunitcode ";           //28:通貨単位コード
-    $aryInsert[] ="  , :strmonetaryunitsign ";           //29:通貨単位
-    $aryInsert[] ="  , :dtminsertdate ";                 //30:作成日
-    $aryInsert[] ="  , :strinsertusercode ";             //31:入力者コード
-    $aryInsert[] ="  , :strinsertusername ";             //32:入力者名
-    $aryInsert[] ="  , :strnote ";                       //33:備考
-    $aryInsert[] ="  , :lngprintcount ";                 //34:印刷回数
-    $aryInsert[] ="  , :bytinvalidflag ";                //35:無効フラグ
+    $aryInsert[] = "  " . $v_lngslipno;                    //1:納品伝票番号
+    $aryInsert[] = " ," . $v_lngrevisionno;                //2:リビジョン番号
+    $aryInsert[] = " ," . $v_strslipcode;                  //3:納品伝票コード
+    $aryInsert[] = " ," . $v_lngsalesno;                   //4:売上番号
+    $aryInsert[] = " ," . $v_strcustomercode;              //5:顧客コード
+    $aryInsert[] = " ," . $v_strcustomercompanyname;       //6:顧客社名
+    $aryInsert[] = " ," . $v_strcustomername;              //7:顧客名
+    $aryInsert[] = " ," . $v_strcustomeraddress1;          //8:顧客住所1
+    $aryInsert[] = " ," . $v_strcustomeraddress2;          //9:顧客住所2
+    $aryInsert[] = " ," . $v_strcustomeraddress3;          //10:顧客住所3
+    $aryInsert[] = " ," . $v_strcustomeraddress4;          //11:顧客住所4
+    $aryInsert[] = " ," . $v_strcustomerphoneno;           //12:顧客電話番号
+    $aryInsert[] = " ," . $v_strcustomerfaxno;             //13:顧客FAX番号
+    $aryInsert[] = " ," . $v_strcustomerusername;          //14:顧客担当者名
+    $aryInsert[] = " ," . $v_strshippercode;               //15:仕入先コード（出荷者）
+    $aryInsert[] = " ," . $v_dtmdeliverydate;              //16:納品日
+    $aryInsert[] = " ," . $v_lngdeliveryplacecode;         //17:納品場所コード
+    $aryInsert[] = " ," . $v_strdeliveryplacename;         //18:納品場所名
+    $aryInsert[] = " ," . $v_strdeliveryplaceusername;     //19:納品場所担当者名
+    $aryInsert[] = " ," . $v_lngpaymentmethodcode;         //20:支払方法コード
+    $aryInsert[] = " ," . $v_dtmpaymentlimit;              //21:支払期限
+    $aryInsert[] = " ," . $v_lngtaxclasscode;              //22:課税区分コード
+    $aryInsert[] = " ," . $v_strtaxclassname;              //23:課税区分
+    $aryInsert[] = " ," . $v_curtax;                       //24:消費税率
+    $aryInsert[] = " ," . $v_strusercode;                  //25:担当者コード
+    $aryInsert[] = " ," . $v_strusername;                  //26:担当者名
+    $aryInsert[] = " ," . $v_curtotalprice;                //27:合計金額
+    $aryInsert[] = " ," . $v_lngmonetaryunitcode;          //28:通貨単位コード
+    $aryInsert[] = " ," . $v_strmonetaryunitsign;          //29:通貨単位
+    $aryInsert[] = " ," . $v_dtminsertdate;                //30:作成日
+    $aryInsert[] = " ," . $v_strinsertusercode;            //31:入力者コード
+    $aryInsert[] = " ," . $v_strinsertusername;            //32:入力者名
+    $aryInsert[] = " ," . $v_strnote;                      //33:備考
+    $aryInsert[] = " ," . $v_lngprintcount;                //34:印刷回数
+    $aryInsert[] = " ," . $v_bytinvalidflag;               //35:無効フラグ
     $aryInsert[] =") ";
     $strQuery = "";
     $strQuery .= implode("\n", $aryInsert);
-
-    // TODO:文字列置換による疑似パラメータバインド
-    $strQuery = str_replace(":lngslipno", $value, $strQuery);                        //1:納品伝票番号
-    $strQuery = str_replace(":lngrevisionno", $value, $strQuery);                    //2:リビジョン番号
-    $strQuery = str_replace(":strslipcode", $value, $strQuery);                      //3:納品伝票コード
-    $strQuery = str_replace(":lngsalesno", $value, $strQuery);                       //4:売上番号
-    $strQuery = str_replace(":strcustomercode", $value, $strQuery);                  //5:顧客コード
-    $strQuery = str_replace(":strcustomercompanyname", $value, $strQuery);           //6:顧客社名
-    $strQuery = str_replace(":strcustomername", $value, $strQuery);                  //7:顧客名
-    $strQuery = str_replace(":strcustomeraddress1", $value, $strQuery);              //8:顧客住所1
-    $strQuery = str_replace(":strcustomeraddress2", $value, $strQuery);              //9:顧客住所2
-    $strQuery = str_replace(":strcustomeraddress3", $value, $strQuery);              //10:顧客住所3
-    $strQuery = str_replace(":strcustomeraddress4", $value, $strQuery);              //11:顧客住所4
-    $strQuery = str_replace(":strcustomerphoneno", $value, $strQuery);               //12:顧客電話番号
-    $strQuery = str_replace(":strcustomerfaxno", $value, $strQuery);                 //13:顧客FAX番号
-    $strQuery = str_replace(":strcustomerusername", $value, $strQuery);              //14:顧客担当者名
-    $strQuery = str_replace(":strshippercode", $value, $strQuery);                   //15:仕入先コード（出荷者）
-    $strQuery = str_replace(":dtmdeliverydate", $value, $strQuery);                  //16:納品日
-    $strQuery = str_replace(":lngdeliveryplacecode", $value, $strQuery);             //17:納品場所コード
-    $strQuery = str_replace(":strdeliveryplacename", $value, $strQuery);             //18:納品場所名
-    $strQuery = str_replace(":strdeliveryplaceusername", $value, $strQuery);         //19:納品場所担当者名
-    $strQuery = str_replace(":lngpaymentmethodcode", $value, $strQuery);             //20:支払方法コード
-    $strQuery = str_replace(":dtmpaymentlimit", $value, $strQuery);                  //21:支払期限
-    $strQuery = str_replace(":lngtaxclasscode", $value, $strQuery);                  //22:課税区分コード
-    $strQuery = str_replace(":strtaxclassname", $value, $strQuery);                  //23:課税区分
-    $strQuery = str_replace(":curtax", $value, $strQuery);                           //24:消費税率
-    $strQuery = str_replace(":strusercode", $value, $strQuery);                      //25:担当者コード
-    $strQuery = str_replace(":strusername", $value, $strQuery);                      //26:担当者名
-    $strQuery = str_replace(":curtotalprice", $value, $strQuery);                    //27:合計金額
-    $strQuery = str_replace(":lngmonetaryunitcode", $value, $strQuery);              //28:通貨単位コード
-    $strQuery = str_replace(":strmonetaryunitsign", $value, $strQuery);              //29:通貨単位
-    $strQuery = str_replace(":dtminsertdate", $value, $strQuery);                    //30:作成日
-    $strQuery = str_replace(":strinsertusercode", $value, $strQuery);                //31:入力者コード
-    $strQuery = str_replace(":strinsertusername", $value, $strQuery);                //32:入力者名
-    $strQuery = str_replace(":strnote", $value, $strQuery);                          //33:備考
-    $strQuery = str_replace(":lngprintcount", $value, $strQuery);                    //34:印刷回数
-    $strQuery = str_replace(":bytinvalidflag", $value, $strQuery);                   //35:無効フラグ
-        
 
     // 登録実行
 	if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
@@ -678,6 +705,30 @@ function fncRegisterSlipDetail($itemMinIndex, $itemMaxIndex, $lngSlipNo, $lngRev
 {
     for ( $i = $itemMinIndex; $i <= $itemMaxIndex; $i++ )
     {
+        // 登録データ作成
+        $v_lngslipno = $value;                     //1:納品伝票番号
+        $v_lngslipdetailno = $value;               //2:納品伝票明細番号
+        $v_lngrevisionno = $value;                 //3:リビジョン番号
+        $v_strcustomersalescode = $value;          //4:顧客受注番号
+        $v_lngsalesclasscode = $value;             //5:売上区分コード
+        $v_strsalesclassname = $value;             //6:売上区分名
+        $v_strgoodscode = $value;                  //7:顧客品番
+        $v_strproductcode = $value;                //8:製品コード
+        $v_strrevisecode = $value;                 //9:再販コード
+        $v_strproductname = $value;                //10:製品名
+        $v_strproductenglishname = $value;         //11:製品名（英語）
+        $v_curproductprice = $value;               //12:単価
+        $v_lngquantity = $value;                   //13:入数
+        $v_lngproductquantity = $value;            //14:数量
+        $v_lngproductunitcode = $value;            //15:製品単位コード
+        $v_strproductunitname = $value;            //16:製品単位名
+        $v_cursubtotalprice = $value;              //17:小計
+        $v_strnote = $value;                       //18:明細備考
+        $v_lngreceiveno = $value;                  //19:受注番号
+        $v_lngreceivedetailno = $value;            //20:受注明細番号
+        $v_lngreceiverevisionno = $value;          //21:受注リビジョン番号
+        $v_lngsortkey = $value;                    //22:表示用ソートキー
+
         // 登録クエリ作成
         $aryInsert = [];
         $aryInsert[] ="INSERT  ";
@@ -706,54 +757,29 @@ function fncRegisterSlipDetail($itemMinIndex, $itemMaxIndex, $lngSlipNo, $lngRev
         $aryInsert[] ="  , lngsortkey ";                   //22:表示用ソートキー
         $aryInsert[] =")  ";                               
         $aryInsert[] ="VALUES (  ";                        
-        $aryInsert[] ="  :lngslipno ";                     //1:納品伝票番号
-        $aryInsert[] ="  , :lngslipdetailno ";             //2:納品伝票明細番号
-        $aryInsert[] ="  , :lngrevisionno ";               //3:リビジョン番号
-        $aryInsert[] ="  , :strcustomersalescode ";        //4:顧客受注番号
-        $aryInsert[] ="  , :lngsalesclasscode ";           //5:売上区分コード
-        $aryInsert[] ="  , :strsalesclassname ";           //6:売上区分名
-        $aryInsert[] ="  , :strgoodscode ";                //7:顧客品番
-        $aryInsert[] ="  , :strproductcode ";              //8:製品コード
-        $aryInsert[] ="  , :strrevisecode ";               //9:再販コード
-        $aryInsert[] ="  , :strproductname ";              //10:製品名
-        $aryInsert[] ="  , :strproductenglishname ";       //11:製品名（英語）
-        $aryInsert[] ="  , :curproductprice ";             //12:単価
-        $aryInsert[] ="  , :lngquantity ";                 //13:入数
-        $aryInsert[] ="  , :lngproductquantity ";          //14:数量
-        $aryInsert[] ="  , :lngproductunitcode ";          //15:製品単位コード
-        $aryInsert[] ="  , :strproductunitname ";          //16:製品単位名
-        $aryInsert[] ="  , :cursubtotalprice ";            //17:小計
-        $aryInsert[] ="  , :strnote ";                     //18:明細備考
-        $aryInsert[] ="  , :lngreceiveno ";                //19:受注番号
-        $aryInsert[] ="  , :lngreceivedetailno ";          //20:受注明細番号
-        $aryInsert[] ="  , :lngreceiverevisionno ";        //21:受注リビジョン番号
-        $aryInsert[] ="  , :lngsortkey ";                  //22:表示用ソートキー
+        $aryInsert[] = "  " . $v_lngslipno;                      //1:納品伝票番号
+        $aryInsert[] = " ," . $v_lngslipdetailno;                //2:納品伝票明細番号
+        $aryInsert[] = " ," . $v_lngrevisionno;                  //3:リビジョン番号
+        $aryInsert[] = " ," . $v_strcustomersalescode;           //4:顧客受注番号
+        $aryInsert[] = " ," . $v_lngsalesclasscode;              //5:売上区分コード
+        $aryInsert[] = " ," . $v_strsalesclassname;              //6:売上区分名
+        $aryInsert[] = " ," . $v_strgoodscode;                   //7:顧客品番
+        $aryInsert[] = " ," . $v_strproductcode;                 //8:製品コード
+        $aryInsert[] = " ," . $v_strrevisecode;                  //9:再販コード
+        $aryInsert[] = " ," . $v_strproductname;                 //10:製品名
+        $aryInsert[] = " ," . $v_strproductenglishname;          //11:製品名（英語）
+        $aryInsert[] = " ," . $v_curproductprice;                //12:単価
+        $aryInsert[] = " ," . $v_lngquantity;                    //13:入数
+        $aryInsert[] = " ," . $v_lngproductquantity;             //14:数量
+        $aryInsert[] = " ," . $v_lngproductunitcode;             //15:製品単位コード
+        $aryInsert[] = " ," . $v_strproductunitname;             //16:製品単位名
+        $aryInsert[] = " ," . $v_cursubtotalprice;               //17:小計
+        $aryInsert[] = " ," . $v_strnote;                        //18:明細備考
+        $aryInsert[] = " ," . $v_lngreceiveno;                   //19:受注番号
+        $aryInsert[] = " ," . $v_lngreceivedetailno;             //20:受注明細番号
+        $aryInsert[] = " ," . $v_lngreceiverevisionno;           //21:受注リビジョン番号
+        $aryInsert[] = " ," . $v_lngsortkey;                     //22:表示用ソートキー
         $aryInsert[] =") ";
-
-        // 文字列置換による疑似パラメータバインド
-        $strQuery = str_replace(":lngslipno", $value, $strQuery);                  //1:納品伝票番号
-        $strQuery = str_replace(":lngslipdetailno", $value, $strQuery);            //2:納品伝票明細番号
-        $strQuery = str_replace(":lngrevisionno", $value, $strQuery);              //3:リビジョン番号
-        $strQuery = str_replace(":strcustomersalescode", $value, $strQuery);       //4:顧客受注番号
-        $strQuery = str_replace(":lngsalesclasscode", $value, $strQuery);          //5:売上区分コード
-        $strQuery = str_replace(":strsalesclassname", $value, $strQuery);          //6:売上区分名
-        $strQuery = str_replace(":strgoodscode", $value, $strQuery);               //7:顧客品番
-        $strQuery = str_replace(":strproductcode", $value, $strQuery);             //8:製品コード
-        $strQuery = str_replace(":strrevisecode", $value, $strQuery);              //9:再販コード
-        $strQuery = str_replace(":strproductname", $value, $strQuery);             //10:製品名
-        $strQuery = str_replace(":strproductenglishname", $value, $strQuery);      //11:製品名（英語）
-        $strQuery = str_replace(":curproductprice", $value, $strQuery);            //12:単価
-        $strQuery = str_replace(":lngquantity", $value, $strQuery);                //13:入数
-        $strQuery = str_replace(":lngproductquantity", $value, $strQuery);         //14:数量
-        $strQuery = str_replace(":lngproductunitcode", $value, $strQuery);         //15:製品単位コード
-        $strQuery = str_replace(":strproductunitname", $value, $strQuery);         //16:製品単位名
-        $strQuery = str_replace(":cursubtotalprice", $value, $strQuery);           //17:小計
-        $strQuery = str_replace(":strnote", $value, $strQuery);                    //18:明細備考
-        $strQuery = str_replace(":lngreceiveno", $value, $strQuery);               //19:受注番号
-        $strQuery = str_replace(":lngreceivedetailno", $value, $strQuery);         //20:受注明細番号
-        $strQuery = str_replace(":lngreceiverevisionno", $value, $strQuery);       //21:受注リビジョン番号
-        $strQuery = str_replace(":lngsortkey", $value, $strQuery);                 //22:表示用ソートキー
-                
 
         // 登録実行
         $strQuery = "";
@@ -768,19 +794,6 @@ function fncRegisterSlipDetail($itemMinIndex, $itemMaxIndex, $lngSlipNo, $lngRev
 
 	// 成功
 	return true;
-}
-// --------------------------------
-// パラメータバインド用ヘルパ関数
-// --------------------------------
-// 直接置換
-function bindDirect($parameterName, $bindValue, $strQuery)
-{
-    return str_replace($parameterName, $bindValue, $strQuery);
-}
-// シングルクォートで囲んでから置換
-function bindWithQuote($parameterName, $bindValue, $strQuery)
-{
-    return str_replace($parameterName, "'".$bindValue."'", $strQuery);
 }
 
 
