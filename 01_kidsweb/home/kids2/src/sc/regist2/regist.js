@@ -171,6 +171,15 @@ jQuery(function($){
         //備考（明細登録用）
         td = $(tr).find($('td.detailNote')).clone();
         $(editTr).append($(td));
+        //通貨単位コード（明細登録用）
+        td = $(tr).find($('td.detailMonetaryUnitCode')).clone();
+        $(editTr).append($(td));
+        //通貨レートコード（明細登録用）
+        td = $(tr).find($('td.detailMonetaryRateCode')).clone();
+        $(editTr).append($(td));
+        //通貨単位記号（明細登録用）
+        td = $(tr).find($('td.detailMonetaryUnitSign')).clone();
+        $(editTr).append($(td));
         
         // 出力明細テーブルに明細を追加
         $(tbody).append($(editTr));
@@ -354,7 +363,7 @@ jQuery(function($){
         return true;
     }
 
-    // ヘッダ部・フッタ部入力エリアのPOST用データ作成
+    // ヘッダ部・フッタ部入力エリアのPOST用データ収集
     function getUpdateHeader(){
         
         var result = {
@@ -377,6 +386,7 @@ jQuery(function($){
             strNote:                   $('input[name="strNote"]').val(),
             //消費税区分
             lngTaxClassCode:           $('select[name="lngTaxClassCode"]').children('option:selected').val(),
+            strTaxClassName:           $('select[name="lngTaxClassCode"]').children('option:selected').text(),
             //消費税率
             lngTaxRate:                $('select[name="lngTaxRate"]').children('option:selected').text(),
             //消費税額
@@ -392,7 +402,7 @@ jQuery(function($){
         return result;
     }
 
-    // 出力明細一覧エリアのPOST用データ作成
+    // 出力明細一覧エリアのPOST用データ収集
     function getUpdateDetail(){
         var result = [];
         $.each($('#EditTableBody tr'), function(i, tr){
@@ -439,6 +449,12 @@ jQuery(function($){
                 lngproductunitcode: $(tr).children('.detailProductUnitCode').text(),
                 //備考（明細登録用）
                 strnote: $(tr).children('.detailNote').text(),
+                //通貨単位コード（明細登録用）
+                lngmonetaryunitcode: $(tr).children('.detailMonetaryUnitCode').text(),
+                //通貨レートコード（明細登録用）
+                lngmonetaryratecode: $(tr).children('.detailMonetaryRateCode').text(),
+                //通貨単位記号（明細登録用）
+                strmonetaryunitsign: $(tr).children('.detailMonetaryUnitSign').text(),
             };
             result.push(param);
         });

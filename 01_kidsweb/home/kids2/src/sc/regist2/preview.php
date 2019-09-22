@@ -257,20 +257,17 @@
 	//    プレビュー表示
 	// --------------------------------
 
-
 	return true;
 
 	function EncodeToJson($object){
-		$json = json_encode($object, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
-		$json = htmlspecialchars($json, ENT_QUOTES, 'UTF-8');
+		$json = base64_encode(json_encode($object));
 		return $json;
 	}
 
 	function DecodeFromJson($json){
-		$object = json_decode($json, true);
+		$object = json_decode(base64_decode($json), true);
 		return $object;
 	}
-
 
 	// エラー画面への遷移
 	function MoveToErrorPage($strMessage){

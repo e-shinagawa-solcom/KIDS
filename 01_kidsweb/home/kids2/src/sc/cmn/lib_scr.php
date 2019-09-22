@@ -86,7 +86,10 @@ function fncGetReceiveDetail($aryCondition, $objDB)
     $arySelect[] = "  rd.lngreceiveno,";                           //受注番号（明細登録用）
     $arySelect[] = "  rd.lngreceivedetailno,";                     //受注明細番号（明細登録用）
     $arySelect[] = "  rd.lngrevisionno,";                          //リビジョン番号（明細登録用）
-    $arySelect[] = "  rd.strnote";                                 //備考（明細登録用）
+    $arySelect[] = "  rd.strnote,";                                //備考（明細登録用）
+    $arySelect[] = "  r.lngmonetaryunitcode,";                     //通貨単位コード（明細登録用）
+    $arySelect[] = "  r.lngmonetaryratecode,";                      //通貨レートコード（明細登録用）
+    $arySelect[] = "  mu.strmonetaryunitsign";                    //通貨単位記号（明細登録用）
     $arySelect[] = " FROM";
     $arySelect[] = "  t_receivedetail rd ";
     $arySelect[] = "    LEFT JOIN m_receive r ON rd.lngreceiveno=r.lngreceiveno";
@@ -95,6 +98,7 @@ function fncGetReceiveDetail($aryCondition, $objDB)
     $arySelect[] = "    LEFT JOIN m_productunit pu ON rd.lngproductunitcode = pu.lngproductunitcode";
     $arySelect[] = "    LEFT JOIN m_product p2 ON rd.strproductcode = p2.strproductcode and rd.strrevisecode = p2.strrevisecode";
     $arySelect[] = "    LEFT JOIN m_group g ON p2.lnginchargegroupcode = g.lnggroupcode";
+    $arySelect[] = "    LEFT JOIN m_monetaryunit mu ON r.lngmonetaryunitcode = mu.lngmonetaryunitcode";
   
     // -------------------
     //  検索条件設定
@@ -274,6 +278,15 @@ function fncGetReceiveDetailHtml($aryReceiveDetail){
         //備考（明細登録用）
         $strDisplayValue = htmlspecialchars($aryReceiveDetail[$i]["strnote"]);
         $strHtml .= "<td class='forEdit detailNote'>" . $strDisplayValue . "</td>";
+        //通貨単位コード（明細登録用）
+        $strDisplayValue = htmlspecialchars($aryReceiveDetail[$i]["lngmonetaryunitcode"]);
+        $strHtml .= "<td class='forEdit detailMonetaryUnitCode'>" . $strDisplayValue . "</td>";
+        //通貨レートコード（明細登録用）
+        $strDisplayValue = htmlspecialchars($aryReceiveDetail[$i]["lngmonetaryratecode"]);
+        $strHtml .= "<td class='forEdit detailMonetaryRateCode'>" . $strDisplayValue . "</td>";
+        //通貨単位記号（明細登録用）
+        $strDisplayValue = htmlspecialchars($aryReceiveDetail[$i]["strmonetaryunitsign"]);
+        $strHtml .= "<td class='forEdit detailMonetaryUnitSign'>" . $strDisplayValue . "</td>";
         
         $strHtml .= "</tr>";
     }
