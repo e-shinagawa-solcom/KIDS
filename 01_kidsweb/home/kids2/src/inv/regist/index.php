@@ -168,12 +168,6 @@
         $baseMonth = date('m', strtotime($dtminvoicedate));
         // システム日付で算出した締め日の前後1ヶ月以内
         $closeDay = fncGetCompanyClosedDay($insertData['strcustomercode'], null, $objDB);
-        // 締め日の取得に失敗
-        if(empty($closeDay))
-        {
-            MoveToErrorPage("締め日の取得ができませんでした。");
-        }
-
         $baseDateTime = new DateTime($closeDay);
         foreach($aryDeliveryDate as $date){
             $deliveryDateTiem = new DateTime($date);
