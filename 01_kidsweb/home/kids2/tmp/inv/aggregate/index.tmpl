@@ -1,0 +1,96 @@
+<config>
+<header1>
+    <link rel="stylesheet" href="/search/cmn/form/css/forms.css">
+    <link rel="stylesheet" href="/search/cmn/form/css/tabs.css">
+    <link rel="stylesheet" href="/search/cmn/navigate/css/navigate.css">
+    <link rel="stylesheet" href="/inv/cmn/form/css/forms.css">
+    <!-- COOKIE関連の処理(検索画面) -->
+    <script src="/search/cmn/search/js/cookie-functions.js" defer></script>
+</header1>
+
+<header2>
+</header2>
+
+<header3>
+    <!-- フォームボタン css -->
+    <link rel="stylesheet" href="/search/cmn/css/form-buttons.css">
+    <!-- COOKIE 表示チェックボックス 保存/復元 -->
+    <script src="/search/cmn/js/cookie-display-items.js" defer></script>
+    <!-- キーバインド -->
+    <script src="/search/cmn/js/key-bind.js" defer></script>
+</header3>
+
+<bodyonload>
+</bodyonload>
+</config>
+
+<!-- 左サイドバー ナビゲート -->
+<div class="navigation-loadpoint">
+    <script>
+        $('.navigation-loadpoint').load('/inv/cmn/navigate/inv_navi.html');
+    </script>
+</div>
+
+<!-- 入力フォーム -->
+<div class="form-box--notabs-for-aggregate">
+    <!-- フォームヘッダ -->
+    <div class="form-box__header">
+        <p class="form-box__header__title">請求集計</p>
+    </div>
+    <!-- フォームコンテンツ -->
+    <div class="form-box__contents--with-scroll"  style="overflow-y: initial;">
+        <form name="aggrest" method="post"  onsubmit="checkText()">
+            <input type="submit">
+            <div class="aggregate-box-area">
+                <div class="aggregate-box">
+                    <span class="regist-label w240">
+                        <span class="regist-label__text50">請求月</span>
+                        <select id="invoiceMonth"  class="w120" name="invoiceMonth"  ></select>
+                        <span class="regist-label__bold">月分</span>
+                    </span>
+                </div>
+                <div class="aggregate-box">
+                    <img class="button" src="/img/type01/inv/total_on_ja_bt.gif"  alt="help" onclick="checkText();">
+                </div>
+                <div class="aggregate-error-msg">
+                    <span id="errMsg">_%noDataMsg%_</span>
+                </div>
+            </div>
+
+            <input type="hidden" name="ActionScriptName"   value="_%ActionScriptName%_">
+            <input type="hidden" name="strSessionID"       value="_%strSessionID%_">
+            <input type="hidden" name="strMode"            value="export" >
+        </form>
+    </div>
+</div>
+<script>
+    // 請求月のセレクトBOX
+    function setMonthSelectBox() {
+    	var start = new Date('2019-04-01');
+        var today = new Date();
+        var mm = today.getFullYear()+ '-' + (today.getMonth()+1);
+        // 来月分まで選択可能にする。
+        today.setMonth(today.getMonth() +1);
+        //月
+        var month = "<select>";
+        for (; start<=today; today.setMonth(today.getMonth() -1) ) {
+        	let date = today.getFullYear() + '年 ' + (today.getMonth()+1) + '月';
+        	let val  = today.getFullYear() + '-' + (today.getMonth()+1);
+            if( val == mm) {
+                month += '<option value=\"' + val + '\" selected >' + date + '</option>';
+            } else {
+                month += '<option value=\"' + val + '\" >' + date + '</option>';
+            }
+        }
+        month += '</select>';
+        $('#invoiceMonth').html(month + "月");
+    };
+    setMonthSelectBox();
+
+    // submit
+    function checkText() {
+        $('#errMsg').text('');
+        document.aggrest.submit();
+    }
+
+</script>
