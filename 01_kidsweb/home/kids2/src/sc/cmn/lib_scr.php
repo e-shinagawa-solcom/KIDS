@@ -88,11 +88,12 @@ function fncGetReceiveDetail($aryCondition, $objDB)
     $arySelect[] = "  rd.lngrevisionno,";                          //リビジョン番号（明細登録用）
     $arySelect[] = "  rd.strnote,";                                //備考（明細登録用）
     $arySelect[] = "  r.lngmonetaryunitcode,";                     //通貨単位コード（明細登録用）
-    $arySelect[] = "  r.lngmonetaryratecode,";                      //通貨レートコード（明細登録用）
-    $arySelect[] = "  mu.strmonetaryunitsign";                    //通貨単位記号（明細登録用）
+    $arySelect[] = "  r.lngmonetaryratecode,";                     //通貨レートコード（明細登録用）
+    $arySelect[] = "  mu.strmonetaryunitsign";                     //通貨単位記号（明細登録用）
     $arySelect[] = " FROM";
     $arySelect[] = "  t_receivedetail rd ";
     $arySelect[] = "    LEFT JOIN m_receive r ON rd.lngreceiveno=r.lngreceiveno";
+    $arySelect[] = "    LEFT JOIN m_company c ON r.lngcustomercompanycode = c.lngcompanycode";
     $arySelect[] = "    LEFT JOIN m_product p ON rd.strproductcode = p.strproductcode";
     $arySelect[] = "    LEFT JOIN m_salesclass sc ON rd.lngsalesclasscode = sc.lngsalesclasscode";
     $arySelect[] = "    LEFT JOIN m_productunit pu ON rd.lngproductunitcode = pu.lngproductunitcode";
@@ -107,8 +108,8 @@ function fncGetReceiveDetail($aryCondition, $objDB)
     $aryWhere[] = "  r.lngreceivestatuscode = 2";   //受注ステータス=2:受注
 
     // 顧客（コードで検索）
-    if ($aryCondition["lngCustomerCode"]){
-        $aryWhere[] = " AND r.lngcustomercompanycode = '" . $aryCondition["lngCustomerCode"] . "'";
+    if ($aryCondition["strCompanyDisplayCode"]){
+        $aryWhere[] = " AND c.strcompanydisplaycode = '" . $aryCondition["strCompanyDisplayCode"] . "'";
     }    
 
     // 顧客受注番号

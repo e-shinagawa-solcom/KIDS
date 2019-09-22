@@ -36,8 +36,8 @@ jQuery(function($){
         
         // 検索条件を変数にセット
         var search_condition = {
-            lngCustomerCode: $('input[name="lngCustomerCode"]').val(),
-            strCustomerName: $('input[name="strCustomerName"]').val(),
+            strCompanyDisplayCode: $('input[name="lngCustomerCode"]').val(),
+            strCompanyDisplayName: $('input[name="strCustomerName"]').val(),
             strCustomerReceiveCode: $('input[name="strCustomerReceiveCode"]').val(),
             lngReceiveNo: $('input[name="lngReceiveNo"]').val(),
             strReceiveDetailProductCode: $('input[name="strReceiveDetailProductCode"]').val(),

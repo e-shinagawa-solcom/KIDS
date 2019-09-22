@@ -5,18 +5,18 @@
 // 検索条件入力画面で入力された値の設定（検索条件入力画面より呼び出される）
 function SetSearchConditionWindowValue(search_condition) {
     // 顧客
-    $('input[name="lngCustomerCode"]').val(search_condition.lngCustomerCode);
-    $('input[name="strCustomerName"]').val(search_condition.strCustomerName);
+    $('input[name="lngCustomerCode"]').val(search_condition.strCompanyDisplayCode);
+    $('input[name="strCustomerName"]').val(search_condition.strCompanyDisplayName);
 
     // 顧客に紐づく国コードによって消費税区分のプルダウンを変更する
-    if(search_condition.lngCustomerCode != ""){
+    if(search_condition.strCompanyDisplayCode != ""){
         $.ajax({
             type: 'POST',
             url: 'index.php',
             data: {
                 strMode : "get-lngcountrycode",
                 strSessionID: $('input[name="strSessionID"]').val(),
-                strcompanydisplaycode: search_condition.lngCustomerCode,
+                strCompanyDisplayCode: search_condition.strCompanyDisplayCode,
             },
             async: true,
         }).done(function(data){
@@ -371,8 +371,8 @@ jQuery(function($){
             lngInsertUserCode:         $('input[name="lngInsertUserCode"]').val(),
             strInsertUserName:         $('input[name="strInsertUserName"]').val(),
             //顧客
-            lngCustomerCode:           $('input[name="lngCustomerCode"]').val(),
-            strCustomerName:           $('input[name="strCustomerName"]').val(),
+            strCompanyDisplayCode:     $('input[name="lngCustomerCode"]').val(),
+            strCompanyDisplayName:     $('input[name="strCustomerName"]').val(),
             //顧客担当者
             strCustomerResponder:      $('input[name="strCustomerResponder"]').val(),
             //納品日

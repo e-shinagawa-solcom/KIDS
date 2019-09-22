@@ -86,7 +86,7 @@
 	//-------------------------------------------------------------------------
 	if ($strMode == "get-lngcountrycode"){
 		// 顧客コード
-		$strCompanyDisplayCode = $_POST["strcompanydisplaycode"];
+		$strCompanyDisplayCode = $_POST["strCompanyDisplayCode"];
 		// 国コード取得
 		$lngCountryCode = fncGetMasterValue( "m_company", "strcompanydisplaycode", "lngcountrycode", "$strCompanyDisplayCode:str", '', $objDB);
 		// データ返却
