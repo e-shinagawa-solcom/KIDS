@@ -122,11 +122,12 @@
 		// トランザクション開始
 		$objDB->transactionBegin();
 
+		/*
 		if (!fncRegisterSalesAndSlip($aryHeader , $aryDetail, $objDB, $objAuth))
 		{
 			fncOutputError ( 9051, DEF_FATAL, "売上（納品書）登録失敗", TRUE, "", $objDB );
 		}
-
+		*/
 
 		// コミット
 		$objDB->transactionCommit();
