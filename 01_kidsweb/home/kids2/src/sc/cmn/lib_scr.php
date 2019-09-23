@@ -476,9 +476,9 @@ function fncGetConversionRateByReceiveData($lngReceiveNo, $lngReceiveRevisionNo,
 }
 
 // 納品書NOの発行
-function fncPublishSlipCode($dtmNowDate, $objDB)
+function fncPublishSlipCode($dtmPublishDate, $objDB)
 {
-    $strYYYYMM = substr($dtmNowDate, 0, 4) . substr($dtmNowDate, 5, 2);
+    $strYYYYMM = substr($dtmPublishDate, 0, 4) . substr($dtmPublishDate, 5, 2);
 
     $strQuery = ""
         . "SELECT"
@@ -507,8 +507,8 @@ function fncPublishSlipCode($dtmNowDate, $objDB)
         $lngNumber = intval($aryResult["nn"]);
         $lngNumber += 1;
     }else{
-        // 当日1件目は nn='00' で開始
-        $lngNumber = 0;
+        // 当日1件目は nn='01' で開始
+        $lngNumber = 1;
     }
 
     $strNN = sprintf("%02d", $lngNumber);
@@ -529,7 +529,7 @@ function fncRegisterSalesAndSlip($aryHeader, $aryDetail, $objDB, $objAuth)
     // 登録する明細の数
     $totalItemCount = count($aryDetail);
 
-    // 顧客コードを取得（表示用→数値）
+    // 顧客コードを取得（表示用->数値）
     $lngCompanyCode = fncGetNumericCompanyCode($aryHeader["strcompanydisplaycode"], $objDB);
 
     
