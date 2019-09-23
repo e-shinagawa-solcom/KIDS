@@ -131,6 +131,10 @@
 	$oneMonthLater = $nowDate->modify('+1 month');
 	$aryData["dtmPaymentDueDate"] = $oneMonthLater->format('Y/m/d');
 
+	// 支払方法プルダウン
+	$optPaymentMethod .= fncGetPulldown("m_paymentmethod","lngpaymentmethodcode","strpaymentmethodname", "", "", $objDB);
+	$aryData["optPaymentMethod"] = $optPaymentMethod;
+
 	// 消費税区分プルダウン
 	$optTaxClass .= fncGetPulldown("m_taxclass","lngtaxclasscode","strtaxclassname", "", "", $objDB);
 	$aryData["optTaxClass"] = $optTaxClass;
