@@ -1120,5 +1120,308 @@ function fncRegisterSlipDetail($itemMinIndex, $itemMaxIndex, $lngSlipNo, $lngRev
 	return true;
 }
 
+// 帳票種別に対応する帳票テンプレートファイル名の取得
+function fncGetReportTemplateFileName($lngSlipKindCode)
+{
+
+    if ($lngSlipKindCode == "1")
+    {
+        //1:指定・専用
+        return "納品書temple_B社_連絡書付.xlsx";
+    }
+    else if ($lngSlipKindCode == "2")
+    {
+        //2:市販
+        return "納品書temple_市販_連絡書付.xlsx";
+    }
+    else if ($lngSlipKindCode == "3")
+    {
+        //3:DEBIT NOTE
+        return "DEBIT NOTE.xlsx";
+    }
+    else 
+    {
+        throw new Exception("帳票テンプレートを特定できません。lngSlipKindCode=".$lngSlipKindCode);
+    }
+}
+
+// 文字コード EUC-JP -> UTF-8 変換用ヘルパ関数
+function fncToUtf8($eucjpText)
+{
+    return mb_convert_encoding($eucjpText, 'UTF-8','EUC-JP' );
+}
+
+// 文字コード UTF-8 -> EUC-JP 変換用ヘルパ関数
+function fncToEucjp($utf8Text)
+{
+    return mb_convert_encoding($utf8Text, 'EUC-JP', 'UTF-8' );
+}
+
+// 指定アドレスのセルに値をセットするヘルパ関数
+function setCellValue($xlWorkSheet, $address, $value)
+{
+    //$value = fncToUtf8($value);
+    $xlWorkSheet->GetCell($address)->SetValue($value);
+}
+
+// 行を変えながらセルに値をセットするヘルパ関数
+function setCellDetailValue($xlWorkSheet, $columnAddress, $rowNumber, $value)
+{
+    $address = $columnAddress . $rowNumber;
+    //$value = fncToUtf8($value);
+    $xlWorkSheet->GetCell($address)->SetValue($value);
+}
+
+// テストコード（削除可）
+function fncGeneratePreviewTestCode($aryHeader, $aryDetail, $objDB)
+{
+    ini_set('default_charset', 'UTF-8');
+    fncCalled($aryHeader);
+    $file = mb_convert_encoding(REPORT_TMPDIR.'\納品書temple_B社_連絡書付.xlsx', 'UTF-8','EUC-JP' );
+    $sheetname = mb_convert_encoding('B社専用', 'UTF-8','EUC-JP' );
+    $cellValue = mb_convert_encoding('個別に値をセット', 'UTF-8','EUC-JP' );
+    $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($file);
+
+    $ws = $spreadsheet->GetSheetByName($sheetname);
+    $ws->GetCell('C3')->SetValue($cellValue);
+
+    $writer = new \PhpOffice\PhpSpreadsheet\Writer\Html($spreadsheet);
+    
+    $outStyle = $writer->generateStyles(true);
+    $outSheetData = $writer->generateSheetData();
+
+    $aryPreview["PreviewStyle"] = mb_convert_encoding($outStyle, 'EUC-JP', 'UTF-8');
+    $aryPreview["PreviewData"] = mb_convert_encoding($outSheetData, 'EUC-JP', 'UTF-8');
+
+    return $aryPreview;
+}
+
+// プレビューHTMLを生成する
+function fncGenerateReportPreview($aryHeader, $aryDetail, $objDB)
+{
+    // --------------------------------------------
+    //  データ取得
+    // --------------------------------------------
+    // 顧客の会社コードを取得
+    $lngCustomerCompanyCode = fncGetNumericCompanyCode($aryHeader["strcompanydisplaycode"], $objDB);
+    // 顧客の会社コードに紐づく納品伝票種別を取得
+    $aryReport = fncGetSlipKindByCompanyCode($lngCustomerCompanyCode, $objDB);
+    
+    // 帳票種別の取得
+    $lngSlipKindCode = $aryReport["lngslipkindcode"];
+    // 帳票種別に対応する帳票テンプレートファイル名の取得
+    $templatFileName = fncGetReportTemplateFileName($lngSlipKindCode);
+    // 顧客に紐づく帳票1ページあたりの最大明細数を取得する
+    $maxItemPerPage = intval($aryReport["lngmaxline"]);
+    // 登録する全明細の数
+    $totalItemCount = count($aryDetail);
+    // 最大ページ数の計算
+    $maxPageCount = ceil($totalItemCount / $maxItemPerPage);
+
+    // 顧客の会社コードに紐づく会社情報を取得
+    $aryCustomerCompany = fncGetCompanyInfoByCompanyCode($lngCustomerCompanyCode, $objDB);
+    // 顧客の国コードを取得
+    $lngCustomerCountryCode = fncGetCountryCode($aryHeader["strcompanydisplaycode"], $objDB);
+    // 顧客社名の取得
+    $strCustomerCompanyName = fncGetCustomerCompanyName($lngCustomerCountryCode, $aryCustomerCompany);
+    // 顧客名の取得
+    $strCustomerName = fncGetCustomerName($aryCustomerCompany);
+    // 納品先の会社コードの取得
+    $lngDeliveryPlaceCode = fncGetNumericCompanyCode($aryHeader["strdeliveryplacecompanydisplaycode"], $objDB);
+
+    // --------------------------------------------
+    //  スプレッドシート初期化
+    // --------------------------------------------
+    // 日本語対応
+    ini_set('default_charset', 'UTF-8');
+    // 帳票テンプレートのフルパス
+    $spreadSheetFilePath = fncToUtf8(REPORT_TMPDIR . $templatFileName);
+    // データを設定するシート名
+    $dataSheetName = fncToUtf8("データ設定用");
+
+    // --------------------------------------------
+    //  プレビューHTML生成
+    // --------------------------------------------
+    // プレビュー用CSS
+    $previewStyle = "";
+    // プレビューHTML
+    $previewData = "";
+
+    // ページ単位でのHTML生成
+    for ( $page = 1; $page <= $maxPageCount; $page++ ){
+
+        // 確実に初期化するため1ページ毎にスプレッドシートを読み込みなおす
+        $xlSpreadSheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($spreadSheetFilePath);
+        $xlWorkSheet = $xlSpreadSheet->GetSheetByName($dataSheetName);
+        $xlWriter = new \PhpOffice\PhpSpreadsheet\Writer\Html($xlSpreadSheet);
+
+        if (strlen($previewStyle) == 0)
+        {
+            // CSSは全体で1つあればよい
+            $previewStyle = $xlWriter->generateStyles(true);
+        }
+
+        // 現在のページ数と1ページあたりの明細数から
+        // 出力する明細のインデックスの最小値と最大値を求める
+        $itemMinIndex = ($page-1) * $maxItemPerPage ;
+        $itemMaxIndex = $page * $maxItemPerPage - 1;
+        if ($itemMaxIndex > $totalItemCount - 1){
+            $itemMaxIndex = $totalItemCount - 1;
+        }
+
+        // 1ページ分のプレビューHTML生成
+        $pageHtml = fncGeneratePreviewPageHtml(
+            $xlWorkSheet, $xlWriter,
+            $itemMinIndex, $itemMaxIndex, $strCustomerCompanyName, 
+            $strCustomerName, $aryCustomerCompany, $lngDeliveryPlaceCode,
+            $aryHeader, $aryDetail);
+
+        // 全体に追加
+        $previewData .= $pageHtml;
+       
+    }
+
+    // 最後にUTF-8からEUC-JPに変換した結果をセット
+    $aryPreview = array();
+    $aryPreview["PreviewStyle"] = fncToEucjp($previewStyle);
+    $aryPreview["PreviewData"] = fncToEucjp($previewData);
+
+    return $aryPreview;
+
+}
+
+// 納品書データから帳票プレビューHTML生成
+function fncGeneratePreviewPageHtml(
+    $xlWorkSheet, $xlWriter,
+    $itemMinIndex, $itemMaxIndex, $strCustomerCompanyName, 
+    $strCustomerName, $aryCustomerCompany, $lngDeliveryPlaceCode,
+    $aryHeader, $aryDetail)
+{
+    // ------------------------------------------
+    //   マスタデータのセット
+    // ------------------------------------------
+    // 値の設定
+    $v_lngslipno = "";                                                      //1:納品伝票番号
+    $v_lngrevisionno = "";                                                  //2:リビジョン番号
+    $v_strslipcode = "";                                                    //3:納品伝票コード
+    $v_lngsalesno = "";                                                     //4:売上番号
+    $v_strcustomercode = $aryCustomerCompany["lngcompanycode"];             //5:顧客コード
+    $v_strcustomercompanyname = $strCustomerCompanyName;                    //6:顧客社名
+    $v_strcustomername = $strCustomerName;                                  //7:顧客名
+    $v_strcustomeraddress1 = $aryCustomerCompany["straddress1"];            //8:顧客住所1
+    $v_strcustomeraddress2 = $aryCustomerCompany["straddress2"];            //9:顧客住所2
+    $v_strcustomeraddress3 = $aryCustomerCompany["straddress3"];            //10:顧客住所3
+    $v_strcustomeraddress4 = $aryCustomerCompany["straddress4"];            //11:顧客住所4
+    $v_strcustomerphoneno = $aryCustomerCompany["strtel1"];                 //12:顧客電話番号
+    $v_strcustomerfaxno = $aryCustomerCompany["strfax1"];                   //13:顧客FAX番号
+    $v_strcustomerusername = $aryHeader["strcustomerusername"];             //14:顧客担当者名
+    $v_dtmdeliverydate = $aryHeader["dtmdeliverydate"];                     //15:納品日
+    $v_lngdeliveryplacecode = $lngDeliveryPlaceCode;                        //16:納品場所コード
+    $v_strdeliveryplacename = $aryHeader["strdeliveryplacename"];           //17:納品場所名
+    $v_strdeliveryplaceusername = $aryHeader["strdeliveryplaceusername"];   //18:納品場所担当者名
+    $v_strusercode =  $aryHeader["strdrafteruserdisplaycode"];              //19:担当者コード
+    $v_strusername = $aryHeader["strdrafteruserdisplayname"];               //20:担当者名
+    $v_curtotalprice = $aryHeader["curtotalprice"];                         //21:合計金額
+    $v_lngmonetaryunitcode = $aryDetail[0]["lngmonetaryunitcode"];          //22:通貨単位コード
+    $v_strmonetaryunitsign = $aryDetail[0]["strmonetaryunitsign"];          //23:通貨単位
+    $v_lngtaxclasscode = $aryHeader["lngtaxclasscode"];                     //24:課税区分コード
+    $v_strtaxclassname = $aryHeader["strtaxclassname"];                     //25:課税区分
+    $v_curtax = $aryHeader["lngtaxrate"];                                   //26:消費税率
+    $v_lngpaymentmethodcode = $$aryHeader["lngpaymentmethodcode"];          //27:支払方法コード
+    $v_dtmpaymentlimit = $aryHeader["dtmpaymentlimit"];                     //28:支払期限
+    $v_dtminsertdate = "";                                                  //29:作成日
+    $v_strnote = $aryHeader["strNote"];                                     //30:備考
+    $v_strshippercode = $aryCustomerCompany["strstockcompanycode"];         //31:仕入先コード（出荷者）
+
+    // セルに値をセット
+    setCellValue($xlWorkSheet, "B3", $v_lngslipno);                         //1:納品伝票番号
+    setCellValue($xlWorkSheet, "C3", $v_lngrevisionno);                     //2:リビジョン番号
+    setCellValue($xlWorkSheet, "D3", $v_strslipcode);                       //3:納品伝票コード
+    setCellValue($xlWorkSheet, "E3", $v_lngsalesno);                        //4:売上番号
+    setCellValue($xlWorkSheet, "F3", $v_strcustomercode);                   //5:顧客コード
+    setCellValue($xlWorkSheet, "G3", $v_strcustomercompanyname);            //6:顧客社名
+    setCellValue($xlWorkSheet, "H3", $v_strcustomername);                   //7:顧客名
+    setCellValue($xlWorkSheet, "I3", $v_strcustomeraddress1);               //8:顧客住所1
+    setCellValue($xlWorkSheet, "J3", $v_strcustomeraddress2);               //9:顧客住所2
+    setCellValue($xlWorkSheet, "K3", $v_strcustomeraddress3);               //10:顧客住所3
+    setCellValue($xlWorkSheet, "L3", $v_strcustomeraddress4);               //11:顧客住所4
+    setCellValue($xlWorkSheet, "M3", $v_strcustomerphoneno);                //12:顧客電話番号
+    setCellValue($xlWorkSheet, "N3", $v_strcustomerfaxno);                  //13:顧客FAX番号
+    setCellValue($xlWorkSheet, "O3", $v_strcustomerusername);               //14:顧客担当者名
+    setCellValue($xlWorkSheet, "P3", $v_dtmdeliverydate);                   //15:納品日
+    setCellValue($xlWorkSheet, "Q3", $v_lngdeliveryplacecode);              //16:納品場所コード
+    setCellValue($xlWorkSheet, "R3", $v_strdeliveryplacename);              //17:納品場所名
+    setCellValue($xlWorkSheet, "S3", $v_strdeliveryplaceusername);          //18:納品場所担当者名
+    setCellValue($xlWorkSheet, "T3", $v_strusercode);                       //19:担当者コード
+    setCellValue($xlWorkSheet, "U3", $v_strusername);                       //20:担当者名
+    setCellValue($xlWorkSheet, "V3", $v_curtotalprice);                     //21:合計金額
+    setCellValue($xlWorkSheet, "W3", $v_lngmonetaryunitcode);               //22:通貨単位コード
+    setCellValue($xlWorkSheet, "X3", $v_strmonetaryunitsign);               //23:通貨単位
+    setCellValue($xlWorkSheet, "Y3", $v_lngtaxclasscode);                   //24:課税区分コード
+    setCellValue($xlWorkSheet, "Z3", $v_strtaxclassname);                   //25:課税区分
+    setCellValue($xlWorkSheet, "AA3", $v_curtax);                           //26:消費税率
+    setCellValue($xlWorkSheet, "AB3", $v_lngpaymentmethodcode);             //27:支払方法コード
+    setCellValue($xlWorkSheet, "AC3", $v_dtmpaymentlimit);                  //28:支払期限
+    setCellValue($xlWorkSheet, "AD3", $v_dtminsertdate);                    //29:作成日
+    setCellValue($xlWorkSheet, "AE3", $v_strnote);                          //30:備考
+    setCellValue($xlWorkSheet, "AF3", $v_strshippercode);                   //31:仕入先コード（出荷者）
+    
+    // ------------------------------------------
+    //   明細データのセット
+    // ------------------------------------------
+    // 明細データをセットする開始行
+    $startRowIndex = 6;
+    for ( $i = $itemMinIndex; $i <= $itemMaxIndex; $i++ )
+    {
+        $d = $aryDetail[$i];
+        
+        // 値の設定
+        $v_lngslipno = "";                                                         //1:納品伝票番号
+        $v_lngslipdetailno = $d["rownumber"];                                      //2:納品伝票明細番号
+        $v_lngrevisionno = "";                                                     //3:リビジョン番号
+        $v_strcustomersalescode = $d["strcustomerreceivecode"];                    //4:顧客受注番号
+        $v_lngsalesclasscode = $d["lngsalesclasscode"];                            //5:売上区分コード
+        $v_strsalesclassname = $d["strsalesclassname"];                            //6:売上区分名
+        $v_strgoodscode = $d["strgoodscode"];                                      //7:顧客品番
+        $v_strproductcode = $d["strproductcode"];                                  //8:製品コード
+        $v_strrevisecode = $d["strrevisecode"];                                    //9:再販コード
+        $v_strproductname = $d["strproductname"];                                  //10:製品名
+        $v_strproductenglishname = $d["strproductenglishname"];                    //11:製品名（英語）
+        $v_curproductprice = $d["curproductprice"];                                //12:単価
+        $v_lngquantity = $d["lngunitquantity"];                                    //13:入数
+        $v_lngproductquantity = $d["lngproductquantity"];                          //14:数量
+        $v_lngproductunitcode = $d["lngproductunitcode"];                          //15:製品単位コード
+        $v_strproductunitname = $d["strproductunitname"];                          //16:製品単位名
+        $v_cursubtotalprice = $d["cursubtotalprice"];                              //17:小計
+        $v_strnote = $d["strnote"];                                                //18:明細備考
+        
+        // セルに値をセット
+        $r = $startRowIndex + ($i - $itemMinIndex);
+        setCellDetailValue($xlWorkSheet, "B", $r, $v_lngslipno);                   //1:納品伝票番号
+        setCellDetailValue($xlWorkSheet, "C", $r, $v_lngslipdetailno);             //2:納品伝票明細番号
+        setCellDetailValue($xlWorkSheet, "D", $r, $v_lngrevisionno);               //3:リビジョン番号
+        setCellDetailValue($xlWorkSheet, "E", $r, $v_strcustomersalescode);        //4:顧客受注番号
+        setCellDetailValue($xlWorkSheet, "F", $r, $v_lngsalesclasscode);           //5:売上区分コード
+        setCellDetailValue($xlWorkSheet, "G", $r, $v_strsalesclassname);           //6:売上区分名
+        setCellDetailValue($xlWorkSheet, "H", $r, $v_strgoodscode);                //7:顧客品番
+        setCellDetailValue($xlWorkSheet, "I", $r, $v_strproductcode);              //8:製品コード
+        setCellDetailValue($xlWorkSheet, "J", $r, $v_strrevisecode);               //9:再販コード
+        setCellDetailValue($xlWorkSheet, "K", $r, $v_strproductname);              //10:製品名
+        setCellDetailValue($xlWorkSheet, "L", $r, $v_strproductenglishname);       //11:製品名（英語）
+        setCellDetailValue($xlWorkSheet, "M", $r, $v_curproductprice);             //12:単価
+        setCellDetailValue($xlWorkSheet, "N", $r, $v_lngquantity);                 //13:入数
+        setCellDetailValue($xlWorkSheet, "O", $r, $v_lngproductquantity);          //14:数量
+        setCellDetailValue($xlWorkSheet, "P", $r, $v_lngproductunitcode);          //15:製品単位コード
+        setCellDetailValue($xlWorkSheet, "Q", $r, $v_strproductunitname);          //16:製品単位名
+        setCellDetailValue($xlWorkSheet, "R", $r, $v_cursubtotalprice);            //17:小計
+        setCellDetailValue($xlWorkSheet, "S", $r, $v_strnote);                     //18:明細備考
+        
+    }
+
+    $pageHtml = $xlWriter->generateSheetData();
+
+    return $pageHtml;
+
+}
 
 ?>
