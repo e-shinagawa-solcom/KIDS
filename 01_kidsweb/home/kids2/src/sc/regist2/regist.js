@@ -378,7 +378,7 @@ jQuery(function($){
             //納品日
             dtmdeliverydate:           $('input[name="dtmDeliveryDate"]').val(),
             //納品先
-            lngdeliveryplacecode:      $('input[name="lngDeliveryPlaceCode"]').val(),
+            strdeliveryplacecompanydisplaycode: $('input[name="lngDeliveryPlaceCode"]').val(),
             strdeliveryplacename:      $('input[name="strDeliveryPlaceName"]').val(),
             //納品先担当者
             strdeliveryplaceusername:  $('input[name="strDeliveryPlaceUserName"]').val(),

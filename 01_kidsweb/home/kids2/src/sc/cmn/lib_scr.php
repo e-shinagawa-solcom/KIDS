@@ -320,11 +320,16 @@ function fncGetNumericUserCode($strUserDisplayCode, $objDB)
 function fncGetSlipKindByCompanyCode($lngCompanyCode, $objDB)
 {
     $strQuery = ""
-        . "SELECT c.lngcompanycode, c.strcompanydisplaycode, c.strcompanydisplayname,"
-        . "       sk.lngslipkindcode, sk.strslipkindname, sk.lngmaxline "
-        . " FROM m_slipkindrelation skr "
-        . "   LEFT JOIN m_slipkind sk ON skr.lngslipkindcode = sk.lngslipkindcode "
-        . "   LEFT JOIN m_company c ON skr.lngcompanycode = c.lngcompanycode "
+        . "SELECT"
+        . "  c.lngcompanycode,"
+        . "  c.strcompanydisplaycode,"
+        . "  c.strcompanydisplayname,"
+        . "  sk.lngslipkindcode,"
+        . "  sk.strslipkindname,"
+        . "  sk.lngmaxline"
+        . " FROM m_slipkindrelation skr"
+        . "   LEFT JOIN m_slipkind sk ON skr.lngslipkindcode = sk.lngslipkindcode"
+        . "   LEFT JOIN m_company c ON skr.lngcompanycode = c.lngcompanycode"
         . " WHERE c.lngcompanycode = ".$lngCompanyCode
         ;
 
@@ -382,7 +387,7 @@ function fncGetCompanyInfoByCompanyCode($lngCompanyCode, $objDB)
 }
 
 // 顧客社名を取得
-function funcGetCustomerCompanyName($lngCountryCode, $aryCompanyInfo)
+function fncGetCustomerCompanyName($lngCountryCode, $aryCompanyInfo)
 {
     if (strlen($aryCompanyInfo["strprintcompanyname"]) != 0)
     {
@@ -405,7 +410,7 @@ function funcGetCustomerCompanyName($lngCountryCode, $aryCompanyInfo)
 }
 
 // 顧客名を取得
-function funcGetCustomerName($aryCompanyInfo)
+function fncGetCustomerName($aryCompanyInfo)
 {
     if (strlen($aryCompanyInfo["strprintcompanyname"]) != 0)
     {
@@ -426,9 +431,8 @@ function fncGetUserInfoByUserCode($lngUserCode, $objDB)
         . "  u.struserdisplayname,"
         . "  gr.lnggroupcode"
         . " FROM m_user u"
-        . "  LEFT JOIN m_grouprelation gr on u.lngusercode = gr.lngusercode"
-        . " WHERE gr.bytdefaultflag = TRUE"
-        . "  AND u.lngusercode = ".$lngUserCode
+        . "  LEFT JOIN (select * from m_grouprelation WHERE bytdefaultflag=TRUE) gr ON u.lngusercode = gr.lngusercode "
+        . " WHERE u.lngusercode=".$lngUserCode
     ;
 
     list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
@@ -550,25 +554,38 @@ function fncRegisterSalesAndSlip($aryHeader, $aryDetail, $objDB, $objAuth)
 {
     // 現在日付
     $dtmNowDate = date( 'Y/m/d', time() );
-
     // 計上日
     $dtmAppropriationDate = $dtmNowDate;
+    // 顧客の会社コードを取得
+    $lngCustomerCompanyCode = fncGetNumericCompanyCode($aryHeader["strcompanydisplaycode"], $objDB);
+    // 顧客の会社コードに紐づく会社情報を取得
+    $aryCustomerCompany = fncGetCompanyInfoByCompanyCode($lngCustomerCompanyCode, $objDB);
+    // 換算レートの取得
+    $curConversionRate = fncGetConversionRateByReceiveData($aryDetail[0]["lngreceiveno"], $aryDetail[0]["lngreceiverevisionno"], $dtmAppropriationDate, $objDB);
+    
+    // 起票者に紐づくユーザー情報を取得
+    $lngDrafterUserCode = fncGetNumericUserCode($aryHeader["strdrafteruserdisplaycode"], $objDB);
+    $aryDrafter = fncGetUserInfoByUserCode($lngDrafterUserCode, $objDB);
 
-    // 登録する明細の数
+    // 顧客の国コードを取得
+    $lngCountryCode = fncGetCountryCode($aryHeader["strcompanydisplaycode"], $objDB);
+    // 顧客社名の取得
+    $strCustomerCompanyName = fncGetCustomerCompanyName($lngCountryCode, $aryCustomerCompany);
+    // 顧客名の取得
+    $strCustomerName = fncGetCustomerName($aryCustomerCompany);
+    // 納品先の会社コードの取得
+    $lngDeliveryPlaceCode = fncGetNumericCompanyCode($aryHeader["strdeliveryplacecompanydisplaycode"], $objDB);
+
+    // 顧客の会社コードに紐づく納品伝票種別を取得
+    $aryReport = fncGetSlipKindByCompanyCode($lngCustomerCompanyCode, $objDB);
+    // 顧客に紐づく帳票1ページあたりの最大明細数を取得する
+    $maxItemPerPage = intval($aryReport["lngmaxline"]);
+    // 登録する全明細の数
     $totalItemCount = count($aryDetail);
-
-    // 顧客コードを取得（表示用->数値）
-    $lngCompanyCode = fncGetNumericCompanyCode($aryHeader["strcompanydisplaycode"], $objDB);
-
-    
-    
-
-    // TODO:顧客コードに紐づく帳票1ページあたりの最大明細数を取得する
-    $maxItemPerPage = 999;
-
     // 最大ページ数の計算
     $maxPageCount = ceil($totalItemCount / $maxItemPerPage);
 
+    // ページ単位でのデータ登録
     for ( $page = 1; $page <= $maxPageCount; $page++ ){
 
         // 現在のページ数と1ページあたりの明細数から、
@@ -589,35 +606,39 @@ function fncRegisterSalesAndSlip($aryHeader, $aryDetail, $objDB, $objAuth)
         $strSalesCode = fncGetDateSequence( date( 'Y', strtotime( $dtmNowDate ) ), 
                                             date( 'm',strtotime( $dtmNowDate ) ), "m_sales.lngSalesNo", $objDB );
 
-        // TODO:当日に紐づく納品伝票コードの発番
-        $strSlipCode = "";
+        // 当日に紐づく納品伝票コードの発番
+        $strSlipCode = fncPublishSlipCode($dtmNowDate, $objDB);
 
         // 納品伝票番号をシーケンスより発番
         $lngSlipNo = fncGetSequence( 'm_slip.lngslipno', $objDB );
 
         // 売上マスタ登録
-        if (!fncRegisterSalesMaster($lngSalesNo, $lngRevisionNo, $strSlipCode, $strSalesCode, $dtmAppropriationDate,
-                 $aryHeader , $aryDetail, $objDB, $objAuth)){
+        if (!fncRegisterSalesMaster($lngSalesNo, $lngRevisionNo, $strSlipCode, $strSalesCode, $dtmAppropriationDate, $curConversionRate, $aryCustomerCompany, $aryDrafter,
+                $aryHeader , $aryDetail, $objDB, $objAuth))
+        {
             // 失敗
             return false;
         }
 
         // 売上明細登録
         if (!fncRegisterSalesDetail($itemMinIndex, $itemMaxIndex, $lngSalesNo, $lngRevisionNo,
-                 $aryHeader , $aryDetail, $objDB, $objAuth)){
+                $aryHeader , $aryDetail, $objDB, $objAuth))
+        {
             // 失敗
             return false;
         }
 
         // 納品伝票マスタ登録
-        if (!fncRegisterSlipMaster($lngSlipNo, $lngRevisionNo, $lngSalesNo, $strSlipCode,
-                 $aryHeader , $aryDetail, $objDB, $objAuth)){
+        if (!fncRegisterSlipMaster($lngSlipNo, $lngRevisionNo, $lngSalesNo, $strSlipCode, $strCustomerCompanyName, $strCustomerName, $aryCustomerCompany, $lngDeliveryPlaceCode,
+                $aryHeader , $aryDetail, $objDB, $objAuth))
+        {
             // 失敗
             return false;
         }
     
         // 納品伝票明細登録
-        if (!fncRegisterSlipDetail($itemMinIndex, $itemMaxIndex, $lngSlipNo, $lngRevisionNo, $aryHeader, $aryDetail, $objDB, $objAuth)){
+        if (!fncRegisterSlipDetail($itemMinIndex, $itemMaxIndex, $lngSlipNo, $lngRevisionNo,
+                $aryHeader, $aryDetail, $objDB, $objAuth)){
             // 失敗
             return false;
         }
@@ -639,20 +660,21 @@ function withQuote($source)
 
 
 // 売上マスタ登録
-function fncRegisterSalesMaster($lngSalesNo, $lngRevisionNo, $strSlipCode, $strSalesCode, $dtmAppropriationDate, $aryHeader , $aryDetail, $objDB, $objAuth)
+function fncRegisterSalesMaster($lngSalesNo, $lngRevisionNo, $strSlipCode, $strSalesCode, $dtmAppropriationDate, $curConversionRate, $aryCustomerCompany, $aryDrafter,
+     $aryHeader , $aryDetail, $objDB, $objAuth)
 {
     // 登録データのセット
     $v_lngsalesno = $lngSalesNo;                                        //1:売上番号
     $v_lngrevisionno = $lngRevisionNo;                                  //2:リビジョン番号
     $v_strsalescode = withQuote($strSalesCode);                         //3:売上コード
     $v_dtmappropriationdate = $dtmAppropriationDate;                    //4:計上日
-    $v_lngcustomercompanycode = $value;                                 //5:顧客コード
-    $v_lnggroupcode = $value;                                           //6:グループコード
-    $v_lngusercode = $value;                                            //7:ユーザコード
+    $v_lngcustomercompanycode = $aryCustomerCompany["lngcompanycode"];  //5:顧客コード
+    $v_lnggroupcode = $aryDrafter["lnggroupcode"];                      //6:グループコード
+    $v_lngusercode = $aryDrafter["lngusercode"];                        //7:ユーザコード
     $v_lngsalesstatuscode = "4";                                        //8:売上状態コード
     $v_lngmonetaryunitcode = $aryDetail[0]["lngmonetaryunitcode"];      //9:通貨単位コード
     $v_lngmonetaryratecode = $aryDetail[0]["lngmonetaryratecode"];      //10:通貨レートコード
-    $v_curconversionrate = $value;                                      //11:換算レート
+    $v_curconversionrate = $curConversionRate;                          //11:換算レート
     $v_strslipcode = withQuote($strSlipCode);                           //12:納品書NO
     $v_lnginvoiceno = "Null";                                           //13:請求書番号
     $v_curtotalprice = $aryHeader["curtotalprice"];                     //14:合計金額
@@ -710,7 +732,7 @@ function fncRegisterSalesMaster($lngSalesNo, $lngRevisionNo, $strSlipCode, $strS
     // 登録実行
     if ( !$lngResultID = $objDB->execute( $strQuery ) )
     {
-        // fncOutputError ( 9051, DEF_ERROR, "（エラーメッセージ）。", TRUE, "", $objDB );
+        fncOutputError ( 9051, DEF_ERROR, "売上マスタ登録失敗。", TRUE, "", $objDB );
         // 失敗
         return false;
     }
@@ -722,13 +744,20 @@ function fncRegisterSalesMaster($lngSalesNo, $lngRevisionNo, $strSlipCode, $strS
 
 
 // 売上明細登録
-function fncRegisterSalesDetail($itemMinIndex, $itemMaxIndex, $lngSalesNo, $lngRevisionNo, $aryHeader , $aryDetail, $objDB, $objAuth)
+function fncRegisterSalesDetail($itemMinIndex, $itemMaxIndex, $lngSalesNo, $lngRevisionNo,
+     $aryHeader , $aryDetail, $objDB, $objAuth)
 {
+    // 消費税率
+    $lngTaxRate = floatval($aryHeader["lngtaxrate"]);
+    // 消費税区分
+    $lngTaxClassCode = $aryHeader["lngtaxclasscode"];
+
     for ( $i = $itemMinIndex; $i <= $itemMaxIndex; $i++ )
     {
         $d = $aryDetail[$i];
 
-        //TODO:明細単位での消費税金額の計算
+        // 明細単位での消費税金額の計算
+        $curTaxPrice = fncCalcTaxPrice($d["cursubtotalprice"], $lngTaxClassCode, $lngTaxRate);
 
         // 登録データのセット
         $v_lngsalesno = $lngSalesNo;                            //1:売上番号
@@ -739,19 +768,19 @@ function fncRegisterSalesDetail($itemMinIndex, $itemMaxIndex, $lngSalesNo, $lngR
         $v_lngsalesclasscode = $d["lngsalesclasscode"];         //6:売上区分コード
         $v_lngconversionclasscode = "Null";                     //7:換算区分コード
         $v_lngquantity = $d["lngunitquantity"];                 //8:入数
-        $v_curproductprice = $d["cursubtotalprice"];            //9:製品価格
+        $v_curproductprice = $d["curproductprice"];             //9:製品価格
         $v_lngproductquantity = $d["lngproductquantity"];       //10:製品数量
         $v_lngproductunitcode = $d["lngproductunitcode"];       //11:製品単位コード
         $v_lngtaxclasscode = $aryHeader["lngtaxclasscode"];     //12:消費税区分コード
         $v_lngtaxcode = $aryHeader["lngtaxcode"];               //13:消費税率コード
-        $v_curtaxprice = $value;                                //14:消費税金額
+        $v_curtaxprice = $curTaxPrice;                          //14:消費税金額
         $v_cursubtotalprice = $d["cursubtotalprice"];           //15:小計金額
         $v_strnote = $d["strnote"];                             //16:備考
         $v_lngsortkey = $d["rownumber"];                        //17:表示用ソートキー
         $v_lngreceiveno = $d["lngreceiveno"];                   //18:受注番号
         $v_lngreceivedetailno = $d["lngreceivedetailno"];       //19:受注明細番号
         $v_lngreceiverevisionno = $d["lngreceiverevisionno"];   //20:受注リビジョン番号
-
+        
         // 登録クエリ作成
         $aryInsert = [];
         $aryInsert[] ="INSERT  ";
@@ -805,7 +834,7 @@ function fncRegisterSalesDetail($itemMinIndex, $itemMaxIndex, $lngSalesNo, $lngR
         // 登録実行
         if ( !$lngResultID = $objDB->execute( $strQuery ) )
         {
-            // fncOutputError ( 9051, DEF_ERROR, "（エラーメッセージ）。", TRUE, "", $objDB );
+            fncOutputError ( 9051, DEF_ERROR, "売上明細登録失敗。", TRUE, "", $objDB );
             // 失敗
             return false;
         }
@@ -817,26 +846,33 @@ function fncRegisterSalesDetail($itemMinIndex, $itemMaxIndex, $lngSalesNo, $lngR
 }
 
 // 納品伝票マスタ登録
-function fncRegisterSlipMaster($lngSlipNo, $lngRevisionNo, $lngSalesNo, $strSlipCode, $aryHeader , $aryDetail, $objDB, $objAuth)
+function fncRegisterSlipMaster($lngSlipNo, $lngRevisionNo, $lngSalesNo, $strSlipCode, $strCustomerCompanyName, $strCustomerName, $aryCustomerCompany, $lngDeliveryPlaceCode,
+     $aryHeader , $aryDetail, $objDB, $objAuth)
 {
+    // 仕入先コードの取得（空の場合は明示的にNullをセット）
+    $strShipperCode = "Null";
+    if (strlen($aryCustomerCompany["strstockcompanycode"]) != 0){
+        $strShipperCode = withQuote($aryCustomerCompany["strstockcompanycode"]);
+    }
+
     // 登録データのセット
     $v_lngslipno = $lngSlipNo;                                                 //1:納品伝票番号
     $v_lngrevisionno = $lngRevisionNo;                                         //2:リビジョン番号
     $v_strslipcode = $strSlipCode;                                             //3:納品伝票コード
     $v_lngsalesno = $lngSalesNo;                                               //4:売上番号
-    $v_strcustomercode = $value;                                               //5:顧客コード
-    $v_strcustomercompanyname = $value;                                        //6:顧客社名
-    $v_strcustomername = $value;                                               //7:顧客名
-    $v_strcustomeraddress1 = $value;                                           //8:顧客住所1
-    $v_strcustomeraddress2 = $value;                                           //9:顧客住所2
-    $v_strcustomeraddress3 = $value;                                           //10:顧客住所3
-    $v_strcustomeraddress4 = $value;                                           //11:顧客住所4
-    $v_strcustomerphoneno = $value;                                            //12:顧客電話番号
-    $v_strcustomerfaxno = $value;                                              //13:顧客FAX番号
+    $v_strcustomercode = $aryCustomerCompany["lngcompanycode"];                //5:顧客コード
+    $v_strcustomercompanyname = $strCustomerCompanyName;                       //6:顧客社名
+    $v_strcustomername = $strCustomerName;                                     //7:顧客名
+    $v_strcustomeraddress1 = $aryCustomerCompany["straddress1"];               //8:顧客住所1
+    $v_strcustomeraddress2 = $aryCustomerCompany["straddress2"];               //9:顧客住所2
+    $v_strcustomeraddress3 = $aryCustomerCompany["straddress3"];               //10:顧客住所3
+    $v_strcustomeraddress4 = $aryCustomerCompany["straddress4"];               //11:顧客住所4
+    $v_strcustomerphoneno = $aryCustomerCompany["strtel1"];                    //12:顧客電話番号
+    $v_strcustomerfaxno = $aryCustomerCompany["strfax1"];                      //13:顧客FAX番号
     $v_strcustomerusername = $aryHeader["strcustomerusername"];                //14:顧客担当者名
-    $v_strshippercode = $value;                                                //15:仕入先コード（出荷者）
+    $v_strshippercode = $strShipperCode;                                       //15:仕入先コード（出荷者）
     $v_dtmdeliverydate = withQuote($aryHeader["dtmdeliverydate"]);             //16:納品日
-    $v_lngdeliveryplacecode = $value;                                          //17:納品場所コード
+    $v_lngdeliveryplacecode = $lngDeliveryPlaceCode;                           //17:納品場所コード
     $v_strdeliveryplacename = withQuote($aryHeader["strdeliveryplacename"]);           //18:納品場所名
     $v_strdeliveryplaceusername = withQuote($aryHeader["strdeliveryplaceusername"]);   //19:納品場所担当者名
     $v_lngpaymentmethodcode = $$aryHeader["lngpaymentmethodcode"];             //20:支払方法コード
@@ -940,7 +976,7 @@ function fncRegisterSlipMaster($lngSlipNo, $lngRevisionNo, $lngSalesNo, $strSlip
     // 登録実行
     if ( !$lngResultID = $objDB->execute( $strQuery ) )
     {
-        // fncOutputError ( 9051, DEF_ERROR, "（エラーメッセージ）。", TRUE, "", $objDB );
+        fncOutputError ( 9051, DEF_ERROR, "納品伝票マスタ登録失敗。", TRUE, "", $objDB );
         // 失敗
         return false;
     }
@@ -951,7 +987,8 @@ function fncRegisterSlipMaster($lngSlipNo, $lngRevisionNo, $lngSalesNo, $strSlip
 }
 
 // 納品伝票明細登録
-function fncRegisterSlipDetail($itemMinIndex, $itemMaxIndex, $lngSlipNo, $lngRevisionNo, $aryHeader, $aryDetail, $objDB, $objAuth)
+function fncRegisterSlipDetail($itemMinIndex, $itemMaxIndex, $lngSlipNo, $lngRevisionNo,
+    $aryHeader, $aryDetail, $objDB, $objAuth)
 {
     for ( $i = $itemMinIndex; $i <= $itemMaxIndex; $i++ )
     {
@@ -1038,7 +1075,7 @@ function fncRegisterSlipDetail($itemMinIndex, $itemMaxIndex, $lngSlipNo, $lngRev
         // 登録実行
         if ( !$lngResultID = $objDB->execute( $strQuery ) )
         {
-            // fncOutputError ( 9051, DEF_ERROR, "（エラーメッセージ）。", TRUE, "", $objDB );
+            fncOutputError ( 9051, DEF_ERROR, "納品伝票明細登録登録失敗。", TRUE, "", $objDB );
             // 失敗
             return false;
         }
