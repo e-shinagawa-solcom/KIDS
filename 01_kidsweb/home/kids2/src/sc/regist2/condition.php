@@ -40,8 +40,14 @@
 	// --------------------------
 	//   フォーム初期値設定
 	// --------------------------
-	// 売上区分プルダウン
-	$optSalesClass .= fncGetPulldown("m_salesclass", "lngsalesclasscode","strsalesclassname", "", "", $objDB);
+	// 顧客コード
+	$aryData["strCustomerCompanyDisplayCode"] = $_POST["strcompanydisplaycode"];
+
+	// 売上区分コードの初期値
+	$lngDefaultSalesClassCode = $_POST["lngsalesclasscode"];
+
+	// 売上区分プルダウン（親画面の出力明細一覧エリアの1行目の売上区分コードを初期値選択）
+	$optSalesClass .= fncGetPulldown("m_salesclass", "lngsalesclasscode","strsalesclassname", $lngDefaultSalesClassCode, "", $objDB);
 	$aryData["optSalesClass"] = $optSalesClass;
 
 	echo fncGetReplacedHtmlWithBase("base_mold_noframes.html", "sc/regist2/condition.tmpl", $aryData ,$objAuth );

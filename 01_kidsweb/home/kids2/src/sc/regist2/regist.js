@@ -2,7 +2,8 @@
 // regist.js
 //
 
-// 検索条件入力画面で入力された値の設定（検索条件入力画面より呼び出される）
+// ＜検索条件入力画面から呼ばれる関数その１＞
+// 検索条件入力画面で入力された値の設定
 function SetSearchConditionWindowValue(search_condition) {
     // 顧客
     $('input[name="lngCustomerCode"]').val(search_condition.strCompanyDisplayCode);
@@ -41,7 +42,8 @@ function SetSearchConditionWindowValue(search_condition) {
     }
 }
 
-// 明細検索（検索条件入力画面より呼び出される）
+// ＜検索条件入力画面から呼ばれる関数その２＞
+// 明細検索
 function SearchReceiveDetail(search_condition) {
  
     // 部分書き換えのためajaxでPOST
@@ -547,17 +549,31 @@ jQuery(function($){
     $('#DetailTableBodyAllCheck').on('change', function(){
         $('input[name="edit"]').prop('checked', this.checked);
     });
+
+
+
+    // 検索条件入力ボタン押下
     $('#SearchBt').on('click', function(){
+
+        //出力明細一覧エリアの1行目の売上区分コードを取得する
+        var firstRowSalesClassCode = "";
+        var firstTr = $("#EditTableBody tr").eq(0);
+        if (0 < firstTr.length){
+            firstRowSalesClassCode = $(firstTr).children('.detailSalesClassCode').text();
+        }
         
+        // 納品書明細検索条件入力画面を別窓で開く
         var url = "/sc/regist2/condition.php" + "?strSessionID=" + $('input[name="strSessionID"]').val();
         var data = {
             strSessionID: $('input[name="strSessionID"]').val(),
-            param1: 'test'
+            //顧客コード（表示用会社コード）
+            strcompanydisplaycode:   $('input[name="lngCustomerCode"]').val(),
+            //出力明細一覧エリアの1行目の売上区分コード
+            lngsalesclasscode:       firstRowSalesClassCode,
           };
         
         var features = "width=710,height=460,top=10,left=10,status=yes,scrollbars=yes,directories=no,menubar=yes,resizable=yes,location=no,toolbar=no";
         post_open(url, data, "conditionWin", features);
-
     });
     
     // 追加ボタン
