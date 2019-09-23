@@ -338,7 +338,7 @@ function fncGetSlipKindByCompanyCode($lngCompanyCode, $objDB)
     }
     $objDB->freeResult( $lngResultID );
 
-    return $aryResult;    
+    return $aryResult[0];    
 }
 
 // 会社コードに紐づく会社情報を取得
@@ -378,7 +378,7 @@ function fncGetCompanyInfoByCompanyCode($lngCompanyCode, $objDB)
     }
     $objDB->freeResult( $lngResultID );
 
-    return $aryResult;    
+    return $aryResult[0];    
 }
 
 // 顧客社名を取得
@@ -441,7 +441,7 @@ function fncGetUserInfoByUserCode($lngUserCode, $objDB)
     }
     $objDB->freeResult( $lngResultID );
 
-    return $aryResult;    
+    return $aryResult[0];    
 }
 
 // 受注データに紐づく換算レートを取得
@@ -472,7 +472,7 @@ function fncGetConversionRateByReceiveData($lngReceiveNo, $lngReceiveRevisionNo,
     }
     $objDB->freeResult( $lngResultID );
 
-    return $aryResult;    
+    return $aryResult[0];    
 }
 
 // 納品書NOの発行
@@ -504,7 +504,7 @@ function fncPublishSlipCode($dtmPublishDate, $objDB)
 
     // 納品書NOの生成
     if ($lngResultNum != 0){
-        $lngNumber = intval($aryResult["nn"]);
+        $lngNumber = intval($aryResult[0]["nn"]);
         $lngNumber += 1;
     }else{
         // 当日1件目は nn='01' で開始
@@ -517,7 +517,35 @@ function fncPublishSlipCode($dtmPublishDate, $objDB)
     return $strPublishdSlipCode;    
 }
 
+// 消費税額の計算
+function fncCalcTaxPrice($curPrice, $lngTaxClassCode, $lngTaxRate)
+{
+    $curTaxPrice = 0;
+
+    if ($lngTaxClassCode == "1")
+    {
+        // 1:非課税
+        $curTaxPrice = 0;
+    }
+    else if ($lngTaxClassCode == "2")
+    {
+        // 2:外税
+        $curTaxPrice = floor($curPrice * $lngTaxRate);
+    }
+    else if ($lngTaxClassCode == "3")
+    {
+        // 3:内税
+        $curTaxPrice = floor( ($curPrice / (1+$lngTaxRate)) * $lngTaxRate );
+    }
+
+    return $curTaxPrice;
+}
+
+// --------------------------------
+// 
 // 売上（納品書）登録メイン関数
+// 
+// --------------------------------
 function fncRegisterSalesAndSlip($aryHeader, $aryDetail, $objDB, $objAuth)
 {
     // 現在日付
