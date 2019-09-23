@@ -16,7 +16,7 @@ function SetSearchConditionWindowValue(search_condition) {
             data: {
                 strMode : "get-lngcountrycode",
                 strSessionID: $('input[name="strSessionID"]').val(),
-                strCompanyDisplayCode: search_condition.strCompanyDisplayCode,
+                strcompanydisplaycode: search_condition.strCompanyDisplayCode,
             },
             async: true,
         }).done(function(data){
