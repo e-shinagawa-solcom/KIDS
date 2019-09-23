@@ -119,18 +119,25 @@
 		// --------------------------
 		//  データベース登録
 		// --------------------------
+		/*
 		// トランザクション開始
 		$objDB->transactionBegin();
 
-		/*
+		// 受注マスタ更新
+		if (!fncUpdateReceiveMaster($aryDetail, $objDB))
+		{
+			fncOutputError ( 9051, DEF_FATAL, "受注マスタ更新失敗", TRUE, "", $objDB );
+		}
+
+		// 売上マスタ登録、売上詳細登録、納品伝票マスタ登録、納品伝票明細登録
 		if (!fncRegisterSalesAndSlip($aryHeader , $aryDetail, $objDB, $objAuth))
 		{
 			fncOutputError ( 9051, DEF_FATAL, "売上（納品書）登録失敗", TRUE, "", $objDB );
 		}
-		*/
 
 		// コミット
 		$objDB->transactionCommit();
+		*/
 
 		// --------------------------
 		//  登録結果画面表示

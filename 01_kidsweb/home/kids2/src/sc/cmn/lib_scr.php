@@ -295,6 +295,40 @@ function fncGetReceiveDetailHtml($aryDetail){
     return $strHtml;
 }
 
+// 明細に紐づく受注マスタの受注状態コードを更新
+function fncUpdateReceiveMaster($aryDetail, $objDB)
+{
+    for ( $i = 0; $i < count($aryDetail); $i++ )
+    {
+        $d = $aryDetail[$i];
+
+        $lngReceiveNo = $d["lngreceiveno"];
+        $lngRevisionNo = $d["lngreceiverevisionno"];
+
+        $strQuery = ""
+        . "UPDATE"
+        . "  m_receive"
+        . " SET"
+        . "  lngreceivestatuscode = 4"
+        . " WHERE"
+        . "  lngreceiveno = " . $lngReceiveNo
+        . "  AND lngrevisionno = " . $lngRevisionNo
+        ;
+
+        // 更新実行
+        if ( !$lngResultID = $objDB->execute( $strQuery ) )
+        {
+            fncOutputError ( 9051, DEF_ERROR, "受注マスタ更新失敗。", TRUE, "", $objDB );
+            // 失敗
+            return false;
+        }
+        $objDB->freeResult( $lngResultID );
+    }
+
+    // 成功
+    return true;
+}
+
 // 表示用会社コードから会社コードを取得する
 function fncGetNumericCompanyCode($strCompanyDisplayCode, $objDB)
 {
@@ -568,9 +602,9 @@ function fncRegisterSalesAndSlip($aryHeader, $aryDetail, $objDB, $objAuth)
     $aryDrafter = fncGetUserInfoByUserCode($lngDrafterUserCode, $objDB);
 
     // 顧客の国コードを取得
-    $lngCountryCode = fncGetCountryCode($aryHeader["strcompanydisplaycode"], $objDB);
+    $lngCustomerCountryCode = fncGetCountryCode($aryHeader["strcompanydisplaycode"], $objDB);
     // 顧客社名の取得
-    $strCustomerCompanyName = fncGetCustomerCompanyName($lngCountryCode, $aryCustomerCompany);
+    $strCustomerCompanyName = fncGetCustomerCompanyName($lngCustomerCountryCode, $aryCustomerCompany);
     // 顧客名の取得
     $strCustomerName = fncGetCustomerName($aryCustomerCompany);
     // 納品先の会社コードの取得
