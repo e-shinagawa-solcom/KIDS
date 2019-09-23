@@ -72,31 +72,45 @@ jQuery(function($){
         changeRowNum();
     });
     // $('input[name="dtmExpirationDate"]').datepicker();
-
+    
     // ------------------------------------------
     //   functions
     // ------------------------------------------
-    function checkPresentRow(tr){
-        var orderNo = $(tr).children('td.detailOrderCode').text();
-        var orderDetailNo = $(tr).children('td.detailOrderDetailNo').text();
-        var result = false;
-        $.each($('#EditTableBody tr'), function(i, tr){
-            var od = $(tr).children('.detailOrderCode').text();
-            var odd = $(tr).children('td.detailOrderDetailNo').text();
-            if(orderNo === od && orderDetailNo === odd){
-                result = true;
+    // 追加バリデーションチェック
+    function validateAdd(tr){
+        //明細選択エリアの納期
+        var detailDeliveryDate = new Date($(tr).children('td.detailDeliveryDate').text());
+
+        //ヘッダ・フッタ部の納品日と比較（同月以外は不正）
+        var headerDeliveryDate = new Date($('input[name="dtmDeliveryDate"]').val());
+        if (headerDeliveryDate.getYear() != detailDeliveryDate.getYear()){
+            alert("受注確定時の納期と納品日と一致しません。受注データを修正してください。");
+            return false;
+        }
+        if (headerDeliveryDate.getMonth() != detailDeliveryDate.getMonth()){
+            alert("受注確定時の納期と納品日と一致しません。受注データを修正してください。");
+            return false;
+        }
+
+        //出力明細の先頭行があればその納期と比較（同月以外は不正）
+        var firstTr = $("#EditTableBody tr").eq(0);
+        if (0 < firstTr.length){
+            var firstRowDate = new Date($(firstTr).children('td.detailDeliveryDate').text());
+            if (firstRowDate.getYear() != detailDeliveryDate.getYear()){
+                alert("出力明細と納品月が異なる明細は選択できません。");
+                return false;
             }
-        });
-        return result;
+            if (firstRowDate.getMonth() != detailDeliveryDate.getMonth()){
+                alert("出力明細と納品月が異なる明細は選択できません。");
+                return false;
+            }
+        }
+
+        return true;
     }
     
     //出力明細一覧エリアに選択した明細を追加
     function setEdit(tr){
-
-        //DEBUG:一旦重複チェック外す
-        //if(checkPresentRow(tr)){
-        //   return false;
-        //}
 
         var editTable = $('#EditTable');
         var tbody = $('#EditTableBody');
@@ -562,8 +576,20 @@ jQuery(function($){
             //alert("明細行が選択されていません。");
             return false;
         }
-        
-        // 出力明細追加
+
+        // 追加バリデーションチェック
+        var invalid = false;
+        $.each($(trArray), function(i, v){
+            if (!validateAdd($(v))){
+                invalid = true;
+            }
+        });
+        if (invalid)
+        {
+            return false;
+        }
+
+        // 明細追加
         $.each($(trArray), function(i, v){
             setEdit($(v));
         });
