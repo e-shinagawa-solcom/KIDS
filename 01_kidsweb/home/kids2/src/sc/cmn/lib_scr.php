@@ -302,6 +302,13 @@ function fncGetNumericCompanyCode($strCompanyDisplayCode, $objDB)
     return $lngCompanyCode;
 }
 
+// 表示用会社コードから国コードを取得する
+function fncGetCountryCode($strCompanyDisplayCode, $objDB)
+{
+    $lngCountryCode = fncGetMasterValue( "m_company", "strcompanydisplaycode", "lngcountrycode", "$strCompanyDisplayCode:str", '', $objDB);
+    return $lngCountryCode;
+}
+
 // 表示用ユーザーコードからユーザーコードを取得する
 function fncGetNumericUserCode($strUserDisplayCode, $objDB)
 {
@@ -339,7 +346,7 @@ function fncGetCompanyInfoByCompanyCode($lngCompanyCode, $objDB)
 {
     $strQuery = ""
         . "SELECT "
-        . "  c.lngcompanycode, "
+        . "  c.lngcompanycode,"
         . "  c.strcompanydisplaycode, "
         . "  c.strcompanydisplayname,"
         . "  c.straddress1,"
@@ -349,10 +356,15 @@ function fncGetCompanyInfoByCompanyCode($lngCompanyCode, $objDB)
         . "  c.strtel1,"
         . "  c.strfax1,"
         . "  sc.strstockcompanycode,"
-        . "  cp.strprintcompanyname"
+        . "  cp.strprintcompanyname,"
+        . "  c.strcompanyname,"
+        . "  c.bytorganizationfront,"
+        . "  o.lngorganizationcode,"
+        . "  o.strorganizationname"
         . " FROM m_company c"
-        . "  LEFT JOIN m_stockcompanycode sc ON c.lngcompanycode = sc.lngcompanyno  "
-        . "  LEFT JOIN m_companyprintname cp ON c.lngcompanycode = cp.lngcompanycode "
+        . "  LEFT JOIN m_stockcompanycode sc ON c.lngcompanycode = sc.lngcompanyno"
+        . "  LEFT JOIN m_companyprintname cp ON c.lngcompanycode = cp.lngcompanycode"
+        . "  LEFT JOIN m_organization o ON c.lngorganizationcode = o.lngorganizationcode"
         . " WHERE c.lngcompanycode = ".$lngCompanyCode
     ;
 
@@ -368,6 +380,41 @@ function fncGetCompanyInfoByCompanyCode($lngCompanyCode, $objDB)
 
     return $aryResult;    
 }
+
+// 顧客社名を取得
+function funcGetCustomerCompanyName($lngCountryCode, $aryCompanyInfo)
+{
+    if (strlen($aryCompanyInfo["strprintcompanyname"]) != 0)
+    {
+        return $aryCompanyInfo["strprintcompanyname"];
+    }
+
+    if ($lngCountryCode != 81)
+    {
+        return $aryCompanyInfo["strcompanyname"];
+    }
+    else if ($aryCompanyInfo["bytorganizationfront"] == TRUE)
+    {
+        return $aryCompanyInfo["strorganizationname"] . $aryCompanyInfo["strcompanyname"];
+    }
+    else 
+    {
+        return $aryCompanyInfo["strcompanyname"] . $aryCompanyInfo["strorganizationname"];
+    }
+}
+
+// 顧客名を取得
+function funcGetCustomerName($aryCompanyInfo)
+{
+    if (strlen($aryCompanyInfo["strprintcompanyname"]) != 0)
+    {
+        return $aryCompanyInfo["strprintcompanyname"];
+    }
+    else{
+        return null;
+    }
+}
+
 
 // ユーザーコードに紐づくユーザー情報を取得
 function fncGetUserInfoByUserCode($lngUserCode, $objDB)
