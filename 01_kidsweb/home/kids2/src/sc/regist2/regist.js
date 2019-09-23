@@ -368,8 +368,8 @@ jQuery(function($){
         
         var result = {
             //µ¯É¼¼Ô
-            lnginsertusercode:         $('input[name="lngInsertUserCode"]').val(),
-            strinsertusername:         $('input[name="strInsertUserName"]').val(),
+            strdrafteruserdisplaycode:  $('input[name="lngInsertUserCode"]').val(),
+            strdrafteruserdisplayname:  $('input[name="strInsertUserName"]').val(),
             //¸ÜµÒ
             strcompanydisplaycode:     $('input[name="lngCustomerCode"]').val(),
             strcompanydisplayname:     $('input[name="strCustomerName"]').val(),

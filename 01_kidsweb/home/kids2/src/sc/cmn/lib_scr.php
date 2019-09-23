@@ -93,7 +93,7 @@ function fncGetReceiveDetail($aryCondition, $objDB)
     $arySelect[] = "  mu.strmonetaryunitsign";                     //通貨単位記号（明細登録用）
     $arySelect[] = " FROM";
     $arySelect[] = "  t_receivedetail rd ";
-    $arySelect[] = "    LEFT JOIN m_receive r ON rd.lngreceiveno=r.lngreceiveno";
+    $arySelect[] = "    INNER JOIN m_receive r ON rd.lngreceiveno=r.lngreceiveno AND rd.lngrevisionno = r.lngrevisionno";
     $arySelect[] = "    LEFT JOIN m_company c ON r.lngcustomercompanycode = c.lngcompanycode";
     $arySelect[] = "    LEFT JOIN m_product p ON rd.strproductcode = p.strproductcode";
     $arySelect[] = "    LEFT JOIN m_salesclass sc ON rd.lngsalesclasscode = sc.lngsalesclasscode";
@@ -295,15 +295,156 @@ function fncGetReceiveDetailHtml($aryDetail){
     return $strHtml;
 }
 
+// 表示用会社コードから会社コードを取得する
+function fncGetNumericCompanyCode($strCompanyDisplayCode, $objDB)
+{
+    $lngCompanyCode = fncGetMasterValue( "m_company", "strcompanydisplaycode", "lngcompanycode", $strCompanyDisplayCode.":str", '', $objDB );
+    return $lngCompanyCode;
+}
+
+// 表示用ユーザーコードからユーザーコードを取得する
+function fncGetNumericUserCode($strUserDisplayCode, $objDB)
+{
+    $lngUserCode = fncGetMasterValue( "m_user", "struserdisplaycode", "lngusercode", $strUserDisplayCode.":str", '', $objDB );
+    return $lngUserCode;
+}
+
+// 会社コードに紐づく帳票伝票種別を取得
+function fncGetSlipKindByCompanyCode($lngCompanyCode, $objDB)
+{
+    $strQuery = ""
+        . "SELECT c.lngcompanycode, c.strcompanydisplaycode, c.strcompanydisplayname,"
+        . "       sk.lngslipkindcode, sk.strslipkindname, sk.lngmaxline "
+        . " FROM m_slipkindrelation skr "
+        . "   LEFT JOIN m_slipkind sk ON skr.lngslipkindcode = sk.lngslipkindcode "
+        . "   LEFT JOIN m_company c ON skr.lngcompanycode = c.lngcompanycode "
+        . " WHERE c.lngcompanycode = ".$lngCompanyCode
+        ;
+
+    list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
+    if ( $lngResultNum ) {
+        for ( $i = 0; $i < $lngResultNum; $i++ ) {
+            $aryResult[] = $objDB->fetchArray( $lngResultID, $i );
+        }
+    } else {
+        fncOutputError ( 9501, DEF_FATAL, "帳票伝票種別の取得に失敗", TRUE, "", $objDB );
+    }
+    $objDB->freeResult( $lngResultID );
+
+    return $aryResult;    
+}
+
+// 会社コードに紐づく会社情報を取得
+function fncGetCompanyInfoByCompanyCode($lngCompanyCode, $objDB)
+{
+    $strQuery = ""
+        . "SELECT "
+        . "  c.lngcompanycode, "
+        . "  c.strcompanydisplaycode, "
+        . "  c.strcompanydisplayname,"
+        . "  c.straddress1,"
+        . "  c.straddress2,"
+        . "  c.straddress3,"
+        . "  c.straddress4,"
+        . "  c.strtel1,"
+        . "  c.strfax1,"
+        . "  sc.strstockcompanycode,"
+        . "  cp.strprintcompanyname"
+        . " FROM m_company c"
+        . "  LEFT JOIN m_stockcompanycode sc ON c.lngcompanycode = sc.lngcompanyno  "
+        . "  LEFT JOIN m_companyprintname cp ON c.lngcompanycode = cp.lngcompanycode "
+        . " WHERE c.lngcompanycode = ".$lngCompanyCode
+    ;
+
+    list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
+    if ( $lngResultNum ) {
+        for ( $i = 0; $i < $lngResultNum; $i++ ) {
+            $aryResult[] = $objDB->fetchArray( $lngResultID, $i );
+        }
+    } else {
+        fncOutputError ( 9501, DEF_FATAL, "会社情報の取得に失敗", TRUE, "", $objDB );
+    }
+    $objDB->freeResult( $lngResultID );
+
+    return $aryResult;    
+}
+
+// ユーザーコードに紐づくユーザー情報を取得
+function fncGetUserInfoByUserCode($lngUserCode, $objDB)
+{
+    $strQuery = ""
+        . "SELECT"
+        . "  u.lngusercode,"
+        . "  u.struserdisplaycode,"
+        . "  u.struserdisplayname,"
+        . "  gr.lnggroupcode"
+        . " FROM m_user u"
+        . "  LEFT JOIN m_grouprelation gr on u.lngusercode = gr.lngusercode"
+        . " WHERE gr.bytdefaultflag = TRUE"
+        . "  AND u.lngusercode = ".$lngUserCode
+    ;
+
+    list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
+    if ( $lngResultNum ) {
+        for ( $i = 0; $i < $lngResultNum; $i++ ) {
+            $aryResult[] = $objDB->fetchArray( $lngResultID, $i );
+        }
+    } else {
+        fncOutputError ( 9501, DEF_FATAL, "ユーザー情報の取得に失敗", TRUE, "", $objDB );
+    }
+    $objDB->freeResult( $lngResultID );
+
+    return $aryResult;    
+}
+
+// 受注データに紐づく換算レートを取得
+function fncGetConversionRateByReceiveData($lngReceiveNo, $lngReceiveRevisionNo, $dtmAppropriationDate, $objDB)
+{
+    $strQuery = ""
+        . "SELECT"
+        . "  r.lngreceiveno,"
+        . "  r.lngmonetaryunitcode,"
+        . "  r.lngmonetaryratecode,"
+        . "  mr.curconversionrate,"
+        . "  mr.dtmapplystartdate,"
+        . "  mr.dtmapplyenddate"
+        . " FROM m_receive r"
+        . "  LEFT JOIN (select distinct * from m_monetaryrate "
+        . "             where dtmapplystartdate<='".$dtmAppropriationDate."' and '".$dtmAppropriationDate."'<=dtmapplyenddate) mr "
+        . "   ON r.lngmonetaryunitcode = mr.lngmonetaryunitcode AND r.lngmonetaryratecode = mr.lngmonetaryratecode"
+        . " WHERE r.lngreceiveno=".$lngReceiveNo." AND r.lngrevisionno = ".$lngReceiveRevisionNo
+    ;
+
+    list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
+    if ( $lngResultNum ) {
+        for ( $i = 0; $i < $lngResultNum; $i++ ) {
+            $aryResult[] = $objDB->fetchArray( $lngResultID, $i );
+        }
+    } else {
+        fncOutputError ( 9501, DEF_FATAL, "換算レートの取得に失敗", TRUE, "", $objDB );
+    }
+    $objDB->freeResult( $lngResultID );
+
+    return $aryResult;    
+}
 
 // 売上（納品書）登録メイン関数
 function fncRegisterSalesAndSlip($aryHeader, $aryDetail, $objDB, $objAuth)
 {
     // 現在日付
-    $dtmNowDate = date( 'Y/m/d', time() );  
+    $dtmNowDate = date( 'Y/m/d', time() );
+
+    // 計上日
+    $dtmAppropriationDate = $dtmNowDate;
 
     // 登録する明細の数
     $totalItemCount = count($aryDetail);
+
+    // 顧客コードを取得（表示用→数値）
+    $lngCompanyCode = fncGetNumericCompanyCode($aryHeader["strcompanydisplaycode"], $objDB);
+
+    
+    
 
     // TODO:顧客コードに紐づく帳票1ページあたりの最大明細数を取得する
     $maxItemPerPage = 999;
@@ -338,19 +479,22 @@ function fncRegisterSalesAndSlip($aryHeader, $aryDetail, $objDB, $objAuth)
         $lngSlipNo = fncGetSequence( 'm_slip.lngslipno', $objDB );
 
         // 売上マスタ登録
-        if (!fncRegisterSalesMaster($lngSalesNo, $lngRevisionNo, $strSlipCode, $strSalesCode, $aryHeader , $aryDetail, $objDB, $objAuth)){
+        if (!fncRegisterSalesMaster($lngSalesNo, $lngRevisionNo, $strSlipCode, $strSalesCode, $dtmAppropriationDate,
+                 $aryHeader , $aryDetail, $objDB, $objAuth)){
             // 失敗
             return false;
         }
 
         // 売上明細登録
-        if (!fncRegisterSalesDetail($itemMinIndex, $itemMaxIndex, $lngSalesNo, $lngRevisionNo, $aryHeader , $aryDetail, $objDB, $objAuth)){
+        if (!fncRegisterSalesDetail($itemMinIndex, $itemMaxIndex, $lngSalesNo, $lngRevisionNo,
+                 $aryHeader , $aryDetail, $objDB, $objAuth)){
             // 失敗
             return false;
         }
 
         // 納品伝票マスタ登録
-        if (!fncRegisterSlipMaster($lngSlipNo, $lngRevisionNo, $lngSalesNo, $strSlipCode, $aryHeader , $aryDetail, $objDB, $objAuth)){
+        if (!fncRegisterSlipMaster($lngSlipNo, $lngRevisionNo, $lngSalesNo, $strSlipCode,
+                 $aryHeader , $aryDetail, $objDB, $objAuth)){
             // 失敗
             return false;
         }
@@ -378,13 +522,13 @@ function withQuote($source)
 
 
 // 売上マスタ登録
-function fncRegisterSalesMaster($lngSalesNo, $lngRevisionNo, $strSlipCode, $strSalesCode, $aryHeader , $aryDetail, $objDB, $objAuth)
+function fncRegisterSalesMaster($lngSalesNo, $lngRevisionNo, $strSlipCode, $strSalesCode, $dtmAppropriationDate, $aryHeader , $aryDetail, $objDB, $objAuth)
 {
     // 登録データのセット
     $v_lngsalesno = $lngSalesNo;                                        //1:売上番号
     $v_lngrevisionno = $lngRevisionNo;                                  //2:リビジョン番号
     $v_strsalescode = withQuote($strSalesCode);                         //3:売上コード
-    $v_dtmappropriationdate = "CURRENT_DATE";                           //4:計上日
+    $v_dtmappropriationdate = $dtmAppropriationDate;                    //4:計上日
     $v_lngcustomercompanycode = $value;                                 //5:顧客コード
     $v_lnggroupcode = $value;                                           //6:グループコード
     $v_lngusercode = $value;                                            //7:ユーザコード
@@ -559,41 +703,41 @@ function fncRegisterSalesDetail($itemMinIndex, $itemMaxIndex, $lngSalesNo, $lngR
 function fncRegisterSlipMaster($lngSlipNo, $lngRevisionNo, $lngSalesNo, $strSlipCode, $aryHeader , $aryDetail, $objDB, $objAuth)
 {
     // 登録データのセット
-    $v_lngslipno = $lngSlipNo;                                        //1:納品伝票番号
-    $v_lngrevisionno = $lngRevisionNo;                                //2:リビジョン番号
-    $v_strslipcode = $strSlipCode;                                    //3:納品伝票コード
-    $v_lngsalesno = $lngSalesNo;                                      //4:売上番号
-    $v_strcustomercode = $value;                                      //5:顧客コード
-    $v_strcustomercompanyname = $value;                               //6:顧客社名
-    $v_strcustomername = $value;                                      //7:顧客名
-    $v_strcustomeraddress1 = $value;                                  //8:顧客住所1
-    $v_strcustomeraddress2 = $value;                                  //9:顧客住所2
-    $v_strcustomeraddress3 = $value;                                  //10:顧客住所3
-    $v_strcustomeraddress4 = $value;                                  //11:顧客住所4
-    $v_strcustomerphoneno = $value;                                   //12:顧客電話番号
-    $v_strcustomerfaxno = $value;                                     //13:顧客FAX番号
-    $v_strcustomerusername = $aryHeader["strcustomerusername"];       //14:顧客担当者名
-    $v_strshippercode = $value;                                       //15:仕入先コード（出荷者）
-    $v_dtmdeliverydate = withQuote($aryHeader["dtmdeliverydate"]);    //16:納品日
-    $v_lngdeliveryplacecode = $value;                                 //17:納品場所コード
+    $v_lngslipno = $lngSlipNo;                                                 //1:納品伝票番号
+    $v_lngrevisionno = $lngRevisionNo;                                         //2:リビジョン番号
+    $v_strslipcode = $strSlipCode;                                             //3:納品伝票コード
+    $v_lngsalesno = $lngSalesNo;                                               //4:売上番号
+    $v_strcustomercode = $value;                                               //5:顧客コード
+    $v_strcustomercompanyname = $value;                                        //6:顧客社名
+    $v_strcustomername = $value;                                               //7:顧客名
+    $v_strcustomeraddress1 = $value;                                           //8:顧客住所1
+    $v_strcustomeraddress2 = $value;                                           //9:顧客住所2
+    $v_strcustomeraddress3 = $value;                                           //10:顧客住所3
+    $v_strcustomeraddress4 = $value;                                           //11:顧客住所4
+    $v_strcustomerphoneno = $value;                                            //12:顧客電話番号
+    $v_strcustomerfaxno = $value;                                              //13:顧客FAX番号
+    $v_strcustomerusername = $aryHeader["strcustomerusername"];                //14:顧客担当者名
+    $v_strshippercode = $value;                                                //15:仕入先コード（出荷者）
+    $v_dtmdeliverydate = withQuote($aryHeader["dtmdeliverydate"]);             //16:納品日
+    $v_lngdeliveryplacecode = $value;                                          //17:納品場所コード
     $v_strdeliveryplacename = withQuote($aryHeader["strdeliveryplacename"]);           //18:納品場所名
     $v_strdeliveryplaceusername = withQuote($aryHeader["strdeliveryplaceusername"]);   //19:納品場所担当者名
-    $v_lngpaymentmethodcode = $$aryHeader["lngpaymentmethodcode"];    //20:支払方法コード
-    $v_dtmpaymentlimit = withQuote($aryHeader["dtmpaymentlimit"]);    //21:支払期限
-    $v_lngtaxclasscode = $aryHeader["lngtaxclasscode"];               //22:課税区分コード
-    $v_strtaxclassname = withQuote($aryHeader["strtaxclassname"]);    //23:課税区分
-    $v_curtax = $aryHeader["lngtaxrate"];                             //24:消費税率
-    $v_strusercode =withQuote( $aryHeader["lnginsertusercode"]);      //25:担当者コード
-    $v_strusername = withQuote($aryHeader["strinsertusername"]);      //26:担当者名
-    $v_curtotalprice = $aryHeader["curtotalprice"];                   //27:合計金額
-    $v_lngmonetaryunitcode = $aryDetail[0]["lngmonetaryunitcode"];    //28:通貨単位コード
-    $v_strmonetaryunitsign = withQuote($aryDetail[0]["strmonetaryunitsign"]);          //29:通貨単位
-    $v_dtminsertdate = "now()";                                       //30:作成日
-    $v_strinsertusercode = withQuote($objAuth->UserCode);             //31:入力者コード
-    $v_strinsertusername = withQuote($objAuth->UserDisplayName);      //32:入力者名
-    $v_strnote = withQuote($aryHeader["strNote"]);                    //33:備考
-    $v_lngprintcount = 0;                                             //34:印刷回数
-    $v_bytinvalidflag = "FALSE";                                      //35:無効フラグ
+    $v_lngpaymentmethodcode = $$aryHeader["lngpaymentmethodcode"];             //20:支払方法コード
+    $v_dtmpaymentlimit = withQuote($aryHeader["dtmpaymentlimit"]);             //21:支払期限
+    $v_lngtaxclasscode = $aryHeader["lngtaxclasscode"];                        //22:課税区分コード
+    $v_strtaxclassname = withQuote($aryHeader["strtaxclassname"]);             //23:課税区分
+    $v_curtax = $aryHeader["lngtaxrate"];                                      //24:消費税率
+    $v_strusercode = withQuote( $aryHeader["strdrafteruserdisplaycode"]);      //25:担当者コード
+    $v_strusername = withQuote($aryHeader["strdrafteruserdisplayname"]);       //26:担当者名
+    $v_curtotalprice = $aryHeader["curtotalprice"];                            //27:合計金額
+    $v_lngmonetaryunitcode = $aryDetail[0]["lngmonetaryunitcode"];             //28:通貨単位コード
+    $v_strmonetaryunitsign = withQuote($aryDetail[0]["strmonetaryunitsign"]);  //29:通貨単位
+    $v_dtminsertdate = "now()";                                                //30:作成日
+    $v_strinsertusercode = withQuote($objAuth->UserCode);                      //31:入力者コード
+    $v_strinsertusername = withQuote($objAuth->UserDisplayName);               //32:入力者名
+    $v_strnote = withQuote($aryHeader["strNote"]);                             //33:備考
+    $v_lngprintcount = 0;                                                      //34:印刷回数
+    $v_bytinvalidflag = "FALSE";                                               //35:無効フラグ
 
     
     // 登録クエリ作成
