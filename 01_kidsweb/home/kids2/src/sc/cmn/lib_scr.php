@@ -389,6 +389,7 @@ function funcGetCustomerCompanyName($lngCountryCode, $aryCompanyInfo)
         return $aryCompanyInfo["strprintcompanyname"];
     }
 
+    // 帳票用会社名取得
     if ($lngCountryCode != 81)
     {
         return $aryCompanyInfo["strcompanyname"];
@@ -414,7 +415,6 @@ function funcGetCustomerName($aryCompanyInfo)
         return null;
     }
 }
-
 
 // ユーザーコードに紐づくユーザー情報を取得
 function fncGetUserInfoByUserCode($lngUserCode, $objDB)
@@ -473,6 +473,48 @@ function fncGetConversionRateByReceiveData($lngReceiveNo, $lngReceiveRevisionNo,
     $objDB->freeResult( $lngResultID );
 
     return $aryResult;    
+}
+
+// 納品書NOの発行
+function fncPublishSlipCode($dtmNowDate, $objDB)
+{
+    $strYYYYMM = substr($dtmNowDate, 0, 4) . substr($dtmNowDate, 5, 2);
+
+    $strQuery = ""
+        . "SELECT"
+        . "  MAX(strslipcode) as yyyymmnn,"
+        . "  SUBSTR(MAX(strslipcode),7,8) as nn"
+        . " FROM"
+        . "  m_slip"
+        . " WHERE"
+        . "  strslipcode IS NOT NULL "
+        . "  AND LENGTH(strslipcode) = 8"
+        . "  AND strslipcode LIKE '".$strYYYYMM."__'"
+    ;
+
+    list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
+    if ( $lngResultNum ) {
+        for ( $i = 0; $i < $lngResultNum; $i++ ) {
+            $aryResult[] = $objDB->fetchArray( $lngResultID, $i );
+        }
+    } else {
+        fncOutputError ( 9501, DEF_FATAL, "納品書NOの発行に失敗", TRUE, "", $objDB );
+    }
+    $objDB->freeResult( $lngResultID );
+
+    // 納品書NOの生成
+    if ($lngResultNum != 0){
+        $lngNumber = intval($aryResult["nn"]);
+        $lngNumber += 1;
+    }else{
+        // 当日1件目は nn='00' で開始
+        $lngNumber = 0;
+    }
+
+    $strNN = sprintf("%02d", $lngNumber);
+    $strPublishdSlipCode = $strYYYYMM . $strNN;
+
+    return $strPublishdSlipCode;    
 }
 
 // 売上（納品書）登録メイン関数
