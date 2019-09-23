@@ -1145,8 +1145,6 @@ function fncRegisterSlipDetail($itemMinIndex, $itemMaxIndex, $lngSlipNo, $lngRev
         $strQuery = "";
         $strQuery .= implode("\n", $aryInsert);
 
-        $detect = mb_detect_encoding($v_strproductname);
-
         // епо©╪б╧т
         if ( !$lngResultID = $objDB->execute( $strQuery ) )
         {
