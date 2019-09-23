@@ -33,7 +33,7 @@ $('img.copy').on({
             contents += '\r\n'
         });
 
-        // クリップボードに値を反映
+        // // クリップボードに値を反映
         if (window.clipboardData.setData('Text', contents)){
             alert("クリップボードに検索結果をコピーしました。");
         }

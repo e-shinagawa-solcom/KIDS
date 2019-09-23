@@ -498,6 +498,9 @@ function fncGetCompanyClosedDay($companyDisplayCode , $targetDate=null, $objDB)
         // 検索結果連想配列を取得
         $result = pg_fetch_assoc($lngResultID);
         $lngClosedDay = (int)$result['lngclosedday'];
+        if($lngClosedDay <= 0){
+            return $closedDay;
+        }
         // 日付の比較
         $dateTime = new DateTime($targetDate);
 
@@ -2299,5 +2302,87 @@ function fncGetJapaneseDate($date)
     return $result;
 
 }
+
+
+/**
+ *
+ *    請求書集計に必要なデータ取得用ＳＱＬ文作成関数
+ *
+ *    @param  date        $invoiceMonth
+ *    @return strQuery    $strQuery 検索用SQL文
+ *    @access public
+ */
+function fncGetInvoiceAggregateSQL ( $invoiceMonth )
+{
+    $start = new DateTime($invoiceMonth);
+    $end =   new DateTime($invoiceMonth);
+    // 来月
+    $end->add(DateInterval::createFromDateString('1 month'));
+
+    // 請求書番号番号
+    $aryQuery[] = "SELECT distinct on (inv.lnginvoiceno) inv.lnginvoiceno as lnginvoiceno ";
+    // リビジョン番号
+    $aryQuery[] = ", inv.lngrevisionno as lngrevisionno";
+    // 顧客コード
+    $aryQuery[] = ", inv.strcustomercode as strcustomercode";
+    // 顧客名
+    $aryQuery[] = ", inv.strcustomername as strcustomername";
+    // 顧客社名
+    $aryQuery[] = ", inv.strcustomercompanyname as strcustomercompanyname";
+    // 請求書コード
+    $aryQuery[] = ", inv.strinvoicecode as strinvoicecode";
+    // 請求日
+    $aryQuery[] = ", to_char( inv.dtminvoicedate, 'YYYY/MM/DD' ) as dtminvoicedate";
+    // 請求期間 自
+    $aryQuery[] = ", to_char( inv.dtmchargeternstart, 'YYYY/MM/DD' ) as dtmchargeternstart";
+    // 請求期間 至
+    $aryQuery[] = ", to_char( inv.dtmchargeternend, 'YYYY/MM/DD' ) as dtmchargeternend";
+    // 前月請求残額
+    $aryQuery[] = ", inv.curlastmonthbalance as curlastmonthbalance";
+    // 御請求金額
+    $aryQuery[] = ", inv.curthismonthamount as curthismonthamount";
+    // 通貨単位コード
+    $aryQuery[] = ", inv.lngmonetaryunitcode as lngmonetaryunitcode";
+    // 通貨単位
+    $aryQuery[] = ", inv.strmonetaryunitsign as strmonetaryunitsign";
+    // 課税区分コード
+    $aryQuery[] = ", inv.lngtaxclasscode as lngtaxclasscode";
+    // 課税区分名
+    $aryQuery[] = ", inv.strtaxclassname as strtaxclassname";
+    // 税抜金額1
+    $aryQuery[] = ", inv.cursubtotal1 as cursubtotal1";
+    // 消費税率1
+    $aryQuery[] = ", inv.curtax1 as curtax1";
+    // 消費税額1
+    $aryQuery[] = ", inv.curtaxprice1 as curtaxprice1";
+    // 担当者
+    $aryQuery[] = ", inv.strusercode as strusercode";
+    $aryQuery[] = ", inv.strusername as strusername";
+    // 作成者
+    $aryQuery[] = ", inv.strinsertusercode as strinsertusercode";
+    $aryQuery[] = ", inv.strinsertusername as strinsertusername";
+    // 作成日
+    $aryQuery[] = ", to_char( inv.dtminsertdate, 'YYYY/MM/DD HH:MI:SS' ) as dtminsertdate";
+    // 備考
+    $aryQuery[] = ", inv.strnote as strnote";
+    // 印刷回数
+    $aryQuery[] = ", inv.lngprintcount as lngprintcount";
+
+    $aryQuery[] = " FROM m_invoice inv ";
+
+    // WHERE  dtminvoicedate
+    $aryQuery[] = " WHERE inv.dtminvoicedate >= '" .$start->format('Y-m-d') ."'  AND inv.dtminvoicedate < '"  .$end->format('Y-m-d') ."' ";
+    // 削除済みは排除
+    $aryQuery[] = " AND inv.lnginvoiceno NOT IN ( ";
+    $aryQuery[] = " SELECT DISTINCT(lnginvoiceno) FROM m_invoice WHERE lngrevisionno = -1";
+    $aryQuery[] = " ) ";
+
+    $aryQuery[] = " ORDER BY inv.lnginvoiceno ASC , inv.lngrevisionno DESC , inv.lngmonetaryunitcode ASC, inv.strcustomercode ASC, inv.strinvoicecode ASC ";
+
+    $strQuery = implode( "\n", $aryQuery );
+
+    return $strQuery;
+}
+
 
 ?>

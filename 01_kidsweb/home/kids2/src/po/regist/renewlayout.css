@@ -204,6 +204,16 @@
 }
 /* END INPUT A SEGMENTS */
 
+#InputDetail {
+	position         : absolute ;
+	left             : 15px ;
+	top              : 240px ;
+	width            : 850px;
+	height           : 330px;
+	border           : 1px solid #798787;
+	background       : #ffffff ;
+	overflow         : auto;
+}
 
 /* START HEADER */
 #SegAHeader {
@@ -221,10 +231,11 @@
 
 /* START BODYS */
 #SegABodys {
-	left : 10px ;
+	position: absolute;
+	left : 0px ;
 	top : 31px ;
 	width : 927px ;
-	height : 310px ;
+	height : 570px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #cdcdcd ;
@@ -237,7 +248,7 @@
 #SegABottom {
 	position : absolute ;
 	left : 0px ;
-	top : 308px ;
+	top : 600px ;
 	width : 766px ;
 	height : 7px ;
 	border-width: 0px ;
@@ -254,12 +265,12 @@
 	left : 10px ;
 	top : 40px ;
 	width : 120px ;
-	height : 27px ;
+	height : 20px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #798787 ;
 	background-color: #ffffff ;
-	padding : 8px 0px 0px 8px ;
+	padding : 5px 0px 0px 8px ;
 }
 
 #SegA02 {
@@ -268,54 +279,54 @@
 	left : 10px ;
 	top : 70px ;
 	width : 120px ;
-	height : 27px ;
+	height : 20px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #798787 ;
 	background-color: #ffffff ;
-	padding : 8px 0px 0px 8px ;
+	padding : 5px 0px 0px 8px ;
 }
 
 #SegA03 {
 	font-weight : bold ;
 	position : absolute ;
 	left : 10px ;
-	top : 110px ;
+	top : 100px ;
 	width : 120px ;
-	height : 27px ;
+	height : 20px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #798787 ;
 	background-color: #ffffff ;
-	padding : 8px 0px 0px 8px ;
+	padding : 5px 0px 0px 8px ;
 }
 
 #SegA04 {
 	font-weight : bold ;
 	position : absolute ;
 	left : 10px ;
-	top : 144px ;
+	top : 130px ;
 	width : 170px ;
-	height : 27px ;
+	height : 20px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #798787 ;
 	background-color: #ffffff ;
-	padding : 8px 0px 0px 8px ;
+	padding : 5px 0px 0px 8px ;
 }
 
 #SegA05 {
 	font-weight : bold ;
 	position : absolute ;
 	left : 10px ;
-	top : 170px ;
+	top : 160px ;
 	width : 170px ;
-	height : 27px ;
+	height : 20px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #798787 ;
 	background-color: #ffffff ;
-	padding : 8px 0px 0px 8px ;
+	padding : 5px 0px 0px 8px ;
 }
 
 #SegA0405 {
@@ -333,43 +344,85 @@
 #SegA11 {
 	font-weight : bold ;
 	position : absolute ;
-	left : 10px ;
-	top : 204px ;
+	left : 290px ;
+	top : 40px ;
 	width : 170px ;
-	height : 27px ;
+	height : 20px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #798787 ;
 	background-color: #ffffff ;
-	padding : 8px 0px 0px 8px ;
+	padding : 5px 0px 0px 8px ;
 }
 
 #SegA12 {
 	font-weight : bold ;
 	position : absolute ;
-	left : 10px ;
-	top : 248px ;
-	width : 120px ;
-	height : 27px ;
+	left : 290px ;
+	top : 70px ;
+	width : 170px ;
+	height : 20px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #798787 ;
 	background-color: #ffffff ;
-	padding : 8px 0px 0px 8px ;
+	padding : 5px 0px 0px 8px ;
 }
 
 #SegA13 {
 	font-weight : bold ;
 	position : absolute ;
-	left : 10px ;
-	top : 278px ;
-	width : 120px ;
-	height : 27px ;
+	left : 290px ;
+	top : 100px ;
+	width : 170px ;
+	height : 20px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #798787 ;
 	background-color: #ffffff ;
-	padding : 8px 0px 0px 8px ;
+	padding : 5px 0px 0px 8px ;
+}
+
+#SegA14 {
+	font-weight : bold ;
+	position : absolute ;
+	left : 290px ;
+	top : 130px ;
+	width : 170px ;
+	height : 20px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #ffffff #798787 #798787 ;
+	background-color: #ffffff ;
+	padding : 5px 0px 0px 8px ;
+}
+
+#SegA15 {
+	font-weight : bold ;
+	position : absolute ;
+	left : 290px ;
+	top : 160px ;
+	width : 170px ;
+	height : 20px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #ffffff #798787 #798787 ;
+	background-color: #ffffff ;
+	padding : 5px 0px 0px 8px ;
+}
+
+#SegA16 {
+	font-weight : bold ;
+	position : absolute ;
+	left : 10px ;
+	top : 190px ;
+	width : 170px ;
+	height : 20px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #ffffff #798787 #798787 ;
+	background-color: #ffffff ;
+	padding : 5px 0px 0px 8px ;
 }
 
 #SegA06 {
@@ -447,21 +500,23 @@
 /* START VARS */
 #VarsA01 {
 	position : absolute ;
-	left : 129px ;
+	left : 130px ;
 	top : 40px ;
-	height : 27px ;
+	height : 22px ;
+	width: 130px;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #798787 #798787 #ffffff ;
 	background-color: #ffffff ;
-	padding : 3px 35px 0px 8px ;
+	padding : 3px 0px 0px 8px ;
 }
 
 #VarsA02 {
 	position : absolute ;
-	left : 129px ;
+	left : 130px ;
 	top : 70px ;
-	height : 27px ;
+	height : 22px ;
+	width: 130px;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #ffffff ;
@@ -472,80 +527,124 @@
 
 #VarsA03 {
 	position : absolute ;
-	left : 129px ;
-	top : 110px ;
-	height : 27px ;
+	left : 130px ;
+	top : 100px ;
+	height : 22px ;
+	width: 98px;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #ffffff ;
 	background-color: #ffffff ;
-	padding : 3px 33px 0px 8px ;
+	padding : 3px 0px 0px 40px ;
 }
 
 
 #VarsA04 {
 	position : absolute ;
-	left : 178px ;
-	top : 144px ;
-	height : 27px ;
+	left : 130px ;
+	top : 130px ;
+	height : 22px ;
+	width: 98px;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #ffffff ;
 	background-color: #ffffff ;
-	padding : 3px 0px 0px 8px ;
+	padding : 3px 0px 0px 40px ;
 }
 
 
 #VarsA05 {
 	position : absolute ;
-	left : 178px ;
-	top : 170px ;
-	height : 27px ;
+	left : 130px ;
+	top : 160px ;
+	height : 22px ;
+	width: 98px;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #ffffff ;
 	background-color: #ffffff ;
-	padding : 3px 0px 0px 8px ;
+	padding : 3px 0px 0px 40px ;
 }
 
 
 #VarsA11 {
 	position : absolute ;
-	left : 171px ;
-	top : 204px ;
-	height : 27px ;
+	left : 380px ;
+	top : 40px ;
+	height : 22px ;
+	width: 380px;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #ffffff ;
 	background-color: #ffffff ;
-	padding : 3px 33px 0px 8px ;
+	padding : 3px 0px 0px 30px ;
 }
 
 
 #VarsA12 {
 	position : absolute ;
-	left : 129px ;
-	top : 248px ;
-	height : 27px ;
+	left : 380px ;
+	top : 70px ;
+	height : 22px ;
+	width: 380px;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #ffffff ;
 	background-color: #ffffff ;
-	padding : 3px 35px 0px 8px ;
+	padding : 3px 0px 0px 30px ;
 }
 
 #VarsA13 {
 	position : absolute ;
-	left : 129px ;
-	top : 278px ;
-	height : 27px ;
+	left : 380px ;
+	top : 100px ;
+	height : 22px ;
+	width: 341px;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #ffffff #798787 #ffffff ;
+	background-color: #ffffff ;
+	padding : 3px 0px 0px 69px ;
+}
+
+#VarsA14 {
+	position : absolute ;
+	left : 380px ;
+	top : 130px ;
+	height : 22px ;
+	width: 341px;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #ffffff #798787 #ffffff ;
+	background-color: #ffffff ;
+	padding : 3px 0px 0px 69px ;
+}
+
+#VarsA15 {
+	position : absolute ;
+	left : 380px ;
+	top : 160px ;
+	height : 22px ;
+	width: 380px;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #ffffff #798787 #ffffff ;
+	background-color: #ffffff ;
+	padding : 3px 0px 0px 30px ;
+}
+
+#VarsA16 {
+	position : absolute ;
+	left : 130px ;
+	top : 190px ;
+	height : 22px ;
+	width: 780px;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #798787 #ffffff #798787 #ffffff ;
 	background-color: #ffffff ;
 	padding : 3px 0px 0px 8px ;
 }
-
 
 #VarsA06 {
 	position : absolute ;
@@ -607,6 +706,53 @@
 	padding : 3px 0px 0px 8px ;
 }
 /* END VARS */
+/* 明細行替えボタン */
+#selectup{
+	position: absolute;
+	top: 220px;
+	left: 860px;
+}
+#selectup1{
+	position: absolute;
+	top: 270px;
+	left: 852px;
+}
+#selectdown{
+	position: absolute;
+	top: 512px;
+	left: 860px;
+}
+#selectdown1{
+	position: absolute;
+	top: 460px;
+	left: 852px;
+}
+#FixEntryBtn{
+	position: absolute;
+	top: 570px;
+	left: 780px;
+}
+
+/* 明細行表示テーブル */
+#DetailTable {
+	table-layout: fixed;
+}
+tr.TrSegs th {
+	font-weight: bold;
+	font-size: 9pt;
+	color: #ffffff;
+	background-color: #7e888f;
+	padding: 4px 3px 1px 3px;
+	white-space: nowrap;
+}
+#DetailTableBody tr td {
+	font-size: 9pt;
+	color: #666666;
+	white-space: nowrap;
+}
+.selected {
+	background-color: #87cefa;
+}
 /************************************** END INPUT A **************************************/
 
 
@@ -1506,8 +1652,8 @@
 
 #DateBtB {
 	position : absolute ;
-	left : 227px ;
-	top : 252px ;
+	left : 230px ;
+	top : 75px ;
 	width : 19px ;
 	height : 19px ;
 	border-width : 0px ;

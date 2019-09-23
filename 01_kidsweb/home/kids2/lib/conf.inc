@@ -325,6 +325,10 @@ define ( "DEF_FUNCTION_PO5",	505 );     //  505 発注管理（発注修正）
 define ( "DEF_FUNCTION_PO6",	506 );     //  506 発注管理（発注削除）
 define ( "DEF_FUNCTION_PO7",	507 );     //  507 発注管理（発注の無効化処理）
 define ( "DEF_FUNCTION_PO8",	508 );     //  508 発注管理（商品マスタダイレクト修正）
+define ( "DEF_FUNCTION_PO9",	509 );     //  509 発注管理（発注確定）
+define ( "DEF_FUNCTION_PO10",	510 );     //  510 発注管理（発注書検索）
+define ( "DEF_FUNCTION_PO11",	511 );     //  511 発注管理（発注書検索　管理モード）
+define ( "DEF_FUNCTION_PO12",	512 );     //  512 発注管理（発注書修正）
 
 define ( "DEF_FUNCTION_SC0",	600 );     //  600 売上管理
 define ( "DEF_FUNCTION_SC1",	601 );     //  601 売上管理（売上登録）

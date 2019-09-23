@@ -109,13 +109,15 @@ else
 	$aryData["btnDetailVisible"] = "";
 }
 
-// 仕入科目
-$aryData["lngStockSubjectCode"]		= fncGetPulldown( "m_stocksubject", "lngstocksubjectcode", "lngstocksubjectcode,	strstocksubjectname", 1, '', $objDB );
-// 仕入部品
-$aryData["lngStockItemCode"] 		= fncGetPulldown( "m_stockitem", "lngstocksubjectcode || '-' || lngstockitemcode", "lngstockitemcode, 	strstockitemname", 0, '', $objDB );
+// 支払条件
+$aryData["lngPayConditionCode"] = fncGetPulldown("m_paycondition", "lngpayconditioncode", "strpayconditionname", 0, '', $objDB);
 
-// 仕入部品復元用
-$TmpAry = explode("\n",$aryData["lngStockItemCode"]);
+// 通貨
+$aryData["lngMonetaryunitCode"] = fncGetPulldown("m_monetaryunit", "lngmonetaryunitcode", "strmonetaryunitname", 0, '', $objDB);
+// 通貨レート
+$aryData["lngMonetaryrateCode"] = fncGetPulldown("m_monetaryrate", "lngmonetaryunitcode || '-' || lngmonetaryratecode", "lngmonetaryratecode, curconversionrate", 0, '', $objDB);
+// 通貨レート復元用
+$TmpAry = explode("\n",$aryData["lngMonetaryrateCode"]);
 
 foreach($TmpAry as $key => $value) {
 	if ($value) {
@@ -123,26 +125,26 @@ foreach($TmpAry as $key => $value) {
 		$ValuePosE = mb_strpos($value, ">", $ValuePosS) -1;
 		$DispPosS = $ValuePosE + 2;
 		$DispPosE = mb_strpos($value, "OPTION", $DispPosS) - 2;
-		if (array_key_exists('lngStockItemCodeValue', $aryData)) {
-			$aryData["lngStockItemCodeValue"] 	= $aryData["lngStockItemCodeValue"] . ",," . substr($value,$ValuePosS,$ValuePosE - $ValuePosS);
-			$aryData["lngStockItemCodeDisp"] 	= $aryData["lngStockItemCodeDisp"] . ",," . mb_ereg_replace("</OPTION>","",substr($value,$DispPosS));
+		if (array_key_exists('lngMonetaryRateCodeValue', $aryData)) {
+			$aryData["lngMonetaryRateCodeValue"] 	= $aryData["lngMonetaryRateCodeValue"] . ",," . substr($value,$ValuePosS,$ValuePosE - $ValuePosS);
+			$aryData["curConversionRate"] 	= $aryData["curConversionRate"] . ",," . mb_ereg_replace("</OPTION>","",substr($value,$DispPosS));
 		}
 		else
 		{
-			$aryData["lngStockItemCodeValue"] 	= substr($value,$ValuePosS,$ValuePosE - $ValuePosS);
-			$aryData["lngStockItemCodeDisp"] 	= mb_ereg_replace("</OPTION>","",substr($value,$DispPosS));
+			$aryData["lngMonetaryRateCodeValue"] 	= substr($value,$ValuePosS,$ValuePosE - $ValuePosS);
+			$aryData["curConversionRate"] 	= mb_ereg_replace("</OPTION>","",substr($value,$DispPosS));
 		}
 	}
 }
 
 //　プルダウンリストの取得に失敗した場合エラー表示
-if ( !$aryData["lngStockSubjectCode"] or !$aryData["lngStockItemCode"] )
+if ( !$aryData["lngMonetaryunitCode"] or !$aryData["lngMonetaryrateCode"] )
 {
 	fncOutputError ( 9055, DEF_WARNING, "システム管理者にお問い合わせ下さい。", TRUE, "", $objDB );
 }
 
-$aryData["lngStockItemCodeValue"]	= "<input type=\"hidden\" name=\"lngStockItemCodeValue\" value=\"" . $aryData["lngStockItemCodeValue"] . "\"></option>";
-$aryData["lngStockItemCodeDisp"]	= mb_convert_encoding("<input type=\"hidden\" name=\"lngStockItemCodeDisp\" value=\"" . $aryData["lngStockItemCodeDisp"] . "\"></option>","EUC-JP","ASCII,JIS,UTF-8,EUC-JP,SJIS");
+$aryData["lngMonetaryRateCodeValue"]	= "<input type=\"hidden\" name=\"lngMonetaryRateCodeValue\" value=\"" . $aryData["lngMonetaryRateCodeValue"] . "\"></option>";
+$aryData["curConversionRate"]	= mb_convert_encoding("<input type=\"hidden\" name=\"curConversionRate\" value=\"" . $aryData["curConversionRate"] . "\"></option>","EUC-JP","ASCII,JIS,UTF-8,EUC-JP,SJIS");
 
 // 文字列チェック
 $aryCheck["strSessionID"]          = "null:numenglish(32,32)";

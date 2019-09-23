@@ -1,42 +1,40 @@
 <?
 // ----------------------------------------------------------------------------
 /**
-*       発注管理  検索関連関数群
-*
-*
-*       @package    K.I.D.S.
-*       @license    http://www.kuwagata.co.jp/
-*       @copyright  KUWAGATA CO., LTD.
-*       @author     K.I.D.S. Groups <info@kids-groups.com>
-*       @access     public
-*       @version    2.00
-*
-*
-*       処理概要
-*         ・検索結果関連の関数
-*
-*       更新履歴
-*
-*/
+ *       発注管理  検索関連関数群
+ *
+ *
+ *       @package    K.I.D.S.
+ *       @license    http://www.kuwagata.co.jp/
+ *       @copyright  KUWAGATA CO., LTD.
+ *       @author     K.I.D.S. Groups <info@kids-groups.com>
+ *       @access     public
+ *       @version    2.00
+ *
+ *
+ *       処理概要
+ *         ・検索結果関連の関数
+ *
+ *       更新履歴
+ *
+ */
 // ----------------------------------------------------------------------------
 
-
-
 /**
-* 検索項目から一致する最新の発注データを取得するSQL文の作成関数
-*
-*	検索項目から SQL文を作成する
-*
-*	@param  Array 	$aryViewColumn 			表示対象カラム名の配列
-*	@param  Array 	$arySearchColumn 		検索対象カラム名の配列
-*	@param  Array 	$arySearchDataColumn 	検索内容の配列
-*	@param  Object	$objDB       			DBオブジェクト
-*	@param	String	$strOrderCode			発注コード	空白指定時:検索結果出力	発注コード指定時:管理用、同じ発注コードの一覧取得
-*	@param	Integer	$lngOrderNo				発注Ｎｏ	0:検索結果出力	発注Ｎｏ指定時:管理用、同じ発注コードとする時の対象外発注NO
-*	@param	Boolean	$bytAdminMode			有効な削除データの取得用フラグ	FALSE:検索結果出力	TRUE:管理用、削除データ取得
-*	@return Array 	$strSQL 検索用SQL文 OR Boolean FALSE
-*	@access public
-*/
+ * 検索項目から一致する最新の発注データを取得するSQL文の作成関数
+ *
+ *	検索項目から SQL文を作成する
+ *
+ *	@param  Array 	$aryViewColumn 			表示対象カラム名の配列
+ *	@param  Array 	$arySearchColumn 		検索対象カラム名の配列
+ *	@param  Array 	$arySearchDataColumn 	検索内容の配列
+ *	@param  Object	$objDB       			DBオブジェクト
+ *	@param	String	$strOrderCode			発注コード	空白指定時:検索結果出力	発注コード指定時:管理用、同じ発注コードの一覧取得
+ *	@param	Integer	$lngOrderNo				発注Ｎｏ	0:検索結果出力	発注Ｎｏ指定時:管理用、同じ発注コードとする時の対象外発注NO
+ *	@param	Boolean	$bytAdminMode			有効な削除データの取得用フラグ	FALSE:検索結果出力	TRUE:管理用、削除データ取得
+ *	@return Array 	$strSQL 検索用SQL文 OR Boolean FALSE
+ *	@access public
+ */
 function fncGetSearchPurchaseSQL ( $aryViewColumn, $arySearchColumn, $arySearchDataColumn, $objDB, $strOrderCode, $lngOrderNo, $bytAdminMode )
 {
 
@@ -781,20 +779,20 @@ function fncGetSearchPurchaseSQL ( $aryViewColumn, $arySearchColumn, $arySearchD
 }
 
 /**
-* 検索項目から一致する最新の発注書データを取得するSQL文の作成関数
-*
-*	検索項目から SQL文を作成する
-*
-*	@param  Array 	$aryViewColumn 			表示対象カラム名の配列
-*	@param  Array 	$arySearchColumn 		検索対象カラム名の配列
-*	@param  Array 	$arySearchDataColumn 	検索内容の配列
-*	@param  Object	$objDB       			DBオブジェクト
-*	@param	String	$strOrderCode			発注コード	空白指定時:検索結果出力	発注コード指定時:管理用、同じ発注コードの一覧取得
-*	@param	Integer	$lngOrderNo				発注Ｎｏ	0:検索結果出力	発注Ｎｏ指定時:管理用、同じ発注コードとする時の対象外発注NO
-*	@param	Boolean	$bytAdminMode			有効な削除データの取得用フラグ	FALSE:検索結果出力	TRUE:管理用、削除データ取得
-*	@return Array 	$strSQL 検索用SQL文 OR Boolean FALSE
-*	@access public
-*/
+ * 検索項目から一致する最新の発注書データを取得するSQL文の作成関数
+ *
+ *	検索項目から SQL文を作成する
+ *
+ *	@param  Array 	$aryViewColumn 			表示対象カラム名の配列
+ *	@param  Array 	$arySearchColumn 		検索対象カラム名の配列
+ *	@param  Array 	$arySearchDataColumn 	検索内容の配列
+ *	@param  Object	$objDB       			DBオブジェクト
+ *	@param	String	$strOrderCode			発注コード	空白指定時:検索結果出力	発注コード指定時:管理用、同じ発注コードの一覧取得
+ *	@param	Integer	$lngOrderNo				発注Ｎｏ	0:検索結果出力	発注Ｎｏ指定時:管理用、同じ発注コードとする時の対象外発注NO
+ *	@param	Boolean	$bytAdminMode			有効な削除データの取得用フラグ	FALSE:検索結果出力	TRUE:管理用、削除データ取得
+ *	@return Array 	$strSQL 検索用SQL文 OR Boolean FALSE
+ *	@access public
+ */
 function fncGetSearchPurcheseOrderSQL( $aryViewColumn, $arySearchColumn, $arySearchDataColumn, $objDB, $strOrderCode, $lngOrderNo, $bytAdminMode ){
 	// 表示用カラムに設定されている内容を検索用に文字列設定
 	for($i = 0; $i < count($aryViewColumn); $i++){
@@ -829,13 +827,13 @@ function fncGetSearchPurcheseOrderSQL( $aryViewColumn, $arySearchColumn, $arySea
 		}
 
 		// 営業部署
-		if($strViewColumnName == "InChargeGroupCode"){
+		if($strViewColumnName == "lngInChargeGroupCode"){
 			$arySelectQuery[] = "  ,mp.lnggroupcode AS lngGroupCode";
 			$arySelectQuery[] = "  ,mp.strgroupname as strGroupName";
 		}
 
 		// 開発担当者
-		if($strViewColumnName == "InChargeUserCode"){
+		if($strViewColumnName == "lngInChargeUserCode"){
 			$arySelectQuery[] = "  ,mp.lngusercode as lngUserCode";
 			$arySelectQuery[] = "  ,mp.strusername as strUserName";
 		}
@@ -852,7 +850,7 @@ function fncGetSearchPurcheseOrderSQL( $aryViewColumn, $arySearchColumn, $arySea
 		}
 
 		// 通貨
-		if($strViewColumnName == "lngMonetaryunitCode"){
+		if($strViewColumnName == "lngMonetaryunitCode" or $strViewColumnName == "curTotalPrice"){
 			$arySelectQuery[] = "  ,mp.lngmonetaryunitcode as lngMonetaryUnitCode";
 			$arySelectQuery[] = "  ,mp.strmonetaryunitsign as strMonetaryUnitSign";
 		}
@@ -1004,10 +1002,10 @@ function fncGetSearchPurcheseOrderSQL( $aryViewColumn, $arySearchColumn, $arySea
 	$aryOutQuery[] = implode("\n", $arySelectQuery);
 	$aryOutQuery[] = "FROM m_purchaseorder mp";
 	$aryOutQuery[] = implode("\n", $aryQuery);
-	// $aryOutQuery[] = "ORDER BY";
-	// $aryOutQuery[] = "   mp.strordercode";
-	// $aryOutQuery[] = "  ,mp.lngrevisionno DESC";
-	// $aryOutQuery[] = "";
+	$aryOutQuery[] = "ORDER BY";
+	$aryOutQuery[] = "   mp.lngpurchaseorderno";
+	$aryOutQuery[] = "  ,mp.lngrevisionno DESC";
+	$aryOutQuery[] = "";
 
 	switch($arySearchDataColumn["strSort"]){
 
@@ -1016,19 +1014,18 @@ function fncGetSearchPurcheseOrderSQL( $aryViewColumn, $arySearchColumn, $arySea
 	return implode("\n", $aryOutQuery);
 }
 
-
 /**
-* 対応する発注NOのデータに対する明細行を取得するSQL文の作成関数
-*
-*	発注NOから明細を取得する SQL文を作成する
-*
-*	@param  Array 	$aryDetailViewColumn 	表示対象明細カラム名の配列
-*	@param  String 	$lngOrderNo 			対象発注NO
-*	@param  Array 	$aryData 				POSTデータの配列
-*	@param  Object	$objDB       			DBオブジェクト
-*	@return Array 	$strSQL 検索用SQL文 OR Boolean FALSE
-*	@access public
-*/
+ * 対応する発注NOのデータに対する明細行を取得するSQL文の作成関数
+ *
+ *	発注NOから明細を取得する SQL文を作成する
+ *
+ *	@param  Array 	$aryDetailViewColumn 	表示対象明細カラム名の配列
+ *	@param  String 	$lngOrderNo 			対象発注NO
+ *	@param  Array 	$aryData 				POSTデータの配列
+ *	@param  Object	$objDB       			DBオブジェクト
+ *	@return Array 	$strSQL 検索用SQL文 OR Boolean FALSE
+ *	@access public
+ */
 function fncGetOrderToProductSQL ( $aryDetailViewColumn, $lngOrderNo, $aryData, $objDB )
 {
 	reset( $aryDetailViewColumn );
@@ -1233,25 +1230,25 @@ function fncGetOrderToProductSQL ( $aryDetailViewColumn, $lngOrderNo, $aryData, 
 }
 
 /**
-* 検索結果表示関数（ヘッダ用）
-*
-*	検索結果からテーブル構成で結果を出力する関数
-*	ヘッダ行を表示する
-*
-*	@param  Integer $lngColumnCount 		行数
-*	@param  Array 	$aryHeadResult 			ヘッダ行の検索結果が格納された配列
-*	@param  Array 	$aryDetailResult 		明細行の検索結果が格納された配列
-*	@param  Array 	$aryDetailViewColumn 	明細表示対象カラム名の配列
-*	@param  Array 	$aryHeadViewColumn 		ヘッダ表示対象カラム名の配列
-*	@param  Array 	$aryData 				ＰＯＳＴデータ群
-*	@param	Array	$aryUserAuthority		ユーザーの操作に対する権限が入った配列
-*	@param  Object 	$objDB 					DBオブジェクト
-*	@param  Object 	$objCache 				キャッシュオブジェクト
-*	@param	Integer	$lngReviseTotalCount	表示対象の発注の過去リバイズの合計数
-*	@param	Integer	$lngReviseCount			表示対象の発注の表示順（最新発注なら０）
-*	@param	Array	$aryNewResult			表示対象の発注の最新の発注データ
-*	@access public
-*/
+ * 検索結果表示関数（ヘッダ用）
+ *
+ *	検索結果からテーブル構成で結果を出力する関数
+ *	ヘッダ行を表示する
+ *
+ *	@param  Integer $lngColumnCount 		行数
+ *	@param  Array 	$aryHeadResult 			ヘッダ行の検索結果が格納された配列
+ *	@param  Array 	$aryDetailResult 		明細行の検索結果が格納された配列
+ *	@param  Array 	$aryDetailViewColumn 	明細表示対象カラム名の配列
+ *	@param  Array 	$aryHeadViewColumn 		ヘッダ表示対象カラム名の配列
+ *	@param  Array 	$aryData 				ＰＯＳＴデータ群
+ *	@param	Array	$aryUserAuthority		ユーザーの操作に対する権限が入った配列
+ *	@param  Object 	$objDB 					DBオブジェクト
+ *	@param  Object 	$objCache 				キャッシュオブジェクト
+ *	@param	Integer	$lngReviseTotalCount	表示対象の発注の過去リバイズの合計数
+ *	@param	Integer	$lngReviseCount			表示対象の発注の表示順（最新発注なら０）
+ *	@param	Array	$aryNewResult			表示対象の発注の最新の発注データ
+ *	@access public
+ */
 function fncSetPurchaseHeadTable ( $lngColumnCount, $aryHeadResult, $aryDetailResult, $aryDetailViewColumn, $aryHeadViewColumn, 
 									$aryData, $aryUserAuthority, $objDB, $objCache, $lngReviseTotalCount, $lngReviseCount, $aryNewResult )
 {
@@ -1611,23 +1608,132 @@ function fncSetPurchaseHeadTable ( $lngColumnCount, $aryHeadResult, $aryDetailRe
 	return $aryHtml;
 }
 
+/**
+ * 発注書データHTML変換
+ * 
+ * @param	Array	$aryViewColumn		カラム情報
+ * @param	Array	$aryResult			発注書データ
+ * @param	Array	$aryUserAuthority	権限
+ * @access	public
+ * 
+ */
+function fncSetPurchaseOrderHtml($aryViewColumn, $aryResult, $aryUserAuthority){
+	for($i = 0; $i < count($aryResult); $i++){
+		$aryHtml[] = "<tr>";
+		$aryHtml[] = "  <td class=\"rownum\">" . ($i + 1) . "</td>";
+		for($j = 0; $j < count($aryViewColumn); $j++){
+			$strColumn = $aryViewColumn[$j];
+			// 表示対象がボタンの場合
+			if($strColumn == "btnEdit" or $strColumn == "btnRecord" or $strColumn == "btnDelete") {
+				// 修正ボタン
+				if($strColumn == "btnEdit" and $aryUserAuthority["Edit"]){
+					// 発注書データが削除済みの場合、修正ボタンは非表示
+					if($aryResult[$i]["lngrevisionno"] == -1){
+						$aryHtml[] = "  <td></td>";
+					} else {
+						$aryHtml[] = "  <td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/detail_off_bt.gif\" lngpurchaseorderno=\"" . $aryResult[$i]["lngpurchaseorderno"] . "\" lngrevisionno=\"" . $aryResult[$i]["lngrevisionno"] . "\" class=\"edit button\"></td>";
+					}
+				}
+				// 履歴ボタン
+				if($strColumn == "btnRecord"){
+					// リビジョンが0の場合、履歴ボタンは非表示
+					if($aryResult[$i]["lngrevisionno"] == 1) {
+						$aryHtml[] = "  <td></td>";
+					} else {
+						$strOrderCode = sprintf("%s_%02d", $aryResult[$i]["strordercode"], $aryResult[$i]["lngrevisionno"]);
+						$aryHtml[] = "  <td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/detail_off_bt.gif\" lngpurchaseorderno=\"" . $aryResult[$i]["lngpurchaseorderno"] . "\" strOrderCode=\"" . $strOrderCode . "\" class=\"record button\"></td>";
+					}
+				}
+				// 削除済ボタン
+				if($strColumn == "btnDelete" and $aryUserAuthority["Admin"]) {
+					// 削除済みのみ表示
+					if($aryResult[$i]["lngrevisionno"] == -1){
+						$aryHtml[] = "  <td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/remove_off_bt.gif\" lngpurchaseorderno=\"" . $aryResult[$i]["lngpurchaseorderno"] . "\" class=\"record button\"></td>";
+					} else {
+						$aryHtml[] = "  <td></td>";
+					}
+				}
+			} else {
+				// 発注NO.
+				if($strColumn == "strOrderCode"){
+					$aryHtml[] = "  <td class=\"td-strordercode\" baseordercode=\"" . $aryResult[$i]["strordercode"] . "\">" . sprintf("%s_%02d", $aryResult[$i]["strordercode"], $aryResult[$i]["lngrevisionno"]) . "</td>";
+				}
+				// 発注有効期限日
+				if($strColumn == "dtmExpirationDate"){
+					$aryHtml[] = "  <td class=\"td-dtmexpirationdate\">" . $aryResult[$i]["dtmexpirationdate"] . "</td>";
+				}
+				// 製品コード
+				if($strColumn == "strProductCode"){
+					$aryHtml[] = "  <td class=\"td-strproductcode\">" . sprintf("[%s]", $aryResult[$i]["strproductcode"]) . "</td>";
+				}
+				// 登録日
+				if($strColumn == "dtmInsertDate"){
+					$aryHtml[] = "  <td class=\"td-dtminsertdate\">" . $aryResult[$i]["dtminsertdate"] . "</td>";
+				}
+				// 入力者
+				if($strColumn == "lngInputUserCode"){
+					$aryHtml[] = "  <td class=\"td-lnginsertusercode\">" . sprintf("[%s] %s", $aryResult[$i]["lnginsertusercode"], $aryResult[$i]["strinsertusername"]) . "</td>";
+				}
+				// 製品名
+				if($strColumn == "strProductName"){
+					$aryHtml[] = "  <td class=\"td-strproductname\">" . $aryResult[$i]["strproductname"] . "</td>";
+				}
+				// 製品名(英語)
+				if($strColumn == "strProductEnglishName"){
+					$aryHtml[] = "  <td class=\"td-strproductenglishname\">" . $aryResult[$i]["strproductenglishname"] . "</td>";
+				}
+				// 営業部署
+				if($strColumn == "lngInChargeGroupCode"){
+					$aryHtml[] = "  <td class=\"td-lnggroupcode\">" . sprintf("[%s] %s", $aryResult[$i]["lnggroupcode"], $aryResult[$i]["strgroupname"]) . "</td>";
+				}
+				// 開発担当者
+				if($strColumn == "lngInChargeUserCode"){
+					$aryHtml[] = "  <td class=\"td-lngusercode\">" . sprintf("[%s] %s", $aryResult[$i]["lngusercode"], $aryResult[$i]["strusername"]) . "</td>";
+				}
+				// 仕入先
+				if($strColumn == "lngCustomerCode"){
+					$aryHtml[] = "  <td class=\"td-lngcustomercode\">" .sprintf("[%s] %s", $aryResult[$i]["lngcustomercode"], $aryResult[$i]["strcustomername"]) . "</td>";
+				}
+				// 支払条件
+				if($strColumn == "lngPayConditionCode"){
+					$aryHtml[] = "  <td class=\"td-strpaycnoditionname\">" . $aryResult[$i]["strpaycnoditionname"] . "</td>";
+				}
+				// 税抜金額
+				if($strColumn == "curTotalPrice"){
+					$aryHtml[] = "  <td class=\"td-curtotalprice\">" . sprintf("%s %.2f", $aryResult[$i]["strmonetaryunitsign"], $aryResult[$i]["curtotalprice"]) . "</td>";
+				}
+				// 納品場所
+				if($strColumn == "lngDeliveryPlaceCode"){
+					$aryHtml[] = "  <td class=\"td-strdeliveryplacename\">" . $aryResult[$i]["strdeliveryplacename"] . "</td>";
+				}
+				// 明細備考
+				if($strColumn == "strNote"){
+					$aryHtml[] = "  <td class=\"td-strnote\">" . $aryResult[$i]["strnote"] . "</td>";
+				}
+			}
+		}
+		$aryHtml[] = "</tr>";
+	}
+
+	return implode("\n", $aryHtml);
+}
 
 /**
-* 検索結果表示関数
-*
-*	検索結果からテーブル構成で結果を出力する関数
-*
-*	@param  Array 	$aryResult 			検索結果が格納された配列
-*	@param  Array 	$aryViewColumn 		表示対象カラム名の配列
-*	@param  Array 	$aryData 			ＰＯＳＴデータ群
-*	@param	Array	$aryUserAuthority	ユーザーの操作に対する権限が入った配列
-*	@param	Array	$aryTytle			項目名が格納された配列（呼び出し元で日本語用、英語用の切り替え）
-*	@param  Object	$objDB       		DBオブジェクト
-*	@param  Object	$objCache       	キャッシュオブジェクト
-*	@param	Array	$aryTableName		表示カラム名とマスタ内カラム名変更用
-*	@access public
-*/
-function fncSetPurchaseTable ( $aryResult, $aryViewColumn, $aryData, $aryUserAuthority, $aryTytle, $objDB, $objCache, $aryTableName )
+ * 検索結果表示関数
+ *
+ *	検索結果からテーブル構成で結果を出力する関数
+ *
+ *	@param  Array 	$aryResult 			検索結果が格納された配列
+ *	@param  Array 	$aryViewColumn 		表示対象カラム名の配列
+ *	@param  Array 	$aryData 			ＰＯＳＴデータ群
+ *	@param	Array	$aryUserAuthority	ユーザーの操作に対する権限が入った配列
+ *	@param	Array	$aryTytle			項目名が格納された配列（呼び出し元で日本語用、英語用の切り替え）
+ *	@param  Object	$objDB       		DBオブジェクト
+ *	@param  Object	$objCache       	キャッシュオブジェクト
+ *	@param	Array	$aryTableName		表示カラム名とマスタ内カラム名変更用
+ *	@access public
+ */
+function fncSetPurchaseTable ( $aryResult, $arySearchColumn, $aryViewColumn, $aryData, $aryUserAuthority, $aryTytle, $objDB, $objCache, $aryTableName )
 {
 	// 準備
 
@@ -1833,6 +1939,17 @@ function fncSetPurchaseTable ( $aryResult, $aryViewColumn, $aryData, $aryUserAut
 	return $strhtml;
 }
 
+/**
+ * 発注データHTML変換
+ * 
+ * @param	Array	$aryResult			発注データ
+ * @param	Array	$aryViewColumn		表示列
+ * @param	Array	$aryUserAuthority	権限
+ * @param	Array	$aryTitle			列名
+ * @param	Object	$objDB				DBオブジェクト
+ * @param	Object	$objCache			キャッシュオブジェクト
+ * @param	Array	$aryTableName		テーブル名
+ */
 function fncSetPurchaseOrderTable( $aryResult, $aryViewColumn, $aryData, $aryUserAuthority, $aryTitle, $objDB, $objCache, $aryTableName ){
 	// 表示カラムのヘッダ部と明細部の分離処理
 	for($i = 0; $i < count($aryViewColumn); $i++){
@@ -1911,15 +2028,25 @@ function fncSetPurchaseOrderTable( $aryResult, $aryViewColumn, $aryData, $aryUse
 	$aryHtml[] = "<tbody>";
 	$lngResultCount = count($aryResult);
 
-	for($i = 0; $i < $lngResultCount; $i++){
-		$aryHtml_add = fncSetPurchaseHeadTable ( $lngColumnCount, $arySameOrderCodeResult[$j], $aryDetailResult, $aryDetailViewColumn, $aryHeadViewColumn, $aryData, $aryUserAuthority, $objDB, $objCache, $lngSameOrderCount, $j, $arySameOrderCodeResult[0] );
-	}
-
+	$aryHtml[] = fncSetPurchaseOrderHtml($aryViewColumn, $aryResult, $aryUserAuthority);
 	$aryHtml[] = "</tbody>";
 	$strHtml = implode("\n", $aryHtml);
 
 	return $strHtml;
 }
+
+/**
+ * 発注書データHTML変換
+ * 
+ * @param	Array	$aryResult			発注書データ
+ * @param	Array	$aryViewColumn		表示列
+ * @param	Array	$aryUserAuthority	権限
+ * @param	Array	$aryTitle			列名
+ * @param	Object	$objDB				DBオブジェクト
+ * @param	Object	$objCache			キャッシュオブジェクト
+ * @param	Array	$aryTableName		テーブル名
+ */
+
 function fncSetPurchaseOrderTable2( $aryResult, $aryViewColumn, $aryData, $aryUserAuthority, $aryTitle, $objDB, $objCache, $aryTableName ){
 	for($i = 0; $i < count($aryDetailResult); $i++){
 		$aryHtml[] = "<tr>";
@@ -1942,7 +2069,7 @@ function fncSetPurchaseOrderTable2( $aryResult, $aryViewColumn, $aryData, $aryUs
 				// 履歴ボタン
 				if($strColumnName == "btnRecord"){
 					if($aryHeadResult["lngRevisionNo"] > 0){
-						$aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/detail_off_bt.gif\" lngPurchaseOrderNo=\"" . $aryDetailResult[$i]["lngPurchaseOrderNo"] . "\" class=\"fix button\"></td>\n";
+						$aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/detail_off_bt.gif\" lngPurchaseOrderNo=\"" . $aryDetailResult[$i]["lngPurchaseOrderNo"] . "\" strOrderCode =\"" . $aryResult["strordercode"] . "\" class=\"fix button\"></td>\n";
 					} else {
 						$aryHtml[] = "\t<td></td>\n";
 					}
@@ -2000,6 +2127,7 @@ function fncResortSearchColumn($aryViewColumn){
 
 	return $aryResult;
 }
+
 function fncResortSearchColumn2($aryViewColumn){
 	$aryResult = array();
 
@@ -2026,4 +2154,5 @@ function fncResortSearchColumn2($aryViewColumn){
 
 	return $aryResult;
 }
+
 ?>

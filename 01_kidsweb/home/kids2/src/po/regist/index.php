@@ -118,7 +118,7 @@
 		if(!fncUpdateOrderDetail($aryUpdate, $aryUpdateDetail, $objDB)) { return false; }
 		// 発注書マスタ更新
 		//if(!fncUpdatePurchaseOrder($aryUpdate, $aryUpdateDetail, $objAuth, $objDB)){ return false; }
-		$aryResult = fncUpdatePurchaseOrder($aryUpdate, $aryUpdateDetail, $objAuth, $objDB);
+		$aryResult = fncInsertPurchaseOrder($aryUpdate, $aryUpdateDetail, $objAuth, $objDB);
 		//echo implode(",", $aryResult);
 		// TODO:あとでコミットに変更する
 		// $objDB->transactionRollback();

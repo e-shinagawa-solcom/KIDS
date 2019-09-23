@@ -1,35 +1,35 @@
 <?
 /** 
-*	発注　詳細、削除、無効化関数群
-*
-*	@package   kuwagata
-*	@license   http://www.wiseknot.co.jp/ 
-*	@copyright Copyright &copy; 2003, Wiseknot 
-*	@author    Keiji Suzukaze <k-suzukaze@wiseknot.co.jp> 
-*	@access    public
-*	@version   1.01
-*
-*	処理概要
-*	検索結果関連の関数
-*
-*	修正履歴
-*
-*	2004.03.17	詳細表示時の単価部分の表示方式を小数点以下４桁に変更
-*	2004.03.29	詳細表示時の明細行番号の表示部分を表示用ソートキーを表示するように変更
-*	2004.05.31	金型番号の指定箇所の追加
-*
-*/
+ *	発注　詳細、削除、無効化関数群
+ *
+ *	@package   kuwagata
+ *	@license   http://www.wiseknot.co.jp/ 
+ *	@copyright Copyright &copy; 2003, Wiseknot 
+ *	@author    Keiji Suzukaze <k-suzukaze@wiseknot.co.jp> 
+ *	@access    public
+ *	@version   1.01
+ *
+ *	処理概要
+ *	検索結果関連の関数
+ *
+ *	修正履歴
+ *
+ *	2004.03.17	詳細表示時の単価部分の表示方式を小数点以下４桁に変更
+ *	2004.03.29	詳細表示時の明細行番号の表示部分を表示用ソートキーを表示するように変更
+ *	2004.05.31	金型番号の指定箇所の追加
+ *
+ */
 
 /**
-* 指定された発注番号から発注ヘッダ情報を取得するＳＱＬ文を作成
-*
-*	指定発注番号のヘッダ情報の取得用ＳＱＬ文作成関数
-*
-*	@param  Integer 	$lngOrderNo 			取得する発注番号
-*	@return strQuery 	$strQuery 検索用SQL文
-*	@access public
-*/
-function fncGetPurchaseHeadNoToInfo ( $lngOrderNo, $lngRevisionNo, $objDB )
+ * 指定された発注番号から発注ヘッダ情報を取得するＳＱＬ文を作成
+ *
+ *	指定発注番号のヘッダ情報の取得用ＳＱＬ文作成関数
+ *
+ *	@param  Integer 	$lngOrderNo 			取得する発注番号
+ *	@return strQuery 	$strQuery 検索用SQL文
+ *	@access public
+ */
+function fncGetPurchaseHeadNoToInfo ( $lngOrderNo, $objDB )
 {
 	// SQL文の作成
 	$aryQuery[] = "SELECT distinct on (o.lngOrderNo) o.lngOrderNo as lngOrderNo, o.lngRevisionNo as lngRevisionNo";
@@ -102,7 +102,7 @@ function fncGetPurchaseHeadNoToInfo ( $lngOrderNo, $lngRevisionNo, $objDB )
 	$aryQuery[] = " LEFT JOIN m_purchaseorder mp on  tp.lngpurchaseorderno = mp.lngpurchaseorderno and tp.lngrevisionno = mp.lngrevisionno";
 
 	$aryQuery[] = " WHERE o.lngOrderNo = " . $lngOrderNo;
-	$aryQuery[] = " AND   o.lngRevisionNo = " . $lngRevisionNo;
+	//$aryQuery[] = " AND   o.lngRevisionNo = " . $lngRevisionNo;
 
 	$strQuery = implode( "\n", $aryQuery );
 
@@ -120,20 +120,15 @@ function fncGetPurchaseHeadNoToInfo ( $lngOrderNo, $lngRevisionNo, $objDB )
 	return $aryOrderResult;
 }
 
-
-
-
-
-
 /**
-* 指定された発注番号から発注明細情報を取得するＳＱＬ文を作成
-*
-*	指定発注番号の明細情報の取得用ＳＱＬ文作成関数
-*
-*	@param  Integer 	$lngOrderNo 			取得する発注番号
-*	@return strQuery 	$strQuery 検索用SQL文
-*	@access public
-*/
+ * 指定された発注番号から発注明細情報を取得するＳＱＬ文を作成
+ *
+ *	指定発注番号の明細情報の取得用ＳＱＬ文作成関数
+ *
+ *	@param  Integer 	$lngOrderNo 			取得する発注番号
+ *	@return strQuery 	$strQuery 検索用SQL文
+ *	@access public
+ */
 function fncGetPurchaseDetailNoToInfo ( $lngOrderNo, $objDB )
 {
 	// 2004.03.29 suzukaze update start
@@ -207,7 +202,14 @@ function fncGetPurchaseDetailNoToInfo ( $lngOrderNo, $objDB )
 	return $aryDetailResult;
 }
 
-
+/**
+ * 取消を行った発注データのHTMLを作成
+ * 
+ * @param	Array	$aryOrder		発注データ
+ * @param	Array	$aryOrderDetail	発注明細データ
+ * @access	public
+ * 
+ */
 function fncDeletePurchaseOrderHtml($aryOrder, $aryOrderDetail){
 	$aryHtml[] = "<table cellpadding=\"5\" cellspacing=\"0\" border=\"0\" bgcolor=\"#6f8180\" align=\"center\">";
 	$aryHtml[] = "  <tr>";
@@ -273,16 +275,15 @@ function fncDeletePurchaseOrderHtml($aryOrder, $aryOrderDetail){
 	return $strHtml;
 }
 
-
 /**
-* 詳細表示関数（ヘッダ用）
-*
-*	テーブル構成で発注データ詳細を出力する関数
-*	ヘッダ行を表示する
-*
-*	@param  Array 	$aryResult 				ヘッダ行の検索結果が格納された配列
-*	@access public
-*/
+ * 詳細表示関数（ヘッダ用）
+ *
+ *	テーブル構成で発注データ詳細を出力する関数
+ *	ヘッダ行を表示する
+ *
+ *	@param  Array 	$aryResult 				ヘッダ行の検索結果が格納された配列
+ *	@access public
+ */
 function fncSetPurchaseHeadTabelData ( $aryResult )
 {
 	$aryColumnNames = array_keys($aryResult);
@@ -444,21 +445,16 @@ function fncSetPurchaseHeadTabelData ( $aryResult )
 	return $aryNewResult;
 }
 
-
-
-
-
-
 /**
-* 詳細表示関数（明細用）
-*
-*	テーブル構成で発注データ詳細を出力する関数
-*	明細行を表示する
-*
-*	@param  Array 	$aryDetailResult 	明細行の検索結果が格納された配列（１データ分）
-*	@param  Array 	$aryHeadResult 		ヘッダ行の検索結果が格納された配列（参照用）
-*	@access public
-*/
+ * 詳細表示関数（明細用）
+ *
+ *	テーブル構成で発注データ詳細を出力する関数
+ *	明細行を表示する
+ *
+ *	@param  Array 	$aryDetailResult 	明細行の検索結果が格納された配列（１データ分）
+ *	@param  Array 	$aryHeadResult 		ヘッダ行の検索結果が格納された配列（参照用）
+ *	@access public
+ */
 function fncSetPurchaseDetailTabelData ( $aryDetailResult, $aryHeadResult )
 {
 	$aryColumnNames = array_keys($aryDetailResult);
@@ -600,20 +596,15 @@ function fncSetPurchaseDetailTabelData ( $aryDetailResult, $aryHeadResult )
 	return $aryNewDetailResult;
 }
 
-
-
-
-
-
 /**
-* 詳細表示用カラム名セット関数
-*
-*	詳細表示時のカラム名（日本語、英語）での設定関数
-*
-*	@param  Array 	$aryResult 		検索結果が格納された配列
-*	@param  Array 	$aryTytle 		カラム名が格納された配列
-*	@access public
-*/
+ * 詳細表示用カラム名セット関数
+ *
+ *	詳細表示時のカラム名（日本語、英語）での設定関数
+ *
+ *	@param  Array 	$aryResult 		検索結果が格納された配列
+ *	@param  Array 	$aryTytle 		カラム名が格納された配列
+ *	@access public
+ */
 function fncSetPurchaseTabelName ( $aryResult, $aryTytle )
 {
 	$aryColumnNames = array_values($aryResult);
@@ -633,22 +624,17 @@ function fncSetPurchaseTabelName ( $aryResult, $aryTytle )
 	return $aryNames;
 }
 
-
-
-
-
-
 /**
-* 指定のコードのデータを他のマスタで使用しているコード取得
-*
-*	指定コードに対して、指定されたマスタの検索関数
-*
-*	@param  String 		$strCode 		検索対象コード
-*	@param	Integer		$lngMode		検索モード	1:発注コードから仕入マスタ	（順次追加）
-*	@param  Object		$objDB			DBオブジェクト
-*	@return Array 		$aryCode		検索対象コードが使用されているマスタ内のコードの配列
-*	@access public
-*/
+ * 指定のコードのデータを他のマスタで使用しているコード取得
+ *
+ *	指定コードに対して、指定されたマスタの検索関数
+ *
+ *	@param  String 		$strCode 		検索対象コード
+ *	@param	Integer		$lngMode		検索モード	1:発注コードから仕入マスタ	（順次追加）
+ *	@param  Object		$objDB			DBオブジェクト
+ *	@return Array 		$aryCode		検索対象コードが使用されているマスタ内のコードの配列
+ *	@access public
+ */
 function fncGetDeleteCodeToMaster ( $strCode, $lngMode, $objDB )
 {
 	// SQL文の作成
@@ -681,22 +667,17 @@ function fncGetDeleteCodeToMaster ( $strCode, $lngMode, $objDB )
 	return $aryCode;
 }
 
-
-
-
-
-
 /**
-* 指定のNOのデータを他のマスタで使用しているコード取得
-*
-*	指定NOに対して、指定されたマスタの検索関数
-*
-*	@param  Integer 	$lngNo 			検索対象No
-*	@param	Integer		$lngMode		検索モード	1:発注コードから仕入マスタ	（順次追加）
-*	@param  Object		$objDB			DBオブジェクト
-*	@return Array 		$aryCode		検索対象コードが使用されているマスタ内のコードの配列
-*	@access public
-*/
+ * 指定のNOのデータを他のマスタで使用しているコード取得
+ *
+ *	指定NOに対して、指定されたマスタの検索関数
+ *
+ *	@param  Integer 	$lngNo 			検索対象No
+ *	@param	Integer		$lngMode		検索モード	1:発注コードから仕入マスタ	（順次追加）
+ *	@param  Object		$objDB			DBオブジェクト
+ *	@return Array 		$aryCode		検索対象コードが使用されているマスタ内のコードの配列
+ *	@access public
+ */
 function fncGetDeleteNoToMaster ( $lngNo, $lngMode, $objDB )
 {
 	// SQL文の作成
@@ -733,25 +714,20 @@ function fncGetDeleteNoToMaster ( $lngNo, $lngMode, $objDB )
 	return $aryCode;
 }
 
-
-
-
-
-
 /**
-* 指定の発注データについて無効化することでどうなるかケースわけする
-*
-*	指定の発注データの状態を調査し、ケースわけする関数
-*
-*	@param  Array 		$aryOrderData 	発注データ
-*	@param  Object		$objDB			DBオブジェクト
-*	@return Integer 	$lngCase		状態のケース
-*										1: 対象発注データを無効化しても、最新の発注データが影響受けない
-*										2: 対象発注データを無効化することで、最新の発注データが入れ替わる
-*										3: 対象発注データが削除データで、発注が復活する
-*										4: 対象発注データを無効化することで、最新の発注データになりうる発注データがない
-*	@access public
-*/
+ * 指定の発注データについて無効化することでどうなるかケースわけする
+ *
+ *	指定の発注データの状態を調査し、ケースわけする関数
+ *
+ *	@param  Array 		$aryOrderData 	発注データ
+ *	@param  Object		$objDB			DBオブジェクト
+ *	@return Integer 	$lngCase		状態のケース
+ *										1: 対象発注データを無効化しても、最新の発注データが影響受けない
+ *										2: 対象発注データを無効化することで、最新の発注データが入れ替わる
+ *										3: 対象発注データが削除データで、発注が復活する
+ *										4: 対象発注データを無効化することで、最新の発注データになりうる発注データがない
+ *	@access public
+ */
 function fncGetInvalidCodeToMaster ( $aryOrderData, $objDB )
 {
 	// 発注コードの取得
@@ -816,6 +792,15 @@ function fncGetInvalidCodeToMaster ( $aryOrderData, $objDB )
 	return $lngCase;
 }
 
+/**
+ * 発注キャンセル
+ * 
+ * @param	Integer		$lngOrderNo		発注NO
+ * @param	Integer		$lngRevisionNo	リビジョン番号
+ * @param	Object		$objDB			DBオブジェクト
+ * @access	public
+ * 
+ */
 function fncGetCancelOrder($lngOrderNo, $lngRevisionNo, $objDB){
 	$arySql[] = "UPDATE m_order SET lngorderstatuscode = 1 ";
 	$arySql[] = "WHERE lngorderno = " . intval($lngOrderNo) . " ";
@@ -831,6 +816,15 @@ function fncGetCancelOrder($lngOrderNo, $lngRevisionNo, $objDB){
 	return true;
 }
 
+/**
+ * 発注書マスタ検索(発注コードで検索)
+ * 
+ * @param	String		$strOrderCode	発注コード
+ * @param	Integer		$lngRevisionNo	リビジョン番号
+ * @param	Object		$objDB			DBオブジェクト
+ * @access	public
+ * 
+ */
 function fncGetPurchaseOrder($strOrderCode, $lngRevisionNo, $objDB){
 	$arySql[] = "SELECT";
 	$arySql[] = "   lngpurchaseorderno";
@@ -881,6 +875,15 @@ function fncGetPurchaseOrder($strOrderCode, $lngRevisionNo, $objDB){
 	return $aryPurchaseOrder;
 }
 
+/**
+ * 発注書マスタ検索(発注書番号で検索)
+ * 
+ * @param	Integer		$lngPurchaseOrderCode	発注書番号
+ * @param	Integer		$lngRevisionNo			リビジョン番号
+ * @param	Object		$objDB					DBオブジェクト
+ * @access	public
+ * 
+ */
 function fncGetPurchaseOrder2($lngPurchaseOrderCode, $lngRevisionNo, $objDB){
 	$arySql[] = "SELECT";
 	$arySql[] = "   mp.lngpurchaseorderno";
@@ -933,6 +936,14 @@ function fncGetPurchaseOrder2($lngPurchaseOrderCode, $lngRevisionNo, $objDB){
 	return $aryPurchaseOrder;
 }
 
+/**
+ * 発注書マスタ検索用SQL作成
+ * 
+ * @param	Integer		$lngOrderNo			発注番号
+ * @param	Integer		$lngRevisionNo		リビジョン番号
+ * @access	public
+ * 
+ */
 function fncGetPurchaseOrderDetailSQL($lngOrderNo, $lngRevisionNo){
 	$arySql[] = "SELECT";
 	$arySql[] = "   lngpurchaseorderno";
@@ -960,6 +971,13 @@ function fncGetPurchaseOrderDetailSQL($lngOrderNo, $lngRevisionNo){
 	return implode("\n", $arySql);
 }
 
+/**
+ * 発注書明細取得用SQL作成
+ * 
+ * @param	Array		$aryPurchaseOrderDetail		発注書明細
+ * @access	public
+ * 
+ */
 function fncInsertPurchaseOrderDetailSQL($aryPurchaseOrderDetail){
 	$arySql[] = "INSERT INTO t_purchaseorderdetail (";
 	$arySql[] = "   lngpurchaseorderno";
@@ -1004,6 +1022,15 @@ function fncInsertPurchaseOrderDetailSQL($aryPurchaseOrderDetail){
 	return implode("\n", $arySql);
 }
 
+/**
+ * 取消対象の発注書データ取得
+ * 
+ * @param	Integer		$lngOrderNo		発注番号
+ * @param	Integer		$lngRevisionNo	リビジョン番号
+ * @param	Object		$objDB					DBオブジェクト
+ * @access	public
+ *	
+ */
 function fncGetDeletePurchaseOrderDetail($lngOrderNo, $lngRevisionNo, $objDB){
 	$aryQuery[] = "SELECT";
 	$aryQuery[] = "   lngpurchaseorderno";
@@ -1053,6 +1080,15 @@ function fncGetDeletePurchaseOrderDetail($lngOrderNo, $lngRevisionNo, $objDB){
 
 }
 
+/**
+ * 発注取消
+ * 
+ * @param	Integer		$lngOrderNo		発注番号
+ * @param	Integer		$lngRevisionNo	リビジョン番号
+ * @param	Object		$objDB					DBオブジェクト
+ * @access	public
+ * 
+ */
 function fncCancelOrder($lngOrderNo, $lngRevisionNo, $objDB){
 	$aryQuery[] = "UPDATE m_order SET";
 	$aryQuery[] = "   lngorderstatuscode = 1";
@@ -1072,6 +1108,15 @@ function fncCancelOrder($lngOrderNo, $lngRevisionNo, $objDB){
 	return true;
 }
 
+/**
+ * 発注明細取消
+ * 
+ * @param	Integer		$lngOrderNo		発注番号
+ * @param	Integer		$lngRevisionNo	リビジョン番号
+ * @param	Object		$objDB					DBオブジェクト
+ * @access	public
+ * 
+ */
 function fncGetDeleteOrderDetail($lngOrderNo, $lngRevisionNo, $objDB){
 	$aryQuery[] = "SELECT";
 	$aryQuery[] = "   lngorderno";
@@ -1103,6 +1148,14 @@ function fncGetDeleteOrderDetail($lngOrderNo, $lngRevisionNo, $objDB){
 
 }
 
+/**
+ * 発注書明細登録
+ * 
+ * @param	Array		$aryDetail		発注書明細データ
+ * @param	Object		$objDB			DBオブジェクト
+ * @access	public
+ * 
+ */
 function fncInsertPurchaseOrderDetail($aryDetail, $objDB){
 	$aryQuery[] = "INSERT INTO t_purchaseorderdetail (";
 	$aryQuery[] = "   lngpurchaseorderno";
@@ -1159,6 +1212,14 @@ function fncInsertPurchaseOrderDetail($aryDetail, $objDB){
 	return true;
 }
 
+/**
+ * 発注書登録
+ * 
+ * @param	Array		$aryOrder		発注書データ
+ * @param	Object		$objDB			DBオブジェクト
+ * @access	public
+ * 
+ */
 function fncInsertPurchaseOrder($aryOrder, $objDB){
 	$aryQuery[] = "INSERT INTO m_purchaseorder (";
 	$aryQuery[] = "   lngpurchaseorderno";
@@ -1243,6 +1304,15 @@ function fncInsertPurchaseOrder($aryOrder, $objDB){
 	return true;
 }
 
+/**
+ * 発注マスタ検索
+ * 
+ * @param	Integer		$lngOrderNo		発注番号
+ * @param	Integer		$lngRevisionNo	リビジョン番号
+ * @param	Object		$objDB			DBオブジェクト
+ * @access	public
+ * 
+ */
 function fncGetOrder($lngOrderNo, $lngRevisionNo, $objDB){
 	$aryQuery[] = "SELECT";
 	$aryQuery[] = "   TO_CHAR(mo.dtminsertdate, 'YYYY/MM/DD') AS dtminsertdate";
@@ -1299,6 +1369,13 @@ function fncGetOrder($lngOrderNo, $lngRevisionNo, $objDB){
 	return $aryResult;
 }
 
+/**
+ * 発注キャンセルデータHTML作成
+ * 
+ * @param	Array		$aryOrder		発注データ
+ * @access	public
+ * 
+ */
 function fncCancelOrderHtml($aryOrder){
 	foreach($aryOrder as $row){
 		$aryHtml[] = "<table cellpadding=\"5\" cellspacing=\"0\" border=\"0\" bgcolor=\"#6f8180\" align=\"center\">";
@@ -1366,12 +1443,21 @@ function fncCancelOrderHtml($aryOrder){
 	return $strHtml;
 }
 
+/**
+ * 発注書キャンセルデータHTML作成
+ * 
+ * @param	Array		$aryOrder		発注書データ
+ * @param	Array		$aryDetail		発注書明細データ
+ * @access	public
+ * 
+ */
 function fncCancelPurchaseOrderHtml($aryOrder, $aryDetail){
 	for($i = 0; $i < count($aryDetail); $i++) {
+		$strUrl = "/list/result/po/listoutput.php?strReportKeyCode=" . $aryDetail[$i]["lngpurchaseorderno"] . "&strSessionID=" . $strSessionID;
 		$aryHtml[] = "<table class=\"ordercode\">";
 		$aryHtml[] = "  <tr>";
 		$aryHtml[] = "    <td class=\"ordercodetd\">" . sprintf("%s_%02d", $aryOrder["strordercode"], $aryOrder["lngrevisionno"]) . "</td>";
-		$aryHtml[] = "    <td class=\"orderbuttontd\"><img src=\"/img/type01/cmn/querybt/preview_off_ja_bt.gif\" alt=\"preview\"></td>";
+		$aryHtml[] = "    <td class=\"orderbuttontd\"><a href=\"" . $strUrl . "\"><img src=\"/img/type01/cmn/querybt/preview_off_ja_bt.gif\" alt=\"preview\"></a></td>";
 		$aryHtml[] = "  </tr>";
 		$aryHtml[] = "</table>";
 		$aryHtml[] = "<p class=\"caption\">取消対象</p>";
