@@ -586,6 +586,11 @@ function fncCalcTaxPrice($curPrice, $lngTaxClassCode, $lngTaxRate)
 // --------------------------------
 function fncRegisterSalesAndSlip($aryHeader, $aryDetail, $objDB, $objAuth)
 {
+    // 戻り値の初期化
+    $aryRegisterResult = array();
+    $aryRegisterResult["result"] = false;
+    $aryRegisterResult["strSlipCode"] = array();
+
     // 現在日付
     $dtmNowDate = date( 'Y/m/d', time() );
     // 計上日
@@ -595,7 +600,7 @@ function fncRegisterSalesAndSlip($aryHeader, $aryDetail, $objDB, $objAuth)
     // 顧客の会社コードに紐づく会社情報を取得
     $aryCustomerCompany = fncGetCompanyInfoByCompanyCode($lngCustomerCompanyCode, $objDB);
     // 換算レートの取得
-    $curConversionRate = fncGetConversionRateByReceiveData($aryDetail[0]["lngreceiveno"], $aryDetail[0]["lngreceiverevisionno"], $dtmAppropriationDate, $objDB);
+    $aryConversionRate = fncGetConversionRateByReceiveData($aryDetail[0]["lngreceiveno"], $aryDetail[0]["lngreceiverevisionno"], $dtmAppropriationDate, $objDB);
     
     // 起票者に紐づくユーザー情報を取得
     $lngDrafterUserCode = fncGetNumericUserCode($aryHeader["strdrafteruserdisplaycode"], $objDB);
@@ -642,16 +647,18 @@ function fncRegisterSalesAndSlip($aryHeader, $aryDetail, $objDB, $objAuth)
 
         // 当日に紐づく納品伝票コードの発番
         $strSlipCode = fncPublishSlipCode($dtmNowDate, $objDB);
+        $aryRegisterResult["strSlipCode"][] = $strSlipCode;
 
         // 納品伝票番号をシーケンスより発番
-        $lngSlipNo = fncGetSequence( 'm_slip.lngslipno', $objDB );
+        $lngSlipNo = fncGetSequence( 'm_Slip.lngSlipNo', $objDB );
 
         // 売上マスタ登録
-        if (!fncRegisterSalesMaster($lngSalesNo, $lngRevisionNo, $strSlipCode, $strSalesCode, $dtmAppropriationDate, $curConversionRate, $aryCustomerCompany, $aryDrafter,
+        if (!fncRegisterSalesMaster($lngSalesNo, $lngRevisionNo, $strSlipCode, $strSalesCode, $dtmAppropriationDate, $aryConversionRate, $aryCustomerCompany, $aryDrafter,
                 $aryHeader , $aryDetail, $objDB, $objAuth))
         {
             // 失敗
-            return false;
+            $aryRegisterResult["result"] = false;
+            return $aryRegisterResult;
         }
 
         // 売上明細登録
@@ -659,7 +666,8 @@ function fncRegisterSalesAndSlip($aryHeader, $aryDetail, $objDB, $objAuth)
                 $aryHeader , $aryDetail, $objDB, $objAuth))
         {
             // 失敗
-            return false;
+            $aryRegisterResult["result"] = false;
+            return $aryRegisterResult;
         }
 
         // 納品伝票マスタ登録
@@ -667,20 +675,23 @@ function fncRegisterSalesAndSlip($aryHeader, $aryDetail, $objDB, $objAuth)
                 $aryHeader , $aryDetail, $objDB, $objAuth))
         {
             // 失敗
-            return false;
+            $aryRegisterResult["result"] = false;
+            return $aryRegisterResult;
         }
     
         // 納品伝票明細登録
         if (!fncRegisterSlipDetail($itemMinIndex, $itemMaxIndex, $lngSlipNo, $lngRevisionNo,
                 $aryHeader, $aryDetail, $objDB, $objAuth)){
             // 失敗
-            return false;
+            $aryRegisterResult["result"] = false;
+            return $aryRegisterResult;
         }
 
     }
 
     // 成功
-    return true;
+    $aryRegisterResult["result"] = true;
+    return $aryRegisterResult;
 }
 
 // --------------------------------
@@ -694,14 +705,21 @@ function withQuote($source)
 
 
 // 売上マスタ登録
-function fncRegisterSalesMaster($lngSalesNo, $lngRevisionNo, $strSlipCode, $strSalesCode, $dtmAppropriationDate, $curConversionRate, $aryCustomerCompany, $aryDrafter,
+function fncRegisterSalesMaster($lngSalesNo, $lngRevisionNo, $strSlipCode, $strSalesCode, $dtmAppropriationDate, $aryConversionRate, $aryCustomerCompany, $aryDrafter,
      $aryHeader , $aryDetail, $objDB, $objAuth)
 {
+    // 換算レートの設定
+    if (strlen($aryConversionRate["curconversionrate"]) == 0){
+        $curConversionRate = "Null";
+    }else{
+        $curConversionRate = $aryConversionRate["curconversionrate"];
+    }
+
     // 登録データのセット
     $v_lngsalesno = $lngSalesNo;                                        //1:売上番号
     $v_lngrevisionno = $lngRevisionNo;                                  //2:リビジョン番号
     $v_strsalescode = withQuote($strSalesCode);                         //3:売上コード
-    $v_dtmappropriationdate = $dtmAppropriationDate;                    //4:計上日
+    $v_dtmappropriationdate = withQuote($dtmAppropriationDate);         //4:計上日
     $v_lngcustomercompanycode = $aryCustomerCompany["lngcompanycode"];  //5:顧客コード
     $v_lnggroupcode = $aryDrafter["lnggroupcode"];                      //6:グループコード
     $v_lngusercode = $aryDrafter["lngusercode"];                        //7:ユーザコード
@@ -797,8 +815,8 @@ function fncRegisterSalesDetail($itemMinIndex, $itemMaxIndex, $lngSalesNo, $lngR
         $v_lngsalesno = $lngSalesNo;                            //1:売上番号
         $v_lngsalesdetailno = $d["rownumber"];                  //2:売上明細番号
         $v_lngrevisionno = $lngRevisionNo;                      //3:リビジョン番号
-        $v_strproductcode = $d["strproductcode"];               //4:製品コード
-        $v_strrevisecode = $d["strrevisecode"];                 //5:再販コード
+        $v_strproductcode = withQuote($d["strproductcode"]);    //4:製品コード
+        $v_strrevisecode = withQuote($d["strrevisecode"]);      //5:再販コード
         $v_lngsalesclasscode = $d["lngsalesclasscode"];         //6:売上区分コード
         $v_lngconversionclasscode = "Null";                     //7:換算区分コード
         $v_lngquantity = $d["lngunitquantity"];                 //8:入数
@@ -809,7 +827,7 @@ function fncRegisterSalesDetail($itemMinIndex, $itemMaxIndex, $lngSalesNo, $lngR
         $v_lngtaxcode = $aryHeader["lngtaxcode"];               //13:消費税率コード
         $v_curtaxprice = $curTaxPrice;                          //14:消費税金額
         $v_cursubtotalprice = $d["cursubtotalprice"];           //15:小計金額
-        $v_strnote = $d["strnote"];                             //16:備考
+        $v_strnote = withQuote(fncToEucjp($d["strnote"]));                  //16:備考
         $v_lngsortkey = $d["rownumber"];                        //17:表示用ソートキー
         $v_lngreceiveno = $d["lngreceiveno"];                   //18:受注番号
         $v_lngreceivedetailno = $d["lngreceivedetailno"];       //19:受注明細番号
@@ -879,38 +897,59 @@ function fncRegisterSalesDetail($itemMinIndex, $itemMaxIndex, $lngSalesNo, $lngR
 	return true;
 }
 
+function nullIfEmpty($source)
+{
+    if (strlen($source) == 0){
+        return "Null";
+    } else {
+        return $source;
+    }
+}
+
 // 納品伝票マスタ登録
 function fncRegisterSlipMaster($lngSlipNo, $lngRevisionNo, $lngSalesNo, $strSlipCode, $strCustomerCompanyName, $strCustomerName, $aryCustomerCompany, $lngDeliveryPlaceCode,
      $aryHeader , $aryDetail, $objDB, $objAuth)
 {
     // 仕入先コードの取得（空の場合は明示的にNullをセット）
-    $strShipperCode = "Null";
     if (strlen($aryCustomerCompany["strstockcompanycode"]) != 0){
         $strShipperCode = withQuote($aryCustomerCompany["strstockcompanycode"]);
+    }else{
+        $strShipperCode = "Null";
+    }
+
+    if (strlen($lngDeliveryPlaceCode) == 0)
+    {
+        $lngDeliveryPlaceCode = "Null";
+    }
+
+    if (strlen($aryHeader["dtmpaymentlimit"])!=0){
+        $dtmPaymentLimit = withQuote($aryHeader["dtmpaymentlimit"]);
+    }else{
+        $dtmPaymentLimit = "Null";
     }
 
     // 登録データのセット
     $v_lngslipno = $lngSlipNo;                                                 //1:納品伝票番号
     $v_lngrevisionno = $lngRevisionNo;                                         //2:リビジョン番号
-    $v_strslipcode = $strSlipCode;                                             //3:納品伝票コード
+    $v_strslipcode = withQuote($strSlipCode);                                             //3:納品伝票コード
     $v_lngsalesno = $lngSalesNo;                                               //4:売上番号
     $v_strcustomercode = $aryCustomerCompany["lngcompanycode"];                //5:顧客コード
-    $v_strcustomercompanyname = $strCustomerCompanyName;                       //6:顧客社名
-    $v_strcustomername = $strCustomerName;                                     //7:顧客名
-    $v_strcustomeraddress1 = $aryCustomerCompany["straddress1"];               //8:顧客住所1
-    $v_strcustomeraddress2 = $aryCustomerCompany["straddress2"];               //9:顧客住所2
-    $v_strcustomeraddress3 = $aryCustomerCompany["straddress3"];               //10:顧客住所3
-    $v_strcustomeraddress4 = $aryCustomerCompany["straddress4"];               //11:顧客住所4
-    $v_strcustomerphoneno = $aryCustomerCompany["strtel1"];                    //12:顧客電話番号
-    $v_strcustomerfaxno = $aryCustomerCompany["strfax1"];                      //13:顧客FAX番号
-    $v_strcustomerusername = $aryHeader["strcustomerusername"];                //14:顧客担当者名
+    $v_strcustomercompanyname = withQuote($strCustomerCompanyName);                       //6:顧客社名
+    $v_strcustomername = withQuote($strCustomerName);                                     //7:顧客名
+    $v_strcustomeraddress1 = withQuote($aryCustomerCompany["straddress1"]);               //8:顧客住所1
+    $v_strcustomeraddress2 = withQuote($aryCustomerCompany["straddress2"]);               //9:顧客住所2
+    $v_strcustomeraddress3 = withQuote($aryCustomerCompany["straddress3"]);               //10:顧客住所3
+    $v_strcustomeraddress4 = withQuote($aryCustomerCompany["straddress4"]);               //11:顧客住所4
+    $v_strcustomerphoneno = withQuote($aryCustomerCompany["strtel1"]);                    //12:顧客電話番号
+    $v_strcustomerfaxno = withQuote($aryCustomerCompany["strfax1"]);                      //13:顧客FAX番号
+    $v_strcustomerusername = withQuote($aryHeader["strcustomerusername"]);                //14:顧客担当者名
     $v_strshippercode = $strShipperCode;                                       //15:仕入先コード（出荷者）
     $v_dtmdeliverydate = withQuote($aryHeader["dtmdeliverydate"]);             //16:納品日
-    $v_lngdeliveryplacecode = $lngDeliveryPlaceCode;                           //17:納品場所コード
+    $v_lngdeliveryplacecode = nullIfEmpty($lngDeliveryPlaceCode);                           //17:納品場所コード
     $v_strdeliveryplacename = withQuote($aryHeader["strdeliveryplacename"]);           //18:納品場所名
     $v_strdeliveryplaceusername = withQuote($aryHeader["strdeliveryplaceusername"]);   //19:納品場所担当者名
-    $v_lngpaymentmethodcode = $$aryHeader["lngpaymentmethodcode"];             //20:支払方法コード
-    $v_dtmpaymentlimit = withQuote($aryHeader["dtmpaymentlimit"]);             //21:支払期限
+    $v_lngpaymentmethodcode = $aryHeader["lngpaymentmethodcode"];             //20:支払方法コード
+    $v_dtmpaymentlimit = $dtmPaymentLimit;                                    //21:支払期限
     $v_lngtaxclasscode = $aryHeader["lngtaxclasscode"];                        //22:課税区分コード
     $v_strtaxclassname = withQuote($aryHeader["strtaxclassname"]);             //23:課税区分
     $v_curtax = $aryHeader["lngtaxrate"];                                      //24:消費税率
@@ -1106,6 +1145,8 @@ function fncRegisterSlipDetail($itemMinIndex, $itemMaxIndex, $lngSlipNo, $lngRev
         $strQuery = "";
         $strQuery .= implode("\n", $aryInsert);
 
+        $detect = mb_detect_encoding($v_strproductname);
+
         // 登録実行
         if ( !$lngResultID = $objDB->execute( $strQuery ) )
         {
@@ -1160,7 +1201,7 @@ function fncToEucjp($utf8Text)
 // 指定アドレスのセルに値をセットするヘルパ関数
 function setCellValue($xlWorkSheet, $address, $value)
 {
-    //$value = fncToUtf8($value);
+    $value = fncToUtf8($value);
     $xlWorkSheet->GetCell($address)->SetValue($value);
 }
 
@@ -1168,7 +1209,7 @@ function setCellValue($xlWorkSheet, $address, $value)
 function setCellDetailValue($xlWorkSheet, $columnAddress, $rowNumber, $value)
 {
     $address = $columnAddress . $rowNumber;
-    //$value = fncToUtf8($value);
+    $value = fncToUtf8($value);
     $xlWorkSheet->GetCell($address)->SetValue($value);
 }
 
@@ -1194,6 +1235,66 @@ function fncGeneratePreviewTestCode($aryHeader, $aryDetail, $objDB)
     $aryPreview["PreviewData"] = mb_convert_encoding($outSheetData, 'EUC-JP', 'UTF-8');
 
     return $aryPreview;
+}
+
+function fncConvertArrayHeaderToEucjp($aryHeader)
+{
+    $aryHeader["strdrafteruserdisplaycode"] = fncToEucjp($aryHeader["strdrafteruserdisplaycode"]);
+    $aryHeader["strdrafteruserdisplayname"] = fncToEucjp($aryHeader["strdrafteruserdisplayname"]);
+    $aryHeader["strcompanydisplaycode"] = fncToEucjp($aryHeader["strcompanydisplaycode"]);
+    $aryHeader["strcompanydisplayname"] = fncToEucjp($aryHeader["strcompanydisplayname"]);
+    $aryHeader["strcustomerusername"] = fncToEucjp($aryHeader["strcustomerusername"]);
+    $aryHeader["dtmdeliverydate"] = fncToEucjp($aryHeader["dtmdeliverydate"]);
+    $aryHeader["strdeliveryplacecompanydisplaycode"] = fncToEucjp($aryHeader["strdeliveryplacecompanydisplaycode"]);
+    $aryHeader["strdeliveryplacename"] = fncToEucjp($aryHeader["strdeliveryplacename"]);
+    $aryHeader["strdeliveryplaceusername"] = fncToEucjp($aryHeader["strdeliveryplaceusername"]);
+    $aryHeader["strnote"] = fncToEucjp($aryHeader["strnote"]);
+    $aryHeader["lngtaxclasscode"] = fncToEucjp($aryHeader["lngtaxclasscode"]);
+    $aryHeader["strtaxclassname"] = fncToEucjp($aryHeader["strtaxclassname"]);
+    $aryHeader["lngtaxcode"] = fncToEucjp($aryHeader["lngtaxcode"]);
+    $aryHeader["lngtaxrate"] = fncToEucjp($aryHeader["lngtaxrate"]);
+    $aryHeader["strtaxamount"] = fncToEucjp($aryHeader["strtaxamount"]);
+    $aryHeader["dtmpaymentlimit"] = fncToEucjp($aryHeader["dtmpaymentlimit"]);
+    $aryHeader["lngpaymentmethodcode"] = fncToEucjp($aryHeader["lngpaymentmethodcode"]);
+    $aryHeader["curtotalprice"] = fncToEucjp($aryHeader["curtotalprice"]);
+    
+    return $aryHeader;
+}
+
+function fncConvertArrayDetailToEucjp($aryDetail)
+{
+    for ( $i = 0; $i < count($aryDetail); $i++ )
+    {
+        $d = &$aryDetail[$i];
+
+        $d["rownumber"] = fncToEucjp($d["rownumber"]);
+        $d["strcustomerreceivecode"] = fncToEucjp($d["strcustomerreceivecode"]);
+        $d["strreceivecode"] = fncToEucjp($d["strreceivecode"]);
+        $d["strgoodscode"] = fncToEucjp($d["strgoodscode"]);
+        $d["strproductcode"] = fncToEucjp($d["strproductcode"]);
+        $d["strproductname"] = fncToEucjp($d["strproductname"]);
+        $d["strproductenglishname"] = fncToEucjp($d["strproductenglishname"]);
+        $d["strsalesdeptname"] = fncToEucjp($d["strsalesdeptname"]);
+        $d["strsalesclassname"] = fncToEucjp($d["strsalesclassname"]);
+        $d["dtmdeliverydate"] = fncToEucjp($d["dtmdeliverydate"]);
+        $d["lngunitquantity"] = fncToEucjp($d["lngunitquantity"]);
+        $d["curproductprice"] = fncToEucjp($d["curproductprice"]);
+        $d["strproductunitname"] = fncToEucjp($d["strproductunitname"]);
+        $d["lngproductquantity"] = fncToEucjp($d["lngproductquantity"]);
+        $d["cursubtotalprice"] = fncToEucjp($d["cursubtotalprice"]);
+        $d["lngreceiveno"] = fncToEucjp($d["lngreceiveno"]);
+        $d["lngreceivedetailno"] = fncToEucjp($d["lngreceivedetailno"]);
+        $d["lngreceiverevisionno"] = fncToEucjp($d["lngreceiverevisionno"]);
+        $d["strrevisecode"] = fncToEucjp($d["strrevisecode"]);
+        $d["lngsalesclasscode"] = fncToEucjp($d["lngsalesclasscode"]);
+        $d["lngproductunitcode"] = fncToEucjp($d["lngproductunitcode"]);
+        $d["strnote"] = fncToEucjp($d["strnote"]);
+        $d["lngmonetaryunitcode"] = fncToEucjp($d["lngmonetaryunitcode"]);
+        $d["lngmonetaryratecode"] = fncToEucjp($d["lngmonetaryratecode"]);
+        $d["strmonetaryunitsign"] = fncToEucjp($d["strmonetaryunitsign"]);
+    }
+
+    return $aryDetail;
 }
 
 // プレビューHTMLを生成する
@@ -1327,7 +1428,7 @@ function fncGeneratePreviewPageHtml(
     $v_lngtaxclasscode = $aryHeader["lngtaxclasscode"];                     //24:課税区分コード
     $v_strtaxclassname = $aryHeader["strtaxclassname"];                     //25:課税区分
     $v_curtax = $aryHeader["lngtaxrate"];                                   //26:消費税率
-    $v_lngpaymentmethodcode = $$aryHeader["lngpaymentmethodcode"];          //27:支払方法コード
+    $v_lngpaymentmethodcode = $aryHeader["lngpaymentmethodcode"];           //27:支払方法コード
     $v_dtmpaymentlimit = $aryHeader["dtmpaymentlimit"];                     //28:支払期限
     $v_dtminsertdate = "";                                                  //29:作成日
     $v_strnote = $aryHeader["strNote"];                                     //30:備考

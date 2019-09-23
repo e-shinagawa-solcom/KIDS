@@ -430,14 +430,14 @@ jQuery(function($){
                 dtmdeliverydate: $(tr).children('.detailDeliveryDate').text(),
                 //入数
                 lngunitquantity: $(tr).children('.detailUnitQuantity').text(),
-                //単価
-                curproductprice: $(tr).children('.detailProductPrice').text(),
+                //単価　※カンマ除去
+                curproductprice: $(tr).children('.detailProductPrice').text().split(',').join(''),
                 //単位
                 strproductunitname: $(tr).children('.detailProductUnitName').text(),
-                //数量
-                lngproductquantity: $(tr).children('.detailProductQuantity').text(),
-                //税抜金額
-                cursubtotalprice: $(tr).children('.detailSubTotalPrice').text(),
+                //数量　※カンマ除去
+                lngproductquantity: $(tr).children('.detailProductQuantity').text().split(',').join(''),
+                //税抜金額　※カンマ除去
+                cursubtotalprice: $(tr).children('.detailSubTotalPrice').text().split(',').join(''),
                 //受注番号（明細登録用）
                 lngreceiveno: $(tr).children('.detailReceiveNo').text(),
                 //受注明細番号（明細登録用）

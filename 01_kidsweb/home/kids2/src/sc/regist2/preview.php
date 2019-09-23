@@ -93,6 +93,14 @@
 		$aryData["aryHeaderJson"] = EncodeToJson($aryHeader);
 		$aryData["aryDetailJson"] = EncodeToJson($aryDetail);
 
+		// --------------------------------
+		//  文字コード変換（UTF-8->EUC-JP）
+		// --------------------------------
+		//jQueryのajaxでPOSTすると文字コードが UTF-8 になって
+		//データ登録時にエラーになるため、EUC-JPに変換する
+		$aryHeader = fncConvertArrayHeaderToEucjp($aryHeader);
+		$aryDetail = fncConvertArrayDetailToEucjp($aryDetail);
+
 		// --------------------------
 		//  プレビュー生成
 		// --------------------------
@@ -125,35 +133,42 @@
 		$aryHeader = DecodeFromJson($_POST["aryHeaderJson"]);
 		$aryDetail = DecodeFromJson($_POST["aryDetailJson"]);
 
+		// --------------------------------
+		//  文字コード変換（UTF-8->EUC-JP）
+		// --------------------------------
+		// json変換時に文字コードが UTF-8 になって
+		// データ登録時にエラーになるため、EUC-JPに戻す
+		$aryHeader = fncConvertArrayHeaderToEucjp($aryHeader);
+		$aryDetail = fncConvertArrayDetailToEucjp($aryDetail);
+
 		// --------------------------
 		//  データベース登録
 		// --------------------------
-		/*
 		// トランザクション開始
 		$objDB->transactionBegin();
 
 		// 受注マスタ更新
-		if (!fncUpdateReceiveMaster($aryDetail, $objDB))
-		{
-			fncOutputError ( 9051, DEF_FATAL, "受注マスタ更新失敗", TRUE, "", $objDB );
+		$updResult = fncUpdateReceiveMaster($aryDetail, $objDB);
+		if (!$updResult){
+			MoveToErrorPage("受注データの更新に失敗しました。");
 		}
 
 		// 売上マスタ登録、売上詳細登録、納品伝票マスタ登録、納品伝票明細登録
-		if (!fncRegisterSalesAndSlip($aryHeader, $aryDetail, $objDB, $objAuth))
-		{
-			fncOutputError ( 9051, DEF_FATAL, "売上（納品書）登録失敗", TRUE, "", $objDB );
+		$aryRegResult = fncRegisterSalesAndSlip($aryHeader, $aryDetail, $objDB, $objAuth);
+		if (!$aryRegResult["result"]){
+			MoveToErrorPage("売上・納品伝票データの登録に失敗しました。");
 		}
 
 		// コミット
 		$objDB->transactionCommit();
-		*/
 
 		// --------------------------
 		//  登録結果画面表示
 		// --------------------------
 		// 画面に表示するパラメータの設定
-		$aryData["dtmRegistDate"] = "2019/5/27 12:34:56";
-		$aryData["lngSlipNo"] = "KWG19527-01-01";
+		// TODO:登録日時の取得
+		$aryData["dtmInsertDate"] = "YYYY/MM/DD HH:MM:SS";
+		$aryData["strSlipCode"] = implode(",", $aryRegResult["strSlipCode"]);
 
 		// テンプレートから構築したHTMLを出力
 		$objTemplate = new clsTemplate();

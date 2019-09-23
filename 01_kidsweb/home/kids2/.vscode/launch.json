@@ -10,7 +10,7 @@
             "request": "launch",
             "port": 9000,
             "xdebugSettings": {
-                "max_children": 2,
+                "max_children": 100,
                 "max_data": 2000,
                 "max_depth": 2,
             }
