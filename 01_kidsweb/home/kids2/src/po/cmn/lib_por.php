@@ -1,35 +1,35 @@
 <?php
 // ----------------------------------------------------------------------------
 /**
-*       発注管理  発注確定関連関数群
-*
-*
-*       @package    K.I.D.S.
-*       @license    http://www.kuwagata.co.jp/
-*       @copyright  KUWAGATA CO., LTD.
-*       @author     K.I.D.S. Groups <info@kids-groups.com>
-*       @access     public
-*       @version    2.00
-*
-*
-*       処理概要
-*         ・発注確定関連の関数
-*
-*       更新履歴
-*
-*/
+ *       発注管理  発注確定関連関数群
+ *
+ *
+ *       @package    K.I.D.S.
+ *       @license    http://www.kuwagata.co.jp/
+ *       @copyright  KUWAGATA CO., LTD.
+ *       @author     K.I.D.S. Groups <info@kids-groups.com>
+ *       @access     public
+ *       @version    2.00
+ *
+ *
+ *       処理概要
+ *         ・発注確定関連の関数
+ *
+ *       更新履歴
+ *
+ */
 // ----------------------------------------------------------------------------
 
 /**
-* 発注No.に一致する発注データのヘッダを取得
-*
-*	発注No.から 発注データを取得する
-*
-*	@param	Integer	$lngOrderNo 発注Ｎｏ
-*	@param  Object	$objDB		DB接続オブジェクト
-*	@return String 	$strQuery   発注データ(ヘッダ)
-*	@access public
-*/
+ * 発注No.に一致する発注データのヘッダを取得
+ *
+ *	発注No.から 発注データを取得する
+ *
+ *	@param	Integer	$lngOrderNo 発注Ｎｏ
+ *	@param  Object	$objDB		DB接続オブジェクト
+ *	@return String 	$strQuery   発注データ(ヘッダ)
+ *	@access public
+ */
 function fncGetOrder($lngOrderNo, $objDB){
     $aryQuery = array();
     $aryQuery[] = "SELECT";
@@ -110,6 +110,15 @@ function fncGetOrder($lngOrderNo, $objDB){
     $objDB->freeResult( $lngResultID );
     return $aryResult;
 }
+
+/**
+ * 会社マスタ検索
+ * 
+ * @param   Integer     $lngCompanyCode     会社コード
+ *	@param  Object		$objDB			    DBオブジェクト
+ *	@access public
+ * 
+ */
 function fncGetCompany($lngCompanyCode, $objDB){
     $aryQuery[] = "SELECT ";
     $aryQuery[] = "   lngcompanycode ";
@@ -150,6 +159,15 @@ function fncGetCompany($lngCompanyCode, $objDB){
     $objDB->freeResult( $lngResultID );
     return $result;
 }
+
+/**
+ * 支払条件マスタ検索
+ * 
+ * @param   Integer     $lngpayconditioncode    支払条件コード
+ * @param   Object      $objDB                  DBオブジェクト
+ * @access  public
+ * 
+ */
 function fncGetPayCondition($lngpayconditioncode, $objDB){
     $aryQuery[] = "SELECT ";
     $aryQuery[] = "   lngpayconditioncode ";
@@ -172,16 +190,17 @@ function fncGetPayCondition($lngpayconditioncode, $objDB){
     $objDB->freeResult( $lngResultID );
     return $result;
 }
+
 /**
-* 発注No.に一致する発注データの明細を取得
-*
-*	発注No.から 発注明細データを取得する
-*
-*	@param	Integer	$lngOrderNo 発注Ｎｏ
-*	@param  Object	$objDB		DB接続オブジェクト
-*	@return String 	$strDetail  発注データ(明細)
-*	@access public
-*/
+ * 発注No.に一致する発注データの明細を取得
+ *
+ *	発注No.から 発注明細データを取得する
+ *
+ *	@param	Integer	$lngOrderNo 発注Ｎｏ
+ *	@param  Object	$objDB		DB接続オブジェクト
+ *	@return String 	$strDetail  発注データ(明細)
+ *	@access public
+ */
 function fncGetOrderDetail($aryOrderNo, $objDB){
     $aryQuery[] = "SELECT DISTINCT ON (mo.strordercode, mo.lngrevisionno, od.lngorderdetailno) ";
     $aryQuery[] = "   mo.strordercode || '_' || TO_CHAR(mo.lngrevisionno,'FM00') AS strordercode";
@@ -259,6 +278,17 @@ function fncGetOrderDetail($aryOrderNo, $objDB){
     $objDB->freeResult( $lngResultID );
     return $aryResult;
 }
+
+/**
+ * 発注明細検索
+ * 
+ * @param   Integer     $lngOrderNo         発注番号
+ * @param   Integer     $lngOrderDetailNo   発注明細番号
+ * @param   Integer     $lngRevisionNo      リビジョン番号
+ * @param   Object      $objDB              DBオブジェクト
+ * @access  public
+ * 
+ */
 function fncGetOrderDetail2($lngOrderNo, $lngOrderDetailNo, $lngRevisioNno, $objDB){
     $aryQuery[] = "SELECT ";
     $aryQuery[] = "   mo.lngorderno ";
@@ -333,6 +363,15 @@ function fncGetOrderDetail2($lngOrderNo, $lngOrderDetailNo, $lngRevisioNno, $obj
     $objDB->freeResult( $lngResultID );
     return $aryResult;
 }
+
+/**
+ * 発注明細HTMLデータ作成
+ * 
+ * @param   Array   $aryOrderDetail     発注明細データ
+ * @param   String  $strDelivery        運搬方法
+ * @access  public
+ * 
+ */
 function fncGetOrderDetailHtml($aryOrderDetail, $strDelivery){
     $strHtml = "";
     for($i=0; $i < count($aryOrderDetail); $i++){
@@ -401,6 +440,15 @@ function fncGetOrderDetailHtml($aryOrderDetail, $strDelivery){
     }
     return $strHtml;
 }
+
+/**
+ * 発注書マスタ検索
+ * 
+ * @param   Array   $aryPurchaseOrderNo     発注書番号
+ * @param   Object  $objDB                  DBオブジェクト
+ * @access  public
+ * 
+ */
 function fncGetPurchaseOrder($aryPurchaseOrderNo, $objDB){
     for($i = 0; $i < count($aryPurchaseOrderNo); $i++){
         $aryQuery = [];
@@ -428,8 +476,6 @@ function fncGetPurchaseOrder($aryPurchaseOrderNo, $objDB){
         $aryQuery[] = "  AND mp.lngrevisionno = tp.lngrevisionno";
         $aryQuery[] = "WHERE mp.lngpurchaseorderno = " . $aryPurchaseOrderNo[$i]["lngpurchaseorderno"];
         $aryQuery[] = "AND   mp.lngrevisionno = " . $aryPurchaseOrderNo[$i]["lngrevisionno"];
-        // $aryQuery[] = "WHERE mp.lngpurchaseorderno = 6";
-        // $aryQuery[] = "AND   mp.lngrevisionno = 4";
         $aryQuery[] = "ORDER BY";
         $aryQuery[] = "   mp.lngpurchaseorderno";
         $aryQuery[] = "  ,mp.lngrevisionno";
@@ -462,16 +508,15 @@ function fncGetPurchaseOrder($aryPurchaseOrderNo, $objDB){
 }
 
 /**		funPulldownMenu()関数
-*
-*		プルダウンメニューの生成
-*
-*		@param Long		$lngProcessNo		// 処理番号
-*		@param Long		$lngValueCode		// value値
-*		@param String	$strWhere			// 条件
-*		@param Object	$objDB				// DB接続オブジェクト
-*		@return	Array	$strPulldownMenu
-*/
-// -----------------------------------------------------------------
+ *
+ *		プルダウンメニューの生成
+ *
+ *		@param Long		$lngProcessNo		// 処理番号
+ *		@param Long		$lngValueCode		// value値
+ *		@param String	$strWhere			// 条件
+ *		@param Object	$objDB				// DB接続オブジェクト
+ *		@return	Array	$strPulldownMenu
+ */
 function fncPulldownMenu ( $lngProcessNo, $lngValueCode, $strWhere, $objDB )
 {
     switch($lngProcessNo){
@@ -488,6 +533,15 @@ function fncPulldownMenu ( $lngProcessNo, $lngValueCode, $strWhere, $objDB )
     return $strPulldownMenu;
 }
 
+/**
+ * 発注マスタ更新
+ * 
+ * @param   Array   $aryUpdate          更新発注データ
+ * @param   Array   $aryUpdateDetail    更新発注明細データ
+ * @param   Object  $objDB              DBオブジェクト
+ * @access  public
+ * 
+ */
 function fncUpdateOrder($aryUpdate, $aryUpdateDetail, $objDB){
 	$lngcountrycode = fncGetMasterValue( "m_company", "strcompanydisplaycode", "lngcountrycode", $aryUpdate["lngdeliveryplacecode"] . ":str", '', $objDB);
 	$lngdeliveryplacecode = fncGetMasterValue( "m_company", "strcompanydisplaycode", "lngcompanycode", $aryUpdate["lngdeliveryplacecode"] . ":str", '', $objDB);
@@ -496,7 +550,6 @@ function fncUpdateOrder($aryUpdate, $aryUpdateDetail, $objDB){
         $aryQuery = [];
         // m_order更新
         $aryQuery[] = "UPDATE m_order SET";
-        // $aryQuery[] = "   lngpayconditioncode = " . intVal($aryUpdate["lngpayconditioncode"]);
         $aryQuery[] = "   lngdeliveryplacecode = " . $lngdeliveryplacecode;
         $aryQuery[] = "  ,lngorderstatuscode = " . intVal($aryUpdate["lngorderstatuscode"]);
         $aryQuery[] = "WHERE lngorderno = " . intVal($aryUpdateDetail[$i]["lngorderno"]);
@@ -517,6 +570,15 @@ function fncUpdateOrder($aryUpdate, $aryUpdateDetail, $objDB){
     return true;
 }
 
+/**
+ * 発注明細更新
+ * 
+ * @param   Array   $aryUpdate      発注マスタデータ
+ * @param   Array   $aryDetail      発注明細データ
+ * @param   Object  $objDB          DBオブジェクト
+ * @access  public
+ * 
+ */
 function fncUpdateOrderDetail($aryUpdate, $aryDetail, $objDB){
     // t_orderdetail更新
     for($i = 0; $i < count($aryDetail); $i++){
@@ -542,7 +604,17 @@ function fncUpdateOrderDetail($aryUpdate, $aryDetail, $objDB){
     return true;
 }
 
-function fncUpdatePurchaseOrder($aryOrder, $aryOrderDetail, $objAuth, $objDB){
+/**
+ * 発注書マスタ登録
+ * 
+ * @param   Array   $aryOrder       発注マスタ
+ * @param   Array   $aryOrderDetail 発注明細
+ * @param   Object  $objAuth        権限
+ * @param   Object  $objDB          DBオブジェクト
+ * @access  public
+ * 
+ */
+function fncInsertPurchaseOrder($aryOrder, $aryOrderDetail, $objAuth, $objDB){
 
     $key1 = "lngcustomercompanycode";
     $key2 = "lngmonetaryunitcode";
@@ -715,7 +787,17 @@ function fncUpdatePurchaseOrder($aryOrder, $aryOrderDetail, $objAuth, $objDB){
     return $aryResult;
 }
 
-function fncUpdatePurchaseOrderDetail($aryOrder, $aryDetail, $objAuth, $objDB){
+/**
+ * 発注書明細登録
+ * 
+ * @param   Array   $aryOrder   発注マスタ
+ * @param   Array   $aryDetail  発注明細
+ * @param   Object  $objAuth    権限
+ * @param   Object  $objDB      DBオブジェクト
+ * @access  public
+ * 
+ */
+function fncInsertPurchaseOrderDetail($aryOrder, $aryDetail, $objAuth, $objDB){
 
     // 発注書詳細
     for($i = 0; $i < count($aryDetail); $i++){
@@ -769,6 +851,16 @@ function fncUpdatePurchaseOrderDetail($aryOrder, $aryDetail, $objAuth, $objDB){
     return true;
 }
 
+/**
+ * 支払条件特定
+ * 
+ * @param   Integer     $lngCountryCode     国コード
+ * @param   Array       $aryDetail          発注明細
+ * @param   Currency    $curTotalPrice      合計金額
+ * @param   Object      $objDB              DBオブジェクト
+ * @access  public
+ * 
+ */
 function fncPayConditionCode($lngContoryCode, $aryDetail, $curTotalPrice, $objDB){
     // 国コードが81の場合、99固定
     if($lngContoryCode == 81) { return 0; }
@@ -799,6 +891,10 @@ function fncPayConditionCode($lngContoryCode, $aryDetail, $curTotalPrice, $objDB
 
     return $code;
 }
+
+/**
+ * 
+ */
 function fncSetForeignTabel(){
 	
 	$aryforeigntable = array(
@@ -857,6 +953,14 @@ function fncSetForeignTabel(){
 	
 	return $aryforeigntable;
 }
+
+/**
+ * 発注書データHTML変換
+ * 
+ * @param   Array   $aryPutchaseOrder   発注書データ
+ * @access  public
+ * 
+ */
 function fncCreatePurchaseOrderHtml($aryPurchaseOrder){
     $aryOrderNo = [];
     foreach($aryPurchaseOrder as $row){
@@ -871,10 +975,11 @@ function fncCreatePurchaseOrderHtml($aryPurchaseOrder){
         for($i = 0; $i < count($aryPurchaseOrder); $i++){
             if($aryPurchaseOrder[$i]["lngpurchaseorderno"] != $orderno){ continue;}
             if($i == 0){
+                $strUrl = "/list/result/po/listoutput.php?strReportKeyCode=" . $aryPurchaseOrder[$i]["lngpurchaseorderno"] . "&strSessionID=" . $strSessionID;
                 $aryHtml[] = "<table class=\"ordercode\">";
                 $aryHtml[] = "  <tr>";
                 $aryHtml[] = "    <td class=\"ordercodetd\">" . sprintf("%s_%02d", $aryPurchaseOrder[$i]["strordercode"], $aryPurchaseOrder[$i]["lngrevisionno"]) . "</td>";
-                $aryHtml[] = "    <td class=\"orderbuttontd\"><img src=\"/img/type01/cmn/querybt/preview_off_ja_bt.gif\" alt=\"preview\"></td>";
+                $aryHtml[] = "    <td class=\"orderbuttontd\"><a href=\"" . $strUrl . "\"><img src=\"/img/type01/cmn/querybt/preview_off_ja_bt.gif\" alt=\"preview\"></a></td>";
                 $aryHtml[] = "  </tr>";
                 $aryHtml[] = "</table> ";
                 $aryHtml[] = "<br>";
@@ -916,6 +1021,239 @@ function fncCreatePurchaseOrderHtml($aryPurchaseOrder){
         $aryHtml[] = "</table>";
         $aryHtml[] = "<br>";
     }
+
+    $strHtml = "";
+    $strHtml = implode("\n", $aryHtml);
+
+    return $strHtml;
+}
+
+/**
+ * 発注書マスタ更新
+ * 
+ * @param   Integer     $lngputchaseorderno 発注書番号
+ * @param   Integer     $lngrevisionno      リビジョン番号
+ * @param   Object      $objDb               DBオブジェクト
+ * @access  public
+ * 
+ */
+function fncGetPurchaseOrderEdit($lngpurchaseorderno, $lngrevisionno, $objDB){
+	$aryQuery[] = "SELECT";
+	$aryQuery[] = "   mp.lngpurchaseorderno";
+	$aryQuery[] = "  ,mp.lngrevisionno";
+	$aryQuery[] = "  ,mp.strrevisecode";
+	$aryQuery[] = "  ,mp.strordercode";
+	$aryQuery[] = "  ,TO_CHAR(mp.dtmexpirationdate, 'YYYY/MM/DD') as dtmexpirationdate";
+	$aryQuery[] = "  ,mp.strproductcode";
+	$aryQuery[] = "  ,mp.strproductname";
+	$aryQuery[] = "  ,mp.strproductenglishname";
+	$aryQuery[] = "  ,TO_CHAR(mp.dtminsertdate, 'YYYY/MM/DD') as dtminsertdate";
+	$aryQuery[] = "  ,mp.lnggroupcode";
+	$aryQuery[] = "  ,mg.strgroupdisplaycode";
+	$aryQuery[] = "  ,mg.strgroupdisplayname";
+	$aryQuery[] = "  ,mp.lngcustomercode";
+	$aryQuery[] = "  ,mc1.strcompanydisplaycode as strcustomercode";
+	$aryQuery[] = "  ,mc1.strcompanydisplayname as strcustomername";
+	$aryQuery[] = "  ,mp.lngdeliveryplacecode";
+	$aryQuery[] = "  ,mc2.strcompanydisplaycode as strdeliveryplacecode";
+	$aryQuery[] = "  ,mc2.strcompanydisplayname as strdeliveryplacename";
+	$aryQuery[] = "  ,mp.lngpayconditioncode";
+    $aryQuery[] = "  ,mp.lngmonetaryunitcode";
+    $aryQuery[] = "  ,mp.strmonetaryunitsign";
+	$aryQuery[] = "  ,mp.curtotalprice";
+	$aryQuery[] = "  ,mp.strnote";
+	$aryQuery[] = "  ,pd.lngpurchaseorderdetailno";
+	$aryQuery[] = "  ,pd.lngstocksubjectcode";
+	$aryQuery[] = "  ,mss.strstocksubjectname";
+	$aryQuery[] = "  ,pd.lngstockitemcode";
+	$aryQuery[] = "  ,msi.strstockitemname";
+    $aryQuery[] = "  ,pd.lngdeliverymethodcode";
+    $aryQuery[] = "  ,pd.strdeliverymethodname";
+	$aryQuery[] = "  ,pd.curproductprice";
+    $aryQuery[] = "  ,pd.lngproductquantity";
+    $aryQuery[] = "  ,pd.lngproductunitcode";
+    $aryQuery[] = "  ,pd.strproductunitname";
+    $aryQuery[] = "  ,pd.cursubtotalprice";
+    $aryQuery[] = "  ,TO_CHAR(pd.dtmdeliverydate, 'YYYY/MM/DD') AS dtmdeliverydate";
+    $aryQuery[] = "  ,pd.strnote as strdetailnote";
+    $aryQuery[] = "  ,pd.lngsortkey";
+	$aryQuery[] = "FROM m_purchaseorder mp";
+	$aryQuery[] = "LEFT JOIN t_purchaseorderdetail pd ON mp.lngpurchaseorderno = pd.lngpurchaseorderno AND mp.lngrevisionno = pd.lngrevisionno";
+	$aryQuery[] = "LEFT JOIN m_group mg ON mp.lnggroupcode = mg.lnggroupcode";
+	$aryQuery[] = "LEFT JOIN m_company mc1 ON mp.lngcustomercode = mc1.lngcompanycode";
+	$aryQuery[] = "LEFT JOIN m_company mc2 ON mp.lngdeliveryplacecode = mc2.lngcompanycode";
+	$aryQuery[] = "LEFT JOIN m_stocksubject mss ON pd.lngstocksubjectcode = mss.lngstocksubjectcode";
+    $aryQuery[] = "LEFT JOIN m_stockitem msi ON pd.lngstockitemcode = msi.lngstockitemcode AND pd.lngstocksubjectcode = msi.lngstocksubjectcode";
+	$aryQuery[] = "WHERE mp.lngpurchaseorderno = " . $lngpurchaseorderno;
+    $aryQuery[] = "AND   mp.lngrevisionno = " . $lngrevisionno;
+    $aryQuery[] = "ORDER BY";
+    $aryQuery[] = "   pd.lngsortkey";
+
+	$srtQuery = "";
+	$strQuery = implode("\n", $aryQuery);
+
+	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
+	if ( !$lngResultNum )
+	{
+		return FALSE;
+	}
+
+	for ( $i = 0; $i < $lngResultNum; $i++ ) {
+		$aryResult[] = $objDB->fetchArray( $lngResultID, $i );
+	}
+
+	$objDB->freeResult( $lngResultID );
+
+	return $aryResult;
+}
+
+/**
+ * 発注書明細HTML作成
+ * 
+ * @param   Array   $aryResult  
+ */
+function fncGetPurchaseOrderDetailHtml($aryResult, $objDB){
+    for($i = 0; $i < count($aryResult); $i++){
+        $aryHtml[] = "  <tr>";
+        $aryHtml[] = "      <td name=\"rownum\">" . ($i + 1) . "</td>";
+        $aryHtml[] = "      <td class=\"detailOrderCode\">" . sprintf("%s_%02d", $aryResult[$i]["strordercode"], $aryResult[$i]["lngrevisionno"]) . "</td>";
+        $aryHtml[] = "      <td class=\"detailPurchaseorderdetailno\">" . $aryResult[$i]["lngpurchaseorderdetailno"] . "</td>";
+        $aryHtml[] = "      <td class=\"detailStockSubjectCode\">" . sprintf("[%s] %s", $aryResult[$i]["lngstocksubjectcode"], $aryResult[$i]["strstocksubjectname"]) . "</td>";
+        $aryHtml[] = "      <td class=\"detailStockItemCode\">" . sprintf("[%s] %s", $aryResult[$i]["lngstockitemcode"], $aryResult[$i]["strstockitemname"]) . "</td>";
+        $aryHtml[] = "      <td class=\"detailDeliveryMethodCode\"><select name=\"lngdeliverymethodcode\">" . fncPulldownMenu(2, $aryResult[$i]["lngdeliverymethodcode"], "", $objDB) ."</select></td>";
+        $aryHtml[] = "      <td class=\"detailProductPrice\">" . sprintf("%s %s", $aryResult[$i]["strmonetaryunitsign"], number_format($aryResult[$i]["curproductprice"], 4)) . "</td>";
+        $aryHtml[] = "      <td class=\"detailProductQuantity\">" . number_format($aryResult[$i]["lngproductquantity"], 0) . "</td>";
+        $aryHtml[] = "      <td class=\"detailSubtotalPrice\">" . sprintf("%s %s", $aryResult[$i]["strmonetaryunitsign"], number_format($aryResult[$i]["cursubtotalprice"], 2)) . "</td>";
+        $aryHtml[] = "      <td class=\"detailDeliveryDate\">" . $aryResult[$i]["dtmdeliverydate"] . "</td>";
+        $aryHtml[] = "      <td class=\"detailDetailNote\">" . $aryResult[$i]["strdetailnote"] . "</td>";
+        $aryHtml[] = "      <td style=\"display:none;\"><input type=\"hidden\" name=\"strProductUnitName\" value=\"" . $aryResult[$i]["strproductunitname"] . "\"></td>";
+        $aryHtml[] = "  </tr>";
+    }
+
+    return implode("\n", $aryHtml);
+}
+
+/**
+ * 発注書マスタ更新
+ * 
+ * @param   Array   $aryPurchaseOrder   発注書データ
+ * @param   Object  $objDB              DBオブジェクト
+ * @access  public
+ * 
+ */
+function fncUpdatePurchaseOrder($aryPurchaseOrder, $objDB){
+    $lngLocationCode = fncGetMasterValue("m_company", "strcompanydisplaycode", "lngcompanycode", $aryPurchaseOrder["strLocationCode"] . ":str", '', $objDB);
+    $aryQuery[] = "UPDATE m_purchaseorder SET";
+    $aryQuery[] = "   dtmexpirationdate = '"    . $aryPurchaseOrder["dtmExpirationDate"] . "'";
+    $aryQuery[] = "  ,lngpayconditioncode = "   . $aryPurchaseOrder["lngPayConditionCode"];
+    $aryQuery[] = "  ,strpayconditionname = '"  . $aryPurchaseOrder["strPayConditionName"] . "'";
+    // $aryQuery[] = "  ,lngdeliveryplacecode = "  . $aryPurchaseOrder["lngLocationCode"];
+    $aryQuery[] = "  ,strdeliveryplacename = '" . mb_convert_encoding(urldecode($aryPurchaseOrder["strLocationName"]), "EUC-JP") . "'";
+    $aryQuery[] = "  ,lngdeliveryplacecode = "  . $lngLocationCode;
+    $aryQuery[] = "  ,strNote = '"              . mb_convert_encoding(urldecode($aryPurchaseOrder["strNote"]), "EUC-JP") . "'";
+    $aryQuery[] = "WHERE lngpurchaseorderno = " . $aryPurchaseOrder["lngPurchaseOrderNo"];
+    $aryQuery[] = "AND   lngrevisionno = "      . $aryPurchaseOrder["lngRevisionNo"];
+
+    $strQuery = "";
+    $strQuery = implode("\n", $aryQuery);
+
+    if ( !$lngResultID = $objDB->execute( $strQuery ) )
+    {
+        fncOutputError ( 9051, DEF_ERROR, "発注書明細への更新処理に失敗しました。", TRUE, "", $objDB );
+        return null;
+    }
+    $objDB->freeResult( $lngResultID );
+
+    return true;
+}
+
+/**
+ * 発注書明細更新
+ * 
+ * @param   Array   $aryPurchaseOrder   発注書データ
+ * @param   Object  $objDB              DBオブジェクト
+ * @access  public
+ * 
+ */
+function fncUpdatePurchaseOrderDetail($aryPurchaseOrder, $objDB){
+    for($i = 0; $i < count($aryPurchaseOrder["aryDetail"]); $i++){
+        $aryQuery = [];
+        $aryQuery[] = "UPDATE t_purchaseorderdetail SET";
+        $aryQuery[] = "   lngdeliverymethodcode = "       . $aryPurchaseOrder["aryDetail"][$i]["lngDeliveryMethodCode"];
+        $aryQuery[] = "  ,strdeliverymethodname = '"      . $aryPurchaseOrder["aryDetail"][$i]["strDeliveryMethodName"] . "'";
+        $aryQuery[] = "  ,lngsortkey = "                  . $aryPurchaseOrder["aryDetail"][$i]["lngSortKey"];
+        $aryQuery[] = "WHERE lngpurchaseorderno = "       . $aryPurchaseOrder["lngPurchaseOrderNo"];
+        $aryQuery[] = "AND   lngpurchaseorderdetailno = " . $aryPurchaseOrder["aryDetail"][$i]["lngPurchaseOrderDetailNo"];
+        $aryQuery[] = "AND   lngrevisionno = "            . $aryPurchaseOrder["lngRevisionNo"];
+    
+        $strQuery = "";
+        $strQuery = implode("\n", $aryQuery);
+
+        if ( !$lngResultID = $objDB->execute( $strQuery ) )
+        {
+            fncOutputError ( 9051, DEF_ERROR, "発注書明細への更新処理に失敗しました。", TRUE, "", $objDB );
+            return null;
+        }
+        $objDB->freeResult( $lngResultID );
+    }
+
+    return true;
+}
+
+/**
+ * 更新後発注書データHTML変換
+ * 
+ * @param   Array   $aryPurchaseOrder   発注書データ
+ * @param   String  $strSessionID       セッションID
+ * @access  public
+ * 
+ */
+function fncCreatePurchaseOrderUpdateHtml($aryPurchaseOrder, $strSessionID){
+    $strUrl = "/list/result/po/listoutput.php?strReportKeyCode=" . $aryPurchaseOrder[0]["lngpurchaseorderno"] . "&strSessionID=" . $strSessionID;
+    $aryHtml[] = "<p class=\"caption\">発注書NO " . $aryPurchaseOrder[0]["strordercode"] . "の修正が完了しました。</p>";
+    $aryHtml[] = "<table class=\"ordercode\">";
+    $aryHtml[] = "  <tr>";
+    $aryHtml[] = "    <td class=\"orderbuttontd\" id=\"btnClose\"><img src=\"/img/type01/cmn/querybt/close_blown_off_ja_bt.gif\" alt=\"\" onclick=\"window.open('about:blank','_self').close()\"></td>";
+    $aryHtml[] = "    <td class=\"orderbuttontd\"><a href=\"" . $strUrl . "\"><img src=\"/img/type01/cmn/querybt/preview_off_ja_bt.gif\" alt=\"preview\"></a></td>";
+    $aryHtml[] = "  </tr>";
+    $aryHtml[] = "</table> ";
+    $aryHtml[] = "<br>";
+    $aryHtml[] = "<table class=\"orderdetail\">";
+    $aryHtml[] = "  <tr>";
+    $aryHtml[] = "    <th class=\"SegColumn\">製品コード</th>";
+    $aryHtml[] = "    <th class=\"SegColumn\">製品名</th>";
+    $aryHtml[] = "    <th class=\"SegColumn\">仕入先</th>";
+    $aryHtml[] = "    <th class=\"SegColumn\">納品場所</th>";
+    $aryHtml[] = "  </tr>";
+    $aryHtml[] = "  <tr>";
+    $aryHtml[] = "    <td class=\"Segs\">" . $aryPurchaseOrder[0]["strproductcode"] . "</td>";
+    $aryHtml[] = "    <td class=\"Segs\">" . $aryPurchaseOrder[0]["strproductname"] . "</td>";
+    $aryHtml[] = "    <td class=\"Segs\">" . sprintf("[%s] %s", $aryPurchaseOrder[0]["strcustomercode"], $aryPurchaseOrder[0]["strcustomername"]) . "</td>";
+    $aryHtml[] = "    <td class=\"Segs\">" . sprintf("[%s] %s", $aryPurchaseOrder[0]["strdeliveryplacecode"], $aryPurchaseOrder[0]["strdeliveryplacename"]) . "</td>";
+    $aryHtml[] = "  </tr>";
+    $aryHtml[] = "</table>";
+    $aryHtml[] = "<table class=\"orderdetail\">";
+    $aryHtml[] = "  <tr>";
+    $aryHtml[] = "    <th class=\"SegColumn\">No.</th>";
+    $aryHtml[] = "    <th class=\"SegColumn\">仕入部品</th>";
+    $aryHtml[] = "    <th class=\"SegColumn\">運搬方法</th>";
+    $aryHtml[] = "    <th class=\"SegColumn\">単価</th>";
+    $aryHtml[] = "    <th class=\"SegColumn\">数量</th>";
+    $aryHtml[] = "    <th class=\"SegColumn\">税抜金額</th>";
+    $aryHtml[] = "    <th class=\"SegColumn\">納期</th>";
+    $aryHtml[] = "  </tr>";
+    for($i = 0; $i < count($aryPurchaseOrder); $i++){
+        $aryHtml[] = "  <tr>";
+        $aryHtml[] = "    <td class=\"Segs\">" . $aryPurchaseOrder[$i]["lngsortkey"] . "</td>";
+        $aryHtml[] = "    <td class=\"Segs\">" . sprintf("[%s] %s", $aryPurchaseOrder[$i]["lngstockitemcode"], $aryPurchaseOrder[$i]["strstockitemname"]) . "</td>";
+        $aryHtml[] = "    <td class=\"Segs\">" . trim($aryPurchaseOrder[$i]["strdeliverymethodname"]) . "</td>";
+        $aryHtml[] = "    <td class=\"Segs\">" . sprintf("%s %.4f", $aryPurchaseOrder[$i]["strmonetaryunitsign"], $aryPurchaseOrder[$i]["curproductprice"]) . "</td>";
+        $aryHtml[] = "    <td class=\"Segs\">" . sprintf("%d %s", number_format($aryPurchaseOrder[$i]["lngproductquantity"]), $aryPurchaseOrder[$i]["strproductunitname"]) . "</td>";
+        $aryHtml[] = "    <td class=\"Segs\">" . sprintf("%s %.4f", $aryPurchaseOrder[$i]["strmonetaryunitsign"], $aryPurchaseOrder[$i]["cursubtotalprice"]) . "</td>";
+        $aryHtml[] = "    <td class=\"Segs\">" . $aryPurchaseOrder[$i]["dtmdeliverydate"] . "</td>";
+        $aryHtml[] = "  </tr>";
+    }
+    $aryHtml[] = "</table>";
 
     $strHtml = "";
     $strHtml = implode("\n", $aryHtml);

@@ -28,8 +28,6 @@ class estimateDB extends clsDB {
             $strQuery .= " dtmapplystartdate,"; 
             $strQuery .= " dtmapplyenddate";
             $strQuery .= " FROM m_monetaryrate";
-            $strQuery .= " WHERE TO_DATE('$today', 'YYYY/MM/DD') <= dtmapplyenddate";
-            $strQuery .= " AND lngmonetaryratecode = ". $monetaryRateCode;
     
             $queryResult = fncQuery($strQuery, $this); // [0]:結果ID [1]:取得行数
     

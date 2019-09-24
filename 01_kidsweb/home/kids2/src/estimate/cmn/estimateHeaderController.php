@@ -56,15 +56,15 @@ class estimateHeaderController {
 
     // 配列内のデータを各定数にセットする
     protected function setCellParams($data) {
-        $this->productCode = $data['productCode'] ? $data['productCode'] : '';
-        $this->productName = $data['productName'] ? $data['productName'] : '';
-        $this->productEnglishName = $data['productEnglishName'] ? $data['productEnglishName'] : '';
-        $this->retailPrice = $data['retailPrice'] ? $data['retailPrice'] : '';
-        $this->inchargeGroupCode = $data['inchargeGroupCode'] ? $data['inchargeGroupCode'] : '';
-        $this->inchargeUserCode = $data['inchargeUserCode'] ? $data['inchargeUserCode'] : '';
-        $this->developUserCode = $data['developUserCode'] ? $data['developUserCode'] : '';
-        $this->cartonQuantity = $data['cartonQuantity'] ? $data['cartonQuantity'] : '';
-        $this->productionQuantity = $data['productionQuantity'] ? $data['productionQuantity'] : '';
+        $this->productCode = isset($data['productCode']) ? $data['productCode'] : '';
+        $this->productName = isset($data['productName']) ? $data['productName'] : '';
+        $this->productEnglishName = isset($data['productEnglishName']) ? $data['productEnglishName'] : '';
+        $this->retailPrice = isset($data['retailPrice']) ? $data['retailPrice'] : '';
+        $this->inchargeGroupCode = isset($data['inchargeGroupCode']) ? $data['inchargeGroupCode'] : '';
+        $this->inchargeUserCode = isset($data['inchargeUserCode']) ? $data['inchargeUserCode'] : '';
+        $this->developUserCode = isset($data['developUserCode']) ? $data['developUserCode'] : '';
+        $this->cartonQuantity = isset($data['cartonQuantity']) ? $data['cartonQuantity'] : '';
+        $this->productionQuantity = isset($data['productionQuantity']) ? $data['productionQuantity'] : '';
         return true;
     }
 
@@ -340,7 +340,7 @@ class estimateHeaderController {
     protected function validateProductionQuantity() {
         $productionQuantity = $this->productionQuantity;
         if (isset($productionQuantity) && $productionQuantity !=='') {
-            if (!preg_match("/\A[1-9][0-9]*\z/", $productionQuantity)) {
+            if (!preg_match("/\A\d+\z/", $productionQuantity)) {
                 // 入力形式不正
                 $this->messageCode['productionQuantity'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
             }

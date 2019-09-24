@@ -58,6 +58,7 @@ switch( $strExcuteHttpHostName )
 		define ( "DB_NAME", "kidscore2" );
 		// エラーメール送信先
 		define ( "ERROR_MAIL_TO", "devs.biz@gmail.com" );
+		//define ( "ERROR_MAIL_TO", "miyata@testdomain.local" );
 		define ( "SEND_MAIL_FLAG", true);
 		// 各ルートパス
 		define ( "PATH_HOME",	"/home/kids2/" );
@@ -140,6 +141,8 @@ switch( $strExcuteHttpHostName )
 		// 各ルートパス
 		define ( "PATH_HOME",	"/Users/solcom/Desktop/Git/KIDS/01_kidsweb/home/kids2" );
 		// define ( "PATH_HOME",	"/Users/solcom-ad/Desktop/Git/KIDS/01_kidsweb/home/kids2" ); // ローカル確認用
+		// define ( "PATH_HOME",	"E:/Source/Repos/solcom-net/KIDS/01_kidsweb/home/kids2" );
+
 		break;
 }
 
@@ -322,6 +325,10 @@ define ( "DEF_FUNCTION_PO5",	505 );     //  505 発注管理（発注修正）
 define ( "DEF_FUNCTION_PO6",	506 );     //  506 発注管理（発注削除）
 define ( "DEF_FUNCTION_PO7",	507 );     //  507 発注管理（発注の無効化処理）
 define ( "DEF_FUNCTION_PO8",	508 );     //  508 発注管理（商品マスタダイレクト修正）
+define ( "DEF_FUNCTION_PO9",	509 );     //  509 発注管理（発注確定）
+define ( "DEF_FUNCTION_PO10",	510 );     //  510 発注管理（発注書検索）
+define ( "DEF_FUNCTION_PO11",	511 );     //  511 発注管理（発注書検索　管理モード）
+define ( "DEF_FUNCTION_PO12",	512 );     //  512 発注管理（発注書修正）
 
 define ( "DEF_FUNCTION_SC0",	600 );     //  600 売上管理
 define ( "DEF_FUNCTION_SC1",	601 );     //  601 売上管理（売上登録）
@@ -549,12 +556,14 @@ define ( "DEF_MONETARY_RATE_CODE_TTM",           1); // TTM
 define ( "DEF_MONETARY_RATE_CODE_COMPANY_LOCAL", 2); // 社内
 
 // // メッセージコード
-define ( "DEF_MESSAGE_CODE_RATE_UNCAUGHT_WARNING",  9201); // 通貨レート取得不可
-define ( "DEF_MESSAGE_CODE_RATE_DIFFER",            9202); // 通貨レート差異
-define ( "DEF_MESSAGE_CODE_NOT_ENTRY_ERROR",        9203); // 未入力エラー
-define ( "DEF_MESSAGE_CODE_FORMAT_ERROR",           9204); // 形式エラー
-define ( "DEF_MESSAGE_CODE_MASTER_CHECK_ERROR",     9205); // マスターチェックエラー
-define ( "DEF_MESSAGE_CODE_PRODUCT_CODE_ERROR",     9206); // 製品コードチェックエラー
+define ( "DEF_MESSAGE_CODE_RATE_UNCAUGHT_WARNING",    9201); // 通貨レート取得不可
+define ( "DEF_MESSAGE_CODE_RATE_DIFFER",              9202); // 通貨レート差異
+define ( "DEF_MESSAGE_CODE_NOT_ENTRY_ERROR",          9203); // 未入力エラー
+define ( "DEF_MESSAGE_CODE_FORMAT_ERROR",             9204); // 形式エラー
+define ( "DEF_MESSAGE_CODE_MASTER_CHECK_ERROR",       9205); // マスターチェックエラー
+define ( "DEF_MESSAGE_CODE_PRODUCT_CODE_ERROR",       9206); // 製品コードチェックエラー
+define ( "DEF_MESSAGE_CODE_FILE_UPLOAD_ERROR",        9207); // ファイルアップロードエラー
+define ( "DEF_MESSAGE_CODE_VALID_SHEET_ABSENT_ERROR", 9208); // 有効シート非存在エラー
 
 // 仕入区分マスタコード
 define ("DEF_STOCK_CLASS_CODE_PARTS",      1); // 材料費
@@ -601,5 +610,16 @@ define ( "DEF_COMPANY_CODE_OTHERS", 0); // その他
 
 // 表示用会社コード
 define ( "DEF_DISPLAY_COMPANY_CODE_OTHERS", '0000'); // その他
+
+// グループ属性コード
+define ( "DEF_GROUP_ATTRIBUTE_CODE_SALES_GROUP",              1);  // 営業部門
+define ( "DEF_GROUP_ATTRIBUTE_CODE_DEVELOP_GROUP",            2);  // 開発部門
+define ( "DEF_GROUP_ATTRIBUTE_CODE_SALES_SUPPORT",            3);  // 営業サポート
+define ( "DEF_GROUP_ATTRIBUTE_CODE_ACCOUNTING",               4);  // 経理
+define ( "DEF_GROUP_ATTRIBUTE_CODE_QUALITY_ASSURANCE",        5);  // 品質保証
+
+// データベースの格納サイズ
+define ( "DEF_DB_INTEGER_MAX_LIMIT",                 2147483647);  // integerの最大値
+define ( "DEF_DB_INTEGER_MIN_LIMIT",                -2147483647);  // integerの最小値
 
 ?>

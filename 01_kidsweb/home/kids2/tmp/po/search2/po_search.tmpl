@@ -39,6 +39,7 @@
 	<script src="/search/cmn/js/key-bind.js" defer></script>
     <!-- バリデーション -->
     <script src="/po/search2/validate.js" defer></script>
+    <link rel="stylesheet" href="/po/search2/layout.css">
 </header3>
 
 <bodyonload>
@@ -66,6 +67,10 @@
 	<div class="form-box__contents--with-scroll">
 		<form name="SearchMoldHistory" method="post">
             <input type="submit">
+            <div class="admin-mode" style="display:_%displayMode%_;">
+                管理者モード
+                <span><input type="checkbox" class="admin-checkbox" name="IsDisplay_btnAdmin"></span>
+            </div>
             <div class="regist-line">
                 <img class="toggle-search button" src="/img/type01/cmn/seg/off_bt.gif" alt="toggle search">
                 <img class="toggle-display button" src="/img/type01/cmn/seg/off_bt.gif" alt="toggle display">
@@ -131,7 +136,7 @@
                     <input name="IsDisplay_strOrderCode" class="is-display" type="checkbox">
                 </span>
 				<span class="regist-label">
-					<span class="regist-label__text">発注NO.</span>
+					<span class="regist-label__text">発注書NO.</span>
                     <input class="TxtStyle05L" name="strOrderCode" type="text" maxlength="11" value="" tabindex="">
 				</span>
 			</div>
@@ -219,6 +224,8 @@
                     </select>
                 </span>
             </div>
+            _%lngMonetaryRateCodeValue%_
+            _%curConversionRate%_
             <div class="regist-line">
                 <span class="search-label--checkbox">
                     <input name="IsSearch_lngPayConditionCode" class="is-search" type="checkbox">

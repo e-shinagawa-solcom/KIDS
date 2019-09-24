@@ -86,7 +86,7 @@ if ( !fncCheckAuthority( DEF_FUNCTION_PO4, $objAuth ) )
 $lngOrderNo = $aryData["lngOrderNo"];
 
 // 指定発注番号の発注データ取得用SQL文の作成
-// $strQuery = fncGetPurchaseHeadNoToInfoSQL ( $lngOrderNo );
+//$strQuery = fncGetPurchaseHeadNoToInfoSQL ( $lngOrderNo );
 $aryResult = fncGetPurchaseHeadNoToInfo ( $lngOrderNo, $objDB );
 
 // 詳細データの取得

@@ -46,7 +46,7 @@ $(window).on('load', function(){
         // var childOrderCode = orderCode[0] + '_' + (parseInt(orderCode[1], 10) - 1);
         var tds = $('td.td-strordercode');
         $.each(tds, function(i, td){
-            console.log($(td)[0]);
+            // console.log($(td)[0]);
             var oc = $(td).attr('baseordercode');
             if(orderCode[0] !== oc) { return true; }
             if($(td).text() === childOrderCode){

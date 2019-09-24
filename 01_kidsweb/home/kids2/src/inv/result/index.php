@@ -142,7 +142,7 @@
 	reset($aryData);
 
 	// 検索SQLを実行し検索（ヒット）件数を取得する
-	$strQuery = fncGetSearchInvoiceSQL( $arySearchColumn, $aryData, $objDB, "", 0, $aryData["strSessionID"]);
+	$strQuery = fncGetSearchInvoiceSQL( $arySearchColumn, $aryData, $objDB, $aryData["strSessionID"]);
 
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 

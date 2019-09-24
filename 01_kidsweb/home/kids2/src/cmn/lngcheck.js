@@ -223,7 +223,7 @@
 		
 		// VBScript¤Î¼Â¹Ô
 		//window.execScript(strParam, "VBScript");
-		/*
+		*/
 
 		var ret = fncVBSCheckNumberValue(strValue,lngAfterDecimal,strCurrencySign,lngDecimalCutPoint,lngCalcCode);
 

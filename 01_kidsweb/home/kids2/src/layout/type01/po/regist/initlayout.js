@@ -256,8 +256,8 @@ function initLayoutPO()
 	///// INPUT A FONT COLOR /////
 	SegA01.style.color = fcolor;
 	SegA02.style.color = fcolor;
-	// SegA03.style.color = fcolor;
-	// SegA04.style.color = fcolor;
+	SegA03.style.color = fcolor;
+	SegA04.style.color = fcolor;
 	SegA05.style.color = fcolor;
 	// SegA06.style.color = fcolor;
 	// SegA07.style.color = fcolor;
@@ -268,14 +268,14 @@ function initLayoutPO()
 	SegA12.style.color = fcolor;
 	SegA13.style.color = fcolor;
 	SegA14.style.color = fcolor;
-	// SegA15.style.color = fcolor;
+	SegA15.style.color = fcolor;
+	SegA16.style.color = fcolor;
 
 	///// INPUT A SEGMENT BG COLOR /////
 	SegA01.style.background = segcolor;
 	SegA02.style.background = segcolor;
-	// SegA03.style.background = segcolor;
-	// SegA04.style.background = segcolor;
-	// // *v1* SegA0405.style.background = segcolor;
+	SegA03.style.background = segcolor;
+	SegA04.style.background = segcolor;
 	SegA05.style.background = segcolor;
 	// SegA06.style.background = segcolor;
 	// SegA07.style.background = segcolor;
@@ -286,13 +286,14 @@ function initLayoutPO()
 	SegA12.style.background = segcolor;
 	SegA13.style.background = segcolor;
 	SegA14.style.background = segcolor;
-	// SegA15.style.background = segcolor;
+	SegA15.style.background = segcolor;
+	SegA16.style.background = segcolor;
 
 	///// INPUT A VARS BG COLOR /////
 	VarsA01.style.background = segcolor;
 	VarsA02.style.background = segcolor;
-	// VarsA03.style.background = segcolor;
-	// VarsA04.style.background = segcolor;
+	VarsA03.style.background = segcolor;
+	VarsA04.style.background = segcolor;
 	VarsA05.style.background = segcolor;
 	// VarsA06.style.background = segcolor;
 	// VarsA07.style.background = segcolor;
@@ -303,14 +304,14 @@ function initLayoutPO()
 	VarsA12.style.background = segcolor;
 	VarsA13.style.background = segcolor;
 	VarsA14.style.background = segcolor;
-	// VarsA15.style.background = segcolor;
+	VarsA15.style.background = segcolor;
+	VarsA16.style.background = segcolor;
 
 	///// INPUT A SEGMENT BORDER COLOR /////
 	SegA01.style.borderColor = brcolor01;
 	SegA02.style.borderColor = brcolor01;
-	// SegA03.style.borderColor = brcolor01;
-	// SegA04.style.borderColor = brcolor01;
-	// // *v1* SegA0405.style.borderColor = brcolor02;
+	SegA03.style.borderColor = brcolor01;
+	SegA04.style.borderColor = brcolor01;
 	SegA05.style.borderColor = brcolor01;
 	// SegA06.style.borderColor = brcolor01;
 	// SegA07.style.borderColor = brcolor01;
@@ -321,13 +322,14 @@ function initLayoutPO()
 	SegA12.style.borderColor = brcolor01;
 	SegA13.style.borderColor = brcolor01;
 	SegA14.style.borderColor = brcolor01;
-	// SegA15.style.borderColor = brcolor01;
+	SegA15.style.borderColor = brcolor01;
+	SegA16.style.borderColor = brcolor01;
 
 	///// INPUT A VARS BORDER COLOR /////
 	VarsA01.style.borderColor = brcolor02;
 	VarsA02.style.borderColor = brcolor02;
-	// VarsA03.style.borderColor = brcolor02;
-	// VarsA04.style.borderColor = brcolor02;
+	VarsA03.style.borderColor = brcolor02;
+	VarsA04.style.borderColor = brcolor02;
 	VarsA05.style.borderColor = brcolor02;
 	// VarsA06.style.borderColor = brcolor02;
 	// VarsA07.style.borderColor = brcolor02;
@@ -338,7 +340,8 @@ function initLayoutPO()
 	VarsA12.style.borderColor = brcolor02;
 	VarsA13.style.borderColor = brcolor02;
 	VarsA14.style.borderColor = brcolor02;
-	// VarsA15.style.borderColor = brcolor02;
+	VarsA15.style.borderColor = brcolor02;
+	VarsA16.style.borderColor = brcolor02;
 
 
 
@@ -498,25 +501,25 @@ function initLayoutPO()
 	SegDetailINBtn.innerHTML  = din1;
 
 
-	var obj = document.DSO.lngWorkflowOrderCode;
+	// var obj = document.DSO.lngWorkflowOrderCode;
 
 
-	// 「承認なし」の場合の判定 -> 「承認なし」の場合はボタン押下禁止
-	for( i=0; i < obj.options.length; i++ )
-	{
-		if( obj.options[i].text == '承認なし' )
-		{
-			if( i == 0 )
-			{
-				WFrootBt.innerHTML = darkgrayOpenBtNotActive;
-				fncAlphaOn( document.all.WFrootBt );
-			}
-		}
-		else
-		{
-			WFrootBt.innerHTML = darkgrayOpenBt1;
-		}
-	}
+	// // 「承認なし」の場合の判定 -> 「承認なし」の場合はボタン押下禁止
+	// for( i=0; i < obj.options.length; i++ )
+	// {
+	// 	if( obj.options[i].text == '承認なし' )
+	// 	{
+	// 		if( i == 0 )
+	// 		{
+	// 			WFrootBt.innerHTML = darkgrayOpenBtNotActive;
+	// 			fncAlphaOn( document.all.WFrootBt );
+	// 		}
+	// 	}
+	// 	else
+	// 	{
+	// 		WFrootBt.innerHTML = darkgrayOpenBt1;
+	// 	}
+	// }
 
 
 	// Debug

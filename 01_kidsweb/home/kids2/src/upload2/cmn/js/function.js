@@ -45,10 +45,16 @@
         var baseURI = workForm.get(0).baseURI;
         
         if(baseURI.indexOf('/upload2/index.php') > 0) {
-        	var windowResult = open('about:blank', windowName, 'scrollbars=yes, width=985, height=700, resizable=0 location=0');
+			var windowResult = open('about:blank', windowName, 'scrollbars=yes, width=985, height=700, resizable=0 location=0');
+			var getParam = getURLGetParam('strSessionID');
+			var inputSessionIDTag = '<input type="hidden" name="strSessionID" value="'+ getParam + '">';
+			workForm.append(inputSessionIDTag);
         	workForm.get(0).action = '/estimate/regist/select.php';
         	// サブミット
-        	workForm.submit();
+			workForm.submit();
+			// $(windowResult).load(function(){
+			// 	$('#messageArea', win.document).append("<div>open直後に設定</div>");
+			// });
         }
         else {
 			alert('URLが不正です');
@@ -56,8 +62,26 @@
         }
 
         
-    });
+	});
+	
+	/**
+	 * URLのゲットパラメータを取得する
+	 *
+	 * @param  name {string} パラメータのキー文字列
+	 * @return  url {url} 対象のURL文字列（任意）
+	 */
+	function getURLGetParam(name, url) {
+		if (!url) url = window.location.href;
+		name = name.replace(/[\[\]]/g, "\\$&");
+		var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+			results = regex.exec(url);
+		if (!results) return null;
+		if (!results[2]) return '';
+		return decodeURIComponent(results[2].replace(/\+/g, " "));
+	}
+
 })();
+
 
 function fncAlphaOff( obj )
 {

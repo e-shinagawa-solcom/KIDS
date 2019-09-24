@@ -291,13 +291,13 @@ jQuery(function($){
                 $(this).prop('checked', false);
                 $(this).attr('disabled', 'disabled');
             });
-            console.log("checked");
+            // console.log("checked");
         } else {
             $.each(targets, function(){
                 $(this).attr('disabled', false);
             });
             $('input[name="IsDisplay_lngRecordNo"]').prop('checked', true);
-            console.log("unchecked");
+            // console.log("unchecked");
         }
     }
 
