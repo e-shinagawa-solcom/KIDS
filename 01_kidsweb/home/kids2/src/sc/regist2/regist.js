@@ -131,17 +131,15 @@ jQuery(function($){
                 alert("出力明細と納品月が異なる明細は選択できません。");
                 return false;
             }
-
-    
         }
 
         //重複する明細の追加を禁止（重複判定：受注明細のキー）
         var existsSameKey = false;
+        var rn1 = $(tr).children('td.detailReceiveNo').text();
+        var dn1 = $(tr).children('td.detailReceiveDetailNo').text();
+        var rev1 = $(tr).children('td.detailReceiveRevisionNo').text();
+    
         $("#EditTableBody tr").each(function(){
-            var rn1 = $(tr).children('td.detailReceiveNo').text();
-            var dn1 = $(tr).children('td.detailReceiveDetailNo').text();
-            var rev1 = $(tr).children('td.detailReceiveRevisionNo').text();
-
             var rn2 = $(this).children('td.detailReceiveNo').text();
             var dn2 = $(this).children('td.detailReceiveDetailNo').text();
             var rev2 = $(this).children('td.detailReceiveRevisionNo').text();
