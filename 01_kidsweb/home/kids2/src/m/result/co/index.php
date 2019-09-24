@@ -185,7 +185,7 @@ $objDB->close();
 $aryParts["HIDDEN"]           = "<input type=hidden name=strSessionID value=" .$aryData["strSessionID"] .">\n";
 $aryParts["HIDDEN"]          .= "<input type=hidden name=lngAttributeCode value=" .$aryData["lngAttributeCode"].">\n";
 $aryParts["HIDDEN"]          .= "<input type=hidden name=strCompanyDisplayName value=" .$aryData["strCompanyDisplayName"]. ">\n";
-$aryParts["lngLanguageCode"]  =& $aryData["lngLanguageCode"];
+// $aryParts["lngLanguageCode"]  =& $aryData["lngLanguageCode"];
 $aryParts["strTableName"]     =& $objMaster->strTableName;
 $aryParts["lngColumnNum"]     = 20;
 $aryParts["strEditURL"]       = "/m/regist/co/edit.php?lngActionCode=" . DEF_ACTION_INSERT . "&strSessionID=" . $aryData["strSessionID"];

@@ -11,15 +11,30 @@
         e.preventDefault();
         return false;
     });
-
     // クリアボタン
     btnClear.on('click', function(){
+		if(workForm.length == 0){
+	        var IFrames = $('iframe');	        
+	        for (var i = 0; i < IFrames.length;i++){
+	        	if(IFrames[i].id == 'SegAIFrm') {
+	        		//workForm = IFrames[i].find('form').children(0).getElementById("myid");
+	        		workForm = IFrames[i].contentDocument.forms[0];
+	        		workForm = $(workForm);
+	        		break;
+	        	}
+	        }
+        }
         // テキスト入力箇所をリセット
         workForm.find('input[type="text"], textarea').val('');
         var checks = workForm.find('input[type="checkbox"]');
         for(var i = 0;i < checks.length;i++){
         	checks[i].checked = false;
-        }
+		}
+		// セレクトボックスを一番目の選択肢に設定
+		workForm.find('select').each(function(index){
+            $(this).val($(this).find('option').first().val());
+        });
+
     });
 
     // 検索ボタン押下時の処理
@@ -50,11 +65,13 @@
             GoResult_list( searchResult, workForm.get(0) , "/result/index.html" , "/result/ifrm.html" , "ResultIframe" , "YES" );
         }
         else if((baseURI.indexOf('/search.php') > 0) && (baseURI.indexOf('/m/search/') > 0)){
-        	var windowResult = open('about:blank', windowName, 'scrollbars=yes, resizable=yes');
-        	var screen = baseURI.slice(baseURI.lastIndexOf('/',baseURI.indexOf('/search.php')-1)+1,baseURI.indexOf('/search.php'))
-        	workForm.get(0).action = '/m/result/' + screen + '/index.php?strSessionID=' + $.cookie('strSessionID');
-        	// サブミット
-        	workForm.submit();
+        	// var windowResult = open('about:blank', windowName, 'scrollbars=yes, resizable=yes');
+        	// var screen = baseURI.slice(baseURI.lastIndexOf('/',baseURI.indexOf('/search.php')-1)+1,baseURI.indexOf('/search.php'))
+        	// workForm.get(0).action = '/m/result/' + screen + '/index.php?strSessionID=' + $.cookie('strSessionID');
+        	// // サブミット
+			// workForm.submit();
+			// var searchResult = open('about:blank', windowName, 'width=1011px, height=700px, resizable=yes, scrollbars=no, menubar=no');
+            GoResult(workForm.get(0) , "/result/index.html" , "/result/ifrm.html" , "ResultIframe" , "YES" );
         }
         else if((baseURI.indexOf('/search.php') > 0) && (baseURI.indexOf('/uc/search/') > 0)){
         	var windowResult = open('about:blank', windowName, 'scrollbars=yes, resizable=yes');

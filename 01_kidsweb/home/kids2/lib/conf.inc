@@ -139,9 +139,9 @@ switch( $strExcuteHttpHostName )
 		define ( "ERROR_MAIL_TO", "kids@kuwagata.co.jp" );
 		define ( "SEND_MAIL_FLAG", true);
 		// 各ルートパス
-		// define ( "PATH_HOME",	"/Users/solcom/Desktop/Git/KIDS/01_kidsweb/home/kids2" );
+		define ( "PATH_HOME",	"/Users/solcom/Desktop/Git/KIDS/01_kidsweb/home/kids2" );
 		// define ( "PATH_HOME",	"/Users/solcom-ad/Desktop/Git/KIDS/01_kidsweb/home/kids2" ); // ローカル確認用
-		define ( "PATH_HOME",	"E:/Source/Repos/solcom-net/KIDS/01_kidsweb/home/kids2" );
+		// define ( "PATH_HOME",	"E:/Source/Repos/solcom-net/KIDS/01_kidsweb/home/kids2" );
 
 		break;
 }
@@ -617,5 +617,9 @@ define ( "DEF_GROUP_ATTRIBUTE_CODE_DEVELOP_GROUP",            2);  // 開発部門
 define ( "DEF_GROUP_ATTRIBUTE_CODE_SALES_SUPPORT",            3);  // 営業サポート
 define ( "DEF_GROUP_ATTRIBUTE_CODE_ACCOUNTING",               4);  // 経理
 define ( "DEF_GROUP_ATTRIBUTE_CODE_QUALITY_ASSURANCE",        5);  // 品質保証
+
+// データベースの格納サイズ
+define ( "DEF_DB_INTEGER_MAX_LIMIT",                 2147483647);  // integerの最大値
+define ( "DEF_DB_INTEGER_MIN_LIMIT",                -2147483647);  // integerの最小値
 
 ?>

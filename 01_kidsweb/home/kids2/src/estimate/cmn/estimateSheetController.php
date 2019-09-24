@@ -399,7 +399,8 @@ class estimateSheetController {
                 }
 
                 // セルの値を取得する
-                if ($sheet->getCell($cellAddress)->getCalculatedValue()) {
+                $getValue = $sheet->getCell($cellAddress)->getCalculatedValue();
+                if (isset($getValue)) {
                     if ($setFormatFlag === true) {
                         $cellValue = trim($sheet->getCell($cellAddress)->getFormattedValue());
                     } else { // フォーマットセットフラグがfalseの時は計算値を直接与える（入力可能セルの一部について入力後にもセルの書式を反映させるため、書式をHandsontableで設定するための対応）
