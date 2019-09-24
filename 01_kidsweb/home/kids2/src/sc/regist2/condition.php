@@ -38,18 +38,23 @@
 	$objDB->open("", "", "", "");
 
 	// --------------------------
-	//   フォーム初期値設定
+	//  フォーム初期値設定
 	// --------------------------
 	// 顧客コード
-	$aryData["strCustomerCompanyDisplayCode"] = $_POST["strcompanydisplaycode"];
+	$aryData["strDefaultCompanyDisplayCode"] = $_POST["strcompanydisplaycode"];
 
-	// 売上区分コードの初期値
+	// 売上区分コードの初期値。画面にも保存しておく
 	$lngDefaultSalesClassCode = $_POST["lngsalesclasscode"];
+	$aryData["lngDefaultSalesClassCode"] = $lngDefaultSalesClassCode;
 
 	// 売上区分プルダウン（親画面の出力明細一覧エリアの1行目の売上区分コードを初期値選択）
 	$optSalesClass .= fncGetPulldown("m_salesclass", "lngsalesclasscode","strsalesclassname", $lngDefaultSalesClassCode, "", $objDB);
 	$aryData["optSalesClass"] = $optSalesClass;
 
+	// --------------------------
+	//  画面表示
+	// --------------------------
+	// 納品書明細検索条件入力画面の表示
 	echo fncGetReplacedHtmlWithBase("base_mold_noframes.html", "sc/regist2/condition.tmpl", $aryData ,$objAuth );
 
 	//-------------------------------------------------------------------------

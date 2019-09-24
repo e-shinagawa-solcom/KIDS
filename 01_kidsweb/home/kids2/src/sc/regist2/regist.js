@@ -68,6 +68,13 @@ function SearchReceiveDetail(search_condition) {
     
 }
 
+// ＜検索条件入力画面から呼ばれる関数その３＞
+// 出力明細をすべてクリア
+function ClearAllEditDetail() {
+    // 全削除ボタンクリックを手動で起動
+    $("#AllDeleteBt").trigger('click');
+}
+
 jQuery(function($){
     $("#EditTableBody").sortable();
     $("#EditTableBody").on('sortstop', function(){
@@ -596,8 +603,8 @@ jQuery(function($){
         // 追加バリデーションチェック
         var invalid = false;
         $.each($(trArray), function(i, v){
-            if (!validateAdd($(v))){
-                invalid = true;
+            if (!invalid){
+                invalid = !validateAdd($(v));
             }
         });
         if (invalid)
