@@ -114,11 +114,9 @@ jQuery(function($){
 
         //ヘッダ・フッタ部の納品日と比較（同月以外は不正）
         var headerDeliveryDate = new Date($('input[name="dtmDeliveryDate"]').val());
-        if (headerDeliveryDate.getYear() != detailDeliveryDate.getYear()){
-            alert("受注確定時の納期と納品日と一致しません。受注データを修正してください。");
-            return false;
-        }
-        if (headerDeliveryDate.getMonth() != detailDeliveryDate.getMonth()){
+        var sameMonth = (headerDeliveryDate.getYear() == detailDeliveryDate.getYear())
+                        && (headerDeliveryDate.getMonth() == detailDeliveryDate.getMonth());
+        if (!sameMonth){
             alert("受注確定時の納期と納品日と一致しません。受注データを修正してください。");
             return false;
         }
@@ -127,14 +125,34 @@ jQuery(function($){
         var firstTr = $("#EditTableBody tr").eq(0);
         if (0 < firstTr.length){
             var firstRowDate = new Date($(firstTr).children('td.detailDeliveryDate').text());
-            if (firstRowDate.getYear() != detailDeliveryDate.getYear()){
+            var sameMonthDetail = (firstRowDate.getYear() == detailDeliveryDate.getYear())
+                                && (firstRowDate.getMonth() == detailDeliveryDate.getMonth());
+            if (!sameMonthDetail){
                 alert("出力明細と納品月が異なる明細は選択できません。");
                 return false;
             }
-            if (firstRowDate.getMonth() != detailDeliveryDate.getMonth()){
-                alert("出力明細と納品月が異なる明細は選択できません。");
-                return false;
-            }
+
+    
+        }
+
+        //重複する明細の追加を禁止（重複判定：受注明細のキー）
+        var existsSameKey = false;
+        $("#EditTableBody tr").each(function(){
+            var rn1 = $(tr).children('td.detailReceiveNo').text();
+            var dn1 = $(tr).children('td.detailReceiveDetailNo').text();
+            var rev1 = $(tr).children('td.detailReceiveRevisionNo').text();
+
+            var rn2 = $(this).children('td.detailReceiveNo').text();
+            var dn2 = $(this).children('td.detailReceiveDetailNo').text();
+            var rev2 = $(this).children('td.detailReceiveRevisionNo').text();
+
+            var isSame = (rn1 == rn2) && (dn1 == dn2) && (rev1 == rev2);
+            existsSameKey = existsSameKey || isSame;
+        });
+
+        if (existsSameKey){
+            alert("重複する明細は選択できません。");
+            return false;
         }
 
         return true;
