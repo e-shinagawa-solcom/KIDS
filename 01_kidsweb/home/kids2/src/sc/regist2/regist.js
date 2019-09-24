@@ -80,7 +80,29 @@ jQuery(function($){
     $("#EditTableBody").on('sortstop', function(){
         changeRowNum();
     });
-    // $('input[name="dtmExpirationDate"]').datepicker();
+
+    // ------------------------------------------
+    //   datepicker設定
+    // ------------------------------------------
+    // datepicker対象要素
+    var dateElements = [
+        // 納品日
+        $('input[name="dtmDeliveryDate"]'),
+        // 支払期限
+        $('input[name="dtmPaymentLimit"]'),
+    ];
+    // datepickerの設定
+    $.each(dateElements, function(){
+        this.datepicker({
+                showButtonPanel: true,
+                dateFormat: "yy/mm/dd",
+                onClose: function(){
+                    this.focus();
+                }
+            }).attr({
+                maxlength: "10"
+        });
+    });
     
     // ------------------------------------------
     //   functions
@@ -526,8 +548,6 @@ jQuery(function($){
     });
 
     $('input[name="dtmDeliveryDate"]').on('change', function(){
-        //TODO:changeイベントを拾えないので要問題解決。素直に日付入力をdateTimePickerに替えたほうがいい
-        
         //消費税率の選択項目変更
         $.ajax({
             type: 'POST',
@@ -540,9 +560,12 @@ jQuery(function($){
             async: true,
         }).done(function(data){
             console.log("done:change-deliverydate");
-            //TODO:消費税率の選択項目更新
             console.log(data);
-            
+
+            //消費税率の選択項目更新
+            $('select[name="lngTaxRate"] > option').remove();
+            $('select[name="lngTaxRate"]').append(data);
+
             //金額の更新
             updateAmount();
 
@@ -665,6 +688,12 @@ jQuery(function($){
         updateAmount();
     });
 
+    $('#DateBtB').on('click', function(){
+        $('input[name="dtmDeliveryDate"]').focus();
+    });
+    $('#DateBtC').on('click', function(){
+        $('input[name="dtmPaymentLimit"]').focus();
+    });
 
     // プレビューボタン押下
     $('#PreviewBt').on('click', function(){
