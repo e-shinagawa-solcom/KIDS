@@ -295,6 +295,31 @@ function fncGetReceiveDetailHtml($aryDetail){
     return $strHtml;
 }
 
+// 納品伝票マスタより作成日を取得
+function fncGetSlipInsertDate($strSlipCode, $objDB)
+{
+    $strQuery = ""
+        . "SELECT"
+        . "  to_char(dtminsertdate, 'yyyy/mm/dd hh24:mm:ss') as dtminsertdate"
+        . " FROM"
+        . "  m_slip"
+        . " WHERE"
+        . "  strslipcode = '". $strSlipCode ."'"
+    ;
+
+    list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
+    if ( $lngResultNum ) {
+        for ( $i = 0; $i < $lngResultNum; $i++ ) {
+            $aryResult[] = $objDB->fetchArray( $lngResultID, $i );
+        }
+    } else {
+        fncOutputError ( 9501, DEF_FATAL, "納品伝票の作成日の取得に失敗", TRUE, "", $objDB );
+    }
+    $objDB->freeResult( $lngResultID );
+
+    return $aryResult[0]["dtminsertdate"];
+}
+
 function fncNotReceivedDetailExists($aryDetail, $objDB)
 {
     for ( $i = 0; $i < count($aryDetail); $i++ )
