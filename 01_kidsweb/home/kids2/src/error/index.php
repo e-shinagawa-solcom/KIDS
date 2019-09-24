@@ -34,41 +34,26 @@ require ( LIB_FILE );
 $aryData["ref"]				= $_GET["ref"];
 $aryData["path"]			= $_GET["path"];
 $aryData["strMessage"]		= $_GET["strMessage"];
-// // COOKIEから言語コードを取得
-// $aryData["lngLanguageCode"] = $_COOKIE[lngLanguageCode];
-// if ( $aryData["lngLanguageCode"] == "" )
-// {
-// 	$aryData["lngLanguageCode"] = 0;
-// }
 
 // テンプレートオブジェクト生成
 $objTemplate = new clsTemplate();
-// $objTemplate->getTemplate( "error/parts.tmpl" );
 $objTemplate->getTemplate( "error/index.html" );
-
-// echo "ref = " . $aryData["ref"] . "<br>";
-// echo "path = " . $aryData["path"] . "<br>";
 
 if ( $aryData["ref"] == TOP_URL )
 {
 	if ( $aryData["path"] != "" )
 	{
 		$aryData["strEvent"] = TOP_URL . $aryData["path"];
-//		$aryData["strEvent"] = "history.back()";
 	}
 	else
 	{
-// 2004.02.26 suzukaze update start
 		$aryData["strEvent"] = TOP_URL . "login/login.php?value=kids";
-// 2004.02.26 suzukaze update end
 	}
-//	$aryData["strEvent"]     = "javascript:top.location.href='" . LOGIN_URL . "';";
 	$aryData["strEventText"] = "戻る";
 	$aryData["lngEventCode"] = DEF_ERROR_BACK;
 }
 else
 {
-//	$aryData["strEvent"]     = "window.close();";
 	$aryData["strEvent"]     = "close";
 	$aryData["strEventText"] = "閉じる";
 	$aryData["lngEventCode"] = DEF_ERROR_CLOSE;

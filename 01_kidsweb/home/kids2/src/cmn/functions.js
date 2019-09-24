@@ -1605,9 +1605,8 @@ function GoResult( obj1 , obj2 , strUrl , strID , strScroll )
 
 	//alert(args[2][1]);return;
 
-
 	//retVal = window.showModalDialog( obj2 , args , "dialogHeight:530px;dialogWidth:1011px;center:yes;status:no;edge:raised;help:no;scroll:no;" );
-	retVal = window.showModalDialog( obj2 , args , "dialogHeight:700px;dialogWidth:1011px;center:yes;status:no;edge:raised;help:no;scroll:no;" );
+	retVal = window.open( obj2 , args , "height:700px;width:1011px;center:yes;status:no;edge:raised;help:no;scroll:no;" );
 
 	return false;
 }
@@ -1900,11 +1899,27 @@ function fncShowDialogCommonMaster( strUrl , ObjFrm , strID , strScroll , lngLan
 function fncDoCopyModule( strID )
 {
 	// 指定のタグ(ID)内のテキストレンジを取得する
-	var doc1 = document.body.createTextRange();
+	// var doc1 = document.body.createTextRange();
+	// doc1.moveToElementText(strID);
 
-	doc1.moveToElementText(strID);
+	// return doc1.htmlText;
 
-	return doc1.htmlText;
+	if(document.body.createTextRange){
+		// IEの場合
+		var doc1 = document.body.createTextRange();
+		doc1.moveToElementText(obj);
+		return doc1.htmlText
+	  } else {
+		alert("tes111dst");
+		var doc1 = document.createRange();
+		alert("tes1121dst");
+		doc1.selectNodeContents(obj);
+		alert("tes111wdst");
+		var selection = window.getSelection();
+		selection.removeAllRanges();
+		selection.addRange(range);
+		return selection;
+	  }
 }
 
 
@@ -1928,12 +1943,27 @@ function fncDoCopyModule( strID )
 //--------------------------------------------------------------------------------------------------------------------
 function fncDoCopy( objBuff1 , strID1 , strID2 )
 {
+	alert("tes111t");
 	// バッファ値を結合
 	objBuff1.value = fncDoCopyModule( strID1 ) + fncDoCopyModule( strID2 );
-
+alert("test");
 	// バッファ用のオブジェクトからテキストレンジを取得
 	var docA = objBuff1.createTextRange();
 
+	if(document.body.createTextRange){
+		// IEの場合
+		var docA = document.body.createTextRange();
+		docA.moveToElementText(obj);
+		docA.select();
+	  } else {
+		var docA = document.createRange();
+		docA.selectNodeContents(obj);
+		var selection = window.getSelection();
+		selection.removeAllRanges();
+		selection.addRange(range);
+	  }
+
+	alert("test2");
 	// バッファのテキストレンジからクリップボードにコピー
 	docA.moveStart('character',0);
 	docA.moveEnd('character');
