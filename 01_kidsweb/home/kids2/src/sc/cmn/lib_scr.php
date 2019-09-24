@@ -295,6 +295,41 @@ function fncGetReceiveDetailHtml($aryDetail){
     return $strHtml;
 }
 
+function fncNotReceivedDetailExists($aryDetail, $objDB)
+{
+    for ( $i = 0; $i < count($aryDetail); $i++ )
+    {
+        $d = $aryDetail[$i];
+
+        $lngReceiveNo = $d["lngreceiveno"];
+        $lngRevisionNo = $d["lngreceiverevisionno"];
+
+        $strQuery = ""
+        . "SELECT"
+        . "  lngreceivestatuscode"
+        . " FROM"
+        . "  m_receive"
+        . " WHERE"
+        . "  lngreceivestatuscode <> 2"
+        . "  AND lngreceiveno = " . $lngReceiveNo
+        . "  AND lngrevisionno = " . $lngRevisionNo
+        ;
+
+        list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
+        if ( $lngResultID ) {
+            // 受注状態コードが2以外の明細が存在するならtrueを返して検索打ち切り
+            if ($lngResultNum > 0) { return true; }
+        } else {
+            fncOutputError ( 9501, DEF_FATAL, "受注状態コードの取得に失敗", TRUE, "", $objDB );
+        }
+        $objDB->freeResult( $lngResultID );
+    }
+
+    // 受注状態コードが2以外の明細は存在しない
+    return false;
+
+}
+
 // 明細に紐づく受注マスタの受注状態コードを更新
 function fncUpdateReceiveMaster($aryDetail, $objDB)
 {
