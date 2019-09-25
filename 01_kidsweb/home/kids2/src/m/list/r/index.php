@@ -81,7 +81,7 @@ foreach ( $objMaster->aryData as $record )
 
 
 	// 修正ボタン生成
-	$aryData["strResultHtml"] .= "		<td bgcolor=\"#ffffff\" nowrap><a href=\"javascript:fncShowDialogCommonMaster('/m/regist/r/edit.php?lngActionCode=" . DEF_ACTION_UPDATE . "&$getUrl' , window.form1 , 'ResultIframeCommonMaster' , 'NO' , $_COOKIE[lngLanguageCode] , 'fix' );\"><img onmouseover=\"RenewOn(this);\" onmouseout=\"RenewOff(this);\" src=\"/img/type01/cmn/seg/renew_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"RENEW\"></a></td>\n";
+	$aryData["strResultHtml"] .= "		<td bgcolor=\"#ffffff\" nowrap><a href=\"javascript:fncShowDialogCommonMaster('/m/regist/r/edit.php?lngActionCode=" . DEF_ACTION_UPDATE . "&$getUrl' , window.form1 , 'ResultIframeCommonMaster' , 'NO' , 1 , 'fix' );\"><img onmouseover=\"RenewOn(this);\" onmouseout=\"RenewOff(this);\" src=\"/img/type01/cmn/seg/renew_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"RENEW\"></a></td>\n";
 
 	$aryData["strResultHtml"] .= "	</tr>\n";
 
@@ -96,7 +96,7 @@ $objDB->close();
 // 登録ボタンのGET文字列生成
 $aryData["strInsertForm"] = "/m/regist/r/edit.php?strSessionID=" .$aryData["strSessionID"]. "&lngActionCode=" . DEF_ACTION_INSERT;
 
-$aryData["lngLanguageCode"] =& $_COOKIE["lngLanguageCode"];
+$aryData["lngLanguageCode"] =1;
 
 // HTML出力
 $objTemplate = new clsTemplate();

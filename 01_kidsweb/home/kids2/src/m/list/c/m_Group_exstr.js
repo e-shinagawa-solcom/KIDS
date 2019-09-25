@@ -15,7 +15,7 @@ function fncEditObjectOnload( lngLangCode )
 	if( g_strMode == 'add' )
 	{
 		// オブジェクトのID変換
-		fncChangeObjectIdModule( Array( 'Input0' , 'Input1' , 'Input2' , 'Input3' , 'Input4' , 'input5' , 'input6' ) ,
+		fncChangeObjectIdModule( Array( 'Input0' , 'Input1' , 'Input2' , 'Input3' , 'Input4' , 'Input5' , 'Input6' ) ,
 
 								 Array( 'TxtDis05L' , 'TxtSlt38' , 'Txt25L' , 'CheckBox14' , 'Txt02L' , 'Txt25L' , 'Txt08L' ) );
 	}
@@ -23,7 +23,7 @@ function fncEditObjectOnload( lngLangCode )
 	else if( g_strMode == 'fix' )
 	{
 		// オブジェクトのID変換
-		fncChangeObjectIdModule( Array( 'Input0' , 'Input1' , 'Input2' , 'Input3' , 'Input4' , 'input5' , 'input6' ) ,
+		fncChangeObjectIdModule( Array( 'Input0' , 'Input1' , 'Input2' , 'Input3' , 'Input4' , 'Input5' , 'Input6' ) ,
 
 								 Array( 'TxtDis05L' , 'TxtSlt38' , 'Txt25L' , 'CheckBox14' , 'Txt02L' , 'Txt25L' , 'Txt08L' ) );
 	}

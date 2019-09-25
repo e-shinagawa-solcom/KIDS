@@ -223,7 +223,7 @@ list ( $aryData, $bytErrorFlag ) = getArrayErrorVisibility( $aryData, $aryCheckR
 //////////////////////////////////////////////////////////////////////////
 // ╫пно
 //////////////////////////////////////////////////////////////////////////
-$aryParts["lngLanguageCode"] =& $_COOKIE["lngLanguageCode"];
+$aryParts["lngLanguageCode"] =1;
 $aryParts["lngActionCode"]   =& $aryData["lngActionCode"];
 $aryParts["strTableName"]    =  "m_WorkflowOrder";
 $aryParts["strKeyName"]      =  "lngWorkflowOrderCode";

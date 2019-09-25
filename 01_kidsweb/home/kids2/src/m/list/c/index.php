@@ -1,15 +1,15 @@
 <?
-/** 
-*	マスタ管理 共通マスタ マスターテーブル結果一覧画面
-*
-*	@package   KIDS
-*	@license   http://www.wiseknot.co.jp/ 
-*	@copyright Copyright &copy; 2003, Wiseknot 
-*	@author    Kenji Chiba <k-chiba@wiseknot.co.jp> 
-*	@access    public
-*	@version   1.00
-*
-*/
+/**
+ *    マスタ管理 共通マスタ マスターテーブル結果一覧画面
+ *
+ *    @package   KIDS
+ *    @license   http://www.wiseknot.co.jp/
+ *    @copyright Copyright &copy; 2003, Wiseknot
+ *    @author    Kenji Chiba <k-chiba@wiseknot.co.jp>
+ *    @access    public
+ *    @version   1.00
+ *
+ */
 // index.php -> strSessionID    -> index.php
 //
 // 登録画面
@@ -34,138 +34,136 @@
 // index.php -> lngKeyCode            -> confirm.php
 // index.php -> (lngStockSubjectCode) -> confirm.php
 
-
 // 設定読み込み
-include_once('conf.inc');
+include_once 'conf.inc';
 
 // ライブラリ読み込み
-require (LIB_FILE);
-require (SRC_ROOT . "m/cmn/lib_m.php");
+require LIB_FILE;
+require SRC_ROOT . "m/cmn/lib_m.php";
 
-
-
-$objDB   = new clsDB();
+$objDB = new clsDB();
 $objAuth = new clsAuth();
-$objDB->open( "", "", "", "" );
+$objDB->open("", "", "", "");
 
 $aryData = $_POST;
 
 // 文字列チェック
-$aryCheck["strSessionID"]       = "null:numenglish(32,32)";
+$aryCheck["strSessionID"] = "null:numenglish(32,32)";
 $aryCheck["strMasterTableName"] = "null:ascii(1,32)";
-$aryResult = fncAllCheck( $aryData, $aryCheck );
-fncPutStringCheckError( $aryResult, $objDB );
+$aryResult = fncAllCheck($aryData, $aryCheck);
+fncPutStringCheckError($aryResult, $objDB);
 
 // セッション確認
-$objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
+$objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 
 // 権限確認
-if ( !fncCheckAuthority( DEF_FUNCTION_M0, $objAuth ) )
-{
-	fncOutputError ( 9052, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
+if (!fncCheckAuthority(DEF_FUNCTION_M0, $objAuth)) {
+    fncOutputError(9052, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
 
 // マスターオブジェクト生成
 $objMaster = new clsMaster();
-$objMaster->setMasterTable( $aryData["strMasterTableName"], "", "", $aryData, $objDB );
-
+$objMaster->setMasterTable($aryData["strMasterTableName"], "", "", $aryData, $objDB);
 
 ///////////////////////////////////////////////////////////////////
 // 仕入関連マスタ特殊処理
 ///////////////////////////////////////////////////////////////////
 // 仕入科目マスタの場合、コード＋名称のカラムを表示する特殊処理
-if ( $objMaster->strTableName == "m_StockSubject" )
-{
-	// 仕入区分マスタからマスタデータを取得し、code をキーとする連想配列に代入
-	$aryMaster = fncGetMasterValue( "m_StockClass", "lngStockClassCode", "strStockClassName", "Array", "", $objDB );
+if ($objMaster->strTableName == "m_StockSubject") {
+    // 仕入区分マスタからマスタデータを取得し、code をキーとする連想配列に代入
+    $aryMaster = fncGetMasterValue("m_StockClass", "lngStockClassCode", "strStockClassName", "Array", "", $objDB);
 
-	$count = count ( $objMaster->aryData );
-	for ( $i = 0; $i < $count; $i++ )
-	{
-		$objMaster->aryData[$i]["lngstockclasscode"] = $objMaster->aryData[$i]["lngstockclasscode"] . ":" . $aryMaster[$objMaster->aryData[$i]["lngstockclasscode"]];
-	}
+    $count = count($objMaster->aryData);
+    for ($i = 0; $i < $count; $i++) {
+        $objMaster->aryData[$i]["lngstockclasscode_comm"] = $objMaster->aryData[$i]["lngstockclasscode"];
+        $objMaster->aryData[$i]["lngstockclasscode"] = $objMaster->aryData[$i]["lngstockclasscode"] . ":" . $aryMaster[$objMaster->aryData[$i]["lngstockclasscode"]];
+    }
 }
 
 // 仕入部品マスタの場合、コード＋名称のカラムを表示する特殊処理
-elseif ( $objMaster->strTableName == "m_StockItem" )
-{
-	// 仕入科目マスタからマスタデータを取得し、code をキーとする連想配列に代入
-	$aryMaster = fncGetMasterValue( "m_StockSubject", "lngStockSubjectCode", "strStockSubjectName", "Array", "", $objDB );
-
-	$count = count ( $objMaster->aryData );
-	for ( $i = 0; $i < $count; $i++ )
-	{
+elseif ($objMaster->strTableName == "m_StockItem") {
+    // 仕入科目マスタからマスタデータを取得し、code をキーとする連想配列に代入
+	$aryMaster = fncGetMasterValue("m_StockSubject", "lngStockSubjectCode", "strStockSubjectName", "Array", "", $objDB);
+    // 仕入科目マスタからマスタデータを取得し、code をキーとする連想配列に代入
+	$arySubjectClassMaster = fncGetMasterValue("m_StockSubject", "lngStockSubjectCode", "lngStockClassCode", "Array", "", $objDB);
+    // 仕入区分マスタからマスタデータを取得し、code をキーとする連想配列に代入
+    $aryClassMaster = fncGetMasterValue("m_StockClass", "lngStockClassCode", "strStockClassName", "Array", "", $objDB);
+	// 見積原価計算書エリア区分マスタからマスタデータを取得し、code をキーとする連想配列に代入
+    $aryAreaMaster = fncGetMasterValue("m_estimateareaclass", "lngestimateareaclassno", "strestimateareaclassname", "Array", "", $objDB);
+    $count = count($objMaster->aryData);
+    for ($i = 0; $i < $count; $i++) {
+	// 	echo $objMaster->aryData[$i]["lngstocksubjectcode"];
+	// 	echo "code:".$arySubjectClassMaster[$objMaster->aryData[$i]["lngstocksubjectcode"]];
+	// 	echo "name:" .$aryClassMaster[$arySubjectClassMaster[$objMaster->aryData[$i]["lngstocksubjectcode"]]];
+	// 	$lngstockclasscode =  $arySubjectClassMaster[$objMaster->aryData[$i]["lngstocksubjectcode"]] . ":" . $aryClassMaster[$arySubjectClassMaster[$objMaster->aryData[$i]["lngstocksubjectcode"]]];
+	// echo $lngstockclasscode;
+		// echo $arySubjectClassMaster['"'.$objMaster->aryData[$i]["lngstocksubjectcode"].'"'];
 		$objMaster->aryData[$i]["lngstocksubjectcode"] = $objMaster->aryData[$i]["lngstocksubjectcode"] . ":" . $aryMaster[$objMaster->aryData[$i]["lngstocksubjectcode"]];
-	}
+		$objMaster->aryData[$i]["lngstockclasscode"] = $arySubjectClassMaster[$objMaster->aryData[$i]["lngstocksubjectcode"]] . ":" . $aryClassMaster[$arySubjectClassMaster[$objMaster->aryData[$i]["lngstocksubjectcode"]]];
+		$objMaster->aryData[$i]["lngestimateareaclassno"] = $objMaster->aryData[$i]["lngestimateareaclassno"] . ":" . $aryAreaMaster[$objMaster->aryData[$i]["lngestimateareaclassno"]];
+
+		// var_dump($objMaster->aryData[$i]["lngstockclasscode"]);
+    }
 }
-
-
+// var_dump($objMaster->aryData[1]);
 
 ///////////////////////////////////////////////////////////////////
 // テーブル生成
 ///////////////////////////////////////////////////////////////////
 // フィールド名表示
 $aryData["lngColumnNum"] = 0;
-foreach ( $objMaster->aryColumnName as $strColumnName )
-{
-	$aryData["strColumnHtml"] .= "		<td id=\"Column$aryData[lngColumnNum]\" nowrap onmouseover=\"SortOn( this );\" onmouseout=\"SortOff( this );\" onclick=\"location.href='#';\">$strColumnName</td>\n";
-	$aryData["lngColumnNum"]++;
+foreach ($objMaster->aryColumnName as $strColumnName) {
+    $aryData["strColumnHtml"] .= "		<td id=\"Column$aryData[lngColumnNum]\" nowrap onmouseover=\"SortOn( this );\" onmouseout=\"SortOff( this );\" onclick=\"location.href='#';\">$strColumnName</td>\n";
+    $aryData["lngColumnNum"]++;
 }
 $aryData["lngColumnNum"] = $aryData["lngColumnNum"] + 2;
 
-
 // 結果行表示
 $count = 0;
-foreach ( $objMaster->aryData as $record )
-{
-	// 最初のカラムをキーとする
-	$lngKeyCode = $record[$objMaster->aryColumnName[0]];
+foreach ($objMaster->aryData as $record) {
+    // 最初のカラムをキーとする
+    $lngKeyCode = $record[$objMaster->aryColumnName[0]];
 
-	$aryData["strResultHtml"] .= "	<tr id=\"Mrecord$count\" class=\"Segs\" onclick=\"fncSelectTrColor( this );\" style=\"background:#ffffff;\">\n";
+    $aryData["strResultHtml"] .= "	<tr id=\"Mrecord$count\" class=\"Segs\" onclick=\"fncSelectTrColor( this );\" style=\"background:#ffffff;\">\n";
 
-	// カラム生成
-	foreach ( $record as $colmun )
-	{
-		$aryData["strResultHtml"] .= "		<td nowrap>" . fncHTMLSpecialChars( $colmun ) . "</td>\n";
-	}
+    // カラム生成
+    foreach ($record as $colmun) {
+        $aryData["strResultHtml"] .= "		<td nowrap>" . fncHTMLSpecialChars($colmun) . "</td>\n";
+    }
 
-	// GETで渡す文字列生成
-	$getUrl = "strSessionID=".$aryData["strSessionID"]. "&strMasterTableName=" .$aryData["strMasterTableName"]."&strKeyName=" .  $objMaster->aryColumnName[0] ."&" .  $objMaster->aryColumnName[0] ."=" . $lngKeyCode;
+    // GETで渡す文字列生成
+    $getUrl = "strSessionID=" . $aryData["strSessionID"] . "&strMasterTableName=" . $aryData["strMasterTableName"] . "&strKeyName=" . $objMaster->aryColumnName[0] . "&" . $objMaster->aryColumnName[0] . "=" . $lngKeyCode;
 
-	// 仕入部品マスタの場合、2つ目のカラムもキーとする
-	if ( $objMaster->strTableName == "m_StockItem" )
-	{
-		$getUrl .= "&" .  $objMaster->aryColumnName[1] ."=" .  $record[$objMaster->aryColumnName[1]];
-	}
+    // 仕入部品マスタの場合、2つ目のカラムもキーとする
+    if ($objMaster->strTableName == "m_StockItem") {
+        $getUrl .= "&" . $objMaster->aryColumnName[1] . "=" . $record[$objMaster->aryColumnName[1]];
+    } else if ($objMaster->strTableName == "m_StockSubject") {
+        $getUrl .= "&" . $objMaster->aryColumnName[1] . "=" . $record["lngstockclasscode_comm"];
 
+    }
 
-	// 修正ボタン生成
-	$aryData["strResultHtml"] .= "		<td bgcolor=\"#ffffff\" nowrap><a href=\"/m/regist/c/edit.php?lngActionCode=" . DEF_ACTION_UPDATE . "&" .$getUrl ."\" name=\"fix\"><img onmouseover=\"RenewOn(this);\" onmouseout=\"RenewOff(this);\" src=\"/img/type01/cmn/seg/renew_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"RENEW\"></a></td>\n";
+    // 修正ボタン生成
+    $aryData["strResultHtml"] .= "		<td bgcolor=\"#ffffff\" nowrap><a href=\"/m/regist/c/edit.php?lngActionCode=" . DEF_ACTION_UPDATE . "&" . $getUrl . "\" name=\"fix\"><img onmouseover=\"RenewOn(this);\" onmouseout=\"RenewOff(this);\" src=\"/img/type01/cmn/seg/renew_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"RENEW\"></a></td>\n";
 
-	// 削除ボタン生成
-	$aryData["strResultHtml"] .= "		<td bgcolor=\"#ffffff\" nowrap><a href=\"/m/regist/c/confirm.php?lngActionCode=" . DEF_ACTION_DELETE . "&" .$getUrl ."\" name=\"delete\"><img onmouseover=\"RemoveOn(this);\" onmouseout=\"RemoveOff(this);\" src=\"/img/type01/cmn/seg/remove_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"REMOVE\"></a></td>\n";
+    // 削除ボタン生成
+    $aryData["strResultHtml"] .= "		<td bgcolor=\"#ffffff\" nowrap><a href=\"/m/regist/c/confirm.php?lngActionCode=" . DEF_ACTION_DELETE . "&" . $getUrl . "\" name=\"delete\"><img onmouseover=\"RemoveOn(this);\" onmouseout=\"RemoveOff(this);\" src=\"/img/type01/cmn/seg/remove_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"REMOVE\"></a></td>\n";
 
-	$aryData["strResultHtml"] .= "	</tr>\n";
+    $aryData["strResultHtml"] .= "	</tr>\n";
 
 }
 
 $objDB->close();
 
-
-
 // 登録ボタンのGET文字列生成
-$aryData["strEditURL"] = "/m/regist/c/edit.php?strSessionID=". $aryData["strSessionID"] . "&lngActionCode=" . DEF_ACTION_INSERT . "&strMasterTableName=" . $aryData["strMasterTableName"] ."&strKeyName=" .  $objMaster->aryColumnName[0];
+$aryData["strEditURL"] = "/m/regist/c/edit.php?strSessionID=" . $aryData["strSessionID"] . "&lngActionCode=" . DEF_ACTION_INSERT . "&strMasterTableName=" . $aryData["strMasterTableName"] . "&strKeyName=" . $objMaster->aryColumnName[0];
 
 $aryData["strTableName"] = $objMaster->strTableName;
 
 // HTML出力
 $objTemplate = new clsTemplate();
-$objTemplate->getTemplate( "m/list/c/parts.tmpl" );
-$objTemplate->replace( $aryData );
+$objTemplate->getTemplate("m/list/c/parts.tmpl");
+$objTemplate->replace($aryData);
 $objTemplate->complete();
 echo $objTemplate->strTemplate;
 
-
-
-return TRUE;
-?>
+return true;

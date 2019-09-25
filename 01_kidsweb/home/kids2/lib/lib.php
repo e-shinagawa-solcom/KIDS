@@ -1055,7 +1055,7 @@ function fncGetCheckBoxObject( $strTable, $strValueFieldName, $strDisplayFieldNa
 		}
 
 		// HTML½ÐÎÏ
-		$strHtml = '<input class="CheckBox14" type="checkbox" name="'.$strObjectName.'" value="'.$aryResult[0].'">'
+		$strHtml .= '<input class="CheckBox14" type="checkbox" name="'.$strObjectName.'" value="'.$aryResult[0].'">'
 		.$strDisplayValue."\n";
 	}
 

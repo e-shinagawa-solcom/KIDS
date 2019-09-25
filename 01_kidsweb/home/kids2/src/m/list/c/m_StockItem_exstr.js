@@ -17,15 +17,15 @@ function fncEditObjectOnload( lngLangCode )
 	if( g_strMode == 'add' )
 	{
 		// オブジェクトのID変換
-		fncChangeObjectIdModule( Array( 'Input0' , 'Input1' , 'Input2' , 'Input3', 'Input4', 'Input5', 'Input6' ) ,
-								 Array( 'Txt03L' , '' , '' , 'Txt40L', '', '', '' ) );
+		fncChangeObjectIdModule( Array( 'Input0' , 'Input1' , 'Input2' , 'Input3', 'Input4', 'Input5', 'Input6', 'Input7' ) ,
+								 Array( 'Txt03L' , '' , '' , 'Txt40L', '', '', '' , '' ) );
 	}
 	// [修正]
 	else if( g_strMode == 'fix' )
 	{
 		// オブジェクトのID変換
-		fncChangeObjectIdModule( Array( 'Input0' , 'Input1' , 'Input2' , 'Input3', 'Input4', 'Input5', 'Input6' ) ,
-								 Array( 'TxtDis03L' , '' , '' , 'Txt40L', '', '', '' ) );
+		fncChangeObjectIdModule( Array( 'Input0' , 'Input1' , 'Input2' , 'Input3', 'Input4', 'Input5', 'Input6', 'Input7' ) ,
+								 Array( 'TxtDis03L' , '' , '' , 'Txt40L', '', '', '', ''  ) );
 	}
 
 
@@ -256,6 +256,11 @@ function ChgEtoJ( g_lngCode )
 		if( typeof(Column6) != 'undefined' )
 		{
 			Column6.innerText	= '見積原価表示';
+		}
+
+		if( typeof(Column7) != 'undefined' )
+		{
+			Column6.innerText	= '対象エリア';
 		}
 
 		// 処理名

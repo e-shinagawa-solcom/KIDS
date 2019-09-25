@@ -39,7 +39,7 @@
 	
 	$aryData["strSessionID"]    = $_REQUEST["strSessionID"];
 	$aryData["lngOrderNo"]      = $_REQUEST["lngOrderNo"];
-	$aryData["lngLanguageCode"] = $_COOKIE["lngLanguageCode"];
+	$aryData["lngLanguageCode"] = 1;
 	
 
 	$objDB->open("", "", "", "");
@@ -453,7 +453,7 @@
 
 			$aryData["RENEW"] = TRUE;
 
-			$aryData["lngLanguageCode"] = $_COOKIE["lngLanguageCode"];
+			$aryData["lngLanguageCode"] = 1;
 
 			$aryData["strActionURL"] = "/po/regist/index2.php?strSessionID=".$aryData["strSessionID"];
 

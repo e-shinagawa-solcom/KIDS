@@ -104,7 +104,9 @@ else
 }
 
 // 受注ステータス
-$aryData["lngReceiveStatusCode"] 	= fncGetCheckBoxObject( "m_receivestatus", "lngreceivestatuscode", "strreceivestatusname", "lngReceiveStatusCode[]", 'where lngReceiveStatusCode not in (1)', $objDB );
+// $aryData["lngReceiveStatusCode"] 	= fncGetCheckBoxObject( "m_receivestatus", "lngreceivestatuscode", "strreceivestatusname", "lngReceiveStatusCode[]", 'where lngReceiveStatusCode not in (1)', $objDB );
+$aryData["lngReceiveStatusCode"] 	= fncGetCheckBoxObject( "m_receivestatus", "lngreceivestatuscode", "strreceivestatusname", "lngReceiveStatusCode[]", '', $objDB );
+
 
 // 売上区分
 $aryData["lngSalesClassCode"] = fncGetPulldown( "m_salesclass", "lngsalesclasscode", "lngsalesclasscode, strsalesclassname", 1, '', $objDB );

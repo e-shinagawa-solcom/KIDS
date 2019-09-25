@@ -36,7 +36,7 @@
 	$aryData = $_POST;
 
 	$aryData["strSessionID"]    = $_REQUEST["strSessionID"];   // セッションID
-	$aryData["lngLanguageCode"] = $_COOKIE["lngLanguageCode"]; // 言語コード
+	$aryData["lngLanguageCode"] = 1; // 言語コード
 
 	setcookie("strSessionID", $aryData["strSessionID"], 0, "/");
 

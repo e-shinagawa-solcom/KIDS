@@ -30,7 +30,7 @@ $objDB->open("", "", "", "");
 $aryData = $_REQUEST;
 
 // 言語コードを取得(0->false: 英語, 1->true: 日本語)
-// $lngLanguageCode = $_COOKIE["lngLanguageCode"];
+$lngLanguageCode = 1;
 
 // セッション確認
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );

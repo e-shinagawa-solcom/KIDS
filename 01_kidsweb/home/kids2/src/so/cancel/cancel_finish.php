@@ -67,7 +67,7 @@ $objDB->freeResult( $lngResultID );
 
 $aryQuery = array();
 $aryQuery[] = "UPDATE m_receive ";
-$aryQuery[] = "set lngreceivestatuscode = " . DEF_RECEIVE_PREORDER . " ";
+$aryQuery[] = "set lngreceivestatuscode = " . DEF_RECEIVE_APPLICATE . " ";
 $aryQuery[] = "where lngreceiveno = " . $aryData["lngReceiveNo"] . " ";
 $strQuery = implode("\n", $aryQuery);
 //結果配列
