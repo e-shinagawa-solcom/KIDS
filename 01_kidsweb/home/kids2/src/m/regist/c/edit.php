@@ -189,7 +189,7 @@ for ( $i = 0; $i < $count; $i++ )
 $objDB->close();
 
 
-$aryData["lngLanguageCode"] = $_COOKIE["lngLanguageCode"];
+$aryData["lngLanguageCode"] = 1;
 $aryData["strTableName"]    = $objMaster->strTableName;
 
 // HTML½ÐÎÏ

@@ -659,7 +659,7 @@ foreach ($records as $i => $record) {
         $tdDecide->setAttribute("style", $bgcolor);
 
         // 確定ボタンの表示
-        if ($allowedDecide and $record["lngrevisionno"] >= 0 and $record["lngreceivestatuscode"] == DEF_RECEIVE_PREORDER and !$deletedFlag) {
+        if ($allowedDecide and $record["lngrevisionno"] >= 0 and $record["lngreceivestatuscode"] == DEF_RECEIVE_APPLICATE and !$deletedFlag) {
             // 確定ボタン
             $imgDecide = $doc->createElement("img");
             $imgDecide->setAttribute("src", "/img/type01/so/renew_off_bt.gif");

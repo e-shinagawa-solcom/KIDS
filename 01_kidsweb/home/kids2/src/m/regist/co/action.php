@@ -21,6 +21,7 @@
 // confirm.php -> bytcompanydisplayflag  -> action.php
 // confirm.php -> strcompanydisplaycode  -> action.php
 // confirm.php -> strcompanydisplayname  -> action.php
+// confirm.php -> strshortname  -> action.php
 // confirm.php -> strpostalcode          -> action.php
 // confirm.php -> straddress1            -> action.php
 // confirm.php -> straddress2            -> action.php
@@ -103,7 +104,7 @@ if ( $aryData["lngActionCode"] != DEF_ACTION_DELETE )
 	$aryCheck["strcompanyname"]        = "null:length(1,100)";
 	$aryCheck["bytcompanydisplayflag"] = "english(4,5)";
 	$aryCheck["strcompanydisplaycode"] = "null:numenglish(0,10)";
-	$aryCheck["strcompanyomitname"] = "length(1,100)";
+	$aryCheck["strshortname"] = "length(1,100)";
 	$aryCheck["strpostalcode"]         = "ascii(0,20)";
 	$aryCheck["straddress1"]           = "length(1,100)";
 	$aryCheck["straddress2"]           = "length(1,100)";
@@ -189,7 +190,7 @@ if ( ( $aryData["lngActionCode"] == DEF_ACTION_INSERT || $aryData["lngActionCode
                        $aryData["bytcompanydisplayflag"] . ", " .
                  "'" . $aryData["strcompanydisplaycode"] . "', " .
                  "'" . $aryData["strcompanydisplayname"] . "', " .
-                 "'" . $aryData["strcompanyomitname"] . "', " .
+                 "'" . $aryData["strshortname"] . "', " .
                  "'" . $aryData["strpostalcode"] . "', " .
                  "'" . $aryData["straddress1"] . "', " .
                  "'" . $aryData["straddress2"] . "', " .
@@ -228,7 +229,7 @@ if ( ( $aryData["lngActionCode"] == DEF_ACTION_INSERT || $aryData["lngActionCode
                        "bytcompanydisplayflag = " . $aryData["bytcompanydisplayflag"] . ", " .
                        "strcompanydisplaycode = '" . $aryData["strcompanydisplaycode"] . "', " .
                        "strcompanydisplayname = '" . $aryData["strcompanydisplayname"] . "', " .
-                       "strcompanyomitname = '" . $aryData["strcompanyomitname"] . "', " .
+                       "strshortname = '" . $aryData["strshortname"] . "', " .
                        "strpostalcode = '" . $aryData["strpostalcode"] . "', " .
                        "straddress1 = '" . $aryData["straddress1"] . "', " .
                        "straddress2 = '" . $aryData["straddress2"] . "', " .
@@ -339,11 +340,11 @@ elseif ( $aryData["lngActionCode"] == DEF_ACTION_DELETE && !join ( $aryCheckResu
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
 	// 結果が1件でもあった場合、削除不可能とし、エラー出力
-	// if ( $lngResultNum > 0 )
-	// {
-	// 	$objDB->freeResult( $lngResultID );
-	// 	fncOutputError ( 1201, DEF_WARNING, "マスタ管理失敗", TRUE, "", $objDB );
-	// }
+	if ( $lngResultNum > 0 )
+	{
+		$objDB->freeResult( $lngResultID );
+		fncOutputError ( 1201, DEF_WARNING, "マスタ管理失敗", TRUE, "", $objDB );
+	}
 
 	// 削除処理(DELETE)
 	$aryQuery[] = "DELETE FROM m_Company WHERE lngCompanyCode = " . $aryData["lngcompanycode"];

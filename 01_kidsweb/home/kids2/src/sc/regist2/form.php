@@ -9,7 +9,7 @@
 	$objAuth	= new clsAuth();
 	
 	$aryData["strSessionID"]	= $_GET["strSessionID"];
-	$aryData["lngLanguageCode"]	= $_COOKIE["lngLanguageCode"];
+	$aryData["lngLanguageCode"]	= 1;
 	
 	// セッション確認
 	$objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );

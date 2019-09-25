@@ -122,7 +122,7 @@ list ( $aryData, $bytErrorFlag ) = getArrayErrorVisibility( $aryData, $aryCheckR
 $count = count ( $objMaster->aryColumnName );
 
 
-$aryParts["lngLanguageCode"] = $_COOKIE["lngLanguageCode"];
+$aryParts["lngLanguageCode"] = 1;
 $aryParts["lngActionCode"]   = $aryData["lngActionCode"];
 $aryParts["strTableName"]    = $objMaster->strTableName;
 $aryParts["strKeyName"]      = $objMaster->aryColumnName[0];

@@ -32,6 +32,7 @@
 // edit.php -> bytcompanydisplayflag  -> confirm.php
 // edit.php -> strcompanydisplaycode  -> confirm.php
 // edit.php -> strcompanydisplayname  -> confirm.php
+// edit.php -> strcompanydisplayname  -> confirm.php
 // edit.php -> strpostalcode          -> confirm.php
 // edit.php -> straddress1            -> confirm.php
 // edit.php -> straddress2            -> confirm.php

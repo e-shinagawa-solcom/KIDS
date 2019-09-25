@@ -16,7 +16,14 @@
     btnClear.on('click', function () {
         // テキスト入力箇所をリセット
         workForm.find('input[type="text"], textarea').val('');
-        workForm.find('select').val('');
+        var checks = workForm.find('input[type="checkbox"]');
+        for(var i = 0;i < checks.length;i++){
+        	checks[i].checked = false;
+		}
+		// セレクトボックスを一番目の選択肢に設定
+		workForm.find('select').each(function(index){
+            $(this).val($(this).find('option').first().val());
+        });
     });
 
     // 検索ボタン押下時の処理

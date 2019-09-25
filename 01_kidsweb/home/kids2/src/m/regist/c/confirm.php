@@ -143,7 +143,7 @@ if ( $aryData["lngActionCode"] == DEF_ACTION_DELETE )
 	}
 }
 
-$aryParts["lngLanguageCode"] = $_COOKIE["lngLanguageCode"];
+$aryParts["lngLanguageCode"] = 1;
 $aryParts["lngActionCode"]   = $aryData["lngActionCode"];
 $aryParts["strTableName"]    = $objMaster->strTableName;
 $aryParts["strKeyName"]      = $aryData["strKeyName"];

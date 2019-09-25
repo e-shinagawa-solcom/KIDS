@@ -193,7 +193,7 @@ $aryParts["HIDDEN"]          = "<input type=hidden name=strSessionID value=" .$a
 $aryParts["HIDDEN"]         .= "<input type=hidden name=lngMonetaryRateCode value=" . $aryData["lngMonetaryRateCode"]. ">\n";
 $aryParts["HIDDEN"]         .= "<input type=hidden name=lngMonetaryUnitCode value=" .$aryData["lngMonetaryUnitCode"].">\n";
 $aryParts["HIDDEN"]         .= "<input type=hidden name=now value=" .$aryData["now"].">\n";
-$aryParts["lngLanguageCode"] =& $_COOKIE["lngLanguageCode"];
+$aryParts["lngLanguageCode"] =1;
 $aryParts["strTableName"]   =& $objMaster->strTableName;
 $aryParts["lngColumnNum"]   = 5;
 $aryParts["strEditURL"]     = "/m/regist/r/edit.php?lngActionCode=" . DEF_ACTION_INSERT . "&strSessionID=" . $aryData["strSessionID"];

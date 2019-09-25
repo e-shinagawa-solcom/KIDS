@@ -56,7 +56,7 @@ if ( !$aryData["bytLogoutFlag"] )
 		$objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
 		// LanguageCode取得
-		$aryData["lngLanguageCode"] = $_COOKIE["lngLanguageCode"];
+		$aryData["lngLanguageCode"] = 1;
 
 		// HTML出力
 		$fp = fopen ( TMP_ROOT . "login/logout.html", "r" );

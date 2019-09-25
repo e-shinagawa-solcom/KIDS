@@ -136,7 +136,7 @@ if ( $aryData["lngActionCode"] != DEF_ACTION_DELETE )
 	$aryCheck["bytcompanydisplayflag"] = "english(1,1)";
 	$aryCheck["strcompanydisplaycode"] = "null:numenglish(0,10)";
 	$aryCheck["strcompanydisplayname"] = "null:length(1,100)";
-	$aryCheck["strcompanyomitname"] = "length(1,100)";
+	$aryCheck["strshortname"] = "length(1,100)";
 	$aryCheck["strpostalcode"]         = "ascii(0,20)";
 	$aryCheck["straddress1"]           = "length(1,100)";
 	$aryCheck["straddress2"]           = "length(1,100)";
@@ -356,8 +356,8 @@ $aryParts["MASTER"] .= "				<tr><td id=\"Column7\" class=\"SegColumn\" width=\"2
 $aryParts["HIDDEN"] .= "<input type=\"hidden\" name=\"strcompanydisplayname\" value=\"" . fncHTMLSpecialChars ( $aryData["strcompanydisplayname"] ) . "\">\n";
 
 // æ Œ¨ÃææŒ
-$aryParts["MASTER"] .= "				<tr><td id=\"Column8\" class=\"SegColumn\" width=\"25%\">Column0</td><td class=\"Segs\">" . fncHTMLSpecialChars ( $aryData["strcompanyomitname"] ) . "</td></tr>\n";
-$aryParts["HIDDEN"] .= "<input type=\"hidden\" name=\"strcompanyomitname\" value=\"" . fncHTMLSpecialChars ( $aryData["strcompanyomitname"] ) . "\">\n";
+$aryParts["MASTER"] .= "				<tr><td id=\"Column8\" class=\"SegColumn\" width=\"25%\">Column0</td><td class=\"Segs\">" . fncHTMLSpecialChars ( $aryData["strshortname"] ) . "</td></tr>\n";
+$aryParts["HIDDEN"] .= "<input type=\"hidden\" name=\"strshortname\" value=\"" . fncHTMLSpecialChars ( $aryData["strshortname"] ) . "\">\n";
 
 // Õπ ÿ»÷πÊ
 $aryParts["MASTER"] .= "				<tr><td id=\"Column9\" class=\"SegColumn\" width=\"25%\">Column0</td><td class=\"Segs\">" . $aryData["strpostalcode"] . "</td></tr>\n";

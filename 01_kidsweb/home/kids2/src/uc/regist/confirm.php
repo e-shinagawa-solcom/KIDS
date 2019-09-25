@@ -86,11 +86,7 @@ $aryCheck["lngAccessIPAddressCode"] = "null:number(-1,32767)";
 $aryCheck["strNote"]                = "length(0,1000)";
 
 // 会社のみエラーメッセージを変える特殊処理
-$aryCheck["lngCompanyCode"]         = "null:number(0,32767,An indispensable item is not input)";
-if ( $_COOKIE["lngLanguageCode"] )
-{
-	$aryCheck["lngCompanyCode"]     = "null:number(0,32767,必須項目が入力されていません)";
-}
+$aryCheck["lngCompanyCode"]     = "null:number(0,32767,必須項目が入力されていません)";
 
 $aryData["bytInvalidFlag_Error"]     = "visibility:hidden;";
 $aryData["lngUserCode_Error"]        = "visibility:hidden;";

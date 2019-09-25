@@ -27,7 +27,7 @@ $objAuth = new clsAuth();
 $objDB->open("", "", "", "");
 
 // 言語コードを取得(0->false: 英語, 1->true: 日本語)
-$lngLanguageCode = $_COOKIE["lngLanguageCode"];
+$lngLanguageCode = 1;
 
 // セッション確認
 $objAuth = fncIsSession( $_REQUEST["strSessionID"], $objAuth, $objDB );

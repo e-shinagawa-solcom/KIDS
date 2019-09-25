@@ -405,8 +405,7 @@ $aryQuery[] = "  p.strProductCode, p.lngProductNo Desc";
 
 // クエリを平易な文字列に変換
 $strQuery = implode("\n", $aryQuery);
-echo $strQuery;
-return;
+
 // 値をとる =====================================
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 

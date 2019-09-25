@@ -101,7 +101,7 @@ if ( $aryData["lngWorkflowOrderGroupCode"] > -1 )
 
 
 $aryParts["strSessionID"]    =& $aryData["strSessionID"];
-$aryParts["lngLanguageCode"] =& $_COOKIE["lngLanguageCode"];
+$aryParts["lngLanguageCode"] =1;
 $aryParts["strTableName"]    =& $objMaster->strTableName;
 $aryParts["lngActionCode"]   = DEF_ACTION_INSERT;
 
