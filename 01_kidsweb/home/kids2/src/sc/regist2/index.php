@@ -91,6 +91,9 @@
 		$lngCountryCode = fncGetCountryCode($strCompanyDisplayCode, $objDB);
 		// データ返却
 		echo $lngCountryCode;
+		// DB切断
+		$objDB->close();
+		// 処理終了
 		return true;
 	}
 
@@ -104,6 +107,9 @@
 		$strHtml = fncGetReceiveDetailHtml($aryReceiveDetail);
 		// データ返却
 		echo $strHtml;
+		// DB切断
+		$objDB->close();
+		// 処理終了
 		return true;
 	}
 
@@ -115,6 +121,9 @@
 		$optTaxRate = fncGetTaxRatePullDown($_POST["dtmDeliveryDate"], $objDB);
 		// データ返却
 		echo $optTaxRate;
+		// DB切断
+		$objDB->close();
+		// 処理終了
 		return true;
 	}
 
@@ -151,6 +160,11 @@
 
 	// 売上（納品書）登録画面表示
 	echo fncGetReplacedHtml( "sc/regist2/parts.tmpl", $aryData ,$objAuth);
+
+	// DB切断
+	$objDB->close();
+
+	// 処理終了
 	return true;
 
 ?>
