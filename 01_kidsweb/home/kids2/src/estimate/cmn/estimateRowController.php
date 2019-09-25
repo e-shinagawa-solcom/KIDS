@@ -396,7 +396,8 @@ abstract class estimateRowController {
             'customerCompany' => $this->customerCompanyCode,
             'payoff' => $this->payoff,
             'percentInputFlag' => $this->percentInputFlag,
-            'percent' => $this->percent
+            'percent' => $this->percent,
+            'note' => $this->note
         );
         return $registData;
     }
@@ -421,7 +422,8 @@ abstract class estimateRowController {
             'monetaryDisplay' => $this->monetaryDisplay,
             'monetary' => $this->monetary,
             'customerCompany' => $this->customerCompanyCode,
-            'payoff' => $this->payoff
+            'payoff' => $this->payoff,
+            'note' => $this->note
         );
         return $errorValue;
     }
