@@ -295,6 +295,66 @@ function fncGetReceiveDetailHtml($aryDetail){
     return $strHtml;
 }
 
+// 納品伝票マスタより作成日を取得
+function fncGetSlipInsertDate($strSlipCode, $objDB)
+{
+    $strQuery = ""
+        . "SELECT"
+        . "  to_char(dtminsertdate, 'yyyy/mm/dd hh24:mm:ss') as dtminsertdate"
+        . " FROM"
+        . "  m_slip"
+        . " WHERE"
+        . "  strslipcode = '". $strSlipCode ."'"
+    ;
+
+    list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
+    if ( $lngResultNum ) {
+        for ( $i = 0; $i < $lngResultNum; $i++ ) {
+            $aryResult[] = $objDB->fetchArray( $lngResultID, $i );
+        }
+    } else {
+        fncOutputError ( 9501, DEF_FATAL, "納品伝票の作成日の取得に失敗", TRUE, "", $objDB );
+    }
+    $objDB->freeResult( $lngResultID );
+
+    return $aryResult[0]["dtminsertdate"];
+}
+
+function fncNotReceivedDetailExists($aryDetail, $objDB)
+{
+    for ( $i = 0; $i < count($aryDetail); $i++ )
+    {
+        $d = $aryDetail[$i];
+
+        $lngReceiveNo = $d["lngreceiveno"];
+        $lngRevisionNo = $d["lngreceiverevisionno"];
+
+        $strQuery = ""
+        . "SELECT"
+        . "  lngreceivestatuscode"
+        . " FROM"
+        . "  m_receive"
+        . " WHERE"
+        . "  lngreceivestatuscode <> 2"
+        . "  AND lngreceiveno = " . $lngReceiveNo
+        . "  AND lngrevisionno = " . $lngRevisionNo
+        ;
+
+        list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
+        if ( $lngResultID ) {
+            // 受注状態コードが2以外の明細が存在するならtrueを返して検索打ち切り
+            if ($lngResultNum > 0) { return true; }
+        } else {
+            fncOutputError ( 9501, DEF_FATAL, "受注状態コードの取得に失敗", TRUE, "", $objDB );
+        }
+        $objDB->freeResult( $lngResultID );
+    }
+
+    // 受注状態コードが2以外の明細は存在しない
+    return false;
+
+}
+
 // 明細に紐づく受注マスタの受注状態コードを更新
 function fncUpdateReceiveMaster($aryDetail, $objDB)
 {

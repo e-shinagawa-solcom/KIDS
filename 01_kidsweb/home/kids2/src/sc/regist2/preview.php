@@ -142,6 +142,15 @@
 		$aryDetail = fncConvertArrayDetailToEucjp($aryDetail);
 
 		// --------------------------
+		//  登録前バリデーション
+		// --------------------------
+		// 受注状態コードが2以外の明細が存在するならエラーとする
+		if(fncNotReceivedDetailExists($aryDetail, $objDB))
+		{
+			MoveToErrorPage("納品書が発行できない状態の明細が選択されています。");
+		}
+
+		// --------------------------
 		//  データベース登録
 		// --------------------------
 		// トランザクション開始
@@ -166,8 +175,11 @@
 		//  登録結果画面表示
 		// --------------------------
 		// 画面に表示するパラメータの設定
-		// TODO:登録日時の取得
-		$aryData["dtmInsertDate"] = "YYYY/MM/DD HH:MM:SS";
+		// 納品書NOに紐づく作成日の取得
+		$dtmInsertDate = fncGetSlipInsertDate($aryRegResult["strSlipCode"][0], $objDB);
+		// 作成日の設定
+		$aryData["dtmInsertDate"] = $dtmInsertDate;
+		// 納品書NOの設定
 		$aryData["strSlipCode"] = implode(",", $aryRegResult["strSlipCode"]);
 
 		// テンプレートから構築したHTMLを出力

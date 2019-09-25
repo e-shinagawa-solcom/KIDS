@@ -80,7 +80,29 @@ jQuery(function($){
     $("#EditTableBody").on('sortstop', function(){
         changeRowNum();
     });
-    // $('input[name="dtmExpirationDate"]').datepicker();
+
+    // ------------------------------------------
+    //   datepicker設定
+    // ------------------------------------------
+    // datepicker対象要素
+    var dateElements = [
+        // 納品日
+        $('input[name="dtmDeliveryDate"]'),
+        // 支払期限
+        $('input[name="dtmPaymentLimit"]'),
+    ];
+    // datepickerの設定
+    $.each(dateElements, function(){
+        this.datepicker({
+                showButtonPanel: true,
+                dateFormat: "yy/mm/dd",
+                onClose: function(){
+                    this.focus();
+                }
+            }).attr({
+                maxlength: "10"
+        });
+    });
     
     // ------------------------------------------
     //   functions
@@ -92,11 +114,9 @@ jQuery(function($){
 
         //ヘッダ・フッタ部の納品日と比較（同月以外は不正）
         var headerDeliveryDate = new Date($('input[name="dtmDeliveryDate"]').val());
-        if (headerDeliveryDate.getYear() != detailDeliveryDate.getYear()){
-            alert("受注確定時の納期と納品日と一致しません。受注データを修正してください。");
-            return false;
-        }
-        if (headerDeliveryDate.getMonth() != detailDeliveryDate.getMonth()){
+        var sameMonth = (headerDeliveryDate.getYear() == detailDeliveryDate.getYear())
+                        && (headerDeliveryDate.getMonth() == detailDeliveryDate.getMonth());
+        if (!sameMonth){
             alert("受注確定時の納期と納品日と一致しません。受注データを修正してください。");
             return false;
         }
@@ -105,14 +125,32 @@ jQuery(function($){
         var firstTr = $("#EditTableBody tr").eq(0);
         if (0 < firstTr.length){
             var firstRowDate = new Date($(firstTr).children('td.detailDeliveryDate').text());
-            if (firstRowDate.getYear() != detailDeliveryDate.getYear()){
+            var sameMonthDetail = (firstRowDate.getYear() == detailDeliveryDate.getYear())
+                                && (firstRowDate.getMonth() == detailDeliveryDate.getMonth());
+            if (!sameMonthDetail){
                 alert("出力明細と納品月が異なる明細は選択できません。");
                 return false;
             }
-            if (firstRowDate.getMonth() != detailDeliveryDate.getMonth()){
-                alert("出力明細と納品月が異なる明細は選択できません。");
-                return false;
-            }
+        }
+
+        //重複する明細の追加を禁止（重複判定：受注明細のキー）
+        var existsSameKey = false;
+        var rn1 = $(tr).children('td.detailReceiveNo').text();
+        var dn1 = $(tr).children('td.detailReceiveDetailNo').text();
+        var rev1 = $(tr).children('td.detailReceiveRevisionNo').text();
+    
+        $("#EditTableBody tr").each(function(){
+            var rn2 = $(this).children('td.detailReceiveNo').text();
+            var dn2 = $(this).children('td.detailReceiveDetailNo').text();
+            var rev2 = $(this).children('td.detailReceiveRevisionNo').text();
+
+            var isSame = (rn1 == rn2) && (dn1 == dn2) && (rev1 == rev2);
+            existsSameKey = existsSameKey || isSame;
+        });
+
+        if (existsSameKey){
+            alert("重複する明細は選択できません。");
+            return false;
         }
 
         return true;
@@ -526,8 +564,6 @@ jQuery(function($){
     });
 
     $('input[name="dtmDeliveryDate"]').on('change', function(){
-        //TODO:changeイベントを拾えないので要問題解決。素直に日付入力をdateTimePickerに替えたほうがいい
-        
         //消費税率の選択項目変更
         $.ajax({
             type: 'POST',
@@ -540,9 +576,12 @@ jQuery(function($){
             async: true,
         }).done(function(data){
             console.log("done:change-deliverydate");
-            //TODO:消費税率の選択項目更新
             console.log(data);
-            
+
+            //消費税率の選択項目更新
+            $('select[name="lngTaxRate"] > option').remove();
+            $('select[name="lngTaxRate"]').append(data);
+
             //金額の更新
             updateAmount();
 
@@ -665,6 +704,12 @@ jQuery(function($){
         updateAmount();
     });
 
+    $('#DateBtB').on('click', function(){
+        $('input[name="dtmDeliveryDate"]').focus();
+    });
+    $('#DateBtC').on('click', function(){
+        $('input[name="dtmPaymentLimit"]').focus();
+    });
 
     // プレビューボタン押下
     $('#PreviewBt').on('click', function(){

@@ -20,6 +20,10 @@
 <script src="/cmn/jquery/jquery-3.1.0.js"></script>
 <script src="/cmn/jquery/ui/jquery-ui.min-1.12.0.js"></script>
 <script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
+<link rel="stylesheet" href="/cmn/jquery/ui/jquery-ui-1.12.0.css">
+<link rel="stylesheet" href="/cmn/jquery/ui/jquery-ui.theme.css">
+<!-- datepickerの日本語化 -->
+<script src="/cmn/jquery/ui/datepicker-ja.js"></script>
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/images.js"></script>
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutbase.js"></script>
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutcommon.js"></script>
@@ -47,6 +51,7 @@
 <script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
 <script type="text/javascript" language="javascript" src="/sc/regist2/regist.js"></script>
 <script src="/search/cmn/js/invoke-master-search.js" defer></script>
+
 </header3>
 
 <bodyonload>
@@ -203,7 +208,7 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutPunit(); initLayo
 		onblur="chColorOff(this);fncCheckDate( this );" 
 		tabindex="1">
 </span>
-<span id="DateBtB" onclick="window.MDateBwin.fncCalendar( window.HSO.dtmDeliveryDate, 'DateB' );DisplayerM10_2( '' , document.all.Mdata10_2 );ExchangeM10_2( 0 , window.self );return false;"></span>
+<span id="DateBtB"></span>
 
 <span id="SegADeliveryPlaceName">納品先</span>
 <span id="VarsADeliveryPlaceName">
@@ -251,7 +256,7 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutPunit(); initLayo
 		onblur="chColorOff(this);fncCheckDate( this );" 
 		tabindex="1">
 </span>
-<span id="DateBtC" onclick="window.MDateCwin.fncCalendar( window.HSO.dtmPaymentDueDate, 'DateC' );DisplayerM10_3( '' , document.all.Mdata10_3 );ExchangeM10_3( 0 , window.self );return false;"></span>
+<span id="DateBtC"></span>
 
 <span id="SegAPaymentMethod">支払方法</span>
 <span id="VarsAPaymentMethod">
