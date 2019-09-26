@@ -291,7 +291,7 @@ class estimateDB extends clsDB {
                 $itemCode = $result['lngstockitemcode']; // 仕入部品コード
                 if (!isset($areaCode)) {
                     // 対象エリアの指定がない場合はエリアコード別の配列を生成する
-                    $targetArea = $result['lngstockclasscode'];
+                    $targetArea = $result['lngestimateareaclassno'];
                     $subjectCodeList[$targetArea][$classCode][$subjectCode][$itemCode] = true; 
                 } else {
                     // 仕入科目コードの下に仕入部品コードの配列を生成する
@@ -937,7 +937,7 @@ class estimateDB extends clsDB {
             return false;
         } else {
             $strQuery = "SELECT";
-            $strQuery .= " b.lngstockclasscode as areacode,";
+            $strQuery .= " b.lngestimateareaclassno as areacode,";
             $strQuery .= " c.lngsalesdivisioncode ||':'|| c.strsalesdivisionname as divisionsubject,";
             $strQuery .= " a.lngsalesclasscode ||':'|| a.strsalesclassname as classitem,";
             $strQuery .= " c.lngsalesdivisioncode as divisionsubjectsort,";
@@ -953,7 +953,7 @@ class estimateDB extends clsDB {
             $strQuery .= " UNION";
             
             $strQuery .= " SELECT";
-            $strQuery .= " d.lngstockclasscode as areacode,";
+            $strQuery .= " d.lngestimateareaclassno as areacode,";
             $strQuery .= " e.lngstocksubjectcode ||':'|| e.strstocksubjectname as divisionsubject,";
             $strQuery .= " d.lngstockitemcode ||':'|| d.strstockitemname as classitem,";
             $strQuery .= " e.lngstocksubjectcode as divisionsubjectsort,";
