@@ -90,7 +90,8 @@ function fncGetReceiveDetail($aryCondition, $objDB)
     $arySelect[] = "  rd.strnote,";                                //備考（明細登録用）
     $arySelect[] = "  r.lngmonetaryunitcode,";                     //通貨単位コード（明細登録用）
     $arySelect[] = "  r.lngmonetaryratecode,";                     //通貨レートコード（明細登録用）
-    $arySelect[] = "  mu.strmonetaryunitsign";                     //通貨単位記号（明細登録用）
+    $arySelect[] = "  mu.strmonetaryunitsign,";                    //通貨単位記号（明細登録用）
+    $arySelect[] = "  sc.bytdetailunifiedflg";                     //明細統一フラグ（明細登録用）
     $arySelect[] = " FROM";
     $arySelect[] = "  t_receivedetail rd ";
     $arySelect[] = "    INNER JOIN m_receive r ON rd.lngreceiveno=r.lngreceiveno AND rd.lngrevisionno = r.lngrevisionno";
@@ -289,6 +290,9 @@ function fncGetReceiveDetailHtml($aryDetail){
         //通貨単位記号（明細登録用）
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["strmonetaryunitsign"]);
         $strHtml .= "<td class='forEdit detailMonetaryUnitSign'>" . $strDisplayValue . "</td>";
+        //明細統一フラグ（明細登録用）
+        $strDisplayValue = htmlspecialchars($aryDetail[$i]["bytdetailunifiedflg"]);
+        $strHtml .= "<td class='forEdit detailUnifiedFlg'>" . $strDisplayValue . "</td>";
         
         $strHtml .= "</tr>";
     }

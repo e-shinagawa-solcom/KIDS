@@ -241,6 +241,9 @@ jQuery(function($){
         //通貨単位記号（明細登録用）
         td = $(tr).find($('td.detailMonetaryUnitSign')).clone();
         $(editTr).append($(td));
+        //明細統一フラグ（明細登録用）
+        td = $(tr).find($('td.detailUnifiedFlg')).clone();
+        $(editTr).append($(td));
         
         // 出力明細テーブルに明細を追加
         $(tbody).append($(editTr));
@@ -519,6 +522,8 @@ jQuery(function($){
                 lngmonetaryratecode: $(tr).children('.detailMonetaryRateCode').text(),
                 //通貨単位記号（明細登録用）
                 strmonetaryunitsign: $(tr).children('.detailMonetaryUnitSign').text(),
+                //明細統一フラグ（明細登録用）
+                bytdetailunifiedflg: $(tr).children('.detailUnifiedFlg').text(),
             };
             result.push(param);
         });
@@ -584,8 +589,10 @@ jQuery(function($){
         var targetMonth = targetDate.getMonth()+1;
 
         if (targetDate.getTime() > closedDate.getTime()){
+            // 対象日 > 締め日 なら翌月度
             return getAddMonthDate(targetYear, targetMonth, 1, +1);
         }else{
+            // 対象日 <= 締め日 なら当月度
             return new Date(targetYear, targetMonth, 1);
         }
     }
