@@ -96,6 +96,24 @@
 		// 処理終了
 		return true;
 	}
+	
+	//-------------------------------------------------------------------------
+	// 【ajax】顧客に紐づく締め日を取得
+	//-------------------------------------------------------------------------
+	if ($strMode == "get-closedday"){
+		// 顧客コード
+		$strCompanyDisplayCode = $_POST["strcompanydisplaycode"];
+		// TODO:締め日取得
+		//$lngClosedDay = fncGetClosedDay($strCompanyDisplayCode, $objDB);
+		// TESTCODE
+		$lngClosedDay = '2019/09/26';
+		// データ返却
+		echo $lngClosedDay;
+		// DB切断
+		$objDB->close();
+		// 処理終了
+		return true;
+	}
 
 	//-------------------------------------------------------------------------
 	// 【ajax】明細検索
