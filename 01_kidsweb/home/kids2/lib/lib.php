@@ -1102,7 +1102,7 @@ function fncGetMasterValue( $strTable, $strKeyFieldName, $strDisplayFieldName, $
 	{
 		$strQuery .= " AND $strQueryWhere";
 	}
-	//echo "$strQuery<br>";
+	// echo "$strQuery<br>";
 
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 

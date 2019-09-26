@@ -83,29 +83,25 @@ if ($objMaster->strTableName == "m_StockSubject") {
 // 仕入部品マスタの場合、コード＋名称のカラムを表示する特殊処理
 elseif ($objMaster->strTableName == "m_StockItem") {
     // 仕入科目マスタからマスタデータを取得し、code をキーとする連想配列に代入
-	$aryMaster = fncGetMasterValue("m_StockSubject", "lngStockSubjectCode", "strStockSubjectName", "Array", "", $objDB);
+    $aryMaster = fncGetMasterValue("m_StockSubject", "lngStockSubjectCode", "strStockSubjectName", "Array", "", $objDB);
     // 仕入科目マスタからマスタデータを取得し、code をキーとする連想配列に代入
-	$arySubjectClassMaster = fncGetMasterValue("m_StockSubject", "lngStockSubjectCode", "lngStockClassCode", "Array", "", $objDB);
+    $arySubjectClassMaster = fncGetMasterValue("m_StockSubject", "lngStockSubjectCode", "lngStockClassCode", "Array", "", $objDB);
     // 仕入区分マスタからマスタデータを取得し、code をキーとする連想配列に代入
     $aryClassMaster = fncGetMasterValue("m_StockClass", "lngStockClassCode", "strStockClassName", "Array", "", $objDB);
-	// 見積原価計算書エリア区分マスタからマスタデータを取得し、code をキーとする連想配列に代入
+    // 見積原価計算書エリア区分マスタからマスタデータを取得し、code をキーとする連想配列に代入
     $aryAreaMaster = fncGetMasterValue("m_estimateareaclass", "lngestimateareaclassno", "strestimateareaclassname", "Array", "", $objDB);
     $count = count($objMaster->aryData);
     for ($i = 0; $i < $count; $i++) {
-	// 	echo $objMaster->aryData[$i]["lngstocksubjectcode"];
-	// 	echo "code:".$arySubjectClassMaster[$objMaster->aryData[$i]["lngstocksubjectcode"]];
-	// 	echo "name:" .$aryClassMaster[$arySubjectClassMaster[$objMaster->aryData[$i]["lngstocksubjectcode"]]];
-	// 	$lngstockclasscode =  $arySubjectClassMaster[$objMaster->aryData[$i]["lngstocksubjectcode"]] . ":" . $aryClassMaster[$arySubjectClassMaster[$objMaster->aryData[$i]["lngstocksubjectcode"]]];
-	// echo $lngstockclasscode;
-		// echo $arySubjectClassMaster['"'.$objMaster->aryData[$i]["lngstocksubjectcode"].'"'];
-		$objMaster->aryData[$i]["lngstocksubjectcode"] = $objMaster->aryData[$i]["lngstocksubjectcode"] . ":" . $aryMaster[$objMaster->aryData[$i]["lngstocksubjectcode"]];
-		$objMaster->aryData[$i]["lngstockclasscode"] = $arySubjectClassMaster[$objMaster->aryData[$i]["lngstocksubjectcode"]] . ":" . $aryClassMaster[$arySubjectClassMaster[$objMaster->aryData[$i]["lngstocksubjectcode"]]];
-		$objMaster->aryData[$i]["lngestimateareaclassno"] = $objMaster->aryData[$i]["lngestimateareaclassno"] . ":" . $aryAreaMaster[$objMaster->aryData[$i]["lngestimateareaclassno"]];
-
-		// var_dump($objMaster->aryData[$i]["lngstockclasscode"]);
+        $objMaster->aryData[$i]["lngstocksubjectcode_comm"] = $objMaster->aryData[$i]["lngstocksubjectcode"];        
+        $lngstockclasscode = $arySubjectClassMaster[$objMaster->aryData[$i]["lngstocksubjectcode"]] . ":" . $aryClassMaster[$arySubjectClassMaster[$objMaster->aryData[$i]["lngstocksubjectcode"]]];
+        $objMaster->aryData[$i]["lngstocksubjectcode"] = $objMaster->aryData[$i]["lngstocksubjectcode"] . ":" . $aryMaster[$objMaster->aryData[$i]["lngstocksubjectcode"]];
+        $objMaster->aryData[$i]["lngstockclasscode"] = $lngstockclasscode;
+        $objMaster->aryData[$i]["lngestimateareaclassno"] = $objMaster->aryData[$i]["lngestimateareaclassno"] . ":" . $aryAreaMaster[$objMaster->aryData[$i]["lngestimateareaclassno"]];
+        
     }
+
+    $objMaster->aryColumnName = ['lngstockitemcode', 'lngstockclasscode', 'lngstocksubjectcode', 'strstockitemname', 'bytdisplayflag', 'bytinvalidflag', 'bytdisplayestimateflag', 'lngestimateareaclassno'];
 }
-// var_dump($objMaster->aryData[1]);
 
 ///////////////////////////////////////////////////////////////////
 // テーブル生成
@@ -127,8 +123,12 @@ foreach ($objMaster->aryData as $record) {
     $aryData["strResultHtml"] .= "	<tr id=\"Mrecord$count\" class=\"Segs\" onclick=\"fncSelectTrColor( this );\" style=\"background:#ffffff;\">\n";
 
     // カラム生成
-    foreach ($record as $colmun) {
-        $aryData["strResultHtml"] .= "		<td nowrap>" . fncHTMLSpecialChars($colmun) . "</td>\n";
+    // foreach ($record as $colmun) {
+    //     $aryData["strResultHtml"] .= "		<td nowrap>" . fncHTMLSpecialChars($colmun) . "</td>\n";
+    // }
+
+    foreach ($objMaster->aryColumnName as $strColumnName) {
+        $aryData["strResultHtml"] .= "		<td nowrap>" . fncHTMLSpecialChars($record[$strColumnName]) . "</td>\n";
     }
 
     // GETで渡す文字列生成
@@ -136,7 +136,7 @@ foreach ($objMaster->aryData as $record) {
 
     // 仕入部品マスタの場合、2つ目のカラムもキーとする
     if ($objMaster->strTableName == "m_StockItem") {
-        $getUrl .= "&" . $objMaster->aryColumnName[1] . "=" . $record[$objMaster->aryColumnName[1]];
+        $getUrl .= "&" . $objMaster->aryColumnName[2] . "=" . $record["lngstocksubjectcode_comm"];
     } else if ($objMaster->strTableName == "m_StockSubject") {
         $getUrl .= "&" . $objMaster->aryColumnName[1] . "=" . $record["lngstockclasscode_comm"];
 

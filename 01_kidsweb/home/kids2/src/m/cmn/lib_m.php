@@ -184,6 +184,8 @@ class clsMaster
         {
             $strQuery .= " ORDER BY 1";
         }
+        // echo $strQuery;
+        // return;
         $this->setMasterTableData( $strQuery, $objDB );
         return TRUE;
     }
