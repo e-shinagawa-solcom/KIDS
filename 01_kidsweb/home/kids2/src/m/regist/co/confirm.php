@@ -245,11 +245,11 @@ elseif ( $aryData["lngActionCode"] == DEF_ACTION_DELETE && !join ( "", $aryCheck
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
 	// 結果が1件でもあった場合、削除不可能とし、エラー出力
-	// if ( $lngResultNum > 0 )
-	// {
-	// 	$objDB->freeResult( $lngResultID );
-	// 	fncOutputError ( 1201, DEF_WARNING, "マスタ管理失敗", TRUE, "", $objDB );
-	// }
+	if ( $lngResultNum > 0 )
+	{
+		$objDB->freeResult( $lngResultID );
+		fncOutputError ( 1201, DEF_WARNING, "マスタ管理失敗", TRUE, "", $objDB );
+	}
 
 	// 削除対象表示のためのデータを取得
 	$strQuery = "SELECT * FROM m_Company WHERE lngCompanyCode = " . $aryData["lngcompanycode"];

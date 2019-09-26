@@ -75,7 +75,7 @@ function fncClickEvent( strEvent )
 	}
 	else if( strEvent == 'close' )
 	{
-		window.close();
+		window.parent.close();
 	}
 
 	fncAlphaOn( document.all.querybt );
