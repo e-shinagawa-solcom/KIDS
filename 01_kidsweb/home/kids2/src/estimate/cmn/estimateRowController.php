@@ -65,10 +65,16 @@ abstract class estimateRowController {
     protected static $customerCompanyCodeMaster; // 顧客先、仕入先マスター
     protected static $divisionSubjectCodeMaster; // 売上分類、仕入科目マスター(売上区分、仕入部品結合済み）
     protected static $conversionRateMaster; // 通貨レートマスター
+    protected static $salesGroupAndUserMaster; // 営業グループ及びユーザマスタ
+    protected static $developGroupAndUserMaster; // 開発グループおよびユーザマスタ
+    protected static $groupDisplayMaster; // 表示用のグループマスタ
+    protected static $userDispayMaster; // 表示用のユーザマスタ
 
     // セル名称リスト
     protected static $headerNameList; // 対象エリアのヘッダー（タイトル）のセル名称
     protected static $resultNameList; // 対象エリアの計算結果のセル名称(明細最終行の次の行)
+
+    
 
 
     protected function __construct($objDB) {
@@ -78,6 +84,7 @@ abstract class estimateRowController {
         $this->setCustomerCompanyCodeMaster();
         $this->setDivisionSubjectCodeMaster();
         $this->setConversionRateMaster();
+        $this->setGroupAndUserMaster();
     }
 
     // 顧客先、仕入先のマスターのデータを取得する
@@ -97,25 +104,46 @@ abstract class estimateRowController {
         }
     }
 
-    // 項目とチェックするマスターの対応配列の生成（名称取得用)
-    // 表示用にマスター名が必要な場合、適宜定数の追加と要素の追加を行うこと
-    protected function setMasterForDetailInputItems() {
-        $areaCode = $this->areaCode;
-        if ($this->salesOrder === DEF_ATTRIBUTE_CLIENT) {
-            // 受注の場合
-            $divisionSubjectTable = 'm_salesdivision'; // 売上分類マスタ
-            $classItemTable = 'm_salesclass'; // 売上区分マスタ
-        } else if ($this->salesOrder === DEF_ATTRIBUTE_SUPPLIER) {
-            // 発注の場合
-            $divisionSubjectTable = 'm_stocksubject'; // 仕入科目マスタ
-            $classItemTable = 'm_stockitem'; // 仕入部品マスタ
+    // 
+    protected function setGroupAndUserMaster() {
+        if (!isset(self::$salesGroupAndUserMaster)
+            || !isset(self::$developGroupAndUserMaster)
+            || !isset(self::$groupDisplayMaster)
+            || !isset(self::$userDispayMaster)) {
+
+            $master = $this->objDB->getSalesGroupAndDevelopGroup();
+
+            foreach($master as $record) {
+                $attributeCode = $record->lngattributecode;           
+                $groupDisplayCode = $record->strgroupdisplaycode;
+                $groupDisplayName = $record->strgroupdisplayname;
+                $userDisplayCode = $record->struserdisplaycode;
+                $userDisplayName = $record->struserdisplayname;
+                
+                if ($attributeCode === DEF_GROUP_ATTRIBUTE_CODE_SALES_GROUP) {
+                    $salesGroupAndUserMaster[$groupDisplayCode][$userDisplayCode] = true;
+                } else if ($attributeCode === DEF_GROUP_ATTRIBUTE_CODE_DEVELOP_GROUP) {
+                    $developGroupAndUserMaster[$groupDisplayCode][$userDisplayCode] = true;
+                }
+    
+                if (!$groupDisplayMaster[$groupDisplayCode]) {
+                    $groupDisplayMaster[$groupDisplayCode] = $groupDisplayName;
+                }
+    
+                if ($userDispayMaster[$userDisplayCode]) {
+                    $userDispayMaster[$userDisplayCode] = $userDisplayName;
+                }
+                
+            }
+    
+            self::$salesGroupAndUserMaster = $salesGroupAndUserMaster;
+            self::$developGroupAndUserMaster = $developGroupAndUserMaster;
+    
+            self::$groupDisplayMaster = $groupDisplayMaster;
+            self::$userDispayMaster = $userDispayMaster;
         }
-        $useMaster = array(
-            'divisionSubject' => $divisionSubjectTable,
-            'classItem' => $classItemTable,          
-            'customerCompany' => 'm_company' // 会社マスタ
-        );
-        return $useMaster;
+
+        return true;
     }
 
     // セル名称に対応したセルのリストと行番号による初期データ作成

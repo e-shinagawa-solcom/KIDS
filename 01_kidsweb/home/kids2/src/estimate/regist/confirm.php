@@ -136,6 +136,10 @@
 			$outputMessage[] = $message;
 		}
 
+		// ヘッダ部の値を出力する
+		$param = $objHeader->outputRegistData();
+		$beforeProductionQuantity = $param[workSheetConst::PRODUCTION_QUANTITY];
+
 		// 対象エリアの範囲を取得する
 		$targetAreaRows = $objSheet->outputTargetAreaRows();
 		$startRowOfDetail = $targetAreaRows[DEF_AREA_PRODUCT_SALES]['firstRow']; // 明細の開始行
@@ -181,6 +185,25 @@
 				
 				if ($objRow) {
 					$objRow->initialize($sheetInfo['cellAddress'], $row);
+
+					// 以下の処理を行う為、部材費及びその他費用の行の処理は製造費用の行の処理の後に行う
+					if ($rowAttribute === DEF_AREA_PARTS_COST_ORDER
+					    || $rowAttribute === DEF_AREA_OTHER_COST_ORDER) {
+
+						$calcProductionQuantity = productSalesRowController::outputProductionQuantity();
+						$result = $objRow->substitutePQForPrice($beforeProductionQuantity, $calcProductionQuantity);
+
+						if ($result === true) { // 数量の代入が行われた場合はブックの値を書き換える
+							
+							$quantityColumn =  $objRow->columnNumberList['quantity'];
+							$quantityCell =  $quantityColumn. $row;
+	
+							// 代入後の数量をsheetオブジェクトに挿入
+							$objSheet->sheet->getCell($quantityCell)->setValue($calcProductionQuantity);
+						}
+
+					}
+
 					// 行のチェック、再計算を行う
 					$objRow->workSheetRegistCheck();
 

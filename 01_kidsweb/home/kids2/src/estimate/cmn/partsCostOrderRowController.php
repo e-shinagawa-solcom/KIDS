@@ -47,4 +47,19 @@ class partsCostOrderRowController extends estimateRowController {
             static::$divisionSubjectCodeMaster = $newMasterData;
         }
     }
+
+    // 再計算前の償却費と単価を比較し、再計算前の値と一致した場合は再計算後の償却費を代入する
+    public function substitutePQForPrice($compare, $substitute) {
+        // 単価を取得
+        $price = $this->price;
+
+        // 単価と再計算前の値が一致した場合のみ再計算結果を代入する。
+        if ($price === $compare) {
+            $this->price = $substitute;
+            return true;
+        }
+
+        return false;
+    }
+
 }

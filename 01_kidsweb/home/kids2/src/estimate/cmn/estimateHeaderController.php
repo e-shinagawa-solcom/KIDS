@@ -26,6 +26,7 @@ class estimateHeaderController {
     protected $developUserCode;
     protected $cartonQuantity;
     protected $productionQuantity;
+    protected $calculatedProductionQuantity;
 
     // マスターデータ配列
 
@@ -79,7 +80,7 @@ class estimateHeaderController {
             workSheetConst::INCHARGE_USER_CODE => $this->inchargeUserCodeNumber,
             workSheetConst::DEVELOP_USER_CODE => $this->developUserCodeNumber,
             workSheetConst::CARTON_QUANTITY => $this->cartonQuantity,
-            workSheetConst::PRODUCTION_QUANTITY => $this->productionQuantity,
+            workSheetConst::PRODUCTION_QUANTITY => $this->calculatedProductionQuantity ? $this->calculatedProductionQuantity : $this->productionQuantity,
         );
         return $registData;
     }
@@ -349,5 +350,10 @@ class estimateHeaderController {
             $this->messageCode['productionQuantity'] = DEF_MESSAGE_CODE_NOT_ENTRY_ERROR;
         }
         return true;
+    }
+
+    public function setProductionQuantity($value) {
+        $this->calculatedProductionQuantity = $value;
+        return;
     }
 }

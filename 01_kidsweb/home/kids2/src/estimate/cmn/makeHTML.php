@@ -346,17 +346,15 @@ class makeHTML {
 		$strHTML .= "<div class = \"data-buttons\">\n";
 		for ($i = $maxRevisionNo; $i >= 0; --$i) {
 			if ($i == $revisionNo) {
-				$strHTML .= "<a href= \"#\">\n";
-				$strHTML .= "<div id=\"btnSelected\">\n";
+				$strHTML .= "<button type=\"button\" id=\"btnSelected\">\n";
 				$strHTML .= "<img class= \"selected_button\" src=\"/img/type01/estimate/preview/data_selected_preview.gif\">\n";
-				$strHTML .= "<p>データ".$revisionNo ."</p>";
-				$strHTML .=	"</div>\n</a>\n";
+				$strHTML .= "<p>データ".$i ."</p>";
+				$strHTML .=	"</button>\n";
 			} else {
-				$strHTML .= "<a href= \"#\">\n";
-				$strHTML .= "<div id=\"btnSwitch\">\n";
+				$strHTML .= "<button type=\"button\" class=\"btnSwitch\" value=\"". $i."\">\n";
 				$strHTML .= "<img class= \"switch_button\" src=\"/img/type01/estimate/preview/data_others_preview.gif\">\n";
-				$strHTML .= "<p>データ".$revisionNo ."</p>";
-				$strHTML .=	"</div>\n</a>\n";
+				$strHTML .= "<p>データ".$i ."</p>";
+				$strHTML .=	"</button>\n";
 			}
 		}
 		$strHTML .=	"</div>\n";
