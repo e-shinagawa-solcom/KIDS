@@ -583,12 +583,13 @@ jQuery(function($){
     }
 
     // 締め日をもとに月度を計算する
-    function getMonthlyBasedOnClosedDate(targetDate, closedDate)
+    function getMonthlyBasedOnClosedDay(targetDate, closedDay)
     {
         var targetYear = targetDate.getFullYear();
         var targetMonth = targetDate.getMonth()+1;
+        var targetDay = targetDate.getDate();
 
-        if (targetDate.getTime() > closedDate.getTime()){
+        if (targetDay > closedDay){
             // 対象日 > 締め日 なら翌月度
             return getAddMonthDate(targetYear, targetMonth, 1, +1);
         }else{
@@ -607,14 +608,14 @@ jQuery(function($){
     }
 
     // 納品日の月が締済みであるなら true
-    function isClosedMonthOfDeliveryDate(deliveryDate, closedDate)
+    function isClosedMonthOfDeliveryDate(deliveryDate, closedDay)
     {
         // システム日付
         var nowDate = new Date();
         // 顧客の月度
-        var customerMonthly = getMonthlyBasedOnClosedDate(nowDate, closedDate);
+        var customerMonthly = getMonthlyBasedOnClosedDay(nowDate, closedDay);
         // 納品日の月度
-        var deliveryMonthly = getMonthlyBasedOnClosedDate(deliveryDate, closedDate);
+        var deliveryMonthly = getMonthlyBasedOnClosedDay(deliveryDate, closedDay);
         // 納品日の月度＜顧客の月度 なら、納品日の月は締め済
         var isClosed = (deliveryMonthly.getTime() < customerMonthly.getTime());
 
@@ -643,10 +644,10 @@ jQuery(function($){
     }
 
     // 出力明細一覧エリアの明細に、ヘッダ部の納品日の月度と同月度ではない納期の明細が存在するなら true
-    function existsInDifferentDetailDeliveryMonthly(deliveryDate, closedDate){
+    function existsInDifferentDetailDeliveryMonthly(deliveryDate, closedDay){
 
         // 納品日の月度
-        var deliveryMonthly = getMonthlyBasedOnClosedDate(deliveryDate, closedDate);
+        var deliveryMonthly = getMonthlyBasedOnClosedDay(deliveryDate, closedDay);
 
         // 各明細の納期の月度を取得する
         var aryDetailDeliveryMonthly = [];
@@ -654,7 +655,7 @@ jQuery(function($){
             // 明細の納期を取得
             var detailDeliveryDate = $(this).children('td.detailDeliveryDate').text();
             // 納期の月度
-            var detailDeliveryMonthly = getMonthlyBasedOnClosedDate(detailDeliveryDate, closedDate);
+            var detailDeliveryMonthly = getMonthlyBasedOnClosedDay(detailDeliveryDate, closedDay);
             // 配列に追加
             aryDetailDeliveryMonthly.push(detailDeliveryMonthly);
         });
@@ -705,7 +706,7 @@ jQuery(function($){
     }
 
     // プレビュー前バリデーションチェック
-    function varidateBeforePreview(closedDate)
+    function varidateBeforePreview(closedDay)
     {
         // 出力明細エリアに明細が一行もない
         if (!existsEditDetail()){
@@ -717,7 +718,7 @@ jQuery(function($){
         var deliveryDate = new Date($('input[name="dtmDeliveryDate"]').val());
 
         // 納品日の月が締済みである
-        if (isClosedMonthOfDeliveryDate(deliveryDate, closedDate)){
+        if (isClosedMonthOfDeliveryDate(deliveryDate, closedDay)){
             alert("締済みのため、指定された納品日は無効です");
             return false;
         }
@@ -729,7 +730,7 @@ jQuery(function($){
         }
 
         // 出力明細一覧エリアの明細に、ヘッダ部の納品日の月度と同月度ではない納期の明細が存在する
-        if (existsInDifferentDetailDeliveryMonthly(deliverDate, closedDate)){
+        if (existsInDifferentDetailDeliveryMonthly(deliverDate, closedDay)){
             alert("出力明細には、入力された納品日と異なる月に納品された明細を指定できません");
             return false;
         }
@@ -951,7 +952,7 @@ jQuery(function($){
         var data = {
             strMode :      "get-closedday",
             strSessionID:  $('input[name="strSessionID"]').val(),
-            aryHeader:     getUpdateHeader(),
+            strcompanydisplaycode:   $('input[name="lngCustomerCode"]').val(),
         };
         
         // プレビュー前のバリデーションに「締め日」が必要なのでajaxで取得する
@@ -965,10 +966,21 @@ jQuery(function($){
             console.log(data);
 
             // 締め日
-            var closedDate = new Date(data);
+            var closedDay = data;
+
+            // 顧客コードに対応する締め日が取得できない
+            if (!closedDay){
+                alert("締め日が取得できません。");
+                return false;
+            }
+            
+            if (closedDay < 0){
+                alert("締め日が負の値です。");
+                return false;
+            }
             
             // プレビュー画面表示前のバリデーションチェック
-            if (!varidateBeforePreview(closedDate)){
+            if (!varidateBeforePreview(closedDay)){
                 return false;
             }
 

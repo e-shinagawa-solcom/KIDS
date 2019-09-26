@@ -407,12 +407,42 @@ function fncGetCountryCode($strCompanyDisplayCode, $objDB)
     return $lngCountryCode;
 }
 
+// 表示用会社コードから締め日を取得する
+function fncGetClosedDay($strCompanyDisplayCode, $objDB)
+{
+    $strQuery = ""
+    . "SELECT"
+    . "  cd.lngclosedday"
+    . " FROM"
+    . "  m_company c "
+    . "    INNER JOIN m_closedday cd "
+    . "    on c.lngcloseddaycode = cd.lngcloseddaycode"
+    . " WHERE"
+    . "  c.strcompanydisplaycode = " . withQuote($strCompanyDisplayCode)
+    ;
+
+    list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
+    if ( $lngResultNum ) {
+        for ( $i = 0; $i < $lngResultNum; $i++ ) {
+            $aryResult[] = $objDB->fetchArray( $lngResultID, $i );
+        }
+    } else {
+        fncOutputError ( 9501, DEF_FATAL, "締め日の取得に失敗", TRUE, "", $objDB );
+    }
+    $objDB->freeResult( $lngResultID );
+
+    return $aryResult[0]["lngclosedday"];    
+}
+
+
 // 表示用ユーザーコードからユーザーコードを取得する
 function fncGetNumericUserCode($strUserDisplayCode, $objDB)
 {
     $lngUserCode = fncGetMasterValue( "m_user", "struserdisplaycode", "lngusercode", $strUserDisplayCode.":str", '', $objDB );
     return $lngUserCode;
 }
+
+
 
 // 会社コードに紐づく帳票伝票種別を取得
 function fncGetSlipKindByCompanyCode($lngCompanyCode, $objDB)

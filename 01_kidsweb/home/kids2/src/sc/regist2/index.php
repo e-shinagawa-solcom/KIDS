@@ -104,9 +104,7 @@
 		// 顧客コード
 		$strCompanyDisplayCode = $_POST["strcompanydisplaycode"];
 		// TODO:締め日取得
-		//$lngClosedDay = fncGetClosedDay($strCompanyDisplayCode, $objDB);
-		// TESTCODE
-		$lngClosedDay = '2019/09/26';
+		$lngClosedDay = fncGetClosedDay($strCompanyDisplayCode, $objDB);
 		// データ返却
 		echo $lngClosedDay;
 		// DB切断
