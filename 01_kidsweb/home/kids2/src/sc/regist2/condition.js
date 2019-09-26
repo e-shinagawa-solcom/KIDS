@@ -38,6 +38,13 @@ jQuery(function($){
         };
 
         // --------------------------------------------------------------
+        //   入力値のバリデーション
+        // --------------------------------------------------------------
+        if (!validateCondition(search_condition)){
+            return false;
+        }
+
+        // --------------------------------------------------------------
         //   顧客コードまたは売上区分が初期値と異なる場合のチェック
         // --------------------------------------------------------------
         // 初期値の取得
@@ -78,5 +85,77 @@ jQuery(function($){
     $('#CancelBt').on('click', function(){
         window.close();
     });
+
+    // ------------------------------------
+    //  functions
+    // ------------------------------------
+    // 入力された検索条件のバリデーション
+    function validateCondition(cnd){
+
+        // 顧客コード必須チェック
+        if(!cnd.strCompanyDisplayCode){
+            alert("顧客コードが未入力です");
+            return false;
+        }
+
+        // FROM納期が不正
+        if (cnd.From_dtmDeliveryDate){
+            if (!isValidDate(cnd.From_dtmDeliveryDate)){
+                alert("納期（FROM）の入力形式が不正です");
+                return false;
+            }
+        }
+
+        // TO納期が不正
+        if (cnd.To_dtmDeliveryDate){
+            if (!isValidDate(cnd.To_dtmDeliveryDate)){
+                alert("納期（TO）の入力形式が不正です");
+                return false;
+            }
+        }
+
+        // FROM納期＞TO納期
+        if (cnd.From_dtmDeliveryDate && cnd.To_dtmDeliveryDate){
+            var from = new Date(cnd.From_dtmDeliveryDate);
+            var to = new Date(cnd.To_dtmDeliveryDate);
+
+            if (from.getTime() > to.getTime()){
+                alert("納期（TO）が納期（FROM）より過去の日です");
+                return false;
+            }
+        }
+
+        return true;
+                
+    };
+
+    // 日付書式チェック
+    function isValidDate(text) {
+        if (!/^\d{1,4}(\/|-)\d{1,2}\1\d{1,2}$/.test(text)) {
+          return false;
+        }
+      
+        const [year, month, day] = text.split(/\/|-/).map(v => parseInt(v, 10));
+      
+        return year >= 1
+          && (1 <= month && month <= 12)
+          && (1 <= day && day <= daysInMonth(year, month));
+      
+        function daysInMonth(year, month) {
+          if (month === 2 && isLeapYear(year)) {
+            return 29;
+          }
+      
+          return {
+            1: 31, 2: 28, 3: 31, 4: 30,
+            5: 31, 6: 30, 7: 31, 8: 31,
+            9: 30, 10: 31, 11: 30, 12: 31
+          }[month];
+        }
+      
+        function isLeapYear(year) {
+          return ((year % 4 === 0) && (year % 100 !== 0)) || (year % 400 === 0);
+        }
+      };
 
 });
