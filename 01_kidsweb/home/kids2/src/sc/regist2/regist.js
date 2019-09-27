@@ -2,6 +2,73 @@
 // regist.js
 //
 
+// ------------------------------------------------------------------
+//   Enterキー押下イベント
+// ------------------------------------------------------------------
+window.document.onkeydown=fncEnterKeyDown;
+
+function fncEnterKeyDown( e )
+{
+    // Enterキー押下で明細追加
+	if( window.event.keyCode == 13)
+	{
+        if (document.activeElement.id == "BaseBack"){
+            $("#AddBt").trigger('click');
+        }
+	}
+}
+
+// ------------------------------------------------------------------
+//   明細選択エリアの選択処理
+// ------------------------------------------------------------------
+var lastSelectedRow;
+function RowClick(currenttr, lock) {
+    if (window.event.ctrlKey) {
+        toggleRow(currenttr);
+    }
+
+    if (window.event.button === 0) {
+        if (!window.event.ctrlKey && !window.event.shiftKey) {
+            clearAllSelected();
+            toggleRow(currenttr);
+        }
+
+        if (window.event.shiftKey) {
+            selectRowsBetweenIndexes([lastSelectedRow.rowIndex, currenttr.rowIndex])
+        }
+    }
+}
+
+function toggleRow(row) {
+    row.className = row.className == 'selected' ? '' : 'selected';
+    // TODO:同じ行のチェックボックスのON/OFFを切り替える
+    var checked = $(row).find('input[name="edit"]').prop('checked');
+    $(row).find('input[name="edit"]').prop('checked', !checked);
+    
+    lastSelectedRow = row;
+}
+
+function selectRowsBetweenIndexes(indexes) {
+    var trs = document.getElementById("DetailTable").tBodies[0].getElementsByTagName("tr");
+    indexes.sort(function(a, b) {
+        return a - b;
+    });
+
+    for (var i = indexes[0]; i <= indexes[1]; i++) {
+        trs[i-1].className = 'selected';
+        var checked = $(trs[i-1]).find('input[name="edit"]').prop('checked');
+        $(trs[i-1]).find('input[name="edit"]').prop('checked', !checked);
+    }
+}
+
+function clearAllSelected() {
+    var trs = document.getElementById("DetailTable").tBodies[0].getElementsByTagName("tr");
+    for (var i = 0; i < trs.length; i++) {
+        trs[i].className = '';
+    }
+}
+// ------------------------------------------------------------------
+
 // ＜検索条件入力画面から呼ばれる関数その１＞
 // 検索条件入力画面で入力された値の設定
 function SetSearchConditionWindowValue(search_condition) {
@@ -109,7 +176,7 @@ jQuery(function($){
                 maxlength: "10"
         });
     });
-    
+
     // ------------------------------------------
     //   functions
     // ------------------------------------------
@@ -865,16 +932,17 @@ jQuery(function($){
     // 追加ボタン
     $('#AddBt').on('click', function(){
         
-        var cb = $('#DetailTableBody').find('input[name="edit"]');
-        var checked = false;
         var trArray = [];
-        $.each(cb, function(i, v){
-            if($(v).prop('checked')){
-                checked = true;
-                trArray.push($(v).parent().parent());
+
+        // 選択行の追加
+        $("#DetailTableBody tr").each(function(index, tr){
+            if ($(tr).attr('class') == "selected" || 
+                $(tr).find('input[name="edit"]').prop('checked') == true){
+                trArray.push(tr);
             }
         });
-        if(!checked){
+
+        if(trArray.length < 1){
             //alert("明細行が選択されていません。");
             return false;
         }

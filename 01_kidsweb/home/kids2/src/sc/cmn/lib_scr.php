@@ -209,10 +209,10 @@ function fncGetReceiveDetailHtml($aryDetail){
     $strHtml = "";
     for($i=0; $i < count($aryDetail); $i++){
         $strDisplayValue = "";
-        $strHtml .= "<tr>";
-
+        //行選択スクリプト埋め込み
+        $strHtml .= "<tr onmousedown='RowClick(this,false);'>";
         //選択チェックボックス
-        $strHtml .= "<td class='detailCheckbox'><input type='checkbox' name='edit'></td>";
+        $strHtml .= "<td class='detailCheckbox'><input type='checkbox' name='edit' onmousedown='return false;' onclick='return false;'></td>";
         //NO.
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["lngsortkey"]);
         $strHtml .= "<td class='detailSortKey'>" . $strDisplayValue . "</td>";
