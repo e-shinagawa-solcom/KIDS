@@ -60,6 +60,12 @@ function SearchReceiveDetail(search_condition) {
         console.log("done:search-detail");
         // 検索結果をテーブルにセット
         $('#DetailTableBody').html(data);
+        // jQueryUIのtablesorterでソート設定
+        $('#DetailTable').tablesorter({
+            headers: {
+                'not-sortable': { sorter: false },
+            }            
+        });
 
     }).fail(function(error){
         console.log("fail:search-detail");
