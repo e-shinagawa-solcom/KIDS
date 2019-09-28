@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------------------
 /**
-*       売上（納品書）登録
+*       納品書修正
 *
 *
 *       @package    K.I.D.S.
@@ -153,7 +153,7 @@
 	//-------------------------------------------------------------------------
 	if($strMode == "change-deliverydate"){
 		// 変更後の納品日に対応する消費税率の選択項目を取得
-		$optTaxRate = fncGetTaxRatePullDown($_POST["dtmDeliveryDate"], $objDB);
+		$optTaxRate = fncGetTaxRatePullDown($_POST["dtmDeliveryDate"], "", $objDB);
 		// データ返却
 		echo $optTaxRate;
 		// DB切断
@@ -162,31 +162,31 @@
 		return true;
 	}
 
-	// //-------------------------------------------------------------------------
-	// // 修正対象データ取得
-	// //-------------------------------------------------------------------------
-	// // TODO:納品伝票番号に紐づくヘッダ・フッタ部のデータ読み込み
-	// $aryHeader = fncGetHeaderBySlipNo($lngSlipNo, $objDB);
+	//-------------------------------------------------------------------------
+	// 修正対象データ取得
+	//-------------------------------------------------------------------------
+	// 納品伝票番号に紐づくヘッダ・フッタ部のデータ読み込み
+	$aryHeader = fncGetHeaderBySlipNo($lngSlipNo, $objDB);
 
-	// // TODO:納品伝票番号に紐づく明細部のキーを取得する
-	// $aryDetailKey = fncGetDetailKeyBySlipNo($lngSlipNo, $objDB);
+	// 納品伝票番号に紐づく明細部のキーを取得する
+	$aryDetailKey = fncGetDetailKeyBySlipNo($lngSlipNo, $objDB);
 	
-	// // 明細部のキーに紐づく受注明細情報を取得する
-	// $aryDetail = array();
-	// for ( $i = 0; $i < count($aryDetailKey); $i++ ){
+	// 明細部のキーに紐づく受注明細情報を取得する
+	$aryDetail = array();
+	for ( $i = 0; $i < count($aryDetailKey); $i++ ){
 
-	// 	$aryCondition = array();
-	// 	$aryCondition["lngreceiveno"] = $aryDetailKey[$i]["lngreceiveno"];
-	// 	$aryCondition["lngreceivedetailno"] = $aryDetailKey[$i]["lngreceivedetailno"];
-	// 	$aryCondition["lngreceiverevisionno"] = $aryDetailKey[$i]["lngreceiverevisionno"];
+		$aryCondition = array();
+		$aryCondition["lngreceiveno"] = $aryDetailKey[$i]["lngreceiveno"];
+		$aryCondition["lngreceivedetailno"] = $aryDetailKey[$i]["lngreceivedetailno"];
+		$aryCondition["lngreceiverevisionno"] = $aryDetailKey[$i]["lngreceiverevisionno"];
 		
-	// 	// キーに紐づく明細を1件ずつ取得して全体の配列にマージ
-	// 	$arySubDetail = fncGetReceiveDetail($aryCondition, $objDB);
-	// 	$aryDetail = array_merge($aryDetail, $arySubDetail);
-	// }
+		// キーに紐づく明細を1件ずつ取得して全体の配列にマージ
+		$arySubDetail = fncGetReceiveDetail($aryCondition, $objDB);
+		$aryDetail = array_merge($aryDetail, $arySubDetail);
+	}
 
-	// // 明細部のHTMLを生成
-	// $strDetailHtml = fncGetReceiveDetailHtml($aryDetail);
+	// 明細部のHTMLを生成
+	$strDetailHtml = fncGetReceiveDetailHtml($aryDetail);
 	
 	//-------------------------------------------------------------------------
 	// フォーム初期値設定
@@ -194,43 +194,65 @@
 	// -------------------------
 	//  修正対象データに紐づくキー
 	// -------------------------
-	// 納品伝票番号（この値がセットされていたら修正モードとみなす）
+	// 納品伝票番号（この値がセットされていたら修正とみなす）
 	$aryData["lngSlipNo"] = $lngSlipNo;
 
 	// -------------------------
 	//  出力明細一覧エリア
 	// -------------------------
-
+	// 明細部のHTMLをセット
+	$aryData["strEditTableBody"] = $strDetailHtml;
 
 	// -------------------------
 	//  ヘッダ・フッダ部
 	// -------------------------
-	// 納品日
-	$nowDate = new DateTime();
-	$aryData["dtmDeliveryDate"] = $nowDate->format('Y/m/d');
+	// 起票者
+	$aryData["lngInsertUserCode"] = $aryHeader["struserdisplaycode"];
+	$aryData["strInsertUserName"] = $aryHeader["struserdisplayname"];
 
-	// 支払期限
-	$oneMonthLater = $nowDate->modify('+1 month');
-	$aryData["dtmPaymentDueDate"] = $oneMonthLater->format('Y/m/d');
+	// 顧客
+	$aryData["lngCustomerCode"] = $aryHeader["strcustomercode"];
+	$aryData["strCustomerName"] = $aryHeader["strcustomerdisplayname"];
+
+	// 顧客側担当者
+	$aryData["strCustomerUserName"] = $aryHeader["strcustomerusername"];
+
+	// 納品日
+	$aryData["dtmDeliveryDate"] = $aryHeader["dtmdeliverydate"];
 
 	// 支払方法プルダウン
-	$optPaymentMethod .= fncGetPulldown("m_paymentmethod","lngpaymentmethodcode","strpaymentmethodname", "", "", $objDB);
+	$lngDefaultPaymentMethodCode = $aryHeader["lngpaymentmethodcode"];
+	$optPaymentMethod .= fncGetPulldown("m_paymentmethod","lngpaymentmethodcode","strpaymentmethodname", $lngDefaultPaymentMethodCode, "", $objDB);
 	$aryData["optPaymentMethod"] = $optPaymentMethod;
 
+	// 支払期限
+	$aryData["dtmPaymentDueDate"] = $aryHeader["dtmpaymentlimit"];
+
+	// 納品先
+	$aryData["lngDeliveryPlaceCode"] = $aryHeader["strcompanydisplaycode"];
+	$aryData["strDeliveryPlaceName"] = $aryHeader["strdeliveryplacename"];
+
+	// 納品先担当者
+	$aryData["strDeliveryPlaceUserName"] = $aryHeader["strdeliveryplaceusername"];
+
+	// 備考
+	$aryData["strNote"] = $aryHeader["strnote"];
+
 	// 消費税区分プルダウン
-	$optTaxClass .= fncGetPulldown("m_taxclass","lngtaxclasscode","strtaxclassname", "", "", $objDB);
+	$lngDefaultTaxClassCode = $aryHeader["lngtaxclasscode"];
+	$optTaxClass .= fncGetPulldown("m_taxclass","lngtaxclasscode","strtaxclassname", $lngDefaultTaxClassCode , "", $objDB);
 	$aryData["optTaxClass"] = $optTaxClass;
 
 	// 消費税率プルダウン
-	// TODO:デフォルト選択値を設定できるように改修
-	$optTaxRate = fncGetTaxRatePullDown($aryData["dtmDeliveryDate"], $objDB);
+	$curDefaultTax = $aryHeader["curtax"];
+	$optTaxRate = fncGetTaxRatePullDown($aryData["dtmDeliveryDate"], $curDefaultTax, $objDB);
 	$aryData["optTaxRate"] = $optTaxRate;
 
-	// 消費税額
+	// 消費税額（※ここでは0をセットしておき、画面表示時にjavascriptで関数を呼び出して計算する）
 	$aryData["strTaxAmount"] = "0";
 
 	// 合計金額
-	$aryData["strTotalAmount"] = "0";
+	$aryData["strTotalAmount"] = $aryHeader["curtotalprice"];
 
 	//-------------------------------------------------------------------------
 	// 画面表示

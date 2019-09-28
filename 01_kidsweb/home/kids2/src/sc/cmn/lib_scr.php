@@ -21,7 +21,7 @@
 // ----------------------------------------------------------------------------
 
 // 消費税率プルダウンの選択項目作成
-function fncGetTaxRatePullDown($dtmDeliveryDate, $objDB)
+function fncGetTaxRatePullDown($dtmDeliveryDate, $curDefaultTax, $objDB)
 {
     // DBからデータ取得
     $strQuery = "SELECT lngtaxcode, curtax "
@@ -45,10 +45,10 @@ function fncGetTaxRatePullDown($dtmDeliveryDate, $objDB)
 	{
         $optionValue =  $aryResult[$i]["lngtaxcode"];
         $displayText =  $aryResult[$i]["curtax"];
-        
-        if ($i == 0)
+
+        // デフォルト値が設定されている場合、その値を選択
+        if ($curDefaultTax == $displayText)
         {
-            // 1件目をデフォルトで選択
             $strHtml .= "<OPTION VALUE=\"$optionValue\" SELECTED>$displayText</OPTION>\n";
         }
         else
@@ -60,6 +60,82 @@ function fncGetTaxRatePullDown($dtmDeliveryDate, $objDB)
     return $strHtml;    
 }
 
+// 納品伝票番号に紐づくヘッダ項目取得
+function fncGetHeaderBySlipNo($lngSlipNo, $objDB)
+{
+    $aryQuery = array();
+    $aryQuery [] = "SELECT ";
+    $aryQuery [] = "  s.lngslipno, ";
+    $aryQuery [] = "  u_ins.struserdisplaycode,  ";
+    $aryQuery [] = "  u_ins.struserdisplayname, ";
+    $aryQuery [] = "  c_cust.strcompanydisplaycode as strcustomercode, ";
+    $aryQuery [] = "  c_cust.strcompanydisplayname as strcustomerdisplayname, ";
+    $aryQuery [] = "  s.strcustomerusername, ";
+    $aryQuery [] = "  s.dtmdeliverydate, ";
+    $aryQuery [] = "  s.dtmpaymentlimit, ";
+    $aryQuery [] = "  s.lngpaymentmethodcode, ";
+    $aryQuery [] = "  c_deli.strcompanydisplaycode, ";
+    $aryQuery [] = "  s.strdeliveryplacename, ";
+    $aryQuery [] = "  s.strdeliveryplaceusername, ";
+    $aryQuery [] = "  s.strnote, ";
+    $aryQuery [] = "  s.lngtaxclasscode, ";
+    $aryQuery [] = "  s.strtaxclassname, ";
+    $aryQuery [] = "  s.curtax, ";
+    $aryQuery [] = "  s.curtotalprice ";
+    $aryQuery [] = " FROM m_slip s ";
+    $aryQuery [] = "   LEFT JOIN m_user u_ins ON s.strinsertusercode = u_ins.struserid ";
+    $aryQuery [] = "   LEFT JOIN m_company c_cust ON CAST(s.strcustomercode AS INTEGER) = c_cust.lngcompanycode ";
+    $aryQuery [] = "   LEFT JOIN m_company c_deli ON s.lngdeliveryplacecode = c_deli.lngcompanycode ";
+    $aryQuery [] = " WHERE ";
+    $aryQuery [] = "  lngslipno = " . $lngSlipNo;
+
+    $strQuery = "";
+    $strQuery .= implode("\n", $aryQuery);
+
+    list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
+    if ( $lngResultNum ) {
+        for ( $i = 0; $i < $lngResultNum; $i++ ) {
+            $aryResult[] = $objDB->fetchArray( $lngResultID, $i );
+        }
+    } else {
+        fncOutputError ( 9501, DEF_FATAL, "納品伝票のヘッダ部の情報取得に失敗", TRUE, "", $objDB );
+    }
+    $objDB->freeResult( $lngResultID );
+
+    return $aryResult;
+}
+
+// 納品伝票番号に紐づく明細のキー項目を取得
+function fncGetDetailKeyBySlipNo($lngSlipNo, $objDB)
+{
+    $aryQuery = array();
+    $aryQuery [] = "SELECT ";
+    $aryQuery [] = "  lngslipno, ";
+    $aryQuery [] = "  lngreceiveno, ";
+    $aryQuery [] = "  lngreceivedetailno, ";
+    $aryQuery [] = "  lngreceiverevisionno ";
+    $aryQuery [] = " FROM t_slipdetail ";
+    $aryQuery [] = " WHERE ";
+    $aryQuery [] = "  lngslipno = " . $lngSlipNo;
+
+    $strQuery = "";
+    $strQuery .= implode("\n", $aryQuery);
+
+    list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
+    if ( $lngResultNum ) {
+        for ( $i = 0; $i < $lngResultNum; $i++ ) {
+            $aryResult[] = $objDB->fetchArray( $lngResultID, $i );
+        }
+    } else {
+        fncOutputError ( 9501, DEF_FATAL, "明細のキー項目の取得に失敗", TRUE, "", $objDB );
+    }
+    $objDB->freeResult( $lngResultID );
+
+    return $aryResult;
+}
+
+
+// 明細検索
 function fncGetReceiveDetail($aryCondition, $objDB)
 {
     // -------------------
