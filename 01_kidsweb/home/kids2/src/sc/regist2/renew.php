@@ -28,6 +28,8 @@
 	require (SRC_ROOT."sc/cmn/lib_scr.php");
 	require (SRC_ROOT."sc/cmn/lib_scd1.php");
 
+	ini_set('memory_limit', '512M');
+
 	$objDB		= new clsDB();
 	$objAuth	= new clsAuth();
 
@@ -139,7 +141,8 @@
 		// DBから明細を検索
 		$aryReceiveDetail = fncGetReceiveDetail($_POST["condition"], $objDB);
 		// 明細選択エリアに出力するHTMLの作成
-		$strHtml = fncGetReceiveDetailHtml($aryReceiveDetail);
+		$withCheckBox = true;
+		$strHtml = fncGetReceiveDetailHtml($aryReceiveDetail, $withCheckBox);
 		// データ返却
 		echo $strHtml;
 		// DB切断
@@ -176,9 +179,9 @@
 	for ( $i = 0; $i < count($aryDetailKey); $i++ ){
 
 		$aryCondition = array();
-		$aryCondition["lngreceiveno"] = $aryDetailKey[$i]["lngreceiveno"];
-		$aryCondition["lngreceivedetailno"] = $aryDetailKey[$i]["lngreceivedetailno"];
-		$aryCondition["lngreceiverevisionno"] = $aryDetailKey[$i]["lngreceiverevisionno"];
+		$aryCondition["lngReceiveNo"] = $aryDetailKey[$i]["lngreceiveno"];
+		$aryCondition["lngReceiveDetailNo"] = $aryDetailKey[$i]["lngreceivedetailno"];
+		$aryCondition["lngReceiveRevisionNo"] = $aryDetailKey[$i]["lngreceiverevisionno"];
 		
 		// キーに紐づく明細を1件ずつ取得して全体の配列にマージ
 		$arySubDetail = fncGetReceiveDetail($aryCondition, $objDB);
@@ -186,7 +189,8 @@
 	}
 
 	// 明細部のHTMLを生成
-	$strDetailHtml = fncGetReceiveDetailHtml($aryDetail);
+	$withCheckBox = false;
+	$strDetailHtml = fncGetReceiveDetailHtml($aryDetail, $withCheckBox);
 	
 	//-------------------------------------------------------------------------
 	// フォーム初期値設定
@@ -244,9 +248,11 @@
 	$aryData["optTaxClass"] = $optTaxClass;
 
 	// 消費税率プルダウン
-	$curDefaultTax = $aryHeader["curtax"];
-	$optTaxRate = fncGetTaxRatePullDown($aryData["dtmDeliveryDate"], $curDefaultTax, $objDB);
-	$aryData["optTaxRate"] = $optTaxRate;
+	if($aryData["dtmDeliveryDate"]){
+		$curDefaultTax = $aryHeader["curtax"];
+		$optTaxRate = fncGetTaxRatePullDown($aryData["dtmDeliveryDate"], $curDefaultTax, $objDB);
+		$aryData["optTaxRate"] = $optTaxRate;
+	}
 
 	// 消費税額（※ここでは0をセットしておき、画面表示時にjavascriptで関数を呼び出して計算する）
 	$aryData["strTaxAmount"] = "0";

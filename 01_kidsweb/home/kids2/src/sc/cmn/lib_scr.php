@@ -102,7 +102,7 @@ function fncGetHeaderBySlipNo($lngSlipNo, $objDB)
     }
     $objDB->freeResult( $lngResultID );
 
-    return $aryResult;
+    return $aryResult[0];
 }
 
 // 納品伝票番号に紐づく明細のキー項目を取得
@@ -188,7 +188,6 @@ function fncGetReceiveDetail($aryCondition, $objDB)
     if ($aryCondition["lngreceivestatuscode"]){
         $aryWhere[] = " AND r.lngreceivestatuscode = '" . $aryCondition["lngreceivestatuscode"] . "'";
     }
-    $aryWhere[] = "  r.lngreceivestatuscode = 2";   //受注ステータス=2:受注
 
     // 顧客（コードで検索）
     if ($aryCondition["strCompanyDisplayCode"]){
@@ -203,6 +202,16 @@ function fncGetReceiveDetail($aryCondition, $objDB)
     // 受注番号
     if ($aryCondition["lngReceiveNo"]){
         $aryWhere[] = " AND r.lngreceiveno = " . $aryCondition["lngReceiveNo"];
+    }
+
+    // 受注明細番号
+    if ($aryCondition["lngReceiveDetailNo"]){
+        $aryWhere[] = " AND rd.lngreceivedetailno = " . $aryCondition["lngReceiveDetailNo"];
+    }
+
+    // リビジョン番号
+    if ($aryCondition["lngReceiveRevisionNo"]){
+        $aryWhere[] = " AND rd.lngrevisionno = " . $aryCondition["lngReceiveRevisionNo"];
     }
 
     // 製品コード
@@ -246,19 +255,9 @@ function fncGetReceiveDetail($aryCondition, $objDB)
     }
     
     // 再販を含む（offの場合、t_receivedetail.strrevisecode='00'のみを対象）
-    if ( $aryCondition["IsIncludingResale"] != "true")
+    if ( $aryCondition["IsIncludingResale"] == "Off")
     {
         $aryWhere[] = " AND rd.strrevisecode = '00'";
-    }
-
-    // 受注明細番号
-    if ($aryCondition["lngreceivedetailno"]){
-        $aryWhere[] = " AND rd.lngreceivedetailno = " . $aryCondition["lngreceivedetailno"];
-    }
-
-    // リビジョン番号
-    if ($aryCondition["lngrevisionno"]){
-        $aryWhere[] = " AND rd.lngrevisionno = " . $aryCondition["lngrevisionno"];
     }
 
     // -------------------
@@ -296,14 +295,18 @@ function fncGetReceiveDetail($aryCondition, $objDB)
     return $aryResult;
 }
 
-function fncGetReceiveDetailHtml($aryDetail){
+function fncGetReceiveDetailHtml($aryDetail, $withCheckBox){
     $strHtml = "";
     for($i=0; $i < count($aryDetail); $i++){
         $strDisplayValue = "";
         //行選択スクリプト埋め込み
         $strHtml .= "<tr onmousedown='RowClick(this,false);'>";
-        //選択チェックボックス
-        $strHtml .= "<td class='detailCheckbox'><input type='checkbox' name='edit' onmousedown='return false;' onclick='return false;'></td>";
+
+        // 明細選択エリアはチェックボックスあり、出力明細一覧エリアはチェックボックスなしのためこのようなスイッチを用意
+        if ($withCheckBox){
+            //選択チェックボックス
+            $strHtml .= "<td class='detailCheckbox'><input type='checkbox' name='edit' onmousedown='return false;' onclick='return false;'></td>";
+        }
         //NO.
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["lngsortkey"]);
         $strHtml .= "<td class='detailSortKey'>" . $strDisplayValue . "</td>";

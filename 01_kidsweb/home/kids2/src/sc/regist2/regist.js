@@ -69,7 +69,11 @@ function clearAllSelected() {
 }
 // ------------------------------------------------------------------
 
-// ＜検索条件入力画面から呼ばれる関数その１＞
+// ------------------------------------------------------------------
+//
+//  検索条件入力画面から呼ばれる関数（呼び出し元は condition.js を参照）
+//
+// ------------------------------------------------------------------
 // 検索条件入力画面で入力された値の設定
 function SetSearchConditionWindowValue(search_condition) {
     // 顧客
@@ -109,7 +113,6 @@ function SetSearchConditionWindowValue(search_condition) {
     }
 }
 
-// ＜検索条件入力画面から呼ばれる関数その２＞
 // 明細検索
 function SearchReceiveDetail(search_condition) {
  
@@ -141,22 +144,32 @@ function SearchReceiveDetail(search_condition) {
     
 }
 
-// ＜検索条件入力画面から呼ばれる関数その３＞
 // 出力明細をすべてクリア
 function ClearAllEditDetail() {
     // 全削除ボタンクリックを手動で起動
     $("#AllDeleteBt").trigger('click');
 }
+// ------------------------------------------------------------------
 
+
+// ------------------------------------------
+//   HTMLエレメント生成後の初期処理
+// ------------------------------------------
 jQuery(function($){
+    
+    // 出力明細部の設定
     $("#EditTableBody").sortable();
     $("#EditTableBody").on('sortstop', function(){
         changeRowNum();
     });
 
-    // ------------------------------------------
-    //   datepicker設定
-    // ------------------------------------------
+    // 画面名ヘッダ画像切り替え
+    if ($('input[name="lngSlipNo"]').val()){
+        SegAHeader.innerHTML = '<img src="/img/type01/sc/screnew_title_ja.gif" width="927" height="30" border="0" alt="売上（納品書）修正">';
+    }else{
+        SegAHeader.innerHTML = '<img src="/img/type01/sc/scr_title_ja.gif" width="927" height="30" border="0" alt="売上（納品書）登録">';
+    }
+
     // datepicker対象要素
     var dateElements = [
         // 納品日
@@ -176,6 +189,9 @@ jQuery(function($){
                 maxlength: "10"
         });
     });
+
+    // 合計金額・消費税額の更新
+    updateAmount();
 
     // ------------------------------------------
     //   functions

@@ -34,7 +34,7 @@ jQuery(function($){
             From_dtmDeliveryDate: $('input[name="From_dtmDeliveryDate"]').val(),
             To_dtmDeliveryDate: $('input[name="To_dtmDeliveryDate"]').val(),
             strNote: $('input[name="strNote"]').val(),
-            IsIncludingResale: $('input[name="IsIncludingResale"]').prop("checked"),
+            IsIncludingResale: $('input[name="IsIncludingResale"]').prop("checked") ? 'On' : 'Off',
         };
 
         // --------------------------------------------------------------

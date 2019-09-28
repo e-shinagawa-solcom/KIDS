@@ -123,7 +123,8 @@
 		// DBから明細を検索
 		$aryReceiveDetail = fncGetReceiveDetail($aryCondition, $objDB);
 		// 明細選択エリアに出力するHTMLの作成
-		$strHtml = fncGetReceiveDetailHtml($aryReceiveDetail);
+		$withCheckBox = true;
+		$strHtml = fncGetReceiveDetailHtml($aryReceiveDetail, $withCheckBox);
 		// データ返却
 		echo $strHtml;
 		// DB切断
@@ -137,7 +138,7 @@
 	//-------------------------------------------------------------------------
 	if($strMode == "change-deliverydate"){
 		// 変更後の納品日に対応する消費税率の選択項目を取得
-		$optTaxRate = fncGetTaxRatePullDown($_POST["dtmDeliveryDate"], $objDB);
+		$optTaxRate = fncGetTaxRatePullDown($_POST["dtmDeliveryDate"], "", $objDB);
 		// データ返却
 		echo $optTaxRate;
 		// DB切断
@@ -168,7 +169,7 @@
 	$aryData["optTaxClass"] = $optTaxClass;
 
 	// 消費税率プルダウン
-	$optTaxRate = fncGetTaxRatePullDown($aryData["dtmDeliveryDate"], $objDB);
+	$optTaxRate = fncGetTaxRatePullDown($aryData["dtmDeliveryDate"], "", $objDB);
 	$aryData["optTaxRate"] = $optTaxRate;
 
 	// 消費税額
@@ -177,6 +178,9 @@
 	// 合計金額
 	$aryData["strTotalAmount"] = "0";
 
+	//-------------------------------------------------------------------------
+	// 画面表示
+	//-------------------------------------------------------------------------
 	// 売上（納品書）登録画面表示（テンプレートは納品書修正画面と共通）
 	echo fncGetReplacedHtml( "sc/regist2/parts.tmpl", $aryData ,$objAuth);
 
