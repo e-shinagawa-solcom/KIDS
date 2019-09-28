@@ -128,8 +128,8 @@
 		$cellAddressList = $sheetInfo['cellAddress'];
 
 		// ヘッダ部のバリデーションを行う
-		$objHeader = new registHeaderController();
-		$objHeader->initialize($sheetInfo['cellAddress'], $lngUserCode, $sheet, $objDB);
+		$objHeader = new registHeaderController($objDB);
+		$objHeader->initialize($sheetInfo['cellAddress'], $lngUserCode, $sheet);
 		$message = $objHeader->validate();
 
 		if ($message) {

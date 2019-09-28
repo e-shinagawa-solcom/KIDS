@@ -14,7 +14,9 @@ class estimateHeaderController {
     protected $errorMessage; // エラーメッセージ
     protected $messageCode;
     
-    public $loginUserCode;
+    protected $loginUserCode;
+
+    protected $objDB;
 
     // 取り込み値
     protected $productCode;
@@ -30,6 +32,11 @@ class estimateHeaderController {
 
     // マスターデータ配列
 
+    protected static $groupDislayNameMaster;
+    protected static $userDisplayNameMaster;
+    protected static $salesGroupMaster;
+    protected static $developUserMaster;
+
     // セル名称リスト
     protected static $nameList; // ヘッダー部入力項目のセル名称
     protected static $titleNameList; // ヘッダー部タイトル項目のセル名称
@@ -38,9 +45,11 @@ class estimateHeaderController {
 
     protected $cellAddressList; // セル名称に対応したセル位置のリスト
 
-    protected function __construct() {
+    protected function __construct($objDB) {
+        $this->objDB = $objDB;
         $this->setNameList();
         $this->setTitleNameList();
+        $this->setGroupAndUserMaster();
     }
 
     protected function setNameList() {
@@ -53,6 +62,63 @@ class estimateHeaderController {
         if (!self::$titleNameList) {
             self::$titleNameList = workSheetConst::WORK_SHEET_HEADER_TITLE_CELL;
         }
+    }
+
+    // マスターセット関数
+    protected function setGroupAndUserMaster() {
+        if (!self::$groupDislayNameMaster
+            || !self::$userDisplayNameMaster
+            || !self::$salesGroupMaster
+            || !self::$developUserMaster) {
+
+           
+            $datas = $this->objDB->getSalesGroupAndDevelopGroup();
+
+            foreach ($datas as $data) {
+
+                $attributeCode = (int)$data->lngattributecode;
+                $groupDisplayCode = $data->strgroupdisplaycode;
+                $groupDisplayName = $data->strgroupdisplayname;
+                $userDisplayCode = $data->struserdisplaycode;
+                $userDisplayName = $data->struserdisplayname;
+
+                if ($groupDislayNameMaster[$groupDisplayCode]) {
+                    $groupDislayNameMaster[$groupDisplayCode] = $groupDisplayName;
+                }
+
+                if ($userDisplayNameMaster[$userDisplayCode]) {
+                    $userDisplayNameMaster[$userDisplayCode] = $userDisplayName;
+                }
+                
+                if ($attributeCode === DEF_GROUP_ATTRIBUTE_CODE_SALES_GROUP) { // 営業部門の場合
+
+                    $salesGroupMaster[$groupDisplayCode][$userDisplayCode] = true;
+                    
+                } else if ($attributeCode === DEF_GROUP_ATTRIBUTE_CODE_DEVELOP_GROUP) { // 開発部門の場合
+
+                    $developUserMaster[$userDisplayCode] = true;
+
+                }                
+            }
+
+            if (!self::$groupDislayNameMaster) {
+                self::$groupDislayNameMaster = $groupDislayNameMaster;
+            }
+
+            if (!self::$groupDislayNameMaster) {
+                self::$userDisplayNameMaster = $userDisplayNameMaster;
+            }
+
+            if (!self::$salesGroupMaster) {
+                self::$salesGroupMaster = $salesGroupMaster;
+            }
+
+            if (!self::$developUserMaster) {
+                self::$developUserMaster = $developUserMaster;
+            }
+        }
+
+        return;
     }
 
     // 配列内のデータを各定数にセットする
@@ -85,6 +151,17 @@ class estimateHeaderController {
         return $registData;
     }
 
+    // 表示名と表示コードを結合したデータのリストを出力する
+    public function outputDisplayData() {
+        $displayData = array(
+            workSheetConst::INCHARGE_GROUP_CODE => $this->inchargeGroupCode,
+            workSheetConst::INCHARGE_USER_CODE => $this->inchargeUserCode,
+            workSheetConst::DEVELOP_USER_CODE => $this->developUserCode,
+        );
+
+        return $displayData;
+    }
+
     // バリデーション処理を行う
     public function validate() {
         // エラーコードをセットする関数
@@ -92,40 +169,20 @@ class estimateHeaderController {
         $this->validateProductName(); // 製品名
         $this->validateProductEnglishName(); // 製品名(英語)
         $this->validateRetailPrice(); // 上代
-        $this->validateInchargeGroupCode(); // 営業部署
-        $this->validateInchargeUserCode(); // 担当
+        $this->validateIncharge(); // 営業部署、担当
         $this->validateDevelopUserCode(); // 開発担当者
         $this->validateCartonQuantity(); // カートン入り数
         $this->validateProductionQuantity(); // 償却数
         
         $loginUserCode = $this->loginUserCode;
         $inchargeGroupCodeNumber = $this->inchargeGroupCodeNumber;
-        $inchargeUserCodeNumber = $this->inchargeUserCodeNumber;
+        $salesGroupMaster = self::$salesGroupMaster; // 営業部署のマスターを取得
 
         // ログインユーザーが営業部署に所属するかチェックする
-        if (!$this->messageCode['inchargeGroupCode']) {
+        if (!$this->messageCode['inchargeGroupCode'] && $inchargeGroupCodeNumber) {
             $result = $this->objDB->userCodeAffiliateCheck($loginUserCode, $inchargeGroupCodeNumber);
             if (!$result) {
                 $this->messageCode['loginUser'] = DEF_MESSAGE_CODE_MASTER_CHECK_ERROR;
-            }
-        }
-
-        // 担当者が営業部署に所属するかチェックする
-        if (!$this->messageCode['inchargeGroupCode'] && !$this->messageCode['inchargeUserCode']) {
-            $result = $this->objDB->userDisplayCodeAffiliateCheck($inchargeUserCodeNumber, $inchargeGroupCodeNumber);
-            if (!$result) {
-                $this->messageCode['loginUser'] = DEF_MESSAGE_CODE_MASTER_CHECK_ERROR;
-            }
-        }
-
-        if (!$this->messageCode['productCode'] && $this->productCode) {
-            // 製品マスタとシートの営業部署が一致するか確認する
-            $currentRecord = $this->objDB->getCurrentRecordForProductCode($this->productCode);
-            if($currentRecord !== false) {
-                $groupDisplayCode = $currentRecord->strgroupdisplaycode;
-                if ($groupDisplayCode != $inchargeGroupCodeNumber) {
-                    $this->messageCode['inchargeGroupCode'] = DEF_MESSAGE_CODE_MASTER_CHECK_ERROR;
-                }                
             }
         }
         
@@ -244,20 +301,40 @@ class estimateHeaderController {
         return true;
     }
 
+    // 営業部署関連のバリデーションを行う
+    protected function validateIncharge() {
+        $this->validateInchargeGroupCode(); // 営業部署
+        $this->validateInchargeUserCode();  // 担当
+        return;
+    }
+
     // 営業部署チェック
     protected function validateInchargeGroupCode() {
         $inchargeGroupCode = $this->inchargeGroupCode;
+
+        $salesGroupMaster = self::$salesGroupMaster; // マスターのデータを取得
+
         // バリデーション条件
         if (isset($inchargeGroupCode) && $inchargeGroupCode !=='') {
             if (preg_match("/\A[0-9]+:.+\z/", $inchargeGroupCode)) {
                 list ($inchargeGroupCodeNumber, $inchargeGroupCodeName) = explode(':', $inchargeGroupCode);
-                $result = $this->objDB->getGroupRecordForDisplay($inchargeGroupCodeNumber);
+
+                // $result = $this->objDB->getGroupRecordForDisplay($inchargeGroupCodeNumber);
+                
                 // マスターチェック
-                if (!$result) {
-                    // レコードが取得できなかった場合
+                if (!$salesGroupMaster[$inchargeGroupCodeNumber]) {
+                    // 営業部署に存在しない場合
                     $this->messageCode['inchargeGroupCode'] = DEF_MESSAGE_CODE_MASTER_CHECK_ERROR;
+
                 } else {
+
                     $this->inchargeGroupCodeNumber = $inchargeGroupCodeNumber; // グループコードをセットする
+
+                    // 表示名をDB取得値に置換             
+                    $groupDislayNameMaster = self::$groupDislayNameMaster;
+                    $displayName = $groupDislayNameMaster[$inchargeGroupCodeNumber];
+                    $this->inchargeGroupCode = $inchargeGroupCodeNumber. ':'. $displayName;
+
                 }
             } else {
                 // 入力形式不正
@@ -272,18 +349,32 @@ class estimateHeaderController {
 
     // 担当者のチェックを行う
     protected function validateInchargeUserCode() {
+        $inchargeGroupCodeNumber = $this->inchargeGroupCodeNumber;
+
+        if (!$inchargeGroupCodeNumber) {
+            return false;
+        }
+
         $inchargeUserCode = $this->inchargeUserCode;
+
+        $salesGroupMaster = self::$salesGroupMaster; // マスターのデータを取得
+
         // バリデーション条件
         if (isset($inchargeUserCode) && $inchargeUserCode !=='') {
             if (preg_match("/\A[0-9]+:.+\z/", $inchargeUserCode)) {
                 list ($inchargeUserCodeNumber, $inchargeUserCodeName) = explode(':', $inchargeUserCode);
-                $result = $this->objDB->getUserRecordForDisplay($inchargeUserCodeNumber);
+
                 // マスターチェック
-                if (!$result) {
-                    // レコードが取得できなかった場合
+                if ($salesGroupMaster[$inchargeGroupCodeNumber][$inchargeUserCodeNumber] !== true) {
+                    // 営業部署に存在しないまたはユーザーコードが存在しない場合
                     $this->messageCode['inchargeUserCode'] = DEF_MESSAGE_CODE_MASTER_CHECK_ERROR;
                 } else {
                     $this->inchargeUserCodeNumber = $inchargeUserCodeNumber; // 表示上のユーザーコードをセットする
+
+                    // 表示名をDB取得値に置換             
+                    $userDisplayNameMaster = self::$userDisplayNameMaster;
+                    $displayName = $userDisplayNameMaster[$inchargeUserCodeNumber];
+                    $this->inchargeUserCode = $inchargeUserCodeNumber. ':'. $displayName;
                 }
             } else {
                 // 入力形式不正
@@ -298,18 +389,27 @@ class estimateHeaderController {
 
     // 開発担当者のチェックを行う
     protected function validateDevelopUserCode() {
+
         $developUserCode = $this->developUserCode;
+        
+        $developUserMaster = self::$developUserMaster;
+
         // バリデーション条件
         if (isset($developUserCode) && $developUserCode !=='') {
             if (preg_match("/\A[0-9]+:.+\z/", $developUserCode)) {
                 list ($developUserCodeNumber, $developUserCodeName) = explode(':', $developUserCode);
-                $result = $this->objDB->getUserRecordForDisplay($developUserCodeNumber);
+
                 // マスターチェック
-                if (!$result) {
-                    // レコードが取得できなかった場合
+                if ($developUserMaster[$developUserCodeNumber] !== true) {
+                    // 開発書に存在していないまたはユーザーコードが存在しない場合
                     $this->messageCode['developUserCode'] = DEF_MESSAGE_CODE_MASTER_CHECK_ERROR;
                 } else {
                     $this->developUserCodeNumber = $developUserCodeNumber; // 表示上のユーザーコードをセットする
+
+                    // 表示名をDB取得値に置換             
+                    $userDisplayNameMaster = self::$userDisplayNameMaster;
+                    $displayName = $userDisplayNameMaster[$developUserCodeNumber];
+                    $this->inchargeUserCode = $developUserCodeNumber. ':'. $displayName;
                 }
             } else {
                 // 入力形式不正

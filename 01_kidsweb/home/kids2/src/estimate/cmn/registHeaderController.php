@@ -14,12 +14,12 @@ use PhpOffice\PhpSpreadsheet\Reader\Xlsx as XlsxReader;
 
 class registHeaderController extends estimateHeaderController {
 
-    public function __construct() {
-        parent::__construct();
+    public function __construct($objDB) {
+        parent::__construct($objDB);
     }
 
     // セル名称に対応したセルのリストと行番号による初期データ作成
-    public function initialize($cellAddressList, $loginUserCode, $sheet, $objDB) {
+    public function initialize($cellAddressList, $loginUserCode, $sheet) {
         $this->sheet = $sheet;
         $this->cellAddressList = $cellAddressList;
         $params = $this->getCellParams();
@@ -27,7 +27,6 @@ class registHeaderController extends estimateHeaderController {
         $this->setCellParams($params);
         $this->setCellTitleParams();
         $this->loginUserCode = $loginUserCode;
-        $this->objDB = $objDB;
         return true;
     }
 
