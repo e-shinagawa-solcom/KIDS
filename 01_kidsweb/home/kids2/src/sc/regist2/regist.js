@@ -2,6 +2,73 @@
 // regist.js
 //
 
+// ------------------------------------------------------------------
+//   Enterキー押下イベント
+// ------------------------------------------------------------------
+window.document.onkeydown=fncEnterKeyDown;
+
+function fncEnterKeyDown( e )
+{
+    // Enterキー押下で明細追加
+	if( window.event.keyCode == 13)
+	{
+        if (document.activeElement.id == "BaseBack"){
+            $("#AddBt").trigger('click');
+        }
+	}
+}
+
+// ------------------------------------------------------------------
+//   明細選択エリアの選択処理
+// ------------------------------------------------------------------
+var lastSelectedRow;
+function RowClick(currenttr, lock) {
+    if (window.event.ctrlKey) {
+        toggleRow(currenttr);
+    }
+
+    if (window.event.button === 0) {
+        if (!window.event.ctrlKey && !window.event.shiftKey) {
+            clearAllSelected();
+            toggleRow(currenttr);
+        }
+
+        if (window.event.shiftKey) {
+            selectRowsBetweenIndexes([lastSelectedRow.rowIndex, currenttr.rowIndex])
+        }
+    }
+}
+
+function toggleRow(row) {
+    row.className = row.className == 'selected' ? '' : 'selected';
+    // TODO:同じ行のチェックボックスのON/OFFを切り替える
+    var checked = $(row).find('input[name="edit"]').prop('checked');
+    $(row).find('input[name="edit"]').prop('checked', !checked);
+    
+    lastSelectedRow = row;
+}
+
+function selectRowsBetweenIndexes(indexes) {
+    var trs = document.getElementById("DetailTable").tBodies[0].getElementsByTagName("tr");
+    indexes.sort(function(a, b) {
+        return a - b;
+    });
+
+    for (var i = indexes[0]; i <= indexes[1]; i++) {
+        trs[i-1].className = 'selected';
+        var checked = $(trs[i-1]).find('input[name="edit"]').prop('checked');
+        $(trs[i-1]).find('input[name="edit"]').prop('checked', !checked);
+    }
+}
+
+function clearAllSelected() {
+    var trs = document.getElementById("DetailTable").tBodies[0].getElementsByTagName("tr");
+    for (var i = 0; i < trs.length; i++) {
+        trs[i].className = '';
+    }
+}
+// ------------------------------------------------------------------
+
 // ＜検索条件入力画面から呼ばれる関数その１＞
 // 検索条件入力画面で入力された値の設定
 function SetSearchConditionWindowValue(search_condition) {
@@ -60,6 +127,12 @@ function SearchReceiveDetail(search_condition) {
         console.log("done:search-detail");
         // 検索結果をテーブルにセット
         $('#DetailTableBody').html(data);
+        // jQueryUIのtablesorterでソート設定
+        $('#DetailTable').tablesorter({
+            headers: {
+                'not-sortable': { sorter: false },
+            }            
+        });
 
     }).fail(function(error){
         console.log("fail:search-detail");
@@ -103,7 +176,7 @@ jQuery(function($){
                 maxlength: "10"
         });
     });
-    
+
     // ------------------------------------------
     //   functions
     // ------------------------------------------
@@ -240,6 +313,9 @@ jQuery(function($){
         $(editTr).append($(td));
         //通貨単位記号（明細登録用）
         td = $(tr).find($('td.detailMonetaryUnitSign')).clone();
+        $(editTr).append($(td));
+        //明細統一フラグ（明細登録用）
+        td = $(tr).find($('td.detailUnifiedFlg')).clone();
         $(editTr).append($(td));
         
         // 出力明細テーブルに明細を追加
@@ -519,14 +595,15 @@ jQuery(function($){
                 lngmonetaryratecode: $(tr).children('.detailMonetaryRateCode').text(),
                 //通貨単位記号（明細登録用）
                 strmonetaryunitsign: $(tr).children('.detailMonetaryUnitSign').text(),
+                //明細統一フラグ（明細登録用）
+                bytdetailunifiedflg: $(tr).children('.detailUnifiedFlg').text(),
             };
             result.push(param);
         });
         return result;
     }
 
-
-    // 別ウィンドウを開いてPOSTする
+    // 別ウィンドウを開いてPOSTする（検索条件入力画面を開くときだけ使用）
     function post_open(url, data, target, features) {
 
         window.open('', target, features);
@@ -550,6 +627,236 @@ jQuery(function($){
        
         // フォームを削除
         $('#temp_form').remove();
+    }
+
+    // --------------------------------------------------------------------------------
+    //   日付計算ヘルパ関数
+    // --------------------------------------------------------------------------------
+    // nヶ月前後の年月日を取得する
+    function getAddMonthDate(year,month,day,add){
+        var addMonth = month + add;
+        var endDate = getEndOfMonth(year,addMonth);//add分を加えた月の最終日を取得
+
+        //引数で渡された日付がnヶ月後の最終日より大きければ日付を次月最終日に合わせる
+        //5/31→6/30のように応当日が無い場合に必要
+        if(day > endDate){
+            day = endDate;
+        }else{
+            day = day - 1;
+        }
+
+        var addMonthDate = new Date(year,addMonth - 1,day);
+        return addMonthDate;
+    }
+    //今月の月末日を取得
+    //※次月の0日目＝今月の末日になる
+    function getEndOfMonth(year,month){
+        var endDate = new Date(year,month,0);
+        return endDate.getDate();
+    }
+
+    // 締め日をもとに月度を計算する
+    function getMonthlyBasedOnClosedDay(targetDate, closedDay)
+    {
+        var targetYear = targetDate.getFullYear();
+        var targetMonth = targetDate.getMonth()+1;
+        var targetDay = targetDate.getDate();
+
+        if (targetDay > closedDay){
+            // 対象日 > 締め日 なら翌月度
+            return getAddMonthDate(targetYear, targetMonth, 1, +1);
+        }else{
+            // 対象日 <= 締め日 なら当月度
+            return new Date(targetYear, targetMonth, 1);
+        }
+    }
+    // --------------------------------------------------------------------------------
+
+    // ------------------------------------------
+    //    バリデーション関連
+    // ------------------------------------------
+    // 出力明細エリアに明細が1行以上存在するなら true
+    function existsEditDetail(){
+        return $("#EditTableBody tr").length > 0;
+    }
+
+    // 納品日の月が締済みであるなら true
+    function isClosedMonthOfDeliveryDate(deliveryDate, closedDay)
+    {
+        // システム日付
+        var nowDate = new Date();
+        // 顧客の月度
+        var customerMonthly = getMonthlyBasedOnClosedDay(nowDate, closedDay);
+        // 納品日の月度
+        var deliveryMonthly = getMonthlyBasedOnClosedDay(deliveryDate, closedDay);
+        // 納品日の月度＜顧客の月度 なら、納品日の月は締め済
+        var isClosed = (deliveryMonthly.getTime() < customerMonthly.getTime());
+
+        return isClosed;
+    }
+
+    // 対象日付がシステム日付の前後一ヶ月以内なら true
+    function withinOneMonthBeforeAndAfter(targetDate)
+    {
+        // システム日付
+        var nowDate = new Date();
+        var nowYear = nowDate.getFullYear();
+        var nowMonth = nowDate.getMonth()+1;
+        var nowDay = nowDate.getDate();
+
+        // ひと月前
+        var aMonthAgo = getAddMonthDate(nowYear, nowMonth, nowDay, -1);
+        // ひと月後
+        var aMonthLater = getAddMonthDate(nowYear, nowMonth, nowDay, +1);
+
+        // 前後一ヶ月以内ならtrue
+        var valid = (aMonthAgo.getTime() <= targetDate.getTime()) &&
+                    (aMonthLater.getTime() >= targetDate.getTime());
+
+        return valid;
+    }
+
+    // 出力明細一覧エリアの明細に、ヘッダ部の納品日の月度と同月度ではない納期の明細が存在するなら true
+    function existsInDifferentDetailDeliveryMonthly(deliveryDate, closedDay){
+
+        // 納品日の月度
+        var deliveryMonthly = getMonthlyBasedOnClosedDay(deliveryDate, closedDay);
+
+        // 各明細の納期の月度を取得する
+        var aryDetailDeliveryMonthly = [];
+        $("#EditTableBody tr").each(function(){
+            // 明細の納期を取得
+            var detailDeliveryDate = $(this).children('td.detailDeliveryDate').text();
+            // 納期の月度
+            var detailDeliveryMonthly = getMonthlyBasedOnClosedDay(detailDeliveryDate, closedDay);
+            // 配列に追加
+            aryDetailDeliveryMonthly.push(detailDeliveryMonthly);
+        });
+
+        // 納期の月度が納品日の月度と一致しない明細が１つでもあったらエラー
+        var indifferentDetailExists = aryDetailDeliveryMonthly.some(function(element){ 
+            return (element.getTime() != deliveryMonthly.getTime());
+        });
+
+        return !indifferentDetailExists;
+    }
+
+    // 出力明細エリアの各明細の売上区分の統一性をチェック。チェックOKならtrue、NGならfalse
+    function checkEditDetailsAreSameSalesClass()
+    {
+        // 出力明細エリアにあるすべての明細の明細統一フラグと売上区分コードを取得する
+        var aryDetailUnifiedFlg = [];
+        var aryDetailSalesClassCode = [];
+        $("#EditTableBody tr").each(function(){
+            // 明細統一フラグを取得して配列に追加
+            aryDetailUnifiedFlg .push($(this).children('td.detailUnifiedFlg').text());
+            // 売上区分コードを取得して配列に追加
+            aryDetailSalesClassCode .push($(this).children('td.detailSalesClassCode').text());
+        });
+
+        // １．全行の売上区分マスタの明細統一フラグがfalse -> OKとしてチェック終了。そうでないなら２．へ
+        var allDetailUnifiedFlgIsFalse = aryDetailUnifiedFlg.every(function(element){ 
+            return (element == false);
+        });
+        if (allDetailUnifiedFlgIsFalse){
+            return true;
+        }
+        
+        // ２．売上区分マスタの明細統一フラグがtrueである明細の件数 != 出力明細一覧エリアの明細行数 を満たすなら NGとしてチェック終了。そうでないなら３．へ
+        var aryDetailUnifiedFlgIsTrue = aryDetailUnifiedFlg.filter(function(element){
+            return (element == true);
+        });
+        if (aryDetailUnifiedFlgIsTrue.length != $("#EditTableBody tr").length){
+            return false;
+        }
+
+        // ３．出力明細一覧エリアの明細の売上区分コードがすべて同じ値 -> OKとしてチェック終了。そうでないなら NGとしてチェック終了
+        var allDetailSalesClassCodeHasSameValue = aryDetailSalesClassCode.every(function(element){ 
+            return (element == aryDetailSalesClassCode[0]);
+        });
+
+        return allDetailSalesClassCodeHasSameValue;
+    }
+
+    // プレビュー前バリデーションチェック
+    function varidateBeforePreview(closedDay)
+    {
+        // 出力明細エリアに明細が一行もない
+        if (!existsEditDetail()){
+            alert("出力明細が選択されていません");
+            return false;
+        }
+
+        // ヘッダ・フッタ部の納品日を取得
+        var deliveryDate = new Date($('input[name="dtmDeliveryDate"]').val());
+
+        // 納品日の月が締済みである
+        if (isClosedMonthOfDeliveryDate(deliveryDate, closedDay)){
+            alert("締済みのため、指定された納品日は無効です");
+            return false;
+        }
+
+        // 納品日がシステム日付の前後一ヶ月以内にない
+        if (!withinOneMonthBeforeAndAfter(deliveryDate)){
+            alert("納品日は今月の前後1ヶ月の間を指定してください");
+            return false;
+        }
+
+        // 出力明細一覧エリアの明細に、ヘッダ部の納品日の月度と同月度ではない納期の明細が存在する
+        if (existsInDifferentDetailDeliveryMonthly(deliverDate, closedDay)){
+            alert("出力明細には、入力された納品日と異なる月に納品された明細を指定できません");
+            return false;
+        }
+
+        // 出力明細一覧エリアの明細各行の売上区分統一性チェック
+        if (!checkEditDetailsAreSameSalesClass()){
+            alert("売上区分の混在ができない明細が選択されています");
+            return false;
+        }
+
+        // バリデーション成功
+        return true;
+    }
+
+    // プレビュー画面を表示する（バリデーションあり）
+    function displayPreview(){
+
+        // プレビュー画面のウィンドウ属性の定義
+        var target = "previewWin";
+        var features = "width=900,height=800,top=10,left=10,status=yes,scrollbars=yes,directories=no,menubar=yes,resizable=yes,location=no,toolbar=no";
+
+        // 先に空のウィンドウを開いておく
+        var emptyWin = window.open('', target, features);
+
+        // POSTデータ構築
+        var data = {
+            strMode :      "display-preview",
+            strSessionID:  $('input[name="strSessionID"]').val(),
+            aryHeader:     getUpdateHeader(),
+            aryDetail:     getUpdateDetail(),
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: 'preview.php',
+            data: data,
+            async: true,
+        }).done(function(data){
+            console.log("done");
+            
+            var url = "/sc/regist2/preview.php" + "?strSessionID=" + $('input[name="strSessionID"]').val();
+            var previewWin = window.open('' , target , features );
+            previewWin.document.write(data);
+            previewWin.document.close();
+            
+            //再読み込みなしでアドレスバーのURLのみ変更
+            previewWin.history.pushState(null,null,url);
+            
+        }).fail(function(error){
+            console.log("fail");
+            console.log(error);
+            emptyWin.close();
+        });
     }
     
     // ------------------------------------------
@@ -625,16 +932,17 @@ jQuery(function($){
     // 追加ボタン
     $('#AddBt').on('click', function(){
         
-        var cb = $('#DetailTableBody').find('input[name="edit"]');
-        var checked = false;
         var trArray = [];
-        $.each(cb, function(i, v){
-            if($(v).prop('checked')){
-                checked = true;
-                trArray.push($(v).parent().parent());
+
+        // 選択行の追加
+        $("#DetailTableBody tr").each(function(index, tr){
+            if ($(tr).attr('class') == "selected" || 
+                $(tr).find('input[name="edit"]').prop('checked') == true){
+                trArray.push(tr);
             }
         });
-        if(!checked){
+
+        if(trArray.length < 1){
             //alert("明細行が選択されていません。");
             return false;
         }
@@ -713,41 +1021,49 @@ jQuery(function($){
 
     // プレビューボタン押下
     $('#PreviewBt').on('click', function(){
-       
-        var target = "previewWin";
-        var features = "width=900,height=800,top=10,left=10,status=yes,scrollbars=yes,directories=no,menubar=yes,resizable=yes,location=no,toolbar=no";
-
-        // 先に空のウィンドウを開いておく
-        var emptyWin = window.open('', target, features);
 
         // POSTデータ構築
         var data = {
-            strMode :      "display-preview",
+            strMode :      "get-closedday",
             strSessionID:  $('input[name="strSessionID"]').val(),
-            aryHeader:     getUpdateHeader(),
-            aryDetail:     getUpdateDetail(),
+            strcompanydisplaycode:   $('input[name="lngCustomerCode"]').val(),
         };
-
+        
+        // プレビュー前のバリデーションに「締め日」が必要なのでajaxで取得する
         $.ajax({
             type: 'POST',
-            url: 'preview.php',
+            url: 'index.php',
             data: data,
             async: true,
         }).done(function(data){
-            console.log("done");
+            console.log("done:get-closedday");
+            console.log(data);
+
+            // 締め日
+            var closedDay = data;
+
+            // 顧客コードに対応する締め日が取得できない
+            if (!closedDay){
+                alert("締め日が取得できません。");
+                return false;
+            }
             
-            var url = "/sc/regist2/preview.php" + "?strSessionID=" + $('input[name="strSessionID"]').val();
-            var previewWin = window.open('' , target , features );
-            previewWin.document.write(data);
-            previewWin.document.close();
+            if (closedDay < 0){
+                alert("締め日が負の値です。");
+                return false;
+            }
             
-            //再読み込みなしでアドレスバーのURLのみ変更
-            previewWin.history.pushState(null,null,url);
+            // プレビュー画面表示前のバリデーションチェック
+            if (!varidateBeforePreview(closedDay)){
+                return false;
+            }
+
+            // プレビュー画面表示
+            displayPreview();
             
         }).fail(function(error){
-            console.log("fail");
+            console.log("fail:get-closedday");
             console.log(error);
-            emptyWin.close();
         });
 
     });

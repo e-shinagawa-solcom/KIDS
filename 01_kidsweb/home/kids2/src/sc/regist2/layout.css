@@ -152,7 +152,6 @@
 		left: 785px;
 	}
 
-	/* ???ç´°è??è¡?ç¤ºã????¼ã????? */
 	#DetailTable {
 		table-layout: fixed;
 	}
@@ -163,6 +162,9 @@
 		background-color: #7e888f;
 		padding: 4px 3px 1px 3px;
 		white-space: nowrap;
+	}
+	tr.TrSegs th.sortable {
+		padding: 4px 20px 1px 3px;
 	}
 	#DetailTableBody tr td {
 		font-size: 9pt;

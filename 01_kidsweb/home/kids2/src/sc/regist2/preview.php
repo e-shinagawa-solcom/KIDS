@@ -97,7 +97,7 @@
 		//  文字コード変換（UTF-8->EUC-JP）
 		// --------------------------------
 		//jQueryのajaxでPOSTすると文字コードが UTF-8 になって
-		//データ登録時にエラーになるため、EUC-JPに変換する
+		//データ登録時にエラーになるため、DB処理前にEUC-JPに変換する
 		$aryHeader = fncConvertArrayHeaderToEucjp($aryHeader);
 		$aryDetail = fncConvertArrayDetailToEucjp($aryDetail);
 
@@ -110,6 +110,7 @@
 		// --------------------------
 		//  プレビュー画面表示
 		// --------------------------
+		// テンプレートから構築したHTMLを出力
 		$aryData["PREVIEW_STYLE"] = $aryPreview["PreviewStyle"];
 		$aryData["PREVIEW_DATA"] = $aryPreview["PreviewData"];
 		$objTemplate = new clsTemplate();
@@ -119,6 +120,9 @@
 
 		echo $objTemplate->strTemplate;
 
+		// DB切断
+		$objDB->close();
+		// 処理終了
 		return true;
 	}
 
@@ -189,45 +193,30 @@
 		$objTemplate->complete();
 		echo $objTemplate->strTemplate;
 
+		// DB切断
+		$objDB->close();
+		// 処理終了
 		return true;
 	}
 
-
-	// -----------------------------------
-	//   帳票表示サンプル
-	// -----------------------------------
-	// if($strMode == "chouhyou-sample"){
-	// 	// 日本語に対応する場合、この1行が必要
-	// 	ini_set('default_charset', 'UTF-8');
-
-	// 	// 読み込み
-	// 	$file = mb_convert_encoding('template\納品書temple_B社_連絡書付.xlsx', 'UTF-8','EUC-JP' );
-	// 	$sheetname = mb_convert_encoding('B社専用', 'UTF-8','EUC-JP' );
-	// 	$cellValue = mb_convert_encoding('個別に値をセット', 'UTF-8','EUC-JP' );
-	// 	$spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($file);
-	// 	$spreadsheet->GetSheetByName($sheetname)->GetCell('C3')->SetValue($cellValue);
-	// 	$writer = new \PhpOffice\PhpSpreadsheet\Writer\Html($spreadsheet);
-	// 	$outStyle = $writer->generateStyles(true);
-	// 	$outSheetData = $writer->generateSheetData();
-	// 	$outStyle = mb_convert_encoding($outStyle, 'EUC-JP', 'UTF-8');
-	// 	$outSheetData = mb_convert_encoding($outSheetData, 'EUC-JP', 'UTF-8');
-
-	// 	$aryData["PREVIEW_STYLE"] = $outStyle;
-	// 	$aryData["PREVIEW_DATA"] = $outSheetData;
-
+	// 通常ここに来ることは無い（不明なモードでPOSTした場合ここに来る）
+	echo "不明なモードでPOSTされました";
 	return true;
 
+	// ヘルパ関数：jsonエンコード後にbase64エンコード
+	// base64変換するのは HTMLのhiddenフィールドに安全な形で格納するため。
 	function EncodeToJson($object){
 		$json = base64_encode(json_encode($object));
 		return $json;
 	}
 
+	// ヘルパ関数：base64デコード後にjsonデコード
 	function DecodeFromJson($json){
 		$object = json_decode(base64_decode($json), true);
 		return $object;
 	}
 
-	// エラー画面への遷移
+	// ヘルパ関数：エラー画面への遷移
 	function MoveToErrorPage($strMessage){
 		
 		// 言語コード：日本語

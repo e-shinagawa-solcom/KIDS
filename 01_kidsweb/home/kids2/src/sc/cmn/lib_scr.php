@@ -90,7 +90,8 @@ function fncGetReceiveDetail($aryCondition, $objDB)
     $arySelect[] = "  rd.strnote,";                                //備考（明細登録用）
     $arySelect[] = "  r.lngmonetaryunitcode,";                     //通貨単位コード（明細登録用）
     $arySelect[] = "  r.lngmonetaryratecode,";                     //通貨レートコード（明細登録用）
-    $arySelect[] = "  mu.strmonetaryunitsign";                     //通貨単位記号（明細登録用）
+    $arySelect[] = "  mu.strmonetaryunitsign,";                    //通貨単位記号（明細登録用）
+    $arySelect[] = "  sc.bytdetailunifiedflg";                     //明細統一フラグ（明細登録用）
     $arySelect[] = " FROM";
     $arySelect[] = "  t_receivedetail rd ";
     $arySelect[] = "    INNER JOIN m_receive r ON rd.lngreceiveno=r.lngreceiveno AND rd.lngrevisionno = r.lngrevisionno";
@@ -208,10 +209,10 @@ function fncGetReceiveDetailHtml($aryDetail){
     $strHtml = "";
     for($i=0; $i < count($aryDetail); $i++){
         $strDisplayValue = "";
-        $strHtml .= "<tr>";
-
+        //行選択スクリプト埋め込み
+        $strHtml .= "<tr onmousedown='RowClick(this,false);'>";
         //選択チェックボックス
-        $strHtml .= "<td class='detailCheckbox'><input type='checkbox' name='edit'></td>";
+        $strHtml .= "<td class='detailCheckbox'><input type='checkbox' name='edit' onmousedown='return false;' onclick='return false;'></td>";
         //NO.
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["lngsortkey"]);
         $strHtml .= "<td class='detailSortKey'>" . $strDisplayValue . "</td>";
@@ -289,6 +290,9 @@ function fncGetReceiveDetailHtml($aryDetail){
         //通貨単位記号（明細登録用）
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["strmonetaryunitsign"]);
         $strHtml .= "<td class='forEdit detailMonetaryUnitSign'>" . $strDisplayValue . "</td>";
+        //明細統一フラグ（明細登録用）
+        $strDisplayValue = htmlspecialchars($aryDetail[$i]["bytdetailunifiedflg"]);
+        $strHtml .= "<td class='forEdit detailUnifiedFlg'>" . $strDisplayValue . "</td>";
         
         $strHtml .= "</tr>";
     }
@@ -403,12 +407,42 @@ function fncGetCountryCode($strCompanyDisplayCode, $objDB)
     return $lngCountryCode;
 }
 
+// 表示用会社コードから締め日を取得する
+function fncGetClosedDay($strCompanyDisplayCode, $objDB)
+{
+    $strQuery = ""
+    . "SELECT"
+    . "  cd.lngclosedday"
+    . " FROM"
+    . "  m_company c "
+    . "    INNER JOIN m_closedday cd "
+    . "    on c.lngcloseddaycode = cd.lngcloseddaycode"
+    . " WHERE"
+    . "  c.strcompanydisplaycode = " . withQuote($strCompanyDisplayCode)
+    ;
+
+    list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
+    if ( $lngResultNum ) {
+        for ( $i = 0; $i < $lngResultNum; $i++ ) {
+            $aryResult[] = $objDB->fetchArray( $lngResultID, $i );
+        }
+    } else {
+        fncOutputError ( 9501, DEF_FATAL, "締め日の取得に失敗", TRUE, "", $objDB );
+    }
+    $objDB->freeResult( $lngResultID );
+
+    return $aryResult[0]["lngclosedday"];    
+}
+
+
 // 表示用ユーザーコードからユーザーコードを取得する
 function fncGetNumericUserCode($strUserDisplayCode, $objDB)
 {
     $lngUserCode = fncGetMasterValue( "m_user", "struserdisplaycode", "lngusercode", $strUserDisplayCode.":str", '', $objDB );
     return $lngUserCode;
 }
+
+
 
 // 会社コードに紐づく帳票伝票種別を取得
 function fncGetSlipKindByCompanyCode($lngCompanyCode, $objDB)

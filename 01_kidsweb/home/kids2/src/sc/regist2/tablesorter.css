@@ -1,0 +1,18 @@
+table.tablesorter th.sortable.tablesorter-headerAsc {
+    background-image: url('/cmn/jquery/tablesorter/themes/blue/asc.gif');
+    background-repeat: no-repeat;
+    background-position: center right;
+}
+table.tablesorter th.sortable.tablesorter-headerDesc {
+    background-image: url('/cmn/jquery/tablesorter/themes/blue/desc.gif');
+    background-repeat: no-repeat;
+    background-position: center right;
+}
+/*
+table.tablesorter th.sortable.tablesorter-headerUnSorted {
+    cursor: pointer;
+    background-image: url('/cmn/jquery/tablesorter/themes/blue/bg.gif');
+    background-repeat: no-repeat;
+    background-position: center right;
+}
+*/
