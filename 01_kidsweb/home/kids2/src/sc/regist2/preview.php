@@ -167,6 +167,7 @@
 		}
 
 		// 売上マスタ登録、売上詳細登録、納品伝票マスタ登録、納品伝票明細登録
+		// TODO:リビジョン番号も受け取るようにする
 		$aryRegResult = fncRegisterSalesAndSlip($aryHeader, $aryDetail, $objDB, $objAuth);
 		if (!$aryRegResult["result"]){
 			MoveToErrorPage("売上・納品伝票データの登録に失敗しました。");
@@ -180,11 +181,13 @@
 		// --------------------------
 		// 画面に表示するパラメータの設定
 		// 納品書NOに紐づく作成日の取得
+		// TODO:aryで複数取得に実装変更
 		$dtmInsertDate = fncGetSlipInsertDate($aryRegResult["strSlipCode"][0], $objDB);
+		// TODO:複数件対応。TABLEのTRを出力するfunctionを追加。納品書NOとリビジョン番号を併せて埋め込み。
 		// 作成日の設定
 		$aryData["dtmInsertDate"] = $dtmInsertDate;
 		// 納品書NOの設定
-		$aryData["strSlipCode"] = implode(",", $aryRegResult["strSlipCode"]);
+		$aryData["strSlipCode"] = $aryRegResult["strSlipCode"][0];
 
 		// テンプレートから構築したHTMLを出力
 		$objTemplate = new clsTemplate();
@@ -197,6 +200,38 @@
 		$objDB->close();
 		// 処理終了
 		return true;
+	}
+
+	if ($strMode == "download"){
+		//TODO:帳票ダウンロードの実装。ajax POSTで実装
+		//パラメータとして納品書NOとリビジョン番号を受け取る
+		$strDownloadSlipCode = $_POST["strdownloadslipcode"];
+		$lngDownloadRevisionNo = $_POST["lngdownloadrevisionno"];
+
+		//TODO:帳票印刷データをDBより取得
+		//$aryDownloadData = fncGetSlipDownloadData($strDownloadSlipCode, $lngDownloadRevisionNo);
+
+		//TODO:登録データとExcelテンプレートとからダウンロードするExcelオブジェクトを取得する
+		//fncDownloadReportExcel($aryHeader, $aryDetail, $objDB, $objAuth);
+
+		// TODO:MIMEタイプをセットしてダウンロード
+		//   //MIMEタイプ：https://technet.microsoft.com/ja-jp/ee309278.aspx
+		//   header("Content-Description: File Transfer");
+		//   header('Content-Disposition: attachment; filename="weather.xlsx"');
+		//   header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+		//   header('Content-Transfer-Encoding: binary');
+		//   header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+		//   header('Expires: 0');
+		//   ob_end_clean(); //バッファ消去
+		   
+		//   $writer = new XlsxWriter($spreadsheet);
+		//   $writer->save('php://output');
+		
+		// TODO:メモリ開放
+
+		// 処理終了
+		return true;
+
 	}
 
 	// 通常ここに来ることは無い（不明なモードでPOSTした場合ここに来る）
