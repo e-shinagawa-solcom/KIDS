@@ -25,7 +25,6 @@
 	//-------------------------------------------------------------------------
 	include('conf.inc');
 	require (LIB_FILE);
-	//require (SRC_ROOT."po/cmn/lib_po.php" );
 	require (SRC_ROOT."sc/cmn/lib_scr.php");
 
 	$objDB		= new clsDB();
@@ -174,7 +173,7 @@
 	// 合計金額
 	$aryData["strTotalAmount"] = "0";
 
-	// 売上（納品書）登録画面表示
+	// 売上（納品書）登録画面表示（テンプレートは納品書修正画面と共通）
 	echo fncGetReplacedHtml( "sc/regist2/parts.tmpl", $aryData ,$objAuth);
 
 	// DB切断

@@ -240,6 +240,7 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 	// ---------------------------------
 	$aryOutQuery = array();
 	$aryOutQuery[] = "SELECT distinct s.lngSlipNo as lngSlipNo";	//納品伝票番号
+	$aryOutQuery[] = "	,s.lngSalesNo as lngSalesNo";			    //売上番号
 	$aryOutQuery[] = "	,s.lngRevisionNo as lngRevisionNo";			//リビジョン番号
 	$aryOutQuery[] = "	,s.dtmInsertDate as dtmInsertDate";			//作成日
 
@@ -295,7 +296,7 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 	$aryFromQuery[] = " FROM m_Slip s";
 	$aryFromQuery[] = " LEFT JOIN m_Sales sa ON s.lngSalesNo = sa.lngSalesNo";
 	$aryFromQuery[] = " LEFT JOIN m_SalesStatus ss ON sa.lngSalesStatusCode = ss.lngSalesStatusCode";
-	$aryFromQuery[] = " LEFT JOIN m_Company cust_c ON s.strCustomerCode = cust_c.strCompanyDisplayCode";
+	$aryFromQuery[] = " LEFT JOIN m_Company cust_c ON CAST(s.strCustomerCode AS INTEGER) = cust_c.lngCompanyCode";
 	$aryFromQuery[] = " LEFT JOIN m_MonetaryUnit mu ON s.lngMonetaryUnitCode = mu.lngMonetaryUnitCode";
 	$aryFromQuery[] = " LEFT JOIN m_User insert_u ON s.strInsertUserCode = insert_u.strUserDisplayCode";
 	$aryFromQuery[] = " LEFT JOIN m_Company delv_c ON s.lngDeliveryPlaceCode = delv_c.lngCompanyCode";
@@ -625,7 +626,12 @@ function fncSetSlipTableRow ( $lngColumnCount, $aryHeadResult, $aryDetailResult,
 					}
 					else
 					{
-						$aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/renew_off_bt.gif\" lngslipno=\"" . $aryDetailResult[$i]["lngslipno"] . "\" class=\"detail button\"></td>\n";
+						$aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\">"
+									."<img src=\"/mold/img/renew_off_bt.gif\" "
+									."lngslipno=\"" . $aryDetailResult[$i]["lngslipno"] . "\" "
+									."lngsalesno=\"" . $aryHeadResult["lngsalesno"] . "\" "
+									."strcustomercode=\"" . $aryHeadResult["strcustomerdisplaycode"] . "\" "
+									."class=\"renew button\"></td>\n";
 					}
 				}
 
