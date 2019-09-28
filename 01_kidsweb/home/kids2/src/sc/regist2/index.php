@@ -116,8 +116,12 @@
 	// 【ajax】明細検索
 	//-------------------------------------------------------------------------
 	if($strMode == "search-detail"){
+		// 検索条件の取得
+		$aryCondition = $_POST["condition"];
+		// 固定検索条件の追加
+		$aryCondition["lngreceivestatuscode"] = 2;	//受注状態コード=2:受注
 		// DBから明細を検索
-		$aryReceiveDetail = fncGetReceiveDetail($_POST["condition"], $objDB);
+		$aryReceiveDetail = fncGetReceiveDetail($aryCondition, $objDB);
 		// 明細選択エリアに出力するHTMLの作成
 		$strHtml = fncGetReceiveDetailHtml($aryReceiveDetail);
 		// データ返却

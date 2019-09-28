@@ -163,6 +163,29 @@
 	}
 
 	//-------------------------------------------------------------------------
+	// 修正対象データ取得
+	//-------------------------------------------------------------------------
+	// TODO:納品伝票番号に紐づくヘッダ・フッタ部のデータ読み込み
+	$aryHeader = fncGetHeaderBySlipNo($lngSlipNo, $objDB);
+
+	// TODO:納品伝票番号に紐づく明細部のキーを取得する
+	$aryDetailKey = fncGetDetailKeyBySlipNo($lngSlipNo, $objDB);
+	
+	// 明細部のキーに紐づく受注明細情報を取得する
+	$aryDetail = array();
+	for ( $i = 0; $i < count($aryDetailKey); $i++ ){
+
+		$aryCondition = array();
+		$aryCondition["lngreceiveno"] = $aryDetailKey[$i]["lngreceiveno"];
+		$aryCondition["lngreceivedetailno"] = $aryDetailKey[$i]["lngreceivedetailno"];
+		$aryCondition["lngreceiverevisionno"] = $aryDetailKey[$i]["lngreceiverevisionno"];
+		
+		// キーに紐づく明細を1件ずつ取得して全体の配列にマージ
+		$arySubDetail = fncGetReceiveDetail($aryCondition, $objDB);
+		$aryDetail = array_merge($aryDetail, $arySubDetail);
+	}
+	
+	//-------------------------------------------------------------------------
 	// フォーム初期値設定
 	//-------------------------------------------------------------------------
 	// ヘッダ・フッダ部
@@ -184,6 +207,7 @@
 	$aryData["optTaxClass"] = $optTaxClass;
 
 	// 消費税率プルダウン
+	// TODO:デフォルト選択値を設定できるように改修
 	$optTaxRate = fncGetTaxRatePullDown($aryData["dtmDeliveryDate"], $objDB);
 	$aryData["optTaxRate"] = $optTaxRate;
 

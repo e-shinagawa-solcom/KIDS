@@ -106,7 +106,12 @@ function fncGetReceiveDetail($aryCondition, $objDB)
     // -------------------
     //  検索条件設定
     // -------------------
-    $aryWhere[] = " WHERE";
+    $aryWhere[] = " WHERE 1=1"; // ダミー検索条件（常に真。後続の検索条件に最初からANDを付与するために存在）
+
+    // 受注状態コード
+    if ($aryCondition["lngreceivestatuscode"]){
+        $aryWhere[] = " AND r.lngreceivestatuscode = '" . $aryCondition["lngreceivestatuscode"] . "'";
+    }
     $aryWhere[] = "  r.lngreceivestatuscode = 2";   //受注ステータス=2:受注
 
     // 顧客（コードで検索）
@@ -168,6 +173,16 @@ function fncGetReceiveDetail($aryCondition, $objDB)
     if ( $aryCondition["IsIncludingResale"] != "true")
     {
         $aryWhere[] = " AND rd.strrevisecode = '00'";
+    }
+
+    // 受注明細番号
+    if ($aryCondition["lngreceivedetailno"]){
+        $aryWhere[] = " AND rd.lngreceivedetailno = " . $aryCondition["lngreceivedetailno"];
+    }
+
+    // リビジョン番号
+    if ($aryCondition["lngrevisionno"]){
+        $aryWhere[] = " AND rd.lngrevisionno = " . $aryCondition["lngrevisionno"];
     }
 
     // -------------------
