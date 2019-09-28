@@ -693,12 +693,15 @@ function fncCalcTaxPrice($curPrice, $lngTaxClassCode, $lngTaxRate)
 // 売上（納品書）登録メイン関数
 // 
 // --------------------------------
-function fncRegisterSalesAndSlip($aryHeader, $aryDetail, $objDB, $objAuth)
+function fncRegisterSalesAndSlip($lngRenewTargetSlipNo, $aryHeader, $aryDetail, $objDB, $objAuth)
 {
     // 戻り値の初期化
     $aryRegisterResult = array();
     $aryRegisterResult["result"] = false;
-    $aryRegisterResult["strSlipCode"] = array();
+    $aryRegisterResult["aryPerPage"] = array();
+
+    // 登録か修正か（修正対象となる納品伝票番号が空なら登録、空でないなら修正）
+    $isCreateNew = strlen($lngRenewTargetSlipNo) == 0;
 
     // 現在日付
     $dtmNowDate = date( 'Y/m/d', time() );
@@ -744,23 +747,69 @@ function fncRegisterSalesAndSlip($aryHeader, $aryDetail, $objDB, $objAuth)
             $itemMaxIndex = $totalItemCount - 1;
         }
 
-        // 売上番号をシーケンスより発番
-        $lngSalesNo = fncGetSequence( 'm_sales.lngSalesNo', $objDB );
+        // 修正の場合、修正対象に紐づく情報を取得
+        if (!$isCreateNew)
+        {
+            // TODO:実装
+            $aryRenewTargetInfo = fncGetRenewTargetSlipInfo($lngRenewTargetSlipNo);
+        }
+
+        // リビジョン番号
+        if ($isCreateNew){
+            // 登録：0 固定
+            $lngRevisionNo = 0;
+        } else {
+            // 修正：同一納品伝票番号内での最大値＋１
+            // TODO:実装
+            $lngRevisionNo = fncGetSlipMaxRevisionNo($lngRenewTargetSlipNo) + 1;
+        }
+
+        // 売上番号
+        if ($isCreateNew){
+            // 登録：シーケンスより発番
+            $lngSalesNo = fncGetSequence( 'm_sales.lngSalesNo', $objDB );
+        }else{
+            // 修正：修正対象に紐づく値
+            $lngSalesNo = $aryRenewTargetInfo["lngSalesNo"];
+        }
+
+        // 売上コード
+        if ($isCreateNew){
+            // 登録：当月に紐づく売上コードの発番
+            $strSalesCode = fncGetDateSequence( date( 'Y', strtotime( $dtmNowDate ) ), 
+                                                date( 'm',strtotime( $dtmNowDate ) ), "m_sales.lngSalesNo", $objDB );
+        }else{
+            // 修正：修正対象に紐づく値
+            $strSalesCode = $aryRenewTargetInfo["strsalescode"];
+        }
         
-        // 新規登録時、リビジョン番号は0固定
-        $lngRevisionNo = 0;
+        // 納品伝票番号
+        if ($isCreateNew){
+            // 登録：シーケンスより発番
+            $lngSlipNo = fncGetSequence( 'm_Slip.lngSlipNo', $objDB );
+        }else{
+            // 修正：修正対象に紐づく値
+            $lngSlipNo = $lngRenewTargetSlipNo;
+        }
 
-        // 当月に紐づく売上コードの発番
-        $strSalesCode = fncGetDateSequence( date( 'Y', strtotime( $dtmNowDate ) ), 
-                                            date( 'm',strtotime( $dtmNowDate ) ), "m_sales.lngSalesNo", $objDB );
+        // 納品伝票コード
+        if ($isCreateNew){
+            // 登録：当日に紐づく納品伝票コードの発番
+            $strSlipCode = fncPublishSlipCode($dtmNowDate, $objDB);
+        }else{
+            // 修正：修正対象に紐づく値
+            $strSlipCode = $aryRenewTargetInfo["strslipcode"];
+        }
+        
+        // ページ単位の情報を保存（後の登録結果画面で使う）
+        $aryPerPage = array();
+        $aryPerPage["strSlipCode"] = $strSlipCode;
+        $aryPerPage["lngRevisionNo"] = $lngRevisionNo;
+        $aryRegisterResult["aryPerPage"][] = $aryPerPage;
 
-        // 当日に紐づく納品伝票コードの発番
-        $strSlipCode = fncPublishSlipCode($dtmNowDate, $objDB);
-        $aryRegisterResult["strSlipCode"][] = $strSlipCode;
-
-        // 納品伝票番号をシーケンスより発番
-        $lngSlipNo = fncGetSequence( 'm_Slip.lngSlipNo', $objDB );
-
+        // --------------------------------
+        //   データベース変更
+        // --------------------------------
         // 売上マスタ登録
         if (!fncRegisterSalesMaster($lngSalesNo, $lngRevisionNo, $strSlipCode, $strSalesCode, $dtmAppropriationDate, $aryConversionRate, $aryCustomerCompany, $aryDrafter,
                 $aryHeader , $aryDetail, $objDB, $objAuth))

@@ -85,11 +85,13 @@
 	//-------------------------------------------------------------------------
 	if ($strMode == "display-preview"){
 		// --------------------------
-		//  登録データ退避
+		//  登録/修正データ退避
 		// --------------------------
-		// プレビュー表示後に登録処理を行うため、入力データをjsonに変換して退避する
+		// プレビュー表示後に登録/修正処理を行うため、入力データをjsonに変換して退避する
+		$lngSlipNo = $_POST["lngSlipNo"];
 		$aryHeader = $_POST["aryHeader"];
 		$aryDetail = $_POST["aryDetail"];
+		$aryData["lngSlipNo"] = $lngSlipNo;
 		$aryData["aryHeaderJson"] = EncodeToJson($aryHeader);
 		$aryData["aryDetailJson"] = EncodeToJson($aryDetail);
 
@@ -127,13 +129,16 @@
 	}
 
 	//-------------------------------------------------------------------------
-	//  登録処理
+	//  登録/修正処理
 	//-------------------------------------------------------------------------
-	if ($strMode == "regist"){
+	if ($strMode == "regist-or-renew"){
 		// --------------------------
-		//  登録データ復元
+		//  登録/修正データ復元
 		// --------------------------
-		// プレビュー表示前に退避した登録データをjsonから復元する
+		// 修正対象に紐づく納品伝票番号（登録の場合は空）
+		$lngSlipNo = $_POST["lngSlipNo"];
+		
+		// プレビュー表示前に退避した登録/修正データをjsonから復元する
 		$aryHeader = DecodeFromJson($_POST["aryHeaderJson"]);
 		$aryDetail = DecodeFromJson($_POST["aryDetailJson"]);
 
@@ -146,7 +151,7 @@
 		$aryDetail = fncConvertArrayDetailToEucjp($aryDetail);
 
 		// --------------------------
-		//  登録前バリデーション
+		//  登録/修正前バリデーション
 		// --------------------------
 		// 受注状態コードが2以外の明細が存在するならエラーとする
 		if(fncNotReceivedDetailExists($aryDetail, $objDB))
@@ -155,7 +160,7 @@
 		}
 
 		// --------------------------
-		//  データベース登録
+		//  データベース処理
 		// --------------------------
 		// トランザクション開始
 		$objDB->transactionBegin();
@@ -166,11 +171,11 @@
 			MoveToErrorPage("受注データの更新に失敗しました。");
 		}
 
-		// 売上マスタ登録、売上詳細登録、納品伝票マスタ登録、納品伝票明細登録
-		// TODO:リビジョン番号も受け取るようにする
-		$aryRegResult = fncRegisterSalesAndSlip($aryHeader, $aryDetail, $objDB, $objAuth);
+		// 売上マスタ、売上詳細、納品伝票マスタ、納品伝票明細へのレコード追加。
+		// 納品伝票番号が空なら登録、空でないなら修正を行う
+		$aryRegResult = fncRegisterSalesAndSlip($lngSlipNo, $aryHeader, $aryDetail, $objDB, $objAuth);
 		if (!$aryRegResult["result"]){
-			MoveToErrorPage("売上・納品伝票データの登録に失敗しました。");
+			MoveToErrorPage("売上・納品伝票データの登録または修正に失敗しました。");
 		}
 
 		// コミット

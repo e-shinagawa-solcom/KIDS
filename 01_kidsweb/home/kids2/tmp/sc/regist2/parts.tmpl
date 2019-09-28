@@ -70,12 +70,7 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutPunit(); initLayo
 
 <span id="objCheckWorkFlowRoot"></span>
 
-
-
-<!-- 確認画面表示フラグ -->
 <input type="hidden" name="lngRegistConfirm" value="_%lngRegistConfirm%_">
-
-
 <bgsound id="BeepSound" src="/error/dummy.aif" loop="1" balance="0" volume="-100">
 <form name="HSO" action="_%strActionUrl%_" method="post">
 <input type="hidden" name="ActionScriptName" value="_%strurl%_">
@@ -346,11 +341,14 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutPunit(); initLayo
 
 <span id="SegHidden">
 </span>
-
 <!-- 明細枠の情報 -->
 <span id="DtHiddenRecord"></span>
-
 </p>
+
+<!-- 修正対象に紐づく納品伝票番号 -->
+<input type="hidden" name="lngSlipNo" value="_%lngSlipNo%_">
+
+
 <!-- //////////////////////////////////// END INPUT A SEGMENTS //////////////////////////////////// -->
 </form>
 

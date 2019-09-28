@@ -43,8 +43,9 @@ _%PREVIEW_STYLE%_
 </head>
 <body>
 	<form name="registFrm" method="POST" action="/sc/regist2/preview.php">
-        <input type="hidden" name="strMode" value="regist">
+        <input type="hidden" name="strMode" value="regist-or-renew">
         <input type="hidden" name="strSessionID" value="_%strSessionID%_">
+        <input type="hidden" name="lngSlipNo"" value="_%lngSlipNo%_">
         <input type="hidden" name="aryHeaderJson" value="_%aryHeaderJson%_">
         <input type="hidden" name="aryDetailJson" value="_%aryDetailJson%_">
 	</form>

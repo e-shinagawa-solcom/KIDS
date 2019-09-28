@@ -832,6 +832,7 @@ jQuery(function($){
         var data = {
             strMode :      "display-preview",
             strSessionID:  $('input[name="strSessionID"]').val(),
+            lngSlipNo:  $('input[name="lngSlipNo"]').val(),
             aryHeader:     getUpdateHeader(),
             aryDetail:     getUpdateDetail(),
         };
