@@ -1876,6 +1876,18 @@ class estimateSheetController {
     public function setHorizontalRight($cellAddress) {
         $this->sheet->getStyle($cellAddress)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);
     }
+
+    // ワークシートヘッダ部の表示名を置換する
+    public function cellValueReplace($replace) {
+        $cellAddressList = $this->cellAddressList;
+        
+        foreach ($replace as $key => $name) {
+            $cellAddress = $cellAddressList[$key];
+            $this->sheet->getCell($cellAddress)->setValue($name);
+        }
+
+        return;
+    }
 }
 
 ?>

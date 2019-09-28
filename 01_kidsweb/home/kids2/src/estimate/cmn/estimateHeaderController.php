@@ -82,11 +82,11 @@ class estimateHeaderController {
                 $userDisplayCode = $data->struserdisplaycode;
                 $userDisplayName = $data->struserdisplayname;
 
-                if ($groupDislayNameMaster[$groupDisplayCode]) {
+                if (!$groupDislayNameMaster[$groupDisplayCode]) {
                     $groupDislayNameMaster[$groupDisplayCode] = $groupDisplayName;
                 }
 
-                if ($userDisplayNameMaster[$userDisplayCode]) {
+                if (!$userDisplayNameMaster[$userDisplayCode]) {
                     $userDisplayNameMaster[$userDisplayCode] = $userDisplayName;
                 }
                 
@@ -105,7 +105,7 @@ class estimateHeaderController {
                 self::$groupDislayNameMaster = $groupDislayNameMaster;
             }
 
-            if (!self::$groupDislayNameMaster) {
+            if (!self::$userDisplayNameMaster) {
                 self::$userDisplayNameMaster = $userDisplayNameMaster;
             }
 
@@ -409,7 +409,8 @@ class estimateHeaderController {
                     // 表示名をDB取得値に置換             
                     $userDisplayNameMaster = self::$userDisplayNameMaster;
                     $displayName = $userDisplayNameMaster[$developUserCodeNumber];
-                    $this->inchargeUserCode = $developUserCodeNumber. ':'. $displayName;
+                    
+                    $this->developUserCode = $developUserCodeNumber. ':'. $displayName;
                 }
             } else {
                 // 入力形式不正

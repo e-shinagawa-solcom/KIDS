@@ -388,6 +388,12 @@
 		// 非表示リスト（無効リスト）を追加する
 		$objSheet->setHiddenRowList($hiddenList);
 
+		// 表示用のヘッダ部の値を出力する（表示名をデータベースの名称に置換）
+		$replace = $objHeader->outputDisplayData();
+		// 表示用ヘッダ部の値をワークシートに挿入する
+		$objSheet->cellValueReplace($replace);
+
+		// web表示用のデータを出力する
 		$viewData = $objSheet->makeDataOfSheet();
 
 		$viewData = $objSheet->deleteInvalidRow($viewData);
