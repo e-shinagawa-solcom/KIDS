@@ -452,61 +452,7 @@ jQuery(function($){
             $(this).html(idx + 1);
         });
     }
-    function validationCheck2(){
-        var result = true;
-        if(!getSelectedRows().length){
-            // 発注明細行が1件も選択されていない場合
-            alert("発注確定する明細行が選択されていません。");
-            result = false;
-        }
-        var expirationDate = $('input[name="dtmExpirationDate"]').val();
-        if(!expirationDate){
-            // 発注有効期限日が未入力の場合
-            alert("発注有効期限日が指定されていません。");
-            result = false;
-        }
-        if(!expirationDate.match(/^\d{4}\/\d{1,2}\/\d{1,2}$/g)){
-            // 発注有効期限日が正規表現「^\d{4}\/\d{1,2}\/\d{1,2}$」に一致しない場合
-            alert("発注有効期限日の書式に誤りがあります。");
-            result = false;
-        }
-        if(!isDate(expirationDate)){
-            // 発注有効期限日が存在しない日付(2/31等)の場合
-            alert("発注有効期限日に存在しない日付が指定されました。");
-            result = false;
-        }
-        var countryCode = $('input[name="lngCountryCode"]').val();
-        if(countryCode !== '81'){
-            var selected = $('select[name="optPayCondition"]').children('option:selected').val();
-            if(selected === '0'){
-                // 仕入先のm_company.lngcountrycodeが「81(日本)」以外かつ支払条件が未選択の場合
-                alert('仕入先が海外の場合、支払い条件を指定してください。');
-                result = false;
-            }
-        }
-        var locationCode = $('input[name="lngLocationCode"]').val();
-        if(!locationCode){
-            // 納品場所が未入力の場合
-            alert('納品場所が指定されていません。');
-            result = false;
-        }
-        var details = getSelectedRows();
-        var message = [];
-        $.each(details, function(i, tr){
-            var selected = $(tr).find('option:selected').val();
-            if(selected === "0"){
-                var row = $(tr).children('td[name="rownum"]').text();
-                message.push(row + '行目の運搬方法が指定されていません。');
-            }
-        });
-        if(message.length){
-            // 運搬方法が1件でも未選択の場合
-            alert(message.join('\n'));
-            result = false;
-        }
 
-        return result;
-    }
     function isDate(d){
         if(d == "") { return false; }
         if(!d.match(/^\d{4}\/\d{1,2}\/\d{1,2}$/)) { return false; }
@@ -1078,15 +1024,16 @@ jQuery(function($){
 
             // 顧客コードに対応する締め日が取得できない
             if (!closedDay){
-                alert("締め日が取得できません。");
+                alert("顧客コードに対応する締め日が取得できません。");
                 return false;
             }
             
             if (closedDay < 0){
-                alert("締め日が負の値です。");
+                alert("顧客コードに対応する締め日が負の値です。");
                 return false;
             }
             
+            // DBG:一時コメントアウト。コメント解除忘れ注意
             /*
             // プレビュー画面表示前のバリデーションチェック
             if (!varidateBeforePreview(closedDay)){

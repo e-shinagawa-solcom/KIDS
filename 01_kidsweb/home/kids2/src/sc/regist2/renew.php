@@ -45,11 +45,20 @@
 	// 処理モード
 	$strMode    = $_POST["strMode"];
 
+	// --------------------
 	// 修正対象に紐づく情報
+	// --------------------
+	// 納品伝票番号
 	$lngSlipNo = $_GET["lngSlipNo"];
+	// 納品伝票コード
 	$strSlipCode = $_GET["strSlipCode"];
+	// 納品書のリビジョン番号
+	$lngRevisionNo = $_GET["lngRevisionNo"];
+	// 売上番号
 	$lngSalesNo = $_GET["lngSalesNo"];
+	// 売上コード
 	$strSalesCode = $_GET["strSalesCode"];
+	// 顧客コード
 	$strCustomerCode = $_GET["strCustomerCode"];
 
 	//-------------------------------------------------------------------------
@@ -87,7 +96,7 @@
 	{
 		$aryData["adddelrowview"] = 'hidden';
 	}
-
+	
 	// --------------------------------
 	//    修正可能かどうかのチェック
 	// --------------------------------
@@ -166,10 +175,27 @@
 	}
 
 	//-------------------------------------------------------------------------
+	// 修正対象データのロック取得
+	//-------------------------------------------------------------------------
+	// 他にロックしている人がいないか確認
+	$lockUserName = fncGetExclusiveLockUser(EXCLUSIVE_CONTROL_FUNCTION_CODE_SC_RENEW, $strSlipCode, $objAuth, $objDB);
+	if (strlen($lockUserName) > 0)
+	{
+		MoveToErrorPage("ユーザー".$lockUserName."が修正中です。");
+	}
+
+	// 修正対象データのロックを取る
+	$locked = fncTakeExclusiveLock(EXCLUSIVE_CONTROL_FUNCTION_CODE_SC_RENEW, $strSlipCode, $objAuth, $objDB);
+	if (!$locked)
+	{
+		MoveToErrorPage("納品書データのロックに失敗しました。");
+	}
+
+	//-------------------------------------------------------------------------
 	// 修正対象データ取得
 	//-------------------------------------------------------------------------
 	// 納品伝票番号に紐づくヘッダ・フッタ部のデータ読み込み
-	$aryHeader = fncGetHeaderBySlipNo($lngSlipNo, $objDB);
+	$aryHeader = fncGetHeaderBySlipNo($lngSlipNo, $lngRevisionNo, $objDB);
 
 	// 納品伝票番号に紐づく明細部のキーを取得する
 	$aryDetailKey = fncGetDetailKeyBySlipNo($lngSlipNo, $objDB);

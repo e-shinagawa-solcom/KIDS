@@ -294,7 +294,7 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 	// From∂Á §Œ¿∏¿Æ
 	$aryFromQuery = array();
 	$aryFromQuery[] = " FROM m_Slip s";
-	$aryFromQuery[] = " LEFT JOIN m_Sales sa ON s.lngSalesNo = sa.lngSalesNo";
+	$aryFromQuery[] = " INNER JOIN m_Sales sa ON s.lngSalesNo = sa.lngSalesNo AND s.lngRevisionNo = sa.lngRevisionNo";
 	$aryFromQuery[] = " LEFT JOIN m_SalesStatus ss ON sa.lngSalesStatusCode = ss.lngSalesStatusCode";
 	$aryFromQuery[] = " LEFT JOIN m_Company cust_c ON CAST(s.strCustomerCode AS INTEGER) = cust_c.lngCompanyCode";
 	$aryFromQuery[] = " LEFT JOIN m_MonetaryUnit mu ON s.lngMonetaryUnitCode = mu.lngMonetaryUnitCode";
@@ -629,6 +629,7 @@ function fncSetSlipTableRow ( $lngColumnCount, $aryHeadResult, $aryDetailResult,
 						$aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\">"
 									."<img src=\"/mold/img/renew_off_bt.gif\" "
 									."lngslipno=\"" . $aryHeadResult["lngslipno"] . "\" "
+									."lngrevisionno=\"" . $aryHeadResult["lngrevisionno"] . "\" "
 									."strslipcode=\"" . $aryHeadResult["strslipcode"] . "\" "
 									."lngsalesno=\"" . $aryHeadResult["lngsalesno"] . "\" "
 									."strsalescode=\"" . $aryHeadResult["strsalescode"] . "\" "

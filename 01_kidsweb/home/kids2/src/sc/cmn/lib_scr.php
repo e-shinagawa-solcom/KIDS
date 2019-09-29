@@ -20,6 +20,41 @@
 */
 // ----------------------------------------------------------------------------
 
+// 修正対象データに対してロックしている人を確認する
+// ロックしている人がいないなら空文字列を返す
+function fncGetExclusiveLockUser($lngFunctionCode, $strSlipCode, $objAuth, $objDB)
+{
+    // TODO:実装
+    $lockUserName = "";
+
+
+    return $lockUserName;
+}
+
+// 対象の機能IDに対して排他ロックを取る
+function fncTakeExclusveLock($lngFunctionCode, $strSlipCode, $objAuth, $objDB)
+{
+    // TODO:実装
+    $locked = false;
+
+    //TODO:他の人がロック済みなら失敗
+    
+    return $locked;
+}
+
+// 対象の機能IDに対して排他ロックを解除する
+function fncReleaseExclusveLock($lngFunctionCode, $strSlipCode, $objAuth, $objDB)
+{
+    // TODO:実装
+    $unlocked = false;
+
+    //TODO:機能IDとロック解除ユーザーが一致したら解除
+    
+    return $unlocked;
+}
+
+
+
 // 消費税率プルダウンの選択項目作成
 function fncGetTaxRatePullDown($dtmDeliveryDate, $curDefaultTax, $objDB)
 {
@@ -61,7 +96,7 @@ function fncGetTaxRatePullDown($dtmDeliveryDate, $curDefaultTax, $objDB)
 }
 
 // 納品伝票番号に紐づくヘッダ項目取得
-function fncGetHeaderBySlipNo($lngSlipNo, $objDB)
+function fncGetHeaderBySlipNo($lngSlipNo, $lngRevisionNo, $objDB)
 {
     //to_char(e.dtmInsertDate,'YYYY/MM/DD')
     $aryQuery = array();
@@ -88,7 +123,8 @@ function fncGetHeaderBySlipNo($lngSlipNo, $objDB)
     $aryQuery [] = "   LEFT JOIN m_company c_cust ON CAST(s.strcustomercode AS INTEGER) = c_cust.lngcompanycode ";
     $aryQuery [] = "   LEFT JOIN m_company c_deli ON s.lngdeliveryplacecode = c_deli.lngcompanycode ";
     $aryQuery [] = " WHERE ";
-    $aryQuery [] = "  lngslipno = " . $lngSlipNo;
+    $aryQuery [] = "  s.lngslipno = " . $lngSlipNo;
+    $aryQuery [] = "  AND s.lngrevisionNo = " . $lngRevisionNo;
 
     $strQuery = "";
     $strQuery .= implode("\n", $aryQuery);
@@ -99,7 +135,7 @@ function fncGetHeaderBySlipNo($lngSlipNo, $objDB)
             $aryResult[] = $objDB->fetchArray( $lngResultID, $i );
         }
     } else {
-        fncOutputError ( 9501, DEF_FATAL, "納品伝票のヘッダ部の情報取得に失敗", TRUE, "", $objDB );
+        fncOutputError ( 9501, DEF_FATAL, "納品書データの取得に失敗", TRUE, "", $objDB );
     }
     $objDB->freeResult( $lngResultID );
 

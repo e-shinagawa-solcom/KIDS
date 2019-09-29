@@ -151,6 +151,9 @@
 		$lngRenewTargetSalesNo = $_POST["lngRenewTargetSalesNo"];
 		// 修正対象に紐づく売上コード（登録の場合は空）
 		$strRenewTargetSalesCode = $_POST["strRenewTargetSalesCode"];
+
+		// 登録か修正か（true:登録、false:修正）
+		$isCreateNew = strlen($lngRenewTargetSlipNo) == 0;
 		
 		// プレビュー表示前に退避した登録/修正データをjsonから復元する
 		$aryHeader = DecodeFromJson($_POST["aryHeaderJson"]);
@@ -164,6 +167,7 @@
 		$aryHeader = fncConvertArrayHeaderToEucjp($aryHeader);
 		$aryDetail = fncConvertArrayDetailToEucjp($aryDetail);
 
+		//DBG:一時コメントアウト
 		// --------------------------
 		//  登録/修正前バリデーション
 		// --------------------------
@@ -173,6 +177,7 @@
 		// 	MoveToErrorPage("納品書が発行できない状態の明細が選択されています。");
 		// }
 
+		//DBG:一時コメントアウト
 		// --------------------------
 		//  データベース処理
 		// --------------------------
@@ -199,10 +204,23 @@
 		// $objDB->transactionCommit();
 
 		// --------------------------
+		//  修正対象データのロック解除
+		// --------------------------
+		// 修正の場合、修正対象データにロックがかかっているので解除する
+		if (!$isCreateNew)
+		{
+			$unlocked = fncReleaseExclusveLock(EXCLUSIVE_CONTROL_FUNCTION_CODE_SC_RENEW, $strSlipCode, $objAuth, $objDB);
+			if(!$unlocked)
+			{
+				MoveToErrorPage("納品書データの修正は成功しましたが、ロック解除に失敗しました");
+			}
+		}
+
+		// --------------------------
 		//  登録結果画面表示
 		// --------------------------
 
-		//TESTCODE
+		//DBG:TESTCODE
 		$aryPage1 = array();
 		$aryPage1["strSlipCode"] = "02000307";
 		$aryPage1["lngRevisionNo"] = "REV1";
