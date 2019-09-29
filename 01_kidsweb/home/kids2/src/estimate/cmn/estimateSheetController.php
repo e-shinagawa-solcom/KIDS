@@ -345,13 +345,13 @@ class estimateSheetController {
                     $detailNoList[$tableRow] = $estimateDetailNo;
 
                     if ($receiveAreaCodeList[$areaCode] === true) { // 受注の場合
-    
+
                         if ($status == DEF_RECEIVE_ORDER || $status == DEF_RECEIVE_END) { // 受注確定ないし納品済の場合
                             $readOnlyDetailRow[] = $tableRow;
                         }
     
                     } else if ($orderAreaCodeList[$areaCode] === true) { // 発注の場合
-    
+
                         if ($status == DEF_ORDER_ORDER || $status == DEF_ORDER_END) { // 発注確定ないし納品済の場合
                             $readOnlyDetailRow[] = $tableRow;
                         }
@@ -589,12 +589,12 @@ class estimateSheetController {
                     // 受注の場合
                     $data = $inputData[$workSheetRow]['data'];
                     $statusCode = $data['statusCode'];
-                    $estimateDetailNo = $data['estimateDetailNo'];
+                    $receiveNo = $data['receiveNo'];
                     switch($statusCode) {
                         case DEF_RECEIVE_APPLICATE:
                             $name = "confirm". $areaCode;
                             $htmlValue1 = "<div class=\"applicate\">";
-                            $htmlValue1 .= "<input type=\"checkbox\" class=\"checkbox_applicate\" name=\"". $name. "\" value=\"".$estimateDetailNo . "\">";
+                            $htmlValue1 .= "<input type=\"checkbox\" class=\"checkbox_applicate\" name=\"". $name. "\" value=\"".$receiveNo . "\">";
                             $htmlValue1 .= "</div>";
                             $mergedCellsList[] = array(
                                 'row' => $tableRow,
@@ -630,12 +630,12 @@ class estimateSheetController {
                     // 発注の場合
                     $data = $inputData[$workSheetRow]['data'];
                     $statusCode = $data['statusCode'];
-                    $estimateDetailNo = $data['estimateDetailNo'];
+                    $orderNo = $data['orderNo'];
                     switch($statusCode) {
                         case DEF_ORDER_APPLICATE:
                             $name = "confirm". $areaCode;
                             $htmlValue1 = "<div class=\"applicate\">";
-                            $htmlValue1 .= "<input type=\"checkbox\" class=\"checkbox_applicate\" name=\"". $name. "\" value=\"".$estimateDetailNo . "\">";
+                            $htmlValue1 .= "<input type=\"checkbox\" class=\"checkbox_applicate\" name=\"". $name. "\" value=\"".$orderNo . "\">";
                             $htmlValue1 .= "</div>";
                             $value3 = $orderStatusMaster[$statusCode]['strorderstatusname'];
                             $htmlValue3 = "<div class=\"status_applicate\">". $value3. "</div>";
@@ -645,7 +645,7 @@ class estimateSheetController {
                         case DEF_ORDER_ORDER:
                             $name = "cancel". $areaCode;
                             $htmlValue2 = "<div class=\"order\">";
-                            $htmlValue2 .= "<input type=\"checkbox\" class=\"checkbox_order\" name=\"". $name. "\" value=\"".$estimateDetailNo . "\">";
+                            $htmlValue2 .= "<input type=\"checkbox\" class=\"checkbox_order\" name=\"". $name. "\" value=\"".$orderNo . "\">";
                             $htmlValue2 .= "</div>";
                             $value3 = $orderStatusMaster[$statusCode]['strorderstatusname'];
                             $htmlValue3 = "<div class=\"status_applicate\">". $value3. "</div>";
@@ -1491,7 +1491,7 @@ class estimateSheetController {
     }
 
     public function setDBEstimateData($productData, $estimateData) {
-        $this->setMonetaryRate(); // 通貨レートのセット
+        // $this->setMonetaryRate(); // 通貨レートのセット
         $this->inputHeaderData($productData); // 製品情報のセット（ヘッダ部）
         $this->inputStandardRate(); // 標準割合のセット
         $this->inputEstimateDetailData($estimateData); // 見積原価明細のセット
@@ -1813,7 +1813,7 @@ class estimateSheetController {
 
         // 通貨レート取得範囲のセット
         for ($colIndex = 0; $colIndex < $colCount; ++$colIndex) {
-            $rangeStart = self::getMoveCell($monetaryHeaderCell, $firstRowMove, $colIndex);
+            $rangeStart = self::getMoveCell($monetaryHeaderCell, $firstRowMove -1, $colIndex);
             $rangeEnd = self::getMoveCell($monetaryHeaderCell, $rowMove, $colIndex);
             $rangeStart = preg_replace($patterns, $replace, $rangeStart);
             $rangeEnd = preg_replace($patterns, $replace, $rangeEnd);
@@ -1865,7 +1865,7 @@ class estimateSheetController {
                 $sumifsParam .= ','.$conditions[8];
 
                 $newFomula = str_replace($match, $sumifsParam, $inputParam);
-                $sheet->getCell($cell)->getValue($newFomula);
+                $sheet->getCell($cell)->setValue($newFomula);
             }
         }
         
@@ -1875,6 +1875,18 @@ class estimateSheetController {
     // セルを右寄せにする
     public function setHorizontalRight($cellAddress) {
         $this->sheet->getStyle($cellAddress)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);
+    }
+
+    // ワークシートヘッダ部の表示名を置換する
+    public function cellValueReplace($replace) {
+        $cellAddressList = $this->cellAddressList;
+        
+        foreach ($replace as $key => $name) {
+            $cellAddress = $cellAddressList[$key];
+            $this->sheet->getCell($cellAddress)->setValue($name);
+        }
+
+        return;
     }
 }
 

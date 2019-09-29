@@ -103,7 +103,7 @@ class registOtherCellsController extends estimateOtherCellsController {
         // À½ÉÊÍø±×
         $productProfit = $productTotalPrice - $manufacturingCost;
         // À½ÉÊÍø±×Î¨
-        $productProfitRate = $manufacturingCost ? ($productProfit / $manufacturingCost) : '';
+        $productProfitRate = $manufacturingCost ? ($productProfit / $productTotalPrice) : '';
         // ¸ÇÄêÈñÇä¾å¹â
         $fixedCostTotalPrice = $receiveFixedCostTotalPrice;
         // ¸ÇÄêÈñÍø±×

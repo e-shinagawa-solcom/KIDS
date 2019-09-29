@@ -353,7 +353,7 @@ class workSheetConst {
     const DETAIL_HEADER_CELL_NAME_LIST = [
         DEF_AREA_PRODUCT_SALES => self::PRODUCT_SALES_HEADER_NAME_LIST,
         DEF_AREA_FIXED_COST_SALES => self::RECEIVE_FIXED_COST_HEADER_CELL,
-        DEF_AREA_FIXED_COST_ORDER => self::RECEIVE_FIXED_COST_HEADER_CELL,
+        DEF_AREA_FIXED_COST_ORDER => self::ORDER_FIXED_COST_HEADER_CELL,
         DEF_AREA_PARTS_COST_ORDER => self::ORDER_ELEMENT_COST_HEADER_CELL,
         DEF_AREA_OTHER_COST_ORDER => self::ORDER_ELEMENT_COST_HEADER_CELL
     ];
@@ -730,7 +730,7 @@ class workSheetConst {
             'classItem' => true,
             'customerCompany' => true,
             'payoff' => true,
-            'quantity' => ($areaCode == DEF_AREA_PARTS_COST_ORDER || $areaCode == DEF_AREA_OTHER_COST_ORDER) ? false : true,
+            'quantity' => true,
             'monetaryDisplay' => true,
             'price' => true,
             'conversionRate' => false,

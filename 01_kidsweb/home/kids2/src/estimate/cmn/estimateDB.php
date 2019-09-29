@@ -78,17 +78,17 @@ class estimateDB extends clsDB {
             }
 
             $strQuery = "SELECT";
-            $strQuery .= " b.lngcompanycode,";
-            $strQuery .= " b.strcompanydisplaycode,";
-            $strQuery .= " b.strcompanydisplayname,";
-            $strQuery .= " b.strshortname";
-            $strQuery .= " FROM m_attributerelation a";
-            $strQuery .= " INNER JOIN m_company b";
-            $strQuery .= " ON a.lngcompanycode = b.lngcompanycode";
-            $strQuery .= " INNER JOIN m_attribute c";
-            $strQuery .= " ON a.lngattributecode = c.lngattributecode";
-            $strQuery .= " WHERE a.lngattributecode = ". $orderAttribute;
-            $strQuery .= " ORDER BY b.strcompanydisplaycode";
+            $strQuery .= " mc.lngcompanycode,";
+            $strQuery .= " mc.strcompanydisplaycode,";
+            $strQuery .= " mc.strcompanydisplayname,";
+            $strQuery .= " mc.strshortname";
+            $strQuery .= " FROM m_attributerelation mar";
+            $strQuery .= " INNER JOIN m_company mc";
+            $strQuery .= " ON mar.lngcompanycode = mc.lngcompanycode";
+            $strQuery .= " INNER JOIN m_attribute ma";
+            $strQuery .= " ON mar.lngattributecode = ma.lngattributecode";
+            $strQuery .= " WHERE mar.lngattributecode = ". $orderAttribute;
+            $strQuery .= " ORDER BY mc.strcompanydisplaycode";
 
             $queryResult = fncQuery($strQuery, $this); // [0]:結果ID [1]:取得行数
 
@@ -180,11 +180,11 @@ class estimateDB extends clsDB {
         if (!$this->isOpen()) {
             return false;
         } else {
-            $strQuery = "SELECT * FROM m_product a";
-            $strQuery .= " INNER JOIN m_group b ON a.lnginchargegroupcode = b.lnggroupcode";
-            $strQuery .= " INNER JOIN m_user c ON a.lnginputusercode = c.lngusercode";
+            $strQuery = "SELECT * FROM m_product mp";
+            $strQuery .= " INNER JOIN m_group mg ON mp.lnginchargegroupcode = mg.lnggroupcode";
+            $strQuery .= " INNER JOIN m_user mu ON mp.lnginputusercode = mu.lngusercode";
             $strQuery .= " WHERE strproductcode = '". $productCode. "'";
-            $strQuery .= " ORDER BY a.strrevisecode DESC, a.lngrevisionno DESC";
+            $strQuery .= " ORDER BY mp.strrevisecode DESC, mp.lngrevisionno DESC";
 
             list($resultID, $resultNumber) = fncQuery($strQuery, $this);
 
@@ -345,11 +345,11 @@ class estimateDB extends clsDB {
         if (!$this->isOpen()) {
             return false;
         } else {
-            $strQuery  = "SELECT a.strgroupdisplaycode FROM m_group a";
-            $strQuery .= " INNER JOIN m_grouprelation b ON b.lnggroupcode = a.lnggroupcode";
-            $strQuery .= " INNER JOIN m_user c ON c.lngusercode = b.lngusercode";
-            $strQuery .= " WHERE a.strgroupdisplaycode = '". $groupDisplayCode. "' and b.lngusercode = ". $userCode;
-            $strQuery .= " AND c.bytinvalidflag = false";
+            $strQuery  = "SELECT mg.strgroupdisplaycode FROM m_group mg";
+            $strQuery .= " INNER JOIN m_grouprelation mgr ON mgr.lnggroupcode = mg.lnggroupcode";
+            $strQuery .= " INNER JOIN m_user mu ON mu.lngusercode = mgr.lngusercode";
+            $strQuery .= " WHERE mg.strgroupdisplaycode = '". $groupDisplayCode. "' and mgr.lngusercode = ". $userCode;
+            $strQuery .= " AND mu.bytinvalidflag = false";
             
             $queryResult = fncQuery($strQuery, $this); // [0]:結果ID [1]:取得行数
             // 検索結果があればtrueを返す
@@ -368,11 +368,11 @@ class estimateDB extends clsDB {
         if (!$this->isOpen()) {
             return false;
         } else {
-            $strQuery  = "SELECT a.strgroupdisplaycode FROM m_group a";
-            $strQuery .= " INNER JOIN m_grouprelation b ON b.lnggroupcode = a.lnggroupcode";
-            $strQuery .= " INNER JOIN m_user c ON c.lngusercode = b.lngusercode";
-            $strQuery .= " WHERE a.strgroupdisplaycode = '". $groupDisplayCode. "' and c.struserdisplaycode = '". $userDisplayCode."'";
-            $strQuery .= " AND c.bytinvalidflag = false";
+            $strQuery  = "SELECT mg.strgroupdisplaycode FROM m_group mg";
+            $strQuery .= " INNER JOIN m_grouprelation mgr ON mgr.lnggroupcode = mg.lnggroupcode";
+            $strQuery .= " INNER JOIN m_user mu ON mu.lngusercode = mgr.lngusercode";
+            $strQuery .= " WHERE mg.strgroupdisplaycode = '". $groupDisplayCode. "' and mu.struserdisplaycode = '". $userDisplayCode."'";
+            $strQuery .= " AND mu.bytinvalidflag = false";
             
             $queryResult = fncQuery($strQuery, $this); // [0]:結果ID [1]:取得行数
             // 検索結果があればtrueを返す
@@ -431,23 +431,23 @@ class estimateDB extends clsDB {
         if (!$this->isOpen()) {
             return false;
         } else {
-            $strQuery = "SELECT b.strgroupdisplaycode, c.struserid FROM m_grouprelation a";
-            $strQuery .= " INNER JOIN m_group b ON a.lnggroupcode = b.lnggroupcode";
-            $strQuery .= " INNER JOIN m_user c ON a.lngusercode = c.lngusercode";
+            $strQuery = "SELECT mg.strgroupdisplaycode, mu.struserid FROM m_grouprelation mgr";
+            $strQuery .= " INNER JOIN m_group mg ON mgr.lnggroupcode = mg.lnggroupcode";
+            $strQuery .= " INNER JOIN m_user mu ON mgr.lngusercode = mu.lngusercode";
             if (is_array($userCode)) {
                 $key = 0;
                 foreach ($userCode as $code) {
                     if($key === 0) {
-                        $strQuery .= " WHERE (b.strgroupdisplaycode = '". $groupCode ."' and c.struserid ='". $code. "')";
+                        $strQuery .= " WHERE (mg.strgroupdisplaycode = '". $groupCode ."' and mu.struserid ='". $code. "')";
                     } else {
-                        $strQuery .= " OR (b.strgroupdisplaycode = '". $groupCode. "' and c.struserid ='". $code. "')";
+                        $strQuery .= " OR (mg.strgroupdisplaycode = '". $groupCode. "' and mu.struserid ='". $code. "')";
                     }
                     ++$key;
                 }                
             } else {
-                $strQuery .= " WHERE b.strgroupdisplaycode = '". $groupCode. "' and c.struserid ='". $userCode. "'";
+                $strQuery .= " WHERE mg.strgroupdisplaycode = '". $groupCode. "' and mu.struserid ='". $userCode. "'";
             }
-            $strQuery .= " AND c.bytinvalidflag = false";
+            $strQuery .= " AND mu.bytinvalidflag = false";
 
             $queryResult = fncQuery($strQuery, $this); // [0]:結果ID [1]:取得行数
 
@@ -516,46 +516,46 @@ class estimateDB extends clsDB {
         } else {
             $strQuery = "SELECT";
             // 見積原価明細の情報取得
-            $strQuery .= " c.lngestimateno AS lngestimateno,";
-            $strQuery .= " c.lngestimatedetailno AS lngestimatedetailno,";
-            $strQuery .= " c.lngrevisionno AS lngrevisionno,";
-            $strQuery .= " c.lngstocksubjectcode AS lngstocksubjectcode,";
-            $strQuery .= " c.lngstockitemcode AS lngstockitemcode,";
-            $strQuery .= " c.lngcustomercompanycode AS lngcustomercompanycode,";
-            $strQuery .= " to_char(c.dtmdelivery, 'YYYY/MM/DD') AS dtmdelivery,";
-            $strQuery .= " c.bytpayofftargetflag AS bytpayofftargetflag,";
-            $strQuery .= " c.bytpercentinputflag AS bytpercentinputflag,";
-            $strQuery .= " c.dblpercent AS dblpercent,";
-            $strQuery .= " c.lngmonetaryunitcode AS lngmonetaryunitcode,";
-            $strQuery .= " c.lngmonetaryratecode AS lngmonetaryratecode,";
-            $strQuery .= " c.curconversionrate AS curconversionrate,";
-            $strQuery .= " c.lngproductquantity AS lngproductquantity,";
-            $strQuery .= " c.curproductprice AS curproductprice,";
-            $strQuery .= " c.curproductrate AS curproductrate,";
-            $strQuery .= " c.cursubtotalprice AS cursubtotalprice,";
-            $strQuery .= " c.strnote AS strnote,";
-            $strQuery .= " c.lngsortkey AS lngsortkey,";
-            $strQuery .= " c.lngsalesdivisioncode AS lngsalesdivisioncode,";
-            $strQuery .= " c.lngsalesclasscode AS lngsalesclasscode,";
+            $strQuery .= " ted.lngestimateno AS lngestimateno,";
+            $strQuery .= " ted.lngestimatedetailno AS lngestimatedetailno,";
+            $strQuery .= " ted.lngrevisionno AS lngrevisionno,";
+            $strQuery .= " ted.lngstocksubjectcode AS lngstocksubjectcode,";
+            $strQuery .= " ted.lngstockitemcode AS lngstockitemcode,";
+            $strQuery .= " ted.lngcustomercompanycode AS lngcustomercompanycode,";
+            $strQuery .= " to_char(ted.dtmdelivery, 'YYYY/MM/DD') AS dtmdelivery,";
+            $strQuery .= " ted.bytpayofftargetflag AS bytpayofftargetflag,";
+            $strQuery .= " ted.bytpercentinputflag AS bytpercentinputflag,";
+            $strQuery .= " ted.dblpercent AS dblpercent,";
+            $strQuery .= " ted.lngmonetaryunitcode AS lngmonetaryunitcode,";
+            $strQuery .= " ted.lngmonetaryratecode AS lngmonetaryratecode,";
+            $strQuery .= " ted.curconversionrate AS curconversionrate,";
+            $strQuery .= " ted.lngproductquantity AS lngproductquantity,";
+            $strQuery .= " ted.curproductprice AS curproductprice,";
+            $strQuery .= " ted.curproductrate AS curproductrate,";
+            $strQuery .= " ted.cursubtotalprice AS cursubtotalprice,";
+            $strQuery .= " ted.strnote AS strnote,";
+            $strQuery .= " ted.lngsortkey AS lngsortkey,";
+            $strQuery .= " ted.lngsalesdivisioncode AS lngsalesdivisioncode,";
+            $strQuery .= " ted.lngsalesclasscode AS lngsalesclasscode,";
             // 受注状態の情報取得
-            $strQuery .= " a.lngreceivestatuscode AS lngreceivestatuscode";
+            $strQuery .= " mr.lngreceivestatuscode AS lngreceivestatuscode";
 
-            $strQuery .= " FROM m_receive a";
-            $strQuery .= " INNER JOIN t_receivedetail b";
-            $strQuery .= " ON a.lngreceiveno = b.lngreceiveno";
-            $strQuery .= " AND a.lngrevisionno = b.lngrevisionno";
-            $strQuery .= " INNER JOIN t_estimatedetail c";
-            $strQuery .= " ON b.lngestimateno = c.lngestimateno";
-            $strQuery .= " AND b.lngestimatedetailno = c.lngestimatedetailno";
-            $strQuery .= " INNER JOIN m_estimate d";
-            $strQuery .= " ON c.lngestimateno = d.lngestimateno";
-            $strQuery .= " AND c.lngrevisionno = d.lngrevisionno";
-            $strQuery .= " INNER JOIN m_product e";
-            $strQuery .= " ON d.strproductcode = e.strproductcode";
-            $strQuery .= " AND d.strrevisecode = e.strrevisecode";
-            $strQuery .= " WHERE e.strproductcode = '". $productCode. "'";
-            $strQuery .= " AND e.strrevisecode = '". $reviseCode. "'";
-            $strQuery .= " AND d.lngrevisionno";
+            $strQuery .= " FROM m_receive mr";
+            $strQuery .= " INNER JOIN t_receivedetail trd";
+            $strQuery .= " ON mr.lngreceiveno = trd.lngreceiveno";
+            $strQuery .= " AND mr.lngrevisionno = trd.lngrevisionno";
+            $strQuery .= " INNER JOIN t_estimatedetail ted";
+            $strQuery .= " ON trd.lngestimateno = ted.lngestimateno";
+            $strQuery .= " AND trd.lngestimatedetailno = ted.lngestimatedetailno";
+            $strQuery .= " INNER JOIN m_estimate me";
+            $strQuery .= " ON ted.lngestimateno = me.lngestimateno";
+            $strQuery .= " AND ted.lngrevisionno = me.lngrevisionno";
+            $strQuery .= " INNER JOIN m_product mp";
+            $strQuery .= " ON me.strproductcode = mp.strproductcode";
+            $strQuery .= " AND me.strrevisecode = mp.strrevisecode";
+            $strQuery .= " WHERE mp.strproductcode = '". $productCode. "'";
+            $strQuery .= " AND mp.strrevisecode = '". $reviseCode. "'";
+            $strQuery .= " AND me.lngrevisionno";
             if ($revisionNo) {
                 // リビジョン番号が指定されている場合
                 $strQuery .= " = ". $revisionNo;
@@ -597,46 +597,46 @@ class estimateDB extends clsDB {
         } else {
             $strQuery = "SELECT";
             // 見積原価明細の情報取得
-            $strQuery .= " c.lngestimateno AS lngestimateno,";
-            $strQuery .= " c.lngestimatedetailno AS lngestimatedetailno,";
-            $strQuery .= " c.lngrevisionno AS lngrevisionno,";
-            $strQuery .= " c.lngstocksubjectcode AS lngstocksubjectcode,";
-            $strQuery .= " c.lngstockitemcode AS lngstockitemcode,";
-            $strQuery .= " c.lngcustomercompanycode AS lngcustomercompanycode,";
-            $strQuery .= " to_char(c.dtmdelivery, 'YYYY/MM/DD') AS dtmdelivery,";
-            $strQuery .= " c.bytpayofftargetflag AS bytpayofftargetflag,";
-            $strQuery .= " c.bytpercentinputflag AS bytpercentinputflag,";
-            $strQuery .= " c.dblpercent AS dblpercent,";
-            $strQuery .= " c.lngmonetaryunitcode AS lngmonetaryunitcode,";
-            $strQuery .= " c.lngmonetaryratecode AS lngmonetaryratecode,";
-            $strQuery .= " c.curconversionrate AS curconversionrate,";
-            $strQuery .= " c.lngproductquantity AS lngproductquantity,";
-            $strQuery .= " c.curproductprice AS curproductprice,";
-            $strQuery .= " c.curproductrate AS curproductrate,";
-            $strQuery .= " c.cursubtotalprice AS cursubtotalprice,";
-            $strQuery .= " c.strnote AS strnote,";
-            $strQuery .= " c.lngsortkey AS lngsortkey,";
-            $strQuery .= " c.lngsalesdivisioncode AS lngsalesdivisioncode,";
-            $strQuery .= " c.lngsalesclasscode AS lngsalesclasscode,";
+            $strQuery .= " ted.lngestimateno AS lngestimateno,";
+            $strQuery .= " ted.lngestimatedetailno AS lngestimatedetailno,";
+            $strQuery .= " ted.lngrevisionno AS lngrevisionno,";
+            $strQuery .= " ted.lngstocksubjectcode AS lngstocksubjectcode,";
+            $strQuery .= " ted.lngstockitemcode AS lngstockitemcode,";
+            $strQuery .= " ted.lngcustomercompanycode AS lngcustomercompanycode,";
+            $strQuery .= " to_char(ted.dtmdelivery, 'YYYY/MM/DD') AS dtmdelivery,";
+            $strQuery .= " ted.bytpayofftargetflag AS bytpayofftargetflag,";
+            $strQuery .= " ted.bytpercentinputflag AS bytpercentinputflag,";
+            $strQuery .= " ted.dblpercent AS dblpercent,";
+            $strQuery .= " ted.lngmonetaryunitcode AS lngmonetaryunitcode,";
+            $strQuery .= " ted.lngmonetaryratecode AS lngmonetaryratecode,";
+            $strQuery .= " ted.curconversionrate AS curconversionrate,";
+            $strQuery .= " ted.lngproductquantity AS lngproductquantity,";
+            $strQuery .= " ted.curproductprice AS curproductprice,";
+            $strQuery .= " ted.curproductrate AS curproductrate,";
+            $strQuery .= " ted.cursubtotalprice AS cursubtotalprice,";
+            $strQuery .= " ted.strnote AS strnote,";
+            $strQuery .= " ted.lngsortkey AS lngsortkey,";
+            $strQuery .= " ted.lngsalesdivisioncode AS lngsalesdivisioncode,";
+            $strQuery .= " ted.lngsalesclasscode AS lngsalesclasscode,";
             // 発注状態の情報取得
-            $strQuery .= " a.lngorderstatuscode AS lngorderstatuscode";
+            $strQuery .= " mo.lngorderstatuscode AS lngorderstatuscode";
 
-            $strQuery .= " FROM m_order a";
-            $strQuery .= " INNER JOIN t_orderdetail b";
-            $strQuery .= " ON a.lngorderno = b.lngorderno";
-            $strQuery .= " AND a.lngrevisionno = b.lngrevisionno";
-            $strQuery .= " INNER JOIN t_estimatedetail c";
-            $strQuery .= " ON b.lngestimateno = c.lngestimateno";
-            $strQuery .= " AND b.lngestimatedetailno = c.lngestimatedetailno";
-            $strQuery .= " INNER JOIN m_estimate d";
-            $strQuery .= " ON c.lngestimateno = d.lngestimateno";
-            $strQuery .= " AND c.lngrevisionno = d.lngrevisionno";
-            $strQuery .= " INNER JOIN m_product e";
-            $strQuery .= " ON d.strproductcode = e.strproductcode";
-            $strQuery .= " AND d.strrevisecode = e.strrevisecode";
-            $strQuery .= " WHERE e.strproductcode = '". $productCode. "'";
-            $strQuery .= " AND e.strrevisecode = '". $reviseCode. "'";
-            $strQuery .= " AND d.lngrevisionno";
+            $strQuery .= " FROM m_order mo";
+            $strQuery .= " INNER JOIN t_orderdetail tod";
+            $strQuery .= " ON mo.lngorderno = tod.lngorderno";
+            $strQuery .= " AND mo.lngrevisionno = tod.lngrevisionno";
+            $strQuery .= " INNER JOIN t_estimatedetail ted";
+            $strQuery .= " ON tod.lngestimateno = ted.lngestimateno";
+            $strQuery .= " AND tod.lngestimatedetailno = ted.lngestimatedetailno";
+            $strQuery .= " INNER JOIN m_estimate me";
+            $strQuery .= " ON ted.lngestimateno = me.lngestimateno";
+            $strQuery .= " AND ted.lngrevisionno = me.lngrevisionno";
+            $strQuery .= " INNER JOIN m_product mp";
+            $strQuery .= " ON me.strproductcode = mp.strproductcode";
+            $strQuery .= " AND me.strrevisecode = mp.strrevisecode";
+            $strQuery .= " WHERE mp.strproductcode = '". $productCode. "'";
+            $strQuery .= " AND mp.strrevisecode = '". $reviseCode. "'";
+            $strQuery .= " AND me.lngrevisionno";
             if ($revisionNo) {
                 // リビジョン番号が指定されている場合
                 $strQuery .= " = ". $revisionNo;
@@ -741,63 +741,63 @@ class estimateDB extends clsDB {
             return false;
         } else {
             $strQuery = "SELECT";
-            $strQuery .= " a.lngestimateno AS lngestimateno,";
-            $strQuery .= " a.lngestimatedetailno AS lngestimatedetailno,";
-            $strQuery .= " a.lngrevisionno AS lngrevisionno,";
-            $strQuery .= " a.lngstocksubjectcode AS lngstocksubjectcode,";
-            $strQuery .= " a.lngstockitemcode AS lngstockitemcode,";
-            $strQuery .= " a.lngcustomercompanycode AS lngcustomercompanycode,";
-            $strQuery .= " to_char(a.dtmdelivery, 'YYYY/MM/DD') AS dtmdelivery,";
-            $strQuery .= " a.bytpayofftargetflag AS bytpayofftargetflag,";
-            $strQuery .= " a.bytpercentinputflag AS bytpercentinputflag,";
-            $strQuery .= " a.curproductrate AS curproductrate,";
-            $strQuery .= " a.lngmonetaryunitcode AS lngmonetaryunitcode,";
-            $strQuery .= " a.lngmonetaryratecode AS lngmonetaryratecode,";
-            $strQuery .= " a.curconversionrate AS curconversionrate,";
-            $strQuery .= " a.lngproductquantity AS lngproductquantity,";
-            $strQuery .= " a.curproductprice AS curproductprice,";
-            $strQuery .= " a.curproductrate AS curproductrate,";
-            $strQuery .= " a.cursubtotalprice AS cursubtotalprice,";
-            $strQuery .= " a.strnote AS strnote,";
-            $strQuery .= " a.lngsortkey AS lngsortkey,";
-            $strQuery .= " a.lngsalesdivisioncode AS lngsalesdivisioncode,";
-            $strQuery .= " a.lngsalesclasscode AS lngsalesclasscode,";
-            $strQuery .= " b.lngproductrevisionno AS lngproductrevisionno,";
-            $strQuery .= " e.lngorderno AS lngorderno,";
-            $strQuery .= " e.lngorderstatuscode AS lngorderstatuscode,";
-            $strQuery .= " g.lngreceiveno AS lngreceiveno,";
-            $strQuery .= " g.lngreceivestatuscode AS lngreceivestatuscode";
+            $strQuery .= " ted.lngestimateno AS lngestimateno,";
+            $strQuery .= " ted.lngestimatedetailno AS lngestimatedetailno,";
+            $strQuery .= " ted.lngrevisionno AS lngrevisionno,";
+            $strQuery .= " ted.lngstocksubjectcode AS lngstocksubjectcode,";
+            $strQuery .= " ted.lngstockitemcode AS lngstockitemcode,";
+            $strQuery .= " ted.lngcustomercompanycode AS lngcustomercompanycode,";
+            $strQuery .= " to_char(ted.dtmdelivery, 'YYYY/MM/DD') AS dtmdelivery,";
+            $strQuery .= " ted.bytpayofftargetflag AS bytpayofftargetflag,";
+            $strQuery .= " ted.bytpercentinputflag AS bytpercentinputflag,";
+            $strQuery .= " ted.curproductrate AS curproductrate,";
+            $strQuery .= " ted.lngmonetaryunitcode AS lngmonetaryunitcode,";
+            $strQuery .= " ted.lngmonetaryratecode AS lngmonetaryratecode,";
+            $strQuery .= " ted.curconversionrate AS curconversionrate,";
+            $strQuery .= " ted.lngproductquantity AS lngproductquantity,";
+            $strQuery .= " ted.curproductprice AS curproductprice,";
+            $strQuery .= " ted.curproductrate AS curproductrate,";
+            $strQuery .= " ted.cursubtotalprice AS cursubtotalprice,";
+            $strQuery .= " ted.strnote AS strnote,";
+            $strQuery .= " ted.lngsortkey AS lngsortkey,";
+            $strQuery .= " ted.lngsalesdivisioncode AS lngsalesdivisioncode,";
+            $strQuery .= " ted.lngsalesclasscode AS lngsalesclasscode,";
+            $strQuery .= " me.lngproductrevisionno AS lngproductrevisionno,";
+            $strQuery .= " mo.lngorderno AS lngorderno,";
+            $strQuery .= " mo.lngorderstatuscode AS lngorderstatuscode,";
+            $strQuery .= " mr.lngreceiveno AS lngreceiveno,";
+            $strQuery .= " mr.lngreceivestatuscode AS lngreceivestatuscode";
 
-            $strQuery .= " FROM t_estimatedetail a";
-            $strQuery .= " INNER JOIN m_estimate b";
-            $strQuery .= " ON a.lngestimateno = b.lngestimateno";
-            $strQuery .= " AND a.lngrevisionno = b.lngrevisionno";
-            $strQuery .= " INNER JOIN m_product c";
-            $strQuery .= " ON b.strproductcode = c.strproductcode";
-            $strQuery .= " AND b.strrevisecode = c.strrevisecode";
-            $strQuery .= " AND b.lngproductrevisionno = c.lngrevisionno";
+            $strQuery .= " FROM t_estimatedetail ted";
+            $strQuery .= " INNER JOIN m_estimate me";
+            $strQuery .= " ON ted.lngestimateno = me.lngestimateno";
+            $strQuery .= " AND ted.lngrevisionno = me.lngrevisionno";
+            $strQuery .= " INNER JOIN m_product mp";
+            $strQuery .= " ON me.strproductcode = mp.strproductcode";
+            $strQuery .= " AND me.strrevisecode = mp.strrevisecode";
+            $strQuery .= " AND me.lngproductrevisionno = mp.lngrevisionno";
 
             // 発注情報の結合(t_orderdetail, m_order)
-            $strQuery .= " LEFT OUTER JOIN t_orderdetail d";
-            $strQuery .= " ON a.lngestimateno = d.lngestimateno";
-            $strQuery .= " AND a.lngestimatedetailno = d.lngestimatedetailno";
-            $strQuery .= " AND a.lngrevisionno = d.lngrevisionno";
-            $strQuery .= " LEFT OUTER JOIN m_order e";
-            $strQuery .= " ON d.lngorderno = e.lngorderno";
-            $strQuery .= " AND d.lngrevisionno = e.lngrevisionno";
+            $strQuery .= " LEFT OUTER JOIN t_orderdetail tod";
+            $strQuery .= " ON ted.lngestimateno = tod.lngestimateno";
+            $strQuery .= " AND ted.lngestimatedetailno = tod.lngestimatedetailno";
+            $strQuery .= " AND ted.lngrevisionno = tod.lngrevisionno";
+            $strQuery .= " LEFT OUTER JOIN m_order mo";
+            $strQuery .= " ON tod.lngorderno = mo.lngorderno";
+            $strQuery .= " AND tod.lngrevisionno = mo.lngrevisionno";
 
             // 受注情報の結合(t_receivedetail, m_receive)
-            $strQuery .= " LEFT OUTER JOIN t_receivedetail f";
-            $strQuery .= " ON a.lngestimateno = f.lngestimateno";
-            $strQuery .= " AND a.lngestimatedetailno = f.lngestimatedetailno";
-            $strQuery .= " AND a.lngrevisionno = f.lngrevisionno";
-            $strQuery .= " LEFT OUTER JOIN m_receive g";
-            $strQuery .= " ON f.lngreceiveno = g.lngreceiveno";
-            $strQuery .= " AND f.lngrevisionno = g.lngrevisionno";
+            $strQuery .= " LEFT OUTER JOIN t_receivedetail trd";
+            $strQuery .= " ON ted.lngestimateno = trd.lngestimateno";
+            $strQuery .= " AND ted.lngestimatedetailno = trd.lngestimatedetailno";
+            $strQuery .= " AND ted.lngrevisionno = trd.lngrevisionno";
+            $strQuery .= " LEFT OUTER JOIN m_receive mr";
+            $strQuery .= " ON trd.lngreceiveno = mr.lngreceiveno";
+            $strQuery .= " AND trd.lngrevisionno = mr.lngrevisionno";
 
-            $strQuery .= " WHERE c.strproductcode = '". $productCode. "'";
-            $strQuery .= " AND c.strrevisecode = '". $reviseCode. "'";
-            $strQuery .= " AND b.lngrevisionno";
+            $strQuery .= " WHERE mp.strproductcode = '". $productCode. "'";
+            $strQuery .= " AND mp.strrevisecode = '". $reviseCode. "'";
+            $strQuery .= " AND me.lngrevisionno";
             if ($revisionNo) {
                 $strQuery .= " = ". $revisionNo;
             } else {
@@ -989,16 +989,16 @@ class estimateDB extends clsDB {
             return false;
         } else {
             $strQuery = "SELECT";
-            $strQuery .= " b.strcompanydisplaycode ||':'|| coalesce(b.strshortname, '')";
+            $strQuery .= " mc.strcompanydisplaycode ||':'|| coalesce(mc.strshortname, '')";
             $strQuery .= " as customercompany,";
-            $strQuery .= " a.lngattributecode as lngattributecode";
-            $strQuery .= " FROM m_attributerelation a";
-            $strQuery .= " INNER JOIN m_company b";
-            $strQuery .= " ON a.lngcompanycode = b.lngcompanycode";
-            $strQuery .= " INNER JOIN m_attribute c";
-            $strQuery .= " ON a.lngattributecode = c.lngattributecode";
-            $strQuery .= " WHERE a.lngattributecode in (". DEF_ATTRIBUTE_CLIENT. ", ". DEF_ATTRIBUTE_SUPPLIER. ")" ;
-            $strQuery .= " ORDER BY lngattributecode ASC, b.strcompanydisplaycode ASC";
+            $strQuery .= " mar.lngattributecode as lngattributecode";
+            $strQuery .= " FROM m_attributerelation mar";
+            $strQuery .= " INNER JOIN m_company mc";
+            $strQuery .= " ON mar.lngcompanycode = mc.lngcompanycode";
+            $strQuery .= " INNER JOIN m_attribute ma";
+            $strQuery .= " ON mar.lngattributecode = ma.lngattributecode";
+            $strQuery .= " WHERE mar.lngattributecode in (". DEF_ATTRIBUTE_CLIENT. ", ". DEF_ATTRIBUTE_SUPPLIER. ")" ;
+            $strQuery .= " ORDER BY lngattributecode ASC, mc.strcompanydisplaycode ASC";
 
             list ($resultID, $resultNumber) = fncQuery($strQuery, $this);
 
@@ -1020,22 +1020,22 @@ class estimateDB extends clsDB {
             return false;
         } else {
             $strQuery = "SELECT";
-            $strQuery .= " b.strgroupdisplaycode ||':'|| b.strgroupdisplayname as groupcode,";
-            $strQuery .= " c.struserdisplaycode ||':'|| c.struserdisplayname as usercode";
-            $strQuery .= " FROM m_grouprelation a";
-            $strQuery .= " INNER JOIN m_group b";
-            $strQuery .= " ON a.lnggroupcode = b.lnggroupcode";
-            $strQuery .= " INNER JOIN m_user c";
-            $strQuery .= " ON a.lngusercode = c.lngusercode";
+            $strQuery .= " mg.strgroupdisplaycode ||':'|| mg.strgroupdisplayname as groupcode,";
+            $strQuery .= " mu.struserdisplaycode ||':'|| mu.struserdisplayname as usercode";
+            $strQuery .= " FROM m_grouprelation mgr";
+            $strQuery .= " INNER JOIN m_group mg";
+            $strQuery .= " ON mgr.lnggroupcode = mg.lnggroupcode";
+            $strQuery .= " INNER JOIN m_user mu";
+            $strQuery .= " ON mgr.lngusercode = mu.lngusercode";
             $strQuery .= " INNER JOIN m_company d";
-            $strQuery .= " ON b.lngcompanycode = d.lngcompanycode";
-            // $strQuery .= " WHERE a.bytdefaultflag = TRUE";
-            $strQuery .= " AND b.bytgroupdisplayflag = TRUE";
-            $strQuery .= " AND c.bytuserdisplayflag = TRUE";
+            $strQuery .= " ON mg.lngcompanycode = d.lngcompanycode";
+            // $strQuery .= " WHERE mgr.bytdefaultflag = TRUE";
+            $strQuery .= " AND mg.bytgroupdisplayflag = TRUE";
+            $strQuery .= " AND mu.bytuserdisplayflag = TRUE";
             $strQuery .= " AND d.lngcompanycode = 1";
-            $strQuery .= " AND c.bytinvalidflag = FALSE";
-            $strQuery .= " ORDER BY b.strgroupdisplaycode ASC, b.strgroupdisplayname ASC,";
-            $strQuery .= " c.struserdisplaycode ASC";
+            $strQuery .= " AND mu.bytinvalidflag = FALSE";
+            $strQuery .= " ORDER BY mg.strgroupdisplaycode ASC, mg.strgroupdisplayname ASC,";
+            $strQuery .= " mu.struserdisplaycode ASC";
             list ($resultID, $resultNumber) = fncQuery($strQuery, $this);
 
             if ($resultNumber > 0) {
@@ -1069,17 +1069,17 @@ class estimateDB extends clsDB {
             return false;
         } else {
             $strQuery = "SELECT";
-            $strQuery .= " a.lngfunctioncode,";
-            $strQuery .= " a.lngusercode,";
-            $strQuery .= " a.stripaddress,";
-            $strQuery .= " b.struserdisplayname";
-            $strQuery .= " FROM t_exclusivecontrol a";
-            $strQuery .= " INNER JOIN m_user b";
-            $strQuery .= " ON a.lngusercode = b.lngusercode";
-            $strQuery .= " WHERE a.lngfunctioncode = ". $functionCode;
-            $strQuery .= " AND a.strexclusivekey1 = '". $key1. "'";
-            if ($key2) $strQuery .= " AND a.strexclusivekey2 = '". $key2. "'";
-            if ($key3) $strQuery .= " AND a.strexclusivekey3 = '". $key3. "'";
+            $strQuery .= " tec.lngfunctioncode,";
+            $strQuery .= " tec.lngusercode,";
+            $strQuery .= " tec.stripaddress,";
+            $strQuery .= " mu.struserdisplayname";
+            $strQuery .= " FROM t_exclusivecontrol tec";
+            $strQuery .= " INNER JOIN m_user mu";
+            $strQuery .= " ON tec.lngusercode = mu.lngusercode";
+            $strQuery .= " WHERE tec.lngfunctioncode = ". $functionCode;
+            $strQuery .= " AND tec.strexclusivekey1 = '". $key1. "'";
+            if ($key2) $strQuery .= " AND tec.strexclusivekey2 = '". $key2. "'";
+            if ($key3) $strQuery .= " AND tec.strexclusivekey3 = '". $key3. "'";
 
             list ($resultID, $resultNumber) = fncQuery($strQuery, $this);
 
@@ -1088,6 +1088,51 @@ class estimateDB extends clsDB {
             } else {
                 return pg_fetch_object($resultID, 0);
             }
+        }
+    }
+
+    /**
+    *
+    *	営業部門、開発部門に属するグループおよびユーザを取得する
+    *
+    *	@access public
+    */
+    public function getSalesGroupAndDevelopGroup() {
+        if (!$this->isOpen()) {
+            return false;
+        } else {
+            $strQuery = "SELECT";
+            $strQuery .= " mga.lngattributecode,";
+            $strQuery .= " mg.strgroupdisplaycode,";
+            $strQuery .= " mg.strgroupdisplayname,";
+            $strQuery .= " mu.struserdisplaycode,";
+            $strQuery .= " mu.struserdisplayname";
+            $strQuery .= " FROM m_grouprelation mgr";
+            $strQuery .= " INNER JOIN m_user mu";
+            $strQuery .= " ON mu.lngusercode = mgr.lngusercode";
+            $strQuery .= " INNER JOIN m_group mg";
+            $strQuery .= " ON mg.lnggroupcode = mgr.lnggroupcode";
+            $strQuery .= " INNER JOIN m_groupattributerelation mgar";
+            $strQuery .= " ON mgar.lnggroupcode = mg.lnggroupcode";
+            $strQuery .= " INNER JOIN m_groupattribute mga";
+            $strQuery .= " ON mga.lngattributecode = mgar.lngattributecode";
+            $strQuery .= " WHERE mga.lngattributecode in (". DEF_GROUP_ATTRIBUTE_CODE_SALES_GROUP. ",". DEF_GROUP_ATTRIBUTE_CODE_DEVELOP_GROUP.")";
+            $strQuery .= " ORDER BY mga.lngattributecode ASC,";
+            $strQuery .= " mg.strgroupdisplaycode ASC,";
+            $strQuery .= " mu.struserdisplaycode ASC";
+
+            list ($resultID, $resultNumber) = fncQuery($strQuery, $this);
+
+            $ret = [];
+
+            if ($resultNumber >= 1) {
+                for ($i = 0; $i < $resultNumber; ++$i) {
+                    $result = pg_fetch_object($resultID, $i);
+                    $ret[] = $result;
+                }
+            }
+
+            return $ret;
         }
     }
 }
