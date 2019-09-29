@@ -1685,38 +1685,54 @@ function fncConvertArrayDetailToEucjp($aryDetail)
     return $aryDetail;
 }
 
-// プレビューHTMLを生成する
-function fncGenerateReportPreview($aryHeader, $aryDetail, $objDB)
+/**
+ * テンプレートから帳票イメージを生成する
+ * @param  string  $strMode     動作モード："html"->プレビュー用HTML生成、"download"->ダウンロード用Writer生成
+ * @param  array   $aryHeader   ヘッダ部データ
+ * @param  array   $aryDetail   明細部データ
+ * @param  object  $objDB       データベース操作クラス
+ * @return array   $$aryGenerateResult  生成結果。動作モードにより格納される値が異なる
+ */
+function fncGenerateReportImage($strMode, $aryHeader, $aryDetail, $objDB)
 {
+    // 生成結果（戻り値）
+    $aryGenerateResult = array();
+
+    // DBG:一時コメントアウト
     // --------------------------------------------
     //  データ取得
     // --------------------------------------------
-    // 顧客の会社コードを取得
-    $lngCustomerCompanyCode = fncGetNumericCompanyCode($aryHeader["strcompanydisplaycode"], $objDB);
-    // 顧客の会社コードに紐づく納品伝票種別を取得
-    $aryReport = fncGetSlipKindByCompanyCode($lngCustomerCompanyCode, $objDB);
+    // // 顧客の会社コードを取得
+    // $lngCustomerCompanyCode = fncGetNumericCompanyCode($aryHeader["strcompanydisplaycode"], $objDB);
+    // // 顧客の会社コードに紐づく納品伝票種別を取得
+    // $aryReport = fncGetSlipKindByCompanyCode($lngCustomerCompanyCode, $objDB);
     
-    // 帳票種別の取得
-    $lngSlipKindCode = $aryReport["lngslipkindcode"];
-    // 帳票種別に対応する帳票テンプレートファイル名の取得
-    $templatFileName = fncGetReportTemplateFileName($lngSlipKindCode);
-    // 顧客に紐づく帳票1ページあたりの最大明細数を取得する
-    $maxItemPerPage = intval($aryReport["lngmaxline"]);
-    // 登録する全明細の数
-    $totalItemCount = count($aryDetail);
-    // 最大ページ数の計算
-    $maxPageCount = ceil($totalItemCount / $maxItemPerPage);
+    // // 帳票種別の取得
+    // $lngSlipKindCode = $aryReport["lngslipkindcode"];
+    // // 帳票種別に対応する帳票テンプレートファイル名の取得
+    // $templatFileName = fncGetReportTemplateFileName($lngSlipKindCode);
+    // // 顧客に紐づく帳票1ページあたりの最大明細数を取得する
+    // $maxItemPerPage = intval($aryReport["lngmaxline"]);
+    // // 登録する全明細の数
+    // $totalItemCount = count($aryDetail);
+    // // 最大ページ数の計算
+    // $maxPageCount = ceil($totalItemCount / $maxItemPerPage);
 
-    // 顧客の会社コードに紐づく会社情報を取得
-    $aryCustomerCompany = fncGetCompanyInfoByCompanyCode($lngCustomerCompanyCode, $objDB);
-    // 顧客の国コードを取得
-    $lngCustomerCountryCode = fncGetCountryCode($aryHeader["strcompanydisplaycode"], $objDB);
-    // 顧客社名の取得
-    $strCustomerCompanyName = fncGetCustomerCompanyName($lngCustomerCountryCode, $aryCustomerCompany);
-    // 顧客名の取得
-    $strCustomerName = fncGetCustomerName($aryCustomerCompany);
-    // 納品先の会社コードの取得
-    $lngDeliveryPlaceCode = fncGetNumericCompanyCode($aryHeader["strdeliveryplacecompanydisplaycode"], $objDB);
+    // // 顧客の会社コードに紐づく会社情報を取得
+    // $aryCustomerCompany = fncGetCompanyInfoByCompanyCode($lngCustomerCompanyCode, $objDB);
+    // // 顧客の国コードを取得
+    // $lngCustomerCountryCode = fncGetCountryCode($aryHeader["strcompanydisplaycode"], $objDB);
+    // // 顧客社名の取得
+    // $strCustomerCompanyName = fncGetCustomerCompanyName($lngCustomerCountryCode, $aryCustomerCompany);
+    // // 顧客名の取得
+    // $strCustomerName = fncGetCustomerName($aryCustomerCompany);
+    // // 納品先の会社コードの取得
+    // $lngDeliveryPlaceCode = fncGetNumericCompanyCode($aryHeader["strdeliveryplacecompanydisplaycode"], $objDB);
+
+    //DBG:TESTCODE
+    //$templatFileName = "納品書temple_市販_連絡書付.xlsx";
+    $templatFileName = "納品書temple_B社_連絡書付.xlsx";
+
 
     // --------------------------------------------
     //  スプレッドシート初期化
@@ -1729,59 +1745,87 @@ function fncGenerateReportPreview($aryHeader, $aryDetail, $objDB)
     $dataSheetName = fncToUtf8("データ設定用");
 
     // --------------------------------------------
-    //  プレビューHTML生成
+    //  動作モードによる処理分岐
     // --------------------------------------------
-    // プレビュー用CSS
-    $previewStyle = "";
-    // プレビューHTML
-    $previewData = "";
-
-    // ページ単位でのHTML生成
-    for ( $page = 1; $page <= $maxPageCount; $page++ ){
-
-        // 確実に初期化するため1ページ毎にスプレッドシートを読み込みなおす
+    if ($strMode == "download")
+    {
+        // --------------------------------------------
+        //  ダウンロード用Writer生成
+        // --------------------------------------------
+        //スプレッドシート生成
         $xlSpreadSheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($spreadSheetFilePath);
+        //ワークシート生成
         $xlWorkSheet = $xlSpreadSheet->GetSheetByName($dataSheetName);
-        $xlWriter = new \PhpOffice\PhpSpreadsheet\Writer\Html($xlSpreadSheet);
+        //XlsxWriter生成
+        $xlWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($xlSpreadSheet);
 
-        if (strlen($previewStyle) == 0)
-        {
-            // CSSは全体で1つあればよい
-            $previewStyle = $xlWriter->generateStyles(true);
+        //Writerだけ戻してみる
+        $aryGenerateResult["XlsxWriter"] = $xlWriter;
+    }
+    else if ($strMode == "html")
+    {
+        // --------------------------------------------
+        //  プレビューHTML生成
+        // --------------------------------------------
+        // プレビュー用CSS
+        $previewStyle = "";
+        // プレビューHTML
+        $previewData = "";
+
+        // ページ単位でのHTML生成
+        for ( $page = 1; $page <= $maxPageCount; $page++ ){
+
+            // 確実に初期化するため1ページ毎にスプレッドシートを読み込みなおす
+            $xlSpreadSheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($spreadSheetFilePath);
+            $xlWorkSheet = $xlSpreadSheet->GetSheetByName($dataSheetName);
+            $xlWriter = new \PhpOffice\PhpSpreadsheet\Writer\Html($xlSpreadSheet);
+
+            if (strlen($previewStyle) == 0)
+            {
+                // CSSは全体で1つあればよい
+                $previewStyle = $xlWriter->generateStyles(true);
+            }
+
+            // 現在のページ数と1ページあたりの明細数から
+            // 出力する明細のインデックスの最小値と最大値を求める
+            $itemMinIndex = ($page-1) * $maxItemPerPage ;
+            $itemMaxIndex = $page * $maxItemPerPage - 1;
+            if ($itemMaxIndex > $totalItemCount - 1){
+                $itemMaxIndex = $totalItemCount - 1;
+            }
+
+            // 1ページ分のプレビューHTML生成
+            fncSetSlipDataToWorkSheet(
+                $xlWorkSheet, 
+                $itemMinIndex, $itemMaxIndex, $strCustomerCompanyName, 
+                $strCustomerName, $aryCustomerCompany, $lngDeliveryPlaceCode,
+                $aryHeader, $aryDetail);
+
+            // 全体に追加
+            $pageHtml = $xlWriter -> generateSheetData();
+            $previewData .= $pageHtml;
+        
         }
 
-        // 現在のページ数と1ページあたりの明細数から
-        // 出力する明細のインデックスの最小値と最大値を求める
-        $itemMinIndex = ($page-1) * $maxItemPerPage ;
-        $itemMaxIndex = $page * $maxItemPerPage - 1;
-        if ($itemMaxIndex > $totalItemCount - 1){
-            $itemMaxIndex = $totalItemCount - 1;
-        }
-
-        // 1ページ分のプレビューHTML生成
-        $pageHtml = fncGeneratePreviewPageHtml(
-            $xlWorkSheet, $xlWriter,
-            $itemMinIndex, $itemMaxIndex, $strCustomerCompanyName, 
-            $strCustomerName, $aryCustomerCompany, $lngDeliveryPlaceCode,
-            $aryHeader, $aryDetail);
-
-        // 全体に追加
-        $previewData .= $pageHtml;
-       
+        // 最後にUTF-8からEUC-JPに変換した結果をセット
+        $aryGenerateResult["PreviewStyle"] = fncToEucjp($previewStyle);
+        $aryGenerateResult["PreviewData"] = fncToEucjp($previewData);
+    }
+    else
+    {
+        // 不明なモード
+        throw new Exception("不明なモードが指定されました。strMode=".$strMode);
     }
 
-    // 最後にUTF-8からEUC-JPに変換した結果をセット
-    $aryPreview = array();
-    $aryPreview["PreviewStyle"] = fncToEucjp($previewStyle);
-    $aryPreview["PreviewData"] = fncToEucjp($previewData);
-
-    return $aryPreview;
-
+    // --------------------------------------------
+    //  戻り値を返す
+    // --------------------------------------------
+    return $aryGenerateResult;
 }
 
-// 納品書データから帳票プレビューHTML生成
-function fncGeneratePreviewPageHtml(
-    $xlWorkSheet, $xlWriter,
+// 納品書データを帳票テンプレートのワークシートに設定
+function fncSetSlipDataToWorkSheet(
+    $xlWorkSheet, 
     $itemMinIndex, $itemMaxIndex, $strCustomerCompanyName, 
     $strCustomerName, $aryCustomerCompany, $lngDeliveryPlaceCode,
     $aryHeader, $aryDetail)
@@ -1907,9 +1951,9 @@ function fncGeneratePreviewPageHtml(
         
     }
 
-    $pageHtml = $xlWriter->generateSheetData();
+    //$pageHtml = $xlWriter->generateSheetData();
 
-    return $pageHtml;
+    //return $pageHtml;
 
 }
 

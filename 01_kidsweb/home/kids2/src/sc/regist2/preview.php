@@ -115,14 +115,14 @@
 		//  プレビュー生成
 		// --------------------------
 		//登録データとExcelテンプレートとからプレビューHTMLを生成する
-		$aryPreview = fncGenerateReportPreview($aryHeader, $aryDetail, $objDB, $objAuth);
+		$aryGenerateResult = fncGenerateReportImage("html", $aryHeader, $aryDetail, $objDB, $objAuth);
 
 		// --------------------------
 		//  プレビュー画面表示
 		// --------------------------
 		// テンプレートから構築したHTMLを出力
-		$aryData["PREVIEW_STYLE"] = $aryPreview["PreviewStyle"];
-		$aryData["PREVIEW_DATA"] = $aryPreview["PreviewData"];
+		$aryData["PREVIEW_STYLE"] = $aryGenerateResult["PreviewStyle"];
+		$aryData["PREVIEW_DATA"] = $aryGenerateResult["PreviewData"];
 		$objTemplate = new clsTemplate();
 		$objTemplate->getTemplate( "sc/regist2/preview.tmpl" );
 		$objTemplate->replace( $aryData );
@@ -167,38 +167,38 @@
 		$aryHeader = fncConvertArrayHeaderToEucjp($aryHeader);
 		$aryDetail = fncConvertArrayDetailToEucjp($aryDetail);
 
-		//DBG:一時コメントアウト
-		// --------------------------
-		//  登録/修正前バリデーション
-		// --------------------------
-		// 受注状態コードが2以外の明細が存在するならエラーとする
-		if(fncNotReceivedDetailExists($aryDetail, $objDB))
-		{
-			MoveToErrorPage("納品書が発行できない状態の明細が選択されています。");
-		}
+		// //DBG:一時コメントアウト
+		// // --------------------------
+		// //  登録/修正前バリデーション
+		// // --------------------------
+		// // 受注状態コードが2以外の明細が存在するならエラーとする
+		// if(fncNotReceivedDetailExists($aryDetail, $objDB))
+		// {
+		// 	MoveToErrorPage("納品書が発行できない状態の明細が選択されています。");
+		// }
 
-		//DBG:一時コメントアウト
-		// --------------------------
-		//  データベース処理
-		// --------------------------
-		// トランザクション開始
-		$objDB->transactionBegin();
+		// //DBG:一時コメントアウト
+		// // --------------------------
+		// //  データベース処理
+		// // --------------------------
+		// // トランザクション開始
+		// $objDB->transactionBegin();
 
-		// 受注マスタ更新
-		$updResult = fncUpdateReceiveMaster($aryDetail, $objDB);
-		if (!$updResult){
-			MoveToErrorPage("受注データの更新に失敗しました。");
-		}
+		// // 受注マスタ更新
+		// $updResult = fncUpdateReceiveMaster($aryDetail, $objDB);
+		// if (!$updResult){
+		// 	MoveToErrorPage("受注データの更新に失敗しました。");
+		// }
 
-		// 売上マスタ、売上詳細、納品伝票マスタ、納品伝票明細へのレコード追加。
-		// 納品伝票番号が空なら登録、空でないなら修正を行う
-		$aryRegResult = fncRegisterSalesAndSlip(
-			$lngRenewTargetSlipNo, $strRenewTargetSlipCode, $lngRenewTargetSalesNo, $strRenewTargetSalesCode,
-			$aryHeader, $aryDetail, $objDB, $objAuth);
+		// // 売上マスタ、売上詳細、納品伝票マスタ、納品伝票明細へのレコード追加。
+		// // 納品伝票番号が空なら登録、空でないなら修正を行う
+		// $aryRegResult = fncRegisterSalesAndSlip(
+		// 	$lngRenewTargetSlipNo, $strRenewTargetSlipCode, $lngRenewTargetSalesNo, $strRenewTargetSalesCode,
+		// 	$aryHeader, $aryDetail, $objDB, $objAuth);
 
-		if (!$aryRegResult["result"]){
-			MoveToErrorPage("売上・納品伝票データの登録または修正に失敗しました。");
-		}
+		// if (!$aryRegResult["result"]){
+		// 	MoveToErrorPage("売上・納品伝票データの登録または修正に失敗しました。");
+		// }
 
 		// コミット
 		$objDB->transactionCommit();
@@ -220,17 +220,18 @@
 		//  登録結果画面表示
 		// --------------------------
 		// 処理結果（テーブル出力）
-		$aryPerPage = $aryRegResult["aryPerPage"];
+		//$aryPerPage = $aryRegResult["aryPerPage"];
+
 		//DBG:TESTCODE
-		// $aryPage1 = array();
-		// $aryPage1["strSlipCode"] = "02000307";
-		// $aryPage1["lngRevisionNo"] = "REV1";
-		// $aryPage2 = array();
-		// $aryPage2["strSlipCode"] = "02030554";
-		// $aryPage2["lngRevisionNo"] = "REV2";
-		// $aryPerPage = array();
-		// $aryPerPage[] = $aryPage1;
-		// $aryPerPage[] = $aryPage2;
+		$aryPage1 = array();
+		$aryPage1["strSlipCode"] = "02000307";
+		$aryPage1["lngRevisionNo"] = "REV1";
+		$aryPage2 = array();
+		$aryPage2["strSlipCode"] = "02030554";
+		$aryPage2["lngRevisionNo"] = "REV2";
+		$aryPerPage = array();
+		$aryPerPage[] = $aryPage1;
+		$aryPerPage[] = $aryPage2;
 		$strHtml = fncGetRegisterResultTableBodyHtml($aryPerPage, $objDB);
 		$aryData["tbodyResiterResult"] = $strHtml;
 
@@ -257,26 +258,26 @@
 		$lngRevisionNo = $_POST["lngRevisionNo"];
 
 		//TODO:帳票印刷データをDBより取得
-		//$aryDownloadData = fncGetSlipDownloadData($strDownloadSlipCode, $lngDownloadRevisionNo);
+		//$aryDownloadData = fncGetSlipDownloadData($strSlipCode, $lngRevisionNo);
 
-		//TODO:登録データとExcelテンプレートとからダウンロードするExcelオブジェクトを取得する
-		//fncDownloadReportExcel($aryHeader, $aryDetail, $objDB, $objAuth);
+		// 帳票イメージを生成するXlsxWriterを取得する
+		$aryGenerateResult = fncGenerateReportImage("download", $aryHeader, $aryDetail, $objDB, $objAuth);
+		$xlsxWriter = $aryGenerateResult["XlsxWriter"];
 
 		// TODO:MIMEタイプをセットしてダウンロード
-		//   //MIMEタイプ：https://technet.microsoft.com/ja-jp/ee309278.aspx
-		//   header("Content-Description: File Transfer");
-		//   header('Content-Disposition: attachment; filename="weather.xlsx"');
-		//   header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-		//   header('Content-Transfer-Encoding: binary');
-		//   header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-		//   header('Expires: 0');
-		//   ob_end_clean(); //バッファ消去
-		   
-		//   $writer = new XlsxWriter($spreadsheet);
-		//   $writer->save('php://output');
+		//MIMEタイプ：https://technet.microsoft.com/ja-jp/ee309278.aspx
+		header("Content-Description: File Transfer");
+		header('Content-Disposition: attachment; filename="weather.xlsx"');
+		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+		header('Content-Transfer-Encoding: binary');
+		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+		header('Expires: 0');
+		ob_end_clean(); //バッファ消去
+
+		$xlsxWriter->save('php://output');
 		
 		// TODO:メモリ開放
-		echo "ダウンロードしたつもり。slip=".$strSlipCode.", rev=".$lngRevisionNo;
+		// echo "ダウンロードしたつもり。slip=".$strSlipCode.", rev=".$lngRevisionNo;
 
 		// 処理終了
 		return true;
