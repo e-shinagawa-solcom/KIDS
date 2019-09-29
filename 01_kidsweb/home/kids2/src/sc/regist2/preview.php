@@ -209,7 +209,7 @@
 		// 修正の場合、修正対象データにロックがかかっているので解除する
 		if (!$isCreateNew)
 		{
-			$unlocked = fncReleaseExclusveLock(EXCLUSIVE_CONTROL_FUNCTION_CODE_SC_RENEW, $strSlipCode, $objAuth, $objDB);
+			$unlocked = fncReleaseExclusiveLock(EXCLUSIVE_CONTROL_FUNCTION_CODE_SC_RENEW, $strRenewTargetSlipCode, $objDB);
 			if(!$unlocked)
 			{
 				MoveToErrorPage("納品書データの修正は成功しましたが、ロック解除に失敗しました");

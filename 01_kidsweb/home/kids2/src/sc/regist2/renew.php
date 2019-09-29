@@ -178,7 +178,7 @@
 	// 修正対象データのロック取得
 	//-------------------------------------------------------------------------
 	// 他にロックしている人がいないか確認
-	$lockUserName = fncGetExclusiveLockUser(EXCLUSIVE_CONTROL_FUNCTION_CODE_SC_RENEW, $strSlipCode, $objAuth, $objDB);
+	$lockUserName = fncGetExclusiveLockUser(EXCLUSIVE_CONTROL_FUNCTION_CODE_SC_RENEW, $strSlipCode, $objDB);
 	if (strlen($lockUserName) > 0)
 	{
 		MoveToErrorPage("ユーザー".$lockUserName."が修正中です。");

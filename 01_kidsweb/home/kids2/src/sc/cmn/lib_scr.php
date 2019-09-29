@@ -22,33 +22,125 @@
 
 // 修正対象データに対してロックしている人を確認する
 // ロックしている人がいないなら空文字列を返す
-function fncGetExclusiveLockUser($lngFunctionCode, $strSlipCode, $objAuth, $objDB)
+function fncGetExclusiveLockUser($lngFunctionCode, $strSlipCode, $objDB)
 {
-    // TODO:実装
     $lockUserName = "";
 
+    $aryQuery = array();
+    $aryQuery [] = "SELECT ";
+    $aryQuery [] = "  tec.lngfunctioncode, ";
+    $aryQuery [] = "  tec.lngusercode, ";
+    $aryQuery [] = "  tec.stripaddress, ";
+    $aryQuery [] = "  mu.struserdisplayname ";
+    $aryQuery [] = " FROM t_exclusivecontrol tec ";
+    $aryQuery [] = "  INNER JOIN m_user mu ON tec.lngusercode = mu.lngusercode ";
+    $aryQuery [] = " WHERE tec.lngfunctioncode = ".$lngFunctionCode;
+    $aryQuery [] = "   AND tec.strexclusivekey1 = ". withQuote($strSlipCode);
+
+    $strQuery = "";
+    $strQuery .= implode("\n", $aryQuery);
+
+    list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
+    if ( 0 < $lngResultNum ) {
+        for ( $i = 0; $i < $lngResultNum; $i++ ) {
+            $aryResult[] = $objDB->fetchArray( $lngResultID, $i );
+        }
+        // ロックしているユーザーの表示用ユーザー名を設定
+        $lockUserName = $aryResult[0]["struserdisplayname"];
+    } else {
+        // だれもロックしていない
+        $lockUserName = "";        
+    }
+    $objDB->freeResult( $lngResultID );
 
     return $lockUserName;
 }
 
 // 対象の機能IDに対して排他ロックを取る
-function fncTakeExclusveLock($lngFunctionCode, $strSlipCode, $objAuth, $objDB)
+function fncTakeExclusiveLock($lngFunctionCode, $strSlipCode, $objAuth, $objDB)
 {
-    // TODO:実装
     $locked = false;
 
-    //TODO:他の人がロック済みなら失敗
+    // 排他キー1のみ対応（他はデフォルト値）
+    $v_lngfunctioncode = $lngFunctionCode;                //1:機能コード
+    $v_strexclusivekey1 = withQuote($strSlipCode);        //2:排他キー1
+    $v_lngusercode = $objAuth->UserCode;                  //5:ユーザコード
+    $v_stripaddress = withQuote($objAuth->AccessIP);      //6:端末IPアドレス
+    $v_dtminsertdate = "now()";                           //7:登録日
+
+    $aryInsert[] ="INSERT  ";
+    $aryInsert[] =" INTO t_exclusivecontrol(  ";
+    $aryInsert[] ="  lngfunctioncode ";                   //1:機能コード
+    $aryInsert[] ="  , strexclusivekey1 ";                //2:排他キー1
+    $aryInsert[] ="  , lngusercode ";                     //5:ユーザコード
+    $aryInsert[] ="  , stripaddress ";                    //6:端末IPアドレス
+    $aryInsert[] ="  , dtminsertdate ";                   //7:登録日
+    $aryInsert[] =")  ";
+    $aryInsert[] =" VALUES (  ";
+    $aryInsert[] = "  " . $v_lngfunctioncode;             //1:機能コード
+    $aryInsert[] = " ," . $v_strexclusivekey1;            //2:排他キー1
+    $aryInsert[] = " ," . $v_lngusercode;                 //5:ユーザコード
+    $aryInsert[] = " ," . $v_stripaddress;                //6:端末IPアドレス
+    $aryInsert[] = " ," . $v_dtminsertdate;               //7:登録日
+    $aryInsert[] =") ";
+    $strQuery = "";
+    $strQuery .= implode("\n", $aryInsert);
+
+    // トランザクション開始
+    $objDB->transactionBegin();
+
+    // 登録実行
+    if ( !$lngResultID = $objDB->execute( $strQuery ) )
+    {
+        // 失敗
+        $locked = false;
+    }
+    else
+    {
+        $objDB->freeResult( $lngResultID );
+        // コミット
+        $objDB->transactionCommit();
+        // 成功
+        $locked = true;
+    }
     
     return $locked;
 }
 
 // 対象の機能IDに対して排他ロックを解除する
-function fncReleaseExclusveLock($lngFunctionCode, $strSlipCode, $objAuth, $objDB)
+function fncReleaseExclusiveLock($lngFunctionCode, $strSlipCode, $objDB)
 {
-    // TODO:実装
     $unlocked = false;
 
-    //TODO:機能IDとロック解除ユーザーが一致したら解除
+    $aryDelete[] =" ";
+    $aryDelete[] ="DELETE  ";
+    $aryDelete[] =" FROM ";
+    $aryDelete[] ="  t_exclusivecontrol  ";
+    $aryDelete[] =" WHERE ";
+    $aryDelete[] ="  lngfunctioncode = " . $lngFunctionCode ;
+    $aryDelete[] ="  and strexclusivekey1 = " . withQuote($strSlipCode);
+    $strQuery = "";
+    $strQuery .= implode("\n", $aryDelete);
+
+    // トランザクション開始
+    $objDB->transactionBegin();
+
+    // 登録実行
+    if ( !$lngResultID = $objDB->execute( $strQuery ) )
+    {
+        // 失敗
+        $unlocked = false;
+    }
+    else
+    {
+        $objDB->freeResult( $lngResultID );
+
+        // コミット
+        $objDB->transactionCommit();
+
+        // 成功
+        $unlocked = true;
+    }
     
     return $unlocked;
 }
