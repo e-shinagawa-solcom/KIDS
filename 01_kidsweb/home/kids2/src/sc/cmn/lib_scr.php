@@ -1217,7 +1217,7 @@ function fncRegisterSalesDetail($itemMinIndex, $itemMaxIndex, $lngSalesNo, $lngR
         $v_lngtaxcode = $aryHeader["lngtaxcode"];               //13:消費税率コード
         $v_curtaxprice = $curTaxPrice;                          //14:消費税金額
         $v_cursubtotalprice = $d["cursubtotalprice"];           //15:小計金額
-        $v_strnote = withQuote(fncToEucjp($d["strnote"]));                  //16:備考
+        $v_strnote = withQuote($d["strnote"]);                  //16:備考
         $v_lngsortkey = $d["rownumber"];                        //17:表示用ソートキー
         $v_lngreceiveno = $d["lngreceiveno"];                   //18:受注番号
         $v_lngreceivedetailno = $d["lngreceivedetailno"];       //19:受注明細番号
