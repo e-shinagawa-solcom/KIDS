@@ -1033,13 +1033,11 @@ jQuery(function($){
                 return false;
             }
             
-            // DBG:一時コメントアウト。コメント解除忘れ注意
-            /*
+            // DBG:一時コメントアウト
             // プレビュー画面表示前のバリデーションチェック
             if (!varidateBeforePreview(closedDay)){
                 return false;
             }
-            */
 
             // プレビュー画面表示
             displayPreview();

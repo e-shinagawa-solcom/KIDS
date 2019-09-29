@@ -181,27 +181,27 @@
 		// --------------------------
 		//  データベース処理
 		// --------------------------
-		// // トランザクション開始
-		// $objDB->transactionBegin();
+		// トランザクション開始
+		$objDB->transactionBegin();
 
-		// // 受注マスタ更新
-		// $updResult = fncUpdateReceiveMaster($aryDetail, $objDB);
-		// if (!$updResult){
-		// 	MoveToErrorPage("受注データの更新に失敗しました。");
-		// }
+		// 受注マスタ更新
+		$updResult = fncUpdateReceiveMaster($aryDetail, $objDB);
+		if (!$updResult){
+			MoveToErrorPage("受注データの更新に失敗しました。");
+		}
 
-		// // 売上マスタ、売上詳細、納品伝票マスタ、納品伝票明細へのレコード追加。
-		// // 納品伝票番号が空なら登録、空でないなら修正を行う
-		// $aryRegResult = fncRegisterSalesAndSlip(
-		// 	$lngRenewTargetSlipNo, $strRenewTargetSlipCode, $lngRenewTargetSalesNo, $strRenewTargetSalesCode,
-		// 	$aryHeader, $aryDetail, $objDB, $objAuth);
+		// 売上マスタ、売上詳細、納品伝票マスタ、納品伝票明細へのレコード追加。
+		// 納品伝票番号が空なら登録、空でないなら修正を行う
+		$aryRegResult = fncRegisterSalesAndSlip(
+			$lngRenewTargetSlipNo, $strRenewTargetSlipCode, $lngRenewTargetSalesNo, $strRenewTargetSalesCode,
+			$aryHeader, $aryDetail, $objDB, $objAuth);
 
-		// if (!$aryRegResult["result"]){
-		// 	MoveToErrorPage("売上・納品伝票データの登録または修正に失敗しました。");
-		// }
+		if (!$aryRegResult["result"]){
+			MoveToErrorPage("売上・納品伝票データの登録または修正に失敗しました。");
+		}
 
-		// // コミット
-		// $objDB->transactionCommit();
+		// コミット
+		$objDB->transactionCommit();
 
 		// --------------------------
 		//  修正対象データのロック解除
@@ -219,19 +219,18 @@
 		// --------------------------
 		//  登録結果画面表示
 		// --------------------------
-
-		//DBG:TESTCODE
-		$aryPage1 = array();
-		$aryPage1["strSlipCode"] = "02000307";
-		$aryPage1["lngRevisionNo"] = "REV1";
-		$aryPage2 = array();
-		$aryPage2["strSlipCode"] = "02030554";
-		$aryPage2["lngRevisionNo"] = "REV2";
-		$aryPerPage = array();
-		$aryPerPage[] = $aryPage1;
-		$aryPerPage[] = $aryPage2;
-
 		// 処理結果（テーブル出力）
+		$aryPerPage = $aryRegResult["aryPerPage"];
+		//DBG:TESTCODE
+		// $aryPage1 = array();
+		// $aryPage1["strSlipCode"] = "02000307";
+		// $aryPage1["lngRevisionNo"] = "REV1";
+		// $aryPage2 = array();
+		// $aryPage2["strSlipCode"] = "02030554";
+		// $aryPage2["lngRevisionNo"] = "REV2";
+		// $aryPerPage = array();
+		// $aryPerPage[] = $aryPage1;
+		// $aryPerPage[] = $aryPage2;
 		$strHtml = fncGetRegisterResultTableBodyHtml($aryPerPage, $objDB);
 		$aryData["tbodyResiterResult"] = $strHtml;
 
