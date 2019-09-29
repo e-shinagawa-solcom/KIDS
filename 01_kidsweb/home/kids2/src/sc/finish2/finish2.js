@@ -26,7 +26,7 @@ function OnMouseOutDownload(obj){
 }
 
 // ダウンロードボタンが押された
-function OnClickDownload(obj, strSlipCode, lngRevisionNo){
+function OnClickDownload(obj, lngSlipNo, strSlipCode, lngRevisionNo){
     // --------------------------------------------------------------------------
     // ダウンロードのための非同期POST
     // 
@@ -35,10 +35,11 @@ function OnClickDownload(obj, strSlipCode, lngRevisionNo){
     // --------------------------------------------------------------------------
     // POSTパラメータの設定。セッションIDは隠しフィールドから取得
     var postParams = "strMode=download"
-                   + "&strSlipCode=" + strSlipCode
-                   + "&lngRevisionNo=" + lngRevisionNo
-                   + "&strSessionID=" + document.getElementById("strSessionID").value
-                   ;
+                    + "&lngSlipNo=" + lngSlipNo
+                    + "&strSlipCode=" + strSlipCode
+                    + "&lngRevisionNo=" + lngRevisionNo
+                    + "&strSessionID=" + document.getElementById("strSessionID").value
+                    ;
 
     // ダウンロードファイル名
     var fileName = "KWG" + strSlipCode + ".xlsx";

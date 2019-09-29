@@ -167,38 +167,38 @@
 		$aryHeader = fncConvertArrayHeaderToEucjp($aryHeader);
 		$aryDetail = fncConvertArrayDetailToEucjp($aryDetail);
 
-		// //DBG:一時コメントアウト
-		// // --------------------------
-		// //  登録/修正前バリデーション
-		// // --------------------------
-		// // 受注状態コードが2以外の明細が存在するならエラーとする
-		// if(fncNotReceivedDetailExists($aryDetail, $objDB))
-		// {
-		// 	MoveToErrorPage("納品書が発行できない状態の明細が選択されています。");
-		// }
+		//DBG:一時コメントアウト対象
+		// --------------------------
+		//  登録/修正前バリデーション
+		// --------------------------
+		// 受注状態コードが2以外の明細が存在するならエラーとする
+		if(fncNotReceivedDetailExists($aryDetail, $objDB))
+		{
+			MoveToErrorPage("納品書が発行できない状態の明細が選択されています。");
+		}
 
-		// //DBG:一時コメントアウト
-		// // --------------------------
-		// //  データベース処理
-		// // --------------------------
-		// // トランザクション開始
-		// $objDB->transactionBegin();
+		//DBG:一時コメントアウト対象
+		// --------------------------
+		//  データベース処理
+		// --------------------------
+		// トランザクション開始
+		$objDB->transactionBegin();
 
-		// // 受注マスタ更新
-		// $updResult = fncUpdateReceiveMaster($aryDetail, $objDB);
-		// if (!$updResult){
-		// 	MoveToErrorPage("受注データの更新に失敗しました。");
-		// }
+		// 受注マスタ更新
+		$updResult = fncUpdateReceiveMaster($aryDetail, $objDB);
+		if (!$updResult){
+			MoveToErrorPage("受注データの更新に失敗しました。");
+		}
 
-		// // 売上マスタ、売上詳細、納品伝票マスタ、納品伝票明細へのレコード追加。
-		// // 納品伝票番号が空なら登録、空でないなら修正を行う
-		// $aryRegResult = fncRegisterSalesAndSlip(
-		// 	$lngRenewTargetSlipNo, $strRenewTargetSlipCode, $lngRenewTargetSalesNo, $strRenewTargetSalesCode,
-		// 	$aryHeader, $aryDetail, $objDB, $objAuth);
+		// 売上マスタ、売上詳細、納品伝票マスタ、納品伝票明細へのレコード追加。
+		// 納品伝票番号が空なら登録、空でないなら修正を行う
+		$aryRegResult = fncRegisterSalesAndSlip(
+			$lngRenewTargetSlipNo, $strRenewTargetSlipCode, $lngRenewTargetSalesNo, $strRenewTargetSalesCode,
+			$aryHeader, $aryDetail, $objDB, $objAuth);
 
-		// if (!$aryRegResult["result"]){
-		// 	MoveToErrorPage("売上・納品伝票データの登録または修正に失敗しました。");
-		// }
+		if (!$aryRegResult["result"]){
+			MoveToErrorPage("売上・納品伝票データの登録または修正に失敗しました。");
+		}
 
 		// コミット
 		$objDB->transactionCommit();
@@ -220,18 +220,22 @@
 		//  登録結果画面表示
 		// --------------------------
 		// 処理結果（テーブル出力）
-		//$aryPerPage = $aryRegResult["aryPerPage"];
+		$aryPerPage = $aryRegResult["aryPerPage"];
 
-		//DBG:TESTCODE
-		$aryPage1 = array();
-		$aryPage1["strSlipCode"] = "02000307";
-		$aryPage1["lngRevisionNo"] = "REV1";
-		$aryPage2 = array();
-		$aryPage2["strSlipCode"] = "02030554";
-		$aryPage2["lngRevisionNo"] = "REV2";
-		$aryPerPage = array();
-		$aryPerPage[] = $aryPage1;
-		$aryPerPage[] = $aryPage2;
+		// //DBG:TESTCODE 仮の処理結果
+		// $aryPage1 = array();
+		// $aryPage1["lngSlipNo"] = 30487;
+		// $aryPage1["lngRevisionNo"] = 1;
+		// $aryPage1["strSlipCode"] = "02030457";
+		// $aryPage2 = array();
+		// $aryPage2["lngSlipNo"] = 27741;
+		// $aryPage2["lngRevisionNo"] = 0;
+		// $aryPage2["strSlipCode"] = "02028443";
+		// $aryPerPage = array();
+		// $aryPerPage[] = $aryPage1;
+		// $aryPerPage[] = $aryPage2;
+
+		// 処理結果をテーブルのHTMLに出力
 		$strHtml = fncGetRegisterResultTableBodyHtml($aryPerPage, $objDB);
 		$aryData["tbodyResiterResult"] = $strHtml;
 
@@ -251,20 +255,27 @@
 		return true;
 	}
 
+	//-------------------------------------------------------------------------
+	//  帳票ダウンロード
+	//-------------------------------------------------------------------------
 	if ($strMode == "download"){
-		//TODO:帳票ダウンロードの実装。ajax POSTで実装
-		//パラメータとして納品書NOとリビジョン番号を受け取る
+
+		// 納品書データのキー項目をパラメータから受け取る
+		$lngSlipNo = $_POST["lngSlipNo"];
 		$strSlipCode = $_POST["strSlipCode"];
 		$lngRevisionNo = $_POST["lngRevisionNo"];
 
-		//TODO:帳票印刷データをDBより取得
-		//$aryDownloadData = fncGetSlipDownloadData($strSlipCode, $lngRevisionNo);
+		// 帳票テンプレートに設定する納品書データの読み込み（ヘッダ・フッタ部）
+		$aryHeader = fncGetHeaderBySlipNo($lngSlipNo, $lngRevisionNo, $objDB);
 
-		// 帳票イメージを生成するXlsxWriterを取得する
+		// 帳票テンプレートに設定する納品書データの読み込み（明細部）
+		$aryDetail = fncGetDetailBySlipNo($lngSlipNo, $lngRevisionNo, $objDB);
+
+		// 帳票テンプレートに納品書データを設定したExcelのバイナリを生成するXlsxWriterを取得する
 		$aryGenerateResult = fncGenerateReportImage("download", $aryHeader, $aryDetail, $objDB, $objAuth);
 		$xlsxWriter = $aryGenerateResult["XlsxWriter"];
 
-		// TODO:MIMEタイプをセットしてダウンロード
+		// MIMEタイプをセットしてダウンロード
 		//MIMEタイプ：https://technet.microsoft.com/ja-jp/ee309278.aspx
 		header("Content-Description: File Transfer");
 		header('Content-Disposition: attachment; filename="weather.xlsx"');
@@ -274,11 +285,9 @@
 		header('Expires: 0');
 		ob_end_clean(); //バッファ消去
 
+		// バイナリイメージをレスポンスとして返す
 		$xlsxWriter->save('php://output');
-		
-		// TODO:メモリ開放
-		// echo "ダウンロードしたつもり。slip=".$strSlipCode.", rev=".$lngRevisionNo;
-
+	
 		// 処理終了
 		return true;
 

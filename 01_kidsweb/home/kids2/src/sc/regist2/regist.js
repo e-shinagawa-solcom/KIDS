@@ -493,7 +493,7 @@ jQuery(function($){
             strtaxclassname:           $('select[name="lngTaxClassCode"]').children('option:selected').text(),
             //消費税率
             lngtaxcode:                $('select[name="lngTaxRate"]').children('option:selected').val(),
-            lngtaxrate:                $('select[name="lngTaxRate"]').children('option:selected').text(),
+            curtax:                    $('select[name="lngTaxRate"]').children('option:selected').text(),
             //消費税額
             strtaxamount:              $('input[name="strTaxAmount"]').val(),
             //支払期限
@@ -1022,7 +1022,7 @@ jQuery(function($){
             // 締め日
             var closedDay = data;
 
-            // 顧客コードに対応する締め日が取得できない
+            // 顧客コードに対応する締め日が取得できないとそもそもバリデーションできない
             if (!closedDay){
                 alert("顧客コードに対応する締め日が取得できません。");
                 return false;
@@ -1033,11 +1033,11 @@ jQuery(function($){
                 return false;
             }
             
-            // // DBG:一時コメントアウト
-            // // プレビュー画面表示前のバリデーションチェック
-            // if (!varidateBeforePreview(closedDay)){
-            //     return false;
-            // }
+            // DBG:一時コメントアウト対象
+            // プレビュー画面表示前のバリデーションチェック
+            if (!varidateBeforePreview(closedDay)){
+                return false;
+            }
 
             // プレビュー画面表示
             displayPreview();

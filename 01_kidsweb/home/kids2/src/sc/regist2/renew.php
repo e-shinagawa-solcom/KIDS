@@ -197,22 +197,8 @@
 	// 納品伝票番号に紐づくヘッダ・フッタ部のデータ読み込み
 	$aryHeader = fncGetHeaderBySlipNo($lngSlipNo, $lngRevisionNo, $objDB);
 
-	// 納品伝票番号に紐づく明細部のキーを取得する
-	$aryDetailKey = fncGetDetailKeyBySlipNo($lngSlipNo, $objDB);
-	
-	// 明細部のキーに紐づく受注明細情報を取得する
-	$aryDetail = array();
-	for ( $i = 0; $i < count($aryDetailKey); $i++ ){
-
-		$aryCondition = array();
-		$aryCondition["lngReceiveNo"] = $aryDetailKey[$i]["lngreceiveno"];
-		$aryCondition["lngReceiveDetailNo"] = $aryDetailKey[$i]["lngreceivedetailno"];
-		$aryCondition["lngReceiveRevisionNo"] = $aryDetailKey[$i]["lngreceiverevisionno"];
-		
-		// キーに紐づく明細を1件ずつ取得して全体の配列にマージ
-		$arySubDetail = fncGetReceiveDetail($aryCondition, $objDB);
-		$aryDetail = array_merge($aryDetail, $arySubDetail);
-	}
+	// 納品伝票番号に紐づく受注明細情報を取得する
+	$aryDetail = fncGetDetailBySlipNo($lngSlipNo, $lngRevisionNo, $objDB);
 
 	// 明細部のHTMLを生成
 	$withCheckBox = false;
@@ -243,12 +229,12 @@
 	//  ヘッダ・フッダ部
 	// -------------------------
 	// 起票者
-	$aryData["lngInsertUserCode"] = $aryHeader["struserdisplaycode"];
-	$aryData["strInsertUserName"] = $aryHeader["struserdisplayname"];
+	$aryData["lngInsertUserCode"] = $aryHeader["strdrafteruserdisplaycode"];
+	$aryData["strInsertUserName"] = $aryHeader["strdrafteruserdisplayname"];
 
 	// 顧客
-	$aryData["lngCustomerCode"] = $aryHeader["strcustomercode"];
-	$aryData["strCustomerName"] = $aryHeader["strcustomerdisplayname"];
+	$aryData["lngCustomerCode"] = $aryHeader["strcompanydisplaycode"];
+	$aryData["strCustomerName"] = $aryHeader["strcompanydisplayname"];
 
 	// 顧客側担当者
 	$aryData["strCustomerUserName"] = $aryHeader["strcustomerusername"];
@@ -265,7 +251,7 @@
 	$aryData["dtmPaymentDueDate"] = $aryHeader["dtmpaymentlimit"];
 
 	// 納品先
-	$aryData["lngDeliveryPlaceCode"] = $aryHeader["strcompanydisplaycode"];
+	$aryData["lngDeliveryPlaceCode"] = $aryHeader["strdeliveryplacecompanydisplaycode"];
 	$aryData["strDeliveryPlaceName"] = $aryHeader["strdeliveryplacename"];
 
 	// 納品先担当者
