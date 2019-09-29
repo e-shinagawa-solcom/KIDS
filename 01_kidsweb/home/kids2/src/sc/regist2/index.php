@@ -102,7 +102,7 @@
 	if ($strMode == "get-closedday"){
 		// 顧客コード
 		$strCompanyDisplayCode = $_POST["strcompanydisplaycode"];
-		// TODO:締め日取得
+		// 締め日取得
 		$lngClosedDay = fncGetClosedDay($strCompanyDisplayCode, $objDB);
 		// データ返却
 		echo $lngClosedDay;
@@ -181,6 +181,9 @@
 	//-------------------------------------------------------------------------
 	// 画面表示
 	//-------------------------------------------------------------------------
+	// ajax POST先をこのファイルにする
+	$aryData["ajaxPostTarget"] = "index.php";
+
 	// 売上（納品書）登録画面表示（テンプレートは納品書修正画面と共通）
 	echo fncGetReplacedHtml( "sc/regist2/parts.tmpl", $aryData ,$objAuth);
 

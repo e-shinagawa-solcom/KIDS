@@ -1,13 +1,22 @@
 (function(){
     $('img.renew.button').on('click', function(){
-        url = '/sc/regist2/renew.php';
-        lngslipno = 'lngSlipNo=' + $(this).attr('lngslipno');
-        lngsalesno = 'lngSalesNo=' + $(this).attr('lngsalesno');
-        strcustomercode = 'strCustomerCode=' + $(this).attr('strcustomercode');
-        sessionID = 'strSessionID=' + getUrlVars()["strSessionID"];
+        
+        var url = '/sc/regist2/renew.php';
+
+        var lngslipno = 'lngSlipNo=' + $(this).attr('lngslipno');
+        var strslipcode = 'strSlipCode=' + $(this).attr('strslipcode');
+        var lngsalesno = 'lngSalesNo=' + $(this).attr('lngsalesno');
+        var strsalescode = 'strSalesCode=' + $(this).attr('strsalescode');
+        var strcustomercode = 'strCustomerCode=' + $(this).attr('strcustomercode');
+        var sessionID = 'strSessionID=' + getUrlVars()["strSessionID"];
 
         // 別ウィンドウで表示
-        open(url + '?' + lngslipno + '&' + lngsalesno + '&' + strcustomercode + '&' + sessionID, 
+        open(url + '?' + lngslipno
+                + '&' + strslipcode
+                + '&' + lngsalesno
+                + '&' + strsalescode
+                + '&' + strcustomercode
+                + '&' + sessionID, 
             'display-renew', 
             'resizable=yes, scrollbars=yes, menubar=no');
     });

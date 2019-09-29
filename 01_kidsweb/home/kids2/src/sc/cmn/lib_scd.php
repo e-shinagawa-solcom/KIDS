@@ -281,7 +281,7 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 	// 合計金額
 	$arySelectQuery[] = ", To_char( s.curTotalPrice, '9,999,999,990.99' ) as curTotalPrice";
 	//// 売上Ｎｏ
-	//$arySelectQuery[] = ", s.strSalesCode as strSalesCode";
+	$arySelectQuery[] = ", sa.strSalesCode as strSalesCode";
 	// 売上状態コード
 	$arySelectQuery[] = ", sa.lngSalesStatusCode as lngSalesStatusCode";
 	$arySelectQuery[] = ", ss.strSalesStatusName as strSalesStatusName";
@@ -599,7 +599,7 @@ function fncSetSlipTableRow ( $lngColumnCount, $aryHeadResult, $aryDetailResult,
 			{
 				// ボタン種により変更
 
-				// 詳細表示
+				// 詳細ボタン
 				if ( $strColumnName == "btnDetail" and $aryUserAuthority["Detail"] )
 				{
 					if ( $aryHeadResult["lngrevisionno"] >= 0 )
@@ -612,7 +612,7 @@ function fncSetSlipTableRow ( $lngColumnCount, $aryHeadResult, $aryDetailResult,
 					}
 				}
 
-				// 修正
+				// 修正ボタン
 				if ( $strColumnName == "btnFix" and $aryUserAuthority["Fix"] )
 				{
 					// 納品書データの状態により分岐 
@@ -628,14 +628,16 @@ function fncSetSlipTableRow ( $lngColumnCount, $aryHeadResult, $aryDetailResult,
 					{
 						$aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\">"
 									."<img src=\"/mold/img/renew_off_bt.gif\" "
-									."lngslipno=\"" . $aryDetailResult[$i]["lngslipno"] . "\" "
+									."lngslipno=\"" . $aryHeadResult["lngslipno"] . "\" "
+									."strslipcode=\"" . $aryHeadResult["strslipcode"] . "\" "
 									."lngsalesno=\"" . $aryHeadResult["lngsalesno"] . "\" "
+									."strsalescode=\"" . $aryHeadResult["strsalescode"] . "\" "
 									."strcustomercode=\"" . $aryHeadResult["strcustomerdisplaycode"] . "\" "
 									."class=\"renew button\"></td>\n";
 					}
 				}
 
-				// 削除
+				// 削除ボタン
 				if ( $strColumnName == "btnDelete" and $aryUserAuthority["Delete"] )
 				{
 					// 管理モードで無い場合もしくはリバイズが存在しない場合

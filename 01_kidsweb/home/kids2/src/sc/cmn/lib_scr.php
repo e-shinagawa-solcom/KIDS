@@ -63,6 +63,7 @@ function fncGetTaxRatePullDown($dtmDeliveryDate, $curDefaultTax, $objDB)
 // 納品伝票番号に紐づくヘッダ項目取得
 function fncGetHeaderBySlipNo($lngSlipNo, $objDB)
 {
+    //to_char(e.dtmInsertDate,'YYYY/MM/DD')
     $aryQuery = array();
     $aryQuery [] = "SELECT ";
     $aryQuery [] = "  s.lngslipno, ";
@@ -71,8 +72,8 @@ function fncGetHeaderBySlipNo($lngSlipNo, $objDB)
     $aryQuery [] = "  c_cust.strcompanydisplaycode as strcustomercode, ";
     $aryQuery [] = "  c_cust.strcompanydisplayname as strcustomerdisplayname, ";
     $aryQuery [] = "  s.strcustomerusername, ";
-    $aryQuery [] = "  s.dtmdeliverydate, ";
-    $aryQuery [] = "  s.dtmpaymentlimit, ";
+    $aryQuery [] = "  TO_CHAR(s.dtmdeliverydate, 'YYYY/MM/DD') as dtmdeliverydate, ";
+    $aryQuery [] = "  TO_CHAR(s.dtmpaymentlimit, 'YYYY/MM/DD') as dtmpaymentlimit, ";
     $aryQuery [] = "  s.lngpaymentmethodcode, ";
     $aryQuery [] = "  c_deli.strcompanydisplaycode, ";
     $aryQuery [] = "  s.strdeliveryplacename, ";
@@ -398,7 +399,7 @@ function fncGetSlipInsertDate($strSlipCode, $objDB)
 {
     $strQuery = ""
         . "SELECT"
-        . "  to_char(dtminsertdate, 'yyyy/mm/dd hh24:mm:ss') as dtminsertdate"
+        . "  TO_CHAR(dtminsertdate, 'yyyy/mm/dd hh24:mm:ss') as dtminsertdate"
         . " FROM"
         . "  m_slip"
         . " WHERE"
@@ -767,12 +768,44 @@ function fncCalcTaxPrice($curPrice, $lngTaxClassCode, $lngTaxRate)
     return $curTaxPrice;
 }
 
+// 納品伝票マスタのリビジョン番号の最大値を取得する
+function fncGetSlipMaxRevisionNo($lngSlipNo, $objDB)
+{
+    $aryQuery = array();
+    $aryQuery [] = "SELECT ";
+    $aryQuery [] = "  lngslipno ";
+    $aryQuery [] = "  , MAX(lngrevisionno) as lngrevisionno";
+    $aryQuery [] = " FROM ";
+    $aryQuery [] = "  m_slip  ";
+    $aryQuery [] = " GROUP BY ";
+    $aryQuery [] = "  lngslipno  ";
+    $aryQuery [] = " HAVING ";
+    $aryQuery [] = "  lngslipno = ".$lngSlipNo;
+
+    $strQuery = "";
+    $strQuery .= implode("\n", $aryQuery);
+
+    list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
+    if ( $lngResultNum ) {
+        for ( $i = 0; $i < $lngResultNum; $i++ ) {
+            $aryResult[] = $objDB->fetchArray( $lngResultID, $i );
+        }
+    } else {
+        fncOutputError ( 9501, DEF_FATAL, "納品伝票マスタのリビジョン番号取得に失敗", TRUE, "", $objDB );
+    }
+    $objDB->freeResult( $lngResultID );
+
+    return $aryResult[0]["lngrevisionno"];
+}
+
 // --------------------------------
 // 
 // 売上（納品書）登録メイン関数
 // 
 // --------------------------------
-function fncRegisterSalesAndSlip($lngRenewTargetSlipNo, $aryHeader, $aryDetail, $objDB, $objAuth)
+function fncRegisterSalesAndSlip(
+    $lngRenewTargetSlipNo, $strRenewTargetSlipCode, $lngRenewTargetSalesNo, $strRenewTargetSalesCode,
+    $aryHeader, $aryDetail, $objDB, $objAuth)
 {
     // 戻り値の初期化
     $aryRegisterResult = array();
@@ -826,21 +859,13 @@ function fncRegisterSalesAndSlip($lngRenewTargetSlipNo, $aryHeader, $aryDetail, 
             $itemMaxIndex = $totalItemCount - 1;
         }
 
-        // 修正の場合、修正対象に紐づく情報を取得
-        if (!$isCreateNew)
-        {
-            // TODO:実装
-            $aryRenewTargetInfo = fncGetRenewTargetSlipInfo($lngRenewTargetSlipNo);
-        }
-
         // リビジョン番号
         if ($isCreateNew){
             // 登録：0 固定
             $lngRevisionNo = 0;
         } else {
             // 修正：同一納品伝票番号内での最大値＋１
-            // TODO:実装
-            $lngRevisionNo = fncGetSlipMaxRevisionNo($lngRenewTargetSlipNo) + 1;
+            $lngRevisionNo = fncGetSlipMaxRevisionNo($lngRenewTargetSlipNo, $objDB) + 1;
         }
 
         // 売上番号
@@ -849,7 +874,7 @@ function fncRegisterSalesAndSlip($lngRenewTargetSlipNo, $aryHeader, $aryDetail, 
             $lngSalesNo = fncGetSequence( 'm_sales.lngSalesNo', $objDB );
         }else{
             // 修正：修正対象に紐づく値
-            $lngSalesNo = $aryRenewTargetInfo["lngSalesNo"];
+            $lngSalesNo = $lngRenewTargetSalesNo;
         }
 
         // 売上コード
@@ -859,7 +884,7 @@ function fncRegisterSalesAndSlip($lngRenewTargetSlipNo, $aryHeader, $aryDetail, 
                                                 date( 'm',strtotime( $dtmNowDate ) ), "m_sales.lngSalesNo", $objDB );
         }else{
             // 修正：修正対象に紐づく値
-            $strSalesCode = $aryRenewTargetInfo["strsalescode"];
+            $strSalesCode = $strRenewTargetSalesCode;
         }
         
         // 納品伝票番号
@@ -877,14 +902,14 @@ function fncRegisterSalesAndSlip($lngRenewTargetSlipNo, $aryHeader, $aryDetail, 
             $strSlipCode = fncPublishSlipCode($dtmNowDate, $objDB);
         }else{
             // 修正：修正対象に紐づく値
-            $strSlipCode = $aryRenewTargetInfo["strslipcode"];
+            $strSlipCode = $strRenewTargetSlipCode;
         }
         
         // ページ単位の情報を保存（後の登録結果画面で使う）
-        $aryPerPage = array();
-        $aryPerPage["strSlipCode"] = $strSlipCode;
-        $aryPerPage["lngRevisionNo"] = $lngRevisionNo;
-        $aryRegisterResult["aryPerPage"][] = $aryPerPage;
+        $aryPageInfo = array();
+        $aryPageInfo["strSlipCode"] = $strSlipCode;
+        $aryPageInfo["lngRevisionNo"] = $lngRevisionNo;
+        $aryRegisterResult["aryPerPage"][] = $aryPageInfo;
 
         // --------------------------------
         //   データベース変更
@@ -1758,6 +1783,41 @@ function fncGeneratePreviewPageHtml(
 
     return $pageHtml;
 
+}
+
+// ページ毎の情報から登録結果HTMLを生成
+function fncGetRegisterResultTableBodyHtml($aryPerPage, $objDB)
+{
+    $strHtml = "";
+
+    for ( $i = 0; $i < count($aryPerPage); $i++ )
+    {
+        $aryPage = $aryPerPage[$i];
+
+        // 納品伝票コード
+        $strSlipCode = $aryPage["strSlipCode"];
+        // リビジョン番号
+        $lngRevisionNo = $aryPage["lngRevisionNo"];
+        // 作成日の取得
+        $dtmInsertDate = fncGetSlipInsertDate($strSlipCode, $objDB);
+
+        $aryHtml = array();
+        $aryHtml[] = "                <tr>";
+        $aryHtml[] = "                    <td class='item-value'>".$strSlipCode."</td>";
+        $aryHtml[] = "                    <td class='item-value'>".$dtmInsertDate."</td>";
+        $aryHtml[] = "                    <td class='item-value'>";
+        $aryHtml[] = "                        <img class='btn-download'";
+        $aryHtml[] = "                         onclick='OnClickDownload(this,\"".$strSlipCode."\",\"".$lngRevisionNo."\");'";
+        $aryHtml[] = "                         onmouseover='OnMouseOverDownload(this);'";
+        $aryHtml[] = "                         onmouseout='OnMouseOutDownload(this);'>";
+        $aryHtml[] = "                    </td>";
+        $aryHtml[] = "                </tr>";
+
+        $strHtml .= implode("\n", $aryHtml);
+    }
+
+    return $strHtml;
+    
 }
 
 ?>

@@ -28,8 +28,6 @@
 	require (SRC_ROOT."sc/cmn/lib_scr.php");
 	require (SRC_ROOT."sc/cmn/lib_scd1.php");
 
-	ini_set('memory_limit', '512M');
-
 	$objDB		= new clsDB();
 	$objAuth	= new clsAuth();
 
@@ -49,7 +47,9 @@
 
 	// 修正対象に紐づく情報
 	$lngSlipNo = $_GET["lngSlipNo"];
+	$strSlipCode = $_GET["strSlipCode"];
 	$lngSalesNo = $_GET["lngSalesNo"];
+	$strSalesCode = $_GET["strSalesCode"];
 	$strCustomerCode = $_GET["strCustomerCode"];
 
 	//-------------------------------------------------------------------------
@@ -124,7 +124,7 @@
 	if ($strMode == "get-closedday"){
 		// 顧客コード
 		$strCompanyDisplayCode = $_POST["strcompanydisplaycode"];
-		// TODO:締め日取得
+		// 締め日取得
 		$lngClosedDay = fncGetClosedDay($strCompanyDisplayCode, $objDB);
 		// データ返却
 		echo $lngClosedDay;
@@ -196,10 +196,16 @@
 	// フォーム初期値設定
 	//-------------------------------------------------------------------------
 	// -------------------------
-	//  修正対象データに紐づくキー
+	//  修正対象データに紐づく値
 	// -------------------------
 	// 納品伝票番号（この値がセットされていたら修正とみなす）
 	$aryData["lngSlipNo"] = $lngSlipNo;
+	// 納品伝票コード
+	$aryData["strSlipCode"] = $strSlipCode;
+	// 売上番号
+	$aryData["lngSalesNo"] = $lngSalesNo;
+	// 売上コード
+	$aryData["strSalesCode"] = $strSalesCode;
 
 	// -------------------------
 	//  出力明細一覧エリア
@@ -263,6 +269,9 @@
 	//-------------------------------------------------------------------------
 	// 画面表示
 	//-------------------------------------------------------------------------
+	// ajax POST先をこのファイルにする
+	$aryData["ajaxPostTarget"] = "renew.php";
+
 	// 納品書修正画面表示（テンプレートは売上（納品書）登録画面と共通）
 	echo fncGetReplacedHtml( "sc/regist2/parts.tmpl", $aryData ,$objAuth);
 

@@ -76,6 +76,9 @@ function clearAllSelected() {
 // ------------------------------------------------------------------
 // 検索条件入力画面で入力された値の設定
 function SetSearchConditionWindowValue(search_condition) {
+    // POST先
+    var postTarget = $('input[name="ajaxPostTarget"]').val();
+
     // 顧客
     $('input[name="lngCustomerCode"]').val(search_condition.strCompanyDisplayCode);
     $('input[name="strCustomerName"]').val(search_condition.strCompanyDisplayName);
@@ -84,7 +87,7 @@ function SetSearchConditionWindowValue(search_condition) {
     if(search_condition.strCompanyDisplayCode != ""){
         $.ajax({
             type: 'POST',
-            url: 'index.php',
+            url: postTarget,
             data: {
                 strMode : "get-lngcountrycode",
                 strSessionID: $('input[name="strSessionID"]').val(),
@@ -115,11 +118,13 @@ function SetSearchConditionWindowValue(search_condition) {
 
 // 明細検索
 function SearchReceiveDetail(search_condition) {
- 
+    // POST先
+    var postTarget = $('input[name="ajaxPostTarget"]').val();
+
     // 部分書き換えのためajaxでPOST
     $.ajax({
         type: 'POST',
-        url: 'index.php',
+        url: postTarget,
         data: {
             strMode : "search-detail",
             strSessionID: $('input[name="strSessionID"]').val(),
@@ -559,10 +564,12 @@ jQuery(function($){
     // 出力明細一覧エリアのPOST用データ収集
     function getUpdateDetail(){
         var result = [];
+
         $.each($('#EditTableBody tr'), function(i, tr){
+            
             var param ={
                 //No.（行番号）
-                rownumber: $(tr).children('td[name="rownum"]').text(),
+                rownumber: $(tr).children('.detailSortKey').text(),
                 //顧客発注番号
                 strcustomerreceivecode: $(tr).children('.detailCustomerReceiveCode').text(),
                 //受注番号
@@ -848,7 +855,10 @@ jQuery(function($){
         var data = {
             strMode :      "display-preview",
             strSessionID:  $('input[name="strSessionID"]').val(),
-            lngSlipNo:  $('input[name="lngSlipNo"]').val(),
+            lngRenewTargetSlipNo:     $('input[name="lngSlipNo"]').val(),
+            strRenewTargetSlipCode:   $('input[name="strSlipCode"]').val(),
+            lngRenewTargetSalesNo:    $('input[name="lngSalesNo"]').val(),
+            strRenewTargetSalesCode:  $('input[name="strSalesCode"]').val(),
             aryHeader:     getUpdateHeader(),
             aryDetail:     getUpdateDetail(),
         };
@@ -888,10 +898,14 @@ jQuery(function($){
     });
 
     $('input[name="dtmDeliveryDate"]').on('change', function(){
+
+        // POST先
+        var postTarget = $('input[name="ajaxPostTarget"]').val();
+
         //消費税率の選択項目変更
         $.ajax({
             type: 'POST',
-            url: 'index.php',
+            url: postTarget,
             data: {
                 strMode : "change-deliverydate",
                 strSessionID: $('input[name="strSessionID"]').val(),
@@ -1039,6 +1053,9 @@ jQuery(function($){
     // プレビューボタン押下
     $('#PreviewBt').on('click', function(){
 
+        // POST先
+        var postTarget = $('input[name="ajaxPostTarget"]').val();
+
         // POSTデータ構築
         var data = {
             strMode :      "get-closedday",
@@ -1049,7 +1066,7 @@ jQuery(function($){
         // プレビュー前のバリデーションに「締め日」が必要なのでajaxで取得する
         $.ajax({
             type: 'POST',
-            url: 'index.php',
+            url: postTarget,
             data: data,
             async: true,
         }).done(function(data){
@@ -1070,10 +1087,12 @@ jQuery(function($){
                 return false;
             }
             
+            /*
             // プレビュー画面表示前のバリデーションチェック
             if (!varidateBeforePreview(closedDay)){
                 return false;
             }
+            */
 
             // プレビュー画面表示
             displayPreview();

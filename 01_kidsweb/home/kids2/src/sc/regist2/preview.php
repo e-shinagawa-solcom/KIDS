@@ -87,11 +87,19 @@
 		// --------------------------
 		//  登録/修正データ退避
 		// --------------------------
+		// 修正対象に紐づくデータ（修正時にセット。登録時は空）
+		$lngRenewTargetSlipNo = $_POST["lngRenewTargetSlipNo"];
+		$strRenewTargetSlipCode = $_POST["strRenewTargetSlipCode"];
+		$lngRenewTargetSalesNo = $_POST["lngRenewTargetSalesNo"];
+		$strRenewTargetSalesCode = $_POST["strRenewTargetSalesCode"];
+		$aryData["lngRenewTargetSlipNo"] = $lngRenewTargetSlipNo;
+		$aryData["strRenewTargetSlipCode"] = $strRenewTargetSlipCode;
+		$aryData["lngRenewTargetSalesNo"] = $lngRenewTargetSalesNo;
+		$aryData["strRenewTargetSalesCode"] = $strRenewTargetSalesCode;
+
 		// プレビュー表示後に登録/修正処理を行うため、入力データをjsonに変換して退避する
-		$lngSlipNo = $_POST["lngSlipNo"];
 		$aryHeader = $_POST["aryHeader"];
 		$aryDetail = $_POST["aryDetail"];
-		$aryData["lngSlipNo"] = $lngSlipNo;
 		$aryData["aryHeaderJson"] = EncodeToJson($aryHeader);
 		$aryData["aryDetailJson"] = EncodeToJson($aryDetail);
 
@@ -136,7 +144,13 @@
 		//  登録/修正データ復元
 		// --------------------------
 		// 修正対象に紐づく納品伝票番号（登録の場合は空）
-		$lngSlipNo = $_POST["lngSlipNo"];
+		$lngRenewTargetSlipNo = $_POST["lngRenewTargetSlipNo"];
+		// 修正対象に紐づく納品コード（登録の場合は空）
+		$strRenewTargetSlipCode = $_POST["strRenewTargetSlipCode"];
+		// 修正対象に紐づく売上番号（登録の場合は空）
+		$lngRenewTargetSalesNo = $_POST["lngRenewTargetSalesNo"];
+		// 修正対象に紐づく売上コード（登録の場合は空）
+		$strRenewTargetSalesCode = $_POST["strRenewTargetSalesCode"];
 		
 		// プレビュー表示前に退避した登録/修正データをjsonから復元する
 		$aryHeader = DecodeFromJson($_POST["aryHeaderJson"]);
@@ -154,45 +168,57 @@
 		//  登録/修正前バリデーション
 		// --------------------------
 		// 受注状態コードが2以外の明細が存在するならエラーとする
-		if(fncNotReceivedDetailExists($aryDetail, $objDB))
-		{
-			MoveToErrorPage("納品書が発行できない状態の明細が選択されています。");
-		}
+		// if(fncNotReceivedDetailExists($aryDetail, $objDB))
+		// {
+		// 	MoveToErrorPage("納品書が発行できない状態の明細が選択されています。");
+		// }
 
 		// --------------------------
 		//  データベース処理
 		// --------------------------
-		// トランザクション開始
-		$objDB->transactionBegin();
+		// // トランザクション開始
+		// $objDB->transactionBegin();
 
-		// 受注マスタ更新
-		$updResult = fncUpdateReceiveMaster($aryDetail, $objDB);
-		if (!$updResult){
-			MoveToErrorPage("受注データの更新に失敗しました。");
-		}
+		// // 受注マスタ更新
+		// $updResult = fncUpdateReceiveMaster($aryDetail, $objDB);
+		// if (!$updResult){
+		// 	MoveToErrorPage("受注データの更新に失敗しました。");
+		// }
 
-		// 売上マスタ、売上詳細、納品伝票マスタ、納品伝票明細へのレコード追加。
-		// 納品伝票番号が空なら登録、空でないなら修正を行う
-		$aryRegResult = fncRegisterSalesAndSlip($lngSlipNo, $aryHeader, $aryDetail, $objDB, $objAuth);
-		if (!$aryRegResult["result"]){
-			MoveToErrorPage("売上・納品伝票データの登録または修正に失敗しました。");
-		}
+		// // 売上マスタ、売上詳細、納品伝票マスタ、納品伝票明細へのレコード追加。
+		// // 納品伝票番号が空なら登録、空でないなら修正を行う
+		// $aryRegResult = fncRegisterSalesAndSlip(
+		// 	$lngRenewTargetSlipNo, $strRenewTargetSlipCode, $lngRenewTargetSalesNo, $strRenewTargetSalesCode,
+		// 	$aryHeader, $aryDetail, $objDB, $objAuth);
 
-		// コミット
-		$objDB->transactionCommit();
+		// if (!$aryRegResult["result"]){
+		// 	MoveToErrorPage("売上・納品伝票データの登録または修正に失敗しました。");
+		// }
+
+		// // コミット
+		// $objDB->transactionCommit();
 
 		// --------------------------
 		//  登録結果画面表示
 		// --------------------------
-		// 画面に表示するパラメータの設定
-		// 納品書NOに紐づく作成日の取得
-		// TODO:aryで複数取得に実装変更
-		$dtmInsertDate = fncGetSlipInsertDate($aryRegResult["strSlipCode"][0], $objDB);
-		// TODO:複数件対応。TABLEのTRを出力するfunctionを追加。納品書NOとリビジョン番号を併せて埋め込み。
-		// 作成日の設定
-		$aryData["dtmInsertDate"] = $dtmInsertDate;
-		// 納品書NOの設定
-		$aryData["strSlipCode"] = $aryRegResult["strSlipCode"][0];
+
+		//TESTCODE
+		$aryPage1 = array();
+		$aryPage1["strSlipCode"] = "02000307";
+		$aryPage1["lngRevisionNo"] = "REV1";
+		$aryPage2 = array();
+		$aryPage2["strSlipCode"] = "02030554";
+		$aryPage2["lngRevisionNo"] = "REV2";
+		$aryPerPage = array();
+		$aryPerPage[] = $aryPage1;
+		$aryPerPage[] = $aryPage2;
+
+		// 処理結果（テーブル出力）
+		$strHtml = fncGetRegisterResultTableBodyHtml($aryPerPage, $objDB);
+		$aryData["tbodyResiterResult"] = $strHtml;
+
+		// 登録完了メッセージ
+		$aryData["strMessage"] = "登録が完了しました";
 
 		// テンプレートから構築したHTMLを出力
 		$objTemplate = new clsTemplate();
@@ -210,8 +236,8 @@
 	if ($strMode == "download"){
 		//TODO:帳票ダウンロードの実装。ajax POSTで実装
 		//パラメータとして納品書NOとリビジョン番号を受け取る
-		$strDownloadSlipCode = $_POST["strdownloadslipcode"];
-		$lngDownloadRevisionNo = $_POST["lngdownloadrevisionno"];
+		$strSlipCode = $_POST["strSlipCode"];
+		$lngRevisionNo = $_POST["lngRevisionNo"];
 
 		//TODO:帳票印刷データをDBより取得
 		//$aryDownloadData = fncGetSlipDownloadData($strDownloadSlipCode, $lngDownloadRevisionNo);
@@ -233,6 +259,7 @@
 		//   $writer->save('php://output');
 		
 		// TODO:メモリ開放
+		echo "ダウンロードしたつもり。slip=".$strSlipCode.", rev=".$lngRevisionNo;
 
 		// 処理終了
 		return true;
