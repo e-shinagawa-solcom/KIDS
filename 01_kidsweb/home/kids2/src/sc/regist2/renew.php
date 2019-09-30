@@ -248,7 +248,7 @@
 	$aryData["optPaymentMethod"] = $optPaymentMethod;
 
 	// »ÙÊ§´ü¸Â
-	$aryData["dtmPaymentDueDate"] = $aryHeader["dtmpaymentlimit"];
+	$aryData["dtmPaymentLimit"] = $aryHeader["dtmpaymentlimit"];
 
 	// Ç¼ÉÊÀè
 	$aryData["lngDeliveryPlaceCode"] = $aryHeader["strdeliveryplacecompanydisplaycode"];
