@@ -281,8 +281,10 @@
 		$aryGenerateResult = fncGenerateReportImage("download", $aryHeader, $aryDetail,
 			 $lngSlipNo, $lngRevisionNo, $strSlipCode, $lngSalesNo, $dtmInsertDate, 
 			 $objDB);
-
 		$xlsxWriter = $aryGenerateResult["XlsxWriter"];
+
+		// 印刷回数を増やす
+		fncIncrementPrintCountBySlipCode($strSlipCode, $objDB);
 
 		// MIMEタイプをセットしてダウンロード
 		//MIMEタイプ：https://technet.microsoft.com/ja-jp/ee309278.aspx

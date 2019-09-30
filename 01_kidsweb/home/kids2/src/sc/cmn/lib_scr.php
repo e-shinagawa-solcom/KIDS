@@ -259,6 +259,8 @@ function fncGetDetailBySlipNo($lngSlipNo, $lngRevisionNo, $objDB)
     return $aryDetail;
 }
 
+
+
 // 納品伝票番号に紐づく明細のキー項目を取得
 function fncGetDetailKeyBySlipNo($lngSlipNo, $lngRevisionNo, $objDB)
 {
@@ -598,6 +600,37 @@ function fncGetSalesNoBySlipCode($strSlipCode, $objDB)
     return $aryResult[0]["lngsalesno"];
 }
 
+// 印刷回数を1増やす
+function fncIncrementPrintCountBySlipCode($strSlipCode, $objDB)
+{
+
+    $aryUpdate = array();
+    $aryUpdate[] ="UPDATE m_slip ";
+    $aryUpdate[] =" SET lngprintcount = (lngprintcount+1) ";
+    $aryUpdate[] =" WHERE ";
+    $aryUpdate[] ="  strslipcode = '". $strSlipCode ."'";
+    $strQuery = "";
+    $strQuery .= implode("\n", $aryUpdate);
+
+    // トランザクション開始
+    $objDB->transactionBegin();
+
+    // 登録実行
+    if ( !$lngResultID = $objDB->execute( $strQuery ) )
+    {
+        // 失敗
+        fncOutputError ( 9501, DEF_FATAL, "納品伝票の印刷回数の更新に失敗", TRUE, "", $objDB );
+    }
+    else
+    {
+        // 成功
+        $objDB->freeResult( $lngResultID );
+        $objDB->transactionCommit();
+    }
+
+}
+
+// 受注状態コードによるバリデーション
 function fncNotReceivedDetailExists($aryDetail, $objDB)
 {
     for ( $i = 0; $i < count($aryDetail); $i++ )
