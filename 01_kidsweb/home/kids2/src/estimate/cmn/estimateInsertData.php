@@ -58,6 +58,11 @@ class estimateInsertData {
         return $this->reviseCode;
     }
 
+    // 見積原価番号を出力する
+    public function getEstimateNo() {
+        return $this->estimateNo;
+    }
+
     /**
     * DB登録用関数
     *

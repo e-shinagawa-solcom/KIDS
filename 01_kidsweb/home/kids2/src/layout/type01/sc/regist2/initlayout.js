@@ -240,7 +240,7 @@ function initLayoutPO()
 	SegCBodys.style.background = segbody;
 
 	///// INPUT A,B,C HEADER TITLE IMAGE /////
-	SegAHeader.innerHTML = headerAJ;
+	//SegAHeader.innerHTML = headerAJ;
 	SegCHeader.innerHTML = headerCJ;
 
 	///// INPUT A,B,C BOTTOM IMAGE /////

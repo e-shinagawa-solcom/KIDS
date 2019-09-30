@@ -240,6 +240,7 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 	// ---------------------------------
 	$aryOutQuery = array();
 	$aryOutQuery[] = "SELECT distinct s.lngSlipNo as lngSlipNo";	//納品伝票番号
+	$aryOutQuery[] = "	,s.lngSalesNo as lngSalesNo";			    //売上番号
 	$aryOutQuery[] = "	,s.lngRevisionNo as lngRevisionNo";			//リビジョン番号
 	$aryOutQuery[] = "	,s.dtmInsertDate as dtmInsertDate";			//作成日
 
@@ -280,7 +281,7 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 	// 合計金額
 	$arySelectQuery[] = ", To_char( s.curTotalPrice, '9,999,999,990.99' ) as curTotalPrice";
 	//// 売上Ｎｏ
-	//$arySelectQuery[] = ", s.strSalesCode as strSalesCode";
+	$arySelectQuery[] = ", sa.strSalesCode as strSalesCode";
 	// 売上状態コード
 	$arySelectQuery[] = ", sa.lngSalesStatusCode as lngSalesStatusCode";
 	$arySelectQuery[] = ", ss.strSalesStatusName as strSalesStatusName";
@@ -293,9 +294,9 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 	// From句 の生成
 	$aryFromQuery = array();
 	$aryFromQuery[] = " FROM m_Slip s";
-	$aryFromQuery[] = " LEFT JOIN m_Sales sa ON s.lngSalesNo = sa.lngSalesNo";
+	$aryFromQuery[] = " INNER JOIN m_Sales sa ON s.lngSalesNo = sa.lngSalesNo AND s.lngRevisionNo = sa.lngRevisionNo";
 	$aryFromQuery[] = " LEFT JOIN m_SalesStatus ss ON sa.lngSalesStatusCode = ss.lngSalesStatusCode";
-	$aryFromQuery[] = " LEFT JOIN m_Company cust_c ON s.strCustomerCode = cust_c.strCompanyDisplayCode";
+	$aryFromQuery[] = " LEFT JOIN m_Company cust_c ON CAST(s.strCustomerCode AS INTEGER) = cust_c.lngCompanyCode";
 	$aryFromQuery[] = " LEFT JOIN m_MonetaryUnit mu ON s.lngMonetaryUnitCode = mu.lngMonetaryUnitCode";
 	$aryFromQuery[] = " LEFT JOIN m_User insert_u ON s.strInsertUserCode = insert_u.strUserDisplayCode";
 	$aryFromQuery[] = " LEFT JOIN m_Company delv_c ON s.lngDeliveryPlaceCode = delv_c.lngCompanyCode";
@@ -598,7 +599,7 @@ function fncSetSlipTableRow ( $lngColumnCount, $aryHeadResult, $aryDetailResult,
 			{
 				// ボタン種により変更
 
-				// 詳細表示
+				// 詳細ボタン
 				if ( $strColumnName == "btnDetail" and $aryUserAuthority["Detail"] )
 				{
 					if ( $aryHeadResult["lngrevisionno"] >= 0 )
@@ -611,7 +612,7 @@ function fncSetSlipTableRow ( $lngColumnCount, $aryHeadResult, $aryDetailResult,
 					}
 				}
 
-				// 修正
+				// 修正ボタン
 				if ( $strColumnName == "btnFix" and $aryUserAuthority["Fix"] )
 				{
 					// 納品書データの状態により分岐 
@@ -625,11 +626,19 @@ function fncSetSlipTableRow ( $lngColumnCount, $aryHeadResult, $aryDetailResult,
 					}
 					else
 					{
-						$aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/renew_off_bt.gif\" lngslipno=\"" . $aryDetailResult[$i]["lngslipno"] . "\" class=\"detail button\"></td>\n";
+						$aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\">"
+									."<img src=\"/mold/img/renew_off_bt.gif\" "
+									."lngslipno=\"" . $aryHeadResult["lngslipno"] . "\" "
+									."lngrevisionno=\"" . $aryHeadResult["lngrevisionno"] . "\" "
+									."strslipcode=\"" . $aryHeadResult["strslipcode"] . "\" "
+									."lngsalesno=\"" . $aryHeadResult["lngsalesno"] . "\" "
+									."strsalescode=\"" . $aryHeadResult["strsalescode"] . "\" "
+									."strcustomercode=\"" . $aryHeadResult["strcustomerdisplaycode"] . "\" "
+									."class=\"renew button\"></td>\n";
 					}
 				}
 
-				// 削除
+				// 削除ボタン
 				if ( $strColumnName == "btnDelete" and $aryUserAuthority["Delete"] )
 				{
 					// 管理モードで無い場合もしくはリバイズが存在しない場合

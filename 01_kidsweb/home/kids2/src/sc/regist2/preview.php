@@ -85,9 +85,19 @@
 	//-------------------------------------------------------------------------
 	if ($strMode == "display-preview"){
 		// --------------------------
-		//  登録データ退避
+		//  登録/修正データ退避
 		// --------------------------
-		// プレビュー表示後に登録処理を行うため、入力データをjsonに変換して退避する
+		// 修正対象に紐づくデータ（修正時にセット。登録時は空）
+		$lngRenewTargetSlipNo = $_POST["lngRenewTargetSlipNo"];
+		$strRenewTargetSlipCode = $_POST["strRenewTargetSlipCode"];
+		$lngRenewTargetSalesNo = $_POST["lngRenewTargetSalesNo"];
+		$strRenewTargetSalesCode = $_POST["strRenewTargetSalesCode"];
+		$aryData["lngRenewTargetSlipNo"] = $lngRenewTargetSlipNo;
+		$aryData["strRenewTargetSlipCode"] = $strRenewTargetSlipCode;
+		$aryData["lngRenewTargetSalesNo"] = $lngRenewTargetSalesNo;
+		$aryData["strRenewTargetSalesCode"] = $strRenewTargetSalesCode;
+
+		// プレビュー表示後に登録/修正処理を行うため、入力データをjsonに変換して退避する
 		$aryHeader = $_POST["aryHeader"];
 		$aryDetail = $_POST["aryDetail"];
 		$aryData["aryHeaderJson"] = EncodeToJson($aryHeader);
@@ -97,7 +107,7 @@
 		//  文字コード変換（UTF-8->EUC-JP）
 		// --------------------------------
 		//jQueryのajaxでPOSTすると文字コードが UTF-8 になって
-		//データ登録時にエラーになるため、EUC-JPに変換する
+		//データ登録時にエラーになるため、DB処理前にEUC-JPに変換する
 		$aryHeader = fncConvertArrayHeaderToEucjp($aryHeader);
 		$aryDetail = fncConvertArrayDetailToEucjp($aryDetail);
 
@@ -105,13 +115,16 @@
 		//  プレビュー生成
 		// --------------------------
 		//登録データとExcelテンプレートとからプレビューHTMLを生成する
-		$aryPreview = fncGenerateReportPreview($aryHeader, $aryDetail, $objDB, $objAuth);
+		$aryGenerateResult = fncGenerateReportImage("html", $aryHeader, $aryDetail, 
+			null, null, null, null, null, 
+			$objDB);
 
 		// --------------------------
 		//  プレビュー画面表示
 		// --------------------------
-		$aryData["PREVIEW_STYLE"] = $aryPreview["PreviewStyle"];
-		$aryData["PREVIEW_DATA"] = $aryPreview["PreviewData"];
+		// テンプレートから構築したHTMLを出力
+		$aryData["PREVIEW_STYLE"] = $aryGenerateResult["PreviewStyle"];
+		$aryData["PREVIEW_DATA"] = $aryGenerateResult["PreviewData"];
 		$objTemplate = new clsTemplate();
 		$objTemplate->getTemplate( "sc/regist2/preview.tmpl" );
 		$objTemplate->replace( $aryData );
@@ -119,17 +132,32 @@
 
 		echo $objTemplate->strTemplate;
 
+		// DB切断
+		$objDB->close();
+		// 処理終了
 		return true;
 	}
 
 	//-------------------------------------------------------------------------
-	//  登録処理
+	//  登録/修正処理
 	//-------------------------------------------------------------------------
-	if ($strMode == "regist"){
+	if ($strMode == "regist-or-renew"){
 		// --------------------------
-		//  登録データ復元
+		//  登録/修正データ復元
 		// --------------------------
-		// プレビュー表示前に退避した登録データをjsonから復元する
+		// 修正対象に紐づく納品伝票番号（登録の場合は空）
+		$lngRenewTargetSlipNo = $_POST["lngRenewTargetSlipNo"];
+		// 修正対象に紐づく納品コード（登録の場合は空）
+		$strRenewTargetSlipCode = $_POST["strRenewTargetSlipCode"];
+		// 修正対象に紐づく売上番号（登録の場合は空）
+		$lngRenewTargetSalesNo = $_POST["lngRenewTargetSalesNo"];
+		// 修正対象に紐づく売上コード（登録の場合は空）
+		$strRenewTargetSalesCode = $_POST["strRenewTargetSalesCode"];
+
+		// 登録か修正か（true:登録、false:修正）
+		$isCreateNew = strlen($lngRenewTargetSlipNo) == 0;
+		
+		// プレビュー表示前に退避した登録/修正データをjsonから復元する
 		$aryHeader = DecodeFromJson($_POST["aryHeaderJson"]);
 		$aryDetail = DecodeFromJson($_POST["aryDetailJson"]);
 
@@ -141,8 +169,9 @@
 		$aryHeader = fncConvertArrayHeaderToEucjp($aryHeader);
 		$aryDetail = fncConvertArrayDetailToEucjp($aryDetail);
 
+		//DBG:一時コメントアウト対象
 		// --------------------------
-		//  登録前バリデーション
+		//  登録/修正前バリデーション
 		// --------------------------
 		// 受注状態コードが2以外の明細が存在するならエラーとする
 		if(fncNotReceivedDetailExists($aryDetail, $objDB))
@@ -150,8 +179,9 @@
 			MoveToErrorPage("納品書が発行できない状態の明細が選択されています。");
 		}
 
+		//DBG:一時コメントアウト対象
 		// --------------------------
-		//  データベース登録
+		//  データベース処理
 		// --------------------------
 		// トランザクション開始
 		$objDB->transactionBegin();
@@ -162,25 +192,57 @@
 			MoveToErrorPage("受注データの更新に失敗しました。");
 		}
 
-		// 売上マスタ登録、売上詳細登録、納品伝票マスタ登録、納品伝票明細登録
-		$aryRegResult = fncRegisterSalesAndSlip($aryHeader, $aryDetail, $objDB, $objAuth);
+		// 売上マスタ、売上詳細、納品伝票マスタ、納品伝票明細へのレコード追加。
+		// 納品伝票番号が空なら登録、空でないなら修正を行う
+		$aryRegResult = fncRegisterSalesAndSlip(
+			$lngRenewTargetSlipNo, $strRenewTargetSlipCode, $lngRenewTargetSalesNo, $strRenewTargetSalesCode,
+			$aryHeader, $aryDetail, $objDB, $objAuth);
+
 		if (!$aryRegResult["result"]){
-			MoveToErrorPage("売上・納品伝票データの登録に失敗しました。");
+			MoveToErrorPage("売上・納品伝票データの登録または修正に失敗しました。");
 		}
 
 		// コミット
 		$objDB->transactionCommit();
 
 		// --------------------------
+		//  修正対象データのロック解除
+		// --------------------------
+		// 修正の場合、修正対象データにロックがかかっているので解除する
+		if (!$isCreateNew)
+		{
+			$unlocked = fncReleaseExclusiveLock(EXCLUSIVE_CONTROL_FUNCTION_CODE_SC_RENEW, $strRenewTargetSlipCode, $objDB);
+			if(!$unlocked)
+			{
+				MoveToErrorPage("納品書データの修正は成功しましたが、ロック解除に失敗しました");
+			}
+		}
+
+		// --------------------------
 		//  登録結果画面表示
 		// --------------------------
-		// 画面に表示するパラメータの設定
-		// 納品書NOに紐づく作成日の取得
-		$dtmInsertDate = fncGetSlipInsertDate($aryRegResult["strSlipCode"][0], $objDB);
-		// 作成日の設定
-		$aryData["dtmInsertDate"] = $dtmInsertDate;
-		// 納品書NOの設定
-		$aryData["strSlipCode"] = implode(",", $aryRegResult["strSlipCode"]);
+		// 処理結果（テーブル出力）
+		$aryPerPage = $aryRegResult["aryPerPage"];
+
+		// //DBG:TESTCODE 仮の処理結果
+		// $aryPage1 = array();
+		// $aryPage1["lngSlipNo"] = 30487;
+		// $aryPage1["lngRevisionNo"] = 1;
+		// $aryPage1["strSlipCode"] = "02030457";
+		// $aryPage2 = array();
+		// $aryPage2["lngSlipNo"] = 27741;
+		// $aryPage2["lngRevisionNo"] = 0;
+		// $aryPage2["strSlipCode"] = "02028443";
+		// $aryPerPage = array();
+		// $aryPerPage[] = $aryPage1;
+		// $aryPerPage[] = $aryPage2;
+
+		// 処理結果をテーブルのHTMLに出力
+		$strHtml = fncGetRegisterResultTableBodyHtml($aryPerPage, $objDB);
+		$aryData["tbodyResiterResult"] = $strHtml;
+
+		// 登録完了メッセージ
+		$aryData["strMessage"] = "登録が完了しました";
 
 		// テンプレートから構築したHTMLを出力
 		$objTemplate = new clsTemplate();
@@ -189,45 +251,77 @@
 		$objTemplate->complete();
 		echo $objTemplate->strTemplate;
 
+		// DB切断
+		$objDB->close();
+		// 処理終了
 		return true;
 	}
 
+	//-------------------------------------------------------------------------
+	//  帳票ダウンロード
+	//-------------------------------------------------------------------------
+	if ($strMode == "download"){
 
-	// -----------------------------------
-	//   帳票表示サンプル
-	// -----------------------------------
-	// if($strMode == "chouhyou-sample"){
-	// 	// 日本語に対応する場合、この1行が必要
-	// 	ini_set('default_charset', 'UTF-8');
+		// 納品書データのキー項目をパラメータから受け取る
+		$lngSlipNo = $_POST["lngSlipNo"];
+		$strSlipCode = $_POST["strSlipCode"];
+		$lngRevisionNo = $_POST["lngRevisionNo"];
 
-	// 	// 読み込み
-	// 	$file = mb_convert_encoding('template\納品書temple_B社_連絡書付.xlsx', 'UTF-8','EUC-JP' );
-	// 	$sheetname = mb_convert_encoding('B社専用', 'UTF-8','EUC-JP' );
-	// 	$cellValue = mb_convert_encoding('個別に値をセット', 'UTF-8','EUC-JP' );
-	// 	$spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($file);
-	// 	$spreadsheet->GetSheetByName($sheetname)->GetCell('C3')->SetValue($cellValue);
-	// 	$writer = new \PhpOffice\PhpSpreadsheet\Writer\Html($spreadsheet);
-	// 	$outStyle = $writer->generateStyles(true);
-	// 	$outSheetData = $writer->generateSheetData();
-	// 	$outStyle = mb_convert_encoding($outStyle, 'EUC-JP', 'UTF-8');
-	// 	$outSheetData = mb_convert_encoding($outSheetData, 'EUC-JP', 'UTF-8');
+		// レコード登録後に作られるデータをDBより取得する
+		$lngSalesNo = fncGetSalesNoBySlipCode($strSlipCode, $objDB);
+		$dtmInsertDate = fncGetInsertDateBySlipCode($strSlipCode, $objDB);
 
-	// 	$aryData["PREVIEW_STYLE"] = $outStyle;
-	// 	$aryData["PREVIEW_DATA"] = $outSheetData;
+		// 帳票テンプレートに設定する納品書データの読み込み（ヘッダ・フッタ部）
+		$aryHeader = fncGetHeaderBySlipNo($lngSlipNo, $lngRevisionNo, $objDB);
 
+		// 帳票テンプレートに設定する納品書データの読み込み（明細部）
+		$aryDetail = fncGetDetailBySlipNo($lngSlipNo, $lngRevisionNo, $objDB);
+
+		// 帳票テンプレートに納品書データを設定したExcelのバイナリを生成するXlsxWriterを取得する
+		$aryGenerateResult = fncGenerateReportImage("download", $aryHeader, $aryDetail,
+			 $lngSlipNo, $lngRevisionNo, $strSlipCode, $lngSalesNo, $dtmInsertDate, 
+			 $objDB);
+		$xlsxWriter = $aryGenerateResult["XlsxWriter"];
+
+		// 印刷回数を増やす
+		fncIncrementPrintCountBySlipCode($strSlipCode, $objDB);
+
+		// MIMEタイプをセットしてダウンロード
+		//MIMEタイプ：https://technet.microsoft.com/ja-jp/ee309278.aspx
+		header("Content-Description: File Transfer");
+		header('Content-Disposition: attachment; filename="weather.xlsx"');
+		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+		header('Content-Transfer-Encoding: binary');
+		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+		header('Expires: 0');
+		ob_end_clean(); //バッファ消去
+
+		// バイナリイメージをレスポンスとして返す
+		$xlsxWriter->save('php://output');
+	
+		// 処理終了
+		return true;
+
+	}
+
+	// 通常ここに来ることは無い（不明なモードでPOSTした場合ここに来る）
+	echo "不明なモードでPOSTされました";
 	return true;
 
+	// ヘルパ関数：jsonエンコード後にbase64エンコード
+	// base64変換するのは HTMLのhiddenフィールドに安全な形で格納するため。
 	function EncodeToJson($object){
 		$json = base64_encode(json_encode($object));
 		return $json;
 	}
 
+	// ヘルパ関数：base64デコード後にjsonデコード
 	function DecodeFromJson($json){
 		$object = json_decode(base64_decode($json), true);
 		return $object;
 	}
 
-	// エラー画面への遷移
+	// ヘルパ関数：エラー画面への遷移
 	function MoveToErrorPage($strMessage){
 		
 		// 言語コード：日本語

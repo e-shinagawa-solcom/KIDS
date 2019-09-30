@@ -146,27 +146,50 @@ table.temporaryTable > tbody > tr > td
 .sheetPreviewHeader
 {
 	position: relative;
-	left: 80px;
+	left: 90px;
 	width: 981px;
 	vertical-align: middle;
-	display: table;
+	display: flex;
+}
+
+.sheetEditHeader
+{
+	position: relative;
+	width: 981px;
+	vertical-align: middle;
+	display: flex;
+}
+
+#btnSelected, .btnSwitch
+{
+	position: relative;
+	display: inline-block;
+	width: auto;
+	border: none;
+	background-color: transparent;
+	cursor: pointer;
+	cursor: hand;
+	padding: 0px;
+	margin: 0px;
 }
 
 #btnSelected p
 {
 	position: absolute;
-	top: 8px;
-	left: 35px;
+	margin: 0px;
+	top: 12px;
+	left: 23px;
 	color: red;
 	font-size: 16px;
 	font-weight: bold;
 }
 
-#btnSwitch p
+.btnSwitch p
 {
 	position: absolute;
-	top: 8px;
-	left: 35px;
+	margin: 0px;
+	top: 12px;
+	left: 23px;
 	color: black;
 	font-size: 16px;
 	font-weight: bold;
@@ -174,8 +197,8 @@ table.temporaryTable > tbody > tr > td
 
 .data-buttons
 {
-	margin-left: 80px;
-	display: table-cell;
+	display: flex;
+	flex-wrap: wrap-reverse;
 	width: 57%;
 }
 
@@ -187,7 +210,7 @@ table.temporaryTable > tbody > tr > td
 
 .action-buttons
 {
-	display: table-cell;
+	display: flex;
 	vertical-align: middle;
 	width: 42%;
 }

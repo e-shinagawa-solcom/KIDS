@@ -42,6 +42,10 @@
 
 
 <header3>
+<script src="/cmn/jquery/tablesorter/jquery.tablesorter.js"></script>
+<script src="/cmn/jquery/tablesorter/jquery.tablesorter.widgets.js"></script>
+<!--<link rel="stylesheet" href="/cmn/jquery/tablesorter/themes/blue/style.css">-->
+<link rel="stylesheet" href="/sc/regist2/tablesorter.css">
 <script type="text/javascript" language="javascript" src="/sc/cmn/subloadmastersettings.js"></script>
 <script type="text/javascript" language="javascript" src="/sc/regist2/functions.js"></script>
 <script type="text/javascript" language="javascript" src="/sc/regist2/exstr.js"></script>
@@ -66,27 +70,16 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutPunit(); initLayo
 
 <span id="objCheckWorkFlowRoot"></span>
 
-
-
-<!-- 確認画面表示フラグ -->
 <input type="hidden" name="lngRegistConfirm" value="_%lngRegistConfirm%_">
-
-
 <bgsound id="BeepSound" src="/error/dummy.aif" loop="1" balance="0" volume="-100">
 <form name="HSO" action="_%strActionUrl%_" method="post">
-
 <input type="hidden" name="ActionScriptName" value="_%strurl%_">
-
-
 <input type="hidden" name="strSessionID" value="_%strSessionID%_">
 <input type="hidden" name="strMode" value="_%strMode%_">
 <input type="hidden" name="strProcMode" value="_%strProcMode%_">
 <input type="hidden" name="lngOrderNo" value="_%lngOrderNo%_">
 <input type="hidden" name="lngRevisionNo" value="_%lngRevisionNo%_">
-
 <input type="hidden" name="strPageCondition" value="_%strPageCondition%_">
-
-<!--発注管理であることを表すフラグ-->
 <input type="hidden" name="POFlg" value="true">
 
 <!-- /////////////////////////////////// START MAIN TITLE /////////////////////////////////// -->
@@ -192,7 +185,7 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutPunit(); initLayo
 
 <span id="SegACustomer">顧客</span>
 <span id="VarsACustomer">
-	<input style="ime-mode:disabled;" class="TxtStyle03L" type="text" name="lngCustomerCode" value="_%llngCustomerCode%_" readonly>
+	<input style="ime-mode:disabled;" class="TxtStyle03L" type="text" name="lngCustomerCode" value="_%lngCustomerCode%_" readonly>
 	<input style="ime-mode:disabled;" class="disTxt32L" type="text" name="strCustomerName" value="_%strCustomerName%_" contenteditable="false" readonly>
 </span>
 
@@ -226,7 +219,7 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutPunit(); initLayo
 
 <span id="SegANote">備考</span>
 <span id="VarsANote">
-	<textarea name="strNote"></textarea>
+	<textarea name="strNote">_%strNote%_</textarea>
 </span>
 
 <span id="SegATaxClass">消費税区分</span>
@@ -272,26 +265,26 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutPunit(); initLayo
 
 
 <!-- 明細選択エリア -->
-<span id="SegDetailIN">
+<span id="SegDetailIN" onselectstart="return false;">
   <table id="DetailTable" cellpadding="0" cellspacing="1" border="0">
     <thead id="DetailTableHead">
 	  <tr class="TrSegs">
-	  	<th style="width:20px;"><input type="checkbox" id="DetailTableBodyAllCheck"></th>
-	  	<th>No.</th>
-	  	<th>顧客発注番号</th>
-	  	<th>受注番号</th>
-	  	<th>顧客品番</th>
-	  	<th>製品コード</th>
-		<th>製品名</th>
-	  	<th>製品名（英語）</th>
-	  	<th>営業部署</th>
-	  	<th>売上区分</th>
-	  	<th>納期</th>
-	  	<th>入数</th>
-	  	<th>単価</th>
-	  	<th>単位</th>
-	  	<th>数量</th>
-		<th>税抜金額</th>
+	  	<th class="not-sortable" style="width:20px;"><input type="checkbox" id="DetailTableBodyAllCheck"></th>
+	  	<th class="not-sortable">No.</th>
+	  	<th class="sortable">顧客発注番号</th>
+	  	<th class="sortable">受注番号</th>
+	  	<th class="sortable">顧客品番</th>
+	  	<th class="sortable">製品コード</th>
+		<th class="sortable">製品名</th>
+	  	<th class="sortable">製品名（英語）</th>
+	  	<th class="sortable">営業部署</th>
+	  	<th class="sortable">売上区分</th>
+	  	<th class="sortable">納期</th>
+	  	<th class="sortable">入数</th>
+	  	<th class="sortable">単価</th>
+	  	<th class="sortable">単位</th>
+	  	<th class="sortable">数量</th>
+		<th class="sortable">税抜金額</th>
 		<th class="forEdit">受注番号（非表示）</th>
 		<th class="forEdit">受注明細番号（非表示）</th>
 		<th class="forEdit">リビジョン番号（非表示）</th>
@@ -302,9 +295,10 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutPunit(); initLayo
 		<th class="forEdit">通貨単位コード（非表示）</th>
 		<th class="forEdit">通貨レートコード（非表示）</th>
 		<th class="forEdit">通貨単位記号（非表示）</th>
+		<th class="forEdit">明細統一フラグ（非表示）</th>
 	  </tr>
 	</thead>
-	<tbody id="DetailTableBody">_%strOrderDetail%_</tbody>
+	<tbody id="DetailTableBody">_%strDetailTableBody%_</tbody>
   </table>
 </span>
 
@@ -338,19 +332,30 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutPunit(); initLayo
 		<th class="forEdit">通貨単位コード（非表示）</th>
 		<th class="forEdit">通貨レートコード（非表示）</th>
 		<th class="forEdit">通貨単位記号（非表示）</th>
+		<th class="forEdit">明細統一フラグ（非表示）</th>
 	  </tr>
 	</thead>
-    <tbody id="EditTableBody"></tbody>
+    <tbody id="EditTableBody">_%strEditTableBody%_</tbody>
   </table>
 </span>
 
 <span id="SegHidden">
 </span>
-
 <!-- 明細枠の情報 -->
 <span id="DtHiddenRecord"></span>
-
 </p>
+
+<!-- 修正対象に紐づく納品伝票番号 -->
+<input type="hidden" name="lngSlipNo" value="_%lngSlipNo%_">
+<!-- 修正対象に紐づく納品伝票コード -->
+<input type="hidden" name="strSlipCode" value="_%strSlipCode%_">
+<!-- 修正対象に紐づく売上番号 -->
+<input type="hidden" name="lngSalesNo" value="_%lngSalesNo%_">
+<!-- 修正対象に紐づく売上コード -->
+<input type="hidden" name="strSalesCode" value="_%strSalesCode%_">
+<!-- Ajax POST先 -->
+<input type="hidden" name="ajaxPostTarget" value = "_%ajaxPostTarget%_">
+
 <!-- //////////////////////////////////// END INPUT A SEGMENTS //////////////////////////////////// -->
 </form>
 

@@ -79,4 +79,24 @@ class otherCostOrderRowController extends estimateRowController {
         }
         return $acquiredRate;
     }
+
+    // 再計算前の償却数と数量を比較し、再計算前の値と一致した場合は再計算後の償却数を代入する
+    public function substitutePQForPrice($compare, $substitute) {
+        // 数量を取得
+        $quantity = $this->quantity;
+
+        // 単価と再計算前の値が一致した場合のみ再計算結果を代入する。
+        if ($quantity === $compare) {
+            $this->quantity = $substitute;
+            return true;
+        }
+
+        return false;
+    }
+
+    // 顧客先のチェックを行う
+    protected function validateCustomerCompany() {
+        $this->customerCompany = null;
+        return;
+    }
 }

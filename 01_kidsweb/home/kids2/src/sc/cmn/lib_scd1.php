@@ -320,7 +320,7 @@ function fncAddColumnNameArrayKeyToCN ($aryColumnNames)
 function fncJapaneseInvoiceExists($strCustomerCode, $lngSalesNo, $objDB)
 {
 	// 顧客の国コード取得
-	$strCompanyQuery = "SELECT lngcountrycode FROM m_Company WHERE strcompanydisplaycode = '" . $strCustomerCode . "'";
+	$strCompanyQuery = "SELECT lngcountrycode FROM m_Company WHERE lngcompanycode = '" . $strCustomerCode . "'";
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strCompanyQuery, $objDB );
 	if ( $lngResultNum )
 	{

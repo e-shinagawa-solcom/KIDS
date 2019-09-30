@@ -25,7 +25,6 @@
 	//-------------------------------------------------------------------------
 	include('conf.inc');
 	require (LIB_FILE);
-	//require (SRC_ROOT."po/cmn/lib_po.php" );
 	require (SRC_ROOT."sc/cmn/lib_scr.php");
 
 	$objDB		= new clsDB();
@@ -91,6 +90,25 @@
 		$lngCountryCode = fncGetCountryCode($strCompanyDisplayCode, $objDB);
 		// データ返却
 		echo $lngCountryCode;
+		// DB切断
+		$objDB->close();
+		// 処理終了
+		return true;
+	}
+	
+	//-------------------------------------------------------------------------
+	// 【ajax】顧客に紐づく締め日を取得
+	//-------------------------------------------------------------------------
+	if ($strMode == "get-closedday"){
+		// 顧客コード
+		$strCompanyDisplayCode = $_POST["strcompanydisplaycode"];
+		// 締め日取得
+		$lngClosedDay = fncGetClosedDay($strCompanyDisplayCode, $objDB);
+		// データ返却
+		echo $lngClosedDay;
+		// DB切断
+		$objDB->close();
+		// 処理終了
 		return true;
 	}
 
@@ -98,12 +116,20 @@
 	// 【ajax】明細検索
 	//-------------------------------------------------------------------------
 	if($strMode == "search-detail"){
+		// 検索条件の取得
+		$aryCondition = $_POST["condition"];
+		// 固定検索条件の追加
+		$aryCondition["lngreceivestatuscode"] = 2;	//受注状態コード=2:受注
 		// DBから明細を検索
-		$aryReceiveDetail = fncGetReceiveDetail($_POST["condition"], $objDB);
+		$aryReceiveDetail = fncGetReceiveDetail($aryCondition, $objDB);
 		// 明細選択エリアに出力するHTMLの作成
-		$strHtml = fncGetReceiveDetailHtml($aryReceiveDetail);
+		$isCreateNew = true;
+		$strHtml = fncGetReceiveDetailHtml($aryReceiveDetail, $isCreateNew);
 		// データ返却
 		echo $strHtml;
+		// DB切断
+		$objDB->close();
+		// 処理終了
 		return true;
 	}
 
@@ -112,9 +138,12 @@
 	//-------------------------------------------------------------------------
 	if($strMode == "change-deliverydate"){
 		// 変更後の納品日に対応する消費税率の選択項目を取得
-		$optTaxRate = fncGetTaxRatePullDown($_POST["dtmDeliveryDate"], $objDB);
+		$optTaxRate = fncGetTaxRatePullDown($_POST["dtmDeliveryDate"], "", $objDB);
 		// データ返却
 		echo $optTaxRate;
+		// DB切断
+		$objDB->close();
+		// 処理終了
 		return true;
 	}
 
@@ -140,7 +169,7 @@
 	$aryData["optTaxClass"] = $optTaxClass;
 
 	// 消費税率プルダウン
-	$optTaxRate = fncGetTaxRatePullDown($aryData["dtmDeliveryDate"], $objDB);
+	$optTaxRate = fncGetTaxRatePullDown($aryData["dtmDeliveryDate"], "", $objDB);
 	$aryData["optTaxRate"] = $optTaxRate;
 
 	// 消費税額
@@ -149,8 +178,19 @@
 	// 合計金額
 	$aryData["strTotalAmount"] = "0";
 
-	// 売上（納品書）登録画面表示
+	//-------------------------------------------------------------------------
+	// 画面表示
+	//-------------------------------------------------------------------------
+	// ajax POST先をこのファイルにする
+	$aryData["ajaxPostTarget"] = "index.php";
+
+	// 売上（納品書）登録画面表示（テンプレートは納品書修正画面と共通）
 	echo fncGetReplacedHtml( "sc/regist2/parts.tmpl", $aryData ,$objAuth);
+
+	// DB切断
+	$objDB->close();
+
+	// 処理終了
 	return true;
 
 ?>

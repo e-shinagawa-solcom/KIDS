@@ -43,8 +43,12 @@ _%PREVIEW_STYLE%_
 </head>
 <body>
 	<form name="registFrm" method="POST" action="/sc/regist2/preview.php">
-        <input type="hidden" name="strMode" value="regist">
+        <input type="hidden" name="strMode" value="regist-or-renew">
         <input type="hidden" name="strSessionID" value="_%strSessionID%_">
+        <input type="hidden" name="lngRenewTargetSlipNo"" value="_%lngRenewTargetSlipNo%_">
+        <input type="hidden" name="strRenewTargetSlipCode"" value="_%strRenewTargetSlipCode%_">
+        <input type="hidden" name="lngRenewTargetSalesNo"" value="_%lngRenewTargetSalesNo%_">
+        <input type="hidden" name="strRenewTargetSalesCode"" value="_%strRenewTargetSalesCode%_">
         <input type="hidden" name="aryHeaderJson" value="_%aryHeaderJson%_">
         <input type="hidden" name="aryDetailJson" value="_%aryDetailJson%_">
 	</form>

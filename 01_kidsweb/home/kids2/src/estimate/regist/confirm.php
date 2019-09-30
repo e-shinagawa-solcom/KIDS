@@ -128,13 +128,17 @@
 		$cellAddressList = $sheetInfo['cellAddress'];
 
 		// ヘッダ部のバリデーションを行う
-		$objHeader = new registHeaderController();
-		$objHeader->initialize($sheetInfo['cellAddress'], $lngUserCode, $sheet, $objDB);
+		$objHeader = new registHeaderController($objDB);
+		$objHeader->initialize($sheetInfo['cellAddress'], $lngUserCode, $sheet);
 		$message = $objHeader->validate();
 
 		if ($message) {
 			$outputMessage[] = $message;
 		}
+
+		// ヘッダ部の値を出力する
+		$param = $objHeader->outputRegistData();
+		$beforeProductionQuantity = $param[workSheetConst::PRODUCTION_QUANTITY];
 
 		// 対象エリアの範囲を取得する
 		$targetAreaRows = $objSheet->outputTargetAreaRows();
@@ -181,6 +185,25 @@
 				
 				if ($objRow) {
 					$objRow->initialize($sheetInfo['cellAddress'], $row);
+
+					// 以下の処理を行う為、部材費及びその他費用の行の処理は製造費用の行の処理の後に行う
+					if ($rowAttribute === DEF_AREA_PARTS_COST_ORDER
+					    || $rowAttribute === DEF_AREA_OTHER_COST_ORDER) {
+
+						$calcProductionQuantity = productSalesRowController::outputProductionQuantity();
+						$result = $objRow->substitutePQForPrice($beforeProductionQuantity, $calcProductionQuantity);
+
+						if ($result === true) { // 数量の代入が行われた場合はブックの値を書き換える
+							
+							$quantityColumn =  $objRow->columnNumberList['quantity'];
+							$quantityCell =  $quantityColumn. $row;
+	
+							// 代入後の数量をsheetオブジェクトに挿入
+							$objSheet->sheet->getCell($quantityCell)->setValue($calcProductionQuantity);
+						}
+
+					}
+
 					// 行のチェック、再計算を行う
 					$objRow->workSheetRegistCheck();
 
@@ -365,6 +388,12 @@
 		// 非表示リスト（無効リスト）を追加する
 		$objSheet->setHiddenRowList($hiddenList);
 
+		// 表示用のヘッダ部の値を出力する（表示名をデータベースの名称に置換）
+		$replace = $objHeader->outputDisplayData();
+		// 表示用ヘッダ部の値をワークシートに挿入する
+		$objSheet->cellValueReplace($replace);
+
+		// web表示用のデータを出力する
 		$viewData = $objSheet->makeDataOfSheet();
 
 		$viewData = $objSheet->deleteInvalidRow($viewData);

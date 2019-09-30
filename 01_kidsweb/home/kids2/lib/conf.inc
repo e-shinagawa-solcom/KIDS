@@ -622,4 +622,7 @@ define ( "DEF_GROUP_ATTRIBUTE_CODE_QUALITY_ASSURANCE",        5);  // 品質保証
 define ( "DEF_DB_INTEGER_MAX_LIMIT",                 2147483647);  // integerの最大値
 define ( "DEF_DB_INTEGER_MIN_LIMIT",                -2147483647);  // integerの最小値
 
+// 排他制御テーブルの機能コード
+define ("EXCLUSIVE_CONTROL_FUNCTION_CODE_SC_RENEW", 1);		// 納品書修正機能
+
 ?>

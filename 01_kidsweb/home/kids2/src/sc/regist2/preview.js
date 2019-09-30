@@ -4,4 +4,8 @@ jQuery(function($){
         registFrm.submit();
     });
 
+    $("#CancelBt").on('click', function(){
+        window.close();
+    });
+
 });
