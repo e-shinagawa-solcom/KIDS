@@ -115,7 +115,7 @@
 		//  プレビュー生成
 		// --------------------------
 		//登録データとExcelテンプレートとからプレビューHTMLを生成する
-		$aryGenerateResult = fncGenerateReportImage("html", $aryHeader, $aryDetail, $objDB, $objAuth);
+		$aryGenerateResult = fncGenerateReportImage("html", $aryHeader, $aryDetail, null, null, null, $objDB);
 
 		// --------------------------
 		//  プレビュー画面表示
@@ -172,10 +172,10 @@
 		//  登録/修正前バリデーション
 		// --------------------------
 		// 受注状態コードが2以外の明細が存在するならエラーとする
-		if(fncNotReceivedDetailExists($aryDetail, $objDB))
-		{
-			MoveToErrorPage("納品書が発行できない状態の明細が選択されています。");
-		}
+		// if(fncNotReceivedDetailExists($aryDetail, $objDB))
+		// {
+		// 	MoveToErrorPage("納品書が発行できない状態の明細が選択されています。");
+		// }
 
 		//DBG:一時コメントアウト対象
 		// --------------------------
@@ -272,7 +272,7 @@
 		$aryDetail = fncGetDetailBySlipNo($lngSlipNo, $lngRevisionNo, $objDB);
 
 		// 帳票テンプレートに納品書データを設定したExcelのバイナリを生成するXlsxWriterを取得する
-		$aryGenerateResult = fncGenerateReportImage("download", $aryHeader, $aryDetail, $objDB, $objAuth);
+		$aryGenerateResult = fncGenerateReportImage("download", $aryHeader, $aryDetail, $lngSlipNo, $lngRevisionNo, $strSlipCode, $objDB, $objAuth);
 		$xlsxWriter = $aryGenerateResult["XlsxWriter"];
 
 		// MIMEタイプをセットしてダウンロード

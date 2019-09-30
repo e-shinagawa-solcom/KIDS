@@ -255,12 +255,11 @@ jQuery(function($){
 
         var editTable = $('#EditTable');
         var tbody = $('#EditTableBody');
-        var i = $(tbody).find('tr').length;
-        
         var editTr = $('<tr></tr>');
-        var td = $('<td></td>').text(i + 1);
-        
+
         // No.
+        var i = $(tbody).find('tr').length;
+        var td = $('<td></td>').text(i + 1);
         $(td).attr('name', 'rownum');
         $(editTr).append($(td));
         // 顧客受注番号
@@ -487,7 +486,7 @@ jQuery(function($){
             //納品先担当者
             strdeliveryplaceusername:  $('input[name="strDeliveryPlaceUserName"]').val(),
             //備考
-            strnote:                   $('input[name="strNote"]').val(),
+            strnote:                   $('textarea[name="strNote"]').val(),
             //消費税区分
             lngtaxclasscode:           $('select[name="lngTaxClassCode"]').children('option:selected').val(),
             strtaxclassname:           $('select[name="lngTaxClassCode"]').children('option:selected').text(),
@@ -515,7 +514,7 @@ jQuery(function($){
             
             var param ={
                 //No.（行番号）
-                rownumber: $(tr).children('.detailSortKey').text(),
+                rownumber: $(tr).children('[name="rownum"]').text(),
                 //顧客発注番号
                 strcustomerreceivecode: $(tr).children('.detailCustomerReceiveCode').text(),
                 //受注番号
@@ -924,17 +923,18 @@ jQuery(function($){
             return false;
         }
 
+        // DBG:コメントアウト対象
         // 追加バリデーションチェック
-        var invalid = false;
-        $.each($(trArray), function(i, v){
-            if (!invalid){
-                invalid = !validateAdd($(v));
-            }
-        });
-        if (invalid)
-        {
-            return false;
-        }
+        // var invalid = false;
+        // $.each($(trArray), function(i, v){
+        //     if (!invalid){
+        //         invalid = !validateAdd($(v));
+        //     }
+        // });
+        // if (invalid)
+        // {
+        //     return false;
+        // }
 
         // 明細追加
         $.each($(trArray), function(i, v){
@@ -1035,9 +1035,9 @@ jQuery(function($){
             
             // DBG:一時コメントアウト対象
             // プレビュー画面表示前のバリデーションチェック
-            if (!varidateBeforePreview(closedDay)){
-                return false;
-            }
+            // if (!varidateBeforePreview(closedDay)){
+            //     return false;
+            // }
 
             // プレビュー画面表示
             displayPreview();
