@@ -201,8 +201,8 @@
 	$aryDetail = fncGetDetailBySlipNo($lngSlipNo, $lngRevisionNo, $objDB);
 
 	// 明細部のHTMLを生成
-	$withCheckBox = false;
-	$strDetailHtml = fncGetReceiveDetailHtml($aryDetail, $withCheckBox);
+	$isCreateNew = false;	//修正モード用
+	$strDetailHtml = fncGetReceiveDetailHtml($aryDetail, $isCreateNew);
 	
 	//-------------------------------------------------------------------------
 	// フォーム初期値設定

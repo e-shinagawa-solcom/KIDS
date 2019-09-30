@@ -123,8 +123,8 @@
 		// DBから明細を検索
 		$aryReceiveDetail = fncGetReceiveDetail($aryCondition, $objDB);
 		// 明細選択エリアに出力するHTMLの作成
-		$withCheckBox = true;
-		$strHtml = fncGetReceiveDetailHtml($aryReceiveDetail, $withCheckBox);
+		$isCreateNew = true;
+		$strHtml = fncGetReceiveDetailHtml($aryReceiveDetail, $isCreateNew);
 		// データ返却
 		echo $strHtml;
 		// DB切断

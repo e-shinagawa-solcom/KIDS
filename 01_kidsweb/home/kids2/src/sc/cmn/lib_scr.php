@@ -452,7 +452,7 @@ function fncGetReceiveDetail($aryCondition, $objDB)
     return $aryResult;
 }
 
-function fncGetReceiveDetailHtml($aryDetail, $withCheckBox){
+function fncGetReceiveDetailHtml($aryDetail, $isCreateNew){
     $strHtml = "";
     for($i=0; $i < count($aryDetail); $i++){
         $strDisplayValue = "";
@@ -460,13 +460,22 @@ function fncGetReceiveDetailHtml($aryDetail, $withCheckBox){
         $strHtml .= "<tr onmousedown='RowClick(this,false);'>";
 
         // 明細選択エリアはチェックボックスあり、出力明細一覧エリアはチェックボックスなしのためこのようなスイッチを用意
-        if ($withCheckBox){
-            //選択チェックボックス
+        if ($isCreateNew){
+            // データ登録時、明細選択エリアには選択チェックボックスが必要（データ修正時、出力明細一覧エリアにチェックボックスは不要）
             $strHtml .= "<td class='detailCheckbox'><input type='checkbox' name='edit' onmousedown='return false;' onclick='return false;'></td>";
         }
+
         //NO.
-        $strDisplayValue = htmlspecialchars($aryDetail[$i]["lngsortkey"]);
-        $strHtml .= "<td class='detailSortKey'>" . $strDisplayValue . "</td>";
+        if ($isCreateNew){
+            // データ登録時、明細選択エリアのNo.は lngsortkey とする 
+            $strDisplayValue = htmlspecialchars($aryDetail[$i]["lngsortkey"]);
+            $strHtml .= "<td class='detailSortKey'>" . $strDisplayValue . "</td>";
+        }
+        else{
+            // データ修正時、出力明細一覧エリアのNo.は明細の配列のインデックス+1とする（行番号）
+            $rownumber = $i + 1;
+            $strHtml .= "<td name='rownum'>" . $rownumber . "</td>";
+        }
         //顧客発注番号
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["strcustomerreceivecode"]);
         $strHtml .= "<td class='detailCustomerReceiveCode'>" . $strDisplayValue . "</td>";
