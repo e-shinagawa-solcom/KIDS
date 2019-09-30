@@ -15,6 +15,7 @@
 	<link rel="stylesheet" type="text/css" media="screen" href="/m/list/tr/cmn/layout.css">
 	<script type="text/javascript" language="javascript" src="/m/list/c/_%strTableName%__exstr.js"></script>
 	<script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
+	<script type="text/javascript" language="javascript" src="/m/cmn/table.js"></script>
 	<script type="text/javascript" language="javascript" src="/m/winopen.js"></script>
 </head>
 
@@ -27,9 +28,10 @@
 
 
 		<span id="COPYAREA1">
-			<table width="100%" border="1px" border-color="#6f818" border-collapse="separate">
-				<tr id="DummyTable">
-					<td colspan="24">&nbsp;</td>
+			<table id="result_tbl" width="950px;" border="1px" border-color="#6f818" border-collapse="separate">
+			<thead>
+				<tr id="DummyTable" class="top:0px;">
+					<td colspan="24">&nbsp;<span id="MasterAddBt"></span></td>
 				</tr>
 
 				<tr id="SegTitle">
@@ -41,8 +43,10 @@
 					</td>
 					_%strColumnHtml%_
 				</tr>
-
+</thead>
+<tbody>
 				_%strResultHtml%_
+				</tbody>
 			</table>
 		</span>
 
@@ -50,7 +54,6 @@
 		</span>
 
 
-		<span id="MasterAddBt"></span>
 
 
 
@@ -58,6 +61,7 @@
 		<input type="hidden" name="strEditURL" value="_%strEditURL%_"> _%HIDDEN%_
 	</form>
 
+	<input type="hidden" name="strTableName" value="_%strTableName%_">
 	<input type="hidden" name="Vars1" value="_%strInsertForm%_">
 	<input type="hidden" name="Vars2" value="_%lngLanguageCode%_">
 

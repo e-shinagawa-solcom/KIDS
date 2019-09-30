@@ -1,64 +1,71 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html lang="ja">
+
 <head>
-<title>K.I.D.S.</title>
-<meta http-equiv="content-type" content="text/html; charset=euc-jp">
-<script type="text/javascript" language="javascript" src="/layout/type01/cmn/images.js"></script>
-<script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
-<link rel="stylesheet" type="text/css" media="screen" href="/cmn/layout.css">
-<script type="text/javascript" language="javascript" src="/m/cmn/functions.js"></script>
-<link rel="stylesheet" type="text/css" media="screen" href="/m/cmn/styles.css">
-<script type="text/javascript" language="javascript" src="/layout/type01/m/cmn/images.js"></script>
-<link rel="stylesheet" type="text/css" media="screen" href="/m/list/tr/cmn/layout.css">
-<script type="text/javascript" language="javascript" src="/m/list/c/_%strTableName%__exstr.js"></script>
-<script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
-<script src="/cmn/jquery/jquery-3.1.0.js"></script>
-<script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
-<script type="text/javascript" language="javascript" src="/m/winopen.js"></script>
+	<title>K.I.D.S.</title>
+	<meta http-equiv="content-type" content="text/html; charset=euc-jp">
+	<script type="text/javascript" language="javascript" src="/layout/type01/cmn/images.js"></script>
+	<script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
+	<link rel="stylesheet" type="text/css" media="screen" href="/cmn/layout.css">
+	<script type="text/javascript" language="javascript" src="/m/cmn/functions.js"></script>
+	<link rel="stylesheet" type="text/css" media="screen" href="/m/cmn/styles.css">
+	<script type="text/javascript" language="javascript" src="/layout/type01/m/cmn/images.js"></script>
+	<link rel="stylesheet" type="text/css" media="screen" href="/m/list/tr/cmn/layout.css">
+	<script type="text/javascript" language="javascript" src="/m/list/c/_%strTableName%__exstr.js"></script>
+	<script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
+	<script src="/cmn/jquery/jquery-3.1.0.js"></script>
+	<script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
+	<script type="text/javascript" language="javascript" src="/m/winopen.js"></script>
+	<script type="text/javascript" language="javascript" src="/m/list/c/cmn/table.js"></script>
 
 
 </head>
+
 <body id="Backs" oncontextmenu="return false;" onload="GetIfrmlngLanguageCode(1);Loading();" onscroll="fncStopHeader3( SegTitle , DummyTable2 );">
 
 
-<p id="Preload">
-	<iframe id="PreloadFrm" name="PreloadWin" frameborder="0" src="/preload/index.html" onload="fncObjectResize( this , 16 , 0 );"></iframe>
-</p>
+	<p id="Preload">
+		<iframe id="PreloadFrm" name="PreloadWin" frameborder="0" src="/preload/index.html" onload="fncObjectResize( this , 16 , 0 );"></iframe>
+	</p>
 
 
-<form name="form1" id="objForm" action="index.php" method="POST">
+	<form name="form1" id="objForm" action="index.php" method="POST">
 
 
-<table cellpadding="5" cellspacing="0" border="0" bgcolor="#f1f1f1" align="center">
-	<tr>
-		<td>
+		<table cellpadding="5" cellspacing="0" border="0" bgcolor="#f1f1f1" align="center">
+			<tr>
+				<td>
 
-			<table width="100%" border="1px" border-color="#6f818" border-collapse="separate">
-
-				<tr id="SegTitle">
-			_%strColumnHtml%_
-					<td id="FixColumn" nowrap>修正</td>
-					<td id="DeleteColumn" nowrap>削除</td>
-				</tr>
-			_%strResultHtml%_
-
-			</table>
-
-
-		</td>
-	</tr>
-</table>
+					<table id="result_tbl" width="100%" border="1px" border-color="#6f818" border-collapse="separate">
+						<thead>
+							<tr id="SegTitle">
+								_%strColumnHtml%_
+								<td id="FixColumn" nowrap>修正</td>
+								<td id="DeleteColumn" nowrap>削除</td>
+							</tr>
+						</thead>
+						<tbody>
+							_%strResultHtml%_
+						</tbody>
+					</table>
 
 
-<input type="hidden" name="strSessionID" value="_%strSessionID%_">
-<input type="hidden" name="lngActionCode" value="_%lngActionCode%_">
-<input type="hidden" name="strMasterTableName" value="_%strMasterTableName%_">
-<input type="hidden" name="strKeyName" value="_%strKeyName%_">
-<input type="hidden" name="strEditURL" value="_%strEditURL%_">
-</form>
+				</td>
+			</tr>
+		</table>
 
 
-<input type="hidden" name="Vars1" value="_%strInsertForm%_">
-<input type="hidden" name="Vars2" value="_%lngLanguageCode%_">
+		<input type="hidden" name="strSessionID" value="_%strSessionID%_">
+		<input type="hidden" name="lngActionCode" value="_%lngActionCode%_">
+		<input type="hidden" name="strMasterTableName" value="_%strMasterTableName%_">
+		<input type="hidden" name="strKeyName" value="_%strKeyName%_">
+	<input type="hidden" name="strTableName" value="_%strTableName%_">
+		<input type="hidden" name="strEditURL" value="_%strEditURL%_">
+	</form>
+
+
+	<input type="hidden" name="Vars1" value="_%strInsertForm%_">
+	<input type="hidden" name="Vars2" value="_%lngLanguageCode%_">
 </body>
+
 </html>

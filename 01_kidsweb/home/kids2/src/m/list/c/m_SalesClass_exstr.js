@@ -15,15 +15,15 @@ function fncEditObjectOnload( lngLangCode )
 	if( g_strMode == 'add' )
 	{
 		// オブジェクトのID変換
-		fncChangeObjectIdModule( Array( 'Input0' , 'Input1' ) ,
-								 Array( 'TxtDis03L' , 'Txt40L' ) );
+		fncChangeObjectIdModule( Array( 'Input0' , 'Input1', 'Input2', 'Input3' ) ,
+								 Array( 'TxtDis03L' , 'Txt40L', '', '' ) );
 	}
 	// [修正]
 	else if( g_strMode == 'fix' )
 	{
 		// オブジェクトのID変換
-		fncChangeObjectIdModule( Array( 'Input0' , 'Input1' ) ,
-								 Array( 'TxtDis03L' , 'Txt40L' ) );
+		fncChangeObjectIdModule( Array( 'Input0' , 'Input1', 'Input2', 'Input3' ) ,
+								 Array( 'TxtDis03L' , 'Txt40L', '', '' ) );
 	}
 
 
@@ -204,6 +204,16 @@ function ChgEtoJ( g_lngCode )
 		if( typeof(Column1) != 'undefined' )
 		{
 			Column1.innerText	= '売上区分名称';
+		}
+
+		if( typeof(Column2) != 'undefined' )
+		{
+			Column1.innerText	= '納品書備考出力フラグ';
+		}
+
+		if( typeof(Column3) != 'undefined' )
+		{
+			Column1.innerText	= '明細統一フラグ';
 		}
 
 		// 処理名
