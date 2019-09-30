@@ -115,7 +115,9 @@
 		//  プレビュー生成
 		// --------------------------
 		//登録データとExcelテンプレートとからプレビューHTMLを生成する
-		$aryGenerateResult = fncGenerateReportImage("html", $aryHeader, $aryDetail, null, null, null, $objDB);
+		$aryGenerateResult = fncGenerateReportImage("html", $aryHeader, $aryDetail, 
+			null, null, null, null, null, 
+			$objDB);
 
 		// --------------------------
 		//  プレビュー画面表示
@@ -265,6 +267,10 @@
 		$strSlipCode = $_POST["strSlipCode"];
 		$lngRevisionNo = $_POST["lngRevisionNo"];
 
+		// レコード登録後に作られるデータをDBより取得する
+		$lngSalesNo = fncGetSalesNoBySlipCode($strSlipCode, $objDB);
+		$dtmInsertDate = fncGetInsertDateBySlipCode($strSlipCode, $objDB);
+
 		// 帳票テンプレートに設定する納品書データの読み込み（ヘッダ・フッタ部）
 		$aryHeader = fncGetHeaderBySlipNo($lngSlipNo, $lngRevisionNo, $objDB);
 
@@ -272,7 +278,10 @@
 		$aryDetail = fncGetDetailBySlipNo($lngSlipNo, $lngRevisionNo, $objDB);
 
 		// 帳票テンプレートに納品書データを設定したExcelのバイナリを生成するXlsxWriterを取得する
-		$aryGenerateResult = fncGenerateReportImage("download", $aryHeader, $aryDetail, $lngSlipNo, $lngRevisionNo, $strSlipCode, $objDB, $objAuth);
+		$aryGenerateResult = fncGenerateReportImage("download", $aryHeader, $aryDetail,
+			 $lngSlipNo, $lngRevisionNo, $strSlipCode, $lngSalesNo, $dtmInsertDate, 
+			 $objDB);
+
 		$xlsxWriter = $aryGenerateResult["XlsxWriter"];
 
 		// MIMEタイプをセットしてダウンロード

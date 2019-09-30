@@ -213,7 +213,7 @@ function fncGetHeaderBySlipNo($lngSlipNo, $lngRevisionNo, $objDB)
     $aryQuery [] = "  Null as strtaxamount, ";                                               //消費税額
     $aryQuery [] = "  s.curtotalprice ";                                                     //合計金額
     $aryQuery [] = " FROM m_slip s ";
-    $aryQuery [] = "   LEFT JOIN m_user u_ins ON s.strinsertusercode = u_ins.struserid ";
+    $aryQuery [] = "   LEFT JOIN m_user u_ins ON CAST(s.strinsertusercode AS INTEGER) = u_ins.lngusercode ";
     $aryQuery [] = "   LEFT JOIN m_company c_cust ON CAST(s.strcustomercode AS INTEGER) = c_cust.lngcompanycode ";
     $aryQuery [] = "   LEFT JOIN m_company c_deli ON s.lngdeliveryplacecode = c_deli.lngcompanycode ";
     $aryQuery [] = " WHERE ";
@@ -549,7 +549,7 @@ function fncGetReceiveDetailHtml($aryDetail, $withCheckBox){
 }
 
 // 納品伝票マスタより作成日を取得
-function fncGetSlipInsertDate($strSlipCode, $objDB)
+function fncGetInsertDateBySlipCode($strSlipCode, $objDB)
 {
     $strQuery = ""
         . "SELECT"
@@ -571,6 +571,31 @@ function fncGetSlipInsertDate($strSlipCode, $objDB)
     $objDB->freeResult( $lngResultID );
 
     return $aryResult[0]["dtminsertdate"];
+}
+
+// 納品伝票マスタより売上番号を取得
+function fncGetSalesNoBySlipCode($strSlipCode, $objDB)
+{
+    $strQuery = ""
+        . "SELECT"
+        . "  lngsalesno"
+        . " FROM"
+        . "  m_slip"
+        . " WHERE"
+        . "  strslipcode = '". $strSlipCode ."'"
+    ;
+
+    list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
+    if ( $lngResultNum ) {
+        for ( $i = 0; $i < $lngResultNum; $i++ ) {
+            $aryResult[] = $objDB->fetchArray( $lngResultID, $i );
+        }
+    } else {
+        fncOutputError ( 9501, DEF_FATAL, "納品伝票の売上番号の取得に失敗", TRUE, "", $objDB );
+    }
+    $objDB->freeResult( $lngResultID );
+
+    return $aryResult[0]["lngsalesno"];
 }
 
 function fncNotReceivedDetailExists($aryDetail, $objDB)
@@ -1706,7 +1731,9 @@ function fncConvertArrayDetailToEucjp($aryDetail)
  * @param  object  $objDB       データベース操作クラス
  * @return array   $$aryGenerateResult  生成結果。動作モードにより格納される値が異なる
  */
-function fncGenerateReportImage($strMode, $aryHeader, $aryDetail, $lngSlipNo, $lngRevisionNo, $strSlipCode, $objDB)
+function fncGenerateReportImage($strMode, $aryHeader, $aryDetail,
+    $lngSlipNo, $lngRevisionNo, $strSlipCode, $lngSalesNo, $dtmInsertDate, 
+    $objDB)
 {
     // 生成結果（戻り値）
     $aryGenerateResult = array();
@@ -1729,8 +1756,6 @@ function fncGenerateReportImage($strMode, $aryHeader, $aryDetail, $lngSlipNo, $l
     $strCustomerName = fncGetCustomerName($aryCustomerCompany);
     // 納品先の会社コードの取得
     $lngDeliveryPlaceCode = fncGetNumericCompanyCode($aryHeader["strdeliveryplacecompanydisplaycode"], $objDB);
-    // 売上番号
-    $lngSalesNo = null;
         
     // 帳票種別の取得
     $lngSlipKindCode = $aryReport["lngslipkindcode"];
@@ -1800,7 +1825,7 @@ function fncGenerateReportImage($strMode, $aryHeader, $aryDetail, $lngSlipNo, $l
             $itemMinIndex, $itemMaxIndex, $strCustomerCompanyName, 
             $strCustomerName, $aryCustomerCompany, $lngDeliveryPlaceCode,
             $aryHeader, $aryDetail, 
-            $lngSlipNo, $lngRevisionNo, $strSlipCode, $lngSalesNo);
+            $lngSlipNo, $lngRevisionNo, $strSlipCode, $lngSalesNo, $dtmInsertDate);
 
         //アクティブシート変更
         $xlSpreadSheet->setActiveSheetIndexByName($activeSheetName);
@@ -1846,7 +1871,7 @@ function fncGenerateReportImage($strMode, $aryHeader, $aryDetail, $lngSlipNo, $l
                 $itemMinIndex, $itemMaxIndex, $strCustomerCompanyName, 
                 $strCustomerName, $aryCustomerCompany, $lngDeliveryPlaceCode,
                 $aryHeader, $aryDetail,
-                $lngSlipNo, $lngRevisionNo, $strSlipCode, $lngSalesNo);
+                $lngSlipNo, $lngRevisionNo, $strSlipCode, $lngSalesNo, $dtmInsertDate);
 
             // 全体に追加
             $pageHtml = $xlWriter -> generateSheetData();
@@ -1876,10 +1901,10 @@ function fncSetSlipDataToWorkSheet(
     $itemMinIndex, $itemMaxIndex, $strCustomerCompanyName,
     $strCustomerName, $aryCustomerCompany, $lngDeliveryPlaceCode,
     $aryHeader, $aryDetail, 
-    $lngSlipNo, $lngRevisionNo, $strSlipCode, $lngSalesNo)
+    $lngSlipNo, $lngRevisionNo, $strSlipCode, $lngSalesNo, $dtmInsertDate)
 {
     // 【補足】
-    // lngSlipNo,lngRevisionNo,strSlipCode,lngSalesNoはデータ登録するまで確定しないため
+    // lngSlipNo,lngRevisionNo,strSlipCode,lngSalesNo,dtmInsertDateはデータ登録するまで確定しないため
     // プレビュー表示時は空にせざるを得ない。ダウンロード時はデータ登録済みなため出力可能。
 
     // ------------------------------------------
@@ -1914,7 +1939,7 @@ function fncSetSlipDataToWorkSheet(
     $v_curtax = $aryHeader["curtax"];                                       //26:消費税率
     $v_lngpaymentmethodcode = $aryHeader["lngpaymentmethodcode"];           //27:支払方法コード
     $v_dtmpaymentlimit = $aryHeader["dtmpaymentlimit"];                     //28:支払期限
-    $v_dtminsertdate = "";                                                  //29:作成日
+    $v_dtminsertdate = is_null($dtmInsertDate) ? "" : $dtmInsertDate;       //29:作成日
     $v_strnote = $aryHeader["strnote"];                                     //30:備考
     $v_strshippercode = $aryCustomerCompany["strstockcompanycode"];         //31:仕入先コード（出荷者）
 
@@ -1961,9 +1986,9 @@ function fncSetSlipDataToWorkSheet(
         $d = $aryDetail[$i];
         
         // 値の設定
-        $v_lngslipno = "";                                                         //1:納品伝票番号
+        $v_lngslipno = is_null($lngSlipNo) ? "" : $lngSlipNo;                      //1:納品伝票番号
         $v_lngslipdetailno = $d["rownumber"];                                      //2:納品伝票明細番号
-        $v_lngrevisionno = "";                                                     //3:リビジョン番号
+        $v_lngrevisionno = is_null($lngRevisionNo) ? "" : $lngRevisionNo;          //3:リビジョン番号
         $v_strcustomersalescode = $d["strcustomerreceivecode"];                    //4:顧客受注番号
         $v_lngsalesclasscode = $d["lngsalesclasscode"];                            //5:売上区分コード
         $v_strsalesclassname = $d["strsalesclassname"];                            //6:売上区分名
@@ -2022,7 +2047,7 @@ function fncGetRegisterResultTableBodyHtml($aryPerPage, $objDB)
         $lngRevisionNo = $aryPage["lngRevisionNo"];
 
         // 作成日の取得
-        $dtmInsertDate = fncGetSlipInsertDate($strSlipCode, $objDB);
+        $dtmInsertDate = fncGetInsertDateBySlipCode($strSlipCode, $objDB);
 
         // HTMLの生成（/sc/finish2/finish2.js のファンクション呼び出しを含む）
         $aryHtml = array();
