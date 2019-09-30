@@ -923,18 +923,18 @@ jQuery(function($){
             return false;
         }
 
-        // DBG:コメントアウト対象
+        // DBG:一時コメントアウト対象
         // 追加バリデーションチェック
-        // var invalid = false;
-        // $.each($(trArray), function(i, v){
-        //     if (!invalid){
-        //         invalid = !validateAdd($(v));
-        //     }
-        // });
-        // if (invalid)
-        // {
-        //     return false;
-        // }
+        var invalid = false;
+        $.each($(trArray), function(i, v){
+            if (!invalid){
+                invalid = !validateAdd($(v));
+            }
+        });
+        if (invalid)
+        {
+            return false;
+        }
 
         // 明細追加
         $.each($(trArray), function(i, v){
@@ -1035,9 +1035,9 @@ jQuery(function($){
             
             // DBG:一時コメントアウト対象
             // プレビュー画面表示前のバリデーションチェック
-            // if (!varidateBeforePreview(closedDay)){
-            //     return false;
-            // }
+            if (!varidateBeforePreview(closedDay)){
+                return false;
+            }
 
             // プレビュー画面表示
             displayPreview();

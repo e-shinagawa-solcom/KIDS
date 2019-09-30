@@ -1813,19 +1813,19 @@ function fncGenerateReportImage($strMode, $aryHeader, $aryDetail,
     {
         //1:回年ˇ漓脱
         $templatFileName = "羌墒今temple_B家_息晚今烧.xlsx";
-        $activeSheetName = fncToUtf8("B家漓脱");
+        $activeSheetName = fncToUtf8("羌墒今");
     }
     else if ($lngSlipKindCode == 2)
     {
         //2:辉任
         $templatFileName = "羌墒今temple_辉任_息晚今烧.xlsx";
-        $activeSheetName = fncToUtf8("辉任");
+        $activeSheetName = fncToUtf8("羌墒今");
     }
     else if ($lngSlipKindCode == 3)
     {
         //3:DEBIT NOTE
         $templatFileName = "DEBIT NOTE.xlsx";
-        $activeSheetName = fncToUtf8("ｆｏｒｍ-blank");
+        $activeSheetName = fncToUtf8("DEBIT NOTE");
     }
     else 
     {

@@ -174,10 +174,10 @@
 		//  登録/修正前バリデーション
 		// --------------------------
 		// 受注状態コードが2以外の明細が存在するならエラーとする
-		// if(fncNotReceivedDetailExists($aryDetail, $objDB))
-		// {
-		// 	MoveToErrorPage("納品書が発行できない状態の明細が選択されています。");
-		// }
+		if(fncNotReceivedDetailExists($aryDetail, $objDB))
+		{
+			MoveToErrorPage("納品書が発行できない状態の明細が選択されています。");
+		}
 
 		//DBG:一時コメントアウト対象
 		// --------------------------
