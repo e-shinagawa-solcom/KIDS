@@ -67,7 +67,7 @@ $aryQuery[] = ", cust_c.strCompanyDisplayName";
 $aryQuery[] = " from m_Receive r1";
 $aryQuery[] = " LEFT JOIN m_MonetaryUnit USING (lngMonetaryUnitCode) ";
 $aryQuery[] = " LEFT JOIN m_Company cust_c ON r1.lngCustomerCompanyCode = cust_c.lngCompanyCode ";
-$aryQuery[] = " WHERE lngreceivestatuscode = " . DEF_RECEIVE_PREORDER ." ";
+$aryQuery[] = " WHERE lngreceivestatuscode = " . DEF_RECEIVE_APPLICATE ." ";
 if ($aryData["strReceiveCode"] != "") {
     $aryQuery[] = " AND strReceiveCode = '" . $aryData["strReceiveCode"] . "' ";
 }
