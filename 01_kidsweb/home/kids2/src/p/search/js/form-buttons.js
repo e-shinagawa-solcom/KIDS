@@ -30,6 +30,7 @@
     btnSearch.on('click', function () {
         if (workForm.valid()) {
             var windowName = 'searchResult';
+            window.open("", windowName,"width=1011px, height=700px, scrollbars=yes, resizable=yes"); 
             workForm.attr('action', '/p/search/result/index.php?strSessionID=' + $.cookie('strSessionID'));
             workForm.attr('method', 'post');
             workForm.attr('target', windowName);

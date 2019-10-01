@@ -214,9 +214,10 @@
 	top          : 0px ;
 	border-width : 0px ;
 	border-style : none ;
-	z-index      : 20 ;
+	z-index      : 20px ;
 	display      : block ;
 	background   : transparent ;
+	margin-block-start: 0em;
 }
 
 #PreloadFrm

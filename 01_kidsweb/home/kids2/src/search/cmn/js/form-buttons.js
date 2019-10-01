@@ -74,7 +74,7 @@
             GoResult(workForm.get(0) , "/result/index.html" , "/result/ifrm.html" , "ResultIframe" , "YES" );
         }
         else if((baseURI.indexOf('/search.php') > 0) && (baseURI.indexOf('/uc/search/') > 0)){
-        	var windowResult = open('about:blank', windowName, 'scrollbars=yes, resizable=yes');
+        	var windowResult = open('about:blank', windowName, 'width=1011px, height=700px, scrollbars=yes, resizable=yes');
         	workForm.get(0).action = '/uc/result/index.php?strSessionID=' + $.cookie('strSessionID');
         	// サブミット
         	workForm.submit();

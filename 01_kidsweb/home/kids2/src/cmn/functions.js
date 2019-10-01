@@ -1601,12 +1601,12 @@ function GoResult( obj1 , obj2 , strUrl , strID , strScroll )
 
 
 
-	//alert(args[4].join('\n'));
+	// alert(args[4].join('\n'));
 
 	//alert(args[2][1]);return;
 
 	//retVal = window.showModalDialog( obj2 , args , "dialogHeight:530px;dialogWidth:1011px;center:yes;status:no;edge:raised;help:no;scroll:no;" );
-	retVal = window.open( obj2 , args , "height:700px;width:1011px;center:yes;status:no;edge:raised;help:no;scroll:no;" );
+	retVal = window.open( obj2 , args , "width=1011px, height=650px, resizable=no, scrollbars=no, menubar=no" );
 
 	return false;
 }
@@ -1768,7 +1768,7 @@ function fncShowDialogCommon( strUrl , ObjFrm , strID , strScroll , lngLanguageC
 
 
 	// retval = window.showModalDialog( '/result/common.html' , args , "dialogHeight:679px;dialogWidth:696px;center:yes;status:no;edge:raised;help:no;scroll:no;" );
-	retval = window.open( '/result/common.html' , args , "height:679px;width:696px;center:yes;status:no;edge:raised;help:no;scroll:no;" );
+	retval = window.open( '/result/common.html' , args , "width=1011px, height=650px, resizable=no, scrollbars=no, menubar=no" );
 
 	if( retval )
 	{

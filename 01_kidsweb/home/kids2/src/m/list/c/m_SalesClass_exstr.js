@@ -208,12 +208,12 @@ function ChgEtoJ( g_lngCode )
 
 		if( typeof(Column2) != 'undefined' )
 		{
-			Column1.innerText	= '納品書備考出力フラグ';
+			Column2.innerText	= '納品書備考出力フラグ';
 		}
 
 		if( typeof(Column3) != 'undefined' )
 		{
-			Column1.innerText	= '明細統一フラグ';
+			Column3.innerText	= '明細統一フラグ';
 		}
 
 		// 処理名

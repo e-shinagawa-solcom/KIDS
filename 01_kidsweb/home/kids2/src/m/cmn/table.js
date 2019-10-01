@@ -1,4 +1,6 @@
 $(document).ready(function () {
+    $("#ResultIframe", parent.document).css("width", "100%");
+    $("#ResultIframe", parent.document).css("height", "100%");
     var row = $("#result_tbl thead tr:nth-child(2)");
     var columnNum = row.find('td').length;
     var widthArry = [];
@@ -12,17 +14,17 @@ $(document).ready(function () {
     $("#result_tbl").css('display', 'block');
     $("#result_tbl").css('overflow-y', 'scroll');
     $("#result_tbl").css('padding-top', '0px');
-    $("#result_tbl").css('width', '990px');
-    $("#result_tbl").css('height', '640px');
+    // $("#result_tbl").css('width', '990px');
+    $("#result_tbl").css('width', '99%');
+    $("#result_tbl").css('height', '97%');
+    // $("#result_tbl").css('height', '640px');
     $("#result_tbl").css('table-layout', 'fixed');
     $("#result_tbl tbody").css('display', 'block');
     $("#result_tbl thead").css('display', 'block');
     $("#result_tbl thead").css('position', 'sticky');
     $("#result_tbl thead").css('top', '0');
     $("#result_tbl thead").css('z-index', '2');
-    // $("#ResultIframe", parent.document).css("width", "4000px");
     if ($('input[name="strTableName"]').val() == "m_Company") {
-
         $("#result_tbl thead").width($("#result_tbl tbody").width() + (10 * columnNum) + 2450);
         $("#result_tbl tbody").width($("#result_tbl tbody").width() + (10 * columnNum) + 2450);
     } else {

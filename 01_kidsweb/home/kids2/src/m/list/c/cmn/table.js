@@ -11,7 +11,7 @@ $(document).ready(function () {
     $("#result_tbl").css('display', 'block');
     $("#result_tbl").css('overflow-y', 'scroll');
     $("#result_tbl").css('padding-top', '0px');
-    $("#result_tbl").css('width', '900px');
+    $("#result_tbl").css('width', '912px');
     $("#result_tbl").css('height', '422px');
     $("#result_tbl").css('table-layout', 'fixed');
     $("#result_tbl tbody").css('display', 'block');
@@ -28,9 +28,8 @@ $(document).ready(function () {
             $("#result_tbl tbody tr:nth-child(1) td:nth-child(" + i + ")").width(widthArry[i - 1] + 20);
         }
     } else {
-
-        $("#result_tbl thead").width($("#result_tbl tbody").width() + (5 * columnNum));
-        $("#result_tbl tbody").width($("#result_tbl tbody").width() + (5 * columnNum));
+        $("#result_tbl thead").width($("#result_tbl tbody").width());
+        $("#result_tbl tbody").width($("#result_tbl tbody").width());
         for (var i = 1; i <= columnNum; i++) {
             $("#result_tbl thead tr td:nth-child(" + i + ")").width(widthArry[i - 1]);
             $("#result_tbl tbody tr:nth-child(1) td:nth-child(" + i + ")").width(widthArry[i - 1]);

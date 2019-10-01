@@ -17,11 +17,11 @@
         // テキスト入力箇所をリセット
         workForm.find('input[type="text"], textarea').val('');
         var checks = workForm.find('input[type="checkbox"]');
-        for(var i = 0;i < checks.length;i++){
-        	checks[i].checked = false;
-		}
-		// セレクトボックスを一番目の選択肢に設定
-		workForm.find('select').each(function(index){
+        for (var i = 0; i < checks.length; i++) {
+            checks[i].checked = false;
+        }
+        // セレクトボックスを一番目の選択肢に設定
+        workForm.find('select').each(function (index) {
             if ($(this).attr('name') == "lngSalesClassCode") {
                 $(this).val('1');
             } else {
@@ -34,6 +34,7 @@
     btnSearch.on('click', function () {
         if (workForm.valid()) {
             var windowName = 'searchResult';
+            window.open("", windowName, "width=1011px, height=700px, scrollbars=yes, resizable=yes");
             workForm.attr('action', '/sc/search/result/index.php?strSessionID=' + $.cookie('strSessionID'));
             // workForm.attr('action', '/sc/old/result/index.php?strSessionID=' + $.cookie('strSessionID'));
             workForm.attr('method', 'post');
