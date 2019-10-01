@@ -242,17 +242,3 @@ $objDB->close();
 
 // HTML出力
 echo $doc->saveHTML();
-
-function toUTF8($str)
-{
-    return htmlspecialchars(mb_convert_encoding($str, "utf-8", "eucjp-win"), ENT_QUOTES, 'utf-8');
-}
-
-function money_format($lngmonetaryunitcode, $strmonetaryunitsign, $price)
-{
-    if ($lngmonetaryunitcode == 1) {
-        return "&yen;" . " " . number_format($price, 4);
-    } else {
-        return toUTF8($strmonetaryunitsign . " " . number_format($price, 4));
-    }
-}
