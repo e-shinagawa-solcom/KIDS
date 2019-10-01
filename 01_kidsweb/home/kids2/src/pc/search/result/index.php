@@ -928,7 +928,7 @@ foreach ($records as $i => $record) {
                     break;
                 // Ã±²Á
                 case "curproductprice":
-                    $td = $doc->createElement("td", money_format($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], $record["curproductprice"]));
+                    $td = $doc->createElement("td", toMoneyFormat($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], $record["curproductprice"]));
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
@@ -946,7 +946,7 @@ foreach ($records as $i => $record) {
                     break;
                 // ÀÇÈ´¶â³Û
                 case "cursubtotalprice":
-                    $td = $doc->createElement("td", money_format($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], $record["cursubtotalprice"]));
+                    $td = $doc->createElement("td", toMoneyFormat($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], $record["cursubtotalprice"]));
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
@@ -964,7 +964,7 @@ foreach ($records as $i => $record) {
                     break;
                 // ÀÇ³Û
                 case "curtaxprice":
-                    $td = $doc->createElement("td", money_format($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], $record["curtaxprice"]));
+                    $td = $doc->createElement("td", toMoneyFormat($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], $record["curtaxprice"]));
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
@@ -1043,16 +1043,16 @@ foreach ($records as $i => $record) {
 // HTML½ÐÎÏ
 echo $doc->saveHTML();
 
-function toUTF8($str)
-{
-    return htmlspecialchars(mb_convert_encoding($str, "utf-8", "eucjp-win"), ENT_QUOTES, 'utf-8');
-}
+// function toUTF8($str)
+// {
+//     return htmlspecialchars(mb_convert_encoding($str, "utf-8", "eucjp-win"), ENT_QUOTES, 'utf-8');
+// }
 
-function money_format($lngmonetaryunitcode, $strmonetaryunitsign, $price)
-{
-    if ($lngmonetaryunitcode == 1) {
-        return "&yen;" . " " . $price;
-    } else {
-        return toUTF8($strmonetaryunitsign . " " . $price);
-    }
-}
+// function toMoneyFormat($lngmonetaryunitcode, $strmonetaryunitsign, $price)
+// {
+//     if ($lngmonetaryunitcode == 1) {
+//         return "&yen;" . " " . $price;
+//     } else {
+//         return toUTF8($strmonetaryunitsign . " " . $price);
+//     }
+// }

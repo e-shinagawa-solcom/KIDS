@@ -132,10 +132,10 @@ for ($i = 0; $i < count($aryDetailData); $i++) {
             // 数量
             $detailDataResult["lngproductquantity"] = number_format($detailDataResult["lngproductquantity"]);
             // 単価
-            $detailDataResult["curproductprice"] = money_format($detailDataResult["lngmonetaryunitcode"], $detailDataResult["strmonetaryunitsign"], $detailDataResult["curproductprice"]);
+            $detailDataResult["curproductprice"] = toMoneyFormat($detailDataResult["lngmonetaryunitcode"], $detailDataResult["strmonetaryunitsign"], $detailDataResult["curproductprice"]);
             // 小計金額
             $cursubtotalprice = $detailDataResult["cursubtotalprice"];
-            $detailDataResult["cursubtotalprice"] = money_format($detailDataResult["lngmonetaryunitcode"], $detailDataResult["strmonetaryunitsign"], $detailDataResult["cursubtotalprice"]);
+            $detailDataResult["cursubtotalprice"] = toMoneyFormat($detailDataResult["lngmonetaryunitcode"], $detailDataResult["strmonetaryunitsign"], $detailDataResult["cursubtotalprice"]);
             // 税率
             $detailDataResult["curTax"] = $aryDetailData[$i]["curTax"];
             // 消費税区分
@@ -143,7 +143,7 @@ for ($i = 0; $i < count($aryDetailData); $i++) {
             // 消費税区分名称
             $detailDataResult["strtaxclassname"] = mb_convert_encoding($aryDetailData[$i]["strTaxClassName"], 'EUC-JP', 'UTF-8');
             // 消費税額
-            $detailDataResult["curtaxprice"] = money_format($detailDataResult["lngmonetaryunitcode"], $detailDataResult["strmonetaryunitsign"], $aryDetailData[$i]["curTaxPrice"]);
+            $detailDataResult["curtaxprice"] = toMoneyFormat($detailDataResult["lngmonetaryunitcode"], $detailDataResult["strmonetaryunitsign"], $aryDetailData[$i]["curTaxPrice"]);
             // 合計金額の設定(小計金額の合計)
             $curtotalprice += $cursubtotalprice;
         }
@@ -163,7 +163,7 @@ for ($i = 0; $i < count($aryDetailData); $i++) {
 
 // 合計金額の設定
 $strmonetaryunitsign = fncGetMasterValue("m_monetaryunit", "lngmonetaryunitcode", "strmonetaryunitsign", $aryData["lngMonetaryUnitCode"], '', $objDB);
-$aryNewResult["curtotalprice"] = money_format($aryData["lngMonetaryUnitCode"], $strmonetaryunitsign, $curtotalprice);
+$aryNewResult["curtotalprice"] = toMoneyFormat($aryData["lngMonetaryUnitCode"], $strmonetaryunitsign, $curtotalprice);
 $aryData["curTotalPrice"] =   $curtotalprice;        
 $aryNewResult["strDetailTable"] = implode ("\n", $aryDetailTable );
 // 作成日
@@ -221,17 +221,3 @@ $objDB->close();
 
 // HTML出力
 echo $doc->saveHTML();
-
-function toUTF8($str)
-{
-    return htmlspecialchars(mb_convert_encoding($str, "utf-8", "eucjp-win"), ENT_QUOTES, 'utf-8');
-}   
-    
-function money_format($lngmonetaryunitcode, $strmonetaryunitsign, $price)
-{
-    if ($lngmonetaryunitcode == 1) {
-        return "&yen;" . " " . number_format($price, 4);
-    } else {
-        return toUTF8($strmonetaryunitsign . " ". number_format($price, 4));
-    }
-}

@@ -1907,19 +1907,19 @@ function fncDoCopyModule( strID )
 	if(document.body.createTextRange){
 		// IEの場合
 		var doc1 = document.body.createTextRange();
-		doc1.moveToElementText(obj);
-		return doc1.htmlText
-	  } else {
-		alert("tes111dst");
-		var doc1 = document.createRange();
-		alert("tes1121dst");
-		doc1.selectNodeContents(obj);
-		alert("tes111wdst");
-		var selection = window.getSelection();
-		selection.removeAllRanges();
-		selection.addRange(range);
-		return selection;
-	  }
+		doc1.moveToElementText(strID);
+		return doc1.htmlText;
+	  } else if(window.getSelection) {
+		var selectionRange = window.getSelection();
+		if (selectionRange.rangeCount > 0) {
+			var range = selectionRange.getRangeAt(0);
+			e = document.getElementById('dummy');
+            e.innerHTML = '';
+            e.appendChild(range.cloneContents());
+            
+            return e.innerHTML;
+		}
+	}
 }
 
 
@@ -1943,24 +1943,20 @@ function fncDoCopyModule( strID )
 //--------------------------------------------------------------------------------------------------------------------
 function fncDoCopy( objBuff1 , strID1 , strID2 )
 {
-	alert("tes111t");
+	alert(fncDoCopyModule( strID1 ));
 	// バッファ値を結合
 	objBuff1.value = fncDoCopyModule( strID1 ) + fncDoCopyModule( strID2 );
-alert("test");
+alert(objBuff1.value);
 	// バッファ用のオブジェクトからテキストレンジを取得
 	var docA = objBuff1.createTextRange();
-
-	if(document.body.createTextRange){
+	docA.moveStart('character',0);
+	docA.moveEnd('character');
+	if(objBuff1.createTextRange){
 		// IEの場合
-		var docA = document.body.createTextRange();
-		docA.moveToElementText(obj);
-		docA.select();
-	  } else {
-		var docA = document.createRange();
-		docA.selectNodeContents(obj);
-		var selection = window.getSelection();
-		selection.removeAllRanges();
-		selection.addRange(range);
+		var docA = objBuff1.createTextRange();
+	  } else if (objBuff1.setSelectionRange) {
+		objBuff1.focus();
+		objBuff1.setSelectionRange(0, );
 	  }
 
 	alert("test2");

@@ -221,7 +221,7 @@ foreach ($aryOrderDetail as $orderDetail) {
     $trBody->appendChild($td);
 
     // 単価
-    $td = $doc->createElement("td", money_format($orderDetail["lngmonetaryunitcode"], $orderDetail["strmonetaryunitsign"], $orderDetail["curproductprice"]));
+    $td = $doc->createElement("td", toMoneyFormat($orderDetail["lngmonetaryunitcode"], $orderDetail["strmonetaryunitsign"], $orderDetail["curproductprice"]));
     $td->setAttribute("class", "col6");
     $trBody->appendChild($td);
 
@@ -236,7 +236,7 @@ foreach ($aryOrderDetail as $orderDetail) {
     $trBody->appendChild($td);
 
     // 税抜金額
-    $td = $doc->createElement("td", money_format($orderDetail["lngmonetaryunitcode"], $orderDetail["strmonetaryunitsign"], $orderDetail["cursubtotalprice"]));
+    $td = $doc->createElement("td", toMoneyFormat($orderDetail["lngmonetaryunitcode"], $orderDetail["strmonetaryunitsign"], $orderDetail["cursubtotalprice"]));
     $td->setAttribute("class", "col9");
     $trBody->appendChild($td);
 
@@ -267,7 +267,7 @@ foreach ($aryOrderDetail as $orderDetail) {
     $trBody->appendChild($td);
 
     // 消費税額
-    $td = $doc->createElement("td", money_format($orderDetail["lngmonetaryunitcode"], $orderDetail["strmonetaryunitsign"], $curtaxprice));
+    $td = $doc->createElement("td", toMoneyFormat($orderDetail["lngmonetaryunitcode"], $orderDetail["strmonetaryunitsign"], $curtaxprice));
     $td->setAttribute("class", "col12");
     $trBody->appendChild($td);
 
@@ -330,16 +330,16 @@ $objDB->close();
 // HTML出力
 echo $doc->saveHTML();
 
-function toUTF8($str)
-{
-    return htmlspecialchars(mb_convert_encoding($str, "utf-8", "eucjp-win"), ENT_QUOTES, 'utf-8');
-}
+// function toUTF8($str)
+// {
+//     return htmlspecialchars(mb_convert_encoding($str, "utf-8", "eucjp-win"), ENT_QUOTES, 'utf-8');
+// }
 
-function money_format($lngmonetaryunitcode, $strmonetaryunitsign, $price)
-{
-    if ($lngmonetaryunitcode == 1) {
-        return "&yen;" . " " . number_format($price, 4);
-    } else {
-        return toUTF8($strmonetaryunitsign . " " . number_format($price, 4));
-    }
-}
+// function toMoneyFormat($lngmonetaryunitcode, $strmonetaryunitsign, $price)
+// {
+//     if ($lngmonetaryunitcode == 1) {
+//         return "&yen;" . " " . number_format($price, 4);
+//     } else {
+//         return toUTF8($strmonetaryunitsign . " " . number_format($price, 4));
+//     }
+// }
