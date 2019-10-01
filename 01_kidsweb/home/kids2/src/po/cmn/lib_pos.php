@@ -892,11 +892,11 @@ function fncGetSearchPurcheseOrderSQL( $aryViewColumn, $arySearchColumn, $arySea
 		// 発注日
 		if($strSearchColumnName == "dtmInsertDate"){
 			if($arySearchDataColumn["dtmInsertDateFrom"]){
-				$dtmSearchDate = $arySearchDataColumn["dtmInsertDateFrom"] . "00:00:00";
+				$dtmSearchDate = $arySearchDataColumn["dtmInsertDateFrom"] . " 00:00:00";
 				$aryQuery[] = "AND   mp.dtminsertdate >= '" . $dtmSearchDate . "'";
 			}
 			if($arySearchDataColumn["dtmInsertDataTo"]){
-				$dtmSearchDate = $arySearchDataColumn["dtmInsertDateTo"] . "23:59:59";
+				$dtmSearchDate = $arySearchDataColumn["dtmInsertDateTo"] . " 23:59:59";
 				$aryQuery[] = "AND   mp.dtminsertdate <= '" . $dtmSearchDate . "'";
 			}
 		}
@@ -904,21 +904,22 @@ function fncGetSearchPurcheseOrderSQL( $aryViewColumn, $arySearchColumn, $arySea
 		// 入力者
 		if($strSearchColumnName == "lngInputUserCode"){
 			if($arySearchDataColumn["lngInputUserCode"]){
-				$aryQuery[] = "AND   mp.lnginsertusercode ~* '" . $arySearchDataColumn["lngInputUserCode"] . "'";
+//				$aryQuery[] = "AND   mp.lnginsertusercode ~* '" . $arySearchDataColumn["lngInputUserCode"] . "'";
+				$aryQuery[] = "AND   input_user.struserdisplaycode = '" . $arySearchDataColumn["lngInputUserCode"] . "'";
 			}
-			if($arySearchDataColumn["strInputUserName"]){
-				$aryQuery[] = "AND   UPPER(mp.strinsertusername) LIKE UPPER('%" . $arySearchDataColumn["strInputUserName"] . "%')";
-			}
+//			if($arySearchDataColumn["strInputUserName"]){
+//				$aryQuery[] = "AND   UPPER(mp.strinsertusername) LIKE UPPER('%" . $arySearchDataColumn["strInputUserName"] . "%')";
+//			}
 		}
 
 		// 発注有効期限
 		if($arySearchColumnName == "dtmExpirationDate"){
 			if($arySearchDataColumn["dtmExpirationDateFrom"]){
-				$dtmSearchDate = $arySearchDataColumn["dtmExpirationDateFrom"] . "00:00:00";
+				$dtmSearchDate = $arySearchDataColumn["dtmExpirationDateFrom"] . " 00:00:00";
 				$aryQuery[] = "AND   mp.dtmexpirationdate >= '" . $dtmSearchDate . "'";
 			}
 			if($arySearchDataColumn["dtmExpirationDateTo"]){
-				$dtmSearchDate = $arySearchDataColumn["dtmExpirationDateTo"] . "23:59:59";
+				$dtmSearchDate = $arySearchDataColumn["dtmExpirationDateTo"] . " 23:59:59";
 				$aryQuery[] = "AND   mp.dtmexpirationdate <= '" . $dtmSearchDate . "'";
 			}
 		}
@@ -933,49 +934,53 @@ function fncGetSearchPurcheseOrderSQL( $aryViewColumn, $arySearchColumn, $arySea
 			if($arySearchDataColumn["strProductCode"]){
 				$aryQuery[] = "AND   mp.strProductCode = '" . $arySearchDataColumn["strProductCode"] . "'";
 			}
-			if($arySearchDataColumn["strProductName"]){
-				$aryQuery[] = "AND   UPPER(mp.strproductname) LIKE UPPER('%" . $arySearchDataColumn["strProductName"] . "%')";
-			}
+//			if($arySearchDataColumn["strProductName"]){
+//				$aryQuery[] = "AND   UPPER(mp.strproductname) LIKE UPPER('%" . $arySearchDataColumn["strProductName"] . "%')";
+//			}
 		}
 
 		// 営業部署
 		if($strSearchColumnName == "lngInChargeGroupCode"){
 			if($arySearchDataColumn["lngInChargeGroupCode"]){
-				$aryQuery[] = "AND   mp.lnggroupcode = '" . $arySearchDataColumn["lngInChargeGroupCode"] . "'";
+//				$aryQuery[] = "AND   mp.lnggroupcode = '" . $arySearchDataColumn["lngInChargeGroupCode"] . "'";
+				$aryQuery[] = "AND   mg.strgroupdisplaycode = '" . $arySearchDataColumn["lngInChargeGroupCode"] . "'";
 			}
-			if($arySearchDataColumn["strInChargeGroupName"]){
-				$aryQuery[] = "AND   UPPER(mp.strgroupname) LIKE UPPER('%" . $arySearchDataColumn["strInChargeGroupName"] . "%')";
-			}
+//			if($arySearchDataColumn["strInChargeGroupName"]){
+//				$aryQuery[] = "AND   UPPER(mp.strgroupname) LIKE UPPER('%" . $arySearchDataColumn["strInChargeGroupName"] . "%')";
+//			}
 		}
 
 		// 開発担当者
 		if($strSearchColumnName == "lngInChargeUserCode"){
 			if($arySearchDataColumn["lngInChargeUserCode"]){
-				$aryQuery[] = "AND   mp.lngusercode = '" . $arySearchDataColumn["lngInChargeUserCode"] . "'";
+//				$aryQuery[] = "AND   mp.lngusercode = '" . $arySearchDataColumn["lngInChargeUserCode"] . "'";
+				$aryQuery[] = "AND   mu.struserdisplaycode = '" . $arySearchDataColumn["lngInChargeUserCode"] . "'";
 			}
-			if($arySearchDataColumn["strInChargeUserName"]){
-				$aryQuery[] = "AND   UPPER(mp.strusername) LIKE UPPER('%" . $arySearchDataColumn["strInChargeUserName"] . "%')";
-			}
+//			if($arySearchDataColumn["strInChargeUserName"]){
+//				$aryQuery[] = "AND   UPPER(mp.strusername) LIKE UPPER('%" . $arySearchDataColumn["strInChargeUserName"] . "%')";
+//			}
 		}
 
 		// 仕入先
 		if($strSearchColumnName == "lngCustomerCode"){
 			if($arySearchDataColumn["lngCustomerCode"]){
-				$aryQuery[] = "AND   mp.lngcustomercode = '" . $arySearchDataColumn["lngCustomerCode"] . "'";
+//				$aryQuery[] = "AND   mp.lngcustomercode = '" . $arySearchDataColumn["lngCustomerCode"] . "'";
+				$aryQuery[] = "AND   mc_stock.strcompanydisplaycode = '" . $arySearchDataColumn["lngCustomerCode"] . "'";
 			}
-			if($arySearchDataColumn["strCustomerName"]){
-				$aryQuery[] = "AND   UPPER(mp.strcustomername) LIKE UPPER('%" . $arySearchDataColumn["strCustomerName"] . "%')";
-			}
+//			if($arySearchDataColumn["strCustomerName"]){
+//				$aryQuery[] = "AND   UPPER(mp.strcustomername) LIKE UPPER('%" . $arySearchDataColumn["strCustomerName"] . "%')";
+//			}
 		}
 
 		// 納品場所
 		if($strSearchColumnName == "lngDeliveryPlaceCode"){
 			if($arySearchDataColumn["lngDeliveryPlaceCode"]){
-				$aryQuery[] = "AND   mp.lngdeliveryplacecode = '" . $arySearchDataColumn["lngDeliveryPlaceCode"] . "'";
+//				$aryQuery[] = "AND   mp.lngdeliveryplacecode = '" . $arySearchDataColumn["lngDeliveryPlaceCode"] . "'";
+				$aryQuery[] = "AND   mc_delivary.strcompanydisplaycode = '" . $arySearchDataColumn["lngDeliveryPlaceCode"] . "'";
 			}
-			if($arySearchDataColumn["strDeliveryPlaceName"]){
-				$aryQuery[] = "AND   UPPER(mp.strdeliveryplacename) LIKE UPPER('%" . $arySearchDataColumn["strDeliveryPlaceName"] . "%')";
-			}
+//			if($arySearchDataColumn["strDeliveryPlaceName"]){
+//				$aryQuery[] = "AND   UPPER(mp.strdeliveryplacename) LIKE UPPER('%" . $arySearchDataColumn["strDeliveryPlaceName"] . "%')";
+//			}
 		}
 
 		// 通貨
@@ -1001,6 +1006,11 @@ function fncGetSearchPurcheseOrderSQL( $aryViewColumn, $arySearchColumn, $arySea
 	$aryOutQuery[] = "  ,mp.strrevisecode as strReviseCode";
 	$aryOutQuery[] = implode("\n", $arySelectQuery);
 	$aryOutQuery[] = "FROM m_purchaseorder mp";
+	$aryOutQuery[] = "inner join m_user input_user on input_user.lngusercode = mp.lnginsertusercode";
+	$aryOutQuery[] = "inner join m_group mg on mg.lnggroupcode = mp.lnggroupcode";
+	$aryOutQuery[] = "inner join m_user mu on mu.lngusercode = mp.lngusercode";
+	$aryOutQuery[] = "inner join m_company mc_stock on mc_stock.lngcompanycode = mp.lngcustomercode";
+	$aryOutQuery[] = "inner join m_company mc_delivary on mc_delivary.lngcompanycode = mp.lngdeliveryplacecode";
 	$aryOutQuery[] = implode("\n", $aryQuery);
 	$aryOutQuery[] = "ORDER BY";
 	$aryOutQuery[] = "   mp.lngpurchaseorderno";
