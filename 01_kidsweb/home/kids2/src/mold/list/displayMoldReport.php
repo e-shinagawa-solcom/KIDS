@@ -409,8 +409,3 @@ function setSelectedCell(DOMElement $element)
 	$currentClassName = $element->getAttribute("class");
 	$element->setAttribute("class", $currentClassName." "."selected-cell");
 }
-
-function toUTF8($str)
-{
-	return htmlspecialchars(mb_convert_encoding($str, "utf-8", "eucjp-win"), ENT_QUOTES, 'utf-8');
-}

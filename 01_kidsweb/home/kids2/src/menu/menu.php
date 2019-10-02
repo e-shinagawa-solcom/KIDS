@@ -160,9 +160,6 @@ if ($lcModel->checkAcUsrid(trim($objAuth->UserID))) {
     $aryData["LCnavi_visibility"] = "hidden";
 }
 
-// サブメニュー生成
-$aryData = fncSetSubMenu($aryData, $objAuth, $objDB, $lcModel);
-
 // 請求管理
 if ( fncCheckAuthority( DEF_FUNCTION_INV0, $objAuth))
 {

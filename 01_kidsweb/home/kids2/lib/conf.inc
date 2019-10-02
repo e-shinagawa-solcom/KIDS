@@ -443,8 +443,8 @@ define ( "DEF_FATAL",		3 );           //  3 システムエラーレベル
 define ( "DEF_ANNOUNCE",	99 );          //  99 システムアナウンス
 
 // デバッグモード
-define ( "DEF_DEBUG_MODE",	0 );         //  本稼動モード　　エラー画面表示
-//define ( "DEF_DEBUG_MODE",	1 );      //  デバッグモード　エラー画面非表示
+//define ( "DEF_DEBUG_MODE",	0 );         //  本稼動モード　　エラー画面表示
+define ( "DEF_DEBUG_MODE",	1 );      //  デバッグモード　エラー画面非表示
 
 // 発注登録
 define ("DEF_M_WORKFLOW_FUNCTIONCODE",	1);		// 機能コード

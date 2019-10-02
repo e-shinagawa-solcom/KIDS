@@ -306,33 +306,6 @@
 		}
 
 		//-------------------------------------------------------------------------
-		// 権限グループコード(ユーザー以下)チェック
-		//-------------------------------------------------------------------------
-		$blnAG = fncCheckUserAuthorityGroupCode( $lngUserCode, $aryData["strSessionID"], $objDB );
-
-		// 「ユーザー」以下の場合
-		if( $blnAG )
-		{
-			// 承認ルート存在チェック
-			$blnWF = fncCheckWorkFlowRoot( $lngUserCode, $aryData["strSessionID"], $objDB );
-
-			// 承認ルートが存在しない場合、「登録」ボタン非表示
-			if( !$blnWF )
-			{
-				$aryData["lngSubFlag_p_0"]	= 0;
-
-				$aryData["lngSubFlag_es_0"]	= 0;
-
-				$aryData["lngSubFlag_so_0"]	= 0;
-
-				$aryData["lngSubFlag_po_0"]	= 0;
-
-				$aryData["lngSubFlag_sc_0"]	= 0;
-
-				$aryData["lngSubFlag_pc_0"]	= 0;
-			}
-		}
-		//-------------------------------------------------------------------------
 
 		return $aryData;
 	}

@@ -142,7 +142,3 @@ else
 	fncOutputError(9065, DEF_ERROR, "", TRUE, "", $objDB);
 }
 
-function toUTF8($str)
-{
-	return htmlspecialchars(mb_convert_encoding($str, "utf-8", "eucjp-win"), ENT_QUOTES, 'utf-8');
-}
