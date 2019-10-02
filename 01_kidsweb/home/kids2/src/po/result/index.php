@@ -192,8 +192,10 @@
 	
 	// 検索条件に一致する発注コードを取得するSQL文の作成
 	$strQuery = fncGetSearchPurchaseSQL( $aryViewColumn, $arySearchColumn, $aryData, $objDB, "", 0, FALSE );
+	fncDebug("kids2.log", $strQuery, __FILE__, __LINE__, "w" );
 	// 値をとる =====================================
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
+	fncDebug("kids2.log", "found " . $lngResultNum . " records", __FILE__, __LINE__, "a" );
 
 	if ( $lngResultNum )
 	{
@@ -223,10 +225,12 @@
 		}
 
 		// 指定数以内であれば通常処理
+	    fncDebug("kids2.log", "passed" , __FILE__, __LINE__, "a" );
 		for ( $i = 0; $i < $lngResultNum; $i++ )
 		{
 			$aryResult[] = $objDB->fetchArray( $lngResultID, $i );
 		}
+	    fncDebug("kids2.log", "passed" , __FILE__, __LINE__, "a" );
 	}
 	else
 	{
@@ -252,6 +256,7 @@
 		exit;
 	}
 
+
 	$objDB->freeResult( $lngResultID );
 
 	// 言語の設定
@@ -264,12 +269,15 @@
 		$aryTytle = $arySearchTableTytleEng;
 	}
 
+	    fncDebug("kids2.log", "passed" , __FILE__, __LINE__, "a" );
 	// テーブル構成で検索結果を取得、ＨＴＭＬ形式で出力する
 	$aryHtml["strHtml"] = fncSetPurchaseTable ( $aryResult, $arySearchColumn, $aryViewColumn, $aryData, $aryUserAuthority, $aryTytle, $objDB, $objCache, $aryTableViewName );
+	    fncDebug("kids2.log", "passed" , __FILE__, __LINE__, "a" );
 
 	// POSTされたデータをHiddenにて設定する
 	unset($ary_keys);
 	$ary_Keys = array_keys( $aryData );
+//	    fncDebug("kids2.log", "passed" , __FILE__, __LINE__, "a" );
 	while ( list ($strKeys, $strValues ) = each ( $ary_Keys ) )
 	{
 		if( $strValues == "ViewColumn")
@@ -308,6 +316,7 @@
 			}
 		}
 	}
+//	    fncDebug("kids2.log", "passed" , __FILE__, __LINE__, "a" );
 
 	$aryHidden[] = "<input type='hidden' name='strSort'>";
 	$aryHidden[] = "<input type='hidden' name='strSortOrder'>";
@@ -327,6 +336,7 @@
 	echo $objTemplate->strTemplate;
 
 	$objCache->Release();
+//    fncDebug("kids2.log", "passed" , __FILE__, __LINE__, "a" );
 
 	return true;
 

@@ -35,7 +35,7 @@
  *	@return Array 	$strSQL 検索用SQL文 OR Boolean FALSE
  *	@access public
  */
-function fncGetSearchPurchaseSQL ( $aryViewColumn, $arySearchColumn, $arySearchDataColumn, $objDB, $strOrderCode, $lngOrderNo, $bytAdminMode )
+function fncGetSearchPurchaseSQL ( $aryViewColumn, $arySearchColumn, $arySearchDataColumn, $objDB, $strOrderCode, $lngOrderNo, $bytAdminMode, $lngRevisionNo = -999 )
 {
 
 	// 表示用カラムに設定されている内容を検索用に文字列設定
@@ -546,8 +546,9 @@ function fncGetSearchPurchaseSQL ( $aryViewColumn, $arySearchColumn, $arySearchD
 
 	// 明細検索用テーブル結合条件
 	$aryDetailFrom = array();
-	$aryDetailFrom[] = ", (SELECT distinct on ( od1.lngOrderNo ) od1.lngOrderNo";
+	$aryDetailFrom[] = "LEFT JOIN  (SELECT od1.lngOrderNo";
 	$aryDetailFrom[] = "	,od1.lngOrderDetailNo";
+	$aryDetailFrom[] = "	,od1.lngRevisionNo";
 	$aryDetailFrom[] = "	,p.strProductCode";
 	$aryDetailFrom[] = "	,mg.strGroupDisplayCode";
 	$aryDetailFrom[] = "	,mg.strGroupDisplayName";
@@ -577,7 +578,7 @@ function fncGetSearchPurchaseSQL ( $aryViewColumn, $arySearchColumn, $arySearchD
 	$aryDetailFrom[] = "        left join t_purchaseorderdetail tp on  od1.lngorderno = tp.lngorderno and od1.lngorderdetailno = tp.lngorderdetailno and od1.lngrevisionno = tp.lngrevisionno";
 	$aryDetailFrom[] = "        left join m_purchaseorder mp on  tp.lngpurchaseorderno = mp.lngpurchaseorderno and tp.lngrevisionno = mp.lngrevisionno";
 
-	$aryDetailWhereQuery[] = ") as od";
+	$aryDetailWhereQuery[] = ") as od on od.lngOrderNo = o.lngOrderNo and od.lngrevisionno = o.lngrevisionno";
 	// where句（明細行） クエリー連結
 	$strDetailQuery = implode("\n", $aryDetailFrom) . "\n";
 	// 明細行の検索対応
@@ -599,13 +600,18 @@ function fncGetSearchPurchaseSQL ( $aryViewColumn, $arySearchColumn, $arySearchD
 	// 明細行の 'order by' 用に追加
 	$aryOutQuery[] = "	,od.lngOrderDetailNo";
 
-
 	// select句 クエリー連結
 	$aryOutQuery[] = implode("\n", $arySelectQuery);
 
 	// From句 の生成
 	$aryFromQuery = array();
 	$aryFromQuery[] = " FROM m_Order o";
+	if ( !$strOrderCode )
+	{
+	    $aryFromQuery[] = " INNER JOIN (";
+	    $aryFromQuery[] = " select strordercode, MAX(lngrevisionno) as lngrevisionno from m_order group by strordercode ) rev";
+	    $aryFromQuery[] = "on rev.strordercode = o.strordercode and rev.lngrevisionno = o.lngrevisionno ";
+	}
 	
 	// 追加表示用の参照マスタ対応
 	if ( $flgInputUser )
@@ -667,17 +673,23 @@ function fncGetSearchPurchaseSQL ( $aryViewColumn, $arySearchColumn, $arySearchD
 	// 発注コードが指定されていない場合は検索条件を設定する
 	if ( !$strOrderCode )
 	{
-		$aryOutQuery[] = " AND o.lngRevisionNo = ( "
-			. "SELECT MAX( o1.lngRevisionNo ) FROM m_Order o1 WHERE o1.strOrderCode = o.strOrderCode AND o1.bytInvalidFlag = false )";
+//		$aryOutQuery[] = " AND o.lngRevisionNo = ( "
+//			. "SELECT MAX( o1.lngRevisionNo ) FROM m_Order o1 WHERE o1.strOrderCode = o.strOrderCode AND o1.bytInvalidFlag = false )";
 		// $aryOutQuery[] = " AND o.strReviseCode = ( "
 		// 	. "SELECT MAX( o2.strReviseCode ) FROM m_Order o2 WHERE o2.strOrderCode = o.strOrderCode AND o2.bytInvalidFlag = false )";
 
 		// 管理モードの場合は削除データも検索対象とするため以下の条件は対象外
 		if ( !$arySearchDataColumn["Admin"] )
 		{
-			$aryOutQuery[] = " AND 0 <= ( "
-				. "SELECT MIN( o3.lngRevisionNo ) FROM m_Order o3 WHERE o3.bytInvalidFlag = false AND o3.strOrderCode = o.strOrderCode )";
+//			$aryOutQuery[] = " AND 0 <= ( "
+//				. "SELECT MIN( o3.lngRevisionNo ) FROM m_Order o3 WHERE o3.bytInvalidFlag = false AND o3.strOrderCode = o.strOrderCode )";
+            $aryOutQuery[] = " AND o.lngorderno not in (select lngorderno from m_Order where bytInvalidFlag and lngrevisionno < 0 )"; 
+
 		}
+	}
+	if ( $lngRevisionNo != -999 )
+	{
+	    $aryOutQuery[] = " AND o.lngrevisionno = " . $lngRevisionNo;
 	}
 
 	// 管理モードの検索時、同じ発注コードのデータを取得する場合
@@ -1036,7 +1048,7 @@ function fncGetSearchPurcheseOrderSQL( $aryViewColumn, $arySearchColumn, $arySea
  *	@return Array 	$strSQL 検索用SQL文 OR Boolean FALSE
  *	@access public
  */
-function fncGetOrderToProductSQL ( $aryDetailViewColumn, $lngOrderNo, $aryData, $objDB )
+function fncGetOrderToProductSQL ( $aryDetailViewColumn, $lngOrderNo, $lngRevisionNo, $aryData, $objDB )
 {
 	reset( $aryDetailViewColumn );
 
@@ -1161,7 +1173,7 @@ function fncGetOrderToProductSQL ( $aryDetailViewColumn, $lngOrderNo, $aryData, 
 	}
 
 	// 絶対条件 対象発注NOの指定
-	$aryQuery[] = " WHERE od.lngOrderNo = " . $lngOrderNo . "";
+	$aryQuery[] = " WHERE od.lngOrderNo = " . $lngOrderNo . " AND od.lngrevisionno = " . $lngRevisionNo ;
 
 	// 条件の追加
 
@@ -1322,7 +1334,7 @@ function fncSetPurchaseHeadTable ( $lngColumnCount, $aryHeadResult, $aryDetailRe
 					{
 						// 発注データの状態により分岐  //// 状態が「仮発注」「締め済」の場合削除ボタンを選択不可
 						// 最新発注が削除データの場合も選択不可
-						if ( $aryHeadResult["lngorderstatuscode"] != DEF_ORDER_TEMPORARY and $aryHeadResult["lngorderstatuscode"] != DEF_ORDER_CLOSED)
+						if ( $aryHeadResult["lngorderstatuscode"] != DEF_ORDER_APPLICATE and $aryHeadResult["lngorderstatuscode"] != DEF_ORDER_CLOSED)
 						{
 							$aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/remove_off_bt.gif\" lngorderno=\"" . $aryDetailResult[$i]["lngorderno"] . "\" class=\"remove button\"></td>\n";
 						}
@@ -1339,7 +1351,7 @@ function fncSetPurchaseHeadTable ( $lngColumnCount, $aryHeadResult, $aryDetailRe
 						{
 							// 発注データの状態により分岐  //// 状態が「申請中」「納品中」「納品済」「締め済」の場合削除ボタンを選択不可
 							// 最新発注が削除データの場合も選択不可
-							if ( $aryHeadResult["lngorderstatuscode"] != DEF_ORDER_TEMPORARY and $aryHeadResult["lngorderstatuscode"] != DEF_ORDER_CLOSED)
+							if ( $aryHeadResult["lngorderstatuscode"] != DEF_ORDER_APPLICATE and $aryHeadResult["lngorderstatuscode"] != DEF_ORDER_CLOSED)
 							{
 								$aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/remove_off_bt.gif\" lngorderno=\"" . $aryDetailResult[$i]["lngorderno"] . "\" class=\"remove button\"></td>\n";
 							}
@@ -1867,32 +1879,31 @@ function fncSetPurchaseTable ( $aryResult, $arySearchColumn, $aryViewColumn, $ar
 			$strOrderCodeBase = $aryResult[$i]["strordercode"];
 		}
 
-		$strSameOrderCodeQuery = fncGetSearchPurchaseSQL( $aryViewColumn, $arySearchColumn, $aryData, $objDB, $strOrderCodeBase, $aryResult[$i]["lngorderno"], FALSE );
-
-		// 値をとる =====================================
-		list ( $lngResultID, $lngResultNum ) = fncQuery( $strSameOrderCodeQuery, $objDB );
+//		$strSameOrderCodeQuery = fncGetSearchPurchaseSQL( $aryViewColumn, $arySearchColumn, $aryData, $objDB, $strOrderCodeBase, $aryResult[$i]["lngorderno"], FALSE ,$aryResult[$i]["lngrevisionno"]);
+//		// 値をとる =====================================
+//		list ( $lngResultID, $lngResultNum ) = fncQuery( $strSameOrderCodeQuery, $objDB );
 
 		// 配列のクリア
-		unset( $arySameOrderCodeResult );
+//		unset( $arySameOrderCodeResult );
 
-		if ( $lngResultNum )
-		{
-			for ( $j = 0; $j < $lngResultNum; $j++ )
-			{
-				$arySameOrderCodeResult[] = $objDB->fetchArray( $lngResultID, $j );
-			}
-			$lngSameOrderCount = $lngResultNum;
-		}
-		$objDB->freeResult( $lngResultID );
+//		if ( $lngResultNum )
+//		{
+//			for ( $j = 0; $j < $lngResultNum; $j++ )
+//			{
+//				$arySameOrderCodeResult[] = $objDB->fetchArray( $lngResultID, $j );
+//			}
+//			$lngSameOrderCount = $lngResultNum;
+//		}
+//		$objDB->freeResult( $lngResultID );
 
 		// 同じ発注コードでの過去リバイズデータが存在すれば
-		if ( $lngResultNum )
-		{
-			for ( $j = 0; $j < $lngSameOrderCount; $j++ )
-			{
+//		if ( $lngResultNum )
+//		{
+//			for ( $j = 0; $j < $lngSameOrderCount; $j++ )
+//			{
 				// 検索結果部分の設定
 
-				reset( $arySameOrderCodeResult[$j] );
+//				reset( $arySameOrderCodeResult[$j] );
 
 				// 明細出力用の調査
 				$lngDetailViewCount = count( $aryDetailViewColumn );
@@ -1900,7 +1911,7 @@ function fncSetPurchaseTable ( $aryResult, $arySearchColumn, $aryViewColumn, $ar
 				if ( $lngDetailViewCount )
 				{
 					// 明細行数の調査
-					$strDetailQuery = fncGetOrderToProductSQL ( $aryDetailViewColumn, $arySameOrderCodeResult[$j]["lngorderno"], $aryData, $objDB );
+					$strDetailQuery = fncGetOrderToProductSQL ( $aryDetailViewColumn, $aryResult[$i]["lngorderno"], $aryResult[$i]["lngrevisionno"], $aryData, $objDB );
 
 					// クエリー実行
 					if ( !$lngDetailResultID = $objDB->execute( $strDetailQuery ) )
@@ -1926,7 +1937,8 @@ function fncSetPurchaseTable ( $aryResult, $arySearchColumn, $aryViewColumn, $ar
 				}
 
 				// １レコード分の出力
-				$aryHtml_add = fncSetPurchaseHeadTable ( $lngColumnCount, $arySameOrderCodeResult[$j], $aryDetailResult, $aryDetailViewColumn, $aryHeadViewColumn, $aryData, $aryUserAuthority, $objDB, $objCache, $lngSameOrderCount, $j, $arySameOrderCodeResult[0] );
+				$aryHtml_add = fncSetPurchaseHeadTable ( $lngColumnCount, $aryResult[$i], $aryDetailResult, $aryDetailViewColumn, $aryHeadViewColumn, $aryData, $aryUserAuthority, $objDB, $objCache, $lngSameOrderCount, $j, $aryResult[$i] );
+//				$aryHtml_add = fncSetPurchaseHeadTable ( $lngColumnCount, $arySameOrderCodeResult[$j], $aryDetailResult, $aryDetailViewColumn, $aryHeadViewColumn, $aryData, $aryUserAuthority, $objDB, $objCache, $lngSameOrderCount, $j, $arySameOrderCodeResult[0] );
 				$lngColumnCount = $lngColumnCount + count($aryDetailResult);
 				
 				$strColBuff = '';
@@ -1935,8 +1947,8 @@ function fncSetPurchaseTable ( $aryResult, $arySearchColumn, $aryViewColumn, $ar
 					$strColBuff .= $aryHtml_add[$k];
 				}
 				$aryHtml[] =$strColBuff;
-			}
-		}
+//			}
+//		}
 
 	// 管理モード用過去リバイズデータ出力end==================================
 
