@@ -1075,7 +1075,3 @@ foreach ($records as $i => $record)
 // HTML½ÐÎÏ
 echo $doc->saveHTML();
 
-function toUTF8($str)
-{
-	return htmlspecialchars(mb_convert_encoding($str, "utf-8", "eucjp-win"), ENT_QUOTES, 'utf-8');
-}
