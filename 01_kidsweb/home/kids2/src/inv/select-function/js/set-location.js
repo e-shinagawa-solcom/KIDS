@@ -13,7 +13,7 @@
 		$(location).attr('href', '../search/index.php?strSessionID=' + sessionId);
 	});
 	// 請求集計画面
-	$('.function-buttons__search').on('click', function(){
-		$(location).attr('href', '../total/index.php?strSessionID=' + sessionId);
+	$('.function-buttons__total').on('click', function(){
+		$(location).attr('href', '../aggregate/index.php?strSessionID=' + sessionId);
 	});
 })($.cookie('strSessionID'));
