@@ -45,6 +45,7 @@ if (!fncCheckAuthority(DEF_FUNCTION_P6, $objAuth)) {
 
 // 変更があった項目のみ$aryUpdateに格納
 $lngproductno = $aryData["lngProductNo"];
+$lngRevisionNo = $aryData["lngRevisionNo"];
 
 $aryQuery[] = "SELECT ";
 $aryQuery[] = "lngproductno, ";
@@ -91,7 +92,8 @@ $aryQuery[] = "lngrevisionno, "; // リビジョン番号
 $aryQuery[] = "strrevisecode"; // リビジョン番号
 $aryQuery[] = "FROM m_product ";
 $aryQuery[] = "WHERE bytinvalidflag = false ";
-$aryQuery[] = "AND lngproductno = '$lngproductno'";
+$aryQuery[] = " AND lngproductno = " .$lngproductno;
+$aryQuery[] = " AND lngRevisionNo = " .$lngRevisionNo;
 $strQuery = implode("\n", $aryQuery);
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 if ($lngResultNum) {

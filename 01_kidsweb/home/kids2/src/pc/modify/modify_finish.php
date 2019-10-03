@@ -49,9 +49,6 @@ if (!fncCheckAuthority(DEF_FUNCTION_PC5, $objAuth)) {
 
 $objDB->transactionBegin();
 
-// 仕入番号の設定
-$sequence_m_stock = fncGetSequence('m_stock.lngStockNo', $objDB);
-
 // リビジョン番号の設定
 //リビジョン番号を現在の最大値をとるように修正する　その際にSELECT FOR UPDATEを使用して、同じ仕入に対してロック状態にする
 $strLockQuery = "SELECT lngRevisionNo FROM m_Stock WHERE strStockCode = '" . $aryData["strStockCode"] . "' FOR UPDATE";
@@ -113,7 +110,7 @@ $aryQuery[] = "lnginputusercode, "; // 19:入力者コード
 $aryQuery[] = "bytinvalidflag, "; // 20:無効フラグ
 $aryQuery[] = "dtminsertdate "; // 21:登録日
 $aryQuery[] = " ) VALUES ( ";
-$aryQuery[] = $sequence_m_stock . ", "; // 1:仕入番号
+$aryQuery[] = $aryData["lngStockNo"] . ", "; // 1:仕入番号
 $aryQuery[] = $lngrevisionno . ","; // 2:リビジョン番号
 $aryQuery[] = $strstockcode . ", "; // 3:仕入コード
 $aryQuery[] = "'" . $aryData["dtmStockAppDate"] . "', "; // 5:計上日
@@ -169,6 +166,7 @@ foreach ($aryDetailData as $data) {
     $aryQuery[] = "FROM t_orderdetail ";
     $aryQuery[] = "WHERE ";
     $aryQuery[] = "lngorderno = " . $data["lngOrderNo"];
+    $aryQuery[] = " AND lngrevisionno = " . $data["lngRevisionNo"];
     $aryQuery[] = " AND lngorderdetailno = " . $data["lngOrderDetailNo"];
     $aryQuery[] = " ORDER BY lngSortKey";
     $strQuery = implode("\n", $aryQuery);
@@ -230,7 +228,7 @@ foreach ($aryDetailData as $data) {
             $aryQuery[] = "strmoldno, "; // 20:金型番号
             $aryQuery[] = "lngSortKey "; // 21:表示用ソートキー
             $aryQuery[] = " ) VALUES ( ";
-            $aryQuery[] = $sequence_m_stock . ", "; // 1:仕入番号
+            $aryQuery[] = $data["lngStockNo"] . ", "; // 1:仕入番号
             $aryQuery[] = $data["lngStockDetailNo"] . ", "; // 2:仕入明細番号 行ごとの明細発注は持っている
             $aryQuery[] = $lngrevisionno . ", "; // 3:リビジョン番号
             $aryQuery[] = $data["lngOrderNo"] . ", "; // 4:発注番号
@@ -267,6 +265,7 @@ foreach ($aryDetailData as $data) {
     $aryQuery[] = "UPDATE m_order ";
     $aryQuery[] = "set lngorderstatuscode = " . DEF_ORDER_END . " ";
     $aryQuery[] = "where lngorderno = " . $data["lngOrderNo"] . " ";
+    $aryQuery[] = "AND lngrevisionno = " . $data["lngRevisionNo"] . " ";
     $strQuery = implode("\n", $aryQuery);
 
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);

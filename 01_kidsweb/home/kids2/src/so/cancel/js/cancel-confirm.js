@@ -3,13 +3,15 @@
     // 登録ボタンのイベント
     $('img.cancel').on('click', function () {
         var lngReceiveNo = $(this).attr('id');
+        var lngRevisionNo = $(this).attr('revisionno');
         // リクエスト送信
         $.ajax({
             url: '/so/cancel/cancel_finish.php',
             type: 'POST',
             data: {
                 'strSessionID': $.cookie('strSessionID'),
-                'lngReceiveNo': lngReceiveNo
+                'lngReceiveNo': lngReceiveNo,
+                'lngRevisionNo': lngRevisionNo
             }
         })
             .done(function (response) {

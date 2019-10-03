@@ -46,9 +46,10 @@ if (!fncCheckAuthority(DEF_FUNCTION_SC4, $objAuth)) {
 }
 
 $lngSalesNo = $aryData["lngSalesNo"];
+$lngRevisionNo = $aryData["lngRevisionNo"];
 
 // 指定売上番号の売上データ取得用SQL文の作成
-$strQuery = fncGetSalesHeadNoToInfoSQL($lngSalesNo);
+$strQuery = fncGetSalesHeadNoToInfoSQL($lngSalesNo, $lngRevisionNo);
 
 // 詳細データの取得
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
@@ -70,7 +71,7 @@ $aryNewResult = fncSetSalesHeadTabelData($aryResult);
 
 ////////// 明細行の取得 ////////////////////
 // 指定売上番号の売上明細データ取得用SQL文の作成
-$strQuery = fncGetSalesDetailNoToInfoSQL($lngSalesNo);
+$strQuery = fncGetSalesDetailNoToInfoSQL($lngSalesNo, $lngRevisionNo);
 // 明細データの取得
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 

@@ -99,7 +99,6 @@ if ($aryData["lngReportCode"]) {
 else {
     // データ取得クエリ
     $strQuery = fncGetListOutputQuery(DEF_REPORT_ORDER, $aryData["strReportKeyCode"], $objDB);
-
     $objMaster = new clsMaster();
     $objMaster->setMasterTableData($strQuery, $objDB);
     $aryParts = &$objMaster->aryData[0];
@@ -131,6 +130,7 @@ else {
     $aryQuery[] = "  t_purchaseorderdetail pod ";
     $aryQuery[] = "WHERE";
     $aryQuery[] = "  pod.lngpurchaseorderno = " . $aryData["strReportKeyCode"];
+    $aryQuery[] = "  AND pod.lngrevisionno = " . $aryParts["lngrevisionno"];
     $aryQuery[] = "ORDER BY";
     $aryQuery[] = "  pod.lngSortKey";
 

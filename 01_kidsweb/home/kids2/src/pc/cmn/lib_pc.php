@@ -21,10 +21,11 @@
  *    指定仕入番号のヘッダ情報の取得用ＳＱＬ文作成関数
  *
  *    @param  Integer     $lngStockNo             取得する仕入番号
+ *    @param  Integer     $lngRevisionNo             取得する仕入リビジョン番号
  *    @return strQuery     $strQuery 検索用SQL文
  *    @access public
  */
-function fncGetStockHeadNoToInfoSQL($lngStockNo)
+function fncGetStockHeadNoToInfoSQL($lngStockNo, $lngRevisionNo)
 {
     // SQL文の作成
     $aryQuery[] = "SELECT distinct on (s.lngStockNo) s.lngStockNo as lngStockNo, s.lngRevisionNo as lngRevisionNo";
@@ -99,6 +100,7 @@ function fncGetStockHeadNoToInfoSQL($lngStockNo)
     $aryQuery[] = " LEFT JOIN m_MonetaryRateClass mr ON s.lngMonetaryRateCode = mr.lngMonetaryRateCode";
 
     $aryQuery[] = " WHERE s.lngStockNo = " . $lngStockNo . "";
+    $aryQuery[] = " AND s.lngRevisionNo = " . $lngRevisionNo . "";
 
     $strQuery = implode("\n", $aryQuery);
 
@@ -111,10 +113,11 @@ function fncGetStockHeadNoToInfoSQL($lngStockNo)
  *    指定仕入番号の明細情報の取得用ＳＱＬ文作成関数
  *
  *    @param  Integer     $lngStockNo             取得する仕入番号
+ *    @param  Integer     $lngRevisionNo             取得する仕入リビジョン番号
  *    @return strQuery     $strQuery 検索用SQL文
  *    @access public
  */
-function fncGetStockDetailNoToInfoSQL($lngStockNo)
+function fncGetStockDetailNoToInfoSQL($lngStockN, $lngRevisionNo)
 {
     // SQL文の作成
     $aryQuery[] = "SELECT distinct on (sd.lngSortKey) sd.lngSortKey as lngRecordNo, ";
@@ -171,8 +174,9 @@ function fncGetStockDetailNoToInfoSQL($lngStockNo)
     $aryQuery[] = ", m_StockItem si ";
 
     $aryQuery[] = " WHERE sd.lngStockNo = " . $lngStockNo . "";
-    $aryQuery[] = "AND si.lngStockSubjectCode = ss.lngStockSubjectCode ";
-    $aryQuery[] = "AND sd.lngStockItemCode = si.lngStockItemCode ";
+    $aryQuery[] = " AND sd.lngRevisionNo = " . $lngRevisionNo . "";
+    $aryQuery[] = " AND si.lngStockSubjectCode = ss.lngStockSubjectCode ";
+    $aryQuery[] = " AND sd.lngStockItemCode = si.lngStockItemCode ";
 
     $aryQuery[] = " ORDER BY sd.lngSortKey ASC ";
 

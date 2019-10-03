@@ -184,8 +184,8 @@ $aryQuery[] = "      FROM";
 $aryQuery[] = "        t_ReceiveDetail rd1 ";
 $aryQuery[] = "        LEFT JOIN (";
 $aryQuery[] = "            select p1.*  from m_product p1 ";
-$aryQuery[] = "        	inner join (select max(lngproductno) lngproductno, strproductcode from m_Product group by strProductCode) p2";
-$aryQuery[] = "            on p1.lngproductno = p2.lngproductno";
+$aryQuery[] = "        	inner join (select max(lngRevisionNo) lngRevisionNo, strproductcode from m_Product group by strProductCode) p2";
+$aryQuery[] = "            on p1.lngRevisionNo = p2.lngRevisionNo and p1.strproductcode = p2.strproductcode ";
 $aryQuery[] = "          ) p ";
 $aryQuery[] = "          ON rd1.strProductCode = p.strProductCode ";
 $aryQuery[] = "        left join m_group mg ";
@@ -263,9 +263,7 @@ if (array_key_exists("dtmDeliveryDate", $searchColumns) &&
 }
 $aryQuery[] = "    ) as rd ";
 $aryQuery[] = "WHERE";
-$aryQuery[] = "  r.bytInvalidFlag = FALSE ";
-$aryQuery[] = " AND r.lngRevisionNo >= 0";
-
+$aryQuery[] = " rd.lngReceiveNo = r.lngReceiveNo ";
 // 登録日
 if (array_key_exists("dtmInsertDate", $searchColumns) &&
     array_key_exists("dtmInsertDate", $from) &&
@@ -317,7 +315,6 @@ if (array_key_exists("lngReceiveStatusCode", $searchColumns) &&
     }
 }
 
-$aryQuery[] = "  AND rd.lngReceiveNo = r.lngReceiveNo ";
 // $aryQuery[] = "  AND r.lngRevisionNo = ( ";
 // $aryQuery[] = "    SELECT";
 // $aryQuery[] = "      MAX(r1.lngRevisionNo) ";
@@ -337,6 +334,8 @@ $aryQuery[] = "  AND rd.lngReceiveNo = r.lngReceiveNo ";
 // $aryQuery[] = "      )";
 // $aryQuery[] = "  ) ";
 if (!array_key_exists("admin", $optionColumns)) {
+    $aryQuery[] = " AND r.bytInvalidFlag = FALSE ";
+    $aryQuery[] = " AND r.lngRevisionNo >= 0";
     $aryQuery[] = "  AND r.strReceiveCode not in ( ";
     $aryQuery[] = "    select";
     $aryQuery[] = "      r1.strReceiveCode ";
@@ -347,8 +346,6 @@ if (!array_key_exists("admin", $optionColumns)) {
     $aryQuery[] = "          , strReceiveCode ";
     $aryQuery[] = "        FROM";
     $aryQuery[] = "          m_Receive ";
-    $aryQuery[] = "        where";
-    $aryQuery[] = "          bytInvalidFlag = false ";
     $aryQuery[] = "        group by";
     $aryQuery[] = "          strReceiveCode";
     $aryQuery[] = "      ) as r1 ";
@@ -361,7 +358,6 @@ $aryQuery[] = " r.strReceiveCode, lngReceiveDetailNo, r.lngReceiveNo DESC";
 
 // クエリを平易な文字列に変換
 $strQuery = implode("\n", $aryQuery);
-
 // 値をとる =====================================
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 // 検索件数がありの場合
@@ -565,7 +561,7 @@ foreach ($records as $i => $record) {
     $aryQuery[] = "on r.lngreceiveno = rd.lngreceiveno ";
     $aryQuery[] = "WHERE strreceivecode='" . $record["strreceivecode"] . "' ";
     $aryQuery[] = "and lngreceivedetailno=" . $record["lngreceivedetailno"] . " ";
-    $aryQuery[] = "order by r.lngreceiveno desc";
+    $aryQuery[] = "order by r.lngrevisionno desc";
 
     // クエリを平易な文字列に変換
     $strQuery = implode("\n", $aryQuery);
@@ -643,6 +639,7 @@ foreach ($records as $i => $record) {
             $imgDetail = $doc->createElement("img");
             $imgDetail->setAttribute("src", "/img/type01/so/detail_off_bt.gif");
             $imgDetail->setAttribute("id", $record["lngreceiveno"]);
+            $imgDetail->setAttribute("revisionno", $record["lngrevisionno"]);
             $imgDetail->setAttribute("class", "detail button");
             // td > img
             $tdDetail->appendChild($imgDetail);
@@ -664,6 +661,7 @@ foreach ($records as $i => $record) {
             $imgDecide = $doc->createElement("img");
             $imgDecide->setAttribute("src", "/img/type01/so/renew_off_bt.gif");
             $imgDecide->setAttribute("id", $record["lngreceiveno"]);
+            $imgDecide->setAttribute("revisionno", $record["lngrevisionno"]);
             $imgDecide->setAttribute("class", "decide button");
             // td > img
             $tdDecide->appendChild($imgDecide);
@@ -842,6 +840,7 @@ foreach ($records as $i => $record) {
             $imgCancel = $doc->createElement("img");
             $imgCancel->setAttribute("src", "/img/type01/so/cancel_off_bt.gif");
             $imgCancel->setAttribute("id", $record["lngreceiveno"]);
+            $imgCancel->setAttribute("revisionno", $record["lngrevisionno"]);
             $imgCancel->setAttribute("class", "cancel button");
             // td > img
             $tdCancel->appendChild($imgCancel);

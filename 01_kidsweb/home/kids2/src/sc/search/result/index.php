@@ -192,8 +192,8 @@ $aryQuery[] = "      FROM";
 $aryQuery[] = "        t_SalesDetail sd1 ";
 $aryQuery[] = "        LEFT JOIN (";
 $aryQuery[] = "            select p1.*  from m_product p1 ";
-$aryQuery[] = "        	inner join (select max(lngproductno) lngproductno, strproductcode from m_Product group by strProductCode) p2";
-$aryQuery[] = "            on p1.lngproductno = p2.lngproductno";
+$aryQuery[] = "        	inner join (select max(lngRevisionNo) lngRevisionNo, strproductcode from m_Product group by strProductCode) p2";
+$aryQuery[] = "            on p1.lngRevisionNo = p2.lngRevisionNo and p1.strproductcode = p2.strproductcode";
 $aryQuery[] = "          ) p ";
 $aryQuery[] = "          ON sd1.strProductCode = p.strProductCode ";
 $aryQuery[] = "        left join m_group mg ";
@@ -686,6 +686,7 @@ foreach ($records as $i => $record) {
             $imgDetail = $doc->createElement("img");
             $imgDetail->setAttribute("src", "/img/type01/so/detail_off_bt.gif");
             $imgDetail->setAttribute("id", $record["lngsalesno"]);
+            $imgDetail->setAttribute("revisionno", $record["lngrevisionno"]);
             $imgDetail->setAttribute("class", "detail button");
             // td > img
             $tdDetail->appendChild($imgDetail);

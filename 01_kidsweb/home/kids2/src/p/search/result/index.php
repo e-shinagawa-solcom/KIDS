@@ -702,6 +702,7 @@ foreach ($records as $i => $record) {
             $imgDetail = $doc->createElement("img");
             $imgDetail->setAttribute("src", "/img/type01/so/detail_off_bt.gif");
             $imgDetail->setAttribute("id", $record["lngproductno"]);
+            $imgDetail->setAttribute("revisionno", $record["lngrevisionno"]);
             $imgDetail->setAttribute("class", "detail button");
             // td > img
             $tdDetail->appendChild($imgDetail);
@@ -724,6 +725,7 @@ foreach ($records as $i => $record) {
             $imgModify = $doc->createElement("img");
             $imgModify->setAttribute("src", "/img/type01/so/renew_off_bt.gif");
             $imgModify->setAttribute("id", $record["lngproductno"]);
+            $imgModify->setAttribute("revisionno", $record["lngrevisionno"]);
             $imgModify->setAttribute("class", "modify button");
             // td > img
             $tdModify->appendChild($imgModify);

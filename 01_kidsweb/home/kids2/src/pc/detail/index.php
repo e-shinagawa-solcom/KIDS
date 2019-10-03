@@ -45,10 +45,11 @@ if (!fncCheckAuthority(DEF_FUNCTION_PC4, $objAuth)) {
 }
 // 仕入番号の取得
 $lngStockNo = $aryData["lngStockNo"];
+$lngRevisionNo = $aryData["lngRevisionNo"];
 // エラー画面での戻りURL
 $strReturnPath = "../pc/search/index.php?strSessionID=" . $aryData["strSessionID"];
 // 指定仕入番号の仕入データ取得用SQL文の作成
-$strQuery = fncGetStockHeadNoToInfoSQL($lngStockNo);
+$strQuery = fncGetStockHeadNoToInfoSQL($lngStockNo, $lngRevisionNo);
 // echo $strQuery;
 // return;
 // 詳細データの取得
@@ -68,7 +69,7 @@ $objDB->freeResult($lngResultID);
 $aryNewResult = fncSetStockHeadTabelData($aryResult);
 
 // 指定仕入番号の仕入明細データ取得用SQL文の作成
-$strQuery = fncGetStockDetailNoToInfoSQL($lngStockNo);
+$strQuery = fncGetStockDetailNoToInfoSQL($lngStockNo, $lngRevisionNo);
 // 明細データの取得
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 

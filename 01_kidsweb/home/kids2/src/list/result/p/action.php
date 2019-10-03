@@ -174,51 +174,13 @@ elseif ( $lngResultNum === 0 )
 		$strCreateUserImage = $strImagePath . $strDefaultImage;
 	}
 
-
-
 	// 承認者のユーザーコードを取得
-	$aryQuery   = array();
-	$aryQuery[] = "SELECT";
-	$aryQuery[] = " mwo.lnginchargecode as lngusercode";
-	$aryQuery[] = "FROM";
-	$aryQuery[] = " m_product mp";
-	$aryQuery[] = "LEFT JOIN";
-	$aryQuery[] = " ( m_workflow mw";
-	$aryQuery[] = "  LEFT JOIN";
-	$aryQuery[] = "   t_workflow tw";
-	$aryQuery[] = "  ON";
-	$aryQuery[] = "   mw.lngworkflowcode = tw.lngworkflowcode";
-	$aryQuery[] = "  AND";
-	$aryQuery[] = "   tw.lngworkflowsubcode = ( select max( lngworkflowsubcode ) from t_workflow where lngworkflowcode = tw.lngworkflowcode )";
-	$aryQuery[] = "  LEFT JOIN";
-	$aryQuery[] = "   m_WorkflowOrder mwo";
-	$aryQuery[] = "  ON";
-	$aryQuery[] = "   mwo.lngWorkflowOrderCode = mw.lngWorkflowOrderCode";
-	$aryQuery[] = "  AND";
-	$aryQuery[] = "   mwo.lngWorkflowStatusCode = 2";
-	$aryQuery[] = " )";
-	$aryQuery[] = "ON";
-	$aryQuery[] = " mw.strworkflowkeycode = mp.strproductcode";
-	$aryQuery[] = "AND";
-	$aryQuery[] = " mw.lngfunctioncode = " . DEF_FUNCTION_P1;
-	$aryQuery[] = "WHERE";
-	$aryQuery[] = " mp.strproductcode = '" . $aryData["strReportKeyCode"] . "'";
-	$aryQuery[] = "AND";
-	$aryQuery[] = " mw.lngWorkflowCode = ( select max( lngWorkflowCode ) from m_workflow where strworkflowkeycode = mp.strproductcode )";
-	$aryQuery[] = "AND";
-	$aryQuery[] = " tw.lngWorkflowStatusCode = 10";
-
-	$strQuery = "";
-	$strQuery = implode( "\n", $aryQuery );
-
-	list( $lngCheckResultID, $lngCheckResultNum ) = fncQuery( $strQuery, $objDB );
+	$lngusercode = $aryParts["lnginchargeusercode"];
 
 	// ユーザーコードを取得
-	if( $lngCheckResultNum == 1 )
+	if(!$lngusercode)
 	{
 		$bytCheck    = false;
-		$objResult   = $objDB->fetchObject( $lngCheckResultID, 0 );
-		$lngusercode = $objResult->lngusercode;
 
 		// 署名ファイルの存在有無確認
 		$bytCheck = fncSignatureCheckFile( $strFullPath, $lngusercode );
@@ -237,7 +199,6 @@ elseif ( $lngResultNum === 0 )
 	{
 		$strAssentUserImage = $strImagePath . $strDefaultImage;
 	}
-
 
 
 	// 作成者(入力者)署名イメージ設定

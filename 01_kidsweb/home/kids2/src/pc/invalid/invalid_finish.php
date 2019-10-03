@@ -46,10 +46,11 @@ if ( !fncCheckAuthority( DEF_FUNCTION_PC7, $objAuth ) )
 }
 // 仕入番号の取得
 $lngStockNo = $aryData["lngStockNo"];
+$lngRevisionNo = $aryData["lngRevisionNo"];
 // エラー画面での戻りURL
 $strReturnPath = "../pc/search/index.php?strSessionID=" . $aryData["strSessionID"];
 // 削除対象の仕入NOの仕入情報取得
-$strQuery = fncGetStockHeadNoToInfoSQL($lngStockNo);
+$strQuery = fncGetStockHeadNoToInfoSQL($lngStockNo, $lngRevisionNo);
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 if ($lngResultNum) {
     if ($lngResultNum == 1) {
@@ -71,7 +72,7 @@ $objDB->freeResult($lngResultID);
 $objDB->transactionBegin();
 
 // 更新対象仕入データをロックする
-$strLockQuery = "SELECT lngStockNo FROM m_Stock WHERE lngStockNo = " . $aryData["lngStockNo"] . " AND bytInvalidFlag = FALSE FOR UPDATE";
+$strLockQuery = "SELECT lngStockNo FROM m_Stock WHERE lngStockNo = " . $aryData["lngStockNo"] . " AND lngRevisionNo = " . $aryData["lngRevisionNo"] . " AND bytInvalidFlag = FALSE FOR UPDATE";
 
 list ( $lngResultID, $lngResultNum ) = fncQuery( $strLockQuery, $objDB );
 if ( !$lngResultNum )
@@ -81,7 +82,7 @@ if ( !$lngResultNum )
 $objDB->freeResult( $lngResultID );
 
 // 無効化確認
-$strQuery = "UPDATE m_Stock SET bytInvalidFlag = TRUE WHERE lngStockNo = " . $aryData["lngStockNo"] . " AND bytInvalidFlag = FALSE";
+$strQuery = "UPDATE m_Stock SET bytInvalidFlag = TRUE WHERE lngStockNo = " . $aryData["lngStockNo"]. " AND lngRevisionNo = " . $aryData["lngRevisionNo"] . " AND bytInvalidFlag = FALSE";
 
 list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 $objDB->freeResult( $lngResultID );

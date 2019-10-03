@@ -4,8 +4,9 @@
         url = '/so/detail/index.php';
         sessionID = 'strSessionID=' + $.cookie('strSessionID');
         lngReceiveNo = 'lngReceiveNo=' + $(this).attr('id');
+        lngRevisionNo = 'lngRevisionNo=' + $(this).attr('revisionno');
 
         // 別ウィンドウで表示
-        open(url + '?' + sessionID + '&' + lngReceiveNo, 'display-detail', 'width=1000, height=600, resizable=yes, scrollbars=yes, menubar=no');
+        open(url + '?' + sessionID + '&' + lngReceiveNo + '&' + lngRevisionNo, 'display-detail', 'width=1000, height=600, resizable=yes, scrollbars=yes, menubar=no');
     });
 })();

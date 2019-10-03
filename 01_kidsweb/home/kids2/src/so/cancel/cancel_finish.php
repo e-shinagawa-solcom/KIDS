@@ -37,13 +37,16 @@ $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 if (!fncCheckAuthority(DEF_FUNCTION_SO2, $objAuth)) {
     fncOutputError(9060, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
-// 404 受注管理（確定）
-if (!fncCheckAuthority(DEF_FUNCTION_SO4, $objAuth)) {
+// 405 受注管理（確定取消）
+if (!fncCheckAuthority(DEF_FUNCTION_SO5, $objAuth)) {
     fncOutputError(9060, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
 
+$lngReceiveNo = $aryData["lngReceiveNo"];
+$lngRevisionNo = $aryData["lngRevisionNo"];
+
 // 指定受注番号の受注データ取得用SQL文の作成
-$strQuery = fncGetReceiveHeadNoToInfoSQL($aryData["lngReceiveNo"], DEF_RECEIVE_ORDER);
+$strQuery = fncGetReceiveHeadNoToInfoSQL($lngReceiveNo, $lngRevisionNo, DEF_RECEIVE_ORDER);
 
 // 詳細データの取得
 list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
@@ -68,7 +71,8 @@ $objDB->freeResult( $lngResultID );
 $aryQuery = array();
 $aryQuery[] = "UPDATE m_receive ";
 $aryQuery[] = "set lngreceivestatuscode = " . DEF_RECEIVE_APPLICATE . " ";
-$aryQuery[] = "where lngreceiveno = " . $aryData["lngReceiveNo"] . " ";
+$aryQuery[] = "where lngreceiveno = " . $lngReceiveNo . " ";
+$aryQuery[] = "AND lngRevisionNo = " . $lngRevisionNo . " ";
 $strQuery = implode("\n", $aryQuery);
 //結果配列
 $result = array();
@@ -79,7 +83,7 @@ $objDB->freeResult($lngResultID);
 
 ////////// 明細行の取得 ////////////////////
 // 指定受注番号の受注明細データ取得用SQL文の作成
-$strQuery = fncGetReceiveDetailNoToInfoSQL ($aryData["lngReceiveNo"]);
+$strQuery = fncGetReceiveDetailNoToInfoSQL ($lngReceiveNo, $lngRevisionNo);
 
 // 明細データの取得
 list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );

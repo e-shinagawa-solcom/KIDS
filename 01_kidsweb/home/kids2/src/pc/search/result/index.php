@@ -206,8 +206,8 @@ $aryQuery[] = "      FROM";
 $aryQuery[] = "        t_StockDetail sd1 ";
 $aryQuery[] = "        LEFT JOIN (";
 $aryQuery[] = "            select p1.*  from m_product p1 ";
-$aryQuery[] = "        	inner join (select max(lngproductno) lngproductno, strproductcode from m_Product group by strProductCode) p2";
-$aryQuery[] = "            on p1.lngproductno = p2.lngproductno";
+$aryQuery[] = "        	inner join (select max(lngrevisionno) lngrevisionno, strproductcode from m_Product group by strProductCode) p2";
+$aryQuery[] = "            on p1.lngrevisionno = p2.lngrevisionno and p1.strproductcode = p2.strproductcode";
 $aryQuery[] = "          ) p ";
 $aryQuery[] = "          ON sd1.strProductCode = p.strProductCode ";
 $aryQuery[] = "        left join m_group mg ";
@@ -731,6 +731,7 @@ foreach ($records as $i => $record) {
             $imgDetail = $doc->createElement("img");
             $imgDetail->setAttribute("src", "/img/type01/pc/detail_off_bt.gif");
             $imgDetail->setAttribute("id", $record["lngstockno"]);
+            $imgDetail->setAttribute("revisionno", $record["lngrevisionno"]);
             $imgDetail->setAttribute("class", "detail button");
             // td > img
             $tdDetail->appendChild($imgDetail);
@@ -752,6 +753,7 @@ foreach ($records as $i => $record) {
             $imgFix = $doc->createElement("img");
             $imgFix->setAttribute("src", "/img/type01/pc/renew_off_bt.gif");
             $imgFix->setAttribute("id", $record["lngstockno"]);
+            $imgFix->setAttribute("revisionno", $record["lngrevisionno"]);
             $imgFix->setAttribute("class", "fix button");
             // td > img
             $tdFix->appendChild($imgFix);
@@ -1006,6 +1008,7 @@ foreach ($records as $i => $record) {
             $imgDelete = $doc->createElement("img");
             $imgDelete->setAttribute("src", "/img/type01/pc/delete_off_bt.gif");
             $imgDelete->setAttribute("id", $record["lngstockno"]);
+            $imgDelete->setAttribute("revisionno", $record["lngrevisionno"]);
             $imgDelete->setAttribute("class", "delete button");
             // td > img
             $tdDelete->appendChild($imgDelete);
@@ -1027,6 +1030,7 @@ foreach ($records as $i => $record) {
             $imgInvalid = $doc->createElement("img");
             $imgInvalid->setAttribute("src", "/img/type01/pc/invalid_off_bt.gif");
             $imgInvalid->setAttribute("id", $record["lngstockno"]);
+            $imgInvalid->setAttribute("revisionno", $record["lngrevisionno"]);
             $imgInvalid->setAttribute("class", "invalid button");
             // td > img
             $tdInvalid->appendChild($imgInvalid);

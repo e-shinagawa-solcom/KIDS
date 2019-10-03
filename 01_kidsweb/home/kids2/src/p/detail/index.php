@@ -47,9 +47,10 @@ if (!fncCheckAuthority(DEF_FUNCTION_P4, $objAuth)) {
 }
 
 $lngProductNo = $aryData["lngProductNo"];
+$lngRevisionNo = $aryData["lngRevisionNo"];
 
 // 指定商品番号の商品データ取得用SQL文の作成
-$strQuery = fncGetProductNoToInfoSQL($lngProductNo);
+$strQuery = fncGetProductNoToInfoSQL($lngProductNo, $lngRevisionNo);
 
 // 詳細データの取得
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);

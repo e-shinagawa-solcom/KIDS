@@ -30,7 +30,7 @@
 *	@return strQuery 	$strQuery 検索用SQL文
 *	@access public
 */
-function fncGetReceiveHeadNoToInfoSQL ($lngReceiveNo, $lngreceivestatuscode)
+function fncGetReceiveHeadNoToInfoSQL ($lngReceiveNo, $lngRevisionNo, $lngreceivestatuscode)
 {
 	// SQL文の作成
 	$aryQuery[] = "SELECT distinct on (r.lngReceiveNo) r.lngReceiveNo as lngReceiveNo, r.lngRevisionNo as lngRevisionNo";
@@ -88,6 +88,7 @@ function fncGetReceiveHeadNoToInfoSQL ($lngReceiveNo, $lngreceivestatuscode)
 	$aryQuery[] = " LEFT JOIN m_MonetaryRateClass mr ON r.lngMonetaryRateCode = mr.lngMonetaryRateCode";
 
 	$aryQuery[] = " WHERE r.lngReceiveNo = " . $lngReceiveNo . "";
+	$aryQuery[] = " AND r.lngRevisionNo = " . $lngRevisionNo . "";
 	if ($lngreceivestatuscode != null) {
 		$aryQuery[] = " and r.lngreceivestatuscode = " . $lngreceivestatuscode ." ";
 	}
@@ -111,7 +112,7 @@ function fncGetReceiveHeadNoToInfoSQL ($lngReceiveNo, $lngreceivestatuscode)
 *	@return strQuery 	$strQuery 検索用SQL文
 *	@access public
 */
-function fncGetReceiveDetailNoToInfoSQL ( $lngReceiveNo)
+function fncGetReceiveDetailNoToInfoSQL ( $lngReceiveNo, $lngRevisionNo)
 {
 	// SQL文の作成
 	$aryQuery[] = "SELECT distinct on (rd.lngSortKey) rd.lngSortKey as lngRecordNo, ";
@@ -145,6 +146,7 @@ function fncGetReceiveDetailNoToInfoSQL ( $lngReceiveNo)
 	$aryQuery[] = " LEFT JOIN m_SalesClass ss USING (lngSalesClassCode)";
 	$aryQuery[] = " LEFT JOIN m_ProductUnit pu ON rd.lngProductUnitCode = pu.lngProductUnitCode";
 	$aryQuery[] = " WHERE rd.lngReceiveNo = " . $lngReceiveNo . " ";
+	$aryQuery[] = " AND rd.lngRevisionNo = " . $lngRevisionNo . " ";
 	$aryQuery[] = " ORDER BY rd.lngSortKey ASC ";
 
 	$strQuery = implode( "\n", $aryQuery );
