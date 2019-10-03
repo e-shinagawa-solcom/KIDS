@@ -45,10 +45,11 @@ if (!fncCheckAuthority(DEF_FUNCTION_PC6, $objAuth)) {
 }
 // 仕入番号の取得
 $lngStockNo = $aryData["lngStockNo"];
+$lngRevisionNo = $aryData["lngRevisionNo"];
 // エラー画面での戻りURL
 $strReturnPath = "../pc/search/index.php?strSessionID=" . $aryData["strSessionID"];
 // 削除対象の仕入NOの仕入情報取得
-$strQuery = fncGetStockHeadNoToInfoSQL($lngStockNo);
+$strQuery = fncGetStockHeadNoToInfoSQL($lngStockNo, $lngRevisionNo);
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 if ($lngResultNum) {
     if ($lngResultNum == 1) {
@@ -68,9 +69,6 @@ $objDB->freeResult($lngResultID);
 
 // トランザクション開始
 $objDB->transactionBegin();
-
-// m_stockのシーケンスを取得
-$sequence_m_stock = fncGetSequence('m_Stock.lngStockNo', $objDB);
 
 // 最小リビジョン番号の取得
 $strStockCode = $aryStockResult["strstockcode"];
@@ -92,7 +90,7 @@ $lngMinRevisionNo--;
 $aryQuery[] = "INSERT INTO m_stock (lngStockNo, lngRevisionNo, "; // 仕入NO、リビジョン番号
 $aryQuery[] = "strStockCode, lngInputUserCode, bytInvalidFlag, dtmInsertDate"; // 仕入コード、入力者コード、無効フラグ、登録日
 $aryQuery[] = ") values (";
-$aryQuery[] = $sequence_m_stock . ", "; // 1:仕入番号
+$aryQuery[] = $lngStockNo . ", "; // 1:仕入番号
 $aryQuery[] = $lngMinRevisionNo . ", "; // 2:リビジョン番号
 $aryQuery[] = "'" . $strStockCode . "', "; // 3:仕入コード．
 $aryQuery[] = $objAuth->UserCode . ", "; // 4:入力者コード

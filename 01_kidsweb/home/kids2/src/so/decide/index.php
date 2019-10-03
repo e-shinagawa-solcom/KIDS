@@ -45,8 +45,9 @@ if (!fncCheckAuthority(DEF_FUNCTION_SO4, $objAuth)) {
 }
 //詳細画面の表示
 $lngReceiveNo = $aryData["lngReceiveNo"];
+$lngRevisionNo = $aryData["lngRevisionNo"];
 // 指定受注番号の受注データ取得用SQL文の作成
-$strQuery = fncGetReceiveHeadNoToInfoSQL($lngReceiveNo, DEF_RECEIVE_APPLICATE);
+$strQuery = fncGetReceiveHeadNoToInfoSQL($lngReceiveNo, $lngRevisionNo, DEF_RECEIVE_APPLICATE);
 
 // 詳細データの取得
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
@@ -73,7 +74,7 @@ $aryNewResult["strnote"] = $aryResult["strnote"];
 
 ////////// 明細行の取得 ////////////////////
 // 指定受注番号の受注明細データ取得用SQL文の作成
-$strQuery = fncGetReceiveDetailNoToInfoSQL($lngReceiveNo);
+$strQuery = fncGetReceiveDetailNoToInfoSQL($lngReceiveNo, $lngRevisionNo);
 // $strQuery = fncGetReceiveDetailNoToInfoSQL($aryResult["strreceivecode2"], $aryResult["lngrevisionno"]);
 // 明細データの取得
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);

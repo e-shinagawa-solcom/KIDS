@@ -4,8 +4,9 @@
         url = '/pc/detail/index.php';
         sessionID = 'strSessionID=' + $.cookie('strSessionID');
         lngStockNo = 'lngStockNo=' + $(this).attr('id');
+        lngRevisionNo = 'lngRevisionNo=' + $(this).attr('revisionno');
 
         // 別ウィンドウで表示
-        open(url + '?' + sessionID + '&' + lngStockNo, 'display-detail', 'width=1000, height=600, resizable=yes, scrollbars=yes, menubar=no');
+        open(url + '?' + sessionID + '&' + lngStockNo + '&' + lngRevisionNo, 'display-detail', 'width=1000, height=600, resizable=yes, scrollbars=yes, menubar=no');
     });
 })();

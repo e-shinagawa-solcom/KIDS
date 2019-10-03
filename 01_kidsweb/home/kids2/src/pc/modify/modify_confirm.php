@@ -102,6 +102,7 @@ for ($i = 0; $i < count($aryDetailData); $i++) {
     $aryQuery[] = "  m_order ";
     $aryQuery[] = "WHERE";
     $aryQuery[] = "  lngorderno = " . $aryDetailData[$i]["lngOrderNo"] . " ";
+    $aryQuery[] = "  AND lngrevisionno = " . $aryDetailData[$i]["lngRevisionNo"] . " ";
     $aryQuery[] = "  AND bytinvalidflag = false ";
     $aryQuery[] = ") o on o.lngorderno = od.lngorderno";
     $aryQuery[] = " LEFT JOIN m_product p on p.strproductcode = od.strproductcode";
@@ -115,6 +116,7 @@ for ($i = 0; $i < count($aryDetailData); $i++) {
 	$aryQuery[] = " LEFT JOIN m_Group g on o.lnggroupcode = g.lnggroupcode";
 	$aryQuery[] = " LEFT JOIN m_User u on o.lngusercode = u.lngusercode";
     $aryQuery[] = " WHERE od.lngorderno = " . $aryDetailData[$i]["lngOrderNo"] . " ";
+    $aryQuery[] = "  AND od.lngrevisionno = " . $aryDetailData[$i]["lngRevisionNo"] . " ";
     $aryQuery[] = "  AND od.lngorderdetailno = " . $aryDetailData[$i]["lngOrderDetailNo"] . " ";
     $aryQuery[] = " ORDER BY od.lngSortKey";
     $strQuery = implode("\n", $aryQuery);

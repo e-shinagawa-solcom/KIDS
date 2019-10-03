@@ -90,28 +90,32 @@ elseif ( $lngResultNum === 0 )
 
 	// 詳細取得
     $aryQuery[] = "select";
-    $aryQuery[] = "pod.lngpurchaseorderno,";
-    $aryQuery[] = "pod.lngpurchaseorderdetailno,";
-    $aryQuery[] = "pod.lngrevisionno,";
-    $aryQuery[] = "pod.lngorderno,";
-    $aryQuery[] = "pod.lngorderdetailno,";
-    $aryQuery[] = "pod.lngorderrevisionno,";
-    $aryQuery[] = "pod.lngstocksubjectcode,";
-    $aryQuery[] = "pod.lngstockitemcode,";
-    $aryQuery[] = "pod.strstockitemname,";
-    $aryQuery[] = "pod.lngdeliverymethodcode,";
-    $aryQuery[] = "pod.strdeliverymethodname,";
-    $aryQuery[] = "pod.curproductprice,";
-    $aryQuery[] = "pod.lngproductquantity,";
-    $aryQuery[] = "pod.lngproductunitcode,";
-    $aryQuery[] = "pod.strproductunitname,";
-    $aryQuery[] = "pod.cursubtotalprice,";
-    $aryQuery[] = "pod.dtmdeliverydate,";
-    $aryQuery[] = "pod.strnote,";
-    $aryQuery[] = "pod.lngsortkey";
-    $aryQuery[] = "t_purchaseorderdetail pod";
-    $aryQuery[] = "WHERE pod.lngpurchaseorderno = " . $aryData["strReportKeyCode"];
-    $aryQuery[] = "ORDER BY pod.lngSortKey";
+    $aryQuery[] = "  pod.lngpurchaseorderno";
+    $aryQuery[] = "  , pod.lngpurchaseorderdetailno";
+    $aryQuery[] = "  , pod.lngrevisionno";
+    $aryQuery[] = "  , pod.lngorderno";
+    $aryQuery[] = "  , pod.lngorderdetailno";
+    $aryQuery[] = "  , pod.lngorderrevisionno";
+    $aryQuery[] = "  , pod.lngstocksubjectcode";
+    $aryQuery[] = "  , pod.lngstockitemcode";
+    $aryQuery[] = "  , pod.strstockitemname";
+    $aryQuery[] = "  , pod.lngdeliverymethodcode";
+    $aryQuery[] = "  , pod.strdeliverymethodname";
+    $aryQuery[] = "  , to_char(pod.curproductprice, '9,999,999,990') AS curproductprice";
+    $aryQuery[] = "  , to_char(pod.lngproductquantity, '9,999,999,990') AS lngproductquantity";
+    $aryQuery[] = "  , pod.lngproductunitcode";
+    $aryQuery[] = "  , pod.strproductunitname";
+    $aryQuery[] = "  , to_char(pod.cursubtotalprice, '9,999,999,990') AS cursubtotalprice";
+    $aryQuery[] = "  , to_char(pod.dtmdeliverydate, 'YYYY/MM/DD') AS dtmdeliverydate";
+    $aryQuery[] = "  , pod.strnote";
+    $aryQuery[] = "  , pod.lngsortkey ";
+    $aryQuery[] = "from";
+    $aryQuery[] = "  t_purchaseorderdetail pod ";
+    $aryQuery[] = "WHERE";
+    $aryQuery[] = "  pod.lngpurchaseorderno = " . $aryData["strReportKeyCode"];
+    $aryQuery[] = "  AND pod.lngrevisionno = " . $aryParts["lngrevisionno"];
+    $aryQuery[] = "ORDER BY";
+    $aryQuery[] = "  pod.lngSortKey";
 
 	$strQuery = join ( "", $aryQuery );
 	unset ( $aryQuery );
@@ -256,7 +260,7 @@ elseif ( $lngResultNum === 0 )
 
 
 	// 帳票テーブルにINSERT
-	$strQuery = "INSERT INTO t_Report VALUES ( $lngSequence, " . DEF_REPORT_ORDER . ", " . $aryParts["lngorderno"] . ", '', '$lngSequence' )";
+	$strQuery = "INSERT INTO t_Report VALUES ( $lngSequence, " . DEF_REPORT_ORDER . ", " . $aryParts["lngpurchaseorderno"] . ", '', '$lngSequence' )";
 
 //fncDebug("list_action.txt", SRC_ROOT . "list/result/cash/" . $lngSequence . ".tmpl", __FILE__ , __LINE__, "w" );
 //fncDebug("list_action.txt", $strQuery, __FILE__ , __LINE__, "a" );

@@ -68,6 +68,7 @@ if (!fncCheckAuthority(DEF_FUNCTION_P6, $objAuth)) {
 }
 
 $lngProductNo = $aryData['lngProductNo'];
+$lngRevisionNo = $aryData["lngRevisionNo"];
 
 $aryQuery = array();
 $aryQuery[] = "SELECT ";
@@ -115,8 +116,9 @@ $aryQuery[] = "lngCategoryCode, "; // カテゴリー
 $aryQuery[] = "strrevisecode "; // 再販コード
 
 $aryQuery[] = "FROM m_product ";
-$aryQuery[] = "WHERE  bytinvalidflag = false AND ";
-$aryQuery[] = "lngproductno = " . $lngProductNo ."";
+$aryQuery[] = "WHERE  bytinvalidflag = false";
+$aryQuery[] = " AND lngproductno = " . $lngProductNo ."";
+$aryQuery[] = " AND lngRevisionNo = " . $lngRevisionNo ."";
 $strQuery = implode("\n", $aryQuery);
 
 $objDB->freeResult($lngResultID);

@@ -176,7 +176,6 @@ if ($lngResultNum > 0) {
 
 // 帳票データ取得クエリ実行・テーブル生成
 $strQuery = implode("\n", $aryQuery);
-
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 for ($i = 0; $i < $lngResultNum; $i++) {
     $objResult = $objDB->fetchObject($lngResultID, $i);

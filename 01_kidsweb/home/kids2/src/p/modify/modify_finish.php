@@ -68,8 +68,6 @@ if (strcmp($aryData["strCustomerUserCode"], "") != 0) {
 
 // キー文字列を小文字に変換
 $aryData = array_change_key_case($aryData, CASE_LOWER);
-// 製品番号の設定
-$sequence_m_product = fncGetSequence('m_product.lngProductNo', $objDB);
 
 // リビジョン番号の設定
 //リビジョン番号を現在の最大値をとるように修正する　その際にSELECT FOR UPDATEを使用して、同じ製品に対してロック状態にする
@@ -141,7 +139,7 @@ $aryInsert[] = "lngcategorycode, ";
 $aryInsert[] = "lngrevisionno, ";
 $aryInsert[] = "strrevisecode ";
 $aryInsert[] = ")VALUES(";
-$aryInsert[] = "'" . $sequence_m_product . "',";
+$aryInsert[] = "'" . $aryData["lngProductNo"] . "',";
 $aryInsert[] = "'" . $aryData["strproductcode"] . "',";
 $aryInsert[] = "'" . mb_convert_encoding($aryData["strproductname"], "euc-jp", "UTF-8") . "',";
 $aryInsert[] = "'" . $aryData["strproductenglishname"] . "',";

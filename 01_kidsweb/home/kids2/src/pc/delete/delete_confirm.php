@@ -45,18 +45,19 @@ if (!fncCheckAuthority(DEF_FUNCTION_PC6, $objAuth)) {
 }
 // 仕入番号の取得
 $lngStockNo = $aryData["lngStockNo"];
+$lngRevisionNo = $aryData["lngRevisionNo"];
 // エラー画面での戻りURL
 $strReturnPath = "../pc/search/index.php?strSessionID=" . $aryData["strSessionID"];
 // 削除対象の仕入NOの仕入情報取得
-$strQuery = fncGetStockHeadNoToInfoSQL($lngStockNo);
+$strQuery = fncGetStockHeadNoToInfoSQL($lngStockNo, $lngRevisionNo);
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 if ($lngResultNum) {
     if ($lngResultNum == 1) {
         $aryResult = $objDB->fetchArray($lngResultID, 0);
 		// 該当仕入の状態が「締め済」の状態であれば
-        // if ($aryResult["lngstockstatuscode"] == DEF_STOCK_CLOSED) {
-        //     fncOutputError(711, DEF_WARNING, "", true, $strReturnPath, $objDB);
-        // }
+        if ($aryResult["lngstockstatuscode"] == DEF_STOCK_CLOSED) {
+            fncOutputError(711, DEF_WARNING, "", true, $strReturnPath, $objDB);
+        }
     } else {
         fncOutputError(703, DEF_ERROR, "該当データの取得に失敗しました", true, $strReturnPath, $objDB);
     }
@@ -70,7 +71,7 @@ $objDB->freeResult($lngResultID);
 $aryNewResult = fncSetStockHeadTabelData($aryResult);
 
 // 指定仕入番号の仕入明細データ取得用SQL文の作成
-$strQuery = fncGetStockDetailNoToInfoSQL($lngStockNo);
+$strQuery = fncGetStockDetailNoToInfoSQL($lngStockNo, $lngRevisionNo);
 // 明細データの取得
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 

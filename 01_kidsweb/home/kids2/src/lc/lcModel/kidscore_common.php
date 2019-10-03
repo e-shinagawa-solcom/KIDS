@@ -443,17 +443,17 @@ function fncGetCurDate($objDB)
 }
 
 /**
- *発注件数を取得する
+ *発注書件数を取得する
  *
  * @param [object] $objDB
  * @param [string] $lcgetdate
  * @return 発注件数
  */
-function fncGetOrderCount($objDB, $lcgetdate)
+function fncGetPurchaseOrderCount($objDB, $lcgetdate)
 {
     $sql = "
         select count(*)
-        from m_order
+        from m_purchaseorder
         where dtmInsertDate > $1
     ";
     //バインドの設定
@@ -462,58 +462,204 @@ function fncGetOrderCount($objDB, $lcgetdate)
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
-        echo "発注件数取得失敗しました。\n";
+        echo "発注書件数取得失敗しました。\n";
         exit;
     } else {
         return pg_fetch_object($result)->count;
     }
 }
 
+// /**
+//  *発注件数を取得する
+//  *
+//  * @param [object] $objDB
+//  * @param [string] $lcgetdate
+//  * @return 発注件数
+//  */
+// function fncGetOrderCount($objDB, $lcgetdate)
+// {
+//     $sql = "
+//         select count(*)
+//         from m_order
+//         where dtmInsertDate > $1
+//     ";
+//     //バインドの設定
+//     $bind = array($lcgetdate);
+
+//     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
+
+//     if (!$result) {
+//         echo "発注件数取得失敗しました。\n";
+//         exit;
+//     } else {
+//         return pg_fetch_object($result)->count;
+//     }
+// }
 /**
- * 発注データを取得する
+ * 発注書データを取得する
  *
  * @param [object] $objDB
  * @param [string] $date
  * @return 発注データリスト
  */
-function fncGetOrderData($objDB, $date)
+function fncGetPurchaseOrderData($objDB, $date)
 {
     $sql = "
         select
-            lngorderno
-            , lngcustomercompanycode
-            , dtmappropriationdate
-            , dtminsertdate
-            , lngdeliveryplacecode
-            , lngmonetaryunitcode
-            , strnote
-            , strrevisecode
-            , lngrevisionno
-            , strordercode
-            , lngmonetaryunitcode
-            , lngpayconditioncode
-            , lngorderstatuscode
-            , bytinvalidflag
-        from
-            m_order
-        where
-            dtminsertdate > $1
-            order by
-            strordercode
-            , lngorderno
-            , strrevisecode
-        ";
+        lngpurchaseorderno
+        , lngrevisionno
+        , strordercode
+        , lngcustomercode
+        , strcustomername
+        , strcustomercompanyaddreess
+        , strcustomercompanytel
+        , strcustomercompanyfax
+        , strproductcode
+        , strrevisecode
+        , strproductname
+        , strproductenglishname
+        , dtmexpirationdate
+        , lngmonetaryunitcode
+        , strmonetaryunitname
+        , strmonetaryunitsign
+        , lngmonetaryratecode
+        , strmonetaryratename
+        , lngpayconditioncode
+        , strpayconditionname
+        , lnggroupcode
+        , strgroupname
+        , txtsignaturefilename
+        , lngusercode
+        , strusername
+        , lngdeliveryplacecode
+        , strdeliveryplacename
+        , curtotalprice
+        , dtminsertdate
+        , lnginsertusercode
+        , strinsertusername
+        , strnote
+        , lngprintcount 
+    from
+        m_purchaseorder 
+    where
+        dtminsertdate > $1 
+    order by
+        strordercode
+        , lngpurchaseorderno
+    ";
     //バインドの設定
     $bind = array($date);
 
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
-        echo "発注データ取得失敗しました。\n";
+        echo "発注書データ取得失敗しました。\n";
         exit;
     } else {
         return pg_fetch_all($result);
     }
+}
+// /**
+//  * 発注データを取得する
+//  *
+//  * @param [object] $objDB
+//  * @param [string] $date
+//  * @return 発注データリスト
+//  */
+// function fncGetOrderData($objDB, $date)
+// {
+//     $sql = "
+//         select
+//             lngorderno
+//             , lngcustomercompanycode
+//             , dtmappropriationdate
+//             , dtminsertdate
+//             , lngdeliveryplacecode
+//             , lngmonetaryunitcode
+//             , strnote
+//             , strrevisecode
+//             , lngrevisionno
+//             , strordercode
+//             , lngmonetaryunitcode
+//             , lngpayconditioncode
+//             , lngorderstatuscode
+//             , bytinvalidflag
+//         from
+//             m_order
+//         where
+//             dtminsertdate > $1
+//             order by
+//             strordercode
+//             , lngorderno
+//             , strrevisecode
+//         ";
+//     //バインドの設定
+//     $bind = array($date);
+
+//     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
+
+//     if (!$result) {
+//         echo "発注データ取得失敗しました。\n";
+//         exit;
+//     } else {
+//         return pg_fetch_all($result);
+//     }
+// }
+
+/**
+ * 発注書明細データを取得する
+ *
+ * @param [object] $objDB
+ * @param [integer] $lngpurchaseorderno
+ * @param [integer] $lngrevisionno
+ * @return 発注明細リスト
+ */
+function fncGetPurchaseOrderDetail($objDB, $lngpurchaseorderno, $lngrevisionno)
+{
+    $sql = "
+        select
+            tp.lngpurchaseorderno
+            , tp.lngpurchaseorderdetailno
+            , tp.lngrevisionno
+            , tp.lngorderno
+            , tp.lngorderdetailno
+            , tp.lngorderrevisionno
+            , tp.lngstocksubjectcode
+            , tp.lngstockitemcode
+            , tp.strstockitemname
+            , tp.lngdeliverymethodcode
+            , tp.strdeliverymethodname
+            , tp.curproductprice
+            , tp.lngproductquantity
+            , tp.lngproductunitcode
+            , tp.strproductunitname
+            , tp.cursubtotalprice
+            , tp.dtmdeliverydate
+            , tp.strnote
+            , tp.lngsortkey
+            , o.dtmappropriationdateq 
+        from
+            t_purchaseorderdetail tp 
+            left join m_order o 
+            on tp.lngorderno = o.lngorderno 
+        where
+            tp.lngpurchaseorderno = $1
+            and tp.lngrevisionno = $2
+        order by
+            tp.lngorderdetailno
+        ";
+    //バインドの設定
+    $bind = array($lngpurchaseorderno, $lngrevisionno);
+
+    $result = pg_query_params($objDB->ConnectID, $sql, $bind);
+
+    if (!$result) {
+        echo "発注書明細データ取得失敗しました。\n";
+        exit;
+    } else {
+        return pg_fetch_all($result);
+    }
+
 }
 
 /**
@@ -595,70 +741,97 @@ function fncGetCompanyNameAndCountryName($objDB, $lngcompanycode)
 
 }
 
+// /**
+//  * 発注コードにより発注データを取得する
+//  *
+//  * @param [object] $objDB
+//  * @param [string] $date
+//  * @return 発注データリスト
+//  */
+// function fncGetOrderDataByOrderCode($objDB, $pono, $poreviseno)
+// {
+//     $sql = "
+//         select
+//             lngorderno
+//             , lngrevisionno
+//             , dtmappropriateiondate
+//             , lngorderstatuscode
+//             , bytinvalidflag
+//         from
+//             m_order
+//         where
+//             strordercode = $1
+//             and strrevisecode = $2
+//         order by
+//             lngorderno desc
+//         ";
+//     //バインドの設定
+//     $bind = array($pono, $poreviseno);
+
+//     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
+
+//     if (!$result) {
+//         echo "発注コードにより発注データ取得失敗しました。\n";
+//         exit;
+//     } else {
+//         return pg_fetch_all($result);
+//     }
+// }
+
 /**
- * 発注コードにより発注データを取得する
- *
- * @param [object] $objDB
- * @param [string] $date
- * @return 発注データリスト
- */
-function fncGetOrderDataByOrderCode($objDB, $pono, $poreviseno)
-{
-    $sql = "
-        select
-            lngorderno
-            , lngrevisionno
-            , dtmappropriateiondate
-            , lngorderstatuscode
-            , bytinvalidflag
-        from
-            m_order
-        where
-            strordercode = $1
-            and strrevisecode = $2
-        order by
-            lngorderno desc
-        ";
-    //バインドの設定
-    $bind = array($pono, $poreviseno);
-
-    $result = pg_query_params($objDB->ConnectID, $sql, $bind);
-
-    if (!$result) {
-        echo "発注コードにより発注データ取得失敗しました。\n";
-        exit;
-    } else {
-        return pg_fetch_all($result);
-    }
-}
-
-/**
- * 削除復活発注データを取得する
+ * 削除復活発注書データを取得する
  *
  * @param [object] $objDB
  * @return 発注コードリスト
  */
-function fncGetDeletedOrderData($objDB)
+function fncGetDeletedPurchaseOrderData($objDB)
 {
     $sql = "
         select
             strordercode
         from
-            m_order
+            m_purchaseorder
         where
             lngrevisionno = -1
-            and bytinvalidflag = true
         ";
 
     $result = pg_query($objDB->ConnectID, $sql);
 
     if (!$result) {
-        echo "削除復活発注データ取得失敗しました。\n";
+        echo "削除復活発注書データ取得失敗しました。\n";
         exit;
     } else {
         return pg_fetch_all($result);
     }
 }
+
+// /**
+//  * 削除復活発注データを取得する
+//  *
+//  * @param [object] $objDB
+//  * @return 発注コードリスト
+//  */
+// function fncGetDeletedOrderData($objDB)
+// {
+//     $sql = "
+//         select
+//             strordercode
+//         from
+//             m_order
+//         where
+//             lngrevisionno = -1
+//             and bytinvalidflag = true
+//         ";
+
+//     $result = pg_query($objDB->ConnectID, $sql);
+
+//     if (!$result) {
+//         echo "削除復活発注データ取得失敗しました。\n";
+//         exit;
+//     } else {
+//         return pg_fetch_all($result);
+//     }
+// }
 
 /**
  * 通貨別PO番号別の合計金額取得

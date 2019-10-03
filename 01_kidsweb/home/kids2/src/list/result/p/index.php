@@ -204,8 +204,6 @@ if ($lngResultNum > 0) {
 
 // 帳票データ取得クエリ実行・テーブル生成
 $strQuery = join("\n", $aryQuery);
-echo $strQuery;
-return;
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 for ($i = 0; $i < $lngResultNum; $i++) {
     $objResult = $objDB->fetchObject($lngResultID, $i);

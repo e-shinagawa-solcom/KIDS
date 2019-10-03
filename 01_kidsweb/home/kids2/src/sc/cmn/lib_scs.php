@@ -30,7 +30,7 @@
 *	@return strQuery 	$strQuery 検索用SQL文
 *	@access public
 */
-function fncGetSalesHeadNoToInfoSQL ( $lngSalesNo )
+function fncGetSalesHeadNoToInfoSQL ( $lngSalesNo, $lngRevisionNo )
 {
 	// SQL文の作成
 	$aryQuery[] = "SELECT distinct on (s.lngSalesNo) s.lngSalesNo as lngSalesNo, s.lngRevisionNo as lngRevisionNo";
@@ -94,6 +94,7 @@ function fncGetSalesHeadNoToInfoSQL ( $lngSalesNo )
 	$aryQuery[] = " LEFT JOIN m_MonetaryRateClass mr ON s.lngMonetaryRateCode = mr.lngMonetaryRateCode";
 
 	$aryQuery[] = " WHERE s.lngSalesNo = " . $lngSalesNo . "";
+	$aryQuery[] = " AND s.lngRevisionNo = " . $lngRevisionNo . "";
 
 	$strQuery = implode( "\n", $aryQuery );
 
@@ -117,7 +118,7 @@ function fncGetSalesHeadNoToInfoSQL ( $lngSalesNo )
 *	@return strQuery 	$strQuery 検索用SQL文
 *	@access public
 */
-function fncGetSalesDetailNoToInfoSQL ( $lngSalesNo )
+function fncGetSalesDetailNoToInfoSQL ( $lngSalesNo, $lngRevisionNo )
 {
 // 2004.03.30 suzukaze update start
 	// SQL文の作成
@@ -168,6 +169,7 @@ function fncGetSalesDetailNoToInfoSQL ( $lngSalesNo )
 	$aryQuery[] = " LEFT JOIN m_Tax t USING (lngTaxCode)";
 
 	$aryQuery[] = " WHERE sd.lngSalesNo = " . $lngSalesNo . "";
+	$aryQuery[] = " AND sd.lngRevisionNo = " . $lngRevisionNo . "";
 
 	$aryQuery[] = " ORDER BY sd.lngSortKey ASC ";
 

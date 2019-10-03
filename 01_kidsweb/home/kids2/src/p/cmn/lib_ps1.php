@@ -5,10 +5,11 @@
 *	指定商品情報の取得用ＳＱＬ文作成関数
 *
 *	@param  Integer 	$lngProductNo 			取得する商品番号
+*	@param  Integer 	$lngRevisionNo 			取得する商品リビジョン番号
 *	@return strQuery 	$strQuery 検索用SQL文
 *	@access public
 */
-function fncGetProductNoToInfoSQL ( $lngProductNo )
+function fncGetProductNoToInfoSQL ( $lngProductNo, $lngRevisionNo )
 {
 	// SQL文の作成
 	$aryQuery[] = "SELECT distinct on (p.lngProductNo) p.lngProductNo as lngProductNo, \n";
@@ -153,6 +154,7 @@ function fncGetProductNoToInfoSQL ( $lngProductNo )
 	$aryQuery[] = " LEFT JOIN  m_goodsplanprogress m_gp on m_gp.lnggoodsplanprogresscode = tt_gp.lnggoodsplanprogresscode) t_gp\n";
 
 	$aryQuery[] = " WHERE p.lngProductNo = " . $lngProductNo . "";
+	$aryQuery[] = " AND p.lngRevisionNo = " . $lngRevisionNo . "";
 
 	$aryQuery[] = " AND t_gp.lngProductNo = p.lngProductNo\n";
 	$aryQuery[] = " AND t_gp.lngRevisionNo = ( SELECT MAX( t_gp1.lngRevisionNo ) FROM t_GoodsPlan t_gp1 WHERE t_gp1.lngProductNo = p.lngProductNo )\n";

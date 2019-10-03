@@ -19,7 +19,7 @@ function fncGetLcData($objDB, $lcModel, $usrId, $date, $time)
     $lcGetDate_time = $lcGetDateArry[1];
 
     // 発注件数の取得
-    $orderCount = fncGetOrderCount($objDB, $lcGetDate);
+    $orderCount = fncGetPurchaseOrderCount($objDB, $lcGetDate);
 
     // リバイズ情報の初期化
     $reviseDataArry = array();
@@ -29,13 +29,13 @@ function fncGetLcData($objDB, $lcModel, $usrId, $date, $time)
         // t_aclcinfoデータの削除
         $lcModel->deleteAcLcInfo($lcGetDate_date, $lcGetDate_time);
 
-        // 発注データを取得する
-        $orderArry = fncGetOrderData($objDB, $lcGetDate);
+        // 発注書データを取得する
+        $orderArry = fncGetPurchaseOrderData($objDB, $lcGetDate);
         // 若納品日の初期化
         $strWorkDate = "9999/99/99";
 
         foreach ($orderArry as $orderData) {
-            $pono = $orderData["lngorderno"];
+            $pono = $orderData["lngpurchaseorderno"];
             $poreviseno = $orderData["lngrevisionno"];
             $intPayFlg = false;
             $payconditioncode = $orderData["lngpayconditioncode"];
@@ -44,13 +44,13 @@ function fncGetLcData($objDB, $lcModel, $usrId, $date, $time)
             $orderDetailArry = fncGetOrderDetail($objDB, $pono, $poreviseno);
             // // ワークフロー状態を取得する
             // $strDataState = fncWorkFlowStatus($orderData);
-            // 発注データのリビジョン番号 < 0 かつ　発注データの無効フラグ = falseの場合
-            if ($poreviseno < 0 && $orderData["bytinvalidflag"] == false) {
+            // 発注データのリビジョン番号 < 0の場合
+            if ($poreviseno < 0) {
                 // t_aclcinfoの状態を削除に更新する
                 $lcModel->updateAcLcStateToDelete($pono, $strDataState);
             } else {
-                // 発注データの支払条件コード = 2 かつ 発注データのリバイズコード <> '00'の場合
-                if ($payconditioncode == DEF_PAYCONDITION_TT && $orderData["strrevisecode"] != '00') {
+                // 発注データの支払条件コード = 2 かつ 発注データのリビジョン番号 <> 0の場合
+                if ($payconditioncode == DEF_PAYCONDITION_TT && $poreviseno != 0) {
                     // t_aclcinfoに同一Ponoが存在しているかをチェックする
                     $acLcCount = $lcModel->getAcLcCount($pono);
                     if ($acLcCount > 0) {
@@ -58,8 +58,8 @@ function fncGetLcData($objDB, $lcModel, $usrId, $date, $time)
                     }
                 }
 
-                // 発注データのリバイズコード <> '00'の場合
-                if ($orderData["strrevisecode"] != '00') {
+                // 発注データのリビジョン番号 <> 0の場合
+                if ($poreviseno　!= 0) {
                     // t_aclcinfoより最新リバイズデータのオープン月と銀行依頼日を取得する
                     $acLcInfoArry = $lcModel->getAcLcInfoByPono($pono);
                 }
@@ -124,7 +124,7 @@ function fncGetLcData($objDB, $lcModel, $usrId, $date, $time)
                             }
                         } else {
                             $reviseNum = 0;
-                            if ($orderData["strrevisecode"] != "") {
+                            if ($orderData["lngrevisionno"] != 0) {
                                 $reviseDataArry[$reviseNum]["pono"] = $pono;
                                 $reviseDataArry[$reviseNum]["polineno"] = $polineno;
                                 $reviseDataArry[$reviseNum]["poreviseno"] = $poreviseno;
@@ -141,24 +141,24 @@ function fncGetLcData($objDB, $lcModel, $usrId, $date, $time)
                             $data["postate"] = "承認済";
                             $data["opendate"] = date("Ym");
                             $data["unloadingareas"] = $companyNameAndCountryName["strcountryenglishname"];
-                            $payfcd = fncGetMasterValue("m_company", "lngcompanycode", "strcompanyDisplaycode", $orderData["lngcustomercompanycode"], '', $objDB);
+                            $payfcd = fncGetMasterValue("m_company", "lngcompanycode", "strcompanyDisplaycode", $orderData["lngcustomercode"], '', $objDB);
                             $data["payfcd"] = $payfcd;
                             $payfinfo = $lcModel->getAcPayfInfo($payfcd);
                             $data["payfnameomit"] = $payfinfo["payfnameomit"];
                             $data["payfnameformal"] = $payfinfo["payfnameformal"];
-                            $data["productcd"] = $orderDetailData["strproductcode"];
-                            $data["productname"] = fncGetMasterValue("m_product", "strproductcode", "strproductname", $orderDetailData["strproductcode"] . ":str", '', $objDB);
-                            $data["productnamee"] = fncGetMasterValue("m_product", "strproductcode", "strproductenglishname", $orderDetailData["strproductcode"] . ":str", '', $objDB);
+                            $data["productcd"] = $orderData["strproductcode"];
+                            $data["productname"] = $orderData["strproductname"];
+                            $data["productnamee"] = orderData["strproductenglishname"];
                             $data["productnumber"] = $orderDetailData["lngproductquantity"];
-                            $data["unitname"] = fncGetMasterValue("m_productunit", "lngproductunitcode", "strproductunitname", $orderData["lngproductunitcode"], '', $objDB);
+                            $data["unitname"] = $orderDetailData["strproductunitname"];
                             $data["unitprice"] = $orderDetailData["curproductprice"];
                             $data["moneyprice"] = $orderDetailData["cursubtotalprice"];
                             $data["shipstartdate"] = $orderDetailData["dtmdeliverydate"];
                             $data["shipenddate"] = $orderDetailData["dtmdeliverydate"];
-                            $data["sumdate"] = $orderData["dtmappropriationdate"];
-                            $data["poupdatedate"] = $orderData["dtminsertdate"];
+                            $data["sumdate"] = $orderDetailData["dtmappropriationdate"];
+                            $data["poupdatedate"] = $orderDetailData["dtminsertdate"];
                             $data["deliveryplace"] = $companyNameAndCountryName["strCompanyDisplayName"];
-                            $data["currencyclass"] = fncGetMasterValue("m_monetaryunit", "lngmonetaryunitcode", "strmonetaryunitname", $orderData["lngmonetaryunitcode"], '', $objDB);
+                            $data["currencyclass"] = $orderData["strmonetaryunitsign"];
                             $data["lcnote"] = $orderData["strnote"];
                             $dtmdeliverydate = $orderDetailData["dtmdeliverydate"];
                             $data["shipterm"] = date("Y/m/d", $dtmdeliverydate . strtotime("+10 day"));
@@ -369,7 +369,7 @@ function fncUpdUnapprovedLcInfo($lcModel)
 function fncRevivalDeletedLcInfo($objDB, $lcModel)
 {
     // 削除復活データのPO番号を取得する
-    $orderDataArry = fncGetDeletedOrderData($objDB);
+    $orderDataArry = fncGetDeletedPurchaseOrderData($objDB);
     if (!$orderDataArry) {
         return;
     }

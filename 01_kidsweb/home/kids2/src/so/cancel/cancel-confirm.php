@@ -45,15 +45,16 @@ if ( !fncCheckAuthority( DEF_FUNCTION_SO2, $objAuth ) )
 {
 	fncOutputError ( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
-// 406 受注管理（確定取消）
-if ( !fncCheckAuthority( DEF_FUNCTION_SO6, $objAuth ) )
+// 405 受注管理（確定取消）
+if ( !fncCheckAuthority( DEF_FUNCTION_SO5, $objAuth ) )
 {
 	fncOutputError ( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
 //詳細画面の表示
 $lngReceiveNo = $aryData["lngReceiveNo"];
+$lngRevisionNo = $aryData["lngRevisionNo"];
 // 指定受注番号の受注データ取得用SQL文の作成
-$strQuery = fncGetReceiveHeadNoToInfoSQL($lngReceiveNo, DEF_RECEIVE_ORDER);
+$strQuery = fncGetReceiveHeadNoToInfoSQL($lngReceiveNo, $lngRevisionNo, DEF_RECEIVE_ORDER);
 
 // 詳細データの取得
 list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
@@ -76,7 +77,7 @@ else
 $objDB->freeResult( $lngResultID );
 ////////// 明細行の取得 ////////////////////
 // 指定受注番号の受注明細データ取得用SQL文の作成
-$strQuery = fncGetReceiveDetailNoToInfoSQL ($lngReceiveNo);
+$strQuery = fncGetReceiveDetailNoToInfoSQL ($lngReceiveNo, $lngRevisionNo);
 
 // 明細データの取得
 list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );

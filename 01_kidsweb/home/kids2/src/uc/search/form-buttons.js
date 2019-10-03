@@ -17,8 +17,56 @@
         // テキスト入力箇所をリセット
         workForm.find('input[type="text"], textarea').val('');
         workForm.find('select').val('');
+        var checks = workForm.find('input[type="checkbox"]');
+        // for(var i = 0;i < checks.length;i++){
+        // 	checks[i].checked = false;
+        // }
+		workForm.find('input[type="checkbox"][name="IsDisplay_lngUserCodeVisible"]').each(function(index){
+            $(this).attr('checked', true);
+            // alert($(this).attr('name'));
+        });
+        // var target = $('input[type="checkbox"][name="IsDisplay_lngUserCodeVisible"]');
+        // alert(target);
+        // target.checked = false;
+        // // target.attr('checked', true);
+        // restoreCookieDispayItems1(workForm);
     });
+// 検索画面にて、表示項目のチェック状態を保存されたCOOKIEから復元する
+function restoreCookieDispayItems1(form){
+    // 保存対象のチェックボックス要素の取得
+    var items = $(form).find();
+    // COOKIE keyname
+    var keyname = $(form).attr('name') + '_IsDisplay';
+    // 表示フラグたち
+    var flags = $.cookie(keyname);
+    // 区切り文字
+    var delimiter = '&';
+    var sepalator = ':';
 
+    if (flags)
+    {
+        var conditions = flags.split(delimiter);
+
+        $.each(conditions, function(){
+            var sep = this.split(sepalator);
+            var name = sep[0];
+            var value = sep[1];
+            workForm.find('input[type="checkbox"][name="' + name + '"]').each(function(index){
+                switch (value) {
+                    case "true":
+                    $(this).attr('checked', true);
+                        break;
+                    case "false":
+                    alert($(this).attr('name'));
+                    $(this).attr('checked', false);
+                        break;
+                    default:
+                        break;
+                }
+            });
+        });
+    }
+}
     // 検索ボタン押下時の処理
     btnSearch.on('click', function () {
         if (workForm.valid()) {

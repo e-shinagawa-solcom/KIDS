@@ -88,19 +88,11 @@
 			</div>
 			<div class="condition">
 				<div class="input-group">
-					<div class="col-10 block input-group">
+					<div class="col-9 block input-group">
 						<div class="col-2">
 							<label>シミュレート</label>
 						</div>
-						<div class="col-2 input-group pr-0">
-							<div>
-								<label>年月</label>
-							</div>
-							<div class="col-6 p-0">
-								<input type="text" class="form-control txt-kids" id="simulateYm">
-							</div>
-						</div>
-						<div class="col-8 simulate-labels pr-0 pl-0 pt-0">
+						<div class="col-10 simulate-labels pr-0 pl-0 pt-0">
 							<label style="background-color: rgb(192,192,192);">有効</label>
 							<label style="background-color: rgb(255,200,50);">リバイズ</label>
 							<label style="background-color: rgb(255,128,128);">削除</label>
@@ -109,9 +101,6 @@
 							<label style="background-color: rgb(100,100,255);">アメンド要</label>
 							<label style="background-color: rgb(255,180,180);">T／T（無効）</label>
 						</div>
-					</div>
-					<div class="col-2 input-group">
-						<button type="button" class="btn btn-light btn-xs btn-kids" id="simulateBtn" onclick="getSimulateLcInfo()">シミュレート</button>
 					</div>
 				</div>
 
@@ -203,17 +192,11 @@
 			<button type="button" class="btn btn-light btn-xs btn-kids selected-btn" id="allBtn" onclick="switchGetModeBtn(0, true)">全データ</button>
 
 		</div>
-		<div class="col-8 ml-5" style="margin-top: 3px;">
+		<div class="col-9" style="margin-top: 3px;" align="right">
 			<!-- PONOソート -->
 			<button type="button" class="btn btn-light btn-xs btn-kids" id="ponoSortBtn" onclick="getLcInfo(1)">PONoソート</button>
 			<!-- 編集 -->
 			<button type="button" class="btn btn-light btn-xs btn-kids" id="editBtn" onclick="openEdit()">編集</button>
-			<!-- インポートボタン -->
-
-			<button type="button" class="btn btn-light btn-xs btn-kids" id="importBtn" onclick="chooseFile()">インポート</button>
-			<input type="file" id="txtFile" style="display:none" onchange="importFile()" accept="text/plain">
-			<!-- エクスポートボタン -->
-			<button type="button" class="btn btn-light btn-xs btn-kids" id="exportBtn" onclick="exportFile()">エクスポート</button>
 			<!-- 帳票出力 -->
 			<button type="button" class="btn btn-light btn-xs btn-kids" id="reportOutputBtn" onclick="reportOutputBtn();">帳票出力</button>
 			<!-- 反映 -->

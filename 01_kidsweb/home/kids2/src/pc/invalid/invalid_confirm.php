@@ -50,8 +50,9 @@ if ( !fncCheckAuthority( DEF_FUNCTION_PC7, $objAuth ) )
 }
 // 仕入番号の取得
 $lngStockNo = $aryData["lngStockNo"];
+$lngRevisionNo = $aryData["lngRevisionNo"];
 // 無効対象の仕入NOの仕入情報取得
-$strQuery = fncGetStockHeadNoToInfoSQL($lngStockNo);
+$strQuery = fncGetStockHeadNoToInfoSQL($lngStockNo, $lngRevisionNo);
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 if ($lngResultNum) {
     if ($lngResultNum == 1) {
@@ -73,7 +74,7 @@ $objDB->freeResult($lngResultID);
 $aryNewResult = fncSetStockHeadTabelData($aryResult);
 
 // 指定仕入番号の仕入明細データ取得用SQL文の作成
-$strQuery = fncGetStockDetailNoToInfoSQL($lngStockNo);
+$strQuery = fncGetStockDetailNoToInfoSQL($lngStockNo, $lngRevisionNo);
 // 明細データの取得
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
