@@ -1027,15 +1027,61 @@ class estimateDB extends clsDB {
             $strQuery .= " ON mgr.lnggroupcode = mg.lnggroupcode";
             $strQuery .= " INNER JOIN m_user mu";
             $strQuery .= " ON mgr.lngusercode = mu.lngusercode";
-            $strQuery .= " INNER JOIN m_company d";
-            $strQuery .= " ON mg.lngcompanycode = d.lngcompanycode";
-            // $strQuery .= " WHERE mgr.bytdefaultflag = TRUE";
-            $strQuery .= " AND mg.bytgroupdisplayflag = TRUE";
+            $strQuery .= " INNER JOIN m_company mc";
+            $strQuery .= " ON mg.lngcompanycode = mc.lngcompanycode";
+
+            $strQuery .= " INNER JOIN m_groupattributerelation mgar";
+            $strQuery .= " ON mg.lnggroupcode = mgar.lnggroupcode";
+
+            $strQuery .= " WHERE mg.bytgroupdisplayflag = TRUE";
             $strQuery .= " AND mu.bytuserdisplayflag = TRUE";
-            $strQuery .= " AND d.lngcompanycode = 1";
+            $strQuery .= " AND mc.lngcompanycode = 1";
             $strQuery .= " AND mu.bytinvalidflag = FALSE";
+            $strQuery .= " AND mgar.lngattributecode = ". DEF_GROUP_ATTRIBUTE_CODE_SALES_GROUP;
             $strQuery .= " ORDER BY mg.strgroupdisplaycode ASC, mg.strgroupdisplayname ASC,";
             $strQuery .= " mu.struserdisplaycode ASC";
+            
+            list ($resultID, $resultNumber) = fncQuery($strQuery, $this);
+
+            if ($resultNumber > 0) {
+                for ($i = 0; $i < $resultNumber; ++$i) {
+                    $result = pg_fetch_object($resultID, $i);
+
+                    $ret[] = $result;
+                }
+            } else {
+                $ret = false;
+            }
+        }
+        return $ret;
+    }
+
+    // 開発担当者のドロップダウンリストを取得する
+    public function getDropdownForDevelopUser() {
+        if (!$this->isOpen()) {
+            return false;
+        } else {
+            $strQuery = "SELECT";
+            $strQuery .= " mu.struserdisplaycode ||':'|| mu.struserdisplayname as usercode";
+            $strQuery .= " FROM m_grouprelation mgr";
+            $strQuery .= " INNER JOIN m_group mg";
+            $strQuery .= " ON mgr.lnggroupcode = mg.lnggroupcode";
+            $strQuery .= " INNER JOIN m_user mu";
+            $strQuery .= " ON mgr.lngusercode = mu.lngusercode";
+            $strQuery .= " INNER JOIN m_company mc";
+            $strQuery .= " ON mg.lngcompanycode = mc.lngcompanycode";
+
+            $strQuery .= " INNER JOIN m_groupattributerelation mgar";
+            $strQuery .= " ON mg.lnggroupcode = mgar.lnggroupcode";
+
+            $strQuery .= " WHERE mg.bytgroupdisplayflag = TRUE";
+            $strQuery .= " AND mu.bytuserdisplayflag = TRUE";
+            $strQuery .= " AND mc.lngcompanycode = 1";
+            $strQuery .= " AND mu.bytinvalidflag = FALSE";
+            $strQuery .= " AND mgar.lngattributecode = ". DEF_GROUP_ATTRIBUTE_CODE_DEVELOP_GROUP;
+            $strQuery .= " ORDER BY mg.strgroupdisplaycode ASC, mg.strgroupdisplayname ASC,";
+            $strQuery .= " mu.struserdisplaycode ASC";
+            
             list ($resultID, $resultNumber) = fncQuery($strQuery, $this);
 
             if ($resultNumber > 0) {

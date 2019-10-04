@@ -557,6 +557,26 @@ class workSheetConst {
         self::HIDDEN_NAME_LIST
     ];
 
+    // ワークシート全てのセル名称リスト
+    const ALL_WORK_SHEET_CELL_NAME_LIST_DOWNLOAD = [
+        self::SET_POSITION_NAME_LIST,
+        self::PRODUCT_SALES_HEADER_NAME_LIST,
+        self::PRODUCT_SALES_RESULT_NAME_LIST,
+        self::RECEIVE_FIXED_COST_HEADER_CELL,
+        self::RECEIVE_FIXED_COST_RESULT_CELL,
+        self::ORDER_FIXED_COST_HEADER_CELL,
+        self::ORDER_FIXED_COST_RESULT_CELL,
+        self::ORDER_ELEMENT_COST_HEADER_CELL,
+        self::ORDER_ELEMENT_COST_RESULT_CELL,
+        self::WORK_SHEET_HEADER_DATA_CELL,
+        self::WORK_SHEET_HEADER_TITLE_CELL,
+        self::WORK_SHEET_FOOTER_DATA_CELL,
+        self::WORK_SHEET_FOOTER_TITLE_CELL,
+        self::HIDDEN_NAME_LIST,
+        self::DIVISION_SUBJECT_DROPDOWN_CELL_NAME,
+        self::CLASS_ITEM_DROPDOWN_CELL_NAME
+    ];
+
     // 全てのセル名称を並列で使用する場合
     public static function getAllNameList() {
         $beforeNameList = self::ALL_WORK_SHEET_CELL_NAME_LIST;
@@ -567,6 +587,19 @@ class workSheetConst {
         }
         return $afterCellNameList;
     }
+
+    // 全てのセル名称を並列で使用する場合
+    public static function getAllNameListForDownload() {
+        $beforeNameList = self::ALL_WORK_SHEET_CELL_NAME_LIST_DOWNLOAD;
+        foreach ($beforeNameList as $cellNameList) {
+            foreach ($cellNameList as $cellName) {
+                $afterCellNameList[] = $cellName;
+            }
+        }
+        return $afterCellNameList;
+    }
+
+
 
     /**
     * 対象エリアのセル名称リストの取得
@@ -640,6 +673,9 @@ class workSheetConst {
         DEF_MONETARY_USD => 4,
         DEF_MONETARY_HKD => 4,
     ];
+
+    // 行コピー時にコピー処理を行う列の範囲
+    const WORK_SHEET_COPY_COLUMN_NUMBER = 27;
 
 
     // ワークシート情報のデフォルト値

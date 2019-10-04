@@ -155,7 +155,7 @@ table.temporaryTable > tbody > tr > td
 .sheetEditHeader
 {
 	position: relative;
-	width: 981px;
+	width: auto;
 	vertical-align: middle;
 	display: flex;
 }
@@ -199,7 +199,7 @@ table.temporaryTable > tbody > tr > td
 {
 	display: flex;
 	flex-wrap: wrap-reverse;
-	width: 57%;
+	width: 580px;
 }
 
 .data-buttons div
@@ -211,8 +211,9 @@ table.temporaryTable > tbody > tr > td
 .action-buttons
 {
 	display: flex;
-	vertical-align: middle;
-	width: 42%;
+	align-items: center;
+	justify-content: flex-end;
+	width: 500px;
 }
 
 
@@ -225,7 +226,7 @@ div.action-buttons > button
 	cursor: pointer;
 	cursor: hand;
 	padding: 0px;
-	margin: 5px;
+	margin: 8px;
 }
 
 .status_applicate
@@ -250,13 +251,13 @@ div.action-buttons > button
 	vertical-align: middle;
 }
 
-.checkbox_order
+.checkbox_cancel
 {
 	width: auto;
 	vertical-align: middle;
 }
 
-.btn_confirm
+.btn_confirm_receive
 {
 	width: auto;
 	vertical-align: middle;
@@ -266,7 +267,17 @@ div.action-buttons > button
     cursor: hand;
 }
 
-.btn_cancel
+.btn_confirm_order
+{
+	width: auto;
+	vertical-align: middle;
+	box-shadow: 1px 1px 2px;
+	padding: 3px;
+	cursor: pointer;
+    cursor: hand;
+}
+
+.btn_cancel_order
 {
 	width: auto;
 	vertical-align: middle;
@@ -290,7 +301,7 @@ div.action-buttons > button
 {
 	left: 100px;
 	top: 0;
-	width: 982px;
+	width: 1120px;
 	height: auto;
 }
 

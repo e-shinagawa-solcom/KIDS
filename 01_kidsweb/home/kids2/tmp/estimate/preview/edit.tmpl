@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=_%CHAR_SET%_" />
+
+	<title>見積原価プレビュー(編集画面）</title>
+
+	<link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="/estimate/cmn/css/layout.css">
+	<script src="/cmn/jquery/jquery-3.1.0.js"></script>
+	<link rel="stylesheet" href="/cmn/handsontable/css/handsontable.full.min.css"/>
+	<script src="/cmn/handsontable/js/handsontable.full.min.js"></script>
+	<script src="/estimate/preview/js/edit/function.js"></script>
+
+	<!-- キーバインド -->
+	<!-- <script src="/cmn/functions.js"></script> -->
+
+</head>
+
+<body id="Backs" oncontextmenu="return false;">
+
+_%DEBUG%_
+
+	<input type="hidden" name="lngLanguageCode"	value="_%lngLanguageCode%_" />
+
+<div class="sideMenu"></div>
+<div id="sideMenu">
+	<div style="height:150px;"></div>
+	<div class="sideMenuButton" style="height:140px; width:100px; text-align:center;">
+		<button class="btn" style="margin:10px;">
+			<img class="btn btnRowAdd" src="/img/type01/estimate/preview/row_add.gif">
+		</button>
+		<button class="btn" style="margin:10px;">
+			<img class="btn btnRowDelete" src="/img/type01/estimate/preview/row_delete.gif">
+		</button>
+	</div>
+	<div class="sideMenuButton" style="height:160px; width:100px; text-align:center;">
+		<button class="btn" style="margin:5px;">
+			<img class="btn btnMoveTop" src="/img/type01/estimate/preview/move_top.gif">
+		</button>
+		<button style="margin:5px;">
+			<img class="btn btnMoveUpper" src="/img/type01/estimate/preview/move_upper.gif">
+		</button>
+	</div>
+	<div class="sideMenuButton" style="height:160px; width:100px; text-align:center;">
+		<button class="btn" style="margin:5px;">
+			<img class="btn btnMoveLower" src="/img/type01/estimate/preview/move_lower.gif">
+		</button>
+		<button class="btn" style="margin:5px;">
+			<img class="btn btnMoveBottom" src="/img/type01/estimate/preview/move_bottom.gif">
+		</button>
+	</div>
+</div>
+
+<div>
+	<div class="header"></div>
+	<header id="header">
+		_%HEADER%_
+	</header>
+</div>
+
+
+
+
+
+<form method="post" name="formAction" id="formData">
+	_%FORM%_
+
+
+
+_%EXCEL%_
+
+    <script id="script" type="text/javascript" src="/estimate/preview/js/edit/handsontableRenderer.js" data-param='_%TABLEDATA%_'></script>
+
+	<br /><br />
+</form>
+
+
+	<!-- プリロード画面の非表示 -->
+	<!--
+	<script type="text/javascript" language="javascript">parent.Preload.style.visibility = 'hidden';</script>
+	-->
+
+</body>
+</html>
