@@ -195,7 +195,6 @@ $form .= makeHTML::getHiddenData($aryData);
 $aryData["HEADER"]      = $header;
 $aryData["EXCEL"]		= $strExcel; // index
 $aryData["TABLEDATA"]	= $json;
-$aryData["FORM_NAME"]	= FORM_NAME;
 $aryData["FORM"]	    = $form;
 
 // テンプレート読み込み
