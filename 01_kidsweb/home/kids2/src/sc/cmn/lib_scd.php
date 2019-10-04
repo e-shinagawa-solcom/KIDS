@@ -77,10 +77,10 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 				{
 					$aryQuery[] = " AND cust_c.strCompanyDisplayCode ~* '" . $arySearchDataColumn["lngCustomerCode"] . "'";
 				}
-				if ( $arySearchDataColumn["strCustomerName"] )
-				{
-					$aryQuery[] = " AND UPPER(cust_c.strCompanyDisplayName) LIKE UPPER('%" . $arySearchDataColumn["strCustomerName"] . "%')";
-				}
+//				if ( $arySearchDataColumn["strCustomerName"] )
+//				{
+//					$aryQuery[] = " AND UPPER(cust_c.strCompanyDisplayName) LIKE UPPER('%" . $arySearchDataColumn["strCustomerName"] . "%')";
+//				}
 			}
 
 			// 課税区分（消費税区分）
@@ -131,10 +131,10 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 					//会社マスタと紐づけた値と比較
 					$aryQuery[] = " AND delv_c.strCompanyDisplayCode ~* '" . $arySearchDataColumn["lngDeliveryPlaceCode"] . "'";
 				}
-				if ( $arySearchDataColumn["strDeliveryPlaceName"] )
-				{
-					$aryQuery[] = " AND UPPER(s.strDeliveryPlaceName) LIKE UPPER('%" . $arySearchDataColumn["strDeliveryPlaceName"] . "%')";
-				}
+//				if ( $arySearchDataColumn["strDeliveryPlaceName"] )
+//				{
+//					$aryQuery[] = " AND UPPER(s.strDeliveryPlaceName) LIKE UPPER('%" . $arySearchDataColumn["strDeliveryPlaceName"] . "%')";
+//				}
 			}
 
 			// 起票者
@@ -144,10 +144,10 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 				{
 					$aryQuery[] = " AND s.strInsertUserCode ~* '" . $arySearchDataColumn["lngInsertUserCode"] . "'";
 				}
-				if ( $arySearchDataColumn["strInsertUserName"] )
-				{
-					$aryQuery[] = " AND UPPER(s.strInsertUserName) LIKE UPPER('%" . $arySearchDataColumn["strInsertUserName"] . "%')";
-				}
+//				if ( $arySearchDataColumn["strInsertUserName"] )
+//				{
+//					$aryQuery[] = " AND UPPER(s.strInsertUserName) LIKE UPPER('%" . $arySearchDataColumn["strInsertUserName"] . "%')";
+//				}
 			}
 
 			// ----------------------------------------------
@@ -294,6 +294,12 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 	// From句 の生成
 	$aryFromQuery = array();
 	$aryFromQuery[] = " FROM m_Slip s";
+	if ( !$strSlipCode )
+	{
+		 $aryFromQuery[] = "INNER JOIN (SELECT lngSlipNo, MAX(lngRevisionNo) AS lngRevisionNo from m_slip group by lngSlipNo) max_rev "
+		 . "on max_rev.lngSlipNo = s.lngslipno and max_rev.lngRevisionNo = s.lngrevisionno";
+
+    }
 	$aryFromQuery[] = " INNER JOIN m_Sales sa ON s.lngSalesNo = sa.lngSalesNo AND s.lngRevisionNo = sa.lngRevisionNo";
 	$aryFromQuery[] = " LEFT JOIN m_SalesStatus ss ON sa.lngSalesStatusCode = ss.lngSalesStatusCode";
 	$aryFromQuery[] = " LEFT JOIN m_Company cust_c ON CAST(s.strCustomerCode AS INTEGER) = cust_c.lngCompanyCode";
@@ -345,14 +351,15 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 	// 納品伝票コードが指定されていない場合は検索条件を設定する
 	if ( !$strSlipCode )
 	{
-		$aryOutQuery[] = " AND s.lngRevisionNo = ( "
-			. "SELECT MAX( s1.lngRevisionNo ) FROM m_Slip s1 WHERE s1.strSlipCode = s.strSlipCode AND s1.bytInvalidFlag = false )";
+//		$aryOutQuery[] = " AND s.lngRevisionNo = ( "
+//			. "SELECT MAX( s1.lngRevisionNo ) FROM m_Slip s1 WHERE s1.strSlipCode = s.strSlipCode AND s1.bytInvalidFlag = false )";
 
 		// 管理モードの場合は削除データも検索対象とするため以下の条件は対象外
 		if ( !$arySearchDataColumn["Admin"] )
 		{
-			$aryOutQuery[] = " AND 0 <= ( "
-				. "SELECT MIN( s2.lngRevisionNo ) FROM m_Slip s2 WHERE s2.bytInvalidFlag = false AND s2.strSlipCode = s.strSlipCode )";
+//			$aryOutQuery[] = " AND 0 <= ( "
+//				. "SELECT MIN( s2.lngRevisionNo ) FROM m_Slip s2 WHERE s2.bytInvalidFlag = false AND s2.strSlipCode = s.strSlipCode )";
+			$aryOutQuery[] = " AND s.lngslipno not in (SELECT lngslipno from m_slip where lngRevisionNo < 0 and bytInvalidFlag = false)";
 		}
 	}
 
