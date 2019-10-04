@@ -35,6 +35,7 @@
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/sc/cmn/images.js"></script>
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/sc/regist2/initlayout.js"></script>
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutquery.js"></script>
+<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/navi/sc/initlayout.js"></script>
 <!--<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutmsw.js"></script>-->
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutpunit.js"></script>
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutdate.js"></script>
@@ -59,7 +60,7 @@
 </header3>
 
 <bodyonload>
-initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutPunit(); initLayoutDate(); autoFocus1(); initLayoutError1( ErrInputA ); initLayoutError2( ErrInputB ); fncRegistrationConfirm( window.HSO , window.DSO , '/result/common.html' , '/result/regist_ifrm.html' , 'ResultIframeRenew' , 'NO' , _%lngLanguageCode%_ , document.all.lngRegistConfirm.value ); GetlngLanguageCode( _%lngLanguageCode%_ ); fncDetailErrorOpen( '_%strErrorMessage%_' ); Loading();
+initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutPunit(); initLayoutDate(); autoFocus1(); initLayoutError1( ErrInputA ); initLayoutError2( ErrInputB ); fncRegistrationConfirm( window.HSO , window.DSO , '/result/common.html' , '/result/regist_ifrm.html' , 'ResultIframeRenew' , 'NO' , _%lngLanguageCode%_ , document.all.lngRegistConfirm.value ); fncDetailErrorOpen( '_%strErrorMessage%_' ); Loading();
 </bodyonload>
 
 </config>
