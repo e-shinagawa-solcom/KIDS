@@ -14,22 +14,7 @@
 
     // クリアボタン
     btnClear.on('click', function () {
-        // テキスト入力箇所をリセット
-        workForm.find('input[type="text"], textarea').val('');
-        workForm.find('select').val('');
-        var checks = workForm.find('input[type="checkbox"]');
-        // for(var i = 0;i < checks.length;i++){
-        // 	checks[i].checked = false;
-        // }
-		workForm.find('input[type="checkbox"][name="IsDisplay_lngUserCodeVisible"]').each(function(index){
-            $(this).attr('checked', true);
-            // alert($(this).attr('name'));
-        });
-        // var target = $('input[type="checkbox"][name="IsDisplay_lngUserCodeVisible"]');
-        // alert(target);
-        // target.checked = false;
-        // // target.attr('checked', true);
-        // restoreCookieDispayItems1(workForm);
+        window.location.reload();
     });
 // 検索画面にて、表示項目のチェック状態を保存されたCOOKIEから復元する
 function restoreCookieDispayItems1(form){

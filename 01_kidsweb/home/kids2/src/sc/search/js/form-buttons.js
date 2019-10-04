@@ -14,20 +14,7 @@
 
     // クリアボタン
     btnClear.on('click', function () {
-        // テキスト入力箇所をリセット
-        workForm.find('input[type="text"], textarea').val('');
-        var checks = workForm.find('input[type="checkbox"]');
-        for (var i = 0; i < checks.length; i++) {
-            checks[i].checked = false;
-        }
-        // セレクトボックスを一番目の選択肢に設定
-        workForm.find('select').each(function (index) {
-            if ($(this).attr('name') == "lngSalesClassCode") {
-                $(this).val('1');
-            } else {
-                $(this).val($(this).find('option').first().val());
-            }
-        });
+        window.location.reload();
     });
 
     // 検索ボタン押下時の処理
