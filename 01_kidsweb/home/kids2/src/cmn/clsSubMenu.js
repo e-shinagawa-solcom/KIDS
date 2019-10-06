@@ -170,7 +170,7 @@
 						g_arySubMenu['wf'][0]	= '°Æ·ï°ìÍ÷';
 						g_arySubMenu['wf'][1]	= '°Æ·ï¸¡º÷';
 						
-						g_arySubMenu['inv'][0]	= 'ÀÁµá½ñÈ¯¹Ô';
+						g_arySubMenu['inv'][0]	= 'ÀÁµá½ñÅĞÏ¿';
 						g_arySubMenu['inv'][1]	= 'ÀÁµá½ñ¸¡º÷';
 						g_arySubMenu['inv'][2]	= 'ÀÁµá½¸·×';
 
