@@ -151,7 +151,7 @@ function fncReleaseExclusiveLock($lngFunctionCode, $strSlipCode, $objDB)
 function fncGetTaxRatePullDown($dtmDeliveryDate, $curDefaultTax, $objDB)
 {
     // DBからデータ取得
-    $strQuery = "SELECT lngtaxcode, curtax "
+    $strQuery = "SELECT lngtaxcode, curtax * 100 as curtax "
         . " FROM m_tax "
         . " WHERE dtmapplystartdate <= '$dtmDeliveryDate' "
         . "   AND dtmapplyenddate >= '$dtmDeliveryDate' "
@@ -171,7 +171,7 @@ function fncGetTaxRatePullDown($dtmDeliveryDate, $curDefaultTax, $objDB)
     for ( $i = 0; $i < count($aryResult); $i++)
 	{
         $optionValue =  $aryResult[$i]["lngtaxcode"];
-        $displayText =  $aryResult[$i]["curtax"];
+        $displayText =  $aryResult[$i]["curtax"] * 1;   // 小数点末尾の0をカット
 
         // デフォルト値が設定されている場合、その値を選択
         if ($curDefaultTax == $displayText)

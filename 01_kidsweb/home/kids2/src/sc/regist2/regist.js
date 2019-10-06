@@ -370,7 +370,7 @@ jQuery(function($){
         var taxClassCode = $('select[name="lngTaxClassCode"]').children('option:selected').val();
 
         // æ√»Ò¿«Œ®§ÚºË∆¿
-        var taxRate = Number($('select[name="lngTaxRate"]').children('option:selected').text());
+        var taxRate = Number($('select[name="lngTaxRate"]').children('option:selected').text()) * 0.01;
 
         console.log(taxRate);
 
@@ -492,7 +492,7 @@ jQuery(function($){
             strtaxclassname:           $('select[name="lngTaxClassCode"]').children('option:selected').text(),
             //æ√»Ò¿«Œ®
             lngtaxcode:                $('select[name="lngTaxRate"]').children('option:selected').val(),
-            curtax:                    $('select[name="lngTaxRate"]').children('option:selected').text(),
+            curtax:                    $('select[name="lngTaxRate"]').children('option:selected').text() * 0.01,
             //æ√»Ò¿«≥€
             strtaxamount:              $('input[name="strTaxAmount"]').val(),
             //ªŸ ß¥¸∏¬
