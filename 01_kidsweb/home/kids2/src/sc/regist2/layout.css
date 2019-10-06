@@ -394,7 +394,7 @@
 	position : absolute ;
 	left : 60px ;
 	top : 40px ;
-	height : 20px ;
+	height : 22px ;
 	width: 235px;
 	border-width: 1px ;
 	border-style: solid ;
@@ -507,6 +507,18 @@
 	background-color: #e8f0f1 ;
 	padding : 3px 0px 0px 0px ;
 }
+/* 話菸薊鎗示正件 */
+#MSWBtCustomerName {
+	position : absolute ;
+	left : 644px ;
+	top : 43px ;
+	width : 19px ;
+	height : 19px ;
+	border-width : 0px ;
+	border-style : none ;
+	background-color : #ffffff ;
+}
+
 
 /* Ф圴燮 */
 #SegADeliveryPlaceName {
