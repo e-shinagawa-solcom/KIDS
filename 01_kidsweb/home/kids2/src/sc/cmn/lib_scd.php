@@ -294,12 +294,12 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 	// From句 の生成
 	$aryFromQuery = array();
 	$aryFromQuery[] = " FROM m_Slip s";
-	if ( !$strSlipCode )
-	{
+//	if ( !$strSlipCode )
+//	{
 		 $aryFromQuery[] = "INNER JOIN (SELECT lngSlipNo, MAX(lngRevisionNo) AS lngRevisionNo from m_slip group by lngSlipNo) max_rev "
 		 . "on max_rev.lngSlipNo = s.lngslipno and max_rev.lngRevisionNo = s.lngrevisionno";
 
-    }
+//    }
 	$aryFromQuery[] = " INNER JOIN m_Sales sa ON s.lngSalesNo = sa.lngSalesNo AND s.lngRevisionNo = sa.lngRevisionNo";
 	$aryFromQuery[] = " LEFT JOIN m_SalesStatus ss ON sa.lngSalesStatusCode = ss.lngSalesStatusCode";
 	$aryFromQuery[] = " LEFT JOIN m_Company cust_c ON CAST(s.strCustomerCode AS INTEGER) = cust_c.lngCompanyCode";
@@ -483,7 +483,7 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 *	@return Array 	$strSQL 検索用SQL文 OR Boolean FALSE
 *	@access public
 */
-function fncGetSlipToProductSQL ( $lngSlipNo, $aryData, $objDB )
+function fncGetSlipToProductSQL ( $lngSlipNo, $lngRevisionNo, $aryData, $objDB )
 {
 	// ----------------------
 	//   SQL文の作成
@@ -524,7 +524,7 @@ function fncGetSlipToProductSQL ( $lngSlipNo, $aryData, $objDB )
 	$aryOutQuery[] = "    LEFT JOIN m_Receive re ON sd.lngReceiveNo = re.lngReceiveNo";
 
 	// Where句
-	$aryOutQuery[] = " WHERE sd.lngSlipNo = " . $lngSlipNo . "";	// 対象納品伝票番号の指定
+	$aryOutQuery[] = " WHERE sd.lngSlipNo = " . $lngSlipNo . " AND sd.lngRevisionNo = " . $lngRevisionNo . "";	// 対象納品伝票番号の指定
 
 	// OrderBy句
 	$aryOutQuery[] = " ORDER BY sd.lngSortKey ASC";
@@ -889,35 +889,37 @@ function fncSetSlipTableBody ( $aryResult, $arySearchColumn, $aryData, $aryUserA
 	for ( $i = 0; $i < $lngResultCount; $i++ )
 	{
 		// 同じ納品伝票コードの一覧を取得し表示する
-		$strSlipCodeBase = $aryResult[$i]["strslipcode"];
-		$strSameSlipCodeQuery = fncGetSearchSlipSQL( $arySearchColumn, $aryData, $objDB, $strSlipCodeBase, $aryResult[$i]["lngslipno"], $aryData["strSessionID"]);
+//		$strSlipCodeBase = $aryResult[$i]["strslipcode"];
+//		$strSameSlipCodeQuery = fncGetSearchSlipSQL( $arySearchColumn, $aryData, $objDB, $strSlipCodeBase, $aryResult[$i]["lngslipno"], $aryData["strSessionID"]);
+//		fncDebug("kids2.log", $strSameSlipCodeQuery, __FILE__, __LINE__, "a+");
 
 		// 値をとる =====================================
-		list ( $lngResultID, $lngResultNum ) = fncQuery( $strSameSlipCodeQuery, $objDB );
+//		list ( $lngResultID, $lngResultNum ) = fncQuery( $strSameSlipCodeQuery, $objDB );
 
 		// 配列のクリア
-		unset( $arySameSlipCodeResult );
+//		unset( $arySameSlipCodeResult );
 
-		if ( $lngResultNum )
-		{
-			for ( $j = 0; $j < $lngResultNum; $j++ )
-			{
-				$arySameSlipCodeResult[] = $objDB->fetchArray( $lngResultID, $j );
-			}
-			$lngSameSlipCount = $lngResultNum;
-		}
-		$objDB->freeResult( $lngResultID );
+//		if ( $lngResultNum )
+//		{
+//			for ( $j = 0; $j < $lngResultNum; $j++ )
+//			{
+//				$arySameSlipCodeResult[] = $objDB->fetchArray( $lngResultID, $j );
+//			}
+//			$lngSameSlipCount = $lngResultNum;
+//		}
+//		$objDB->freeResult( $lngResultID );
 
 		// 同じ納品伝票コードでの過去リバイズデータが存在すれば
-		if ( $lngResultNum )
-		{
-			for ( $j = 0; $j < $lngSameSlipCount; $j++ )
-			{
-				// 検索結果部分の設定
-				reset( $arySameSlipCodeResult[$j] );
+//		if ( $lngResultNum )
+//		{
+//			for ( $j = 0; $j < $lngSameSlipCount; $j++ )
+//			{
+//				// 検索結果部分の設定
+//				reset( $arySameSlipCodeResult[$j] );
 
 				// 明細選択クエリー実行
-				$strDetailQuery = fncGetSlipToProductSQL ( $arySameSlipCodeResult[$j]["lngslipno"], $aryData, $objDB );
+				$strDetailQuery = fncGetSlipToProductSQL ( $aryResult[$i]["lngslipno"], $aryResult[$i]["lngrevisionno"], $aryData, $objDB );
+//				fncDebug("kids2.log", $strDetailQuery, __FILE__, __LINE__, "a+");
 				if ( !$lngDetailResultID = $objDB->execute( $strDetailQuery ) )
 				{
 					$strMessage = fncOutputError( 3, "DEF_FATAL", "クエリー実行エラー" ,TRUE, "../sc/search2/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
@@ -947,7 +949,7 @@ function fncSetSlipTableBody ( $aryResult, $arySearchColumn, $aryData, $aryUserA
 				}
 
 				// １レコード分の出力
-				$aryHtml_add = fncSetSlipTableRow ( $lngColumnCount, $arySameSlipCodeResult[$j], $aryDetailResult, $aryHeadViewColumn, $aryData, $aryUserAuthority, $lngSameSlipCount, $j, $bytDeleteFlag );
+				$aryHtml_add = fncSetSlipTableRow ( $lngColumnCount, $aryResult[$i], $aryDetailResult, $aryHeadViewColumn, $aryData, $aryUserAuthority, $lngSameSlipCount, $j, $bytDeleteFlag );
 				$lngColumnCount = $lngColumnCount + count($aryDetailResult);
 				
 				$strColBuff = '';
@@ -956,8 +958,8 @@ function fncSetSlipTableBody ( $aryResult, $arySearchColumn, $aryData, $aryUserA
 					$strColBuff .= $aryHtml_add[$k];
 				}
 				$aryHtml[] =$strColBuff;
-			}
-		}
+//			}
+//		}
 	}
 
 	$aryHtml[] = "</tbody>";
