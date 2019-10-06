@@ -412,6 +412,7 @@ abstract class estimateRowController {
             $this->percentInputFlag = false;
         }
         $registData = array(
+            'areaCode' => $this->areaCode,
             'salesOrder' => $this->salesOrder, // 受注または発注
             'delivery' => $this->delivery,
             'quantity' => $this->quantity,

@@ -157,8 +157,7 @@ class registInsertData extends estimateInsertData {
 
             // 発注の場合
             } else if ($salesOrder === DEF_ATTRIBUTE_SUPPLIER) {
-                if ($rowData['divisionSubject'] != DEF_STOCK_SUBJECT_CODE_CHARGE
-                    && $rowData['divisionSubject'] != DEF_STOCK_SUBJECT_CODE_EXPENSE) {
+                if ($rowData['areaCode'] !== DEF_AREA_OTHER_COST_ORDER) {
                     // 発注明細番号のインクリメント
                     ++$orderDetailNo;
 
