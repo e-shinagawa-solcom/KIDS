@@ -736,37 +736,39 @@ class estimateDB extends clsDB {
     *	@return array $estimateDetail ¸«ÀÑ¸¶²ÁÌÀºÙ
     *	@access public
     */
-    public function getEstimateDetail($productCode, $reviseCode, $revisionNo = null) {
+    public function getEstimateDetail($estimateNo, $revisionNo = null) {
         if (!$this->isOpen()) {
             return false;
         } else {
             $strQuery = "SELECT";
-            $strQuery .= " ted.lngestimateno AS lngestimateno,";
-            $strQuery .= " ted.lngestimatedetailno AS lngestimatedetailno,";
-            $strQuery .= " ted.lngrevisionno AS lngrevisionno,";
-            $strQuery .= " ted.lngstocksubjectcode AS lngstocksubjectcode,";
-            $strQuery .= " ted.lngstockitemcode AS lngstockitemcode,";
-            $strQuery .= " ted.lngcustomercompanycode AS lngcustomercompanycode,";
+            $strQuery .= " ted.lngestimateno,";
+            $strQuery .= " ted.lngestimatedetailno,";
+            $strQuery .= " ted.lngrevisionno,";
+            $strQuery .= " ted.lngstocksubjectcode,";
+            $strQuery .= " ted.lngstockitemcode,";
+            $strQuery .= " ted.lngcustomercompanycode,";
             $strQuery .= " to_char(ted.dtmdelivery, 'YYYY/MM/DD') AS dtmdelivery,";
-            $strQuery .= " ted.bytpayofftargetflag AS bytpayofftargetflag,";
-            $strQuery .= " ted.bytpercentinputflag AS bytpercentinputflag,";
-            $strQuery .= " ted.curproductrate AS curproductrate,";
-            $strQuery .= " ted.lngmonetaryunitcode AS lngmonetaryunitcode,";
-            $strQuery .= " ted.lngmonetaryratecode AS lngmonetaryratecode,";
-            $strQuery .= " ted.curconversionrate AS curconversionrate,";
-            $strQuery .= " ted.lngproductquantity AS lngproductquantity,";
-            $strQuery .= " ted.curproductprice AS curproductprice,";
-            $strQuery .= " ted.curproductrate AS curproductrate,";
-            $strQuery .= " ted.cursubtotalprice AS cursubtotalprice,";
-            $strQuery .= " ted.strnote AS strnote,";
-            $strQuery .= " ted.lngsortkey AS lngsortkey,";
-            $strQuery .= " ted.lngsalesdivisioncode AS lngsalesdivisioncode,";
-            $strQuery .= " ted.lngsalesclasscode AS lngsalesclasscode,";
-            $strQuery .= " me.lngproductrevisionno AS lngproductrevisionno,";
-            $strQuery .= " mo.lngorderno AS lngorderno,";
-            $strQuery .= " mo.lngorderstatuscode AS lngorderstatuscode,";
-            $strQuery .= " mr.lngreceiveno AS lngreceiveno,";
-            $strQuery .= " mr.lngreceivestatuscode AS lngreceivestatuscode";
+            $strQuery .= " ted.bytpayofftargetflag,";
+            $strQuery .= " ted.bytpercentinputflag,";
+            $strQuery .= " ted.curproductrate,";
+            $strQuery .= " ted.lngmonetaryunitcode,";
+            $strQuery .= " ted.lngmonetaryratecode,";
+            $strQuery .= " ted.curconversionrate,";
+            $strQuery .= " ted.lngproductquantity,";
+            $strQuery .= " ted.curproductprice,";
+            $strQuery .= " ted.curproductrate,";
+            $strQuery .= " ted.cursubtotalprice,";
+            $strQuery .= " ted.strnote,";
+            $strQuery .= " ted.lngsortkey,";
+            $strQuery .= " ted.lngsalesdivisioncode,";
+            $strQuery .= " ted.lngsalesclasscode,";
+            $strQuery .= " me.lngproductrevisionno,";
+            $strQuery .= " mo.lngorderno,";
+            $strQuery .= " mo.lngorderstatuscode,";
+            $strQuery .= " mr.lngreceiveno,";
+            $strQuery .= " mr.lngreceivestatuscode,";
+            $strQuery .= " mp.strproductcode,";
+            $strQuery .= " mp.strrevisecode";
 
             $strQuery .= " FROM t_estimatedetail ted";
             $strQuery .= " INNER JOIN m_estimate me";
@@ -795,15 +797,13 @@ class estimateDB extends clsDB {
             $strQuery .= " ON trd.lngreceiveno = mr.lngreceiveno";
             $strQuery .= " AND trd.lngrevisionno = mr.lngrevisionno";
 
-            $strQuery .= " WHERE mp.strproductcode = '". $productCode. "'";
-            $strQuery .= " AND mp.strrevisecode = '". $reviseCode. "'";
+            $strQuery .= " WHERE me.lngestimateno = ". $estimateNo;
             $strQuery .= " AND me.lngrevisionno";
             if ($revisionNo) {
                 $strQuery .= " = ". $revisionNo;
             } else {
                 $strQuery .= " IN (SELECT MAX(lngrevisionno) FROM m_estimate";
-                $strQuery .= " WHERE strproductcode = '". $productCode. "'";
-                $strQuery .= " AND strrevisecode = '". $reviseCode. "')";
+                $strQuery .= " WHERE lngestimateno = ". $estimateNo. ")";
             }
         }
 

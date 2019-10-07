@@ -41,6 +41,7 @@ $aryData	= $_GET;
 //-------------------------------------------------------------------------
 // 入力文字列値・セッション・権限チェック
 //-------------------------------------------------------------------------
+
 // 文字列チェック
 $aryCheck["strSessionID"]	= "null:numenglish(32,32)";
 $aryResult	= fncAllCheck( $aryData, $aryCheck );
@@ -64,16 +65,15 @@ if( !fncCheckAuthority( DEF_FUNCTION_UP0, $objAuth ) )
 $lngAuthorityGroupCode = fncGetUserAuthorityGroupCode( $lngUserCode, $aryData["strSessionID"], $objDB );
 
 // GETパラメータよりパラメータを取得
-$productCode = $aryData['productCode']; // 製品コード
-$reviseCode = $aryData['reviseCode']; // リバイスコード
+$estimateNo = $aryData['estimateNo']; // 製品コード
 
 // リビジョン番号の取得
 if (isset($_POST['revisionNo'])) {
 	$revisionNo = $_POST['revisionNo'];
-	$estimate = $objDB->getEstimateDetail($productCode, $reviseCode, $revisionNo);
+	$estimate = $objDB->getEstimateDetail($estimateNo, $revisionNo);
 } else {
 	// リビジョン番号がPOSTされなかった場合は最新のデータを取得する
-	$estimate = $objDB->getEstimateDetail($productCode, $reviseCode);
+	$estimate = $objDB->getEstimateDetail($estimateNo);
 }
 
 $firstEstimateDetail = current($estimate);
@@ -86,13 +86,15 @@ if (!isset($revisionNo)) {
 if (isset($_POST['maxRevisionNo'])) {
 	$maxRevisionNo = $_POST['maxRevisionNo'];
 } else {
-	$result = $objDB->getEstimateDetail($productCode, $reviseCode);
+	$result = $objDB->getEstimateDetail($estimateNo);
 	if ($result) {
 		$firstRecord = current($result);
 		$maxRevisionNo = $firstRecord->lngrevisionno;
 	}
 }
-	
+
+$productCode = $firstEstimateDetail->strproductcode;
+$reviseCode = $firstEstimateDetail->strrevisecode;
 $productRevisionNo = $firstEstimateDetail->lngproductrevisionno;
 
 // 製品マスタの情報取得
@@ -189,8 +191,16 @@ $header	= makeHTML::getPreviewHeader($maxRevisionNo, $revisionNo); // ヘッダ�
 $strExcel .= makeHTML::getGridTable($ws_num); // データ挿入タグ
 $aryData['revisionNo'] = $revisionNo;
 
+$formData = array(
+	'strSessionID' => $aryData["strSessionID"],
+	'productCode' => $productCode,
+	'reviseCode' => $reviseCode,
+	'revisionNo' => $revisionNo,
+	'estimateNo' => $estimateNo,
+);
+
 // 送信用FORMデータ作成
-$form .= makeHTML::getHiddenData($aryData);
+$form .= makeHTML::getHiddenData($formData);
 
 $aryData["HEADER"]      = $header;
 $aryData["EXCEL"]		= $strExcel; // index

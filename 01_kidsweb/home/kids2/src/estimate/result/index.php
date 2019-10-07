@@ -456,7 +456,7 @@ for ($i = 0; $i < $resultNum; ++$i) {
 
 	$estimateNo = htmlspecialchars($result['lngestimateno'], ENT_QUOTES);
 
-	$body .= "<tr id=\"". $estimateNo."\" style=\"background:#FFFFFF\" onclick=\"fncSelectTrColor( this );\">";
+	$body .= "<tr id=\"". $estimateNo."\" class=\"estimate_search_result\" style=\"background:#FFFFFF\" onclick=\"fncSelectTrColor( this );\">";
 
 	$number = $i + 1;
 
@@ -465,7 +465,7 @@ for ($i = 0; $i < $resultNum; ++$i) {
 	foreach ($displayColumns as $column) {
 		if ($column === 'detail') { // ¾ÜºÙ
 				$body .= "<td bgcolor=\"#FFFFFF\" align=\"center\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $lngResultNum . "_',1 );\">";
-				$body .= "<button type=\"button\" class=\"cells btnDetail\" action=\"/estimate/preview/index.php?strSessionID=". $strSessionID. "&productCode=". $result['strproductcode']. "&reviseCode=". $result['strrevisecode']."\" value=\"". $result['lngrevisionno']. "\">";
+				$body .= "<button type=\"button\" class=\"cells btnDetail\" action=\"/estimate/preview/index.php?strSessionID=". $strSessionID. "&estimateNo=". $estimateNo."\" value=\"". $result['lngrevisionno']. "\">";
 				$body .= "<img onmouseover=\"DetailOn(this);\" onmouseout=\"DetailOff(this);\" src=\"/img/type01/wf/result/detail_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"DETAIL\">";
 				$body .= "</button></td>";
 
