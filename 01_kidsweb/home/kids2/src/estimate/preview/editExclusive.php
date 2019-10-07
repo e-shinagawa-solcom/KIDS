@@ -51,6 +51,7 @@ $lngAuthorityGroupCode = fncGetUserAuthorityGroupCode( $lngUserCode, $aryData["s
 $sessionID = $aryData["strSessionID"];
 $productCode = $aryData["productCode"];
 $reviseCode = $aryData["reviseCode"];
+$estimateNo = $aryData["estimateNo"];
 $ipAddress = $_SERVER['REMOTE_ADDR'];
 
 $mode = $aryData['processMode'];
@@ -74,7 +75,7 @@ switch($mode) {
         } else {
             // 正常時
             $ret['result'] = true;
-            $ret['action'] = "/estimate/preview/index.php?strSessionID=". $sessionID. "&productCode=". $productCode."&reviseCode=". $reviseCode;
+            $ret['action'] = "/estimate/preview/index.php?strSessionID=". $sessionID. "&estimateNo=". $estimateNo;
         }
         break;
     case 'close':

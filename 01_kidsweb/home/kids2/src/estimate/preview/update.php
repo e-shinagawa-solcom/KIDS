@@ -50,9 +50,6 @@
 	$aryData	= array();
 	$aryData	= $_POST;
 
-	$aryData["CHAR_SET"]			= TMP_CHARSET;					// テンプレート文字コード
-	$aryData["lngLanguageCode"]		= $_COOKIE["lngLanguageCode"];	// 言語コード
-
 	//-------------------------------------------------------------------------
 	// 入力文字列値・セッション・権限チェック
 	//-------------------------------------------------------------------------
@@ -69,8 +66,6 @@
 
 	// 機能コード
 	$functionCode = DEF_FUNCTION_E3;
-
-	
 
 	// 権限確認
 	if( !fncCheckAuthority( $functionCode, $objAuth ) )
@@ -152,11 +147,6 @@
 			}
 		}
 	}
-
-	unset($postData);
-	unset($value);
-	unset($class);
-
 
 	// ヘッダ部の処理
 	$objHeader = new updateHeaderController($objDB);
@@ -336,6 +326,7 @@
 	$productCode = $aryData['productCode'];
 	$reviseCode = $aryData['reviseCode'];
 	$revisionNo = $aryData['revisionNo'];
+	$estimateNo = $aryData['estimateNo'];
 
 	// 登録に必要なデータをセットする
 	$objRegist->setUpdateParam($update, $lngUserCode, $productCode, $reviseCode, $revisionNo, $objDB);
@@ -349,14 +340,16 @@
 	$completeMessage .= "見積原価データの再読み込みを行います";
 
 	$formData = array(
-		'strSessionID' => $sessionID,
+		'strSessionID' => $aryData["strSessionID"],
 		'productCode' => $productCode,
 		'reviseCode' => $reviseCode,
+		'revisionNo' => $revisionNo,
+		'estimateNo' => $estimateNo,
 	);
 
 	$form = makeHTML::getHiddenData($formData);
 
-	$postData = array(
+	$formData = array(
 		'FORM' => $form,
 		'completeMessage' => $completeMessage
 	);
@@ -364,7 +357,7 @@
 	$objTemplate = new clsTemplate();
 	$objTemplate->getTemplate( "estimate/preview/update.tmpl" );
 
-	$objTemplate->replace( $postData );
+	$objTemplate->replace( $formData );
 	$objTemplate->complete();
 
     //fncDebug( 'es_finish.txt', $objTemplate->strTemplate, __FILE__, __LINE__);

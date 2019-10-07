@@ -99,6 +99,7 @@ if( $aryData["lngFunctionCode"] == DEF_FUNCTION_E1 )
 	$sessionID = $aryData['strSessionID'];
 	$productCode = $objRegist->getProductCode();
 	$reviseCode = $objRegist->getReviseCode();
+	$estimateNo = $objRegist->getEstimateNo();
 
 	if ($reviseCode === '00') {
 		$completeMessage = "製品コード". $productCode. "を新規登録いたしました。";
@@ -110,6 +111,7 @@ if( $aryData["lngFunctionCode"] == DEF_FUNCTION_E1 )
 		'strSessionID' => $sessionID,
 		'productCode' => $productCode,
 		'reviseCode' => $reviseCode,
+		'estimateNo' => $estimateNo,
 		'completeMessage' => $completeMessage
 	);
 

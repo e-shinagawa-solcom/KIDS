@@ -1,9 +1,8 @@
 window.onbeforeunload = function () {
 	var sessionID = $('input[name="strSessionID"]').val();
-	var productCode = $('input[name="productCode"]').val();
-	var reviseCode = $('input[name="reviseCode"]').val();
+	var estimateNo = $('input[name="estimateNo"]').val();
 
-	var actionUrl = '/estimate/preview/index.php?strSessionID=' + sessionID +'&productCode=' + productCode + '&reviseCode=' + reviseCode;
+	var actionUrl = '/estimate/preview/index.php?strSessionID=' + sessionID +'&estimateNo=' + estimateNo;
 
 	window.opener.location.href = actionUrl;
 }

@@ -1,11 +1,10 @@
 $(function(){
 	$('.btnSwitch').on('click', function(){
 		var sessionID = $('input[name="strSessionID"]').val();
-		var productCode = $('input[name="productCode"]').val();
-		var reviseCode = $('input[name="reviseCode"]').val();
+		var estimateNo = $('input[name="estimateNo"]').val();
 		var revisionNo = $(this).val();
 
-		var actionUrl = "/estimate/preview/index.php?strSessionID=" + sessionID + "&productCode=" + productCode + "&reviseCode=" + reviseCode;
+		var actionUrl = "/estimate/preview/index.php?strSessionID=" + sessionID + "&estimateNo=" + estimateNo;
 		
 		var form = $("<form>", {
 			method: 'post',

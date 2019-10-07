@@ -63,17 +63,18 @@
 	$lngAuthorityGroupCode = fncGetUserAuthorityGroupCode( $lngUserCode, $aryData["strSessionID"], $objDB );
     
 	// POSTパラメータよりパラメータを取得
-	$productCode = $aryData['productCode']; // 製品コード
-	$reviseCode = $aryData['reviseCode']; // リバイスコード
+	$estimateNo = $aryData['estimateNo']; // 見積原価番号
 
 	$revisionNo = $aryData['revisionNo']; // リビジョン番号
     
     // 見積原価情報の取得
-    $estimate = $objDB->getEstimateDetail($productCode, $reviseCode, $revisionNo);
+    $estimate = $objDB->getEstimateDetail($estimateNo, $revisionNo);
 
 	$firstEstimateDetail = current($estimate);
 	
-    $productRevisionNo = $firstEstimateDetail->lngproductrevisionno;
+	$productCode = $firstEstimateDetail->strproductcode;
+	$reviseCode = $firstEstimateDetail->strrevisecode;
+	$productRevisionNo = $firstEstimateDetail->lngproductrevisionno;
 
     // 製品マスタの情報取得
 	$product = $objDB->getProduct($productCode, $reviseCode, $productRevisionNo);
@@ -191,10 +192,16 @@
 	$strExcel = str_replace('_%css_rowstyle%_', $css_rowstyle, $strCSS). $strExcel;
 
 
-	$aryData["revisionNo"] = $revisionNo;
+	$formData = array(
+		'strSessionID' => $aryData["strSessionID"],
+		'productCode' => $productCode,
+		'reviseCode' => $reviseCode,
+		'revisionNo' => $revisionNo,
+		'estimateNo' => $estimateNo,
+	);
 
 	// 送信用FORMデータ作成
-	$form .= makeHTML::getHiddenData($aryData);
+	$form .= makeHTML::getHiddenData($formData);
 
 	$aryData["HEADER"]      = $header;
 	$aryData["EXCEL"]		= $strExcel; // index
