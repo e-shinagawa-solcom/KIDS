@@ -558,8 +558,10 @@ foreach ($records as $i => $record) {
     $aryQuery[] = " r.lngreceiveno, r.lngrevisionno ";
     $aryQuery[] = "FROM m_receive r inner join t_receivedetail rd ";
     $aryQuery[] = "on r.lngreceiveno = rd.lngreceiveno ";
-    $aryQuery[] = "WHERE strreceivecode='" . $record["strreceivecode"] . "' ";
-    $aryQuery[] = "and lngreceivedetailno=" . $record["lngreceivedetailno"] . " ";
+    $aryQuery[] = "WHERE r.strreceivecode='" . $record["strreceivecode"] . "' ";
+    $aryQuery[] = "and rd.lngreceivedetailno=" . $record["lngreceivedetailno"] . " ";
+    $aryQuery[] = "and r.lngrevisionno >= 0";
+    $aryQuery[] = "and r.bytInvalidFlag = FALSE ";
     $aryQuery[] = "order by r.lngrevisionno desc";
 
     // クエリを平易な文字列に変換

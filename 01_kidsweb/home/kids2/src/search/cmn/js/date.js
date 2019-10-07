@@ -8,7 +8,9 @@
             var m = str.substr(4, 2);
             var d = str.substr(6, 2);
             $(this).val(y + "/" + m + "/" + d);
-        } else if (/(19[0-9]{2}|2[0-9]{3})\/(0[1-9]|1[0-2])/.test(value)) {
+        } else if (/(19[0-9]{2}|2[0-9]{3})\/(0[1-9]|1[0-2])\/([0-2][0-9]|3[0-1])/.test(value)) {
+            $(this).val(value.trim());
+        }  else if (/(19[0-9]{2}|2[0-9]{3})\/(0[1-9]|1[0-2])/.test(value)) {
             var str = value.trim();
             var y = str.substr(0, 4);
             var m = str.substr(5, 2);

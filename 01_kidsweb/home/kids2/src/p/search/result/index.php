@@ -508,6 +508,8 @@ $exclude = "exclude-in-clip-board-target";
 // 項番カラム
 $thIndex = $doc->createElement("th");
 $thIndex->setAttribute("class", $exclude);
+$thIndex->setAttribute("unselectable", "off");
+
 // コピーボタン
 $imgCopy = $doc->createElement("img");
 $imgCopy->setAttribute("src", "/img/type01/cmn/seg/copy_off_bt.gif");
@@ -694,7 +696,7 @@ foreach ($records as $i => $record) {
         // 詳細セル
         $tdDetail = $doc->createElement("td");
         $tdDetail->setAttribute("class", $exclude);
-        $tdDetail->setAttribute("style", $bgcolor. "text-align: center;");
+        $tdDetail->setAttribute("style", $bgcolor . "text-align: center;");
 
         // 詳細ボタンの表示
         // if (($allowedDetailDelete and $record["bytinvalidflag"] != "f") or ($allowedDetail and $record["bytinvalidflag"] == "f")) {
@@ -717,7 +719,7 @@ foreach ($records as $i => $record) {
         // 修正セル
         $tdModify = $doc->createElement("td");
         $tdModify->setAttribute("class", $exclude);
-        $tdModify->setAttribute("style", $bgcolor. "text-align: center;");
+        $tdModify->setAttribute("style", $bgcolor . "text-align: center;");
 
         // 修正ボタンの表示
         // if ($allowedModify and $record["bytinvalidflag"] == "f") {
@@ -740,7 +742,7 @@ foreach ($records as $i => $record) {
         // 履歴セル
         $tdHistory = $doc->createElement("td");
         $tdHistory->setAttribute("class", $exclude);
-        $tdHistory->setAttribute("style", $bgcolor. "text-align: center;");
+        $tdHistory->setAttribute("style", $bgcolor . "text-align: center;");
 
         if ($isMaxproduct and $historyFlag) {
             // 履歴ボタン
@@ -808,28 +810,44 @@ foreach ($records as $i => $record) {
                     break;
                 // 入力者
                 case "lnginputusercode":
-                    $textContent = "[" . $record["strinputuserdisplaycode"] . "]" . " " . $record["strinputuserdisplayname"];
+                    if ($record["strinputuserdisplaycode"] != "") {
+                        $textContent = "[" . $record["strinputuserdisplaycode"] . "]" . " " . $record["strinputuserdisplayname"];
+                    } else {
+                        $textContent = "";
+                    }
                     $td = $doc->createElement("td", toUTF8($textContent));
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
                 // 営業部署
                 case "lnginchargegroupcode":
-                    $textContent = "[" . $record["strinchargegroupdisplaycode"] . "]" . " " . $record["strinchargegroupdisplayname"];
+                    if ($record["strinchargegroupdisplaycode"] != "") {
+                        $textContent = "[" . $record["strinchargegroupdisplaycode"] . "]" . " " . $record["strinchargegroupdisplayname"];
+                    } else {
+                        $textContent = "";
+                    }
                     $td = $doc->createElement("td", toUTF8($textContent));
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
                 // [担当者表示コード] 担当者表示名
                 case "lnginchargeusercode":
-                    $textContent = "[" . $record["strinchargeuserdisplaycode"] . "]" . " " . $record["strinchargeuserdisplayname"];
+                    if ($record["strinchargeuserdisplaycode"] != "") {
+                        $textContent = "[" . $record["strinchargeuserdisplaycode"] . "]" . " " . $record["strinchargeuserdisplayname"];
+                    } else {
+                        $textContent = "";
+                    }
                     $td = $doc->createElement("td", toUTF8($textContent));
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
                 // [開発担当者表示コード] 開発担当者表示名
                 case "lngdevelopusercode":
-                    $textContent = "[" . $record["strdevelopuserdisplaycode"] . "]" . " " . $record["strdevelopuserdisplayname"];
+                    if ($record["strdevelopuserdisplaycode"] != "") {
+                        $textContent = "[" . $record["strdevelopuserdisplaycode"] . "]" . " " . $record["strdevelopuserdisplayname"];
+                    } else {
+                        $textContent = "";
+                    }
                     $td = $doc->createElement("td", toUTF8($textContent));
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
@@ -854,14 +872,22 @@ foreach ($records as $i => $record) {
                     break;
                 // 顧客
                 case "lngcustomercompanycode":
-                    $textContent = "[" . $record["strcustomercompanycode"] . "]" . " " . $record["strcustomercompanyname"];
+                    if ($record["strcustomercompanycode"] != "") {
+                        $textContent = "[" . $record["strcustomercompanycode"] . "]" . " " . $record["strcustomercompanyname"];
+                    } else {
+                        $textContent = "";
+                    }
                     $td = $doc->createElement("td", toUTF8($textContent));
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
                 // 顧客担当者
                 case "lngcustomerusercode":
-                    $textContent = "[" . $record["strcustomerusercode"] . "]" . " " . $record["strcustomerusername"];
+                    if ($record["strcustomerusercode"] != "") {
+                        $textContent = "[" . $record["strcustomerusercode"] . "]" . " " . $record["strcustomerusername"];
+                    } else {
+                        $textContent = "";
+                    }
                     $td = $doc->createElement("td", toUTF8($textContent));
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
@@ -910,21 +936,33 @@ foreach ($records as $i => $record) {
                     break;
                 // 生産工場
                 case "lngfactorycode":
-                    $textContent = "[" . $record["strfactorycode"] . "]" . " " . $record["strfactoryname"];
+                    if ($record["strfactorycode"] != "") {
+                        $textContent = "[" . $record["strfactorycode"] . "]" . " " . $record["strfactoryname"];
+                    } else {
+                        $textContent = "";
+                    }
                     $td = $doc->createElement("td", toUTF8($textContent));
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
                 // アッセンブリ工場
                 case "lngassemblyfactorycode":
-                    $textContent = "[" . $record["strassemblyfactorycode"] . "]" . " " . $record["strassemblyfactoryname"];
+                    if ($record["strassemblyfactorycode"] != "") {
+                        $textContent = "[" . $record["strassemblyfactorycode"] . "]" . " " . $record["strassemblyfactoryname"];
+                    } else {
+                        $textContent = "";
+                    }
                     $td = $doc->createElement("td", toUTF8($textContent));
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
                 // 納品場所
                 case "lngdeliveryplacecode":
-                    $textContent = "[" . $record["strdeliveryplacecode"] . "]" . " " . $record["strdeliveryplacename"];
+                    if ($record["strdeliveryplacecode"] != "") {
+                        $textContent = "[" . $record["strdeliveryplacecode"] . "]" . " " . $record["strdeliveryplacename"];
+                    } else {
+                        $textContent = "";
+                    }
                     $td = $doc->createElement("td", toUTF8($textContent));
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);

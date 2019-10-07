@@ -31,22 +31,7 @@ $('img.copy').on({
             var cells = $(this).find('td:not(' + excludeClassName + ')');
 
             cells.each(function(){
-                // 対象セルが金型NO項目の場合
-                if ($(this).hasClass("moldinfo"))
-                {
-                    var splits = '';
-                    // <br>要素を別のデリミタに置き換え
-                    $.each(this.innerHTML.split('<br>'), function(){
-                        splits += this + brReplacement;
-                    });
-                    // 末尾の区切り文字を削除
-                    splits = splits.replace(patternLastBrReplacement, '');
-                    // 結果文字列を格納
-                    contents += splits;
-                }
-                else {
-                    contents += this.innerHTML;
-                }
+                contents += this.innerHTML;
                 contents += delimiter;
             });
             // 改行
