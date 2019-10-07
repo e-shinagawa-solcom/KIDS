@@ -65,14 +65,6 @@ Loading();
 	<div class="form-box__contents--with-scroll">
 		<form name="SearchMoldHistory" method="post">
             <input type="submit">
-            <div class="option-box">
-                <div class="regist-line">
-                    <span class="regist-label">
-                        <span class="regist-label--text-only">´ÉÍý¼Ô¥â¡¼¥É</span>
-                        <input name="Option_IsDetail" type="checkbox">
-                    </span>
-                </div>
-            </div>
             <div class="regist-line">
                 <img class="toggle-search button" src="/img/type01/cmn/seg/off_bt.gif" alt="toggle search">
                 <img class="toggle-display button" src="/img/type01/cmn/seg/off_bt.gif" alt="toggle display">
@@ -82,8 +74,8 @@ Loading();
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_btnDetailConditions" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_btnDetailVisible" class="is-display" type="checkbox">
+                    <input name="IsSearch_detail" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_detail" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label--text-only">¾ÜºÙ</span>
@@ -91,17 +83,8 @@ Loading();
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_IsSearch_btnFixConditions" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_IsSearch_btnFixVisible" class="is-display" type="checkbox">
-                </span>
-                <span class="regist-label">
-                    <span class="regist-label--text-only">½¤Àµ</span>
-                </span>
-            </div>
-            <div class="regist-line">
-                <span class="search-label--checkbox">
-                    <input name="IsSearch_RecordConditions" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_RecordVisible" class="is-display" type="checkbox">
+                    <input name="IsSearch_record" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_record" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label--text-only">ÍúÎò</span>
@@ -109,19 +92,19 @@ Loading();
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_dtmCreationDateConditions" class="is-search" type="checkbox">
-                    <input name="IsDisplay_dtmCreationDateVisible" class="is-display" type="checkbox">
+                    <input name="IsSearch_dtmInsertDate" class="is-search" type="checkbox">
+                    <input name="IsDisplay_dtmInsertDate" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label__text">ºîÀ®Æü</span>
-                    FROM <input class="TxtStyle05L" name="From_dtmCreationDate" type="text" value="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this); fncCheckDate(this); fncCopyValue( this, document.all.To_dtmCreationDate );" tabindex="">
-                    TO <input class="TxtStyle05L" name="To_dtmCreationDate" type="text" value="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this); fncCheckDate(this);" tabindex="">
+                    FROM <input class="TxtStyle05L" name="From_dtmInsertDate" type="text" value="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this); fncCheckDate(this); fncCopyValue( this, document.all.To_dtmCreationDate );" tabindex="">
+                    TO <input class="TxtStyle05L" name="To_dtmInsertDate" type="text" value="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this); fncCheckDate(this);" tabindex="">
                 </span>
             </div>
 			<div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_strProductCodeConditions" class="is-search" type="checkbox">
-                    <input name="IsDisplay_strProductCodeVisible" class="is-display" type="checkbox">
+                    <input name="IsSearch_strProductCode" class="is-search" type="checkbox">
+                    <input name="IsDisplay_strProductCode" class="is-display" type="checkbox">
                 </span>
 				<span class="regist-label">
 					<span class="regist-label__text">À½ÉÊ¥³¡¼¥É</span>
@@ -131,8 +114,8 @@ Loading();
 			</div>
 			<div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_strProductNameConditions" class="is-search" type="checkbox">
-                    <input name="IsDisplay_strProductNameVisible" class="is-display" type="checkbox">
+                    <input name="IsSearch_strProductName" class="is-search" type="checkbox">
+                    <input name="IsDisplay_strProductName" class="is-display" type="checkbox">
                 </span>
 				<span class="regist-label">
 					<span class="regist-label__text">À½ÉÊÌ¾</span>
@@ -141,44 +124,44 @@ Loading();
 			</div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_strInchargeGroupDisplayCodeConditions" class="is-search" type="checkbox">
-                    <input name="IsDisplay_strInchargeGroupDisplayCodeVisible" class="is-display" type="checkbox">
+                    <input name="IsSearch_strInchargeGroupDisplayCode" class="is-search" type="checkbox">
+                    <input name="IsDisplay_strInchargeGroupDisplayCode" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label__text">±Ä¶ÈÉô½ð</span>
-                    <input class="TxtStyle05L" name="lngInChargeGroupCode" type="text">
-                    <input class="disTxt46L" name="strInChargeGroupName" type="text" readonly>
+                    <input class="TxtStyle05L" name="strInchargeGroupDisplayCode" type="text">
+                    <input class="disTxt46L" name="strInChargeGroupDisplayName" type="text" readonly>
                     <img class="msw-button button" invokeMSWName="msw-group" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
                 </span>
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_strInchargeUserDisplayCodeConditions" class="is-search" type="checkbox">
-                    <input name="IsDisplay_strInchargeUserDisplayCodeVisible" class="is-display" type="checkbox">
-                </span>
-                <span class="regist-label">
-                    <span class="regist-label__text">³«È¯Ã´Åö¼Ô</span>
-                    <input class="TxtStyle05L" name="lngInChargeUserCode" type="text">
-                    <input class="disTxt46L" name="strInChargeUserName" type="text" readonly>
-                    <img class="msw-button button" invokeMSWName="msw-user" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
-                </span>
-            </div>
-            <div class="regist-line">
-                <span class="search-label--checkbox">
-                    <input name="IsSearch_strInputUserDisplayCodeConditions" class="is-search" type="checkbox">
-                    <input name="IsDisplay_strInchargeUserDisplayCodeVisible" class="is-display" type="checkbox">
+                    <input name="IsSearch_strInchargeUserDisplayCode" class="is-search" type="checkbox">
+                    <input name="IsDisplay_strInchargeUserDisplayCode" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label__text">Ã´Åö</span>
-                    <input class="TxtStyle05L" name="lngInputUserCode" type="text">
-                    <input class="disTxt46L" name="lngInputUserName" type="text" readonly>
+                    <input class="TxtStyle05L" name="strInchargeUserDisplayCode" type="text">
+                    <input class="disTxt46L" name="strInchargeUserDisplayName" type="text" readonly>
                     <img class="msw-button button" invokeMSWName="msw-user" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
                 </span>
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_dtmDeliveryLimitDateConditions" class="is-search" type="checkbox">
-                    <input name="IsDisplay_dtmDeliveryLimitDateVisible" class="is-display" type="checkbox">
+                    <input name="IsSearch_strDevelopUserDisplayCode" class="is-search" type="checkbox">
+                    <input name="IsDisplay_strDevelopUserDisplayCode" class="is-display" type="checkbox">
+                </span>
+                <span class="regist-label">
+                    <span class="regist-label__text">³«È¯Ã´Åö¼Ô</span>
+                    <input class="TxtStyle05L" name="strDevelopUserDisplayCode" type="text">
+                    <input class="disTxt46L" name="strDevelopUserDisplayName" type="text" readonly>
+                    <img class="msw-button button" invokeMSWName="msw-user" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="search-label--checkbox">
+                    <input name="IsSearch_dtmDeliveryLimitDate" class="is-search" type="checkbox">
+                    <input name="IsDisplay_dtmDeliveryLimitDate" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label__text">µÒÀèÇ¼ÉÊÆü</span>
@@ -188,8 +171,8 @@ Loading();
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_curRetailPriceConditions" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_curRetailPriceVisible" class="is-display" type="checkbox">
+                    <input name="IsSearch_curRetailPrice" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_curRetailPrice" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label--text-only">¾åÂå</span>
@@ -197,8 +180,8 @@ Loading();
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_lngCartonQuantityConditions" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_lngCartonQuantityVisible" class="is-display" type="checkbox">
+                    <input name="IsSearch_lngCartonQuantity" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_lngCartonQuantity" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label--text-only">¥«¡¼¥È¥óÆþ¿ô</span>
@@ -206,8 +189,8 @@ Loading();
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_lngProductionQuantityConditions" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_lngProductionQuantityVisible" class="is-display" type="checkbox">
+                    <input name="IsSearch_lngProductionQuantity" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_lngProductionQuantity" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label--text-only">½þµÑ¿ô¡Êpcs¡Ë</span>
@@ -215,8 +198,8 @@ Loading();
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_Preview" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_Preview" class="is-display" type="checkbox">
+                    <input name="IsSearch_curSalesAmount" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_curSalesAmount" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label--text-only">À½ÉÊÇä¾å¹â</span>
@@ -224,8 +207,8 @@ Loading();
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_Preview" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_Preview" class="is-display" type="checkbox">
+                    <input name="IsSearch_curSalesProfit" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_curSalesProfit" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label--text-only">À½ÉÊÍø±×</span>
@@ -233,8 +216,8 @@ Loading();
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_Preview" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_Preview" class="is-display" type="checkbox">
+                    <input name="IsSearch_curSalesProfitRate" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_curSalesProfitRate" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label--text-only">À½ÉÊÍø±×Î¨</span>
@@ -242,8 +225,8 @@ Loading();
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_Preview" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_Preview" class="is-display" type="checkbox">
+                    <input name="IsSearch_curFixedCostSales" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_curFixedCostSales" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label--text-only">¸ÇÄêÈñÇä¾å¹â</span>
@@ -251,8 +234,8 @@ Loading();
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_Preview" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_Preview" class="is-display" type="checkbox">
+                    <input name="IsSearch_curFixedCostSalesProfit" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_curFixedCostSalesProfit" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label--text-only">¸ÇÄêÈñÍø±×</span>
@@ -260,8 +243,8 @@ Loading();
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_Preview" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_Preview" class="is-display" type="checkbox">
+                    <input name="IsSearch_curFixedCostSalesProfitRate" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_curFixedCostSalesProfitRate" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label--text-only">¸ÇÄêÈñÍø±×Î¨</span>
@@ -269,8 +252,8 @@ Loading();
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_Preview" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_Preview" class="is-display" type="checkbox">
+                    <input name="IsSearch_curTotalSales" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_curTotalSales" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label--text-only">ÁíÇä¾å¹â</span>
@@ -278,8 +261,8 @@ Loading();
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_curProfitOnSalesConditions" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_curProfitOnSalesVisible" class="is-display" type="checkbox">
+                    <input name="IsSearch_curTotalPrice" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_curTotalPrice" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label--text-only">Çä¾åÁíÍø±×</span>
@@ -287,8 +270,8 @@ Loading();
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_Preview" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_Preview" class="is-display" type="checkbox">
+                    <input name="IsSearch_curTotalPriceRate" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_curTotalPriceRate" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label--text-only">Çä¾åÁíÍø±×Î¨</span>
@@ -296,8 +279,8 @@ Loading();
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_curStandardRateConditions" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_curStandardRateVisible" class="is-display" type="checkbox">
+                    <input name="IsSearch_curIndirectManufacturingCost" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_curIndirectManufacturingCost" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label--text-only">´ÖÀÜÀ½Â¤·ÐÈñ</span>
@@ -305,8 +288,8 @@ Loading();
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_Preview" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_Preview" class="is-display" type="checkbox">
+                    <input name="IsSearch_curStandardRate" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_curStandardRate" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label--text-only">´ÖÀÜÀ½Â¤·ÐÈñÎ¨</span>
@@ -314,8 +297,8 @@ Loading();
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_Preview" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_Preview" class="is-display" type="checkbox">
+                    <input name="IsSearch_curProfit" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_curProfit" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label--text-only">±Ä¶ÈÍø±×</span>
@@ -323,8 +306,8 @@ Loading();
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_Preview" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_Preview" class="is-display" type="checkbox">
+                    <input name="IsSearch_curProfitRate" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_curProfitRate" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label--text-only">±Ä¶ÈÍø±×Î¨</span>
@@ -332,8 +315,8 @@ Loading();
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_Preview" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_Preview" class="is-display" type="checkbox">
+                    <input name="IsSearch_curMemberCostPieces" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_curMemberCostPieces" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label--text-only">pcsÉôºàÈñÍÑ</span>
@@ -341,8 +324,8 @@ Loading();
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_Preview" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_Preview" class="is-display" type="checkbox">
+                    <input name="IsSearch_curMemberCost" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_curMemberCost" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label--text-only">ÉôºàÈñ¹ç·×</span>
@@ -350,8 +333,8 @@ Loading();
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_Preview" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_Preview" class="is-display" type="checkbox">
+                    <input name="IsSearch_curFixedCostPieces" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_curFixedCostPieces" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label--text-only">pcs½þµÑÈñÍÑ</span>
@@ -359,8 +342,8 @@ Loading();
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_curFixedCostConditions" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_curFixedCostVisible" class="is-display" type="checkbox">
+                    <input name="IsSearch_curFixedCost" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_curFixedCost" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label--text-only">½þµÑÈñ¹ç·×</span>
@@ -368,8 +351,8 @@ Loading();
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_Preview" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_Preview" class="is-display" type="checkbox">
+                    <input name="IsSearch_curManufacturingCostPieces" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_curManufacturingCostPieces" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label--text-only">pcs¥³¥¹¥È</span>
@@ -377,8 +360,8 @@ Loading();
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_curManufacturingCostConditions" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_curManufacturingCostVisible" class="is-display" type="checkbox">
+                    <input name="IsSearch_curManufacturingCost" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_curManufacturingCost" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label--text-only">À½Â¤ÈñÍÑ¹ç·×</span>
@@ -386,8 +369,8 @@ Loading();
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_Delete" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_Delete" class="is-display" type="checkbox">
+                    <input name="IsSearch_delete" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_delete" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label--text-only">ºï½ü</span>

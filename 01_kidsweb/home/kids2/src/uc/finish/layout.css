@@ -138,7 +138,7 @@
 	position : absolute ;
 	left : 0px ;
 	top : 0px ;
-	width : 220px ;
+	width : 210px ;
 	height : 27px ;
 	border-width: 1px ;
 	border-style: solid ;
@@ -152,7 +152,7 @@
 {
 	font-weight : bold ;
 	position : absolute ;
-	left : 215px ;
+	left : 220px ;
 	top : 0px ;
 	width : 100px ;
 	height : 27px ;
@@ -167,8 +167,8 @@
 #CloseBt
 {
 	position : absolute ;
-	left : 229px ;
-	top : 3px ;
+	left : 230px ;
+	top : 8px ;
 	border-width: 0px ;
 	border-style: none ;
 	background : transparent ;

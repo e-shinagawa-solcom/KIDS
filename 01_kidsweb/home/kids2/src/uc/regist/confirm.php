@@ -316,7 +316,7 @@ if ( $aryData["lngFunctionCode"] == DEF_FUNCTION_UC1 || $aryData["lngFunctionCod
 		$aryData["lngAuthorityGroupCode"]  = $aryUserData["lngAuthorityGroupCode"];
 		$aryData["lngAccessIPAddressCode"] = $aryUserData["lngAccessIPAddressCode"];
 	}
-
+	
 	// ユーザー重複チェック
 	list ( $bytErrorFlag, $aryError, $aryErrorMessage ) = checkUniqueUser( $aryData["lngUserCode"], $aryData["strUserID"], $aryData["lngCompanyCode"], $aryData["strUserDisplayCode"], $aryUserData["lngUserCode"], $aryUserData["strUserID"], $aryUserData["lngCompanyCode"], $aryUserData["strUserDisplayCode"], "UPDATE", $objDB );
 	if ( $bytErrorFlag )

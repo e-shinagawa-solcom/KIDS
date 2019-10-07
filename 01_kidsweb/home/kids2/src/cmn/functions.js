@@ -1649,7 +1649,7 @@ function fncShowDialogCommon(strUrl, ObjFrm, strID, strScroll, lngLanguageCode, 
 
 
 	// retval = window.showModalDialog( '/result/common.html' , args , "dialogHeight:679px;dialogWidth:696px;center:yes;status:no;edge:raised;help:no;scroll:no;" );
-	retval = window.open('/result/common.html', args, "width=1011px, height=650px, resizable=no, scrollbars=no, menubar=no");
+	retval = window.open('/result/common.html', args, "width=696px, height=679px, resizable=no, scrollbars=no, menubar=no");
 
 	if (retval) {
 		// ローディング画面の表示
@@ -1690,7 +1690,7 @@ function fncShowDialogRenew(strUrl, ObjFrm, strID, strScroll, lngLanguageCode) {
 	args[0][3] = lngLanguageCode;
 
 	//retval = window.showModalDialog( '/result/renew.html' , args , "dialogHeight:580px;dialogWidth:970px;center:yes;status:no;edge:raised;help:no;scroll:no;" );
-	retval = window.open('/result/renew.html', args, "height:600px;width:970px;center:yes;status:no;edge:raised;help:no;scroll:no;");
+	retval = window.open('/result/renew.html', args, "width=970px, height=580px, resizable=no, scrollbars=no, menubar=no");
 
 	if (retval) {
 		// ローディング画面の表示
