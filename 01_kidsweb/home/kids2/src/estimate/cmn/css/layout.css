@@ -216,6 +216,14 @@ table.temporaryTable > tbody > tr > td
 	width: 500px;
 }
 
+button
+{
+	width: auto;
+	border: none;
+	background-color: transparent;
+	cursor: pointer;
+	cursor: hand;
+}
 
 div.action-buttons > button
 {

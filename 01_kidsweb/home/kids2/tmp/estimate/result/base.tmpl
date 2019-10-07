@@ -4,11 +4,16 @@
 <title>K.I.D.S.</title>
 <meta http-equiv="content-type" content="text/html; charset=euc-jp">
 
+<script src="/cmn/jquery/jquery-3.1.0.js"></script>
+
 <script type="text/javascript" language="javascript" src="/layout/type01/cmn/images.js"></script>
 <script type="text/javascript" language="javascript" src="/cmn/functions.js" charset="euc-jp"></script>
 
 <script type="text/javascript" language="javascript" src="/result/cmn/functions.js" charset="utf-8"></script>
 <link rel="stylesheet" type="text/css" media="screen" href="/result/cmn/layout.css">
+<link rel="stylesheet" type="text/css" media="screen" href="/estimate/cmn/css/layout.css">
+<link rel="stylesheet" type="text/css" media="screen" href="/estimate/result/layout.css">
+<script src="/estimate/result/js/function.js"></script>
 
 </head>
 <body onScroll="fncStopHeader( SegTitle );">
@@ -19,53 +24,17 @@
 <input type="hidden" value="" name="copyhidden">
 
 <span id="COPYAREA1">
-<table width="100%" cellpadding="0" cellspacing="1" border="0" bgcolor="#6f8180" align="center">
-<tr id="SegTitle">
-<td valign="top" valign="center"><a href="#" onclick="fncDoCopy( copyhidden , document.getElementById('COPYAREA1') , document.getElementById('COPYAREA2') );return false;"><img onmouseover="CopyOn(this);" onmouseout="CopyOff(this);" src="/img/type01/cmn/seg/copy_off_bt.gif" width="15" height="15" border="0" alt="COPY" rowspan="2"></a></td>
-		_%detail%_
-		_%update%_
-		_%column1%_
-		_%column2%_
-		_%column3%_
-		_%column4%_
-		_%column5%_
-		_%column6%_
-		_%column7%_
-		_%column8%_
-		_%column9%_
-		_%column10%_
-		_%column11%_
-		_%column12%_
-		_%column31%_
-		_%column32%_
-		_%column33%_
-		_%column34%_
-		_%column13%_
-		_%column14%_
-		_%column15%_
-		_%column16%_
-		_%column17%_
-		_%column18%_
-		_%column19%_
-		_%column20%_
-		_%column21%_
-		_%column22%_
-		_%column23%_
-		_%column24%_
-		_%column25%_
-		_%column26%_
-		_%column27%_
-		_%column28%_
-		_%column29%_
-		_%column30%_
-		_%delete%_
+<table class="estimate_search">
+<tr>
+<th valign="top" valign="center"><a href="#" onclick="fncDoCopy( copyhidden , document.getElementById('COPYAREA1') , document.getElementById('COPYAREA2') );return false;"><img onmouseover="CopyOn(this);" onmouseout="CopyOff(this);" src="/img/type01/cmn/seg/copy_off_bt.gif" width="15" height="15" border="0" alt="COPY" rowspan="2"></a></td>
+	_%HEADER%_
 </tr>
 <!--
 <tr id="SegTitle">
   _%2row%_
 </tr>
 -->
-<tr id="DummyTR"><th colspan="_%lngColumnNum%_">&nbsp;</th></tr>
+<!-- <tr id="DummyTR"><th colspan="_%lngColumnNum%_">&nbsp;</th></tr> -->
 _%tabledata%_
 </table>
 </span>
@@ -76,8 +45,8 @@ _%strErrorMessage%_
 </span>
 
 
-<form name="form1" action="./index.php" method="POST">
-_%strHidden%_
+<form id="displayColumns" action="/estimate/result/searchRecordPreview.php" method="POST">
+_%FORM%_
 
 <!-- セッション情報 -->
 <input type="hidden" value="_%strSessionID%_" name="strSessionID">
