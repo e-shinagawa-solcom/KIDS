@@ -497,6 +497,7 @@ $aryTableHeaderName["dtminsertdate"] = "登録日";
 $aryTableHeaderName["lnginputusercode"] = "入力者";
 $aryTableHeaderName["strcustomerreceivecode"] = "顧客受注番号";
 $aryTableHeaderName["strreceivecode"] = "受注ＮＯ.";
+$aryTableHeaderName["lngrevisionno"] = "リビジョン番号";
 $aryTableHeaderName["strproductcode"] = "製品コード";
 $aryTableHeaderName["strproductname"] = "製品名";
 $aryTableHeaderName["strproductenglishname"] = "製品名（英語）";
@@ -629,7 +630,7 @@ foreach ($records as $i => $record) {
         // 詳細セル
         $tdDetail = $doc->createElement("td");
         $tdDetail->setAttribute("class", $exclude);
-        $tdDetail->setAttribute("style", $bgcolor);
+        $tdDetail->setAttribute("style", $bgcolor. "text-align: center;");
 
         // 詳細ボタンの表示
         if ($allowedDetail and $record["lngrevisionno"] >= 0) {
@@ -651,7 +652,7 @@ foreach ($records as $i => $record) {
         // 確定セル
         $tdDecide = $doc->createElement("td");
         $tdDecide->setAttribute("class", $exclude);
-        $tdDecide->setAttribute("style", $bgcolor);
+        $tdDecide->setAttribute("style", $bgcolor. "text-align: center;");
 
         // 確定ボタンの表示
         if ($allowedDecide and $record["lngrevisionno"] >= 0 and $record["lngreceivestatuscode"] == DEF_RECEIVE_APPLICATE and !$deletedFlag) {
@@ -673,7 +674,7 @@ foreach ($records as $i => $record) {
         // 履歴セル
         $tdHistory = $doc->createElement("td");
         $tdHistory->setAttribute("class", $exclude);
-        $tdHistory->setAttribute("style", $bgcolor);
+        $tdHistory->setAttribute("style", $bgcolor. "text-align: center;");
 
         if ($isMaxReceive and $historyFlag and array_key_exists("admin", $optionColumns)) {
             // 履歴ボタン
@@ -719,6 +720,13 @@ foreach ($records as $i => $record) {
                 case "strreceivecode":
                     $td = $doc->createElement("td", toUTF8($record["strreceivecode"]));
                     $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+                // リビジョン番号
+                case "lngrevisionno":
+                    $td = $doc->createElement("td", $record["lngrevisionno"]);
+                    $td->setAttribute("style", $bgcolor);
+                    $td->setAttribute("rowspan", $rowspan);
                     $trBody->appendChild($td);
                     break;
                 // 製品コード
@@ -830,7 +838,7 @@ foreach ($records as $i => $record) {
         // 確定取消セル
         $tdCancel = $doc->createElement("td");
         $tdCancel->setAttribute("class", $exclude);
-        $tdCancel->setAttribute("style", $bgcolor);
+        $tdCancel->setAttribute("style", $bgcolor. "text-align: center;");
 
         // 確定取消ボタンの表示
         if ($allowedCancel and $record["lngrevisionno"] >= 0 and $record["lngreceivestatuscode"] == DEF_RECEIVE_ORDER and !$deletedFlag) {

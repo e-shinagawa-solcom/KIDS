@@ -280,7 +280,6 @@ if (array_key_exists("lngSalesClassCode", $searchColumns) &&
 $aryQuery[] = "    ) as sd ";
 $aryQuery[] = "WHERE";
 $aryQuery[] = " sd.lngSalesNo = s.lngSalesNo ";
-$aryQuery[] = " AND sd.lngRevisionNo = s.lngRevisionNo ";
 
 // 登録日
 if (array_key_exists("dtmInsertDate", $searchColumns) &&
@@ -543,6 +542,7 @@ $aryTableHeaderName = array();
 $aryTableHeaderName["dtminsertdate"] = "登録日";
 $aryTableHeaderName["dtmappropriationdate"] = "請求日";
 $aryTableHeaderName["strsalescode"] = "売上NO.";
+$aryTableHeaderName["lngrevisionno"] = "リビジョン番号";
 $aryTableHeaderName["strcustomerreceivecode"] = "顧客受注番号";
 $aryTableHeaderName["strslipcode"] = "納品書NO.";
 $aryTableHeaderName["lnginputusercode"] = "入力者";
@@ -699,7 +699,7 @@ foreach ($records as $i => $record) {
         // 詳細セル
         $tdDetail = $doc->createElement("td");
         $tdDetail->setAttribute("class", $exclude);
-        $tdDetail->setAttribute("style", $bgcolor);
+        $tdDetail->setAttribute("style", $bgcolor. "text-align: center;");
         $tdDetail->setAttribute("rowspan", $rowspan);
 
         // 詳細ボタンの表示
@@ -722,7 +722,7 @@ foreach ($records as $i => $record) {
         // 履歴セル
         $tdHistory = $doc->createElement("td");
         $tdHistory->setAttribute("class", $exclude);
-        $tdHistory->setAttribute("style", $bgcolor);
+        $tdHistory->setAttribute("style", $bgcolor. "text-align: center;");
         $tdHistory->setAttribute("rowspan", $rowspan);
 
         if ($isMaxSales and $historyFlag and array_key_exists("admin", $optionColumns)) {
@@ -765,6 +765,13 @@ foreach ($records as $i => $record) {
                 // 売上NO.
                 case "strsalescode":
                     $td = $doc->createElement("td", $record["strsalescode"]);
+                    $td->setAttribute("style", $bgcolor);
+                    $td->setAttribute("rowspan", $rowspan);
+                    $trBody->appendChild($td);
+                    break;
+                // リビジョン番号
+                case "lngrevisionno":
+                    $td = $doc->createElement("td", $record["lngrevisionno"]);
                     $td->setAttribute("style", $bgcolor);
                     $td->setAttribute("rowspan", $rowspan);
                     $trBody->appendChild($td);

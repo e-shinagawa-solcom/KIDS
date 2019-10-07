@@ -558,6 +558,7 @@ $aryTableHeaderName["dtminsertdate"] = "作成日";
 $aryTableHeaderName["lnggoodsplanprogresscode"] = "企画進行状況";
 $aryTableHeaderName["dtmupdatedate"] = "改訂日時";
 $aryTableHeaderName["strproductcode"] = "製品コード";
+$aryTableHeaderName["lngrevisionno"] = "リビジョン番号";
 $aryTableHeaderName["strproductname"] = "製品名";
 $aryTableHeaderName["strproductenglishname"] = "製品名（英語）";
 $aryTableHeaderName["lnginputusercode"] = "入力者";
@@ -693,7 +694,7 @@ foreach ($records as $i => $record) {
         // 詳細セル
         $tdDetail = $doc->createElement("td");
         $tdDetail->setAttribute("class", $exclude);
-        $tdDetail->setAttribute("style", $bgcolor);
+        $tdDetail->setAttribute("style", $bgcolor. "text-align: center;");
 
         // 詳細ボタンの表示
         // if (($allowedDetailDelete and $record["bytinvalidflag"] != "f") or ($allowedDetail and $record["bytinvalidflag"] == "f")) {
@@ -716,7 +717,7 @@ foreach ($records as $i => $record) {
         // 修正セル
         $tdModify = $doc->createElement("td");
         $tdModify->setAttribute("class", $exclude);
-        $tdModify->setAttribute("style", $bgcolor);
+        $tdModify->setAttribute("style", $bgcolor. "text-align: center;");
 
         // 修正ボタンの表示
         // if ($allowedModify and $record["bytinvalidflag"] == "f") {
@@ -739,7 +740,7 @@ foreach ($records as $i => $record) {
         // 履歴セル
         $tdHistory = $doc->createElement("td");
         $tdHistory->setAttribute("class", $exclude);
-        $tdHistory->setAttribute("style", $bgcolor);
+        $tdHistory->setAttribute("style", $bgcolor. "text-align: center;");
 
         if ($isMaxproduct and $historyFlag) {
             // 履歴ボタン
@@ -784,6 +785,13 @@ foreach ($records as $i => $record) {
                 case "strproductcode":
                     $td = $doc->createElement("td", $record["strproductcode"] . "_" . $record["strrevisecode"]);
                     $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+                // リビジョン番号
+                case "lngrevisionno":
+                    $td = $doc->createElement("td", $record["lngrevisionno"]);
+                    $td->setAttribute("style", $bgcolor);
+                    $td->setAttribute("rowspan", $rowspan);
                     $trBody->appendChild($td);
                     break;
                 // 製品名

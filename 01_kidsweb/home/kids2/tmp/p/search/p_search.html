@@ -28,8 +28,6 @@
         <script src="/p/search/js/form-buttons.js" defer></script>
         <!-- フォームバリデーション -->
         <script src="/p/search/js/validate-form.js" defer></script>
-        <!-- チェックボックスの切り替え処理 -->
-        <script src="/p/search/js/toggleCheckbox.js" defer></script>
         <!-- マスタ検索呼び出し -->
         <script src="/p/cmn/js/invoke-master-search.js" defer></script>
         <!-- マスタ検索呼び出し -->
@@ -69,16 +67,16 @@
         <form name="SearchMoldHistory" method="post">
             <input type="submit">
             <div class="regist-line">
-                <img class="toggle-search-header button" src="/img/type01/cmn/seg/off_bt.gif" alt="toggle search">
-                <img class="toggle-display-header button" src="/img/type01/cmn/seg/off_bt.gif" alt="toggle display">
+                <img class="toggle-search button" src="/img/type01/cmn/seg/off_bt.gif" alt="toggle search">
+                <img class="toggle-display button" src="/img/type01/cmn/seg/off_bt.gif" alt="toggle display">
             </div>
             <div class="regist-line">
                 <img src="/img/type01/cmn/seg/view_search_ja.gif" alt="view search">
             </div>
             <div class="regist-line" _%btnDetail_visibility%_>
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_btnDetail" class="is-search-header" type="checkbox" disabled>
-                    <input name="IsDisplay_btnDetail" class="is-display-header" type="checkbox" _%btnDetailVisible%_>
+                    <input name="IsSearch_btnDetail" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_btnDetail" class="is-display" type="checkbox" _%btnDetailVisible%_>
                 </span>
                 <span class="regist-label">
                     <span class="regist-label--text-only">詳細</span>
@@ -86,8 +84,8 @@
             </div>
             <div class="regist-line" _%btnFix_visibility%_>
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_btnFix" class="is-search-header" type="checkbox" disabled>
-                    <input name="IsDisplay_btnFix" class="is-display-header" type="checkbox" _%btnFixVisible%_>
+                    <input name="IsSearch_btnFix" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_btnFix" class="is-display" type="checkbox" _%btnFixVisible%_>
                 </span>
                 <span class="regist-label">
                     <span class="regist-label--text-only">修正</span>
@@ -95,8 +93,8 @@
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_btnHistory" class="is-search-header" type="checkbox" disabled>
-                    <input name="IsDisplay_btnHistory" class="is-display-header" type="checkbox">
+                    <input name="IsSearch_btnHistory" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_btnHistory" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label--text-only">履歴</span>
@@ -104,8 +102,8 @@
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_dtmInsertDate" class="is-search-header" type="checkbox">
-                    <input name="IsDisplay_dtmInsertDate" class="is-display-header" type="checkbox">
+                    <input name="IsSearch_dtmInsertDate" class="is-search" type="checkbox">
+                    <input name="IsDisplay_dtmInsertDate" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label__text">作成日時</span>
@@ -116,8 +114,8 @@
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_lngGoodsPlanProgressCode" class="is-search-header" type="checkbox">
-                    <input name="IsDisplay_lngGoodsPlanProgressCode" class="is-display-header" type="checkbox">
+                    <input name="IsSearch_lngGoodsPlanProgressCode" class="is-search" type="checkbox">
+                    <input name="IsDisplay_lngGoodsPlanProgressCode" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label__text">企画進行状況</span>
@@ -128,8 +126,8 @@
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_dtmUpdateDate" class="is-search-header" type="checkbox">
-                    <input name="IsDisplay_dtmUpdateDate" class="is-display-header" type="checkbox">
+                    <input name="IsSearch_dtmUpdateDate" class="is-search" type="checkbox">
+                    <input name="IsDisplay_dtmUpdateDate" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label__text">改訂日時</span>
@@ -139,16 +137,14 @@
                 </span>
             </div>
             <div class="regist-line">
-                <img class="toggle-search button" src="/img/type01/cmn/seg/off_bt.gif" alt="toggle search">
-                <img class="toggle-display button" src="/img/type01/cmn/seg/off_bt.gif" alt="toggle display">
-            </div>
-            <div class="regist-line">
                 <img src="/img/type01/cmn/seg/view_search_ja.gif" alt="view search">
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
                     <input name="IsSearch_strProductCode" class="is-search" type="checkbox">
-                    <input name="IsDisplay_strProductCode" class="is-display" type="checkbox">
+                    <input name="IsDisplay_strProductCode" class="is-display" type="checkbox" checked disabled>
+                    <input type="hidden" name="IsDisplay_strProductCode" value="on">
+                    <input type="hidden" name="IsDisplay_lngRevisionNo" value="on">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label__text">製品コード</span>

@@ -1,4 +1,7 @@
 (function () {
+
+    $('input[type="checkbox"][name="IsDisplay_strStockCode"]').prop('checked', true);
+
     // 製品名称、仕入科目、仕入部品、顧客品番、運搬方法、単価、単位、数量、税抜金額、明細備考
     var chkboxElements = [
         $('input[type="checkbox"][name="IsDisplay_lngRecordNo"]')

@@ -113,32 +113,7 @@ $aryQuery = array();
 $aryQuery[] = "SELECT";
 $aryQuery[] = "  s.lngStockNo as lngStockNo";
 $aryQuery[] = "  , s.lngRevisionNo as lngRevisionNo";
-$aryQuery[] = "  , sd.lngStockDetailNo";
 $aryQuery[] = "  , sd.strordercode";
-$aryQuery[] = "  , sd.strProductCode";
-$aryQuery[] = "  , sd.strProductname";
-$aryQuery[] = "  , sd.strMoldNo";
-$aryQuery[] = "  , sd.strGroupDisplayCode";
-$aryQuery[] = "  , sd.strGroupDisplayName";
-$aryQuery[] = "  , sd.strUserDisplayCode";
-$aryQuery[] = "  , sd.strUserDisplayName";
-$aryQuery[] = "  , sd.strGoodsCode";
-$aryQuery[] = "  , sd.lngDeliveryMethodCode";
-$aryQuery[] = "  , sd.strDeliveryMethodName";
-$aryQuery[] = "  , sd.lngStockSubjectCode";
-$aryQuery[] = "  , sd.strStockSubjectName";
-$aryQuery[] = "  , sd.lngStockItemCode";
-$aryQuery[] = "  , sd.strStockItemName";
-$aryQuery[] = "  , sd.curProductPrice";
-$aryQuery[] = "  , sd.lngProductUnitCode";
-$aryQuery[] = "  , sd.strproductunitname";
-$aryQuery[] = "  , sd.lngProductQuantity";
-$aryQuery[] = "  , sd.curSubTotalPrice";
-$aryQuery[] = "  , sd.lngTaxClassCode";
-$aryQuery[] = "  , sd.strTaxClassName";
-$aryQuery[] = "  , sd.curTax";
-$aryQuery[] = "  , to_char(sd.curTaxPrice, '9,999,999,990.99') as curTaxPrice";
-$aryQuery[] = "  , sd.strNote as strDetailNote";
 $aryQuery[] = "  , to_char(s.dtmInsertDate, 'YYYY/MM/DD HH24:MI:SS') as dtmInsertDate";
 $aryQuery[] = "  , to_char(s.dtmappropriationdate, 'YYYY/MM/DD') as dtmappropriationdate";
 $aryQuery[] = "  , to_char(s.dtmexpirationdate, 'YYYY/MM/DD') as dtmexpirationdate";
@@ -169,13 +144,10 @@ $aryQuery[] = "    ON s.lngMonetaryUnitCode = mu.lngMonetaryUnitCode";
 $aryQuery[] = "  LEFT JOIN m_paycondition mp ";
 $aryQuery[] = "    ON s.lngpayconditioncode = mp.lngpayconditioncode";
 $aryQuery[] = "  , ( ";
-if ($isDisplayDetail) {
-    $aryQuery[] = "      SELECT sd1.lngStockNo";
-} else {
-    $aryQuery[] = "      SELECT distinct";
-    $aryQuery[] = "          on (sd1.lngStockNo) sd1.lngStockNo";
-}
+$aryQuery[] = "      SELECT distinct";
+$aryQuery[] = "          on (sd1.lngStockNo) sd1.lngStockNo";
 $aryQuery[] = "        , sd1.lngStockDetailNo";
+$aryQuery[] = "        , sd1.lngRevisionNo ";
 $aryQuery[] = "        , o.strordercode";
 $aryQuery[] = "        , p.strProductCode";
 $aryQuery[] = "        , mg.strGroupDisplayCode";
@@ -315,10 +287,8 @@ if (array_key_exists("lngDeliveryMethodCode", $searchColumns) &&
 // }
 $aryQuery[] = "    ) as sd ";
 $aryQuery[] = "WHERE";
-$aryQuery[] = "  s.bytInvalidFlag = FALSE ";
-
-$aryQuery[] = " AND s.lngRevisionNo >= 0";
-
+$aryQuery[] = "  sd.lngStockNo = s.lngStockNo ";
+// $aryQuery[] = "  AND sd.lngRevisionNo = s.lngRevisionNo ";
 // 登録日
 if (array_key_exists("dtmInsertDate", $searchColumns) &&
     array_key_exists("dtmInsertDate", $from) &&
@@ -385,16 +355,6 @@ if (array_key_exists("lngPayConditionCode", $searchColumns) &&
     $aryQuery[] = " AND s.lngPayConditionCode = '" . $searchValue["lngPayConditionCode"] . "'";
 }
 
-$aryQuery[] = "  AND sd.lngStockNo = s.lngStockNo ";
-// $aryQuery[] = "  AND s.lngRevisionNo = ( ";
-// $aryQuery[] = "    SELECT";
-// $aryQuery[] = "      MAX(s1.lngRevisionNo) ";
-// $aryQuery[] = "    FROM";
-// $aryQuery[] = "      m_Stock s1 ";
-// $aryQuery[] = "    WHERE";
-// $aryQuery[] = "      s1.strStockCode = s.strStockCode ";
-// $aryQuery[] = "      AND s1.bytInvalidFlag = false";
-// $aryQuery[] = "  ) ";
 if (!array_key_exists("admin", $optionColumns)) {
     $aryQuery[] = "  AND s.strStockCode not in ( ";
     $aryQuery[] = "    select";
@@ -406,22 +366,22 @@ if (!array_key_exists("admin", $optionColumns)) {
     $aryQuery[] = "          , strStockCode ";
     $aryQuery[] = "        FROM";
     $aryQuery[] = "          m_Stock ";
-    $aryQuery[] = "        where";
-    $aryQuery[] = "          bytInvalidFlag = false ";
     $aryQuery[] = "        group by";
     $aryQuery[] = "          strStockCode";
     $aryQuery[] = "      ) as s2 ";
     $aryQuery[] = "    where";
     $aryQuery[] = "      s2.lngRevisionNo < 0";
     $aryQuery[] = "  ) ";
+} else {
+    $aryQuery[] = " AND s.bytInvalidFlag = FALSE ";
+    $aryQuery[] = " AND s.lngRevisionNo >= 0";
 }
 $aryQuery[] = "ORDER BY";
-$aryQuery[] = " strStockCode, lngstockDetailNo, lngStockNo DESC";
+$aryQuery[] = " strStockCode, lngRevisionNo DESC";
 
 // クエリを平易な文字列に変換
 $strQuery = implode("\n", $aryQuery);
-// echo $strQuery;
-// return;
+
 // 値をとる =====================================
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 // 検索件数がありの場合
@@ -490,7 +450,6 @@ $tbody = $table->getElementsByTagName("tbody")->item(0);
 
 // キー文字列を小文字に変換
 $displayColumns = array_change_key_case($displayColumns, CASE_LOWER);
-
 // -------------------------------------------------------
 // 各種ボタン表示チェック/権限チェック
 // -------------------------------------------------------
@@ -565,6 +524,7 @@ $aryTableHeaderName = array();
 $aryTableHeaderName["dtminsertdate"] = "登録日";
 $aryTableHeaderName["dtmappropriationdate"] = "仕入日";
 $aryTableHeaderName["strstockcode"] = "仕入ＮＯ.";
+$aryTableHeaderName["lngrevisionno"] = "リビジョン番号";
 $aryTableHeaderName["strordercode"] = "発注ＮＯ.";
 $aryTableHeaderName["strslipcode"] = "納品書ＮＯ.";
 $aryTableHeaderName["lnginputusercode"] = "入力者";
@@ -574,25 +534,24 @@ $aryTableHeaderName["lngpayconditioncode"] = "支払条件";
 $aryTableHeaderName["dtmexpirationdate"] = "製品到着日";
 $aryTableHeaderName["strnote"] = "備考";
 $aryTableHeaderName["curtotalprice"] = "合計金額";
-$aryTableHeaderName["lngrecordno"] = "明細行番号";
-$aryTableHeaderName["strproductcode"] = "製品コード";
-$aryTableHeaderName["lnginchargegroupcode"] = "営業部署";
-$aryTableHeaderName["lnginchargeusercode"] = "開発担当者";
-$aryTableHeaderName["strproductname"] = "製品名";
-$aryTableHeaderName["lngstocksubjectcode"] = "仕入科目";
-$aryTableHeaderName["lngstockitemcode"] = "仕入部品";
-$aryTableHeaderName["strmoldno"] = "Ｎｏ．";
-$aryTableHeaderName["strgoodscode"] = "顧客品番";
-$aryTableHeaderName["lngdeliverymethodcode"] = "運搬方法";
-// $aryTableHeaderName["dtmdeliverydate"] = "納期";
-$aryTableHeaderName["curproductprice"] = "単価";
-$aryTableHeaderName["lngproductunitcode"] = "単位";
-$aryTableHeaderName["lngproductquantity"] = "数量";
-$aryTableHeaderName["cursubtotalprice"] = "税抜金額";
-$aryTableHeaderName["lngtaxclasscode"] = "税区分";
-$aryTableHeaderName["curtax"] = "税率";
-$aryTableHeaderName["curtaxprice"] = "税額";
-$aryTableHeaderName["strdetailnote"] = "明細備考";
+$aryTableDetailHeaderName["lngrecordno"] = "明細行番号";
+$aryTableDetailHeaderName["strproductcode"] = "製品コード";
+$aryTableDetailHeaderName["lnginchargegroupcode"] = "営業部署";
+$aryTableDetailHeaderName["lnginchargeusercode"] = "開発担当者";
+$aryTableDetailHeaderName["strproductname"] = "製品名";
+$aryTableDetailHeaderName["lngstocksubjectcode"] = "仕入科目";
+$aryTableDetailHeaderName["lngstockitemcode"] = "仕入部品";
+$aryTableDetailHeaderName["strmoldno"] = "Ｎｏ．";
+$aryTableDetailHeaderName["strgoodscode"] = "顧客品番";
+$aryTableDetailHeaderName["lngdeliverymethodcode"] = "運搬方法";
+$aryTableDetailHeaderName["curproductprice"] = "単価";
+$aryTableDetailHeaderName["lngproductunitcode"] = "単位";
+$aryTableDetailHeaderName["lngproductquantity"] = "数量";
+$aryTableDetailHeaderName["cursubtotalprice"] = "税抜金額";
+$aryTableDetailHeaderName["lngtaxclasscode"] = "税区分";
+$aryTableDetailHeaderName["curtax"] = "税率";
+$aryTableDetailHeaderName["curtaxprice"] = "税額";
+$aryTableDetailHeaderName["strdetailnote"] = "明細備考";
 
 // TODO 要リファクタリング
 // 指定されたテーブル項目のカラムを作成する
@@ -602,7 +561,13 @@ foreach ($aryTableHeaderName as $key => $value) {
         $trHead->appendChild($th);
     }
 }
-
+// 明細ヘッダーを作成する
+foreach ($aryTableDetailHeaderName as $key => $value) {
+    if (array_key_exists($key, $displayColumns)) {
+        $th = $doc->createElement("th", toUTF8($value));
+        $trHead->appendChild($th);
+    }
+}
 // 削除項目を表示
 if ($existsDelete) {
     // 削除カラム
@@ -644,19 +609,19 @@ foreach ($records as $i => $record) {
 
     // 同じ仕入NOの最新仕入データのリビジョン番号を取得する
     $aryQuery[] = "SELECT";
-    $aryQuery[] = " s.lngstockno, s.lngrevisionno ";
-    $aryQuery[] = "FROM m_stock s inner join t_stockdetail sd ";
-    $aryQuery[] = "on s.lngstockno = sd.lngstockno ";
-    $aryQuery[] = "WHERE strstockcode ='" . $record["strstockcode"] . "' ";
-    $aryQuery[] = "and lngstockdetailno =" . $record["lngstockdetailno"] . " ";
-    $aryQuery[] = "order by s.lngstockno desc ";
+    $aryQuery[] = " lngstockno, lngrevisionno ";
+    $aryQuery[] = "FROM m_stock";
+    $aryQuery[] = "WHERE strstockcode='" . $record["strstockcode"] . "' ";
+    $aryQuery[] = "and lngrevisionno >= 0";
+    $aryQuery[] = "and bytInvalidFlag = FALSE ";
+    $aryQuery[] = "order by lngrevisionno desc";
 
     // クエリを平易な文字列に変換
     $strQuery = implode("\n", $aryQuery);
-    
+
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
-     // 検索件数がありの場合
-     if ($lngResultNum > 0) {
+    // 検索件数がありの場合
+    if ($lngResultNum > 0) {
         if ($lngResultNum > 1) {
             $historyFlag = true;
         }
@@ -671,7 +636,7 @@ foreach ($records as $i => $record) {
                 if ($maxStockInfo["lngrevisionno"] != 0) {
                     $revisedFlag = true;
                 }
-                if ($maxStockInfo["lngstockno"] == $record["lngstockno"]) {
+                if ($maxStockInfo["lngrevisionno"] == $record["lngrevisionno"]) {
                     $isMaxStock = true;
                 }
             } else {
@@ -687,6 +652,10 @@ foreach ($records as $i => $record) {
 
     $objDB->freeResult($lngResultID);
 
+// 詳細データを取得する
+$detailData = fncGetDetailData($record["lngstockno"], $record["lngrevisionno"], $objDB);
+$rowspan = count($detailData);
+
     // 背景色設定
     if ($record["lngrevisionno"] < 0) {
         $bgcolor = "background-color: #B3E0FF;";
@@ -695,14 +664,22 @@ foreach ($records as $i => $record) {
     } else {
         $bgcolor = "background-color: #FEEF8B;";
     }
+    // 明細番号取得
+    for ($i = $rowspan; $i > 0; $i--) {
+        if ($detailnos == "") {
+            $detailnos = $detailData[$i]["lngstockdetailno"];
+        } else {
+            $detailnos = $detailnos . "," . $detailData[$i]["lngstockdetailno"];
+        }
+    }
 
     // tbody > tr要素作成
     $trBody = $doc->createElement("tr");
     if (!$isMaxStock) {
-        $trBody->setAttribute("id", $record["strstockcode"]. "_" . $record["lngstockdetailno"]. "_" . $record["lngrevisionno"]);
+        $trBody->setAttribute("id", $record["strstockcode"] . "_" . $record["lngrevisionno"]);
         $trBody->setAttribute("style", "display: none;");
     } else {
-        $trBody->setAttribute("id", $record["strstockcode"]. "_" . $record["lngstockdetailno"]);
+        $trBody->setAttribute("id", $record["strstockcode"]);
     }
 
     // 項番
@@ -716,6 +693,7 @@ foreach ($records as $i => $record) {
     }
     $tdIndex->setAttribute("class", $exclude);
     $tdIndex->setAttribute("style", $bgcolor);
+    $tdIndex->setAttribute("rowspan", $rowspan);
     $trBody->appendChild($tdIndex);
 
     // 詳細を表示
@@ -723,7 +701,8 @@ foreach ($records as $i => $record) {
         // 詳細セル
         $tdDetail = $doc->createElement("td");
         $tdDetail->setAttribute("class", $exclude);
-        $tdDetail->setAttribute("style", $bgcolor);
+        $tdDetail->setAttribute("style", $bgcolor . "text-align: center;");
+        $tdDetail->setAttribute("rowspan", $rowspan);
 
         // 詳細ボタンの表示
         if ($allowedDetail && $record["lngrevisionno"] >= 0) {
@@ -745,7 +724,8 @@ foreach ($records as $i => $record) {
         // 修正セル
         $tdFix = $doc->createElement("td");
         $tdFix->setAttribute("class", $exclude);
-        $tdFix->setAttribute("style", $bgcolor);
+        $tdFix->setAttribute("style", $bgcolor . "text-align: center;");
+        $tdFix->setAttribute("rowspan", $rowspan);
 
         // 修正ボタンの表示
         if ($allowedFix && $record["lngrevisionno"] >= 0 && $recode["lngstockstatuscode"] != DEF_STOCK_CLOSED && !$deletedFlag) {
@@ -761,20 +741,23 @@ foreach ($records as $i => $record) {
         // tr > td
         $trBody->appendChild($tdFix);
     }
-    
+
     // 履歴項目を表示
     if ($existsHistory) {
         // 履歴セル
         $tdHistory = $doc->createElement("td");
         $tdHistory->setAttribute("class", $exclude);
-        $tdHistory->setAttribute("style", $bgcolor);
+        $tdHistory->setAttribute("style", $bgcolor . "text-align: center;");
+        $tdHistory->setAttribute("rowspan", $rowspan);
 
-        if ($isMaxStock and $historyFlag) {
+        if ($isMaxStock and $historyFlag and array_key_exists("admin", $optionColumns)) {
             // 履歴ボタン
             $imgHistory = $doc->createElement("img");
             $imgHistory->setAttribute("src", "/img/type01/so/renew_off_bt.gif");
-            $imgHistory->setAttribute("id", $record["strstockcode"]. "_" . $record["lngstockdetailno"]);
+            $imgHistory->setAttribute("id", $record["strstockcode"]);
             $imgHistory->setAttribute("revisionnos", $revisionNos);
+            $imgHistory->setAttribute("revisionno", $record["lngrevisionno"]);
+            $imgHistory->setAttribute("maxdetailno", $detailData[$rowspan - 1]["lngstockdetailno"]);
             $imgHistory->setAttribute("class", "history button");
             // td > img
             $tdHistory->appendChild($imgHistory);
@@ -794,30 +777,42 @@ foreach ($records as $i => $record) {
                 case "dtminsertdate":
                     $td = $doc->createElement("td", $record["dtminsertdate"]);
                     $td->setAttribute("style", $bgcolor);
+                    $td->setAttribute("rowspan", $rowspan);
                     $trBody->appendChild($td);
                     break;
                 // 仕入日
                 case "dtmappropriationdate":
                     $td = $doc->createElement("td", $record["dtmappropriationdate"]);
                     $td->setAttribute("style", $bgcolor);
+                    $td->setAttribute("rowspan", $rowspan);
                     $trBody->appendChild($td);
                     break;
                 // 仕入ＮＯ.
                 case "strstockcode":
                     $td = $doc->createElement("td", $record["strstockcode"]);
                     $td->setAttribute("style", $bgcolor);
+                    $td->setAttribute("rowspan", $rowspan);
+                    $trBody->appendChild($td);
+                    break;
+                // リビジョン番号
+                case "lngrevisionno":
+                    $td = $doc->createElement("td", $record["lngrevisionno"]);
+                    $td->setAttribute("style", $bgcolor);
+                    $td->setAttribute("rowspan", $rowspan);
                     $trBody->appendChild($td);
                     break;
                 // 発注ＮＯ.
                 case "strordercode":
                     $td = $doc->createElement("td", $record["strordercode"]);
                     $td->setAttribute("style", $bgcolor);
+                    $td->setAttribute("rowspan", $rowspan);
                     $trBody->appendChild($td);
                     break;
                 // 納品書ＮＯ.
                 case "strslipcode":
                     $td = $doc->createElement("td", $record["strslipcode"]);
                     $td->setAttribute("style", $bgcolor);
+                    $td->setAttribute("rowspan", $rowspan);
                     $trBody->appendChild($td);
                     break;
                 // [入力者表示コード] 入力者表示名
@@ -825,6 +820,7 @@ foreach ($records as $i => $record) {
                     $textContent = "[" . $record["strinputuserdisplaycode"] . "]" . " " . $record["strinputuserdisplayname"];
                     $td = $doc->createElement("td", toUTF8($textContent));
                     $td->setAttribute("style", $bgcolor);
+                    $td->setAttribute("rowspan", $rowspan);
                     $trBody->appendChild($td);
                     break;
                 // [仕入先表示コード] 入力者表示名
@@ -832,160 +828,63 @@ foreach ($records as $i => $record) {
                     $textContent = "[" . $record["strcustomerdisplaycode"] . "]" . " " . $record["strcustomerdisplayname"];
                     $td = $doc->createElement("td", toUTF8($textContent));
                     $td->setAttribute("style", $bgcolor);
+                    $td->setAttribute("rowspan", $rowspan);
                     $trBody->appendChild($td);
                     break;
                 // 状態
                 case "lngstockstatuscode":
                     $td = $doc->createElement("td", toUTF8($record["strstockstatusname"]));
                     $td->setAttribute("style", $bgcolor);
+                    $td->setAttribute("rowspan", $rowspan);
                     $trBody->appendChild($td);
                     break;
                 // 支払条件
                 case "lngpayconditioncode":
                     $td = $doc->createElement("td", toUTF8($record["strpayconditionname"]));
                     $td->setAttribute("style", $bgcolor);
+                    $td->setAttribute("rowspan", $rowspan);
                     $trBody->appendChild($td);
                     break;
                 // 製品到着日
                 case "dtmexpirationdate":
                     $td = $doc->createElement("td", toUTF8($record["dtmexpirationdate"]));
                     $td->setAttribute("style", $bgcolor);
+                    $td->setAttribute("rowspan", $rowspan);
                     $trBody->appendChild($td);
                     break;
                 // 備考
                 case "strnote":
                     $td = $doc->createElement("td", toUTF8($record["strnote"]));
                     $td->setAttribute("style", $bgcolor);
+                    $td->setAttribute("rowspan", $rowspan);
                     $trBody->appendChild($td);
                     break;
                 // 合計金額
                 case "curtotalprice":
                     $td = $doc->createElement("td", toUTF8($record["curtotalprice"]));
                     $td->setAttribute("style", $bgcolor);
-                    $trBody->appendChild($td);
-                    break;
-                // 明細行番号
-                case "lngrecordno":
-                    $td = $doc->createElement("td", $record["lngstockdetailno"]);
-                    $td->setAttribute("style", $bgcolor);
-                    $trBody->appendChild($td);
-                    break;
-                // 製品コード
-                case "strproductcode":
-                    $td = $doc->createElement("td", $record["strproductcode"]);
-                    $td->setAttribute("style", $bgcolor);
-                    $trBody->appendChild($td);
-                    break;
-                // [営業部署表示コード] 営業部署表示名
-                case "lnginchargegroupcode":
-                    $textContent = "[" . $record["strgroupdisplaycode"] . "]" . " " . $record["strgroupdisplayname"];
-                    $td = $doc->createElement("td", toUTF8($textContent));
-                    $td->setAttribute("style", $bgcolor);
-                    $trBody->appendChild($td);
-                    break;
-                // [開発担当者表示コード] 開発担当者表示名
-                case "lnginchargeusercode":
-                    $textContent = "[" . $record["struserdisplaycode"] . "]" . " " . $record["struserdisplayname"];
-                    $td = $doc->createElement("td", toUTF8($textContent));
-                    $td->setAttribute("style", $bgcolor);
-                    $trBody->appendChild($td);
-                    break;
-                // 製品マスタ.製品名称(日本語)
-                case "strproductname":
-                    $td = $doc->createElement("td", toUTF8($record["strproductname"]));
-                    $td->setAttribute("style", $bgcolor);
-                    $trBody->appendChild($td);
-                    break;
-                // 仕入科目
-                case "lngstockitemcode":
-                    $textContent = "[" . $record["lngstockitemcode"] . "]" . " " . $record["strstockitemname"];
-                    $td = $doc->createElement("td", toUTF8($textContent));
-                    $td->setAttribute("style", $bgcolor);
-                    $trBody->appendChild($td);
-                    break;
-                // 仕入部品
-                case "lngstocksubjectcode":
-                    $textContent = "[" . $record["lngstocksubjectcode"] . "]" . " " . $record["strstocksubjectname"];
-                    $td = $doc->createElement("td", toUTF8($textContent));
-                    $td->setAttribute("style", $bgcolor);
-                    $trBody->appendChild($td);
-                    break;
-                // NO.
-                case "strmoldno":
-                    $td = $doc->createElement("td", $record["strmoldno"]);
-                    $td->setAttribute("style", $bgcolor);
-                    $trBody->appendChild($td);
-                    break;
-                // 顧客品番
-                case "strgoodscode":
-                    $td = $doc->createElement("td", toUTF8($record["strgoodscode"]));
-                    $td->setAttribute("style", $bgcolor);
-                    $trBody->appendChild($td);
-                    break;
-                // 運搬方法
-                case "lngdeliverymethodcode":
-                    $td = $doc->createElement("td", toUTF8($record["strdeliverymethodname"]));
-                    $td->setAttribute("style", $bgcolor);
-                    $trBody->appendChild($td);
-                    break;
-                // 単価
-                case "curproductprice":
-                    $td = $doc->createElement("td", toMoneyFormat($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], $record["curproductprice"]));
-                    $td->setAttribute("style", $bgcolor);
-                    $trBody->appendChild($td);
-                    break;
-                // 単位
-                case "lngproductunitcode":
-                    $td = $doc->createElement("td", toUTF8($record["strproductunitname"]));
-                    $td->setAttribute("style", $bgcolor);
-                    $trBody->appendChild($td);
-                    break;
-                // 数量
-                case "lngproductquantity":
-                    $td = $doc->createElement("td", number_format($record["lngproductquantity"]));
-                    $td->setAttribute("style", $bgcolor);
-                    $trBody->appendChild($td);
-                    break;
-                // 税抜金額
-                case "cursubtotalprice":
-                    $td = $doc->createElement("td", toMoneyFormat($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], $record["cursubtotalprice"]));
-                    $td->setAttribute("style", $bgcolor);
-                    $trBody->appendChild($td);
-                    break;
-                // 税区分
-                case "lngtaxclasscode":
-                    $td = $doc->createElement("td", toUTF8($record["strtaxclassname"]));
-                    $td->setAttribute("style", $bgcolor);
-                    $trBody->appendChild($td);
-                    break;
-                // 税率
-                case "curtax":
-                    $td = $doc->createElement("td", $record["curtax"]);
-                    $td->setAttribute("style", $bgcolor);
-                    $trBody->appendChild($td);
-                    break;
-                // 税額
-                case "curtaxprice":
-                    $td = $doc->createElement("td", toMoneyFormat($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], $record["curtaxprice"]));
-                    $td->setAttribute("style", $bgcolor);
-                    $trBody->appendChild($td);
-                    break;
-                // 明細備考
-                case "strdetailnote":
-                    $td = $doc->createElement("td", toUTF8($record["strdetailnote"]));
-                    $td->setAttribute("style", $bgcolor);
+                    $td->setAttribute("rowspan", $rowspan);
                     $trBody->appendChild($td);
                     break;
             }
         }
     }
+    
+
+    // 明細データの設定
+    fncSetDetailDataToTr($doc, $trBody, $bgcolor, $aryTableDetailHeaderName, $displayColumns, $detailData[0]);
+
+    // tbody > tr
+    $tbody->appendChild($trBody);
+
 
     // 削除項目を表示
     if ($existsDelete) {
         // 削除セル
         $tdDelete = $doc->createElement("td");
         $tdDelete->setAttribute("class", $exclude);
-        $tdDelete->setAttribute("style", $bgcolor);
+        $tdDelete->setAttribute("style", $bgcolor . "text-align: center;");
+        $tdDelete->setAttribute("rowspan", $rowspan);
 
         $showDeleteFlag = false;
         if ($allowedDelete) {
@@ -1022,7 +921,8 @@ foreach ($records as $i => $record) {
         // 無効セル
         $tdInvalid = $doc->createElement("td");
         $tdInvalid->setAttribute("class", $exclude);
-        $tdInvalid->setAttribute("style", $bgcolor);
+        $tdInvalid->setAttribute("style", $bgcolor . "text-align: center;");
+        $tdInvalid->setAttribute("rowspan", $rowspan);
 
         // 無効ボタンの表示
         if ($allowedInvalid && $allowedAdmin && array_key_exists("admin", $optionColumns) && $recode["lngstockstatuscode"] != DEF_STOCK_CLOSED) {
@@ -1042,8 +942,255 @@ foreach ($records as $i => $record) {
     // tbody > tr
     $tbody->appendChild($trBody);
 
+    
+    // 明細行のtrの追加
+    for ($i = 1; $i < $rowspan; $i++) {
+        $trBody = $doc->createElement("tr");
+        if (!$isMaxStock) {
+            $trBody->setAttribute("style", "display: none;");
+        }
+        $trBody->setAttribute("id", $record["strstockcode"] . "_" . $record["lngrevisionno"] . "_" . $detailData[$i]["lngstockdetailno"]);
+
+        fncSetDetailDataToTr($doc, $trBody, $bgcolor, $aryTableDetailHeaderName, $displayColumns, $detailData[$i]);
+
+        $tbody->appendChild($trBody);
+
+    }
 }
 
 // HTML出力
 echo $doc->saveHTML();
 
+/**
+ * 明細データの取得
+ *
+ * @param [type] $lngSalesNo
+ * @param [type] $lngRevisionNo
+ * @param [type] $objDB
+ * @return void
+ */
+function fncGetDetailData($lngStockNo, $lngRevisionNo, $objDB)
+{
+    $detailData = array();
+    unset($aryQuery);
+    $aryQuery[] = "SELECT sd.lngStockNo";
+    $aryQuery[] = "  , sd.lngStockDetailNo";
+    $aryQuery[] = "  , p.strProductCode";
+    $aryQuery[] = "  , mg.strGroupDisplayCode";
+    $aryQuery[] = "  , mg.strGroupDisplayName";
+    $aryQuery[] = "  , mu.struserdisplaycode";
+    $aryQuery[] = "  , mu.struserdisplayname";
+    $aryQuery[] = "  , p.strProductName";
+    $aryQuery[] = "  , p.strProductEnglishName";
+    $aryQuery[] = "  , sd.lngStockSubjectCode";
+    $aryQuery[] = "  , ss.strStockSubjectName";
+    $aryQuery[] = "  , sd.lngStockItemCode";
+    $aryQuery[] = "  , si.strStockItemName";
+    $aryQuery[] = "  , sd.strMoldNo";
+    $aryQuery[] = "  , p.strGoodsCode";
+    $aryQuery[] = "  , sd.lngDeliveryMethodCode";
+    $aryQuery[] = "  , dm.strDeliveryMethodName";
+    $aryQuery[] = "  , sd.curProductPrice";
+    $aryQuery[] = "  , sd.lngProductUnitCode";
+    $aryQuery[] = "  , pu.strProductUnitName";
+    $aryQuery[] = "  , sd.lngProductQuantity";
+    $aryQuery[] = "  , sd.curSubTotalPrice";
+    $aryQuery[] = "  , sd.lngTaxClassCode";
+    $aryQuery[] = "  , mtc.strTaxClassName";
+    $aryQuery[] = "  , mt.curtax";
+    $aryQuery[] = "  , to_char(sd.curTaxPrice, '9,999,999,990.99') as curTaxPrice";
+    $aryQuery[] = "  , sd.strNote ";
+    $aryQuery[] = "FROM";
+    $aryQuery[] = "  t_StockDetail sd ";
+    $aryQuery[] = "  LEFT JOIN ( ";
+    $aryQuery[] = "    select";
+    $aryQuery[] = "      p1.* ";
+    $aryQuery[] = "    from";
+    $aryQuery[] = "      m_product p1 ";
+    $aryQuery[] = "      inner join ( ";
+    $aryQuery[] = "        select";
+    $aryQuery[] = "          max(lngrevisionno) lngrevisionno";
+    $aryQuery[] = "          , strproductcode ";
+    $aryQuery[] = "        from";
+    $aryQuery[] = "          m_Product ";
+    $aryQuery[] = "        group by";
+    $aryQuery[] = "          strProductCode";
+    $aryQuery[] = "      ) p2 ";
+    $aryQuery[] = "        on p1.lngrevisionno = p2.lngrevisionno ";
+    $aryQuery[] = "        and p1.strproductcode = p2.strproductcode";
+    $aryQuery[] = "  ) p ";
+    $aryQuery[] = "    ON sd.strProductCode = p.strProductCode ";
+    $aryQuery[] = "  left join m_group mg ";
+    $aryQuery[] = "    on p.lnginchargegroupcode = mg.lnggroupcode ";
+    $aryQuery[] = "  left join m_user mu ";
+    $aryQuery[] = "    on p.lnginchargeusercode = mu.lngusercode ";
+    $aryQuery[] = "  left join m_tax mt ";
+    $aryQuery[] = "    on mt.lngtaxcode = sd.lngtaxcode ";
+    $aryQuery[] = "  left join m_taxclass mtc ";
+    $aryQuery[] = "    on mtc.lngtaxclasscode = sd.lngtaxclasscode ";
+    $aryQuery[] = "  LEFT JOIN m_Stocksubject ss ";
+    $aryQuery[] = "    on ss.lngStocksubjectcode = sd.lngStocksubjectcode ";
+    $aryQuery[] = "  LEFT JOIN m_Stockitem si ";
+    $aryQuery[] = "    on si.lngStocksubjectcode = sd.lngStocksubjectcode ";
+    $aryQuery[] = "    and si.lngStockitemcode = sd.lngStockitemcode ";
+    $aryQuery[] = "  LEFT JOIN m_deliverymethod dm ";
+    $aryQuery[] = "    on dm.lngdeliverymethodcode = sd.lngdeliverymethodcode ";
+    $aryQuery[] = "  LEFT JOIN m_productunit pu ";
+    $aryQuery[] = "    on pu.lngproductunitcode = sd.lngproductunitcode ";
+    $aryQuery[] = "where";
+    $aryQuery[] = "  sd.lngStockNo = " . $lngStockNo;
+    $aryQuery[] = "  and sd.lngrevisionno = " . $lngRevisionNo;
+    $aryQuery[] = "order by sd.lngStockDetailNo";
+
+    // クエリを平易な文字列に変換
+    $strQuery = implode("\n", $aryQuery);
+
+    list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
+    // 検索件数がありの場合
+    if ($lngResultNum > 0) {
+        // 指定数以内であれば通常処理
+        for ($i = 0; $i < $lngResultNum; $i++) {
+            $detailData = pg_fetch_all($lngResultID);
+        }
+    }
+    $objDB->freeResult($lngResultID);
+
+    return $detailData;
+}
+
+/**
+ * 明細行データの生成
+ *
+ * @param [type] $doc
+ * @param [type] $trBody
+ * @param [type] $bgcolor
+ * @param [type] $aryTableDetailHeaderName
+ * @param [type] $displayColumns
+ * @param [type] $detailData
+ * @return void
+ */
+function fncSetDetailDataToTr($doc, $trBody, $bgcolor, $aryTableDetailHeaderName, $displayColumns, $detailData)
+{
+    // 指定されたテーブル項目のセルを作成する
+    foreach ($aryTableDetailHeaderName as $key => $value) {
+        // 表示対象のカラムの場合
+        if (array_key_exists($key, $displayColumns)) {
+            // 項目別に表示テキストを設定
+            switch ($key) {                
+                // 明細行番号
+                case "lngrecordno":
+                    $td = $doc->createElement("td", $detailData["lngstockdetailno"]);
+                    $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+                // 製品コード
+                case "strproductcode":
+                    $td = $doc->createElement("td", $detailData["strproductcode"]);
+                    $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+                // [営業部署表示コード] 営業部署表示名
+                case "lnginchargegroupcode":
+                    $textContent = "[" . $detailData["strgroupdisplaycode"] . "]" . " " . $detailData["strgroupdisplayname"];
+                    $td = $doc->createElement("td", toUTF8($textContent));
+                    $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+                // [開発担当者表示コード] 開発担当者表示名
+                case "lnginchargeusercode":
+                    $textContent = "[" . $detailData["struserdisplaycode"] . "]" . " " . $detailData["struserdisplayname"];
+                    $td = $doc->createElement("td", toUTF8($textContent));
+                    $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+                // 製品マスタ.製品名称(日本語)
+                case "strproductname":
+                    $td = $doc->createElement("td", toUTF8($detailData["strproductname"]));
+                    $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+                // 仕入科目
+                case "lngstockitemcode":
+                    $textContent = "[" . $detailData["lngstockitemcode"] . "]" . " " . $detailData["strstockitemname"];
+                    $td = $doc->createElement("td", toUTF8($textContent));
+                    $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+                // 仕入部品
+                case "lngstocksubjectcode":
+                    $textContent = "[" . $detailData["lngstocksubjectcode"] . "]" . " " . $detailData["strstocksubjectname"];
+                    $td = $doc->createElement("td", toUTF8($textContent));
+                    $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+                // NO.
+                case "strmoldno":
+                    $td = $doc->createElement("td", $detailData["strmoldno"]);
+                    $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+                // 顧客品番
+                case "strgoodscode":
+                    $td = $doc->createElement("td", toUTF8($detailData["strgoodscode"]));
+                    $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+                // 運搬方法
+                case "lngdeliverymethodcode":
+                    $td = $doc->createElement("td", toUTF8($detailData["strdeliverymethodname"]));
+                    $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+                // 単価
+                case "curproductprice":
+                    $td = $doc->createElement("td", toMoneyFormat($detailData["lngmonetaryunitcode"], $detailData["strmonetaryunitsign"], $detailData["curproductprice"]));
+                    $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+                // 単位
+                case "lngproductunitcode":
+                    $td = $doc->createElement("td", toUTF8($detailData["strproductunitname"]));
+                    $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+                // 数量
+                case "lngproductquantity":
+                    $td = $doc->createElement("td", number_format($detailData["lngproductquantity"]));
+                    $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+                // 税抜金額
+                case "cursubtotalprice":
+                    $td = $doc->createElement("td", toMoneyFormat($detailData["lngmonetaryunitcode"], $detailData["strmonetaryunitsign"], $detailData["cursubtotalprice"]));
+                    $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+                // 税区分
+                case "lngtaxclasscode":
+                    $td = $doc->createElement("td", toUTF8($detailData["strtaxclassname"]));
+                    $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+                // 税率
+                case "curtax":
+                    $td = $doc->createElement("td", $detailData["curtax"]);
+                    $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+                // 税額
+                case "curtaxprice":
+                    $td = $doc->createElement("td", toMoneyFormat($detailData["lngmonetaryunitcode"], $detailData["strmonetaryunitsign"], $detailData["curtaxprice"]));
+                    $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+                // 明細備考
+                case "strdetailnote":
+                    $td = $doc->createElement("td", toUTF8($detailData["strdetailnote"]));
+                    $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+            }
+        }
+    }
+    return $trBody;
+}
