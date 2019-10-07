@@ -1,11 +1,11 @@
 (function(){
     $('input[type="checkbox"][name="IsDisplay_btnRecord"]').prop('checked', true);
     $('input[type="checkbox"][name="IsDisplay_strProductCode"]').prop('checked', true);
+    $('input[type="checkbox"][name="IsDisplay_strReceiveCode"]').prop('checked', true);
     $('input[type="checkbox"][name="IsDisplay_strCustomerReceiveCode"]').prop('checked', true);
     
     var chkboxElements = [
-        $('input[type="checkbox"][name="IsDisplay_strProductCode"]')
-      , $('input[type="checkbox"][name="IsDisplay_strProductName"]')
+        $('input[type="checkbox"][name="IsDisplay_strProductName"]')
       , $('input[type="checkbox"][name="IsDisplay_strProductEnglishName"]')
       , $('input[type="checkbox"][name="IsDisplay_lngInChargeGroupCode"]')
       , $('input[type="checkbox"][name="IsDisplay_lngInChargeUserCode"]')

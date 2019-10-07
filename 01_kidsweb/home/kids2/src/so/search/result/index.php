@@ -156,13 +156,10 @@ $aryQuery[] = "    USING (lngReceiveStatusCode) ";
 $aryQuery[] = "  LEFT JOIN m_MonetaryUnit mu ";
 $aryQuery[] = "    ON r.lngMonetaryUnitCode = mu.lngMonetaryUnitCode";
 $aryQuery[] = "  , ( ";
-if ($isDisplayDetail) {
-    $aryQuery[] = "      SELECT rd1.lngReceiveNo";
-} else {
-    $aryQuery[] = "      SELECT distinct";
-    $aryQuery[] = "          on (rd1.lngReceiveNo) rd1.lngReceiveNo";
-}
+$aryQuery[] = "      SELECT distinct";
+$aryQuery[] = "          on (rd1.lngReceiveNo) rd1.lngReceiveNo";
 $aryQuery[] = "        , rd1.lngReceiveDetailNo";
+$aryQuery[] = "        , rd1.lngRevisionNo";
 $aryQuery[] = "        , p.strProductCode";
 $aryQuery[] = "        , mg.strGroupDisplayCode";
 $aryQuery[] = "        , mg.strGroupDisplayName";
@@ -264,6 +261,7 @@ if (array_key_exists("dtmDeliveryDate", $searchColumns) &&
 $aryQuery[] = "    ) as rd ";
 $aryQuery[] = "WHERE";
 $aryQuery[] = " rd.lngReceiveNo = r.lngReceiveNo ";
+$aryQuery[] = " AND rd.lngRevisionNo = r.lngRevisionNo ";
 // ÅÐÏ¿Æü
 if (array_key_exists("dtmInsertDate", $searchColumns) &&
     array_key_exists("dtmInsertDate", $from) &&
@@ -334,8 +332,6 @@ if (array_key_exists("lngReceiveStatusCode", $searchColumns) &&
 // $aryQuery[] = "      )";
 // $aryQuery[] = "  ) ";
 if (!array_key_exists("admin", $optionColumns)) {
-    $aryQuery[] = " AND r.bytInvalidFlag = FALSE ";
-    $aryQuery[] = " AND r.lngRevisionNo >= 0";
     $aryQuery[] = "  AND r.strReceiveCode not in ( ";
     $aryQuery[] = "    select";
     $aryQuery[] = "      r1.strReceiveCode ";
@@ -352,6 +348,9 @@ if (!array_key_exists("admin", $optionColumns)) {
     $aryQuery[] = "    where";
     $aryQuery[] = "      r1.lngRevisionNo < 0";
     $aryQuery[] = "  ) ";
+} else {
+    $aryQuery[] = " AND r.bytInvalidFlag = FALSE ";
+    $aryQuery[] = " AND r.lngRevisionNo >= 0";
 }
 $aryQuery[] = "ORDER BY";
 $aryQuery[] = " r.strReceiveCode, lngReceiveDetailNo, r.lngReceiveNo DESC";
@@ -493,7 +492,6 @@ if ($existsHistory) {
     // ¥Ø¥Ã¥À¤ËÄÉ²Ã
     $trHead->appendChild($thHistory);
 }
-
 $aryTableHeaderName = array();
 $aryTableHeaderName["dtminsertdate"] = "ÅÐÏ¿Æü";
 $aryTableHeaderName["lnginputusercode"] = "ÆþÎÏ¼Ô";
@@ -677,7 +675,7 @@ foreach ($records as $i => $record) {
         $tdHistory->setAttribute("class", $exclude);
         $tdHistory->setAttribute("style", $bgcolor);
 
-        if ($isMaxReceive and $historyFlag) {
+        if ($isMaxReceive and $historyFlag and array_key_exists("admin", $optionColumns)) {
             // ÍúÎò¥Ü¥¿¥ó
             $imgHistory = $doc->createElement("img");
             $imgHistory->setAttribute("src", "/img/type01/so/renew_off_bt.gif");
