@@ -2189,6 +2189,11 @@ $(function() {
     return col;      
   }
 
+  /**
+   * 適用レートを取得する
+   * @param {integer} row 指定行
+   * 
+   */
   function getConversionRate(row) {
     var checkList = cellClass;
   
@@ -2289,43 +2294,46 @@ $(function() {
       return true;
   }
 
+  // 編集保存処理
   $('#update_regist').on('click', function() {
-    var postData = {
-      value: cellValue,
-      class: cellClass,
-      estimateDetailNo: detailNoList
+    if (window.confirm('編集内容を保存してプレビュー画面を再読み込みします。よろしいですか？')){
+      var postData = {
+        value: cellValue,
+        class: cellClass,
+        estimateDetailNo: detailNoList
+      }
+
+      var postJson = JSON.stringify(postData, replacer);
+
+      $("<input>", {
+        type: 'hidden',
+        name: 'postData',
+        value: postJson
+      }).appendTo('#formData');
+
+      var form = $('#formData');
+
+      windowName = 'updateResult';
+      
+      winWidth = 700;
+      winHeight = 500;
+
+      var x = (screen.width - winWidth) / 2;
+      var y = (screen.height - winHeight) / 2; 
+      var windowResult = open(
+        'about:blank',
+        windowName,
+        'scrollbars=yes, width=' + winWidth + ', height=' + winHeight +', top=' + y + ', left=' + x + 'resizable=0 location=0'
+      );
+
+      form.attr('action', '/estimate/preview/update.php');
+      form.attr('target', windowName);
+      // サブミット
+      form.submit();
+      
+    } else {
+      return false;
     }
-
-    var postJson = JSON.stringify(postData, replacer);
-
-    $("<input>", {
-      type: 'hidden',
-      name: 'postData',
-      value: postJson
-    }).appendTo('#formData');
-
-    var form = $('#formData');
-
-    windowName = 'updateResult';
-    
-    winWidth = 700;
-    winHeight = 500;
-
-    var x = (screen.width - winWidth) / 2;
-    var y = (screen.height - winHeight) / 2; 
-    var windowResult = open(
-      'about:blank',
-      windowName,
-      'scrollbars=yes, width=' + winWidth + ', height=' + winHeight +', top=' + y + ', left=' + x + 'resizable=0 location=0'
-    );
-
-    form.attr('action', '/estimate/preview/update.php');
-    form.attr('target', windowName);
-    // サブミット
-    form.submit();
-
-    console.log(windowName);
-
   });
 
 
