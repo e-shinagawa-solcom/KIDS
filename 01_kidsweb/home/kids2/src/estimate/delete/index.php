@@ -5,10 +5,10 @@
 *	@charset	: EUC-JP
 */
 
-require ( 'conf.inc' );										// è¨­å®šèª­ã¿è¾¼ã¿
-require ( LIB_DEBUGFILE );									// Debugãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«
+require ( 'conf.inc' );										// ÀßÄêÆÉ¤ß¹þ¤ß
+require ( LIB_DEBUGFILE );									// Debug¥â¥¸¥å¡¼¥ë
 
-require ( LIB_FILE );										// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
+require ( LIB_FILE );										// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹þ¤ß
 
 require ( SRC_ROOT . "estimate/cmn/estimateSheetController.php" );
 require ( SRC_ROOT . "estimate/cmn/makeHTML.php" );
@@ -20,59 +20,57 @@ use PhpOffice\PhpSpreadsheet\Reader\Xlsx as XlsxReader;
 
 $objDB			= new estimateDB();
 $objAuth		= new clsAuth();
-$objTemplate	= new clsTemplate();								// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
+$objTemplate	= new clsTemplate();								// ¥Æ¥ó¥×¥ì¡¼¥È¥ª¥Ö¥¸¥§¥¯¥ÈÀ¸À®
 
 $charset = 'EUC-JP';
 
 $objReader      = new XlsxReader();
 
 //-------------------------------------------------------------------------
-// DBã‚ªãƒ¼ãƒ—ãƒ³
+// DB¥ª¡¼¥×¥ó
 //-------------------------------------------------------------------------
 $objDB->InputEncoding = 'UTF-8';
 $objDB->open( "", "", "", "" );
 
 //-------------------------------------------------------------------------
-// ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿å–å¾—
+// ¥Ñ¥é¥á¡¼¥¿¼èÆÀ
 //-------------------------------------------------------------------------
 $aryData	= array();
-$aryData	= $_GET;
+$aryData	= $_POST;
 
 //-------------------------------------------------------------------------
-// å…¥åŠ›æ–‡å­—åˆ—å€¤ãƒ»ã‚»ãƒƒã‚·ãƒ§ãƒ³ãƒ»æ¨©é™ãƒã‚§ãƒƒã‚¯
+// ÆþÎÏÊ¸»úÎóÃÍ¡¦¥»¥Ã¥·¥ç¥ó¡¦¸¢¸Â¥Á¥§¥Ã¥¯
 //-------------------------------------------------------------------------
 
-// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
+// Ê¸»úÎó¥Á¥§¥Ã¥¯
 $aryCheck["strSessionID"]	= "null:numenglish(32,32)";
 $aryResult	= fncAllCheck( $aryData, $aryCheck );
 fncPutStringCheckError( $aryResult, $objDB );
 
-// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
+// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
-// ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰å–å¾—
+// ¥æ¡¼¥¶¡¼¥³¡¼¥É¼èÆÀ
 $lngUserCode = $objAuth->UserCode;
 
-
-
-// æ¨©é™ç¢ºèª
-if( !fncCheckAuthority( DEF_FUNCTION_E0, $objAuth ) )
+// ¸¢¸Â³ÎÇ§
+if( !fncCheckAuthority( DEF_FUNCTION_E4, $objAuth ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
+	fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", TRUE, "", $objDB );
 }
 
-// æ¨©é™ã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰ã®å–å¾—
+// ¸¢¸Â¥°¥ë¡¼¥×¥³¡¼¥É¤Î¼èÆÀ
 $lngAuthorityGroupCode = fncGetUserAuthorityGroupCode( $lngUserCode, $aryData["strSessionID"], $objDB );
 
-// GETãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚ˆã‚Šãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’å–å¾—
-$estimateNo = $aryData['estimateNo']; // è£½å“ã‚³ãƒ¼ãƒ‰
+// GET¥Ñ¥é¥á¡¼¥¿¤è¤ê¥Ñ¥é¥á¡¼¥¿¤ò¼èÆÀ
+$estimateNo = $aryData['estimateNo']; // À½ÉÊ¥³¡¼¥É
 
-// ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·ã®å–å¾—
+// ¥ê¥Ó¥¸¥ç¥óÈÖ¹æ¤Î¼èÆÀ
 if (isset($_POST['revisionNo'])) {
 	$revisionNo = $_POST['revisionNo'];
 	$estimate = $objDB->getEstimateDetail($estimateNo, $revisionNo);
 } else {
-	// ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·ãŒPOSTã•ã‚Œãªã‹ã£ãŸå ´åˆã¯æœ€æ–°ã®ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
+	// ¥ê¥Ó¥¸¥ç¥óÈÖ¹æ¤¬POST¤µ¤ì¤Ê¤«¤Ã¤¿¾ì¹ç¤ÏºÇ¿·¤Î¥Ç¡¼¥¿¤ò¼èÆÀ¤¹¤ë
 	$estimate = $objDB->getEstimateDetail($estimateNo);
 }
 
@@ -82,7 +80,7 @@ if (!isset($revisionNo)) {
 	$revisionNo = $firstEstimateDetail->lngrevisionno;
 }
 
-// æœ€å¤§ã®ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·ã®å–å¾—
+// ºÇÂç¤Î¥ê¥Ó¥¸¥ç¥óÈÖ¹æ¤Î¼èÆÀ
 if (isset($_POST['maxRevisionNo'])) {
 	$maxRevisionNo = $_POST['maxRevisionNo'];
 } else {
@@ -97,7 +95,7 @@ $productCode = $firstEstimateDetail->strproductcode;
 $reviseCode = $firstEstimateDetail->strrevisecode;
 $productRevisionNo = $firstEstimateDetail->lngproductrevisionno;
 
-// è£½å“ãƒžã‚¹ã‚¿ã®æƒ…å ±å–å¾—
+// À½ÉÊ¥Þ¥¹¥¿¤Î¾ðÊó¼èÆÀ
 $product = $objDB->getProduct($productCode, $reviseCode, $productRevisionNo);
 
 $objPreview = new estimatePreviewController();
@@ -112,33 +110,33 @@ $tempFilePath = EXCEL_TMP_ROOT. 'workSheetTmp.xlsx';
 
 $spreadSheet = $objReader->load($tempFilePath);
 
-// å¿…è¦ãªå®šæ•°ã‚’å–å¾—ã™ã‚‹
+// É¬Í×¤ÊÄê¿ô¤ò¼èÆÀ¤¹¤ë
 $nameList = workSheetConst::getAllNameListForDownload();
 $rowCheckNameList = workSheetConst::DETAIL_HEADER_CELL_NAME_LIST;
 $targetAreaList = workSheetConst::TARGET_AREA_DISPLAY_NAME_LIST;
 
-// phpSpreadSheetã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‹ã‚‰ã‚·ãƒ¼ãƒˆã®æƒ…å ±ã‚’å–å¾—
+// phpSpreadSheet¥ª¥Ö¥¸¥§¥¯¥È¤«¤é¥·¡¼¥È¤Î¾ðÊó¤ò¼èÆÀ
 $allSheetInfo = estimateSheetController::getSheetInfo($spreadSheet, $nameList, $rowCheckNameList);
 
 $sheetInfo = estimateSheetController::getFirstElement($allSheetInfo);
 
 if ($sheetInfo['displayInvalid']) {
-	// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”¨ã®ã‚·ãƒ¼ãƒˆãŒç„¡åŠ¹ã«ãªã£ã¦ã„ãªã„å ´åˆã€ã‚¨ãƒ©ãƒ¼ã‚’å‡ºåŠ›ã™ã‚‹
+	// ¥Æ¥ó¥×¥ì¡¼¥ÈÍÑ¤Î¥·¡¼¥È¤¬Ìµ¸ú¤Ë¤Ê¤Ã¤Æ¤¤¤Ê¤¤¾ì¹ç¡¢¥¨¥é¡¼¤ò½ÐÎÏ¤¹¤ë
 	if ( !$sheetDataList ) {
-		$strMessage = 'ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç•°å¸¸';
+		$strMessage = '¥Æ¥ó¥×¥ì¡¼¥È°Û¾ï';
 
-		// [strErrorMessage]æ›¸ãå‡ºã—
+		// [strErrorMessage]½ñ¤­½Ð¤·
 		$aryHtml["strErrorMessage"] = $strMessage;
 
-		// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
+		// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹þ¤ß
 		$objTemplate = new clsTemplate();
 		$objTemplate->getTemplate( "/result/error/parts.tmpl" );
 		
-		// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
+		// ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
 		$objTemplate->replace( $aryHtml );
 		$objTemplate->complete();
 
-		// HTMLå‡ºåŠ›
+		// HTML½ÐÎÏ
 		echo $objTemplate->strTemplate;
 
 		exit;
@@ -147,28 +145,28 @@ if ($sheetInfo['displayInvalid']) {
 
 $objSheet = null;
 
-// ã‚·ãƒ¼ãƒˆãŒè¡¨ç¤ºç„¡åŠ¹ã§ãªã„å ´åˆã¯ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆå‡¦ç†ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç”Ÿæˆ
+// ¥·¡¼¥È¤¬É½¼¨Ìµ¸ú¤Ç¤Ê¤¤¾ì¹ç¤Ï¥ï¡¼¥¯¥·¡¼¥È½èÍý¥ª¥Ö¥¸¥§¥¯¥È¤Î¥¤¥ó¥¹¥¿¥ó¥¹À¸À®
 $objSheet = new estimateSheetController();
 
-// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«ãƒ‡ãƒ¼ã‚¿ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
+// ¥ª¥Ö¥¸¥§¥¯¥È¤Ë¥Ç¡¼¥¿¤ò¥»¥Ã¥È¤¹¤ë
 $objSheet->dataInitialize($sheetInfo, $objDB);
 
-// phpSpreadSheetã§ç”Ÿæˆã—ãŸã‚·ãƒ¼ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ã‚°ãƒ­ãƒ¼ãƒãƒ«å‚ç…§ç”¨ã«ã‚»ãƒƒãƒˆã™ã‚‹
+// phpSpreadSheet¤ÇÀ¸À®¤·¤¿¥·¡¼¥È¥ª¥Ö¥¸¥§¥¯¥È¤ò¥°¥í¡¼¥Ð¥ë»²¾ÈÍÑ¤Ë¥»¥Ã¥È¤¹¤ë
 $sheet = $sheetInfo['sheet'];
 $cellAddressList = $sheetInfo['cellAddress'];
 
-// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã®æ•´å½¢ã‚’è¡Œã†
+// ¥Æ¥ó¥×¥ì¡¼¥È¤ÎÀ°·Á¤ò¹Ô¤¦
 $objSheet->templateAdjust($estimateData);
 
-// ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«å¿…è¦ãªå€¤ã‚’ã‚»ãƒƒãƒˆ
+// ¥ï¡¼¥¯¥·¡¼¥È¥ª¥Ö¥¸¥§¥¯¥È¤ËÉ¬Í×¤ÊÃÍ¤ò¥»¥Ã¥È
 $objSheet->setDBEstimateData($productData, $estimateData);
 
 $hiddenList = array();
 
-// éžè¡¨ç¤ºãƒªã‚¹ãƒˆï¼ˆç„¡åŠ¹ãƒªã‚¹ãƒˆï¼‰ã‚’è¿½åŠ ã™ã‚‹
+// ÈóÉ½¼¨¥ê¥¹¥È¡ÊÌµ¸ú¥ê¥¹¥È¡Ë¤òÄÉ²Ã¤¹¤ë
 $objSheet->setHiddenRowList($hiddenList);
 
-$viewData = $objSheet->makeDataOfSheet('preview');
+$viewData = $objSheet->makeDataOfSheet();
 
 $viewDataList[0] = $viewData;
 
@@ -180,15 +178,12 @@ $ws_num = 0;
 $objDB->close();
 $objDB->freeResult( $lngResultID );
 
-// dataã‚’JSONã«å¤‰æ›
+// data¤òJSON¤ËÊÑ´¹
 $json = json_encode($viewDataList, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
 $json = htmlspecialchars($json, ENT_QUOTES, 'UTF-8');
 
-// ãƒ˜ãƒƒãƒ€éƒ¨ã®ç”Ÿæˆ
-$header	= makeHTML::getPreviewHeader($maxRevisionNo, $revisionNo); // ãƒ˜ãƒƒãƒ€ãƒ¼
-
-// Excelãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆHTMLå–å¾—
-$strExcel .= makeHTML::getGridTable($ws_num); // ãƒ‡ãƒ¼ã‚¿æŒ¿å…¥ã‚¿ã‚°
+// Excel¥ï¡¼¥¯¥·¡¼¥ÈHTML¼èÆÀ
+$strExcel .= makeHTML::getGridTable($ws_num); // ¥Ç¡¼¥¿ÁÞÆþ¥¿¥°
 $aryData['revisionNo'] = $revisionNo;
 
 $formData = array(
@@ -199,7 +194,7 @@ $formData = array(
 	'estimateNo' => $estimateNo,
 );
 
-// é€ä¿¡ç”¨FORMãƒ‡ãƒ¼ã‚¿ä½œæˆ
+// Á÷¿®ÍÑFORM¥Ç¡¼¥¿ºîÀ®
 $form .= makeHTML::getHiddenData($formData);
 
 $aryData["HEADER"]      = $header;
@@ -207,14 +202,14 @@ $aryData["EXCEL"]		= $strExcel; // index
 $aryData["TABLEDATA"]	= $json;
 $aryData["FORM"]	    = $form;
 
-// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
-$objTemplate->getTemplate( "estimate/preview/parts.tmpl" );
+// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹þ¤ß
+$objTemplate->getTemplate( "estimate/delete/parts.tmpl" );
 
-// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
+// ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
 $objTemplate->replace( $aryData );
 $objTemplate->complete();
 
-// HTMLå‡ºåŠ›
+// HTML½ÐÎÏ
 echo $objTemplate->strTemplate;
 
 ?>
