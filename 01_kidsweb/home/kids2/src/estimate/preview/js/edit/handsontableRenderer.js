@@ -432,82 +432,87 @@ $(function() {
 
       var selectedCell = getElementsForRowAndColumn(selectedRow, selectedColumn, checkList);
 
-      if (selectedCell[0].className.includes('detail')) {
-        var newData = [];
-        var blankRow = [];
-
-        // 空行配列の生成
-        blankRow[0] = JSON.parse(JSON.stringify(cellData[selectedRow]));        
-        for (var column = startColumn; column <= endColumn; column++) {
-          blankRow[0][column]['value'] = '';
-        }
-
-        var newRow = startRow;
-        // 空行をデータに挿入する
-        for (var row = startRow; row <= endRow; row++) {
-          if (row == selectedRow) {
-            newData[newRow] = blankRow[0];
+      if (isEmpty(selectedCell) === false) {
+        if (selectedCell[0].className.includes('detail')) {
+          var newData = [];
+          var blankRow = [];
+  
+          // 空行配列の生成
+          blankRow[0] = JSON.parse(JSON.stringify(cellData[selectedRow]));        
+          for (var column = startColumn; column <= endColumn; column++) {
+            blankRow[0][column]['value'] = '';
+          }
+  
+          var newRow = startRow;
+          // 空行をデータに挿入する
+          for (var row = startRow; row <= endRow; row++) {
+            if (row == selectedRow) {
+              newData[newRow] = blankRow[0];
+              newRow++;
+            }
+            newData[newRow] = JSON.parse(JSON.stringify(cellData[row]));
             newRow++;
           }
-          newData[newRow] = JSON.parse(JSON.stringify(cellData[row]));
-          newRow++;
-        }
-
-        // 元のセルの情報を書き換える
-        cellData = newData;
-        endRow += 1;
-
-        cellValue = [];
   
-        // セルの情報を配列に格納する
-        for (var i = startRow; i <= endRow; i++) {
-          var rowValue = [];
-          for (var j = startColumn; j <= endColumn; j++) {
-            rowValue.push(cellData[i][j]['value']);
+          // 元のセルの情報を書き換える
+          cellData = newData;
+          endRow += 1;
+  
+          cellValue = [];
+    
+          // セルの情報を配列に格納する
+          for (var i = startRow; i <= endRow; i++) {
+            var rowValue = [];
+            for (var j = startColumn; j <= endColumn; j++) {
+              rowValue.push(cellData[i][j]['value']);
+            }
+            cellValue.push(rowValue);
           }
-          cellValue.push(rowValue);
+          
+          var selectedMerge = [];
+          
+          merge.forEach(function(value) {
+            if (value.row == selectedRow) {
+              var newValue = $.extend(true, {}, value);
+              selectedMerge.push(newValue);
+              value.row += 1;
+            } else if (value.row > selectedRow) {
+              value.row += 1;
+            }
+          });
+  
+          var selectedClassInfo = [];
+  
+          cellClass.forEach(function(value) {
+            if (value.row == selectedRow) {
+              var newClassInfo = $.extend(true, {}, value);
+              selectedClassInfo.push(newClassInfo);
+              value.row += 1;
+            } else if (value.row > selectedRow) {
+              value.row += 1;
+            }
+          });
+  
+  
+          merge = merge.concat(selectedMerge);
+          cellClass = cellClass.concat(selectedClassInfo);
+          rowHeight.splice(selectedRow, 0, rowHeight[selectedRow]);
+  
+          table[0].updateSettings({
+            data: cellValue,
+            rowHeights: rowHeight,
+            cells: cells,
+            mergeCells: merge,
+            cell: cellClass
+          });
+  
+        } else {
+          alert('明細行以外の行追加はできません');
         }
-        
-        var selectedMerge = [];
-        
-        merge.forEach(function(value) {
-          if (value.row == selectedRow) {
-            var newValue = $.extend(true, {}, value);
-            selectedMerge.push(newValue);
-            value.row += 1;
-          } else if (value.row > selectedRow) {
-            value.row += 1;
-          }
-        });
-
-        var selectedClassInfo = [];
-
-        cellClass.forEach(function(value) {
-          if (value.row == selectedRow) {
-            var newClassInfo = $.extend(true, {}, value);
-            selectedClassInfo.push(newClassInfo);
-            value.row += 1;
-          } else if (value.row > selectedRow) {
-            value.row += 1;
-          }
-        });
-
-
-        merge = merge.concat(selectedMerge);
-        cellClass = cellClass.concat(selectedClassInfo);
-        rowHeight.splice(selectedRow, 0, rowHeight[selectedRow]);
-
-        table[0].updateSettings({
-          data: cellValue,
-          rowHeights: rowHeight,
-          cells: cells,
-          mergeCells: merge,
-          cell: cellClass
-        });
-
       } else {
         alert('明細行以外の行追加はできません');
       }
+
 
       table[0].selectCell(selectedRow, selectedColumn);
     }
@@ -525,99 +530,103 @@ $(function() {
 
       var selectedCell = getElementsForRowAndColumn(selectedRow, selectedColumn, checkList);
 
-      if (selectedCell[0].className.includes('detail')) {
-        var area = selectedCell[0].className.match(/area(\d+)/);
-        var areaClassName = 'detail ' + area[0] + ' divisionSubject';
-
-        var elements = getElementsForClassName(areaClassName, checkList);
-
-        if (readOnlyDetailRow.includes(selectedRow)) {
-          // 確定済の行は削除できないようにする
-          alert('確定済の明細は削除できません。');
-
-        } else if (elements.length > 1) {
-          var newData = [];
-
-          var newRow = startRow;
-
-          // 行の数値を削除する
-          for (var row = startRow; row <= endRow; row++) {
-            if (row == selectedRow) {
-              continue;
+      if (isEmpty(selectedCell) === false) {
+        if (selectedCell[0].className.includes('detail')) {
+          var area = selectedCell[0].className.match(/area(\d+)/);
+          var areaClassName = 'detail ' + area[0] + ' divisionSubject';
+  
+          var elements = getElementsForClassName(areaClassName, checkList);
+  
+          if (readOnlyDetailRow.includes(selectedRow)) {
+            // 確定済の行は削除できないようにする
+            alert('確定済の明細は削除できません。');
+  
+          } else if (elements.length > 1) {
+            var newData = [];
+  
+            var newRow = startRow;
+  
+            // 行の数値を削除する
+            for (var row = startRow; row <= endRow; row++) {
+              if (row == selectedRow) {
+                continue;
+              }
+              newData[newRow] = JSON.parse(JSON.stringify(cellData[row]));
+              newRow++;
             }
-            newData[newRow] = JSON.parse(JSON.stringify(cellData[row]));
-            newRow++;
-          }
-  
-          // 元のセルの情報を書き換える
-          cellData = newData;
-          endRow -= 1;
-  
-          cellValue = [];
     
-          // セルの情報を配列に格納する
-          for (var i = startRow; i <= endRow; i++) {
-            var rowValue = [];
-            for (var j = startColumn; j <= endColumn; j++) {
-              rowValue.push(cellData[i][j]['value']);
+            // 元のセルの情報を書き換える
+            cellData = newData;
+            endRow -= 1;
+    
+            cellValue = [];
+      
+            // セルの情報を配列に格納する
+            for (var i = startRow; i <= endRow; i++) {
+              var rowValue = [];
+              for (var j = startColumn; j <= endColumn; j++) {
+                rowValue.push(cellData[i][j]['value']);
+              }
+              cellValue.push(rowValue);
             }
-            cellValue.push(rowValue);
+            
+            var newMerge = [];
+            merge.forEach(function(value) {
+              if (value.row == selectedRow) {
+                return;
+              } else if (value.row > selectedRow) {
+                value.row -= 1;
+              }
+              var newValue = $.extend(true, {}, value);
+              newMerge.push(newValue);
+            });
+    
+            var newCellClass = [];
+            cellClass.forEach(function(value) {
+              if (value.row == selectedRow) {
+                return;
+              } else if (value.row > selectedRow) {
+                value.row -= 1;
+              }
+              var newValue = $.extend(true, {}, value);
+              newCellClass.push(newValue);
+            });
+  
+            var newReadOnly = readOnlyDetailRow.map(function(value) {
+              if (value > selectedRow) {
+                value = value - 1;
+              }
+              return value;
+            });
+  
+            merge = newMerge;
+            cellClass = newCellClass;
+            readOnlyDetailRow = newReadOnly;
+  
+            rowHeight.splice(selectedRow, 1);
+  
+            // 計算フラグの設定
+  
+            var calcFlag = {};
+  
+            // 再計算フラグの設定
+            setCalcFlagForChangeSubtotal(Number(area[1]), calcFlag);
+            setQuantityCalculateFlag(Number(area[1]), calcFlag);
+  
+            calculate(calcFlag);
+    
+            table[0].updateSettings({
+              data: cellValue,
+              rowHeights: rowHeight,
+              cells: cells,
+              mergeCells: merge,
+              cell: cellClass,
+            });
+          } else {
+            alert('該当エリアの明細行が1行以下のため行削除できません');
           }
-          
-          var newMerge = [];
-          merge.forEach(function(value) {
-            if (value.row == selectedRow) {
-              return;
-            } else if (value.row > selectedRow) {
-              value.row -= 1;
-            }
-            var newValue = $.extend(true, {}, value);
-            newMerge.push(newValue);
-          });
-  
-          var newCellClass = [];
-          cellClass.forEach(function(value) {
-            if (value.row == selectedRow) {
-              return;
-            } else if (value.row > selectedRow) {
-              value.row -= 1;
-            }
-            var newValue = $.extend(true, {}, value);
-            newCellClass.push(newValue);
-          });
-
-          var newReadOnly = readOnlyDetailRow.map(function(value) {
-            if (value > selectedRow) {
-              value = value - 1;
-            }
-            return value;
-          });
-
-          merge = newMerge;
-          cellClass = newCellClass;
-          readOnlyDetailRow = newReadOnly;
-
-          rowHeight.splice(selectedRow, 1);
-
-          // 計算フラグの設定
-
-          var calcFlag = {};
-
-          // 再計算フラグの設定
-          setCalcFlagForChangeSubtotal(Number(area[1]), calcFlag);
-          setQuantityCalculateFlag(Number(area[1]), calcFlag);
-
-          calculate(calcFlag);
-  
-          table[0].updateSettings({
-            data: cellValue,
-            rowHeights: rowHeight,
-            cells: cells,
-            mergeCells: merge,
-            cell: cellClass,
-          });
         } else {
-          alert('該当エリアの明細行が1行以下のため行削除できません');
+          alert('明細行以外の削除はできません');
         }
       } else {
         alert('明細行以外の削除はできません');
@@ -637,54 +646,58 @@ $(function() {
       var checkList = cellClass;
 
       var selectedCell = getElementsForRowAndColumn(selectedRow, selectedColumn, checkList);
-
-      if (selectedCell[0].className.includes('detail')) {
-        var area = selectedCell[0].className.match(/area[0-9]+/);
-        var areaClassName = 'detail ' + area + ' divisionSubject';
-
-        var elements = getElementsForClassName(areaClassName, checkList);
-
-        if (elements.length > 1) {
-          var minRow = null;
-          var maxRow = null;
-          for (var i = 0; i < elements.length; i++) {
-            var rowNumber = elements[i].row;
-            if (!minRow || (minRow && minRow > rowNumber)) {
-              minRow = rowNumber;
-            } else if (!maxRow || (maxRow && maxRow < rowNumber)){
-              maxRow = rowNumber;
+      
+      if (isEmpty(selectedCell) === false) {
+        if (selectedCell[0].className.includes('detail')) {
+          var area = selectedCell[0].className.match(/area[0-9]+/);
+          var areaClassName = 'detail ' + area + ' divisionSubject';
+  
+          var elements = getElementsForClassName(areaClassName, checkList);
+  
+          if (elements.length > 1) {
+            var minRow = null;
+            var maxRow = null;
+            for (var i = 0; i < elements.length; i++) {
+              var rowNumber = elements[i].row;
+              if (!minRow || (minRow && minRow > rowNumber)) {
+                minRow = rowNumber;
+              } else if (!maxRow || (maxRow && maxRow < rowNumber)){
+                maxRow = rowNumber;
+              }
             }
+            var minRowCellValue = cellValue.splice(selectedRow, 1);
+            cellValue.splice(minRow, 0, minRowCellValue[0]);
+  
+            // readOnlyを書き換える
+            var newReadOnly = readOnlyDetailRow.map(function(value){
+              if (value == selectedRow) {
+                return minRow;
+              } else if (value > minRow && value <= selectedRow) {
+                return value + 1;
+              }
+            });
+  
+            readOnlyDetailRow = newReadOnly;
+  
+            // 元のセルデータを更新する
+            for (var i = minRow; i <= maxRow; i++) {
+              for (var j = startColumn; j <= endColumn; j++) {
+                cellData[i][j]['value'] = cellValue[i][j];
+              }
+            }
+  
+            table[0].updateSettings({
+              data: cellValue,
+              rowHeights: rowHeight,
+              cells: cells,
+              mergeCells: merge,
+              cell: cellClass
+            });
           }
-          var minRowCellValue = cellValue.splice(selectedRow, 1);
-          cellValue.splice(minRow, 0, minRowCellValue[0]);
-
-          // readOnlyを書き換える
-          var newReadOnly = readOnlyDetailRow.map(function(value){
-            if (value == selectedRow) {
-              return minRow;
-            } else if (value > minRow && value <= selectedRow) {
-              return value + 1;
-            }
-          });
-
-          readOnlyDetailRow = newReadOnly;
-
-          // 元のセルデータを更新する
-          for (var i = minRow; i <= maxRow; i++) {
-            for (var j = startColumn; j <= endColumn; j++) {
-              cellData[i][j]['value'] = cellValue[i][j];
-            }
-          }
-
-          table[0].updateSettings({
-            data: cellValue,
-            rowHeights: rowHeight,
-            cells: cells,
-            mergeCells: merge,
-            cell: cellClass
-          });
+  
+        } else {
+          alert('明細行以外の移動はできません');
         }
-
       } else {
         alert('明細行以外の移動はできません');
       }
@@ -704,56 +717,62 @@ $(function() {
 
       var selectedCell = getElementsForRowAndColumn(selectedRow, selectedColumn, checkList);
 
-      if (selectedCell[0].className.includes('detail')) {
-        var area = selectedCell[0].className.match(/area[0-9]+/);
-        var areaClassName = 'detail ' + area + ' divisionSubject';
-
-        var elements = getElementsForClassName(areaClassName, checkList);
-
-        if (elements.length > 1) {
-          var minRow = null;
-          var maxRow = null;
-          for (var i = 0; i < elements.length; i++) {
-            var rowNumber = elements[i].row;
-            if (!minRow || (minRow && minRow > rowNumber)) {
-              minRow = rowNumber;
-            } else if (!maxRow || (maxRow && maxRow < rowNumber)){
-              maxRow = rowNumber;
+      if (isEmpty(selectedCell) === false) {
+        if (selectedCell[0].className.includes('detail')) {
+          var area = selectedCell[0].className.match(/area[0-9]+/);
+          var areaClassName = 'detail ' + area + ' divisionSubject';
+  
+          var elements = getElementsForClassName(areaClassName, checkList);
+  
+          if (elements.length > 1) {
+            var minRow = null;
+            var maxRow = null;
+            for (var i = 0; i < elements.length; i++) {
+              var rowNumber = elements[i].row;
+              if (!minRow || (minRow && minRow > rowNumber)) {
+                minRow = rowNumber;
+              } else if (!maxRow || (maxRow && maxRow < rowNumber)){
+                maxRow = rowNumber;
+              }
             }
+            var maxRowCellValue = cellValue.splice(selectedRow, 1);
+            cellValue.splice(maxRow, 0, maxRowCellValue[0]);
+  
+            // readOnlyを書き換える
+            var newReadOnly = readOnlyDetailRow.map(function(value) {
+              if (value == selectedRow) {
+                return maxRow;
+              } else if (value < maxRow && value >= selectedRow) {
+                return value - 1;
+              }
+            });
+  
+            readOnlyDetailRow = newReadOnly;
+  
+            // 元のセルデータを更新する
+            for (var i = minRow; i <= maxRow; i++) {
+              for (var j = startColumn; j <= endColumn; j++) {
+                cellData[i][j]['value'] = cellValue[i][j];
+              }
+            }
+  
+            table[0].updateSettings({
+              data: cellValue,
+              rowHeights: rowHeight,
+              cells: cells,
+              mergeCells: merge,
+              cell: cellClass
+            });
           }
-          var maxRowCellValue = cellValue.splice(selectedRow, 1);
-          cellValue.splice(maxRow, 0, maxRowCellValue[0]);
-
-          // readOnlyを書き換える
-          var newReadOnly = readOnlyDetailRow.map(function(value) {
-            if (value == selectedRow) {
-              return maxRow;
-            } else if (value < maxRow && value >= selectedRow) {
-              return value - 1;
-            }
-          });
-
-          readOnlyDetailRow = newReadOnly;
-
-          // 元のセルデータを更新する
-          for (var i = minRow; i <= maxRow; i++) {
-            for (var j = startColumn; j <= endColumn; j++) {
-              cellData[i][j]['value'] = cellValue[i][j];
-            }
-          }
-
-          table[0].updateSettings({
-            data: cellValue,
-            rowHeights: rowHeight,
-            cells: cells,
-            mergeCells: merge,
-            cell: cellClass
-          });
+  
+        } else {
+          alert('明細行以外の移動はできません');
         }
 
       } else {
         alert('明細行以外の移動はできません');
       }
+
 
       table[0].selectCell(maxRow, selectedRange[1]);
     }
@@ -771,53 +790,57 @@ $(function() {
 
       var selectedCell = getElementsForRowAndColumn(selectedRow, selectedColumn, checkList);
 
-      if (selectedCell[0].className.includes('detail')) {
-        var area = selectedCell[0].className.match(/area[0-9]+/);
-        var areaClassName = 'detail ' + area + ' divisionSubject';
-
-        var elements = getElementsForClassName(areaClassName, checkList);
-
-        if (elements.length > 1) {
-          var minRow = null;
-          for (var i = 0; i < elements.length; i++) {
-            var rowNumber = elements[i].row;
-            if (!minRow || (minRow && minRow > rowNumber)) {
-              minRow = rowNumber;
-            }
-          }
-          
-          if(selectedRow != minRow) {
-            var insertRow = selectedRow - 1;
-            var movecellValue = cellValue.splice(selectedRow, 1);
-            cellValue.splice(insertRow, 0, movecellValue[0]);
-
-            // readOnlyを書き換える
-            var newReadOnly = readOnlyDetailRow.map(function(value) {
-              if (value == selectedRow) {
-                return selectedRow - 1;
-              } else if (value == selectedRow + 1) {
-                return selectedRow;
+      if (isEmpty(selectedCell) === false) {
+        if (selectedCell[0].className.includes('detail')) {
+          var area = selectedCell[0].className.match(/area[0-9]+/);
+          var areaClassName = 'detail ' + area + ' divisionSubject';
+  
+          var elements = getElementsForClassName(areaClassName, checkList);
+  
+          if (elements.length > 1) {
+            var minRow = null;
+            for (var i = 0; i < elements.length; i++) {
+              var rowNumber = elements[i].row;
+              if (!minRow || (minRow && minRow > rowNumber)) {
+                minRow = rowNumber;
               }
-            });
-
-            readOnlyDetailRow = newReadOnly;
-
-            // 元のセルデータを更新する
-            for (var j = startColumn; j <= endColumn; j++) {
-              cellData[selectedRow][j]['value'] = cellValue[insertRow][j];
-              cellData[insertRow][j]['value'] = cellValue[selectedRow][j];
             }
-
-            table[0].updateSettings({
-              data: cellValue,
-              rowHeights: rowHeight,
-              cells: cells,
-              mergeCells: merge,
-              cell: cellClass
-            });
+            
+            if(selectedRow != minRow) {
+              var insertRow = selectedRow - 1;
+              var movecellValue = cellValue.splice(selectedRow, 1);
+              cellValue.splice(insertRow, 0, movecellValue[0]);
+  
+              // readOnlyを書き換える
+              var newReadOnly = readOnlyDetailRow.map(function(value) {
+                if (value == selectedRow) {
+                  return selectedRow - 1;
+                } else if (value == selectedRow + 1) {
+                  return selectedRow;
+                }
+              });
+  
+              readOnlyDetailRow = newReadOnly;
+  
+              // 元のセルデータを更新する
+              for (var j = startColumn; j <= endColumn; j++) {
+                cellData[selectedRow][j]['value'] = cellValue[insertRow][j];
+                cellData[insertRow][j]['value'] = cellValue[selectedRow][j];
+              }
+  
+              table[0].updateSettings({
+                data: cellValue,
+                rowHeights: rowHeight,
+                cells: cells,
+                mergeCells: merge,
+                cell: cellClass
+              });
+            }
           }
+  
+        } else {
+          alert('明細行以外の移動はできません');
         }
-
       } else {
         alert('明細行以外の移動はできません');
       }
@@ -832,8 +855,6 @@ $(function() {
   // 行移動(一行下に)
   $('.btnMoveLower').on('click', function() {
       $('[class~="btn"]').prop('disabled', true);
-    // 画面のロック
-    var lock = screenLock();
 
     var selectedRange = getSelectedCell();
     
@@ -845,61 +866,64 @@ $(function() {
 
       var selectedCell = getElementsForRowAndColumn(selectedRow, selectedColumn, checkList);
 
-      if (selectedCell[0].className.includes('detail')) {
-        var area = selectedCell[0].className.match(/area[0-9]+/);
-        var areaClassName = 'detail ' + area + ' divisionSubject';
-
-        var elements = getElementsForClassName(areaClassName, checkList);
-
-        if (elements.length > 1) {
-          var maxRow = null;
-          for (var i = 0; i < elements.length; i++) {
-            var rowNumber = elements[i].row;
-            if (!maxRow || (maxRow && maxRow < rowNumber)) {
-              maxRow = rowNumber;
-            }
-          }
-
-          if (selectedRow != maxRow) {
-            var insertRow = selectedRow + 1;
-            var movecellValue = cellValue.splice(selectedRow, 1);
-            cellValue.splice(insertRow, 0, movecellValue[0]);
-
-            // readOnlyを書き換える
-            var newReadOnly = readOnlyDetailRow.map(function(value){
-              if (value == selectedRow) {
-                return selectedRow + 1;
-              } else if (value == selectedRow - 1) {
-                return selectedRow;
+      if (isEmpty(selectedCell) === false) {
+        if (selectedCell[0].className.includes('detail')) {
+          var area = selectedCell[0].className.match(/area[0-9]+/);
+          var areaClassName = 'detail ' + area + ' divisionSubject';
+  
+          var elements = getElementsForClassName(areaClassName, checkList);
+  
+          if (elements.length > 1) {
+            var maxRow = null;
+            for (var i = 0; i < elements.length; i++) {
+              var rowNumber = elements[i].row;
+              if (!maxRow || (maxRow && maxRow < rowNumber)) {
+                maxRow = rowNumber;
               }
-            });
-
-            readOnlyDetailRow = newReadOnly
-
-            // 元のセルデータを更新する
-            for (var j = startColumn; j <= endColumn; j++) {
-              cellData[selectedRow][j]['value'] = cellValue[insertRow][j];
-              cellData[insertRow][j]['value'] = cellValue[selectedRow][j];
             }
-
-            table[0].updateSettings({
-              data: cellValue,
-              rowHeights: rowHeight,
-              mergeCells: merge,
-              cell: cellClass
-            })
-
+  
+            if (selectedRow != maxRow) {
+              var insertRow = selectedRow + 1;
+              var movecellValue = cellValue.splice(selectedRow, 1);
+              cellValue.splice(insertRow, 0, movecellValue[0]);
+  
+              // readOnlyを書き換える
+              var newReadOnly = readOnlyDetailRow.map(function(value){
+                if (value == selectedRow) {
+                  return selectedRow + 1;
+                } else if (value == selectedRow - 1) {
+                  return selectedRow;
+                }
+              });
+  
+              readOnlyDetailRow = newReadOnly
+  
+              // 元のセルデータを更新する
+              for (var j = startColumn; j <= endColumn; j++) {
+                cellData[selectedRow][j]['value'] = cellValue[insertRow][j];
+                cellData[insertRow][j]['value'] = cellValue[selectedRow][j];
+              }
+  
+              table[0].updateSettings({
+                data: cellValue,
+                rowHeights: rowHeight,
+                mergeCells: merge,
+                cell: cellClass
+              })
+  
+            }
           }
+  
+        } else {
+          alert('明細行以外の移動はできません');
         }
-
       } else {
         alert('明細行以外の移動はできません');
-        var unlock = screenUnlock();
       }
+
+
       table[0].selectCell(insertRow, selectedRange[1]);
     }
-
-    var unlock = screenUnlock();
 
     return;
   });
@@ -1206,7 +1230,7 @@ $(function() {
       if (cellValue[classRow][classCol] == mainProductName) {
         var quantityRow = quantityElements[i].row;
         var quantityCol = quantityElements[i].col;
-        var quantity = cellValue[quantityRow][quantityCol];
+        var quantity = Number(cellValue[quantityRow][quantityCol]);
         productionQuantity += quantity;
       }
     }
@@ -1461,7 +1485,7 @@ $(function() {
     for (var i = 0; i < subtotalCells.length; i++) {
       row = subtotalCells[i].row;
       col = subtotalCells[i].col;
-      totalQuantity += cellValue[row][col];
+      totalQuantity += Number(cellValue[row][col]);
     }
 
     var totalQuantityClassName = 'receive_p_totalquantity';
@@ -1518,7 +1542,7 @@ $(function() {
     for (var i = 0; i < subtotalCells.length; i++) {
       row = subtotalCells[i].row;
       col = subtotalCells[i].col;
-      totalQuantity += cellValue[row][col];
+      totalQuantity += Number(cellValue[row][col]);
     }
 
     var totalQuantityClassName = 'receive_f_totalquantity';
