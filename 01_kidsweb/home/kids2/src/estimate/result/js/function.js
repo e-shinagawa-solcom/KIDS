@@ -86,4 +86,53 @@ $(function() {
 		formData.remove();
 	});
 
+	$('button[class*="btnDelete"]').on('click', function() {
+		var url = $(this).attr('action');
+		var value = $(this).val();
+		var estimateNo = $(this).parent().parent().attr('id');
+		var sessionID = $('input[name="strSessionID"]').val();
+
+		var windowName = 'workSheetView';
+
+		var formData = $("<form>", {
+			method: 'post',
+			action: url,
+			target: windowName
+		});
+
+		// 見積原価番号を追加
+		formData.append($("<input>", {
+			type: 'hidden',
+			name: 'strSessionID',
+			value: sessionID
+		}));
+
+		// 見積原価番号を追加
+		formData.append($("<input>", {
+			type: 'hidden',
+			name: 'estimateNo',
+			value: estimateNo
+		}));
+
+		// リビジョン番号を追加
+		formData.append($("<input>", {
+			type: 'hidden',
+			name: 'revisionNo',
+			value: value
+		}));
+
+
+		
+		var windowResult = open('about:blank', windowName, 'scrollbars=yes, width=985, height=700, resizable=0 location=0');
+
+		// formの追加
+		formData.appendTo($('body'));
+
+		// サブミット
+		formData.submit();
+
+		// formの削除
+		formData.remove();
+	});
+
 });
