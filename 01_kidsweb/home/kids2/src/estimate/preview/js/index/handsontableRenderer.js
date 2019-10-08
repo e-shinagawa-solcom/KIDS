@@ -251,7 +251,7 @@ $(function(){
         return false;
       }
     } else {
-      alert('対象明細が選択されていません。');
+      alert('受注を確定する明細行を選択してください。');
     }
   });
 
@@ -289,7 +289,7 @@ $(function(){
     });
     
     if (check === false) {
-      alert('複数の仕入先は選択できません。');
+      alert('複数の仕入先が指定されています。');
       return false;
     }
     
@@ -323,7 +323,7 @@ $(function(){
         return false;
       }
     } else {
-      alert('対象明細が選択されていません。');
+      alert('発注を確定する明細行を選択してください。');
     }
   });
 
