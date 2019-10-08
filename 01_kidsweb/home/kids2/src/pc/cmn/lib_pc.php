@@ -901,7 +901,12 @@ function fncGetPoInfoSQL($strOrderCode, $objDB)
     $aryQuery[] = "      AND o2.strordercode = '" . $strOrderCode . "'";
     $aryQuery[] = "  ) ";
     $aryQuery[] = ") o on o.lngorderno = od.lngorderno";
-    $aryQuery[] = " LEFT JOIN m_product p on p.strproductcode = od.strproductcode";
+    $aryQuery[] = " LEFT JOIN (";
+    $aryQuery[] = "   select p1.*  from m_product p1 ";
+    $aryQuery[] = "   inner join (select max(lngrevisionno) lngrevisionno, strproductcode from m_Product group by strProductCode) p2";
+    $aryQuery[] = "   on p1.lngrevisionno = p2.lngrevisionno and p1.strproductcode = p2.strproductcode";
+    $aryQuery[] = ") p ";
+    $aryQuery[] = " on p.strproductcode = od.strproductcode";
     $aryQuery[] = " LEFT JOIN m_stocksubject ss on ss.lngstocksubjectcode = od.lngstocksubjectcode";
     $aryQuery[] = " LEFT JOIN m_stockitem si on si.lngstocksubjectcode = od.lngstocksubjectcode and si.lngstockitemcode = od.lngstockitemcode";
     $aryQuery[] = " LEFT JOIN m_monetaryunit mu on mu.lngmonetaryunitcode = o.lngmonetaryunitcode";

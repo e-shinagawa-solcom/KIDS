@@ -1796,25 +1796,6 @@ function fncDoCopyModule(strID) {
 		var container = document.createElement("div");
 		container.appendChild(str);
 		return container.innerHTML;
-		//   return str;
-		//   if (selection.rangeCount) {
-		// 	var container = document.createElement("div");
-		//     for (var i = 0, len = sel.rangeCount; i < len; ++i) {
-		//         container.appendChild(sel.getRangeAt(i).cloneContents());
-		//     }
-		//     return container.innerHTML;
-		//   }
-		// if (selectionRange.rangeCount) {
-		// 	alert("2");
-		// 	var range = selectionRange.getRangeAt(0);
-		// 	alert("3");
-		// 	e = document.getElementById('dummy');
-		// 	alert("4");
-		//     e.innerHTML = '';
-		//     e.appendChild(range.cloneContents());
-
-		//     return e.innerHTML;
-		// }
 	}
 }
 
@@ -1838,7 +1819,6 @@ function fncDoCopyModule(strID) {
 */
 //--------------------------------------------------------------------------------------------------------------------
 function fncDoCopy(objBuff1, strID1, strID2) {
-	alert(fncDoCopyModule(strID1));
 	// バッファ値を結合
 	objBuff1.value = fncDoCopyModule(strID1) + fncDoCopyModule(strID2);
 	if (objBuff1.createTextRange) {
@@ -1869,6 +1849,24 @@ function fncDoCopy(objBuff1, strID1, strID2) {
 	}
 	return true;
 }
+
+// function fncDoCopy(objname) {
+// 	// クリップボードに値を反映
+// 	if (window.getSelection) {
+// 		var selection = getSelection();
+// 		selection.removeAllRanges();
+// 		var range = document.createRange();
+// 		range.selectNodeContents(document.getElementById(objname));
+// 		selection.addRange(range);
+// 		document.execCommand('copy');
+// 		selection.removeAllRanges();
+// 		alert('クリップボードにコピーしました。');
+// 	} else {
+// 		alert("クリップボードへのコピーに失敗しました。");
+// 	}
+// 	return true;
+// }
+
 /*
 	サンプルソース
 	<input type="button" value="copy" onclick="fncDoCopy( 'COPYAREA1', copyhidden1 , 'COPYAREA2', copyhidden2 );">

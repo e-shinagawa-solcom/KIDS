@@ -33,7 +33,7 @@
         <!-- フォーム関数 -->
         <script src="/pc/search/js/functions.js" defer></script>
         <!-- マスタ検索呼び出し -->
-        <script src="/search/cmn/js/invoke-master-search.js" defer></script>
+        <script src="/p/cmn/js/invoke-master-search.js" defer></script>
         <script src="/p/cmn/js/msw.js" defer></script>
         <!-- COOKIE 表示チェックボックス 保存/復元 -->
         <script src="/search/cmn/js/cookie-display-items.js" defer></script>
@@ -173,8 +173,8 @@
                 </span>
                 <span class="regist-label">
                     <span class="regist-label__text">入力者</span>
-                    <input class="TxtStyle05L" name="lngInputUserCode"  type="text">
-                    <input class="disTxt46L" name="lngInputUserName"  type="text" readonly>
+                    <input class="TxtStyle05L" name="lngInputUserCode"  type="text" alt="InputUser">
+                    <input class="disTxt46L" name="strInputUserName"  type="text" readonly>
                     <img class="msw-button button" invokeMSWName="msw-user" msw-before="pickupGroupCodeToNull" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
                 </span>
             </div>
@@ -185,7 +185,7 @@
                 </span>
                 <span class="regist-label">
                     <span class="regist-label__text">仕入先</span>
-                    <input class="TxtStyle05L" name="lngCustomerCode"  type="text">
+                    <input class="TxtStyle05L" name="lngCustomerCode"  type="text" alt="Customer">
                     <input class="disTxt46L" name="strCustomerName"  type="text" readonly>
                     <img class="msw-button button" invokeMSWName="msw-customer" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
                 </span>
@@ -268,7 +268,7 @@
                 </span>
                 <span class="regist-label">
                     <span class="regist-label__text">営業部署</span>
-                    <input class="TxtStyle05L" name="lngInChargeGroupCode" type="text">
+                    <input class="TxtStyle05L" name="lngInChargeGroupCode" type="text" alt="InChargeGroup">
                     <input class="disTxt46L" name="strInChargeGroupName" type="text" readonly>
                     <img class="msw-button button" invokeMSWName="msw-group" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
                 </span>
@@ -280,7 +280,7 @@
                 </span>
                 <span class="regist-label">
                     <span class="regist-label__text">開発担当者</span>
-                    <input class="TxtStyle05L" name="lngInChargeUserCode" type="text">
+                    <input class="TxtStyle05L" name="lngInChargeUserCode" type="text" alt="InChargeUser">
                     <input class="disTxt46L" name="strInChargeUserName" type="text" readonly>
                     <img class="msw-button button" invokeMSWName="msw-user" msw-before="pickupGroupCode" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
                 </span>

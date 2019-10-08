@@ -19,7 +19,7 @@
             // JQuery Validation Pluginで検知させる為イベントキック
             $(this).trigger('blur');
             // フォーカスをユーザ名に合わせる
-            $('input[name="lngInputUserName"]').focus();
+            $('input[name="strInputUserName"]').focus();
         }
     });
     // 担当グループ-表示グループコード イベント登録
@@ -135,7 +135,7 @@
             console.log(response.responseText);
             // 登録者-表示名の値をリセット
             $(invoker).val('');
-            $('input[name="lngInputUserName"]').val('');
+            $('input[name="strInputUserName"]').val('');
         });
     };
 

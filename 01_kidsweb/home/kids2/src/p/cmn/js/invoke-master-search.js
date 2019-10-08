@@ -20,6 +20,18 @@
         }
     });
 
+    // 仕入先-表示会社コード イベント登録
+    $('input[name="lngCustomerCode"]').on({
+        'change': function () {
+            // 表示名を索引
+            selectCustomerName($(this));
+            // JQuery Validation Pluginで検知させる為イベントキック
+            $(this).trigger('blur');
+            // フォーカスを生産工場名に合わせる
+            $('input[name="strCustomerName"]').focus();
+        }
+    });
+
     // 顧客担当者-表示ユーザーコード イベント登録
     $('input[name="lngCustomerUserCode"]').on({
         'change': function () {

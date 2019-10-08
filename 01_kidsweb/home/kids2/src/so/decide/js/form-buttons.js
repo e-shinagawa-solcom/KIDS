@@ -33,11 +33,11 @@
     // 検索ボタン押下時の処理
     btnSearch.on('click', function () {
         if (workForm.valid()) {
-            //ウィンドウオブジェクトが存在していない時警告してフラグをfalseに
-            if (!window.opener || !Object.keys(window.opener).length) {
-                window.alert('親画面が存在しません');
-                parantExistanceFlag = false;
-            }
+            // //ウィンドウオブジェクトが存在していない時警告してフラグをfalseに
+            // if (!window.opener || !Object.keys(window.opener).length) {
+            //     window.alert('親画面が存在しません');
+            //     parantExistanceFlag = false;
+            // }
 
             //親画面に値を挿入
             if (parantExistanceFlag) {
@@ -49,6 +49,7 @@
                     data: formData
                 })
                     .done(function (response) {
+                        alert("test" + response);
                         var data = JSON.parse(response);
                         var tblchkbox = window.opener.$("#tbl_detail_chkbox");
                         var tbl = window.opener.$("#tbl_detail");
@@ -93,6 +94,7 @@
                         // w.document.close();
                     })
                     .fail(function (response) {
+                        alert("test2"+response);
                         alert("fail");
                         // Ajaxリクエストが失敗
                     });

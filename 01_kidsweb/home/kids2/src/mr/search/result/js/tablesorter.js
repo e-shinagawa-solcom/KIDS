@@ -4,7 +4,7 @@
         dateFormat: 'yyyy/mm/dd',
         sortInitialOrder: 'asc',
         widgets:['zebra','stickyHeaders'],
-        //headers :{0:{sorter: "text"}},
+        headers: { 0: { sorter: false } },
         debug: true,
         widgetOptions: {
             cssStickyHeaders_offset        : 0,

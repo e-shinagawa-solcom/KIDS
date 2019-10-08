@@ -33,12 +33,12 @@ if ($aryData == null) {
 }
 
 // セッション確認
-$objAuth = fncIsSession($_GET["strSessionID"], $objAuth, $objDB);
+// $objAuth = fncIsSession($_GET["strSessionID"], $objAuth, $objDB);
 
 $aryQuery = array();
 $aryQuery[] = "SELECT ";
 $aryQuery[] = "rd.lngReceiveNo as lngReceiveNo, rd.lngRevisionNo as lngRevisionNo";
-$aryQuery[] = ", r.strReceiveCode || '_' || r.strReviseCode as strReceiveCode";
+$aryQuery[] = ", r.strReceiveCode";
 $aryQuery[] = ", r.strcustomerreceivecode";
 $aryQuery[] = ", r.strMonetaryUnitSign";
 $aryQuery[] = ", rd.lngreceivedetailno as lngreceivedetailno";
@@ -59,47 +59,50 @@ $aryQuery[] = ", To_char( rd.curSubTotalPrice, '9,999,999,990.99' )  as curSubTo
 $aryQuery[] = ", rd.strNote as strDetailNote"; // 明細備考
 $aryQuery[] = ", ed.lngproductquantity as lngproductquantity"; // 製品数量
 $aryQuery[] = " FROM t_ReceiveDetail rd";
-$aryQuery[] = " INNER JOIN (";
-$aryQuery[] = " SELECT r1.*";
-$aryQuery[] = ", m_MonetaryUnit.strMonetaryUnitSign";
-$aryQuery[] = ", cust_c.strCompanyDisplayCode";
-$aryQuery[] = ", cust_c.strCompanyDisplayName";
-$aryQuery[] = " from m_Receive r1";
-$aryQuery[] = " LEFT JOIN m_MonetaryUnit USING (lngMonetaryUnitCode) ";
-$aryQuery[] = " LEFT JOIN m_Company cust_c ON r1.lngCustomerCompanyCode = cust_c.lngCompanyCode ";
-$aryQuery[] = " WHERE lngreceivestatuscode = " . DEF_RECEIVE_APPLICATE ." ";
+$aryQuery[] = "  INNER JOIN ( ";
+$aryQuery[] = "    SELECT";
+$aryQuery[] = "      r1.*";
+$aryQuery[] = "      , m_MonetaryUnit.strMonetaryUnitSign";
+$aryQuery[] = "      , cust_c.strCompanyDisplayCode";
+$aryQuery[] = "      , cust_c.strCompanyDisplayName ";
+$aryQuery[] = "    from";
+$aryQuery[] = "      m_Receive r1 ";
+$aryQuery[] = "      inner join ( ";
+$aryQuery[] = "        select";
+$aryQuery[] = "          max(lngrevisionno) lngrevisionno";
+$aryQuery[] = "          , strReceiveCode ";
+$aryQuery[] = "        from";
+$aryQuery[] = "          m_Receive ";
+$aryQuery[] = "        group by";
+$aryQuery[] = "          strReceiveCode";
+$aryQuery[] = "      ) r2 ";
+$aryQuery[] = "        on r1.lngrevisionno = r2.lngrevisionno ";
+$aryQuery[] = "        and r1.strReceiveCode = r2.strReceiveCode ";
+$aryQuery[] = "      LEFT JOIN m_MonetaryUnit ";
+$aryQuery[] = "        USING (lngMonetaryUnitCode) ";
+$aryQuery[] = "      LEFT JOIN m_Company cust_c ";
+$aryQuery[] = "        ON r1.lngCustomerCompanyCode = cust_c.lngCompanyCode ";
+$aryQuery[] = "    WHERE";
+$aryQuery[] = "      r1.lngreceivestatuscode = " . DEF_RECEIVE_APPLICATE ." ";
 if ($aryData["strReceiveCode"] != "") {
-    $aryQuery[] = " AND strReceiveCode = '" . $aryData["strReceiveCode"] . "' ";
+    $aryQuery[] = " AND r1.strReceiveCode = '" . $aryData["strReceiveCode"] . "' ";
 }
 if ($aryData["lngCustomerCode"] != "") {
-    $aryQuery[] = " AND lngcustomercompanycode = " . $aryData["lngCustomerCode"] . " ";
+    $aryQuery[] = " AND r1.lngcustomercompanycode = " . $aryData["lngCustomerCode"] . " ";
 }
 if ($aryData["From_dtmDeliveryDate"] != "") {
-    $aryQuery[] = " AND dtmDeliveryDate >= '" . $aryData["From_dtmDeliveryDate"] . "' ";
+    $aryQuery[] = " AND r1.dtmDeliveryDate >= '" . $aryData["From_dtmDeliveryDate"] . "' ";
 }
 if ($aryData["To_dtmDeliveryDate"] != "") {
-    $aryQuery[] = " AND dtmDeliveryDate <= '" . $aryData["To_dtmDeliveryDate"] . "' ";
+    $aryQuery[] = " AND r1.dtmDeliveryDate <= '" . $aryData["To_dtmDeliveryDate"] . "' ";
 }
-$aryQuery[] = "AND r1.lngRevisionNo = ( ";
-$aryQuery[] = "	SELECT";
-$aryQuery[] = "	  MAX(r2.lngRevisionNo) ";
-$aryQuery[] = "	FROM";
-$aryQuery[] = "	  m_Receive r2 ";
-$aryQuery[] = "	WHERE";
-$aryQuery[] = "	  r2.strReceiveCode = r1.strReceiveCode ";
-$aryQuery[] = "	  AND r2.bytInvalidFlag = false ";
-$aryQuery[] = "	  AND r2.strReviseCode = ( ";
-$aryQuery[] = "		SELECT";
-$aryQuery[] = "		  MAX(r3.strReviseCode)"; 
-$aryQuery[] = "		FROM";
-$aryQuery[] = "		  m_Receive r3 ";
-$aryQuery[] = "		WHERE";
-$aryQuery[] = "		  r3.strReceiveCode = r2.strReceiveCode ";
-$aryQuery[] = "		  AND r3.bytInvalidFlag = false";
-$aryQuery[] = "	  )";
-$aryQuery[] = " )";
-$aryQuery[] = " ) r USING (lngReceiveNo)";
-$aryQuery[] = " LEFT JOIN m_Product p USING (strProductCode)";
+$aryQuery[] = " ) r USING (lngReceiveNo)";    
+$aryQuery[] = "        LEFT JOIN (";
+$aryQuery[] = "            select p1.*  from m_product p1 ";
+$aryQuery[] = "        	inner join (select max(lngrevisionno) lngrevisionno, strproductcode from m_Product group by strProductCode) p2";
+$aryQuery[] = "            on p1.lngrevisionno = p2.lngrevisionno and p1.strproductcode = p2.strproductcode";
+$aryQuery[] = "          ) p ";
+$aryQuery[] = "          ON rd.strProductCode = p.strProductCode ";
 $aryQuery[] = " LEFT JOIN m_SalesClass ss USING (lngSalesClassCode)";
 $aryQuery[] = " LEFT JOIN m_ProductUnit pu ON rd.lngProductUnitCode = pu.lngProductUnitCode";
 $aryQuery[] = " LEFT JOIN t_estimatedetail ed USING (lngestimateno, lngestimatedetailno)";

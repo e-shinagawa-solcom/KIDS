@@ -30,7 +30,7 @@
 *	@return strQuery 	$strQuery 検索用SQL文
 *	@access public
 */
-function fncGetReceiveHeadNoToInfoSQL ($lngReceiveNo, $lngreceivestatuscode)
+function fncGetReceiveHeadNoToInfoSQL ($lngReceiveNo, $lngRevisionNo, $lngreceivestatuscode)
 {
 	// SQL文の作成
 	$aryQuery[] = "SELECT distinct on (r.lngReceiveNo) r.lngReceiveNo as lngReceiveNo, r.lngRevisionNo as lngRevisionNo";
@@ -84,6 +84,7 @@ function fncGetReceiveHeadNoToInfoSQL ($lngReceiveNo, $lngreceivestatuscode)
 	$aryQuery[] = " LEFT JOIN m_MonetaryRateClass mr ON r.lngMonetaryRateCode = mr.lngMonetaryRateCode";
 
 	$aryQuery[] = " WHERE r.lngReceiveNo = " . $lngReceiveNo . "";
+    $aryQuery[] = " AND r.lngRevisionNo = " . $lngRevisionNo . "";
 	if ($lngreceivestatuscode != null) {
 		$aryQuery[] = " and r.lngreceivestatuscode = " . $lngreceivestatuscode ." ";
 	}
@@ -107,7 +108,7 @@ function fncGetReceiveHeadNoToInfoSQL ($lngReceiveNo, $lngreceivestatuscode)
 *	@return strQuery 	$strQuery 検索用SQL文
 *	@access public
 */
-function fncGetReceiveDetailNoToInfoSQL ( $lngReceiveNo)
+function fncGetReceiveDetailNoToInfoSQL ( $lngReceiveNo, $lngRevisionNo)
 {
 	// SQL文の作成
 	$aryQuery[] = "SELECT distinct on (rd.lngSortKey) rd.lngSortKey as lngRecordNo, ";
@@ -137,10 +138,17 @@ function fncGetReceiveDetailNoToInfoSQL ( $lngReceiveNo)
 	$aryQuery[] = ", rd.strNote as strDetailNote";
 
 	// 明細行を表示する場合
-	$aryQuery[] = " FROM t_ReceiveDetail rd LEFT JOIN m_Product p USING (strProductCode)";
+	$aryQuery[] = " FROM t_ReceiveDetail rd ";
+	$aryQuery[] = " LEFT JOIN (";
+    $aryQuery[] = "   select p1.*  from m_product p1 ";
+    $aryQuery[] = "   inner join (select max(lngrevisionno) lngrevisionno, strproductcode from m_Product group by strProductCode) p2";
+    $aryQuery[] = "   on p1.lngrevisionno = p2.lngrevisionno and p1.strproductcode = p2.strproductcode";
+    $aryQuery[] = ") p ";
+    $aryQuery[] = " ON rd.strProductCode = p.strProductCode ";
 	$aryQuery[] = " LEFT JOIN m_SalesClass ss USING (lngSalesClassCode)";
 	$aryQuery[] = " LEFT JOIN m_ProductUnit pu ON rd.lngProductUnitCode = pu.lngProductUnitCode";
 	$aryQuery[] = " WHERE rd.lngReceiveNo = " . $lngReceiveNo . " ";
+    $aryQuery[] = " AND rd.lngRevisionNo = " . $lngRevisionNo . " ";
 	$aryQuery[] = " ORDER BY rd.lngSortKey ASC ";
 
 	$strQuery = implode( "\n", $aryQuery );
