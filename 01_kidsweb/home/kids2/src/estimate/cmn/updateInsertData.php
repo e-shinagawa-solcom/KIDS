@@ -220,8 +220,8 @@ class updateInsertData extends estimateInsertData {
 
             // 発注の場合
             } else if ($salesOrder === DEF_ATTRIBUTE_SUPPLIER) {
-                if ($rowData['divisionSubject'] != DEF_STOCK_SUBJECT_CODE_CHARGE
-                    && $rowData['divisionSubject'] != DEF_STOCK_SUBJECT_CODE_EXPENSE) {
+                // 発注で経費以外の場合
+                if ($rowData['areaCode'] !== DEF_AREA_OTHER_COST_ORDER) {
 
                     // 発注明細テーブル登録処理
                     $this->updateTableOrderDetail($rowData, $orderSortKeyList, $orderNewSortKey);

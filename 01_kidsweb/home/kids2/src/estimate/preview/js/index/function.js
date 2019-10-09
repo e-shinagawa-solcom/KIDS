@@ -27,6 +27,7 @@ $(function(){
 	});
 });
 
+// ロード時の配置調整
 $(window).on('load',function(){
 	var height = $('#header').height();
 	var width = $('#sideMenu').width();
@@ -34,38 +35,13 @@ $(window).on('load',function(){
 	$('.grid').css({'margin-left': width + 'px'});
 });
 
+// URLコピー
 function urlCopy() {
 	$('body').append('<textarea id="currentURL" style="position:fixed;left:-100%;">' + location.href + '</textarea>');
 	$('#currentURL').select();
 	document.execCommand('copy');
 	$('#currentURL').remove();
 	alert("URLをコピーしました。");
-}
-
-function orderCancel (name) {
-	var target = $('[name=' + name + ']:checked').map(function() {
-		return $(this).val();
-	}).get().join(",");
-	
-	if (target) {
-		var text = '選択された発注の確定を取り消します。\nよろしいですか？';
-		var result = confirm(text);
-		if (result) {
-			var value = [];
-			value = makePostData();
-
-			value['detailNo'] = target;
-			value['action'] = 'cancel';
-
-			value['revisionNo'] = document.revisionNo.value;
-
-			postChild(value);
-		} else {
-			return false;
-		}
-	} else {
-		alert('対象明細が選択されていません。');
-	}
 }
 
 function makePostData() {
@@ -121,6 +97,7 @@ function postChild(data) {
 	document.temp_form.remove();
 }
 
+// 編集モードへの移行
 function editModeTransition() {
 	// フォームに処理モードを追加
 	$("<input>", {
@@ -295,59 +272,3 @@ function addPostData(name, value, formElement) {
 
 	return;
 }
-// function fncAlphaOff( obj )
-// {
-// 	obj.style.filter = 'alpha(opacity=100)' ;
-// }
-
-// function fncRegistButton( strMode , obj )
-// {
-// 	switch( strMode )
-// 	{
-// 		case 'offJ':
-// 			obj.src = registJ1;
-// 			break;
-
-// 		case 'onJ':
-// 			obj.src = registJ2;
-// 			break;
-
-// 		case 'downJ':
-// 			obj.src = registJ3;
-// 			break;
-
-// 		default:
-// 			break;
-// 	}
-// }
-
-// function fncCloseButton( strMode , obj )
-// {
-// 	switch( strMode )
-// 	{
-// 		case 'offJ':
-// 			obj.src = closeJ1;
-// 			break;
-
-// 		case 'onJ':
-// 			obj.src = closeJ2;
-// 			break;
-
-// 		case 'downJ':
-// 			obj.src = closeJ3;
-// 			break;
-
-// 		default:
-// 			break;
-// 	}
-// }
-// // 登録gif
-// var registJ1 = '/img/type01/estimate/regist/regist/regist_off_ja_bt.gif';
-// var registJ2 = '/img/type01/estimate/regist/regist/regist_off_on_ja_bt.gif';
-// var registJ3 = '/img/type01/estimate/regist/regist/regist_on_ja_bt.gif';
-
-
-// // 閉じるgif
-// var closeJ1 = '/img/type01/estimate/regist/close/close_off_ja_bt.gif';
-// var closeJ2 = '/img/type01/estimate/regist/close/close_off_on_ja_bt.gif';
-// var closeJ3 = '/img/type01/estimate/regist/close/close_on_ja_bt.gif';

@@ -443,6 +443,7 @@ $percentList = array(
 	"curSalesProfitRate"            => true,
 	"curFixedCostSalesProfitRate"   => true,
 	"curTotalPriceRate"             => true,
+	"curProfitRate"                 => true,
 	"curStandardRate"               => true,
 );
 
@@ -464,16 +465,16 @@ for ($i = 0; $i < $resultNum; ++$i) {
 
 	foreach ($displayColumns as $column) {
 		if ($column === 'detail') { // ¾ÜºÙ
-				$body .= "<td bgcolor=\"#FFFFFF\" align=\"center\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $lngResultNum . "_',1 );\">";
+				$body .= "<td bgcolor=\"#FFFFFF\" align=\"center\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $resultNum . "_',1 );\">";
 				$body .= "<button type=\"button\" class=\"cells btnDetail\" action=\"/estimate/preview/index.php?strSessionID=". $strSessionID. "&estimateNo=". $estimateNo."\" value=\"". $result['lngrevisionno']. "\">";
-				$body .= "<img onmouseover=\"DetailOn(this);\" onmouseout=\"DetailOff(this);\" src=\"/img/type01/wf/result/detail_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"DETAIL\">";
+				$body .= "<img onmouseover=\"DetailOn(this);\" onmouseout=\"DetailOff(this);\" src=\"/img/". LAYOUT_CODE. "/wf/result/detail_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"DETAIL\">";
 				$body .= "</button></td>";
 
 		} else if ($column === 'record') { // ÍúÎò
 			if ($result['lngmaxrevisionno'] > 1 && $result['lngrevisionno'] === $result['lngmaxrevisionno'] ) {
-				$body .= "<td bgcolor=\"#FFFFFF\" align=\"center\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $lngResultNum . "_',1 );\">";
+				$body .= "<td bgcolor=\"#FFFFFF\" align=\"center\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $resultNum . "_',1 );\">";
 				$body .= "<button type=\"button\" class=\"cells btnRecord\">";
-				$body .= "<img onmouseover=\"DetailOn(this);\" onmouseout=\"DetailOff(this);\" src=\"/img/type01/wf/result/detail_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"DETAIL\">";
+				$body .= "<img onmouseover=\"RenewOn(this);\" onmouseout=\"RenewOff(this);\" src=\"/img/". LAYOUT_CODE. "/cmn/seg/renew_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"HISTORY\">";
 				$body .= "</button></td>";
 			} else {
 				$body .= "<td nowrap align=\"left\"></td>";
@@ -482,9 +483,10 @@ for ($i = 0; $i < $resultNum; ++$i) {
 		} else if ($column === 'delete') { // ºï½ü
 			if ($result['lngrevisionno'] === $result['lngmaxrevisionno']
 				&& $result['deleteflag'] === 't') {
-				$body .= "<td bgcolor=\"#FFFFFF\" align=\"center\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $lngResultNum . "_',1 );\">";
-				$body .= "<button type=\"button\" class=\"cells btnDelete\">";
-				$body .= "<img onmouseover=\"DetailOn(this);\" onmouseout=\"DetailOff(this);\" src=\"/img/type01/wf/result/detail_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"DETAIL\">";
+				$body .= "<td bgcolor=\"#FFFFFF\" align=\"center\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $resultNum . "_',1 );\">";
+				$body .= "<button type=\"button\" class=\"cells btnDelete\" action=\"/estimate/delete/index.php\" value=\"". $result['lngrevisionno']. "\">";
+				$body .= "<img onmouseover=\"RemoveOn(this);\" onmouseout=\"RemoveOff(this);\" src=\"/img/". LAYOUT_CODE. "/cmn/seg/remove_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"REMOVE\">";
+				
 				$body .= "</button></td>";
 			} else {
 				$body .= "<td nowrap align=\"left\"></td>";

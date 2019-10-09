@@ -799,7 +799,7 @@ class estimateDB extends clsDB {
 
             $strQuery .= " WHERE me.lngestimateno = ". $estimateNo;
             $strQuery .= " AND me.lngrevisionno";
-            if ($revisionNo) {
+            if (strlen($revisionNo)) {
                 $strQuery .= " = ". $revisionNo;
             } else {
                 $strQuery .= " IN (SELECT MAX(lngrevisionno) FROM m_estimate";

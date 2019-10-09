@@ -172,83 +172,6 @@ class makeHTML {
 		return $strHTML;
 	}
 
-    //@------------------------------------------------------------------------
-	/**
-	*	概要	: フォーム要素返却
-	*
-	*
-	*	解説	: 各ワークシート選択用フォームオブジェクトを生成、返却
-	*
-	*	対象	: 結果用テンプレート
-	*
-	*	@param	[$ws_num]	: [Integer]	. 選択したExcelワークシート番号
-	*	@param	[$aryData]	: [Array]	. $_REQUEST より取得した値
-	*
-	*	@return	[$strHTML]	: [String]
-	*/
-	//-------------------------------------------------------------------------
-	public static function getForm($ws_num, $aryData)
-	{
-		$aryHTML	= array();
-		$strHTML	= "";
-
-		$aryHTML[]	= self::getHiddenCommon($ws_num, $aryData);	// 共通HIDDEN要素取得
-		$strHTML	= implode( "", $aryHTML );
-
-
-		unset( $aryHTML );
-		return $strHTML;
-	}
-
-
-
-	//@------------------------------------------------------------------------
-	/**
-	*	概要	: 共通HIDDEN要素返却
-	*
-	*
-	*	解説	: 各ワークシート毎にHIDDENオブジェクトを生成、返却
-	*
-	*	対象	: 結果用テンプレート
-	*
-	*	@param	[$ws_num]	: [Integer]	. 選択したExcelワークシート番号
-	*	@param	[$aryData]	: [Array]	. $_REQUEST より取得した値
-	*
-	*	@return	[$strHTML]	: [String]
-	*/
-	//-------------------------------------------------------------------------
-	public static function getHiddenCommon( $ws_num, $aryData )
-	{
-		$aryHTML	= array();
-		$strHTML	= "";
-
-		$aryHTML[]	= "\t<input type=\"hidden\" name=\"ActionScriptName\"		value=\"\" />\n";
-		$aryHTML[]	= "\t<input type=\"hidden\" name=\"strSessionID\"			value=\"" .$aryData["strSessionID"]. "\" />\n";
-		$aryHTML[]	= "\t<input type=\"hidden\" name=\"lngFunctionCode\"		value=\"" .$aryData["lngFunctionCode"]. "\" />\n";
-		$aryHTML[]	= "\t<input type=\"hidden\" name=\"ESFlg\"					value=\"1\" />\n";
-		$aryHTML[]	= "\t<input type=\"hidden\" name=\"lngEstimateNo\"			value=\"\" />\n";
-		$aryHTML[]	= "\t<input type=\"hidden\" name=\"strProcess\"				value=\"\" />\n";
-		$aryHTML[]	= "\t<input type=\"hidden\" name=\"strPageCondition\"		value=\"\" />\n";
-		$aryHTML[]	= "\t<input type=\"hidden\" name=\"strActionName\"			value=\"\" />\n";
-		$aryHTML[]	= "\t<input type=\"hidden\" name=\"lngRegistConfirm\"		value=\"\" />\n";
-		$aryHTML[]	= "\t<input type=\"hidden\" name=\"strMode\"				value=\"\" />\n";
-		$aryHTML[]	= "\t<input type=\"hidden\" name=\"RENEW\"					value=\"\" />\n\n";
-
-		$aryHTML[]	= "\t<input type=\"hidden\" name=\"lngSelectSheetNo\"	value=\"" .$ws_num. "\" />\n";
-		$aryHTML[]	= "\t<input type=\"hidden\" name=\"style\"				value=\"" .$aryData["style"]. "\" />\n";
-		$aryHTML[]	= "\t<input type=\"hidden\" name=\"exc_name\"			value=\"" .$aryData["exc_name"]. "\" />\n";
-		$aryHTML[]	= "\t<input type=\"hidden\" name=\"exc_type\"			value=\"" .$aryData["exc_type"]. "\" />\n";
-		$aryHTML[]	= "\t<input type=\"hidden\" name=\"exc_tmp_name\"		value=\"" .$aryData["exc_tmp_name"]. "\" />\n";
-		$aryHTML[]	= "\t<input type=\"hidden\" name=\"exc_error\"			value=\"" .$aryData["exc_error"]. "\" />\n";
-		$aryHTML[]	= "\t<input type=\"hidden\" name=\"exc_size\"			value=\"" .$aryData["exc_size"]. "\" />\n";
-
-		$strHTML	= implode( "", $aryHTML );
-
-
-		unset( $aryHTML );
-		return $strHTML;
-	}
-
 	//@------------------------------------------------------------------------
 	/**
 	*	概要	: ExcelワークシートデータHTML返却
@@ -264,12 +187,7 @@ class makeHTML {
 	*	@return	[$strHTML]		: [String]
 	*/
 	//-------------------------------------------------------------------------
-	public static function getWorkSheet2HTML($strWSName, $sn, $strMode)
-	{ 
-//		require_once ( LIB_DEBUGFILE );
-//		require_once ( '/home/kids2/intra-v2-1/src/upload2/cmn/peruser.php' );
-//		require_once ( '/home/kids2/intra-v2-1/src/upload2/cmn/lib_peruser.php' );
-
+	public static function getWorkSheet2HTML($strWSName, $sn, $strMode)	{ 
 
 		// ワークシート名取得
 		$strHTML	.= "<a name=\"" .$sn. "\"></a>";
@@ -279,21 +197,6 @@ class makeHTML {
 		$strHTML	.= "&nbsp;&nbsp;<b>Worksheet: \"";
 		$strHTML	.= $strWSName;
 		$strHTML	.= "\"</b></span>\n\n";
-
-		// if( !isset($obj) )
-		// {
-		// 	// emtpty worksheet
-		// 	$strHTML	.= "<b> - empty</b>\n";
-		// 	$strHTML	.= "<span class=\"buttons\">\n";
-		// 	$strHTML	.= "\t<button onclick=\"window.close();\"> 閉じる </button>&nbsp;&nbsp;&nbsp;\n";
-		// 	$strHTML	.= "\t<a id=\"excHref\" href=\"#\" onclick=\"scrollTop();\"><b>↑Page Top</b></a>&nbsp;&nbsp;\n";
-		// 	$strHTML	.= "</span>\n\n\n";
-		// 	$strHTML	.= "<br />";
-
-		// 	$strHTML	.= "\n\n\n<hr size=\"1\"><br />\n";
-		// 	return $strHTML;
-		// }
-
 
 		// ファイル選択HTMLスクリプト
 		$strHTML	.= self::getFileConfirmScript2HTML( $strWSName, $sn, $strMode );
@@ -338,6 +241,20 @@ class makeHTML {
 		return $strHTML;
 	}
 
+
+	//@------------------------------------------------------------------------
+	/**
+	*	概要	: 見積原価プレビューヘッダ部生成
+	*
+	*	解説	: ヘッダ部のHTML生成、返却
+	*
+	*
+	*	@param	[$maxRevisionNo]		: [Integer]	. 最大のリビジョン番号
+	*	@param	[$strMode]		        : [Integer]	. 現在のリビジョン番号
+	*
+	*	@return	[$strHTML]		: [String]
+	*/
+	//-------------------------------------------------------------------------
 	public function getPreviewHeader($maxRevisionNo, $revisionNo = null) {
 		if (!isset($revisionNo)) {
 			$revisionNo = $maxRevisionNo;
