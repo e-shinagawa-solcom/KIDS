@@ -45,7 +45,6 @@
                     }
 
                     $("#tbl_order_detail").empty();
-
                     for (var i = 0; i < data.orderdetail.length; i++) {
                         var row = data.orderdetail[i];
                         // 発注ステータスが納品済の場合、エラーを出す
@@ -74,18 +73,19 @@
                         $('input[name="strLocationName"]').val(row.strlocationame);
                         $('input[name="dtmExpirationDate"]').val(row.dtmexpirationdate);
                         $('input[name="lngOrderNo"]').val(row.lngorderno);
-                        
                         // 国コードの取得
                         var lngcountrycode = row.lngcountrycode;
                         var curtax = 0;
                         var lngtaxclasscode = 0;
-                        // 国コード：81日本語の場合、「外税」となる、それ以外の場合、非課税
+                        var lngtaxcode = row.lngtaxcode;
+                        // 国コード：81日本の場合、「外税」となる、それ以外の場合、非課税
                         if (lngcountrycode == 81) {
                             if (data.tax == null) {
                                 alert("消費税情報の取得に失敗しました。");
                                 exit;
                             } else {
                                 curtax = data.tax.curtax;
+                                lngtaxcode = data.tax.lngtaxcode
                             }
                             lngtaxclasscode = 2;
                         } else {
@@ -135,16 +135,30 @@
                             + '<td class="col13">' + row.dtmdeliverydate + '</td>'
                             + '<td class="col14">' + row.strnote + '</td>'
                             + '<td style="display:none">' + row.cursubtotalprice + '</td>'
-                            + '<td style="display:none">' + data.tax.curtax + '</td>'
+                            + '<td style="display:none">' + curtax + '</td>'
                             + '<td style="display:none">' + row.lngmonetaryunitcode + '</td>'
                             + '<td style="display:none">' + row.strmonetaryunitsign + '</td>'
                             + '<td style="display:none">' + curtaxprice + '</td>'
                             + '<td style="display:none">' + row.lngorderno + '</td>'
+                            + '<td style="display:none">' + row.lngrevisionno + '</td>'
                             + '<td style="display:none">' + row.lngorderdetailno + '</td>'
-                            + '<td style="display:none">' + data.tax.lngtaxcode + '</td>'
+                            + '<td style="display:none">' + lngtaxcode + '</td>'
                             + '</tr>';
                         $("#tbl_order_detail").append(detail_body);
                     }
+
+                    var row = $(".table-description tbody tr:nth-child(1)");
+    var columnNum = row.find('td').length;
+    var widthArry = [];
+    var theadwidth = $(".table-description tbody").width();
+    for (var i = 1; i <= columnNum; i++) {
+        var width = $(".table-description tbody tr:nth-child(1) td:nth-child(" + i + ")").width();
+        widthArry.push(width);
+    }
+    $(".table-description thead").width($(".table-description tbody").width()+columnNum+10);
+    for (var i = 1; i <= columnNum; i++) {
+        $(".table-description thead tr th:nth-child(" + i + ")").width(widthArry[i - 1]+1);
+    }
 
                 })
                 .fail(function (response) {
@@ -220,8 +234,10 @@
                     len += 1;
                     // 発注番号                
                     var lngOrderNo = $(this).find('td:nth-child(20)').text();
+                    // 発注リビジョン番号                
+                    var lngRevisionNo = $(this).find('td:nth-child(21)').text();
                     // 発注明細番号                
-                    var lngOrderDetailNo = $(this).find('td:nth-child(21)').text();
+                    var lngOrderDetailNo = $(this).find('td:nth-child(22)').text();
                     // 仕入明細番号
                     var lngStockDetailNo = len;
                     // 消費税区分
@@ -234,7 +250,7 @@
                     // 納期
                     var dtmDeliveryDate = $(this).find('td:nth-child(13)').text();
                     // 消費税コード                
-                    var lngTaxCode = $(this).find('td:nth-child(22)').text();
+                    var lngTaxCode = $(this).find('td:nth-child(23)').text();
 
                     // 納期がヘッダ部で入力した製品到着日と同月でない行が存在した場合
                     if (dtmDeliveryDate.substring(1, 7) != dtmExpirationDate.substring(1, 7)) {
@@ -245,6 +261,7 @@
                     detaildata[len - 1] = {
                         "lngOrderNo": lngOrderNo,
                         "lngOrderDetailNo": lngOrderDetailNo,
+                        "lngRevisionNo": lngRevisionNo,
                         "lngStockDetailNo": lngStockDetailNo,
                         "lngTaxClassCode": lngTaxClassCode,
                         "strTaxClassName": strTaxClassName,
@@ -266,6 +283,7 @@
             formData.push({name:"strPayConditionName", value:$('select[name="lngPayConditionCode"] option:selected').text()});
 
             var actionUrl = workForm.attr('action');
+            alert(actionUrl);
             // リクエスト送信
             $.ajax({
                 url: actionUrl,
@@ -273,6 +291,7 @@
                 data: formData
             })
                 .done(function (response) {
+                    alert(response);
                     var w = window.open();
                     w.document.open();
                     w.document.write(response);
@@ -282,6 +301,7 @@
                     }
                 })
                 .fail(function (response) {
+                    alert(response);
                     alert("fail");
                     // Ajaxリクエストが失敗
                 });

@@ -142,6 +142,7 @@ foreach ($aryDetailData as $data) {
     $aryQuery[] = "FROM t_orderdetail ";
     $aryQuery[] = "WHERE ";
     $aryQuery[] = "lngorderno = " . $data["lngOrderNo"];
+    $aryQuery[] = " AND lngrevisionno = " . $data["lngRevisionNo"];
     $aryQuery[] = " AND lngorderdetailno = " . $data["lngOrderDetailNo"];
     $aryQuery[] = " ORDER BY lngSortKey";
     $strQuery = implode("\n", $aryQuery);
@@ -189,7 +190,6 @@ foreach ($aryDetailData as $data) {
             $aryQuery[] = "strrevisecode, "; // 6:リバイスコード
             $aryQuery[] = "lngstocksubjectcode, "; // 7:仕入科目コード
             $aryQuery[] = "lngstockitemcode, "; // 8:仕入部品コード
-            $aryQuery[] = "dtmdeliverydate, "; // 9:納品日
             $aryQuery[] = "lngdeliverymethodcode, "; // 10:運搬方法
             $aryQuery[] = "lngconversionclasscode, "; // 11:換算区分コード / 1：単位計上/ 2：荷姿単位計上
             $aryQuery[] = "curproductprice, "; // 12:製品価格
@@ -212,7 +212,6 @@ foreach ($aryDetailData as $data) {
             $aryQuery[] = "'" . $detailDataResult["strrevisecode"] . "', "; // 6:リバイスコード
             $aryQuery[] = $detailDataResult["lngstocksubjectcode"] . ", "; // 7:仕入科目コード
             $aryQuery[] = $detailDataResult["lngstockitemcode"] . ", "; // 8:仕入部品コード
-            $aryQuery[] = "'" . ($detailDataResult["dtmdeliverydate"] == "" ? "null" : $detailDataResult["dtmdeliverydate"]) . "', "; // 7:納期
             $aryQuery[] = $detailDataResult["lngcarriercode"] . ", "; // 10:運搬方法
             $aryQuery[] = $detailDataResult["lngconversionclasscode"] . ", "; // 11:換算区分コード / 1：単位計上/ 2：荷姿単位計上
             $aryQuery[] = $detailDataResult["curproductprice"] . ", "; // 9:製品価格
@@ -224,10 +223,10 @@ foreach ($aryDetailData as $data) {
             $aryQuery[] = $detailDataResult["cursubtotalprice"] . ", "; // 15:小計金額 / 税抜小計金額
             $aryQuery[] = "'" . $detailDataResult["strnote"] . "', "; // 16:備考
             $aryQuery[] = "'" . $strSerialNo . "', "; // 17:金型番号
-            $aryQuery[] = $detailDataResult["lngsortkey"] . " "; // 18:表示用ソートキー
+            $aryQuery[] = ($detailDataResult["lngsortkey"] == "" ? "null" : $detailDataResult["lngsortkey"]) . " "; // 18:表示用ソートキー
             $aryQuery[] = " )";
             $strQuery = implode("\n", $aryQuery);
-
+            
             if (!$lngResultID = $objDB->execute($strQuery)) {
                 fncOutputError(9051, DEF_ERROR, "", true, "", $objDB);
             }
@@ -241,6 +240,7 @@ foreach ($aryDetailData as $data) {
     $aryQuery[] = "UPDATE m_order ";
     $aryQuery[] = "set lngorderstatuscode = " . DEF_ORDER_END . " ";
     $aryQuery[] = "where lngorderno = " . $data["lngOrderNo"] . " ";
+    $aryQuery[] = "and lngrevisionno = " . $data["lngRevisionNo"] . " ";
     $strQuery = implode("\n", $aryQuery);
 
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);

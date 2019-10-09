@@ -30,8 +30,6 @@
         <script src="/pc/search/js/form-buttons.js" defer></script>
         <!-- フォームバリデーション -->
         <script src="/pc/search/js/validate-form.js" defer></script>
-        <!-- フォーム関数 -->
-        <script src="/pc/search/js/functions.js" defer></script>
         <!-- マスタ検索呼び出し -->
         <script src="/p/cmn/js/invoke-master-search.js" defer></script>
         <script src="/p/cmn/js/msw.js" defer></script>
@@ -68,14 +66,6 @@
 	<div class="form-box__contents--with-scroll">
 		<form name="SearchseaHistory" method="post">
             <input type="submit">
-            <div class="option-box">
-                <div class="regist-line" _%AdminSet_visibility%_>
-                    <span class="regist-label">
-                        <span class="regist-label--text-only">管理者モード</span>
-                        <input name="Option_admin" type="checkbox">
-                    </span>
-                </div>
-            </div>
             <div class="regist-line">
                 <img class="toggle-search button" src="/img/type01/cmn/seg/off_bt.gif" alt="toggle search">
                 <img class="toggle-display button" src="/img/type01/cmn/seg/off_bt.gif" alt="toggle display">
@@ -135,7 +125,7 @@
             <div class="regist-line">
                 <span class="search-label--checkbox">
                     <input name="IsSearch_strStockCode" class="is-search" type="checkbox">
-                    <input name="IsDisplay_strStockCode" class="is-display" type="checkbox" disabled>
+                    <input name="IsDisplay_strStockCode" class="is-display" type="checkbox" checked disabled>
                     <input type="hidden" name="IsDisplay_strStockCode" value="on">
                     <input type="hidden" name="IsDisplay_lngRevisionNo" value="on">
                 </span>
@@ -447,7 +437,7 @@
             <div class="regist-line" _%btnInvalid_visibility%_>
                 <span class="search-label--checkbox">
                     <input name="IsSearch_btnInvalid" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_btnInvalid" class="is-display" type="checkbox" _%btnInvalidVisible%_>
+                    <input name="IsDisplay_btnInvalid" class="is-display" type="checkbox" >
                 </span>
                 <span class="regist-label">
                     <span class="regist-label--text-only">無効</span>

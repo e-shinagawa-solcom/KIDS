@@ -390,18 +390,8 @@ if (array_key_exists("lngCopyrightCode", $searchColumns) &&
     array_key_exists("lngCopyrightCode", $searchValue)) {
     $aryQuery[] = " AND p.lngCopyrightCode = '" . pg_escape_string($searchValue["lngCopyrightCode"]) . "'";
 }
-
-// $aryQuery[] = "  AND p.lngRevisionNo = ( ";
-// $aryQuery[] = "    SELECT";
-// $aryQuery[] = "      MAX(p1.lngRevisionNo) ";
-// $aryQuery[] = "    FROM";
-// $aryQuery[] = "      m_Product p1 ";
-// $aryQuery[] = "    WHERE";
-// $aryQuery[] = "      p1.strProductCode = p.strProductCode ";
-// $aryQuery[] = "      AND p1.bytInvalidFlag = false";
-// $aryQuery[] = "  ) ";
 $aryQuery[] = "ORDER BY";
-$aryQuery[] = "  p.strProductCode, p.lngProductNo Desc";
+$aryQuery[] = "  p.strProductCode, p.lngRevisionNo Desc";
 
 // クエリを平易な文字列に変換
 $strQuery = implode("\n", $aryQuery);
@@ -481,19 +471,11 @@ $displayColumns = array_change_key_case($displayColumns, CASE_LOWER);
 // -------------------------------------------------------
 // 詳細カラムを表示
 $existsDetail = array_key_exists("btndetail", $displayColumns);
-// 修正カラムを表示
-$existsFix = array_key_exists("btnfix", $displayColumns);
-// 再販を表示
-$existsResale = array_key_exists("btnresale", $displayColumns);
 // 履歴カラムを表示
 $existsHistory = array_key_exists("btnhistory", $displayColumns);
 
 // 詳細ボタンを表示
 $allowedDetail = fncCheckAuthority(DEF_FUNCTION_P4, $objAuth);
-// 修正ボタンを表示
-$allowedFix = fncCheckAuthority(DEF_FUNCTION_P6, $objAuth);
-// 再販カラムを表示
-$allowedResale = fncCheckAuthority(DEF_FUNCTION_P7, $objAuth);
 // 詳細表示　削除データの表示）
 $allowedDetailDelete = fncCheckAuthority(DEF_FUNCTION_P5, $objAuth);
 // -------------------------------------------------------
@@ -527,16 +509,6 @@ if ($existsDetail) {
     // ヘッダに追加
     $trHead->appendChild($thDetail);
 }
-
-// 修正項目を表示
-if ($existsFix) {
-    // 確定カラム
-    $thModify = $doc->createElement("th", toUTF8("修正"));
-    $thModify->setAttribute("class", $exclude);
-    // ヘッダに追加
-    $trHead->appendChild($thModify);
-}
-
 // 履歴項目を表示
 if ($existsHistory) {
     // プレビューカラム
@@ -544,15 +516,6 @@ if ($existsHistory) {
     $thHistory->setAttribute("class", $exclude);
     // ヘッダに追加
     $trHead->appendChild($thHistory);
-}
-
-// 再販項目を表示
-if ($existsResale) {
-    // プレビューカラム
-    $thResale = $doc->createElement("th", toUTF8("再販"));
-    $thResale->setAttribute("class", $exclude);
-    // ヘッダに追加
-    $trHead->appendChild($thResale);
 }
 
 $aryTableHeaderName = array();
@@ -629,7 +592,7 @@ foreach ($records as $i => $record) {
     $aryQuery[] = " lngproductno, lngrevisionno ";
     $aryQuery[] = "FROM m_product ";
     $aryQuery[] = "WHERE strproductcode='" . $record["strproductcode"] . "' ";
-    $aryQuery[] = "order by lngproductno desc";
+    $aryQuery[] = "order by lngrevisionno desc";
 
     // クエリを平易な文字列に変換
     $strQuery = implode("\n", $aryQuery);
@@ -647,7 +610,7 @@ foreach ($records as $i => $record) {
                 if ($maxProductInfo["lngrevisionno"] < 0) {
                     $deletedFlag = true;
                 }
-                if ($maxProductInfo["lngproductno"] == $record["lngproductno"]) {
+                if ($maxProductInfo["lngrevisionno"] == $record["lngrevisionno"]) {
                     $isMaxproduct = true;
                 }
             } else {
@@ -712,29 +675,6 @@ foreach ($records as $i => $record) {
         }
         // tr > td
         $trBody->appendChild($tdDetail);
-    }
-
-    // 修正項目を表示
-    if ($existsFix) {
-        // 修正セル
-        $tdModify = $doc->createElement("td");
-        $tdModify->setAttribute("class", $exclude);
-        $tdModify->setAttribute("style", $bgcolor . "text-align: center;");
-
-        // 修正ボタンの表示
-        // if ($allowedModify and $record["bytinvalidflag"] == "f") {
-        if ($allowedFix && $record["lngrevisionno"] >= 0 && !$deletedFlag) {
-            // 修正ボタン
-            $imgModify = $doc->createElement("img");
-            $imgModify->setAttribute("src", "/img/type01/so/renew_off_bt.gif");
-            $imgModify->setAttribute("id", $record["lngproductno"]);
-            $imgModify->setAttribute("revisionno", $record["lngrevisionno"]);
-            $imgModify->setAttribute("class", "modify button");
-            // td > img
-            $tdModify->appendChild($imgModify);
-        }
-        // tr > td
-        $trBody->appendChild($tdModify);
     }
 
     // 履歴項目を表示
@@ -975,13 +915,23 @@ foreach ($records as $i => $record) {
                     break;
                 // 納価
                 case "curproductprice":
-                    $td = $doc->createElement("td", "&yen;" . " " . $record["curproductprice"]);
+                    if ($record["curproductprice"] != "") {
+                        $textContent = "&yen;" . " " . $record["curproductprice"];
+                    } else {
+                        $textContent = "";
+                    }
+                    $td = $doc->createElement("td", $textContent);
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
                 // 上代
-                case "curretailprice":
-                    $td = $doc->createElement("td", "&yen;" . " " . $record["curretailprice"]);
+                case "curretailprice":    
+                    if ($record["curretailprice"] != "") {
+                        $textContent = "&yen;" . " " . $record["curretailprice"];
+                    } else {
+                        $textContent = "";
+                    }
+                    $td = $doc->createElement("td", $textContent);
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;

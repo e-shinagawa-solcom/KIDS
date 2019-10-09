@@ -89,19 +89,18 @@ for ($i = 0; $i < count($aryDetailData); $i++) {
     $aryQuery[] = "mu.strmonetaryunitsign as strmonetaryunitsign, "; // 通貨単位名称
     $aryQuery[] = "c.lngcountrycode as lngcountrycode, "; // 国コード
     $aryQuery[] = "o.lngmonetaryratecode as lngmonetaryratecode, "; // 通貨レートコード
-    $aryQuery[] = "o.strrevisecode as strrevisecode, "; // リバイスコード
-    $aryQuery[] = "o.lngpayconditioncode as lngpayconditioncode, "; // 支払条件
-    $aryQuery[] = "o.dtmexpirationdate as dtmexpirationdate "; // 発注有効期限日
+    $aryQuery[] = "o.lngpayconditioncode as lngpayconditioncode "; // 支払条件
     $aryQuery[] = "FROM t_orderdetail od";
     $aryQuery[] = "inner join  ";
     $aryQuery[] = "(";
     $aryQuery[] = "select";
     $aryQuery[] = " lngorderno, lngorderstatuscode, lngmonetaryunitcode,lnggroupcode,lngusercode,";
-    $aryQuery[] = " lngmonetaryratecode, lngcustomercompanycode, strrevisecode, lngpayconditioncode, dtmexpirationdate ";
+    $aryQuery[] = " lngmonetaryratecode, lngcustomercompanycode, lngpayconditioncode ";
     $aryQuery[] = "FROM";
     $aryQuery[] = "  m_order ";
     $aryQuery[] = "WHERE";
     $aryQuery[] = "  lngorderno = " . $aryDetailData[$i]["lngOrderNo"] . " ";
+    $aryQuery[] = "  AND lngrevisionno = " . $aryDetailData[$i]["lngRevisionNo"] . " ";
     $aryQuery[] = "  AND bytinvalidflag = false ";
     $aryQuery[] = ") o on o.lngorderno = od.lngorderno";
     $aryQuery[] = " LEFT JOIN m_product p on p.strproductcode = od.strproductcode";
@@ -115,9 +114,11 @@ for ($i = 0; $i < count($aryDetailData); $i++) {
 	$aryQuery[] = " LEFT JOIN m_Group g on o.lnggroupcode = g.lnggroupcode";
 	$aryQuery[] = " LEFT JOIN m_User u on o.lngusercode = u.lngusercode";
     $aryQuery[] = " WHERE od.lngorderno = " . $aryDetailData[$i]["lngOrderNo"] . " ";
+    $aryQuery[] = "  AND od.lngrevisionno = " . $aryDetailData[$i]["lngRevisionNo"] . " ";
     $aryQuery[] = "  AND od.lngorderdetailno = " . $aryDetailData[$i]["lngOrderDetailNo"] . " ";
     $aryQuery[] = " ORDER BY od.lngSortKey";
     $strQuery = implode("\n", $aryQuery);
+    
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
     if ($lngResultNum) {
         if ($lngResultNum == 1) {

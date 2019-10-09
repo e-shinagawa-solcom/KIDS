@@ -3,13 +3,15 @@
     // 削除ボタンのイベント
     $('img.delete').on('click', function () {
         var lngStockNo = $(this).attr('id');
+        var lngRevisionNo = $(this).attr('revisionno');
         // リクエスト送信
         $.ajax({
             url: '/pc/delete/delete_finish.php',
             type: 'POST',
             data: {
                 'strSessionID': $.cookie('strSessionID'),
-                'lngStockNo': lngStockNo
+                'lngStockNo': lngStockNo,
+                'lngRevisionNo': lngRevisionNo
             }
         })
             .done(function (response) {

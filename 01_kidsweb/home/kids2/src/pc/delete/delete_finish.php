@@ -50,6 +50,7 @@ $lngRevisionNo = $aryData["lngRevisionNo"];
 $strReturnPath = "../pc/search/index.php?strSessionID=" . $aryData["strSessionID"];
 // 削除対象の仕入NOの仕入情報取得
 $strQuery = fncGetStockHeadNoToInfoSQL($lngStockNo, $lngRevisionNo);
+
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 if ($lngResultNum) {
     if ($lngResultNum == 1) {

@@ -117,7 +117,7 @@ function fncGetStockHeadNoToInfoSQL($lngStockNo, $lngRevisionNo)
  *    @return strQuery     $strQuery 検索用SQL文
  *    @access public
  */
-function fncGetStockDetailNoToInfoSQL($lngStockN, $lngRevisionNo)
+function fncGetStockDetailNoToInfoSQL($lngStockNo, $lngRevisionNo)
 {
     // SQL文の作成
     $aryQuery[] = "SELECT distinct on (sd.lngSortKey) sd.lngSortKey as lngRecordNo, ";
@@ -161,6 +161,7 @@ function fncGetStockDetailNoToInfoSQL($lngStockN, $lngRevisionNo)
     $aryQuery[] = ", To_char( t.curTax, '9,999,999,990.9999' ) as curTax";
     // 税額
     $aryQuery[] = ", To_char( sd.curTaxPrice, '9,999,999,990.99' )  as curTaxPrice";
+    $aryQuery[] = ", sd.curTaxPrice as curTaxPrice_comm";
     // 明細備考
     $aryQuery[] = ", sd.strNote as strDetailNote";
 
@@ -876,7 +877,7 @@ function fncGetPoInfoSQL($strOrderCode, $objDB)
     $aryQuery[] = "inner join  ";
     $aryQuery[] = "(";
     $aryQuery[] = "select";
-    $aryQuery[] = " lngorderno, lngorderstatuscode, lngmonetaryunitcode,";
+    $aryQuery[] = " lngorderno, lngrevisionno, lngorderstatuscode, lngmonetaryunitcode,";
     $aryQuery[] = " lngmonetaryratecode, lngcustomercompanycode, lngpayconditioncode, lngdeliveryplacecode ";
     $aryQuery[] = "FROM";
     $aryQuery[] = "  m_order ";
@@ -900,7 +901,7 @@ function fncGetPoInfoSQL($strOrderCode, $objDB)
     $aryQuery[] = "      o2.bytinvalidflag = false ";
     $aryQuery[] = "      AND o2.strordercode = '" . $strOrderCode . "'";
     $aryQuery[] = "  ) ";
-    $aryQuery[] = ") o on o.lngorderno = od.lngorderno";
+    $aryQuery[] = ") o on o.lngorderno = od.lngorderno and o.lngrevisionno = od.lngrevisionno";
     $aryQuery[] = " LEFT JOIN (";
     $aryQuery[] = "   select p1.*  from m_product p1 ";
     $aryQuery[] = "   inner join (select max(lngrevisionno) lngrevisionno, strproductcode from m_Product group by strProductCode) p2";
