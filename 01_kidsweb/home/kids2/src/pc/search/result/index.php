@@ -355,27 +355,27 @@ if (array_key_exists("lngPayConditionCode", $searchColumns) &&
     $aryQuery[] = " AND s.lngPayConditionCode = '" . $searchValue["lngPayConditionCode"] . "'";
 }
 
-if (!array_key_exists("admin", $optionColumns)) {
-    $aryQuery[] = "  AND s.strStockCode not in ( ";
-    $aryQuery[] = "    select";
-    $aryQuery[] = "      s2.strStockCode ";
-    $aryQuery[] = "    from";
-    $aryQuery[] = "      ( ";
-    $aryQuery[] = "        SELECT";
-    $aryQuery[] = "          min(lngRevisionNo) lngRevisionNo";
-    $aryQuery[] = "          , strStockCode ";
-    $aryQuery[] = "        FROM";
-    $aryQuery[] = "          m_Stock ";
-    $aryQuery[] = "        group by";
-    $aryQuery[] = "          strStockCode";
-    $aryQuery[] = "      ) as s2 ";
-    $aryQuery[] = "    where";
-    $aryQuery[] = "      s2.lngRevisionNo < 0";
-    $aryQuery[] = "  ) ";
-} else {
+// if (!array_key_exists("admin", $optionColumns)) {
+//     $aryQuery[] = "  AND s.strStockCode not in ( ";
+//     $aryQuery[] = "    select";
+//     $aryQuery[] = "      s2.strStockCode ";
+//     $aryQuery[] = "    from";
+//     $aryQuery[] = "      ( ";
+//     $aryQuery[] = "        SELECT";
+//     $aryQuery[] = "          min(lngRevisionNo) lngRevisionNo";
+//     $aryQuery[] = "          , strStockCode ";
+//     $aryQuery[] = "        FROM";
+//     $aryQuery[] = "          m_Stock ";
+//     $aryQuery[] = "        group by";
+//     $aryQuery[] = "          strStockCode";
+//     $aryQuery[] = "      ) as s2 ";
+//     $aryQuery[] = "    where";
+//     $aryQuery[] = "      s2.lngRevisionNo < 0";
+//     $aryQuery[] = "  ) ";
+// } else {
     $aryQuery[] = " AND s.bytInvalidFlag = FALSE ";
     $aryQuery[] = " AND s.lngRevisionNo >= 0";
-}
+// }
 $aryQuery[] = "ORDER BY";
 $aryQuery[] = " strStockCode, lngRevisionNo DESC";
 
@@ -464,8 +464,6 @@ $existsDelete = array_key_exists("btndelete", $displayColumns);
 // 無効カラムを表示
 $existsInvalid = array_key_exists("btninvalid", $displayColumns);
 
-// 管理モードを表示
-$allowedAdmin = fncCheckAuthority(DEF_FUNCTION_PC3, $objAuth);
 // 詳細ボタンを表示
 $allowedDetail = fncCheckAuthority(DEF_FUNCTION_PC4, $objAuth);
 // 修正を表示
@@ -594,7 +592,6 @@ $thead->appendChild($trHead);
 // -------------------------------------------------------
 // 検索結果件数分走査
 foreach ($records as $i => $record) {
-
     unset($aryQuery);
     // 削除フラグ
     $deletedFlag = false;
@@ -728,7 +725,7 @@ $rowspan = count($detailData);
         $tdFix->setAttribute("rowspan", $rowspan);
 
         // 修正ボタンの表示
-        if ($allowedFix && $record["lngrevisionno"] >= 0 && $recode["lngstockstatuscode"] != DEF_STOCK_CLOSED && !$deletedFlag) {
+        if ($allowedFix && $isMaxStock && $record["lngrevisionno"] >= 0 && $record["lngstockstatuscode"] != DEF_STOCK_CLOSED && !$deletedFlag) {
             // 修正ボタン
             $imgFix = $doc->createElement("img");
             $imgFix->setAttribute("src", "/img/type01/pc/renew_off_bt.gif");
@@ -750,7 +747,7 @@ $rowspan = count($detailData);
         $tdHistory->setAttribute("style", $bgcolor . "text-align: center;");
         $tdHistory->setAttribute("rowspan", $rowspan);
 
-        if ($isMaxStock and $historyFlag and array_key_exists("admin", $optionColumns)) {
+        if ($isMaxStock and $historyFlag) {
             // 履歴ボタン
             $imgHistory = $doc->createElement("img");
             $imgHistory->setAttribute("src", "/img/type01/so/renew_off_bt.gif");
@@ -888,13 +885,13 @@ $rowspan = count($detailData);
 
         $showDeleteFlag = false;
         if ($allowedDelete) {
-            if (!array_key_exists("admin", $optionColumns) or !$revisedFlag) {
-                if ($recode["lngstockstatuscode"] != DEF_STOCK_CLOSED && !$deletedFlag) {
+            if (!$revisedFlag) {
+                if ($record["lngstockstatuscode"] != DEF_STOCK_CLOSED && !$deletedFlag) {
                     $showDeleteFlag = true;
                 }
             } else {
                 if ($isMaxStock) {
-                    if ($recode["lngstockstatuscode"] != DEF_STOCK_CLOSED && !$deletedFlag) {
+                    if ($record["lngstockstatuscode"] != DEF_STOCK_CLOSED && !$deletedFlag) {
                         $showDeleteFlag = true;
                     }
                 }
@@ -902,7 +899,7 @@ $rowspan = count($detailData);
         }
 
         // 削除ボタンの表示
-        if ($showDeleteFlag) {
+        if ($showDeleteFlag && $isMaxStock) {
             // 削除ボタン
             $imgDelete = $doc->createElement("img");
             $imgDelete->setAttribute("src", "/img/type01/pc/delete_off_bt.gif");
@@ -925,7 +922,7 @@ $rowspan = count($detailData);
         $tdInvalid->setAttribute("rowspan", $rowspan);
 
         // 無効ボタンの表示
-        if ($allowedInvalid && $allowedAdmin && array_key_exists("admin", $optionColumns) && $recode["lngstockstatuscode"] != DEF_STOCK_CLOSED) {
+        if ($allowedInvalid && $isMaxStock && $record["lngstockstatuscode"] != DEF_STOCK_CLOSED) {
             // 無効ボタン
             $imgInvalid = $doc->createElement("img");
             $imgInvalid->setAttribute("src", "/img/type01/pc/invalid_off_bt.gif");

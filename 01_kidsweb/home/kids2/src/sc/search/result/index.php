@@ -392,27 +392,27 @@ if (array_key_exists("lngSalesStatusCode", $searchColumns) &&
     }
 }
 
-if (!array_key_exists("admin", $optionColumns)) {
-    $aryQuery[] = "  AND s.strSalesCode not in ( ";
-    $aryQuery[] = "    select";
-    $aryQuery[] = "      s1.strSalesCode ";
-    $aryQuery[] = "    from";
-    $aryQuery[] = "      ( ";
-    $aryQuery[] = "        SELECT";
-    $aryQuery[] = "          min(lngRevisionNo) lngRevisionNo";
-    $aryQuery[] = "          , strSalesCode ";
-    $aryQuery[] = "        FROM";
-    $aryQuery[] = "          m_sales ";
-    $aryQuery[] = "        group by";
-    $aryQuery[] = "          strSalesCode";
-    $aryQuery[] = "      ) as s1 ";
-    $aryQuery[] = "    where";
-    $aryQuery[] = "      s1.lngRevisionNo < 0";
-    $aryQuery[] = "  ) ";
-} else {
+// if (!array_key_exists("admin", $optionColumns)) {
+//     $aryQuery[] = "  AND s.strSalesCode not in ( ";
+//     $aryQuery[] = "    select";
+//     $aryQuery[] = "      s1.strSalesCode ";
+//     $aryQuery[] = "    from";
+//     $aryQuery[] = "      ( ";
+//     $aryQuery[] = "        SELECT";
+//     $aryQuery[] = "          min(lngRevisionNo) lngRevisionNo";
+//     $aryQuery[] = "          , strSalesCode ";
+//     $aryQuery[] = "        FROM";
+//     $aryQuery[] = "          m_sales ";
+//     $aryQuery[] = "        group by";
+//     $aryQuery[] = "          strSalesCode";
+//     $aryQuery[] = "      ) as s1 ";
+//     $aryQuery[] = "    where";
+//     $aryQuery[] = "      s1.lngRevisionNo < 0";
+//     $aryQuery[] = "  ) ";
+// } else {
     $aryQuery[] = "  AND s.bytInvalidFlag = FALSE ";
     $aryQuery[] = "  AND s.lngRevisionNo >= 0 ";
-}
+// }
 $aryQuery[] = "ORDER BY";
 $aryQuery[] = "  strSalesCode, lngRevisionNo DESC";
 
@@ -725,7 +725,7 @@ foreach ($records as $i => $record) {
         $tdHistory->setAttribute("style", $bgcolor. "text-align: center;");
         $tdHistory->setAttribute("rowspan", $rowspan);
 
-        if ($isMaxSales and $historyFlag and array_key_exists("admin", $optionColumns)) {
+        if ($isMaxSales and $historyFlag) {
             // ÍúÎò¥Ü¥¿¥ó
             $imgHistory = $doc->createElement("img");
             $imgHistory->setAttribute("src", "/img/type01/so/renew_off_bt.gif");

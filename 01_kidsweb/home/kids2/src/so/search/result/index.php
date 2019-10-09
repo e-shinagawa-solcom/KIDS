@@ -156,8 +156,7 @@ $aryQuery[] = "    USING (lngReceiveStatusCode) ";
 $aryQuery[] = "  LEFT JOIN m_MonetaryUnit mu ";
 $aryQuery[] = "    ON r.lngMonetaryUnitCode = mu.lngMonetaryUnitCode";
 $aryQuery[] = "  , ( ";
-$aryQuery[] = "      SELECT distinct";
-$aryQuery[] = "          on (rd1.lngReceiveNo) rd1.lngReceiveNo";
+$aryQuery[] = "      SELECT rd1.lngReceiveNo";
 $aryQuery[] = "        , rd1.lngReceiveDetailNo";
 $aryQuery[] = "        , rd1.lngRevisionNo";
 $aryQuery[] = "        , p.strProductCode";
@@ -312,51 +311,34 @@ if (array_key_exists("lngReceiveStatusCode", $searchColumns) &&
         $aryQuery[] = " AND r.lngReceiveStatusCode in (" . $searchStatus . ")";
     }
 }
-
-// $aryQuery[] = "  AND r.lngRevisionNo = ( ";
-// $aryQuery[] = "    SELECT";
-// $aryQuery[] = "      MAX(r1.lngRevisionNo) ";
-// $aryQuery[] = "    FROM";
-// $aryQuery[] = "      m_Receive r1 ";
-// $aryQuery[] = "    WHERE";
-// $aryQuery[] = "      r1.strReceiveCode = r.strReceiveCode ";
-// $aryQuery[] = "      AND r1.bytInvalidFlag = false ";
-// $aryQuery[] = "      AND r1.strReviseCode = ( ";
-// $aryQuery[] = "        SELECT";
-// $aryQuery[] = "          MAX(r2.strReviseCode) ";
-// $aryQuery[] = "        FROM";
-// $aryQuery[] = "          m_Receive r2 ";
-// $aryQuery[] = "        WHERE";
-// $aryQuery[] = "          r2.strReceiveCode = r1.strReceiveCode ";
-// $aryQuery[] = "          AND r2.bytInvalidFlag = false";
-// $aryQuery[] = "      )";
-// $aryQuery[] = "  ) ";
-if (!array_key_exists("admin", $optionColumns)) {
-    $aryQuery[] = "  AND r.strReceiveCode not in ( ";
-    $aryQuery[] = "    select";
-    $aryQuery[] = "      r1.strReceiveCode ";
-    $aryQuery[] = "    from";
-    $aryQuery[] = "      ( ";
-    $aryQuery[] = "        SELECT";
-    $aryQuery[] = "          min(lngRevisionNo) lngRevisionNo";
-    $aryQuery[] = "          , strReceiveCode ";
-    $aryQuery[] = "        FROM";
-    $aryQuery[] = "          m_Receive ";
-    $aryQuery[] = "        group by";
-    $aryQuery[] = "          strReceiveCode";
-    $aryQuery[] = "      ) as r1 ";
-    $aryQuery[] = "    where";
-    $aryQuery[] = "      r1.lngRevisionNo < 0";
-    $aryQuery[] = "  ) ";
-} else {
+// if (!array_key_exists("admin", $optionColumns)) {
+//     $aryQuery[] = "  AND r.strReceiveCode not in ( ";
+//     $aryQuery[] = "    select";
+//     $aryQuery[] = "      r1.strReceiveCode ";
+//     $aryQuery[] = "    from";
+//     $aryQuery[] = "      ( ";
+//     $aryQuery[] = "        SELECT";
+//     $aryQuery[] = "          min(lngRevisionNo) lngRevisionNo";
+//     $aryQuery[] = "          , strReceiveCode ";
+//     $aryQuery[] = "        FROM";
+//     $aryQuery[] = "          m_Receive ";
+//     $aryQuery[] = "        group by";
+//     $aryQuery[] = "          strReceiveCode";
+//     $aryQuery[] = "      ) as r1 ";
+//     $aryQuery[] = "    where";
+//     $aryQuery[] = "      r1.lngRevisionNo < 0";
+//     $aryQuery[] = "  ) ";
+// } else {
     $aryQuery[] = " AND r.bytInvalidFlag = FALSE ";
     $aryQuery[] = " AND r.lngRevisionNo >= 0";
-}
+// }
 $aryQuery[] = "ORDER BY";
-$aryQuery[] = " r.strReceiveCode, lngReceiveDetailNo, r.lngReceiveNo DESC";
+$aryQuery[] = " r.strReceiveCode, rd.lngReceiveDetailNo, r.lngRevisionNo DESC";
 
 // クエリを平易な文字列に変換
 $strQuery = implode("\n", $aryQuery);
+
+// echo $strQuery;
 // 値をとる =====================================
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 // 検索件数がありの場合
@@ -558,6 +540,7 @@ foreach ($records as $i => $record) {
     $aryQuery[] = " r.lngreceiveno, r.lngrevisionno ";
     $aryQuery[] = "FROM m_receive r inner join t_receivedetail rd ";
     $aryQuery[] = "on r.lngreceiveno = rd.lngreceiveno ";
+    $aryQuery[] = "AND r.lngrevisionno = rd.lngrevisionno ";
     $aryQuery[] = "WHERE r.strreceivecode='" . $record["strreceivecode"] . "' ";
     $aryQuery[] = "and rd.lngreceivedetailno=" . $record["lngreceivedetailno"] . " ";
     $aryQuery[] = "and r.lngrevisionno >= 0";
@@ -583,7 +566,7 @@ foreach ($records as $i => $record) {
                 if ($maxReceiveInfo["lngrevisionno"] != 0) {
                     $revisedFlag = true;
                 }
-                if ($maxReceiveInfo["lngreceiveno"] == $record["lngreceiveno"]) {
+                if ($maxReceiveInfo["lngrevisionno"] == $record["lngrevisionno"]) {
                     $isMaxReceive = true;
                 }
             } else {
@@ -657,7 +640,7 @@ foreach ($records as $i => $record) {
         $tdDecide->setAttribute("style", $bgcolor. "text-align: center;");
 
         // 確定ボタンの表示
-        if ($allowedDecide and $record["lngrevisionno"] >= 0 and $record["lngreceivestatuscode"] == DEF_RECEIVE_APPLICATE and !$deletedFlag) {
+        if ($allowedDecide and $isMaxReceive and $record["lngrevisionno"] >= 0 and $record["lngreceivestatuscode"] == DEF_RECEIVE_APPLICATE and !$deletedFlag) {
             // 確定ボタン
             $imgDecide = $doc->createElement("img");
             $imgDecide->setAttribute("src", "/img/type01/so/renew_off_bt.gif");
@@ -678,7 +661,7 @@ foreach ($records as $i => $record) {
         $tdHistory->setAttribute("class", $exclude);
         $tdHistory->setAttribute("style", $bgcolor. "text-align: center;");
 
-        if ($isMaxReceive and $historyFlag and array_key_exists("admin", $optionColumns)) {
+        if ($isMaxReceive and $historyFlag) {
             // 履歴ボタン
             $imgHistory = $doc->createElement("img");
             $imgHistory->setAttribute("src", "/img/type01/so/renew_off_bt.gif");
@@ -843,7 +826,7 @@ foreach ($records as $i => $record) {
         $tdCancel->setAttribute("style", $bgcolor. "text-align: center;");
 
         // 確定取消ボタンの表示
-        if ($allowedCancel and $record["lngrevisionno"] >= 0 and $record["lngreceivestatuscode"] == DEF_RECEIVE_ORDER and !$deletedFlag) {
+        if ($allowedCancel and $isMaxReceive and $record["lngrevisionno"] >= 0 and $record["lngreceivestatuscode"] == DEF_RECEIVE_ORDER and !$deletedFlag) {
             // 確定取消ボタン
             $imgCancel = $doc->createElement("img");
             $imgCancel->setAttribute("src", "/img/type01/so/cancel_off_bt.gif");

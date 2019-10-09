@@ -41,21 +41,13 @@ $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 if (!fncCheckAuthority(DEF_FUNCTION_PC2, $objAuth)) {
     fncOutputError(9052, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
-// 703 仕入管理（仕入検索　管理モード）
-if (fncCheckAuthority(DEF_FUNCTION_PC3, $objAuth)) {
-    $aryData["AdminSet_visibility"] = 'style="visibility: visible"';
-    // 707 仕入管理（無効化）
-    if (fncCheckAuthority(DEF_FUNCTION_PC7, $objAuth)) {
-        $aryData["btnInvalid_visibility"] = 'style="visibility: visible"';
-        $aryData["btnInvalidVisible"] = "disabled";
-    } else {
-        $aryData["btnInvalid_visibility"] = 'style="visibility: hidden"';
-        $aryData["btnInvalidVisible"] = "disabled";
-    }
+// 707 仕入管理（無効化）
+if (fncCheckAuthority(DEF_FUNCTION_PC7, $objAuth)) {
+    $aryData["btnInvalid_visibility"] = 'style="visibility: visible"';
+    $aryData["btnInvalidVisible"] = "disabled";
 } else {
-    $aryData["AdminSet_visibility"] = 'style="visibility: hidden"';
     $aryData["btnInvalid_visibility"] = 'style="visibility: hidden"';
-    $aryData["btnInvalidVisible"] = "";
+    $aryData["btnInvalidVisible"] = "disabled";
 }
 // 704 仕入管理（詳細表示）
 if (fncCheckAuthority(DEF_FUNCTION_PC4, $objAuth)) {
@@ -88,33 +80,31 @@ $aryData["lngPayConditionCode"] = fncGetPulldown("m_paycondition", "lngpaycondit
 // 運搬方法
 $aryData["lngDeliveryMethodCode"] = fncGetPulldown("m_deliverymethod", "lngdeliverymethodcode", "strdeliverymethodname", 0, '', $objDB);
 // 仕入科目
-$aryData["lngStockSubjectCode"]		= fncGetPulldown( "m_stocksubject", "lngstocksubjectcode", "lngstocksubjectcode,	strstocksubjectname", 1, '', $objDB );
+$aryData["lngStockSubjectCode"] = fncGetPulldown("m_stocksubject", "lngstocksubjectcode", "lngstocksubjectcode,	strstocksubjectname", 1, '', $objDB);
 // 仕入部品
-$aryData["lngStockItemCode"] 		= fncGetPulldown( "m_stockitem", "lngstocksubjectcode || '-' || lngstockitemcode", "lngstockitemcode, 	strstockitemname", 0, '', $objDB );
+$aryData["lngStockItemCode"] = fncGetPulldown("m_stockitem", "lngstocksubjectcode || '-' || lngstockitemcode", "lngstockitemcode, 	strstockitemname", 0, '', $objDB);
 
 // 仕入部品復元用
-$TmpAry = explode("\n",$aryData["lngStockItemCode"]);
+$TmpAry = explode("\n", $aryData["lngStockItemCode"]);
 
-foreach($TmpAry as $key => $value) {
-	if ($value) {
-		$ValuePosS = 15;
-		$ValuePosE = mb_strpos($value, ">", $ValuePosS) -1;
-		$DispPosS = $ValuePosE + 2;
-		$DispPosE = mb_strpos($value, "OPTION", $DispPosS) - 2;
-		if (array_key_exists('lngStockItemCodeValue', $aryData)) {
-			$aryData["lngStockItemCodeValue"] 	= $aryData["lngStockItemCodeValue"] . ",," . substr($value,$ValuePosS,$ValuePosE - $ValuePosS);
-			$aryData["lngStockItemCodeDisp"] 	= $aryData["lngStockItemCodeDisp"] . ",," . mb_ereg_replace("</OPTION>","",substr($value,$DispPosS));
-		}
-		else
-		{
-			$aryData["lngStockItemCodeValue"] 	= substr($value,$ValuePosS,$ValuePosE - $ValuePosS);
-			$aryData["lngStockItemCodeDisp"] 	= mb_ereg_replace("</OPTION>","",substr($value,$DispPosS));
-		}
-	}
+foreach ($TmpAry as $key => $value) {
+    if ($value) {
+        $ValuePosS = 15;
+        $ValuePosE = mb_strpos($value, ">", $ValuePosS) - 1;
+        $DispPosS = $ValuePosE + 2;
+        $DispPosE = mb_strpos($value, "OPTION", $DispPosS) - 2;
+        if (array_key_exists('lngStockItemCodeValue', $aryData)) {
+            $aryData["lngStockItemCodeValue"] = $aryData["lngStockItemCodeValue"] . ",," . substr($value, $ValuePosS, $ValuePosE - $ValuePosS);
+            $aryData["lngStockItemCodeDisp"] = $aryData["lngStockItemCodeDisp"] . ",," . mb_ereg_replace("</OPTION>", "", substr($value, $DispPosS));
+        } else {
+            $aryData["lngStockItemCodeValue"] = substr($value, $ValuePosS, $ValuePosE - $ValuePosS);
+            $aryData["lngStockItemCodeDisp"] = mb_ereg_replace("</OPTION>", "", substr($value, $DispPosS));
+        }
+    }
 }
 
-$aryData["lngStockItemCodeValue"]	= "<input type=\"hidden\" name=\"lngStockItemCodeValue\" value=\"" . $aryData["lngStockItemCodeValue"] . "\"</option>";
-$aryData["lngStockItemCodeDisp"]	= mb_convert_encoding("<input type=\"hidden\" name=\"lngStockItemCodeDisp\" value=\"" . $aryData["lngStockItemCodeDisp"] . "\"</option>","EUC-JP","auto");
+$aryData["lngStockItemCodeValue"] = "<input type=\"hidden\" name=\"lngStockItemCodeValue\" value=\"" . $aryData["lngStockItemCodeValue"] . "\"</option>";
+$aryData["lngStockItemCodeDisp"] = mb_convert_encoding("<input type=\"hidden\" name=\"lngStockItemCodeDisp\" value=\"" . $aryData["lngStockItemCodeDisp"] . "\"</option>", "EUC-JP", "auto");
 
 //　プルダウンリストの取得に失敗した場合エラー表示
 if (!$aryData["lngStockStatusCode"] or !$aryData["lngPayConditionCode"] or !$aryData["lngStockSubjectCode"] or !$aryData["lngStockItemCode"]) {

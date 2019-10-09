@@ -2,56 +2,56 @@
 
 // ----------------------------------------------------------------------------
 /**
- *      ä»•å…¥ç®¡ç†  ä¿®æ­£ç”»é¢
+ *      »ÅÆþ´ÉÍý  ½¤Àµ²èÌÌ
  */
 // ----------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------
-// â–  ãƒ©ã‚¤ãƒ–ãƒ©ãƒªãƒ•ã‚¡ã‚¤ãƒ«èª­è¾¼
+// ¢£ ¥é¥¤¥Ö¥é¥ê¥Õ¥¡¥¤¥ëÆÉ¹þ
 //-------------------------------------------------------------------------
 include 'conf.inc';
 require LIB_FILE;
 require SRC_ROOT . "pc/cmn/lib_pc.php";
 
 //-------------------------------------------------------------------------
-// â–  ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
+// ¢£ ¥ª¥Ö¥¸¥§¥¯¥ÈÀ¸À®
 //-------------------------------------------------------------------------
 $objDB = new clsDB();
 $objAuth = new clsAuth();
 
 //-------------------------------------------------------------------------
-// â–  DBã‚ªãƒ¼ãƒ—ãƒ³
+// ¢£ DB¥ª¡¼¥×¥ó
 //-------------------------------------------------------------------------
 $objDB->open("", "", "", "");
 
 //-------------------------------------------------------------------------
-// â–  ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿å–å¾—
+// ¢£ ¥Ñ¥é¥á¡¼¥¿¼èÆÀ
 //-------------------------------------------------------------------------
 $aryData = $_GET;
 
 setcookie("strSessionID", $aryData["strSessionID"], 0, "/");
 
-// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
+// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
 $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 
-// ã‚¨ãƒ©ãƒ¼ç”»é¢ã§ã®æˆ»ã‚ŠURL
+// ¥¨¥é¡¼²èÌÌ¤Ç¤ÎÌá¤êURL
 $strReturnPath = "../pc/search/index.php?strSessionID=" . $aryData["strSessionID"];
 
-// 700 ä»•å…¥ç®¡ç†
+// 700 »ÅÆþ´ÉÍý
 if (!fncCheckAuthority(DEF_FUNCTION_PC0, $objAuth)) {
-    fncOutputError(9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", true, $strReturnPath, $objDB);
+    fncOutputError(9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", true, $strReturnPath, $objDB);
 }
 
-// 705 ä»•å…¥ç®¡ç†ï¼ˆ ä»•å…¥ä¿®æ­£ï¼‰
+// 705 »ÅÆþ´ÉÍý¡Ê »ÅÆþ½¤Àµ¡Ë
 if (!fncCheckAuthority(DEF_FUNCTION_PC5, $objAuth)) {
-    fncOutputError(9018, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", true, $strReturnPath, $objDB);
+    fncOutputError(9018, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", true, $strReturnPath, $objDB);
 }
 
-// ä»•å…¥ç•ªå·ã®å–å¾—
+// »ÅÆþÈÖ¹æ¤Î¼èÆÀ
 $lngStockNo = $aryData["lngStockNo"];
 $lngRevisionNo = $aryData["lngRevisionNo"];
 
-// ä¿®æ­£å¯¾è±¡ã®ä»•å…¥NOã®ä»•å…¥æƒ…å ±å–å¾—
+// ½¤ÀµÂÐ¾Ý¤Î»ÅÆþNO¤Î»ÅÆþ¾ðÊó¼èÆÀ
 $strQuery = fncGetStockHeadNoToInfoSQL($lngStockNo, $lngRevisionNo);
 
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
@@ -59,20 +59,21 @@ list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 if ($lngResultNum) {
     if ($lngResultNum == 1) {
         $aryStock = $objDB->fetchArray($lngResultID, 0);
-        // è©²å½“ä»•å…¥ã®çŠ¶æ…‹ãŒã€Œç· ã‚æ¸ˆã€ã®çŠ¶æ…‹ã§ã‚ã‚Œã°
+        // ³ºÅö»ÅÆþ¤Î¾õÂÖ¤¬¡ÖÄù¤áºÑ¡×¤Î¾õÂÖ¤Ç¤¢¤ì¤Ð
         if ($aryStock["lngstockstatuscode"] == DEF_STOCK_CLOSED) {
             fncOutputError(711, DEF_WARNING, "", true, $strReturnPath, $objDB);
         }
     } else {
-        fncOutputError(703, DEF_ERROR, "è©²å½“ãƒ‡ãƒ¼ã‚¿ã®å–å¾—ã«å¤±æ•—ã—ã¾ã—ãŸ", true, $strReturnPath, $objDB);
+        fncOutputError(703, DEF_ERROR, "³ºÅö¥Ç¡¼¥¿¤Î¼èÆÀ¤Ë¼ºÇÔ¤·¤Þ¤·¤¿", true, $strReturnPath, $objDB);
     }
 } else {
-    fncOutputError(703, DEF_ERROR, "ãƒ‡ãƒ¼ã‚¿ãŒç•°å¸¸ã§ã™", true, $strReturnPath, $objDB);
+    fncOutputError(703, DEF_ERROR, "¥Ç¡¼¥¿¤¬°Û¾ï¤Ç¤¹", true, $strReturnPath, $objDB);
 }
 
-// æŒ‡å®šä»•å…¥ç•ªå·ã®ä»•å…¥æ˜Žç´°ãƒ‡ãƒ¼ã‚¿å–å¾—ç”¨SQLæ–‡ã®ä½œæˆ
+// »ØÄê»ÅÆþÈÖ¹æ¤Î»ÅÆþÌÀºÙ¥Ç¡¼¥¿¼èÆÀÍÑSQLÊ¸¤ÎºîÀ®
 $strQuery = fncGetStockDetailNoToInfoSQL($lngStockNo, $lngRevisionNo);
-// æ˜Žç´°ãƒ‡ãƒ¼ã‚¿ã®å–å¾—
+
+// ÌÀºÙ¥Ç¡¼¥¿¤Î¼èÆÀ
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
 if ($lngResultNum) {
@@ -80,110 +81,111 @@ if ($lngResultNum) {
         $aryStockDetail[] = $objDB->fetchArray($lngResultID, $i);
     }
 } else {
-    fncOutputError(703, DEF_WARNING, "ä»•å…¥ç•ªå·ã«å¯¾ã™ã‚‹æ˜Žç´°æƒ…å ±ãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ã€‚", true, $strReturnPath, $objDB);
+    fncOutputError(703, DEF_WARNING, "»ÅÆþÈÖ¹æ¤ËÂÐ¤¹¤ëÌÀºÙ¾ðÊó¤¬¸«¤Ä¤«¤ê¤Þ¤»¤ó¡£", true, $strReturnPath, $objDB);
 }
 
 $objDB->freeResult($lngResultID);
 
-// ç™ºæ³¨æƒ…å ±ã‚’å–å¾—
+// È¯Ãí¾ðÊó¤ò¼èÆÀ
 $aryOrderDetail = fncGetPoInfoSQL($aryStock["strrealordercode"], $objDB);
 
-// æ¶ˆè²»ç¨Žæƒ…å ±ã‚’å–å¾—
+// ¾ÃÈñÀÇ¾ðÊó¤ò¼èÆÀ
 $taxObj = fncGetTaxInfo($aryStock["dtmstockappdate"], $objDB);
 
-// æ¶ˆè²»ç¨ŽåŒºåˆ†ã‚’å–å¾—
+// ¾ÃÈñÀÇ¶èÊ¬¤ò¼èÆÀ
 $aryTaxclass = fncGetTaxClassAry($objDB);
 
 if ($taxObj == null) {
-    fncOutputError(703, DEF_ERROR, "æ¶ˆè²»ç¨Žæƒ…å ±ã®å–å¾—ã«å¤±æ•—ã—ã¾ã—ãŸã€‚", true, $strReturnPath, $objDB);
+    fncOutputError(703, DEF_ERROR, "¾ÃÈñÀÇ¾ðÊó¤Î¼èÆÀ¤Ë¼ºÇÔ¤·¤Þ¤·¤¿¡£", true, $strReturnPath, $objDB);
 }
 
 $aryTaxclass = fncGetTaxClassAry($objDB);
 
-// é€šè²¨
+// ÄÌ²ß
 $aryStock["lngmonetaryunitcode"] = fncGetPulldown("m_monetaryunit", "lngmonetaryunitcode", "strmonetaryunitname", $aryStock["lngmonetaryunitcode"], '', $objDB);
-// ãƒ¬ãƒ¼ãƒˆã‚¿ã‚¤ãƒ—
+// ¥ì¡¼¥È¥¿¥¤¥×
 $aryStock["lngmonetaryratecode"] = fncGetPulldown("m_monetaryrateclass", "lngmonetaryratecode", "strmonetaryratename", $aryStock["lngmonetaryratecode"], '', $objDB);
-// æ”¯æ‰•æ¡ä»¶
+// »ÙÊ§¾ò·ï
 $aryStock["lngpayconditioncode"] = fncGetPulldown("m_paycondition", "lngpayconditioncode", "strpayconditionname", $aryStock["lngpayconditioncode"], '', $objDB);
-// ãƒ•ã‚©ãƒ¼ãƒ URL
+// ¥Õ¥©¡¼¥àURL
 $aryStock["actionUrl"] = "/pc/modify/modify_confirm.php";
 $objDB->close();
 
 // var_dump($aryStock);
 // return;
 
-// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
+// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹þ¤ß
 // $objTemplate = new clsTemplate();
 // $objTemplate->getTemplate("pc/modify/pc_modify.html");
 // mb_convert_variables('EUC-JP', 'UTF-8', $aryData);
-// // ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
+// // ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
 // $objTemplate->replace($aryData);
 // $objTemplate->replace($aryNewResult);
 // $objTemplate->complete();
 
 $strTemplate = fncGetReplacedHtmlWithBase("pc/base.html", "pc/modify/pc_modify.html", $aryStock, $objAuth);
 
-// æ¤œç´¢çµæžœãƒ†ãƒ¼ãƒ–ãƒ«ç”Ÿæˆã®ç‚ºDOMDocumentã‚’ä½¿ç”¨
+// ¸¡º÷·ë²Ì¥Æ¡¼¥Ö¥ëÀ¸À®¤Î°ÙDOMDocument¤ò»ÈÍÑ
 $doc = new DOMDocument();
-// ãƒ‘ãƒ¼ã‚¹ã‚¨ãƒ©ãƒ¼æŠ‘åˆ¶
+// ¥Ñ¡¼¥¹¥¨¥é¡¼ÍÞÀ©
 libxml_use_internal_errors(true);
-// DOMãƒ‘ãƒ¼ã‚¹
+// DOM¥Ñ¡¼¥¹
 $doc->loadHTML(mb_convert_encoding($strTemplate, "utf8", "eucjp-win"));
 // $doc->loadHTML($strTemplate);
-// ãƒ‘ãƒ¼ã‚¹ã‚¨ãƒ©ãƒ¼ã‚¯ãƒªã‚¢
+// ¥Ñ¡¼¥¹¥¨¥é¡¼¥¯¥ê¥¢
 libxml_clear_errors();
-// ãƒ‘ãƒ¼ã‚¹ã‚¨ãƒ©ãƒ¼æŠ‘åˆ¶è§£é™¤
+// ¥Ñ¡¼¥¹¥¨¥é¡¼ÍÞÀ©²ò½ü
 libxml_use_internal_errors(false);
 
-// æ¤œç´¢çµæžœãƒ†ãƒ¼ãƒ–ãƒ«ã®å–å¾—
+// ¸¡º÷·ë²Ì¥Æ¡¼¥Ö¥ë¤Î¼èÆÀ
 $tbodyDetail = $doc->getElementById("tbl_order_detail");
 // $tbodyDetail = $tableDetail->getElementsByTagName("tbody")->item(0);
 
 $aryData["lngGroupCode"] = $aryNewResult["lngGroupCode"];
 $aryData["lngUserCode"] = $aryNewResult["lngUserCode"];
 
-// æ˜Žç´°æƒ…å ±ã®å‡ºåŠ›
+// ÌÀºÙ¾ðÊó¤Î½ÐÎÏ
 $num = 0;
 foreach ($aryOrderDetail as $orderDetail) {
     $num += 1;
-    // ä»•å…¥ç™»éŒ²æ¸ˆãƒ•ãƒ©ã‚°
+    // »ÅÆþÅÐÏ¿ºÑ¥Õ¥é¥°
     $isStocked = false;
-    // æ¶ˆè²»ç¨Žã‚³ãƒ¼ãƒ‰
+    // ¾ÃÈñÀÇ¥³¡¼¥É
     $lngtaxcode = $orderDetail["lngtaxcode"];
-    // æ¶ˆè²»ç¨ŽåŒºåˆ†ã‚³ãƒ¼ãƒ‰
+    // ¾ÃÈñÀÇ¶èÊ¬¥³¡¼¥É
     $lngtaxclasscode = DEF_TAXCLASS_HIKAZEI;
-    // æ¶ˆè²»ç¨Žé‡‘é¡
+    // ¾ÃÈñÀÇ¶â³Û
     $curtaxprice = 0;
-    // æ¶ˆè²»ç¨ŽçŽ‡
+    // ¾ÃÈñÀÇÎ¨
     $curtax = 0;
     if ($orderDetail["lngcountrycode"] == 81) {
         $curtax = $taxObj->curtax;
         $lngtaxclasscode = DEF_TAXCLASS_SOTOZEI;
     }
-    // ï¼‘ï¼šéžèª²ç¨Ž
+    // £±¡§Èó²ÝÀÇ
     if ($lngtaxclasscode == DEF_TAXCLASS_HIKAZEI) {
         $curtaxprice = 0;
-        //ã€€2:å¤–ç¨Ž
+        //¡¡2:³°ÀÇ
     } else if ($lngtaxclasscode == DEF_TAXCLASS_SOTOZEI) {
         $curtaxprice = floor($orderDetail["cursubtotalprice"] * (1 + $curtax));
-        // 3:å†…ç¨Ž
+        // 3:ÆâÀÇ
     } else {
         $curtaxprice = $orderDetail["cursubtotalprice"] - floor(($orderDetail["cursubtotalprice"] / (1 + $curtax)) * $curtax);
     }
 
-    // ä»•å…¥æ˜Žç´°ã‚’ãƒ«ãƒ¼ãƒ—ã—ã€ç™ºæ³¨ç•ªå·ã€ç™ºæ³¨æ˜Žç´°ç•ªå·ãŒåŒã˜ã®å ´åˆã€ä»•å…¥ç™»éŒ²æ¸ˆãƒ•ãƒ©ã‚°ã‚’true
+    // »ÅÆþÌÀºÙ¤ò¥ë¡¼¥×¤·¡¢È¯ÃíÈÖ¹æ¡¢È¯ÃíÌÀºÙÈÖ¹æ¤¬Æ±¤¸¤Î¾ì¹ç¡¢»ÅÆþÅÐÏ¿ºÑ¥Õ¥é¥°¤òtrue
     foreach ($aryStockDetail as $stockDetail) {
         if ($stockDetail["lngorderno"] == $orderDetail["lngorderno"]
             && $stockDetail["lngorderdetailno"] == $orderDetail["lngorderdetailno"]) {
             $isStocked = true;
             $lngtaxclasscode = $stockDetail["lngtaxclasscode"];
             $lngtaxcode = $stockDetail["lngtaxcode"];
-            $curtaxprice = $stockDetail["curtaxprice"];
+            $curtax = $stockDetail["curtax"];
+            $curtaxprice = $stockDetail["curtaxprice_comm"];
         }
     }
 
-    // tbody > trè¦ç´ ä½œæˆ
+    // tbody > trÍ×ÁÇºîÀ®
     $trBody = $doc->createElement("tr");
 
     // No.
@@ -191,7 +193,7 @@ foreach ($aryOrderDetail as $orderDetail) {
     $td->setAttribute("class", "col1");
     $trBody->appendChild($td);
 
-    // å¯¾è±¡
+    // ÂÐ¾Ý
     $td = $doc->createElement("td");
     $td->setAttribute("class", "col2");
     $chkBox = $doc->createElement("input");
@@ -203,45 +205,45 @@ foreach ($aryOrderDetail as $orderDetail) {
     $td->appendChild($chkBox);
     $trBody->appendChild($td);
 
-    // è£½å“
+    // À½ÉÊ
     $textContent = "[". $orderDetail["strproductcode"]. "] ". substr($orderDetail["strproductname"], 1, 28);
     $td = $doc->createElement("td", toUTF8($textContent));
     $td->setAttribute("class", "col3");
     $trBody->appendChild($td);
 
-    // ä»•å…¥ç§‘ç›®
+    // »ÅÆþ²ÊÌÜ
     $textContent = "[". $orderDetail["lngstocksubjectcode"]. "] ". $orderDetail["strstocksubjectname"];
     $td = $doc->createElement("td", toUTF8($textContent));
     $td->setAttribute("class", "col4");
     $trBody->appendChild($td);
 
-    // ä»•å…¥éƒ¨å“
+    // »ÅÆþÉôÉÊ
     $textContent = "[". $orderDetail["lngstockitemcode"]. "] ". $orderDetail["strstockitemname"];
     $td = $doc->createElement("td", toUTF8($textContent));
     $td->setAttribute("class", "col5");
     $trBody->appendChild($td);
 
-    // å˜ä¾¡
+    // Ã±²Á
     $td = $doc->createElement("td", toMoneyFormat($orderDetail["lngmonetaryunitcode"], $orderDetail["strmonetaryunitsign"], $orderDetail["curproductprice"]));
     $td->setAttribute("class", "col6");
     $trBody->appendChild($td);
 
-    // å˜ä½
+    // Ã±°Ì
     $td = $doc->createElement("td", toUTF8($orderDetail["strmonetaryunitname"]));
     $td->setAttribute("class", "col7");
     $trBody->appendChild($td);
 
-    // æ•°é‡
+    // ¿ôÎÌ
     $td = $doc->createElement("td", number_format($orderDetail["lngproductquantity"]));
     $td->setAttribute("class", "col8");
     $trBody->appendChild($td);
 
-    // ç¨ŽæŠœé‡‘é¡
+    // ÀÇÈ´¶â³Û
     $td = $doc->createElement("td", toMoneyFormat($orderDetail["lngmonetaryunitcode"], $orderDetail["strmonetaryunitsign"], $orderDetail["cursubtotalprice"]));
     $td->setAttribute("class", "col9");
     $trBody->appendChild($td);
 
-    // æ¶ˆè²»ç¨ŽåŒºåˆ†
+    // ¾ÃÈñÀÇ¶èÊ¬
     $td = $doc->createElement("td");
     $td->setAttribute("class", "col10");
     $select = $doc->createElement("select");
@@ -262,62 +264,67 @@ foreach ($aryOrderDetail as $orderDetail) {
     $trBody->appendChild($td);
 
     
-    // æ¶ˆè²»ç¨ŽçŽ‡
+    // ¾ÃÈñÀÇÎ¨
     $td = $doc->createElement("td", $curtax);
     $td->setAttribute("class", "col11");
     $trBody->appendChild($td);
 
-    // æ¶ˆè²»ç¨Žé¡
+    // ¾ÃÈñÀÇ³Û
     $td = $doc->createElement("td", toMoneyFormat($orderDetail["lngmonetaryunitcode"], $orderDetail["strmonetaryunitsign"], $curtaxprice));
     $td->setAttribute("class", "col12");
     $trBody->appendChild($td);
 
-    // ç´æœŸ
+    // Ç¼´ü
     $td = $doc->createElement("td", toUTF8($orderDetail["dtmdeliverydate"]));
     $td->setAttribute("class", "col13");
     $trBody->appendChild($td);
 
-    // å‚™è€ƒ
+    // È÷¹Í
     $td = $doc->createElement("td", toUTF8($orderDetail["strnote"]));
     $td->setAttribute("class", "col14");
     $trBody->appendChild($td);
 
-    // ç¨ŽæŠœé‡‘é¡ï¼ˆé‡‘é¡ãƒ•ã‚©ãƒ¼ãƒžãƒƒãƒˆå¤‰æ›å‰ï¼‰
+    // ÀÇÈ´¶â³Û¡Ê¶â³Û¥Õ¥©¡¼¥Þ¥Ã¥ÈÊÑ´¹Á°¡Ë
     $td = $doc->createElement("td", $orderDetail["cursubtotalprice"]);
     $td->setAttribute("style", "display:none");
     $trBody->appendChild($td);
 
-    // ç¨ŽçŽ‡
+    // ÀÇÎ¨
     $td = $doc->createElement("td", $taxObj->curtax);
     $td->setAttribute("style", "display:none");
     $trBody->appendChild($td);
 
-    // å˜ä½ã‚³ãƒ¼ãƒ‰
+    // Ã±°Ì¥³¡¼¥É
     $td = $doc->createElement("td", $orderDetail["lngmonetaryunitcode"]);
     $td->setAttribute("style", "display:none");
     $trBody->appendChild($td);
 
-    // å˜ä½è¨˜å·
+    // Ã±°Ìµ­¹æ
     $td = $doc->createElement("td", $orderDetail["strmonetaryunitsign"]);
     $td->setAttribute("style", "display:none");
     $trBody->appendChild($td);
 
-    // ç¨Žé¡
+    // ÀÇ³Û
     $td = $doc->createElement("td", $curtaxprice);
     $td->setAttribute("style", "display:none");
     $trBody->appendChild($td);
 
-    // ç™ºæ³¨ç•ªå·
+    // È¯ÃíÈÖ¹æ
     $td = $doc->createElement("td", $orderDetail["lngorderno"]);
     $td->setAttribute("style", "display:none");
     $trBody->appendChild($td);
 
-    // ç™ºæ³¨æ˜Žç´°ç•ªå·
+    // È¯Ãí¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
+    $td = $doc->createElement("td", $orderDetail["lngrevisionno"]);
+    $td->setAttribute("style", "display:none");
+    $trBody->appendChild($td);
+
+    // È¯ÃíÌÀºÙÈÖ¹æ
     $td = $doc->createElement("td", $orderDetail["lngorderdetailno"]);
     $td->setAttribute("style", "display:none");
     $trBody->appendChild($td);
 
-    // æ¶ˆè²»ç¨Žã‚³ãƒ¼ãƒ‰
+    // ¾ÃÈñÀÇ¥³¡¼¥É
     $td = $doc->createElement("td", $taxObj->lngtaxcode);
     $td->setAttribute("style", "display:none");
     $trBody->appendChild($td);
@@ -328,5 +335,5 @@ foreach ($aryOrderDetail as $orderDetail) {
 
 $objDB->close();
 
-// HTMLå‡ºåŠ›
+// HTML½ÐÎÏ
 echo $doc->saveHTML();

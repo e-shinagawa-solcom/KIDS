@@ -6,6 +6,11 @@
 	<meta http-equiv="content-type" content="text/html; charset=euc-jp">
 	<script src="/cmn/jquery/jquery-3.1.0.js"></script>
 	<script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
+    <script src="/cmn/jquery/tablesorter/jquery.tablesorter.js"></script>
+    <script src="/cmn/jquery/tablesorter/jquery.tablesorter.widgets.js"></script>
+    <link rel="stylesheet" href="/cmn/jquery/tablesorter/themes/blue/style.css">
+    <script src="/p/search/result/js/tablesorter.js" defer></script>
+    <link rel="stylesheet" href="/p/cmn/search/result/css/table.css">
 	<script type="text/javascript" language="javascript" src="/layout/type01/cmn/images.js"></script>
 	<script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
 	<script type="text/javascript" language="javascript" src="/result/cmn/functions.js" charset="utf-8"></script>
@@ -19,7 +24,7 @@
 	<script type="text/javascript" language="javascript" src="/m/winopen.js"></script>
 </head>
 
-<body id="Backs" oncontextmenu="return false;" onload="GetIfrmlngLanguageCode( 1 );" onscroll="fncStopHeader2( SegTitle , DummyTable , MasterAddBt );">
+<body id="Backs" oncontextmenu="return false;" onload="GetIfrmlngLanguageCode( 1 );">
 
 
 	<form name="form1" id="objForm" action="index.php" method="POST">
@@ -28,19 +33,19 @@
 
 
 		<span id="COPYAREA1">
-			<table id="result_tbl" width="99%" height="97%" border="1px" border-color="#6f818" border-collapse="separate">
+			<table id="result" class="tablesorter">
 			<thead>
 				<tr id="DummyTable" class="top:0px;">
-					<td colspan="24">&nbsp;<span id="MasterAddBt"></span></td>
+					<th colspan="24">&nbsp;<span id="MasterAddBt"></span></th>
 				</tr>
 
 				<tr id="SegTitle">
-					<td valign="top" valign="center">
-						<a href="#" onclick="fncDoCopy(document.getElementById('copyhidden')  , document.getElementById('COPYAREA1') , document.getElementById('COPYAREA2') );return false;">
+					<th valign="top" valign="center">
+						<a href="#" onclick="fncDoCopy('result');return false;">
 							<img onmouseover="CopyOn(this);" onmouseout="CopyOff(this);" src="/img/type01/cmn/seg/copy_off_bt.gif" width="15" height="15"
 							 border="0" alt="COPY">
 						</a>
-					</td>
+					</th>
 					_%strColumnHtml%_
 				</tr>
 </thead>

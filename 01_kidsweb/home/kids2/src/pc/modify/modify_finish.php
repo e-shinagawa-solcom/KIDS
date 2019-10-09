@@ -34,7 +34,6 @@ $aryDetailData = json_decode($aryData["detailData"], true);
 
 // セッション確認
 $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
-
 // 入力者コードを取得
 $lngUserCode = $objAuth->UserCode;
 // 700 仕入管理
@@ -126,7 +125,7 @@ $aryQuery[] = "'" . $aryData["strSlipCode"] . "', "; // 14:伝票コード
 $aryQuery[] = $aryData["curTotalPrice"] . ", "; // 15:合計金額
 $aryQuery[] = $aryData["lngDeliveryPlaceCode"] . ", "; // 16:納品場所
 $aryQuery[] = "'" . $aryData["dtmExpirationDate"] . "', "; // 17:製品到着日
-$aryQuery[] = "'" . $aryData["strNote"] . "', "; // 18:備考
+$aryQuery[] = "'" . mb_convert_encoding($aryData["strNote"], "euc-jp", "UTF-8"). "', "; // 18:備考
 $aryQuery[] = $lngUserCode . ", "; // 19:入力者コード
 $aryQuery[] = "false, "; // 20:無効フラグ
 $aryQuery[] = "now()"; // 21:登録日
@@ -170,7 +169,7 @@ foreach ($aryDetailData as $data) {
     $aryQuery[] = " AND lngorderdetailno = " . $data["lngOrderDetailNo"];
     $aryQuery[] = " ORDER BY lngSortKey";
     $strQuery = implode("\n", $aryQuery);
-
+    
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
     if ($lngResultNum) {
@@ -214,7 +213,6 @@ foreach ($aryDetailData as $data) {
             $aryQuery[] = "strrevisecode, "; // 6:リバイスコード
             $aryQuery[] = "lngstocksubjectcode, "; // 7:仕入科目コード
             $aryQuery[] = "lngstockitemcode, "; // 8:仕入部品コード
-            $aryQuery[] = "dtmdeliverydate, "; // 9:納品日
             $aryQuery[] = "lngdeliverymethodcode, "; // 10:運搬方法
             $aryQuery[] = "lngconversionclasscode, "; // 11:換算区分コード / 1：単位計上/ 2：荷姿単位計上
             $aryQuery[] = "curproductprice, "; // 12:製品価格
@@ -228,7 +226,7 @@ foreach ($aryDetailData as $data) {
             $aryQuery[] = "strmoldno, "; // 20:金型番号
             $aryQuery[] = "lngSortKey "; // 21:表示用ソートキー
             $aryQuery[] = " ) VALUES ( ";
-            $aryQuery[] = $data["lngStockNo"] . ", "; // 1:仕入番号
+            $aryQuery[] = $aryData["lngStockNo"] . ", "; // 1:仕入番号
             $aryQuery[] = $data["lngStockDetailNo"] . ", "; // 2:仕入明細番号 行ごとの明細発注は持っている
             $aryQuery[] = $lngrevisionno . ", "; // 3:リビジョン番号
             $aryQuery[] = $data["lngOrderNo"] . ", "; // 4:発注番号
@@ -237,7 +235,6 @@ foreach ($aryDetailData as $data) {
             $aryQuery[] = "'" . $detailDataResult["strrevisecode"] . "', "; // 6:リバイスコード
             $aryQuery[] = $detailDataResult["lngstocksubjectcode"] . ", "; // 7:仕入科目コード
             $aryQuery[] = $detailDataResult["lngstockitemcode"] . ", "; // 8:仕入部品コード
-            $aryQuery[] = "'" . ($detailDataResult["dtmdeliverydate"] == "" ? "null" : $detailDataResult["dtmdeliverydate"]) . "', "; // 7:納期
             $aryQuery[] = $detailDataResult["lngcarriercode"] . ", "; // 10:運搬方法
             $aryQuery[] = $detailDataResult["lngconversionclasscode"] . ", "; // 11:換算区分コード / 1：単位計上/ 2：荷姿単位計上
             $aryQuery[] = $detailDataResult["curproductprice"] . ", "; // 9:製品価格
@@ -249,9 +246,10 @@ foreach ($aryDetailData as $data) {
             $aryQuery[] = $detailDataResult["cursubtotalprice"] . ", "; // 15:小計金額 / 税抜小計金額
             $aryQuery[] = "'" . $detailDataResult["strnote"] . "', "; // 16:備考
             $aryQuery[] = "'" . $strSerialNo . "', "; // 17:金型番号
-            $aryQuery[] = $detailDataResult["lngsortkey"] . " "; // 18:表示用ソートキー
+            $aryQuery[] = $detailDataResult["lngsortkey"] == "" ? "null" : $detailDataResult["lngsortkey"] . " "; // 18:表示用ソートキー
             $aryQuery[] = " )";
             $strQuery = implode("\n", $aryQuery);
+
             if (!$lngResultID = $objDB->execute($strQuery)) {
                 fncOutputError(9051, DEF_ERROR, "", true, "", $objDB);
             }

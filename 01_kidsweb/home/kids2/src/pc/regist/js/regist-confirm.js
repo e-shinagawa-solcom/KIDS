@@ -19,6 +19,7 @@
                 $('body').attr('class', 'finish-background');
             })
             .fail(function (response) {
+                alert(response);
                 alert("fail");
                 // Ajaxリクエストが失敗
             });

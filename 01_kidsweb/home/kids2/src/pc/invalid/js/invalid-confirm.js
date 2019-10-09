@@ -3,13 +3,15 @@
     // 無効ボタンのイベント
     $('img.invalid').on('click', function () {
         var lngStockNo = $(this).attr('id');
+        var lngRevisionNo = $(this).attr('revisionno');
         // リクエスト送信
         $.ajax({
             url: '/pc/invalid/invalid_finish.php',
             type: 'POST',
             data: {
                 'strSessionID': $.cookie('strSessionID'),
-                'lngStockNo': lngStockNo
+                'lngStockNo': lngStockNo,
+                'lngRevisionNo': lngRevisionNo
             }
         })
             .done(function (response) {
