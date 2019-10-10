@@ -403,7 +403,8 @@ define ( "DEF_FUNCTION_E0",	1500 );	// 1500 見積原価管理
 define ( "DEF_FUNCTION_E1",	1501 );	// 1501 見積原価管理（登録）
 define ( "DEF_FUNCTION_E2",	1502 );	// 1502 見積原価管理（検索）
 define ( "DEF_FUNCTION_E3",	1503 );	// 1503 見積原価管理（修正）
-define ( "DEF_FUNCTION_E4",	1504 );	// 1504 見積原価管理（削除）
+define ( "DEF_FUNCTION_E4",	1504 );	// 1504 見積原価管理（詳細）
+define ( "DEF_FUNCTION_E5",	1505 );	// 1505 見積原価管理（削除）
 
 define ( "DEF_FUNCTION_UP0",	1600 );	// 1600 アップロード管理
 define ( "DEF_FUNCTION_UP1",	1601 );	// 1601 アップロード管理（登録）
@@ -444,8 +445,8 @@ define ( "DEF_FATAL",		3 );           //  3 システムエラーレベル
 define ( "DEF_ANNOUNCE",	99 );          //  99 システムアナウンス
 
 // デバッグモード
-//define ( "DEF_DEBUG_MODE",	0 );         //  本稼動モード　　エラー画面表示
-define ( "DEF_DEBUG_MODE",	1 );      //  デバッグモード　エラー画面非表示
+define ( "DEF_DEBUG_MODE",	0 );         //  本稼動モード　　エラー画面表示
+//define ( "DEF_DEBUG_MODE",	1 );      //  デバッグモード　エラー画面非表示
 
 // 発注登録
 define ("DEF_M_WORKFLOW_FUNCTIONCODE",	1);		// 機能コード

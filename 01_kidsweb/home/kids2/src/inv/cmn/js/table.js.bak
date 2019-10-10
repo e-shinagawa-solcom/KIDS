@@ -1,52 +1,52 @@
 $(function() {
-  // response ¥Ç¥£¡¼¥×¥³¥Ô¡¼ÍÑÇÛÎó
+  // response ãƒ‡ã‚£ãƒ¼ãƒ—ã‚³ãƒ”ãƒ¼ç”¨é…åˆ—
   var data = [];
 
-  // dom ½é´ü²½ÍÑ¶õÇÛÎó
+  // dom åˆæœŸåŒ–ç”¨ç©ºé…åˆ—
   var dataEmpty = new Array(20).fill('');
 
-  // ¥Æ¡¼¥Ö¥ëA Ê£À½dom³ÊÇ¼ÍÑÇÛÎó
+  // ãƒ†ãƒ¼ãƒ–ãƒ«A è¤‡è£½domæ ¼ç´ç”¨é…åˆ—
   var domA = [];
 
-  // ¥Æ¡¼¥Ö¥ëB Ê£À½dom³ÊÇ¼ÍÑÇÛÎó
+  // ãƒ†ãƒ¼ãƒ–ãƒ«B è¤‡è£½domæ ¼ç´ç”¨é…åˆ—
   var domB = [];
 
-  // ¥Ç¡¼¥¿°ì»şÊİ´É ¡öÁ÷¿®Á°¤Î¥Ç¡¼¥¿³ÊÇ¼ÍÑÇÛÎó
+  // ãƒ‡ãƒ¼ã‚¿ä¸€æ™‚ä¿ç®¡ ï¼Šé€ä¿¡å‰ã®ãƒ‡ãƒ¼ã‚¿æ ¼ç´ç”¨é…åˆ—
   var temp = [];
 
-  // ÁªÂò¹Ô¥¤¥ó¥Ç¥Ã¥¯¥¹³ÊÇ¼ÍÑÇÛÎó
+  // é¸æŠè¡Œã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹æ ¼ç´ç”¨é…åˆ—
   var selectedRowIndexes = [];
 
-  // ¥µ¥Ö¥¯¥¨¥ê¥­¥ã¥Ã¥·¥å
+  // ã‚µãƒ–ã‚¯ã‚¨ãƒªã‚­ãƒ£ãƒƒã‚·ãƒ¥
   $tableA = $('#tableA');
   $tableB = $('#tableB');
 
-  // ¥Æ¡¼¥Ö¥ëA <tbody>, <tr>
+  // ãƒ†ãƒ¼ãƒ–ãƒ«A <tbody>, <tr>
   $tableA_tbody = $('tbody', $tableA);
   $tableA_row = $('tr', $tableA_tbody);
 
-  // ¥Æ¡¼¥Ö¥ëB <tbody>, <tr>
+  // ãƒ†ãƒ¼ãƒ–ãƒ«B <tbody>, <tr>
   $tableB_tbody = $('tbody', $tableB);
   $tableB_row = $('tr', $tableB_tbody);
 
-  // Ê£À½¸µ¤Î $tableA_row ¤òºï½ü
+  // è¤‡è£½å…ƒã® $tableA_row ã‚’å‰Šé™¤
   $tableA_row.remove();
 
-  // Ê£À½¸µ¤Î $tableB_row ¤òºï½ü
+  // è¤‡è£½å…ƒã® $tableB_row ã‚’å‰Šé™¤
   $tableB_row.remove();
 
   /**
    * ----------------------------------------------------------------------------------------------------
-   * ´Ø¿ô·²
+   * é–¢æ•°ç¾¤
    * ----------------------------------------------------------------------------------------------------
    */
 
    /**
-   * @method createSkeletonTable ¥Æ¡¼¥Ö¥ëÀ¸À®
-   * @param data {Array} ´ğ¤È¤Ê¤ë¥Ç¡¼¥¿ÇÛÎó
-   * @param clone {Object} Ê£À½¸µ¥»¥ì¥¯¥¿¡¼
-   * @param dom {Array} Ê£À½dom³ÊÇ¼ÍÑÇÛÎó
-   * @param target {Object} ½ĞÎÏÀè¥¿¡¼¥²¥Ã¥È¥»¥ì¥¯¥¿¡¼
+   * @method createSkeletonTable ãƒ†ãƒ¼ãƒ–ãƒ«ç”Ÿæˆ
+   * @param data {Array} åŸºã¨ãªã‚‹ãƒ‡ãƒ¼ã‚¿é…åˆ—
+   * @param clone {Object} è¤‡è£½å…ƒã‚»ãƒ¬ã‚¯ã‚¿ãƒ¼
+   * @param dom {Array} è¤‡è£½domæ ¼ç´ç”¨é…åˆ—
+   * @param target {Object} å‡ºåŠ›å…ˆã‚¿ãƒ¼ã‚²ãƒƒãƒˆã‚»ãƒ¬ã‚¯ã‚¿ãƒ¼
    */
   $.createSkeletonTable = function(data, clone, dom, target) {
     dom = [];
@@ -60,93 +60,87 @@ $(function() {
   };
 
   /**
-   * @method addDataTableA ¥Æ¡¼¥Ö¥ëA¤Ë¥Ç¡¼¥¿¤òÄÉ²Ã
+   * @method addDataTableA ãƒ†ãƒ¼ãƒ–ãƒ«Aã«ãƒ‡ãƒ¼ã‚¿ã‚’è¿½åŠ 
    */
   $.addDataTableA = function() {
     if (data[0] === '') return;
     $.each(data, function(i, v) {
       var $target_row = $('tbody tr', $tableA).eq(i);
       var slipcode = v.strslipcode;
-      var customercode = v.strcompanydisplaycode;
+      var customercode = v.strcustomercode;
       var customername = v.strcustomername;
       var deliverydate = v.dtmdeliverydate.replace(/-/g, '/');
-      var curtotalprice = Number(v.curtotalprice);
+      var price = Math.floor(v.curtotalprice - (v.curtotalprice * v.curtax)).toLocaleString();
       var taxclasscode = v.lngtaxclasscode;
       var taxclassname = v.strtaxclassname;
       var tax = Number(v.curtax);
-      var taxamount = (curtotalprice * (tax*100))/100;
-      if(taxclasscode == 1) taxamount = 0;
+      var taxamount = Math.round(v.curtotalprice * v.curtax).toLocaleString();
       var id = v.strslipcode;
-      var strnote = v.strnote;
 
-      // html ½ĞÎÏ
+      // html å‡ºåŠ›
       $target_row.attr('data-id', id);
       $('.slipcode', $target_row).html(slipcode);
-      $('.customer .customercode', $target_row).html('[' + customercode + '] ');
+      $('.customer .customercode', $target_row).html('[' + customercode + ']');
       $('.customer .customername', $target_row).html(customername);
       $('.deliverydate', $target_row).html(deliverydate);
-      $('.price', $target_row).html(curtotalprice);
-      $('.taxclass .taxclasscode', $target_row).html('[' + taxclasscode + '] ');
+      $('.price', $target_row).html(price);
+      $('.taxclass .taxclasscode', $target_row).html('[' + taxclasscode + ']');
       $('.taxclass .taxclassname', $target_row).html(taxclassname);
-      $('.tax', $target_row).html(tax*100 + '¡ó');
-      $('.taxamount', $target_row).html(Math.round(taxamount));
-      $('.remarks', $target_row).html(strnote);
+      $('.tax', $target_row).html(tax + 'ï¼…');
+      $('.taxamount', $target_row).html(taxamount);
     });
   };
 
   /**
-   * @method addDataTableB ¥Æ¡¼¥Ö¥ëB¤Ë¥Ç¡¼¥¿¤òÄÉ²Ã
+   * @method addDataTableB ãƒ†ãƒ¼ãƒ–ãƒ«Bã«ãƒ‡ãƒ¼ã‚¿ã‚’è¿½åŠ 
    */
   $.addDataTableB = function() {
     $.each(temp, function(i, v) {
       var $target_row = $('tbody tr', $tableB).eq(i);
       var slipcode = v.strslipcode;
-      var customercode = v.strcompanydisplaycode;
+      var customercode = v.strcustomercode;
       var customername = v.strcustomername;
       var deliverydate = v.dtmdeliverydate.replace(/-/g, '/');
-      var curtotalprice = Number(v.curtotalprice);
+      var price = Math.floor(v.curtotalprice - (v.curtotalprice * v.curtax)).toLocaleString();
       var taxclasscode = v.lngtaxclasscode;
       var taxclassname = v.strtaxclassname;
       var tax = Number(v.curtax);
-      var taxamount = (curtotalprice * (tax*100))/100;
-      if(taxclasscode == 1) taxamount = 0;
+      var taxamount = Math.round(v.curtotalprice * v.curtax).toLocaleString();
       var id = v.strslipcode;
-      var strnote = v.strnote;
 
-      // html ½ĞÎÏ
+      // html å‡ºåŠ›
       $target_row.attr('data-id', id);
       $('.slipcode', $target_row).html(slipcode);
-      $('.customer .customercode', $target_row).html('[' + customercode + '] ');
+      $('.customer .customercode', $target_row).html('[' + customercode + ']');
       $('.customer .customername', $target_row).html(customername);
       $('.deliverydate', $target_row).html(deliverydate);
-      $('.price', $target_row).html(curtotalprice);
-      $('.taxclass .taxclasscode', $target_row).html('[' + taxclasscode + '] ');
+      $('.price', $target_row).html(price);
+      $('.taxclass .taxclasscode', $target_row).html('[' + taxclasscode + ']');
       $('.taxclass .taxclassname', $target_row).html(taxclassname);
-      $('.tax', $target_row).html(tax*100 + '¡ó');
-      $('.taxamount', $target_row).html(Math.round(taxamount));
-      $('.remarks', $target_row).html(strnote);
+      $('.tax', $target_row).html(tax + 'ï¼…');
+      $('.taxamount', $target_row).html(taxamount);
     });
   };
 
   /**
-   * @method scanAllCheckbox ¥¹¥­¥ã¥ó¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹
+   * @method scanAllCheckbox ã‚¹ã‚­ãƒ£ãƒ³ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹
    */
   $.scanAllCheckbox = function() {
     var $all_rows = $('tbody tr', $tableA);
     var $all_checkbox = $all_rows.find('input[type="checkbox"]');
 
-    // Í­¸ú <tr> ¡öÁªÂò²ÄÇ½¹Ô
+    // æœ‰åŠ¹ <tr> ï¼Šé¸æŠå¯èƒ½è¡Œ
     var count_checked = 0;
     var count_disabled = 0;
 
-    // data ¤¬¤Ê¤¤¾ì¹ç¡¢Á´ÁªÂò¡¿²ò½ü¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤ò¿²¤«¤»¤ÆÌµ¸ú²½
+    // data ãŒãªã„å ´åˆã€å…¨é¸æŠï¼è§£é™¤ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã‚’å¯ã‹ã›ã¦ç„¡åŠ¹åŒ–
     if (!data.length) {
       $('#allChecked').prop({ 'checked': false, 'disabled': true });
     } else {
       $('#allChecked').prop('disabled', false);
     }
 
-    // <tr> ¤Ë data-id Â°À­¤¬Â¸ºß¤·¤Ê¤¤¾ì¹ç¡¢³ºÅö¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤òÌµ¸ú²½
+    // <tr> ã« data-id å±æ€§ãŒå­˜åœ¨ã—ãªã„å ´åˆã€è©²å½“ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã‚’ç„¡åŠ¹åŒ–
     $.each($all_rows, function() {
       if (!$(this).data('id')) {
         $all_checkbox.prop({ 'checked': false, 'disabled': true });
@@ -154,12 +148,12 @@ $(function() {
     });
 
     $.each($all_checkbox, function(i) {
-      // ¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤¬¤Ò¤È¤Ä¤Ç¤â³°¤ì¤Æ¤¤¤ë¾ì¹ç¡¢Á´ÁªÂò¡¿²ò½ü¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤ò¿²¤«¤¹
+      // ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ãŒã²ã¨ã¤ã§ã‚‚å¤–ã‚Œã¦ã„ã‚‹å ´åˆã€å…¨é¸æŠï¼è§£é™¤ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã‚’å¯ã‹ã™
       if (!$(this).closest('tr').hasClass('selected')) {
         $('#allChecked').prop('checked', false);
       }
 
-      // ¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤¬¤¹¤Ù¤Æ¥Á¥§¥Ã¥¯¤µ¤ì¤¿¾ì¹ç¡¢Á´ÁªÂò¡¿²ò½ü¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤òÎ©¤Æ¤ë
+      // ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ãŒã™ã¹ã¦ãƒã‚§ãƒƒã‚¯ã•ã‚ŒãŸå ´åˆã€å…¨é¸æŠï¼è§£é™¤ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã‚’ç«‹ã¦ã‚‹
       if ($(this).closest('tr').hasClass('selected')) {
         ++count_checked;
       }
@@ -167,7 +161,7 @@ $(function() {
         $('#allChecked').prop('checked', true);
       }
 
-      // ¤¹¤Ù¤Æ¤Î¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤¬Ìµ¸ú²½¤µ¤ì¤¿¾ì¹ç¡¢Á´ÁªÂò¡¿²ò½ü¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤ò¿²¤«¤»¤ÆÌµ¸ú²½
+      // ã™ã¹ã¦ã®ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ãŒç„¡åŠ¹åŒ–ã•ã‚ŒãŸå ´åˆã€å…¨é¸æŠï¼è§£é™¤ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã‚’å¯ã‹ã›ã¦ç„¡åŠ¹åŒ–
       if ($(this).prop('disabled')) {
         ++count_disabled;
       }
@@ -178,17 +172,17 @@ $(function() {
   };
 
   /**
-   * @method initTableA ¥Æ¡¼¥Ö¥ëA ½é´ü²½
+   * @method initTableA ãƒ†ãƒ¼ãƒ–ãƒ«A åˆæœŸåŒ–
    */
   $.initTableA = function() {
-    // ¥¹¥­¥ã¥ó¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹
+    // ã‚¹ã‚­ãƒ£ãƒ³ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹
     $.scanAllCheckbox();
     data = [];
     $.createSkeletonTable(dataEmpty, $tableA_row, domA, $tableA_tbody);
   };
 
   /**
-   * @method setTableSorter ¥Æ¡¼¥Ö¥ë¥½¡¼¥Èµ¡Ç½ÀßÄê
+   * @method setTableSorter ãƒ†ãƒ¼ãƒ–ãƒ«ã‚½ãƒ¼ãƒˆæ©Ÿèƒ½è¨­å®š
    */
   $.setTableSorter = function() {
     $('#tableA, #tableB').trigger('destroy');
@@ -207,34 +201,34 @@ $(function() {
 
   /**
    * ----------------------------------------------------------------------------------------------------
-   * ½é´üÉ½¼¨
+   * åˆæœŸè¡¨ç¤º
    * ----------------------------------------------------------------------------------------------------
    */
 
-  // ¥¹¥­¥ã¥ó¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹
+  // ã‚¹ã‚­ãƒ£ãƒ³ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹
   $.scanAllCheckbox();
 
   $.createTable = function(response) {
     data = (response === undefined || response && !response.length) ? dataEmpty : Array.from(new Set(response));
 
-    // ¥Æ¡¼¥Ö¥ëAÀ¸À®
+    // ãƒ†ãƒ¼ãƒ–ãƒ«Aç”Ÿæˆ
     $.createSkeletonTable(data, $tableA_row, domA, $tableA_tbody);
     $.addDataTableA();
 
-    // ¥Æ¡¼¥Ö¥ë¥½¡¼¥Èµ¡Ç½ÀßÄê
+    // ãƒ†ãƒ¼ãƒ–ãƒ«ã‚½ãƒ¼ãƒˆæ©Ÿèƒ½è¨­å®š
     $.setTableSorter();
 
-    // ¥¹¥­¥ã¥ó¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹
+    // ã‚¹ã‚­ãƒ£ãƒ³ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹
     $.scanAllCheckbox();
   };
 
   /**
    * ----------------------------------------------------------------------------------------------------
-   * ¥¤¥Ù¥ó¥ÈÀßÄê
+   * ã‚¤ãƒ™ãƒ³ãƒˆè¨­å®š
    * ----------------------------------------------------------------------------------------------------
    */
 
-  // ¥Æ¡¼¥Ö¥ëA Á´ÁªÂò¡¿²ò½ü¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹
+  // ãƒ†ãƒ¼ãƒ–ãƒ«A å…¨é¸æŠï¼è§£é™¤ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹
   $(document).on('change', '#allChecked', function(e) {
     e.preventDefault();
 
@@ -250,7 +244,7 @@ $(function() {
     }
   });
 
-  // ¥Æ¡¼¥Ö¥ëA ÄÉ²Ã¥Ü¥¿¥ó
+  // ãƒ†ãƒ¼ãƒ–ãƒ«A è¿½åŠ ãƒœã‚¿ãƒ³
   $('#btnAdd').on('click', function(e) {
     e.preventDefault();
 
@@ -263,44 +257,38 @@ $(function() {
       checked.push($isChecked);
     });
 
-    // ¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤¬¤Ò¤È¤Ä¤âÁªÂò¤µ¤ì¤Æ¤¤¤Ê¤¤¾ì¹ç¡¢return
+    // ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ãŒã²ã¨ã¤ã‚‚é¸æŠã•ã‚Œã¦ã„ãªã„å ´åˆã€return
     if ($.inArray(true, checked) === -1) return;
 
-    // ¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤Î³ºÅö¥Ç¡¼¥¿¤ò¤¹¤Ù¤Æ temp ¤Ë³ÊÇ¼
+    // ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã®è©²å½“ãƒ‡ãƒ¼ã‚¿ã‚’ã™ã¹ã¦ temp ã«æ ¼ç´
     $.each($all_checkbox, function() {
       if ($(this).prop('checked')) {
         var $data_id = $(this).closest('tr').data('id');
         var data_index = data.findIndex(function(value) { return value.strslipcode == $data_id });
         if (data_index !== -1) {
-          // id½ÅÊ£¥Á¥§¥Ã¥¯
-          let sameId = false;
-          $.each(temp, function(i,v) {
-            if(v.strslipcode == data[data_index].strslipcode) { sameId = true;}
-          });
-          if(sameId == true) { return; }
           temp.push(data[data_index]);
-          // ³ºÅö¥Ç¡¼¥¿¤ò data ¤«¤éºï½ü
+          // è©²å½“ãƒ‡ãƒ¼ã‚¿ã‚’ data ã‹ã‚‰å‰Šé™¤
           data.splice(data_index, 1);
         }
       }
     });
 
-    // ¥Æ¡¼¥Ö¥ëB¤Ë¥Ç¡¼¥¿¤òÄÉ²Ã
+    // ãƒ†ãƒ¼ãƒ–ãƒ«Bã«ãƒ‡ãƒ¼ã‚¿ã‚’è¿½åŠ 
     $.createSkeletonTable(temp, $tableB_row, domB, $tableB_tbody);
     $.addDataTableB();
 
-    // ¥Æ¡¼¥Ö¥ëA ºÆÀ¸À®
+    // ãƒ†ãƒ¼ãƒ–ãƒ«A å†ç”Ÿæˆ
     $.createSkeletonTable(data, $tableA_row, domA, $tableA_tbody);
     $.addDataTableA();
 
-    // ¥Æ¡¼¥Ö¥ë¥½¡¼¥Èµ¡Ç½ÀßÄê
+    // ãƒ†ãƒ¼ãƒ–ãƒ«ã‚½ãƒ¼ãƒˆæ©Ÿèƒ½è¨­å®š
     $.setTableSorter();
 
-    // ¥¹¥­¥ã¥ó¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹
+    // ã‚¹ã‚­ãƒ£ãƒ³ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹
     $.scanAllCheckbox();
   });
   
-  // ¥Æ¡¼¥Ö¥ëB ºï½ü¥Ü¥¿¥ó
+  // ãƒ†ãƒ¼ãƒ–ãƒ«B å‰Šé™¤ãƒœã‚¿ãƒ³
   $('#btnDelete').on('click', function(e) {
     e.preventDefault();
 
@@ -312,24 +300,24 @@ $(function() {
       var $data_id = $(this).data('id');
       var temp_index = temp.findIndex(function(value) { return value.strslipcode == $data_id });
 
-      // ³ºÅö¥Ç¡¼¥¿¤ò temp ¤«¤éºï½ü
+      // è©²å½“ãƒ‡ãƒ¼ã‚¿ã‚’ temp ã‹ã‚‰å‰Šé™¤
       if (temp_index !== -1) {
         temp.splice(temp_index, 1);
       }
     });
 
-    // ¥Æ¡¼¥Ö¥ëB ºÆÀ¸À®
+    // ãƒ†ãƒ¼ãƒ–ãƒ«B å†ç”Ÿæˆ
     $.createSkeletonTable(temp, $tableB_row, domB, $tableB_tbody);
     $.addDataTableB();
 
-    // ¥Æ¡¼¥Ö¥ë¥½¡¼¥Èµ¡Ç½ÀßÄê
+    // ãƒ†ãƒ¼ãƒ–ãƒ«ã‚½ãƒ¼ãƒˆæ©Ÿèƒ½è¨­å®š
     $.setTableSorter();
 
-    // ¥¹¥­¥ã¥ó¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹
+    // ã‚¹ã‚­ãƒ£ãƒ³ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹
     $.scanAllCheckbox();
   });
 
-  // ¥Æ¡¼¥Ö¥ëB Á´ºï½ü¥Ü¥¿¥ó
+  // ãƒ†ãƒ¼ãƒ–ãƒ«B å…¨å‰Šé™¤ãƒœã‚¿ãƒ³
   $('#btnAllDelete').on('click', function(e) {
     e.preventDefault();
 
@@ -347,65 +335,63 @@ $(function() {
     temp = [];
     domB = [];
 
-    // ¥Æ¡¼¥Ö¥ëA ºÆÀ¸À®
+    // ãƒ†ãƒ¼ãƒ–ãƒ«A å†ç”Ÿæˆ
     $.createSkeletonTable(data, $tableA_row, domA, $tableA_tbody);
     $.addDataTableA();
 
-    // ¥Æ¡¼¥Ö¥ëB ½é´ü²½
+    // ãƒ†ãƒ¼ãƒ–ãƒ«B åˆæœŸåŒ–
     $tableB_tbody.empty();
 
-    // ¥Æ¡¼¥Ö¥ë¥½¡¼¥Èµ¡Ç½ÀßÄê
+    // ãƒ†ãƒ¼ãƒ–ãƒ«ã‚½ãƒ¼ãƒˆæ©Ÿèƒ½è¨­å®š
     $.setTableSorter();
 
-    // ¥¹¥­¥ã¥ó¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹
+    // ã‚¹ã‚­ãƒ£ãƒ³ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹
     $.scanAllCheckbox();
   });
 
-  // ¸¡º÷¾ò·ïÆşÎÏ¥Ü¥¿¥ó
+  // æ¤œç´¢æ¡ä»¶å…¥åŠ›ãƒœã‚¿ãƒ³
   $('#btnSearchCondition').on('click', function(e) {
     e.preventDefault();
 
-    // selectedRowIndexes ½é´ü²½
+    // selectedRowIndexes åˆæœŸåŒ–
     selectedRowIndexes = [];
 
     var $all_rows = $('tbody tr', $tableA);
     var $all_checkbox = $all_rows.find('input[type="checkbox"]');
 
-    // ¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤Î¥Á¥§¥Ã¥¯¤ò¤¹¤Ù¤Æ²ò½ü
+    // ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã®ãƒã‚§ãƒƒã‚¯ã‚’ã™ã¹ã¦è§£é™¤
     $.each($all_checkbox, function() {
       if ($(this).prop('checked')) {
         $(this).prop('checked', false);
       }
     });
 
-    // ¤¹¤Ù¤Æ¤Î current ¤òºï½ü
+    // ã™ã¹ã¦ã® current ã‚’å‰Šé™¤
     $.each($all_rows, function() {
       $(this).children('td').removeClass('current');
     });
 
-    // Á´ÁªÂò¡¿²ò½ü¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤Î¥Á¥§¥Ã¥¯¤ò²ò½ü
+    // å…¨é¸æŠï¼è§£é™¤ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã®ãƒã‚§ãƒƒã‚¯ã‚’è§£é™¤
     if ($('#allChecked').prop('checked')) {
       $('#allChecked').prop('checked', false);
     }
 
-    url = $('input[name="invConditionUrl"]').val();
-    // Ç¼ÉÊ½ñ¸¡º÷¥¦¥£¥ó¥É¥¦¤ò¥İ¥Ã¥×¥¢¥Ã¥×É½¼¨
-    sub_win = window.open(url, 'winSearch', "width=800,height=500,scrollbars=yes");
-    // ÀÁµá½ñ¸¡º÷¥¦¥£¥ó¥É¥¦¤ò¥İ¥Ã¥×¥¢¥Ã¥×É½¼¨
+    // è«‹æ±‚æ›¸æ¤œç´¢ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’ãƒãƒƒãƒ—ã‚¢ãƒƒãƒ—è¡¨ç¤º
+    window.open('./search.html', 'winSearch', 'width=640,height=480');
   });
 
   /**
    * ----------------------------------------------------------------------------------------------------
-   * ÆÃ¼ì¥­¡¼ + click ¥¤¥Ù¥ó¥È½èÍı
+   * ç‰¹æ®Šã‚­ãƒ¼ + click ã‚¤ãƒ™ãƒ³ãƒˆå‡¦ç†
    * ----------------------------------------------------------------------------------------------------
    */
 
-  // ctrl + º¸ click ¥³¥ó¥Æ¥¯¥¹¥È¥á¥Ë¥å¡¼ÈóÉ½¼¨
+  // ctrl + å·¦ click ã‚³ãƒ³ãƒ†ã‚¯ã‚¹ãƒˆãƒ¡ãƒ‹ãƒ¥ãƒ¼éè¡¨ç¤º
   $(document).on('contextmenu', function(e) {
     if (e.which === 1) return false;
   });
 
-  // ctrl, shift ¥­¡¼¥¤¥Ù¥ó¥È¤ò document ¤ËÀßÄê
+  // ctrl, shift ã‚­ãƒ¼ã‚¤ãƒ™ãƒ³ãƒˆã‚’ document ã«è¨­å®š
   var isCtrlKey = false;
   var isShiftKey = false;
 
@@ -420,45 +406,45 @@ $(function() {
     }
   });
 
-  // ¥Æ¡¼¥Ö¥ëA ¥¤¥Ù¥ó¥È½èÍı
+  // ãƒ†ãƒ¼ãƒ–ãƒ«A ã‚¤ãƒ™ãƒ³ãƒˆå‡¦ç†
   $(document).on('mousedown', '#tableA tbody tr', function(e) {
     e.preventDefault();
 
     var $tableA_rows = $('#tableA tbody tr');
     var $tableA_rows_length = $tableA_rows.length;
 
-    // ¥Æ¡¼¥Ö¥ëA <tr> ctrl + click -> ¥Æ¡¼¥Ö¥ëB¤Ë¥Ç¡¼¥¿¤òÄÉ²Ã
+    // ãƒ†ãƒ¼ãƒ–ãƒ«A <tr> ctrl + click -> ãƒ†ãƒ¼ãƒ–ãƒ«Bã«ãƒ‡ãƒ¼ã‚¿ã‚’è¿½åŠ 
     if (isCtrlKey && e.which === 1) {
       var $data_id = $(this).data('id');
       var data_index = data.findIndex(function(value) { return value.strslipcode == $data_id });
       if (data_index !== -1) {
         temp.push(data[data_index]);
-        // ³ºÅö¥Ç¡¼¥¿¤ò data ¤«¤éºï½ü
+        // è©²å½“ãƒ‡ãƒ¼ã‚¿ã‚’ data ã‹ã‚‰å‰Šé™¤
         data.splice(data_index, 1);
       }
 
-      // ¥Æ¡¼¥Ö¥ëB¤Ë¥Ç¡¼¥¿¤òÄÉ²Ã
+      // ãƒ†ãƒ¼ãƒ–ãƒ«Bã«ãƒ‡ãƒ¼ã‚¿ã‚’è¿½åŠ 
       $.createSkeletonTable(temp, $tableB_row, domB, $tableB_tbody);
       $.addDataTableB();
 
-      // ¥Æ¡¼¥Ö¥ëA ºÆÀ¸À®
+      // ãƒ†ãƒ¼ãƒ–ãƒ«A å†ç”Ÿæˆ
       $.createSkeletonTable(data, $tableA_row, domA, $tableA_tbody);
       $.addDataTableA();
 
-      // ¥Æ¡¼¥Ö¥ë¥½¡¼¥Èµ¡Ç½ÀßÄê
+      // ãƒ†ãƒ¼ãƒ–ãƒ«ã‚½ãƒ¼ãƒˆæ©Ÿèƒ½è¨­å®š
       $.setTableSorter();
 
     }
 
-    // ¥Æ¡¼¥Ö¥ëA <input type="checkbox">
+    // ãƒ†ãƒ¼ãƒ–ãƒ«A <input type="checkbox">
     if (e.target.nodeName === 'INPUT') {
       if ($tableA_rows_length !== 1 && isShiftKey && e.which === 1) {
         var $row_index = $(this).index();
 
-        // ÁªÂò¤µ¤ì¤¿¹Ô¥¤¥ó¥Ç¥Ã¥¯¥¹¤ò selectedRowIndexes ¤Ë³ÊÇ¼
+        // é¸æŠã•ã‚ŒãŸè¡Œã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’ selectedRowIndexes ã«æ ¼ç´
         selectedRowIndexes.push($row_index);
 
-        // ¾º½ç¥½¡¼¥È
+        // æ˜‡é †ã‚½ãƒ¼ãƒˆ
         selectedRowIndexes.sort(function(a, b) { return a - b });
 
         var min = selectedRowIndexes[0] + 1;
@@ -468,7 +454,7 @@ $(function() {
           array_range.push(i);
         }
 
-        // Ê£¿ôÁªÂò
+        // è¤‡æ•°é¸æŠ
         if (!e.target.checked) {
           $(this).addClass('selected').children('td').addClass('current');
 
@@ -477,7 +463,7 @@ $(function() {
             $tableA_rows.eq(v).find('input[type="checkbox"]').prop('checked', true);
           });
         }
-        // Ê£¿ôÁªÂò²ò½ü
+        // è¤‡æ•°é¸æŠè§£é™¤
         else {
           $(this).removeClass('selected').children('td').removeClass('current');
 
@@ -487,7 +473,7 @@ $(function() {
           });
         }
 
-        // selectedRowIndexes ½é´ü²½
+        // selectedRowIndexes åˆæœŸåŒ–
         if (selectedRowIndexes.length >= 2) selectedRowIndexes = [];
       } else {
         if (!e.target.checked) {
@@ -498,17 +484,17 @@ $(function() {
       }
     }
 
-    // ¥Æ¡¼¥Ö¥ëA <tr> shift + click -> Ê£¿ôÁªÂò¡¿²ò½ü
+    // ãƒ†ãƒ¼ãƒ–ãƒ«A <tr> shift + click -> è¤‡æ•°é¸æŠï¼è§£é™¤
     else if ($tableA_rows_length !== 1 && isShiftKey && e.which === 1) {
       var $row_index = $(this).index();
 
-      // ÁªÂò¤µ¤ì¤¿¹Ô¥¤¥ó¥Ç¥Ã¥¯¥¹¤ò selectedRowIndexes ¤Ë³ÊÇ¼
+      // é¸æŠã•ã‚ŒãŸè¡Œã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’ selectedRowIndexes ã«æ ¼ç´
       selectedRowIndexes.push($row_index);
 
-      // ¾º½ç¥½¡¼¥È
+      // æ˜‡é †ã‚½ãƒ¼ãƒˆ
       selectedRowIndexes.sort(function(a, b) { return a - b });
 
-      // Ê£¿ôÁªÂò
+      // è¤‡æ•°é¸æŠ
       if (!$(this).hasClass('selected')) {
         $(this).addClass('selected').children('td').addClass('current');
         $(this).find('input[type="checkbox"]').prop('checked', true);
@@ -520,7 +506,7 @@ $(function() {
           ++i;
         }
       }
-      // Ê£¿ôÁªÂò²ò½ü
+      // è¤‡æ•°é¸æŠè§£é™¤
       else {
         $(this).removeClass('selected').children('td').removeClass('current');
         $(this).find('input[type="checkbox"]').prop('checked', false);
@@ -533,35 +519,35 @@ $(function() {
         }
       }
 
-      // selectedRowIndexes ½é´ü²½
+      // selectedRowIndexes åˆæœŸåŒ–
       if (selectedRowIndexes.length >= 2) selectedRowIndexes = [];
     }
 
-    // selectedRowIndexes ½é´ü²½
+    // selectedRowIndexes åˆæœŸåŒ–
     if ($tableA_rows_length === 1) selectedRowIndexes = [];
 
-    // ¥¹¥­¥ã¥ó¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹
+    // ã‚¹ã‚­ãƒ£ãƒ³ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹
     $.scanAllCheckbox();
   });
 
-  // ¥Æ¡¼¥Ö¥ëB <tr> ÆÃ¼ì¥­¡¼ + click ¥¤¥Ù¥ó¥È½èÍı
+  // ãƒ†ãƒ¼ãƒ–ãƒ«B <tr> ç‰¹æ®Šã‚­ãƒ¼ + click ã‚¤ãƒ™ãƒ³ãƒˆå‡¦ç†
   $(document).on('mousedown', '#tableB tbody tr', function(e) {
     e.preventDefault();
 
     var $tableB_rows = $('#tableB tbody tr');
     var $tableB_rows_length = $tableB_rows.length;
 
-    // ¥Æ¡¼¥Ö¥ëB <tr> shift + click -> Ê£¿ôÁªÂò¡¿²ò½ü
+    // ãƒ†ãƒ¼ãƒ–ãƒ«B <tr> shift + click -> è¤‡æ•°é¸æŠï¼è§£é™¤
     if ($tableB_rows_length !== 1 && isShiftKey && e.which === 1) {
       var $row_index = $(this).index();
 
-      // ÁªÂò¤µ¤ì¤¿¹Ô¥¤¥ó¥Ç¥Ã¥¯¥¹¤ò selectedRowIndexes ¤Ë³ÊÇ¼
+      // é¸æŠã•ã‚ŒãŸè¡Œã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’ selectedRowIndexes ã«æ ¼ç´
       selectedRowIndexes.push($row_index);
 
-      // ¾º½ç¥½¡¼¥È
+      // æ˜‡é †ã‚½ãƒ¼ãƒˆ
       selectedRowIndexes.sort(function(a, b) { return a - b });
 
-      // Ê£¿ôÁªÂò
+      // è¤‡æ•°é¸æŠ
       if (!$(this).hasClass('selected')) {
         $(this).addClass('selected').children('td').addClass('current');
 
@@ -571,7 +557,7 @@ $(function() {
           ++i;
         }
       }
-      // Ê£¿ôÁªÂò²ò½ü
+      // è¤‡æ•°é¸æŠè§£é™¤
       else {
         $(this).removeClass('selected').children('td').removeClass('current');
 
@@ -582,7 +568,7 @@ $(function() {
         }
       }
 
-      // selectedRowIndexes ½é´ü²½
+      // selectedRowIndexes åˆæœŸåŒ–
       if (i === selectedRowIndexes[1] + 1) selectedRowIndexes = [];
     }
     else {

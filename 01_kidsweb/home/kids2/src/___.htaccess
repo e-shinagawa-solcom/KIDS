@@ -1,7 +1,5 @@
 AddType application/x-httpd-php .html
 
-#php_value include_path /Users/solcom/Desktop/Git/KIDS/01_kidsweb/home/kids2/lib
-#php_value include_path E:/Source/Repos/solcom-net/KIDS/01_kidsweb/home/kids2/lib
 php_value include_path /Users/esash/Desktop/solcom/git/KIDS2/01_kidsweb/home/kids2/lib
 
 # Added by k.saito
@@ -22,3 +20,4 @@ AuthType 	Basic
 order deny,allow
 deny from all
 </Files>
+

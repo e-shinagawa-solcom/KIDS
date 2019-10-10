@@ -133,9 +133,10 @@ $(function() {
    */
   $.scanAllCheckbox = function() {
     var $all_rows = $('tbody tr', $tableA);
-    var $all_checkbox = $all_rows.find('input[type="checkbox"]');
+    var $all_checkbox = $all_rows.find('.checkbox input[type="checkbox"].check');
 
     // 有効 <tr> ＊選択可能行
+    var $enabled_rows = $all_rows.find('.checkbox input[type="checkbox"].check').not(':disabled');
     var count_checked = 0;
     var count_disabled = 0;
 
@@ -155,15 +156,15 @@ $(function() {
 
     $.each($all_checkbox, function(i) {
       // チェックボックスがひとつでも外れている場合、全選択／解除チェックボックスを寝かす
-      if (!$(this).closest('tr').hasClass('selected')) {
+      if (!$(this).prop('checked')) {
         $('#allChecked').prop('checked', false);
       }
 
       // チェックボックスがすべてチェックされた場合、全選択／解除チェックボックスを立てる
-      if ($(this).closest('tr').hasClass('selected')) {
+      if ($(this).prop('checked')) {
         ++count_checked;
       }
-      if ($all_rows.length === count_checked) {
+      if ($enabled_rows.length === count_checked) {
         $('#allChecked').prop('checked', true);
       }
 
@@ -238,16 +239,30 @@ $(function() {
   $(document).on('change', '#allChecked', function(e) {
     e.preventDefault();
 
-    var $all_rows = $('tbody tr', $tableA);
-    var $all_rows_checkbox = $('input[type="checkbox"]', $tableA);
+    var $all_rows_checkbox = $('.checkbox input[type="checkbox"].check', $tableA);
 
     if (e.target.checked) {
-      $all_rows.addClass('selected');
       $all_rows_checkbox.not(':disabled').prop('checked', true).closest('tr').children('td').addClass('current');
     } else {
-      $all_rows.removeClass('selected');
       $all_rows_checkbox.prop('checked', false).closest('tr').children('td').removeClass('current');
     }
+  });
+
+  // テーブルA 行選択／解除
+  $(document).on('change', '#tableA .checkbox input[type="checkbox"].check', function(e) {
+    e.preventDefault();
+    var $self_row = $(this).closest('tr');
+
+    if (e.target.checked) {
+      $self_row.addClass('selected');
+      $self_row.children('td').addClass('current');
+    } else {
+      $self_row.removeClass('selected');
+      $self_row.children('td').removeClass('current');
+    }
+
+    // スキャンチェックボックス
+    $.scanAllCheckbox();
   });
 
   // テーブルA 追加ボタン
@@ -255,11 +270,11 @@ $(function() {
     e.preventDefault();
 
     var $all_rows = $('tbody tr', $tableA);
-    var $all_checkbox = $all_rows.find('input[type="checkbox"]');
+    var $all_checkbox = $all_rows.find('.checkbox input[type="checkbox"].check');
     var checked = [];
 
     $.each($all_rows, function() {
-      var $isChecked = $(this).find('input[type="checkbox"]').prop('checked');
+      var $isChecked = $(this).find('.checkbox input[type="checkbox"].check').prop('checked');
       checked.push($isChecked);
     });
 
@@ -369,7 +384,7 @@ $(function() {
     selectedRowIndexes = [];
 
     var $all_rows = $('tbody tr', $tableA);
-    var $all_checkbox = $all_rows.find('input[type="checkbox"]');
+    var $all_checkbox = $all_rows.find('.checkbox input[type="checkbox"].check');
 
     // チェックボックスのチェックをすべて解除
     $.each($all_checkbox, function() {
@@ -420,7 +435,7 @@ $(function() {
     }
   });
 
-  // テーブルA イベント処理
+  // テーブルA <tr> 特殊キー + click イベント処理
   $(document).on('mousedown', '#tableA tbody tr', function(e) {
     e.preventDefault();
 
@@ -447,59 +462,10 @@ $(function() {
 
       // テーブルソート機能設定
       $.setTableSorter();
-
-    }
-
-    // テーブルA <input type="checkbox">
-    if (e.target.nodeName === 'INPUT') {
-      if ($tableA_rows_length !== 1 && isShiftKey && e.which === 1) {
-        var $row_index = $(this).index();
-
-        // 選択された行インデックスを selectedRowIndexes に格納
-        selectedRowIndexes.push($row_index);
-
-        // 昇順ソート
-        selectedRowIndexes.sort(function(a, b) { return a - b });
-
-        var min = selectedRowIndexes[0] + 1;
-        var max = selectedRowIndexes[1] - 1;
-        var array_range = [];
-        for (var i = min; i <= max; ++i) {
-          array_range.push(i);
-        }
-
-        // 複数選択
-        if (!e.target.checked) {
-          $(this).addClass('selected').children('td').addClass('current');
-
-          $.each(array_range, function(i, v) {
-            $tableA_rows.eq(v).addClass('selected').children('td').addClass('current');
-            $tableA_rows.eq(v).find('input[type="checkbox"]').prop('checked', true);
-          });
-        }
-        // 複数選択解除
-        else {
-          $(this).removeClass('selected').children('td').removeClass('current');
-
-          $.each(array_range, function(i, v) {
-            $tableA_rows.eq(v).removeClass('selected').children('td').removeClass('current');
-            $tableA_rows.eq(v).find('input[type="checkbox"]').prop('checked', false);
-          });
-        }
-
-        // selectedRowIndexes 初期化
-        if (selectedRowIndexes.length >= 2) selectedRowIndexes = [];
-      } else {
-        if (!e.target.checked) {
-          $(this).addClass('selected').children('td').addClass('current');
-        } else {
-          $(this).removeClass('selected').children('td').removeClass('current');
-        }
-      }
     }
 
     // テーブルA <tr> shift + click -> 複数選択／解除
-    else if ($tableA_rows_length !== 1 && isShiftKey && e.which === 1) {
+    if ($tableA_rows_length !== 1 && isShiftKey && e.which === 1) {
       var $row_index = $(this).index();
 
       // 選択された行インデックスを selectedRowIndexes に格納
@@ -508,33 +474,33 @@ $(function() {
       // 昇順ソート
       selectedRowIndexes.sort(function(a, b) { return a - b });
 
-      // 複数選択
-      if (!$(this).hasClass('selected')) {
-        $(this).addClass('selected').children('td').addClass('current');
-        $(this).find('input[type="checkbox"]').prop('checked', true);
-
-        var i = selectedRowIndexes[0];
-        while (i <= selectedRowIndexes[1]) {
-          $tableA_rows.eq(i).addClass('selected').children('td').addClass('current');
-          $tableA_rows.eq(i).find('input[type="checkbox"]').prop('checked', true);
-          ++i;
-        }
-      }
       // 複数選択解除
-      else {
+      if ($(this).hasClass('selected')) {
         $(this).removeClass('selected').children('td').removeClass('current');
-        $(this).find('input[type="checkbox"]').prop('checked', false);
+        $(this).find('.checkbox input[type="checkbox"].check').prop('checked', false);
 
         var i = selectedRowIndexes[0];
         while (i <= selectedRowIndexes[1]) {
           $tableA_rows.eq(i).removeClass('selected').children('td').removeClass('current');
-          $tableA_rows.eq(i).find('input[type="checkbox"]').prop('checked', false);
+          $tableA_rows.eq(i).find('.checkbox input[type="checkbox"].check').prop('checked', false);
+          ++i;
+        }
+      }
+      // 複数選択
+      else {
+        $(this).addClass('selected').children('td').addClass('current');
+        $(this).find('.checkbox input[type="checkbox"].check').prop('checked', true);
+
+        var i = selectedRowIndexes[0];
+        while (i <= selectedRowIndexes[1]) {
+          $tableA_rows.eq(i).addClass('selected').children('td').addClass('current');
+          $tableA_rows.eq(i).find('.checkbox input[type="checkbox"].check').prop('checked', true);
           ++i;
         }
       }
 
       // selectedRowIndexes 初期化
-      if (selectedRowIndexes.length >= 2) selectedRowIndexes = [];
+      if (i === selectedRowIndexes[1] + 1) selectedRowIndexes = [];
     }
 
     // selectedRowIndexes 初期化
@@ -561,18 +527,8 @@ $(function() {
       // 昇順ソート
       selectedRowIndexes.sort(function(a, b) { return a - b });
 
-      // 複数選択
-      if (!$(this).hasClass('selected')) {
-        $(this).addClass('selected').children('td').addClass('current');
-
-        var i = selectedRowIndexes[0];
-        while (i <= selectedRowIndexes[1]) {
-          $tableB_rows.eq(i).addClass('selected').children('td').addClass('current');
-          ++i;
-        }
-      }
       // 複数選択解除
-      else {
+      if ($(this).hasClass('selected')) {
         $(this).removeClass('selected').children('td').removeClass('current');
 
         var i = selectedRowIndexes[0];
@@ -581,11 +537,20 @@ $(function() {
           ++i;
         }
       }
+      // 複数選択
+      else {
+        $(this).addClass('selected').children('td').addClass('current');
+
+        var i = selectedRowIndexes[0];
+        while (i <= selectedRowIndexes[1]) {
+          $tableB_rows.eq(i).addClass('selected').children('td').addClass('current');
+          ++i;
+        }
+      }
 
       // selectedRowIndexes 初期化
       if (i === selectedRowIndexes[1] + 1) selectedRowIndexes = [];
-    }
-    else {
+    } else {
       if ($(this).hasClass('selected')) {
         $(this).removeClass('selected').children('td').removeClass('current');
       } else {
