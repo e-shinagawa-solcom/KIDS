@@ -74,8 +74,8 @@ Loading();
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_detail" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_detail" class="is-display" type="checkbox">
+                    <input name="IsSearch_btnDetail" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_btnDetail" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label--text-only">詳細</span>
@@ -83,8 +83,8 @@ Loading();
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_record" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_record" class="is-display" type="checkbox">
+                    <input name="IsSearch_btnHistory" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_btnHistory" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label--text-only">履歴</span>
@@ -118,8 +118,18 @@ Loading();
                     <input name="IsDisplay_strProductName" class="is-display" type="checkbox">
                 </span>
 				<span class="regist-label">
-					<span class="regist-label__text">製品名</span>
+					<span class="regist-label__text">製品名称（日本語）</span>
                     <input class="Txt46L" name="strProductName" type="text" value="" maxlength="80" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this );" tabindex="">
+				</span>
+            </div>
+            <div class="regist-line">
+                <span class="search-label--checkbox">
+                    <input name="IsSearch_strProductEnglishName" class="is-search" type="checkbox">
+                    <input name="IsDisplay_strProductEnglishName" class="is-display" type="checkbox">
+                </span>
+				<span class="regist-label">
+					<span class="regist-label__text">製品名称（英語）</span>
+                    <input class="Txt46L" name="strProductEnglishName" type="text" value="" maxlength="80" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this );" tabindex="">
 				</span>
 			</div>
             <div class="regist-line">
@@ -369,8 +379,8 @@ Loading();
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_delete" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_delete" class="is-display" type="checkbox">
+                    <input name="IsSearch_btnDelete" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_btnDelete" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label--text-only">削除</span>

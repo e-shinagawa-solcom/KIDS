@@ -26,6 +26,17 @@ class updateOtherCellsController extends estimateOtherCellsController {
         $mainProductDivision = DEF_SALES_DIVISION_CODE_PRODUCT_SALES;
         $mainProduct = DEF_SALES_CLASS_CODE_MAIN_PRODUCT;
 
+        // 集計用変数のセット
+        $receiveProductTotalPrice = 0;
+        $receiveProductTotalQuantity = 0;
+        $productionQuantity = 0;
+        $receiveFixedCostTotalPrice = 0;
+        $receiveFixedCostTotalQuantity = 0;
+        $orderFixedCostTotalPrice = 0;
+        $depreciationCost = 0;
+        $orderFixedCostNotDepreciation = 0;
+        $memberCost = 0;
+
         foreach ($objRowList as $objRow) {
 
             if ($objRow->invalidFlag) {
@@ -107,7 +118,7 @@ class updateOtherCellsController extends estimateOtherCellsController {
         // 製品利益
         $productProfit = $productTotalPrice - $manufacturingCost;
         // 製品利益率
-        $productProfitRate = $manufacturingCost ? ($productProfit / $manufacturingCost) : '';
+        $productProfitRate = $productTotalPrice ? ($productProfit / $productTotalPrice) : '';
         // 固定費売上高
         $fixedCostTotalPrice = $receiveFixedCostTotalPrice;
         // 固定費利益

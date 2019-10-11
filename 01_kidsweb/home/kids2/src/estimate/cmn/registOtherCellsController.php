@@ -29,6 +29,17 @@ class registOtherCellsController extends estimateOtherCellsController {
         $cellMainProduct = $cellAddressList[workSheetConst::HIDDEN_MAIN_PRODUCT];
         $mainProduct = $sheet->getCell($cellMainProduct)->getCalculatedValue();
 
+        // ½¸·×ÍÑÊÑ¿ô¤Î¥»¥Ã¥È
+        $receiveProductTotalPrice = 0;
+        $receiveProductTotalQuantity = 0;
+        $productionQuantity = 0;
+        $receiveFixedCostTotalPrice = 0;
+        $receiveFixedCostTotalQuantity = 0;
+        $orderFixedCostTotalPrice = 0;
+        $depreciationCost = 0;
+        $orderFixedCostNotDepreciation = 0;
+        $memberCost = 0;
+
         foreach ($objRowList as $objRow) {
             if ($objRow->invalidFlag === false) {
                 $areaCode = $objRow->areaCode;
@@ -103,19 +114,19 @@ class registOtherCellsController extends estimateOtherCellsController {
         // À½ÉÊÍø±×
         $productProfit = $productTotalPrice - $manufacturingCost;
         // À½ÉÊÍø±×Î¨
-        $productProfitRate = $manufacturingCost ? ($productProfit / $productTotalPrice) : '';
+        $productProfitRate = $productTotalPrice ? ($productProfit / $productTotalPrice) : 0;
         // ¸ÇÄêÈñÇä¾å¹â
         $fixedCostTotalPrice = $receiveFixedCostTotalPrice;
         // ¸ÇÄêÈñÍø±×
         $fixedCostProfit = $fixedCostTotalPrice - $orderFixedCostNotDepreciation;
         // ¸ÇÄêÈñÍø±×Î¨
-        $fixedCostProfitRate = $fixedCostTotalPrice ? ($fixedCostProfit / $fixedCostTotalPrice) : '';
+        $fixedCostProfitRate = $fixedCostTotalPrice ? ($fixedCostProfit / $fixedCostTotalPrice) : 0;
         // ÁíÇä¾å¹â
         $salesAmount = $productTotalPrice + $fixedCostTotalPrice;
         // Çä¾åÁíÍø±×
         $profit = $productProfit + $fixedCostProfit;
         // Íø±×Î¨
-        $profitRate = $salesAmount ? ($profit / $salesAmount) : '';
+        $profitRate = $salesAmount ? ($profit / $salesAmount) : 0;
         // É¸½à³ä¹ç
         $standardRate = $standardRateMaster;
         // ´ÖÀÜÀ½Â¤·ÐÈñ
@@ -123,7 +134,7 @@ class registOtherCellsController extends estimateOtherCellsController {
         // ±Ä¶ÈÍø±×
         $operatingProfit = $profit - $indirectCost;
         // ±Ä¶ÈÍø±×Î¨
-        $operatingProfitRate = $salesAmount ? ($operatingProfit / $salesAmount) : '';
+        $operatingProfitRate = $salesAmount ? ($operatingProfit / $salesAmount) : 0;
         // ÉôºàÈñ¸Ä¿ô
         $memberQuantity = $productionQuantity;
         // ½þµÑÈñ¸Ä¿ô
