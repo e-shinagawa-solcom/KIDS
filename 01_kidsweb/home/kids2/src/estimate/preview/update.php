@@ -207,6 +207,9 @@
 		}	
 	}
 
+	// 行番号でソートする
+	ksort($objRowList);
+
 	// 輸入費用計算用変数に関税計算用変数を代入
 	$importCost = $tariff;
 
