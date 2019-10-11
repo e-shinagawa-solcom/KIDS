@@ -214,14 +214,14 @@ jQuery(function($){
             return false;
         }
         if(from.length){
-            if(!from.match(/^\d{8}(_\d{2})?$/)){
+            if(!from.match(/^\d{8}(_\d{2})?$/) && !from.match(/^\d{9}(_\d{2})?$/)){
                 alert("発注NO.FROMの書式に誤りがあります");
                 result = false;
                 return false;
             }
         }
         if(to.length){
-            if(!to.match(/^\d{8}(_\d{2})?$/)){
+            if(!to.match(/^\d{8}(_\d{2})?$/) && !to.match(/^\d{9}(_\d{2})?$/)){
                 alert("発注NO.TOの書式に誤りがあります");
                 result = false;
                 return false;
