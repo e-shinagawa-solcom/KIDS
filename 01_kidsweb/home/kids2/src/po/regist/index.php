@@ -167,10 +167,7 @@
 	$aryData["strLocationName"]       = $aryOrderHeader[0]["strcompanydisplayname2"];
 	$aryData["lngRevisionNo"]         = $aryOrderHeader[0]["lngrevisionno"];
 	
-	// »ÙÊ§¾ò·ï¥×¥ë¥À¥¦¥ó
-	$strPulldownPaycondition = fncPulldownMenu(0, 0, "", $objDB);
-	$aryData["optPayCondition"] = $strPulldownPaycondition;
-
+	$aryData["lngPayConditionCode"]      = fncPulldownMenu(0, 0, "", $objDB);
 	// ÌÀºÙ
 	// $aryDetail = [];
 	// for($i = 0; $i < count($aryOrderHeader); $i++){
