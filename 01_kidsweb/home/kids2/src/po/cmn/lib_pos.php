@@ -20,6 +20,7 @@
  */
 // ----------------------------------------------------------------------------
 
+
 /**
  * 検索項目から一致する最新の発注データを取得するSQL文の作成関数
  *
@@ -35,7 +36,9 @@
  *	@return Array 	$strSQL 検索用SQL文 OR Boolean FALSE
  *	@access public
  */
-function fncGetSearchPurchaseSQL ( $aryViewColumn, $arySearchColumn, $arySearchDataColumn, $objDB, $strOrderCode, $lngOrderNo, $bytAdminMode, $lngRevisionNo = -999 )
+ 
+ 
+function fncGetSearchPurchaseSQL ( $aryViewColumn, $arySearchColumn, $arySearchDataColumn, $objDB, $strOrderCode, $lngOrderNo, $bytAdminMode)
 {
 
 	// 表示用カラムに設定されている内容を検索用に文字列設定
@@ -550,6 +553,7 @@ function fncGetSearchPurchaseSQL ( $aryViewColumn, $arySearchColumn, $arySearchD
 	$aryDetailFrom[] = "	,od1.lngOrderDetailNo";
 	$aryDetailFrom[] = "	,od1.lngRevisionNo";
 	$aryDetailFrom[] = "	,p.strProductCode";
+	$aryDetailFrom[] = "	,p.strReviseCode";
 	$aryDetailFrom[] = "	,mg.strGroupDisplayCode";
 	$aryDetailFrom[] = "	,mg.strGroupDisplayName";
 	$aryDetailFrom[] = "	,mu.struserdisplaycode";
@@ -571,7 +575,23 @@ function fncGetSearchPurchaseSQL ( $aryViewColumn, $arySearchColumn, $arySearchD
 	$aryDetailFrom[] = "    ,od1.strReviseCode";
 	$aryDetailFrom[] = "    ,mp.dtmexpirationdate";
 	$aryDetailFrom[] = "	FROM t_OrderDetail od1";
-	$aryDetailFrom[] = "		LEFT JOIN m_Product p ON od1.strProductCode = p.strProductCode";
+	$aryDetailFrom[] = "		INNER JOIN (";
+	$aryDetailFrom[] = "		    select m_product.*";
+	$aryDetailFrom[] = "		from m_product";
+	$aryDetailFrom[] = "		inner join (";
+	$aryDetailFrom[] = "		select";
+	$aryDetailFrom[] = "		strProductCode";
+	$aryDetailFrom[] = "		,strrevisecode";
+	$aryDetailFrom[] = "		,MAX(lngrevisionno) as lngrevisionno";
+	$aryDetailFrom[] = "		from m_product";
+	$aryDetailFrom[] = "		group by strProductCode, strrevisecode";
+	$aryDetailFrom[] = "		) a";
+	$aryDetailFrom[] = "		on a.strProductCode = m_product.strproductcode";
+	$aryDetailFrom[] = "		and a.strrevisecode = m_product.strrevisecode";
+	$aryDetailFrom[] = "		and a.lngrevisionno = m_product.lngrevisionno";
+	$aryDetailFrom[] = "		) p ON od1.strProductCode = p.strProductCode and p.strrevisecode = od1.strrevisecode";
+
+//	$aryDetailFrom[] = "		LEFT JOIN m_Product p ON od1.strProductCode = p.strProductCode";
 	$aryDetailFrom[] = "		left join m_group mg on p.lnginchargegroupcode = mg.lnggroupcode";
 	$aryDetailFrom[] = "		left join m_user  mu on p.lnginchargeusercode = mu.lngusercode";
 	$aryDetailFrom[] = "		left join m_tax  mt on mt.lngtaxcode = od1.lngtaxcode";
@@ -662,7 +682,7 @@ function fncGetSearchPurchaseSQL ( $aryViewColumn, $arySearchColumn, $arySearchD
 	$aryOutQuery[] = implode("\n", $aryQuery);
 
 	// 明細行条件があった場合の 条件連結
-	$aryOutQuery[] = " AND od.lngOrderNo = o.lngOrderNo";
+//	$aryOutQuery[] = " AND od.lngOrderNo = o.lngOrderNo";
 
 
 	/////////////////////////////////////////////////////////////
@@ -687,11 +707,6 @@ function fncGetSearchPurchaseSQL ( $aryViewColumn, $arySearchColumn, $arySearchD
 
 		}
 	}
-	if ( $lngRevisionNo != -999 )
-	{
-	    $aryOutQuery[] = " AND o.lngrevisionno = " . $lngRevisionNo;
-	}
-
 	// 管理モードの検索時、同じ発注コードのデータを取得する場合
 	if ( $strOrderCode or $bytAdminMode )
 	{
@@ -1061,7 +1076,7 @@ function fncGetOrderToProductSQL ( $aryDetailViewColumn, $lngOrderNo, $lngRevisi
 		// 製品コード
 		if ( $strViewColumnName == "strProductCode" )
 		{
-			$arySelectQuery[] = ", od.strProductCode as strProductCode";
+			$arySelectQuery[] = ", od.strProductCode || '_' || od.strReviseCode  as strProductCode";
 		}
 
 		// 部門
@@ -1195,7 +1210,7 @@ function fncGetOrderToProductSQL ( $aryDetailViewColumn, $lngOrderNo, $lngRevisi
 	$aryFromQuery[] = " FROM t_OrderDetail od";
 
 	// 追加表示用の参照マスタ対応
-	$aryFromQuery[] = " LEFT JOIN m_Product p USING (strProductCode)";
+	$aryFromQuery[] = "   LEFT JOIN m_Product p on p.strProductCode = od.strProductCode and p.strReviseCode = od.strReviseCode";
 	$aryFromQuery[] = " left join m_group mg on mg.lnggroupcode = p.lnginchargegroupcode";
 	$aryFromQuery[] = " left join m_user  mu on mu.lngusercode = p.lnginchargeusercode";
 
@@ -1274,6 +1289,8 @@ function fncGetOrderToProductSQL ( $aryDetailViewColumn, $lngOrderNo, $lngRevisi
 function fncSetPurchaseHeadTable ( $lngColumnCount, $aryHeadResult, $aryDetailResult, $aryDetailViewColumn, $aryHeadViewColumn, 
 									$aryData, $aryUserAuthority, $objDB, $objCache, $lngReviseTotalCount, $lngReviseCount, $aryNewResult )
 {
+	include_once('conf.inc');
+	require_once (LIB_DEBUGFILE);
 	for ( $i = 0; $i < count($aryDetailResult); $i++ )
 	{
 		$aryHtml[] =  "<tr>";
@@ -1503,6 +1520,7 @@ function fncSetPurchaseHeadTable ( $lngColumnCount, $aryHeadResult, $aryDetailRe
 						$strText .= "      ";
 					}
 					$strText .= " " . $aryDetailResult[$i]["strstocksubjectname"];
+//fncDebug("kids2.log", $strText , __FILE__, __LINE__, "a" );
 					$TdData .= "\t<td class=\"td-lngstocksubjectcode\">";
 					$TdData .= $strText;
 				}
@@ -1523,10 +1541,10 @@ function fncSetPurchaseHeadTable ( $lngColumnCount, $aryHeadResult, $aryDetailRe
 								$strStockItemName = fncGetMasterValue( "m_stockitem", "lngstockitemcode", "strstockitemname" , 
 									$aryDetailResult[$i]["lngstockitemcode"], "lngstocksubjectcode = " . $aryDetailResult[$i]["lngstocksubjectcode"], $objDB );
 								// 仕入名称の設定
-								$aryStockItem[0] = $strStockItemName;
+								$aryStockItem = $strStockItemName;
 								$objCache->SetValue("lngstocksubjectcode:lngstockitemcode", $strSubjectItem, $aryStockItem);
 							}
-							$strText .= " " . $aryStockItem[0];
+							$strText .= " " . $aryStockItem;
 						}
 					}
 					else
@@ -1758,6 +1776,8 @@ function fncSetPurchaseOrderHtml($aryViewColumn, $aryResult, $aryUserAuthority){
 function fncSetPurchaseTable ( $aryResult, $arySearchColumn, $aryViewColumn, $aryData, $aryUserAuthority, $aryTytle, $objDB, $objCache, $aryTableName )
 {
 	// 準備
+	include_once('conf.inc');
+	require_once (LIB_DEBUGFILE);
 
 	// 表示カラムのヘッダ部と明細部の分離処理
 	for ( $i = 0; $i < count($aryViewColumn); $i++ )
@@ -1912,7 +1932,7 @@ function fncSetPurchaseTable ( $aryResult, $arySearchColumn, $aryViewColumn, $ar
 				{
 					// 明細行数の調査
 					$strDetailQuery = fncGetOrderToProductSQL ( $aryDetailViewColumn, $aryResult[$i]["lngorderno"], $aryResult[$i]["lngrevisionno"], $aryData, $objDB );
-
+//fncDebug("kids2.log", $strDetailQuery , __FILE__, __LINE__, "a" );
 					// クエリー実行
 					if ( !$lngDetailResultID = $objDB->execute( $strDetailQuery ) )
 					{
