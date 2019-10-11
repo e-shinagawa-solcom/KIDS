@@ -29,14 +29,12 @@
 		<link rel="stylesheet" href="/pc/regist/css/forms.css">
 		<!-- datepickerの要素指定 -->
 		<script src="/pc/regist/js/datepicker.js" defer></script>
-		<!-- マスタデータ検索 -->
-		<script src="/pc/regist/js/invoke-master-search.js" defer></script>
+        <!-- マスタ検索呼び出し -->
+        <script src="/search/cmn/js/invoke-master-search.js" defer></script>
 		<!-- フォーム ボタン -->
 		<script src="/pc/regist/js/form-buttons.js" defer></script>
 		<!-- フォーム検証 -->
 		<script src="/pc/regist/js/validate-form.js" defer></script>
-		<!-- msw表示切替 -->
-		<script src="/pc/regist/js/msw.js" defer></script>
 	</header3>
 
 	<bodyonload>
@@ -111,7 +109,7 @@
 						<span class="regist-label__required-text">仕入先</span>
 						<input class="TxtStyle05L" name="lngCustomerCode" type="text" value="_%strcustomerdisplaycode%_">
 						<input class="disTxt46L" name="strCustomerName" type="text"  value="_%strcustomerdisplayname%_" readonly>
-						<img class="msw-button button" invokeMSWName="msw-customer" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+						<img class="msw-button button" invokeMSWName="msw-supplier" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
 					</span>
 					<span class="regist-label regist-label--right">
 						<span class="regist-label__text">レートタイプ</span>
@@ -126,7 +124,7 @@
 						<span class="regist-label__required-text">納品場所</span>
 						<input class="TxtStyle05L" name="lngLocationCode" type="text" value="_%strdeliverydisplaycode%_">
 						<input class="disTxt46L" name="strLocationName" type="text"  value="_%strdeliverydisplayname%_" readonly>
-						<img class="msw-button button" invokeMSWName="msw-factory" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+						<img class="msw-button button" invokeMSWName="msw-location" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
 					</span>
 					<span class="regist-label regist-label--right">
 						<span class="regist-label__text">適用レート</span>
@@ -197,11 +195,11 @@
 	</div>
 </form>
 <div class="msw-loadpoints">
-	<!-- MSW 工場マスタ検索 -->
-	<iframe class="msw-factory" src="/mold/cmn/msw/factory/mswfactory.html" frameborder="0">
+	<!-- MSW 納品場所マスタ検索 -->
+	<iframe class="msw-location" src="/mold/cmn/msw/location/mswlocation.html" frameborder="0">
 	</iframe>
-	<!-- MSW 顧客マスタ検索 -->
-	<iframe class="msw-customer" src="/mold/cmn/msw/customer/mswcustomer.html" frameborder="0">
+	<!-- MSW 仕入先マスタ検索 -->
+	<iframe class="msw-supplier" src="/mold/cmn/msw/supplier/mswsupplier.html" frameborder="0">
 	</iframe>
 </div>
 

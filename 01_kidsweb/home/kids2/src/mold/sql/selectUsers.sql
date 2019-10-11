@@ -1,14 +1,10 @@
-SELECT DISTINCT
-      mu.struserdisplaycode usercode
-    , mu.struserdisplayname username
-FROM
-    m_group mg,  m_grouprelation mgr,  m_user mu
-WHERE
-    mu.lngusercode = mgr.lngusercode
-AND mg.lnggroupcode = mgr.lnggroupcode
-AND mg.bytgroupdisplayflag = true
-AND mu.bytuserdisplayflag = true
-AND mg.strgroupdisplaycode LIKE '%' || $1 || '%'
-ORDER BY
-    mu.struserdisplaycode
+SELECT DISTINCT mu.struserdisplaycode usercode,mu.struserdisplayname username
+FROM m_user mu, m_company mc, m_attributerelation mal
+WHERE mc.lngcompanycode = mal.lngcompanycode 
+	AND mal.lngattributecode = 2
+	AND mu.lngcompanycode = mc.lngcompanycode
+	AND mc.bytcompanydisplayflag = true
+	AND mu.bytuserdisplayflag = true
+	AND mc.strcompanydisplaycode LIKE '%' || $1 || '%'
+ORDER BY mu.struserdisplaycode
 ;

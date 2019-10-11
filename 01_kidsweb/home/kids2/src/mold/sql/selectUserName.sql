@@ -1,7 +1,7 @@
 SELECT
-    mu.struserdisplayname userdisplayname
+    struserdisplayname userdisplayname 
 FROM
-    m_user mu
+    m_user
 WHERE
-      mu.struserdisplaycode = $1
+    struserdisplaycode = $1
 ;

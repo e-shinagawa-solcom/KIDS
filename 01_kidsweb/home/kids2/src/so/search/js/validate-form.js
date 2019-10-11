@@ -346,9 +346,9 @@
                 }
             },
             // ¸ÜµÒ            
-            lngCustomerCode: {
+            lngCustomerCompanyCode: {
                 required: function () {
-                    return $('input[name="IsSearch_lngCustomerCode"]').get(0).checked;
+                    return $('input[name="IsSearch_lngCustomerCompanyCode"]').get(0).checked;
                 }
             },
             // Ç¼´ü            
@@ -433,7 +433,7 @@
                 required: msgRequired
             },
             // ¸ÜµÒ            
-            lngCustomerCode: {
+            lngCustomerCompanyCode: {
                 required: msgRequired
             },
             // Ç¼´ü            

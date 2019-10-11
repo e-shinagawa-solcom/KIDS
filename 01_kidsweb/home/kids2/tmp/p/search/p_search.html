@@ -8,6 +8,8 @@
         <script src="/search/cmn/js/date.js" defer></script>
         <!-- チェックボックスの切り替え処理 -->
         <script src="/search/cmn/search/js/toggleCheckbox.js" defer></script>
+        <!-- マスタ検索呼び出し -->
+        <script src="/search/cmn/js/invoke-master-search.js" defer></script>
         <!-- msw 表示 -->
         <script src="/search/cmn/msw/cmn/js/msw.js" defer></script>
         <!-- COOKIE関連の処理(検索画面) -->
@@ -28,10 +30,6 @@
         <script src="/p/search/js/form-buttons.js" defer></script>
         <!-- フォームバリデーション -->
         <script src="/p/search/js/validate-form.js" defer></script>
-        <!-- マスタ検索呼び出し -->
-        <script src="/p/cmn/js/invoke-master-search.js" defer></script>
-        <!-- マスタ検索呼び出し -->
-        <script src="/p/cmn/js/msw.js" defer></script>
         <!-- COOKIE 表示チェックボックス 保存/復元 -->
         <script src="/search/cmn/js/cookie-display-items.js" defer></script>
         <!-- キーバインド -->
@@ -182,7 +180,8 @@
                     <span class="regist-label__text">入力者</span>
                     <input class="TxtStyle05L" name="lngInputUserCode" type="text" alt="InputUser">
                     <input class="disTxt46L" name="strInputUserName" type="text" readonly>
-                    <img class="msw-button button" invokeMSWName="msw-user" msw-before="pickupGroupCodeToNull" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                    <img class="msw-button button" invokeMSWName="msw-inputuser" src="/img/type01/msw/cmn/open_off_bt.gif"
+                        alt="msw">
                 </span>
             </div>
             <div class="regist-line">
@@ -206,19 +205,20 @@
                     <span class="regist-label__text">担当者</span>
                     <input class="TxtStyle05L" name="lngInChargeUserCode" type="text" alt="InChargeUser">
                     <input class="disTxt46L" name="strInChargeUserName" type="text" readonly>
-                    <img class="msw-button button" invokeMSWName="msw-user" msw-before="pickupGroupCode" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                    <img class="msw-button button" invokeMSWName="msw-inchargeuser" msw-before="pickupGroupCode" src="/img/type01/msw/cmn/open_off_bt.gif"
+                        alt="msw">
                 </span>
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_lngDevelopUsercode" class="is-search" type="checkbox">
-                    <input name="IsDisplay_lngDevelopUsercode" class="is-display" type="checkbox">
+                    <input name="IsSearch_lngDevelopUserCode" class="is-search" type="checkbox">
+                    <input name="IsDisplay_lngDevelopUserCode" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label__text">開発担当者</span>
-                    <input class="TxtStyle05L" name="lngDevelopUsercode" type="text" alt="DevelopUser">
+                    <input class="TxtStyle05L" name="lngDevelopUserCode" type="text" alt="DevelopUser">
                     <input class="disTxt46L" name="strDevelopUserName" type="text" readonly>
-                    <img class="msw-button button" invokeMSWName="msw-user" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                    <img class="msw-button button" invokeMSWName="msw-developuser" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
                 </span>
             </div>
             <div class="regist-line">
@@ -243,7 +243,7 @@
                 </span>
                 <span class="regist-label">
                     <span class="regist-label__text">顧客品番</span>
-                    <input class="TxtStyle05L" name="strGoodsCode" type="text" alt="DevelopUser">
+                    <input class="TxtStyle05L" name="strGoodsCode" type="text">
                 </span>
             </div>
             <div class="regist-line">
@@ -277,7 +277,7 @@
                     <span class="regist-label__text">顧客担当者</span>
                     <input class="TxtStyle05L" name="lngCustomerUserCode" type="text" alt="CustomerUser">
                     <input class="disTxt46L" name="strCustomerUserName" type="text" readonly>
-                    <img class="msw-button button" invokeMSWName="msw-user" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                    <img class="msw-button button" invokeMSWName="msw-user"  msw-before="pickupCompanyCode" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
                 </span>
             </div>
             <div class="regist-line">
@@ -376,7 +376,7 @@
                     <span class="regist-label__text">納品場所</span>
                     <input class="TxtStyle05L" name="lngDeliveryPlaceCode" type="text" alt="DeliveryPlace">
                     <input class="disTxt46L" name="strDeliveryPlaceName" type="text" readonly>
-                    <img class="msw-button button" invokeMSWName="msw-factory" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                    <img class="msw-button button" invokeMSWName="msw-location" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
                 </span>
             </div>
             <div class="regist-line">
@@ -514,10 +514,22 @@
         <!-- MSW 工場マスタ検索 -->
         <iframe class="msw-factory" src="/mold/cmn/msw/factory/mswfactory.html" frameborder="0">
         </iframe>
+        <!-- MSW 納品場所マスタ検索 -->
+        <iframe class="msw-location" src="/mold/cmn/msw/location/mswlocation.html" frameborder="0">
+        </iframe>
         <!-- MSW 担当部署マスタ検索 -->
         <iframe class="msw-group" src="/search/cmn/msw/group/mswgroup.html" frameborder="0">
         </iframe>
         <!-- MSW 担当者マスタ検索 -->
+        <iframe class="msw-inchargeuser" src="/search/cmn/msw/inchargeuser/mswinchargeuser.html" frameborder="0">
+        </iframe>
+        <!-- MSW 入力者マスタ検索 -->
+        <iframe class="msw-inputuser" src="/search/cmn/msw/inputuser/mswinputuser.html" frameborder="0">
+        </iframe>
+        <!-- MSW 開発担当者マスタ検索 -->
+        <iframe class="msw-developuser" src="/search/cmn/msw/developuser/mswdevelopuser.html" frameborder="0">
+        </iframe>
+        <!-- MSW 入力者マスタ検索 -->
         <iframe class="msw-user" src="/search/cmn/msw/user/mswuser.html" frameborder="0">
         </iframe>
     </div>

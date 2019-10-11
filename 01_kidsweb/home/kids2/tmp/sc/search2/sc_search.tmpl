@@ -76,7 +76,7 @@
                 </span>
                 <span class="regist-label">
                     <span class="regist-label__text">顧客</span>
-                    <input class="TxtStyle05L" name="lngCustomerCode" type="text">
+                    <input class="TxtStyle05L" name="lngCustomerCode" type="text" iscustomer="yes" alt="Customer">
                     <input class="disTxt46L" name="strCustomerName" type="text" readonly>
                     <img class="msw-button button" invokeMSWName="msw-customer" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
                 </span>
@@ -147,9 +147,9 @@
                 </span>
                 <span class="regist-label">
                     <span class="regist-label__text">納品先</span>
-                    <input class="TxtStyle05L" name="lngDeliveryPlaceCode" type="text">
+                    <input class="TxtStyle05L" name="lngDeliveryPlaceCode" type="text" alt="DeliveryPlace">
                     <input class="disTxt46L" name="strDeliveryPlaceName" type="text" readonly>
-                    <img class="msw-button button" invokeMSWName="msw-customer" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                    <img class="msw-button button" invokeMSWName="msw-location" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
                 </span>
             </div>
 			<div class="regist-line">
@@ -158,9 +158,9 @@
                 </span>
                 <span class="regist-label">
                     <span class="regist-label__text">起票者</span>
-                    <input class="TxtStyle05L" name="lngInsertUserCode"  type="text">
+                    <input class="TxtStyle05L" name="lngInsertUserCode"  type="text" alt="InsertUser">
                     <input class="disTxt46L" name="strInsertUserName"  type="text" readonly>
-                    <img class="msw-button button" invokeMSWName="msw-user" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                    <img class="msw-button button" invokeMSWName="msw-inputuser" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
                 </span>
             </div>
 			<div class="regist-line">
@@ -190,11 +190,11 @@
 		<!-- MSW 顧客マスタ検索 -->
 		<iframe class="msw-customer" src="/search/cmn/msw/customer/mswcustomer.html" frameborder="0">
 		</iframe>
-		<!-- MSW 担当部署マスタ検索 -->
-		<iframe class="msw-group" src="/search/cmn/msw/group/mswgroup.html" frameborder="0">
+		<!-- MSW　納品場所マスタ検索 -->
+		<iframe class="msw-location" src="/search/cmn/msw/location/mswlocation.html" frameborder="0">
 		</iframe>
-		<!-- MSW 担当者マスタ検索 -->
-		<iframe class="msw-user" src="/search/cmn/msw/user/mswuser.html" frameborder="0">
+		<!-- MSW 入力者マスタ検索 -->
+		<iframe class="msw-inputuser" src="/search/cmn/msw/inputuser/mswinputuser.html" frameborder="0">
 		</iframe>
 	</div>
 </div>

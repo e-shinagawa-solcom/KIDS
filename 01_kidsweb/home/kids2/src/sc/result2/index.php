@@ -127,8 +127,8 @@
 	// TODO:Õ◊ª≈ÕÕ≥Œ«ß
 	/*
 	//∏‹µ“
-	$aryCheck["lngCustomerCode"]		= "numenglish(0,4)";
-	$aryCheck["strCustomerName"]		= "length(0,50)";
+	$aryCheck["lngCustomerCompanyCode"]		= "numenglish(0,4)";
+	$aryCheck["strCustomerCompanyName"]		= "length(0,50)";
 	//≤›¿«∂Ë ¨
 	
 	//«º… ΩÒNO.

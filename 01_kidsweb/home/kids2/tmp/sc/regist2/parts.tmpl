@@ -177,16 +177,16 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutPunit(); initLayo
 
 <span id="SegADrafter">起票者</span>
 <span id="VarsADrafter">
-	<input style="ime-mode:disabled;" class="TxtStyle03L" type="text" name="lngInsertUserCode" value="_%lngInsertUserCode%_">
+	<input style="ime-mode:disabled;" class="TxtStyle03L" type="text" name="lngInsertUserCode" value="_%lngInsertUserCode%_" alt="InsertUser">
 	<input style="ime-mode:disabled;" class="disTxt23L" type="text" name="strInsertUserName" value="_%strInsertUserName%_" contenteditable="false">
 </span>
 <span id="MSWBtDrafter" class="regist-line">
-	<img class="msw-button button" invokeMSWName="msw-user" inputCodeMSWName="lngInsertUserCode" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+	<img class="msw-button button" invokeMSWName="msw-inputuser" inputCodeMSWName="lngInsertUserCode" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
 </span>
 
 <span id="SegACustomer">顧客</span>
 <span id="VarsACustomer">
-	<input style="ime-mode:disabled;" class="TxtStyle03L" type="text" name="lngCustomerCode" value="_%lngCustomerCode%_" readonly>
+	<input style="ime-mode:disabled;" class="TxtStyle03L" type="text" name="lngCustomerCode" value="_%lngCustomerCode%_" readonly iscustomer="yes" alt="Customer">
 	<input style="ime-mode:disabled;" class="disTxt32L" type="text" name="strCustomerName" value="_%strCustomerName%_" contenteditable="false" readonly>
 </span>
 <span id="MSWBtCustomerName" class="regist-line">
@@ -209,11 +209,11 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutPunit(); initLayo
 
 <span id="SegADeliveryPlaceName">納品先</span>
 <span id="VarsADeliveryPlaceName">
-	<input style="ime-mode:disabled;" class="TxtStyle03L" type="text" name="lngDeliveryPlaceCode" value="_%lngDeliveryPlaceCode%_">
+	<input style="ime-mode:disabled;" class="TxtStyle03L" type="text" name="lngDeliveryPlaceCode" value="_%lngDeliveryPlaceCode%_" alt="DeliveryPlace">
 	<input style="ime-mode:disabled;" class="disTxt32L" type="text" name="strDeliveryPlaceName" value="_%strDeliveryPlaceName%_" contenteditable="false">
 </span>
 <span id="MSWBtDeliveryPlaceName" class="regist-line">
-	<img class="msw-button button" invokeMSWName="msw-customer" inputCodeMSWName="lngDeliveryPlaceCode" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+	<img class="msw-button button" invokeMSWName="msw-location" inputCodeMSWName="lngDeliveryPlaceCode" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
 </span>
 
 <span id="SegADeliveryPlaceUserName">納品先担当者</span>
@@ -416,11 +416,11 @@ _%strDetailHidden%_
 		<!-- MSW 顧客マスタ検索 -->
 		<iframe class="msw-customer" src="/search/cmn/msw/customer/mswcustomer.html" frameborder="0">
 		</iframe>
-		<!-- MSW 担当部署マスタ検索 -->
-		<iframe class="msw-group" src="/search/cmn/msw/group/mswgroup.html" frameborder="0">
+		<!-- MSW 納品場所マスタ検索 -->
+		<iframe class="msw-location" src="/search/cmn/msw/location/mswlocation.html" frameborder="0">
 		</iframe>
-		<!-- MSW 担当者マスタ検索 -->
-		<iframe class="msw-user" src="/search/cmn/msw/user/mswuser.html" frameborder="0">
+		<!-- MSW 入力者マスタ検索 -->
+		<iframe class="msw-inputuser" src="/search/cmn/msw/inputuser/mswinputuser.html" frameborder="0">
 		</iframe>
 </div>
 

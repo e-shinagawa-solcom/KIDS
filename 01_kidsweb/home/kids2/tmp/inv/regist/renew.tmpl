@@ -76,7 +76,7 @@
                     <div class="regist-line regist-float">
                         <span class="regist-label w-465">
                             <span class="regist-label__text50">¸ÜµÒ</span>
-                            <input class="TxtStyle05L input-code"  name="lngCustomerCode"  type="text" value="_%strCustomerCode%_">
+                            <input class="TxtStyle05L input-code"  name="lngCustomerCode"  type="text" value="_%strCustomerCode%_" iscustomer="yes" alt="Customer">
                             <input class="disTxt2xL input-name"  name="strCustomerName"  type="text" readonly value="_%strCustomerName%_">
                             <img class="msw-inv-button button" invokeMSWName="msw-customer" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
                         </span>
@@ -104,9 +104,9 @@
                     <div class="regist-line regist-float">
                         <span class="regist-label">
                             <span class="regist-label__text50">µ¯É¼¼Ô</span>
-                            <input class="Txt07L" name="lngInputUserCode"  type="text" value="_%strUserCode%_">
-                            <input class="disTxt120pxL" name="lngInputUserName"  type="text" readonly value="_%strUserName%_" >
-                            <img class="msw-button button" invokeMSWName="msw-user" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                            <input class="Txt07L" name="lngInputUserCode"  type="text" value="_%strUserCode%_" alt="InputUser">
+                            <input class="disTxt120pxL" name="strInputUserName"  type="text" readonly value="_%strUserName%_" >
+                            <img class="msw-button button" invokeMSWName="msw-inputuser" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
                         </span>
                         <span class="regist-label">
                             <span class="regist-label__text50">ÀÁµáÆü</span>
@@ -298,12 +298,9 @@
 		<!-- MSW ¸ÜµÒ¥Þ¥¹¥¿¸¡º÷ -->
 		<iframe class="msw-customer" src="/search/cmn/msw/customer/mswcustomer.html" frameborder="0">
 		</iframe>
-		<!-- MSW Ã´ÅöÉô½ð¥Þ¥¹¥¿¸¡º÷ -->
-		<iframe class="msw-group" src="/search/cmn/msw/group/mswgroup.html" frameborder="0">
-		</iframe>
-		<!-- MSW Ã´Åö¼Ô¥Þ¥¹¥¿¸¡º÷ -->
-		<iframe class="msw-user" src="/search/cmn/msw/user/mswuser.html" frameborder="0">
-		</iframe>
+        <!-- MSW ÆþÎÏ¼Ô¥Þ¥¹¥¿¸¡º÷ -->
+        <iframe class="msw-inputuser" src="/search/cmn/msw/inputuser/mswinputuser.html" frameborder="0">
+        </iframe>
 	</div>
 </div>
 <script>

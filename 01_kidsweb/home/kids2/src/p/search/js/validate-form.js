@@ -395,9 +395,9 @@
                 }
             },
             // 開発担当者            
-            lngDevelopUsercode: {
+            lngDevelopUserCode: {
                 required: function () {
-                    return $('input[name="IsSearch_lngDevelopUsercode"]').get(0).checked;
+                    return $('input[name="IsSearch_lngDevelopUserCode"]').get(0).checked;
                 }
             }
         },
@@ -478,7 +478,7 @@
                 required: msgRequired
             },
             // 開発担当者            
-            lngDevelopUsercode: {
+            lngDevelopUserCode: {
                 required: msgRequired
             }
         }

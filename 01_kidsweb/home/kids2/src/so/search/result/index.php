@@ -298,9 +298,9 @@ if (array_key_exists("lngInputUserCode", $searchColumns) &&
 }
 
 // ¸ÜµÒ
-if (array_key_exists("lngCustomerCode", $searchColumns) &&
-    array_key_exists("lngCustomerCode", $searchValue)) {
-    $aryQuery[] = " AND cust_c.strCompanyDisplayCode = '" . $searchValue["lngCustomerCode"] . "'";
+if (array_key_exists("lngCustomerCompanyCode", $searchColumns) &&
+    array_key_exists("lngCustomerCompanyCode", $searchValue)) {
+    $aryQuery[] = " AND cust_c.strCompanyDisplayCode = '" . $searchValue["lngCustomerCompanyCode"] . "'";
 }
 
 // ¾õÂÖ
@@ -487,7 +487,7 @@ $aryTableHeaderName["lnginchargegroupcode"] = "±Ä¶ÈÉô½ð";
 $aryTableHeaderName["lnginchargeusercode"] = "³«È¯Ã´Åö¼Ô";
 $aryTableHeaderName["lngsalesclasscode"] = "Çä¾å¶èÊ¬";
 $aryTableHeaderName["strgoodscode"] = "¸ÜµÒÉÊÈÖ";
-$aryTableHeaderName["lngcustomercode"] = "¸ÜµÒ";
+$aryTableHeaderName["lngcustomercompanycode"] = "¸ÜµÒ";
 $aryTableHeaderName["dtmdeliverydate"] = "Ç¼´ü";
 $aryTableHeaderName["lngreceivestatuscode"] = "¾õÂÖ";
 // $aryTableHeaderName["strnote"] = "È÷¹Í";
@@ -760,7 +760,7 @@ foreach ($records as $i => $record) {
                     $trBody->appendChild($td);
                     break;
                 // [¸ÜµÒÉ½¼¨¥³¡¼¥É] ¸ÜµÒÉ½¼¨Ì¾
-                case "lngcustomercode":
+                case "lngcustomercompanycode":
                     $textContent = "[" . $record["strcustomerdisplaycode"] . "]" . " " . $record["strcustomerdisplayname"];
                     $td = $doc->createElement("td", toUTF8($textContent));
                     $td->setAttribute("style", $bgcolor);

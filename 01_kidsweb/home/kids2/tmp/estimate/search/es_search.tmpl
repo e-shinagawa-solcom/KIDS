@@ -124,38 +124,38 @@ Loading();
 			</div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_strInchargeGroupDisplayCode" class="is-search" type="checkbox">
-                    <input name="IsDisplay_strInchargeGroupDisplayCode" class="is-display" type="checkbox">
+                    <input name="IsSearch_lngInChargeGroupCode" class="is-search" type="checkbox">
+                    <input name="IsDisplay_lngInChargeGroupCode" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label__text">営業部署</span>
-                    <input class="TxtStyle05L" name="strInchargeGroupDisplayCode" type="text">
-                    <input class="disTxt46L" name="strInChargeGroupDisplayName" type="text" readonly>
+                    <input class="TxtStyle05L" name="lngInChargeGroupCode" type="text" alt="InChargeGroup">
+                    <input class="disTxt46L" name="strInChargeGroupName" type="text" readonly>
                     <img class="msw-button button" invokeMSWName="msw-group" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
                 </span>
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_strInchargeUserDisplayCode" class="is-search" type="checkbox">
-                    <input name="IsDisplay_strInchargeUserDisplayCode" class="is-display" type="checkbox">
+                    <input name="IsSearch_lngInChargeUserCode" class="is-search" type="checkbox">
+                    <input name="IsDisplay_lngInChargeUserCode" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
-                    <span class="regist-label__text">担当</span>
-                    <input class="TxtStyle05L" name="strInchargeUserDisplayCode" type="text">
-                    <input class="disTxt46L" name="strInchargeUserDisplayName" type="text" readonly>
-                    <img class="msw-button button" invokeMSWName="msw-user" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                    <span class="regist-label__text">担当者</span>
+                    <input class="TxtStyle05L" name="lngInChargeUserCode" type="text" alt="InChargeUser">
+                    <input class="disTxt46L" name="strInChargeUserName" type="text" readonly>
+                    <img class="msw-button button" invokeMSWName="msw-inchargeuser" msw-before="pickupGroupCode" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
                 </span>
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_strDevelopUserDisplayCode" class="is-search" type="checkbox">
-                    <input name="IsDisplay_strDevelopUserDisplayCode" class="is-display" type="checkbox">
+                    <input name="IsSearch_lngDevelopUserCode" class="is-search" type="checkbox">
+                    <input name="IsDisplay_lngDevelopUserCode" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label__text">開発担当者</span>
-                    <input class="TxtStyle05L" name="strDevelopUserDisplayCode" type="text">
-                    <input class="disTxt46L" name="strDevelopUserDisplayName" type="text" readonly>
-                    <img class="msw-button button" invokeMSWName="msw-user" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                    <input class="TxtStyle05L" name="lngDevelopUserCode" type="text" alt="DevelopUser">
+                    <input class="disTxt46L" name="strDevelopUserName" type="text" readonly>
+                    <img class="msw-button button" invokeMSWName="msw-developuser" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
                 </span>
             </div>
             <div class="regist-line">
@@ -384,8 +384,14 @@ Loading();
 		<!-- MSW 担当部署マスタ検索 -->
 		<iframe class="msw-group" src="/search/cmn/msw/group/mswgroup.html" frameborder="0">
 		</iframe>
+		<!-- MSW 入力者マスタ検索 -->
+		<iframe class="msw-inputuser" src="/search/cmn/msw/inputuser/mswinputuser.html" frameborder="0">
+		</iframe>
 		<!-- MSW 担当者マスタ検索 -->
-		<iframe class="msw-user" src="/search/cmn/msw/user/mswuser.html" frameborder="0">
+		<iframe class="msw-inchargeuser" src="/search/cmn/msw/inchargeuser/mswinchargeuser.html" frameborder="0">
+		</iframe>
+		<!-- MSW 開発担当者マスタ検索 -->
+		<iframe class="msw-developuser" src="/search/cmn/msw/developuser/mswdevelopuser.html" frameborder="0">
 		</iframe>
 	</div>
 </div>
