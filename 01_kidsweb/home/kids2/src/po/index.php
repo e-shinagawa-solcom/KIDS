@@ -56,7 +56,7 @@
 	}
 	
 	// 510 発注管理（発注書検索）
-	if ( fncCheckAuthority( DEF_FUNCRION_PO10, $objAuth ) )
+	if ( fncCheckAuthority( DEF_FUNCTION_PO10, $objAuth ) )
 	{
 		$aryData["strDocSearchURL"]   = "search2/index.php?strSessionID=" . $aryData["strSessionID"];
 	}
