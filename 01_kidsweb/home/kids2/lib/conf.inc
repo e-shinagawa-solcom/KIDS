@@ -133,16 +133,16 @@ switch( $strExcuteHttpHostName )
 		define ( "LC_POSTGRESQL_HOSTNAME", EXECUTE_HOST_NAME_KWG_DB );
 		define ( "LC_POSTGRESQL_HOSTPORT", "5432" );
 		define ( "LC_DB_LOGIN_USERNAME", "ackids" );
-		define ( "LC_DB_LOGIN_PASSWORD", "kids" );
+		define ( "LC_DB_LOGIN_PASSWORD", "x7zv1jid" );
 		define ( "LC_DB_NAME", "ackids" );
 		// エラーメール送信先
 		define ( "ERROR_MAIL_TO", "kids@kuwagata.co.jp" );
 		define ( "SEND_MAIL_FLAG", true);
 		// 各ルートパス
 		// define ( "PATH_HOME",	"/Users/solcom/Desktop/Git/KIDS/01_kidsweb/home/kids2" );
-		// define ( "PATH_HOME",	"/Users/solcom-ad/Desktop/Git/KIDS/01_kidsweb/home/kids2" ); // ローカル確認用
+		define ( "PATH_HOME",	"/Users/solcom-ad/Desktop/Git/KIDS/01_kidsweb/home/kids2" ); // ローカル確認用
 		// define ( "PATH_HOME",	"E:/Source/Repos/solcom-net/KIDS/01_kidsweb/home/kids2" );
-        define ( "PATH_HOME",    "/Users/esash/Desktop/solcom/git/KIDS2/01_kidsweb/home/kids2" ); // ローカル確認用
+        // define ( "PATH_HOME",    "/Users/esash/Desktop/solcom/git/KIDS2/01_kidsweb/home/kids2" ); // ローカル確認用
         define ( "LOG_FILE",     PATH_HOME ."/src/logs/debug.log" ); // ローカル確認用
 
 		break;
