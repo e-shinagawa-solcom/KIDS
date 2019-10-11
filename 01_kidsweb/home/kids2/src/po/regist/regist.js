@@ -129,7 +129,8 @@ jQuery(function($){
         return true;
     }
     function getSelectedRows(){
-        return $('#EditTableBody tr.selected');
+//        return $('#EditTableBody tr.selected');
+        return $('#EditTableBody tr');
     }
     function executeSort(mode){
         var row = $('#EditTableBody').children('.selected');
@@ -282,6 +283,7 @@ jQuery(function($){
             setEdit($(v));
         });
     });
+    /*
     $('body').on('click', '#EditTableBody tr', function(e){
         var tds = $(e.currentTarget).children('td');
         var checked = $(tds).hasClass('selected');
@@ -293,6 +295,7 @@ jQuery(function($){
             $(this).addClass('selected');
         }
     });
+    */
     $('#selectup').on('click', function(){
         var selected = getCheckedRows();
         if(!selected){ return false; }
