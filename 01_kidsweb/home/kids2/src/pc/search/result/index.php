@@ -355,27 +355,27 @@ if (array_key_exists("lngPayConditionCode", $searchColumns) &&
     $aryQuery[] = " AND s.lngPayConditionCode = '" . $searchValue["lngPayConditionCode"] . "'";
 }
 
-// if (!array_key_exists("admin", $optionColumns)) {
-//     $aryQuery[] = "  AND s.strStockCode not in ( ";
-//     $aryQuery[] = "    select";
-//     $aryQuery[] = "      s2.strStockCode ";
-//     $aryQuery[] = "    from";
-//     $aryQuery[] = "      ( ";
-//     $aryQuery[] = "        SELECT";
-//     $aryQuery[] = "          min(lngRevisionNo) lngRevisionNo";
-//     $aryQuery[] = "          , strStockCode ";
-//     $aryQuery[] = "        FROM";
-//     $aryQuery[] = "          m_Stock ";
-//     $aryQuery[] = "        group by";
-//     $aryQuery[] = "          strStockCode";
-//     $aryQuery[] = "      ) as s2 ";
-//     $aryQuery[] = "    where";
-//     $aryQuery[] = "      s2.lngRevisionNo < 0";
-//     $aryQuery[] = "  ) ";
-// } else {
+if (!array_key_exists("admin", $optionColumns)) {
+    $aryQuery[] = "  AND s.strStockCode not in ( ";
+    $aryQuery[] = "    select";
+    $aryQuery[] = "      s2.strStockCode ";
+    $aryQuery[] = "    from";
+    $aryQuery[] = "      ( ";
+    $aryQuery[] = "        SELECT";
+    $aryQuery[] = "          min(lngRevisionNo) lngRevisionNo";
+    $aryQuery[] = "          , strStockCode ";
+    $aryQuery[] = "        FROM";
+    $aryQuery[] = "          m_Stock ";
+    $aryQuery[] = "        group by";
+    $aryQuery[] = "          strStockCode";
+    $aryQuery[] = "      ) as s2 ";
+    $aryQuery[] = "    where";
+    $aryQuery[] = "      s2.lngRevisionNo < 0";
+    $aryQuery[] = "  ) ";
+} else {
     $aryQuery[] = " AND s.bytInvalidFlag = FALSE ";
     $aryQuery[] = " AND s.lngRevisionNo >= 0";
-// }
+}
 $aryQuery[] = "ORDER BY";
 $aryQuery[] = " strStockCode, lngRevisionNo DESC";
 
@@ -678,6 +678,7 @@ $rowspan = count($detailData);
     } else {
         $trBody->setAttribute("id", $record["strstockcode"]);
     }
+    $trBody->setAttribute("detailnos", $detailnos);
 
     // ¹àÈÖ
     if ($isMaxStock) {
@@ -747,7 +748,7 @@ $rowspan = count($detailData);
         $tdHistory->setAttribute("style", $bgcolor . "text-align: center;");
         $tdHistory->setAttribute("rowspan", $rowspan);
 
-        if ($isMaxStock and $historyFlag) {
+        if ($isMaxStock and $historyFlag and array_key_exists("admin", $optionColumns)) {
             // ÍúÎò¥Ü¥¿¥ó
             $imgHistory = $doc->createElement("img");
             $imgHistory->setAttribute("src", "/img/type01/so/renew_off_bt.gif");

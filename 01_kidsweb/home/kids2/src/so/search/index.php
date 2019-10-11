@@ -63,43 +63,43 @@ if ( !fncCheckAuthority( DEF_FUNCTION_SO2, $objAuth ) )
 // 403 受注管理（受注検索　管理モード）
 if ( fncCheckAuthority( DEF_FUNCTION_SO3, $objAuth ) )
 {
-	$aryData["AdminSet_visibility"] = "visible";
+	$aryData["AdminSet_visibility"] = 'style="visibility: visible"';
 }
 else
 {
-	$aryData["AdminSet_visibility"] = "hidden";
+	$aryData["AdminSet_visibility"] = 'style="visibility: hidden"';
 }
 // 404 受注管理（詳細表示）
 if ( fncCheckAuthority( DEF_FUNCTION_SO4, $objAuth ) )
 {
-	$aryData["btnDetail_visibility"] = "visible";
+	$aryData["btnDetail_visibility"] = 'style="visibility: visible"';
 	$aryData["btnDetailVisible"] = "checked";
 }
 else
 {
-	$aryData["btnDetail_visibility"] = "hidden";
+	$aryData["btnDetail_visibility"] = 'style="visibility: hidden"';
 	$aryData["btnDetailVisible"] = "";
 }
 // 405 受注管理（確定）
 if ( fncCheckAuthority( DEF_FUNCTION_SO4, $objAuth ) )
 {
-	$aryData["btnDecide_visibility"] = "visible";
+	$aryData["btnDecide_visibility"] = 'style="visibility: visible"';
 	$aryData["btnDecideVisible"] = "checked";
 }
 else
 {
-	$aryData["btnDecide_visibility"] = "hidden";
+	$aryData["btnDecide_visibility"] = 'style="visibility: hidden"';
 	$aryData["btnDecideVisible"] = "";
 }
 // 406 受注管理（確定取消）
 if ( fncCheckAuthority( DEF_FUNCTION_SO5, $objAuth ) )
 {
-	$aryData["btnCancel_visibility"] = "visible";
+	$aryData["btnCancel_visibility"] = 'style="visibility: visible"';
 	$aryData["btnCancelVisible"] = "checked";
 }
 else
 {
-	$aryData["btnCancel_visibility"] = "hidden";
+	$aryData["btnCancel_visibility"] = 'style="visibility: hidden"';
 	$aryData["btnCancelVisible"] = "";
 }
 

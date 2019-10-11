@@ -51,34 +51,34 @@ if ( !fncCheckAuthority( DEF_FUNCTION_SC2, $objAuth ) )
 // 603 売上管理（売上検索　管理モード）
 if ( fncCheckAuthority( DEF_FUNCTION_SC3, $objAuth ) )
 {
-    $aryData["AdminSet_visibility"] = "visible";
+    $aryData["AdminSet_visibility"] = 'style="visibility: visible"';
     // 607 売上管理（無効化）
     if ( fncCheckAuthority( DEF_FUNCTION_SC7, $objAuth ) )
     {
-        $aryData["btnInvalid_visibility"] = "visible";
+        $aryData["btnInvalid_visibility"] = 'style="visibility: visible"';
         $aryData["btnInvalidVisible"] = "disabled";
     }
     else
     {
-        $aryData["btnInvalid_visibility"] = "hidden";
+        $aryData["btnInvalid_visibility"] = 'style="visibility: hidden"';
         $aryData["btnInvalidVisible"] = "disabled";
     }
 }
 else
 {
-    $aryData["AdminSet_visibility"] = "hidden";
-    $aryData["btnInvalid_visibility"] = "hidden";
+    $aryData["AdminSet_visibility"] = 'style="visibility: hidden"';
+    $aryData["btnInvalid_visibility"] = 'style="visibility: hidden"';
     $aryData["btnInvalidVisible"] = "";
 }
 // 604 売上管理（詳細表示）
 if ( fncCheckAuthority( DEF_FUNCTION_SC4, $objAuth ) )
 {
-    $aryData["btnDetail_visibility"] = "visible";
+    $aryData["btnDetail_visibility"] = 'style="visibility: visible"';
     $aryData["btnDetailVisible"] = "checked";
 }
 else
 {
-    $aryData["btnDetail_visibility"] = "hidden";
+    $aryData["btnDetail_visibility"] = 'style="visibility: hidden"';
     $aryData["btnDetailVisible"] = "";
 }
 

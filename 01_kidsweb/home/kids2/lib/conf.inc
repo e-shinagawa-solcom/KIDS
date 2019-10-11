@@ -35,8 +35,8 @@ define ( "EXECUTE_HOST_NAME_KWG_WEBv2",	"192.168.10.228" );
 define ( "EXECUTE_HOST_NAME_KWG_WEBv1",	"192.168.10.235" );
 define ( "EXECUTE_HOST_NAME_KWG_BACK",	"192.168.10.230" );
 // define ( "EXECUTE_HOST_NAME_KWG_DB",	"192.168.1.82" );
-//define ( "EXECUTE_HOST_NAME_KWG_DB",	"192.168.1.113" );
-define ( "EXECUTE_HOST_NAME_KWG_DB",	"127.0.0.1" ); // ローカル確認用
+define ( "EXECUTE_HOST_NAME_KWG_DB",	"192.168.1.113" );
+//define ( "EXECUTE_HOST_NAME_KWG_DB",	"127.0.0.1" ); // ローカル確認用
 
 // 実行サーバー名称の取得
 $strExcuteHttpHostName = $_SERVER["HTTP_HOST"];
@@ -139,11 +139,11 @@ switch( $strExcuteHttpHostName )
 		define ( "ERROR_MAIL_TO", "kids@kuwagata.co.jp" );
 		define ( "SEND_MAIL_FLAG", true);
 		// 各ルートパス
-		// define ( "PATH_HOME",	"/Users/solcom/Desktop/Git/KIDS/01_kidsweb/home/kids2" );
-		define ( "PATH_HOME",	"/Users/solcom-ad/Desktop/Git/KIDS/01_kidsweb/home/kids2" ); // ローカル確認用
+		define ( "PATH_HOME",	"/Users/solcom/Desktop/Git/KIDS/01_kidsweb/home/kids2" );
+		//define ( "PATH_HOME",	"/Users/solcom-ad/Desktop/Git/KIDS/01_kidsweb/home/kids2" ); // ローカル確認用
 		// define ( "PATH_HOME",	"E:/Source/Repos/solcom-net/KIDS/01_kidsweb/home/kids2" );
         // define ( "PATH_HOME",    "/Users/esash/Desktop/solcom/git/KIDS2/01_kidsweb/home/kids2" ); // ローカル確認用
-        define ( "LOG_FILE",     PATH_HOME ."/src/logs/debug.log" ); // ローカル確認用
+        //define ( "LOG_FILE",     PATH_HOME ."/src/logs/debug.log" ); // ローカル確認用
 
 		break;
 }

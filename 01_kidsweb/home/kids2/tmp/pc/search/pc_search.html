@@ -30,6 +30,8 @@
         <script src="/pc/search/js/form-buttons.js" defer></script>
         <!-- フォームバリデーション -->
         <script src="/pc/search/js/validate-form.js" defer></script>
+        <!-- 管理者モードイベント -->
+        <script src="/pc/search/js/functions.js" defer></script>
         <!-- マスタ検索呼び出し -->
         <script src="/search/cmn/js/invoke-master-search.js" defer></script>
         <!-- COOKIE 表示チェックボックス 保存/復元 -->
@@ -65,6 +67,14 @@
 	<div class="form-box__contents--with-scroll">
 		<form name="SearchseaHistory" method="post">
             <input type="submit">
+            <div class="option-box">
+                <div class="regist-line" _%AdminSet_visibility%_>
+                    <span class="regist-label">
+                        <span class="regist-label--text-only">管理者モード</span>
+                        <input name="Option_admin" type="checkbox">
+                    </span>
+                </div>
+            </div>
             <div class="regist-line">
                 <img class="toggle-search button" src="/img/type01/cmn/seg/off_bt.gif" alt="toggle search">
                 <img class="toggle-display button" src="/img/type01/cmn/seg/off_bt.gif" alt="toggle display">
@@ -268,7 +278,7 @@
                     <input name="IsDisplay_lngInChargeUserCode" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
-                    <span class="regist-label__text">開発担当者</span>
+                    <span class="regist-label__text">担当者</span>
                     <input class="TxtStyle05L" name="lngInChargeUserCode" type="text" alt="InChargeUser">
                     <input class="disTxt46L" name="strInChargeUserName" type="text" readonly>
                     <img class="msw-button button" invokeMSWName="msw-inchargeuser" msw-before="pickupGroupCode" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">

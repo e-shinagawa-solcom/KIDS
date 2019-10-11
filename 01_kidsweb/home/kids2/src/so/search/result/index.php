@@ -311,27 +311,27 @@ if (array_key_exists("lngReceiveStatusCode", $searchColumns) &&
         $aryQuery[] = " AND r.lngReceiveStatusCode in (" . $searchStatus . ")";
     }
 }
-// if (!array_key_exists("admin", $optionColumns)) {
-//     $aryQuery[] = "  AND r.strReceiveCode not in ( ";
-//     $aryQuery[] = "    select";
-//     $aryQuery[] = "      r1.strReceiveCode ";
-//     $aryQuery[] = "    from";
-//     $aryQuery[] = "      ( ";
-//     $aryQuery[] = "        SELECT";
-//     $aryQuery[] = "          min(lngRevisionNo) lngRevisionNo";
-//     $aryQuery[] = "          , strReceiveCode ";
-//     $aryQuery[] = "        FROM";
-//     $aryQuery[] = "          m_Receive ";
-//     $aryQuery[] = "        group by";
-//     $aryQuery[] = "          strReceiveCode";
-//     $aryQuery[] = "      ) as r1 ";
-//     $aryQuery[] = "    where";
-//     $aryQuery[] = "      r1.lngRevisionNo < 0";
-//     $aryQuery[] = "  ) ";
-// } else {
+if (!array_key_exists("admin", $optionColumns)) {
+    $aryQuery[] = "  AND r.strReceiveCode not in ( ";
+    $aryQuery[] = "    select";
+    $aryQuery[] = "      r1.strReceiveCode ";
+    $aryQuery[] = "    from";
+    $aryQuery[] = "      ( ";
+    $aryQuery[] = "        SELECT";
+    $aryQuery[] = "          min(lngRevisionNo) lngRevisionNo";
+    $aryQuery[] = "          , strReceiveCode ";
+    $aryQuery[] = "        FROM";
+    $aryQuery[] = "          m_Receive ";
+    $aryQuery[] = "        group by";
+    $aryQuery[] = "          strReceiveCode";
+    $aryQuery[] = "      ) as r1 ";
+    $aryQuery[] = "    where";
+    $aryQuery[] = "      r1.lngRevisionNo < 0";
+    $aryQuery[] = "  ) ";
+} else {
     $aryQuery[] = " AND r.bytInvalidFlag = FALSE ";
     $aryQuery[] = " AND r.lngRevisionNo >= 0";
-// }
+}
 $aryQuery[] = "ORDER BY";
 $aryQuery[] = " r.strReceiveCode, rd.lngReceiveDetailNo, r.lngRevisionNo DESC";
 
@@ -661,7 +661,7 @@ foreach ($records as $i => $record) {
         $tdHistory->setAttribute("class", $exclude);
         $tdHistory->setAttribute("style", $bgcolor. "text-align: center;");
 
-        if ($isMaxReceive and $historyFlag) {
+        if ($isMaxReceive and $historyFlag and array_key_exists("admin", $optionColumns)) {
             // ÍúÎò¥Ü¥¿¥ó
             $imgHistory = $doc->createElement("img");
             $imgHistory->setAttribute("src", "/img/type01/so/renew_off_bt.gif");
