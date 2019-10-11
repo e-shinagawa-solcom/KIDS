@@ -1,61 +1,61 @@
 $(document).ready(function () {
-    // var row = $("#result_tbl thead tr");
-    // var columnNum = row.find('td').length;
-    // var widthArry = [];
-    // var theadwidth = $("#result_tbl thead").width();
-    // for (var i = 1; i <= columnNum; i++) {
-    //     var width = $("#result_tbl thead tr td:nth-child(" + i + ")").width();
-    //     var tdwidth = $("#result_tbl tbody tr:nth-child(1) td:nth-child(" + i + ")").width();
-    //     widthArry.push(width);
-    // }
-    // $("#result_tbl").css('display', 'block');
-    // $("#result_tbl").css('overflow-y', 'scroll');
-    // $("#result_tbl").css('padding-top', '0px');
-    // $("#result_tbl").css('width', '912px');
-    // $("#result_tbl").css('height', '422px');
-    // $("#result_tbl").css('table-layout', 'fixed');
-    // $("#result_tbl tbody").css('display', 'block');
-    // $("#result_tbl thead").css('display', 'block');
-    // $("#result_tbl thead").css('position', 'sticky');
-    // $("#result_tbl thead").css('top', '0');
-    // $("#result_tbl thead").css('z-index', '2');
-
-    // if ($('input[name="strTableName"]').val() == "m_StockItem") {
-    //     $("#result_tbl thead").width($("#result_tbl tbody").width() + (5 * columnNum) + 100);
-    //     $("#result_tbl tbody").width($("#result_tbl tbody").width() + (5 * columnNum) + 100);
-    //     for (var i = 1; i <= columnNum; i++) {
-    //         $("#result_tbl thead tr td:nth-child(" + i + ")").width(widthArry[i - 1] + 20);
-    //         $("#result_tbl tbody tr:nth-child(1) td:nth-child(" + i + ")").width(widthArry[i - 1] + 20);
-    //     }
-    // } else {
-    //     $("#result_tbl thead").width($("#result_tbl tbody").width());
-    //     $("#result_tbl tbody").width($("#result_tbl tbody").width());
-    //     for (var i = 1; i <= columnNum; i++) {
-    //         $("#result_tbl thead tr td:nth-child(" + i + ")").width(widthArry[i - 1]);
-    //         $("#result_tbl tbody tr:nth-child(1) td:nth-child(" + i + ")").width(widthArry[i - 1]);
-    //     }
-    // }
-    if ($('input[name="strTableName"]').val() == "m_Company") {
-        $("#result thead tr td:nth-child(2)").find('div').text('ä¼šç¤¾ã‚³ãƒ¼ãƒ‰');
-        $("#result thead tr td:nth-child(3)").find('div').text('å›½ã‚³ãƒ¼ãƒ‰');
-        $("#result thead tr td:nth-child(4)").find('div').text('çµ„ç¹”ã‚³ãƒ¼ãƒ‰');
-        $("#result thead tr td:nth-child(5)").find('div').text('çµ„ç¹”è¡¨è¨˜');
-        $("#result thead tr td:nth-child(6)").find('div').text('ä¼šç¤¾åç§°');
-        $("#result thead tr td:nth-child(7)").find('div').text('è¡¨ç¤ºä¼šç¤¾è¨±å¯');
-        $("#result thead tr td:nth-child(8)").find('div').text('è¡¨ç¤ºä¼šç¤¾ã‚³ãƒ¼ãƒ‰');
-        $("#result thead tr td:nth-child(9)").find('div').text('è¡¨ç¤ºä¼šç¤¾åç§°');
-        $("#result thead tr td:nth-child(10)").find('div').text('çœç•¥åç§°');
-        $("#result thead tr td:nth-child(11)").find('div').text('éƒµä¾¿ç•ªå·');
-        $("#result thead tr td:nth-child(12)").find('div').text('ä½æ‰€1 / éƒ½é“åºœçœŒ');
-        $("#result thead tr td:nth-child(13)").find('div').text('ä½æ‰€2 / å¸‚ã€åŒºã€éƒ¡');
-        $("#result thead tr td:nth-child(14)").find('div').text('ä½æ‰€3 / ç”ºã€ç•ªåœ°');
-        $("#result thead tr td:nth-child(15)").find('div').text('ä½æ‰€4 / ãƒ“ãƒ«ç­‰ã€å»ºç‰©å');
-        $("#result thead tr td:nth-child(16)").find('div').text('é›»è©±ç•ªå·1');
-        $("#result thead tr td:nth-child(17)").find('div').text('é›»è©±ç•ªå·2');
-        $("#result thead tr td:nth-child(18)").find('div').text('ãƒ•ã‚¡ãƒƒã‚¯ã‚¹ç•ªå·1');
-        $("#result thead tr td:nth-child(19)").find('div').text('ãƒ•ã‚¡ãƒƒã‚¯ã‚¹ç•ªå·2');
-        $("#result thead tr td:nth-child(20)").find('div').text('è­˜åˆ¥ã‚³ãƒ¼ãƒ‰');
-        $("#result thead tr td:nth-child(21)").find('div').text('ç· ã‚æ—¥ã‚³ãƒ¼ãƒ‰');
-        $("#result thead tr td:nth-child(22)").find('div').text('ä¼šç¤¾å±žæ€§');
+    var row = $("#result_tbl thead tr");
+    var columnNum = row.find('td').length;
+    var widthArry = [];
+    var theadwidth = $("#result_tbl thead").width();
+    for (var i = 1; i <= columnNum; i++) {
+        var width = $("#result_tbl thead tr td:nth-child(" + i + ")").width();
+        var tdwidth = $("#result_tbl tbody tr:nth-child(1) td:nth-child(" + i + ")").width();
+        widthArry.push(width);
     }
+    $("#result_tbl").css('display', 'block');
+    $("#result_tbl").css('overflow-y', 'scroll');
+    $("#result_tbl").css('padding-top', '0px');
+    $("#result_tbl").css('width', '912px');
+    $("#result_tbl").css('height', '422px');
+    $("#result_tbl").css('table-layout', 'fixed');
+    $("#result_tbl tbody").css('display', 'block');
+    $("#result_tbl thead").css('display', 'block');
+    $("#result_tbl thead").css('position', 'sticky');
+    $("#result_tbl thead").css('top', '0');
+    $("#result_tbl thead").css('z-index', '2');
+
+    if ($('input[name="strTableName"]').val() == "m_StockItem") {
+        $("#result_tbl thead").width($("#result_tbl tbody").width() + (5 * columnNum) + 100);
+        $("#result_tbl tbody").width($("#result_tbl tbody").width() + (5 * columnNum) + 100);
+        for (var i = 1; i <= columnNum; i++) {
+            $("#result_tbl thead tr td:nth-child(" + i + ")").width(widthArry[i - 1] + 20);
+            $("#result_tbl tbody tr:nth-child(1) td:nth-child(" + i + ")").width(widthArry[i - 1] + 20);
+        }
+    } else {
+        $("#result_tbl thead").width($("#result_tbl tbody").width());
+        $("#result_tbl tbody").width($("#result_tbl tbody").width());
+        for (var i = 1; i <= columnNum; i++) {
+            $("#result_tbl thead tr td:nth-child(" + i + ")").width(widthArry[i - 1]);
+            $("#result_tbl tbody tr:nth-child(1) td:nth-child(" + i + ")").width(widthArry[i - 1]);
+        }
+    }
+    // if ($('input[name="strTableName"]').val() == "m_Company") {
+    //     $("#result thead tr td:nth-child(2)").find('div').text('²ñ¼Ò¥³¡¼¥É');
+    //     $("#result thead tr td:nth-child(3)").find('div').text('¹ñ¥³¡¼¥É');
+    //     $("#result thead tr td:nth-child(4)").find('div').text('ÁÈ¿¥¥³¡¼¥É');
+    //     $("#result thead tr td:nth-child(5)").find('div').text('ÁÈ¿¥É½µ­');
+    //     $("#result thead tr td:nth-child(6)").find('div').text('²ñ¼ÒÌ¾¾Î');
+    //     $("#result thead tr td:nth-child(7)").find('div').text('É½¼¨²ñ¼Òµö²Ä');
+    //     $("#result thead tr td:nth-child(8)").find('div').text('É½¼¨²ñ¼Ò¥³¡¼¥É');
+    //     $("#result thead tr td:nth-child(9)").find('div').text('É½¼¨²ñ¼ÒÌ¾¾Î');
+    //     $("#result thead tr td:nth-child(10)").find('div').text('¾ÊÎ¬Ì¾¾Î');
+    //     $("#result thead tr td:nth-child(11)").find('div').text('Í¹ÊØÈÖ¹æ');
+    //     $("#result thead tr td:nth-child(12)").find('div').text('½»½ê1 / ÅÔÆ»ÉÜ¸©');
+    //     $("#result thead tr td:nth-child(13)").find('div').text('½»½ê2 / »Ô¡¢¶è¡¢·´');
+    //     $("#result thead tr td:nth-child(14)").find('div').text('½»½ê3 / Ä®¡¢ÈÖÃÏ');
+    //     $("#result thead tr td:nth-child(15)").find('div').text('½»½ê4 / ¥Ó¥ëÅù¡¢·úÊªÌ¾');
+    //     $("#result thead tr td:nth-child(16)").find('div').text('ÅÅÏÃÈÖ¹æ1');
+    //     $("#result thead tr td:nth-child(17)").find('div').text('ÅÅÏÃÈÖ¹æ2');
+    //     $("#result thead tr td:nth-child(18)").find('div').text('¥Õ¥¡¥Ã¥¯¥¹ÈÖ¹æ1');
+    //     $("#result thead tr td:nth-child(19)").find('div').text('¥Õ¥¡¥Ã¥¯¥¹ÈÖ¹æ2');
+    //     $("#result thead tr td:nth-child(20)").find('div').text('¼±ÊÌ¥³¡¼¥É');
+    //     $("#result thead tr td:nth-child(21)").find('div').text('Äù¤áÆü¥³¡¼¥É');
+    //     $("#result thead tr td:nth-child(22)").find('div').text('²ñ¼ÒÂ°À­');
+    // }
 });

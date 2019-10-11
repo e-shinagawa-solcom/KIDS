@@ -13,7 +13,7 @@ INNER JOIN
   ON
     mar.lngcompanycode = mc.lngcompanycode
 WHERE
-    mar.lngattributecode in (3, 4, 99)
+    mar.lngattributecode in (4, 99)
 ORDER BY
     strcompanydisplaycode
 ;

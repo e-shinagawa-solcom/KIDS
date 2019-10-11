@@ -321,9 +321,9 @@ if (array_key_exists("lngInChargeUserCode", $searchColumns) &&
 }
 
 // 開発担当者
-if (array_key_exists("lngDevelopUsercode", $searchColumns) &&
-    array_key_exists("lngDevelopUsercode", $searchValue)) {
-    $aryQuery[] = " AND devp_u.strUserDisplayCode = '" . pg_escape_string($searchValue["lngDevelopUsercode"]) . "'";
+if (array_key_exists("lngDevelopUserCode", $searchColumns) &&
+    array_key_exists("lngDevelopUserCode", $searchValue)) {
+    $aryQuery[] = " AND devp_u.strUserDisplayCode = '" . pg_escape_string($searchValue["lngDevelopUserCode"]) . "'";
 }
 // カテゴリ
 if (array_key_exists("lngCategoryCode", $searchColumns) &&

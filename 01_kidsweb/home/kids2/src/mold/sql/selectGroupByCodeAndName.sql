@@ -1,12 +1,15 @@
 SELECT
-      mg.strgroupdisplaycode groupdisplaycode
-    , mg.strgroupdisplayname groupdisplayname
+  mg.strgroupdisplaycode groupdisplaycode
+  , mg.strgroupdisplayname groupdisplayname
 FROM
-    m_group mg
+  m_group mg
+  , m_groupattributerelation mgar 
 WHERE
-    mg.bytgroupdisplayflag = true
-AND mg.strgroupdisplaycode = $1
-AND mg.strgroupdisplayname LIKE '%' || $2 || '%'
+  mg.lnggroupcode = mgar.lnggroupcode 
+  AND mgar.lngattributecode = 1 
+  AND mg.bytgroupdisplayflag = true
+  AND mg.strgroupdisplaycode = $1
+  AND mg.strgroupdisplayname LIKE '%' || $2 || '%'
 ORDER BY
-    mg.strgroupdisplaycode
+  mg.strgroupdisplaycode
 ;

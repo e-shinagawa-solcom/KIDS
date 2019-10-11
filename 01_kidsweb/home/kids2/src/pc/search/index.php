@@ -41,14 +41,27 @@ $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 if (!fncCheckAuthority(DEF_FUNCTION_PC2, $objAuth)) {
     fncOutputError(9052, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
-// 707 仕入管理（無効化）
-if (fncCheckAuthority(DEF_FUNCTION_PC7, $objAuth)) {
-    $aryData["btnInvalid_visibility"] = 'style="visibility: visible"';
-    $aryData["btnInvalidVisible"] = "disabled";
-} else {
-    $aryData["btnInvalid_visibility"] = 'style="visibility: hidden"';
-    $aryData["btnInvalidVisible"] = "disabled";
+
+// 703 仕入管理（仕入検索　管理モード）
+if ( fncCheckAuthority( DEF_FUNCTION_SC3, $objAuth ) )
+{
+    $aryData["AdminSet_visibility"] = 'style="visibility: visible"';
+    // 707 仕入管理（無効化）
+    if (fncCheckAuthority(DEF_FUNCTION_PC7, $objAuth)) {
+        $aryData["btnInvalid_visibility"] = 'style="visibility: visible"';
+        $aryData["btnInvalidVisible"] = "disabled";
+    } else {
+        $aryData["btnInvalid_visibility"] = 'style="visibility: hidden"';
+        $aryData["btnInvalidVisible"] = "disabled";
+    }
 }
+else
+{
+    $aryData["AdminSet_visibility"] = 'style="visibility: visible"';
+    $aryData["btnInvalid_visibility"] = 'style="visibility: hidden"';
+    $aryData["btnInvalidVisible"] = "";
+}
+
 // 704 仕入管理（詳細表示）
 if (fncCheckAuthority(DEF_FUNCTION_PC4, $objAuth)) {
     $aryData["btnDetail_visibility"] = 'style="visibility: visible"';

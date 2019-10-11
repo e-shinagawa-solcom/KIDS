@@ -1,13 +1,13 @@
 (function() {
     var mswBox = $('.msw-box');
-    var customerCode = mswBox.find('.input-code');
-    var customerName = mswBox.find('.input-name');
+    var productCode = mswBox.find('.input-code');
+    var productName = mswBox.find('.input-name');
     var btnSearch = mswBox.find('.search-btn img');
 
-    // TabKey¤ÎÀ©¸æ
+    // TabKeyã®ãƒ•ã‚©ãƒ¼ã‚«ã‚¹åˆ¶å¾¡
     mswBox.on(
         'keydown', 'input.input-code', function(e){
-            // Tab + shift¤Çmsw¤ÎºÇ¸å¤ÎÍ×ÁÇ¤Ë¥Õ¥©¡¼¥«¥¹¤òÌá¤¹
+            // Tab + shiftã§mswã®æœ€å¾Œã®è¦ç´ ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ã‚’æˆ»ã™
             if(e.keyCode == 9 && e.shiftKey){
                 mswBox.find('img.apply').focus();
                 return false;
@@ -16,7 +16,7 @@
     );
     mswBox.on(
         'keydown', 'img.apply', function(e){
-            // Tab¤Î¤ß¤Çmsw¤ÎºÇ½é¤ÎÍ×ÁÇ¤Ë¥Õ¥©¡¼¥«¥¹¤òÌá¤¹
+            // Tabã®ã¿ã§mswã®æœ€åˆã®è¦ç´ ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ã‚’æˆ»ã™
             if(e.keyCode == 9 && !e.shiftKey){
                 mswBox.find('input.input-code').focus();
                 return false;
@@ -24,66 +24,65 @@
         }
     );
 
-    // ¸¡º÷·ë²Ì¥À¥Ö¥ë¥¯¥ê¥Ã¥¯¤ÇÅ¬ÍÑ¤¹¤ë
+    // æ¤œç´¢çµæœãƒ€ãƒ–ãƒ«ã‚¯ãƒªãƒƒã‚¯ã§é©ç”¨ã™ã‚‹
     $(".result-select").on("dblclick",  function(){
         mswBox.find('img.apply').trigger('click');
         mswBox.find('img.msw-box__header__close-btn').trigger('click');
     });
-    
-    // ¸¡º÷¥Ü¥¿¥ó²¡²¼»ş¤Î½èÍı
+
+    // æ¤œç´¢ãƒœã‚¿ãƒ³æŠ¼ä¸‹æ™‚ã®å‡¦ç†
     btnSearch.on({
-        // ¥¯¥ê¥Ã¥¯
         'click': function() {
-            selectcustomers();
+            selectProducts();
         },
         // EnterKey
         'keypress': function(e) {
             if(e.which == 13){
-                selectcustomers();
+                selectProducts();
             }
         }
     });
-    var selectcustomers = function() {
+    var selectProducts = function() {
         $('select').find('option').remove();
-        switch (isEmpty(customerCode.val()) + isEmpty(customerName.val())) {
-            // ¤É¤Á¤é¤âÌ¤ÆşÎÏ
+        switch (isEmpty(productCode.val()) + isEmpty(productName.val())) {
+            // ã©ã¡ã‚‰ã‚‚æœªå…¥åŠ›
             case '00':
                 var condition = {
                     data: {
-                        QueryName: 'selectCustomers'
+                        QueryName: 'selectProducts'
                     }
                 };
                 break;
-            // À½ÉÊÌ¾¾Î¤Î¤ßÆşÎÏ
+            // è£½å“åç§°ã®ã¿å…¥åŠ›
             case '01':
                 var condition = {
                     data: {
-                        QueryName: 'selectCustomerByCustomerName',
+                        QueryName: 'selectProductByProductName',
                         Conditions: {
-                            customerName: customerName.val()
+                            ProductName: productName.val()
                         }
                     }
                 };
                 break;
-            // À½ÉÊ¥³¡¼¥É¤Î¤ßÆşÎÏ
+            // è£½å“ã‚³ãƒ¼ãƒ‰ã®ã¿å…¥åŠ›
             case '10':
                 var condition = {
                     data: {
-                        QueryName: 'selectCustomerByCustomerCode',
+                        QueryName: 'selectProductByProductCode',
                         Conditions: {
-                            customerCode: customerCode.val()
+                            ProductCode: productCode.val()
                         }
                     }
                 };
                 break;
-            // ¤É¤Á¤é¤âÆşÎÏ
+            // ã©ã¡ã‚‰ã‚‚å…¥åŠ›
             case '11':
                 var condition = {
                     data: {
-                        QueryName: 'selectCustomerByCodeAndName',
+                        QueryName: 'selectProductByCodeAndName',
                         Conditions: {
-                            customerCode: customerCode.val(),
-                            customerName: customerName.val()
+                            ProductCode: productCode.val(),
+                            ProductName: productName.val()
                         }
                     }
                 };
@@ -91,11 +90,11 @@
             default:
                 break;
         }
-        // ¥Ş¥¹¥¿¡¼¸¡º÷¼Â¹Ô
+        // ãƒã‚¹ã‚¿ãƒ¼æ¤œç´¢å®Ÿè¡Œ
         queryMasterData(condition, setResult, setNodata);
     };
 
-    // ¿¿µ¶ÃÍ¤ÎÊ¸»úÎóÉ½¸½¤ò¼èÆÀ
+    // çœŸå½å€¤ã®æ–‡å­—åˆ—è¡¨ç¾ã‚’å–å¾—
     function isEmpty(val) {
         if (val) {
             return '1';
@@ -104,26 +103,27 @@
         }
     }
 
-    // ¸¡º÷·ë²Ì¤òselect¤ÎoptionÍ×ÁÇ¤Ë¥»¥Ã¥È
+    // æ¤œç´¢çµæœã‚’selectã®optionè¦ç´ ã«ã‚»ãƒƒãƒˆ
     function setResult(response) {
-        // ¸¡º÷·ï¿ô¤ò¥«¥¦¥ó¥¿¡¼¤Ë¥»¥Ã¥È
+        // æ¤œç´¢ä»¶æ•°ã‚’ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ã«ã‚»ãƒƒãƒˆ
         $('.result-count .counter').val(response.length);
+
         $.each(response, function() {
             $('.result-select').append(
                 $('<option>')
                 .attr({
-                    code: this.customerdisplaycode,
-                    name: this.customerdisplayname
+                    code: this.productcode,
+                    name: this.productname
                 })
-                .html(this.customerdisplaycode + '&nbsp;&nbsp;&nbsp;' + this.customerdisplayname)
+                .html(this.productcode + '&nbsp;&nbsp;&nbsp;' + this.productname)
             );
         });
     }
 
-    // ¸¡º÷·ë²Ì0·ï¤Î»şoption¤ËNoData¤ò¥»¥Ã¥È
+    // æ¤œç´¢çµæœ0ä»¶ã®æ™‚optionã«NoDataã‚’ã‚»ãƒƒãƒˆ
     function setNodata(response){
         console.log(response.responseText);
-        // ¸¡º÷·ï¿ô¥ê¥»¥Ã¥È
+        // æ¤œç´¢ä»¶æ•°ãƒªã‚»ãƒƒãƒˆ
         $('.result-count .counter').val('');
         $('.result-select').append(
             $('<option>')

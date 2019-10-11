@@ -19,5 +19,5 @@ INNER JOIN
 WHERE
     mc.strcompanydisplaycode = $1
 AND mc.strcompanydisplayname LIKE '%' || $2 || '%'
-AND mar.lngattributecode in (3, 4, 99)
+AND mar.lngattributecode in (4, 99)
 ;

@@ -1,6 +1,6 @@
 $(function() {
 
-	// $('button[class*="btnRecord"]').on('click', function() {
+	// $('button[class*="btnHistory"]').on('click', function() {
 	// 	var estimateNo = $(this).parent().parent().attr('id');
 	// 	var form = $('#displayColumns');
 	// 	var strSort = 'strSort';
@@ -29,7 +29,7 @@ $(function() {
 	// 	numberForm.appendTo(form);
 
 	// 	$.ajax({
-	// 		url: "/estimate/result/searchRecordPreview.php",
+	// 		url: "/estimate/result/searchHistoryPreview.php",
 	// 		type: "post",
 	// 		dataType: "json",
 	// 		async: false,

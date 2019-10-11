@@ -17,7 +17,7 @@ INNER JOIN
     mar.lngcompanycode = mc.lngcompanycode
 WHERE
     mc.strcompanydisplayname LIKE '%' || $1 || '%'
-AND mar.lngattributecode in (3, 4, 99)
+AND mar.lngattributecode in (4, 99)
 ORDER BY
     mc.strcompanydisplaycode
 ;

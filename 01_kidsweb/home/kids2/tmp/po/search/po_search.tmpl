@@ -128,7 +128,7 @@
                     <span class="regist-label__text">入力者</span>
                     <input class="TxtStyle05L" name="lngInputUserCode"  type="text" alt="InputUser">
                     <input class="disTxt46L" name="strInputUserName"  type="text" readonly>
-                    <img class="msw-button button" invokeMSWName="msw-user" msw-before="pickupGroupCodeToNull" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                    <img class="msw-button button" invokeMSWName="msw-inputuser" msw-before="pickupGroupCodeToNull" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
                 </span>
             </div>
             <div class="regist-line">
@@ -202,10 +202,10 @@
                     <input name="IsDisplay_lngInChargeUserCode" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
-                    <span class="regist-label__text">開発担当者</span>
+                    <span class="regist-label__text">担当者</span>
                     <input class="TxtStyle05L" name="lngInChargeUserCode" type="text" alt="InChargeUser">
                     <input class="disTxt46L" name="strInChargeUserName" type="text" readonly>
-                    <img class="msw-button button" invokeMSWName="msw-user" msw-before="pickupGroupCode"  src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                    <img class="msw-button button" invokeMSWName="msw-inchargeuser" msw-before="pickupGroupCode"  src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
                 </span>
             </div>
             <div class="regist-line">
@@ -217,7 +217,7 @@
                     <span class="regist-label__text">仕入先</span>
                     <input class="TxtStyle05L" name="lngCustomerCode" type="text" alt="Customer">
                     <input class="disTxt46L" name="strCustomerName" type="text" readonly>
-                    <img class="msw-button button" invokeMSWName="msw-customer" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                    <img class="msw-button button" invokeMSWName="msw-supplier" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
                 </span>
             </div>
             <div class="regist-line">
@@ -335,14 +335,17 @@
 		</form>
 	</div>
     <div class="msw-loadpoints">
-		<!-- MSW 顧客マスタ検索 -->
-		<iframe class="msw-customer" src="/search/cmn/msw/customer/mswcustomer.html" frameborder="0">
+		<!-- MSW 仕入先マスタ検索 -->
+		<iframe class="msw-supplier" src="/search/cmn/msw/supplier/mswsupplier.html" frameborder="0">
 		</iframe>
 		<!-- MSW 担当部署マスタ検索 -->
 		<iframe class="msw-group" src="/search/cmn/msw/group/mswgroup.html" frameborder="0">
 		</iframe>
 		<!-- MSW 担当者マスタ検索 -->
-		<iframe class="msw-user" src="/search/cmn/msw/user/mswuser.html" frameborder="0">
+		<iframe class="msw-inchargeuser" src="/search/cmn/msw/inchargeuser/mswinchargeuser.html" frameborder="0">
+		</iframe>
+		<!-- MSW 入力者マスタ検索 -->
+		<iframe class="msw-inputuser" src="/search/cmn/msw/inputuser/mswinputuser.html" frameborder="0">
 		</iframe>
 	</div>
 </div>

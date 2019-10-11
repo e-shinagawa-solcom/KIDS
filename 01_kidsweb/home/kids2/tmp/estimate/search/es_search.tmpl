@@ -74,8 +74,8 @@ Loading();
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_detail" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_detail" class="is-display" type="checkbox">
+                    <input name="IsSearch_btnDetail" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_btnDetail" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label--text-only">詳細</span>
@@ -83,8 +83,8 @@ Loading();
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_record" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_record" class="is-display" type="checkbox">
+                    <input name="IsSearch_btnHistory" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_btnHistory" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label--text-only">履歴</span>
@@ -118,44 +118,54 @@ Loading();
                     <input name="IsDisplay_strProductName" class="is-display" type="checkbox">
                 </span>
 				<span class="regist-label">
-					<span class="regist-label__text">製品名</span>
+					<span class="regist-label__text">製品名称（日本語）</span>
                     <input class="Txt46L" name="strProductName" type="text" value="" maxlength="80" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this );" tabindex="">
+				</span>
+            </div>
+            <div class="regist-line">
+                <span class="search-label--checkbox">
+                    <input name="IsSearch_strProductEnglishName" class="is-search" type="checkbox">
+                    <input name="IsDisplay_strProductEnglishName" class="is-display" type="checkbox">
+                </span>
+				<span class="regist-label">
+					<span class="regist-label__text">製品名称（英語）</span>
+                    <input class="Txt46L" name="strProductEnglishName" type="text" value="" maxlength="80" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this );" tabindex="">
 				</span>
 			</div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_strInchargeGroupDisplayCode" class="is-search" type="checkbox">
-                    <input name="IsDisplay_strInchargeGroupDisplayCode" class="is-display" type="checkbox">
+                    <input name="IsSearch_lngInChargeGroupCode" class="is-search" type="checkbox">
+                    <input name="IsDisplay_lngInChargeGroupCode" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label__text">営業部署</span>
-                    <input class="TxtStyle05L" name="strInchargeGroupDisplayCode" type="text">
-                    <input class="disTxt46L" name="strInChargeGroupDisplayName" type="text" readonly>
+                    <input class="TxtStyle05L" name="lngInChargeGroupCode" type="text" alt="InChargeGroup">
+                    <input class="disTxt46L" name="strInChargeGroupName" type="text" readonly>
                     <img class="msw-button button" invokeMSWName="msw-group" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
                 </span>
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_strInchargeUserDisplayCode" class="is-search" type="checkbox">
-                    <input name="IsDisplay_strInchargeUserDisplayCode" class="is-display" type="checkbox">
+                    <input name="IsSearch_lngInChargeUserCode" class="is-search" type="checkbox">
+                    <input name="IsDisplay_lngInChargeUserCode" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
-                    <span class="regist-label__text">担当</span>
-                    <input class="TxtStyle05L" name="strInchargeUserDisplayCode" type="text">
-                    <input class="disTxt46L" name="strInchargeUserDisplayName" type="text" readonly>
-                    <img class="msw-button button" invokeMSWName="msw-user" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                    <span class="regist-label__text">担当者</span>
+                    <input class="TxtStyle05L" name="lngInChargeUserCode" type="text" alt="InChargeUser">
+                    <input class="disTxt46L" name="strInChargeUserName" type="text" readonly>
+                    <img class="msw-button button" invokeMSWName="msw-inchargeuser" msw-before="pickupGroupCode" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
                 </span>
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_strDevelopUserDisplayCode" class="is-search" type="checkbox">
-                    <input name="IsDisplay_strDevelopUserDisplayCode" class="is-display" type="checkbox">
+                    <input name="IsSearch_lngDevelopUserCode" class="is-search" type="checkbox">
+                    <input name="IsDisplay_lngDevelopUserCode" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label__text">開発担当者</span>
-                    <input class="TxtStyle05L" name="strDevelopUserDisplayCode" type="text">
-                    <input class="disTxt46L" name="strDevelopUserDisplayName" type="text" readonly>
-                    <img class="msw-button button" invokeMSWName="msw-user" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                    <input class="TxtStyle05L" name="lngDevelopUserCode" type="text" alt="DevelopUser">
+                    <input class="disTxt46L" name="strDevelopUserName" type="text" readonly>
+                    <img class="msw-button button" invokeMSWName="msw-developuser" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
                 </span>
             </div>
             <div class="regist-line">
@@ -369,8 +379,8 @@ Loading();
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_delete" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_delete" class="is-display" type="checkbox">
+                    <input name="IsSearch_btnDelete" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_btnDelete" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label--text-only">削除</span>
@@ -384,8 +394,14 @@ Loading();
 		<!-- MSW 担当部署マスタ検索 -->
 		<iframe class="msw-group" src="/search/cmn/msw/group/mswgroup.html" frameborder="0">
 		</iframe>
+		<!-- MSW 入力者マスタ検索 -->
+		<iframe class="msw-inputuser" src="/search/cmn/msw/inputuser/mswinputuser.html" frameborder="0">
+		</iframe>
 		<!-- MSW 担当者マスタ検索 -->
-		<iframe class="msw-user" src="/search/cmn/msw/user/mswuser.html" frameborder="0">
+		<iframe class="msw-inchargeuser" src="/search/cmn/msw/inchargeuser/mswinchargeuser.html" frameborder="0">
+		</iframe>
+		<!-- MSW 開発担当者マスタ検索 -->
+		<iframe class="msw-developuser" src="/search/cmn/msw/developuser/mswdevelopuser.html" frameborder="0">
 		</iframe>
 	</div>
 </div>

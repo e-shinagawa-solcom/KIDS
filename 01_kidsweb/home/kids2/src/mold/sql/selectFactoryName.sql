@@ -16,5 +16,5 @@ INNER JOIN
     mar.lngcompanycode = mc.lngcompanycode
 WHERE
       mc.strcompanydisplaycode = $1
-  AND mar.lngattributecode in (3, 4, 99)
+  AND mar.lngattributecode in (4, 99)
 ;

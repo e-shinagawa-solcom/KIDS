@@ -61,8 +61,6 @@ $strSessionID = $aryData["strSessionID"];
 		}
 	}
 
-$aryData = fncToHTMLString( $aryData );
-
 //////////////////////////////////////////////////////////////////////////
 // セッション、権限確認
 //////////////////////////////////////////////////////////////////////////
@@ -78,15 +76,15 @@ if ( !fncCheckAuthority( DEF_FUNCTION_E2, $objAuth ) )
 
 // 検索結果のカラム表記の言語設定
 $aryColumnLang = Array (
-	"detail"						=> "詳細",
-	"record"                        => "修正",
-	"record"						=> "履歴",
+	"btnDetail"						=> "詳細",
+	"btnHistory"					=> "履歴",
 	"dtmInsertDate"		    		=> "作成日",
 	"strProductCode"				=> "製品コード",
 	"strProductName"				=> "製品名称(日本語)",
-	"strInchargeGroupDisplayCode"	=> "営業部署",
-	"strInchargeUserDisplayCode"	=> "担当",
-	"strDevelopUserDisplayCode"		=> "開発担当者",
+	"strProductEnglishName"			=> "製品名称(英語)",
+	"lngInChargeGroupCode"      	=> "営業部署",
+	"lngInChargeUserCode"	        => "担当",
+	"lngDevelopUserCode"		    => "開発担当者",
 	"dtmDeliveryLimitDate"			=> "客先納品日",
 	"curRetailPrice"				=> "上代",
 	"lngCartonQuantity"				=> "カートン入数",
@@ -110,7 +108,7 @@ $aryColumnLang = Array (
 	"curFixedCost"                  => "償却費合計",
 	"curManufacturingCostPieces"    => "pcsコスト",
 	"curManufacturingCost"          => "製造費用合計",
-	"delete"                        => "削除"
+	"btnDelete"                     => "削除"
 );
 
 //////////////////////////////////////////////////////////////////////////
@@ -121,9 +119,9 @@ $aryCheck["strSessionID"]                = "null:numenglish(32,32)";
 $aryCheck["strProductCodeFrom"]          = "number(0,2147483647)";
 $aryCheck["strProductCodeTo"]            = "number(0,2147483647)";
 $aryCheck["strProductName"]              = "length(0,80)";
-$aryCheck["strInchargeGroupDisplayCode"] = "numenglish(0,32767)";
-$aryCheck["strInchargeUserDisplayCode"]  = "numenglish(0,32767)";
-$aryCheck["strDevelopUserDisplayCode"]   = "numenglish(0,32767)";
+$aryCheck["lngInChargeGroupCode"]        = "numenglish(0,32767)";
+$aryCheck["lngInChargeUserCode"]         = "numenglish(0,32767)";
+$aryCheck["lngDevelopUserCode"]          = "numenglish(0,32767)";
 $aryCheck["dtmCreationDateFrom"]         = "date(/)";
 $aryCheck["dtmCreationDateTo"]           = "date(/)";
 $aryCheck["dtmDeliveryLimitDateFrom"]    = "date(/)";
@@ -138,11 +136,12 @@ fncPutStringCheckError( $aryCheckResult, $objDB );
 $selectQuery = 
 	"SELECT
 		TO_CHAR(mp.dtminsertdate, 'YYYY/MM/DD') AS dtminsertdate,
-		mp.strproductcode AS strproductcode,
-		mp.strproductname AS strproductname,
-		'[' || mg.strgroupdisplaycode || ']' || mg.strgroupdisplayname AS strinchargegroupdisplaycode,
-		'[' || mu1.struserdisplaycode || ']' || mu1.struserdisplayname AS strinchargeuserdisplaycode,
-		'[' || mu2.struserdisplaycode || ']' || mu2.struserdisplayname AS strdevelopuserdisplaycode,
+		mp.strproductcode,
+		mp.strproductname,
+		mp.strproductenglishname,
+		'[' || mg.strgroupdisplaycode || ']' || mg.strgroupdisplayname AS lnginchargegroupcode,
+		'[' || mu1.struserdisplaycode || ']' || mu1.struserdisplayname AS lnginchargeusercode,
+		'[' || mu2.struserdisplaycode || ']' || mu2.struserdisplayname AS lngdevelopusercode,
 		TO_CHAR(mp.dtmdeliverylimitdate, 'YYYY/MM/DD') AS dtmdeliverylimitdate,
 		mp.curretailprice,
 		mp.lngcartonquantity,
@@ -166,7 +165,7 @@ $selectQuery =
 		CASE WHEN mp.lngproductionquantity = 0 THEN 0 ELSE me.curfixedcost / mp.lngproductionquantity END AS curfixedcostpieces,
 		me.curmanufacturingcost AS curmanufacturingcost,
 		CASE WHEN mp.lngproductionquantity = 0 THEN 0 ELSE me.curmanufacturingcost / mp.lngproductionquantity END AS curmanufacturingcostpieces,
-		CASE WHEN countofreceiveandorderdetail = countofaplicatedetail THEN TRUE ELSE FALSE END AS deleteflag,
+		CASE WHEN tsum.countofreceiveandorderdetail = tsum.countofaplicatedetail THEN TRUE ELSE FALSE END AS deleteflag,
 		me.lngestimateno,
 		mp.strrevisecode,
 		me.lngrevisionno,
@@ -185,7 +184,7 @@ $selectQuery =
 	INNER JOIN m_user mu1
 		ON mu1.lngusercode = mp.lnginchargeusercode
 	
-	INNER JOIN m_user mu2
+	LEFT OUTER JOIN m_user mu2
 		ON mu2.lngusercode = mp.lngdevelopusercode
 	
 	LEFT OUTER JOIN
@@ -194,7 +193,7 @@ $selectQuery =
 			me.lngestimateno,
 			me.lngrevisionno,
 			SUM(CASE WHEN mscdl.lngestimateareaclassno = 2 THEN ted.curconversionrate * ted.cursubtotalprice ELSE 0 END) AS curfixedcostsales,
-			SUM(CASE WHEN mscdl.lngestimateareaclassno = 2 AND ted.bytpayofftargetflag = FALSE THEN ted.curconversionrate * ted.cursubtotalprice ELSE 0 END) AS curnotdepreciationcost,
+			SUM(CASE WHEN msi.lngestimateareaclassno = 3 AND ted.bytpayofftargetflag = FALSE THEN ted.curconversionrate * ted.cursubtotalprice ELSE 0 END) AS curnotdepreciationcost,
 			count(mscdl.lngestimateareaclassno <> 0 OR msi.lngestimateareaclassno <> 5 OR NULL) AS countofreceiveandorderdetail,
 			count(mr.lngreceivestatuscode = 1 OR mo.lngorderstatuscode = 1 OR NULL) AS countofaplicatedetail
 		FROM t_estimatedetail ted
@@ -254,20 +253,20 @@ $selectQuery =
 			// 入力日
 			case 'dtmInsertDate':
 				if ($condition['from']) {
-					$fromCondition = "me.dtmInsertDate >= ". $condition['from'];                                 
+					$fromCondition = "me.dtminsertdate >= ". $condition['from'];                                 
 				}
 				if ($condition['to']) {
-					$toCondition = "me.dtmInsertDate <= ". $condition['to'];
+					$toCondition = "me.dtminsertdate <= ". $condition['to'];
 				}
 				break;
 
 			// 製品コード
 			case 'strProductCode':
 				if ($condition['from']) {
-					$fromCondition = "mp.strProductCode >= '". $condition['from']. "'";                                 
+					$fromCondition = "mp.strproductcode >= '". $condition['from']. "'";                                 
 				}
 				if ($condition['to']) {
-					$toCondition = "mp.strProductCode <= '". $condition['to']. "'";
+					$toCondition = "mp.strproductcode <= '". $condition['to']. "'";
 				}
 				break;
 
@@ -277,27 +276,27 @@ $selectQuery =
 				break;
 
 			// 営業部署
-			case 'strInchargeGroupDisplayCode':
-				$search = "mp.strInchargeGroupDisplayCode = ". $condition;
+			case 'lngInChargeGroupCode':
+				$search = "mp.strInchargegroupdisplaycode = ". $condition;
 				break;
 
 			// 担当
-			case 'strInchargeUserDisplayCode':
-				$search = "mp.strInchargeUserDisplayCode = ". $condition;
+			case 'lngInChargeUserCode':
+				$search = "mp.strInchargeuserdisplaycode = ". $condition;
 				break;
 
 			// 開発担当者
-			case 'strDevelopUserDisplayCode':
-				$search = "mp.strDevelopUserDisplayCode = ". $condition;
+			case 'lngDevelopUserCode':
+				$search = "mp.strdevelopuserdisplaycode = ". $condition;
 				break;
 			
 			// 納期
 			case 'dtmDeliveryLimitDate';
 				if ($condition['from']) {
-					$fromCondition = "mp.dtmDeliveryLimitDate >= ". $condition['from'];                                 
+					$fromCondition = "mp.dtmdeliverylimitdate >= ". $condition['from'];                                 
 				}
 				if ($condition['to']) {
-					$toCondition = "mp.dtmDeliveryLimitDate <= ". $condition['to'];
+					$toCondition = "mp.dtmdeliverylimitdate <= ". $condition['to'];
 				}
 				break;
 			
@@ -364,8 +363,8 @@ $selectQuery =
 		exit;
 	}
 
-// 共通受け渡しURL生成(セッションID、ページ、各検索条件)
-$strURL = fncGetURL( $aryData );
+// // 共通受け渡しURL生成(セッションID、ページ、各検索条件)
+// $strURL = fncGetURL( $aryData );
 
 //////////////////////////////////////////////////////////////////////////
 // 結果取得、出力処理
@@ -380,9 +379,9 @@ foreach ($displayColumns as $column) {
 
 	$title = htmlspecialchars($aryColumnLang[$column], ENT_QUOTES);
 
-	if ($column === 'detail'
-	    || $column === 'record'
-		|| $column === 'delete') {
+	if ($column === 'btnDetail'
+	    || $column === 'btnHistory'
+		|| $column === 'btnDelete') {
 		$header .= "<th nowrap>" . $title . "</th>";
 	} else {
 		++$sort;
@@ -464,28 +463,28 @@ for ($i = 0; $i < $resultNum; ++$i) {
 	$body .= "<td nowrap>". $number. "</td>";	
 
 	foreach ($displayColumns as $column) {
-		if ($column === 'detail') { // 詳細
+		if ($column === 'btnDetail') { // 詳細
 				$body .= "<td bgcolor=\"#FFFFFF\" align=\"center\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $resultNum . "_',1 );\">";
 				$body .= "<button type=\"button\" class=\"cells btnDetail\" action=\"/estimate/preview/index.php?strSessionID=". $strSessionID. "&estimateNo=". $estimateNo."\" value=\"". $result['lngrevisionno']. "\">";
 				$body .= "<img onmouseover=\"DetailOn(this);\" onmouseout=\"DetailOff(this);\" src=\"/img/". LAYOUT_CODE. "/wf/result/detail_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"DETAIL\">";
 				$body .= "</button></td>";
 
-		} else if ($column === 'record') { // 履歴
+		} else if ($column === 'btnHistory') { // 履歴
 			if ($result['lngmaxrevisionno'] > 1 && $result['lngrevisionno'] === $result['lngmaxrevisionno'] ) {
 				$body .= "<td bgcolor=\"#FFFFFF\" align=\"center\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $resultNum . "_',1 );\">";
-				$body .= "<button type=\"button\" class=\"cells btnRecord\">";
+				$body .= "<button type=\"button\" class=\"cells btnHistory\">";
 				$body .= "<img onmouseover=\"RenewOn(this);\" onmouseout=\"RenewOff(this);\" src=\"/img/". LAYOUT_CODE. "/cmn/seg/renew_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"HISTORY\">";
 				$body .= "</button></td>";
 			} else {
 				$body .= "<td nowrap align=\"left\"></td>";
 			}
 
-		} else if ($column === 'delete') { // 削除
+		} else if ($column === 'btnDelete') { // 削除
 			if ($result['lngrevisionno'] === $result['lngmaxrevisionno']
 				&& $result['deleteflag'] === 't') {
 				$body .= "<td bgcolor=\"#FFFFFF\" align=\"center\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $resultNum . "_',1 );\">";
 				$body .= "<button type=\"button\" class=\"cells btnDelete\" action=\"/estimate/delete/index.php\" value=\"". $result['lngrevisionno']. "\">";
-				$body .= "<img onmouseover=\"RemoveOn(this);\" onmouseout=\"RemoveOff(this);\" src=\"/img/". LAYOUT_CODE. "/cmn/seg/remove_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"REMOVE\">";
+				$body .= "<img onmouseover=\"RemoveOn(this);\" onmouseout=\"RemoveOff(this);\" src=\"/img/". LAYOUT_CODE. "/cmn/seg/remove_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"DELETE\">";
 				
 				$body .= "</button></td>";
 			} else {
@@ -532,10 +531,10 @@ if ( $DESC == 'ASC' ) {
 	$header = str_replace ($pattern, $replace, $header);
 }
 
-// 表示項目をhiddenで渡す
-$hiddenParam['display'] = implode(',', $displayColumns);
+// 検索画面の情報をhiddenで渡す
+unset($aryData["strSort"]);
 
-$form = makeHTML::getHiddenData($hiddenParam);
+$form = makeHTML::getHiddenData($aryData);
 
 // ベーステンプレート読み込み
 $objTemplate = new clsTemplate();

@@ -170,8 +170,30 @@ else
 }
 
 // カラム行HTML取得
-$aryParts["strColumnHtml"] = $objMaster->getColumnHtmlTable( 21 );
-
+// $aryParts["strColumnHtml"] = $objMaster->getColumnHtmlTable( 21 );
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>会社コード</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>国コード</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>組織コード</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>組織表記</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>会社名称</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>表示会社許可</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>表示会社コード</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>表示会社名称</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>省略名称</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>郵便番号 </td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>住所1 / 都道府県 </td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>住所2 / 市、区、郡 </td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>住所3 / 町、番地 </td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>住所4 / ビル等、建物名</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>電話番号1</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>電話番号2</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>ファックス番号1</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>ファックス番号2</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>識別コード</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>締め日コード</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>会社属性</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"FixColumn\" nowrap>修正</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"DeleteColumn\" nowrap>削除</td>\n";
 $objDB->close();
 
 

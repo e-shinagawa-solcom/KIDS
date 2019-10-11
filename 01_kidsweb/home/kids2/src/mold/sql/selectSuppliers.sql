@@ -1,0 +1,19 @@
+/*
+ *    概要：属性が「3:仕入先」又は「99:その他」の「表示会社コード」と「表示会社名」を取得
+ *    対象：会社マスタ
+ *
+ */
+SELECT
+      mc.strcompanydisplaycode supplierdisplaycode
+    , mc.strcompanydisplayname supplierdisplayname
+FROM
+    m_attributerelation mar
+INNER JOIN
+    m_company mc
+  ON
+    mar.lngcompanycode = mc.lngcompanycode
+WHERE
+    mar.lngattributecode in (3, 99)
+ORDER BY
+    strcompanydisplaycode
+;
