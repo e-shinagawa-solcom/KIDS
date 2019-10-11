@@ -341,9 +341,12 @@ class estimateSheetController {
                 if ($areaCode) {
                     $data = $inputData[$workSheetRow]['data']; // 行データの取得
                     $status = $data['statusCode']; // ステータスコードの取得
-                    $estimateDetailNo = $data['estimateDetailNo']; // 見積原価明細番号
+                    $estimateDetailNo = is_numeric($data['estimateDetailNo']) ? (int)$data['estimateDetailNo'] : $data['estimateDetailNo']; // 見積原価明細番号
 
-                    $detailNoList[$tableRow] = $estimateDetailNo;
+                    $detailNoList[] = array(
+                        'row' => $tableRow,
+                        'estimateDetailNo' => $estimateDetailNo
+                    );
 
                     if ($receiveAreaCodeList[$areaCode] === true) { // 受注の場合
 

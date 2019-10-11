@@ -492,10 +492,33 @@ $(function() {
               value.row += 1;
             }
           });
-  
+
+          var newReadOnly = readOnlyDetailRow.map(function(value) {
+            if (value >= selectedRow) {
+              value = value + 1;
+            }
+            return value;
+          });       
+
+          var copyDetailNoList = JSON.parse(JSON.stringify(detailNoList));
+
+
+          detailNoList = copyDetailNoList.map(function(value) {
+            if (value.row >= selectedRow) {
+              value.row += 1;
+            }
+            return value;
+          });
+
+          insertDetailNo = {row: selectedRow, estimateDetailNo: null}
+          detailNoList.push(insertDetailNo);
+
+          console.log(detailNoList);
   
           merge = merge.concat(selectedMerge);
           cellClass = cellClass.concat(selectedClassInfo);
+          readOnlyDetailRow = newReadOnly;
+
           rowHeight.splice(selectedRow, 0, rowHeight[selectedRow]);
   
           table[0].updateSettings({
@@ -598,6 +621,23 @@ $(function() {
               }
               return value;
             });
+            
+            var copyDetailNoList = JSON.parse(JSON.stringify(detailNoList));
+
+            selectedKey = null;
+
+            detailNoList = copyDetailNoList.map(function(value, key) {
+              if (value.row > selectedRow) {
+                value.row -= 1;
+              } else if (value.row === selectedRow) {
+                selectedKey = key;
+              }
+              return value;
+            });
+  
+            detailNoList.splice(selectedKey, 1);
+
+            console.log(detailNoList);
   
             merge = newMerge;
             cellClass = newCellClass;
@@ -678,6 +718,17 @@ $(function() {
             });
   
             readOnlyDetailRow = newReadOnly;
+
+            var copyDetailNoList = JSON.parse(JSON.stringify(detailNoList));
+
+            detailNoList = copyDetailNoList.map(function(value) {
+              if (value.row < selectedRow) {
+                value.row += 1;
+              } else if (value.row === selectedRow) {
+                value.row = minRow;
+              }
+              return value;
+            });
   
             // 元のセルデータを更新する
             for (var i = minRow; i <= maxRow; i++) {
@@ -748,6 +799,17 @@ $(function() {
             });
   
             readOnlyDetailRow = newReadOnly;
+
+            var copyDetailNoList = JSON.parse(JSON.stringify(detailNoList));
+
+            detailNoList = copyDetailNoList.map(function(value) {
+              if (value.row > selectedRow) {
+                value.row -= 1;
+              } else if (value.row === selectedRow) {
+                value.row = maxRow;
+              }
+              return value;
+            });
   
             // 元のセルデータを更新する
             for (var i = minRow; i <= maxRow; i++) {
@@ -821,11 +883,22 @@ $(function() {
               });
   
               readOnlyDetailRow = newReadOnly;
+
+              var copyDetailNoList = JSON.parse(JSON.stringify(detailNoList));
+
+              detailNoList = copyDetailNoList.map(function(value) {
+                if (value.row === selectedRow - 1) {
+                  value.row = selectedRow;
+                } else if (value.row === selectedRow) {
+                  value.row -= 1;
+                }
+                return value;
+              });
   
               // 元のセルデータを更新する
               for (var j = startColumn; j <= endColumn; j++) {
-                cellData[selectedRow][j]['value'] = cellValue[insertRow][j];
-                cellData[insertRow][j]['value'] = cellValue[selectedRow][j];
+                cellData[selectedRow][j]['value'] = cellValue[selectedRow][j];
+                cellData[insertRow][j]['value'] = cellValue[insertRow][j];
               }
   
               table[0].updateSettings({
@@ -835,6 +908,8 @@ $(function() {
                 mergeCells: merge,
                 cell: cellClass
               });
+
+              console.log(cellValue);
             }
           }
   
@@ -897,11 +972,22 @@ $(function() {
               });
   
               readOnlyDetailRow = newReadOnly
+
+              var copyDetailNoList = JSON.parse(JSON.stringify(detailNoList));
+
+              detailNoList = copyDetailNoList.map(function(value) {
+                if (value.row === selectedRow + 1) {
+                  value.row = selectedRow;
+                } else if (value.row === selectedRow) {
+                  value.row += 1;
+                }
+                return value;
+              });
   
               // 元のセルデータを更新する
               for (var j = startColumn; j <= endColumn; j++) {
-                cellData[selectedRow][j]['value'] = cellValue[insertRow][j];
-                cellData[insertRow][j]['value'] = cellValue[selectedRow][j];
+                cellData[selectedRow][j]['value'] = cellValue[selectedRow][j];
+                cellData[insertRow][j]['value'] = cellValue[insertRow][j];
               }
   
               table[0].updateSettings({
@@ -909,7 +995,9 @@ $(function() {
                 rowHeights: rowHeight,
                 mergeCells: merge,
                 cell: cellClass
-              })
+              });
+
+              console.log(cellData);
   
             }
           }
