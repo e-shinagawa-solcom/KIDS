@@ -167,6 +167,10 @@
 	$aryData["strLocationName"]       = $aryOrderHeader[0]["strcompanydisplayname2"];
 	$aryData["lngRevisionNo"]         = $aryOrderHeader[0]["lngrevisionno"];
 	
+	// 支払条件プルダウン
+	$strPulldownPaycondition = fncPulldownMenu(0, 0, "", $objDB);
+	$aryData["optPayCondition"] = $strPulldownPaycondition;
+
 	// 明細
 	// $aryDetail = [];
 	// for($i = 0; $i < count($aryOrderHeader); $i++){
@@ -174,9 +178,6 @@
 	// }
 	$aryDetail = fncGetOrderDetail($aryData["lngOrderNo"], $objDB);
 
-	// 支払条件プルダウン
-	$strPulldownPaycondition = fncPulldownMenu(0, 0, "", $objDB);
-	$aryData["optPayCondition"] = $strPulldownPaycondition;
 	// 通貨プルダウン
 	$strPulldownMonetaryUnit = fncPulldownMenu(1, $aryOrderHeader["lngmonetaryunitcode"], "", $objDB);
 	$aryData["optMonetaryUnit"] = $strPulldownMonetaryUnit;
