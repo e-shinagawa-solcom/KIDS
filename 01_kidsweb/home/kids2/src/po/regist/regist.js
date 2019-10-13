@@ -204,6 +204,7 @@ jQuery(function($){
             result = false;
         }
         var details = getSelectedRows();
+/* 運搬方法は"-"も可とする
         var message = [];
         $.each(details, function(i, tr){
             var selected = $(tr).find('option:selected').val();
@@ -217,7 +218,7 @@ jQuery(function($){
             alert(message.join('\n'));
             result = false;
         }
-
+*/
         return result;
     }
     function isDate(d){
