@@ -31,6 +31,7 @@
 	// require (SRC_ROOT."po/cmn/lib_po.php");
 	// require (SRC_ROOT."po/cmn/lib_pop.php");
 	require (SRC_ROOT."po/cmn/lib_por.php");
+	require_once (LIB_DEBUGFILE);
 	
 	$objDB		= new clsDB();
 	$objAuth	= new clsAuth();
@@ -46,7 +47,7 @@
 		$aryData["lngOrderNo"]   = $_POST["lngOrderNo"];
 	}
 	$aryData["lngLanguageCode"]	= $_COOKIE["lngLanguageCode"];
-
+//fncDebug("kids2.log", $aryData["lngOrderNo"], __FILE__, __LINE__, "a" );
 	
 	$objDB->open("", "", "", "");
 	
@@ -173,7 +174,10 @@
 	// for($i = 0; $i < count($aryOrderHeader); $i++){
 	// 	$aryDetail[] = fncGetOrderDetail($aryOrderHeader[$i], $objDB);
 	// }
-	$aryDetail = fncGetOrderDetail($aryData["lngOrderNo"], $objDB);
+	$lngOrderNo = explode(",", $aryData["lngOrderNo"]);
+//fncDebug("kids2.log", $lngOrderNo[0], __FILE__, __LINE__, "a" );
+	//$aryDetail = fncGetOrderDetail($aryData["lngOrderNo"], $objDB);
+	$aryDetail = fncGetOrderDetail($lngOrderNo[0], $aryData["lngRevisionNo"], $objDB);
 
 	// 通貨プルダウン
 	$strPulldownMonetaryUnit = fncPulldownMenu(1, $aryOrderHeader["lngmonetaryunitcode"], "", $objDB);

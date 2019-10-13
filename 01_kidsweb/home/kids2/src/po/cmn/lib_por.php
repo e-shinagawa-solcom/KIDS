@@ -201,7 +201,7 @@ function fncGetPayCondition($lngpayconditioncode, $objDB){
  *	@return String 	$strDetail  発注データ(明細)
  *	@access public
  */
-function fncGetOrderDetail($aryOrderNo, $objDB){
+function fncGetOrderDetail($aryOrderNo, $lngRevisionNo, $objDB){
     $aryQuery[] = "SELECT DISTINCT ON (mo.strordercode, mo.lngrevisionno, od.lngorderdetailno) ";
     $aryQuery[] = "   mo.strordercode || '_' || TO_CHAR(mo.lngrevisionno,'FM00') AS strordercode";
     $aryQuery[] = "  ,od.lngorderdetailno";
@@ -234,9 +234,12 @@ function fncGetOrderDetail($aryOrderNo, $objDB){
     $aryQuery[] = "  ON  mo.lngorderno = od.lngorderno";
     $aryQuery[] = "  AND mo.lngrevisionno = od.lngrevisionno";
     // $aryQuery[] = "INNER JOIN (SELECT strordercode, lngrevisionno FROM m_order WHERE lngorderno = " . $lngOrderNo . ") o";
-    $aryQuery[] = "INNER JOIN (SELECT strordercode, lngrevisionno FROM m_order WHERE lngorderno IN (" . $aryOrderNo . ")) o";
+    // $aryQuery[] = "INNER JOIN (SELECT strordercode, lngrevisionno FROM m_order WHERE lngorderno IN (" . $aryOrderNo . ")) o";
+    $aryQuery[] = "INNER JOIN (SELECT strordercode, lngrevisionno, lngcustomercompanycode, lngmonetaryunitcode FROM m_order WHERE lngorderno = " . $aryOrderNo . " AND lngrevisionno = " . $lngRevisionNo . ") o";
     $aryQuery[] = "  ON  mo.strordercode = o.strordercode";
     $aryQuery[] = "  AND mo.lngrevisionno = o.lngrevisionno";
+    $aryQuery[] = "  AND mo.lngcustomercompanycode = o.lngcustomercompanycode";
+    $aryQuery[] = "  AND mo.lngmonetaryunitcode = o.lngmonetaryunitcode";
     $aryQuery[] = "LEFT JOIN m_product mp";
     $aryQuery[] = "  ON  od.strproductcode = mp.strproductcode";
     $aryQuery[] = "LEFT JOIN m_company mc";
