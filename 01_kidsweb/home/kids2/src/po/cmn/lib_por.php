@@ -619,6 +619,7 @@ function fncUpdateOrderDetail($aryUpdate, $aryDetail, $objDB){
  */
 function fncInsertPurchaseOrder($aryOrder, $aryOrderDetail, $objAuth, $objDB){
 
+	require_once (LIB_DEBUGFILE);
     $key1 = "lngcustomercompanycode";
     $key2 = "lngmonetaryunitcode";
     $group = [];
@@ -647,7 +648,12 @@ function fncInsertPurchaseOrder($aryOrder, $aryOrderDetail, $objAuth, $objDB){
                     $lngpurchaseorderno = fncGetSequence("m_purchaseorder.lngpurchaseorderno", $objDB);
                     $lngrevisionno = $aryOrderDetailUpdate[$i]["lngrevisionno"] == null ? 0 : intval($aryOrderDetailUpdate[$i]["lngrevisionno"]) + 1;
                     $ym = date('ym');
-                    $lngorderno = fncGetSequence("m_purchaseorder.strordercode." . $ym, $objDB);
+                    $year = date('y');
+                    $month = date('m');
+//fncDebug("kids2.log", $year . "/" . $month, __FILE__, __LINE__, "a");
+//                    $lngorderno = fncGetSequence("m_purchaseorder.strordercode." . $ym, $objDB);
+                    $lngorderno = fncGetDateSequence($year, $month, "m_purchaseorder.strordercode", $objDB);
+//fncDebug("kids2.log", $lngorderno, __FILE__, __LINE__, "a");
                     $customer = fncGetCompany($aryOrderDetailUpdate[$i]["lngcustomercompanycode"], $objDB);
                     $delivery = fncGetCompany($aryOrderDetailUpdate[$i]["lngdeliveryplacecode"], $objDB);
                     $payconditioncode = fncPayConditionCode($customer["lngcountrycode"], $aryOrderDetailUpdate[$i], $curTotalPrice, $objDB);
@@ -687,7 +693,7 @@ function fncInsertPurchaseOrder($aryOrder, $aryOrderDetail, $objAuth, $objDB){
                     $aryQuery[] = ") VALUES (";
                     $aryQuery[] = "   "  . $lngpurchaseorderno;
                     $aryQuery[] = "  ,"  . $lngrevisionno;
-                    $aryQuery[] = "  ,'" . sprintf('%s%04d', $ym, $lngorderno) . "'";
+                    $aryQuery[] = "  ,'" . $lngorderno . "'";
                     $aryQuery[] = "  ,"  . $customer["lngcompanycode"];
                     $aryQuery[] = "  ,'" . $customer["strcompanydisplayname"] . "'";
                     $aryQuery[] = "  ,'" . $customer["straddress1"]. $customer["straddress2"]. $customer["straddress3"] . "'";

@@ -109,7 +109,6 @@
 			$aryUpdateDetail[$i]["dtmseliverydate"]        = $_POST["aryDetail"][$i]["dtmDeliveryDate"];
 		}
 		
-		
 		$objDB->transactionBegin();
 		// 発注マスタ更新
 		if(!fncUpdateOrder($aryUpdate, $aryUpdateDetail, $objDB)) { return false; }
