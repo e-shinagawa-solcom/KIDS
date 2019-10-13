@@ -338,7 +338,7 @@ jQuery(function($){
                 lngOrderNo:           $('input[name="lngOrderNo"]').val(),
                 strMode:              $('input[name="strMode"]').val(),
                 lngRevisionNo:        $('input[name="lngRevisionNo"]').val(),
-                lngPayConditionCode:  $('select[name="optPayCondition"]').children('option:selected').val(),
+                lngPayConditionCode:  $('select[name="lngPayConditionCode"]').val(),
                 dtmExpirationDate:    $('input[name="dtmExpirationDate"]').val(),
                 lngLocationCode:      $('input[name="lngLocationCode"]').val(),
                 strNote:              $('input[name="strNote"]').text(),
