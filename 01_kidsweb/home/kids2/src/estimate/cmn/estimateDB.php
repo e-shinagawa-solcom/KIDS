@@ -500,167 +500,167 @@ class estimateDB extends clsDB {
         }
     }
 
-    /**
-    *
-    *	製品コード、リバイスコード、リビジョン番号に紐付く最新の受注明細を取得する
-    *
-    *	@param string $productCode 製品コード
-    *	@param string $reviseCode  リバイスコード
-    *
-    *	@return array $estimateDetail 見積原価明細
-    *	@access public
-    */
-    public function getReceiveDetail($productCode, $reviseCode, $revisionNo = null) {
-        if (!$this->isOpen()) {
-            return false;
-        } else {
-            $strQuery = "SELECT";
-            // 見積原価明細の情報取得
-            $strQuery .= " ted.lngestimateno AS lngestimateno,";
-            $strQuery .= " ted.lngestimatedetailno AS lngestimatedetailno,";
-            $strQuery .= " ted.lngrevisionno AS lngrevisionno,";
-            $strQuery .= " ted.lngstocksubjectcode AS lngstocksubjectcode,";
-            $strQuery .= " ted.lngstockitemcode AS lngstockitemcode,";
-            $strQuery .= " ted.lngcustomercompanycode AS lngcustomercompanycode,";
-            $strQuery .= " to_char(ted.dtmdelivery, 'YYYY/MM/DD') AS dtmdelivery,";
-            $strQuery .= " ted.bytpayofftargetflag AS bytpayofftargetflag,";
-            $strQuery .= " ted.bytpercentinputflag AS bytpercentinputflag,";
-            $strQuery .= " ted.dblpercent AS dblpercent,";
-            $strQuery .= " ted.lngmonetaryunitcode AS lngmonetaryunitcode,";
-            $strQuery .= " ted.lngmonetaryratecode AS lngmonetaryratecode,";
-            $strQuery .= " ted.curconversionrate AS curconversionrate,";
-            $strQuery .= " ted.lngproductquantity AS lngproductquantity,";
-            $strQuery .= " ted.curproductprice AS curproductprice,";
-            $strQuery .= " ted.curproductrate AS curproductrate,";
-            $strQuery .= " ted.cursubtotalprice AS cursubtotalprice,";
-            $strQuery .= " ted.strnote AS strnote,";
-            $strQuery .= " ted.lngsortkey AS lngsortkey,";
-            $strQuery .= " ted.lngsalesdivisioncode AS lngsalesdivisioncode,";
-            $strQuery .= " ted.lngsalesclasscode AS lngsalesclasscode,";
-            // 受注状態の情報取得
-            $strQuery .= " mr.lngreceivestatuscode AS lngreceivestatuscode";
+    // /**
+    // *
+    // *	製品コード、リバイスコード、リビジョン番号に紐付く最新の受注明細を取得する
+    // *
+    // *	@param string $productCode 製品コード
+    // *	@param string $reviseCode  リバイスコード
+    // *
+    // *	@return array $estimateDetail 見積原価明細
+    // *	@access public
+    // */
+    // public function getReceiveDetail($productCode, $reviseCode, $revisionNo = null) {
+    //     if (!$this->isOpen()) {
+    //         return false;
+    //     } else {
+    //         $strQuery = "SELECT";
+    //         // 見積原価明細の情報取得
+    //         $strQuery .= " ted.lngestimateno AS lngestimateno,";
+    //         $strQuery .= " ted.lngestimatedetailno AS lngestimatedetailno,";
+    //         $strQuery .= " ted.lngrevisionno AS lngrevisionno,";
+    //         $strQuery .= " ted.lngstocksubjectcode AS lngstocksubjectcode,";
+    //         $strQuery .= " ted.lngstockitemcode AS lngstockitemcode,";
+    //         $strQuery .= " ted.lngcustomercompanycode AS lngcustomercompanycode,";
+    //         $strQuery .= " to_char(ted.dtmdelivery, 'YYYY/MM/DD') AS dtmdelivery,";
+    //         $strQuery .= " ted.bytpayofftargetflag AS bytpayofftargetflag,";
+    //         $strQuery .= " ted.bytpercentinputflag AS bytpercentinputflag,";
+    //         $strQuery .= " ted.dblpercent AS dblpercent,";
+    //         $strQuery .= " ted.lngmonetaryunitcode AS lngmonetaryunitcode,";
+    //         $strQuery .= " ted.lngmonetaryratecode AS lngmonetaryratecode,";
+    //         $strQuery .= " ted.curconversionrate AS curconversionrate,";
+    //         $strQuery .= " ted.lngproductquantity AS lngproductquantity,";
+    //         $strQuery .= " ted.curproductprice AS curproductprice,";
+    //         $strQuery .= " ted.curproductrate AS curproductrate,";
+    //         $strQuery .= " ted.cursubtotalprice AS cursubtotalprice,";
+    //         $strQuery .= " ted.strnote AS strnote,";
+    //         $strQuery .= " ted.lngsortkey AS lngsortkey,";
+    //         $strQuery .= " ted.lngsalesdivisioncode AS lngsalesdivisioncode,";
+    //         $strQuery .= " ted.lngsalesclasscode AS lngsalesclasscode,";
+    //         // 受注状態の情報取得
+    //         $strQuery .= " mr.lngreceivestatuscode AS lngreceivestatuscode";
 
-            $strQuery .= " FROM m_receive mr";
-            $strQuery .= " INNER JOIN t_receivedetail trd";
-            $strQuery .= " ON mr.lngreceiveno = trd.lngreceiveno";
-            $strQuery .= " AND mr.lngrevisionno = trd.lngrevisionno";
-            $strQuery .= " INNER JOIN t_estimatedetail ted";
-            $strQuery .= " ON trd.lngestimateno = ted.lngestimateno";
-            $strQuery .= " AND trd.lngestimatedetailno = ted.lngestimatedetailno";
-            $strQuery .= " INNER JOIN m_estimate me";
-            $strQuery .= " ON ted.lngestimateno = me.lngestimateno";
-            $strQuery .= " AND ted.lngrevisionno = me.lngrevisionno";
-            $strQuery .= " INNER JOIN m_product mp";
-            $strQuery .= " ON me.strproductcode = mp.strproductcode";
-            $strQuery .= " AND me.strrevisecode = mp.strrevisecode";
-            $strQuery .= " WHERE mp.strproductcode = '". $productCode. "'";
-            $strQuery .= " AND mp.strrevisecode = '". $reviseCode. "'";
-            $strQuery .= " AND me.lngrevisionno";
-            if ($revisionNo) {
-                // リビジョン番号が指定されている場合
-                $strQuery .= " = ". $revisionNo;
-            } else { 
-                $strQuery .= " IN (SELECT MAX(lngrevisionno) FROM m_estimate";
-                $strQuery .= " WHERE strproductcode = '". $productCode. "'";
-                $strQuery .= " AND strrevisecode = '". $reviseCode. "')";
-            }
-        }
+    //         $strQuery .= " FROM m_receive mr";
+    //         $strQuery .= " INNER JOIN t_receivedetail trd";
+    //         $strQuery .= " ON mr.lngreceiveno = trd.lngreceiveno";
+    //         $strQuery .= " AND mr.lngrevisionno = trd.lngrevisionno";
+    //         $strQuery .= " INNER JOIN t_estimatedetail ted";
+    //         $strQuery .= " ON trd.lngestimateno = ted.lngestimateno";
+    //         $strQuery .= " AND trd.lngestimatedetailno = ted.lngestimatedetailno";
+    //         $strQuery .= " INNER JOIN m_estimate me";
+    //         $strQuery .= " ON ted.lngestimateno = me.lngestimateno";
+    //         $strQuery .= " AND ted.lngrevisionno = me.lngrevisionno";
+    //         $strQuery .= " INNER JOIN m_product mp";
+    //         $strQuery .= " ON me.strproductcode = mp.strproductcode";
+    //         $strQuery .= " AND me.strrevisecode = mp.strrevisecode";
+    //         $strQuery .= " WHERE mp.strproductcode = '". $productCode. "'";
+    //         $strQuery .= " AND mp.strrevisecode = '". $reviseCode. "'";
+    //         $strQuery .= " AND me.lngrevisionno";
+    //         if ($revisionNo) {
+    //             // リビジョン番号が指定されている場合
+    //             $strQuery .= " = ". $revisionNo;
+    //         } else { 
+    //             $strQuery .= " IN (SELECT MAX(lngrevisionno) FROM m_estimate";
+    //             $strQuery .= " WHERE strproductcode = '". $productCode. "'";
+    //             $strQuery .= " AND strrevisecode = '". $reviseCode. "')";
+    //         }
+    //     }
 
-        list ($resultID, $resultNumber) = fncQuery($strQuery, $this);
+    //     list ($resultID, $resultNumber) = fncQuery($strQuery, $this);
 
-        if ($resultNumber > 0) {
-            for ($i = 0; $i < $resultNumber; ++$i) {
-                $result = pg_fetch_object($resultID, $i);   
-                $order[] = $result;
-            }
-        } else {
-            $order = false;
-        }
+    //     if ($resultNumber > 0) {
+    //         for ($i = 0; $i < $resultNumber; ++$i) {
+    //             $result = pg_fetch_object($resultID, $i);   
+    //             $order[] = $result;
+    //         }
+    //     } else {
+    //         $order = false;
+    //     }
 
-        $this->freeResult($resultID);
-        return $order;
-    }
+    //     $this->freeResult($resultID);
+    //     return $order;
+    // }
 
-    /**
-    *
-    *	製品コード、リバイスコード、リビジョン番号に紐付く最新の発注明細を取得する
-    *
-    *	@param string $productCode 製品コード
-    *	@param string $reviseCode  リバイスコード
-    *
-    *	@return array $estimateDetail 見積原価明細
-    *	@access public
-    */
-    public function getOrderDetail($productCode, $reviseCode, $revisionNo = null) {
-        if (!$this->isOpen()) {
-            return false;
-        } else {
-            $strQuery = "SELECT";
-            // 見積原価明細の情報取得
-            $strQuery .= " ted.lngestimateno AS lngestimateno,";
-            $strQuery .= " ted.lngestimatedetailno AS lngestimatedetailno,";
-            $strQuery .= " ted.lngrevisionno AS lngrevisionno,";
-            $strQuery .= " ted.lngstocksubjectcode AS lngstocksubjectcode,";
-            $strQuery .= " ted.lngstockitemcode AS lngstockitemcode,";
-            $strQuery .= " ted.lngcustomercompanycode AS lngcustomercompanycode,";
-            $strQuery .= " to_char(ted.dtmdelivery, 'YYYY/MM/DD') AS dtmdelivery,";
-            $strQuery .= " ted.bytpayofftargetflag AS bytpayofftargetflag,";
-            $strQuery .= " ted.bytpercentinputflag AS bytpercentinputflag,";
-            $strQuery .= " ted.dblpercent AS dblpercent,";
-            $strQuery .= " ted.lngmonetaryunitcode AS lngmonetaryunitcode,";
-            $strQuery .= " ted.lngmonetaryratecode AS lngmonetaryratecode,";
-            $strQuery .= " ted.curconversionrate AS curconversionrate,";
-            $strQuery .= " ted.lngproductquantity AS lngproductquantity,";
-            $strQuery .= " ted.curproductprice AS curproductprice,";
-            $strQuery .= " ted.curproductrate AS curproductrate,";
-            $strQuery .= " ted.cursubtotalprice AS cursubtotalprice,";
-            $strQuery .= " ted.strnote AS strnote,";
-            $strQuery .= " ted.lngsortkey AS lngsortkey,";
-            $strQuery .= " ted.lngsalesdivisioncode AS lngsalesdivisioncode,";
-            $strQuery .= " ted.lngsalesclasscode AS lngsalesclasscode,";
-            // 発注状態の情報取得
-            $strQuery .= " mo.lngorderstatuscode AS lngorderstatuscode";
+    // /**
+    // *
+    // *	製品コード、リバイスコード、リビジョン番号に紐付く最新の発注明細を取得する
+    // *
+    // *	@param string $productCode 製品コード
+    // *	@param string $reviseCode  リバイスコード
+    // *
+    // *	@return array $estimateDetail 見積原価明細
+    // *	@access public
+    // */
+    // public function getOrderDetail($productCode, $reviseCode, $revisionNo = null) {
+    //     if (!$this->isOpen()) {
+    //         return false;
+    //     } else {
+    //         $strQuery = "SELECT";
+    //         // 見積原価明細の情報取得
+    //         $strQuery .= " ted.lngestimateno AS lngestimateno,";
+    //         $strQuery .= " ted.lngestimatedetailno AS lngestimatedetailno,";
+    //         $strQuery .= " ted.lngrevisionno AS lngrevisionno,";
+    //         $strQuery .= " ted.lngstocksubjectcode AS lngstocksubjectcode,";
+    //         $strQuery .= " ted.lngstockitemcode AS lngstockitemcode,";
+    //         $strQuery .= " ted.lngcustomercompanycode AS lngcustomercompanycode,";
+    //         $strQuery .= " to_char(ted.dtmdelivery, 'YYYY/MM/DD') AS dtmdelivery,";
+    //         $strQuery .= " ted.bytpayofftargetflag AS bytpayofftargetflag,";
+    //         $strQuery .= " ted.bytpercentinputflag AS bytpercentinputflag,";
+    //         $strQuery .= " ted.dblpercent AS dblpercent,";
+    //         $strQuery .= " ted.lngmonetaryunitcode AS lngmonetaryunitcode,";
+    //         $strQuery .= " ted.lngmonetaryratecode AS lngmonetaryratecode,";
+    //         $strQuery .= " ted.curconversionrate AS curconversionrate,";
+    //         $strQuery .= " ted.lngproductquantity AS lngproductquantity,";
+    //         $strQuery .= " ted.curproductprice AS curproductprice,";
+    //         $strQuery .= " ted.curproductrate AS curproductrate,";
+    //         $strQuery .= " ted.cursubtotalprice AS cursubtotalprice,";
+    //         $strQuery .= " ted.strnote AS strnote,";
+    //         $strQuery .= " ted.lngsortkey AS lngsortkey,";
+    //         $strQuery .= " ted.lngsalesdivisioncode AS lngsalesdivisioncode,";
+    //         $strQuery .= " ted.lngsalesclasscode AS lngsalesclasscode,";
+    //         // 発注状態の情報取得
+    //         $strQuery .= " mo.lngorderstatuscode AS lngorderstatuscode";
 
-            $strQuery .= " FROM m_order mo";
-            $strQuery .= " INNER JOIN t_orderdetail tod";
-            $strQuery .= " ON mo.lngorderno = tod.lngorderno";
-            $strQuery .= " AND mo.lngrevisionno = tod.lngrevisionno";
-            $strQuery .= " INNER JOIN t_estimatedetail ted";
-            $strQuery .= " ON tod.lngestimateno = ted.lngestimateno";
-            $strQuery .= " AND tod.lngestimatedetailno = ted.lngestimatedetailno";
-            $strQuery .= " INNER JOIN m_estimate me";
-            $strQuery .= " ON ted.lngestimateno = me.lngestimateno";
-            $strQuery .= " AND ted.lngrevisionno = me.lngrevisionno";
-            $strQuery .= " INNER JOIN m_product mp";
-            $strQuery .= " ON me.strproductcode = mp.strproductcode";
-            $strQuery .= " AND me.strrevisecode = mp.strrevisecode";
-            $strQuery .= " WHERE mp.strproductcode = '". $productCode. "'";
-            $strQuery .= " AND mp.strrevisecode = '". $reviseCode. "'";
-            $strQuery .= " AND me.lngrevisionno";
-            if ($revisionNo) {
-                // リビジョン番号が指定されている場合
-                $strQuery .= " = ". $revisionNo;
-            } else { 
-                $strQuery .= " IN (SELECT MAX(lngrevisionno) FROM m_estimate";
-                $strQuery .= " WHERE strproductcode = '". $productCode. "'";
-                $strQuery .= " AND strrevisecode = '". $reviseCode. "')";
-            }
-        }
+    //         $strQuery .= " FROM m_order mo";
+    //         $strQuery .= " INNER JOIN t_orderdetail tod";
+    //         $strQuery .= " ON mo.lngorderno = tod.lngorderno";
+    //         $strQuery .= " AND mo.lngrevisionno = tod.lngrevisionno";
+    //         $strQuery .= " INNER JOIN t_estimatedetail ted";
+    //         $strQuery .= " ON tod.lngestimateno = ted.lngestimateno";
+    //         $strQuery .= " AND tod.lngestimatedetailno = ted.lngestimatedetailno";
+    //         $strQuery .= " INNER JOIN m_estimate me";
+    //         $strQuery .= " ON ted.lngestimateno = me.lngestimateno";
+    //         $strQuery .= " AND ted.lngrevisionno = me.lngrevisionno";
+    //         $strQuery .= " INNER JOIN m_product mp";
+    //         $strQuery .= " ON me.strproductcode = mp.strproductcode";
+    //         $strQuery .= " AND me.strrevisecode = mp.strrevisecode";
+    //         $strQuery .= " WHERE mp.strproductcode = '". $productCode. "'";
+    //         $strQuery .= " AND mp.strrevisecode = '". $reviseCode. "'";
+    //         $strQuery .= " AND me.lngrevisionno";
+    //         if ($revisionNo) {
+    //             // リビジョン番号が指定されている場合
+    //             $strQuery .= " = ". $revisionNo;
+    //         } else { 
+    //             $strQuery .= " IN (SELECT MAX(lngrevisionno) FROM m_estimate";
+    //             $strQuery .= " WHERE strproductcode = '". $productCode. "'";
+    //             $strQuery .= " AND strrevisecode = '". $reviseCode. "')";
+    //         }
+    //     }
 
-        list ($resultID, $resultNumber) = fncQuery($strQuery, $this);
+    //     list ($resultID, $resultNumber) = fncQuery($strQuery, $this);
 
-        if ($resultNumber > 0) {
-            for ($i = 0; $i < $resultNumber; ++$i) {
-                $result = pg_fetch_object($resultID, $i);   
-                $order[] = $result;
-            }
-        } else {
-            $order = false;
-        }
+    //     if ($resultNumber > 0) {
+    //         for ($i = 0; $i < $resultNumber; ++$i) {
+    //             $result = pg_fetch_object($resultID, $i);   
+    //             $order[] = $result;
+    //         }
+    //     } else {
+    //         $order = false;
+    //     }
 
-        $this->freeResult($resultID);
-        return $order;
-    }
+    //     $this->freeResult($resultID);
+    //     return $order;
+    // }
 
     /**
     *
@@ -765,10 +765,15 @@ class estimateDB extends clsDB {
             $strQuery .= " me.lngproductrevisionno,";
             $strQuery .= " mo.lngorderno,";
             $strQuery .= " mo.lngorderstatuscode,";
+            $strQuery .= " mo.lngrevisionno AS lngorderrevisionno,";
             $strQuery .= " mr.lngreceiveno,";
             $strQuery .= " mr.lngreceivestatuscode,";
+            $strQuery .= " mr.lngrevisionno AS lngreceiverevisionno,";
+            $strQuery .= " mp.lngproductno,";
             $strQuery .= " mp.strproductcode,";
-            $strQuery .= " mp.strrevisecode";
+            $strQuery .= " mp.strrevisecode,";
+            $strQuery .= " mp.lngrevisionno AS lngproductrevisionno,";
+            $strQuery .= " minRev.lngrevisionno AS minrevisionno";
 
             $strQuery .= " FROM t_estimatedetail ted";
             $strQuery .= " INNER JOIN m_estimate me";
@@ -779,11 +784,20 @@ class estimateDB extends clsDB {
             $strQuery .= " AND me.strrevisecode = mp.strrevisecode";
             $strQuery .= " AND me.lngproductrevisionno = mp.lngrevisionno";
 
+            // 最小リビジョン番号の結合
+            $strQuery .= " LEFT OUTER JOIN";
+            $strQuery .= " (";
+            $strQuery .= "SELECT lngestimateno, min(lngrevisionno) as lngrevisionno";
+            $strQuery .= " FROM m_estimate";
+            $strQuery .= " GROUP BY lngestimateno";
+            $strQuery .= ") minRev";
+            $strQuery .= " ON minRev.lngestimateno = me.lngestimateno";
+
             // 発注情報の結合(t_orderdetail, m_order)
             $strQuery .= " LEFT OUTER JOIN t_orderdetail tod";
             $strQuery .= " ON ted.lngestimateno = tod.lngestimateno";
             $strQuery .= " AND ted.lngestimatedetailno = tod.lngestimatedetailno";
-            $strQuery .= " AND ted.lngrevisionno = tod.lngrevisionno";
+            $strQuery .= " AND ted.lngrevisionno = tod.lngestimaterevisionno";
             $strQuery .= " LEFT OUTER JOIN m_order mo";
             $strQuery .= " ON tod.lngorderno = mo.lngorderno";
             $strQuery .= " AND tod.lngrevisionno = mo.lngrevisionno";
@@ -792,7 +806,7 @@ class estimateDB extends clsDB {
             $strQuery .= " LEFT OUTER JOIN t_receivedetail trd";
             $strQuery .= " ON ted.lngestimateno = trd.lngestimateno";
             $strQuery .= " AND ted.lngestimatedetailno = trd.lngestimatedetailno";
-            $strQuery .= " AND ted.lngrevisionno = trd.lngrevisionno";
+            $strQuery .= " AND ted.lngrevisionno = trd.lngestimaterevisionno";
             $strQuery .= " LEFT OUTER JOIN m_receive mr";
             $strQuery .= " ON trd.lngreceiveno = mr.lngreceiveno";
             $strQuery .= " AND trd.lngrevisionno = mr.lngrevisionno";

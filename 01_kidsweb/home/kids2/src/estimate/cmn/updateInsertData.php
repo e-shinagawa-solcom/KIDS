@@ -55,81 +55,6 @@ class updateInsertData extends estimateInsertData {
     /**
     * DB登録用関数
     *
-    *	登録用のINSERT文を生成する
-    *   
-    *   @param array $array 登録データ（キーにカラム名を持つデータ配列）
-    *   @param string $condition 検索条件
-    *   @param $returning 返却するカラム
-    *
-    *	@return boolean
-    *	@access protected
-    */
-    protected function makeInsertQuery($table, $array, $condition = null, $returning = null) {
-
-        if ($condition) { // 検索条件が指定されているとき
-            foreach ($array as $key => $value) {
-                // 列情報のセット
-                if (!isset($columns)) {
-                    $columns = $key;
-                } else {
-                    $columns = $columns. ", ". $key;
-                }
-                
-                $type = gettype($value);
-                if ($type == 'boolean' || $type == 'NULL') {
-                    $value = var_export($value, true);
-                }
-
-                if (!isset($values)) {
-                    $values = $value; 
-                } else {
-                    $values = $values. ", ". $value;
-                }
-            }
-            $sqlQuery = "INSERT INTO ". $table;
-            $sqlQuery .= " (". $columns. ")";
-            $sqlQuery .= " SELECT";
-            $sqlQuery .= " ". $values;
-            $sqlQuery .= " FROM ". $table;
-            $sqlQuery .= " ". $condition;
-
-            if ($returning) {
-                $returningQuery = " RETURNING";
-                if (is_array($returning)) {
-                    $columns = "";
-                    foreach($returning as $column) {
-                        if (is_string($column)) {
-                            if ($columns) {
-                                $columns .= ", ". $column;
-                            } else {
-                                $columns = " ". $column;
-                            }
-                        } else {
-                            $returningQuery = "";
-                            break;
-                        }
-                    }
-    
-                    $returningQuery .= $columns;
-                    
-                } else if (is_string($returning)) {
-                    $returningQuery .= " ". $returning;
-                } else {
-                    $returningQuery = "";
-                }
-    
-                $sqlQuery .= $returningQuery;
-            }
-        } else {
-            $sqlQuery = parent::makeInsertQuery($table, $array);
-        }
-
-        return $sqlQuery;
-    }
-
-    /**
-    * DB登録用関数
-    *
     *	見積原価登録を行う
     *   
     *	@return true
@@ -334,7 +259,7 @@ class updateInsertData extends estimateInsertData {
         $returning = 'lngproductno, lngrevisionno';
 
         // クエリの生成
-        $strQuery = $this->makeInsertQuery($table, $data, $join, $returning);
+        $strQuery = $this->makeInsertSelectQuery($table, $data, $join, $returning);
         
         // クエリの実行
         list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
@@ -411,7 +336,7 @@ class updateInsertData extends estimateInsertData {
         $returning = 'lngestimateno, lngrevisionno';
 
         // クエリの生成
-        $strQuery = $this->makeInsertQuery($table, $data, $join, $returning);
+        $strQuery = $this->makeInsertSelectQuery($table, $data, $join, $returning);
         
         // クエリの実行
         list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
@@ -486,7 +411,7 @@ class updateInsertData extends estimateInsertData {
         ); 
         
         // クエリの生成
-        $strQuery = $this->makeInsertQuery($table, $data);
+        $strQuery = $this->makeInsertSelectQuery($table, $data);
         // クエリの実行
         list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
 
@@ -550,7 +475,7 @@ class updateInsertData extends estimateInsertData {
             $returning = "lngreceiveno";
 
             // クエリの生成
-            $strQuery = $this->makeInsertQuery($table, $data, $condition, $returning);
+            $strQuery = $this->makeInsertSelectQuery($table, $data, $condition, $returning);
 
             // クエリの実行
             list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
@@ -593,7 +518,7 @@ class updateInsertData extends estimateInsertData {
             );        
     
             // クエリの生成
-            $strQuery = $this->makeInsertQuery($table, $data);
+            $strQuery = $this->makeInsertSelectQuery($table, $data);
     
             // クエリの実行
             list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
@@ -659,7 +584,7 @@ class updateInsertData extends estimateInsertData {
             $returning = "lngreceivestatuscode";
 
             // クエリの生成
-            $strQuery = $this->makeInsertQuery($table, $data, $condition, $returning);
+            $strQuery = $this->makeInsertSelectQuery($table, $data, $condition, $returning);
             // クエリの実行
             list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
 
@@ -694,7 +619,7 @@ class updateInsertData extends estimateInsertData {
             );
 
             // クエリの生成
-            $strQuery = $this->makeInsertQuery($table, $data);
+            $strQuery = $this->makeInsertSelectQuery($table, $data);
             // クエリの実行
             list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
 
@@ -763,7 +688,7 @@ class updateInsertData extends estimateInsertData {
             $returning = "lngorderno";
 
             // クエリの生成
-            $strQuery = $this->makeInsertQuery($table, $data, $condition, $returning);
+            $strQuery = $this->makeInsertSelectQuery($table, $data, $condition, $returning);
     
             // クエリの実行
             list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
@@ -811,7 +736,7 @@ class updateInsertData extends estimateInsertData {
                 'lngestimaterevisionno' => $this->revisionNo
             );
             // クエリの生成
-            $strQuery = $this->makeInsertQuery($table, $data);
+            $strQuery = $this->makeInsertSelectQuery($table, $data);
     
             // クエリの実行
             list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
@@ -870,7 +795,7 @@ class updateInsertData extends estimateInsertData {
             $returning = "lngorderstatuscode";
     
             // クエリの生成
-            $strQuery = $this->makeInsertQuery($table, $data, $condition, $returning);
+            $strQuery = $this->makeInsertSelectQuery($table, $data, $condition, $returning);
 
             // クエリの実行
             list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
@@ -905,7 +830,7 @@ class updateInsertData extends estimateInsertData {
             );
     
             // クエリの生成
-            $strQuery = $this->makeInsertQuery($table, $data);
+            $strQuery = $this->makeInsertSelectQuery($table, $data);
             // クエリの実行
             list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
     
@@ -951,7 +876,7 @@ class updateInsertData extends estimateInsertData {
         $condition .= " AND strrevisecode = '". $this->reviseCode. "'";
 
         // クエリの生成
-        $strQuery = $this->makeInsertQuery($table, $data, $condition);
+        $strQuery = $this->makeInsertSelectQuery($table, $data, $condition);
 
         // クエリの実行
         list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
