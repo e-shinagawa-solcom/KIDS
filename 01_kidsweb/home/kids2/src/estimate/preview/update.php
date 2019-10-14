@@ -114,7 +114,10 @@
 				if (strpos($className, $index)) {
 					$param = mb_convert_encoding($value[$row][$col], 'EUC-JP', 'UTF-8');
 					switch ($index) {
-						case 'monetary':
+						case 'monetary':						
+							if (!$param) { // 通貨コードがセットされていない場合はJPをセットする
+								$param = 'JP';
+							}
 							$param = $monetaryExchange[$param];
 							break;
 						case 'subtotal':
