@@ -90,6 +90,7 @@
 		$aryUpdate["dtmexpirationdate"]    = $_POST["dtmExpirationDate"];
 		$aryUpdate["lngpayconditioncode"]  = $_POST["lngPayConditionCode"];
 		$aryUpdate["lngdeliveryplacecode"] = $_POST["lngLocationCode"];
+		$aryUpdate["strnote"] = mb_convert_encoding($_POST["strNote"], "EUC-JP", "auto");
 		$aryUpdate["lngorderstatuscode"]   = 2;
 		for($i = 0; $i < count($_POST["aryDetail"]); $i++){
 			$aryUpdateDetail[$i]["lngorderdetailno"]       = $_POST["aryDetail"][$i]["lngOrderDetailNo"];

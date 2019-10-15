@@ -720,7 +720,7 @@ function fncInsertPurchaseOrder($aryOrder, $aryOrderDetail, $objAuth, $objDB){
                     $aryQuery[] = "  ,NOW()";
                     $aryQuery[] = "  ,'" . $objAuth->UserID . "'";
                     $aryQuery[] = "  ,'" . $objAuth->UserDisplayName . "'";
-                    $aryQuery[] = "  ,'" . $aryOrder["strNote"] . "'";
+                    $aryQuery[] = "  ,'" . $aryOrder["strnote"] . "'";
                     $aryQuery[] = "  ,0";
                     $aryQuery[] = ")";
 

@@ -341,7 +341,7 @@ jQuery(function($){
                 lngPayConditionCode:  $('select[name="lngPayConditionCode"]').val(),
                 dtmExpirationDate:    $('input[name="dtmExpirationDate"]').val(),
                 lngLocationCode:      $('input[name="lngLocationCode"]').val(),
-                strNote:              $('input[name="strNote"]').text(),
+                strNote:              $('input[name="strNote"]').val(),
                 aryDetail:            getUpdateDetail(),
             },
             async: true,
