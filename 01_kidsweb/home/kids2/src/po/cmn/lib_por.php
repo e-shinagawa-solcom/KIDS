@@ -970,7 +970,7 @@ function fncSetForeignTabel(){
  * @access  public
  * 
  */
-function fncCreatePurchaseOrderHtml($aryPurchaseOrder){
+function fncCreatePurchaseOrderHtml($aryPurchaseOrder, $strSessionID){
     $aryOrderNo = [];
     foreach($aryPurchaseOrder as $row){
         $orderno = $row["lngpurchaseorderno"];

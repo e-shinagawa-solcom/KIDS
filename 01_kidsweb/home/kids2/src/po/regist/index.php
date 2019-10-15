@@ -129,7 +129,7 @@
 			return FALSE;
 		}
 		
-		$strHtml = fncCreatePurchaseOrderHtml($aryPurcharseOrder);
+		$strHtml = fncCreatePurchaseOrderHtml($aryPurcharseOrder, $aryData["strSessionID"]);
 		$aryData["aryPurchaseOrder"] = $strHtml;
 
 		// テンプレート読み込み

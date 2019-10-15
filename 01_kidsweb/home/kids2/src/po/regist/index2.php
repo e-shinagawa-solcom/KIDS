@@ -89,7 +89,7 @@
 		return FALSE;
 	}
 	
-	$strHtml = fncCreatePurchaseOrderHtml($aryPurcharseOrder);
+	$strHtml = fncCreatePurchaseOrderHtml($aryPurcharseOrder, $aryData["strSessionID"]);
 	$aryData["aryPurchaseOrder"] = $strHtml;
 
 
