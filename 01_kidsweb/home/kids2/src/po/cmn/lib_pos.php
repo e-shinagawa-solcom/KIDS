@@ -1953,7 +1953,6 @@ function fncSetPurchaseTable ( $aryResult, $arySearchColumn, $aryViewColumn, $ar
 				{
 					// 明細行数の調査
 					$strDetailQuery = fncGetOrderToProductSQL ( $aryDetailViewColumn, $aryResult[$i]["lngorderno"], $aryResult[$i]["lngrevisionno"], $aryData, $objDB );
-//fncDebug("kids2.log", $strDetailQuery , __FILE__, __LINE__, "a" );
 					// クエリー実行
 					if ( !$lngDetailResultID = $objDB->execute( $strDetailQuery ) )
 					{
@@ -1978,7 +1977,7 @@ function fncSetPurchaseTable ( $aryResult, $arySearchColumn, $aryViewColumn, $ar
 				}
 
 				// １レコード分の出力
-				$aryHtml_add = fncSetPurchaseHeadTable ( $lngColumnCount, $aryResult[$i], $aryDetailResult, $aryDetailViewColumn, $aryHeadViewColumn, $aryData, $aryUserAuthority, $objDB, $objCache, $lngSameOrderCount, $j, $aryResult[$i] );
+				$aryHtml_add = fncSetPurchaseHeadTable ( $lngColumnCount, $aryResult[$i], $aryDetailResult, $aryDetailViewColumn, $aryHeadViewColumn, $aryData, $aryUserAuthority, $objDB, $objCache, $lngSameOrderCount, $aryResult[$i]["lngrevisionno"], $aryResult[$i] );
 //				$aryHtml_add = fncSetPurchaseHeadTable ( $lngColumnCount, $arySameOrderCodeResult[$j], $aryDetailResult, $aryDetailViewColumn, $aryHeadViewColumn, $aryData, $aryUserAuthority, $objDB, $objCache, $lngSameOrderCount, $j, $arySameOrderCodeResult[0] );
 				$lngColumnCount = $lngColumnCount + count($aryDetailResult);
 				
