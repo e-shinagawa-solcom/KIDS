@@ -557,14 +557,18 @@ define ( "DEF_MONETARY_RATE_CODE_TTM",           1); // TTM
 define ( "DEF_MONETARY_RATE_CODE_COMPANY_LOCAL", 2); // 社内
 
 // // メッセージコード
-define ( "DEF_MESSAGE_CODE_RATE_UNCAUGHT_WARNING",    9201); // 通貨レート取得不可
-define ( "DEF_MESSAGE_CODE_RATE_DIFFER",              9202); // 通貨レート差異
-define ( "DEF_MESSAGE_CODE_NOT_ENTRY_ERROR",          9203); // 未入力エラー
-define ( "DEF_MESSAGE_CODE_FORMAT_ERROR",             9204); // 形式エラー
-define ( "DEF_MESSAGE_CODE_MASTER_CHECK_ERROR",       9205); // マスターチェックエラー
-define ( "DEF_MESSAGE_CODE_PRODUCT_CODE_ERROR",       9206); // 製品コードチェックエラー
-define ( "DEF_MESSAGE_CODE_FILE_UPLOAD_ERROR",        9207); // ファイルアップロードエラー
-define ( "DEF_MESSAGE_CODE_VALID_SHEET_ABSENT_ERROR", 9208); // 有効シート非存在エラー
+define ( "DEF_MESSAGE_CODE_RATE_UNCAUGHT_WARNING",     9201); // 通貨レート取得不可
+define ( "DEF_MESSAGE_CODE_RATE_DIFFER",               9202); // 通貨レート差異
+define ( "DEF_MESSAGE_CODE_NOT_ENTRY_ERROR",           9203); // 未入力エラー
+define ( "DEF_MESSAGE_CODE_FORMAT_ERROR",              9204); // 形式エラー
+define ( "DEF_MESSAGE_CODE_MASTER_CHECK_ERROR",        9205); // マスターチェックエラー
+define ( "DEF_MESSAGE_CODE_PRODUCT_CODE_ERROR",        9206); // 製品コードチェックエラー
+define ( "DEF_MESSAGE_CODE_FILE_UPLOAD_ERROR",         9207); // ファイルアップロードエラー
+define ( "DEF_MESSAGE_CODE_VALID_SHEET_ABSENT_ERROR",  9208); // 有効シート非存在エラー
+define ( "DEF_MESSAGE_CODE_CURRENT_REVISION_ERROR",    9209); // 最新リビジョンチェックエラー
+define ( "DEF_MESSAGE_CODE_EXCLUSIVE_CHECK_ERROR",     9210); // 排他チェックエラー
+define ( "DEF_MESSAGE_CODE_DELETE_CHECK_ERROR",        9211); // 削除チェックエラー
+define ( "DEF_MESSAGE_CODE_DELETED_ERROR",             9212); // 削除済エラー
 
 // 仕入区分マスタコード
 define ("DEF_STOCK_CLASS_CODE_PARTS",      1); // 材料費

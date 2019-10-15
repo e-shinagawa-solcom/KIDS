@@ -53,11 +53,15 @@ $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 // ユーザーコード取得
 $lngUserCode = $objAuth->UserCode;
 
+// 機能コードのセット
+$functionCode = DEF_FUNCTION_E4;
+
 // 権限確認
-if( !fncCheckAuthority( DEF_FUNCTION_E4, $objAuth ) )
+if( !fncCheckAuthority( $functionCode, $objAuth ) )
 {
 	fncOutputError ( 9052, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
+
 
 // 権限グループコードの取得
 $lngAuthorityGroupCode = fncGetUserAuthorityGroupCode( $lngUserCode, $aryData["strSessionID"], $objDB );
@@ -192,6 +196,7 @@ $formData = array(
 	'reviseCode' => $reviseCode,
 	'revisionNo' => $revisionNo,
 	'estimateNo' => $estimateNo,
+	'lngFunctionCode' => $functionCode
 );
 
 // 送信用FORMデータ作成

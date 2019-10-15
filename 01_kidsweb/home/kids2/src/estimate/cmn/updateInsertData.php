@@ -55,81 +55,6 @@ class updateInsertData extends estimateInsertData {
     /**
     * DB登録用関数
     *
-    *	登録用のINSERT文を生成する
-    *   
-    *   @param array $array 登録データ（キーにカラム名を持つデータ配列）
-    *   @param string $condition 検索条件
-    *   @param $returning 返却するカラム
-    *
-    *	@return boolean
-    *	@access protected
-    */
-    protected function makeInsertQuery($table, $array, $condition = null, $returning = null) {
-
-        if ($condition) { // 検索条件が指定されているとき
-            foreach ($array as $key => $value) {
-                // 列情報のセット
-                if (!isset($columns)) {
-                    $columns = $key;
-                } else {
-                    $columns = $columns. ", ". $key;
-                }
-                
-                $type = gettype($value);
-                if ($type == 'boolean' || $type == 'NULL') {
-                    $value = var_export($value, true);
-                }
-
-                if (!isset($values)) {
-                    $values = $value; 
-                } else {
-                    $values = $values. ", ". $value;
-                }
-            }
-            $sqlQuery = "INSERT INTO ". $table;
-            $sqlQuery .= " (". $columns. ")";
-            $sqlQuery .= " SELECT";
-            $sqlQuery .= " ". $values;
-            $sqlQuery .= " FROM ". $table;
-            $sqlQuery .= " ". $condition;
-
-            if ($returning) {
-                $returningQuery = " RETURNING";
-                if (is_array($returning)) {
-                    $columns = "";
-                    foreach($returning as $column) {
-                        if (is_string($column)) {
-                            if ($columns) {
-                                $columns .= ", ". $column;
-                            } else {
-                                $columns = " ". $column;
-                            }
-                        } else {
-                            $returningQuery = "";
-                            break;
-                        }
-                    }
-    
-                    $returningQuery .= $columns;
-                    
-                } else if (is_string($returning)) {
-                    $returningQuery .= " ". $returning;
-                } else {
-                    $returningQuery = "";
-                }
-    
-                $sqlQuery .= $returningQuery;
-            }
-        } else {
-            $sqlQuery = parent::makeInsertQuery($table, $array);
-        }
-
-        return $sqlQuery;
-    }
-
-    /**
-    * DB登録用関数
-    *
     *	見積原価登録を行う
     *   
     *	@return true
@@ -155,8 +80,7 @@ class updateInsertData extends estimateInsertData {
 
             if ($previousDetailNo) {
                 // 受注マスタ、発注マスタいずれかに登録される明細行について、以前の見積原価明細行番号を取得する
-                if ($rowData['divisionSubject'] != DEF_STOCK_SUBJECT_CODE_CHARGE
-                    && $rowData['divisionSubject'] != DEF_STOCK_SUBJECT_CODE_EXPENSE) {
+                if ($rowData['areaCode'] !== DEF_AREA_OTHER_COST_ORDER) {
 
                     $detailNoList[] = $previousDetailNo;
                 }
@@ -334,7 +258,7 @@ class updateInsertData extends estimateInsertData {
         $returning = 'lngproductno, lngrevisionno';
 
         // クエリの生成
-        $strQuery = $this->makeInsertQuery($table, $data, $join, $returning);
+        $strQuery = $this->makeInsertSelectQuery($table, $data, $join, $returning);
         
         // クエリの実行
         list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
@@ -411,7 +335,7 @@ class updateInsertData extends estimateInsertData {
         $returning = 'lngestimateno, lngrevisionno';
 
         // クエリの生成
-        $strQuery = $this->makeInsertQuery($table, $data, $join, $returning);
+        $strQuery = $this->makeInsertSelectQuery($table, $data, $join, $returning);
         
         // クエリの実行
         list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
@@ -486,7 +410,7 @@ class updateInsertData extends estimateInsertData {
         ); 
         
         // クエリの生成
-        $strQuery = $this->makeInsertQuery($table, $data);
+        $strQuery = $this->makeInsertSelectQuery($table, $data);
         // クエリの実行
         list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
 
@@ -550,7 +474,7 @@ class updateInsertData extends estimateInsertData {
             $returning = "lngreceiveno";
 
             // クエリの生成
-            $strQuery = $this->makeInsertQuery($table, $data, $condition, $returning);
+            $strQuery = $this->makeInsertSelectQuery($table, $data, $condition, $returning);
 
             // クエリの実行
             list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
@@ -593,7 +517,7 @@ class updateInsertData extends estimateInsertData {
             );        
     
             // クエリの生成
-            $strQuery = $this->makeInsertQuery($table, $data);
+            $strQuery = $this->makeInsertSelectQuery($table, $data);
     
             // クエリの実行
             list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
@@ -608,8 +532,6 @@ class updateInsertData extends estimateInsertData {
 
             return;
         }
-
-
     }
 
     /**
@@ -659,7 +581,7 @@ class updateInsertData extends estimateInsertData {
             $returning = "lngreceivestatuscode";
 
             // クエリの生成
-            $strQuery = $this->makeInsertQuery($table, $data, $condition, $returning);
+            $strQuery = $this->makeInsertSelectQuery($table, $data, $condition, $returning);
             // クエリの実行
             list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
 
@@ -694,7 +616,7 @@ class updateInsertData extends estimateInsertData {
             );
 
             // クエリの生成
-            $strQuery = $this->makeInsertQuery($table, $data);
+            $strQuery = $this->makeInsertSelectQuery($table, $data);
             // クエリの実行
             list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
 
@@ -763,7 +685,7 @@ class updateInsertData extends estimateInsertData {
             $returning = "lngorderno";
 
             // クエリの生成
-            $strQuery = $this->makeInsertQuery($table, $data, $condition, $returning);
+            $strQuery = $this->makeInsertSelectQuery($table, $data, $condition, $returning);
     
             // クエリの実行
             list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
@@ -811,7 +733,7 @@ class updateInsertData extends estimateInsertData {
                 'lngestimaterevisionno' => $this->revisionNo
             );
             // クエリの生成
-            $strQuery = $this->makeInsertQuery($table, $data);
+            $strQuery = $this->makeInsertSelectQuery($table, $data);
     
             // クエリの実行
             list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
@@ -870,7 +792,7 @@ class updateInsertData extends estimateInsertData {
             $returning = "lngorderstatuscode";
     
             // クエリの生成
-            $strQuery = $this->makeInsertQuery($table, $data, $condition, $returning);
+            $strQuery = $this->makeInsertSelectQuery($table, $data, $condition, $returning);
 
             // クエリの実行
             list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
@@ -905,7 +827,7 @@ class updateInsertData extends estimateInsertData {
             );
     
             // クエリの生成
-            $strQuery = $this->makeInsertQuery($table, $data);
+            $strQuery = $this->makeInsertSelectQuery($table, $data);
             // クエリの実行
             list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
     
@@ -951,7 +873,7 @@ class updateInsertData extends estimateInsertData {
         $condition .= " AND strrevisecode = '". $this->reviseCode. "'";
 
         // クエリの生成
-        $strQuery = $this->makeInsertQuery($table, $data, $condition);
+        $strQuery = $this->makeInsertSelectQuery($table, $data, $condition);
 
         // クエリの実行
         list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
@@ -969,14 +891,13 @@ class updateInsertData extends estimateInsertData {
     *	@return true
     */
     protected function updateTableSalesDetail($rowData) {
-        $table = 't_salesdetail';
 
         $receiveNo = $rowData['receiveNo'];
         $receiveDetailNo = $rowData['receiveDetailNo'];
         $preReceiveRevisionNo = $this->preReceiveRevisionNo;
         
         $strQuery = "UPDATE";
-        $strQuery .= " ". $table;
+        $strQuery .= " t_salesdetail";
         $strQuery .= " SET";
         $strQuery .= " lngreceiverevisionno = lngreceiverevisionno + 1";
         $strQuery .= " WHERE lngreceiveno = ". $receiveNo;
@@ -999,14 +920,13 @@ class updateInsertData extends estimateInsertData {
     *	@return true
     */
     protected function updateTableSlipDetail($rowData) {
-        $table = 't_slipdetail';
 
         $receiveNo = $rowData['receiveNo'];
         $receiveDetailNo = $rowData['receiveDetailNo'];
         $preReceiveRevisionNo = $this->preReceiveRevisionNo;
         
         $strQuery = "UPDATE";
-        $strQuery .= " ". $table;
+        $strQuery .= " t_slipdetail";
         $strQuery .= " SET";
         $strQuery .= " lngreceiverevisionno = lngreceiverevisionno + 1";
         $strQuery .= " WHERE lngreceiveno = ". $receiveNo;
@@ -1029,14 +949,13 @@ class updateInsertData extends estimateInsertData {
     *	@return true
     */
     protected function updateTablePurchaseOrderDetail($rowData) {
-        $table = 't_purchaseorderdetail';
 
         $orderNo = $rowData['orderNo'];
         $orderDetailNo = $rowData['orderDetailNo'];
         $preOrderRevisionNo = $this->preOrderRevisionNo;
         
         $strQuery = "UPDATE";
-        $strQuery .= " ". $table;
+        $strQuery .= " t_purchaseorderdetail";
         $strQuery .= " SET";
         $strQuery .= " lngorderrevisionno = lngorderrevisionno + 1";
         $strQuery .= " WHERE lngorderno = ". $orderNo;
@@ -1059,14 +978,13 @@ class updateInsertData extends estimateInsertData {
     *	@return true
     */
     protected function updateTableStockDetail($rowData) {
-        $table = 't_slipdetail';
-
+ 
         $orderNo = $rowData['orderNo'];
         $orderDetailNo = $rowData['orderDetailNo'];
         $preOrderRevisionNo = $this->preOrderRevisionNo;
         
         $strQuery = "UPDATE";
-        $strQuery .= " ". $table;
+        $strQuery .= " t_stockdetail";
         $strQuery .= " SET";
         $strQuery .= " lngorderrevisionno = lngorderrevisionno + 1";
         $strQuery .= " WHERE lngorderno = ". $orderNo;
@@ -1244,33 +1162,89 @@ class updateInsertData extends estimateInsertData {
         return $ret;
     }
 
-    // 論理削除用のレコードを追加する
+    // 削除対象明細の修正および論理削除用のレコードの追加を行う
     protected function insertDeleteRecord() {
+        $this->updateDeleteReceive();
         $this->insertDeleteReceive();
         $this->insertDeleteOrder();
         return;
     }
 
-    // 受注マスタに論理削除用レコードを追加する
-    protected function insertDeleteReceive() {
-        $table = "m_receive";
+    // 受注マスタの削除対象明細の受注コードを修正する
+    protected function updateDeleteReceive() {
 
         $previousRevisionNo = $this->revisionNo - 1;
 
-        $strQuery = "INSERT INTO ". $table;
-        $strQuery .= " (lngreceiveno, lngrevisionno, strreceivecode)";
+        $strQuery = "UPDATE m_receive mr";
+        $strQuery .= " SET strreceivecode = CASE WHEN strreceivecode ~ '^\*.+\*$' THEN strreceivecode ELSE '*' || strreceivecode || '*' END";
+        // 以下、登録前のリビジョン番号が存在し、登録後のリビジョン番号が存在しない受注番号を取得する
+        $strQuery .= " FROM";
+        $strQuery .= " (";
+        $strQuery .= "SELECT mr2.lngreceiveno";
+        $strQuery .= " FROM t_receivedetail trd";
+        $strQuery .= " INNER JOIN m_receive mr2";
+        $strQuery .= " ON mr2.lngreceiveno = trd.lngreceiveno";
+        $strQuery .= " AND mr2.lngrevisionno = trd.lngrevisionno";
+        $strQuery .= " LEFT OUTER JOIN t_receivedetail trd2";
+        $strQuery .= " ON mr2.lngreceiveno = trd2.lngreceiveno";
+        $strQuery .= " AND trd.lngestimateno = trd2.lngestimateno";
+        $strQuery .= " AND trd2.lngestimaterevisionno = ". $this->revisionNo;
+        $strQuery .= " WHERE";
+        $strQuery .= " trd.lngestimateno = ". $this->estimateNo;
+        $strQuery .= " AND trd.lngestimaterevisionno = ". $previousRevisionNo;
+        $strQuery .= " AND trd2.lngreceiveno is NULL";
+        $strQuery .= ") sub";
+        $strQuery .= " WHERE sub.lngreceiveno = mr.lngreceiveno"; // 受注番号を結合
+
+        // クエリの実行
+        list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
+
+        $this->objDB->freeResult($resultID);
+
+        return true;
+    }
+
+    // 受注マスタに論理削除用レコードを追加する
+    protected function insertDeleteReceive() {
+
+        $previousRevisionNo = $this->revisionNo - 1;
+
+        $strQuery = "INSERT INTO m_receive";
+        $strQuery .= " (";
+
+        $strQuery .= "lngreceiveno,";
+        $strQuery .= " lngrevisionno,";
+        $strQuery .= " strreceivecode,";
+        $strQuery .= " lnginputusercode,";
+        $strQuery .= " bytinvalidflag,";
+        $strQuery .= " dtminsertdate,";
+        $strQuery .= " strrevisecode";
+
+        $strQuery .= ")";
+
         $strQuery .= " SELECT";
+
         $strQuery .= " mr.lngreceiveno,";
         $strQuery .= " -1,";
-        $strQuery .= " mr.strreceivecode";
+        $strQuery .= " CASE WHEN mr.strreceivecode ~ '^\*.+\*$' THEN mr.strreceivecode ELSE '*' || mr.strreceivecode || '*' END,";
+        $strQuery .= " ". $this->inputUserCode. ",";
+        $strQuery .= " false,";
+        $strQuery .= " now(),";
+        $strQuery .= " mr.strrevisecode";
+
         $strQuery .= " FROM t_receivedetail trd";
+
+        // 受注明細テーブルに受注マスタを結合
         $strQuery .= " INNER JOIN m_receive mr";
         $strQuery .= " ON mr.lngreceiveno = trd.lngreceiveno";
         $strQuery .= " AND mr.lngrevisionno = trd.lngrevisionno";
+
+        // 修正後のリビジョンの検索結果を結合
         $strQuery .= " LEFT OUTER JOIN t_receivedetail trd2";
         $strQuery .= " ON mr.lngreceiveno = trd2.lngreceiveno";
-        $strQuery .= " AND trd.lngestimateno = trd2.lngestimateno";
         $strQuery .= " AND trd2.lngestimaterevisionno = ". $this->revisionNo;
+
+        // 修正後のリビジョンが存在しないものだけを対象とするWHERE句
         $strQuery .= " WHERE";
         $strQuery .= " trd.lngestimateno = ". $this->estimateNo;
         $strQuery .= " AND trd.lngestimaterevisionno = ". $previousRevisionNo;
@@ -1286,16 +1260,29 @@ class updateInsertData extends estimateInsertData {
 
     // 発注マスタに論理削除用レコードを追加する
     protected function insertDeleteOrder() {
-        $table = "m_order";
 
         $previousRevisionNo = $this->revisionNo - 1;
 
-        $strQuery = "INSERT INTO ". $table;
-        $strQuery .= " (lngorderno, lngrevisionno, strordercode)";
+        $strQuery = "INSERT INTO m_order";
+        $strQuery .= " (";
+        
+        $strQuery .= " lngorderno,";
+        $strQuery .= " lngrevisionno,";
+        $strQuery .= " strordercode,";
+        $strQuery .= " lnginputusercode,";
+        $strQuery .= " bytinvalidflag,";
+        $strQuery .= " dtminsertdate";
+
+        $strQuery .= ")";
+
         $strQuery .= " SELECT";
         $strQuery .= " mo.lngorderno,";
         $strQuery .= " -1,";
-        $strQuery .= " mo.strordercode";
+        $strQuery .= " mo.strordercode,";
+        $strQuery .= " ". $this->inputUserCode. ",";
+        $strQuery .= " false,";
+        $strQuery .= " now()";
+
         $strQuery .= " FROM t_orderdetail tod";
         $strQuery .= " INNER JOIN m_order mo";
         $strQuery .= " ON mo.lngorderno = tod.lngorderno";

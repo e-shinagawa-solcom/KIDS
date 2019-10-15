@@ -114,7 +114,10 @@
 				if (strpos($className, $index)) {
 					$param = mb_convert_encoding($value[$row][$col], 'EUC-JP', 'UTF-8');
 					switch ($index) {
-						case 'monetary':
+						case 'monetary':						
+							if (!$param) { // 通貨コードがセットされていない場合はJPをセットする
+								$param = 'JP';
+							}
 							$param = $monetaryExchange[$param];
 							break;
 						case 'subtotal':
@@ -297,6 +300,14 @@
 	// 登録用データの取得
 	// ヘッダ部
 	$headerData = $objHeader->outputRegistData();
+
+	// 見積原価番号リストの生成
+	foreach($estimateDetailNo as $value) {
+		$rowNo = $value['row'];
+		$detailNo = $value['estimateDetailNo'];
+		$detailNoList[$rowNo] = $detailNo;
+	}
+
 	// 行データ
 	$index = 0;
 	foreach ($objRowList as $objRow) {
@@ -304,7 +315,7 @@
 			++$index;
 			$row = $objRow->outputRow();
 			$rowData = $objRow->outputRegistData();
-			$previousDetailNo = $estimateDetailNo[$row];
+			$previousDetailNo = $detailNoList[$row];
 			$rowData['previousDetailNo'] = $previousDetailNo;
 			$rowDataList[$index] = $rowData;
 		}
