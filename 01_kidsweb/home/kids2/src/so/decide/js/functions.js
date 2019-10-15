@@ -88,7 +88,7 @@
                         + '<td style="width: 100px;text-align: center;"><img class="button" src="/img/type01/so/product_off_ja_bt.gif" onclick="showProductInfo(this)" strproductcode="' + row.strproductcode + '"></td>'
                         + '<td style="width: 70px;">' + lngproductquantity + '</td>'
                         + '<td style="width: 100px;">' +  money_format(row.lngmonetaryunitcode, row.strmonetaryunitsign, row.cursubtotalprice) + '</td>'
-                        + '<td style="width: 250px;"><input type="text" class="form-control form-control-sm txt-kids" style="width:240px;" value="' + row.strdetailnote + '"></td>'
+                        + '<td style="width: 250px;"><input type="text" class="form-control form-control-sm txt-kids" style="width:240px;" value="' + convertNull(row.strdetailnote) + '"></td>'
                         + '<td style="display:none">[' + convertNull(row.strcompanydisplaycode) + '] ' + convertNull(row.strcompanydisplayname) + '</td>'
                         + '<td style="display:none">' + row.lngreceiveno + '</td>'
                         + '<td style="display:none">' + row.lngrevisionno + '</td>'
@@ -147,7 +147,7 @@
         sessionID = 'strSessionID=' + $.cookie('strSessionID');
         strReceiveCode = 'strReceiveCode=' + $(this).attr('code');
         // 別ウィンドウで表示
-        window.open(url + '?' + sessionID + '&' + strReceiveCode, '_blank', 'width=730, height=370, resizable=yes, scrollbars=yes, menubar=no');
+        window.open(url + '?' + sessionID + '&' + strReceiveCode, '_blank', 'width=730, height=570, resizable=yes, scrollbars=yes, menubar=no');
     });
 
     // 行を一つ上に移動するボタン

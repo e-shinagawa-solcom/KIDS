@@ -43,7 +43,7 @@ if (!fncCheckAuthority(DEF_FUNCTION_PC2, $objAuth)) {
 }
 
 // 703 仕入管理（仕入検索　管理モード）
-if ( fncCheckAuthority( DEF_FUNCTION_SC3, $objAuth ) )
+if ( fncCheckAuthority( DEF_FUNCTION_PC3, $objAuth ) )
 {
     $aryData["AdminSet_visibility"] = 'style="visibility: visible"';
     // 707 仕入管理（無効化）

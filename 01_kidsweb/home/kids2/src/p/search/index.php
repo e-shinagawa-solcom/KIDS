@@ -61,6 +61,16 @@ if (!fncCheckAuthority(DEF_FUNCTION_P2, $objAuth)) {
     fncOutputError(9018, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
 
+
+// 303 商品管理（商品検索）　管理モード）
+if ( fncCheckAuthority( DEF_FUNCTION_P3, $objAuth ) )
+{
+    $aryData["AdminSet_visibility"] = 'style="visibility: visible"';
+}
+else
+{
+    $aryData["AdminSet_visibility"] = 'style="visibility: visible"';
+}
 // 304 商品管理（詳細表示）
 if (fncCheckAuthority(DEF_FUNCTION_P4, $objAuth)) {
     $aryData["btnDetail_visibility"] = "visible";
@@ -68,14 +78,6 @@ if (fncCheckAuthority(DEF_FUNCTION_P4, $objAuth)) {
 } else {
     $aryData["btnDetail_visibility"] = "hidden";
     $aryData["btnDetailVisible"] = "";
-}
-// 306 商品管理（修正）
-if (fncCheckAuthority(DEF_FUNCTION_P6, $objAuth)) {
-    $aryData["btnFix_visibility"] = "visible";
-    $aryData["btnFixVisible"] = "checked";
-} else {
-    $aryData["btnFix_visibility"] = "hidden";
-    $aryData["btnFixVisible"] = "";
 }
 // 部門
 $aryData["lngInChargeGroupCodeSelect"]	= fncGetPulldown( "m_group", "lnggroupcode", "strgroupdisplaycode || ' ' || strgroupdisplayname as strgroupdisplayname", 0,'WHERE bytgroupdisplayflag = true and lngcompanycode in (0,1)', $objDB );

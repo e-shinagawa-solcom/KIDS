@@ -95,6 +95,8 @@ for ($i = 0; $i < count($aryId); $i++) {
 }
 $aryQuery[] = " ORDER BY strReceiveCode ASC, lngreceivedetailno DESC";
 $strQuery = implode( "\n", $aryQuery );
+echo $strQuery;
+return;
 //·ë²ÌÇÛÎó
 $result = array();
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);

@@ -46,9 +46,10 @@
                 $.ajax({
                     url: '/so/decide/search_result.php?strSessionID=' + $.cookie('strSessionID'),
                     type: 'post',
+                    dataType: 'json',
                     data: formData
                 })
-                    .done(function (response) {
+                .done(function(response){
                         alert("test" + response);
                         var data = JSON.parse(response);
                         var tblchkbox = window.opener.$("#tbl_detail_chkbox");
@@ -93,8 +94,8 @@
                         // w.document.write(tmp_id);
                         // w.document.close();
                     })
-                    .fail(function (response) {
-                        alert("test2"+response);
+                    .fail(function(response) {
+                        var data = JSON.parse(response);
                         alert("fail");
                         // Ajaxリクエストが失敗
                     });

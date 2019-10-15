@@ -31,9 +31,10 @@ $s = new Services_JSON();
 if ($aryData == null) {
     $aryData = $_POST;
 }
+$aryData = $_GET;
 
 // セッション確認
-// $objAuth = fncIsSession($_GET["strSessionID"], $objAuth, $objDB);
+$objAuth = fncIsSession($_GET["strSessionID"], $objAuth, $objDB);
 
 $aryQuery = array();
 $aryQuery[] = "SELECT ";

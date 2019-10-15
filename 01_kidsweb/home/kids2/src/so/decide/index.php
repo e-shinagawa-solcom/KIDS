@@ -52,10 +52,13 @@ $strQuery = fncGetReceiveHeadNoToInfoSQL($lngReceiveNo, $lngRevisionNo, DEF_RECE
 // 詳細データの取得
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 if ($lngResultNum) {
-    if ($lngResultNum == 1) {
-        $aryResult = $objDB->fetchArray($lngResultID, 0);
-    } else {
-        fncOutputError(403, DEF_ERROR, "該当データの取得に失敗しました", true, "../so/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
+    // if ($lngResultNum == 1) {
+    //     $aryResult = $objDB->fetchArray($lngResultID, 0);
+    // } else {
+    //     fncOutputError(403, DEF_ERROR, "該当データの取得に失敗しました", true, "../so/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
+    // }
+    for ($i = 0; $i < $lngResultNum; $i++) {
+        $aryResult = pg_fetch_all($lngResultID);
     }
 } else {
     fncOutputError(403, DEF_ERROR, "データが異常です", true, "../so/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
@@ -64,18 +67,15 @@ if ($lngResultNum) {
 $objDB->freeResult($lngResultID);
 // 取得データの調整
 $aryNewResult = array();
-$aryNewResult["strcustomerdisplaycode"] = $aryResult["strcustomerdisplaycode"];
-$aryNewResult["strcustomerdisplayname"] = $aryResult["strcustomerdisplayname"];
-$aryNewResult["strreceivecode"] = $aryResult["strreceivecode2"];
-$aryNewResult["strnote"] = $aryResult["strnote"];
-
-// $aryData["strreceivecode2"] = $aryResult["strreceivecode2"];
-// $aryData["lngrevisionno"] = $aryResult["lngrevisionno"];
+$aryNewResult["strcustomerdisplaycode"] = $aryResult[0]["strcustomerdisplaycode"];
+$aryNewResult["strcustomerdisplayname"] = $aryResult[0]["strcustomerdisplayname"];
+$aryNewResult["strreceivecode"] = $aryResult[0]["strreceivecode2"];
+$aryNewResult["strnote"] = $aryResult[0]["strnote"];
 
 ////////// 明細行の取得 ////////////////////
 // 指定受注番号の受注明細データ取得用SQL文の作成
 $strQuery = fncGetReceiveDetailNoToInfoSQL($lngReceiveNo, $lngRevisionNo);
-// $strQuery = fncGetReceiveDetailNoToInfoSQL($aryResult["strreceivecode2"], $aryResult["lngrevisionno"]);
+
 // 明細データの取得
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
@@ -163,7 +163,11 @@ foreach ($aryDetailResult as $detailResult) {
     $td->setAttribute("style", "width: 120px;");
     $trBody->appendChild($td);
     // 顧客
-    $textContent = "[" . $aryResult["strcustomerdisplaycode"] . "]" . " " . $aryResult["strcustomerdisplayname"];
+    if ($aryResult["strcustomerdisplaycode"] != "") {
+        $textContent = "[" . $aryResult["strcustomerdisplaycode"] . "]" . " " . $aryResult["strcustomerdisplayname"];
+    } else {
+        $textContent = "";
+    }
     $td = $doc->createElement("td", toUTF8($textContent));
     $td->setAttribute("style", "width: 250px;");
     $trBody->appendChild($td);
