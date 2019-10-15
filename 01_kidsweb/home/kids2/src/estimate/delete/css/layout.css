@@ -1,0 +1,60 @@
+<!--
+
+#Backs
+{
+	background-color : #d6d0b1 ;
+}
+
+
+#Complete
+{
+	position : absolute ;
+	top : 250px ;
+	border-width: 0px ;
+	border-style: none ;
+	background-color : transparent ;
+	width: 100%;
+    text-align: center;
+    display: inline-block;
+}
+
+#CompleteMessage
+{
+	font-family : Arial , £Í£Ó £Ð¥´¥·¥Ã¥¯, Osaka ;
+	font-weight : bold ;
+	font-size : 14px ;
+}
+
+#TableContaina
+{
+	display:inline-block;
+}
+
+#CompleteBox
+{
+	font-family : Arial , £Í£Ó £Ð¥´¥·¥Ã¥¯, Osaka ;
+	font-size : 15px;
+	margin-top: 12px;
+	width: 250px;
+	border-collapse: collapse;
+}
+
+#CompleteTitle
+{
+	padding: 8px;
+	background-color: #f1f1f1;
+	font-weight: bold;
+}
+
+#CompleteBox td
+{
+	padding: 5px;
+}
+
+#CompleteBox table, #CompleteBox th, #CompleteBox td
+{
+	border: 1px #798787 solid; 
+	border-collapse: collapse;
+}
+
+-->

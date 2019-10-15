@@ -167,8 +167,6 @@ table.temporaryTable > tbody > tr > td
 	width: auto;
 	border: none;
 	background-color: transparent;
-	cursor: pointer;
-	cursor: hand;
 	padding: 0px;
 	margin: 0px;
 }
@@ -221,8 +219,6 @@ table.temporaryTable > tbody > tr > td
 	width: auto;
 	border: none;
 	background-color: transparent;
-	cursor: pointer;
-	cursor: hand;
 }
 
 div.action-buttons > button
@@ -231,8 +227,6 @@ div.action-buttons > button
 	width: auto;
 	border: none;
 	background-color: transparent;
-	cursor: pointer;
-	cursor: hand;
 	padding: 0px;
 	margin: 8px;
 }
@@ -335,8 +329,12 @@ div.action-buttons > button
 	width: auto;
 	border: none;
 	background-color: transparent;
+}
+
+button
+{
 	cursor: pointer;
-	cursor: hand;
+    cursor: hand;
 }
 
 

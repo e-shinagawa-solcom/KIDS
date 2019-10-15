@@ -109,7 +109,7 @@ $postData = array(
 );
 
 $objTemplate = new clsTemplate();
-$objTemplate->getTemplate( "estimate/regist/result.tmpl" );
+$objTemplate->getTemplate( "estimate/delete/result.tmpl" );
 
 $objTemplate->replace( $postData );
 $objTemplate->complete();

@@ -14,13 +14,12 @@
 
 
 // 設定読み込み
-include_once('conf.inc');
-require_once( LIB_DEBUGFILE );
-require_once(SRC_ROOT.'/mold/lib/UtilSearchForm.class.php');
+include_once ('conf.inc');
+require_once ( LIB_DEBUGFILE );
+require_once (SRC_ROOT.'/mold/lib/UtilSearchForm.class.php');
 
 // ライブラリ読み込み
 require_once (LIB_FILE);
-require_once (SRC_ROOT . "estimate/cmn/lib_e.php");
 require_once (SRC_ROOT. "estimate/cmn/makeHTML.php");
 
 // DB接続
@@ -232,10 +231,18 @@ $selectQuery =
 			lngestimateno,
 			MAX(lngrevisionno) AS lngrevisionno
 		FROM m_estimate
-		GROUP BY lngestimateno
-		HAVING MIN(lngrevisionno) >= 0
+		GROUP BY lngestimateno";
+
+// // 管理者モードでない場合
+// if () {
+// 	$selectQuery .=
+// 	    "HAVING MIN(lngrevisionno) >= 0";
+
+// }
 		
-	) maxrev
+$selectQuery .=
+
+	") maxrev
 
 		ON maxrev.lngestimateno = me.lngestimateno
 		AND maxrev.lngrevisionno = me.lngrevisionno";
@@ -363,9 +370,6 @@ $selectQuery =
 		exit;
 	}
 
-// // 共通受け渡しURL生成(セッションID、ページ、各検索条件)
-// $strURL = fncGetURL( $aryData );
-
 //////////////////////////////////////////////////////////////////////////
 // 結果取得、出力処理
 //////////////////////////////////////////////////////////////////////////
@@ -385,7 +389,7 @@ foreach ($displayColumns as $column) {
 		$header .= "<th nowrap>" . $title . "</th>";
 	} else {
 		++$sort;
-		$header .= "<th id=\"Columns\" nowrap onmouseover=\"SortOn( this );\" onmouseout=\"SortOff( this );\" onclick=\"location.href='index.php?". $strURL. "&strSort=column_". $sort. "_ASC';\"><a href=\"#\">" . $title . "</a></th>";
+		$header .= "<th class=\"sortColumns\" nowrap onmouseover=\"SortOn( this );\" onmouseout=\"SortOff( this );\" data-value=\"column_". $sort. "_ASC\"><a href=\"#\">" . $title . "</a></th>";
 	}
 	++$columns;
 }
