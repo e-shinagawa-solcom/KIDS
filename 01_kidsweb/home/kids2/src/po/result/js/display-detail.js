@@ -4,9 +4,10 @@
         url = '/po/result/index2.php';
         lngorderno = 'lngOrderNo=' + $(this).attr('lngorderno');
         sessionID = 'strSessionID=' + getUrlVars()["strSessionID"];
+        lngrevisionno = 'lngRevisionNo=' + $(this).attr('lngrevisionno');
 
         // 別ウィンドウで表示
-        open(url + '?' + lngorderno + '&' + sessionID, 'display-detail', 'resizable=yes, scrollbars=yes, menubar=no');
+        open(url + '?' + lngorderno + '&' + lngrevisionno + '&' + sessionID, 'display-detail', 'resizable=yes, scrollbars=yes, menubar=no');
     });
 })();
 

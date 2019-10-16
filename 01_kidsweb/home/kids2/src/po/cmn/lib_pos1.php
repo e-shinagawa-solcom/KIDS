@@ -29,10 +29,10 @@
  *	@return strQuery 	$strQuery 検索用SQL文
  *	@access public
  */
-function fncGetPurchaseHeadNoToInfo ( $lngOrderNo, $objDB )
+function fncGetPurchaseHeadNoToInfo ( $lngOrderNo, $lngRevisionNo, $objDB )
 {
 	// SQL文の作成
-	$aryQuery[] = "SELECT distinct on (o.lngOrderNo) o.lngOrderNo as lngOrderNo, o.lngRevisionNo as lngRevisionNo";
+	$aryQuery[] = "SELECT o.lngOrderNo as lngOrderNo, o.lngRevisionNo as lngRevisionNo";
 
 	// 登録日
 	$aryQuery[] = ", to_char( o.dtmInsertDate, 'YYYY/MM/DD' ) as dtmInsertDate";
@@ -87,25 +87,24 @@ function fncGetPurchaseHeadNoToInfo ( $lngOrderNo, $objDB )
 	$aryQuery[] = ", ot.strProductCode as strProductCode";
 	$aryQuery[] = ", p.strProductName as strProductName";
 
-	$aryQuery[] = " FROM m_Order o LEFT JOIN t_OrderDetail ot USING (lngOrderNo)";
-	$aryQuery[] = " LEFT JOIN m_Product p ON ot.strproductCode = p.strproductCode";
+	$aryQuery[] = " FROM m_Order o INNER JOIN t_OrderDetail ot on ot.lngOrderNo = o.lngorderno and ot.lngrevisionno = o.lngrevisionno";
+	$aryQuery[] = " LEFT JOIN m_Product p ON ot.strproductCode = p.strproductCode and ot.strrevisecode = p.strrevisecode and ot.lngrevisionno = p.lngrevisionno";
 	$aryQuery[] = " LEFT JOIN m_User input_u ON o.lngInputUserCode = input_u.lngUserCode";
 	$aryQuery[] = " LEFT JOIN m_Company cust_c ON o.lngCustomerCompanyCode = cust_c.lngCompanyCode";
 	$aryQuery[] = " LEFT JOIN m_Company delv_c ON o.lngDeliveryPlaceCode = delv_c.lngCompanyCode";
 	$aryQuery[] = " LEFT JOIN m_Group inchg_g ON p.lnginchargegroupcode = inchg_g.lngGroupCode";
 	$aryQuery[] = " LEFT JOIN m_User inchg_u ON p.lnginchargeusercode = inchg_u.lngUserCode";
 	$aryQuery[] = " LEFT JOIN m_OrderStatus os USING (lngOrderStatusCode)";
-	$aryQuery[] = " LEFT JOIN m_PayCondition pc ON o.lngPayConditionCode = pc.lngPayConditionCode";
 	$aryQuery[] = " LEFT JOIN m_MonetaryUnit mu ON o.lngMonetaryUnitCode = mu.lngMonetaryUnitCode";
 	$aryQuery[] = " LEFT JOIN m_MonetaryRateClass mr ON o.lngMonetaryRateCode = mr.lngMonetaryRateCode";
 	$aryQuery[] = " LEFT JOIN t_purchaseorderdetail tp ON ot.lngorderno = tp.lngorderno AND ot.lngorderdetailno = tp.lngorderdetailno and ot.lngrevisionno = tp.lngrevisionno";
 	$aryQuery[] = " LEFT JOIN m_purchaseorder mp on  tp.lngpurchaseorderno = mp.lngpurchaseorderno and tp.lngrevisionno = mp.lngrevisionno";
+	$aryQuery[] = " LEFT JOIN m_PayCondition pc ON pc.lngPayConditionCode = mp.lngPayConditionCode";
 
 	$aryQuery[] = " WHERE o.lngOrderNo = " . $lngOrderNo;
-	//$aryQuery[] = " AND   o.lngRevisionNo = " . $lngRevisionNo;
+	$aryQuery[] = " AND   o.lngRevisionNo = " . $lngRevisionNo;
 
 	$strQuery = implode( "\n", $aryQuery );
-
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 	if ( $lngResultNum == 1 )
 	{
@@ -129,12 +128,12 @@ function fncGetPurchaseHeadNoToInfo ( $lngOrderNo, $objDB )
  *	@return strQuery 	$strQuery 検索用SQL文
  *	@access public
  */
-function fncGetPurchaseDetailNoToInfo ( $lngOrderNo, $objDB )
+function fncGetPurchaseDetailNoToInfo ( $lngOrderNo, $lngRevisionNo, $objDB )
 {
 	// 2004.03.29 suzukaze update start
 	// SQL文の作成
 	//	$aryQuery[] = "SELECT distinct on (od.lngOrderDetailNo) od.lngOrderDetailNo as lngRecordNo, ";
-	$aryQuery[] = "SELECT distinct on (od.lngSortKey) od.lngSortKey as lngRecordNo, ";
+	$aryQuery[] = "SELECT od.lngOrderDetailNo as lngRecordNo, ";
 	// 2004.03.29 suzukaze update end
 	$aryQuery[] = "od.lngOrderNo as lngOrderNo, od.lngRevisionNo as lngRevisionNo";
 
@@ -173,13 +172,14 @@ function fncGetPurchaseDetailNoToInfo ( $lngOrderNo, $objDB )
 	$aryQuery[] = ", od.lngOrderDetailNo as lngOrderDetailNo";
 
 	// 明細行を表示する場合
-	$aryQuery[] = " FROM t_OrderDetail od LEFT JOIN m_Product p USING (strProductCode)";
+	$aryQuery[] = " FROM t_OrderDetail od INNER JOIN m_Product p ON od.strproductCode = p.strproductCode and od.strrevisecode = p.strrevisecode and od.lngrevisionno = p.lngrevisionno";
 	$aryQuery[] = " LEFT JOIN m_StockSubject ss USING (lngStockSubjectCode)";
 	//	$aryQuery[] = " LEFT JOIN m_StockItem si USING (lngStockItemCode)";
 	$aryQuery[] = " LEFT JOIN m_DeliveryMethod dm USING (lngDeliveryMethodCode)";
 	$aryQuery[] = " LEFT JOIN m_ProductUnit pu ON od.lngProductUnitCode = pu.lngProductUnitCode";
 	$aryQuery[] = ", m_StockItem si ";
 	$aryQuery[] = " WHERE od.lngOrderNo = " . $lngOrderNo . " ";
+	$aryQuery[] = "AND od.lngRevisionNo = " . $lngRevisionNo . " ";
 	$aryQuery[] = "AND si.lngStockSubjectCode = ss.lngStockSubjectCode ";
 	$aryQuery[] = "AND od.lngStockItemCode = si.lngStockItemCode ";
 
@@ -188,7 +188,6 @@ function fncGetPurchaseDetailNoToInfo ( $lngOrderNo, $objDB )
 	// 2004.03.29 suzukaze update end
 
 	$strQuery = implode( "\n", $aryQuery );
-
 	// 明細データの取得
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
@@ -1033,34 +1032,42 @@ function fncInsertPurchaseOrderDetailSQL($aryPurchaseOrderDetail){
  */
 function fncGetDeletePurchaseOrderDetail($lngOrderNo, $lngRevisionNo, $objDB){
 	$aryQuery[] = "SELECT";
-	$aryQuery[] = "   lngpurchaseorderno";
-	$aryQuery[] = "  ,lngpurchaseorderdetailno";
-	$aryQuery[] = "  ,lngrevisionno";
-	$aryQuery[] = "  ,lngorderno";
-	$aryQuery[] = "  ,lngorderdetailno";
-	$aryQuery[] = "  ,lngorderrevisionno";
-	$aryQuery[] = "  ,lngstocksubjectcode";
-	$aryQuery[] = "  ,lngstockitemcode";
-	$aryQuery[] = "  ,strstockitemname";
-	$aryQuery[] = "  ,lngdeliverymethodcode";
-	$aryQuery[] = "  ,strdeliverymethodname";
-	$aryQuery[] = "  ,curproductprice";
-	$aryQuery[] = "  ,lngproductquantity";
-	$aryQuery[] = "  ,lngproductunitcode";
-	$aryQuery[] = "  ,strproductunitname";
-	$aryQuery[] = "  ,cursubtotalprice";
-	$aryQuery[] = "  ,TO_CHAR(dtmdeliverydate, 'YYYY/MM/DD')";
-	$aryQuery[] = "  ,strnote";
-	$aryQuery[] = "  ,lngsortkey";
-	$aryQuery[] = "FROM t_purchaseorderdetail";
-	$aryQuery[] = "WHERE lngorderno = "  . $lngOrderNo;
-	$aryQuery[] = "AND   lngorderrevisionno = "  .$lngRevisionNo;
-	$aryQuery[] = "ORDER BY";
-	$aryQuery[] = "   lngsortkey";
+	$aryQuery[] = "   all_detail.lngpurchaseorderno";
+	$aryQuery[] = "  ,all_detail.lngpurchaseorderdetailno";
+	$aryQuery[] = "  ,all_detail.lngrevisionno";
+	$aryQuery[] = "  ,all_detail.lngorderno";
+	$aryQuery[] = "  ,all_detail.lngorderdetailno";
+	$aryQuery[] = "  ,all_detail.lngorderrevisionno";
+	$aryQuery[] = "  ,all_detail.lngstocksubjectcode";
+	$aryQuery[] = "  ,all_detail.lngstockitemcode";
+	$aryQuery[] = "  ,all_detail.strstockitemname";
+	$aryQuery[] = "  ,all_detail.lngdeliverymethodcode";
+	$aryQuery[] = "  ,all_detail.strdeliverymethodname";
+	$aryQuery[] = "  ,all_detail.curproductprice";
+	$aryQuery[] = "  ,all_detail.lngproductquantity";
+	$aryQuery[] = "  ,all_detail.lngproductunitcode";
+	$aryQuery[] = "  ,all_detail.strproductunitname";
+	$aryQuery[] = "  ,all_detail.cursubtotalprice";
+	$aryQuery[] = "  ,TO_CHAR(all_detail.dtmdeliverydate, 'YYYY/MM/DD') as dtmdeliverydate";
+	$aryQuery[] = "  ,all_detail.strnote";
+	$aryQuery[] = "  ,all_detail.lngsortkey";
+	$aryQuery[] = "FROM t_purchaseorderdetail target ";
+	$aryQuery[] = "INNER JOIN t_purchaseorderdetail all_detail";
+	$aryQuery[] = "    ON all_detail.lngpurchaseorderno = target.lngpurchaseorderno";
+	$aryQuery[] = "    AND all_detail.lngrevisionno = target.lngrevisionno ";
+	$aryQuery[] = "INNER JOIN(";
+	$aryQuery[] = "SELECT lngpurchaseorderno, lngpurchaseorderdetailno, MAX(lngrevisionno) AS lngrevisionno FROM t_purchaseorderdetail GROUP BY lngpurchaseorderno, lngpurchaseorderdetailno";
+	$aryQuery[] = ") rev_max ";
+	$aryQuery[] = "on rev_max.lngpurchaseorderno = all_detail.lngpurchaseorderno ";
+	$aryQuery[] = "AND rev_max.lngpurchaseorderdetailno = all_detail.lngpurchaseorderdetailno ";
+	$aryQuery[] = "AND rev_max.lngrevisionno = all_detail.lngrevisionno ";
+	$aryQuery[] = "WHERE target.lngorderno = "  . $lngOrderNo;
+	$aryQuery[] = " AND target.lngorderrevisionno = "  .$lngRevisionNo;
+	$aryQuery[] = " ORDER BY";
+	$aryQuery[] = " all_detail.lngsortkey";
 
 	$strQuery = "";
 	$strQuery = implode("\n", $aryQuery);
-
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
 	if ( $lngResultNum )
@@ -1201,7 +1208,6 @@ function fncInsertPurchaseOrderDetail($aryDetail, $objDB){
 
 	$strQuery = "";
 	$strQuery = implode("\n", $aryQuery );
-
 	if ( !$lngResultID = $objDB->execute( $strQuery ) )
 	{
 		fncOutputError ( 9051, DEF_ERROR, "発注書明細への更新処理に失敗しました。", TRUE, "", $objDB );
@@ -1284,7 +1290,7 @@ function fncInsertPurchaseOrder($aryOrder, $objDB){
 	$aryQuery[] = "  ,"  . ($aryOrder["lngdeliveryplacecode"] ? $aryOrder["lngdeliveryplacecode"] : 'null');
 	$aryQuery[] = "  ,'" . $aryOrder["strdeliveryplacename"] . "'";
 	$aryQuery[] = "  ,"  . $aryOrder["curtotalprice"];
-	$aryQuery[] = "  ,"  . ($aryOrder["dtminsertdate"] ? "'" . $aryOrder["dtminsertdate"] . "'" : 'null');
+	$aryQuery[] = "  ,"  . "NOW()";
 	$aryQuery[] = "  ,"  . $aryOrder["lnginsertusercode"];
 	$aryQuery[] = "  ,'" . $aryOrder["strinsertusername"] . "'";
 	$aryQuery[] = "  ,'" . $aryOrder["strnote"] . "'";
@@ -1293,7 +1299,6 @@ function fncInsertPurchaseOrder($aryOrder, $objDB){
 
 	$strQuery = "";
 	$strQuery = implode("\n", $aryQuery );
-
 	if ( !$lngResultID = $objDB->execute( $strQuery ) )
 	{
 		fncOutputError ( 9051, DEF_ERROR, "発注書マスタへの更新処理に失敗しました。", TRUE, "", $objDB );
@@ -1339,13 +1344,13 @@ function fncGetOrder($lngOrderNo, $lngRevisionNo, $objDB){
 	$aryQuery[] = "  ,od.lngproductquantity";
 	$aryQuery[] = "  ,od.cursubtotalprice";
 	$aryQuery[] = "  ,mpu.strproductunitname";
-	$aryQuery[] = "  ,od.strnote";
+	$aryQuery[] = "  ,od.strnote as strdetailnote";
 	$aryQuery[] = "  ,TO_CHAR(od.dtmdeliverydate, 'YYYY/MM/DD') as dtmdeliverydate";
 	$aryQuery[] = "FROM m_order mo";
 	$aryQuery[] = "LEFT JOIN t_orderdetail od ON mo.lngorderno = od.lngorderno AND mo.lngrevisionno = od.lngrevisionno";
 	$aryQuery[] = "LEFT JOIN t_purchaseorderdetail tp ON od.lngorderno = tp.lngorderno AND od.lngrevisionno = tp.lngorderrevisionno";
 	$aryQuery[] = "LEFT JOIN m_purchaseorder po ON tp.lngpurchaseorderno = po.lngpurchaseorderno AND tp.lngrevisionno = po.lngrevisionno";
-	$aryQuery[] = "LEFT JOIN m_product mp ON od.strproductcode = mp.strproductcode";
+	$aryQuery[] = "LEFT JOIN m_product mp ON od.strproductcode = mp.strproductcode and od.lngrevisionno = mp.lngrevisionno and od.strrevisecode = mp.strrevisecode";
 	$aryQuery[] = "LEFT JOIN m_group mg ON mo.lnggroupcode = mg.lnggroupcode";
 	$aryQuery[] = "LEFT JOIN m_user mu ON mo.lngusercode = mu.lngusercode";
 	$aryQuery[] = "LEFT JOIN m_stockitem ms ON od.lngstockitemcode = ms.lngstockitemcode and od.lngstocksubjectcode = ms.lngstocksubjectcode";
@@ -1357,7 +1362,6 @@ function fncGetOrder($lngOrderNo, $lngRevisionNo, $objDB){
 
 	$strQuery = "";
 	$strQuery = implode("\n", $aryQuery);
-
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
 	if ( $lngResultNum )

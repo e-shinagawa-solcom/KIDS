@@ -1231,7 +1231,7 @@ function fncGetOrderToProductSQL ( $aryDetailViewColumn, $lngOrderNo, $lngRevisi
 	$aryFromQuery[] = " FROM t_OrderDetail od";
 
 	// 追加表示用の参照マスタ対応
-	$aryFromQuery[] = "   LEFT JOIN m_Product p on p.strProductCode = od.strProductCode and p.strReviseCode = od.strReviseCode";
+	$aryFromQuery[] = "   LEFT JOIN m_Product p on p.strProductCode = od.strProductCode and p.strReviseCode = od.strReviseCode and p.lngrevisionno = od.lngrevisionno";
 	$aryFromQuery[] = " left join m_group mg on mg.lnggroupcode = p.lnginchargegroupcode";
 	$aryFromQuery[] = " left join m_user  mu on mu.lngusercode = p.lnginchargeusercode";
 
@@ -1333,7 +1333,7 @@ function fncSetPurchaseHeadTable ( $lngColumnCount, $aryHeadResult, $aryDetailRe
 					// 発注データが削除対象の場合、詳細表示ボタンは選択不可
 					if ( $aryHeadResult["lngrevisionno"] >= 0 )
 					{
-						$aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/detail_off_bt.gif\" lngorderno=\"" . $aryDetailResult[$i]["lngorderno"] . "\" class=\"detail button\"></td>\n";
+						$aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/detail_off_bt.gif\" lngorderno=\"" . $aryDetailResult[$i]["lngorderno"] . "\" lngrevisionno=\"" . $aryDetailResult[$i]["lngrevisionno"] . "\" class=\"detail button\"></td>\n";
 					}
 					else
 					{
@@ -1367,6 +1367,17 @@ function fncSetPurchaseHeadTable ( $lngColumnCount, $aryHeadResult, $aryDetailRe
 				// 確定取消
 				if ( $strColumnName == "btnDelete" and $aryUserAuthority["Delete"] )
 				{
+					// 発注データの状態により分岐  //// 状態が「申請中」「納品中」「納品済」「締め済」の場合削除ボタンを選択不可
+					// 最新発注が削除データの場合も選択不可
+					if ( $aryHeadResult["lngorderstatuscode"] != DEF_ORDER_APPLICATE and $aryHeadResult["lngorderstatuscode"] != DEF_ORDER_CLOSED)
+					{
+						$aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/remove_off_bt.gif\" lngorderno=\"" . $aryDetailResult[$i]["lngorderno"] . "\" class=\"remove button\"></td>\n";
+					}
+					else
+					{
+						$aryHtml[] = "\t<td></td>\n";
+					}
+/*
 					//リバイズが存在しない場合
 					if ( $lngReviseTotalCount == 1 )
 					{
@@ -1403,6 +1414,7 @@ function fncSetPurchaseHeadTable ( $lngColumnCount, $aryHeadResult, $aryDetailRe
 							$aryHtml[] = "\t<td></td>\n";
 						}
 					}
+*/
 				}
 
 				// 削除済
@@ -1953,6 +1965,7 @@ function fncSetPurchaseTable ( $aryResult, $arySearchColumn, $aryViewColumn, $ar
 				{
 					// 明細行数の調査
 					$strDetailQuery = fncGetOrderToProductSQL ( $aryDetailViewColumn, $aryResult[$i]["lngorderno"], $aryResult[$i]["lngrevisionno"], $aryData, $objDB );
+fncDebug("kids2.log", $strDetailQuery , __FILE__, __LINE__, "a" );
 					// クエリー実行
 					if ( !$lngDetailResultID = $objDB->execute( $strDetailQuery ) )
 					{

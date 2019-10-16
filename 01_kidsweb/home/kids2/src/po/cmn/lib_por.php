@@ -311,6 +311,7 @@ function fncGetOrderDetail2($lngOrderNo, $lngOrderDetailNo, $lngRevisioNno, $obj
     $aryQuery[] = "  ,mo.lngusercode ";
     $aryQuery[] = "  ,mu.struserdisplayname ";
     $aryQuery[] = "  ,od.lngstockitemcode ";
+    $aryQuery[] = "  ,od.lngstocksubjectcode ";
     $aryQuery[] = "  ,msi.strstockitemname ";
     $aryQuery[] = "  ,od.lngdeliverymethodcode ";
     $aryQuery[] = "  ,md.strdeliverymethodname ";
@@ -646,7 +647,8 @@ function fncInsertPurchaseOrder($aryOrder, $aryOrderDetail, $objAuth, $objDB){
                 if($i == 0){
                     // 発注書マスタ登録
                     $lngpurchaseorderno = fncGetSequence("m_purchaseorder.lngpurchaseorderno", $objDB);
-                    $lngrevisionno = $aryOrderDetailUpdate[$i]["lngrevisionno"] == null ? 0 : intval($aryOrderDetailUpdate[$i]["lngrevisionno"]) + 1;
+//                    $lngrevisionno = $aryOrderDetailUpdate[$i]["lngrevisionno"] == null ? 0 : intval($aryOrderDetailUpdate[$i]["lngrevisionno"]) + 1;
+                    $lngrevisionno = 0;
                     $ym = date('ym');
                     $year = date('y');
                     $month = date('m');
@@ -746,7 +748,7 @@ function fncInsertPurchaseOrder($aryOrder, $aryOrderDetail, $objAuth, $objDB){
                 $aryQueryDetail[] = "  ,lngorderno";
                 $aryQueryDetail[] = "  ,lngorderdetailno";
                 $aryQueryDetail[] = "  ,lngorderrevisionno";
-                // $aryQueryDetail[] = "  ,lngstocksubjectcode";
+                $aryQueryDetail[] = "  ,lngstocksubjectcode";
                 $aryQueryDetail[] = "  ,lngstockitemcode";
                 $aryQueryDetail[] = "  ,strstockitemname";
                 $aryQueryDetail[] = "  ,lngdeliverymethodcode";
@@ -761,12 +763,12 @@ function fncInsertPurchaseOrder($aryOrder, $aryOrderDetail, $objAuth, $objDB){
                 $aryQueryDetail[] = "  ,lngsortkey";
                 $aryQueryDetail[] = ") VALUES (";
                 $aryQueryDetail[] = "   "  . $lngpurchaseorderno;
-                $aryQueryDetail[] = "  ,"  . $aryOrderDetailUpdate[$i]["lngorderdetailno"];
+                $aryQueryDetail[] = "  ,"  . ($i + 1);
                 $aryQueryDetail[] = "  ,"  . $lngrevisionno;
-                $aryQueryDetail[] = "  ,"  . $order["lngorderno"];
+                $aryQueryDetail[] = "  ,"  . $aryOrderDetailUpdate[$i]["lngorderno"];
                 $aryQueryDetail[] = "  ,"  . $aryOrderDetailUpdate[$i]["lngorderdetailno"];
                 $aryQueryDetail[] = "  ,"  . $aryOrderDetailUpdate[$i]["lngrevisionno"];
-                // $aryQueryDetail[] = "";
+                $aryQueryDetail[] = "  ,"  . $aryOrderDetailUpdate[$i]["lngstocksubjectcode"];
                 $aryQueryDetail[] = "  ,"  . $aryOrderDetailUpdate[$i]["lngstockitemcode"];
                 $aryQueryDetail[] = "  ,'" . $aryOrderDetailUpdate[$i]["strstockitemname"] . "'";
                 $aryQueryDetail[] = "  ,"  . $aryOrderDetailUpdate[$i]["lngdeliverymethodcode"];
@@ -782,7 +784,6 @@ function fncInsertPurchaseOrder($aryOrder, $aryOrderDetail, $objAuth, $objDB){
                 $aryQueryDetail[] = ")";
    
                 $strQueryDetail = implode("\n", $aryQueryDetail );
-
                 if ( !$lngResultID = $objDB->execute( $strQueryDetail ) )
                 {
                     fncOutputError ( 9051, DEF_ERROR, "発注書明細への更新処理に失敗しました。", TRUE, "", $objDB );
