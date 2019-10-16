@@ -8,9 +8,6 @@
 	require ( 'conf.inc' );										// 設定読み込み
 	require ( LIB_DEBUGFILE );									// Debugモジュール
 
-	require ( LIB_ROOT . "mapping/conf_mapping_common.inc" );	// マッピング設定 - 共通
-	require ( LIB_ROOT . "mapping/conf_mapping_estimate.inc" );	// マッピング設定 - 見積原価管理
-
 	require ( LIB_FILE );										// ライブラリ読み込み
     
     require ( SRC_ROOT . "estimate/cmn/estimateSheetController.php" );
@@ -201,7 +198,6 @@
 							// 代入後の数量をsheetオブジェクトに挿入
 							$objSheet->sheet->getCell($quantityCell)->setValue($calcProductionQuantity);
 						}
-
 					}
 
 					// 行のチェック、再計算を行う
@@ -452,11 +448,24 @@
 		
 		$form .= makeHTML::getHiddenData($aryData);
 
-		$aryData["WORKSHEET"]	= $select; // ワークシート選択肢
-		$aryData["EXCEL"]		= $strExcel; // index
-		$aryData["TABLEDATA"]	= $json;
-		$aryData["FORM_NAME"]	= FORM_NAME;
-		$aryData["FORM"]	    = $form;
+		// 再販フラグの取得
+		$reviseFlag = $objHeader->outputReviseFlag();
+
+		// 登録メッセージの作成
+		if ($reviseFlag === true) {
+			$registType = "再販";
+			$registClass = "reviseRegist";
+		} else {
+			$registType = "新規";
+			$registClass = "newRegist";
+		}
+
+		$aryData["WORKSHEET"]	 = $select; // ワークシート選択肢
+		$aryData["EXCEL"]		 = $strExcel; // index
+		$aryData["TABLEDATA"]	 = $json;
+		$aryData["FORM"]	     = $form;
+		$aryData["REGIST_TYPE"]  = $registType;
+		$aryData["REGIST_CLASS"] = $registClass;
 
 		// テンプレート読み込み
 		$objTemplate->getTemplate( "estimate/regist/confirm.tmpl" );
