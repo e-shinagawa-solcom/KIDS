@@ -141,7 +141,7 @@ $selectQuery =
 		'[' || mg.strgroupdisplaycode || ']' || mg.strgroupdisplayname AS lnginchargegroupcode,
 		'[' || mu1.struserdisplaycode || ']' || mu1.struserdisplayname AS lnginchargeusercode,
 		'[' || mu2.struserdisplaycode || ']' || mu2.struserdisplayname AS lngdevelopusercode,
-		TO_CHAR(mp.dtmdeliverylimitdate, 'YYYY/MM/DD') AS dtmdeliverylimitdate,
+		-- TO_CHAR(mp.dtmdeliverylimitdate, 'YYYY/MM/DD') AS dtmdeliverylimitdate,
 		mp.curretailprice,
 		mp.lngcartonquantity,
 		mp.lngproductionquantity,
@@ -235,8 +235,8 @@ $selectQuery =
 
 // // 管理者モードでない場合
 // if () {
-// 	$selectQuery .=
-// 	    "HAVING MIN(lngrevisionno) >= 0";
+	$selectQuery .=
+	    " HAVING MIN(lngrevisionno) >= 0";
 
 // }
 		
@@ -260,14 +260,14 @@ $selectQuery .=
 			// 入力日
 			case 'dtmInsertDate':
 				if ($condition['from']) {
-					$fromCondition = "me.dtminsertdate >= ". $condition['from'];                                 
+					$fromCondition = "me.dtminsertdate >= TO_TIMESTAMP('".$condition['from']." 00:00:00', 'YYYY/MM/DD HH24:MI:SS')";                                 
 				}
 				if ($condition['to']) {
-					$toCondition = "me.dtminsertdate <= ". $condition['to'];
+					$toCondition = "me.dtminsertdate <= TO_TIMESTAMP('".$condition['to']." 23:59:59', 'YYYY/MM/DD HH24:MI:SS')";
 				}
 				break;
 
-			// 製品コード
+			// 製品コードs
 			case 'strProductCode':
 				if ($condition['from']) {
 					$fromCondition = "mp.strproductcode >= '". $condition['from']. "'";                                 
@@ -297,15 +297,15 @@ $selectQuery .=
 				$search = "mp.strdevelopuserdisplaycode = ". $condition;
 				break;
 			
-			// 納期
-			case 'dtmDeliveryLimitDate';
-				if ($condition['from']) {
-					$fromCondition = "mp.dtmdeliverylimitdate >= ". $condition['from'];                                 
-				}
-				if ($condition['to']) {
-					$toCondition = "mp.dtmdeliverylimitdate <= ". $condition['to'];
-				}
-				break;
+			// // 納期
+			// case 'dtmDeliveryLimitDate';
+			// 	if ($condition['from']) {
+			// 		$fromCondition = "mp.dtmdeliverylimitdate >= TO_DATE('".$condition['from']."', 'YYYY/MM/DD')";                                 
+			// 	}
+			// 	if ($condition['to']) {
+			// 		$toCondition = "mp.dtmdeliverylimitdate <= TO_DATE('".$condition['to']."', 'YYYY/MM/DD')";
+			// 	}
+			// 	break;
 			
 			default:
 				break;
