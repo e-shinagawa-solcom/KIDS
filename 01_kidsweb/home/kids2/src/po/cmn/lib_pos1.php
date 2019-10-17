@@ -1456,13 +1456,15 @@ function fncCancelOrderHtml($aryOrder){
  * @access	public
  * 
  */
-function fncCancelPurchaseOrderHtml($aryOrder, $aryDetail){
+function fncCancelPurchaseOrderHtml($aryOrder, $aryDetail, $strSessionID, $isDeleted = false){
 //	for($i = 0; $i < count($aryDetail); $i++) {
 		$strUrl = "/list/result/po/listoutput.php?strReportKeyCode=" . $aryDetail["lngpurchaseorderno"] . "&strSessionID=" . $strSessionID;
 		$aryHtml[] = "<table class=\"ordercode\">";
 		$aryHtml[] = "  <tr>";
 		$aryHtml[] = "    <td class=\"ordercodetd\">" . sprintf("%s_%02d", $aryOrder["strordercode"], $aryOrder["lngrevisionno"]) . "</td>";
-		$aryHtml[] = "    <td class=\"orderbuttontd\"><a href=\"" . $strUrl . "\"><img src=\"/img/type01/cmn/querybt/preview_off_ja_bt.gif\" alt=\"preview\"></a></td>";
+		if( !$isDeleted ){
+			$aryHtml[] = "    <td class=\"orderbuttontd\"><a href=\"" . $strUrl . "\"><img src=\"/img/type01/cmn/querybt/preview_off_ja_bt.gif\" alt=\"preview\"></a></td>";
+		}
 		$aryHtml[] = "  </tr>";
 		$aryHtml[] = "</table>";
 		$aryHtml[] = "<p class=\"caption\">¼è¾ÃÂÐ¾Ý</p>";
