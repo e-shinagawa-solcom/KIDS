@@ -1456,7 +1456,7 @@ function fncCancelOrderHtml($aryOrder){
  * @access	public
  * 
  */
-function fncCancelPurchaseOrderHtml($aryOrder, $aryDetail, $isDeleted = false){
+function fncCancelPurchaseOrderHtml($aryOrder, $aryDetail, $strSessionID, $isDeleted = false){
 //	for($i = 0; $i < count($aryDetail); $i++) {
 		$strUrl = "/list/result/po/listoutput.php?strReportKeyCode=" . $aryDetail["lngpurchaseorderno"] . "&strSessionID=" . $strSessionID;
 		$aryHtml[] = "<table class=\"ordercode\">";
