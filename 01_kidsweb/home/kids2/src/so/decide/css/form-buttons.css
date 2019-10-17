@@ -2,8 +2,8 @@
 /* フォーム ボタン */
 .form-buttons
 {
-    position: relative; 
-    top: -30px;
+    position: absolute; 
+    top: 550px;
     left: 21px;
 
     width: 927px;

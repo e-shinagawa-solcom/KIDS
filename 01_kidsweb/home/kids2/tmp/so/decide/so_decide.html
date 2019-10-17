@@ -1,30 +1,42 @@
-<config>
-	<header1>
-		<link rel="stylesheet" type="text/css" media="screen" href="/so/decide/css/forms.css">
-		<link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
-		<link rel="stylesheet" type="text/css" media="screen" href="/so/decide/css/table.css">
-		<link rel="stylesheet" type="text/css" media="screen" href="/so/decide/css/table-decide.css">
-		<link rel="stylesheet" type="text/css" media="screen" href="/so/decide/css/table-box.css">
-		<link rel="stylesheet" type="text/css" media="screen" href="/so/decide/css/form-buttons.css">
-	</header1>
+<!DOCTYPE html>
+<html lang="ja">
 
-	<header2>
-	</header2>
+<head>
+	<!-- 互換表示OFFを強制させる -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<!--
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    php domパース用メタ要素 コメントアウトしていてもphpのdomElement->loadHTMLで認識される
+    -->
+	<meta charset="euc-jp">
 
-	<header3>
-		<script src="/so/decide/js/functions.js" defer></script>
-	</header3>
+	<title>K.I.D.S.</title>
+	<link rel="stylesheet" href="/cmn/css/base/base-general.css">
 
-	<bodyonload>
-	</bodyonload>
-</config>
+	<!-- スタイル初期化 & 各種コントロールスタイル -->
 
-<!-- 左サイドバー ナビゲート -->
-<div class="navigation-loadpoint">
-	<script>
-		$('.navigation-loadpoint').load('/search/cmn/navigate/so_navi.html');
-	</script>
-</div>
+	<link rel="stylesheet" type="text/css" media="screen" href="/so/decide/css/forms.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="/so/decide/css/forms-confirm.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="/so/decide/css/table-confirm.css">
+	<script src="/cmn/jquery/jquery-3.1.0.js"></script>
+	<script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
+	<script src="/cmn/jquery/ui/jquery-ui-1.12.0.js"></script>
+	<!-- <script src="/so/decide/js/functions.js" defer></script> -->
+	<script src="/so/decide/js/decide-confirm.js" defer></script>
+    <link rel="stylesheet" href="/so/decide/css/forms-finish.css">
+    <!-- ボタン画像の共通の振る舞い CSS -->
+    <link rel="stylesheet" href="/cmn/css/base/button-behaivior.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="/so/decide/css/forms.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="/so/decide/css/table.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="/so/decide/css/table-decide.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="/so/decide/css/table-box.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="/so/decide/css/form-buttons.css">
+	<script src="/so/decide/js/functions.js" defer></script>
+</head>
+
+<body class="background">
 
 <!-- 入力フォーム -->
 <div class="form-box">
@@ -209,3 +221,6 @@
 	}
 	$E("decide_data").onscroll = decide_scroll;
 </script>
+</body>
+
+</html>

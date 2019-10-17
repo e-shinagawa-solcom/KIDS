@@ -52,16 +52,11 @@ $strQuery = fncGetReceiveHeadNoToInfoSQL($lngReceiveNo, $lngRevisionNo, DEF_RECE
 // 詳細データの取得
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 if ($lngResultNum) {
-    // if ($lngResultNum == 1) {
-    //     $aryResult = $objDB->fetchArray($lngResultID, 0);
-    // } else {
-    //     fncOutputError(403, DEF_ERROR, "該当データの取得に失敗しました", true, "../so/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
-    // }
     for ($i = 0; $i < $lngResultNum; $i++) {
         $aryResult = pg_fetch_all($lngResultID);
     }
 } else {
-    fncOutputError(403, DEF_ERROR, "データが異常です", true, "../so/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
+    fncOutputError(403, DEF_ERROR, "該当データの取得に失敗しました", true, "../so/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
 }
 
 $objDB->freeResult($lngResultID);
@@ -69,7 +64,7 @@ $objDB->freeResult($lngResultID);
 $aryNewResult = array();
 $aryNewResult["strcustomerdisplaycode"] = $aryResult[0]["strcustomerdisplaycode"];
 $aryNewResult["strcustomerdisplayname"] = $aryResult[0]["strcustomerdisplayname"];
-$aryNewResult["strreceivecode"] = $aryResult[0]["strreceivecode2"];
+$aryNewResult["strreceivecode"] = $aryResult[0]["strreceivecode"];
 $aryNewResult["strnote"] = $aryResult[0]["strnote"];
 
 ////////// 明細行の取得 ////////////////////
@@ -90,10 +85,10 @@ if ($lngResultNum) {
 $objDB->freeResult($lngResultID);
 
 // テンプレート読み込み
-// $objTemplate = new clsTemplate();
-// $objTemplate->getTemplate("/so/decide/so_decide.html");
-// $objTemplate->replace($aryNewResult);
-$strTemplate = fncGetReplacedHtmlWithBase("pc/base.html", "so/decide/so_decide.html", $aryNewResult, $objAuth);
+$objTemplate = new clsTemplate();
+$objTemplate->getTemplate("/so/decide/so_decide.html");
+$objTemplate->replace($aryNewResult);
+$strTemplate = $objTemplate->strTemplate;
 // 検索結果テーブル生成の為DOMDocumentを使用
 $doc = new DOMDocument();
 // パースエラー抑制
@@ -139,7 +134,7 @@ foreach ($aryDetailResult as $detailResult) {
     $trBody->appendChild($td);
 
     // 受注番号
-    $td = $doc->createElement("td", $aryResult["strreceivecode"]);
+    $td = $doc->createElement("td", $aryResult[0]["strreceivecode"]);
     $td->setAttribute("style", "width: 100px;");
     $trBody->appendChild($td);
 
@@ -163,8 +158,8 @@ foreach ($aryDetailResult as $detailResult) {
     $td->setAttribute("style", "width: 120px;");
     $trBody->appendChild($td);
     // 顧客
-    if ($aryResult["strcustomerdisplaycode"] != "") {
-        $textContent = "[" . $aryResult["strcustomerdisplaycode"] . "]" . " " . $aryResult["strcustomerdisplayname"];
+    if ($aryResult[0]["strcustomerdisplaycode"] != "") {
+        $textContent = "[" . $aryResult[0]["strcustomerdisplaycode"] . "]" . " " . $aryResult[0]["strcustomerdisplayname"];
     } else {
         $textContent = "";
     }

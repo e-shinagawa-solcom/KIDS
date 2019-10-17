@@ -49,6 +49,8 @@ $aryQuery[] = ", r.lngMonetaryUnitCode";
 $aryQuery[] = ", rd.lngreceivedetailno as lngreceivedetailno";
 $aryQuery[] = ", rd.strProductCode as strProductCode";// 製品コード・名称
 $aryQuery[] = ", p.strProductName as strProductName";
+$aryQuery[] = ", p.lngProductNo as lngProductNo";
+$aryQuery[] = ", p.lngRevisionNo as lngProductRevisionNo";
 $aryQuery[] = ", r.strCompanyDisplayCode as strCompanyDisplayCode";// 顧客コード・名称
 $aryQuery[] = ", r.strCompanyDisplayName as strCompanyDisplayName";
 $aryQuery[] = ", p.lngproductno as lngproductno";
@@ -72,13 +74,12 @@ $aryQuery[] = ", cust_c.strCompanyDisplayName";
 $aryQuery[] = " from m_Receive r1";
 $aryQuery[] = " LEFT JOIN m_MonetaryUnit USING (lngMonetaryUnitCode) ";
 $aryQuery[] = " LEFT JOIN m_Company cust_c ON r1.lngCustomerCompanyCode = cust_c.lngCompanyCode ";
-$aryQuery[] = " ) r USING (lngReceiveNo)";
-// $aryQuery[] = " LEFT JOIN m_Product p USING (strProductCode)";
-$aryQuery[] = "        LEFT JOIN (";
-$aryQuery[] = "            select p1.*  from m_product p1 ";
-$aryQuery[] = "        	inner join (select max(lngRevisionNo) lngRevisionNo, strproductcode from m_Product group by strProductCode) p2";
-$aryQuery[] = "            on p1.lngRevisionNo = p2.lngRevisionNo and p1.strproductcode = p2.strproductcode";
-$aryQuery[] = "          ) p USING (strProductCode)";
+$aryQuery[] = " ) r USING (lngReceiveNo, lngRevisionNo)";
+$aryQuery[] = " LEFT JOIN (";
+$aryQuery[] = "   select p1.*  from m_product p1 ";
+$aryQuery[] = "     inner join (select max(lngRevisionNo) lngRevisionNo, strproductcode from m_Product group by strProductCode) p2";
+$aryQuery[] = "     on p1.lngRevisionNo = p2.lngRevisionNo and p1.strproductcode = p2.strproductcode";
+$aryQuery[] = " ) p USING (strProductCode)";
 $aryQuery[] = " LEFT JOIN m_SalesClass ss USING (lngSalesClassCode)";
 $aryQuery[] = " LEFT JOIN m_ProductUnit pu ON rd.lngProductUnitCode = pu.lngProductUnitCode";
 $aryQuery[] = " LEFT JOIN t_estimatedetail ed USING (lngestimateno, lngestimatedetailno)";
@@ -95,8 +96,7 @@ for ($i = 0; $i < count($aryId); $i++) {
 }
 $aryQuery[] = " ORDER BY strReceiveCode ASC, lngreceivedetailno DESC";
 $strQuery = implode( "\n", $aryQuery );
-echo $strQuery;
-return;
+
 //結果配列
 $result = array();
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);

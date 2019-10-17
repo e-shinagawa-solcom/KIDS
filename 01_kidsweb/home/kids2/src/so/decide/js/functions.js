@@ -1,4 +1,6 @@
 (function () {
+    var lockId = "lockId";
+
     // チェックボックスの切り替え処理のバインド
     $('input[type="checkbox"][name="allSel"]').on({
         'click': function () {
@@ -43,6 +45,7 @@
             }
         })
             .done(function (data) {
+                console.log("取得データ：" + data);
                 // Ajaxリクエストが成功
                 var data = JSON.parse(data);
                 //既存データの削除
@@ -85,9 +88,9 @@
                         + '<td style="width: 100px;">' + money_format(row.lngmonetaryunitcode, row.strmonetaryunitsign, row.curproductprice) + '</td>'
                         + '<td style="width: 100px;">' + select + '</td>' //単位
                         + '<td style="width: 70px;">' + lngunitquantity + '</td>'
-                        + '<td style="width: 100px;text-align: center;"><img class="button" src="/img/type01/so/product_off_ja_bt.gif" onclick="showProductInfo(this)" strproductcode="' + row.strproductcode + '"></td>'
+                        + '<td style="width: 100px;text-align: center;"><img class="button" src="/img/type01/so/product_off_ja_bt.gif" onclick="showProductInfo(this)" lngproductno="' + row.lngproductno + '" lngrevisionno="' + row.lngproductrevisionno + '"></td>'
                         + '<td style="width: 70px;">' + lngproductquantity + '</td>'
-                        + '<td style="width: 100px;">' +  money_format(row.lngmonetaryunitcode, row.strmonetaryunitsign, row.cursubtotalprice) + '</td>'
+                        + '<td style="width: 100px;">' + money_format(row.lngmonetaryunitcode, row.strmonetaryunitsign, row.cursubtotalprice) + '</td>'
                         + '<td style="width: 250px;"><input type="text" class="form-control form-control-sm txt-kids" style="width:240px;" value="' + convertNull(row.strdetailnote) + '"></td>'
                         + '<td style="display:none">[' + convertNull(row.strcompanydisplaycode) + '] ' + convertNull(row.strcompanydisplayname) + '</td>'
                         + '<td style="display:none">' + row.lngreceiveno + '</td>'
@@ -99,7 +102,8 @@
                 }
 
             })
-            .fail(function () {
+            .fail(function (data) {
+                console.log("処理結果：" + data);
                 alert("fail");
                 // Ajaxリクエストが失敗
             });
@@ -143,6 +147,10 @@
 
     // 検索条件変更ボタンのイベント
     $('img.search').on('click', function () {
+
+        // 画面操作を無効する
+        lockScreen(lockId);
+
         url = '/so/decide/search_init.php';
         sessionID = 'strSessionID=' + $.cookie('strSessionID');
         strReceiveCode = 'strReceiveCode=' + $(this).attr('code');
@@ -269,6 +277,7 @@
     });
 
     $('img.regist').on('click', function () {
+
         var params = new Array();
         var len = 0;
         $("#table_decide_body tr").each(function (i, e) {
@@ -289,8 +298,11 @@
                 exit;
             }
 
+            // 画面操作を無効する
+            lockScreen("lockId");
+
             var strDetailNote = $(this).find('td:nth-child(14)').find('input:text').val();
-            var strProductUnitName = $(this).find('td:nth-child(9)').find('select option:selected').text();            
+            var strProductUnitName = $(this).find('td:nth-child(9)').find('select option:selected').text();
             var lngProductUnitCode = $(this).find('td:nth-child(9)').find('select option:selected').val();
 
             params[len - 1] = {
@@ -326,27 +338,30 @@
             }
         })
             .done(function (response) {
-                var w = window.open();
+                var w = window.open("", 'Decide Confirm', "width=1011px, height=600px, scrollbars=yes, resizable=yes");
                 w.document.open();
                 w.document.write(response);
                 w.document.close();
             })
             .fail(function (response) {
+                console.log("処理結果：" + JSON.stringify(response));
                 alert("fail");
-                // Ajaxリクエストが失敗
+        
+                // 画面操作を有効にする
+                unlockScreen("lockId");
             });
     });
 
 })();
 
 function showProductInfo(objID) {
-    // url = '/p/result/index2.php';
-    url = '/p/regist/renew.php';
+    url = '/p/detail/index.php';
     sessionID = 'strSessionID=' + $.cookie('strSessionID');
-    strProductCode = 'strProductCode=' + objID.getAttribute('strproductcode');
+    lngProductNo = 'lngProductNo=' + objID.getAttribute('lngproductno');
+    lngRevisionNo = 'lngRevisionNo=' + objID.getAttribute('lngrevisionno');
     // 別ウィンドウで表示
-    window.open(url + '?' + sessionID + '&' + strProductCode, '_blank', 'height=510, width=600, resizable=yes, scrollbars=yes, menubar=no');
-    // var w = window.open(url + '?' + sessionID + '&' + lngReceiveNo, 'display-detail', 'width=1000, height=600, resizable=yes, scrollbars=yes, menubar=no');
+    window.open(url + '?' + sessionID + '&' + lngProductNo + '&' + lngRevisionNo, '_blank', 'height=510, width=600, resizable=yes, scrollbars=yes, menubar=no');
+    
 }
 
 // 行選択イベント
@@ -395,7 +410,7 @@ function resetData(objID) {
     // 単位が[c/t]の場合、
     if (val == 2) {
         // 入数 = カートン入数
-        lngunitquantitynew = lngcartonquantity;        
+        lngunitquantitynew = lngcartonquantity;
         // 数量 = 製品数量/カートン入数
         lngproductquantitynew = lngproductquantity / lngunitquantitynew;
     }
@@ -410,11 +425,11 @@ function resetData(objID) {
  * @param {} str 
  */
 function convertNull(str) {
-	if (str != "" && str != undefined && str != "null") {
-		return str;
-	} else {
-		return "";
-	}
+    if (str != "" && str != undefined && str != "null") {
+        return str;
+    } else {
+        return "";
+    }
 }
 
 /**
@@ -422,18 +437,54 @@ function convertNull(str) {
  * @param {} str 
  */
 function convertNullToZero(str) {
-	if (str != "" && str != undefined && str != "null") {
-		return str;
-	} else {
-		return 0;
-	}
+    if (str != "" && str != undefined && str != "null") {
+        return str;
+    } else {
+        return 0;
+    }
 }
 
-function money_format(lngmonetaryunitcode, strmonetaryunitsign, price)
-{
+function money_format(lngmonetaryunitcode, strmonetaryunitsign, price) {
     if (lngmonetaryunitcode == 1) {
         return '\xA5' + " " + price;
     } else {
         return $strmonetaryunitsign + " " + $price;
     }
+}
+/*
+ * 画面操作を無効にする
+ */
+function lockScreen(id) {
+
+    /*
+     * 現在画面を覆い隠すためのDIVタグを作成する
+     */
+    var divTag = $('<div />').attr("id", id);
+
+    /*
+     * スタイルを設定
+     */
+    divTag.css("z-index", "999")
+        .css("position", "absolute")
+        .css("top", "0px")
+        .css("left", "0px")
+        .css("right", "0px")
+        .css("bottom", "0px")
+        .css("background-color", "gray")
+        .css("opacity", "0.8");
+
+    /*
+     * BODYタグに作成したDIVタグを追加
+     */
+    $('body').append(divTag);
+}
+
+/*
+ * 画面操作無効を解除する
+ */
+function unlockScreen(id) {
+    /*
+     * 画面を覆っているタグを削除する
+     */
+    $("#" + id).remove();
 }

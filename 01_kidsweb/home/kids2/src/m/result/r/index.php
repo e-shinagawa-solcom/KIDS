@@ -180,9 +180,13 @@ else
 }
 
 // カラム行HTML取得
-$aryParts["strColumnHtml"] = $objMaster->getColumnHtmlTable( 5 );
-
-
+// $aryParts["strColumnHtml"] = $objMaster->getColumnHtmlTable( 5 );
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>通貨レートコード</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>通貨単位コード</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>換算レート</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>適用開始月</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>適用終了月</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"FixColumn\" nowrap>修正</td>\n";
 
 
 $objDB->close();

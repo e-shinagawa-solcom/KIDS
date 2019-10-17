@@ -133,7 +133,7 @@
                             // 壅�魊Ё�
                             + '<td class="col12">' + money_format(row.lngmonetaryunitcode, row.strmonetaryunitsign, curtaxprice) + '</td>'
                             + '<td class="col13">' + row.dtmdeliverydate + '</td>'
-                            + '<td class="col14">' + row.strnote + '</td>'
+                            + '<td class="col14">' + convertNull(row.strnote) + '</td>'
                             + '<td style="display:none">' + row.cursubtotalprice + '</td>'
                             + '<td style="display:none">' + curtax + '</td>'
                             + '<td style="display:none">' + row.lngmonetaryunitcode + '</td>'
@@ -148,17 +148,17 @@
                     }
 
                     var row = $(".table-description tbody tr:nth-child(1)");
-    var columnNum = row.find('td').length;
-    var widthArry = [];
-    var theadwidth = $(".table-description tbody").width();
-    for (var i = 1; i <= columnNum; i++) {
-        var width = $(".table-description tbody tr:nth-child(1) td:nth-child(" + i + ")").width();
-        widthArry.push(width);
-    }
-    $(".table-description thead").width($(".table-description tbody").width()+columnNum+10);
-    for (var i = 1; i <= columnNum; i++) {
-        $(".table-description thead tr th:nth-child(" + i + ")").width(widthArry[i - 1]+1);
-    }
+                    var columnNum = row.find('td').length;
+                    var widthArry = [];
+                    var theadwidth = $(".table-description tbody").width();
+                    for (var i = 1; i <= columnNum; i++) {
+                        var width = $(".table-description tbody tr:nth-child(1) td:nth-child(" + i + ")").width();
+                        widthArry.push(width);
+                    }
+                    $(".table-description thead").width($(".table-description tbody").width() + columnNum + 10);
+                    for (var i = 1; i <= columnNum; i++) {
+                        $(".table-description thead tr th:nth-child(" + i + ")").width(widthArry[i - 1] + 1);
+                    }
 
                 })
                 .fail(function (response) {
@@ -217,7 +217,7 @@
 
     // 瓚狤示正件瓷票凜及質咥
     btnRegist.on('click', function () {
-        
+
         if (workForm.valid()) {
 
             var dtmExpirationDate = $('input[name="dtmExpirationDate"]').val();
@@ -276,11 +276,11 @@
                 exit;
             }
             var formData = workForm.serializeArray();
-            formData.push({name:"detailData", value:JSON.stringify(detaildata)});
-            formData.push({name:"strSessionID", value:$.cookie('strSessionID')});
-            formData.push({name:"strMonetaryRateName", value:$('select[name="lngMonetaryRateCode"] option:selected').text()});
-            formData.push({name:"strMonetaryUnitName", value:$('select[name="lngMonetaryUnitCode"] option:selected').text()});
-            formData.push({name:"strPayConditionName", value:$('select[name="lngPayConditionCode"] option:selected').text()});
+            formData.push({ name: "detailData", value: JSON.stringify(detaildata) });
+            formData.push({ name: "strSessionID", value: $.cookie('strSessionID') });
+            formData.push({ name: "strMonetaryRateName", value: $('select[name="lngMonetaryRateCode"] option:selected').text() });
+            formData.push({ name: "strMonetaryUnitName", value: $('select[name="lngMonetaryUnitCode"] option:selected').text() });
+            formData.push({ name: "strPayConditionName", value: $('select[name="lngPayConditionCode"] option:selected').text() });
 
             var actionUrl = workForm.attr('action');
             alert(actionUrl);

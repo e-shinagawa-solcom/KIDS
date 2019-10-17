@@ -6,6 +6,9 @@
 	<meta http-equiv="content-type" content="text/html; charset=euc-jp">
 	<script src="/cmn/jquery/jquery-3.1.0.js"></script>
 	<script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
+    <script src="/cmn/jquery/tablesorter/jquery.tablesorter.js"></script>
+    <script src="/cmn/jquery/tablesorter/jquery.tablesorter.widgets.js"></script>
+    <script src="/m/cmn/tablesorter.js" defer></script>
 	<script type="text/javascript" language="javascript" src="/layout/type01/cmn/images.js"></script>
 	<script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
 	<script type="text/javascript" language="javascript" src="/result/cmn/functions.js" charset="utf-8"></script>
@@ -17,9 +20,11 @@
 	<script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
 	<script type="text/javascript" language="javascript" src="/m/cmn/table.js"></script>
 	<script type="text/javascript" language="javascript" src="/m/winopen.js"></script>
+    <!-- ???????????????????? -->
+    <script src="/p/search/result/js/clipboard.js" defer></script>
 </head>
 
-<body id="Backs" oncontextmenu="return false;" onload="GetIfrmlngLanguageCode( 1 );" onscroll="fncStopHeader2( SegTitle , DummyTable , MasterAddBt );">
+<body id="Backs" oncontextmenu="return false;">
 
 
 	<form name="form1" id="objForm" action="index.php" method="POST">
@@ -28,18 +33,17 @@
 
 
 		<span id="COPYAREA1">
-			<table id="result_tbl" width="99%" height="97%" border="1px" border-color="#6f818" border-collapse="separate">
+			<table id="result" width="99%" height="97%" border="1px" border-color="#6f818" border-collapse="separate">
 			<thead>
-				<tr id="DummyTable" class="top:0px;">
-					<td colspan="24">&nbsp;<span id="MasterAddBt"></span></td>
+				<tr id="DummyTable">
+					<td colspan="24">&nbsp;<span id="MasterAddBt">
+					<a href="#"><img onmouseover="MasterAddJOn( this );" onmouseout="MasterAddJOff( this );" src="/img/type01/m/m_add_off_ja_bt.gif" width="72" height="20" border="0" alt="追加"></a></span>
+					</td>
 				</tr>
-
 				<tr id="SegTitle">
 					<td valign="top" valign="center">
-						<a href="#" onclick="fncDoCopy(document.getElementById('copyhidden')  , document.getElementById('COPYAREA1') , document.getElementById('COPYAREA2') );return false;">
-							<img onmouseover="CopyOn(this);" onmouseout="CopyOff(this);" src="/img/type01/cmn/seg/copy_off_bt.gif" width="15" height="15"
+						<img class="copy button" onmouseover="CopyOn(this);" onmouseout="CopyOff(this);" src="/img/type01/cmn/seg/copy_off_bt.gif" width="15" height="15"
 							 border="0" alt="COPY">
-						</a>
 					</td>
 					_%strColumnHtml%_
 				</tr>

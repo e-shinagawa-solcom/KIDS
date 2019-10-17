@@ -127,10 +127,16 @@ else
 }
 
 // カラム行HTML取得
-$aryParts["strColumnHtml"] = $objMaster->getColumnHtmlTable( 7 );
-
-
-
+// $aryParts["strColumnHtml"] = $objMaster->getColumnHtmlTable( 7 );
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>グループコード</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>会社コード</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>グループ名称</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>表示グループ許可</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>表示グループコード</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>表示グループ名称</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>表示グループカラー</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"FixColumn\" nowrap>修正</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"DeleteColumn\" nowrap>削除</td>\n";
 $objDB->close();
 
 

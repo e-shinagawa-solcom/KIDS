@@ -948,14 +948,14 @@ function fncGetTaxInfo($dtmStockAppDate, $objDB)
         . "WHERE dtmapplystartdate <= to_date('" . $dtmStockAppDate . "', 'yyyy/mm/dd') "
         . "AND dtmapplyenddate >= to_date('" . $dtmStockAppDate . "', 'yyyy/mm/dd') "
         . "GROUP BY lngtaxcode, curtax "
-        . "ORDER BY 3 ";
+        . "ORDER BY lngpriority ";
 
     $objResult = null;
 
     // 税率などの取得クエリーの実行
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
-    if ($lngResultNum == 1) {
+    if ($lngResultNum) {
         $objResult = $objDB->fetchObject($lngResultID, 0);
     }
 

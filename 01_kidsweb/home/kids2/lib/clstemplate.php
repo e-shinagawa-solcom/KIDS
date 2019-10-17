@@ -118,12 +118,16 @@ class clsTemplate
 
 			foreach ( $aryPostName as $key )
 			{
-				if ( $aryPost[$key] !== "" )
+				// if ( $aryPost[$key] !== "" )
+				// {
+				// 	if ( !is_array( $aryPost[$key] ) )
+				// 	{
+				// 		$this->strTemplate = preg_replace ( "/_%" . $key . "%_/i", $aryPost[$key], $this->strTemplate );
+				// 	}
+				// }
+				if ( !is_array( $aryPost[$key] ) )
 				{
-					if ( !is_array( $aryPost[$key] ) )
-					{
-						$this->strTemplate = preg_replace ( "/_%" . $key . "%_/i", $aryPost[$key], $this->strTemplate );
-					}
+					$this->strTemplate = preg_replace ( "/_%" . $key . "%_/i", $aryPost[$key], $this->strTemplate );
 				}
 			}
 		}

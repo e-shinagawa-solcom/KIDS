@@ -53,6 +53,20 @@
     // 閉じるボタンのイベント
     $('img.close').on('click', function () {
         //ウィンドウを閉じる
-        window.close();
+        window.close();        
+
+        // 親ウィンドウのロックを解除する
+        if (window.opener.$('#lockId').length) {
+            window.opener.$('#lockId').remove();
+        }
     });
+
+    
+    $(window).on("beforeunload", function(e) {
+        // 親ウィンドウのロックを解除する
+        if (window.opener.$('#lockId').length) {
+            window.opener.$('#lockId').remove();
+        }
+    });
+
 })();

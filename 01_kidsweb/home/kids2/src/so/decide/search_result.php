@@ -1,39 +1,38 @@
 <?php
 // ----------------------------------------------------------------------------
 /**
- *       å—æ³¨ç®¡ç† ç¢ºå®šç”»é¢ã®ç¢ºå®šãƒœã‚¿ãƒ³
+ *       ¼õÃí´ÉÍı ³ÎÄê²èÌÌ¤Î³ÎÄê¥Ü¥¿¥ó
  *
- *       å‡¦ç†æ¦‚è¦
- *         ãƒ»ç¢ºå®šå¯¾è±¡æ˜ç´°è¡Œé¸æŠéƒ¨ã§é¸æŠã—ãŸè¡Œã‚’ç¢ºå®šã™ã‚‹å‡¦ç†
+ *       ½èÍı³µÍ×
+ *         ¡¦³ÎÄêÂĞ¾İÌÀºÙ¹ÔÁªÂòÉô¤ÇÁªÂò¤·¤¿¹Ô¤ò³ÎÄê¤¹¤ë½èÍı
  *
- *       æ›´æ–°å±¥æ­´
+ *       ¹¹¿·ÍúÎò
  *
  */
 // ----------------------------------------------------------------------------
 
-// èª­ã¿è¾¼ã¿
+// ÆÉ¤ß¹ş¤ß
 include 'conf.inc';
 require LIB_FILE;
 
-//PHPæ¨™æº–ã®JSONå¤‰æ›ãƒ¡ã‚½ãƒƒãƒ‰ã¯ã‚¨ãƒ©ãƒ¼ã«ãªã‚‹ã®ã§å¤–éƒ¨ã®ãƒ©ã‚¤ãƒ–ãƒ©ãƒª(æã‚‰ãã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã®å•é¡Œ)
+//PHPÉ¸½à¤ÎJSONÊÑ´¹¥á¥½¥Ã¥É¤Ï¥¨¥é¡¼¤Ë¤Ê¤ë¤Î¤Ç³°Éô¤Î¥é¥¤¥Ö¥é¥ê(¶²¤é¤¯¥¨¥ó¥³¡¼¥É¤ÎÌäÂê)
 include 'JSON.php';
 
-//å€¤ã®å–å¾—
+//ÃÍ¤Î¼èÆÀ
 $postdata = file_get_contents("php://input");
 $aryData = json_decode($postdata, true);
 $objDB = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open("", "", "", "");
-//JSONã‚¯ãƒ©ã‚¹ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹åŒ–
+//JSON¥¯¥é¥¹¥¤¥ó¥¹¥¿¥ó¥¹²½
 $s = new Services_JSON();
 
-//å€¤ãŒå­˜åœ¨ã—ãªã„å ´åˆã¯é€šå¸¸ã® POST ã§å—ã‘ã‚‹
+//ÃÍ¤¬Â¸ºß¤·¤Ê¤¤¾ì¹ç¤ÏÄÌ¾ï¤Î POST ¤Ç¼õ¤±¤ë
 if ($aryData == null) {
     $aryData = $_POST;
 }
-$aryData = $_GET;
 
-// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
+// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
 $objAuth = fncIsSession($_GET["strSessionID"], $objAuth, $objDB);
 
 $aryQuery = array();
@@ -43,22 +42,22 @@ $aryQuery[] = ", r.strReceiveCode";
 $aryQuery[] = ", r.strcustomerreceivecode";
 $aryQuery[] = ", r.strMonetaryUnitSign";
 $aryQuery[] = ", rd.lngreceivedetailno as lngreceivedetailno";
-$aryQuery[] = ", rd.strProductCode as strProductCode"; // è£½å“ã‚³ãƒ¼ãƒ‰ãƒ»åç§°
+$aryQuery[] = ", rd.strProductCode as strProductCode"; // À½ÉÊ¥³¡¼¥É¡¦Ì¾¾Î
 $aryQuery[] = ", p.strProductName as strProductName";
-$aryQuery[] = ", r.strCompanyDisplayCode as strCustomerDisplayCode"; // é¡§å®¢ã‚³ãƒ¼ãƒ‰ãƒ»åç§°
+$aryQuery[] = ", r.strCompanyDisplayCode as strCustomerDisplayCode"; // ¸ÜµÒ¥³¡¼¥É¡¦Ì¾¾Î
 $aryQuery[] = ", r.strCompanyDisplayName as strCustomerDisplayName";
 $aryQuery[] = ", p.lngproductno as lngproductno";
-$aryQuery[] = ", rd.lngSalesClassCode as lngSalesClassCode"; // å£²ä¸ŠåŒºåˆ†
+$aryQuery[] = ", rd.lngSalesClassCode as lngSalesClassCode"; // Çä¾å¶èÊ¬
 $aryQuery[] = ", ss.strSalesClassName as strSalesClassName";
-$aryQuery[] = ", p.strGoodsCode as strGoodsCode"; // é¡§å®¢å“ç•ª
-$aryQuery[] = ", rd.dtmDeliveryDate as dtmDeliveryDate"; // ç´æœŸ
-$aryQuery[] = ", To_char( rd.curProductPrice, '9,999,999,990.9999' )  as curProductPrice"; // å˜ä¾¡
-$aryQuery[] = ", rd.lngProductUnitCode as lngProductUnitCode"; // å˜ä½
+$aryQuery[] = ", p.strGoodsCode as strGoodsCode"; // ¸ÜµÒÉÊÈÖ
+$aryQuery[] = ", rd.dtmDeliveryDate as dtmDeliveryDate"; // Ç¼´ü
+$aryQuery[] = ", To_char( rd.curProductPrice, '9,999,999,990.9999' )  as curProductPrice"; // Ã±²Á
+$aryQuery[] = ", rd.lngProductUnitCode as lngProductUnitCode"; // Ã±°Ì
 $aryQuery[] = ", pu.strProductUnitName as strProductUnitName";
-$aryQuery[] = ", p.lngcartonquantity"; // ã‚«ãƒ¼ãƒˆãƒ³å…¥æ•°
-$aryQuery[] = ", To_char( rd.curSubTotalPrice, '9,999,999,990.99' )  as curSubTotalPrice"; // ç¨æŠœé‡‘é¡
-$aryQuery[] = ", rd.strNote as strDetailNote"; // æ˜ç´°å‚™è€ƒ
-$aryQuery[] = ", ed.lngproductquantity as lngproductquantity"; // è£½å“æ•°é‡
+$aryQuery[] = ", p.lngcartonquantity"; // ¥«¡¼¥È¥óÆş¿ô
+$aryQuery[] = ", To_char( rd.curSubTotalPrice, '9,999,999,990.99' )  as curSubTotalPrice"; // ÀÇÈ´¶â³Û
+$aryQuery[] = ", rd.strNote as strDetailNote"; // ÌÀºÙÈ÷¹Í
+$aryQuery[] = ", ed.lngproductquantity as lngproductquantity"; // À½ÉÊ¿ôÎÌ
 $aryQuery[] = " FROM t_ReceiveDetail rd";
 $aryQuery[] = "  INNER JOIN ( ";
 $aryQuery[] = "    SELECT";
@@ -97,7 +96,7 @@ if ($aryData["From_dtmDeliveryDate"] != "") {
 if ($aryData["To_dtmDeliveryDate"] != "") {
     $aryQuery[] = " AND r1.dtmDeliveryDate <= '" . $aryData["To_dtmDeliveryDate"] . "' ";
 }
-$aryQuery[] = " ) r USING (lngReceiveNo)";    
+$aryQuery[] = " ) r USING (lngReceiveNo, lngRevisionNo)";    
 $aryQuery[] = "        LEFT JOIN (";
 $aryQuery[] = "            select p1.*  from m_product p1 ";
 $aryQuery[] = "        	inner join (select max(lngrevisionno) lngrevisionno, strproductcode from m_Product group by strProductCode) p2";
@@ -124,7 +123,8 @@ if ($lngResultNum) {
 $objDB->freeResult($lngResultID);
 
 $objDB->close();
-
-//çµæœå‡ºåŠ›
-mb_convert_variables('UTF-8', 'EUC-JP', $result);
-echo $s->encodeUnsafe($result);
+$aryResult["result"] = $result;
+$aryResult["count"] = $lngResultNum;
+//·ë²Ì½ĞÎÏ
+mb_convert_variables('UTF-8', 'EUC-JP', $aryResult);
+echo $s->encodeUnsafe($aryResult);

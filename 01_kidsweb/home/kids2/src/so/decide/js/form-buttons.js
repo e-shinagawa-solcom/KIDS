@@ -26,6 +26,10 @@
     btnClose.on('click', function () {
         //ウィンドウを閉じる
         window.close();
+        // 親ウィンドウのロックを解除する
+        if (window.opener.$('#lockId').length) {
+            window.opener.$('#lockId').remove();
+        }
     });
 
     var parantExistanceFlag = true;
@@ -33,11 +37,11 @@
     // 検索ボタン押下時の処理
     btnSearch.on('click', function () {
         if (workForm.valid()) {
-            // //ウィンドウオブジェクトが存在していない時警告してフラグをfalseに
-            // if (!window.opener || !Object.keys(window.opener).length) {
-            //     window.alert('親画面が存在しません');
-            //     parantExistanceFlag = false;
-            // }
+            //ウィンドウオブジェクトが存在していない時警告してフラグをfalseに
+            if (!window.opener || !Object.keys(window.opener).length) {
+                window.alert('親画面が存在しません');
+                parantExistanceFlag = false;
+            }
 
             //親画面に値を挿入
             if (parantExistanceFlag) {
@@ -46,16 +50,20 @@
                 $.ajax({
                     url: '/so/decide/search_result.php?strSessionID=' + $.cookie('strSessionID'),
                     type: 'post',
-                    dataType: 'json',
+                    async: false,
                     data: formData
                 })
-                .done(function(response){
-                        alert("test" + response);
-                        var data = JSON.parse(response);
+                    .done(function (response) {
+                        console.log("取得データ：" + response);
+                        var response = JSON.parse(response);
+                        var data = response.result;                        
+                        if (response.count == 0) {
+                            alert("該当する受注明細が存在しません。");
+                        }
+                        
                         var tblchkbox = window.opener.$("#tbl_detail_chkbox");
                         var tbl = window.opener.$("#tbl_detail");
                         var tmp_id = "";
-
                         for (var i = 0; i < data.length; i++) {
                             var row = data[i];
                             var chkbox_id = row.lngreceiveno + "_" + row.lngreceivedetailno + "_" + row.lngrevisionno;
@@ -86,22 +94,20 @@
                                 tbl.append(detailstr);
                             }
                         }
-                        if (data.length == 0) {
-                            alert("該当する受注明細が存在しません。");
-                        }
-                        // var w = window.open();
-                        // w.document.open();
-                        // w.document.write(tmp_id);
-                        // w.document.close();
                     })
-                    .fail(function(response) {
-                        var data = JSON.parse(response);
+                    .fail(function (response) {
+                        console.log("処理結果：" + JSON.stringify(response));
                         alert("fail");
                         // Ajaxリクエストが失敗
                     });
             }
             //ウィンドウを閉じる
             window.close();
+
+            // 親ウィンドウのロックを解除する
+            if (window.opener.$('#lockId').length) {
+                window.opener.$('#lockId').remove();
+            }
         }
         else {
             // バリデーションのキック
@@ -110,17 +116,23 @@
     });
 })();
 
-
+ 
+$(window).on("beforeunload", function(e) {
+    // 親ウィンドウのロックを解除する
+    if (window.opener.$('#lockId').length) {
+        window.opener.$('#lockId').remove();
+    }
+});
 /**
  * 文字変換（nullの場合、""に変換）
  * @param {} str 
  */
 function convertNull(str) {
-	if (str != "" && str != undefined && str != "null") {
-		return str;
-	} else {
-		return "";
-	}
+    if (str != "" && str != undefined && str != "null") {
+        return str;
+    } else {
+        return "";
+    }
 }
 
 /**
@@ -128,9 +140,9 @@ function convertNull(str) {
  * @param {} str 
  */
 function convertNullToZero(str) {
-	if (str != "" && str != undefined && str != "null") {
-		return str;
-	} else {
-		return 0;
-	}
+    if (str != "" && str != undefined && str != "null") {
+        return str;
+    } else {
+        return 0;
+    }
 }

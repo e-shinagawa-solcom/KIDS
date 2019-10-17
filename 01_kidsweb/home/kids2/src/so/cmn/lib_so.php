@@ -39,10 +39,8 @@ function fncGetReceiveHeadNoToInfoSQL($lngReceiveNo, $lngRevisionNo, $lngreceive
     $aryQuery[] = ", to_char( r.dtmAppropriationDate, 'YYYY/MM/DD' ) as dtmReceiveAppDate";
     // 顧客受注番号
     $aryQuery[] = ", r.strCustomerReceiveCode as strCustomerReceiveCode";
-    // 受注No
-    $aryQuery[] = ", r.strReceiveCode as strReceiveCode";
     // 受注コード
-    $aryQuery[] = ", r.strReceiveCode as strReceiveCode2";
+    $aryQuery[] = ", r.strReceiveCode as strReceiveCode";
     // 入力者
     $aryQuery[] = ", r.lngInputUserCode as lngInputUserCode";
     $aryQuery[] = ", input_u.strUserDisplayCode as strInputUserDisplayCode";

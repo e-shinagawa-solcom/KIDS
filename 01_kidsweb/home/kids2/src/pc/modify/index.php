@@ -110,9 +110,7 @@ $aryStock["lngpayconditioncode"] = fncGetPulldown("m_paycondition", "lngpaycondi
 // フォームURL
 $aryStock["actionUrl"] = "/pc/modify/modify_confirm.php";
 $objDB->close();
-
-// var_dump($aryStock);
-// return;
+// $aryStock["strnote"] = $aryStock["strnote"]!='' ? $aryStock["strnote"] : " ";
 
 // テンプレート読み込み
 // $objTemplate = new clsTemplate();
@@ -123,7 +121,13 @@ $objDB->close();
 // $objTemplate->replace($aryNewResult);
 // $objTemplate->complete();
 
-$strTemplate = fncGetReplacedHtmlWithBase("pc/base.html", "pc/modify/pc_modify.html", $aryStock, $objAuth);
+$objTemplate = new clsTemplate();
+$objTemplate->getTemplate("pc/modify/pc_modify.html");
+$objTemplate->replace($aryStock);
+$strTemplate = $objTemplate->strTemplate;
+
+
+// $strTemplate = fncGetReplacedHtmlWithBase("pc/base.html", "pc/modify/pc_modify.html", $aryStock, $objAuth);
 
 // 検索結果テーブル生成の為DOMDocumentを使用
 $doc = new DOMDocument();
@@ -206,7 +210,7 @@ foreach ($aryOrderDetail as $orderDetail) {
     $trBody->appendChild($td);
 
     // 製品
-    $textContent = "[". $orderDetail["strproductcode"]. "] ". substr($orderDetail["strproductname"], 1, 28);
+    $textContent = "[". $orderDetail["strproductcode"]. "] ". $orderDetail["strproductname"];
     $td = $doc->createElement("td", toUTF8($textContent));
     $td->setAttribute("class", "col3");
     $trBody->appendChild($td);
