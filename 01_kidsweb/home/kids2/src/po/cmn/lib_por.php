@@ -716,11 +716,11 @@ function fncInsertPurchaseOrder($aryOrder, $aryOrderDetail, $objAuth, $objDB){
                     $aryQuery[] = "  ,'" . $aryOrderDetailUpdate[$i]["txtsignaturefilename"] . "'";
                     $aryQuery[] = "  ,"  . $aryOrderDetailUpdate[$i]["lngusercode"];
                     $aryQuery[] = "  ,'" . $aryOrderDetailUpdate[$i]["struserdisplayname"] . "'";
-                    $aryQuery[] = "  ,"  . $delivery["strcompanydisplaycode"];
+                    $aryQuery[] = "  ,"  . $delivery["lngcompanycode"];
                     $aryQuery[] = "  ,'" . $delivery["strcompanydisplayname"] . "'";
                     $aryQuery[] = "  ,"  . $curTotalPrice;//  . $aryOrderDetailUpdate[$i][0]["curtotalprice"];
                     $aryQuery[] = "  ,NOW()";
-                    $aryQuery[] = "  ,'" . $objAuth->UserID . "'";
+                    $aryQuery[] = "  ,'" . $objAuth->UserCode . "'";
                     $aryQuery[] = "  ,'" . $objAuth->UserDisplayName . "'";
                     $aryQuery[] = "  ,'" . $aryOrder["strnote"] . "'";
                     $aryQuery[] = "  ,0";

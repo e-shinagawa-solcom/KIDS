@@ -121,10 +121,53 @@ if($_POST){
 					$aryInsertPurchaseOrderDetail[$j]["dtmdeliverydate"] = $aryPurchaseOrderDetail[$j]["dtmdeliverydate"];
 					$aryInsertPurchaseOrderDetail[$j]["strnote"] = $aryPurchaseOrderDetail[$j]["strnote"];
 					$aryInsertPurchaseOrderDetail[$j]["lngsortkey"] = $j + 1;
+					$aryInsertPurchaseOrderDetail[$j]["lngprintcount"] = 0;
+				}
+				else{
+					$aryCancelOrderDetail["lngpurchaseorderno"] = $aryPurchaseOrderDetail[$j]["lngpurchaseorderno"];
+					$aryCancelOrderDetail["lngpurchaseorderdetailno"] = $aryPurchaseOrderDetail[$j]["lngpurchaseorderdetailno"];
+					$aryCancelOrderDetail["lngrevisionno"] = intval($aryPurchaseOrderDetail[$j]["lngrevisionno"]);
+					$aryCancelOrderDetail["lngorderno"] = $aryPurchaseOrderDetail[$j]["lngorderno"];
+					$aryCancelOrderDetail["lngorderdetailno"] = $aryPurchaseOrderDetail[$j]["lngorderdetailno"];
+					$aryCancelOrderDetail["lngorderrevisionno"] = $aryPurchaseOrderDetail[$j]["lngorderrevisionno"];
+					$aryCancelOrderDetail["lngstocksubjectcode"] = $aryPurchaseOrderDetail[$j]["lngstocksubjectcode"];
+					$aryCancelOrderDetail["lngstockitemcode"] = $aryPurchaseOrderDetail[$j]["lngstockitemcode"];
+					$aryCancelOrderDetail["strstockitemname"] = $aryPurchaseOrderDetail[$j]["strstockitemname"];
+					$aryCancelOrderDetail["lngdeliverymethodcode"] = $aryPurchaseOrderDetail[$j]["lngdeliverymethodcode"];
+					$aryCancelOrderDetail["strdeliverymethodname"] = $aryPurchaseOrderDetail[$j]["strdeliverymethodname"];
+					$aryCancelOrderDetail["curproductprice"] = $aryPurchaseOrderDetail[$j]["curproductprice"];
+					$aryCancelOrderDetail["lngproductquantity"] = $aryPurchaseOrderDetail[$j]["lngproductquantity"];
+					$aryCancelOrderDetail["lngproductunitcode"] = $aryPurchaseOrderDetail[$j]["lngproductunitcode"];
+					$aryCancelOrderDetail["strproductunitname"] = $aryPurchaseOrderDetail[$j]["strproductunitname"];
+					$aryCancelOrderDetail["cursubtotalprice"] = $aryPurchaseOrderDetail[$j]["cursubtotalprice"];
+					$aryCancelOrderDetail["dtmdeliverydate"] = $aryPurchaseOrderDetail[$j]["dtmdeliverydate"];
+					$aryCancelOrderDetail["strnote"] = $aryPurchaseOrderDetail[$j]["strnote"];
+					$aryCancelOrderDetail["lngsortkey"] = $aryPurchaseOrderDetail[$j]["lngsortkey"];
 				}
 			}
 		}
-	
+		else
+		{
+			$aryCancelOrderDetail["lngpurchaseorderno"] = $aryPurchaseOrderDetail["lngpurchaseorderno"];
+			$aryCancelOrderDetail["lngpurchaseorderdetailno"] = $aryPurchaseOrderDetail["lngpurchaseorderdetailno"];
+			$aryCancelOrderDetail["lngrevisionno"] = intval($aryPurchaseOrderDetail["lngrevisionno"]);
+			$aryCancelOrderDetail["lngorderno"] = $aryPurchaseOrderDetail["lngorderno"];
+			$aryCancelOrderDetail["lngorderdetailno"] = $aryPurchaseOrderDetail["lngorderdetailno"];
+			$aryCancelOrderDetail["lngorderrevisionno"] = $aryPurchaseOrderDetail["lngorderrevisionno"];
+			$aryCancelOrderDetail["lngstocksubjectcode"] = $aryPurchaseOrderDetail["lngstocksubjectcode"];
+			$aryCancelOrderDetail["lngstockitemcode"] = $aryPurchaseOrderDetail["lngstockitemcode"];
+			$aryCancelOrderDetail["strstockitemname"] = $aryPurchaseOrderDetail["strstockitemname"];
+			$aryCancelOrderDetail["lngdeliverymethodcode"] = $aryPurchaseOrderDetail["lngdeliverymethodcode"];
+			$aryCancelOrderDetail["strdeliverymethodname"] = $aryPurchaseOrderDetail["strdeliverymethodname"];
+			$aryCancelOrderDetail["curproductprice"] = $aryPurchaseOrderDetail["curproductprice"];
+			$aryCancelOrderDetail["lngproductquantity"] = $aryPurchaseOrderDetail["lngproductquantity"];
+			$aryCancelOrderDetail["lngproductunitcode"] = $aryPurchaseOrderDetail["lngproductunitcode"];
+			$aryCancelOrderDetail["strproductunitname"] = $aryPurchaseOrderDetail["strproductunitname"];
+			$aryCancelOrderDetail["cursubtotalprice"] = $aryPurchaseOrderDetail["cursubtotalprice"];
+			$aryCancelOrderDetail["dtmdeliverydate"] = $aryPurchaseOrderDetail["dtmdeliverydate"];
+			$aryCancelOrderDetail["strnote"] = $aryPurchaseOrderDetail["strnote"];
+			$aryCancelOrderDetail["lngsortkey"] = $aryPurchaseOrderDetail[$j]["lngsortkey"];
+		}
 		if(count($aryInsertPurchaseOrderDetail) > 0){
 			// 残明細がある場合は、発注書明細を新規に登録する
 			foreach($aryInsertPurchaseOrderDetail as $row){
@@ -139,11 +182,8 @@ if($_POST){
 		}
 		else
 		{
-//echo "----";
-//echo $aryPurchaseOrderDetail["lngpurchaseorderno"];
-//echo "----";
 			// 残明細がない場合は発注書マスタも削除する。
-			$aryOrder["lngpurchaseorderno"] = $aryPurchaseOrderDetail["lngpurchaseorderno"];
+			$aryOrder = fncGetPurchaseOrder2($aryCancelOrderDetail["lngpurchaseorderno"], $aryCancelOrderDetail["lngrevisionno"], $objDB);
 			$aryOrder["lngrevisionno"] = -1;
 			$aryOrder["lngcustomercode"] = null;
 			$aryOrder["strcustomername"] = null;
@@ -181,14 +221,14 @@ if($_POST){
 		$objDB->transactionCommit();
 
 		if(count($aryInsertPurchaseOrderDetail) > 0){
-			$aryHtml[] = "<p class=\"caption\">発注確定取消に伴い、以下の発注書を修正しました。</p>";
-			$aryHtml[] = fncCancelPurchaseOrderHtml($aryOrder, $aryInsertPurchaseOrderDetail);
+			$aryHtml[] = "<p class=\"caption\">以下の発注の確定取消に伴い、該当の発注書を修正しました。</p>";
+			$aryHtml[] = fncCancelPurchaseOrderHtml($aryOrder, $aryCancelOrderDetail);
 		}
 		else
 		{
 			// 残明細がない場合
-			$aryHtml[] = "<p class=\"caption\">発注確定取消に伴い、以下の発注書を削除しました</p>";
-			$aryHtml[] = fncCancelPurchaseOrderHtml($aryOrder, $aryInsertPurchaseOrderDetail);
+			$aryHtml[] = "<p class=\"caption\">以下の発注の確定取消に伴い、該当の発注書を削除しました</p>";
+			$aryHtml[] = fncCancelPurchaseOrderHtml($aryOrder, $aryCancelOrderDetail);
 			
 		}
 	}
