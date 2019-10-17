@@ -1058,9 +1058,9 @@ function fncGetDeletePurchaseOrderDetail($lngOrderNo, $lngRevisionNo, $objDB){
 	$aryQuery[] = "INNER JOIN(";
 	$aryQuery[] = "SELECT lngpurchaseorderno, lngpurchaseorderdetailno, MAX(lngrevisionno) AS lngrevisionno FROM t_purchaseorderdetail GROUP BY lngpurchaseorderno, lngpurchaseorderdetailno";
 	$aryQuery[] = ") rev_max ";
-	$aryQuery[] = "on rev_max.lngpurchaseorderno = all_detail.lngpurchaseorderno ";
-	$aryQuery[] = "AND rev_max.lngpurchaseorderdetailno = all_detail.lngpurchaseorderdetailno ";
-	$aryQuery[] = "AND rev_max.lngrevisionno = all_detail.lngrevisionno ";
+	$aryQuery[] = "on rev_max.lngpurchaseorderno = target.lngpurchaseorderno ";
+	$aryQuery[] = "AND rev_max.lngpurchaseorderdetailno = target.lngpurchaseorderdetailno ";
+	$aryQuery[] = "AND rev_max.lngrevisionno = target.lngrevisionno ";
 	$aryQuery[] = "WHERE target.lngorderno = "  . $lngOrderNo;
 	$aryQuery[] = " AND target.lngorderrevisionno = "  .$lngRevisionNo;
 	$aryQuery[] = " ORDER BY";
@@ -1098,7 +1098,8 @@ function fncGetDeletePurchaseOrderDetail($lngOrderNo, $lngRevisionNo, $objDB){
  */
 function fncCancelOrder($lngOrderNo, $lngRevisionNo, $objDB){
 	$aryQuery[] = "UPDATE m_order SET";
-	$aryQuery[] = "   lngorderstatuscode = 1";
+	$aryQuery[] = "    lngorderstatuscode = 1";
+	$aryQuery[] = "   ,lngdeliveryplacecode = null ";
 	$aryQuery[] = "WHERE lngorderno = "  . $lngOrderNo;
 	$aryQuery[] = "AND   lngrevisionno = "  . $lngRevisionNo;
 
@@ -1265,36 +1266,36 @@ function fncInsertPurchaseOrder($aryOrder, $objDB){
 	$aryQuery[] = "   "  . $aryOrder["lngpurchaseorderno"];
 	$aryQuery[] = "  ,"  . $aryOrder["lngrevisionno"];
 	$aryQuery[] = "  ,'" . $aryOrder["strordercode"] . "'";
-	$aryQuery[] = "  ,"  . $aryOrder["lngcustomercode"];
-	$aryQuery[] = "  ,'" . $aryOrder["strcustomername"] . "'";
-	$aryQuery[] = "  ,'" . $aryOrder["strcustomercompanyaddreess"] . "'";
-	$aryQuery[] = "  ,'" . $aryOrder["strcustomercompanytel"] . "'";
-	$aryQuery[] = "  ,'" . $aryOrder["strcustomercompanyfax"] . "'";
-	$aryQuery[] = "  ,'" . $aryOrder["strproductcode"] . "'";
-	$aryQuery[] = "  ,'" . $aryOrder["strrevisecode"] . "'";
-	$aryQuery[] = "  ,'" . $aryOrder["strproductname"] . "'";
-	$aryQuery[] = "  ,'" . $aryOrder["strproductenglishname"] . "'";
-	$aryQuery[] = "  ,"  . ($aryOrder["dtmexpirationdate"] ? "'" . $aryOrder["dtmexpirationdate"] . "'" : 'null');
-	$aryQuery[] = "  ,"  . $aryOrder["lngmonetaryunitcode"];
-	$aryQuery[] = "  ,'" . $aryOrder["strmonetaryunitname"] . "'";
-	$aryQuery[] = "  ,'" . $aryOrder["strmonetaryunitsign"] . "'";
-	$aryQuery[] = "  ,"  . ($aryOrder["lngmonetaryratecode"] ? $aryOrder["lngmonetaryratecode"] : 'null');
-	$aryQuery[] = "  ,'" . $aryOrder["strmonetaryratename"] . "'";
-	$aryQuery[] = "  ,"  . ($aryOrder["lngpayconditioncode"] ? $aryOrder["lngpayconditioncode"] : 'null');
-	$aryQuery[] = "  ,'" . $aryOrder["strpayconditionname"] . "'";
-	$aryQuery[] = "  ,"  . ($aryOrder["lnggroupcode"] ? $aryOrder["lnggroupcode"] : 'null');
-	$aryQuery[] = "  ,'" . $aryOrder["strgroupname"] . "'";
-	$aryQuery[] = "  ,'" . $aryOrder["txtsignaturefilename"] . "'";
-	$aryQuery[] = "  ,"  . $aryOrder["lngusercode"];
-	$aryQuery[] = "  ,'" . $aryOrder["strusername"] . "'";
-	$aryQuery[] = "  ,"  . ($aryOrder["lngdeliveryplacecode"] ? $aryOrder["lngdeliveryplacecode"] : 'null');
-	$aryQuery[] = "  ,'" . $aryOrder["strdeliveryplacename"] . "'";
-	$aryQuery[] = "  ,"  . $aryOrder["curtotalprice"];
-	$aryQuery[] = "  ,"  . "NOW()";
-	$aryQuery[] = "  ,"  . $aryOrder["lnginsertusercode"];
-	$aryQuery[] = "  ,'" . $aryOrder["strinsertusername"] . "'";
-	$aryQuery[] = "  ,'" . $aryOrder["strnote"] . "'";
-	$aryQuery[] = "  ,"  . $aryOrder["lngprintcount"];
+	$aryQuery[] = "  ," . ($aryOrder["lngcustomercode"] ? $aryOrder["lngcustomercode"] : 'null');
+	$aryQuery[] = "  ," . ($aryOrder["strcustomername"] ? "'" . $aryOrder["strcustomername"] . "'" : 'null');
+	$aryQuery[] = "  ," . ($aryOrder["strcustomercompanyaddreess"] ? "'" . $aryOrder["strcustomercompanyaddreess"] . "'" : 'null');
+	$aryQuery[] = "  ," . ($aryOrder["strcustomercompanytel"] ? "'" . $aryOrder["strcustomercompanytel"] . "'" : 'null');
+	$aryQuery[] = "  ," . ($aryOrder["strcustomercompanyfax"] ? "'" . $aryOrder["strcustomercompanyfax"] . "'" : 'null');
+	$aryQuery[] = "  ," . ($aryOrder["strproductcode"] ? "'" . $aryOrder["strproductcode"] . "'" : 'null');
+	$aryQuery[] = "  ," . ($aryOrder["strrevisecode"] ? "'" . $aryOrder["strrevisecode"] . "'" : 'null');
+	$aryQuery[] = "  ," . ($aryOrder["strproductname"] ? "'" . $aryOrder["strproductname"] . "'" : 'null');
+	$aryQuery[] = "  ," . ($aryOrder["strproductenglishname"] ? "'" . $aryOrder["strproductenglishname"] . "'" : 'null');
+	$aryQuery[] = "  ," . ($aryOrder["dtmexpirationdate"] ? "'" . $aryOrder["dtmexpirationdate"] . "'" : 'null');
+	$aryQuery[] = "  ," . ($aryOrder["lngmonetaryunitcode"] ? $aryOrder["lngmonetaryunitcode"] : 'null');
+	$aryQuery[] = "  ," . ($aryOrder["strmonetaryunitname"] ? "'" . $aryOrder["strmonetaryunitname"] . "'" : 'null');
+	$aryQuery[] = "  ," . ($aryOrder["strmonetaryunitsign"] ? "'" . $aryOrder["strmonetaryunitsign"] . "'" : 'null');
+	$aryQuery[] = "  ," . ($aryOrder["lngmonetaryratecode"] ? $aryOrder["lngmonetaryratecode"] : 'null');
+	$aryQuery[] = "  ," . ($aryOrder["strmonetaryratename"] ? "'" . $aryOrder["strmonetaryratename"] . "'" : 'null');
+	$aryQuery[] = "  ," . ($aryOrder["lngpayconditioncode"] ? $aryOrder["lngpayconditioncode"] : 'null');
+	$aryQuery[] = "  ," . ($aryOrder["strpayconditionname"] ? "'" . $aryOrder["strpayconditionname"] . "'" : 'null');
+	$aryQuery[] = "  ," . ($aryOrder["lnggroupcode"] ? $aryOrder["lnggroupcode"] : 'null');
+	$aryQuery[] = "  ," . ($aryOrder["strgroupname"] ? "'" . $aryOrder["strgroupname"] . "'" : 'null');
+	$aryQuery[] = "  ," . ($aryOrder["txtsignaturefilename"] ? "'" . $aryOrder["txtsignaturefilename"] . "'" : 'null');
+	$aryQuery[] = "  ," . ($aryOrder["lngusercode"] ? $aryOrder["lngusercode"] : 'null');
+	$aryQuery[] = "  ," . ($aryOrder["strusername"] ? "'" . $aryOrder["strusername"] . "'" : 'null');
+	$aryQuery[] = "  ," . ($aryOrder["lngdeliveryplacecode"] ? $aryOrder["lngdeliveryplacecode"] : 'null');
+	$aryQuery[] = "  ," . ($aryOrder["strdeliveryplacename"] ? "'" . $aryOrder["strdeliveryplacename"] . "'" : 'null');
+	$aryQuery[] = "  ," . ($aryOrder["curtotalprice"] ? $aryOrder["curtotalprice"] : 'null');
+	$aryQuery[] = "  ," . "NOW()";
+	$aryQuery[] = "  ," . $aryOrder["lnginsertusercode"];
+	$aryQuery[] = "  ," . ($aryOrder["strinsertusername"] ? "'" . $aryOrder["strinsertusername"] . "'" : 'null');
+	$aryQuery[] = "  ," . ($aryOrder["strnote"] ? "'" . $aryOrder["strnote"] . "'" : 'null');
+	$aryQuery[] = "  ," . ($aryOrder["lngprintcount"] ? $aryOrder["lngprintcount"] : 'null');
 	$aryQuery[] = ")";
 
 	$strQuery = "";
@@ -1456,8 +1457,8 @@ function fncCancelOrderHtml($aryOrder){
  * 
  */
 function fncCancelPurchaseOrderHtml($aryOrder, $aryDetail){
-	for($i = 0; $i < count($aryDetail); $i++) {
-		$strUrl = "/list/result/po/listoutput.php?strReportKeyCode=" . $aryDetail[$i]["lngpurchaseorderno"] . "&strSessionID=" . $strSessionID;
+//	for($i = 0; $i < count($aryDetail); $i++) {
+		$strUrl = "/list/result/po/listoutput.php?strReportKeyCode=" . $aryDetail["lngpurchaseorderno"] . "&strSessionID=" . $strSessionID;
 		$aryHtml[] = "<table class=\"ordercode\">";
 		$aryHtml[] = "  <tr>";
 		$aryHtml[] = "    <td class=\"ordercodetd\">" . sprintf("%s_%02d", $aryOrder["strordercode"], $aryOrder["lngrevisionno"]) . "</td>";
@@ -1476,7 +1477,7 @@ function fncCancelPurchaseOrderHtml($aryOrder, $aryDetail){
 		$aryHtml[] = "    <th class=\"SegColumn\">»Ø√ÌNO.</th>";
 		$aryHtml[] = "    <td class=\"Segs\">" . sprintf("%s_%02d", $aryOrder["strordercode"], $aryOrder["lngrevisionno"]) . "</td>";
 		$aryHtml[] = "    <th class=\"SegColumn\">ª≈∆˛…Ù… </th>";
-		$aryHtml[] = "    <td class=\"Segs\">" . sprintf("[%s] %s", $aryDetail[$i]["lngstockitemcode"], $aryDetail[$i]["strstockitemname"]) . "</td>";
+		$aryHtml[] = "    <td class=\"Segs\">" . sprintf("[%s] %s", $aryDetail["lngstockitemcode"], $aryDetail["strstockitemname"]) . "</td>";
 		$aryHtml[] = "  </tr>";
 		$aryHtml[] = "  <tr>";
 		$aryHtml[] = "    <th class=\"SegColumn\">¿Ω… Ãæ</th>";
@@ -1494,23 +1495,23 @@ function fncCancelPurchaseOrderHtml($aryOrder, $aryDetail){
 		$aryHtml[] = "  </th>";
 		$aryHtml[] = "  <tr>";
 		$aryHtml[] = "    <th class=\"SegColumn\">«º¥¸</th>";
-		$aryHtml[] = "    <td class=\"Segs\">" . $aryDetail[$i]["dtmdeliverydate"] . "</td>";
+		$aryHtml[] = "    <td class=\"Segs\">" . $aryDetail["dtmdeliverydate"] . "</td>";
 		$aryHtml[] = "    <th class=\"SegColumn\">√±≤¡</th>";
-		$aryHtml[] = "    <td class=\"Segs\">" . sprintf("%s %.4f", $aryOrder["strmonetaryunitsign"], $aryDetail[$i]["curproductprice"]) . "</td>";
+		$aryHtml[] = "    <td class=\"Segs\">" . sprintf("%s %.4f", $aryOrder["strmonetaryunitsign"], $aryDetail["curproductprice"]) . "</td>";
 		$aryHtml[] = "  </tr>";
 		$aryHtml[] = "  <tr>";
 		$aryHtml[] = "    <th class=\"SegColumn\">øÙŒÃ</th>";
-		$aryHtml[] = "    <td class=\"Segs\">" . $aryDetail[$i]["lngproductquantity"] . "</td>";
+		$aryHtml[] = "    <td class=\"Segs\">" . $aryDetail["lngproductquantity"] . "</td>";
 		$aryHtml[] = "    <th class=\"SegColumn\">¿«»¥≤¡≥ </th>";
-		$aryHtml[] = "    <td class=\"Segs\">" . sprintf("%s %.2f", $aryOrder["strmonetaryunitsign"], $aryDetail[$i]["cursubtotalprice"]) . "</td>";
+		$aryHtml[] = "    <td class=\"Segs\">" . sprintf("%s %.2f", $aryOrder["strmonetaryunitsign"], $aryDetail["cursubtotalprice"]) . "</td>";
 		$aryHtml[] = "  </tr>";
 		$aryHtml[] = "  <tr>";
 		$aryHtml[] = "    <th class=\"SegColumn\">Ã¿∫Ÿ»˜πÕ</th>";
-		$aryHtml[] = "    <td colspan=\"3\" class=\"Segs\">" . $aryDetail[$i]["strnote"] . "</td>";
+		$aryHtml[] = "    <td colspan=\"3\" class=\"Segs\">" . $aryDetail["strnote"] . "</td>";
 		$aryHtml[] = "  </tr>";
 		$aryHtml[] = "</table>";
 		$aryHtml[] = "<br>";
-	}
+//	}
 
     $strHtml = "";
     $strHtml = implode("\n", $aryHtml);
