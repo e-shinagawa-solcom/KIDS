@@ -80,8 +80,8 @@
                     var decide_body = '<tr id="' + detail_id + '" rownum="' + rowNum + '" onclick="rowSelect(this);">'
                         + '<td style="width: 100px;">' + row.strreceivecode + '</td>'
                         + '<td style="width: 50px;">' + row.lngreceivedetailno + '</td>'
-                        + '<td style="width: 100px;"><input type="text" class="form-control form-control-sm txt-kids" style="width:90px;" value="' + row.strcustomerreceivecode + '"></td>'
-                        + '<td style="width: 250px;">[' + convertNull(row.strproductcode) + '] ' + convertNull(row.strproductname.substring(1, 28)) + '</td>'
+                        + '<td style="width: 100px;"><input type="text" class="form-control form-control-sm txt-kids" style="width:90px;" value="' + convertNull(row.strcustomerreceivecode) + '"></td>'
+                        + '<td style="width: 250px;">[' + convertNull(row.strproductcode) + '] ' + convertNull(row.strproductname) + '</td>'
                         + '<td style="width: 100px;">' + convertNull(row.strgoodscode) + '</td>'
                         + '<td style="width: 70px;">' + convertNull(row.dtmdeliverydate) + '</td>'
                         + '<td style="width: 70px;">[' + convertNull(row.lngsalesclasscode) + '] ' + convertNull(row.strsalesclassname) + '</td>'
@@ -90,13 +90,15 @@
                         + '<td style="width: 70px;">' + lngunitquantity + '</td>'
                         + '<td style="width: 100px;text-align: center;"><img class="button" src="/img/type01/so/product_off_ja_bt.gif" onclick="showProductInfo(this)" lngproductno="' + row.lngproductno + '" lngrevisionno="' + row.lngproductrevisionno + '"></td>'
                         + '<td style="width: 70px;">' + lngproductquantity + '</td>'
-                        + '<td style="width: 100px;">' + money_format(row.lngmonetaryunitcode, row.strmonetaryunitsign, row.cursubtotalprice) + '</td>'
+                        + '<td style="width: 150px;">' + money_format(row.lngmonetaryunitcode, row.strmonetaryunitsign, row.cursubtotalprice) + '</td>'
                         + '<td style="width: 250px;"><input type="text" class="form-control form-control-sm txt-kids" style="width:240px;" value="' + convertNull(row.strdetailnote) + '"></td>'
                         + '<td style="display:none">[' + convertNull(row.strcompanydisplaycode) + '] ' + convertNull(row.strcompanydisplayname) + '</td>'
                         + '<td style="display:none">' + row.lngreceiveno + '</td>'
                         + '<td style="display:none">' + row.lngrevisionno + '</td>'
                         + '<td style="display:none">' + convertNullToZero(row.lngcartonquantity) + '</td>'
                         + '<td style="display:none">' + convertNullToZero(row.lngproductquantity) + '</td>'
+                        + '<td style="display:none">' + row.lngproductrevisionno + '</td>'
+                        + '<td style="display:none">' + row.strproductcode + '</td>'
                         + '</tr>';
                     $("#table_decide_body").append(decide_body);
                 }
@@ -276,7 +278,8 @@
         resetRowid();
     });
 
-    $('img.regist').on('click', function () {
+    // 確定登録イベント
+    $('img.decideRegist').on('click', function () {
 
         var params = new Array();
         var len = 0;
@@ -322,6 +325,8 @@
                 "strCompanyDisplayCode": $(this).find('td:nth-child(15)').text(),
                 "lngReceiveNo": $(this).find('td:nth-child(16)').text(),
                 "lngRevisionNo": $(this).find('td:nth-child(17)').text(),
+                "lngRevisionNo_product": $(this).find('td:nth-child(20)').text(),
+                "strProductCode_product": $(this).find('td:nth-child(21)').text(),
                 "lngProductUnitCode": lngProductUnitCode
             };
         });
@@ -448,7 +453,7 @@ function money_format(lngmonetaryunitcode, strmonetaryunitsign, price) {
     if (lngmonetaryunitcode == 1) {
         return '\xA5' + " " + price;
     } else {
-        return $strmonetaryunitsign + " " + $price;
+        return strmonetaryunitsign + " " + price;
     }
 }
 /*

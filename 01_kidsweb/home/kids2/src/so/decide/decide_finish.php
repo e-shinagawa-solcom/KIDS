@@ -14,6 +14,7 @@
 
 include 'conf.inc';
 require LIB_FILE;
+require SRC_ROOT . "so/cmn/lib_so.php";
 include 'JSON.php';
 
 //////////////////////////////////////////////////////////////////////////
@@ -39,6 +40,11 @@ if (!fncCheckAuthority(DEF_FUNCTION_SO2, $objAuth)) {
 // 404 受注管理（確定）
 if (!fncCheckAuthority(DEF_FUNCTION_SO4, $objAuth)) {
     fncOutputError(9060, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
+}
+
+// 排他制御チェック
+if (fncCheckExclusiveControl(DEF_FUNCTION_E3, $aryData["detailData"][0]["strProductCode_product"], $aryData["detailData"][0]["lngRevisionNo_product"], $objDB)) {
+    fncOutputError(9213, DEF_ERROR, "", true, "../so/decide/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
 }
 
 $objDB->transactionBegin();

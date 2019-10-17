@@ -2,19 +2,19 @@
 
 // ----------------------------------------------------------------------------
 /**
-*       受注管理  確定登録確認
-*
-*       処理概要
-*         ・登録した確定情報を確定確認画面に表示する処理
-*
-*       更新履歴
-*
-*/
+ *       受注管理  確定登録確認
+ *
+ *       処理概要
+ *         ・登録した確定情報を確定確認画面に表示する処理
+ *
+ *       更新履歴
+ *
+ */
 // ----------------------------------------------------------------------------
-
 
 include 'conf.inc';
 require LIB_FILE;
+require SRC_ROOT . "so/cmn/lib_so.php";
 include 'JSON.php';
 
 //////////////////////////////////////////////////////////////////////////
@@ -32,19 +32,21 @@ if ($aryData == null) {
 }
 
 // セッション確認
-$objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
+$objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 // 権限確認
 // 402 受注管理（受注検索）
-if ( !fncCheckAuthority( DEF_FUNCTION_SO2, $objAuth ) )
-{
-	fncOutputError ( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
+if (!fncCheckAuthority(DEF_FUNCTION_SO2, $objAuth)) {
+    fncOutputError(9060, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
 // 404 受注管理（確定）
-if ( !fncCheckAuthority( DEF_FUNCTION_SO4, $objAuth ) )
-{
-	fncOutputError ( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
+if (!fncCheckAuthority(DEF_FUNCTION_SO4, $objAuth)) {
+    fncOutputError(9060, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
 
+// 排他制御チェック
+if (fncCheckExclusiveControl(DEF_FUNCTION_E3, $aryData["detailData"][0]["strProductCode_product"], $aryData["detailData"][0]["lngRevisionNo_product"], $objDB)) {
+    fncOutputError(9213, DEF_ERROR, "", true, "../so/decide/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
+}
 
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate("/so/decide/so_confirm_decide.html");
@@ -104,7 +106,7 @@ foreach ($aryData["detailData"] as $data) {
     // 売上区分
     $td = $doc->createElement("td", $data["lngSalesClassCode"]);
     $trBody->appendChild($td);
-    
+
     // 単価
     $td = $doc->createElement("td", $data["curProductPrice"]);
     $trBody->appendChild($td);
@@ -143,6 +145,16 @@ foreach ($aryData["detailData"] as $data) {
     $td->setAttribute("style", "display:none");
     $trBody->appendChild($td);
 
+    // 製品リビジョン番号
+    $td = $doc->createElement("td", $data["lngRevisionNo_product"]);
+    $td->setAttribute("style", "display:none");
+    $trBody->appendChild($td);
+
+    // 製品コード
+    $td = $doc->createElement("td", $data["strProductCode_product"]);
+    $td->setAttribute("style", "display:none");
+    $trBody->appendChild($td);
+
     $trBody->appendChild($td);
     // tbody > tr
     $tbodyDetail->appendChild($trBody);
@@ -153,6 +165,3 @@ $objDB->close();
 
 // HTML出力
 echo $doc->saveHTML();
-
-
-?>

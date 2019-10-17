@@ -22,7 +22,9 @@
                 "strDetailNote": $(this).find('td:nth-child(15)').text(),
                 "lngReceiveNo": $(this).find('td:nth-child(16)').text(),
                 "lngRevisionNo": $(this).find('td:nth-child(17)').text(),
-                "lngProductUnitCode": $(this).find('td:nth-child(18)').text()
+                "lngProductUnitCode": $(this).find('td:nth-child(18)').text(),
+                "lngRevisionNo_product": $(this).find('td:nth-child(19)').text(),
+                "strProductCode_product": $(this).find('td:nth-child(20)').text()
             };
             
             len += 1;
