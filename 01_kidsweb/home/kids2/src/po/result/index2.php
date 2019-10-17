@@ -33,6 +33,8 @@ require (SRC_ROOT . "list/cmn/lib_lo.php");
 require (SRC_ROOT . "po/cmn/lib_pos1.php");
 require (SRC_ROOT . "po/cmn/column.php");
 
+require (LIB_DEBUGFILE);
+
 // DB接続
 $objDB   = new clsDB();
 $objAuth = new clsAuth();
@@ -59,6 +61,7 @@ if ( !isset($aryData["lngOrderNo"]) )
 // 文字列チェック
 $aryCheck["strSessionID"] = "null:numenglish(32,32)";
 $aryCheck["lngOrderNo"]	  = "null:number(0,10)";
+$aryCheck["lngRevisionNo"]	  = "null:number(0,10)";
 // $aryResult = fncAllCheck( $aryData, $aryCheck );
 // fncPutStringCheckError( $aryResult, $objDB );
 
@@ -84,10 +87,11 @@ if ( !fncCheckAuthority( DEF_FUNCTION_PO4, $objAuth ) )
 //詳細画面の表示
 
 $lngOrderNo = $aryData["lngOrderNo"];
+$lngRevisionNo = $aryData["lngRevisionNo"];
 
 // 指定発注番号の発注データ取得用SQL文の作成
 //$strQuery = fncGetPurchaseHeadNoToInfoSQL ( $lngOrderNo );
-$aryResult = fncGetPurchaseHeadNoToInfo ( $lngOrderNo, $objDB );
+$aryResult = fncGetPurchaseHeadNoToInfo ( $lngOrderNo, $lngRevisionNo, $objDB );
 
 // 詳細データの取得
 // list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
@@ -133,7 +137,7 @@ $aryDetailColumnNames = fncSetPurchaseTabelName ( $aryTableViewDetail, $aryTytle
 
 // 指定発注番号の発注明細データ取得用SQL文の作成
 // $strQuery = fncGetPurchaseDetailNoToInfoSQL ( $lngOrderNo );
-$aryDetailResult[] = fncGetPurchaseDetailNoToInfo ( $lngOrderNo, $objDB );
+$aryDetailResult[] = fncGetPurchaseDetailNoToInfo ( $lngOrderNo, $lngRevisionNo, $objDB );
 
 // 明細データの取得
 // list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );

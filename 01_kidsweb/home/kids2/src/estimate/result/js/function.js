@@ -84,6 +84,7 @@ $(function() {
 
 		// form¤Îºï½ü
 		formData.remove();
+
 	});
 
 	$('button[class*="btnDelete"]').on('click', function() {
@@ -120,8 +121,6 @@ $(function() {
 			name: 'revisionNo',
 			value: value
 		}));
-
-
 		
 		var windowResult = open('about:blank', windowName, 'scrollbars=yes, width=985, height=700, resizable=0 location=0');
 
@@ -133,6 +132,20 @@ $(function() {
 
 		// form¤Îºï½ü
 		formData.remove();
+	});
+
+	$('.sortColumns').on('click', function() {
+		var sortKey = $(this).attr('data-value');
+		var form = $('#displayColumns');
+
+		var baseUrl = "/estimate/result/index.php"
+		var sessionID = $('input[name="strSessionID"]').val();
+
+		var actionUrl = baseUrl + '?strSessionID=' + sessionID + '&strSort=' + sortKey;
+
+		form.attr('action', actionUrl);
+
+		form.submit();	
 	});
 
 });

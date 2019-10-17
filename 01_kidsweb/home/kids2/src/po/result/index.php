@@ -192,7 +192,7 @@
 	
 	// 検索条件に一致する発注コードを取得するSQL文の作成
 	$strQuery = fncGetSearchPurchaseSQL( $aryViewColumn, $arySearchColumn, $aryData, $objDB, "", 0, FALSE );
-//	fncDebug("kids2.log", $strQuery, __FILE__, __LINE__, "w" );
+//	fncDebug("kids2.log", $strQuery, __FILE__, __LINE__, "a" );
 	// 値をとる =====================================
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 //	fncDebug("kids2.log", "found " . $lngResultNum . " records", __FILE__, __LINE__, "a" );
@@ -225,12 +225,12 @@
 		}
 
 		// 指定数以内であれば通常処理
-//	    fncDebug("kids2.log", "passed" , __FILE__, __LINE__, "a" );
+	    fncDebug("kids2.log", "passed" , __FILE__, __LINE__, "a" );
 		for ( $i = 0; $i < $lngResultNum; $i++ )
 		{
 			$aryResult[] = $objDB->fetchArray( $lngResultID, $i );
 		}
-//	    fncDebug("kids2.log", "passed" , __FILE__, __LINE__, "a" );
+	    fncDebug("kids2.log", "passed" , __FILE__, __LINE__, "a" );
 	}
 	else
 	{

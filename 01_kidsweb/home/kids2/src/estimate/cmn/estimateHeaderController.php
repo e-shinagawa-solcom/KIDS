@@ -45,6 +45,8 @@ class estimateHeaderController {
 
     protected $cellAddressList; // セル名称に対応したセル位置のリスト
 
+    protected $reviseFlag; // 再販フラグ
+
     protected function __construct($objDB) {
         $this->objDB = $objDB;
         $this->setNameList();
@@ -62,6 +64,10 @@ class estimateHeaderController {
         if (!self::$titleNameList) {
             self::$titleNameList = workSheetConst::WORK_SHEET_HEADER_TITLE_CELL;
         }
+    }
+
+    public function outputReviseFlag() {
+        return $this->reviseFlag;
     }
 
     // マスターセット関数
@@ -252,7 +258,10 @@ class estimateHeaderController {
                     // マスターチェックエラー
                     $this->messageCode['productCode'] = DEF_MESSAGE_CODE_PRODUCT_CODE_ERROR;
                 }
+                $this->reviseFlag = true;
             }
+        } else {
+            $this->reviseFlag = false;
         }
         return true;
     }

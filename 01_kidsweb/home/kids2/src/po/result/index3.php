@@ -85,9 +85,8 @@ if($_POST){
 		$lngorderno = intval(explode("_", $aryOrderNo[$i])[0]);
 		$lngrevisionno = intval(explode("_", $aryOrderNo[$i])[1]);
 	
-		// 確定取消対象となった発注明細に基づく発注書明細を取得
+		// 確定取消対象となった発注明細に基づく発注書明細全件を取得
 		$aryPurchaseOrderDetail = fncGetDeletePurchaseOrderDetail($lngorderno, $lngrevisionno, $objDB);
-	
 		$objDB->transactionBegin();
 		// 確定取り消しとなった発注明細に基づく発注マスタの発注ステータスを「仮発注」へ戻す
 		if(!fncCancelOrder($lngorderno, $lngrevisionno, $objDB)){ return false; }
@@ -99,32 +98,35 @@ if($_POST){
 		// 表示用ソートキーの昇順に取得した結果を基に、以下の仕様で新規の発注書明細を新規に登録する
 		$aryInsertPurchaseOrderDetail = [];
 		$aryDetailNo = array_column($aryOrderDetail, "lngorderdetailno");
-		for($j = 0; $j < count($aryPurchaseOrderDetail); $j++){
-			if(!in_array($aryOrderDetail[$j]["lngorderdetailno"], $aryDetailNo, true)){
-				$aryInsertPurchaseOrderDetail[$j]["lngpurchaseorderno"] = $aryPurchaseOrderDetail[$j]["lngpurchaseorderno"];
-				$aryInsertPurchaseOrderDetail[$j]["lngpurchaseorderdetailno"] = $aryPurchaseOrderDetail[$j]["lngpurchaseorderdetailno"];
-				$aryInsertPurchaseOrderDetail[$j]["lngrevisionno"] = intval($aryPurchaseOrderDetail[$j]["lngrevisionno"]) + 1;
-				$aryInsertPurchaseOrderDetail[$j]["lngorderno"] = $aryPurchaseOrderDetail[$j]["lngorderno"];
-				$aryInsertPurchaseOrderDetail[$j]["lngorderdetailno"] = $aryPurchaseOrderDetail[$j]["lngorderdetailno"];
-				$aryInsertPurchaseOrderDetail[$j]["lngorderrevisionno"] = $aryPurchaseOrderDetail[$j]["lngorderrevisionno"];
-				$aryInsertPurchaseOrderDetail[$j]["lngstocksubjectcode"] = $aryPurchaseOrderDetail[$j]["lngstocksubjectcode"];
-				$aryInsertPurchaseOrderDetail[$j]["lngstockitemcode"] = $aryPurchaseOrderDetail[$j]["lngstockitemcode"];
-				$aryInsertPurchaseOrderDetail[$j]["strstockitemname"] = $aryPurchaseOrderDetail[$j]["strstockitemname"];
-				$aryInsertPurchaseOrderDetail[$j]["lngdeliverymethodcode"] = $aryPurchaseOrderDetail[$j]["lngdeliverymethodcode"];
-				$aryInsertPurchaseOrderDetail[$j]["strdeliverymethodname"] = $aryPurchaseOrderDetail[$j]["strdeliverymethodname"];
-				$aryInsertPurchaseOrderDetail[$j]["curproductprice"] = $aryPurchaseOrderDetail[$j]["curproductprice"];
-				$aryInsertPurchaseOrderDetail[$j]["lngproductquantity"] = $aryPurchaseOrderDetail[$j]["lngproductquantity"];
-				$aryInsertPurchaseOrderDetail[$j]["lngproductunitcode"] = $aryPurchaseOrderDetail[$j]["lngproductunitcode"];
-				$aryInsertPurchaseOrderDetail[$j]["strproductunitname"] = $aryPurchaseOrderDetail[$j]["strproductunitname"];
-				$aryInsertPurchaseOrderDetail[$j]["cursubtotalprice"] = $aryPurchaseOrderDetail[$j]["cursubtotalprice"];
-				$aryInsertPurchaseOrderDetail[$j]["dtmdeliverydate"] = $aryPurchaseOrderDetail[$j]["dtmdeliverydate"];
-				$aryInsertPurchaseOrderDetail[$j]["strnote"] = $aryPurchaseOrderDetail[$j]["strnote"];
-				$aryInsertPurchaseOrderDetail[$j]["lngsortkey"] = $j + 1;
+		if( is_array($aryPurchaseOrderDetail) )
+		{
+			for($j = 0; $j < count($aryPurchaseOrderDetail); $j++){
+				if($aryPurchaseOrderDetail[$j]["lngorderdetailno"] != $aryDetailNo[0]){
+					$aryInsertPurchaseOrderDetail[$j]["lngpurchaseorderno"] = $aryPurchaseOrderDetail[$j]["lngpurchaseorderno"];
+					$aryInsertPurchaseOrderDetail[$j]["lngpurchaseorderdetailno"] = $j + 1;
+					$aryInsertPurchaseOrderDetail[$j]["lngrevisionno"] = intval($aryPurchaseOrderDetail[$j]["lngrevisionno"]) + 1;
+					$aryInsertPurchaseOrderDetail[$j]["lngorderno"] = $aryPurchaseOrderDetail[$j]["lngorderno"];
+					$aryInsertPurchaseOrderDetail[$j]["lngorderdetailno"] = $aryPurchaseOrderDetail[$j]["lngorderdetailno"];
+					$aryInsertPurchaseOrderDetail[$j]["lngorderrevisionno"] = $aryPurchaseOrderDetail[$j]["lngorderrevisionno"];
+					$aryInsertPurchaseOrderDetail[$j]["lngstocksubjectcode"] = $aryPurchaseOrderDetail[$j]["lngstocksubjectcode"];
+					$aryInsertPurchaseOrderDetail[$j]["lngstockitemcode"] = $aryPurchaseOrderDetail[$j]["lngstockitemcode"];
+					$aryInsertPurchaseOrderDetail[$j]["strstockitemname"] = $aryPurchaseOrderDetail[$j]["strstockitemname"];
+					$aryInsertPurchaseOrderDetail[$j]["lngdeliverymethodcode"] = $aryPurchaseOrderDetail[$j]["lngdeliverymethodcode"];
+					$aryInsertPurchaseOrderDetail[$j]["strdeliverymethodname"] = $aryPurchaseOrderDetail[$j]["strdeliverymethodname"];
+					$aryInsertPurchaseOrderDetail[$j]["curproductprice"] = $aryPurchaseOrderDetail[$j]["curproductprice"];
+					$aryInsertPurchaseOrderDetail[$j]["lngproductquantity"] = $aryPurchaseOrderDetail[$j]["lngproductquantity"];
+					$aryInsertPurchaseOrderDetail[$j]["lngproductunitcode"] = $aryPurchaseOrderDetail[$j]["lngproductunitcode"];
+					$aryInsertPurchaseOrderDetail[$j]["strproductunitname"] = $aryPurchaseOrderDetail[$j]["strproductunitname"];
+					$aryInsertPurchaseOrderDetail[$j]["cursubtotalprice"] = $aryPurchaseOrderDetail[$j]["cursubtotalprice"];
+					$aryInsertPurchaseOrderDetail[$j]["dtmdeliverydate"] = $aryPurchaseOrderDetail[$j]["dtmdeliverydate"];
+					$aryInsertPurchaseOrderDetail[$j]["strnote"] = $aryPurchaseOrderDetail[$j]["strnote"];
+					$aryInsertPurchaseOrderDetail[$j]["lngsortkey"] = $j + 1;
+				}
 			}
 		}
 	
-		if($aryInsertPurchaseOrderDetail){
-			// 発注書明細を新規に登録する
+		if(count($aryInsertPurchaseOrderDetail) > 0){
+			// 残明細がある場合は、発注書明細を新規に登録する
 			foreach($aryInsertPurchaseOrderDetail as $row){
 				if(!fncInsertPurchaseOrderDetail($row, $objDB)) { return false; }
 			}
@@ -135,13 +137,59 @@ if($_POST){
 			$aryOrder["lngprintcount"] = 0;
 			if(!fncInsertPurchaseOrder($aryOrder, $objDB)) { return false; }
 		}
+		else
+		{
+//echo "----";
+//echo $aryPurchaseOrderDetail["lngpurchaseorderno"];
+//echo "----";
+			// 残明細がない場合は発注書マスタも削除する。
+			$aryOrder["lngpurchaseorderno"] = $aryPurchaseOrderDetail["lngpurchaseorderno"];
+			$aryOrder["lngrevisionno"] = -1;
+			$aryOrder["lngcustomercode"] = null;
+			$aryOrder["strcustomername"] = null;
+			$aryOrder["strcustomercompanyaddreess"] = null;
+			$aryOrder["strcustomercompanytel"] = null;
+			$aryOrder["strcustomercompanyfax"] = null;
+			$aryOrder["strproductname"] = null;
+			$aryOrder["strproductenglishname"] = null;
+			$aryOrder["dtmexpirationdate"] = null;
+			$aryOrder["lngmonetaryunitcode"] = null;
+			$aryOrder["strmonetaryunitname"] = null;
+			$aryOrder["strmonetaryunitsign"] = null;
+			$aryOrder["lngmonetaryratecode"] = null;
+			$aryOrder["strmonetaryratename"] = null;
+			$aryOrder["lngpayconditioncode"] = null;
+			$aryOrder["strpayconditionname"] = null;
+			$aryOrder["lnggroupcode"] = null;
+			$aryOrder["strgroupname"] = null;
+			$aryOrder["txtsignaturefilename"] = null;
+			$aryOrder["lngusercode"] = null;
+			$aryOrder["strusername"] = null;
+			$aryOrder["lngdeliveryplacecode"] = null;
+			$aryOrder["strdeliveryplacename"] = null;
+			$aryOrder["curtotalprice"] = null;
+			$aryOrder["lnginsertusercode"] = $lngInputUserCode;
+			$aryOrder["strinsertusername"] = null;
+			$aryOrder["strnote"] = null;
+			$aryOrder["lngprintcount"] = null;
+
+			if(!fncInsertPurchaseOrder($aryOrder, $objDB)) { return false; }
+			
+		}
 	
 		// $objDB->transactionRollback();
 		$objDB->transactionCommit();
 
-		if($aryInsertPurchaseOrderDetail){
+		if(count($aryInsertPurchaseOrderDetail) > 0){
 			$aryHtml[] = "<p class=\"caption\">発注確定取消に伴い、以下の発注書を修正しました。</p>";
 			$aryHtml[] = fncCancelPurchaseOrderHtml($aryOrder, $aryInsertPurchaseOrderDetail);
+		}
+		else
+		{
+			// 残明細がない場合
+			$aryHtml[] = "<p class=\"caption\">発注確定取消に伴い、以下の発注書を削除しました</p>";
+			$aryHtml[] = fncCancelPurchaseOrderHtml($aryOrder, $aryInsertPurchaseOrderDetail);
+			
 		}
 	}
 

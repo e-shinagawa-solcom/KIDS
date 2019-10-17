@@ -9,6 +9,9 @@ class workSheetConst {
     private function __construct() {
 
     }
+
+    // Excel(xlsx)アプリケーションタイプ
+    const APP_EXCEL_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
     
     // ワークシートセル名称 -------------------------------------------------------------------------------------------
 

@@ -93,6 +93,7 @@
 		$aryUpdate["strnote"] = mb_convert_encoding($_POST["strNote"], "EUC-JP", "auto");
 		$aryUpdate["lngorderstatuscode"]   = 2;
 		for($i = 0; $i < count($_POST["aryDetail"]); $i++){
+			$aryUpdateDetail[$i]["lngpurchaseorderdetailno"] = $i + 1;
 			$aryUpdateDetail[$i]["lngorderdetailno"]       = $_POST["aryDetail"][$i]["lngOrderDetailNo"];
 			$aryUpdateDetail[$i]["lngsortkey"]             = $_POST["aryDetail"][$i]["lngSortKey"];
 			$aryUpdateDetail[$i]["lngdeliverymethodcode"]  = $_POST["aryDetail"][$i]["lngDeliveryMethodCode"];
@@ -118,9 +119,6 @@
 		// 発注書マスタ更新
 		//if(!fncUpdatePurchaseOrder($aryUpdate, $aryUpdateDetail, $objAuth, $objDB)){ return false; }
 		$aryResult = fncInsertPurchaseOrder($aryUpdate, $aryUpdateDetail, $objAuth, $objDB);
-		//echo implode(",", $aryResult);
-		// TODO:あとでコミットに変更する
-		// $objDB->transactionRollback();
 		$objDB->transactionCommit();
 
 		// 更新後発注書データ取得
@@ -459,7 +457,6 @@
 	$aryData["strMode"] = "update";				// モード（次の動作）check→renew
 	$aryData["strActionUrl"] = "index2.php";		// formのaction
 	
-	//echo "value :".$aryData["lngWorkflowOrderCode"]."<br>";
 	$dtmNowDate = date( 'Y/m/d', time());
 	$aryData["dtmOrderAppDate"] = $dtmNowDate;
 	

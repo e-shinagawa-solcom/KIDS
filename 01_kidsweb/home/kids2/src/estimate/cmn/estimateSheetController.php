@@ -105,7 +105,7 @@ class estimateSheetController {
         $checkResult　= '';	// チェック結果
 
         // 拡張子による判定
-        if(!empty($file['exc_type']) || strtolower($file['exc_type']) == APP_EXCEL_TYPE ) {
+        if(!empty($file['exc_type']) || strtolower($file['exc_type']) == workSheetConst::APP_EXCEL_TYPE ) {
             // 拡張子がxlsxならファイルを開いて確認する
             $excel_file	= FILE_UPLOAD_TMPDIR . $file["exc_tmp_name"];
             $finfo  = finfo_open(FILEINFO_MIME_TYPE);
@@ -113,7 +113,7 @@ class estimateSheetController {
             finfo_close($finfo);
 
             // MIME_TYPEによる判定
-            if (!empty($mime_type) && $mime_type == APP_EXCEL_TYPE) {
+            if (!empty($mime_type) && $mime_type == workSheetConst::APP_EXCEL_TYPE) {
                 if (!empty($file['exc_name'])) {
                     $error = false;
                 }

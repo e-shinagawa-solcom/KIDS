@@ -14,13 +14,12 @@
 
 
 // 設定読み込み
-include_once('conf.inc');
-require_once( LIB_DEBUGFILE );
-require_once(SRC_ROOT.'/mold/lib/UtilSearchForm.class.php');
+include_once ('conf.inc');
+require_once ( LIB_DEBUGFILE );
+require_once (SRC_ROOT.'/mold/lib/UtilSearchForm.class.php');
 
 // ライブラリ読み込み
 require_once (LIB_FILE);
-require_once (SRC_ROOT . "estimate/cmn/lib_e.php");
 require_once (SRC_ROOT. "estimate/cmn/makeHTML.php");
 
 // DB接続
@@ -142,7 +141,7 @@ $selectQuery =
 		'[' || mg.strgroupdisplaycode || ']' || mg.strgroupdisplayname AS lnginchargegroupcode,
 		'[' || mu1.struserdisplaycode || ']' || mu1.struserdisplayname AS lnginchargeusercode,
 		'[' || mu2.struserdisplaycode || ']' || mu2.struserdisplayname AS lngdevelopusercode,
-		TO_CHAR(mp.dtmdeliverylimitdate, 'YYYY/MM/DD') AS dtmdeliverylimitdate,
+		-- TO_CHAR(mp.dtmdeliverylimitdate, 'YYYY/MM/DD') AS dtmdeliverylimitdate,
 		mp.curretailprice,
 		mp.lngcartonquantity,
 		mp.lngproductionquantity,
@@ -232,10 +231,18 @@ $selectQuery =
 			lngestimateno,
 			MAX(lngrevisionno) AS lngrevisionno
 		FROM m_estimate
-		GROUP BY lngestimateno
-		HAVING MIN(lngrevisionno) >= 0
+		GROUP BY lngestimateno";
+
+// // 管理者モードでない場合
+// if () {
+	$selectQuery .=
+	    " HAVING MIN(lngrevisionno) >= 0";
+
+// }
 		
-	) maxrev
+$selectQuery .=
+
+	") maxrev
 
 		ON maxrev.lngestimateno = me.lngestimateno
 		AND maxrev.lngrevisionno = me.lngrevisionno";
@@ -253,14 +260,14 @@ $selectQuery =
 			// 入力日
 			case 'dtmInsertDate':
 				if ($condition['from']) {
-					$fromCondition = "me.dtminsertdate >= ". $condition['from'];                                 
+					$fromCondition = "me.dtminsertdate >= TO_TIMESTAMP('".$condition['from']." 00:00:00', 'YYYY/MM/DD HH24:MI:SS')";                                 
 				}
 				if ($condition['to']) {
-					$toCondition = "me.dtminsertdate <= ". $condition['to'];
+					$toCondition = "me.dtminsertdate <= TO_TIMESTAMP('".$condition['to']." 23:59:59', 'YYYY/MM/DD HH24:MI:SS')";
 				}
 				break;
 
-			// 製品コード
+			// 製品コードs
 			case 'strProductCode':
 				if ($condition['from']) {
 					$fromCondition = "mp.strproductcode >= '". $condition['from']. "'";                                 
@@ -290,15 +297,15 @@ $selectQuery =
 				$search = "mp.strdevelopuserdisplaycode = ". $condition;
 				break;
 			
-			// 納期
-			case 'dtmDeliveryLimitDate';
-				if ($condition['from']) {
-					$fromCondition = "mp.dtmdeliverylimitdate >= ". $condition['from'];                                 
-				}
-				if ($condition['to']) {
-					$toCondition = "mp.dtmdeliverylimitdate <= ". $condition['to'];
-				}
-				break;
+			// // 納期
+			// case 'dtmDeliveryLimitDate';
+			// 	if ($condition['from']) {
+			// 		$fromCondition = "mp.dtmdeliverylimitdate >= TO_DATE('".$condition['from']."', 'YYYY/MM/DD')";                                 
+			// 	}
+			// 	if ($condition['to']) {
+			// 		$toCondition = "mp.dtmdeliverylimitdate <= TO_DATE('".$condition['to']."', 'YYYY/MM/DD')";
+			// 	}
+			// 	break;
 			
 			default:
 				break;
@@ -363,9 +370,6 @@ $selectQuery =
 		exit;
 	}
 
-// // 共通受け渡しURL生成(セッションID、ページ、各検索条件)
-// $strURL = fncGetURL( $aryData );
-
 //////////////////////////////////////////////////////////////////////////
 // 結果取得、出力処理
 //////////////////////////////////////////////////////////////////////////
@@ -385,7 +389,7 @@ foreach ($displayColumns as $column) {
 		$header .= "<th nowrap>" . $title . "</th>";
 	} else {
 		++$sort;
-		$header .= "<th id=\"Columns\" nowrap onmouseover=\"SortOn( this );\" onmouseout=\"SortOff( this );\" onclick=\"location.href='index.php?". $strURL. "&strSort=column_". $sort. "_ASC';\"><a href=\"#\">" . $title . "</a></th>";
+		$header .= "<th class=\"sortColumns\" nowrap onmouseover=\"SortOn( this );\" onmouseout=\"SortOff( this );\" data-value=\"column_". $sort. "_ASC\"><a href=\"#\">" . $title . "</a></th>";
 	}
 	++$columns;
 }
