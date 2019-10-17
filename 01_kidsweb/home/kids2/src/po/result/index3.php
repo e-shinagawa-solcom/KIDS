@@ -228,7 +228,7 @@ if($_POST){
 		{
 			// 残明細がない場合
 			$aryHtml[] = "<p class=\"caption\">以下の発注の確定取消に伴い、該当の発注書を削除しました</p>";
-			$aryHtml[] = fncCancelPurchaseOrderHtml($aryOrder, $aryCancelOrderDetail);
+			$aryHtml[] = fncCancelPurchaseOrderHtml($aryOrder, $aryCancelOrderDetail, true);
 			
 		}
 	}
