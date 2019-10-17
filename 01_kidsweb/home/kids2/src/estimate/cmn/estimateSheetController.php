@@ -16,6 +16,7 @@ use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+use PhpOffice\PhpSpreadsheet\Cell\DataValidation;
 
 
 /**
@@ -158,6 +159,7 @@ class estimateSheetController {
         $endRow = $sheetInfo['endRow'];
         $startColumn = $sheetInfo['startColumn'];
         $endColumn = $sheetInfo['endColumn'];
+        $nameList = $sheetInfo['nameList'];
 
         $this->sheet = $sheet;
         $this->displayInvalid = $displayInvalid;
@@ -166,6 +168,7 @@ class estimateSheetController {
         $this->endRow = $endRow;
         $this->startColumn = $startColumn;
         $this->endColumn = $endColumn;
+        $this->nameList = $nameList;
 
         return true;
     }
@@ -195,6 +198,7 @@ class estimateSheetController {
                     $namedRange = null;
                     // シート内にセル名称が設定されているか検索する
                     $namedRange = $spreadSheet->getNamedRange($val, $sheet);
+
                     if ($namedRange && $namedRange->getWorkSheet()->getTitle() === $sheetName) {
                         // 取得した結果内のシート名と検索時に指定したシート名が一致した場合のみセル名称に対するセル位置の配列を生成する
                         // 対象シートで定義できなかった場合、ブックに設定されたデータを取得しないようするための対策
@@ -238,7 +242,8 @@ class estimateSheetController {
                 'startRow' => $startRow,             // 開始行
                 'endRow' => $endRow,                 // 終了行
                 'startColumn' => $startColumn,       // 開始列
-                'endColumn' => $endColumn            // 終了列
+                'endColumn' => $endColumn,           // 終了列
+                'nameList' => $nameList              // 検索に使用したセル名称のリスト
             );
         }        
         return $sheetInfo;
@@ -820,79 +825,6 @@ class estimateSheetController {
     }
 
     /**
-     * セル名称に対応するセル位置を取得する
-     *
-     * @param array $spreadSheet ブックのphpSpreadSheetオブジェクト
-     * @param array $sheet シート情報(シートのphpSpreadSheetオブジェクトを子要素にもつ配列)
-     *
-     * @return array $data シート情報（無効なシートを削除）
-     */
-    function getCellAddressForCellName($spreadSheet, $sheet, $nameList, $rowCheckNameList) {
-        $cellAddressList = array();
-        $cellAddressListRowAndColumn = array();
-        if (!is_array($sheet)) {
-            // 引数がシートオブジェクトの場合は配列にセットする
-            $sheetList[0] = $sheet;
-        } else {
-            $sheetList = $sheet;
-        }
-        foreach($sheetList as $key => $value) {
-            $showDataDeleteFlug = null;
-            $draftCellAddressList = array();
-            $draftCellAddressListRowAndColumn = array();
-            foreach($nameList as $val) {
-                $namedRange = null;
-                // シート内にセル名称が設定されているか検索する
-                $namedRange = $spreadSheet->getNamedRange($val, $value);
-                if ($namedRange && $namedRange->getWorkSheet()->getTitle() === $value->getTitle()) {
-                    // 取得した結果内のシート名と検索時に指定したシート名が一致した場合のみセル名称に対するセル位置の配列を生成する
-                    // 対象シートで定義できなかった場合、ブックに設定されたデータを取得しないようするための対策
-                    $draftCellAddress = $namedRange->getRange();
-                    $draftCellAddressList[$val] = $draftCellAddress;
-                    $draftCellAddressListRowAndColumn[$val] = $this->separateRowAndColumn($draftCellAddress); //行と列に分割したセル位置リスト
-                } else {
-                    // シート内で見つからないセル名称があった場合は処理を中断し、データ削除フラグを立てる
-                    $showDataDeleteFlug = 1;
-                    break;
-                }
-            }
-            if ($draftCellAddressListRowAndColumn) {
-                $startRow = intval($draftCellAddressListRowAndColumn['top_left']['row']);
-                $endRow = intval($draftCellAddressListRowAndColumn['bottom_left']['row']);
-                $startColumn = $this->getIndexForColumnAlphabet($draftCellAddressListRowAndColumn['top_left']['column']);
-                $endColumn = $this->getIndexForColumnAlphabet($draftCellAddressListRowAndColumn['top_right']['column']);
-                $rowValue = $endRow - $startRow + 1;
-                if ($endRow - $startRow === 16) {
-                // 列数が指定数でない場合は削除フラグを立てる
-                    $showDataDeleteFlug = 1;
-                } else {
-                    // 各入力フォームのヘッダーが同じ行に無いときは、データ削除フラグを立てる
-                    foreach($rowCheckNameList as $array) {
-                        if (!$this->rowCheck($draftCellAddressListRowAndColumn, $array)) {
-                            $showDataDeleteFlug = 1;
-                            break;
-                        }
-                    }
-                }
-            }
-            if ($showDataDeleteFlug !== 1) {
-                // データ削除フラグが1でない時、シート及びセル名称に対応したセルリストを配列にセットする
-                $data[$key] = array(
-                    'sheet' => $sheetList[$key],
-                    'cellAddress' => $draftCellAddressList,
-                    'area' => array(
-                        'startRow' => $startRow,
-                        'endRow' => $endRow,
-                        'startColumn' => $startColumn,
-                        'endColumn' => $endColumn,
-                    )                
-                );
-            }
-        }
-        return $data;
-    }
-
-    /**
      * 指定のセル名称が同じ行に存在するかチェックする
      *
      * @param array $cellAddressList セル名称と紐付くセル位置のリスト
@@ -940,8 +872,8 @@ class estimateSheetController {
             // マージセルの開始行列と終了行列
             $startRow = intval($address['start']['row']);
             $endRow = intval($address['end']['row']);
-            $startColumn = $this->getIndexForColumnAlphabet($address['start']['column']);
-            $endColumn = $this->getIndexForColumnAlphabet($address['end']['column']);
+            $startColumn = self::getIndexForColumnAlphabet($address['start']['column']);
+            $endColumn = self::getIndexForColumnAlphabet($address['end']['column']);
             // マージされたセルが指定の範囲外にあるときはリストに追加しない
             if ($startRow < $areaStartRow
                 || $endRow > $areaEndRow
@@ -1525,12 +1457,11 @@ class estimateSheetController {
     * @return string  列番号（アルファベット)
     */
     public function setDBEstimateData($productData, $estimateData) {
-        // $this->setMonetaryRate(); // 通貨レートのセット
         $this->inputHeaderData($productData); // 製品情報のセット（ヘッダ部）
         $this->inputStandardRate(); // 標準割合のセット
         $this->insertDeficiencyRow($estimateData); // 見積原価セット時に不足する行を挿入する
         $this->inputEstimateDetailData($estimateData); // 見積原価明細のセット
-        // $this->inputDropdownList();
+        $this->inputDropdownList();
     }
 
     // ヘッダ部に値をセットする
@@ -1719,96 +1650,17 @@ class estimateSheetController {
 
     // ドロップダウンリストをワークシートオブジェクト内のセルに入力する
     protected function inputDropdownList() {
-        // ドロップダウンリストの取得
+        // ドロップダウンリストの元データをDBより取得する
         $this->setDropdownList();
 
-        // ドロップダウンリストの切り分けを行う
-        $dropdownDSCI = $this->dropdownDSCI;
-        $dropdownCompany = $this->dropdownCompany;
-        $dropdownGU = $this->dropdownGU;
+        // ドロップダウンリストの生成
 
-        $cellAdrresList = $this->cellAddressList;
+        $this->inputInchargeDropdownList(); // 営業部署、担当
 
-        $divSubDropdownCellList = workSheetConst::DIVISION_SUBJECT_DROPDOWN_CELL_NAME;
-        $clsItmDropdownCellList = workSheetConst::CLASS_ITEM_DROPDOWN_CELL_NAME;
-        
-        foreach ($dropdownDSCI as $dropdownList) {
-            $areaCode = $dropdownList->areacode;
-        
-            // ドロップダウンリストをエリア区分、売上分類ごとに整理
-            $newList[$areaCode][$dropdownList->divisionsubject][] = $dropdownList->classitem;
-        }
+        $this->inputDevelopDropdownList(); // 開発担当者
 
-        $areaNameList = workSheetConst::TARGET_AREA_NAME;
+        $this->inputDetailDropdownList(); // 明細行(売上分類 or 仕入科目、売上区分 or 仕入部品、顧客先 or 仕入先)
 
-        foreach($areaNameList as $areaCode => $areaName) {
-            $divSubCellName = $divSubDropdownCellList[$areaCode];
-            $divSubCellAddress = $cellAdrresList[$divSubCellName];
-            $divSubSeparate = $this->separateRowAndColumn($divSubCellAddress);
-            $divSubHeaderRow = $divSubSeparate['row'];
-            $divSubCol = $divSubSeparate['col'];
-
-            $clsItmCellName = $clsItmDropdownCellList[$areaCode];
-            $clsItmCellAddress = $cellAdrresList[$clsItmCellName];
-            $clsItmseparate = $this->separateRowAndColumn($clsItmCellAddress);
-            $clsItmHeaderRow = $divSubSeparate['row'];
-            $clsItmCol = $divSubSeparate['col'];
-
-            $divSubRow = $divSubHeaderRow;
-            $clsItmRow = $clsItmHeaderRow;
-
-            $beforeDivSub = '';
-
-            foreach ($newList[$areaCode] as $divSub => $clsItm) {
-                if ($beforeDivSub === '') { // 最初の代入処理
-                    $beforeDivSub = $divSub;
-
-                    ++$divSubRow;
-                    $inputDivSubCell = $divSubCol.$divSubRow;
-                    $this->sheet->getCell($inputDivSubCell)->setValue($divSub);
-
-                    ++$clsItmRow;
-                    $inputClsItmCell = $clsItmCol.$clsItmRow;
-                    $this->sheet->getCell($inputClsItmCell)->setValue($clsItm);
-
-                } else if ($beforeDivSub === $divSub) { // 2回目以降で以前の売上分類(又は仕入科目)と一致する場合
-                    ++$clsItmRow;
-                    $inputClsItmCell = $clsItmCol.$clsItmRow;
-                    $this->sheet->getCell($inputClsItmCell)->setValue($clsItm);
-
-                } else { // 2回目以降で以前の売上分類(又は仕入科目)と一致しない場合
-                    $beforeDivSub = $divSub;
-                    ++$divSubRow;
-                    $inputDivSubCell = $divSubCol.$divSubRow;
-                    $this->sheet->getCell($inputDivSubCell)->setValue($divSub);
-
-                    ++$clsItmRow;
-                    ++$clsItmRow; // 1行スペースを空ける
-                    $inputClsItmCell = $clsItmCol.$clsItmRow;
-                    $this->sheet->getCell($inputClsItmCell)->setValue($clsItm);
-                }
-                
-            }
-        }
-
-
-
-
-
-
-        // foreach ($newList as $divSub => $clsItmList) {
-        //     ++$divSubRow;
-        //     $inputDivSubCell = $divSubCol.$divSubRow;
-        //     $this->sheet->getCell($cell)->setValue($divSub);
-        //     foreach ($clsItmList as $classItem) {
-        //         ++$clsItmRow;
-        //         $inputClsItmCell = $clsItmCol.$clsItmRow;
-
-        //         // ダウンロード用　保留                    
-        //     }
-        // }
-
-        var_dump($newList);
     }
 
     // ドロップダウンリストをオブジェクトにセットする
@@ -1817,10 +1669,13 @@ class estimateSheetController {
             $this->setDropdownForDivSubAndClsItm();
         }
         if (!$this->dropdownCompany) {
-            $this->setDropdownForDivSubAndClsItm();
+            $this->setDropdownForCompany();
         }
         if (!$this->dropdownGU) {
             $this->setDropdownForGroupAndUser();
+        }
+        if (!$this->dropdownDevUser) {
+            $this->setDropdownForDevelopUser();
         }
         return;
     }
@@ -1840,10 +1695,327 @@ class estimateSheetController {
         return;
     }
 
+    protected function setDropdownForDevelopUser() {
+        $this->dropdownDevUser = $this->objDB->getDropdownForDevelopUser();
+        return;
+    }
+
+    // 営業部署及び担当のドロップダウンリストをブックにセットする
+    protected function inputInchargeDropdownList() {
+
+        $dropdownGU = $this->dropdownGU;
+
+        // ユーザーを部署ごとに切り分ける
+        foreach ($dropdownGU as $list) {
+            $groupCode = $list->groupcode;
+            $newInchargeList[$groupCode][] = $list->usercode;
+        }
+
+        $cellAddressList = $this->cellAddressList;
+
+        // ドロップダウンのリストを書き込むセルの情報取得
+        $inchargeGroupListCellName = workSheetConst::INCHARGE_GROUP_DROPDOWN; // ドロップダウンリストをセットするためのセル名称(営業部署)
+        $IGLCellAddress = $cellAddressList[$inchargeGroupListCellName];
+        $IGLSeparate = self::separateRowAndColumn($IGLCellAddress);
+        $IGLHeaderRow = $IGLSeparate['row'];
+        $IGLCol = $IGLSeparate['column'];
+
+        $inchargeUserListCellName = workSheetConst::INCHARGE_USER_DROPDOWN; // ドロップダウンリストをセットするためのセル名称(担当)
+        $IULCellAddress = $cellAddressList[$inchargeUserListCellName];
+        $IULSeparate = self::separateRowAndColumn($IULCellAddress);
+        $IULHeaderRow = $IULSeparate['row'];
+        $IULCol = $IULSeparate['column'];
+        
+        $IGLRow = $IGLHeaderRow + 1;
+        $IULRow = $IULHeaderRow + 1;
+
+        // 売上分類 or 仕入科目のドロップダウンリストの最初のセル
+        $startIGLCell = '$'. $IGLCol. '$'. $IGLRow;
+
+        // ドロップダウンリストを生成し、ブックにセットする
+        foreach ($newInchargeList as $groupCode => $userCodeList) {
+            ++$IGLRow;
+            $inputIGLCell = $IGLCol.$IGLRow;
+            $this->sheet->getCell($inputIGLCell)->setValue($groupCode);
+
+            $fixedIGL = '$'. $IGLCol. '$'. $IGLRow;
+
+            $inchargeDropdownList[$fixedIGL]['start'] = '$'. $IULCol. '$'. $IULRow;
+
+            foreach ($userCodeList as $userCode) {
+                ++$IULRow;
+                $inputIULCell = $IULCol.$IULRow;
+                $this->sheet->getCell($inputIULCell)->setValue($userCode);
+            }
+
+            $inchargeDropdownList[$fixedIGL]['end'] = '$'. $IULCol. '$'. $IULRow;
+
+            ++$IULRow;
+        }
+
+        $blankCell = '$'. $IULCol. '$'. $IULRow;  // ブランクセルの設定
+        
+        $endIGLCell = '$'. $IGLCol. '$'. $IGLRow;  // 営業部署のドロップダウンリストの最後のセル
+
+        $IGLFomula = '='. $startIGLCell. ':'. $endIGLCell; // 営業部署に代入する式
+
+        // 担当に代入する式を生成する
+        $IULFomula = '=';
+        $branch = 0;
+
+        $inchargeGroupCell = $cellAddressList[workSheetConst::INCHARGE_GROUP_CODE]; // 営業部署のセル
+
+        foreach ($inchargeDropdownList as $fixedIGL => $userCodeCells) {
+            $start = $userCodeCells['start'];
+            $end = $userCodeCells['end'];
+            $range = $start. ':'. $end;
+            $IULFomula .= 'IF('. $inchargeGroupCell.'='. $fixedIGL. ','. $range. ',';
+            ++$branch;
+        }
+
+        $IULFomula .= $blankCell; // すべての条件に合致しなかった場合はブランクセルのみのドロップダウンを表示
+        $IULFomula .= str_repeat(')', $branch); // 条件分岐の数だけ閉じ括弧を追加
+
+        $inchargeUserCell = $cellAddressList[workSheetConst::INCHARGE_USER_CODE]; // 担当のセル
+
+        // 入力規則の設定(ドロップダウン生成)
+        $this->setDataValidationForCell($inchargeGroupCell, $IGLFomula); // 営業部署
+        $this->setDataValidationForCell($inchargeUserCell, $IULFomula);  // 担当
+
+        return;
+    }
+
+    // 開発担当者のドロップダウンリストをブックにセットする
+    protected function inputDevelopDropdownList() {
+        $dropdownDevUser = $this->dropdownDevUser;
+
+        $cellAddressList = $this->cellAddressList;
+
+        // ドロップダウンのリストを書き込むセルの情報取得
+        $developUserListCellName = workSheetConst::DEVELOP_USER_DROPDOWN; // ドロップダウンリストをセットするためのセル名称(開発担当)
+        $DULCellAddress = $cellAddressList[$developUserListCellName];
+        $DULSeparate = self::separateRowAndColumn($DULCellAddress);
+        $DULHeaderRow = $DULSeparate['row'];
+        $DULCol = $DULSeparate['column'];
+
+        $DULRow = $DULHeaderRow + 1;
+
+
+        $startDULCell = '$'. $DULCol. '$'. $DULRow;  // ドロップダウンリストの最初のセル
+
+        foreach ($dropdownDevUser as $data) {
+            ++$DULRow;
+            $inputDULCell = $DULCol.$DULRow;
+            $this->sheet->getCell($inputDULCell)->setValue($data->usercode);
+        }
+
+        $endDULCell = '$'. $DULCol. '$'. $DULRow;  // ドロップダウンリストの最後のセル
+
+        $fomula = $startDULCell. ':'. $endDULCell;
+
+        $developUserCell = $cellAddressList[workSheetConst::DEVELOP_USER_CODE]; // 担当のセル
+
+        // 入力規則の設定(ドロップダウン生成)
+        $this->setDataValidationForCell($developUserCell, $fomula);
+
+        return;
+    }
+
+    // 明細行にセットするドロップダウンリストを生成し、ブックにセットする
+    protected function inputDetailDropdownList() {
+
+        // ドロップダウンリストの切り分けを行う
+        $dropdownDSCI = $this->dropdownDSCI;
+        $dropdownCompany = $this->dropdownCompany;
+    
+        $cellAddressList = $this->cellAddressList;
+
+        $divSubDropdownCellList = workSheetConst::DIVISION_SUBJECT_DROPDOWN_CELL_NAME;
+        $clsItmDropdownCellList = workSheetConst::CLASS_ITEM_DROPDOWN_CELL_NAME;
+        
+
+        // 会社を顧客先と仕入先に分類する
+        foreach ($dropdownCompany as $list) {
+            $companyAttribute = $list->lngattributecode;
+            $newCompanyList[$companyAttribute][] = $list->customercompany;
+        }
+
+        // 売上分類(or仕入科目)、売上区分(or仕入部品)についてリレーションを維持して切り分ける
+        foreach ($dropdownDSCI as $list) {
+            $areaCode = $list->areacode;
+        
+            // ドロップダウンリストをエリア区分、売上分類ごとに整理
+            $newList[$areaCode][$list->divisionsubject][] = $list->classitem;
+        }
+        
+        // 明細にセットするドロップダウンリスト
+        // 顧客先または仕入先
+        foreach ($newCompanyList as $attribute => $companyList) {
+            if ($attribute === DEF_ATTRIBUTE_CLIENT) {
+                $cellName = workSheetConst::CLIENT_DROPDOWN; // ドロップダウンリストをセットするためのセル名称
+            } else if ($attribute === DEF_ATTRIBUTE_SUPPLIER) {
+                $cellName = workSheetConst::SUPPLIER_DROPDOWN; // ドロップダウンリストをセットするためのセル名称
+            }
+
+            $cellAddress = $cellAddressList[$cellName];
+            $separate = self::separateRowAndColumn($cellAddress);
+            $headerRow = $separate['row'];
+            $col = $separate['column'];
+
+            $row = $headerRow + 1;
+
+            $startCompanyCellList[$attribute] = '$'. $col. '$'. $row;
+
+            foreach ($companyList as $company) {
+                ++$row;
+                $inputCell = $col.$row;
+                $this->sheet->getCell($inputCell)->setValue($company);
+            }
+
+            $endCompanyCellList[$attribute] = '$'. $col. '$'. $row;
+        }
+
+        // エリア区分の取得
+        $areaNameList = workSheetConst::TARGET_AREA_NAME;
+
+        // 売上分類（仕入科目）、売上区分（仕入部品）
+        foreach($areaNameList as $areaCode => $areaName) {
+            $divSubCellName = $divSubDropdownCellList[$areaCode]; // ドロップダウンリストをセットするためのセル名称
+            $divSubCellAddress = $cellAddressList[$divSubCellName];
+            $divSubSeparate = self::separateRowAndColumn($divSubCellAddress);
+            $divSubHeaderRow = $divSubSeparate['row'];
+            $divSubCol = $divSubSeparate['column'];
+
+            $clsItmCellName = $clsItmDropdownCellList[$areaCode]; // ドロップダウンリストをセットするためのセル名称
+            $clsItmCellAddress = $cellAddressList[$clsItmCellName];
+            $clsItmseparate = self::separateRowAndColumn($clsItmCellAddress);
+            $clsItmHeaderRow = $clsItmseparate['row'];
+            $clsItmCol = $clsItmseparate['column'];
+
+            $divSubRow = $divSubHeaderRow + 1;
+            $clsItmRow = $clsItmHeaderRow + 1;
+
+            // 売上分類 or 仕入科目のドロップダウンリストの最初のセル
+            $startDivSubCell = '$'. $divSubCol. '$'. $divSubRow;
+
+            foreach ($newList[$areaCode] as $divSub => $clsItmList) {
+                ++$divSubRow;
+                $inputDivSubCell = $divSubCol.$divSubRow;
+                $this->sheet->getCell($inputDivSubCell)->setValue($divSub);
+
+                $fixedDivSub = '$'. $divSubCol. '$'. $divSubRow;
+
+                $dropDownList[$fixedDivSub]['start'] = '$'. $clsItmCol. '$'. $clsItmRow;
+
+                foreach ($clsItmList as $clsItm) {
+                    ++$clsItmRow;
+                    $inputClsItmCell = $clsItmCol.$clsItmRow;
+                    $this->sheet->getCell($inputClsItmCell)->setValue($clsItm);
+                }
+
+                $dropDownList[$fixedDivSub]['end'] = '$'. $clsItmCol. '$'. $clsItmRow;
+
+                ++$clsItmRow;
+            }
+
+            // ブランクセルの設定
+            $blankCell = '$'. $clsItmCol. '$'. $clsItmRow;
+
+            // 売上分類 or 仕入科目のドロップダウンリストの最後のセル
+            $endDivSubCell = '$'. $divSubCol. '$'. $divSubRow;
+
+            $divSubFomula = '='.$startDivSubCell. ':'. $endDivSubCell; // 売上分類 or 仕入科目に代入する式
+
+
+            // 売上区分 or 仕入科目に代入する式を生成する
+            $clsItmFomula = '=';
+            $branch = 0;
+            $pattern = '_%CELL%_';
+
+            foreach ($dropDownList as $divSubCell => $clsItmCells) {
+                $start = $clsItmCells['start'];
+                $end = $clsItmCells['end'];
+                $range = $start. ':'. $end;
+                $clsItmFomula .= 'IF('. $pattern.'='. $divSubCell. ','. $range. ',';
+                ++$branch;
+            }
+
+            $clsItmFomula .= $blankCell;
+            $clsItmFomula .= str_repeat(')', $branch);
+
+            $orderAttribute = workSheetConst::ORDER_ATTRIBUTE_FOR_TARGET_AREA;
+
+
+            // 顧客先または仕入先の参照セルを取得
+            if ($orderAttribute[DEF_ATTRIBUTE_CLIENT][$areaCode] === true) {
+                $startCompanyCell = $startCompanyCellList[DEF_ATTRIBUTE_CLIENT];
+                $endCompanyCell = $endCompanyCellList[DEF_ATTRIBUTE_CLIENT];
+            } else if ($orderAttribute[DEF_ATTRIBUTE_SUPPLIER][$areaCode] === true) {
+                $startCompanyCell = $startCompanyCellList[DEF_ATTRIBUTE_SUPPLIER];
+                $endCompanyCell = $endCompanyCellList[DEF_ATTRIBUTE_SUPPLIER];
+            } else {
+                $startCompanyCell = null;
+                $endCompanyCell = null;
+            }
+
+            if ($startCompanyCell && $endCompanyCell) {
+                $companyFomula = $startCompanyCell. ':'. $endCompanyCell;
+            } else {
+                $companyFomula = null;
+            }
+
+            // セル名称に対応する列番号を取得する
+            $columnNumber = $this->getColumnNumberList($areaCode);
+
+            $targetAreaRows = $this->targetAreaRows;
+
+            $firstRow = $targetAreaRows[$areaCode]['firstRow'];
+            $lastRow = $targetAreaRows[$areaCode]['lastRow'];
+
+            $detailDivSubCol = $columnNumber['divisionSubject'];  // 売上分類 or 仕入科目の列番号
+            $detailClsItmCol = $columnNumber['classItem'];        // 売上区分 or 仕入部品の列番号
+            $detailCompanyCol = $columnNumber['customerCompany']; // 顧客先 or 仕入先の列番号
+
+            // 明細行に入力規則を適用
+            for ($row = $firstRow; $row <= $lastRow; ++$row) {
+                $detailDivSubCell = $detailDivSubCol. $row;
+                $detailClsItmCell = $detailClsItmCol. $row;
+                $detailCompanyCell = $detailCompanyCol. $row;
+
+                $this->setDataValidationForCell($detailDivSubCell, $divSubFomula);  // 売上分類 or 仕入科目
+
+                $inputClsItmFomula = str_replace($pattern, $detailDivSubCell, $clsItmFomula);
+
+                $this->setDataValidationForCell($detailClsItmCell, $inputClsItmFomula);  // 売上区分 or 仕入部品
+
+                if ($companyFomula) {
+                    $this->setDataValidationForCell($detailCompanyCell, $companyFomula);  // 顧客先 or 仕入先
+                }
+            }
+        }
+
+        return;
+    }
+
+    // データの入力規則を式で指定し、セルにドロップダウンを設定する
+    protected function setDataValidationForCell($cell, $fomula) {
+        // 対象セルの入力規則を取得
+        $validation = $this->sheet->getCell($cell)->getDataValidation();
+
+        // パラメータのセット
+        $validation->setType(DataValidation::TYPE_LIST);
+        $validation->setAllowBlank(true);
+        $validation->setShowDropDown(true);
+        $validation->setFormula1($fomula);
+
+        return;
+    }
+    
 
 
     // 各項目の列番号を取得する
     protected function getColumnNumberList($areaCode) {
+        
         $cellNameList = workSheetConst::getCellNameOfTargetArea($areaCode);
         $headerNameList = $cellNameList['headerList'];
         $cellAddressList = $this->cellAddressList;
@@ -1856,121 +2028,6 @@ class estimateSheetController {
             }
         }
         return $columnNumber;
-    }
-
-    // 取得した通貨レートをワークシートにセットする
-    public function setMonetaryRate() {
-        if (!$this->objDB) {
-            return false;
-        }
-
-        $sheet = $this->sheet;
-
-        $cellAddressList = $this->cellAddressList;
-        $monetaryHeaderCell = $cellAddressList[WorkSheetConst::MONETARY_RATE_LIST]; 
-     
-        $monetaryRateMaster = $this->objDB->getTemporaryRateList();
-
-        $firstRowMove = 2; // 最初は2行下に挿入
-        // 通貨レートをワークシートにセットする
-        foreach ($monetaryRateMaster as $monetaryUnitCode => $monetaryData) {
-            foreach ($monetaryData as $item => $value) {
-                if (!$rowMove) {
-                    $rowMove = $firstRowMove;
-                } else {
-                    ++$rowMove;
-                }
-                $monetaryRateCode = $value['monetaryRateCode'];
-                $rate = $value['conversionRate'];
-                $startDate = $value['startDate'];
-                $endDate = $value['endDate'];
-
-                // 配列順に列に代入する
-                $setArray = array(
-                    $monetaryRateCode,
-                    $monetaryUnitCode,
-                    $rate,
-                    $startDate,
-                    $endDate
-                );
-
-                foreach ($setArray as $index => $setValue) {
-                    $cell = self::getMoveCell($monetaryHeaderCell, $rowMove, $index);
-                    // 要調査（条件分岐必須かも）
-                    // if ($index === 3 || $index === 4 ) {
-                    //     $date = new DateTime($setValue);
-                    //     $setValue = Date::dateTimeToExcel($date);
-                    // }
-                    $sheet->getCell($cell)->setValue($setValue);
-                }
-            }
-        }
-
-        $colCount = count($setArray);
-
-        // 絶対参照置換用配列
-        $patterns = '/([A-z]+|[0-9]+)/';  // 検索正規表現
-        $replace = '$$1';                 // 置換正規表現
-
-        // 通貨レート取得範囲のセット
-        for ($colIndex = 0; $colIndex < $colCount; ++$colIndex) {
-            $rangeStart = self::getMoveCell($monetaryHeaderCell, $firstRowMove -1, $colIndex);
-            $rangeEnd = self::getMoveCell($monetaryHeaderCell, $rowMove, $colIndex);
-            $rangeStart = preg_replace($patterns, $replace, $rangeStart);
-            $rangeEnd = preg_replace($patterns, $replace, $rangeEnd);
-            $range[$colIndex] = $rangeStart. ':'. $rangeEnd;
-        }
-
-        $targetAreaRows = $this->targetAreaRows;
-        foreach($targetAreaRows as $areaCode => $rows) {
-            // 対象エリアの開始行と終了行取得
-            $firstRow = $rows['firstRow'];
-            $lastRow = $rows['lastRow'];
-
-            // 対象エリアのセル名称リストを取得
-            $nameList = workSheetConst::getCellNameOfTargetArea($areaCode);
-
-            // 適用レートの列を抽出
-            $rateHeaderName = $nameList['headerList']['conversionRate'];
-            $rateHeaderCell = $cellAddressList[$rateHeaderName];
-            $separate = self::separateRowAndColumn($rateHeaderCell);
-            $rateCol = $separate['column']; // 適用レートの列番号(アルファベット)
-
-            for ($row = $firstRow; $row <= $lastRow; ++$row) {
-                $cell = $rateCol. $row;
-                $inputParam = $sheet->getCell($cell)->getValue();
-                // sumifs()のカッコ内を抽出
-                preg_match('/(?<=sumifs\()[^\)]+(?=\))/i', $inputParam, $match);
-                // ,(カンマ）で区切られた条件を取得する
-                $conditions = explode(',', $match[0]);
-
-                // $conditions内訳(詳細はエクセルの式参照のこと)
-                // $totalRange = $conditions[0];        // 合計範囲
-                // $rateCodeRange = $conditions[1];     // 通貨レートコード検索範囲
-                // $rateCodeValue = $conditions[2];     // 通貨レートコード検索条件
-                // $unitCodeRange = $conditions[3];     // 通貨単位コード検索範囲
-                // $unitCodeValue = $conditions[4];     // 通貨単位コード検索条件
-                // $startDateRange = $conditions[5];    // 適用開始日検索範囲
-                // $startDateValue = $conditions[6];    // 適用開始日検索条件
-                // $endDateRange = $conditions[7];      // 適用終了日検索範囲
-                // $endDateValue = $conditions[8];      // 適用終了日検索条件
-
-                $sumifsParam = $range[2];
-                $sumifsParam .= ','.$range[0];
-                $sumifsParam .= ','.$conditions[2];
-                $sumifsParam .= ','.$range[1];
-                $sumifsParam .= ','.$conditions[4];
-                $sumifsParam .= ','.$range[3];
-                $sumifsParam .= ','.$conditions[6];
-                $sumifsParam .= ','.$range[4];
-                $sumifsParam .= ','.$conditions[8];
-
-                $newFomula = str_replace($match, $sumifsParam, $inputParam);
-                $sheet->getCell($cell)->setValue($newFomula);
-            }
-        }
-        
-        return true;
     }
 
     // セルを右寄せにする
@@ -2132,7 +2189,7 @@ class estimateSheetController {
     protected function resettingCellAddressList() {
 
         $spreadSheet = $this->sheet->getParent();
-        $nameList = workSheetConst::getAllNameList();
+        $nameList = $this->nameList;
 
         foreach ($nameList as $cellName) {
             $cellAddress = $spreadSheet->getNamedRange($cellName, $this->sheet)->getRange();
