@@ -853,7 +853,7 @@ function fncGetSearchPurcheseOrderSQL( $aryViewColumn, $arySearchColumn, $arySea
 
 		// 入力者
 		if($strViewColumnName == "lngInputUserCode"){
-			$arySelectQuery[] = "  ,mp.lnginsertusercode AS lngInsertUserCode";
+			$arySelectQuery[] = "  ,input_user.struserdisplaycode AS lngInsertUserCode";
 			$arySelectQuery[] = "  ,mp.strinsertusername AS strInsertUserName";
 		}
 
@@ -876,19 +876,19 @@ function fncGetSearchPurcheseOrderSQL( $aryViewColumn, $arySearchColumn, $arySea
 
 		// 営業部署
 		if($strViewColumnName == "lngInChargeGroupCode"){
-			$arySelectQuery[] = "  ,mp.lnggroupcode AS lngGroupCode";
+			$arySelectQuery[] = "  ,mg.strgroupdisplaycode AS lngGroupCode";
 			$arySelectQuery[] = "  ,mp.strgroupname as strGroupName";
 		}
 
 		// 開発担当者
 		if($strViewColumnName == "lngInChargeUserCode"){
-			$arySelectQuery[] = "  ,mp.lngusercode as lngUserCode";
+			$arySelectQuery[] = "  ,mu.struserdisplaycode as lngUserCode";
 			$arySelectQuery[] = "  ,mp.strusername as strUserName";
 		}
 
 		// 仕入先
 		if($strViewColumnName == "lngCustomerCode"){
-			$arySelectQuery[] = "  ,mp.lngcustomercode as lngCustomerCode";
+			$arySelectQuery[] = "  ,mc_stock.strcompanydisplaycode as lngCustomerCode";
 			$arySelectQuery[] = "  ,mp.strcustomername as strCustomerName";
 		}
 
