@@ -108,8 +108,8 @@
 		// --------------------------------
 		//jQueryのajaxでPOSTすると文字コードが UTF-8 になって
 		//データ登録時にエラーになるため、DB処理前にEUC-JPに変換する
-		$aryHeader = fncConvertArrayHeaderToEucjp($aryHeader);
-		$aryDetail = fncConvertArrayDetailToEucjp($aryDetail);
+//		$aryHeader = fncConvertArrayHeaderToEucjp($aryHeader);
+//		$aryDetail = fncConvertArrayDetailToEucjp($aryDetail);
 
 		// --------------------------
 		//  プレビュー生成

@@ -694,7 +694,9 @@ jQuery(function($){
         var aryDetailDeliveryMonthly = [];
         $("#EditTableBody tr").each(function(){
             // 明細の納期を取得
-            var detailDeliveryDate = $(this).children('td.detailDeliveryDate').text();
+            var arr = $(this).children('td.detailDeliveryDate').text().split('/');
+            var detailDeliveryDate = new Date(arr[0], arr[1] -1, arr[2] );
+            
             // 納期の月度
             var detailDeliveryMonthly = getMonthlyBasedOnClosedDay(detailDeliveryDate, closedDay);
             // 配列に追加
@@ -706,7 +708,7 @@ jQuery(function($){
             return (element.getTime() != deliveryMonthly.getTime());
         });
 
-        return !indifferentDetailExists;
+        return indifferentDetailExists;
     }
 
     // 出力明細エリアの各明細の売上区分の統一性をチェック。チェックOKならtrue、NGならfalse
@@ -724,7 +726,7 @@ jQuery(function($){
 
         // １．全行の売上区分マスタの明細統一フラグがfalse -> OKとしてチェック終了。そうでないなら２．へ
         var allDetailUnifiedFlgIsFalse = aryDetailUnifiedFlg.every(function(element){ 
-            return (element == false);
+            return (element.toUpperCase() == 'F');
         });
         if (allDetailUnifiedFlgIsFalse){
             return true;
@@ -732,7 +734,7 @@ jQuery(function($){
         
         // ２．売上区分マスタの明細統一フラグがtrueである明細の件数 != 出力明細一覧エリアの明細行数 を満たすなら NGとしてチェック終了。そうでないなら３．へ
         var aryDetailUnifiedFlgIsTrue = aryDetailUnifiedFlg.filter(function(element){
-            return (element == true);
+            return (element.toUpperCase() == 'T');
         });
         if (aryDetailUnifiedFlgIsTrue.length != $("#EditTableBody tr").length){
             return false;
@@ -771,7 +773,7 @@ jQuery(function($){
         }
 
         // 出力明細一覧エリアの明細に、ヘッダ部の納品日の月度と同月度ではない納期の明細が存在する
-        if (existsInDifferentDetailDeliveryMonthly(deliverDate, closedDay)){
+        if (existsInDifferentDetailDeliveryMonthly(deliveryDate, closedDay)){
             alert("出力明細には、入力された納品日と異なる月に納品された明細を指定できません");
             return false;
         }
