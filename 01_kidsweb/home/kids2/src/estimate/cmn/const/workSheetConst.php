@@ -290,6 +290,21 @@ class workSheetConst {
     const ORDER_ELEMENT_COST_STOCK_ITEM_DROPDOWN = 'order_e_stockitem_dropdown';
     // その他費用の仕入部品ドロップダウンリストのタイトルセル
     const ORDER_OTHER_COST_STOCK_ITEM_DROPDOWN = 'order_o_stockitem_dropdown';
+
+    // 営業部署のドロップダウンリストのタイトルセル
+    const INCHARGE_GROUP_DROPDOWN = 'incharge_group_dropdown';
+
+    // 担当のドロップダウンリストのタイトルセル
+    const INCHARGE_USER_DROPDOWN = 'incharge_user_dropdown';
+
+    // 開発担当者のドロップダウンリストのタイトルセル
+    const DEVELOP_USER_DROPDOWN = 'develop_user_dropdown';
+
+    // 顧客先のドロップダウンリストのタイトルセル
+    const CLIENT_DROPDOWN = 'client_dropdown';
+
+    // 仕入先のドロップダウンリストのタイトルセル
+    const SUPPLIER_DROPDOWN = 'supplier_dropdown';
     
     // ----------------------------------------------------------------------------------------------------
 
@@ -337,7 +352,7 @@ class workSheetConst {
     const ORDER_AREA_CODE = [
         DEF_AREA_FIXED_COST_ORDER => true,
         DEF_AREA_PARTS_COST_ORDER => true,
-        DEF_AREA_OTHER_COST_ORDER => true
+        DEF_AREA_OTHER_COST_ORDER => false
     ];
 
     // 対象エリアで使用する顧客先、仕入先の分類
@@ -537,8 +552,7 @@ class workSheetConst {
         'tariffTotal' => self::TARIFF_TOTAL,
         'calculationImportCost' => self::CALCULATION_IMPORT_COST,
         'hiddenPayoffCircle' => self::HIDDEN_PAYOFF_CIRCLE,
-        'hiddenMainProduct' => self::HIDDEN_MAIN_PRODUCT,
-        'monetaryRateList' => self::MONETARY_RATE_LIST
+        'hiddenMainProduct' => self::HIDDEN_MAIN_PRODUCT
     ];
 
 
@@ -577,7 +591,8 @@ class workSheetConst {
         self::WORK_SHEET_FOOTER_TITLE_CELL,
         self::HIDDEN_NAME_LIST,
         self::DIVISION_SUBJECT_DROPDOWN_CELL_NAME,
-        self::CLASS_ITEM_DROPDOWN_CELL_NAME
+        self::CLASS_ITEM_DROPDOWN_CELL_NAME,
+        self::OTHER_DROPDOWN_CELL_NAME
     ];
 
     // 全てのセル名称を並列で使用する場合
@@ -859,4 +874,13 @@ class workSheetConst {
         DEF_AREA_PARTS_COST_ORDER => self::ORDER_ELEMENT_COST_STOCK_ITEM_DROPDOWN,
         DEF_AREA_OTHER_COST_ORDER => self::ORDER_OTHER_COST_STOCK_ITEM_DROPDOWN
     ];
+
+    const OTHER_DROPDOWN_CELL_NAME = [
+        self::INCHARGE_GROUP_DROPDOWN,
+        self::INCHARGE_USER_DROPDOWN,
+        self::DEVELOP_USER_DROPDOWN,
+        self::CLIENT_DROPDOWN,
+        self::SUPPLIER_DROPDOWN
+    ];
+
 }

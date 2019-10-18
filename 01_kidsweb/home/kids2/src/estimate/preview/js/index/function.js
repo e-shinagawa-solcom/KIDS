@@ -157,91 +157,119 @@ function editModeTransition() {
 	});
 }
 
-function fileDownload() {
-	var sessionID = $('input[name="strSessionID"]').val();
-	var productCode = $('input[name="productCode"]').val();
-	var reviseCode = $('input[name="reviseCode"]').val();
-	var revisionNo = $('#btnSelected').val();
+	// テストソース(ダウンロード用)
+	function fileDownload() {
+		var sessionID = $('input[name="strSessionID"]').val();
+		var estimateNo = $('input[name="estimateNo"]').val();
+		var revisionNo = $('#btnSelected').val();
 
-	var actionUrl = "/estimate/preview/download.php";
-
-	var formData = $("<form>", {
-		method: 'post',
-		action: actionUrl,
-	})
-
-	// フォームに処理モードを追加
-	formData.append($("<input>", {
-		type: 'hidden',
-		name: 'strSessionID',
-		value: sessionID
-	}));
-
-	formData.append($("<input>", {
-		type: 'hidden',
-		name: 'productCode',
-		value: productCode
-	}));
-
-	formData.append($("<input>", {
-		type: 'hidden',
-		name: 'reviseCode',
-		value: reviseCode
-	}));
-
-	formData.append($("<input>", {
-		type: 'hidden',
-		name: 'revisionNo',
-		value: revisionNo
-	}));
-	
-	$.ajax({
-		url: actionUrl,
-		type: "post",
-		dataType: "json",
-		async: false,
-		data: formData.serialize()
-	
-	}).done(function (response) {
-		if (response.result === true) {			
-			formData.attr('action', response.action);
-			formData.attr('target', '');
-			formData.submit();
-		} else {
-
-			var baseURI = formData[0].baseURI;
-			
-			if(baseURI.indexOf('/estimate/preview/') > 0) {
-				windowName = 'estimateEditChangeError';
-				winWidth = 400;
-				winHeight = 250;
-				var x = (screen.width - winWidth) / 2;
-				var y = (screen.height - winHeight) / 2;
-				var windowResult = open(
-					'about:blank',
-					windowName,
-					'scrollbars=yes, width=' + winWidth + ', height=' + winHeight +', top=' + y + ', left=' + x + 'resizable=0 location=no'
-				);
-				// フォーム設定
-				formData.append('<input type="hidden" class="addMessage" name="message" value="' + response.message + '">');
-				formData.attr('action', response.action);
-				formData.attr('target', windowName);		
-
-				// サブミット
-				formData.submit();
-			}
-			else {
-				alert('URLが不正です');
-			}
-		}	
-	}).fail(function (xhr,textStatus,errorThrown) {
-		alert('通信エラー');
-	}).always(function () {
+		var actionUrl = "/estimate/preview/download.php?strSessionID=" + sessionID + "&estimateNo=" + estimateNo;
 		
-	});
+		var form = $("<form>", {
+			method: 'post',
+            action: actionUrl,
+            target: '_self',
+		})
 
-	document.formAction.submit();
-}
+		// フォームに処理モードを追加
+		form.append($("<input>", {
+			type: 'hidden',
+			name: 'revisionNo',
+			value: revisionNo
+		}));
+
+		form.appendTo(document.body);
+		form.submit();
+		form.remove();
+		
+		return false;
+	}
+
+// function fileDownload() {
+// 	var sessionID = $('input[name="strSessionID"]').val();
+// 	var productCode = $('input[name="productCode"]').val();
+// 	var reviseCode = $('input[name="reviseCode"]').val();
+// 	var revisionNo = $('#btnSelected').val();
+
+// 	var actionUrl = "/estimate/preview/download.php";
+
+// 	var formData = $("<form>", {
+// 		method: 'post',
+// 		action: actionUrl,
+// 	})
+
+// 	// フォームに処理モードを追加
+// 	formData.append($("<input>", {
+// 		type: 'hidden',
+// 		name: 'strSessionID',
+// 		value: sessionID
+// 	}));
+
+// 	formData.append($("<input>", {
+// 		type: 'hidden',
+// 		name: 'productCode',
+// 		value: productCode
+// 	}));
+
+// 	formData.append($("<input>", {
+// 		type: 'hidden',
+// 		name: 'reviseCode',
+// 		value: reviseCode
+// 	}));
+
+// 	formData.append($("<input>", {
+// 		type: 'hidden',
+// 		name: 'revisionNo',
+// 		value: revisionNo
+// 	}));
+	
+// 	$.ajax({
+// 		url: actionUrl,
+// 		type: "post",
+// 		dataType: "json",
+// 		async: false,
+// 		data: formData.serialize()
+	
+// 	}).done(function (response) {
+// 		if (response.result === true) {			
+// 			formData.attr('action', response.action);
+// 			formData.attr('target', '');
+// 			formData.submit();
+// 		} else {
+
+// 			var baseURI = formData[0].baseURI;
+			
+// 			if(baseURI.indexOf('/estimate/preview/') > 0) {
+// 				windowName = 'estimateEditChangeError';
+// 				winWidth = 400;
+// 				winHeight = 250;
+// 				var x = (screen.width - winWidth) / 2;
+// 				var y = (screen.height - winHeight) / 2;
+// 				var windowResult = open(
+// 					'about:blank',
+// 					windowName,
+// 					'scrollbars=yes, width=' + winWidth + ', height=' + winHeight +', top=' + y + ', left=' + x + 'resizable=0 location=no'
+// 				);
+// 				// フォーム設定
+// 				formData.append('<input type="hidden" class="addMessage" name="message" value="' + response.message + '">');
+// 				formData.attr('action', response.action);
+// 				formData.attr('target', windowName);		
+
+// 				// サブミット
+// 				formData.submit();
+// 			}
+// 			else {
+// 				alert('URLが不正です');
+// 			}
+// 		}	
+// 	}).fail(function (xhr,textStatus,errorThrown) {
+// 		alert('通信エラー');
+// 	}).always(function () {
+		
+// 	});
+
+// 	document.formAction.submit();
+// }
 
 function sheetPrint() {
 	//プリントしたいエリアの取得
@@ -271,4 +299,64 @@ function addPostData(name, value, formElement) {
 	formElement.appendChild(element);
 
 	return;
+}
+
+
+// ダウンロードボタンが押された
+function OnClickDownload(obj, lngSlipNo, strSlipCode, lngRevisionNo){
+    // --------------------------------------------------------------------------
+    // ダウンロードのための非同期POST
+    // 
+    // 備考：jQueryの$.ajaxのPOSTではファイルダウンロードがうまくいかないらしいので
+    //      素のjavascriptを使う
+    // --------------------------------------------------------------------------
+    // POSTパラメータの設定。セッションIDは隠しフィールドから取得
+    var postParams = "strMode=download"
+                    + "&lngSlipNo=" + lngSlipNo
+                    + "&strSlipCode=" + strSlipCode
+                    + "&lngRevisionNo=" + lngRevisionNo
+                    + "&strSessionID=" + document.getElementById("strSessionID").value
+                    ;
+
+    // ダウンロードファイル名
+    var fileName = "KWG" + strSlipCode + ".xlsx";
+
+　　// 非同期リクエストの設定
+    var url = "preview.php"
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', url, true);
+    xhr.setRequestHeader( 'Content-Type', 'application/x-www-form-urlencoded' );
+    xhr.responseType = 'blob'; //blob型のレスポンスを受け付ける
+
+    // コールバック定義
+    xhr.onload = function (e) {
+        // 成功時の処理
+        if (this.status == 200) {
+            var blob = this.response;//レスポンス
+            //IEとその他で処理の切り分け
+            if (navigator.appVersion.toString().indexOf('.NET') > 0) {
+                //IE 10+
+                window.navigator.msSaveBlob(blob, fileName);
+            } else {
+                //aタグの生成
+                var a = document.createElement("a");
+                //レスポンスからBlobオブジェクト＆URLの生成
+                var blobUrl = window.URL.createObjectURL(new Blob([blob], {
+                    type: blob.type
+                }));
+                //上で生成したaタグをアペンド
+                document.body.appendChild(a);
+                a.style = "display: none";
+                //BlobオブジェクトURLをセット
+                a.href = blobUrl;
+                //ダウンロードさせるファイル名の生成
+                a.download = fileName;
+                //クリックイベント発火
+                a.click();
+            }
+        }
+    };
+
+    // 非同期リクエストの送信
+    xhr.send(postParams);
 }

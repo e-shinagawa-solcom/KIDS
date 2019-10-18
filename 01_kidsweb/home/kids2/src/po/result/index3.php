@@ -100,10 +100,12 @@ if($_POST){
 		$aryDetailNo = array_column($aryOrderDetail, "lngorderdetailno");
 		if( is_array($aryPurchaseOrderDetail) )
 		{
+		    $count = 1;
 			for($j = 0; $j < count($aryPurchaseOrderDetail); $j++){
 				if($aryPurchaseOrderDetail[$j]["lngorderdetailno"] != $aryDetailNo[0]){
 					$aryInsertPurchaseOrderDetail[$j]["lngpurchaseorderno"] = $aryPurchaseOrderDetail[$j]["lngpurchaseorderno"];
-					$aryInsertPurchaseOrderDetail[$j]["lngpurchaseorderdetailno"] = $j + 1;
+					$aryInsertPurchaseOrderDetail[$j]["lngpurchaseorderdetailno"] = $count;
+					$count++;
 					$aryInsertPurchaseOrderDetail[$j]["lngrevisionno"] = intval($aryPurchaseOrderDetail[$j]["lngrevisionno"]) + 1;
 					$aryInsertPurchaseOrderDetail[$j]["lngorderno"] = $aryPurchaseOrderDetail[$j]["lngorderno"];
 					$aryInsertPurchaseOrderDetail[$j]["lngorderdetailno"] = $aryPurchaseOrderDetail[$j]["lngorderdetailno"];
@@ -184,6 +186,7 @@ if($_POST){
 		{
 			// 残明細がない場合は発注書マスタも削除する。
 			$aryOrder = fncGetPurchaseOrder2($aryCancelOrderDetail["lngpurchaseorderno"], $aryCancelOrderDetail["lngrevisionno"], $objDB);
+			$orgRevision = $aryOrder["lngrevisionno"];
 			$aryOrder["lngrevisionno"] = -1;
 			$aryOrder["lngcustomercode"] = null;
 			$aryOrder["strcustomername"] = null;
@@ -214,6 +217,8 @@ if($_POST){
 			$aryOrder["lngprintcount"] = null;
 
 			if(!fncInsertPurchaseOrder($aryOrder, $objDB)) { return false; }
+			// 確定取消完了画面表示のためにリビジョン番号を復元
+			$aryOrder["lngrevisionno"] = $orgRevision;
 			
 		}
 	
@@ -222,13 +227,13 @@ if($_POST){
 
 		if(count($aryInsertPurchaseOrderDetail) > 0){
 			$aryHtml[] = "<p class=\"caption\">以下の発注の確定取消に伴い、該当の発注書を修正しました。</p>";
-			$aryHtml[] = fncCancelPurchaseOrderHtml($aryOrder, $aryCancelOrderDetail);
+			$aryHtml[] = fncCancelPurchaseOrderHtml($aryOrder, $aryCancelOrderDetail, $aryData["strSessionID"]);
 		}
 		else
 		{
 			// 残明細がない場合
 			$aryHtml[] = "<p class=\"caption\">以下の発注の確定取消に伴い、該当の発注書を削除しました</p>";
-			$aryHtml[] = fncCancelPurchaseOrderHtml($aryOrder, $aryCancelOrderDetail);
+			$aryHtml[] = fncCancelPurchaseOrderHtml($aryOrder, $aryCancelOrderDetail, $aryData["strSessionID"], true);
 			
 		}
 	}
