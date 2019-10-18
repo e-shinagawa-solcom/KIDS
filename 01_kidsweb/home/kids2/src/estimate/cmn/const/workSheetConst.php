@@ -322,6 +322,28 @@ class workSheetConst {
     const PREFIX_ELEMENTS_COST = 'e';
 
 
+    // 見積原価の処理モード--------------------------------------------------------------------------------------
+    // 見積原価プレビュー(閲覧)
+    const MODE_ESTIMATE_PREVIEW = 'preview';
+    // 見積原価プレビュー(編集)
+    const MODE_ESTIMATE_EDIT = 'edit';
+    // 見積原価プレビュー(ダウンロード)
+    const MODE_ESTIMATE_DOWNLOAD = 'download';
+    // 見積原価削除
+    const MODE_ESTIMATE_DELETE = 'delete';
+    // ワークシート選択
+    const MODE_ESTIMATE_RESIST_SELECT = 'select';
+    // ワークシート登録(確認)
+    const MODE_ESTIMATE_RESIST_CONFIRM = 'confirm';
+    // ワークシート登録
+    const MODE_ESTIMATE_RESIST_RESULT = 'regist';
+    // 見積原価検索
+    const MODE_ESTIMATE_SEARCH = 'search';
+    // 見積原価一覧
+    const MODE_ESTIMATE_RESULT = 'result';
+
+
+
     // 対象エリア関連の定数 -------------------------------------------------------------------------------------------
 
     // 対象エリア名
@@ -787,7 +809,7 @@ class workSheetConst {
             'quantity' => true,
             'monetaryDisplay' => true,
             'price' => true,
-            'conversionRate' => false,
+            'conversionRate' => true,
             'subtotal' => false,
             'delivery' => true,
             'note' => true

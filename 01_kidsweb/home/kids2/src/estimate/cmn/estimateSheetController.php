@@ -385,12 +385,13 @@ class estimateSheetController {
                 $setFormatFlag = true; // フォーマットセットフラグ
 
                 // 編集モード時の書式の設定
-                if ($mode === 'edit') {
+                if ($mode === workSheetConst::MODE_ESTIMATE_EDIT) {
                     if ($areaCode) {
                         // 各入力項目のヘッダに対する列番号リストの取得
                         $columnNoList = $this->getColumnNumberList($areaCode);
                         if ($columnNoList['quantity'] == $colAlphabet
-                        || $columnNoList['price'] == $colAlphabet) { // 数量又は単価の場合
+                        || $columnNoList['price'] == $colAlphabet
+                        || $columnNoList['conversionRate'] == $colAlphabet) { // 数量又は単価の場合
                             $setFormatFlag = false;
                         }
 
@@ -496,7 +497,7 @@ class estimateSheetController {
                 }
 
                 // readOnlyセルの設定
-                if ($mode === 'edit') {                    
+                if ($mode === workSheetConst::MODE_ESTIMATE_EDIT) {                    
                     if ($areaCode) {
                         // 列番号を数字からアルファベットに変換
                         // $colAlphabet = $this->getAlphabetForColumnIndex($workSheetColumn);
@@ -546,7 +547,7 @@ class estimateSheetController {
         }
 
         // previewの場合
-        if ($mode === 'preview') {
+        if ($mode === workSheetConst::MODE_ESTIMATE_PREVIEW) {
 
             // 発注状態マスタの取得
             $receiveStatusMaster = $this->objDB->getMasterToArray('m_receivestatus', 'lngreceivestatuscode', 'strreceivestatusname');
@@ -1456,12 +1457,15 @@ class estimateSheetController {
     *
     * @return string  列番号（アルファベット)
     */
-    public function setDBEstimateData($productData, $estimateData) {
+    public function setDBEstimateData($productData, $estimateData, $mode = null) {
         $this->inputHeaderData($productData); // 製品情報のセット（ヘッダ部）
         $this->inputStandardRate(); // 標準割合のセット
         $this->insertDeficiencyRow($estimateData); // 見積原価セット時に不足する行を挿入する
         $this->inputEstimateDetailData($estimateData); // 見積原価明細のセット
-        $this->inputDropdownList();
+
+        if ($mode === workSheetConst::MODE_ESTIMATE_DOWNLOAD) {
+            $this->inputDropdownList();
+        }       
     }
 
     // ヘッダ部に値をセットする

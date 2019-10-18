@@ -289,35 +289,35 @@
 		}
 
 
-		// 標準割合のチェック
-		$standardRateCell = $cellAddressList[workSheetConst::STANDARD_RATE];
-		$standardRate = $objSheet->sheet->getCell($standardRateCell)->getCalculatedValue();
-		if ($standardRateMaster != $standardRate) {
-			$companyLocalRate = $standardRateMaster ? number_format(($standardRateMaster * 100), 2, '.', ''). "%" : '-';
-			$sheetRate = $standardRate ? number_format(($standardRate * 100), 2, '.', ''). "%" : '-';
-			$difference[] = array(
-				'delivery' => '-',
-				'monetary' => '標準割合',
-				'temporaryRate' => $companyLocalRate,
-				'sheetRate' => $sheetRate
-			);
-		}
+		// // 標準割合のチェック
+		// $standardRateCell = $cellAddressList[workSheetConst::STANDARD_RATE];
+		// $standardRate = $objSheet->sheet->getCell($standardRateCell)->getCalculatedValue();
+		// if ($standardRateMaster != $standardRate) {
+		// 	$companyLocalRate = $standardRateMaster ? number_format(($standardRateMaster * 100), 2, '.', ''). "%" : '-';
+		// 	$sheetRate = $standardRate ? number_format(($standardRate * 100), 2, '.', ''). "%" : '-';
+		// 	$difference[] = array(
+		// 		'delivery' => '-',
+		// 		'monetary' => '標準割合',
+		// 		'temporaryRate' => $companyLocalRate,
+		// 		'sheetRate' => $sheetRate
+		// 	);
+		// }
 
 		// 行オブジェクトを基にした処理
 		foreach ($objRowList as $row => $objRow) {
 			$columnList = $objRow->columnNumberList;
 			
-			// メッセージコードの取得
-			$messageOfConversionRate = $objRow->messageCode['conversionRate'];
+			// // メッセージコードの取得
+			// $messageOfConversionRate = $objRow->messageCode['conversionRate'];
 
-			// ブックの適用レートがDBの通貨レートと異なる場合、またはブックの小計が計算結果と異なる場合
-			if ($messageOfConversionRate === DEF_MESSAGE_CODE_RATE_DIFFER) {
-				// ブックオブジェクトの通貨レートの置換
-				$column = $columnList['conversionRate'];
-				$convarsionRateCell = $column.$row;
-				$acquiredRate = $objRow->acquiredRate;
-				$objSheet->sheet->getCell($convarsionRateCell)->setValue($acquiredRate);
-			}
+			// ブックの適用レートがDBの通貨レートと異なる場合
+			// if ($messageOfConversionRate === DEF_MESSAGE_CODE_RATE_DIFFER) {
+			// 	// ブックオブジェクトの通貨レートの置換
+			// 	$column = $columnList['conversionRate'];
+			// 	$convarsionRateCell = $column.$row;
+			// 	$acquiredRate = $objRow->acquiredRate;
+			// 	$objSheet->sheet->getCell($convarsionRateCell)->setValue($acquiredRate);
+			// }
 
 			// ブックオブジェクトの小計の置換
 			$column = $columnList['subtotal'];

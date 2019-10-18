@@ -239,7 +239,7 @@ abstract class estimateRowController {
         $this->divisionSubject = isset($data['divisionSubject']) ? $data['divisionSubject'] : '';
         $this->classItem = isset($data['classItem']) ? $data['classItem'] : '';
         $this->subtotal = isset($data['subtotal']) ? $data['subtotal'] : '';
-        $this->conversionRate = isset($data['conversionRate']) ? number_format($data['conversionRate'], 6, '.', '') : '';
+        $this->conversionRate = isset($data['conversionRate']) ? $data['conversionRate'] : '';
         $this->monetaryDisplay = isset($data['monetaryDisplay']) ? $data['monetaryDisplay'] : '';
         $this->monetary = isset($data['monetary']) ? (int)$data['monetary'] : ''; // 比較するのでint型で取得
         $this->customerCompany = isset($data['customerCompany']) ? $data['customerCompany'] : '';
@@ -264,6 +264,8 @@ abstract class estimateRowController {
 
     // 無効フラグを取得する
     public function getInvalidFlag() {
+        // 全てのエラーメッセージを取得したい場合は$retを使用すること
+        // $ret = false;
 
         // 売上分類 or 仕入科目のチェック
         $this->validateDivisionSubject();
@@ -271,6 +273,7 @@ abstract class estimateRowController {
         if ($this->messageCode['divisionSubject']) {
             // 売上分類 or 仕入科目の入力が正確でない場合は表示しない
             return true;
+            // $ret = true;
         }
 
         // 売上区分、仕入部品のチェック
@@ -279,6 +282,7 @@ abstract class estimateRowController {
         if ($this->messageCode['classItem']) {
             // 売上区分 or 仕入部品の入力が正確でない場合は表示しない
             return true;
+            // $ret = true;
         }
 
         // 数量のチェック
@@ -287,6 +291,7 @@ abstract class estimateRowController {
         if ($this->messageCode['quantity']) {
             // 数量の入力が正確でない場合
             return true;
+            // $ret = true;
         }
 
         // 単価のバリデーション
@@ -295,6 +300,7 @@ abstract class estimateRowController {
         if ($this->messageCode['price']) {
             // 単価の入力が正確でない場合
             return true;
+            // $ret = true;
         }
 
         // 輸入費用、関税フラグを設定する
@@ -306,6 +312,7 @@ abstract class estimateRowController {
         if ($this->messageCode['delivery']) {
             // 納期の入力が正確でない場合は非表示にする
             return true;
+            // $ret = true;
         }
 
 
@@ -318,6 +325,7 @@ abstract class estimateRowController {
                 } else {
                     // 単価が数式の場合、顧客先に数値が入っていない場合は無効にする
                     return true;
+                    // $ret = true;
                 }
             }
         } else { // 輸入費用、関税以外の場合
@@ -326,15 +334,17 @@ abstract class estimateRowController {
             if ($this->messageCode['customerCompany']) {
                 // 顧客先の入力が正確でない場合非表示
                 return true;
+                // $ret = true;
             }
         }
 
         // 通貨レートのチェックを行う
         $this->validateConversionRate();
 
-        if ($this->messageCode['conversionRate'] === DEF_MESSAGE_CODE_RATE_UNCAUGHT_WARNING) {
-            // 通貨レートが取得できなかった場合
+        if ($this->messageCode['conversionRate']) {
+            // 通貨レートが正常でない場合
             return true;
+            // $ret = true;
         }
 
         // 輸入費用と関税以外の場合は小計を再計算し、チェックする
@@ -345,10 +355,12 @@ abstract class estimateRowController {
             if ($this->messageCode['subtotal']) {
                 // 小計の値が正常でない場合
                 return true;
+                // $ret = true;
             }
         }
  
         return false;
+        // return $ret;
     }
 
 
@@ -357,9 +369,9 @@ abstract class estimateRowController {
     protected function calcuratePrice() {
         $quantity = $this->quantity;
         $subtotal = $this->subtotal;
-        $acqiredRate = $this->acqiredRate;
-        if($quantity || $subtotal || $acqiredRate) {
-            $recalculatedPrice = $subtotal / $quantity / $acqiredRate;
+        $conversionRate = $this->conversionRate;
+        if($quantity || $subtotal || $conversionRate) {
+            $recalculatedPrice = $subtotal / $quantity / $conversionRate;
         }
         return $recalculatedPrice;
     }
@@ -392,11 +404,11 @@ abstract class estimateRowController {
     public function calculateSubtotal() {
         $quantity = $this->quantity;
         $price = $this->price;
-        $acquiredRate = $this->acquiredRate;
+        $conversionRate = $this->conversionRate;
 
-        if(is_numeric($quantity) || is_numeric($price) || is_numeric($acquiredRate)) {
+        if(is_numeric($quantity) || is_numeric($price) || is_numeric($conversionRate)) {
             $calculatedSubtotal = $quantity * $price;
-            $calculatedSubtotalJP = $quantity * $price * $acquiredRate;
+            $calculatedSubtotalJP = $quantity * $price * $conversionRate;
         }
 
         // 計算値を代入
@@ -420,7 +432,7 @@ abstract class estimateRowController {
             'divisionSubject' => $this->divisionSubjectCode,
             'classItem' => $this->classItemCode,
             'subtotal' => $this->calculatedSubtotal, // 再計算結果を出力
-            'conversionRate' => $this->acquiredRate, // DBから取得した通貨コードを出力
+            'conversionRate' => $this->conversionRate, // DBから取得した通貨コードを出力
             'monetary' => $this->monetary,
             'customerCompany' => $this->customerCompanyCode,
             'payoff' => $this->payoff,
@@ -575,7 +587,7 @@ abstract class estimateRowController {
         // 再計算結果で置換
         $this->price = $price;
         
-        $conversionRate = $this->acquiredRate; // マスター上の通貨レート
+        $conversionRate = $this->conversionRate; // マスター上の通貨レート
 
         // 小計の再計算
         $calculatedSubtotal = $price * $conversionRate * $quantity;
@@ -709,24 +721,18 @@ abstract class estimateRowController {
     }
 
 
-    // 通貨レートのチェックを行い、DBの通貨レートを出力する
+    // 通貨レートのチェックを行う
     protected function validateConversionRate() {
         $conversionRate = $this->conversionRate;
-        $acquiredRate = $this->getConversionRateForDelivery(); // DBから取得した通貨レート
-        if ($acquiredRate) {
-            $this->acquiredRate = $acquiredRate;
-            if (preg_match("/\A\d{0,15}(\.[0-9]+)?\z/", $acquiredRate)) { // 整数部分が15ケタ以内か確認
-                if ($acquiredRate !== DEF_MONETARY_YEN  && $conversionRate !== $acquiredRate) {
-                    // DBから取得した通貨レートとシートから取得した通貨レートが異なる場合
-                    $this->messageCode['conversionRate'] = DEF_MESSAGE_CODE_RATE_DIFFER;
-                }
-            } else {
-                $this->messageCode['classItem'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
-            }
-        } else {
-            // DBから通貨レートが取得できなかった場合
-            $this->messageCode['conversionRate'] = DEF_MESSAGE_CODE_RATE_UNCAUGHT_WARNING;
+        if ($conversionRate) {
+            $this->messageCode['classItem'] = DEF_MESSAGE_CODE_NOT_ENTRY_ERROR;
         }
+        if (preg_match("/\A\d{0,15}(\.[0-9]+)?\z/", $conversionRate) && $conversionRate > 0) { // 整数部分が15ケタ以内か確認
+            return true;
+        } else {
+            $this->messageCode['classItem'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
+        }
+
         return true;
     }
 

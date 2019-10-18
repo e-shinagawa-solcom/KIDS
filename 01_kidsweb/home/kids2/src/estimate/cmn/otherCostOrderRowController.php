@@ -48,38 +48,6 @@ class otherCostOrderRowController extends estimateRowController {
         }
     }
 
-    // 通貨レートマスターから納期に対応する通貨レートを取得する
-    protected function getConversionRateForDelivery() {
-        $monetary = $this->monetary;
-        $delivery = $this->delivery;
-        
-        if (!$monetary) {
-            $acquiredRate = null;
-        } else if ($monetary == DEF_MONETARY_YEN) {
-            $acquiredRate = 1;
-        } else {
-            if(!$delivery) {
-                $acquiredRate = null;
-            } else {
-                $conversionRateMaster = self::$conversionRateMaster;
-                if (!$conversionRateMaster[$monetary]) {
-                    $acquiredRate = null;
-                } else {
-                    foreach ($conversionRateMaster[$monetary] as $data) {
-                        // 納品日に対応する通貨レートを取得する（DBから取得したリスト内の検索）
-                        if (strtotime($delivery) <= strtotime($data['endDate']) 
-                            && strtotime($data['startDate']) <= strtotime($delivery)) {
-                            $acquiredRate = $data['conversionRate'];
-                        } else {
-                            $acquiredRate = null;
-                        }
-                    }
-                }
-            }
-        }
-        return $acquiredRate;
-    }
-
     // 再計算前の償却数と数量を比較し、再計算前の値と一致した場合は再計算後の償却数を代入する
     public function substitutePQForPrice($compare, $substitute) {
         // 数量を取得

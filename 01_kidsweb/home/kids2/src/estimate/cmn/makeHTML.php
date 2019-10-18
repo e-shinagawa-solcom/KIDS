@@ -27,7 +27,7 @@ class makeHTML {
 	}
 
 	// Excelの適用レートがマスターと異なるデータのテーブルを作成する
-	public static function makeDifferenceRateTable($difference = false, $message) {
+	public static function makeDifferenceRateTable($difference, $message) {
 		$strTemporary = '';
 		if ($difference) {
 			if ($message) {
@@ -36,10 +36,10 @@ class makeHTML {
 			$strTemporary .= "<div class = 'temporary'>\n";
 			$strTemporary .= "<table class = \"temporaryTable\" align=\"center\">\n";
 			$strTemporary .= "<tr>\n";
-			$strTemporary .= "<th>通貨</th>\n";
-			$strTemporary .= "<th>社内レート</th>\n";
-			$strTemporary .= "<th>Excelレート</th>\n";
-			$strTemporary .= "<th>納品日</th>\n";
+			$strTemporary .= "<th>項目</th>\n";
+			$strTemporary .= "<th>KIDS設定値</th>\n";
+			$strTemporary .= "<th>ブック設定値</th>\n";
+			// $strTemporary .= "<th>納品日</th>\n";
 			$strTemporary .= "</tr>\n";
 	
 			foreach($difference as $rateInfo) {
@@ -47,7 +47,7 @@ class makeHTML {
 				$strTemporary .= "<td class='rateDiff'>".$rateInfo['monetary']."</td>\n";
 				$strTemporary .= "<td class='rateDiff'>".$rateInfo['temporaryRate']."</td>\n";
 				$strTemporary .= "<td class='rateDiff'>".$rateInfo['sheetRate']."</td>\n";
-				$strTemporary .= "<td class='rateDiff'>".$rateInfo['delivery']."</td>\n";		
+				// $strTemporary .= "<td class='rateDiff'>".$rateInfo['delivery']."</td>\n";		
 				$strTemporary .= "</tr>\n";
 			}
 			$strTemporary .= "</table>\n";
@@ -57,7 +57,7 @@ class makeHTML {
 	}
 
 	// Excelの適用レート取得できなかったデータのテーブルを作成する
-	public static function makeNotFoundRateTable($notFound = false, $message) {
+	public static function makeNotFoundRateTable($notFound, $message) {
 		$strTemporary = '';
 		if ($notFound) {
 			if ($message) {

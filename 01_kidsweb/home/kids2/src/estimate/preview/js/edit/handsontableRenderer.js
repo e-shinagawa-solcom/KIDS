@@ -330,6 +330,11 @@ $(function() {
           cellProperties.numericFormat = {
             pattern: '#,##0',
           };
+        } else if (className.includes('conversionRate')) { // 適用レート
+          cellProperties.type = 'numeric';
+          cellProperties.numericFormat = {
+            pattern: '#,##0.0000',
+          };
         }
       }
     }
@@ -1126,9 +1131,7 @@ $(function() {
       } else if (className.includes('price')) {
         calcFlag.subtotal = true;
 
-      } else if (className.includes('monetaryDisplay')
-      || className.includes('delivery')) {
-        getConversionRate(row);
+      } else if (className.includes('conversionRate')) {
         calcFlag.subtotal = true;
       } else if (className.includes('payoff')) { // 償却
         if (Number(areaCode[1]) === 3) {

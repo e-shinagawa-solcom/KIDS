@@ -29,6 +29,8 @@ $charset = 'EUC-JP';
 
 $objReader      = new XlsxReader();
 
+$mode = workSheetConst::MODE_ESTIMATE_DOWNLOAD; // 処理モード：ダウンロード
+
 //-------------------------------------------------------------------------
 // DBオープン
 //-------------------------------------------------------------------------
@@ -160,7 +162,7 @@ $objSheet->dataInitialize($sheetInfo, $objDB);
 $objSheet->templateAdjust($estimateData);
 
 // ワークシートオブジェクトに必要な値をセット
-$objSheet->setDBEstimateData($productData, $estimateData);
+$objSheet->setDBEstimateData($productData, $estimateData, $mode);
 
 // phpSpreadSheetオブジェクトをxlsxに書き込むオブジェクトにセットする
 $writer = new XlsxWriter($spreadSheet);
