@@ -29,7 +29,7 @@
     $.validator.addMethod(
         "checkStrProductCode",
         function (value, element, params) {
-            if (params) {
+            if (params && value != '') {
                 var codes = value.split(',');
                 var result = true;
                 $.each(codes, function (ind, val) {
@@ -57,7 +57,7 @@
     $.validator.addMethod(
         "checkDateFormat",
         function (value, element, params) {
-            if (params) {
+            if (params && value != '') {
                 // yyyy/mm/dd形式か
                 if (!(regDate.test(value))) {
                     return false;
@@ -81,7 +81,7 @@
     $.validator.addMethod(
         "isLessThanToday",
         function (value, element, params) {
-            if (params) {
+            if (params && value != '') {
                 var regResult = regDate.exec(value);
                 var yyyy = regResult[1];
                 var mm = regResult[2];
@@ -121,7 +121,7 @@
     $.validator.addMethod(
         "isGreaterThanFromDate",
         function (value, element, params) {
-            if (params[0]) {
+            if (params[0] && value != '') {
                 // FROM_XXXXが入力された場合、
                 if ($(params[1]).val() != "") {
                     var regResult = regDate.exec($(params[1]).val());

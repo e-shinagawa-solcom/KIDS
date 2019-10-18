@@ -61,7 +61,7 @@ foreach ($isSearch as $key => $flag) {
 $strCopyQuery = "SELECT strReportKeyCode, lngReportCode FROM t_Report WHERE lngReportClassCode = " . DEF_REPORT_ESTIMATE;
 
 // 見積原価書取得クエリ生成
-// SELECT
+$detailConditionCount = 0;
 $aryQuery[] = "SELECT";
 $aryQuery[] = " e.lngestimatestatuscode,";
 $aryQuery[] = " e.lngrevisionno,";
@@ -82,6 +82,31 @@ $aryQuery[] = " inner join (select max(lngproductno) lngproductno, strproductcod
 $aryQuery[] = " on p1.lngproductno = p2.lngproductno";
 $aryQuery[] = " ) p ON p.strProductCode       = e.strProductCode";
 $aryQuery[] = "  AND p.bytInvalidFlag = FALSE";
+$aryQuery[] = "  LEFT OUTER JOIN ( ";
+$aryQuery[] = "    select distinct";
+$aryQuery[] = "      lngestimateno";
+$aryQuery[] = "      , lngrevisionno ";
+$aryQuery[] = "    from";
+$aryQuery[] = "      t_estimatedetail ";
+// 納期_from
+if (array_key_exists("dtmDeliveryLimitDate", $searchColumns) &&
+    array_key_exists("dtmDeliveryLimitDate", $from) && $from["dtmDeliveryLimitDate"] != '') {
+    $detailConditionCount += 1;
+    $aryQuery[] = $detailConditionCount == 1 ? "WHERE " : "AND ";
+    $aryQuery[] = " date_trunc('day', dtmdelivery)" .
+    " >= '" . pg_escape_string($from["dtmDeliveryLimitDate"]) . "'";
+}
+// 納期_to
+if (array_key_exists("dtmDeliveryLimitDate", $searchColumns) &&
+    array_key_exists("dtmDeliveryLimitDate", $to) && $to["dtmDeliveryLimitDate"] != '') {
+    $detailConditionCount += 1;
+    $aryQuery[] = $detailConditionCount == 1 ? "WHERE " : "AND ";
+    $aryQuery[] = " date_trunc('day', dtmdelivery)" .
+    " <= " . "'" . pg_escape_string($to["dtmDeliveryLimitDate"]) . "'";
+}
+$aryQuery[] = "  ) ed ";
+$aryQuery[] = "    on e.lngestimateno = ed.lngestimateno ";
+$aryQuery[] = "    and e.lngrevisionno = ed.lngrevisionno ";
 $aryQuery[] = " LEFT OUTER JOIN m_Group g   ON p.lngInChargeGroupCode = g.lngGroupCode";
 $aryQuery[] = " LEFT OUTER JOIN m_User u1   ON p.lngInChargeUserCode  = u1.lngUserCode";
 $aryQuery[] = " INNER JOIN m_User u2   ON e.lngInputUserCode     = u2.lngUserCode";
@@ -97,22 +122,31 @@ $aryQuery[] = "AND e.lngestimatestatuscode != " . DEF_ESTIMATE_DENIAL;
 /////////////////////////////////////////////////////////////////
 // 検索条件
 /////////////////////////////////////////////////////////////////
-// 作成日時
+// 作成日時_from
 if (array_key_exists("dtmInsertDate", $searchColumns) &&
-    array_key_exists("dtmInsertDate", $from) &&
-    array_key_exists("dtmInsertDate", $to)) {
+    array_key_exists("dtmInsertDate", $from) && $from["dtmInsertDate"] != '') {
     $aryQueryWhere[] = " date_trunc('day', e.dtmInsertDate)" .
-    " between '" . pg_escape_string($from["dtmInsertDate"]) . "'" .
-    " AND " . "'" . pg_escape_string($to["dtmInsertDate"]) . "'";
+    " >= '" . pg_escape_string($from["dtmInsertDate"]) . "'";
+}
+// 作成日時_to
+if (array_key_exists("dtmInsertDate", $searchColumns) &&
+    array_key_exists("dtmInsertDate", $to) && $to["dtmInsertDate"] != '') {
+    $aryQueryWhere[] = " date_trunc('day', e.dtmInsertDate)" .
+    " <= " . "'" . pg_escape_string($to["dtmInsertDate"]) . "'";
 }
 
-// 製品コード
+// 製品コード_from
 if (array_key_exists("strProductCode", $searchColumns) &&
-    array_key_exists("strProductCode", $from) &&
-    array_key_exists("strProductCode", $to)) {
+    array_key_exists("strProductCode", $from) && $from["strProductCode"] != '') {
     $aryQueryWhere[] = " e.strProductCode" .
-    " between '" . pg_escape_string($from["strProductCode"]) . "'" .
-    " AND " . "'" . pg_escape_string($to["strProductCode"]) . "'";
+    " >= '" . pg_escape_string($from["strProductCode"]) . "'";
+}
+
+// 製品コード_to
+if (array_key_exists("strProductCode", $searchColumns) &&
+    array_key_exists("strProductCode", $to) && $to["strProductCode"] != '') {
+    $aryQueryWhere[] = " e.strProductCode" .
+    " <= " . "'" . pg_escape_string($to["strProductCode"]) . "'";
 }
 // 入力者
 if (array_key_exists("lngInputUserCode", $searchColumns) &&

@@ -91,7 +91,6 @@ foreach ($isSearch as $key => $flag) {
     }
 }
 
-
 // 検索項目から一致する最新の受注データを取得するSQL文の作成関数
 $subStrQuery = fncGetMaxReceiveSQL($displayColumns, $searchColumns, $from, $to, $searchValue, $optionColumns);
 

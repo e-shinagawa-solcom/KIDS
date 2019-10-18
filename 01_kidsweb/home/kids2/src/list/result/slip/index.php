@@ -135,13 +135,17 @@ $aryQuery[] = "  ) ";
 /////////////////////////////////////////////////////////////////
 // ¸¡º÷¾ò·ï
 /////////////////////////////////////////////////////////////////
-// Ç¼ÉÊÆü
+// Ç¼ÉÊÆü_from
 if (array_key_exists("dtmDeliveryDate", $searchColumns) &&
-    array_key_exists("dtmDeliveryDate", $from) &&
-    array_key_exists("dtmDeliveryDate", $to)) {
+    array_key_exists("dtmDeliveryDate", $from) && $from["dtmDeliveryDate"]!='') {
     $aryQuery[] = " AND date_trunc('day', s.dtmDeliveryDate )" .
-    " between '" . pg_escape_string($from["dtmDeliveryDate"]) . "'" .
-    " AND " . "'" . pg_escape_string($to["dtmDeliveryDate"]) . "'";
+    " >= '" . pg_escape_string($from["dtmDeliveryDate"]) . "'";
+}
+// Ç¼ÉÊÆü_to
+if (array_key_exists("dtmDeliveryDate", $searchColumns) &&
+    array_key_exists("dtmDeliveryDate", $to) && $to["dtmDeliveryDate"]!='') {
+    $aryQuery[] = " AND date_trunc('day', s.dtmDeliveryDate )" .
+    " <= " . "'" . pg_escape_string($to["dtmDeliveryDate"]) . "'";
 }
 // Çä¾å¶èÊ¬
 if (array_key_exists("lngsalesclasscode", $searchColumns) &&

@@ -91,16 +91,22 @@ function fncGetMaxReceiveSQL($displayColumns, $searchColumns, $from, $to, $searc
     $aryQuery[] = "          on ms.lngsalesclasscode = rd1.lngsalesclasscode ";
     $aryQuery[] = "        left join m_productunit mp ";
     $aryQuery[] = "          on mp.lngproductunitcode = rd1.lngproductunitcode ";
-    // ¿Ω… •≥°º•…
+    // ¿Ω… •≥°º•…_from
     if (array_key_exists("strProductCode", $searchColumns) &&
-        array_key_exists("strProductCode", $from) &&
-        array_key_exists("strProductCode", $to)) {
+        array_key_exists("strProductCode", $from) && $from["strProductCode"] != '') {
         $detailConditionCount += 1;
         $aryQuery[] = $detailConditionCount == 1 ? "WHERE " : "AND ";
         $aryQuery[] = " rd1.strProductCode" .
-        " between '" . pg_escape_string($from["strProductCode"]) . "'" .
-        " AND " . "'" . pg_escape_string($to["strProductCode"]) . "'";
+        " >= '" . pg_escape_string($from["strProductCode"]) . "'";
     }
+    // ¿Ω… •≥°º•…_to
+    if (array_key_exists("strProductCode", $searchColumns) &&
+    array_key_exists("strProductCode", $to) && $to["strProductCode"] != '') {
+    $detailConditionCount += 1;
+    $aryQuery[] = $detailConditionCount == 1 ? "WHERE " : "AND ";
+    $aryQuery[] = " rd1.strProductCode" .
+    " <= " . "'" . pg_escape_string($to["strProductCode"]) . "'";
+}
     // ¿Ω… ÃææŒ
     if (array_key_exists("strProductName", $searchColumns) &&
         array_key_exists("strProductName", $searchValue)) {
@@ -148,46 +154,64 @@ function fncGetMaxReceiveSQL($displayColumns, $searchColumns, $from, $to, $searc
         $aryQuery[] = "rd1.lngSalesClassCode = '" . pg_escape_string($searchValue["lngSalesClassCode"]) . "'";
     }
 
-    // «º¥¸
+    // «º¥¸_from
     if (array_key_exists("dtmDeliveryDate", $searchColumns) &&
-        array_key_exists("dtmDeliveryDate", $from) &&
-        array_key_exists("dtmDeliveryDate", $to)) {
+        array_key_exists("dtmDeliveryDate", $from) && $from["dtmDeliveryDate"] != '') {
         $aryQuery[] = "AND rd1.dtmdeliverydate" .
-            " between '" . $from["dtmDeliveryDate"] . "'" .
-            " AND " . "'" . $to["dtmDeliveryDate"] . "'";
+            " >= '" . $from["dtmDeliveryDate"] . "'";
+    }
+    // «º¥¸_to
+    if (array_key_exists("dtmDeliveryDate", $searchColumns) &&
+        array_key_exists("dtmDeliveryDate", $to) && $to["dtmDeliveryDate"] != '') {
+        $aryQuery[] = "AND rd1.dtmdeliverydate" .
+            " <= " . "'" . $to["dtmDeliveryDate"] . "'";
     }
     $aryQuery[] = "    ) as rd ";
     $aryQuery[] = "WHERE";
     $aryQuery[] = " rd.lngReceiveNo = r.lngReceiveNo ";
     $aryQuery[] = " AND rd.lngRevisionNo = r.lngRevisionNo ";
-    // ≈–œø∆¸
+    // ≈–œø∆¸_from
     if (array_key_exists("dtmInsertDate", $searchColumns) &&
-        array_key_exists("dtmInsertDate", $from) &&
-        array_key_exists("dtmInsertDate", $to)) {
+        array_key_exists("dtmInsertDate", $from) && $from["dtmInsertDate"] != '') {
         $aryQuery[] = "AND r.dtmInsertDate" .
-            " between '" . $from["dtmInsertDate"] . " 00:00:00'" .
-            " AND " . "'" . $to["dtmInsertDate"] . " 23:59:59.99999'";
+            " >= '" . $from["dtmInsertDate"] . " 00:00:00'";
+    }
+    // ≈–œø∆¸_to
+    if (array_key_exists("dtmInsertDate", $searchColumns) &&
+        array_key_exists("dtmInsertDate", $to) && $to["dtmInsertDate"] != '') {
+        $aryQuery[] = "AND r.dtmInsertDate" .
+            " <= " . "'" . $to["dtmInsertDate"] . " 23:59:59.99999'";
     }
 
-    // ∏‹µ“ºı√Ì»÷πÊ
+    // ∏‹µ“ºı√Ì»÷πÊ_from
     if (array_key_exists("strCustomerReceiveCode", $searchColumns) &&
-        array_key_exists("strCustomerReceiveCode", $from) &&
-        array_key_exists("strCustomerReceiveCode", $to)) {
+        array_key_exists("strCustomerReceiveCode", $from) && $from["strCustomerReceiveCode"] != '') {
         $aryQuery[] = "AND r.strCustomerReceiveCode" .
-            " between '" . $from["strCustomerReceiveCode"] . "'" .
-            " AND " . "'" . $to["strCustomerReceiveCode"] . "'";
+            " >= '" . $from["strCustomerReceiveCode"] . "'";
     }
 
-    // ºı√Ì£Œ£Ô
+    // ∏‹µ“ºı√Ì»÷πÊ_to
+    if (array_key_exists("strCustomerReceiveCode", $searchColumns) &&
+        array_key_exists("strCustomerReceiveCode", $to) && $to["strCustomerReceiveCode"] != '') {
+        $aryQuery[] = "AND r.strCustomerReceiveCode" .
+            " <= " . "'" . $to["strCustomerReceiveCode"] . "'";
+    }
+
+    // ºı√Ì£Œ£Ô_from
     if (array_key_exists("strReceiveCode", $searchColumns) &&
-        array_key_exists("strReceiveCode", $from) &&
-        array_key_exists("strReceiveCode", $to)) {
+        array_key_exists("strReceiveCode", $from) && $from["strReceiveCode"] != '') {
         $fromstrReceiveCode = strpos($from["strReceiveCode"], "-") ? preg_replace(strrchr($from["strReceiveCode"], "-"), "", $from["strReceiveCode"]) : $from["strReceiveCode"];
+        $aryQuery[] = "AND r.strReceiveCode" .
+            " >= '" . $fromstrReceiveCode . "'";
+    }
+
+    // ºı√Ì£Œ£Ô_to
+    if (array_key_exists("strReceiveCode", $searchColumns) &&
+        array_key_exists("strReceiveCode", $to) && $to["strReceiveCode"] != '') {
         $tostrReceiveCode = strpos($to["strReceiveCode"], "-") ? preg_replace(strrchr($to["strReceiveCode"], "-"), "", $to["strReceiveCode"]) : $to["strReceiveCode"];
 
         $aryQuery[] = "AND r.strReceiveCode" .
-            " between '" . $fromstrReceiveCode . "'" .
-            " AND " . "'" . $tostrReceiveCode . "'";
+            " <= " . "'" . $tostrReceiveCode . "'";
     }
 
     // ∆˛Œœº‘
@@ -234,7 +258,7 @@ function fncGetMaxReceiveSQL($displayColumns, $searchColumns, $from, $to, $searc
 
     // •Ø•®•Í§Ú ø∞◊§  ∏ª˙ŒÛ§À —¥π
     $strQuery = implode("\n", $aryQuery);
-
+    
     return $strQuery;
 }
 

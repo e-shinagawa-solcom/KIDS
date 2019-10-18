@@ -34,7 +34,7 @@
     $.validator.addMethod(
         "checkStrProductCode",
         function (value, element, params) {
-            if (params) {
+            if (params && value!='') {
                 return this.optional(element) || /\d{5}(_\d{2})?$/.test(value);
             }
             return true;
@@ -46,7 +46,7 @@
     $.validator.addMethod(
         "checkDateFormat",
         function (value, element, params) {
-            if (params) {
+            if (params && value!='') {
                 if (/^[0-9]{8}$/.test(value)) {
                     var str = value.trim();
                     var y = str.substr(0, 4);

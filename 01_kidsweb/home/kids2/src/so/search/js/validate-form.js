@@ -37,7 +37,7 @@
     $.validator.addMethod(
         "checkStrCustomerReceiveCode",
         function (value, element, params) {
-            if (params) {
+            if (params && value!="") {
                 return this.optional(element) || /^[a-zA-Z0-9-, ]+$/.test(value);
             } 
             return true;
@@ -49,7 +49,7 @@
     $.validator.addMethod(
         "checkStrReceiveCode",
         function (value, element, params) {
-            if (params) {
+            if (params && value!="") {
                 return this.optional(element) || /^d\d{8}(_\d{2})?$/.test(value);
             }
             return true;
@@ -60,7 +60,7 @@
     $.validator.addMethod(
         "checkStrProductCode",
         function (value, element, params) {
-            if (params) {
+            if (params && value!="") {
                 return this.optional(element) || /\d{5}(_\d{2})?$/.test(value);
             }
             return true;
@@ -72,7 +72,7 @@
     $.validator.addMethod(
         "checkDateFormat",
         function (value, element, params) {
-            if (params) {
+            if (params && value!="") {
                 // yyyy/mm/dd形式か
                 if (!(regDate.test(value))) {
                     return false;
@@ -96,7 +96,7 @@
     $.validator.addMethod(
         "isLessThanToday",
         function (value, element, params) {
-            if (params) {
+            if (params && value!="") {
                 var regResult = regDate.exec(value);
                 var yyyy = regResult[1];
                 var mm = regResult[2];
@@ -136,7 +136,7 @@
     $.validator.addMethod(
         "isGreaterThanFromDate",
         function (value, element, params) {
-            if (params[0]) {
+            if (params[0] && value!="") {
                 // FROM_XXXXが入力された場合、
                 if ($(params[1]).val() != "") {
                     var regResult = regDate.exec($(params[1]).val());
@@ -261,7 +261,7 @@
             // 顧客受注番号                        
             From_strCustomerReceiveCode: {
                 required: function () {
-                    return $('input[name="IsSearch_strCustomerReceiveCode"]').get(0).checked;
+                    return $('input[name="IsSearch_strCustomerReceiveCode"]').get(0).checked && $('input[name="To_strCustomerReceiveCode"]').val() == "";
                 },
                 checkStrCustomerReceiveCode: function() {
                     return $('input[name="IsSearch_strCustomerReceiveCode"]').get(0).checked;
@@ -269,7 +269,7 @@
             },
             To_strCustomerReceiveCode: {
                 required: function () {
-                    return $('input[name="IsSearch_strCustomerReceiveCode"]').get(0).checked;
+                    return $('input[name="IsSearch_strCustomerReceiveCode"]').get(0).checked && $('input[name="From_strCustomerReceiveCode"]').val() == "";
                 },
                 checkStrCustomerReceiveCode: function() {
                     return $('input[name="IsSearch_strCustomerReceiveCode"]').get(0).checked;
@@ -278,7 +278,7 @@
             // 受注No.            
             From_strReceiveCode: {
                 required: function () {
-                    return $('input[name="IsSearch_strReceiveCode"]').get(0).checked;
+                    return $('input[name="IsSearch_strReceiveCode"]').get(0).checked && $('input[name="To_strReceiveCode"]').val() == "";
                 },
                 checkStrReceiveCode: function() {
                     return $('input[name="IsSearch_strReceiveCode"]').get(0).checked;
@@ -286,7 +286,7 @@
             },
             To_strReceiveCode: {
                 required: function () {
-                    return $('input[name="IsSearch_strReceiveCode"]').get(0).checked;
+                    return $('input[name="IsSearch_strReceiveCode"]').get(0).checked && $('input[name="From_strReceiveCode"]').val() == "";
                 },
                 checkStrReceiveCode: function() {
                     return $('input[name="IsSearch_strReceiveCode"]').get(0).checked;
@@ -295,7 +295,7 @@
             // 製品コード            
             From_strProductCode: {
                 required: function () {
-                    return $('input[name="IsSearch_strProductCode"]').get(0).checked;
+                    return $('input[name="IsSearch_strProductCode"]').get(0).checked && $('input[name="To_strProductCode"]').val() == "";
                 },
                 checkStrProductCode: function() {
                     return $('input[name="IsSearch_strProductCode"]').get(0).checked;
@@ -303,7 +303,7 @@
             },
             To_strProductCode: {
                 required: function () {
-                    return $('input[name="IsSearch_strProductCode"]').get(0).checked;
+                    return $('input[name="IsSearch_strProductCode"]').get(0).checked && $('input[name="From_strProductCode"]').val() == "";
                 },
                 checkStrProductCode: function() {
                     return $('input[name="IsSearch_strProductCode"]').get(0).checked;

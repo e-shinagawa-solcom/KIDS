@@ -134,34 +134,46 @@ $aryQuery[] = "  ) ";
 /////////////////////////////////////////////////////////////////
 // 検索条件
 /////////////////////////////////////////////////////////////////
-// 作成日時
+// 作成日時_from
 if (array_key_exists("dtmInsertDate", $searchColumns) &&
-    array_key_exists("dtmInsertDate", $from) &&
-    array_key_exists("dtmInsertDate", $to)) {
+    array_key_exists("dtmInsertDate", $from) && $from["dtmInsertDate"] != '') {
     $aryQuery[] = " AND date_trunc('day', p.dtmInsertDate)" .
-    " between '" . pg_escape_string($from["dtmInsertDate"]) . "'" .
-    " AND " . "'" . pg_escape_string($to["dtmInsertDate"]) . "'";
+    " >= '" . pg_escape_string($from["dtmInsertDate"]) . "'";
+}
+// 作成日時_to
+if (array_key_exists("dtmInsertDate", $searchColumns) &&
+    array_key_exists("dtmInsertDate", $to) && $to["dtmInsertDate"] != '') {
+    $aryQuery[] = " AND date_trunc('day', p.dtmInsertDate)" .
+    " <= " . "'" . pg_escape_string($to["dtmInsertDate"]) . "'";
 }
 // 企画進行状況
 if (array_key_exists("lngGoodsPlanProgressCode", $searchColumns) &&
     array_key_exists("lngGoodsPlanProgressCode", $searchValue)) {
 		$aryQuery[] = " AND gp.lngGoodsPlanProgressCode = " . $searchValue["lngGoodsPlanProgressCode"];
 }
-// 改訂日時
+// 改訂日時_from
 if (array_key_exists("dtmRevisionDate", $searchColumns) &&
-    array_key_exists("dtmRevisionDate", $from) &&
-    array_key_exists("dtmRevisionDate", $to)) {
+    array_key_exists("dtmRevisionDate", $from) && $to["dtmRevisionDate"] != '') {
     $aryQuery[] = " AND date_trunc('day', p.dtmUpdateDate)" .
-    " between '" . pg_escape_string($from["dtmRevisionDate"]) . "'" .
-    " AND " . "'" . pg_escape_string($to["dtmRevisionDate"]) . "'";
+    " >= '" . pg_escape_string($from["dtmRevisionDate"]) . "'";
 }
-// 製品コード
+// 改訂日時_to
+if (array_key_exists("dtmRevisionDate", $searchColumns) &&
+    array_key_exists("dtmRevisionDate", $to) && $to["dtmRevisionDate"] != '') {
+    $aryQuery[] = " AND date_trunc('day', p.dtmUpdateDate)" .
+    " <= " . "'" . pg_escape_string($to["dtmRevisionDate"]) . "'";
+}
+// 製品コード_from
 if (array_key_exists("strProductCode", $searchColumns) &&
-    array_key_exists("strProductCode", $from) &&
-    array_key_exists("strProductCode", $to)) {
+    array_key_exists("strProductCode", $from) && $from["strProductCode"] != '') {
     $aryQuery[] = " AND p.strProductCode" .
-    " between '" . pg_escape_string($from["strProductCode"]) . "'" .
-    " AND " . "'" . pg_escape_string($to["strProductCode"]) . "'";
+    " >= '" . pg_escape_string($from["strProductCode"]) . "'";
+}
+// 製品コード_to
+if (array_key_exists("strProductCode", $searchColumns) &&
+    array_key_exists("strProductCode", $to) && $to["strProductCode"] != '') {
+    $aryQuery[] = " AND p.strProductCode" .
+    " <= " . "'" . pg_escape_string($to["strProductCode"]) . "'";
 }
 // 製品名
 if (array_key_exists("strProductName", $searchColumns) &&

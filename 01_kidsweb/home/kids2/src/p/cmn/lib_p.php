@@ -103,26 +103,34 @@ $aryQuery[] = "    ON t_gp.lnggoodsplanprogresscode = m_gpp.lnggoodsplanprogress
 $aryQuery[] = " ) gp ON p.lngproductno = gp.lngproductno ";
 $aryQuery[] = "WHERE";
 $aryQuery[] = "  p.lngProductNo >= 0 ";
-// 登録日
+// 登録日_from
 if (array_key_exists("dtmInsertDate", $searchColumns) &&
-    array_key_exists("dtmInsertDate", $from) &&
-    array_key_exists("dtmInsertDate", $to)) {
+    array_key_exists("dtmInsertDate", $from) && $from["dtmInsertDate"] !='') {
     $aryQuery[] = " AND p.dtmInsertDate" .
-        " between '" . $from["dtmInsertDate"] . " 00:00:00'" .
-        " AND " . "'" . $to["dtmInsertDate"] . " 23:59:59.99999'";
+        " >= '" . $from["dtmInsertDate"] . " 00:00:00'";
+}
+// 登録日_to
+if (array_key_exists("dtmInsertDate", $searchColumns) &&
+    array_key_exists("dtmInsertDate", $to) && $to["dtmInsertDate"] !='') {
+    $aryQuery[] = " AND p.dtmInsertDate" .
+        " <= " . "'" . $to["dtmInsertDate"] . " 23:59:59.99999'";
 }
 // 企画進行状況
 if (array_key_exists("lngGoodsPlanProgressCode", $searchColumns) &&
     array_key_exists("lngGoodsPlanProgressCode", $searchValue)) {
     $aryQuery[] = " AND gp.lnggoodsplanprogresscode = " . $searchValue["lngGoodsPlanProgressCode"] . "";
 }
-// 改訂日時
+// 改訂日時_from
 if (array_key_exists("dtmUpdateDate", $searchColumns) &&
-    array_key_exists("dtmUpdateDate", $from) &&
-    array_key_exists("dtmUpdateDate", $to)) {
+    array_key_exists("dtmUpdateDate", $from) && $from["dtmUpdateDate"] !='') {
     $aryQuery[] = " AND p.dtmUpdateDate" .
-        " between '" . $from["dtmUpdateDate"] . " 00:00:00'" .
-        " AND " . "'" . $to["dtmUpdateDate"] . " 23:59:59.99999'";
+        " >= '" . $from["dtmUpdateDate"] . " 00:00:00'";
+}
+// 改訂日時_to
+if (array_key_exists("dtmUpdateDate", $searchColumns) &&
+    array_key_exists("dtmUpdateDate", $to) && $to["dtmUpdateDate"] !='') {
+    $aryQuery[] = " AND p.dtmUpdateDate" .
+        " <= " . "'" . $to["dtmUpdateDate"] . " 23:59:59.99999'";
 }
 // 製品コード
 if (array_key_exists("strProductCode", $searchColumns) &&
@@ -232,13 +240,17 @@ if (array_key_exists("lngCertificateClassCode", $searchColumns) &&
     array_key_exists("lngCertificateClassCode", $searchValue)) {
     $aryQuery[] = " AND p.lngCertificateClassCode = '" . pg_escape_string($searchValue["lngCertificateClassCode"]) . "'";
 }
-// 納期
+// 納期_from
 if (array_key_exists("dtmDeliveryLimitDate", $searchColumns) &&
-    array_key_exists("dtmDeliveryLimitDate", $from) &&
-    array_key_exists("dtmDeliveryLimitDate", $to)) {
+    array_key_exists("dtmDeliveryLimitDate", $from) && $from["dtmDeliveryLimitDate"] != '') {
     $aryQuery[] = " AND p.dtmDeliveryLimitDate" .
-        " between '" . $from["dtmDeliveryLimitDate"] . " 00:00:00'" .
-        " AND " . "'" . $to["dtmDeliveryLimitDate"] . " 23:59:59.99999'";
+        " <= '" . $from["dtmDeliveryLimitDate"] . "'";
+}
+// 納期_to
+if (array_key_exists("dtmDeliveryLimitDate", $searchColumns) &&
+    array_key_exists("dtmDeliveryLimitDate", $to) && $to["dtmDeliveryLimitDate"] != '') {
+    $aryQuery[] = " AND p.dtmDeliveryLimitDate" .
+        " >= " . "'" . $to["dtmDeliveryLimitDate"] . "'";
 }
 
 // 版権元

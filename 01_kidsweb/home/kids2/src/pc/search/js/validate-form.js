@@ -36,7 +36,7 @@
     $.validator.addMethod(
         "checkStrProductCode",
         function (value, element, params) {
-            if (params) {
+            if (params && value!='') {
                 return this.optional(element) || /\d{5}(_\d{2})?$/.test(value);
             }
             return true;
@@ -47,7 +47,7 @@
     $.validator.addMethod(
         "checkAscii",
         function (value, element, params) {
-            if (params) {
+            if (params && value!='') {
                 return this.optional(element) || /\d{0,10}/.test(value);
             }
             return true;
@@ -58,7 +58,7 @@
     $.validator.addMethod(
         "checkDateFormat",
         function (value, element, params) {
-            if (params) {
+            if (params && value!='') {
                 if (/^[0-9]{8}$/.test(value)) {
                     var str = value.trim();
                     var y = str.substr(0, 4);
@@ -101,7 +101,7 @@
     $.validator.addMethod(
         "isLessThanToday",
         function (value, element, params) {
-            if (params) {
+            if (params && value!='') {
                 var regResult = regDate.exec(value);
                 var yyyy = regResult[1];
                 var mm = regResult[2];
@@ -141,7 +141,7 @@
     $.validator.addMethod(
         "isGreaterThanFromDate",
         function (value, element, params) {
-            if (params[0]) {
+            if (params[0] && value!='') {
                 // FROM_XXXXが入力された場合、
                 if ($(params[1]).val() != "") {
                     var regResult = regDate.exec($(params[1]).val());
@@ -371,7 +371,7 @@
             // 製品コード            
             From_strProductCode: {
                 required: function () {
-                    return $('input[name="IsSearch_strProductCode"]').get(0).checked;
+                    return $('input[name="IsSearch_strProductCode"]').get(0).checked && $('input[name="To_strProductCode"]').val() == "";
                 },
                 checkStrProductCode: function () {
                     return $('input[name="IsSearch_strProductCode"]').get(0).checked;
@@ -379,7 +379,7 @@
             },
             To_strProductCode: {
                 required: function () {
-                    return $('input[name="IsSearch_strProductCode"]').get(0).checked;
+                    return $('input[name="IsSearch_strProductCode"]').get(0).checked && $('input[name="From_strProductCode"]').val() == "";
                 },
                 checkStrProductCode: function () {
                     return $('input[name="IsSearch_strProductCode"]').get(0).checked;
@@ -401,20 +401,6 @@
             lngInChargeUserCode: {
                 required: function () {
                     return $('input[name="IsSearch_lngInChargeUserCode"]').get(0).checked;
-                }
-            },
-            // 納期            
-            From_dtmDeliveryDate: {
-                required: function () {
-                    return $('input[name="IsSearch_dtmDeliveryDate"]').get(0).checked && $('input[name="To_dtmDeliveryDate"]').val() == "";
-                }
-            },
-            To_dtmDeliveryDate: {
-                required: function () {
-                    return $('input[name="IsSearch_dtmDeliveryDate"]').get(0).checked && $('input[name="From_dtmDeliveryDate"]').val() == "";
-                },
-                isGreaterThanFromDate: function () {
-                    return [$('input[name="IsSearch_dtmDeliveryDate"]').get(0).checked, 'input[name="From_dtmDeliveryDate"]'];
                 }
             },
             // 状態            
@@ -499,13 +485,6 @@
             },
             // 開発担当者            
             lngInChargeUserCode: {
-                required: msgRequired
-            },
-            // 納期            
-            From_dtmDeliveryDate: {
-                required: msgRequired
-            },
-            To_dtmDeliveryDate: {
                 required: msgRequired
             },
             // 状態            

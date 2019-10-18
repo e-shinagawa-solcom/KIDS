@@ -114,29 +114,42 @@ function fncGetMaxStockSQL($displayColumns, $searchColumns, $from, $to, $searchV
     $aryQuery[] = "          on pu.lngproductunitcode = sd1.lngproductunitcode";
     $aryQuery[] = "        LEFT JOIN m_Order o on sd1.lngOrderNo = o.lngOrderNo";
 
-// 発注書No
+    // 発注書No_from
     if (array_key_exists("strOrderCode", $searchColumns) &&
-        array_key_exists("strOrderCode", $from) &&
-        array_key_exists("strOrderCode", $to)) {
+        array_key_exists("strOrderCode", $from) && $from["strOrderCode"]!='') {
         $detailConditionCount += 1;
         $aryQuery[] = $detailConditionCount == 1 ? "WHERE " : "AND ";
         $aryQuery[] = " o.strOrderCode" .
-            " between '" . $from["strOrderCode"] . "'" .
-            " AND " . "'" . $to["strOrderCode"] . "'";
+            " >= '" . $from["strOrderCode"] . "'";
+    }
+    // 発注書No_to
+    if (array_key_exists("strOrderCode", $searchColumns) &&
+        array_key_exists("strOrderCode", $to) && $to["strOrderCode"]!='') {
+        $detailConditionCount += 1;
+        $aryQuery[] = $detailConditionCount == 1 ? "WHERE " : "AND ";
+        $aryQuery[] = " o.strOrderCode" .
+            " >= " . "'" . $to["strOrderCode"] . "'";
     }
 
-// 製品コード
+    // 製品コード_from
     if (array_key_exists("strProductCode", $searchColumns) &&
-        array_key_exists("strProductCode", $from) &&
-        array_key_exists("strProductCode", $to)) {
+        array_key_exists("strProductCode", $from) && $from["strProductCode"]!='') {
         $detailConditionCount += 1;
         $aryQuery[] = $detailConditionCount == 1 ? "WHERE " : "AND ";
         $aryQuery[] = " sd1.strProductCode" .
-        " between '" . pg_escape_string($from["strProductCode"]) . "'" .
-        " AND " . "'" . pg_escape_string($to["strProductCode"]) . "'";
+        " >= '" . pg_escape_string($from["strProductCode"]) . "'";
     }
 
-// 営業部署
+    // 製品コード_to
+    if (array_key_exists("strProductCode", $searchColumns) &&
+        array_key_exists("strProductCode", $to) && $to["strProductCode"]!='') {
+        $detailConditionCount += 1;
+        $aryQuery[] = $detailConditionCount == 1 ? "WHERE " : "AND ";
+        $aryQuery[] = " sd1.strProductCode" .
+        " <= " . "'" . pg_escape_string($to["strProductCode"]) . "'";
+    }
+
+    // 営業部署
     if (array_key_exists("lngInChargeGroupCode", $searchColumns) &&
         array_key_exists("lngInChargeGroupCode", $searchValue)) {
         $detailConditionCount += 1;
@@ -144,7 +157,7 @@ function fncGetMaxStockSQL($displayColumns, $searchColumns, $from, $to, $searchV
         $aryQuery[] = "mg.strGroupDisplayCode = '" . pg_escape_string($searchValue["lngInChargeGroupCode"]) . "'";
     }
 
-// 開発担当者
+    // 開発担当者
     if (array_key_exists("lngInChargeUserCode", $searchColumns) &&
         array_key_exists("lngInChargeUserCode", $searchValue)) {
         $detailConditionCount += 1;
@@ -152,7 +165,7 @@ function fncGetMaxStockSQL($displayColumns, $searchColumns, $from, $to, $searchV
         $aryQuery[] = "mu.strUserDisplayCode = '" . pg_escape_string($searchValue["lngInChargeUserCode"]) . "'";
     }
 
-// 製品名称
+    // 製品名称
     if (array_key_exists("strProductName", $searchColumns) &&
         array_key_exists("strProductName", $searchValue)) {
         $detailConditionCount += 1;
@@ -160,7 +173,7 @@ function fncGetMaxStockSQL($displayColumns, $searchColumns, $from, $to, $searchV
         $aryQuery[] = "UPPER(p.strproductname) like UPPER('%" . pg_escape_string($searchValue["strProductName"]) . "%')";
     }
 
-// 仕入科目コード
+    // 仕入科目コード
     if (array_key_exists("lngStockSubjectCode", $searchColumns) &&
         array_key_exists("lngStockSubjectCode", $searchValue)) {
         $detailConditionCount += 1;
@@ -168,7 +181,7 @@ function fncGetMaxStockSQL($displayColumns, $searchColumns, $from, $to, $searchV
         $aryQuery[] = "sd1.lngStockSubjectCode = " . $searchValue["lngStockSubjectCode"] . "";
     }
 
-// 仕入部品コード
+    // 仕入部品コード
     if (array_key_exists("lngStockItemCode", $searchColumns) &&
         array_key_exists("lngStockItemCode", $searchValue)) {
         $detailConditionCount += 1;
@@ -176,14 +189,14 @@ function fncGetMaxStockSQL($displayColumns, $searchColumns, $from, $to, $searchV
 
         $aryQuery[] = "sd1.lngStockItemCode = " . explode("-", $searchValue["lngStockItemCode"])[1] . "";
     }
-// 顧客品番
+    // 顧客品番
     if (array_key_exists("strGoodsCode", $searchColumns) &&
         array_key_exists("strGoodsCode", $searchValue)) {
         $detailConditionCount += 1;
         $aryQuery[] = $detailConditionCount == 1 ? "WHERE " : "AND ";
         $aryQuery[] = "p.strgoodscode = '" . pg_escape_string($searchValue["strGoodsCode"]) . "'";
     }
-// 運搬方法
+    // 運搬方法
     if (array_key_exists("lngDeliveryMethodCode", $searchColumns) &&
         array_key_exists("lngDeliveryMethodCode", $searchValue)) {
         $detailConditionCount += 1;
@@ -193,58 +206,74 @@ function fncGetMaxStockSQL($displayColumns, $searchColumns, $from, $to, $searchV
     $aryQuery[] = "    ) as sd ";
     $aryQuery[] = "WHERE";
     $aryQuery[] = "  sd.lngStockNo = s.lngStockNo ";
-// 登録日
+    // 登録日_from
     if (array_key_exists("dtmInsertDate", $searchColumns) &&
-        array_key_exists("dtmInsertDate", $from) &&
-        array_key_exists("dtmInsertDate", $to)) {
+        array_key_exists("dtmInsertDate", $from) && $from["dtmInsertDate"] != '') {
         $aryQuery[] = "AND s.dtmInsertDate" .
-            " between '" . $from["dtmInsertDate"] . " 00:00:00'" .
-            " AND " . "'" . $to["dtmInsertDate"] . " 23:59:59.99999'";
+            " >= '" . $from["dtmInsertDate"] . " 00:00:00'";
     }
-// 仕入日
+    // 登録日_to
+    if (array_key_exists("dtmInsertDate", $searchColumns) &&
+        array_key_exists("dtmInsertDate", $to) && $to["dtmInsertDate"] != '') {
+        $aryQuery[] = "AND s.dtmInsertDate" .
+            " <= " . "'" . $to["dtmInsertDate"] . " 23:59:59.99999'";
+    }
+    // 仕入日_from
     if (array_key_exists("dtmAppropriationDate", $searchColumns) &&
-        array_key_exists("dtmAppropriationDate", $from) &&
-        array_key_exists("dtmAppropriationDate", $to)) {
+        array_key_exists("dtmAppropriationDate", $from) && $from["dtmAppropriationDate"] != '') {
         $aryQuery[] = "AND s.dtmAppropriationDate" .
-            " between '" . $from["dtmAppropriationDate"] . "'" .
-            " AND " . "'" . $to["dtmAppropriationDate"] . "'";
+            " >= '" . $from["dtmAppropriationDate"] . "'";
     }
-// 製品到着日
+    // 仕入日_to
+    if (array_key_exists("dtmAppropriationDate", $searchColumns) &&
+        array_key_exists("dtmAppropriationDate", $to) && $to["dtmAppropriationDate"] != '') {
+        $aryQuery[] = "AND s.dtmAppropriationDate" .
+            " >= " . "'" . $to["dtmAppropriationDate"] . "'";
+    }
+    // 製品到着日_from
     if (array_key_exists("dtmExpirationDate", $searchColumns) &&
-        array_key_exists("dtmExpirationDate", $from) &&
-        array_key_exists("dtmExpirationDate", $to)) {
+        array_key_exists("dtmExpirationDate", $from) && $from["dtmExpirationDate"] != '') {
         $aryQuery[] = "AND s.dtmExpirationDate" .
-            " between '" . $from["dtmExpirationDate"] . "'" .
-            " AND " . "'" . $to["dtmExpirationDate"] . "'";
+            " >= '" . $from["dtmExpirationDate"] . "'";
+    }
+    // 製品到着日_to
+    if (array_key_exists("dtmExpirationDate", $searchColumns) &&
+        array_key_exists("dtmExpirationDate", $to) && $to["dtmExpirationDate"] != '') {
+        $aryQuery[] = "AND s.dtmExpirationDate" .
+            " <= " . "'" . $to["dtmExpirationDate"] . "'";
     }
 
-// 仕入Ｎｏ
+    // 仕入Ｎｏ_from
     if (array_key_exists("strStockCode", $searchColumns) &&
-        array_key_exists("strStockCode", $from) &&
-        array_key_exists("strStockCode", $to)) {
+        array_key_exists("strStockCode", $from) && $from["strStockCode"] != '') {
         $aryQuery[] = "AND s.strStockCode" .
-            " between '" . $from["strStockCode"] . "'" .
-            " AND " . "'" . $to["strStockCode"] . "'";
+            " >= '" . $from["strStockCode"] . "'";
     }
-// 納品書Ｎｏ
+    // 仕入Ｎｏ_to
+    if (array_key_exists("strStockCode", $searchColumns) &&
+        array_key_exists("strStockCode", $to) && $to["strStockCode"] != '') {
+        $aryQuery[] = "AND s.strStockCode" .
+            " <= " . "'" . $to["strStockCode"] . "'";
+    }
+    // 納品書Ｎｏ
     if (array_key_exists("strSlipCode", $searchColumns) &&
         array_key_exists("strSlipCode", $searchValue)) {
         $aryQuery[] = " AND s.strSlipCode = '" . $searchValue["strSlipCode"] . "'";
     }
 
-// 入力者
+    // 入力者
     if (array_key_exists("lngInputUserCode", $searchColumns) &&
         array_key_exists("lngInputUserCode", $searchValue)) {
         $aryQuery[] = " AND input_u.strUserDisplayCode = '" . $searchValue["lngInputUserCode"] . "'";
     }
 
-// 仕入先
+    // 仕入先
     if (array_key_exists("lngCustomerCode", $searchColumns) &&
         array_key_exists("lngCustomerCode", $searchValue)) {
         $aryQuery[] = " AND cust_c.strCompanyDisplayCode = '" . $searchValue["lngCustomerCode"] . "'";
     }
 
-// 状態
+    // 状態
     if (array_key_exists("lngStockStatusCode", $searchColumns) &&
         array_key_exists("lngStockStatusCode", $searchValue)) {
         if (is_array($searchValue["lngStockStatusCode"])) {
@@ -253,7 +282,7 @@ function fncGetMaxStockSQL($displayColumns, $searchColumns, $from, $to, $searchV
         }
     }
 
-// 支払条件
+    // 支払条件
     if (array_key_exists("lngPayConditionCode", $searchColumns) &&
         array_key_exists("lngPayConditionCode", $searchValue)) {
         $aryQuery[] = " AND s.lngPayConditionCode = '" . $searchValue["lngPayConditionCode"] . "'";
@@ -280,7 +309,7 @@ function fncGetMaxStockSQL($displayColumns, $searchColumns, $from, $to, $searchV
 		$aryQuery[] = " AND s.lngRevisionNo >= 0";
 	}
 
-// クエリを平易な文字列に変換
+    // クエリを平易な文字列に変換
     $strQuery = implode("\n", $aryQuery);
 
     return $strQuery;

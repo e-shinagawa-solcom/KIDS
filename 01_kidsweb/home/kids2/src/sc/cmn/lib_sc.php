@@ -30,7 +30,7 @@ function fncGetMaxSalesSQL($displayColumns, $searchColumns, $from, $to, $searchV
     // 明細検索条件数
     $detailConditionCount = 0;
 
-	// クエリの組立て
+    // クエリの組立て
     $aryQuery = array();
     $aryQuery[] = "SELECT distinct";
     $aryQuery[] = " s.strSalesCode as strSalesCode";
@@ -104,7 +104,7 @@ function fncGetMaxSalesSQL($displayColumns, $searchColumns, $from, $to, $searchV
     $aryQuery[] = "        left join m_Receive r ";
     $aryQuery[] = "          on r.lngreceiveno = sd1.lngreceiveno ";
 
-	// 製品コード
+    // 製品コード
     if (array_key_exists("strProductCode", $searchColumns) &&
         array_key_exists("strProductCode", $searchValue)) {
         $detailConditionCount += 1;
@@ -133,7 +133,7 @@ function fncGetMaxSalesSQL($displayColumns, $searchColumns, $from, $to, $searchV
         $aryQuery[] = ")";
     }
 
-	// 製品名称
+    // 製品名称
     if (array_key_exists("strProductName", $searchColumns) &&
         array_key_exists("strProductName", $searchValue)) {
         $detailConditionCount += 1;
@@ -144,7 +144,7 @@ function fncGetMaxSalesSQL($displayColumns, $searchColumns, $from, $to, $searchV
 
     }
 
-	// 顧客品番
+    // 顧客品番
     if (array_key_exists("strGoodsCode", $searchColumns) &&
         array_key_exists("strGoodsCode", $searchValue)) {
         $detailConditionCount += 1;
@@ -152,7 +152,7 @@ function fncGetMaxSalesSQL($displayColumns, $searchColumns, $from, $to, $searchV
         $aryQuery[] = "p.strgoodscode = '" . pg_escape_string($searchValue["strGoodsCode"]) . "'";
     }
 
-	// 営業部署
+    // 営業部署
     if (array_key_exists("lngInChargeGroupCode", $searchColumns) &&
         array_key_exists("lngInChargeGroupCode", $searchValue)) {
         $detailConditionCount += 1;
@@ -160,7 +160,7 @@ function fncGetMaxSalesSQL($displayColumns, $searchColumns, $from, $to, $searchV
         $aryQuery[] = "mg.strGroupDisplayCode = '" . pg_escape_string($searchValue["lngInChargeGroupCode"]) . "'";
     }
 
-	// 開発担当者
+    // 開発担当者
     if (array_key_exists("lngInChargeUserCode", $searchColumns) &&
         array_key_exists("lngInChargeUserCode", $searchValue)) {
         $detailConditionCount += 1;
@@ -168,7 +168,7 @@ function fncGetMaxSalesSQL($displayColumns, $searchColumns, $from, $to, $searchV
         $aryQuery[] = "mu.strUserDisplayCode = '" . pg_escape_string($searchValue["lngInChargeUserCode"]) . "'";
     }
 
-	// 売上区分
+    // 売上区分
     if (array_key_exists("lngSalesClassCode", $searchColumns) &&
         array_key_exists("lngSalesClassCode", $searchValue)) {
         $detailConditionCount += 1;
@@ -180,24 +180,35 @@ function fncGetMaxSalesSQL($displayColumns, $searchColumns, $from, $to, $searchV
     $aryQuery[] = "WHERE";
     $aryQuery[] = " sd.lngSalesNo = s.lngSalesNo ";
 
-	// 登録日
+    // 登録日
     if (array_key_exists("dtmInsertDate", $searchColumns) &&
         array_key_exists("dtmInsertDate", $from) &&
         array_key_exists("dtmInsertDate", $to)) {
-        $aryQuery[] = "AND s.dtmInsertDate" .
-            " between '" . $from["dtmInsertDate"] . " 00:00:00'" .
-            " AND " . "'" . $to["dtmInsertDate"] . " 23:59:59.99999'";
+        if ($from["dtmInsertDate"] != '') {
+            $aryQuery[] = "AND s.dtmInsertDate" .
+                " >= '" . $from["dtmInsertDate"] . " 00:00:00'";
+        }
+
+        if ($to["dtmInsertDate"] != '') {
+            $aryQuery[] = "AND s.dtmInsertDate" .
+                " <= '" . $to["dtmInsertDate"] . " 00:00:00'";
+        }
     }
 
-	// 請求日
+    // 請求日
     if (array_key_exists("dtmAppropriationDate", $searchColumns) &&
         array_key_exists("dtmAppropriationDate", $from) &&
         array_key_exists("dtmAppropriationDate", $to)) {
-        $aryQuery[] = "AND s.dtmAppropriationDate" .
-            " between '" . $from["dtmAppropriationDate"] . " 00:00:00'" .
-            " AND " . "'" . $to["dtmAppropriationDate"] . " 23:59:59.99999'";
+        if ($from["dtmAppropriationDate"] != '') {
+            $aryQuery[] = "AND s.dtmAppropriationDate" .
+                " >= '" . $from["dtmAppropriationDate"] . " 00:00:00'";
+        }
+        if ($to["dtmAppropriationDate"] != '') {
+            $aryQuery[] = "AND s.dtmAppropriationDate" .
+                " <= " . "'" . $to["dtmAppropriationDate"] . " 23:59:59.99999'";
+        }
     }
-	// 売上No.
+    // 売上No.
     if (array_key_exists("strSalesCode", $searchColumns) &&
         array_key_exists("strSalesCode", $searchValue)) {
 
@@ -221,7 +232,7 @@ function fncGetMaxSalesSQL($displayColumns, $searchColumns, $from, $to, $searchV
         }
         $aryQuery[] = ")";
     }
-	// 顧客受注番号
+    // 顧客受注番号
     if (array_key_exists("strCustomerReceiveCode", $searchColumns) &&
         array_key_exists("strCustomerReceiveCode", $searchValue)) {
 
@@ -246,7 +257,7 @@ function fncGetMaxSalesSQL($displayColumns, $searchColumns, $from, $to, $searchV
         $aryQuery[] = ")";
     }
 
-	// 納品書NO.
+    // 納品書NO.
     if (array_key_exists("strSlipCode", $searchColumns) &&
         array_key_exists("strSlipCode", $searchValue)) {
 
@@ -270,19 +281,19 @@ function fncGetMaxSalesSQL($displayColumns, $searchColumns, $from, $to, $searchV
         $aryQuery[] = ")";
     }
 
-	// 入力者
+    // 入力者
     if (array_key_exists("lngInputUserCode", $searchColumns) &&
         array_key_exists("lngInputUserCode", $searchValue)) {
         $aryQuery[] = " AND input_u.strUserDisplayCode = '" . $searchValue["lngInputUserCode"] . "'";
     }
 
-	// 顧客
+    // 顧客
     if (array_key_exists("lngCustomerCompanyCode", $searchColumns) &&
         array_key_exists("lngCustomerCompanyCode", $searchValue)) {
         $aryQuery[] = " AND cust_c.strCompanyDisplayCode = '" . $searchValue["lngCustomerCompanyCode"] . "'";
     }
 
-	// 状態
+    // 状態
     if (array_key_exists("lngSalesStatusCode", $searchColumns) &&
         array_key_exists("lngSalesStatusCode", $searchValue)) {
         if (is_array($searchValue["lngSalesStatusCode"])) {
@@ -313,7 +324,7 @@ function fncGetMaxSalesSQL($displayColumns, $searchColumns, $from, $to, $searchV
         $aryQuery[] = "  AND s.lngRevisionNo >= 0 ";
     }
 
-	// クエリを平易な文字列に変換
+    // クエリを平易な文字列に変換
     $strQuery = implode("\n", $aryQuery);
 
     return $strQuery;
@@ -408,10 +419,10 @@ function fncGetSalesByStrSalesCodeSQL($subStrQuery)
     $aryQuery[] = "ORDER BY";
     $aryQuery[] = "  strSalesCode, lngRevisionNo DESC";
 
-	// クエリを平易な文字列に変換
-	$strQuery = implode("\n", $aryQuery);
-	
-	return $strQuery;
+    // クエリを平易な文字列に変換
+    $strQuery = implode("\n", $aryQuery);
+
+    return $strQuery;
 }
 
 /**

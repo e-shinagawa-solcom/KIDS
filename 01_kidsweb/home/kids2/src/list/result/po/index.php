@@ -118,27 +118,39 @@ $aryQuery[] = "  ) ";
 /////////////////////////////////////////////////////////////////
 // 作成日時
 if (array_key_exists("dtmInsertDate", $searchColumns) &&
-    array_key_exists("dtmInsertDate", $from) &&
-    array_key_exists("dtmInsertDate", $to)) {
+    array_key_exists("dtmInsertDate", $from) && $from["dtmInsertDate"] != '') {
     $aryQuery[] = " AND date_trunc('day', po.dtmInsertDate )" .
-    " between '" . pg_escape_string($from["dtmInsertDate"]) . "'" .
-    " AND " . "'" . pg_escape_string($to["dtmInsertDate"]) . "'";
+    " >= '" . pg_escape_string($from["dtmInsertDate"]) . "'";
+}
+// 作成日時
+if (array_key_exists("dtmInsertDate", $searchColumns) &&
+    array_key_exists("dtmInsertDate", $to) && $to["dtmInsertDate"] != '') {
+    $aryQuery[] = " AND date_trunc('day', po.dtmInsertDate )" .
+    " <= " . "'" . pg_escape_string($to["dtmInsertDate"]) . "'";
 }
 // 発注書ＮＯ.
 if (array_key_exists("strOrderCode", $searchColumns) &&
-    array_key_exists("strOrderCode", $from) &&
-    array_key_exists("strOrderCode", $to)) {
+    array_key_exists("strOrderCode", $from) && $from["strOrderCode"] != '') {
     $aryQuery[] = " AND po.strOrderCode" .
-    " between '" . pg_escape_string($from["strOrderCode"]) . "'" .
-    " AND " . "'" . pg_escape_string($to["strOrderCode"]) . "'";
+    " >= '" . pg_escape_string($from["strOrderCode"]) . "'";
 }
-// 製品コード
+// 発注書ＮＯ.
+if (array_key_exists("strOrderCode", $searchColumns) &&
+    array_key_exists("strOrderCode", $to) && $to["strOrderCode"] != '') {
+    $aryQuery[] = " AND po.strOrderCode" .
+    " <= " . "'" . pg_escape_string($to["strOrderCode"]) . "'";
+}
+// 製品コード_from
 if (array_key_exists("strProductCode", $searchColumns) &&
-    array_key_exists("strProductCode", $from) &&
-    array_key_exists("strProductCode", $to)) {
+    array_key_exists("strProductCode", $from) && $from["strProductCode"] != '') {
     $aryQuery[] = " AND po.strProductCode" .
-    " between '" . pg_escape_string($from["strProductCode"]) . "'" .
-    " AND " . "'" . pg_escape_string($to["strProductCode"]) . "'";
+    " >= '" . pg_escape_string($from["strProductCode"]) . "'";
+}
+// 製品コード_to
+if (array_key_exists("strProductCode", $searchColumns) &&
+    array_key_exists("strProductCode", $to) && $to["strProductCode"] != '') {
+    $aryQuery[] = " AND po.strProductCode" .
+    " <= " . "'" . pg_escape_string($to["strProductCode"]) . "'";
 }
 // 入力者
 if (array_key_exists("lngInputUserCode", $searchColumns) &&
