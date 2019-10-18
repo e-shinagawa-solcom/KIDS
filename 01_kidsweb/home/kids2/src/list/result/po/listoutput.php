@@ -60,7 +60,7 @@ if (!fncCheckAuthority(DEF_FUNCTION_LO0, $objAuth) || !fncCheckAuthority(DEF_FUN
 //===================================================================
 
 $strQuery = fncGetCopyFilePathQuery(DEF_REPORT_ORDER, $aryData["strReportKeyCode"], $aryData["lngReportCode"]);
-echo $strQuery;
+
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
 if ($lngResultNum > 0) {
@@ -70,11 +70,7 @@ if ($lngResultNum > 0) {
 }
 
 $copyDisabled = "visible";
-var_dump($strReportPathName);
-var_dump(!$strReportPathName);
-var_dump($aryData["bytCopyFlag"]);
-var_dump(!$strReportPathName);
-var_dump(!$strReportPathName);
+
 // コピーファイルパスが存在しない または
 // 帳票コードが無い または コピーフラグが偽(コピー選択ではない) かつ
 // コピー解除権限がある場合、
@@ -83,7 +79,6 @@ if (!$strReportPathName || (!($aryData["lngReportCode"] || $aryData["bytCopyFlag
     $copyDisabled = "hidden";
 }
 
-var_dump($copyDisabled);
 ///////////////////////////////////////////////////////////////////////////
 // 帳票コードが真の場合、ファイルデータを取得
 ///////////////////////////////////////////////////////////////////////////
