@@ -228,6 +228,18 @@ elseif ($lngResultNum === 0) {
     $strQuery = "INSERT INTO t_Report VALUES ( $lngSequence, " . DEF_REPORT_SLIP . ", " . $aryParts["lngslipno"] . ", '', '$lngSequence' )";
 
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
+    
+    $objDB->freeResult($lngResultID);
+
+    // 印刷回数の設定
+    $aryParts["lngprintcount"] += 1;
+
+    // 印刷回数の更新    
+    $strQuery = "update m_slip set lngprintcount = ".$aryParts["lngprintcount"] ." where lngslipno = " .$aryParts["lngslipno"] . " and lngrevisionno = " .$aryParts["lngrevisionno"];
+    
+    list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
+    
+    $objDB->freeResult($lngResultID);
 
     // 帳票ファイルオープン
     if (!$fp = fopen(SRC_ROOT . "list/result/cash/" . $lngSequence . ".tmpl", "w")) {

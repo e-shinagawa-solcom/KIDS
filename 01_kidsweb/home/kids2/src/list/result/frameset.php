@@ -1,15 +1,15 @@
 <?
 /**
-*	帳票出力 商品企画書 印刷プレビュー画面(FARAMESET)
-*
-*	@package   KIDS
-*	@license   http://www.wiseknot.co.jp/
-*	@copyright Copyright &copy; 2003, Wiseknot
-*	@author    Kenji Chiba <k-chiba@wiseknot.co.jp>
-*	@access    public
-*	@version   1.00
-*
-*/
+ *    帳票出力 商品企画書 印刷プレビュー画面(FARAMESET)
+ *
+ *    @package   KIDS
+ *    @license   http://www.wiseknot.co.jp/
+ *    @copyright Copyright &copy; 2003, Wiseknot
+ *    @author    Kenji Chiba <k-chiba@wiseknot.co.jp>
+ *    @access    public
+ *    @version   1.00
+ *
+ */
 // 検索結果画面より
 // index.php -> strSessionID       -> frameset.php
 // index.php -> lngReportClassCode -> frameset.php
@@ -33,15 +33,15 @@
 // frameset.php -> lngReportCode      -> action.php
 
 // 設定読み込み
-include_once('conf.inc');
+include_once 'conf.inc';
 
 // ライブラリ読み込み
-require (LIB_FILE);
-require (SRC_ROOT . "list/cmn/lib_lo.php");
+require LIB_FILE;
+require SRC_ROOT . "list/cmn/lib_lo.php";
 
-$objDB   = new clsDB();
+$objDB = new clsDB();
 $objAuth = new clsAuth();
-$objDB->open( "", "", "", "" );
+$objDB->open("", "", "", "");
 
 //////////////////////////////////////////////////////////////////////////
 // データ取得
@@ -51,16 +51,15 @@ $aryData = $_GET;
 // 文字列チェック
 $aryCheck["strSessionID"] = "null:numenglish(32,32)";
 
-$aryResult = fncAllCheck( $aryData, $aryCheck );
-fncPutStringCheckError( $aryResult, $objDB );
+$aryResult = fncAllCheck($aryData, $aryCheck);
+fncPutStringCheckError($aryResult, $objDB);
 
 // セッション確認
-$objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
+$objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 
 // 権限確認
-if ( !fncCheckAuthority( DEF_FUNCTION_LO0, $objAuth ) || !fncCheckAuthority( DEF_FUNCTION_PO0, $objAuth ) )
-{
-	fncOutputError ( 9052, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
+if (!fncCheckAuthority(DEF_FUNCTION_LO0, $objAuth) || !fncCheckAuthority(DEF_FUNCTION_PO0, $objAuth)) {
+    fncOutputError(9052, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
@@ -68,13 +67,20 @@ if ( !fncCheckAuthority( DEF_FUNCTION_LO0, $objAuth ) || !fncCheckAuthority( DEF
 <head>
 <title>K.I.D.S.</title>
 <meta http-equiv="content-type" content="text/html; charset=euc-jp">
+<!-- jQuery -->
+<script src="/cmn/jquery/jquery-3.1.0.js"></script>
+<!-- jQuery Cookie -->
+<script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
+<!-- jQuery UI -->
+<script src="/cmn/jquery/ui/jquery-ui-1.12.0.js"></script>
+<script src="/list/result/cmn/frameset.js"></script>
 </head>
 
 
 <frameset rows="40,1,*" frameborder="0" border="0" framespacing="0">
-	<frame id="button" src="button.php?strSessionID=<? echo $aryData["strSessionID"]; ?>&lngReportClassCode=<? echo $aryData["lngReportClassCode"]; ?>&strReportKeyCode=<? echo $aryData["strReportKeyCode"]; ?>&lngReportCode=<? echo $aryData["lngReportCode"]; ?>" name="button" scrolling="no" noresize>
+	<frame id="button" src="button.php?strSessionID=<?echo $aryData["strSessionID"]; ?>&lngReportClassCode=<?echo $aryData["lngReportClassCode"]; ?>&strReportKeyCode=<?echo $aryData["strReportKeyCode"]; ?>&lngReportCode=<?echo $aryData["lngReportCode"]; ?>" name="button" scrolling="no" noresize>
 	<frame src="/list/printset/borders.html" scrolling="no" noresize>
-	<frame src="<? echo $aryListOutputMenu[$aryData["lngReportClassCode"]]["file"]; ?>/listoutput.php?strSessionID=<? echo $aryData["strSessionID"]; ?>&strReportKeyCode=<? echo $aryData["strReportKeyCode"]; ?>&lngReportCode=<? echo $aryData["lngReportCode"]; ?>&bytCopyFlag=<? echo $aryData["bytCopyFlag"]; ?>" name="list" noresize>
+	<frame src="<?echo $aryListOutputMenu[$aryData["lngReportClassCode"]]["file"]; ?>/listoutput.php?strSessionID=<?echo $aryData["strSessionID"]; ?>&strReportKeyCode=<?echo $aryData["strReportKeyCode"]; ?>&lngReportCode=<?echo $aryData["lngReportCode"]; ?>&bytCopyFlag=<?echo $aryData["bytCopyFlag"]; ?>" name="list" noresize>
 </frameset>
 
 

@@ -512,6 +512,7 @@ function fncGetListOutputQuery($lngClassCode, $lngKeyCode, $objDB)
         $aryQuery[] = "  , s.to_char(dtmpaymentlimit, 'dd/mm/yyyy') as dtmpaymentlimit";
         $aryQuery[] = "  , s.dtminsertdate";
         $aryQuery[] = "  , s.strnote";
+        $aryQuery[] = "  , s.lngprintcount";
         $aryQuery[] = "  , s.strshippercode ";
         $aryQuery[] = "from";
         $aryQuery[] = "  m_slip ";

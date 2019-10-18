@@ -266,8 +266,18 @@ elseif ( $lngResultNum === 0 )
 //fncDebug("list_action.txt", $strQuery, __FILE__ , __LINE__, "a" );
 
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
+    
+    $objDB->freeResult($lngResultID);
 
+    // 印刷回数の設定
+    $aryParts["lngprintcount"] += 1;
 
+    // 印刷回数の更新    
+    $strQuery = "update m_purchaseorder set lngprintcount = ".$aryParts["lngprintcount"] ." where lngpurchaseorderno = " .$aryParts["lngpurchaseorderno"] . " and lngrevisionno = " .$aryParts["lngrevisionno"];
+    
+    list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
+    
+    $objDB->freeResult($lngResultID);
 
 	// 帳票ファイルオープン
 	if ( !$fp = fopen ( SRC_ROOT . "list/result/cash/" . $lngSequence . ".tmpl", "w" ) )
