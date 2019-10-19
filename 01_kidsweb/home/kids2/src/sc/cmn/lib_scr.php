@@ -809,7 +809,7 @@ function fncGetCompanyInfoByCompanyCode($lngCompanyCode, $objDB)
         . "  c.strcompanyname,"
         . "  c.bytorganizationfront,"
         . "  o.lngorganizationcode,"
-        . "  o.strorganizationname"
+        . "  CASE o.lngorganizationcode WHEN 0 THEN '' ELSE o.strorganizationname END AS strorganizationname"
         . " FROM m_company c"
         . "  LEFT JOIN m_stockcompanycode sc ON c.lngcompanycode = sc.lngcompanyno"
         . "  LEFT JOIN m_companyprintname cp ON c.lngcompanycode = cp.lngcompanycode"
