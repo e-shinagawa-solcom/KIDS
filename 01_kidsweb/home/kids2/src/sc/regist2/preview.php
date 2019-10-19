@@ -125,6 +125,7 @@
 		// テンプレートから構築したHTMLを出力
 		$aryData["PREVIEW_STYLE"] = $aryGenerateResult["PreviewStyle"];
 		$aryData["PREVIEW_DATA"] = $aryGenerateResult["PreviewData"];
+		$aryData["strComfirmMessage"] = mb_convert_encoding("以下の内容で売上（納品書）を登録します。よろしいですか？","UTF-8", "auto");
 		$objTemplate = new clsTemplate();
 		$objTemplate->getTemplate( "sc/regist2/preview.tmpl" );
 		$objTemplate->replace( $aryData );

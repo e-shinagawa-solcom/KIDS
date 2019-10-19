@@ -18,11 +18,14 @@ _%PREVIEW_STYLE%_
 		margin: 0 !important;
 		overflow-y: scroll;
     }
+    #ConfirmMsg {
+        text-align:center;
+    }
     .site-header{
         background:#f1f1f1;
         position: fixed;
         width: 100%;
-        height:50px;
+        height:75px;
         border-bottom: 1px;
         border-bottom-style: solid;
         border-bottom-color: black;
@@ -53,6 +56,7 @@ _%PREVIEW_STYLE%_
         <input type="hidden" name="aryDetailJson" value="_%aryDetailJson%_">
 	</form>
     <header class="site-header">
+        <span id="ConfirmMsg"><p>_%strComfirmMessage%_</p></span>
         <div class="form-buttons">
             <span id="CancelBt">
                 <img src="/img/type01/cmn/seg/close_off_ja_bt.gif" 
