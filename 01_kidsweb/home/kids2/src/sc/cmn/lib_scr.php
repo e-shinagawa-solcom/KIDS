@@ -1916,7 +1916,6 @@ function fncGenerateReportImage($strMode, $aryHeader, $aryDetail,
 
             // 全体に追加
             $pageHtml = $xlWriter -> generateSheetData();
-//echo $pageHtml;
             $previewData .= $pageHtml;
         
         }
@@ -1984,7 +1983,6 @@ function fncSetSlipDataToWorkSheet(
     $v_dtmpaymentlimit = $aryHeader["dtmpaymentlimit"];                     //28:支払期限
     $v_dtminsertdate = is_null($dtmInsertDate) ? "" : $dtmInsertDate;       //29:作成日
     $v_strnote = $aryHeader["strnote"];                                     //30:備考
-//echo $v_strnote;
     $v_strshippercode = $aryCustomerCompany["strstockcompanycode"];         //31:仕入先コード（出荷者）
 
     // セルに値をセット
@@ -1993,8 +1991,8 @@ function fncSetSlipDataToWorkSheet(
     setCellValue($xlWorkSheet, "D3", mb_convert_encoding($v_strslipcode, 'euc-jp', 'UTF8' ));                       //3:納品伝票コード
     setCellValue($xlWorkSheet, "E3", mb_convert_encoding($v_lngsalesno, 'euc-jp', 'UTF8' ));                        //4:売上番号
     setCellValue($xlWorkSheet, "F3", mb_convert_encoding($v_strcustomercode, 'euc-jp', 'UTF8' ));                   //5:顧客コード
-    setCellValue($xlWorkSheet, "G3", mb_convert_encoding($v_strcustomercompanyname, 'euc-jp', 'UTF8' ));            //6:顧客社名
-    setCellValue($xlWorkSheet, "H3", mb_convert_encoding($v_strcustomername, 'euc-jp', 'UTF8' ));                   //7:顧客名
+    setCellValue($xlWorkSheet, "G3", $v_strcustomercompanyname);            //6:顧客社名
+    setCellValue($xlWorkSheet, "H3", $v_strcustomername);                   //7:顧客名
     setCellValue($xlWorkSheet, "I3", mb_convert_encoding($v_strcustomeraddress1, 'euc-jp', 'UTF8' ));               //8:顧客住所1
     setCellValue($xlWorkSheet, "J3", mb_convert_encoding($v_strcustomeraddress2, 'euc-jp', 'UTF8' ));               //9:顧客住所2
     setCellValue($xlWorkSheet, "K3", mb_convert_encoding($v_strcustomeraddress3, 'euc-jp', 'UTF8' ));               //10:顧客住所3
@@ -2008,7 +2006,7 @@ function fncSetSlipDataToWorkSheet(
     setCellValue($xlWorkSheet, "S3", mb_convert_encoding($v_strdeliveryplaceusername, 'euc-jp', 'UTF8' ));          //18:納品場所担当者名
     setCellValue($xlWorkSheet, "T3", mb_convert_encoding($v_strusercode, 'euc-jp', 'UTF8' ));                       //19:担当者コード
     setCellValue($xlWorkSheet, "U3", mb_convert_encoding($v_strusername, 'euc-jp', 'UTF8' ));                       //20:担当者名
-    setCellValue($xlWorkSheet, "V3", mb_convert_encoding($v_curtotalprice, 'euc-jp', 'UTF8' ));                     //21:合計金額
+    setCellValue($xlWorkSheet, "V3", $v_curtotalprice);                     //21:合計金額
     setCellValue($xlWorkSheet, "W3", mb_convert_encoding($v_lngmonetaryunitcode, 'euc-jp', 'UTF8' ));               //22:通貨単位コード
     setCellValue($xlWorkSheet, "X3", mb_convert_encoding($v_strmonetaryunitsign, 'euc-jp', 'UTF8' ));               //23:通貨単位
     setCellValue($xlWorkSheet, "Y3", mb_convert_encoding($v_lngtaxclasscode, 'euc-jp', 'UTF8' ));                   //24:課税区分コード
@@ -2062,12 +2060,12 @@ function fncSetSlipDataToWorkSheet(
         setCellDetailValue($xlWorkSheet, "J", $r, mb_convert_encoding($v_strrevisecode, 'euc-jp', 'UTF8' ));               //9:再販コード
         setCellDetailValue($xlWorkSheet, "K", $r, mb_convert_encoding($v_strproductname, 'euc-jp', 'UTF8' ));              //10:製品名
         setCellDetailValue($xlWorkSheet, "L", $r, mb_convert_encoding($v_strproductenglishname, 'euc-jp', 'UTF8' ));       //11:製品名（英語）
-        setCellDetailValue($xlWorkSheet, "M", $r, mb_convert_encoding($v_curproductprice, 'euc-jp', 'UTF8' ));             //12:単価
-        setCellDetailValue($xlWorkSheet, "N", $r, mb_convert_encoding($v_lngquantity, 'euc-jp', 'UTF8' ));                 //13:入数
-        setCellDetailValue($xlWorkSheet, "O", $r, mb_convert_encoding($v_lngproductquantity, 'euc-jp', 'UTF8' ));          //14:数量
-        setCellDetailValue($xlWorkSheet, "P", $r, mb_convert_encoding($v_lngproductunitcode, 'euc-jp', 'UTF8' ));          //15:製品単位コード
+        setCellDetailValue($xlWorkSheet, "M", $r, $v_curproductprice);             //12:単価
+        setCellDetailValue($xlWorkSheet, "N", $r, $v_lngquantity);                 //13:入数
+        setCellDetailValue($xlWorkSheet, "O", $r, $v_lngproductquantity);          //14:数量
+        setCellDetailValue($xlWorkSheet, "P", $r, $v_lngproductunitcode);          //15:製品単位コード
         setCellDetailValue($xlWorkSheet, "Q", $r, mb_convert_encoding($v_strproductunitname, 'euc-jp', 'UTF8' ));          //16:製品単位名
-        setCellDetailValue($xlWorkSheet, "R", $r, mb_convert_encoding($v_cursubtotalprice, 'euc-jp', 'UTF8' ));            //17:小計
+        setCellDetailValue($xlWorkSheet, "R", $r, $v_cursubtotalprice);            //17:小計
         setCellDetailValue($xlWorkSheet, "S", $r, mb_convert_encoding($v_strnote, 'euc-jp', 'UTF8' ));                     //18:明細備考
         
     }
