@@ -816,7 +816,6 @@ function fncGetCompanyInfoByCompanyCode($lngCompanyCode, $objDB)
         . "  LEFT JOIN m_organization o ON c.lngorganizationcode = o.lngorganizationcode"
         . " WHERE c.lngcompanycode = ".$lngCompanyCode
     ;
-
     list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
     if ( $lngResultNum ) {
         for ( $i = 0; $i < $lngResultNum; $i++ ) {
@@ -1347,7 +1346,7 @@ function fncRegisterSalesDetail($itemMinIndex, $itemMaxIndex, $lngSalesNo, $lngR
         $v_lngsalesno = $lngSalesNo;                            //1:売上番号
         $v_lngsalesdetailno = $d["rownumber"];                  //2:売上明細番号
         $v_lngrevisionno = $lngRevisionNo;                      //3:リビジョン番号
-        $v_strproductcode = withQuote($d["strproductcode"]);    //4:製品コード
+        $v_strproductcode = withQuote(mb_substr($d["strproductcode"],0,5));    //4:製品コード
         $v_strrevisecode = withQuote($d["strrevisecode"]);      //5:再販コード
         $v_lngsalesclasscode = $d["lngsalesclasscode"];         //6:売上区分コード
         $v_lngconversionclasscode = "Null";                     //7:換算区分コード
@@ -1594,7 +1593,7 @@ function fncRegisterSlipDetail($itemMinIndex, $itemMaxIndex, $lngSlipNo, $lngRev
         $v_lngsalesclasscode = $d["lngsalesclasscode"];                     //5:売上区分コード
         $v_strsalesclassname = withQuote($d["strsalesclassname"]);          //6:売上区分名
         $v_strgoodscode = withQuote($d["strgoodscode"]);                    //7:顧客品番
-        $v_strproductcode = withQuote($d["strproductcode"]);                //8:製品コード
+        $v_strproductcode = withQuote(mb_substr($d["strproductcode"], 0, 5));                //8:製品コード
         $v_strrevisecode = withQuote($d["strrevisecode"]);                  //9:再販コード
         $v_strproductname = withQuote($d["strproductname"]);                //10:製品名
         $v_strproductenglishname = withQuote($d["strproductenglishname"]);  //11:製品名（英語）
