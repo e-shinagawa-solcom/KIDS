@@ -651,6 +651,9 @@ abstract class estimateRowController {
                 // エラー処理
                 $this->messageCode['price'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
             }
+        } else {
+            // 未入力の場合は0をセットする
+            $this->price = 0;
         }
 
         return true;
