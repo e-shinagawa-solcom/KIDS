@@ -1,6 +1,6 @@
 <?php
 
-require_once('conf.inc');
+require_once ('conf.inc');
 
 class makeHTML {
     public static function setSelectData($data) {
@@ -255,7 +255,7 @@ class makeHTML {
 	*	@return	[$strHTML]		: [String]
 	*/
 	//-------------------------------------------------------------------------
-	public function getPreviewHeader($maxRevisionNo, $revisionNo = null) {
+	public function getPreviewHeader($maxRevisionNo, $revisionNo = null, $minRevisionNo = 0) {
 		if (!isset($revisionNo)) {
 			$revisionNo = $maxRevisionNo;
 		}
@@ -290,7 +290,7 @@ class makeHTML {
 		$strHTML .= "<img class= \"print_button\" src=\"/img/type01/estimate/preview/print.gif\">\n";
 		$strHTML .=	"</button>\n";
 
-		if ($revisionNo == $maxRevisionNo) {
+		if ($revisionNo === $maxRevisionNo && $minRevisionNo >= 0) {
 			$strHTML .= "<button type=\"button\" id=\"edit\" onclick=\"editModeTransition();\">\n";
 			$strHTML .= "<img class= \"edit_button\" src=\"/img/type01/estimate/preview/edit.gif\">\n";
 			$strHTML .=	"</button>\n";
@@ -338,4 +338,31 @@ class makeHTML {
 		return $strHTML;
 	}
 
+	public static function outputErrorWindow($strErrorMessage) {
+		// 検索でエラーが発生したらエラーメッセージを出力する
+		if (is_array($strErrorMessage) && count($strErrorMessage)) {
+			$strMessage = '';
+			foreach($strErrorMessage as $message) {
+				$strMessage .= "<div style=\"margin:5px;\">". $message. "</div>";
+			}
+		} else {
+			$strMessage = "<div style=\"margin:5px;\">". $strErrorMessage. "</div>";
+		}		
+
+		// [strErrorMessage]書き出し
+		$aryHtml["strErrorMessage"] = $strMessage;
+
+		// テンプレート読み込み
+		$objTemplate = new clsTemplate();
+		$objTemplate->getTemplate( "/result/error/parts.tmpl" );
+		
+		// テンプレート生成
+		$objTemplate->replace( $aryHtml );
+		$objTemplate->complete();
+
+		// HTML出力
+		echo $objTemplate->strTemplate;
+
+		exit;
+	}
 }

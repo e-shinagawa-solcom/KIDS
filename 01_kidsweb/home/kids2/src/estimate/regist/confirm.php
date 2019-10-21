@@ -40,7 +40,7 @@
 	//-------------------------------------------------------------------------
 	// DBオープン
 	//-------------------------------------------------------------------------
-	$objDB->InputEncoding = 'UTF-8';
+	$objDB->InputEncoding = 'UTF-8'; // phpSpreadSheetに代入する文字コードをUTF-8で扱うためDBの文字コードをセットする
 	$objDB->open( "", "", "", "" );
 
 	//-------------------------------------------------------------------------
@@ -127,11 +127,7 @@
 		// ヘッダ部のバリデーションを行う
 		$objHeader = new registHeaderController($objDB);
 		$objHeader->initialize($sheetInfo['cellAddress'], $lngUserCode, $sheet);
-		$message = $objHeader->validate();
-
-		if ($message) {
-			$outputMessage[] = $message;
-		}
+		$errorMessage = $objHeader->validate();
 
 		// ヘッダ部の値を出力する
 		$param = $objHeader->outputRegistData();
@@ -338,38 +334,10 @@
 			}
 		}
 
-		// バリデーションでエラーが発生した場合はエラーメッセージを表示する
-		if ( $outputMessage ) {
-			$strMessage = '';
-			foreach ($outputMessage as $messageList) {
-				foreach ($messageList as $message) {
-					if (!$strMessage) {
-						$strMessage = "<div>". $message. "</div>";
-					} else {
-						$strMessage .= "<br>";
-						$strMessage .= "<div>". $message. "</div>";
-					}
-				}
-			}
-
-			// [lngLanguageCode]書き出し
-			$aryHtml["lngLanguageCode"] = $aryData["lngLanguageCode"];
-
-			// [strErrorMessage]書き出し
-			$aryHtml["strErrorMessage"] = mb_convert_encoding($strMessage, 'EUC-JP', 'UTF-8');
-
-			// テンプレート読み込み
-			$objTemplate = new clsTemplate();
-			$objTemplate->getTemplate( "/result/error/parts.tmpl" );
-			
-			// テンプレート生成
-			$objTemplate->replace( $aryHtml );
-			$objTemplate->complete();
-
-			// HTML出力
-			echo $objTemplate->strTemplate;
-
-			exit;
+		// バリデーションでエラーが発生した場合はエラーメッセージ出力画面に遷移する
+		if ($errorMessage) {
+			mb_convert_variables('EUC-JP', 'UTF-8', $errorMessage); // DBの文字コードをUTF-8に変換したため、画面出力文字をEUC-JPに変換
+			makeHTML::outputErrorWindow($errorMessage);
 		}
 
 		$objCal = new registOtherCellsController();

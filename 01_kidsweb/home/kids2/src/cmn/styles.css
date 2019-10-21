@@ -653,6 +653,11 @@ textarea {
 	text-align : right ;
 }
 
+.Txt30L { /* 30byte */
+	width : 221px ;
+	text-align : left ;
+}
+
 .Txt40L { /* 40byte */
 	width : 285px ;
 	text-align : left ;

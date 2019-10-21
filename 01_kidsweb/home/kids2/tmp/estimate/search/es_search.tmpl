@@ -116,8 +116,7 @@ Loading();
                 </span>
 				<span class="regist-label">
 					<span class="regist-label__text">製品コード</span>
-                    FROM <input class="TxtStyle05L" name="From_strProductCode"  type="text" value="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCopyValue( this , document.all.To_strProductCode );" tabindex="">
-					TO <input class="TxtStyle05L" name="To_strProductCode"  type="text" value="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="">
+                    <input class="Txt30L" name="strProductCode" type="text" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this );" tabindex="">
 				</span>
 			</div>
 			<div class="regist-line">
@@ -174,6 +173,18 @@ Loading();
                     <input class="TxtStyle05L" name="lngDevelopUserCode" type="text" alt="DevelopUser">
                     <input class="disTxt46L" name="strDevelopUserName" type="text" readonly>
                     <img class="msw-button button" invokeMSWName="msw-developuser" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="search-label--checkbox">
+                    <input name="IsSearch_lngInputUserCode" class="is-search" type="checkbox">
+                    <input name="IsDisplay_lngInputUserCode" class="is-display" type="checkbox">
+                </span>
+                <span class="regist-label">
+                    <span class="regist-label__text">入力者</span>
+                    <input class="TxtStyle05L" name="lngInputUserCode"  type="text" alt="InputUser">
+                    <input class="disTxt46L" name="strInputUserName"  type="text" readonly>
+                    <img class="msw-button button" invokeMSWName="msw-inputuser" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
                 </span>
             </div>
             <!-- <div class="regist-line">
@@ -244,7 +255,7 @@ Loading();
             <div class="regist-line">
                 <span class="search-label--checkbox">
                     <input name="IsSearch_curFixedCostSales" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_curFixedCostSales" class="is-display" type="checkbox">
+                    <input name="IsDisplay_curFixedCostSales" class="is-display" type="checkbox" checked="checked" disabled>
                 </span>
                 <span class="regist-label">
                     <span class="regist-label--text-only">固定費売上高</span>
@@ -253,7 +264,7 @@ Loading();
             <div class="regist-line">
                 <span class="search-label--checkbox">
                     <input name="IsSearch_curFixedCostSalesProfit" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_curFixedCostSalesProfit" class="is-display" type="checkbox">
+                    <input name="IsDisplay_curFixedCostSalesProfit" class="is-display" type="checkbox" checked="checked" disabled>
                 </span>
                 <span class="regist-label">
                     <span class="regist-label--text-only">固定費利益</span>

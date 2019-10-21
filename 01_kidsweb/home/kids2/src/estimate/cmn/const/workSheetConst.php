@@ -321,6 +321,25 @@ class workSheetConst {
     // 部材費(部材費)
     const PREFIX_ELEMENTS_COST = 'e';
 
+    // 見積原価の機能名--------------------------------------------------------------------------------------
+    // 見積原価プレビュー(閲覧)
+    const ESTIMATE_PREVIEW = 'preview';
+    // 見積原価プレビュー(編集)
+    const ESTIMATE_EDIT = 'edit';
+    // 見積原価削除
+    const ESTIMATE_DELETE = 'delete';
+    // ワークシート選択
+    const ESTIMATE_RESIST_SELECT = 'select';
+    // ワークシート登録(確認)
+    const ESTIMATE_RESIST_CONFIRM = 'confirm';
+    // ワークシート登録
+    const ESTIMATE_RESIST_RESULT = 'regist';
+    // 見積原価検索
+    const ESTIMATE_SEARCH = 'search';
+    // 見積原価一覧
+    const ESTIMATE_RESULT = 'result';
+
+
 
     // 見積原価の処理モード--------------------------------------------------------------------------------------
     // 見積原価プレビュー(閲覧)

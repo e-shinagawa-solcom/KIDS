@@ -40,8 +40,16 @@
 
 	// 文字列チェック
 	$aryCheckResult = fncAllCheck( $aryData, $aryCheck );
-	fncPutStringCheckError( $aryCheckResult, $objDB );
-	unset ( $aryCheck );
+	
+	// エラーメッセージを出力する
+	$strErrorMessage = array();
+
+	foreach ( $aryCheckResult as $value ) {
+		if ($value)	{
+			list ($lngErrorNo, $errorReplace) = explode (":", $value);
+			$strErrorMessage[] = fncOutputError ( $lngErrorNo, DEF_ERROR, $errorReplace, FALSE, "", $objDB );
+		}
+	}
 
 
 	// セッション確認
@@ -75,24 +83,11 @@ $objRegist = new deleteInsertData();
 // 登録に必要なデータをセットする
 $objRegist->setDeleteParam($estimateNo, $revisionNo, $lngUserCode, $objDB);
 
-$errorMessage = $objRegist->delete();
+$strErrorMessage = $objRegist->delete();
 
-if ($errorMessage) {
-
-	$aryHtml["strErrorMessage"] = $errorMessage;
-
-	// テンプレート読み込み
-	$objTemplate = new clsTemplate();
-	$objTemplate->getTemplate( "/result/error/parts.tmpl" );
-	
-	// テンプレート生成
-	$objTemplate->replace( $aryHtml );
-	$objTemplate->complete();
-
-	// HTML出力
-	echo $objTemplate->strTemplate;
-
-	exit;
+// 検索でエラーが発生したらエラーメッセージ出力画面に遷移する
+if ($strErrorMessage) {
+	makeHTML::outputErrorWindow($strErrorMessage);
 }
 
 $objDB->transactionCommit();

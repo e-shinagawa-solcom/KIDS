@@ -93,6 +93,8 @@ if (isset($_POST['maxRevisionNo'])) {
 	}
 }
 
+$minRevisionNo = $firstRecord->minrevisionno;
+
 $productCode = $firstEstimateDetail->strproductcode;
 $reviseCode = $firstEstimateDetail->strrevisecode;
 $productRevisionNo = $firstEstimateDetail->lngproductrevisionno;
@@ -185,7 +187,7 @@ $json = json_encode($viewDataList, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS |
 $json = htmlspecialchars($json, ENT_QUOTES, 'UTF-8');
 
 // ヘッダ部の生成
-$header	= makeHTML::getPreviewHeader($maxRevisionNo, $revisionNo); // ヘッダー
+$header	= makeHTML::getPreviewHeader($maxRevisionNo, $revisionNo, $minRevisionNo); // ヘッダー
 
 // ExcelワークシートHTML取得
 $strExcel .= makeHTML::getGridTable($ws_num); // データ挿入タグ

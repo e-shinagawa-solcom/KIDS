@@ -56,7 +56,7 @@ $strSessionID = $aryData["strSessionID"];
 				'to' => $to[$column]
 			);
 		} else {
-			$searchData[$column] = $data[$column];
+			$searchData[$column] = $aryData[$column];
 		}
 	}
 
@@ -86,6 +86,7 @@ $aryColumnLang = Array (
 	"lngDevelopUserCode"		    => "開発担当者",
 	"dtmDeliveryLimitDate"			=> "客先納品日",
 	"curRetailPrice"				=> "上代",
+	"lngInputUserCode"              => "入力者",
 	"lngCartonQuantity"				=> "カートン入数",
 	"lngProductionQuantity"			=> "償却数(pcs)",
 	"curSalesAmount"			    => "製品売上高",
@@ -115,138 +116,161 @@ $aryColumnLang = Array (
 //////////////////////////////////////////////////////////////////////////
 
 $aryCheck["strSessionID"]                = "null:numenglish(32,32)";
-$aryCheck["strProductCodeFrom"]          = "number(0,2147483647)";
-$aryCheck["strProductCodeTo"]            = "number(0,2147483647)";
+$aryCheck["strProductCodeFrom"]          = "number(0,99999)";
+$aryCheck["strProductCodeTo"]            = "number(0,99999)";
 $aryCheck["strProductName"]              = "length(0,80)";
+$aryCheck["strProductEnglishName"]       = "ascii(0,80)";
 $aryCheck["lngInChargeGroupCode"]        = "numenglish(0,32767)";
 $aryCheck["lngInChargeUserCode"]         = "numenglish(0,32767)";
 $aryCheck["lngDevelopUserCode"]          = "numenglish(0,32767)";
+$aryCheck["lngInputUserCode"]            = "numenglish(0,32767)";
 $aryCheck["dtmCreationDateFrom"]         = "date(/)";
 $aryCheck["dtmCreationDateTo"]           = "date(/)";
 $aryCheck["dtmDeliveryLimitDateFrom"]    = "date(/)";
 $aryCheck["dtmDeliveryLimitDateTo"]      = "date(/)";
 
+$linkedProductCode = str_replace('-', ',', $aryData['strProductCode']);
+$productCodes = explode(',', $linkedProductCode);
+
+for ($i = 0; $i < count($productCodes); ++$i) {
+	$key = 'strProductCode'. $i;
+	$aryData[$key] = $productCodes[$i];
+	$aryCheck[$key] = "intstring(5)";
+}
 
 // 文字列チェック
 $aryCheckResult = fncAllCheck( $aryData, $aryCheck );
-fncPutStringCheckError( $aryCheckResult, $objDB );
 
-// 見積原価のデータ取得
-$selectQuery = 
-	"SELECT
-		TO_CHAR(mp.dtminsertdate, 'YYYY/MM/DD') AS dtminsertdate,
-		mp.strproductcode,
-		mp.strproductname,
-		mp.strproductenglishname,
-		'[' || mg.strgroupdisplaycode || ']' || mg.strgroupdisplayname AS lnginchargegroupcode,
-		'[' || mu1.struserdisplaycode || ']' || mu1.struserdisplayname AS lnginchargeusercode,
-		'[' || mu2.struserdisplaycode || ']' || mu2.struserdisplayname AS lngdevelopusercode,
-		-- TO_CHAR(mp.dtmdeliverylimitdate, 'YYYY/MM/DD') AS dtmdeliverylimitdate,
-		mp.curretailprice,
-		mp.lngcartonquantity,
-		mp.lngproductionquantity,
-		me.cursalesamount,
-		me.cursalesamount - me.curmanufacturingcost AS cursalesprofit,
-		CASE WHEN me.cursalesamount = 0 THEN 0 ELSE (me.cursalesamount - me.curmanufacturingcost) / me.cursalesamount * 100 END AS cursalesprofitrate,
-		tsum.curfixedcostsales,
-		tsum.curfixedcostsales - tsum.curnotdepreciationcost AS curfixedcostsalesprofit,
-		CASE WHEN tsum.curfixedcostsales = 0 THEN 0 ELSE (tsum.curfixedcostsales - tsum.curnotdepreciationcost) / tsum.curfixedcostsales * 100 END AS curfixedcostsalesprofitrate,
-		me.cursalesamount + tsum.curfixedcostsales AS curtotalsales,
-		me.curtotalprice,
-		CASE WHEN me.cursalesamount + tsum.curfixedcostsales = 0 THEN 0 ELSE me.curtotalprice / (me.cursalesamount + tsum.curfixedcostsales) * 100 END AS curtotalpricerate,
-		me.curtotalprice - me.curprofit AS curindirectmanufacturingcost,
-		CASE WHEN me.cursalesamount + tsum.curfixedcostsales = 0 THEN 0 ELSE (me.curtotalprice - me.curprofit) / (me.cursalesamount + tsum.curfixedcostsales) * 100 END AS curstandardrate,
-		me.curprofit,
-		CASE WHEN me.cursalesamount + tsum.curfixedcostsales = 0 THEN 0 ELSE me.curprofit / (me.cursalesamount + tsum.curfixedcostsales) * 100 END AS curprofitrate,
-		me.curmembercost,
-		CASE WHEN mp.lngproductionquantity = 0 THEN 0 ELSE me.curmembercost / mp.lngproductionquantity END AS curmembercostpieces,
-		me.curfixedcost,
-		CASE WHEN mp.lngproductionquantity = 0 THEN 0 ELSE me.curfixedcost / mp.lngproductionquantity END AS curfixedcostpieces,
-		me.curmanufacturingcost AS curmanufacturingcost,
-		CASE WHEN mp.lngproductionquantity = 0 THEN 0 ELSE me.curmanufacturingcost / mp.lngproductionquantity END AS curmanufacturingcostpieces,
-		CASE WHEN tsum.countofreceiveandorderdetail = tsum.countofaplicatedetail THEN TRUE ELSE FALSE END AS deleteflag,
-		me.lngestimateno,
-		mp.strrevisecode,
-		me.lngrevisionno,
-		me.lngrevisionno AS lngmaxrevisionno
-		
-	FROM m_estimate me
-	
-	INNER JOIN m_product mp
-		ON mp.strproductcode = me.strproductcode
-		AND mp.strrevisecode = me.strrevisecode
-		AND mp.lngrevisionno = me.lngproductrevisionno
-	
-	INNER JOIN m_group mg
-		ON mg.lnggroupcode = mp.lnginchargegroupcode
-	
-	INNER JOIN m_user mu1
-		ON mu1.lngusercode = mp.lnginchargeusercode
-	
-	LEFT OUTER JOIN m_user mu2
-		ON mu2.lngusercode = mp.lngdevelopusercode
-	
-	LEFT OUTER JOIN
-	(
-		SELECT 
+// エラーメッセージを出力する
+$strErrorMessage = array();
+
+foreach ( $aryCheckResult as $value ) {
+	if ($value)	{
+		list ($lngErrorNo, $errorReplace) = explode (":", $value);
+		$strErrorMessage[] = fncOutputError ( $lngErrorNo, DEF_ERROR, $errorReplace, FALSE, "", $objDB );
+	}
+}
+
+if (!count($strErrorMessage)) {
+	// 見積原価のデータ取得
+	$selectQuery = 
+		"SELECT
+			TO_CHAR(mp.dtminsertdate, 'YYYY/MM/DD') AS dtminsertdate,
+			mp.strproductcode,
+			mp.strproductname,
+			mp.strproductenglishname,
+			'[' || mg.strgroupdisplaycode || ']' || mg.strgroupdisplayname AS lnginchargegroupcode,
+			'[' || mu1.struserdisplaycode || ']' || mu1.struserdisplayname AS lnginchargeusercode,
+			'[' || mu2.struserdisplaycode || ']' || mu2.struserdisplayname AS lngdevelopusercode,
+			mp.curretailprice,
+			'[' || mu3.struserdisplaycode || ']' || mu3.struserdisplayname AS lnginputusercode,
+			mp.lngcartonquantity,
+			mp.lngproductionquantity,
+			me.cursalesamount,
+			me.cursalesamount - me.curmanufacturingcost AS cursalesprofit,
+			CASE WHEN me.cursalesamount = 0 THEN 0 ELSE (me.cursalesamount - me.curmanufacturingcost) / me.cursalesamount * 100 END AS cursalesprofitrate,
+			tsum.curfixedcostsales,
+			tsum.curfixedcostsales - tsum.curnotdepreciationcost AS curfixedcostsalesprofit,
+			CASE WHEN tsum.curfixedcostsales = 0 THEN 0 ELSE (tsum.curfixedcostsales - tsum.curnotdepreciationcost) / tsum.curfixedcostsales * 100 END AS curfixedcostsalesprofitrate,
+			me.cursalesamount + tsum.curfixedcostsales AS curtotalsales,
+			me.curtotalprice,
+			CASE WHEN me.cursalesamount + tsum.curfixedcostsales = 0 THEN 0 ELSE me.curtotalprice / (me.cursalesamount + tsum.curfixedcostsales) * 100 END AS curtotalpricerate,
+			me.curtotalprice - me.curprofit AS curindirectmanufacturingcost,
+			CASE WHEN me.cursalesamount + tsum.curfixedcostsales = 0 THEN 0 ELSE (me.curtotalprice - me.curprofit) / (me.cursalesamount + tsum.curfixedcostsales) * 100 END AS curstandardrate,
+			me.curprofit,
+			CASE WHEN me.cursalesamount + tsum.curfixedcostsales = 0 THEN 0 ELSE me.curprofit / (me.cursalesamount + tsum.curfixedcostsales) * 100 END AS curprofitrate,
+			me.curmembercost,
+			CASE WHEN mp.lngproductionquantity = 0 THEN 0 ELSE me.curmembercost / mp.lngproductionquantity END AS curmembercostpieces,
+			me.curfixedcost,
+			CASE WHEN mp.lngproductionquantity = 0 THEN 0 ELSE me.curfixedcost / mp.lngproductionquantity END AS curfixedcostpieces,
+			me.curmanufacturingcost AS curmanufacturingcost,
+			CASE WHEN mp.lngproductionquantity = 0 THEN 0 ELSE me.curmanufacturingcost / mp.lngproductionquantity END AS curmanufacturingcostpieces,
+			CASE WHEN tsum.countofreceiveandorderdetail = tsum.countofaplicatedetail THEN TRUE ELSE FALSE END AS deleteflag,
 			me.lngestimateno,
+			mp.strrevisecode,
 			me.lngrevisionno,
-			SUM(CASE WHEN mscdl.lngestimateareaclassno = 2 THEN ted.curconversionrate * ted.cursubtotalprice ELSE 0 END) AS curfixedcostsales,
-			SUM(CASE WHEN msi.lngestimateareaclassno = 3 AND ted.bytpayofftargetflag = FALSE THEN ted.curconversionrate * ted.cursubtotalprice ELSE 0 END) AS curnotdepreciationcost,
-			count(mscdl.lngestimateareaclassno <> 0 OR msi.lngestimateareaclassno <> 5 OR NULL) AS countofreceiveandorderdetail,
-			count(mr.lngreceivestatuscode = 1 OR mo.lngorderstatuscode = 1 OR NULL) AS countofaplicatedetail
-		FROM t_estimatedetail ted
-		INNER JOIN m_estimate me
-			ON me.lngestimateno = ted.lngestimateno
-			AND me.lngrevisionno = ted.lngrevisionno
-		LEFT OUTER JOIN  m_salesclassdivisonlink mscdl
-			ON mscdl.lngsalesclasscode = ted.lngsalesclasscode
-			AND mscdl.lngsalesdivisioncode = ted.lngsalesdivisioncode		
-		LEFT OUTER JOIN m_stockitem msi
-		    ON msi.lngstocksubjectcode = ted.lngstocksubjectcode
-			AND msi.lngstockitemcode = ted.lngstockitemcode
-		LEFT OUTER JOIN t_receivedetail trd
-		    ON trd.lngestimateno = ted.lngestimateno
-			AND trd.lngestimatedetailno = ted.lngestimatedetailno
-			AND trd.lngestimaterevisionno = ted.lngrevisionno
-		LEFT OUTER JOIN m_receive mr
-		    ON mr.lngreceiveno = trd.lngreceiveno
-			AND mr.lngrevisionno = trd.lngrevisionno
-		LEFT OUTER JOIN t_orderdetail tod
-		    ON tod.lngestimateno = ted.lngestimateno
-			AND tod.lngestimatedetailno = ted.lngestimatedetailno
-			AND tod.lngestimaterevisionno = ted.lngrevisionno
-		LEFT OUTER JOIN m_order mo
-		    ON mo.lngorderno = tod.lngorderno
-			AND mo.lngrevisionno = tod.lngrevisionno
-		GROUP BY me.lngestimateno, me.lngrevisionno
-	) tsum
+			me.lngrevisionno AS lngmaxrevisionno
+			
+		FROM m_estimate me
 		
-		ON tsum.lngestimateno = me.lngestimateno
-		AND tsum.lngrevisionno = me.lngrevisionno
+		INNER JOIN m_product mp
+			ON mp.strproductcode = me.strproductcode
+			AND mp.strrevisecode = me.strrevisecode
+			AND mp.lngrevisionno = me.lngproductrevisionno
 		
-	INNER JOIN
-	(
-		SELECT
-			lngestimateno,
-			MAX(lngrevisionno) AS lngrevisionno
-		FROM m_estimate
-		GROUP BY lngestimateno";
+		INNER JOIN m_group mg
+			ON mg.lnggroupcode = mp.lnginchargegroupcode
+		
+		INNER JOIN m_user mu1
+			ON mu1.lngusercode = mp.lnginchargeusercode
+		
+		LEFT OUTER JOIN m_user mu2
+			ON mu2.lngusercode = mp.lngdevelopusercode
+		
+		INNER JOIN m_user mu3
+			ON mu3.lngusercode = mp.lnginputusercode
+		
+		LEFT OUTER JOIN
+		(
+			SELECT 
+				me.lngestimateno,
+				me.lngrevisionno,
+				SUM(CASE WHEN mscdl.lngestimateareaclassno = 2 THEN ted.curconversionrate * ted.cursubtotalprice ELSE 0 END) AS curfixedcostsales,
+				SUM(CASE WHEN msi.lngestimateareaclassno = 3 AND ted.bytpayofftargetflag = FALSE THEN ted.curconversionrate * ted.cursubtotalprice ELSE 0 END) AS curnotdepreciationcost,
+				count(mscdl.lngestimateareaclassno <> 0 OR msi.lngestimateareaclassno <> 5 OR NULL) AS countofreceiveandorderdetail,
+				count(mr.lngreceivestatuscode = 1 OR mo.lngorderstatuscode = 1 OR NULL) AS countofaplicatedetail
+			FROM t_estimatedetail ted
+			INNER JOIN m_estimate me
+				ON me.lngestimateno = ted.lngestimateno
+				AND me.lngrevisionno = ted.lngrevisionno
+			LEFT OUTER JOIN  m_salesclassdivisonlink mscdl
+				ON mscdl.lngsalesclasscode = ted.lngsalesclasscode
+				AND mscdl.lngsalesdivisioncode = ted.lngsalesdivisioncode		
+			LEFT OUTER JOIN m_stockitem msi
+				ON msi.lngstocksubjectcode = ted.lngstocksubjectcode
+				AND msi.lngstockitemcode = ted.lngstockitemcode
+			LEFT OUTER JOIN t_receivedetail trd
+				ON trd.lngestimateno = ted.lngestimateno
+				AND trd.lngestimatedetailno = ted.lngestimatedetailno
+				AND trd.lngestimaterevisionno = ted.lngrevisionno
+			LEFT OUTER JOIN m_receive mr
+				ON mr.lngreceiveno = trd.lngreceiveno
+				AND mr.lngrevisionno = trd.lngrevisionno
+			LEFT OUTER JOIN t_orderdetail tod
+				ON tod.lngestimateno = ted.lngestimateno
+				AND tod.lngestimatedetailno = ted.lngestimatedetailno
+				AND tod.lngestimaterevisionno = ted.lngrevisionno
+			LEFT OUTER JOIN m_order mo
+				ON mo.lngorderno = tod.lngorderno
+				AND mo.lngrevisionno = tod.lngrevisionno
+			GROUP BY me.lngestimateno, me.lngrevisionno
+		) tsum
+			
+			ON tsum.lngestimateno = me.lngestimateno
+			AND tsum.lngrevisionno = me.lngrevisionno
+			
+		INNER JOIN
+		(
+			SELECT
+				lngestimateno,
+				MAX(lngrevisionno) AS lngrevisionno
+			FROM m_estimate
+			GROUP BY lngestimateno";
 
-// // 管理者モードでない場合
-// if () {
+	// // 管理者モードでない場合
+	if (!$options['admin']) {
+		$selectQuery .=
+			" HAVING MIN(lngrevisionno) >= 0";
+
+	}
+			
 	$selectQuery .=
-	    " HAVING MIN(lngrevisionno) >= 0";
 
-// }
+		") maxrev
+
+			ON maxrev.lngestimateno = me.lngestimateno
+			AND maxrev.lngrevisionno = me.lngrevisionno";
 		
-$selectQuery .=
-
-	") maxrev
-
-		ON maxrev.lngestimateno = me.lngestimateno
-		AND maxrev.lngrevisionno = me.lngrevisionno";
-	
 	// WHERE句生成
 	$where = '';
 
@@ -254,6 +278,8 @@ $selectQuery .=
 		$fromCondition = '';
 		$toCondition = '';
 		$search = '';
+		$searchs = array();
+		$searchNumber = array();
 
 		// 検索条件を振り分ける
 		switch ($key) {
@@ -267,35 +293,64 @@ $selectQuery .=
 				}
 				break;
 
-			// 製品コードs
+			// 製品コード
 			case 'strProductCode':
-				if ($condition['from']) {
-					$fromCondition = "mp.strproductcode >= '". $condition['from']. "'";                                 
-				}
-				if ($condition['to']) {
-					$toCondition = "mp.strproductcode <= '". $condition['to']. "'";
-				}
+			    if (strlen($condition)) {
+					$conditions = explode(',', $condition);
+					foreach ($conditions as $value) {
+						if (preg_match('/\A(\d+)-(\d+)\z/', $value, $matches)) {
+							$searchs[] = "mp.strProductCode BETWEEN '". $matches[1]. "' AND '". $matches[2]. "'";
+						} else {
+							$searchNumber[] = "'". $value. "'";
+						}					
+					}
+					$numbers = implode(',', $searchNumber);
+					$searchs[] = "mp.strProductCode IN (". $numbers. ")";
+					$search = implode(' OR ', $searchs);
+				}                             
 				break;
 
-			// 製品名
+			// 製品名称
 			case 'strProductName';
-				$search = "mp.strProductName = ". $condition;
+			    if (strlen($condition)) {
+					$search = "mp.strProductName LIKE '%". $condition. "%'";
+				}				
 				break;
+
+			// 製品名称(英語)
+			case 'strProductEnglishName';
+				if (strlen($condition)) {
+					$search = "mp.strproductenglishname LIKE '%". $condition. "%'";
+				}				
+			break;
 
 			// 営業部署
 			case 'lngInChargeGroupCode':
-				$search = "mp.strInchargegroupdisplaycode = ". $condition;
+			    if (strlen($condition)) {
+					$search = "mg.strgroupdisplaycode = '". $condition. "'";
+				}
 				break;
 
 			// 担当
 			case 'lngInChargeUserCode':
-				$search = "mp.strInchargeuserdisplaycode = ". $condition;
+				if (strlen($condition)) {
+					$search = "mu1.struserdisplaycode = '". $condition. "'";
+				}
 				break;
 
 			// 開発担当者
 			case 'lngDevelopUserCode':
-				$search = "mp.strdevelopuserdisplaycode = ". $condition;
+				if (strlen($condition)) {
+					$search = "mu2.struserdisplaycode = '". $condition. "'";
+				}
 				break;
+			
+			// 入力者
+			case 'lngInputUserCode':
+				if (strlen($condition)) {
+					$search = "mu3.struserdisplaycode = '". $condition. "'";
+				}
+			    break;
 			
 			// // 納期
 			// case 'dtmDeliveryLimitDate';
@@ -347,28 +402,12 @@ $selectQuery .=
 	} else if ($resultNum < 1) {
 		$strErrorMessage = fncOutputError( 1507, DEF_WARNING, "", FALSE, "/estimate/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB );
 	}
+}
 
-	// バリデーションでエラーが発生した場合はエラーメッセージを表示する
-	if ( $strErrorMessage ) {
-
-		$strMessage = "<div>". $strErrorMessage. "</div>";
-
-		// [strErrorMessage]書き出し
-		$aryHtml["strErrorMessage"] = $strMessage;
-
-		// テンプレート読み込み
-		$objTemplate = new clsTemplate();
-		$objTemplate->getTemplate( "/result/error/parts.tmpl" );
-		
-		// テンプレート生成
-		$objTemplate->replace( $aryHtml );
-		$objTemplate->complete();
-
-		// HTML出力
-		echo $objTemplate->strTemplate;
-
-		exit;
-	}
+// 検索でエラーが発生したらエラーメッセージを画面に出力する
+if ($strErrorMessage) {
+	makeHTML::outputErrorWindow($strErrorMessage);
+}
 
 //////////////////////////////////////////////////////////////////////////
 // 結果取得、出力処理

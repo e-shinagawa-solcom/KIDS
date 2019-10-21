@@ -59,6 +59,7 @@ $aryConfigName = array ( "bodyonload", "header1", "header2", "header3" );
 *	                              money(min,max)                  : 金額
 *	                              IP(min,max,plural,asterisk)     : IPアドレス
 *	                              color                           : 色
+*                                 intstring(degit)                : 数字文字列
 *	@return String                エラー情報
 *	        Boolean               FALSE エラー無し
 *	@access public
@@ -389,6 +390,19 @@ function fncCheckString( $str, $strCheckMode )
 			if ( !preg_match ( "/^#[0-9a-fA-F]{6}$/", $str ) )
 			{
 				return "9010:$str";
+			}
+		}
+		// 文字列型の数字チェック
+		elseif ( preg_match ( "/^intstring/", $strCheckType ) && $str != "" ) 
+		{
+			// 文字数指定の取得
+			preg_match ( "/\((\d+)\)/", $strCheckType , $lngRange );
+
+			$pattern = '/^\d{'. $lngRange[1].'}$/';
+
+			if ( !preg_match ( $pattern, $str ) )
+			{
+				return "9021:$str";
 			}
 		}
 	}
