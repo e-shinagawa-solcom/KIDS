@@ -660,3 +660,36 @@ function fncSetDetailDataToTr($doc, $trBody, $bgcolor, $aryTableDetailHeaderName
     }
     return $trBody;
 }
+
+/**
+ * 仕入コードによりデータの状態を確認する
+ *
+ * @param [type] $strstockcode
+ * @param [type] $objDB
+ * @return void [0：未削除データ　1：削除済データ]
+ */
+function fncCheckData($strstockcode, $objDB) {
+    $result = 0;
+    unset($aryQuery);
+    $aryQuery[] = "SELECT";
+    $aryQuery[] = " max(lngrevisionno) lngrevisionno, bytInvalidFlag, strstockcode ";
+    $aryQuery[] = "FROM m_stock ";
+    $aryQuery[] = "WHERE strstockcode='" . $strstockcode . "' ";
+    $aryQuery[] = "group by strstockcode, bytInvalidFlag";
+
+    // クエリを平易な文字列に変換
+    $strQuery = implode("\n", $aryQuery);
+    
+    list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
+
+    if ($lngResultNum) {
+        $resultObj = $objDB->fetchArray($lngResultID, 0);
+    }
+
+    $objDB->freeResult($lngResultID);
+
+    if ($resultObj["lngrevisionno"] < 0) {
+        $result = 1;
+    }
+    return $result;
+}

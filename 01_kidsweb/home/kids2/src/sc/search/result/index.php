@@ -267,8 +267,6 @@ $thead->appendChild($trHead);
 // 検索結果件数分走査
 foreach ($records as $i => $record) {
     unset($aryQuery);
-    // 削除フラグ
-    $deletedFlag = false;
     // リビジョン番号
     $revisionNos = "";
     // 明細番号
@@ -299,10 +297,6 @@ foreach ($records as $i => $record) {
         for ($j = 0; $j < $lngResultNum; $j++) {
             if ($j == 0) {
                 $maxSalesInfo = $objDB->fetchArray($lngResultID, $j);
-                // 該当製品のリビジョン番号<0の場合、削除済となる
-                if ($maxSalesInfo["lngrevisionno"] < 0) {
-                    $deletedFlag = true;
-                }
                 if ($maxSalesInfo["lngrevisionno"] == $record["lngrevisionno"]) {
                     $isMaxSales = true;
                 }
