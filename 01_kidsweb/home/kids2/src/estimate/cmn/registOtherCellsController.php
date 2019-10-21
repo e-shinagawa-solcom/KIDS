@@ -43,8 +43,8 @@ class registOtherCellsController extends estimateOtherCellsController {
         foreach ($objRowList as $objRow) {
             if ($objRow->invalidFlag === false) {
                 $areaCode = $objRow->areaCode;
-                // 再計算結果がない場合は0を代入する
-                $subtotal = isset($objRow->calculatedSubtotalJP) ? $objRow->calculatedSubtotalJP : 0;
+                // 再計算結果がない場合は取得値を参照する
+                $subtotal = isset($objRow->calculatedSubtotalJP) ? $objRow->calculatedSubtotalJP : $objRow->subtotal;
                 switch ($areaCode) {
                     case DEF_AREA_PRODUCT_SALES:
                         $quantity = $objRow->quantity;
