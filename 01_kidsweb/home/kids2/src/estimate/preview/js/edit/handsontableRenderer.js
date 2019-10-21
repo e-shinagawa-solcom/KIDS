@@ -1550,7 +1550,7 @@ $(function() {
       var price = Number(cellValue[row][priceCol]);
       var rate = Number(cellValue[row][rateCol]);
       var subtotal = quantity * price * rate;
-      subtotal = subtotal != 0 ? '\xA5' + numberFormat(subtotal, 0) : '';
+      subtotal = '\xA5' + numberFormat(subtotal, 0);
     } else {
       var subtotal = '';
     }
