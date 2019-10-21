@@ -363,3 +363,36 @@ function fncGetReceivesByStrReceiveCodeSQL($subStrQuery)
 
     return $strQuery;
 }
+
+/**
+ * 受注コードによりデータの状態を確認する
+ *
+ * @param [type] $strstrreceivecode
+ * @param [type] $objDB
+ * @return void [0:確定対象外データ　1：確定対象データ]
+ */
+function fncCheckData($strstrreceivecode, $objDB) {
+    $result = 1;
+    unset($aryQuery);
+    $aryQuery[] = "SELECT";
+    $aryQuery[] = " max(lngrevisionno) lngrevisionno, bytInvalidFlag, strreceivecode ";
+    $aryQuery[] = "FROM m_receive ";
+    $aryQuery[] = "WHERE strreceivecode='" . $strstrreceivecode . "' ";
+    $aryQuery[] = "group by strreceivecode, bytInvalidFlag";
+
+    // クエリを平易な文字列に変換
+    $strQuery = implode("\n", $aryQuery);
+
+    list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
+
+    if ($lngResultNum) {
+        $resultObj = $objDB->fetchArray($lngResultID, 0);
+    }
+
+    $objDB->freeResult($lngResultID);
+
+    if ($resultObj["lngrevisionno"] < 0 || $resultObj["bytInvalidFlag"]) {
+        $result = 0;
+    }
+    return $result;
+}

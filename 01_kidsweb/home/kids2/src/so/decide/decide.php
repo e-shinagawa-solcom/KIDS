@@ -82,7 +82,9 @@ $aryQuery[] = "     on p1.lngRevisionNo = p2.lngRevisionNo and p1.strproductcode
 $aryQuery[] = " ) p USING (strProductCode)";
 $aryQuery[] = " LEFT JOIN m_SalesClass ss USING (lngSalesClassCode)";
 $aryQuery[] = " LEFT JOIN m_ProductUnit pu ON rd.lngProductUnitCode = pu.lngProductUnitCode";
-$aryQuery[] = " LEFT JOIN t_estimatedetail ed USING (lngestimateno, lngestimatedetailno)";
+$aryQuery[] = " LEFT JOIN t_estimatedetail ed on rd.lngestimateno = ed.lngestimateno";
+$aryQuery[] = " and rd.lngestimatedetailno = ed.lngestimatedetailno ";
+$aryQuery[] = " and rd.lngestimaterevisionno = ed.lngrevisionno";
 $aryQuery[] = " WHERE ";
 for ($i = 0; $i < count($aryId); $i++) {
     $id = explode("_", $aryId[$i]);
@@ -96,7 +98,6 @@ for ($i = 0; $i < count($aryId); $i++) {
 }
 $aryQuery[] = " ORDER BY strReceiveCode ASC, lngreceivedetailno DESC";
 $strQuery = implode( "\n", $aryQuery );
-
 //·ë²ÌÇÛÎó
 $result = array();
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);

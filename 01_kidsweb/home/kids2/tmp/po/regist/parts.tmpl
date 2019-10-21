@@ -242,7 +242,8 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutMsw(); initLayout
 <span id="VarsA14">
 	<input style="ime-mode:disabled;" class="TxtStyle03L" type="text" name="lngLocationCode" value="_%lngLocationCode%_">&nbsp;<input style="ime-mode:disabled;" class="disTxt46L" type="text" name="strLocationName" value="_%strLocationName%_" contenteditable="false">
 </span>
-<span id="MSWBt04" onclick="fncGetObjectName( window.MLwin , window.HSO.lngLocationCode , window.HSO.strLocationName );DisplayerM04( '' , document.all.Mdata04 , window.MLwin.document.all.lngLocationCode  );ExchangeM04( 0 , window.self );fncFocusType( window.MLwin , 'locationTop' );return false;"></span>
+<span id="MSWBt04" onclick="fncGetObjectName( window.MLwin , window.HSO.lngLocationCode , window.HSO.strLocationName );DisplayerM04( '' , document.all.Mdata04 , window.MLwin.document.all.lngLocationCode  );ExchangeM04( 0 , window.self );fncFocusType( window.MLwin , 'locationTop' );return false;">
+</span>
 
 <!-- 確定対象明細行選択部 -->
 <span id="SegDetailIN">
@@ -851,7 +852,7 @@ _%strDetailHidden%_
 
 <!-- START [LOCATION] -->
 <p id="MiFrame04" onclick="Zchange(this);">
-<iframe id="Mdata04" name="MLwin" frameborder="0" scrolling="no" src="/msw/location/index.html"></iframe>
+<iframe id="Mdata04" name="MLwin" frameborder="0" scrolling="no" src="/search/cmn/msw/location/mswlocation.html"></iframe>
 <span id="DummyDrag04" onmousedown="pickup04('MiFrame04',event);return false;" 
 	onmouseup="ShowValue( window.MLwin );fncMswPositionCheck( document.all.Mdata04 , document.all.MiFrame04 );" 
 	ondblclick="fncTitlebar( document.all.Mdata04 , document.all.MiFrame04 );"></span>

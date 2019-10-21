@@ -29,7 +29,7 @@
         "checkStrReceiveCode",
         function (value, element, params) {
             if (params) {
-                return this.optional(element) || /^d\d{8}(_\d{2})?$/.test(value);
+                return this.optional(element) || /^d\d{9}(_\d{2})?$/.test(value);
             }
             return true;
         },

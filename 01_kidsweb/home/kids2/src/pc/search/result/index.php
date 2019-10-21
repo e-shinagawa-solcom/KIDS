@@ -331,11 +331,6 @@ foreach ($records as $i => $record) {
         for ($j = 0; $j < $lngResultNum; $j++) {
             if ($j == 0) {
                 $maxStockInfo = $objDB->fetchArray($lngResultID, $j);
-                // 該当製品のリビジョン番号<0の場合、削除済となる
-                if ($maxStockInfo["lngrevisionno"] < 0) {
-                    $deletedFlag = true;
-                }
-
                 if ($maxStockInfo["lngrevisionno"] != 0) {
                     $revisedFlag = true;
                 }
@@ -356,6 +351,8 @@ foreach ($records as $i => $record) {
 
     $objDB->freeResult($lngResultID);
 
+    $deletedFlag = fncCheckData($record["strstockcode"], $objDB);
+    
     // 詳細データを取得する
     $detailData = fncGetDetailData($record["lngstockno"], $record["lngrevisionno"], $objDB);
     $rowspan = count($detailData);
