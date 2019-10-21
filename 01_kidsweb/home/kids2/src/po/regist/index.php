@@ -413,7 +413,18 @@
 
 			// テンプレート読み込み
 			$objDB->freeResult( $lngResultID );
-			echo fncGetReplacedHtml( "/po/regist/parts.tmpl", $aryData, $objAuth );
+
+			// テンプレート読み込み
+$objTemplate = new clsTemplate();
+$objTemplate->getTemplate("/po/regist/parts.html");
+
+// テンプレート生成
+$objTemplate->replace($aryData);
+$objTemplate->complete();
+
+// HTML出力
+echo $objTemplate->strTemplate;
+			// echo fncGetReplacedHtml( "/po/regist/parts.tmpl", $aryData, $objAuth );
 			return true;
 			
 		}
@@ -483,7 +494,16 @@
 	// ヘルプ対応
 	$aryData["lngFunctionCode"] = DEF_FUNCTION_PO1;
 
-	echo fncGetReplacedHtml( "po/regist/parts.tmpl", $aryData ,$objAuth);
+	$objTemplate = new clsTemplate();
+$objTemplate->getTemplate("/po/regist/parts.html");
+
+// テンプレート生成
+$objTemplate->replace($aryData);
+$objTemplate->complete();
+
+// HTML出力
+echo $objTemplate->strTemplate;
+	// echo fncGetReplacedHtml( "po/regist/parts.tmpl", $aryData ,$objAuth);
 	
 	return true;
 

@@ -121,34 +121,34 @@
 	}
 	#FixEntryBtn {
 		position: absolute;
-		top: 470px;
+		top: 490px;
 		left: 715px;
 	}
 	#ClearBtn{
 		position: absolute;
-		top: 470px;
+		top: 490px;
 		left: 830px;
 	}
 	/* 明細行替えボタン */
 	#selectup{
 		position: absolute;
 		top: 330px;
-		left: 785px;
+		left: 790px;
 	}
 	#selectup1{
 		position: absolute;
 		top: 353px;
-		left: 777px;
+		left: 790px;
 	}
 	#selectdown{
 		position: absolute;
 		top: 444px;
-		left: 785px;
+		left: 790px;
 	}
 	#selectdown1{
 		position: absolute;
 		top: 421px;
-		left: 777px;
+		left: 790px;
 	}
 
 	/* 明細行表示テーブル */

@@ -77,21 +77,22 @@
                         lngunitquantity = convertNullToZero(row.lngcartonquantity);
                         lngproductquantity = convertNullToZero(row.lngproductquantity) / lngunitquantity;
                     }
-                    var decide_body = '<tr id="' + detail_id + '" rownum="' + rowNum + '" onclick="rowSelect(this);">'
-                        + '<td style="width: 100px;">' + row.strreceivecode + '</td>'
-                        + '<td style="width: 50px;">' + row.lngreceivedetailno + '</td>'
-                        + '<td style="width: 100px;"><input type="text" class="form-control form-control-sm txt-kids" style="width:90px;" value="' + convertNull(row.strcustomerreceivecode) + '"></td>'
-                        + '<td style="width: 250px;">[' + convertNull(row.strproductcode) + '] ' + convertNull(row.strproductname) + '</td>'
-                        + '<td style="width: 100px;">' + convertNull(row.strgoodscode) + '</td>'
-                        + '<td style="width: 70px;">' + convertNull(row.dtmdeliverydate) + '</td>'
-                        + '<td style="width: 70px;">[' + convertNull(row.lngsalesclasscode) + '] ' + convertNull(row.strsalesclassname) + '</td>'
-                        + '<td style="width: 100px;">' + money_format(row.lngmonetaryunitcode, row.strmonetaryunitsign, row.curproductprice) + '</td>'
-                        + '<td style="width: 100px;">' + select + '</td>' //単位
-                        + '<td style="width: 70px;">' + lngunitquantity + '</td>'
-                        + '<td style="width: 100px;text-align: center;"><img class="button" src="/img/type01/so/product_off_ja_bt.gif" onclick="showProductInfo(this)" lngproductno="' + row.lngproductno + '" lngrevisionno="' + row.lngproductrevisionno + '"></td>'
-                        + '<td style="width: 70px;">' + lngproductquantity + '</td>'
-                        + '<td style="width: 150px;">' + money_format(row.lngmonetaryunitcode, row.strmonetaryunitsign, row.cursubtotalprice) + '</td>'
-                        + '<td style="width: 250px;"><input type="text" class="form-control form-control-sm txt-kids" style="width:240px;" value="' + convertNull(row.strdetailnote) + '"></td>'
+                    // var decide_body = '<tr id="' + detail_id + '" rownum="' + rowNum + '" onclick="rowSelect(this);">'
+                    var decide_body = '<tr id="' + detail_id + '" rownum="' + rowNum + '" >'
+                        + '<td>' + row.strreceivecode + '</td>'
+                        + '<td>' + row.lngreceivedetailno + '</td>'
+                        + '<td><input type="text" class="form-control form-control-sm txt-kids" style="width:90px;" value="' + convertNull(row.strcustomerreceivecode) + '"></td>'
+                        + '<td style="white-space: nowrap;">[' + convertNull(row.strproductcode) + '] ' + convertNull(row.strproductname) + '</td>'
+                        + '<td>' + convertNull(row.strgoodscode) + '</td>'
+                        + '<td>' + convertNull(row.dtmdeliverydate) + '</td>'
+                        + '<td style="white-space: nowrap;" >[' + convertNull(row.lngsalesclasscode) + '] ' + convertNull(row.strsalesclassname) + '</td>'
+                        + '<td>' + money_format(row.lngmonetaryunitcode, row.strmonetaryunitsign, row.curproductprice) + '</td>'
+                        + '<td>' + select + '</td>' //単位
+                        + '<td>' + lngunitquantity + '</td>'
+                        + '<td style="text-align: center;"><img class="button" src="/img/type01/so/product_off_ja_bt.gif" onclick="showProductInfo(this)" lngproductno="' + row.lngproductno + '" lngrevisionno="' + row.lngproductrevisionno + '"></td>'
+                        + '<td>' + lngproductquantity + '</td>'
+                        + '<td style="white-space: nowrap;">' + money_format(row.lngmonetaryunitcode, row.strmonetaryunitsign, row.cursubtotalprice) + '</td>'
+                        + '<td><input type="text" class="form-control form-control-sm txt-kids" style="width:240px;" value="' + convertNull(row.strdetailnote) + '"></td>'
                         + '<td style="display:none">[' + convertNull(row.strcompanydisplaycode) + '] ' + convertNull(row.strcompanydisplayname) + '</td>'
                         + '<td style="display:none">' + row.lngreceiveno + '</td>'
                         + '<td style="display:none">' + row.lngrevisionno + '</td>'
@@ -102,6 +103,73 @@
                         + '</tr>';
                     $("#table_decide_body").append(decide_body);
                 }
+
+                var row = $(".table-decide-description tbody tr");
+                var columnNum = row.find('td').length;
+                var thwidthArry = [];
+                var tdwidthArry = [];
+                for (var i = 1; i <= 14; i++) {
+                    var width = $(".table-decide-description thead tr th:nth-child(" + i + ")").width();
+                    thwidthArry.push(width);
+                    var tdwidth = $(".table-decide-description tbody tr td:nth-child(" + i + ")").width();
+                    tdwidthArry.push(tdwidth);
+                }
+                for (var i = 1; i <= 14; i++) {
+                    if (thwidthArry[i - 1] > tdwidthArry[i - 1]) {
+                        $(".table-decide-description thead tr th:nth-child(" + i + ")").width(thwidthArry[i - 1]);
+                    } else {
+                        $(".table-decide-description thead tr th:nth-child(" + i + ")").width(tdwidthArry[i - 1]);
+                    }
+                }
+                for (var i = 1; i <= 14; i++) {
+                    if (thwidthArry[i - 1] > tdwidthArry[i - 1]) {
+                        $(".table-decide-description tbody tr td:nth-child(" + i + ")").width(thwidthArry[i - 1]);
+                    } else {
+                        $(".table-decide-description tbody tr td:nth-child(" + i + ")").width(tdwidthArry[i - 1]);
+
+                    }
+                }
+                var rows = $('.table-decide-description tbody tr');
+                var lastSelectedRow;
+                /* Create 'click' event handler for rows */
+                rows.on('click', function (e) {
+                    /* Get current row */
+                    var row = $(this);
+
+                    /* Check if 'Ctrl', 'cmd' or 'Shift' keyboard key was pressed
+                     * 'Ctrl' => is represented by 'e.ctrlKey' or 'e.metaKey'
+                     * 'Shift' => is represented by 'e.shiftKey' */
+                    if (e.ctrlKey || e.metaKey) {
+                        /* If pressed highlight the other row that was clicked */
+                        $(".table-decide-description tbody tr:nth-child(" + (row.index() + 1) + ")").css("background-color", "#bbbbbb");
+                        
+                    } else if (e.shiftKey) {
+                        /* If pressed highlight the other row that was clicked */
+                        var indexes = [lastSelectedRow.index(), row.index()];
+                        indexes.sort(function (a, b) {
+                            return a - b;
+                        });
+                        for (var i = indexes[0]; i <= indexes[1]; i++) {
+                            $(".table-decide-description tbody tr:nth-child(" + (i + 1) + ")").css("background-color", "#bbbbbb");
+                        }
+                    } else {
+                        /* Otherwise just highlight one row and clean others */
+                        $(".table-decide-description tbody tr").css("background-color", "#ffffff");
+                        $(".table-decide-description tbody tr:nth-child(" + (row.index() + 1) + ")").css("background-color", "#bbbbbb");
+                        lastSelectedRow = row;
+                    }
+
+                });
+
+                /* This 'event' is used just to avoid that the table text 
+                 * gets selected (just for styling). 
+                 * For example, when pressing 'Shift' keyboard key and clicking 
+                 * (without this 'event') the text of the 'table' will be selected.
+                 * You can remove it if you want, I just tested this in 
+                 * Chrome v30.0.1599.69 */
+                $(document).bind('selectstart dragstart', function (e) {
+                    e.preventDefault(); return false;
+                });
 
             })
             .fail(function (data) {
@@ -351,7 +419,7 @@
             .fail(function (response) {
                 console.log("処理結果：" + JSON.stringify(response));
                 alert("fail");
-        
+
                 // 画面操作を有効にする
                 unlockScreen("lockId");
             });
@@ -366,7 +434,7 @@ function showProductInfo(objID) {
     lngRevisionNo = 'lngRevisionNo=' + objID.getAttribute('lngrevisionno');
     // 別ウィンドウで表示
     window.open(url + '?' + sessionID + '&' + lngProductNo + '&' + lngRevisionNo, '_blank', 'height=510, width=600, resizable=yes, scrollbars=yes, menubar=no');
-    
+
 }
 
 // 行選択イベント
