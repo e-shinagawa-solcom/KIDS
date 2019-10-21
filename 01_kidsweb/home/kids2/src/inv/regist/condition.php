@@ -29,6 +29,7 @@
     require (SRC_ROOT . "m/cmn/lib_m.php");
     require (SRC_ROOT . "inv/cmn/lib_regist.php");
     require_once (SRC_ROOT.'/cmn/exception/SQLException.class.php');
+	require_once (LIB_DEBUGFILE);
 
     // オブジェクト生成
     $objDB   = new clsDB();
@@ -73,7 +74,6 @@
     // ajax 検索
     if(isset($aryData["mode"]) && $aryData["mode"] == 'ajax')
     {
-
         // 検索条件を含んでいる場合
         if(array_key_exists("conditions", $_POST) && count($_POST["conditions"]))
         {
@@ -88,7 +88,7 @@
             $strQuery = fncGetSearchMSlipSQL ($params, false, $objDB);
 //             error_log($strQuery,"3",LOG_FILE);
             // EUC-JPへ変換
-            $strQuery = mb_convert_encoding($strQuery, "EUC-JP", "auto");
+//            $strQuery = mb_convert_encoding($strQuery, "EUC-JP", "auto");
 
             // クエリ実行
             list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
@@ -106,22 +106,24 @@
                     // 検索結果レコードをオブジェクトで取得し必要なjsonデータに加工する
                     foreach($objDB->fetchObject( $lngResultID, $i ) as $column => $val)
                     {
-                        $json[$i][$column] = $val;
+                        $json[$i][mb_convert_encoding($column,"UTF-8","auto")] = mb_convert_encoding($val,"UTF-8","auto");
                     }
 //                     $json[$i]['sql'] = $strQuery;
                 }
 
-                // レスポンスヘッダ設定
-                header('Content-Type: application/json');
                 // json変換の為、一時的にUTF-8へ変換
-                mb_convert_variables('UTF-8', 'eucjp-win', $json);
-
+//                mb_convert_variables('UTF-8', 'euc-jp', $json);
+			    $objDB->close();
+	            // レスポンスヘッダ設定
+	            header('Content-Type: application/json');
                 echo json_encode($json);
+                exit;
             }
             else
-           {
-               echo  json_encode("該当するレコードが見つかりませんでした");
-           }
+            {
+            	$json[mb_convert_encoding("Message","UTF-8", "auto")] = mb_convert_encoding("該当するレコードが見つかりませんでした", "UTF-8", "auto");
+                echo  json_encode($json);
+            }
         }
         // 結果が得られなかった(クエリに失敗した)場合
         else
@@ -132,8 +134,8 @@
                 $params);
         }
 
-    $objDB->close();
-    return true;
+	    $objDB->close();
+	    return true;
     }
     else if(isset($aryData["mode"]) && $aryData["mode"] == 'ajaxRenew')
     {
@@ -163,7 +165,7 @@
             }
 
             // レスポンスヘッダ設定
-            header('Content-Type: application/json');
+//            header('Content-Type: application/json');
             // json変換の為、一時的にUTF-8へ変換
             mb_convert_variables('UTF-8', 'eucjp-win', $json);
 

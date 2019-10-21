@@ -49,9 +49,9 @@ function fncGetSearchMSlipSQL ( $aryCondtition = array(), $renew = false, $objDB
 //     //明細行NO
 //     $aryOutQuery[] = "SELECT sd.lngSortKey as lngRecordNo";
     //納品伝票番号
-    $aryOutQuery[] = " SELECT DISTINCT ON (ms.lngslipno) ms.lngslipno ";
+    $aryOutQuery[] = " SELECT ms.lngslipno ";
     //リビジョン番号
-    $aryOutQuery[] = ",lngrevisionno ";
+    $aryOutQuery[] = ",ms.lngrevisionno ";
     // 納品伝票コード
     $aryOutQuery[] = ", ms.strslipcode ";
     // 売上番号
@@ -110,11 +110,13 @@ function fncGetSearchMSlipSQL ( $aryCondtition = array(), $renew = false, $objDB
     $aryOutQuery[] = ", ms.bytinvalidflag ";
     // From句
     $aryOutQuery[] = " FROM m_slip ms ";
+    $aryOutQuery[] = " INNER JOIN (select lngslipno, MAX(lngrevisionno) as lngrevisionno from m_slip group by lngslipno)";
+    $aryOutQuery[] = " rev_max on rev_max.lngslipno = ms.lngslipno and rev_max.lngrevisionno = ms.lngrevisionno";
     // JOIN
     $aryOutQuery[] = " LEFT JOIN m_company mc ON (mc.lngcompanycode = to_number(ms.strcustomercode,'9999') ) ";
 
     // Where句
-    $aryOutQuery[] = " WHERE lngrevisionno > 0 " ;    // 対象納品伝票番号の指定
+    $aryOutQuery[] = " WHERE ms.lngslipno not in (select lngslipno from m_slip where lngslipno < 0) " ; // 削除済みは対象外
 
     foreach($aryCondtition as $column => $value) {
         $value = trim($value);
@@ -124,14 +126,15 @@ function fncGetSearchMSlipSQL ( $aryCondtition = array(), $renew = false, $objDB
 
         // 顧客コード(表示用)
         if($column == 'customerCode') {
-            $aryOutQuery[] = " AND mc.strcompanydisplaycode LIKE '%" .$value ."%' " ;
+            $aryOutQuery[] = " AND mc.strcompanydisplaycode = '" .$value ."' " ;
         }
 
         // 顧客名
+/*
         if($column == 'customerName') {
             $aryOutQuery[] = " AND strcustomername LIKE '%" .$value ."%' " ;
         }
-
+*/
         // 納品書番号
         if($column == 'strSlipCode') {
             // カンマ区切りの入力値をOR条件に展開

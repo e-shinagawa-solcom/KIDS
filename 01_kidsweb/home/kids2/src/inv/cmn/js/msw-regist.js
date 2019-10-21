@@ -424,7 +424,7 @@
                                 url: '/inv/regist/condition.php?strSessionID=' + $.cookie('strSessionID'),
                                 type: 'post',
                                 dataType: 'json',
-                                data:params
+                                data:params,
                             };
 
                 $.ajax( search )
@@ -437,6 +437,11 @@
                     }
                     else
                     {
+                    	if(response.Message)
+                    	{
+                    		alert(response.Message);
+                    		return;
+                    	}
                         // TABLE∫Ó¿Æ
                         window.opener.$.createTable(response);
 
