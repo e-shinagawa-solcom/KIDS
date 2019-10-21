@@ -235,10 +235,10 @@ abstract class estimateRowController {
     protected function setRowParams($data) {
         $this->delivery = isset($data['delivery']) ? $data['delivery'] : '';
         $this->quantity = isset($data['quantity']) ? $data['quantity'] : '';
-        $this->price = isset($data['price']) ? $data['price'] : '';
+        $this->price = isset($data['price']) ? $data['price'] : 0; // 単価は未入力を0とする
         $this->divisionSubject = isset($data['divisionSubject']) ? $data['divisionSubject'] : '';
         $this->classItem = isset($data['classItem']) ? $data['classItem'] : '';
-        $this->subtotal = isset($data['subtotal']) ? $data['subtotal'] : '';
+        $this->subtotal = isset($data['subtotal']) ? $data['subtotal'] : 0; /// 小計は未入力を0とする
         $this->conversionRate = isset($data['conversionRate']) ? $data['conversionRate'] : '';
         $this->monetaryDisplay = isset($data['monetaryDisplay']) ? $data['monetaryDisplay'] : '';
         $this->monetary = isset($data['monetary']) ? (int)$data['monetary'] : ''; // 比較するのでint型で取得
@@ -651,9 +651,8 @@ abstract class estimateRowController {
                 // エラー処理
                 $this->messageCode['price'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
             }
-        } else {
-            $this->messageCode['price'] = DEF_MESSAGE_CODE_NOT_ENTRY_ERROR; // 必須チェック
         }
+
         return true;
     }
 
