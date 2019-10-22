@@ -87,13 +87,8 @@ class updateInsertData extends estimateInsertData {
             }
         }
 
-        // 受注明細テーブル、発注明細テーブルの再採番したソートキーを取得
         $receiveTable = 't_receivedetail';
         $orderTable = 't_orderdetail';
-
-        $receiveSortKeyList = $this->getRenumberSortKeyList($receiveTable, $detailNoList, $receiveNewSortKey); // 受注明細テーブル用
-        $orderSortKeyList = $this->getRenumberSortKeyList($orderTable, $detailNoList, $orderNewSortKey);       // 発注明細テーブル用
-
 
         // 受注明細テーブル、発注明細テーブルの明細番号の最大値を取得し、セットする
         $search = "WHERE lngestimateno = ". $this->estimateNo; // 検索条件クエリ
@@ -129,7 +124,7 @@ class updateInsertData extends estimateInsertData {
             if ($salesOrder === DEF_ATTRIBUTE_CLIENT) {
 
                 // 受注明細テーブル登録処理
-                $this->updateTableReceiveDetail($rowData, $receiveSortKeyList, $receiveNewSortKey);
+                $this->updateTableReceiveDetail($rowData);
 
                 // 受注マスタ登録処理
                 $this->updateMasterReceive($rowData);
@@ -148,7 +143,7 @@ class updateInsertData extends estimateInsertData {
                 if ($rowData['areaCode'] !== DEF_AREA_OTHER_COST_ORDER) {
 
                     // 発注明細テーブル登録処理
-                    $this->updateTableOrderDetail($rowData, $orderSortKeyList, $orderNewSortKey);
+                    $this->updateTableOrderDetail($rowData);
 
                     // 発注マスタ登録処理
                     $this->updateMasterOrder($rowData);
@@ -433,7 +428,7 @@ class updateInsertData extends estimateInsertData {
     *   
     *	@return true
     */
-    protected function updateTableReceiveDetail(&$rowData, $receiveSortKeyList, &$defaultSortKey) {
+    protected function updateTableReceiveDetail(&$rowData) {
         // テーブルの設定 
         $table = 't_receivedetail';
 
@@ -443,8 +438,6 @@ class updateInsertData extends estimateInsertData {
 
         $previousDetailNo = $rowData['previousDetailNo']; // 以前の見積原価明細番号（検索用）
         $estimateDetailNo = $rowData['currentDetailNo'];  // 今回の見積原価明細番号（登録用)
-
-        $sortKey = $receiveSortKeyList[$previousDetailNo];
 
         if ($previousDetailNo) {
             $data = array(
@@ -461,7 +454,7 @@ class updateInsertData extends estimateInsertData {
                 'lngproductunitcode' => 'lngproductunitcode',
                 'cursubtotalprice' => $rowData['subtotal'],
                 'strnote' => "'". $rowData['note']. "'",
-                'lngsortkey' => $sortKey,
+                'lngsortkey' => $estimateDetailNo,
                 'lngestimateno' => $this->estimateNo,
                 'lngestimatedetailno' => $estimateDetailNo,
                 'lngestimaterevisionno' => $this->revisionNo
@@ -510,7 +503,7 @@ class updateInsertData extends estimateInsertData {
                 'lngproductunitcode' => 'NULL',
                 'cursubtotalprice' => $rowData['subtotal'],
                 'strnote' => "'". $rowData['note']. "'",
-                'lngsortkey' => $defaultSortKey,
+                'lngsortkey' => $estimateDetailNo,
                 'lngestimateno' => $this->estimateNo,
                 'lngestimatedetailno' => $estimateDetailNo,
                 'lngestimaterevisionno' => $this->revisionNo
@@ -526,9 +519,6 @@ class updateInsertData extends estimateInsertData {
             $rowData['receiveNo'] = $receiveNo;
     
             $this->objDB->freeResult($resultID);
-
-            // インクリメント
-            ++$defaultSortKey;
 
             return;
         }
@@ -637,7 +627,7 @@ class updateInsertData extends estimateInsertData {
     *   
     *	@return true
     */
-    protected function updateTableOrderDetail(&$rowData, $orderSortKeyList, &$defaultSortKey) {
+    protected function updateTableOrderDetail(&$rowData) {
         // テーブルの設定
         $table = 't_orderdetail';
 
@@ -672,7 +662,7 @@ class updateInsertData extends estimateInsertData {
                 'cursubtotalprice' => $rowData['subtotal'],
                 'strnote' => "'". $rowData['note']. "'",
                 'strmoldno' => 'strmoldno',
-                'lngsortkey' => $orderDetailNo,
+                'lngsortkey' => 'lngsortkey',
                 'lngestimateno' => $this->estimateNo,
                 'lngestimatedetailno' => $estimateDetailNo,
                 'lngestimaterevisionno' => $this->revisionNo
@@ -727,7 +717,7 @@ class updateInsertData extends estimateInsertData {
                 'cursubtotalprice' => $rowData['subtotal'],
                 'strnote' => "'". $rowData['note']. "'",
                 'strmoldno' => 'NULL',
-                'lngsortkey' => $orderDetailNo,
+                'lngsortkey' => $this->maxOrderDetailNo,
                 'lngestimateno' => $this->estimateNo,
                 'lngestimatedetailno' => $estimateDetailNo,
                 'lngestimaterevisionno' => $this->revisionNo
@@ -1036,41 +1026,6 @@ class updateInsertData extends estimateInsertData {
             return true;
         }
     }
-
-
-    // 見積原価番号に対応する、指定のテーブルのソートキーのリストを取得する
-    protected function getRenumberSortKeyList($table, $detailNoList, &$newSortKey) {
-        $detail = implode(', ', $detailNoList);
-        $previousRevisionNo = $this->revisionNo - 1;
-        $strQuery = "SELECT";
-        $strQuery .= " lngsortkey,";
-        $strQuery .= " lngestimatedetailno";
-        $strQuery .= " FROM ". $table;
-        $strQuery .= " WHERE lngestimatedetailno IN (". $detail. ")";
-        $strQuery .= " AND lngestimateno = ". $this->estimateNo;
-        $strQuery .= " AND lngrevisionno = ". $previousRevisionNo;
-        $strQuery .= " ORDER BY lngsortkey";
-
-        // クエリの実行
-        list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
-
-        $sortKey = 1; // ソートキーは1からの連番
-
-        for ($i = 0; $i < $resultNumber; ++$i) {
-            $result = pg_fetch_object($resultID, $i);
-            $previousDetailNo = $result->lngestimatedetailno;
-            $sortKeyList[$previousDetailNo] = $sortKey;
-            ++$sortKey;
-        }
-
-        $newSortKey = $sortKey; // 新しいソートキーが必要な時に使用する
-
-        $this->objDB->freeResult($resultID);
-
-        return $sortKeyList;
-    }
-
-
 
     /**
     *	検索結果の最初のレコードから指定したカラムの値を取得する
