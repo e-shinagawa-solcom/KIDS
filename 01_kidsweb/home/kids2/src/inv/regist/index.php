@@ -167,7 +167,7 @@
         // 納品日の月
         $baseMonth = date('m', strtotime($dtminvoicedate));
         // システム日付で算出した締め日の前後1ヶ月以内
-        $closeDay = fncGetCompanyClosedDay($insertData['strcustomercode'], null, $objDB);
+        $closeDay = fncGetCompanyClosedDay($insertData['strcustomercode'], $dtminvoicedate, $objDB);
         // 締め日の取得に失敗
         if(empty($closeDay))
         {

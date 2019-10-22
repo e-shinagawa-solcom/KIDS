@@ -205,7 +205,7 @@
         // 納品日の月
         $baseMonth = date('m', strtotime($dtminvoicedate));
         // システム日付で算出した締め日の前後1ヶ月以内
-        $closeDay = fncGetCompanyClosedDay($insertData['strcustomercode'], null, $objDB);
+        $closeDay = fncGetCompanyClosedDay($insertData['strcustomercode'], $dtminvoicedate, $objDB);
         $baseDateTime = new DateTime($closeDay);
         foreach($aryDeliveryDate as $date){
             $deliveryDateTiem = new DateTime($date);

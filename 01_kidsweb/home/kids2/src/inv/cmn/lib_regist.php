@@ -491,7 +491,6 @@ function fncGetCompanyClosedDay($companyDisplayCode , $targetDate=null, $objDB)
 
     // クエリを平易な文字列に変換
     $query = implode("\n",$strQuery);
-
     // クエリ実行
     list ( $lngResultID, $lngResultNum ) = fncQuery( $query, $objDB );
 
@@ -501,18 +500,28 @@ function fncGetCompanyClosedDay($companyDisplayCode , $targetDate=null, $objDB)
         // 検索結果連想配列を取得
         $result = pg_fetch_assoc($lngResultID);
         $lngClosedDay = (int)$result['lngclosedday'];
-        if($lngClosedDay <= 0){
+        if($lngClosedDay < 0){
             return $closedDay;
         }
         // 日付の比較
         $dateTime = new DateTime($targetDate);
 
-        $day = (int)$dateTime->format('d');
-
-        if($day > $lngClosedDay)
+        if( $lngClosedDay == 0 )
         {
-            // 来月
+        	$year = (int)($dateTime->format('Y'));
+        	$month = (int)($dateTime->format('m'));
+            $dateTime->setDate($year,$month,1);
             $dateTime->add(DateInterval::createFromDateString('1 month'));
+            $dateTime->add(DateInterval::createFromDateString('-1 day'));
+        }
+        else
+        {
+            $day = (int)$dateTime->format('d');
+            if($day > $lngClosedDay)
+            {
+                // 来月
+                $dateTime->add(DateInterval::createFromDateString('1 month'));
+            }
         }
         $objDB->freeResult($lngResultID);
         $closedDay = $dateTime->format('Y-m-').$lngClosedDay;
