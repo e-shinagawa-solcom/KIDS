@@ -2161,6 +2161,7 @@ function fncSetInvoiceDetailTableData ( $aryDetailResult, $aryHeadResult )
  */
 function fncSetPreviewTableData ( $aryResult , $lngInvoiceNo, $objDB)
 {
+	require_once (LIB_DEBUGFILE);
     // 請求書明細の納品書No
     $slipCodeArray = explode(',' ,$aryResult['slipCodeList']);
     $aryPrevResult['slipCodeList']  = $aryResult['slipCodeList'];
@@ -2233,8 +2234,7 @@ function fncSetPreviewTableData ( $aryResult , $lngInvoiceNo, $objDB)
 
     // 担当者
     $aryPrevResult["strUserCode"] = $aryResult["lngInputUserCode"];
-    $aryPrevResult["strUserName"] = $aryResult["lngInputUserName"];
-
+    $aryPrevResult["strUserName"] = $aryResult["strInputUserName"];
     // 通貨単位名称
     $monetaryUnitCode = 1;
     $aryPrevResult['strMonetaryUnitName'] = fncGetMonetaryunitSign( $monetaryUnitCode ,$objDB);
