@@ -65,7 +65,7 @@
 
     // 日付が過去でないか ActionDate
     $.validator.addMethod(
-        "isGreaterThanToday",
+        "equalsOrGreaterThanToday",
         function(value, element, params) {
             if(params){
                 var regResult = regDate.exec(value);
@@ -91,7 +91,7 @@
                         return true;
                     } else if (nowDi.getMonth() == di.getMonth()){
                         // 入力した日が現在と同じかそれより小さければエラー
-                        if (nowDi.getDate() >= di.getDate()) {
+                        if (nowDi.getDate() > di.getDate()) {
                             return false;
                         }
                     }

@@ -343,7 +343,7 @@ function fncGetStrInvoiceCode( $lnginvoiceno = null, $isDummy=true , $objDB )
     }
 
     // 請求書番号(strinvoicecode)を発行
-    $format = '%02d-B%02d%04d';
+    $format = '%02d-B%02d%03d';
     // 期取得
     $basePeriod = 42;
     $baseDate   = '2019-04-01';
@@ -373,7 +373,7 @@ function fncGetStrInvoiceCode( $lnginvoiceno = null, $isDummy=true , $objDB )
         // シーケンス発行
         $sequenceInvoiceCode = fncGetDateSequence($period, $thisMonth, 'm_invoice.strinvoicecode', $objDB);
         // formatに従って請求書コードを返す
-        $strinvoicecode = sprintf($format, substr($sequenceInvoiceCode,0,2), substr($sequenceInvoiceCode,2,2), substr($sequenceInvoiceCode,4,4) );
+        $strinvoicecode = sprintf($format, substr($sequenceInvoiceCode,0,2), substr($sequenceInvoiceCode,2,2), substr($sequenceInvoiceCode,5,3) );
     }
 
     return $strinvoicecode;
