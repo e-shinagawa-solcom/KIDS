@@ -151,6 +151,9 @@
         mswBox.find('img.msw-box__header__close-btn').trigger('click');
     });
 
+    $('.TxtStyle05L.billing-date.hasDatepicker').on("change", function(){
+            selectClosedDay();
+    });
     // 請求日ボタン押下時の処理
     var btnbilling = $('.billing-button').find('img');
     btnbilling.on({
@@ -194,7 +197,6 @@
                         QueryName: 'selectClosedDayByCodeAndName',
                         Conditions: {
                             customerCode: customerCode.val(),
-                            customerName: customerName.val()
                         }
                     }
                 };
@@ -230,6 +232,9 @@
         var billingEnd   = $('input[name="dtmchargeternend"]');
         billingStart.val(start).change();
         billingEnd.val(end).change();
+        // 請求月セット
+        var billingMonth = $('input[name="From_strInvoiceMonth"]');
+        billingMonth.val(end.split('/')[1]).change();
         return true;
 
 
@@ -265,29 +270,39 @@
         // 締め日 (close)
         close = parseInt(close);
         isCloseDay = close;
-
-        // 至 ：請求日の日 <= 締め日の場合、当月の締め日、それ以外の場合は、翌月の締め日
-        if (dd <= close) {
-            var date1 = new Date(yyyy, mm - 1, close);
-            var end = yyyy + '/' + mm + '/' + close;
-        } else {
-            var date1 = new Date(yyyy, mm - 1, close);
-            date1.setMonth(date1.getMonth() + 1);
-            var end = date1.getFullYear() + '/' + (date1.getMonth()+1) + '/' + date1.getDate();
+        if( close === 0 )
+        {
+	        // 末日締めの対応
+	        var startDate = new Date(yyyy, mm - 1, 1);
+	        var start = startDate.getFullYear() + '/' + (startDate.getMonth()+1) + '/' + startDate.getDate();
+	        var endDate = new Date(yyyy, mm, 1);
+	        endDate.setDate(endDate.getDate() - 1);
+	        var end = endDate.getFullYear() + '/' + (endDate.getMonth()+1) + '/' + endDate.getDate();
         }
+    	else
+    	{
+            // 至 ：請求日の日 <= 締め日の場合、当月の締め日、それ以外の場合は、翌月の締め日
+            if (dd <= close) {
+                var date1 = new Date(yyyy, mm - 1, close);
+                var end = yyyy + '/' + mm + '/' + close;
+            } else {
+                var date1 = new Date(yyyy, mm - 1, close);
+                date1.setMonth(date1.getMonth() + 1);
+                var end = date1.getFullYear() + '/' + (date1.getMonth()+1) + '/' + date1.getDate();
+            }
 
-        // 自：至の1ヶ月前の翌日
-        var startSplit = splitDate(end);
-        var syyyy = parseInt(startSplit[1]);
-        var smm   = parseInt(startSplit[2]);
-        var sdd   = parseInt(startSplit[3]);
-        var date2 = new Date(syyyy, smm - 1, sdd);
-        // 一か月前
-        date2.setMonth(date2.getMonth() - 1);
-        // 翌日
-        date2.setDate(date2.getDate() + 1);
-        var start = date2.getFullYear() + '/' + (date2.getMonth()+1) + '/' + date2.getDate();
-
+            // 自：至の1ヶ月前の翌日
+            var startSplit = splitDate(end);
+            var syyyy = parseInt(startSplit[1]);
+            var smm   = parseInt(startSplit[2]);
+            var sdd   = parseInt(startSplit[3]);
+            var date2 = new Date(syyyy, smm - 1, sdd);
+            // 一か月前
+            date2.setMonth(date2.getMonth() - 1);
+            // 翌日
+            date2.setDate(date2.getDate() + 1);
+            var start = date2.getFullYear() + '/' + (date2.getMonth()+1) + '/' + date2.getDate();
+        }
         // 返却
         return [start, end];
     }
