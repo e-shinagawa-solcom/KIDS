@@ -88,11 +88,6 @@ $(function(){
   table[0].selectCell(0, 0);
   table[0].deselectCell();
 
-  
-  // var cellString = JSON.stringify(cellClass);
-  // console.log(cellString);
-  
-
   // Handsontable¤Îtd¥¿¥°CSS
   function firstRenderer(instance, td, row, col, prop, value, cellProperties) {
     if (col <= 2) {

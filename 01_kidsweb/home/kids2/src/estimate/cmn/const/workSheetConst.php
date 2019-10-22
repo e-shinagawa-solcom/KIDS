@@ -24,6 +24,10 @@ class workSheetConst {
     const BOTTOM_LEFT = 'bottom_left';
 
     // ヘッダー部
+    // 作成日タイトル
+    const INSERT_DATE_HEADER = 'insert_date_header';
+    // 作成日
+    const INSERT_DATE = 'insert_date';
     // 製品コードタイトル
     const PRODUCT_CODE_HEADER = 'productcode_header';
     // 製品コード
@@ -360,6 +364,8 @@ class workSheetConst {
     const MODE_ESTIMATE_SEARCH = 'search';
     // 見積原価一覧
     const MODE_ESTIMATE_RESULT = 'result';
+    // 見積原価印刷
+    const MODE_ESTIMATE_PRINT = 'print';
 
 
 
@@ -507,6 +513,7 @@ class workSheetConst {
 
     // ワークシートヘッダー入力項目セル名称
     const WORK_SHEET_HEADER_DATA_CELL = [
+        'insertDate' => self::INSERT_DATE,
         'productCode' => self::PRODUCT_CODE,
         'productName' => self::PRODUCT_NAME,
         'productEnglishName' => self::PRODUCT_ENGLISH_NAME,
@@ -520,6 +527,7 @@ class workSheetConst {
 
     // ワークシートヘッダー項目タイトルセル名称
     const WORK_SHEET_HEADER_TITLE_CELL = [
+        'insertDate' => self::INSERT_DATE_HEADER,
         'productCode' => self::PRODUCT_CODE_HEADER,
         'productName' => self::PRODUCT_NAME_HEADER,
         'productEnglishName' => self::PRODUCT_ENGLISH_NAME_HEADER,
@@ -838,7 +846,7 @@ class workSheetConst {
 
     // 編集可能なセルリスト(対象エリア以外)
     const EDITABLE_KEY_EXPECT_FOR_TARGET_AREA = [
-        self::PRODUCT_CODE => true,
+        self::PRODUCT_CODE => false,
         self::PRODUCT_NAME => true,
         self::PRODUCT_ENGLISH_NAME => true,
         self::RETAIL_PRICE => true,

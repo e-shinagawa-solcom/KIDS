@@ -2,7 +2,7 @@
 
 /**
 *
-*	@charset	: EUC-JP
+*	@charset	: UTF-8
 */
 
 ini_set("default_charset", "UTF-8");

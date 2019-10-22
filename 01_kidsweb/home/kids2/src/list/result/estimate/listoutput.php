@@ -1,6 +1,6 @@
 <?
 /** 
-*	Ä¢É¼½ÐÎÏ ¸«ÀÑ¸¶²Á·×»» °õºþ¥×¥ì¥Ó¥å¡¼²èÌÌ
+*	å¸³ç¥¨å‡ºåŠ› è¦‹ç©åŽŸä¾¡è¨ˆç®— å°åˆ·ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼ç”»é¢
 *
 *	@package   KIDS
 *	@copyright Copyright &copy; 2004, AntsBizShare 
@@ -8,26 +8,41 @@
 *	@access    public
 *	@version   1.00
 */
-// ¸«ÀÑ¸¶²Á °õºþ¥×¥ì¥Ó¥å¡¼²èÌÌ
+// è¦‹ç©åŽŸä¾¡ å°åˆ·ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼ç”»é¢
 // frameset.php -> strSessionID     -> listoutput.php
 // frameset.php -> lngReportCode    -> listoutput.php
 // frameset.php -> lngReportKeyCode -> listoutput.php
 
-// ÀßÄêÆÉ¤ß¹þ¤ß
+
+ini_set("default_charset", "UTF-8");
+
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once('conf.inc');
 require( LIB_DEBUGFILE );
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹þ¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require (LIB_FILE);
 require (SRC_ROOT . "list/cmn/lib_lo.php");
 require (SRC_ROOT . "list/result/estimate/estimate.php");
+require_once ( VENDOR_AUTOLOAD_FILE );
 
-$objDB   = new clsDB();
+require_once (SRC_ROOT . "/estimate/cmn/estimateDB.php");
+require_once (SRC_ROOT . "/estimate/cmn/estimatePreviewController.php");
+
+require_once ( SRC_ROOT . "estimate/cmn/estimateSheetController.php" );
+require_once ( SRC_ROOT . "estimate/cmn/makeHTML.php" );
+
+use PhpOffice\PhpSpreadsheet\Reader\Xlsx as XlsxReader;
+use PhpOffice\PhpSpreadsheet\Writer\Html as HtmlWriter;
+
+$objDB   = new estimateDB();
 $objAuth = new clsAuth();
+
+$objDB->InputEncoding = 'UTF-8';
 $objDB->open( "", "", "", "" );
 
 //////////////////////////////////////////////////////////////////////////
-// POST(°ìÉôGET)¥Ç¡¼¥¿¼èÆÀ
+// POST(ä¸€éƒ¨GET)ãƒ‡ãƒ¼ã‚¿å–å¾—
 //////////////////////////////////////////////////////////////////////////
 if ( $_POST )
 {
@@ -39,7 +54,7 @@ elseif ( $_GET )
 }
 
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheck["strSessionID"]       = "null:numenglish(32,32)";
 $aryCheck["lngReportCode"]      = "ascii(1,7)";
 $aryCheck["strReportKeyCode"]   = "null:number(0,9999999)";
@@ -47,16 +62,16 @@ $aryCheck["strReportKeyCode"]   = "null:number(0,9999999)";
 $aryResult = fncAllCheck( $aryData, $aryCheck );
 fncPutStringCheckError( $aryResult, $objDB );
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
-// ¸¢¸Â³ÎÇ§
+// æ¨©é™ç¢ºèª
 if ( !fncCheckAuthority( DEF_FUNCTION_LO0, $objAuth ) || !fncCheckAuthority( DEF_FUNCTION_E0, $objAuth ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
 
-// ¸«ÀÑ¸¶²Á¥³¥Ô¡¼¥Õ¥¡¥¤¥ë¥Ñ¥¹¼èÆÀ¥¯¥¨¥êÀ¸À®
+// è¦‹ç©åŽŸä¾¡ã‚³ãƒ”ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹å–å¾—ã‚¯ã‚¨ãƒªç”Ÿæˆ
 $strQuery = fncGetCopyFilePathQuery( DEF_REPORT_ESTIMATE, $aryData["strReportKeyCode"], $aryData["lngReportCode"] );
 
 list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
@@ -69,10 +84,10 @@ if ( $lngResultNum > 0 )
 
 $copyDisabled = "visible";
 
-// ¥³¥Ô¡¼¥Õ¥¡¥¤¥ë¥Ñ¥¹¤¬Â¸ºß¤·¤Ê¤¤ ¤Þ¤¿¤Ï
-// Ä¢É¼¥³¡¼¥É¤¬Ìµ¤¤ ¤Þ¤¿¤Ï ¥³¥Ô¡¼¥Õ¥é¥°¤¬µ¶(¥³¥Ô¡¼ÁªÂò¤Ç¤Ï¤Ê¤¤) ¤«¤Ä
-// ¥³¥Ô¡¼²ò½ü¸¢¸Â¤¬¤¢¤ë¾ì¹ç¡¢
-// ¥³¥Ô¡¼¥Þ¡¼¥¯¤ÎÈóÉ½¼¨
+// ã‚³ãƒ”ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ãŒå­˜åœ¨ã—ãªã„ ã¾ãŸã¯
+// å¸³ç¥¨ã‚³ãƒ¼ãƒ‰ãŒç„¡ã„ ã¾ãŸã¯ ã‚³ãƒ”ãƒ¼ãƒ•ãƒ©ã‚°ãŒå½(ã‚³ãƒ”ãƒ¼é¸æŠžã§ã¯ãªã„) ã‹ã¤
+// ã‚³ãƒ”ãƒ¼è§£é™¤æ¨©é™ãŒã‚ã‚‹å ´åˆã€
+// ã‚³ãƒ”ãƒ¼ãƒžãƒ¼ã‚¯ã®éžè¡¨ç¤º
 if ( !$strReportPathName || ( !( $aryData["lngReportCode"] || $aryData["bytCopyFlag"] ) && fncCheckAuthority( DEF_FUNCTION_LO4, $objAuth ) ) )
 {
 	$copyDisabled = "hidden";
@@ -80,82 +95,160 @@ if ( !$strReportPathName || ( !( $aryData["lngReportCode"] || $aryData["bytCopyF
 
 
 ///////////////////////////////////////////////////////////////////////////
-// Ä¢É¼¥³¡¼¥É¤¬¿¿¤Î¾ì¹ç¡¢¥Õ¥¡¥¤¥ë¥Ç¡¼¥¿¤ò¼èÆÀ
+// å¸³ç¥¨ã‚³ãƒ¼ãƒ‰ãŒçœŸã®å ´åˆã€ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—
 ///////////////////////////////////////////////////////////////////////////
 if ( $aryData["lngReportCode"] )
 {
 	if ( !$lngResultNum )
 	{
-		fncOutputError ( 9056, DEF_FATAL, "Ä¢É¼¥³¥Ô¡¼¤¬¤¢¤ê¤Þ¤»¤ó¡£", TRUE, "", $objDB );
+		fncOutputError ( 9056, DEF_FATAL, "å¸³ç¥¨ã‚³ãƒ”ãƒ¼ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 	}
 
 	if ( !$aryHtml[] =  file_get_contents ( SRC_ROOT . "list/result/cash/" . $strReportPathName . ".tmpl" ) )
 	{
-		fncOutputError ( 9059, DEF_FATAL, "Ä¢É¼¥Ç¡¼¥¿¥Õ¥¡¥¤¥ë¤¬³«¤±¤Þ¤»¤ó¤Ç¤·¤¿¡£", TRUE, "", $objDB );
+		fncOutputError ( 9059, DEF_FATAL, "å¸³ç¥¨ãƒ‡ãƒ¼ã‚¿ãƒ•ã‚¡ã‚¤ãƒ«ãŒé–‹ã‘ã¾ã›ã‚“ã§ã—ãŸã€‚", TRUE, "", $objDB );
 	}
 	$objDB->freeResult( $lngResultID );
 }
 
 ///////////////////////////////////////////////////////////////////////////
-// ¥Æ¥ó¥×¥ì¡¼¥È¤ÈÃÖ¤­´¹¤¨¥Ç¡¼¥¿¼èÆÀ
+// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã¨ç½®ãæ›ãˆãƒ‡ãƒ¼ã‚¿å–å¾—
 ///////////////////////////////////////////////////////////////////////////
 else
 {
-	// ¸«ÀÑ¸¶²Á¥Þ¥¹¥¿¥Ç¡¼¥¿¼èÆÀ
-	$aryEstimateData = fncGetEstimate( $aryData["strReportKeyCode"], $objDB );
-	// ¥³¥á¥ó¥È¡Ê¥Ð¥Ã¥Õ¥¡¡Ë¼èÆÀ
-	$strBuffRemark	= $aryEstimateData["strRemark"];
+	// GETãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚ˆã‚Šãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’å–å¾—
+	$estimateNo = $aryData["strReportKeyCode"]; // è¦‹ç©åŽŸä¾¡ç•ªå·
+
+	// ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·ã®å–å¾—
+	if (isset($aryData['revisionNo'])) {
+		$revisionNo = $aryData['revisionNo'];
+		$estimate = $objDB->getEstimateDetail($estimateNo, $revisionNo);
+	} else {
+		// ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·ãŒPOSTã•ã‚Œãªã‹ã£ãŸå ´åˆã¯æœ€æ–°ã®ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
+		$estimate = $objDB->getEstimateDetail($estimateNo);
+	}
+
+	$firstEstimateDetail = current($estimate);
+
+	if (!isset($revisionNo)) {
+		$revisionNo = $firstEstimateDetail->lngrevisionno;
+	}
+
+	// æœ€å¤§ã®ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·ã®å–å¾—
+	if (isset($_POST['maxRevisionNo'])) {
+		$maxRevisionNo = $_POST['maxRevisionNo'];
+	} else {
+		$result = $objDB->getEstimateDetail($estimateNo);
+		if ($result) {
+			$firstRecord = current($result);
+			$maxRevisionNo = $firstRecord->lngrevisionno;
+		}
+	}
+
+	$productCode = $firstEstimateDetail->strproductcode;
+	$reviseCode = $firstEstimateDetail->strrevisecode;
+	$productRevisionNo = $firstEstimateDetail->lngproductrevisionno;
+
+	// è£½å“ãƒžã‚¹ã‚¿ã®æƒ…å ±å–å¾—
+	$product = $objDB->getProduct($productCode, $reviseCode, $productRevisionNo);
+
+	$objPreview = new estimatePreviewController();
+	$objPreview->dataInitialize($product, $estimate, $objDB);
+
+	$productData = $objPreview->getProduct();
+
+	$estimateData = $objPreview->getEstimate();
 
 
-	// ¸«ÀÑ¸¶²Á¤Î¥Ç¥Õ¥©¥ë¥ÈÃÍ¤ËÂÐ¤¹¤ëÆþÎÏÃÍ¤Î¼èÆÀ
-	//¼õÃí²Á³Û¤ò½Ð¤¹¤¿¤á¤Ë¼ÂÀÓÇ¼²Á/curReceiveProductPrice¤ò°ú¿ô¤ËÄÉ²Ã
-	$aryDefaultValue = fncGetEstimateDefaultValue( $aryData["strReportKeyCode"], $aryEstimateData["lngReceiveProductQuantity"], 
-		$aryEstimateData["lngProductionQuantity"], $aryEstimateData["curProductPrice"], $aryRate, $objDB, $aryEstimateData["curReceiveProductPrice"]);
+	$tempFilePath = EXCEL_TMP_ROOT. 'workSheetPrintTmp.xlsx';
 
-	list ( $aryDetail, $aryOrderDetail ) = fncGetEstimateDetail( $aryData["strReportKeyCode"], $aryEstimateData["strProductCode"], $aryRate, $aryDefaultValue, $objDB );
+	$objReader = new XlsxReader();
 
-	list ( $aryDetail, $aryCalculated, $aryHiddenString ) = fncGetEstimateDetailHtml( $aryDetail, $aryOrderDetail, $aryDefaultValue, "list/result/e_detail.tmpl", "list/result/e_subject.tmpl", $objDB );
+	$spreadSheet = $objReader->load($tempFilePath);
 
-	unset ( $aryHiddenString );
-	unset ( $aryRate );
+	// å¿…è¦ãªå®šæ•°ã‚’å–å¾—ã™ã‚‹
+	$nameList = workSheetConst::getAllNameListForDownload();
+	$rowCheckNameList = workSheetConst::DETAIL_HEADER_CELL_NAME_LIST;
+	$targetAreaList = workSheetConst::TARGET_AREA_DISPLAY_NAME_LIST;
 
-	// ÇÛÎó¤Î¥Þ¡¼¥¸
-	$aryEstimateData = array_merge( $aryEstimateData, $aryCalculated );
+	// phpSpreadSheetã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‹ã‚‰ã‚·ãƒ¼ãƒˆã®æƒ…å ±ã‚’å–å¾—
+	$allSheetInfo = estimateSheetController::getSheetInfo($spreadSheet, $nameList, $rowCheckNameList);
 
-	// É¸½à³ä¹ç¼èÆÀ
-	$aryEstimateData["curStandardRate"] = fncGetEstimateDefault( $objDB );
+	$sheetInfo = estimateSheetController::getFirstElement($allSheetInfo);
 
-	// ¼ÒÆâUS¥É¥ë¥ì¡¼¥È¼èÆÀ
-	$aryEstimateData["curConversionRate"] = fncGetUSConversionRate( $aryEstimateData["dtmInsertDate"], $objDB );
+	if ($sheetInfo['displayInvalid']) {
+		// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”¨ã®ã‚·ãƒ¼ãƒˆãŒç„¡åŠ¹ã«ãªã£ã¦ã„ãªã„å ´åˆã€ã‚¨ãƒ©ãƒ¼ã‚’å‡ºåŠ›ã™ã‚‹
+		if ( !$sheetDataList ) {
+			$strMessage = 'ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç•°å¸¸';
 
-	// ·×»»·ë²Ì¤ò¼èÆÀ
-	$aryEstimateData = fncGetEstimateCalculate( $aryEstimateData );
+			// [strErrorMessage]æ›¸ãå‡ºã—
+			$aryHtml["strErrorMessage"] = $strMessage;
 
-	// ¥«¥ó¥Þ½èÍý
-	$aryEstimateData = fncGetCommaNumber( $aryEstimateData );
+			// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
+			$objTemplate = new clsTemplate();
+			$objTemplate->getTemplate( "/result/error/parts.tmpl" );
+			
+			// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
+			$objTemplate->replace( $aryHtml );
+			$objTemplate->complete();
 
+			// HTMLå‡ºåŠ›
+			echo $objTemplate->strTemplate;
 
-	// ¥³¥á¥ó¥È
-	$aryEstimateData["strRemarkDisp"]	= nl2br($strBuffRemark);
+			$objDB->close();
 
+			exit;
+		}
+	}
 
-	// ¥Ù¡¼¥¹¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹þ¤ß
-	$objTemplate = new clsTemplate();
-	$objTemplate->getTemplate( "list/result/e_base.tmpl" );
+	$objSheet = null;
 
-	// ¥Ù¡¼¥¹¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
-	$objTemplate->replace( $aryEstimateData );
-	$objTemplate->replace( $aryDetail );
-	$objTemplate->complete();
+	// ã‚·ãƒ¼ãƒˆãŒè¡¨ç¤ºç„¡åŠ¹ã§ãªã„å ´åˆã¯ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆå‡¦ç†ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç”Ÿæˆ
+	$objSheet = new estimateSheetController();
 
-	// HTML½ÐÎÏ
-	$aryHtml[] = $objTemplate->strTemplate;
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«ãƒ‡ãƒ¼ã‚¿ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
+	$objSheet->dataInitialize($sheetInfo, $objDB);
+
+	// phpSpreadSheetã§ç”Ÿæˆã—ãŸã‚·ãƒ¼ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ã‚°ãƒ­ãƒ¼ãƒãƒ«å‚ç…§ç”¨ã«ã‚»ãƒƒãƒˆã™ã‚‹
+	$sheet = $sheetInfo['sheet'];
+	$cellAddressList = $sheetInfo['cellAddress'];
+
+	// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã®æ•´å½¢ã‚’è¡Œã†
+	$objSheet->templateAdjust($estimateData);
+
+	// ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«å¿…è¦ãªå€¤ã‚’ã‚»ãƒƒãƒˆ
+	$objSheet->setDBEstimateData($productData, $estimateData);
+
+	$objDB->close();
+
+	$objWriter = new HtmlWriter($spreadSheet);
 }
 
-echo join( "\n", $aryHtml );
+// ç½®æ›æ–‡å­—åˆ—ç”Ÿæˆ
+$time = new DateTime();
+$replace = '_%'. md5($time->format('YmdHisu')). '%_';
 
-$objDB->close();
+$output = $objWriter->generateHTMLHeader();
+$output .= $objWriter->generateStyles();
 
+$customCSS = "<style>";
+$customCSS .= "table {table-layout: fixed; width: 950px; white-space:nowrap;}";
+$customCSS .= "td {overflow: hidden;}";
+$customCSS .= "</style>";
+
+$output .= $customCSS;
+
+// æ–‡å­—åŒ–ã‘å¯¾ç­–ï¼šã‚¨ã‚¯ã‚»ãƒ«ã®Â¥ãƒžãƒ¼ã‚¯ã‚’ç½®æ›æ–‡å­—åˆ—ã«ç½®æ›(UTF-8 â†’ EUC-JPã®å¤‰æ›æ™‚ã«ä¸Šæ‰‹ãå¤‰æ›ã§ããªã„ãŸã‚)
+$sheetData = str_replace('Â¥', $replace, $objWriter->generateSheetData());
+
+$output .= $sheetData;
+
+$output .= $objWriter->generateHTMLFooter();
+
+$output = mb_convert_encoding($output, 'EUC-JP', 'UTF-8');
+
+// ç½®æ›æ–‡å­—åˆ—ã‚’htmlã®å††ãƒžãƒ¼ã‚¯å‡ºåŠ›æ–‡å­—ã«å¤‰æ›ã—ã¦htmlã‚’å‡ºåŠ›
+echo str_replace($replace, '&yen;', $output);
 
 return TRUE;
 ?>

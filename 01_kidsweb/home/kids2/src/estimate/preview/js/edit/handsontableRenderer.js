@@ -517,8 +517,6 @@ $(function() {
 
           insertDetailNo = {row: selectedRow, estimateDetailNo: null}
           detailNoList.push(insertDetailNo);
-
-          console.log(detailNoList);
   
           merge = merge.concat(selectedMerge);
           cellClass = cellClass.concat(selectedClassInfo);
@@ -641,8 +639,6 @@ $(function() {
             });
   
             detailNoList.splice(selectedKey, 1);
-
-            console.log(detailNoList);
   
             merge = newMerge;
             cellClass = newCellClass;
@@ -913,8 +909,6 @@ $(function() {
                 mergeCells: merge,
                 cell: cellClass
               });
-
-              console.log(cellValue);
             }
           }
   
@@ -1000,10 +994,7 @@ $(function() {
                 rowHeights: rowHeight,
                 mergeCells: merge,
                 cell: cellClass
-              });
-
-              console.log(cellData);
-  
+              });  
             }
           }
   

@@ -153,6 +153,9 @@ class estimatePreviewController {
             if (!isset($this->revisionNo)) {
                 $this->revisionNo = $record->lngrevisionno;
             }
+            if (!isset($this->insertDate)) {
+                $this->insertDate = $record->dtminsertdate;
+            }
             if ($record->lngsalesdivisioncode && $record->lngsalesclasscode) {
                 // 売上
                 $divisionCode = $record->lngsalesdivisioncode; // 売上分類
@@ -273,7 +276,11 @@ class estimatePreviewController {
 
 
     public function getProduct() {
-        return $this->product;
+        $product = $this->product;
+        if ($this->insertDate) {
+            $product[workSheetConst::INSERT_DATE] = $this->insertDate;
+        }
+        return $product;
     }
 
     public function getEstimate() {
