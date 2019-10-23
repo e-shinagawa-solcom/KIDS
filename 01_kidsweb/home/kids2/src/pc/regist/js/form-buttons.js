@@ -67,10 +67,10 @@
                         $('input[name="curConversionRate"]').val(row.curconversionrate);
                         $('select[name="lngPayConditionCode"]').val(row.lngpayconditioncode);
                         $('input[name="lngCustomerCode"]').val(row.strcompanydisplaycode);
-                        $('input[name="strCustomerName]').val(row.strcompanydisplayname);
+                        $('input[name="strCustomerName"]').val(row.strcompanydisplayname);
                         $('input[name="strReviseCode"]').val(row.strrevisecode);
                         $('input[name="lngLocationCode"]').val(row.lnglocationcode);
-                        $('input[name="strLocationName"]').val(row.strlocationame);
+                        $('input[name="strLocationName"]').val(row.strlocationname);
                         $('input[name="dtmExpirationDate"]').val(row.dtmexpirationdate);
                         $('input[name="lngOrderNo"]').val(row.lngorderno);
                         // 国コードの取得
@@ -119,7 +119,7 @@
                         var detail_body = '<tr>'
                             + '<td class="col1">' + rowNum + '</td>'
                             + '<td class="col2"><input type="checkbox" style="width:10px;"></td>'
-                            + '<td class="col3">[' + convertNull(row.strproductcode) + '] ' + convertNull(row.strproductname).substring(1, 28) + '</td>'
+                            + '<td class="col3">[' + convertNull(row.strproductcode) + '] ' + convertNull(row.strproductname).substring(0, 28) + '</td>'
                             + '<td class="col4">[' + convertNull(row.lngstocksubjectcode) + '] ' + convertNull(row.strstocksubjectname) + '</td>'
                             + '<td class="col5">[' + convertNull(row.lngstockitemcode) + '] ' + convertNull(row.strstockitemname) + '</td>'
                             + '<td class="col6">' + money_format(row.lngmonetaryunitcode, row.strmonetaryunitsign, row.curproductprice) + '</td>'
