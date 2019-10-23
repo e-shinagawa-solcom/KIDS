@@ -146,7 +146,6 @@
 
 		return true;
 	}
-
 	// ヘッダ・フッダ部
 	$aryOrderHeader = fncGetOrder($aryData["lngOrderNo"], $objDB);
 
@@ -157,8 +156,8 @@
 	$aryData["strNote"]               = $aryOrderHeader[0]["strnote"];
 	// $aryData["lngCustomerCode"]       = $aryOrderHeader[0]["strcompanydisplaycode"];
 	// $aryData["strCustomerName"]       = $aryOrderHeader[0]["strcompanydisplayname"];
-	$aryData["strGroupDisplayCode"]   = $aryOrderHeader[0]["strgroupdisplaycode"];
-	$aryData["strGroupDisplayName"]   = $aryOrderHeader[0]["strgroupdisplayname"];
+	$aryData["lngInChargeGroupCode"]   = $aryOrderHeader[0]["strgroupdisplaycode"];
+	$aryData["strInChargeGroupName"]   = $aryOrderHeader[0]["strgroupdisplayname"];
 	$aryData["strProductName"]        = $aryOrderHeader[0]["strproductname"];
 	$aryData["strProductEnglishName"] = $aryOrderHeader[0]["strproductenglishname"];
 	$aryData["lngCountryCode"]        = $aryOrderHeader[0]["lngcountrycode"];
@@ -175,7 +174,7 @@
 	$lngOrderNo = explode(",", $aryData["lngOrderNo"]);
 //fncDebug("kids2.log", $lngOrderNo[0], __FILE__, __LINE__, "a" );
 	//$aryDetail = fncGetOrderDetail($aryData["lngOrderNo"], $objDB);
-	$aryDetail = fncGetOrderDetail($lngOrderNo[0], $aryData["lngRevisionNo"], $objDB);
+	$aryDetail = fncGetOrderDetail($aryData["lngOrderNo"], $aryData["lngRevisionNo"], $objDB);
 
 	// 通貨プルダウン
 	$strPulldownMonetaryUnit = fncPulldownMenu(1, $aryOrderHeader["lngmonetaryunitcode"], "", $objDB);

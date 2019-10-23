@@ -1363,6 +1363,7 @@ function fncGetOrder($lngOrderNo, $lngRevisionNo, $objDB){
 
 	$strQuery = "";
 	$strQuery = implode("\n", $aryQuery);
+	echo $strQuery;
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
 	if ( $lngResultNum )
