@@ -52,6 +52,7 @@ $sessionID = $aryData["strSessionID"];
 $productCode = $aryData["productCode"];
 $reviseCode = $aryData["reviseCode"];
 $estimateNo = $aryData["estimateNo"];
+$revisionNo = $aryData["revisionNo"];
 $ipAddress = $_SERVER['REMOTE_ADDR'];
 
 $mode = $aryData['processMode'];
@@ -89,51 +90,86 @@ switch($mode) {
         
         break;
     case 'edit':
-        $check = $objDB->checkExclusiveStatus($functionCode, $productCode, $reviseCode);
-        if ($check === false) {
-            $strQuery = "INSERT";
-            $strQuery .= " INTO t_exclusivecontrol";
-            $strQuery .= " (";
-            $strQuery .= "lngfunctioncode,";
-            $strQuery .= " strexclusivekey1,";
-            $strQuery .= " strexclusivekey2,";
-            $strQuery .= " strexclusivekey3,";
-            $strQuery .= " lngusercode,";
-            $strQuery .= " stripaddress";
-            $strQuery .= ") VALUES (";
-            $strQuery .= $functionCode. ",";
-            $strQuery .= " '".$productCode. "',";
-            $strQuery .= " '".$reviseCode. "',";
-            $strQuery .= " '0',";
-            $strQuery .= " ".$lngUserCode .",";
-            $strQuery .= " '".$ipAddress. "'";
-            $strQuery .= ")";
-    
-            $result = pg_query($objDB->ConnectID, $strQuery);
-            if (!$result) {
-                // エラー処理
-                $ret['result'] = false;
-                $ret['message'] = "編集画面のロックが正常に行われませんでした";
-                $ret['action'] = "/estimate/cmn/estimateError.php";
-            } else {
-                $ret['result'] = true;
-                $ret['action'] = "/estimate/preview/edit.php";
-            }
-        } else {
-            $getAddress = $check->stripaddress;
-            $getUserCode = $check->lngusercode;
-            if ($ipAddress === $getAddress && $lngUserCode === $getUserCode) {
-                $ret['result'] = true;
-                $ret['action'] = "/estimate/preview/edit.php";                
-            } else {
-                // 表示名取得
-                $userDisplayName = $check->struserdisplayname;
+        $strQuery = "SELECT";
+        $strQuery .= " max(lngrevisionno) AS maxrevisionno,";
+        $strQuery .= " min(lngrevisionno) AS minrevisionno";
+        $strQuery .= " FROM m_estimate";
+        $strQuery .= " WHERE lngestimateno = ". $estimateNo;
 
+        $resultID = pg_query($objDB->ConnectID, $strQuery);
+
+        if (!pg_num_rows($resultID)) {
+            // 最大値と最小値を取得できなかった場合
+            $ret['result'] = false;
+            $ret['message'] = "見積原価情報を取得できませんでした";        
+        } else {
+            $result = pg_fetch_object($resultID, 0);
+
+            $max = $result->maxrevisionno;
+            $min = $result->minrevisionno;
+
+            if ($min < 0) {
                 $ret['result'] = false;
-                $ret['message'] = "ユーザ名：". $userDisplayName."が編集中です";
-                $ret['action'] = "/estimate/cmn/estimateError.php";
-            }  
+                $ret['message'] = "他のユーザによって削除された見積原価明細です。";
+            } else if ($max !== $revisionNo) {
+                $ret['result'] = false;
+                $ret['message'] = "他のユーザによって編集された見積原価明細です。";
+            } else {
+                $check = $objDB->checkExclusiveStatus($functionCode, $productCode, $reviseCode);
+                if ($check === false) {
+                    $strQuery = "INSERT";
+                    $strQuery .= " INTO t_exclusivecontrol";
+                    $strQuery .= " (";
+                    $strQuery .= "lngfunctioncode,";
+                    $strQuery .= " strexclusivekey1,";
+                    $strQuery .= " strexclusivekey2,";
+                    $strQuery .= " strexclusivekey3,";
+                    $strQuery .= " lngusercode,";
+                    $strQuery .= " stripaddress";
+                    $strQuery .= ") VALUES (";
+                    $strQuery .= $functionCode. ",";
+                    $strQuery .= " '".$productCode. "',";
+                    $strQuery .= " '".$reviseCode. "',";
+                    $strQuery .= " '0',";
+                    $strQuery .= " ".$lngUserCode .",";
+                    $strQuery .= " '".$ipAddress. "'";
+                    $strQuery .= ")";
+            
+                    $resultID = pg_query($objDB->ConnectID, $strQuery);
+                    if (!$resultID) {
+                        // エラー処理
+                        $ret['result'] = false;
+                        $ret['message'] = "編集画面のロックが正常に行われませんでした";
+                    } else {
+                        $ret['result'] = true;
+                    }
+                } else {
+                    $getAddress = $check->stripaddress;
+                    $getUserCode = $check->lngusercode;
+                    if ($ipAddress === $getAddress && $lngUserCode === $getUserCode) {
+                        $ret['result'] = true;        
+                    } else {
+                        // 表示名取得
+                        $userDisplayName = $check->struserdisplayname;
+        
+                        $ret['result'] = false;
+                        $ret['message'] = "ユーザ名：". $userDisplayName."が編集中です";
+                    }  
+                }
+            }
         }
+        if ($ret['result'] === true) {
+            // 正常時
+            $ret['action'] = "/estimate/preview/edit.php";   
+        } else {
+            // エラー発生時
+            $ret['action'] = "/estimate/cmn/estimateError.php";
+        }
+
+        break;
+
+    default:
+        break;
 }
 
 $ret = json_encode($ret, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);

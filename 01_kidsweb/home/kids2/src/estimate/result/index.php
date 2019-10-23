@@ -116,8 +116,6 @@ $aryColumnLang = Array (
 //////////////////////////////////////////////////////////////////////////
 
 $aryCheck["strSessionID"]                = "null:numenglish(32,32)";
-$aryCheck["strProductCodeFrom"]          = "number(0,99999)";
-$aryCheck["strProductCodeTo"]            = "number(0,99999)";
 $aryCheck["strProductName"]              = "length(0,80)";
 $aryCheck["strProductEnglishName"]       = "ascii(0,80)";
 $aryCheck["lngInChargeGroupCode"]        = "numenglish(0,32767)";
@@ -299,22 +297,25 @@ if (!count($strErrorMessage)) {
 					$conditions = explode(',', $condition);
 					foreach ($conditions as $value) {
 						if (preg_match('/\A(\d+)-(\d+)\z/', $value, $matches)) {
+							$rangeFlag = true;
 							$searchs[] = "mp.strProductCode BETWEEN '". $matches[1]. "' AND '". $matches[2]. "'";
 						} else {
 							$searchNumber[] = "'". $value. "'";
 						}					
 					}
 					$numbers = implode(',', $searchNumber);
-					$searchs[] = "mp.strProductCode IN (". $numbers. ")";
-					$search = implode(' OR ', $searchs);
-				}                             
+					if ($numbers) {
+						$searchs[] = "mp.strProductCode IN (". $numbers. ")";
+					}
+					$search = "(". implode(' OR ', $searchs). ")";
+				}
 				break;
 
 			// À½ÉÊÌ¾¾Î
 			case 'strProductName';
 			    if (strlen($condition)) {
 					$search = "mp.strProductName LIKE '%". $condition. "%'";
-				}				
+				}
 				break;
 
 			// À½ÉÊÌ¾¾Î(±Ñ¸ì)
@@ -322,7 +323,7 @@ if (!count($strErrorMessage)) {
 				if (strlen($condition)) {
 					$search = "mp.strproductenglishname LIKE '%". $condition. "%'";
 				}				
-			break;
+			    break;
 
 			// ±Ä¶ÈÉô½ð
 			case 'lngInChargeGroupCode':
