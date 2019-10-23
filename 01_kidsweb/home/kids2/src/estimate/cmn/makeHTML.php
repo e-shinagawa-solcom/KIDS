@@ -278,18 +278,24 @@ class makeHTML {
 		
 		$strHTML .= "<div class = \"action-buttons\">\n";
 
+		// URLコピー
 		$strHTML .= "<button type=\"button\" id=\"url_copy\" onclick=\"urlCopy();\">\n";
 		$strHTML .= "<img class= \"url_copy_button\" src=\"/img/type01/estimate/preview/url_copy.gif\">\n";
 		$strHTML .=	"</button>\n";
 
+		// ダウンロード
 		$strHTML .= "<button type=\"button\" id=\"download\" onclick=\"fileDownload();\">\n";
 		$strHTML .= "<img class= \"download_button\" src=\"/img/type01/estimate/preview/download.gif\">\n";
 		$strHTML .=	"</button>\n";
 
-		$strHTML .= "<button type=\"button\" id=\"print\" onclick=\"sheetPrint();\">\n";
-		$strHTML .= "<img class= \"print_button\" src=\"/img/type01/estimate/preview/print.gif\">\n";
-		$strHTML .=	"</button>\n";
+		// 印刷(共通の帳票印刷が最新版しか印刷できないので最新リビジョンの時のみ表示)
+		if ($revisionNo === $maxRevisionNo) {
+			$strHTML .= "<button type=\"button\" id=\"print\" onclick=\"sheetPrint();\">\n";
+			$strHTML .= "<img class= \"print_button\" src=\"/img/type01/estimate/preview/print.gif\">\n";
+			$strHTML .=	"</button>\n";
+		}
 
+		// 編集(最新リビジョンかつ削除済みでない場合のみ編集可能)
 		if ($revisionNo === $maxRevisionNo && $minRevisionNo >= 0) {
 			$strHTML .= "<button type=\"button\" id=\"edit\" onclick=\"editModeTransition();\">\n";
 			$strHTML .= "<img class= \"edit_button\" src=\"/img/type01/estimate/preview/edit.gif\">\n";
