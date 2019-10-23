@@ -208,7 +208,7 @@ function fncGetCopyFilePathQuery($lngReportClassCode, $strReportKeyCode, $lngRep
         $aryQuery[] = "SELECT r.strReportPathName ";
         $aryQuery[] = "FROM m_slip s, t_Report r ";
 
-        // 対象帳票(製品企画 or 発注)指定
+        // 対象帳票指定
         $aryQuery[] = "WHERE r.lngReportClassCode = " . $lngReportClassCode;
 
         $aryQuery[] = $strReportCodeConditions;
@@ -221,6 +221,25 @@ function fncGetCopyFilePathQuery($lngReportClassCode, $strReportKeyCode, $lngRep
         $aryQuery[] = "  SELECT MIN( s1.lngRevisionNo ) FROM m_slip s1 WHERE s1.bytInvalidFlag = false AND s1.strslipcode = s.strslipcode ";
         $aryQuery[] = ")";
         $aryQuery[] = " AND  r.strReportKeyCode = trim(to_char(s.lngslipno, '9999999'))";
+    }
+    // 請求書帳票出力コピーファイル取得クエリ生成
+    elseif ($lngReportClassCode == DEF_REPORT_INV) {
+        $aryQuery[] = "SELECT r.strReportPathName ";
+        $aryQuery[] = "FROM m_invoice i, t_Report r ";
+
+        // 対象帳票指定
+        $aryQuery[] = "WHERE i.lngReportClassCode = " . $lngReportClassCode;
+
+        $aryQuery[] = $strReportCodeConditions;
+
+        // 帳票コード指定
+        $aryQuery[] = " AND i.strReportKeyCode = '" . $strReportKeyCode . "'";
+        // リビジョンにマイナスの無い
+        $aryQuery[] = " AND 0 <= ";
+        $aryQuery[] = "( ";
+        $aryQuery[] = "  SELECT MIN( i1.lngRevisionNo ) FROM m_invoice i1 WHERE i1.bytInvalidFlag = false AND i1.strinvoicecode = i.strinvoicecode ";
+        $aryQuery[] = ")";
+        $aryQuery[] = " AND  r.strReportKeyCode = trim(to_char(i.lnginvoiceno, '9999999'))";
     }
 
     // 見積原価帳票出力コピーファイル取得クエリ生成
@@ -528,6 +547,53 @@ function fncGetListOutputQuery($lngClassCode, $lngKeyCode, $objDB)
         $aryQuery[] = "    on s.strslipcode = s1.strslipcode ";
         $aryQuery[] = "    and s.lngrevisionno = s1.lngrevisionno ";
         $aryQuery[] = "WHERE s.lngslipno = " . $lngKeyCode;
+    }  else if ($lngClassCode == DEF_REPORT_INV) {
+        $aryQuery[] = "  i.lnginvoiceno";
+        $aryQuery[] = "  , i.lngrevisionno";
+        $aryQuery[] = "  , i.strinvoicecode";
+        $aryQuery[] = "  , i.dtminvoicedate";
+        $aryQuery[] = "  , i.strcustomername";
+        $aryQuery[] = "  , i.strcustomercompanyname";
+        $aryQuery[] = "  , i.strmonetaryunitsign";
+        $aryQuery[] = "  , to_char(i.curthismonthamount + i.curlastmonthbalance + i.curtaxprice1, '9,999,999,990') AS totalprice";
+        $aryQuery[] = "  , to_char(i.curthismonthamount, '9,999,999,990') AS curthismonthamount";
+        $aryQuery[] = "  , to_char(i.curlastmonthbalance, '9,999,999,990') AS curlastmonthbalance";
+        $aryQuery[] = "  , to_char(i.curtaxprice1, '9,999,999,990') AS curtaxprice1";
+        $aryQuery[] = "  , to_char(i.dtminvoicedate, 'mm月') as dtminvoicemonth";
+        $aryQuery[] = "  , to_char(i.dtmchargeternstart, 'mm月dd日') as dtmchargeternstart";
+        $aryQuery[] = "  , to_char(i.dtmchargeternend, 'mm月dd日') as dtmchargeternend";
+        $aryQuery[] = "  , id.detailcount";
+        $aryQuery[] = "  , i.strnote";
+        $aryQuery[] = "  , i.strusername";
+        $aryQuery[] = "FROM";
+        $aryQuery[] = "  m_invoice i ";
+        $aryQuery[] = "  inner join ( ";
+        $aryQuery[] = "    SELECT";
+        $aryQuery[] = "      MAX(lngRevisionNo) lngRevisionNo";
+        $aryQuery[] = "      , strinvoicecode ";
+        $aryQuery[] = "    FROM";
+        $aryQuery[] = "      m_invoice ";
+        $aryQuery[] = "    where";
+        $aryQuery[] = "      bytInvalidFlag = false ";
+        $aryQuery[] = "    group by";
+        $aryQuery[] = "      strinvoicecode";
+        $aryQuery[] = "  ) i1 ";
+        $aryQuery[] = "    on i.strinvoicecode = i1.strinvoicecode ";
+        $aryQuery[] = "    AND i.lngrevisionno = i1.lngRevisionNo ";
+        $aryQuery[] = "  left join ( ";
+        $aryQuery[] = "    select";
+        $aryQuery[] = "      lnginvoiceno";
+        $aryQuery[] = "      , lngrevisionno";
+        $aryQuery[] = "      , count(*) detailcount ";
+        $aryQuery[] = "    from";
+        $aryQuery[] = "      t_invoicedetail ";
+        $aryQuery[] = "    group by";
+        $aryQuery[] = "      lnginvoiceno";
+        $aryQuery[] = "      , lngrevisionno";
+        $aryQuery[] = "  ) id ";
+        $aryQuery[] = "    on id.lnginvoiceno = i.lnginvoiceno ";
+        $aryQuery[] = "    and id.lngrevisionno = i.lngrevisionno";
+        $aryQuery[] = "WHERE i.lnginvoiceno = " . $lngKeyCode;
     }
 
     return join("", $aryQuery);
@@ -627,6 +693,31 @@ function fncGetSlipDetailQuery($strReportKeyCode, $lngRevisionNo)
     $aryQuery[] = "  AND lngrevisionno = " . $lngRevisionNo;
     $aryQuery[] = " ORDER BY";
     $aryQuery[] = "  lngSortKey";
+
+    return join("", $aryQuery);
+}
+
+
+/**
+ * 請求明細取得クエリの生成
+ *
+ * @param [type] $strReportKeyCode
+ * @return void
+ */
+function fncGetInvDetailQuery($strReportKeyCode, $lngRevisionNo)
+{
+    $aryQuery[] = "SELECT distinct";
+    $aryQuery[] = "  s.strslipcode ";
+    $aryQuery[] = "from";
+    $aryQuery[] = "  t_invoicedetail id ";
+    $aryQuery[] = "  left join m_slip s ";
+    $aryQuery[] = "    on id.lngslipno = s.lngslipno ";
+    $aryQuery[] = "    and id.lngsliprevisionno = s.lngrevisionno ";
+    $aryQuery[] = "where";
+    $aryQuery[] = "  id.lnginvoiceno = " . $strReportKeyCode;
+    $aryQuery[] = "  AND id.lngrevisionno = " . $lngRevisionNo;
+    $aryQuery[] = " ORDER BY";
+    $aryQuery[] = "  s.strslipcode";
 
     return join("", $aryQuery);
 }

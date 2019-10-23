@@ -294,6 +294,7 @@ define ( "DEF_REPORT_ORDER",	2 );	// PurchaseOrder(発注)
 define ( "DEF_REPORT_ESTIMATE",	3 );	// 見積原価計算
 define ( "DEF_REPORT_MOLD",	4 );		// 金型依頼書
 define ( "DEF_REPORT_SLIP",	5 );		// 納品書
+define ( "DEF_REPORT_INV",	6 );		// 請求書
 
 // m_Organization.lngOrganizationCode
 define ( "DEF_ORGANIZATION_FOREIGN",	11 ); // 海外
@@ -373,6 +374,8 @@ define ( "DEF_FUNCTION_LO3",	903 );     //  903 帳票出力(商品化企画書)コピー解除
 define ( "DEF_FUNCTION_LO4",	904 );     //  904 帳票出力(発注書ＰＯ)コピー解除権限
 define ( "DEF_FUNCTION_LO5",	905 );     //  905 帳票出力(納品書)
 define ( "DEF_FUNCTION_LO6",	906 );     //  906 帳票出力(納品書)コピー解除権限
+define ( "DEF_FUNCTION_LO7",	907 );     //  907 帳票出力(請求書)
+define ( "DEF_FUNCTION_LO8",	908 );     //  908 帳票出力(請求書)コピー解除権限
 
 define ( "DEF_FUNCTION_DE0",	1000 );    // 1000 データエクスポート
 define ( "DEF_FUNCTION_DE1",	1001 );    // 1001 データエクスポート(発注管理/L/C 予定表)

@@ -2,13 +2,6 @@
 /**
  *    帳票出力 納品書 印刷プレビュー画面
  *
- *    @package   KIDS
- *    @license   http://www.wiseknot.co.jp/
- *    @copyright Copyright &copy; 2003, Wiseknot
- *    @author    Kenji Chiba <k-chiba@wiseknot.co.jp>
- *    @access    public
- *    @version   1.00
- *
  */
 // 帳票出力 印刷プレビュー画面
 // frameset.php -> strSessionID     -> listoutput.php

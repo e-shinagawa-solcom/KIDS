@@ -59,6 +59,11 @@ if (fncCheckAuthority(DEF_FUNCTION_LO5, $objAuth)) {
     // 納品書帳票出力可能
     $aryParts["strManagementMenu"] .= "<a href=search/" . $aryListOutputMenu[DEF_REPORT_SLIP]["file"] . ".php?strSessionID=" . $aryData["strSessionID"] . ">" . $aryListOutputMenu[DEF_REPORT_SLIP]["name"] . "</a>\n";
 }
+if (fncCheckAuthority(DEF_FUNCTION_LO7, $objAuth)) {
+    // 請求書帳票出力可能
+    $aryParts["strManagementMenu"] .= "<a href=search/" . $aryListOutputMenu[DEF_REPORT_INV]["file"] . ".php?strSessionID=" . $aryData["strSessionID"] . ">" . $aryListOutputMenu[DEF_REPORT_INV]["name"] . "</a>\n";
+}
+
 
 // ヘルプリンク用機能コードをセット
 $aryData["lngFunctionCode"] = DEF_FUNCTION_LO0;
@@ -106,6 +111,14 @@ if (!$aryData["strListMode"]) {
             $aryData["lngTaxClassCode"] = "<option value=\"\"></option>\n";
             $aryData["lngTaxClassCode"] .= fncGetPulldown("m_taxClass", "lngTaxClassCode", "lngTaxClassCode, strtaxclassname", "", '', $objDB);
             $strTemplatePath = "list/search/slip/slp_search.html";
+            break;
+
+        // 請求書 検索ページ
+        case 'inv':
+            // 消費税区分プルダウンメニュー 生成
+            $aryData["lngTaxClassCode"] = "<option value=\"\"></option>\n";
+            $aryData["lngTaxClassCode"] .= fncGetPulldown("m_taxClass", "lngTaxClassCode", "lngTaxClassCode, strtaxclassname", "", '', $objDB);
+            $strTemplatePath = "list/search/inv/inv_search.html";
             break;
 
         default:

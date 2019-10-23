@@ -72,10 +72,15 @@ if ( fncCheckAuthority( DEF_FUNCTION_E0, $objAuth ) )
 	// ¸«ÀÑ¸¶²Á·×»»Ä¢É¼½ÐÎÏ²ÄÇ½
 	$aryParts["strEstimateURL"] =  "/list/index.php?strSessionID=" . $aryData["strSessionID"] . "&strListMode=es";
 }
-if ( fncCheckAuthority( DEF_FUNCTION_E0, $objAuth ) )
+if ( fncCheckAuthority( DEF_FUNCTION_SC0, $objAuth ) )
 {
 	// Ç¼ÉÊ½ñÄ¢É¼½ÐÎÏ²ÄÇ½
 	$aryParts["strSlipURL"] =  "/list/index.php?strSessionID=" . $aryData["strSessionID"] . "&strListMode=slp";
+}
+if ( fncCheckAuthority( DEF_FUNCTION_INV0, $objAuth ) )
+{
+	// ÀÁµá½ñÄ¢É¼½ÐÎÏ²ÄÇ½
+	$aryParts["strInvoiceURL"] =  "/list/index.php?strSessionID=" . $aryData["strSessionID"] . "&strListMode=inv";
 }
 
 

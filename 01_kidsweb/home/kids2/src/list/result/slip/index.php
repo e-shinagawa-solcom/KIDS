@@ -2,13 +2,6 @@
 /**
  *    帳票出力 納品書 検索結果画面
  *
- *    @package   KIDS
- *    @license   http://www.wiseknot.co.jp/
- *    @copyright Copyright &copy; 2019, Wiseknot
- *    @author    Kenji Chiba <k-chiba@wiseknot.co.jp>
- *    @access    public
- *    @version   1.00
- *
  */
 // 検索結果画面( * は指定帳票のファイル名 )
 // *.php -> strSessionID       -> index.php
@@ -148,14 +141,14 @@ if (array_key_exists("dtmDeliveryDate", $searchColumns) &&
     " <= " . "'" . pg_escape_string($to["dtmDeliveryDate"]) . "'";
 }
 // 売上区分
-if (array_key_exists("lngsalesclasscode", $searchColumns) &&
-    array_key_exists("lngsalesclasscode", $searchValue)) {
-    $aryQuery[] = " AND sd.lngsalesclasscode = '" . $searchValue["lngsalesclasscode"] . "'";
+if (array_key_exists("lngSalesClassCode", $searchColumns) &&
+    array_key_exists("lngSalesClassCode", $searchValue)) {
+    $aryQuery[] = " AND sd.lngsalesclasscode = '" . $searchValue["lngSalesClassCode"] . "'";
 }
 // 消費税区分
-if (array_key_exists("lngtaxclasscode", $searchColumns) &&
-    array_key_exists("lngtaxclasscode", $searchValue)) {
-    $aryQuery[] = " AND s.lngtaxclasscode = '" . $searchValue["lngtaxclasscode"] . "'";
+if (array_key_exists("lngTaxClassCode", $searchColumns) &&
+    array_key_exists("lngTaxClassCode", $searchValue)) {
+    $aryQuery[] = " AND s.lngtaxclasscode = '" . $searchValue["lngTaxClassCode"] . "'";
 }
 // 納品書NO.
 if (array_key_exists("strSlipCode", $searchColumns) &&
@@ -251,8 +244,7 @@ if ($lngResultNum > 0) {
 
 // 帳票データ取得クエリ実行・テーブル生成
 $strQuery = implode("\n", $aryQuery);
-echo $strQuery;
-return;
+
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 for ($i = 0; $i < $lngResultNum; $i++) {
     $objResult = $objDB->fetchObject($lngResultID, $i);
