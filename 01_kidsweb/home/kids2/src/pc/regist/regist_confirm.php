@@ -76,9 +76,11 @@ for ($i = 0; $i < count($aryDetailData); $i++) {
     $aryQuery[] = "od.lngproductquantity, "; // 製品数量
     $aryQuery[] = "od.lngproductunitcode, "; // 製品単位コード
     $aryQuery[] = "pu.strproductunitname, "; // 製品単位名称
+/*
     $aryQuery[] = "od.lngtaxclasscode, "; // 消費税区分コード
     $aryQuery[] = "od.lngtaxcode, "; // 消費税コード
     $aryQuery[] = "od.curtaxprice, "; // 消費税金額
+*/
     $aryQuery[] = "od.cursubtotalprice as cursubtotalprice, "; // 小計金額
     $aryQuery[] = "od.strnote, "; // 備考
     $aryQuery[] = "od.strmoldno as strSerialNo, "; // シリアル
@@ -118,7 +120,7 @@ for ($i = 0; $i < count($aryDetailData); $i++) {
     $aryQuery[] = "  AND od.lngorderdetailno = " . $aryDetailData[$i]["lngOrderDetailNo"] . " ";
     $aryQuery[] = " ORDER BY od.lngSortKey";
     $strQuery = implode("\n", $aryQuery);
-    
+echo $strQuery . "<br>";
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
     if ($lngResultNum) {
         if ($lngResultNum == 1) {

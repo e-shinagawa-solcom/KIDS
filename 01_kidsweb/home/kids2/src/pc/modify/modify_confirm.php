@@ -76,9 +76,11 @@ for ($i = 0; $i < count($aryDetailData); $i++) {
     $aryQuery[] = "od.lngproductquantity, "; // 製品数量
     $aryQuery[] = "od.lngproductunitcode, "; // 製品単位コード
     $aryQuery[] = "pu.strproductunitname, "; // 製品単位名称
+/*
     $aryQuery[] = "od.lngtaxclasscode, "; // 消費税区分コード
     $aryQuery[] = "od.lngtaxcode, "; // 消費税コード
     $aryQuery[] = "od.curtaxprice, "; // 消費税金額
+*/
     $aryQuery[] = "od.cursubtotalprice as cursubtotalprice, "; // 小計金額
     $aryQuery[] = "od.strnote, "; // 備考
     $aryQuery[] = "od.strmoldno as strSerialNo, "; // シリアル
@@ -136,6 +138,7 @@ for ($i = 0; $i < count($aryDetailData); $i++) {
             // 小計金額
             $cursubtotalprice = $detailDataResult["cursubtotalprice"];
             $detailDataResult["cursubtotalprice"] = toMoneyFormat($detailDataResult["lngmonetaryunitcode"], $detailDataResult["strmonetaryunitsign"], $detailDataResult["cursubtotalprice"]);
+/*
             // 税率
             $detailDataResult["curTax"] = $aryDetailData[$i]["curTax"];
             // 消費税区分
@@ -144,7 +147,8 @@ for ($i = 0; $i < count($aryDetailData); $i++) {
             $detailDataResult["strtaxclassname"] = mb_convert_encoding($aryDetailData[$i]["strTaxClassName"], 'EUC-JP', 'UTF-8');
             // 消費税額
             $detailDataResult["curtaxprice"] = toMoneyFormat($detailDataResult["lngmonetaryunitcode"], $detailDataResult["strmonetaryunitsign"], $aryDetailData[$i]["curTaxPrice"]);
-            // 合計金額の設定(小計金額の合計)
+
+*/            // 合計金額の設定(小計金額の合計)
             $curtotalprice += $cursubtotalprice;
         }
     }

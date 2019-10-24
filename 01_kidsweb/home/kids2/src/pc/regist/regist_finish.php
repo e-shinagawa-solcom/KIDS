@@ -108,7 +108,7 @@ $aryQuery[] = "false, "; // 20:無効フラグ
 $aryQuery[] = "now()"; // 21:登録日
 $aryQuery[] = " )";
 
-$strQuery = implode("\n", $aryQuery);
+//$strQuery = implode("\n", $aryQuery);
 
 if (!$lngResultID = $objDB->execute($strQuery)) {
     fncOutputError(9051, DEF_ERROR, "", true, "", $objDB);
@@ -132,9 +132,11 @@ foreach ($aryDetailData as $data) {
     $aryQuery[] = "curproductprice, "; // 製品価格
     $aryQuery[] = "lngproductquantity, "; // 製品数量
     $aryQuery[] = "lngproductunitcode, "; // 製品単位コード
+/*
     $aryQuery[] = "lngtaxclasscode, "; // 消費税区分コード
     $aryQuery[] = "lngtaxcode, "; // 消費税コード
     $aryQuery[] = "curtaxprice, "; // 消費税金額
+*/
     $aryQuery[] = "cursubtotalprice, "; // 小計金額
     $aryQuery[] = "strnote, "; // 備考
     $aryQuery[] = "strmoldno as strSerialNo, "; // シリアル
