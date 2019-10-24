@@ -259,7 +259,7 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 	$aryOutQuery[] = "	,sd.strNote";				      // Ã¿∫Ÿ»˜πÕ
 
 	// ∏‹µ“
-	$arySelectQuery[] = ", s.strCustomerCode as strCustomerDisplayCode";
+	$arySelectQuery[] = ", cust_c.strcompanydisplaycode as strCustomerDisplayCode";
 	$arySelectQuery[] = ", s.strCustomerName as strCustomerDisplayName";
 	// ∏‹µ“§ŒπÒ
 	$arySelectQuery[] = ", cust_c.lngCountryCode as lngcountrycode";
@@ -274,7 +274,7 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 	// «º… ¿Ë
 	$arySelectQuery[] = " , s.strDeliveryPlaceName as strDeliveryPlaceName";
 	// µØ…ºº‘
-	$arySelectQuery[] = ", s.strInsertUserCode as strInsertUserCode";
+	$arySelectQuery[] = ", insert_u.struserdisplaycode as strInsertUserCode";
 	$arySelectQuery[] = ", s.strInsertUserName as strInsertUserName";
 	// »˜πÕ
 	$arySelectQuery[] = ", s.strNote as strNote";
@@ -302,9 +302,9 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 //    }
 	$aryFromQuery[] = " INNER JOIN m_Sales sa ON s.lngSalesNo = sa.lngSalesNo AND s.lngRevisionNo = sa.lngRevisionNo";
 	$aryFromQuery[] = " LEFT JOIN m_SalesStatus ss ON sa.lngSalesStatusCode = ss.lngSalesStatusCode";
-	$aryFromQuery[] = " LEFT JOIN m_Company cust_c ON CAST(s.strCustomerCode AS INTEGER) = cust_c.lngCompanyCode";
+	$aryFromQuery[] = " LEFT JOIN m_Company cust_c ON s.lngCustomerCode = cust_c.lngCompanyCode";
 	$aryFromQuery[] = " LEFT JOIN m_MonetaryUnit mu ON s.lngMonetaryUnitCode = mu.lngMonetaryUnitCode";
-	$aryFromQuery[] = " LEFT JOIN m_User insert_u ON s.strInsertUserCode = insert_u.strUserDisplayCode";
+	$aryFromQuery[] = " LEFT JOIN m_User insert_u ON s.lngInsertUserCode = insert_u.lngusercode";
 	$aryFromQuery[] = " LEFT JOIN m_Company delv_c ON s.lngDeliveryPlaceCode = delv_c.lngCompanyCode";
 	// From∂Á •Ø•®•Í°ºœ¢∑Î
 	$aryOutQuery[] = implode("\n", $aryFromQuery);
@@ -359,7 +359,7 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 		{
 //			$aryOutQuery[] = " AND 0 <= ( "
 //				. "SELECT MIN( s2.lngRevisionNo ) FROM m_Slip s2 WHERE s2.bytInvalidFlag = false AND s2.strSlipCode = s.strSlipCode )";
-			$aryOutQuery[] = " AND s.lngslipno not in (SELECT lngslipno from m_slip where lngRevisionNo < 0 and bytInvalidFlag = false)";
+			$aryOutQuery[] = " AND not exists (SELECT lngslipno from m_slip s1 where s1.lngslipno=s.lngslipno and s1.lngRevisionNo < 0 and s1.bytInvalidFlag = false)";
 		}
 	}
 

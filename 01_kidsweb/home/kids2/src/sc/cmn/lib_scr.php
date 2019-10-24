@@ -194,10 +194,11 @@ function fncGetHeaderBySlipNo($lngSlipNo, $lngRevisionNo, $objDB)
     $aryQuery = array();
     $aryQuery [] = "SELECT ";
     $aryQuery [] = "  s.lngslipno, ";
+    $aryQuery [] = "  u_ins.lngusercode as lngdrafterusercode,  ";             //起票者（ユーザーコード）
     $aryQuery [] = "  u_ins.struserdisplaycode as strdrafteruserdisplaycode,  ";             //起票者（表示用ユーザーコード）
     $aryQuery [] = "  u_ins.struserdisplayname as strdrafteruserdisplayname, ";              //起票者（表示用ユーザー名）
     $aryQuery [] = "  c_cust.strcompanydisplaycode as strcompanydisplaycode, ";              //顧客（表示用会社コード）
-    $aryQuery [] = "  c_cust.strcompanydisplayname as strcustomerdisplayname, ";             //顧客（表示用会社名）
+    $aryQuery [] = "  c_cust.strcompanydisplayname as strcompanydisplayname, ";             //顧客（表示用会社名）
     $aryQuery [] = "  s.strcustomerusername, ";                                              //顧客担当者
     $aryQuery [] = "  TO_CHAR(s.dtmdeliverydate, 'YYYY/MM/DD') as dtmdeliverydate, ";        //納品日
     $aryQuery [] = "  TO_CHAR(s.dtmpaymentlimit, 'YYYY/MM/DD') as dtmpaymentlimit, ";        //支払期限
@@ -213,8 +214,8 @@ function fncGetHeaderBySlipNo($lngSlipNo, $lngRevisionNo, $objDB)
     $aryQuery [] = "  Null as strtaxamount, ";                                               //消費税額
     $aryQuery [] = "  s.curtotalprice ";                                                     //合計金額
     $aryQuery [] = " FROM m_slip s ";
-    $aryQuery [] = "   LEFT JOIN m_user u_ins ON CAST(s.strinsertusercode AS INTEGER) = u_ins.lngusercode ";
-    $aryQuery [] = "   LEFT JOIN m_company c_cust ON CAST(s.strcustomercode AS INTEGER) = c_cust.lngcompanycode ";
+    $aryQuery [] = "   LEFT JOIN m_user u_ins ON s.lnginsertusercode = u_ins.lngusercode ";
+    $aryQuery [] = "   LEFT JOIN m_company c_cust ON s.lngcustomercode = c_cust.lngcompanycode ";
     $aryQuery [] = "   LEFT JOIN m_company c_deli ON s.lngdeliveryplacecode = c_deli.lngcompanycode ";
     $aryQuery [] = " WHERE ";
     $aryQuery [] = "  s.lngslipno = " . $lngSlipNo;
@@ -222,7 +223,7 @@ function fncGetHeaderBySlipNo($lngSlipNo, $lngRevisionNo, $objDB)
 
     $strQuery = "";
     $strQuery .= implode("\n", $aryQuery);
-
+    
     list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
     if ( $lngResultNum ) {
         for ( $i = 0; $i < $lngResultNum; $i++ ) {
@@ -1492,7 +1493,7 @@ function fncRegisterSlipMaster($lngSlipNo, $lngRevisionNo, $lngSalesNo, $strSlip
     $aryInsert[] ="  , lngrevisionno ";                  //2:リビジョン番号
     $aryInsert[] ="  , strslipcode ";                    //3:納品伝票コード
     $aryInsert[] ="  , lngsalesno ";                     //4:売上番号
-    $aryInsert[] ="  , strcustomercode ";                //5:顧客コード
+    $aryInsert[] ="  , lngcustomercode ";                //5:顧客コード
     $aryInsert[] ="  , strcustomercompanyname ";         //6:顧客社名
     $aryInsert[] ="  , strcustomername ";                //7:顧客名
     $aryInsert[] ="  , strcustomeraddress1 ";            //8:顧客住所1
@@ -1512,13 +1513,13 @@ function fncRegisterSlipMaster($lngSlipNo, $lngRevisionNo, $lngSalesNo, $strSlip
     $aryInsert[] ="  , lngtaxclasscode ";                //22:課税区分コード
     $aryInsert[] ="  , strtaxclassname ";                //23:課税区分
     $aryInsert[] ="  , curtax ";                         //24:消費税率
-    $aryInsert[] ="  , strusercode ";                    //25:担当者コード
+    $aryInsert[] ="  , lngusercode ";                    //25:担当者コード
     $aryInsert[] ="  , strusername ";                    //26:担当者名
     $aryInsert[] ="  , curtotalprice ";                  //27:合計金額
     $aryInsert[] ="  , lngmonetaryunitcode ";            //28:通貨単位コード
     $aryInsert[] ="  , strmonetaryunitsign ";            //29:通貨単位
     $aryInsert[] ="  , dtminsertdate ";                  //30:作成日
-    $aryInsert[] ="  , strinsertusercode ";              //31:入力者コード
+    $aryInsert[] ="  , lnginsertusercode ";              //31:入力者コード
     $aryInsert[] ="  , strinsertusername ";              //32:入力者名
     $aryInsert[] ="  , strnote ";                        //33:備考
     $aryInsert[] ="  , lngprintcount ";                  //34:印刷回数

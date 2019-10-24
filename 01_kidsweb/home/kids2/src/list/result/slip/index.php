@@ -61,8 +61,8 @@ $aryQuery[] = "SELECT";
 $aryQuery[] = "  distinct s.strslipcode";
 $aryQuery[] = "  , u1.strUserDisplayCode AS strinsertuserdisplaycode";
 $aryQuery[] = "  , u1.strUserDisplayName AS strinsertuserdisplayname";
-$aryQuery[] = "  , s.strcustomercode";
-$aryQuery[] = "  , s.strcustomername";
+$aryQuery[] = "  , cust.strCompanyDisplayCode";
+$aryQuery[] = "  , cust.strCompanyDisplayName";
 $aryQuery[] = "  , u2.strGroupDisplayCode AS strGroupDisplayCode";
 $aryQuery[] = "  , u2.strGroupDisplayName AS strGroupDisplayName";
 $aryQuery[] = "  , u2.strUserDisplayCode AS strUserDisplayCode";
@@ -88,9 +88,9 @@ $aryQuery[] = "    on s.lngslipno = sd.lngslipno ";
 $aryQuery[] = "  left join m_Company c ";
 $aryQuery[] = "    on s.lngdeliveryplacecode = c.lngCompanyCode ";
 $aryQuery[] = "  left join m_Company cust ";
-$aryQuery[] = "    on s.strcustomercode = trim(to_char(cust.lngCompanyCode, '9999999'))";
+$aryQuery[] = "    on s.lngcustomercode = cust.lngCompanyCode";
 $aryQuery[] = "  left join m_user u1 ";
-$aryQuery[] = "    on s.strinsertusercode = trim(to_char(u1.lngUserCode, '9999999')) ";
+$aryQuery[] = "    on s.lnginsertusercode = u1.lngUserCode";
 $aryQuery[] = "  left join ( ";
 $aryQuery[] = "    select";
 $aryQuery[] = "      u.lngUserCode";
@@ -107,7 +107,7 @@ $aryQuery[] = "      g.lnggroupcode = gr.lnggroupcode ";
 $aryQuery[] = "      AND u.lngusercode = gr.lngusercode ";
 $aryQuery[] = "      AND gr.bytdefaultflag = true";
 $aryQuery[] = "  ) u2 ";
-$aryQuery[] = "    on s.strusercode = trim(to_char(u2.lngUserCode, '9999999')) ";
+$aryQuery[] = "    on s.lngusercode = u2.lngUserCode ";
 $aryQuery[] = "WHERE";
 $aryQuery[] = "  not exists ( ";
 $aryQuery[] = "    select";
@@ -133,13 +133,13 @@ $aryQuery[] = "  ) ";
 /////////////////////////////////////////////////////////////////
 // Ç¼ÉÊÆü_from
 if (array_key_exists("dtmDeliveryDate", $searchColumns) &&
-    array_key_exists("dtmDeliveryDate", $from) && $from["dtmDeliveryDate"]!='') {
+    array_key_exists("dtmDeliveryDate", $from) && $from["dtmDeliveryDate"] != '') {
     $aryQuery[] = " AND date_trunc('day', s.dtmDeliveryDate )" .
     " >= '" . pg_escape_string($from["dtmDeliveryDate"]) . "'";
 }
 // Ç¼ÉÊÆü_to
 if (array_key_exists("dtmDeliveryDate", $searchColumns) &&
-    array_key_exists("dtmDeliveryDate", $to) && $to["dtmDeliveryDate"]!='') {
+    array_key_exists("dtmDeliveryDate", $to) && $to["dtmDeliveryDate"] != '') {
     $aryQuery[] = " AND date_trunc('day', s.dtmDeliveryDate )" .
     " <= " . "'" . pg_escape_string($to["dtmDeliveryDate"]) . "'";
 }
@@ -289,10 +289,10 @@ for ($i = 0; $i < $lngResultNum; $i++) {
     $aryParts["strResult"] .= "<tr class=\"Segs\">\n";
 
     $aryParts["strResult"] .= "<td>" . $objResult->strslipcode . "</td>\n";
-    $aryParts["strResult"] .= "<td>" . $objResult->strinsertuserdisplaycode . ":" . $objResult->strinsertuserdisplayname . "</td>\n";
-    $aryParts["strResult"] .= "<td>" . $objResult->strcustomercode . ":" . $objResult->strcustomername . "</td>\n";
-    $aryParts["strResult"] .= "<td>" . $objResult->strgroupdisplaycode . ":" . $objResult->strgroupdisplayname . "</td>\n";
-    $aryParts["strResult"] .= "<td>" . $objResult->struserdisplaycode . ":" . $objResult->struserdisplayname . "</td>\n";
+    $aryParts["strResult"] .= "<td>" . ($objResult->strinsertuserdisplaycode == "" ? "&nbsp;" : ($objResult->strinsertuserdisplaycode . ":" . $objResult->strinsertuserdisplayname)) . "</td>\n";
+    $aryParts["strResult"] .= "<td>" . ($objResult->strcompanydisplaycode == "" ? "&nbsp;" : ($objResult->strcompanydisplaycode . ":" . $objResult->strcompanydisplayname)) . "</td>\n";
+    $aryParts["strResult"] .= "<td>" . ($objResult->strgroupdisplaycode == "" ? "&nbsp;" : ($objResult->strgroupdisplaycode . ":" . $objResult->strgroupdisplayname)) . "</td>\n";
+    $aryParts["strResult"] .= "<td>" . ($objResult->struserdisplaycode == "" ? "&nbsp;" : ($objResult->struserdisplaycode . ":" . $objResult->struserdisplayname)) . "</td>\n";
 
     $aryParts["strResult"] .= "<td align=center>";
 

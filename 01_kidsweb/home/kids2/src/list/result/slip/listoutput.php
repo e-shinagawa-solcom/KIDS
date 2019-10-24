@@ -88,6 +88,7 @@ if ($aryData["lngReportCode"]) {
 else {
     // データ取得クエリ
     $strQuery = fncGetListOutputQuery(DEF_REPORT_SLIP, $aryData["strReportKeyCode"], $objDB);
+
     $objMaster = new clsMaster();
     $objMaster->setMasterTableData($strQuery, $objDB);
     $aryParts = &$objMaster->aryData[0];

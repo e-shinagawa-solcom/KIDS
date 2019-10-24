@@ -33,7 +33,7 @@ function fncGetSlipHeadNoToInfoSQL ( $lngSlipNo )
 	// 納品書No
 	$aryQuery[] = ", s.strSlipCode as strslipcode";
 	// 顧客
-	$aryQuery[] = ", s.strCustomerCode as strcustomercode";	//顧客コード
+	$aryQuery[] = ", c.strcompanydisplaycode as strcustomercode";	//顧客コード
 	$aryQuery[] = ", s.strCustomerName as strcustomername";	//顧客名
 	// 納品日
 	$aryQuery[] = ", to_char( s.dtmDeliveryDate, 'YYYY/MM/DD HH:MI:SS' ) as dtmdeliverydate";
@@ -54,7 +54,7 @@ function fncGetSlipHeadNoToInfoSQL ( $lngSlipNo )
 	// 入力日
 	$aryQuery[] = ", to_char( s.dtmInsertDate, 'YYYY/MM/DD HH:MI:SS' ) as dtminsertdate";
 	// 入力者＝起票者
-	$aryQuery[] = ", s.strInsertUserCode as strinsertusercode";	//入力者コード
+	$aryQuery[] = ", u.struserdisplaycode as strinsertusercode";	//入力者コード
 	$aryQuery[] = ", s.strInsertUserName as strinsertusername";	//入力者名
 	// 印刷回数
 	$aryQuery[] = ", s.lngPrintCount as lngprintcount";
@@ -64,6 +64,8 @@ function fncGetSlipHeadNoToInfoSQL ( $lngSlipNo )
 	// FROM句
 	$aryQuery[] = " FROM m_Slip s ";
 	$aryQuery[] = " LEFT JOIN m_MonetaryUnit mu ON s.lngMonetaryUnitCode = mu.lngMonetaryUnitCode";
+	$aryQuery[] = " LEFT JOIN m_company c ON s.lngCustomerCode = c.lngcompanycode";
+	$aryQuery[] = " LEFT JOIN m_user u ON s.lngInsertUserCode = u.lngusercode";
 
 	// WHERE句
 	$aryQuery[] = " WHERE s.lngSlipNo = " . $lngSlipNo . "";

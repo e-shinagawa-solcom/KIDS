@@ -63,7 +63,7 @@ function fncGetSearchMSlipSQL ( $aryCondtition = array(), $renew = false, $objDB
     // 売上番号
     $aryOutQuery[] = ", ms.lngsalesno ";
     // 顧客コード
-    $aryOutQuery[] = ", ms.strcustomercode ";
+    $aryOutQuery[] = ", ms.lngcustomercode ";
     // 表示用顧客コード
     $aryOutQuery[] = ", mc.strcompanydisplaycode ";
     // 顧客名
@@ -87,7 +87,7 @@ function fncGetSearchMSlipSQL ( $aryCondtition = array(), $renew = false, $objDB
     // 消費税率
     $aryOutQuery[] = ", ms.curtax ";
     // 担当者コード
-    $aryOutQuery[] = ", ms.strusercode ";
+    $aryOutQuery[] = ", ms.lngusercode ";
     // 担当者名
     $aryOutQuery[] = ", ms.strusername ";
     // 合計金額
@@ -99,7 +99,7 @@ function fncGetSearchMSlipSQL ( $aryCondtition = array(), $renew = false, $objDB
     // 作成日
     $aryOutQuery[] = ", ms.dtminsertdate ";
     // 入力者コード
-    $aryOutQuery[] = ", ms.strinsertusercode ";
+    $aryOutQuery[] = ", ms.lnginsertusercode ";
     // 入力者名
     $aryOutQuery[] = ", ms.strinsertusername ";
     // 備考
@@ -113,10 +113,12 @@ function fncGetSearchMSlipSQL ( $aryCondtition = array(), $renew = false, $objDB
     $aryOutQuery[] = " INNER JOIN (select lngslipno, MAX(lngrevisionno) as lngrevisionno from m_slip group by lngslipno)";
     $aryOutQuery[] = " rev_max on rev_max.lngslipno = ms.lngslipno and rev_max.lngrevisionno = ms.lngrevisionno";
     // JOIN
-    $aryOutQuery[] = " LEFT JOIN m_company mc ON (mc.lngcompanycode = to_number(ms.strcustomercode,'9999') ) ";
+    $aryOutQuery[] = " LEFT JOIN m_company mc ON mc.lngcompanycode = ms.lngcustomercode ";
+    $aryOutQuery[] = " LEFT JOIN m_user mu1 ON mu.lngusercode = ms.lngusercode ";
+    $aryOutQuery[] = " LEFT JOIN m_user mu2 ON mu.lnginsertusercode = ms.lngusercode ";
 
     // Where句
-    $aryOutQuery[] = " WHERE ms.lngslipno not in (select lngslipno from m_slip where lngslipno < 0) " ; // 削除済みは対象外
+    $aryOutQuery[] = " WHERE not exists (select lngslipno from m_slip ms1 where ms1.lngslipno = ms.lngslipno and lngslipno < 0) " ; // 削除済みは対象外
 
     foreach($aryCondtition as $column => $value) {
         $value = trim($value);
@@ -180,7 +182,7 @@ function fncGetSearchMSlipSQL ( $aryCondtition = array(), $renew = false, $objDB
 
         // 担当者コード
         if($column == 'inChargeUserCode') {
-            $aryOutQuery[] = " AND strusercode LIKE '%" .$value ."%' " ;
+            $aryOutQuery[] = " AND mu1.struserdisplaycode LIKE '%" .$value ."%' " ;
         }
 
         // 担当者
@@ -190,7 +192,7 @@ function fncGetSearchMSlipSQL ( $aryCondtition = array(), $renew = false, $objDB
 
         // 作成者コード
         if($column == 'inputUserCode') {
-            $aryOutQuery[] = " AND strinsertusercode LIKE '%" .$value ."%' " ;
+            $aryOutQuery[] = " AND mu2.struserdisplaycode LIKE '%" .$value ."%' " ;
         }
 
         // 作成者
@@ -234,13 +236,7 @@ function fncGetSearchMSlipInvoiceNoSQL ( $lnginvoiceno )
     // 売上番号
     $aryOutQuery[] = ", ms.lngsalesno ";
     // 顧客コード
-    $aryOutQuery[] = ", ms.strcustomercode ";
-    // 顧客名
-    $aryOutQuery[] = ", ms.strcustomername ";
-    // 売上番号
-    $aryOutQuery[] = ", ms.lngsalesno ";
-    // 顧客コード
-    $aryOutQuery[] = ", ms.strcustomercode ";
+    $aryOutQuery[] = ", ms.lngcustomercode ";
     // 表示用顧客コード
     $aryOutQuery[] = ", mc.strcompanydisplaycode ";
     // 顧客名
@@ -264,7 +260,7 @@ function fncGetSearchMSlipInvoiceNoSQL ( $lnginvoiceno )
     // 消費税率
     $aryOutQuery[] = ", ms.curtax ";
     // 担当者コード
-    $aryOutQuery[] = ", ms.strusercode ";
+    $aryOutQuery[] = ", ms.lngusercode ";
     // 担当者名
     $aryOutQuery[] = ", ms.strusername ";
     // 合計金額
@@ -276,7 +272,7 @@ function fncGetSearchMSlipInvoiceNoSQL ( $lnginvoiceno )
     // 作成日
     $aryOutQuery[] = ", ms.dtminsertdate ";
     // 入力者コード
-    $aryOutQuery[] = ", ms.strinsertusercode ";
+    $aryOutQuery[] = ", ms.lnginsertusercode ";
     // 入力者名
     $aryOutQuery[] = ", ms.strinsertusername ";
     // 備考

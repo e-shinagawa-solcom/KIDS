@@ -283,7 +283,7 @@
 	//-------------------------------------------------------------------------
 	// ajax POST先をこのファイルにする
 	$aryData["ajaxPostTarget"] = "renew.php";
-
+	
 	// 納品書修正画面表示（テンプレートは売上（納品書）登録画面と共通）
 	echo fncGetReplacedHtml( "sc/regist2/parts.tmpl", $aryData ,$objAuth);
 
