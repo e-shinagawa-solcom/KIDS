@@ -87,6 +87,8 @@ $aryQuery[] = "  left join t_slipdetail sd ";
 $aryQuery[] = "    on s.lngslipno = sd.lngslipno ";
 $aryQuery[] = "  left join m_Company c ";
 $aryQuery[] = "    on s.lngdeliveryplacecode = c.lngCompanyCode ";
+$aryQuery[] = "  left join m_Company cust ";
+$aryQuery[] = "    on s.strcustomercode = trim(to_char(cust.lngCompanyCode, '9999999'))";
 $aryQuery[] = "  left join m_user u1 ";
 $aryQuery[] = "    on s.strinsertusercode = trim(to_char(u1.lngUserCode, '9999999')) ";
 $aryQuery[] = "  left join ( ";
@@ -102,12 +104,12 @@ $aryQuery[] = "      , m_Group g";
 $aryQuery[] = "      , m_grouprelation gr ";
 $aryQuery[] = "    where";
 $aryQuery[] = "      g.lnggroupcode = gr.lnggroupcode ";
-$aryQuery[] = "      and u.lngusercode = gr.lngusercode ";
-$aryQuery[] = "      and gr.bytdefaultflag = true";
+$aryQuery[] = "      AND u.lngusercode = gr.lngusercode ";
+$aryQuery[] = "      AND gr.bytdefaultflag = true";
 $aryQuery[] = "  ) u2 ";
 $aryQuery[] = "    on s.strusercode = trim(to_char(u2.lngUserCode, '9999999')) ";
 $aryQuery[] = "WHERE";
-$aryQuery[] = "  s.strslipcode not in ( ";
+$aryQuery[] = "  not exists ( ";
 $aryQuery[] = "    select";
 $aryQuery[] = "      s1.strslipcode ";
 $aryQuery[] = "    from";
@@ -123,7 +125,8 @@ $aryQuery[] = "        group by";
 $aryQuery[] = "          strslipcode";
 $aryQuery[] = "      ) as s1 ";
 $aryQuery[] = "    where";
-$aryQuery[] = "      s1.lngRevisionNo < 0";
+$aryQuery[] = "      s1.strslipcode = s.strslipcode";
+$aryQuery[] = "      AND s1.lngRevisionNo < 0";
 $aryQuery[] = "  ) ";
 /////////////////////////////////////////////////////////////////
 // 検索条件
@@ -216,7 +219,7 @@ if (array_key_exists("strGoodsCode", $searchColumns) &&
 // 顧客
 if (array_key_exists("lngCustomerCompanyCode", $searchColumns) &&
     array_key_exists("lngCustomerCompanyCode", $searchValue)) {
-    $aryQuery[] = " AND s.strcustomercode = '" . $searchValue["lngCustomerCompanyCode"] . "'";
+    $aryQuery[] = " AND cust.strCompanyDisplayCode = '" . $searchValue["lngCustomerCompanyCode"] . "'";
 }
 // 納品先
 if (array_key_exists("lngDeliveryPlaceCode", $searchColumns) &&
@@ -244,8 +247,42 @@ if ($lngResultNum > 0) {
 
 // 帳票データ取得クエリ実行・テーブル生成
 $strQuery = implode("\n", $aryQuery);
-
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
+
+// 検索件数がありの場合
+if ($lngResultNum > 0) {
+    // 指定数以上の場合エラーメッセージを表示する
+    if ($lngResultNum > DEF_SEARCH_MAX) {
+        $errorFlag = true;
+        $lngErrorCode = 9057;
+        $aryErrorMessage = DEF_SEARCH_MAX;
+    }
+} else {
+    $errorFlag = true;
+    $lngErrorCode = 9214;
+    $aryErrorMessage = "";
+}
+if ($errorFlag) {
+
+    $strMessage = fncOutputError($lngErrorCode, DEF_WARNING, $aryErrorMessage, false, "", $objDB);
+
+    // [strErrorMessage]書き出し
+    $aryHtml["strErrorMessage"] = $strMessage;
+
+    // テンプレート読み込み
+    $objTemplate = new clsTemplate();
+    $objTemplate->getTemplate("/result/error/parts.tmpl");
+
+    // テンプレート生成
+    $objTemplate->replace($aryHtml);
+    $objTemplate->complete();
+
+    // HTML出力
+    echo $objTemplate->strTemplate;
+
+    exit;
+}
+
 for ($i = 0; $i < $lngResultNum; $i++) {
     $objResult = $objDB->fetchObject($lngResultID, $i);
 

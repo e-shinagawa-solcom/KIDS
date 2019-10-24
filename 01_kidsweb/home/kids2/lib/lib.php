@@ -2416,6 +2416,7 @@ function toUTF8($str)
     return htmlspecialchars(mb_convert_encoding($str, "utf-8", "eucjp-win"), ENT_QUOTES, 'utf-8');
 }
 
+
 function toMoneyFormat($lngmonetaryunitcode, $strmonetaryunitsign, $price)
 {
     if ($lngmonetaryunitcode == 1) {
@@ -2425,4 +2426,37 @@ function toMoneyFormat($lngmonetaryunitcode, $strmonetaryunitsign, $price)
     }
 }
 
+// 西暦→和暦変換
+function convert_jpdt($str,$fmt='年n月j日',$kanji=true) {
+    $date = (int)date('Ymd',  strtotime($str));
+    $year = (int)date('Y',  strtotime($str));	
+
+	if ($date >= 20190501) {        //令和元年（2019年5月1日以降）
+		$name = "  R令和";
+		$year -= 2018;
+	} else if ($date >= 19890108) { //平成元年（1989年1月8日以降）
+		$name = "  H平成";
+		$year -= 1988;
+	} else if ($date >= 19261225) { //昭和元年（1926年12月25日以降）
+		$name = "  S昭和";
+		$year -= 1925;
+	} else if ($date >= 19120730) { //大正元年（1912年7月30日以降）
+		$name = "  T大正";
+		$year -= 1911;
+	} else if ($date >= 18680125) { //明治元年（1868年1月25日以降）
+		$name = "  M明治";
+		$year -= 1867;
+	} else {
+		$name = 'AD 西暦';
+	}
+
+	if ($kanji) {
+		$name = substr($name,3);
+		if ($year==1) $year = '元';
+	} else {
+		$name = ltrim(substr($name,0,3));
+	}
+
+	return $name.$year.date($fmt,strtotime($str));
+}
 ?>

@@ -303,7 +303,7 @@ function fncGetMaxSalesSQL($displayColumns, $searchColumns, $from, $to, $searchV
     }
 
     if (!array_key_exists("admin", $optionColumns)) {
-        $aryQuery[] = "  AND s.strSalesCode not in ( ";
+        $aryQuery[] = "  AND not exists ( ";
         $aryQuery[] = "    select";
         $aryQuery[] = "      s1.strSalesCode ";
         $aryQuery[] = "    from";
@@ -317,7 +317,8 @@ function fncGetMaxSalesSQL($displayColumns, $searchColumns, $from, $to, $searchV
         $aryQuery[] = "          strSalesCode";
         $aryQuery[] = "      ) as s1 ";
         $aryQuery[] = "    where";
-        $aryQuery[] = "      s1.lngRevisionNo < 0";
+        $aryQuery[] = "      s1.strSalesCode = s.strSalesCode";
+        $aryQuery[] = "      AND s1.lngRevisionNo < 0";
         $aryQuery[] = "  ) ";
     } else {
         $aryQuery[] = "  AND s.bytInvalidFlag = FALSE ";

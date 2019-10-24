@@ -288,7 +288,7 @@ function fncGetMaxStockSQL($displayColumns, $searchColumns, $from, $to, $searchV
         $aryQuery[] = " AND s.lngPayConditionCode = '" . $searchValue["lngPayConditionCode"] . "'";
     }
 	if (!array_key_exists("admin", $optionColumns)) {
-		$aryQuery[] = "  AND s.strStockCode not in ( ";
+		$aryQuery[] = "  AND not exists ( ";
 		$aryQuery[] = "    select";
 		$aryQuery[] = "      s2.strStockCode ";
 		$aryQuery[] = "    from";
@@ -302,7 +302,8 @@ function fncGetMaxStockSQL($displayColumns, $searchColumns, $from, $to, $searchV
 		$aryQuery[] = "          strStockCode";
 		$aryQuery[] = "      ) as s2 ";
 		$aryQuery[] = "    where";
-		$aryQuery[] = "      s2.lngRevisionNo < 0";
+		$aryQuery[] = "      s2.strStockCode = s.strStockCode";
+		$aryQuery[] = "      AND s2.lngRevisionNo < 0";
 		$aryQuery[] = "  ) ";
 	} else {
 		$aryQuery[] = " AND s.bytInvalidFlag = FALSE ";

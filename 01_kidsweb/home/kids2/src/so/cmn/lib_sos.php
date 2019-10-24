@@ -235,7 +235,7 @@ function fncGetMaxReceiveSQL($displayColumns, $searchColumns, $from, $to, $searc
         }
     }
     if (!array_key_exists("admin", $optionColumns)) {
-        $aryQuery[] = "  AND r.strReceiveCode not in ( ";
+        $aryQuery[] = "  AND not exists ( ";
         $aryQuery[] = "    select";
         $aryQuery[] = "      r1.strReceiveCode ";
         $aryQuery[] = "    from";
@@ -249,7 +249,8 @@ function fncGetMaxReceiveSQL($displayColumns, $searchColumns, $from, $to, $searc
         $aryQuery[] = "          strReceiveCode";
         $aryQuery[] = "      ) as r1 ";
         $aryQuery[] = "    where";
-        $aryQuery[] = "      r1.lngRevisionNo < 0";
+        $aryQuery[] = "      r1.strReceiveCode = r.strReceiveCode";
+        $aryQuery[] = "      AND r1.lngRevisionNo < 0";
         $aryQuery[] = "  ) ";
     } else {
         $aryQuery[] = " AND r.bytInvalidFlag = FALSE ";

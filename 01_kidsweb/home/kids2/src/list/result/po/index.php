@@ -97,7 +97,7 @@ $aryQuery[] = "    ON po.lngcustomercode = c.lngCompanyCode ";
 $aryQuery[] = "  LEFT JOIN m_group g ";
 $aryQuery[] = "    ON po.lnggroupcode = g.lnggroupcode ";
 $aryQuery[] = "WHERE";
-$aryQuery[] = "  po.strordercode not in ( ";
+$aryQuery[] = "  not exists ( ";
 $aryQuery[] = "    select";
 $aryQuery[] = "      po2.strordercode ";
 $aryQuery[] = "    from";
@@ -111,7 +111,8 @@ $aryQuery[] = "        group by";
 $aryQuery[] = "          strordercode";
 $aryQuery[] = "      ) as po2 ";
 $aryQuery[] = "    where";
-$aryQuery[] = "      po2.lngRevisionNo < 0";
+$aryQuery[] = "      po2.strordercode = po.strordercode";
+$aryQuery[] = "      AND po2.lngRevisionNo < 0";
 $aryQuery[] = "  ) ";
 /////////////////////////////////////////////////////////////////
 // 検索条件
@@ -189,6 +190,43 @@ if ($lngResultNum > 0) {
 // 帳票データ取得クエリ実行・テーブル生成
 $strQuery = implode("\n", $aryQuery);
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
+
+// 検索件数がありの場合
+if ($lngResultNum > 0) {
+    // 指定数以上の場合エラーメッセージを表示する
+    if ($lngResultNum > DEF_SEARCH_MAX) {
+        $errorFlag = true;
+        $lngErrorCode = 9057;
+        $aryErrorMessage = DEF_SEARCH_MAX;
+    }
+} else {
+    $errorFlag = true;
+    $lngErrorCode = 503;
+    $aryErrorMessage = "";
+}
+if ($errorFlag) {
+    // エラー画面の戻り先
+    // $strReturnPath = "../list/po/index.php?strSessionID=" . $aryData["strSessionID"];
+
+    $strMessage = fncOutputError($lngErrorCode, DEF_WARNING, $aryErrorMessage, false, $strReturnPath, $objDB);
+
+    // [strErrorMessage]書き出し
+    $aryHtml["strErrorMessage"] = $strMessage;
+
+    // テンプレート読み込み
+    $objTemplate = new clsTemplate();
+    $objTemplate->getTemplate("/result/error/parts.tmpl");
+
+    // テンプレート生成
+    $objTemplate->replace($aryHtml);
+    $objTemplate->complete();
+
+    // HTML出力
+    echo $objTemplate->strTemplate;
+
+    exit;
+}
+
 for ($i = 0; $i < $lngResultNum; $i++) {
     $objResult = $objDB->fetchObject($lngResultID, $i);
 

@@ -260,7 +260,7 @@ if (array_key_exists("lngCopyrightCode", $searchColumns) &&
 }
 
 if (!array_key_exists("admin", $optionColumns)) {
-    $aryQuery[] = "  AND p.strProductCode not in ( ";
+    $aryQuery[] = "  AND not exists ( ";
     $aryQuery[] = "    select";
     $aryQuery[] = "      p1.strProductCode ";
     $aryQuery[] = "    from";
@@ -274,7 +274,8 @@ if (!array_key_exists("admin", $optionColumns)) {
     $aryQuery[] = "          strProductCode";
     $aryQuery[] = "      ) as p1 ";
     $aryQuery[] = "    where";
-    $aryQuery[] = "      p1.lngRevisionNo < 0";
+    $aryQuery[] = "      p1.strProductCode = p.strProductCode";
+    $aryQuery[] = "      AND p1.lngRevisionNo < 0";
     $aryQuery[] = "  ) ";
 } else {
     $aryQuery[] = "  AND p.bytInvalidFlag = FALSE ";

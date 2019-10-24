@@ -113,7 +113,7 @@ $aryQuery[] = "          on gp1.lngProductNo = gp2.lngProductNo ";
 $aryQuery[] = "          and gp1.lngRevisionNo = gp2.lngRevisionNo";
 $aryQuery[] = "    ) gp ";
 $aryQuery[] = " WHERE p.lngProductNo = gp.lngProductNo";
-$aryQuery[] = "  AND p.strproductcode not in ( ";
+$aryQuery[] = "  AND not exists ( ";
 $aryQuery[] = "    select";
 $aryQuery[] = "      p1.strproductcode ";
 $aryQuery[] = "    from";
@@ -129,7 +129,8 @@ $aryQuery[] = "        group by";
 $aryQuery[] = "          strproductcode";
 $aryQuery[] = "      ) as p1 ";
 $aryQuery[] = "    where";
-$aryQuery[] = "      p1.lngRevisionNo < 0";
+$aryQuery[] = "      p1.strproductcode = p.strproductcode";
+$aryQuery[] = "      AND p1.lngRevisionNo < 0";
 $aryQuery[] = "  ) ";
 /////////////////////////////////////////////////////////////////
 // ¸¡º÷¾ò·ï

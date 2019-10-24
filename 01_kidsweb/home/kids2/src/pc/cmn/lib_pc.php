@@ -909,7 +909,7 @@ function fncGetPoInfoSQL($strOrderCode, $objDB)
     $aryQuery[] = "  LEFT JOIN m_company dp_c on dp_c.lngcompanycode = mo.lngdeliveryplacecode";
     $aryQuery[] = " WHERE mo.lngorderstatuscode = 2";
     $aryQuery[] = " and mpo.strordercode = '" . $strOrderCode . "'"; // 
-    $aryQuery[] = " and mpo.lngpurchaseorderno not in (select lngpurchaseorderno from m_purchaseorder where lngrevisionno = -1)";
+    $aryQuery[] = " AND not exists (select lngpurchaseorderno from m_purchaseorder mpo1 where mpo1.lngpurchaseorderno = mpo.lngpurchaseorderno and mpo1.lngrevisionno = -1)";
     $aryQuery[] = "  ORDER BY od.lngSortKey";
 
     $strQuery = implode("\n", $aryQuery);
