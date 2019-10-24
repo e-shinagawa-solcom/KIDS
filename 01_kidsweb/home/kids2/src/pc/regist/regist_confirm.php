@@ -120,7 +120,7 @@ for ($i = 0; $i < count($aryDetailData); $i++) {
     $aryQuery[] = "  AND od.lngorderdetailno = " . $aryDetailData[$i]["lngOrderDetailNo"] . " ";
     $aryQuery[] = " ORDER BY od.lngSortKey";
     $strQuery = implode("\n", $aryQuery);
-echo $strQuery . "<br>";
+//echo $strQuery . "<br>";
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
     if ($lngResultNum) {
         if ($lngResultNum == 1) {
