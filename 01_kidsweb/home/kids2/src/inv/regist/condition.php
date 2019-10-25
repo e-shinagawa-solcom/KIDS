@@ -47,10 +47,8 @@
     {
         $aryData = $_GET;
     }
-
     // セッション確認
     $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
-
 
     // cookieにSET
     if( !empty($aryData["strSessionID"]) )
@@ -70,7 +68,6 @@
     {
         fncOutputError ( 9052, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
     }
-
     // ajax 検索
     if(isset($aryData["mode"]) && $aryData["mode"] == 'ajax')
     {
@@ -86,6 +83,7 @@
 
             // SQL文取得
             $strQuery = fncGetSearchMSlipSQL ($params, false, $objDB);
+fncDebug("kids2.log", $strQuery, __FILE__, __LINE__, "a+" );
 //             error_log($strQuery,"3",LOG_FILE);
             // EUC-JPへ変換
 //            $strQuery = mb_convert_encoding($strQuery, "EUC-JP", "auto");
@@ -93,6 +91,7 @@
             // クエリ実行
             list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
+fncDebug("kids2.log", $lngResultNum, __FILE__, __LINE__, "a+" );
             // 結果件数を取得
             if($lngResultNum > 0)
             {

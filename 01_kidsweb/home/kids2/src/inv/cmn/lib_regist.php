@@ -57,7 +57,7 @@ function fncGetSearchMSlipSQL ( $aryCondtition = array(), $renew = false, $objDB
     // 売上番号
     $aryOutQuery[] = ", ms.lngsalesno ";
     // 顧客コード
-    $aryOutQuery[] = ", ms.strcustomercode ";
+    $aryOutQuery[] = ", ms.lngcustomercode ";
     // 顧客名
     $aryOutQuery[] = ", ms.strcustomername ";
     // 売上番号
@@ -114,8 +114,8 @@ function fncGetSearchMSlipSQL ( $aryCondtition = array(), $renew = false, $objDB
     $aryOutQuery[] = " rev_max on rev_max.lngslipno = ms.lngslipno and rev_max.lngrevisionno = ms.lngrevisionno";
     // JOIN
     $aryOutQuery[] = " LEFT JOIN m_company mc ON mc.lngcompanycode = ms.lngcustomercode ";
-    $aryOutQuery[] = " LEFT JOIN m_user mu1 ON mu.lngusercode = ms.lngusercode ";
-    $aryOutQuery[] = " LEFT JOIN m_user mu2 ON mu.lnginsertusercode = ms.lngusercode ";
+    $aryOutQuery[] = " LEFT JOIN m_user mu1 ON mu1.lngusercode = ms.lngusercode ";
+    $aryOutQuery[] = " LEFT JOIN m_user mu2 ON mu2.lngusercode = ms.lnginsertusercode ";
 
     // Where句
     $aryOutQuery[] = " WHERE not exists (select lngslipno from m_slip ms1 where ms1.lngslipno = ms.lngslipno and lngslipno < 0) " ; // 削除済みは対象外
@@ -1063,7 +1063,7 @@ function fncInvoiceInsertReturnArray($aryData, $aryResult=null, $objAuth, $objDB
     // 作成者コード
     $insertAry['strinsertusercode'] = $objAuth->UserCode;
     // 作成者名
-    $insertAry['strinsertusername'] = $objAuth->UserFullName;
+    $insertAry['strinsertusername'] = $objAuth->UserDisplayName;
     // 備考
     $insertAry['strnote'] = $aryData['strnote'];
 
@@ -1081,7 +1081,7 @@ function fncInvoiceInsertReturnArray($aryData, $aryResult=null, $objAuth, $objDB
  *    @param  Object   $objDB      DBオブジェクト
  *    @access public
  */
-function fncInvoiceInsert( $insertAry ,$objDB)
+function fncInvoiceInsert( $insertAry ,$objDB, $objAuth)
 {
     // 請求書マスタにデータを登録する
     // 請求書番号を取得
@@ -1100,7 +1100,7 @@ function fncInvoiceInsert( $insertAry ,$objDB)
     $aryQuery[] = "lngrevisionno, ";            // リビジョン番号 //登録時は0
     $aryQuery[] = "strinvoicecode, ";           // 請求書コード
     $aryQuery[] = "dtminvoicedate, ";           // 請求日
-    $aryQuery[] = "strcustomercode, ";          // 顧客コード
+    $aryQuery[] = "lngcustomercode, ";          // 顧客コード
     $aryQuery[] = "strcustomername, ";          // 顧客名
     $aryQuery[] = "strcustomercompanyname, ";   // 顧客社名
     $aryQuery[] = "dtmchargeternstart, ";       // 請求期間(FROM)
@@ -1115,12 +1115,12 @@ function fncInvoiceInsert( $insertAry ,$objDB)
     $aryQuery[] = "curtax1, ";                  // 消費税率1
     $aryQuery[] = "curtaxprice1, ";             // 消費税額1
     $aryQuery[] = "dtminsertdate, ";            // 作成日
-    $aryQuery[] = "strusercode, ";              // 担当者コード
+    $aryQuery[] = "lngusercode, ";              // 担当者コード
     $aryQuery[] = "strusername, ";              // 担当者名
-    $aryQuery[] = "strinsertusercode, ";        // 作成者コード
+    $aryQuery[] = "lnginsertusercode, ";        // 作成者コード
     $aryQuery[] = "strinsertusername, ";        // 作成者名
     $aryQuery[] = "strnote, ";                  // 備考
-//     $aryQuery[] = "lngprintcount, ";         // 印刷回数
+     $aryQuery[] = "lngprintcount, ";         // 印刷回数
     $aryQuery[] = "bytinvalidflag ";            // 無効フラグ
     $aryQuery[] = ") values (";
     // 請求書番号
@@ -1128,7 +1128,7 @@ function fncInvoiceInsert( $insertAry ,$objDB)
     $aryQuery[] = $insertAry['lngrevisionno'] ." ,";                                        // リビジョン番号
     $aryQuery[] = "'" .$insertAry['strinvoicecode'] ."' ,";                                 // 請求書コード
     $aryQuery[] = "'" .$insertAry['dtminvoicedate'] ."' ,";                                 // 請求日
-    $aryQuery[] = "'". $insertAry['strcustomercode'] ."'  ,";                               // 顧客コード(表示用)
+    $aryQuery[] = "(select lngcompanycode from m_company where strcompanydisplaycode='". $insertAry['strcustomercode'] ."')  ,";                               // 顧客コード(表示用)
     $aryQuery[] = "'" .$insertAry['strcustomername']."' , " ;                               // 顧客名
     $aryQuery[] = "'" .$insertAry['strcustomercompanyname']."' , " ;                        // 顧客社名
     $aryQuery[] = "'". $insertAry['dtmchargeternstart'] ."'  ,";                            // 請求期間(FROM)
@@ -1143,12 +1143,12 @@ function fncInvoiceInsert( $insertAry ,$objDB)
     $aryQuery[] = (int)$insertAry['curtax1'] .",";                                          // 消費税率1
     $aryQuery[] = (int)$insertAry['curtaxprice1'] .",";                                     // 消費税額1
     $aryQuery[] = "now() ,";                                                                // 作成日
-    $aryQuery[] = "'". $insertAry['strusercode'] ."'  ,";                                   // 担当者コード
+    $aryQuery[] = "(select lngusercode from m_user where struserdisplaycode = '". $insertAry['strusercode'] ."')  ,";                                   // 担当者コード
     $aryQuery[] = "'". $insertAry['strusername'] ."'  ,";                                   // 担当者名
-    $aryQuery[] = "'" .$insertAry['strinsertusercode'] ."' ,";                              // 作成者コード
-    $aryQuery[] = "'" .$insertAry['strinsertusername'] ."' ,";                              // 作成者名
+    $aryQuery[] = $objAuth->UserCode . " ,";                              // 作成者コード
+    $aryQuery[] = "'" .$objAuth->UserDisplayName ."' ,";                              // 作成者名
     $aryQuery[] = "'" .$insertAry['strnote'] ."', ";                                        // 備考
-//     $aryQuery[] = "0 ,";                                                                 // 印刷回数
+    $aryQuery[] = "0 ,";                                                                 // 印刷回数
     $aryQuery[] = "FALSE ";                                                                 // 無効フラグ
     $aryQuery[] = ") ";
 

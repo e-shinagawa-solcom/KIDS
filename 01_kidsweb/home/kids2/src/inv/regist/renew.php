@@ -236,7 +236,7 @@
         }
 
         // 請求書マスタ・請求書明細・売上マスタを更新する
-        if (!fncInvoiceInsert( $insertData , $objDB))
+        if (!fncInvoiceInsert( $insertData , $objDB, $objAuth))
         {
             fncOutputError ( 9051, DEF_FATAL, "更新処理に伴う売上マスタテーブル処理失敗", TRUE, "", $objDB );
         }
