@@ -155,9 +155,10 @@ $objSheet = new estimateSheetController();
 // オブジェクトにデータをセットする
 $objSheet->dataInitialize($sheetInfo, $objDB);
 
-// phpSpreadSheetで生成したシートオブジェクトをグローバル参照用にセットする
-$sheet = $sheetInfo['sheet'];
-$cellAddressList = $sheetInfo['cellAddress'];
+// 最新でない、または削除済みの見積原価明細の場合は編集不可能フラグをセットする
+if ($maxRevisionNo !== $revisionNo || $minRevisionNo < 0) {
+	$objSheet->setUneditableFlag(true);
+}
 
 // テンプレートの整形を行う
 $objSheet->templateAdjust($estimateData);

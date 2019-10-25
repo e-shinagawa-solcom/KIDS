@@ -42,6 +42,8 @@ class estimateSheetController {
 
     protected $excelErrorList;
 
+    protected $uneditableFlag = false;
+
     public $errorMessage;
     public $difference;
     
@@ -84,6 +86,12 @@ class estimateSheetController {
     // データベースオブジェクトをセットする
     protected function setObjectDatabase($objDB) {
         $this->objDB = $objDB;
+        return true;
+    }
+
+    // 編集不可能フラグをセットする
+    public function setUneditableFlag($flag) {
+        $this->uneditableFlag = $flag;
         return true;
     }
 
@@ -581,6 +589,11 @@ class estimateSheetController {
                 $classData['col'] += 3;
             }
 
+            // 受注確定、発注確定、発注取消のチェックボックス、ボタンのセット
+            $receiveConfirm = mb_convert_encoding('確定', 'UTF-8', 'EUC-JP');
+            $orderConfirm = mb_convert_encoding('確', 'UTF-8', 'EUC-JP');
+            $orderCancel = mb_convert_encoding('消', 'UTF-8', 'EUC-JP');
+
             foreach ($cellData as $tableRow => $rowData) {
                 $workSheetRow = $tableRow + $rowShiftValue; // ワークシートの行番号
 
@@ -590,21 +603,91 @@ class estimateSheetController {
 
                 $areaCode = $this->checkAttributeRow($workSheetRow);
 
-                $receiveConfirm = mb_convert_encoding('確定', 'UTF-8', 'EUC-JP');
-                $orderConfirm = mb_convert_encoding('確', 'UTF-8', 'EUC-JP');
-                $orderCancel = mb_convert_encoding('消', 'UTF-8', 'EUC-JP');
+                // 編集可能な場合のみボタンを生成する
+                if ($this->uneditableFlag === false) {
 
-                // ボタン生成処理
-                if ($receiveAreaCodeList[$areaCode]) {
-                    // 受注の場合
-                    $data = $inputData[$workSheetRow]['data'];
-                    $statusCode = $data['statusCode'];
-                    $receiveNo = $data['receiveNo'];
-                    switch($statusCode) {
-                        case DEF_RECEIVE_APPLICATE:
-                            $name = "confirm". $areaCode;
-                            $htmlValue1 = "<div class=\"applicate\">";
-                            $htmlValue1 .= "<input type=\"checkbox\" class=\"checkbox_applicate\" name=\"". $name. "\" value=\"".$receiveNo . "\">";
+                    // ボタン生成処理
+                    if ($receiveAreaCodeList[$areaCode]) {
+                        // 受注の場合
+                        $data = $inputData[$workSheetRow]['data'];
+                        $statusCode = $data['statusCode'];
+                        $receiveNo = $data['receiveNo'];
+                        switch($statusCode) {
+                            case DEF_RECEIVE_APPLICATE:
+                                $name = "confirm". $areaCode;
+                                $htmlValue1 = "<div class=\"applicate\">";
+                                $htmlValue1 .= "<input type=\"checkbox\" class=\"checkbox_applicate\" name=\"". $name. "\" value=\"".$receiveNo . "\">";
+                                $htmlValue1 .= "</div>";
+                                $mergedCellsList[] = array(
+                                    'row' => $tableRow,
+                                    'col' => 0,
+                                    'rowspan' => 1,
+                                    'colspan' => 2,
+                                );
+                                
+                                $value3 = $receiveStatusMaster[$statusCode]['strreceivestatusname'];
+                                $htmlValue3 = "<div class=\"status_applicate\">". $value3. "</div>";
+
+                                $ColumnData1['value'] = $htmlValue1;
+                                $ColumnData3['value'] = $htmlValue3;
+                                break;
+                            case DEF_RECEIVE_ORDER:
+                                $value = $receiveStatusMaster[$statusCode]['strreceivestatusname'];
+                                $htmlValue = "<div class=\"status_order\">". $value. "</div>";
+                                $ColumnData3['value'] = $htmlValue;
+                                break;
+                            case DEF_RECEIVE_END:
+                                $ColumnData1['value'] = $receiveStatusMaster[$statusCode]['strreceivestatusname'];
+                                $mergedCellsList[] = array(
+                                    'row' => $tableRow,
+                                    'col' => 0,
+                                    'rowspan' => 1,
+                                    'colspan' => 3,
+                                );
+                                break;
+                            default:
+                                break;
+                        }                
+                    } else if ($orderAreaCodeList[$areaCode]) {
+                        // 発注の場合
+                        $data = $inputData[$workSheetRow]['data'];
+                        $statusCode = $data['statusCode'];
+                        $orderNo = $data['orderNo'];
+                        switch($statusCode) {
+                            case DEF_ORDER_APPLICATE:
+                                $name = "confirm". $areaCode;
+                                $htmlValue1 = "<div class=\"applicate\">";
+                                $htmlValue1 .= "<input type=\"checkbox\" class=\"checkbox_applicate\" name=\"". $name. "\" value=\"".$orderNo . "\">";
+                                $htmlValue1 .= "</div>";
+                                $value3 = $orderStatusMaster[$statusCode]['strorderstatusname'];
+                                $htmlValue3 = "<div class=\"status_applicate\">". $value3. "</div>";
+                                $ColumnData1['value'] = $htmlValue1;
+                                $ColumnData3['value'] = $htmlValue3;
+                                break;
+                            case DEF_ORDER_ORDER:
+                                $name = "cancel". $areaCode;
+                                $htmlValue2 = "<div class=\"order\">";
+                                $htmlValue2 .= "<input type=\"checkbox\" class=\"checkbox_cancel\" name=\"". $name. "\" value=\"".$orderNo . "\">";
+                                $htmlValue2 .= "</div>";
+                                $value3 = $orderStatusMaster[$statusCode]['strorderstatusname'];
+                                $htmlValue3 = "<div class=\"status_order\">". $value3. "</div>";
+                                $ColumnData2['value'] = $htmlValue2;
+                                $ColumnData3['value'] = $htmlValue3;
+                                break;
+                            case DEF_ORDER_END:
+                                break;
+                            default:
+                                break;
+                        }
+        
+                    } else if ($titleRowAttribute[$workSheetRow]) {
+                        // 確定、取消ボタンの生成
+                        $areaCode = $titleRowAttribute[$workSheetRow];
+                        if ($receiveAreaCodeList[$areaCode]) {
+                            // 受注エリアの場合
+                            $confirmValue = "confirm". $areaCode;
+                            $htmlValue1 = "<div>";
+                            $htmlValue1 .= "<button type=\"button\" class=\"btn_confirm_receive\" value=\"". $confirmValue. "\">". $receiveConfirm. "</button>";
                             $htmlValue1 .= "</div>";
                             $mergedCellsList[] = array(
                                 'row' => $tableRow,
@@ -612,92 +695,23 @@ class estimateSheetController {
                                 'rowspan' => 1,
                                 'colspan' => 2,
                             );
-                            
-                            $value3 = $receiveStatusMaster[$statusCode]['strreceivestatusname'];
-                            $htmlValue3 = "<div class=\"status_applicate\">". $value3. "</div>";
-
                             $ColumnData1['value'] = $htmlValue1;
-                            $ColumnData3['value'] = $htmlValue3;
-                            break;
-                        case DEF_RECEIVE_ORDER:
-                            $value = $receiveStatusMaster[$statusCode]['strreceivestatusname'];
-                            $htmlValue = "<div class=\"status_order\">". $value. "</div>";
-                            $ColumnData3['value'] = $htmlValue;
-                            break;
-                        case DEF_RECEIVE_END:
-                            $ColumnData1['value'] = $receiveStatusMaster[$statusCode]['strreceivestatusname'];
-                            $mergedCellsList[] = array(
-                                'row' => $tableRow,
-                                'col' => 0,
-                                'rowspan' => 1,
-                                'colspan' => 3,
-                            );
-                            break;
-                        default:
-                            break;
-                    }                
-                } else if ($orderAreaCodeList[$areaCode]) {
-                    // 発注の場合
-                    $data = $inputData[$workSheetRow]['data'];
-                    $statusCode = $data['statusCode'];
-                    $orderNo = $data['orderNo'];
-                    switch($statusCode) {
-                        case DEF_ORDER_APPLICATE:
-                            $name = "confirm". $areaCode;
-                            $htmlValue1 = "<div class=\"applicate\">";
-                            $htmlValue1 .= "<input type=\"checkbox\" class=\"checkbox_applicate\" name=\"". $name. "\" value=\"".$orderNo . "\">";
+                        } else if ($orderAreaCodeList[$areaCode]) {
+                            $confirmValue = "confirm". $areaCode;
+                            $cancelValue = "cancel". $areaCode;
+                            // 発注エリアの場合
+                            $htmlValue1 = "<div>";
+                            $htmlValue1 .= "<button type=\"button\" class=\"btn_confirm_order\" value=\"". $confirmValue. "\">". $orderConfirm. "</button>";
                             $htmlValue1 .= "</div>";
-                            $value3 = $orderStatusMaster[$statusCode]['strorderstatusname'];
-                            $htmlValue3 = "<div class=\"status_applicate\">". $value3. "</div>";
-                            $ColumnData1['value'] = $htmlValue1;
-                            $ColumnData3['value'] = $htmlValue3;
-                            break;
-                        case DEF_ORDER_ORDER:
-                            $name = "cancel". $areaCode;
-                            $htmlValue2 = "<div class=\"order\">";
-                            $htmlValue2 .= "<input type=\"checkbox\" class=\"checkbox_cancel\" name=\"". $name. "\" value=\"".$orderNo . "\">";
+                            $htmlValue2 = "<div>";
+                            $htmlValue2 .= "<button type=\"button\" class=\"btn_cancel_order\" value=\"". $cancelValue. "\">". $orderCancel. "</button>";
                             $htmlValue2 .= "</div>";
-                            $value3 = $orderStatusMaster[$statusCode]['strorderstatusname'];
-                            $htmlValue3 = "<div class=\"status_order\">". $value3. "</div>";
+                            $ColumnData1['value'] = $htmlValue1;
                             $ColumnData2['value'] = $htmlValue2;
-                            $ColumnData3['value'] = $htmlValue3;
-                            break;
-                        case DEF_ORDER_END:
-                            break;
-                        default:
-                            break;
-                    }
-    
-                } else if ($titleRowAttribute[$workSheetRow]) {
-                    // 確定、取消ボタンの生成
-                    $areaCode = $titleRowAttribute[$workSheetRow];
-                    if ($receiveAreaCodeList[$areaCode]) {
-                        // 受注エリアの場合
-                        $confirmValue = "confirm". $areaCode;
-                        $htmlValue1 = "<div>";
-                        $htmlValue1 .= "<button type=\"button\" class=\"btn_confirm_receive\" value=\"". $confirmValue. "\">". $receiveConfirm. "</button>";
-                        $htmlValue1 .= "</div>";
-                        $mergedCellsList[] = array(
-                            'row' => $tableRow,
-                            'col' => 0,
-                            'rowspan' => 1,
-                            'colspan' => 2,
-                        );
-                        $ColumnData1['value'] = $htmlValue1;
-                    } else if ($orderAreaCodeList[$areaCode]) {
-                        $confirmValue = "confirm". $areaCode;
-                        $cancelValue = "cancel". $areaCode;
-                        // 発注エリアの場合
-                        $htmlValue1 = "<div>";
-                        $htmlValue1 .= "<button type=\"button\" class=\"btn_confirm_order\" value=\"". $confirmValue. "\">". $orderConfirm. "</button>";
-                        $htmlValue1 .= "</div>";
-                        $htmlValue2 = "<div>";
-                        $htmlValue2 .= "<button type=\"button\" class=\"btn_cancel_order\" value=\"". $cancelValue. "\">". $orderCancel. "</button>";
-                        $htmlValue2 .= "</div>";
-                        $ColumnData1['value'] = $htmlValue1;
-                        $ColumnData2['value'] = $htmlValue2;
+                        }
                     }
                 }
+
                 array_unshift($cellData[$tableRow], $ColumnData1, $ColumnData2, $ColumnData3);
             }
         }
