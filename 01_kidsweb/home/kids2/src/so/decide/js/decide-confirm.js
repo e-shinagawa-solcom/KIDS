@@ -54,13 +54,13 @@
     
     // 閉じるボタンのイベント
     $('img.close').on('click', function () {
-        //ウィンドウを閉じる
-        window.close();        
-
+                
         // 親ウィンドウのロックを解除する
         if (window.opener.$('#lockId').length) {
             window.opener.$('#lockId').remove();
         }
+        //ウィンドウを閉じる
+        window.close();
     });
 
     

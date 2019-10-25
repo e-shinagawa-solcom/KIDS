@@ -40,8 +40,8 @@ $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 if (!fncCheckAuthority(DEF_FUNCTION_SC2, $objAuth)) {
     fncOutputError(9060, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
-// 604 売上管理（詳細表示）
-if (!fncCheckAuthority(DEF_FUNCTION_SC4, $objAuth)) {
+// 611 売上管理（詳細表示）
+if (!fncCheckAuthority(DEF_FUNCTION_SC11, $objAuth)) {
     fncOutputError(9060, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
 

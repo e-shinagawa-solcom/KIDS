@@ -12,9 +12,17 @@
 	$('.navi-po-search').on('click', function(){
 		$(location).attr('href', '/po/search/index.php?strSessionID=' + sessionId);
 	});
+	// 売上納品書登録画面
+	$('.navi-sc-regist').on('click', function(){
+		$(location).attr('href', '/sc/regist2/index.php?strSessionID=' + sessionId);
+	});
 	// 売上検索画面
 	$('.navi-sc-search').on('click', function(){
 		$(location).attr('href', '/sc/search/index.php?strSessionID=' + sessionId);
+	});
+	// 売上納品書検索画面
+	$('.navi-sc-hogesearch').on('click', function(){
+		$(location).attr('href', '/sc/search2/index.php?strSessionID=' + sessionId);
 	});
 	// 仕入登録画面
 	$('.navi-pc-regist').on('click', function(){

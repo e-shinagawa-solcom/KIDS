@@ -348,7 +348,7 @@
 
     // 確定登録イベント
     $('img.decideRegist').on('click', function () {
-
+        
         var params = new Array();
         var len = 0;
         $("#table_decide_body tr").each(function (i, e) {
@@ -368,9 +368,6 @@
                 alert(len + "行目の見積原価計算書上の数量が入数で割り切れません。");
                 exit;
             }
-
-            // 画面操作を無効する
-            lockScreen("lockId");
 
             var strDetailNote = $(this).find('td:nth-child(14)').find('input:text').val();
             var strProductUnitName = $(this).find('td:nth-child(9)').find('select option:selected').text();
@@ -398,6 +395,9 @@
                 "lngProductUnitCode": lngProductUnitCode
             };
         });
+        
+        // 画面操作を無効する
+        lockScreen("lockId");
 
         // リクエスト送信
         $.ajax({

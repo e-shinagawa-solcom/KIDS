@@ -79,10 +79,12 @@ function fncGetMaxReceiveSQL($displayColumns, $searchColumns, $from, $to, $searc
     $aryQuery[] = "        t_ReceiveDetail rd1 ";
     $aryQuery[] = "        LEFT JOIN (";
     $aryQuery[] = "            select p1.*  from m_product p1 ";
-    $aryQuery[] = "        	inner join (select max(lngRevisionNo) lngRevisionNo, strproductcode from m_Product group by strProductCode) p2";
-    $aryQuery[] = "            on p1.lngRevisionNo = p2.lngRevisionNo and p1.strproductcode = p2.strproductcode ";
+    $aryQuery[] = "        	inner join (select max(p2.lngRevisionNo) lngRevisionNo, p2.strproductcode, p2.strrevisecode from m_Product p2 where p2.bytinvalidflag = false ";
+    $aryQuery[] = "        	and not exists (select strproductcode from m_product p3 where p3.lngRevisionNo < 0 and p3.strproductcode = p2.strproductcode) group by p2.strProductCode, p2.strrevisecode) p4";
+    $aryQuery[] = "            on p1.lngRevisionNo = p4.lngRevisionNo and p1.strproductcode = p4.strproductcode  and p1.strrevisecode = p4.strrevisecode ";
     $aryQuery[] = "          ) p ";
     $aryQuery[] = "          ON rd1.strProductCode = p.strProductCode ";
+    $aryQuery[] = "          and rd1.strrevisecode = p.strrevisecode ";
     $aryQuery[] = "        left join m_group mg ";
     $aryQuery[] = "          on p.lnginchargegroupcode = mg.lnggroupcode ";
     $aryQuery[] = "        left join m_user mu ";

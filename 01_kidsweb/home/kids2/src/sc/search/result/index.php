@@ -168,7 +168,7 @@ $existsDetail = array_key_exists("btndetail", $displayColumns);
 $existsHistory = array_key_exists("btnhistory", $displayColumns);
 
 // 詳細ボタンを表示
-$allowedDetail = fncCheckAuthority(DEF_FUNCTION_SC3, $objAuth);
+$allowedDetail = fncCheckAuthority(DEF_FUNCTION_SC11, $objAuth);
 
 // -------------------------------------------------------
 // テーブルヘッダ作成

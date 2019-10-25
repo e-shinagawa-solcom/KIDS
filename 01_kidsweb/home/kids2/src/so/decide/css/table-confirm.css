@@ -1,7 +1,7 @@
 .table-description
 {
     border-collapse: collapse;
-    width: 200%;
+    width: auto;
     margin-bottom: 0rem;
     table-layout: fixed;
 }

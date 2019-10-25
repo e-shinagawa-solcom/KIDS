@@ -133,6 +133,7 @@ function SearchReceiveDetail(search_condition) {
         async: true,
     }).done(function(data){
         console.log("done:search-detail");
+        console.log(data);
         // 検索結果をテーブルにセット
         $('#DetailTableBody').html(data);
         // jQueryUIのtablesorterでソート設定
@@ -877,10 +878,19 @@ jQuery(function($){
 
     });
 
-    $('#DetailTableBodyAllCheck').on('change', function(){
-        $('input[name="edit"]').prop('checked', this.checked);
+    // $('#DetailTableBodyAllCheck').on('change', function(){
+    //     alert(this.checked);
+    //     $('input[name="edit"]').prop('checked', this.checked);
+    // });
+    $('#DetailTableBodyAllCheck').on({
+        'click': function () {
+            var status = this.checked;
+            $('input[type="checkbox"][name="edit"]')
+                .each(function () {
+                    this.checked = status;
+                });
+        }
     });
-
 
 
     // 検索条件入力ボタン押下

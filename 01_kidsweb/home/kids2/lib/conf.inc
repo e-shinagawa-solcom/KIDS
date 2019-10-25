@@ -336,16 +336,19 @@ define ( "DEF_FUNCTION_PO11",	511 );     //  511 х╞цМ╢имЩ║йх╞цМ╫Я╦║╨В║║╢имЩ╔Б║╪╔
 define ( "DEF_FUNCTION_PO12",	512 );     //  512 х╞цМ╢имЩ║йх╞цМ╫Я╫╓ю╣║к
 
 define ( "DEF_FUNCTION_SC0",	600 );     //  600 гД╬Е╢имЩ
-define ( "DEF_FUNCTION_SC1",	601 );     //  601 гД╬Е╢имЩ║йгД╬Еепо©║к
+define ( "DEF_FUNCTION_SC1",	601 );     //  601 гД╬Е╢имЩ║йгД╬Е(г╪ий╫Я)епо©║к
 define ( "DEF_FUNCTION_SC2",	602 );     //  602 гД╬Е╢имЩ║йгД╬Е╦║╨В║к
-define ( "DEF_FUNCTION_SC3",	603 );     //  602 гД╬Е╢имЩ║йгД╬Е╦║╨В║║╢имЩ╔Б║╪╔и║к
-define ( "DEF_FUNCTION_SC4",	604 );     //  604 гД╬Е╢имЩ║йгД╬Е╬э╨ыи╫╪╗║к
-define ( "DEF_FUNCTION_SC5",	605 );     //  603 гД╬Е╢имЩ║йгД╬Е╫╓ю╣║к
-define ( "DEF_FUNCTION_SC6",	606 );     //  604 гД╬Е╢имЩ║йгД╬Е╨О╫Э║к
+define ( "DEF_FUNCTION_SC3",	603 );     //  603 гД╬Е╢имЩ║йгД╬Е╦║╨В║║╢имЩ╔Б║╪╔и║к
+define ( "DEF_FUNCTION_SC4",	604 );     //  604 гД╬Е╢имЩ║йгД╬Е(г╪ий╫Я)╬э╨ыи╫╪╗║к
+define ( "DEF_FUNCTION_SC5",	605 );     //  605 гД╬Е╢имЩ║йгД╬Е(г╪ий╫Я)╫╓ю╣║к
+define ( "DEF_FUNCTION_SC6",	606 );     //  606 гД╬Е╢имЩ║йгД╬Е(г╪ий╫Я)╨О╫Э║к
 define ( "DEF_FUNCTION_SC7",	607 );     //  607 гД╬Е╢имЩ║йгД╬Е╓нл╣╦З╡╫╫ХмЩ║к
 define ( "DEF_FUNCTION_SC8",	608 );     //  608 гД╬Е╢имЩ║йгД╬Е╓н╪УцМNo╓Р╩ьдЙ╓╥╓й╓╓епо©║к
 define ( "DEF_FUNCTION_SC9",	609 );     //  609 гД╬Е╢имЩ║йгД╬Е╓н╪УцМNo╓Р╩ьдЙ╓╥╓й╓╓юъдЙ╤БЁш║йDEF_MONEY_NO_CODE║к╟й╬Е╓непо©║к
 define ( "DEF_FUNCTION_SC10",	610 );     //  610 гД╬Е╢имЩ║й╧тди╡ц║╕╧т╨О╫Э║к
+define ( "DEF_FUNCTION_SC11",	611 );     //  611 гД╬Е╢имЩ║йгД╬Е╬э╨ыи╫╪╗║к
+define ( "DEF_FUNCTION_SC12",	612 );     //  612 гД╬Е╢имЩ║йгД╬Ег╪ий╫Я╦║╨В║к
+
 
 define ( "DEF_FUNCTION_PC0",	700 );     //  700 ╩ефЧ╢имЩ
 define ( "DEF_FUNCTION_PC1",	701 );     //  701 ╩ефЧ╢имЩ║й╩ефЧепо©║к

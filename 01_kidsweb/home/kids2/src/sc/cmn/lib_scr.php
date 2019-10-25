@@ -303,7 +303,7 @@ function fncGetReceiveDetail($aryCondition, $objDB)
     $arySelect[] = "  rd.lngsortkey,";                             //No.
     $arySelect[] = "  r.strcustomerreceivecode,";                  //顧客受注番号
     $arySelect[] = "  r.strreceivecode,";                          //受注番号
-    $arySelect[] = "  p2.strgoodscode,";                           //顧客品番
+    $arySelect[] = "  p.strgoodscode,";                           //顧客品番
     $arySelect[] = "  rd.strproductcode,";                         //製品コード
     $arySelect[] = "  rd.strrevisecode,";                          //リバイズコード（再販コード）
     $arySelect[] = "  p.strproductname,";                          //製品名
@@ -328,14 +328,79 @@ function fncGetReceiveDetail($aryCondition, $objDB)
     $arySelect[] = "  sc.bytdetailunifiedflg";                     //明細統一フラグ（明細登録用）
     $arySelect[] = " FROM";
     $arySelect[] = "  t_receivedetail rd ";
-    $arySelect[] = "    INNER JOIN m_receive r ON rd.lngreceiveno=r.lngreceiveno AND rd.lngrevisionno = r.lngrevisionno";
-    $arySelect[] = "    LEFT JOIN m_company c ON r.lngcustomercompanycode = c.lngcompanycode";
-    $arySelect[] = "    LEFT JOIN m_product p ON rd.strproductcode = p.strproductcode";
-    $arySelect[] = "    LEFT JOIN m_salesclass sc ON rd.lngsalesclasscode = sc.lngsalesclasscode";
-    $arySelect[] = "    LEFT JOIN m_productunit pu ON rd.lngproductunitcode = pu.lngproductunitcode";
-    $arySelect[] = "    LEFT JOIN m_product p2 ON rd.strproductcode = p2.strproductcode and rd.strrevisecode = p2.strrevisecode";
-    $arySelect[] = "    LEFT JOIN m_group g ON p2.lnginchargegroupcode = g.lnggroupcode";
-    $arySelect[] = "    LEFT JOIN m_monetaryunit mu ON r.lngmonetaryunitcode = mu.lngmonetaryunitcode";
+    $arySelect[] = "  INNER JOIN ( ";
+    $arySelect[] = "    select";
+    $arySelect[] = "      r1.* ";
+    $arySelect[] = "    from";
+    $arySelect[] = "      m_receive r1 ";
+    $arySelect[] = "      inner join ( ";
+    $arySelect[] = "        select";
+    $arySelect[] = "          max(lngrevisionno) lngrevisionno";
+    $arySelect[] = "          , strreceivecode ";
+    $arySelect[] = "        from";
+    $arySelect[] = "          m_receive r2 ";
+    $arySelect[] = "        where";
+    $arySelect[] = "          lngrevisionno > 0 ";
+    $arySelect[] = "          and bytinvalidflag = false ";
+    $arySelect[] = "          and not exists ( ";
+    $arySelect[] = "            select";
+    $arySelect[] = "              strreceivecode ";
+    $arySelect[] = "            from";
+    $arySelect[] = "              m_receive r3 ";
+    $arySelect[] = "            where";
+    $arySelect[] = "              lngrevisionno < 0 ";
+    $arySelect[] = "              and r3.strreceivecode = r2.strreceivecode";
+    $arySelect[] = "          ) ";
+    $arySelect[] = "        group by";
+    $arySelect[] = "          strreceivecode";
+    $arySelect[] = "      ) r2 ";
+    $arySelect[] = "        ON r1.lngrevisionno = r2.lngrevisionno ";
+    $arySelect[] = "        and r1.strreceivecode = r2.strreceivecode ";
+    $arySelect[] = "  ) r ";
+    $arySelect[] = "    on rd.lngreceiveno = r.lngreceiveno ";
+    $arySelect[] = "    AND rd.lngrevisionno = r.lngrevisionno ";
+    $arySelect[] = "  LEFT JOIN m_company c ";
+    $arySelect[] = "    ON r.lngcustomercompanycode = c.lngcompanycode ";
+    $arySelect[] = "  LEFT JOIN ( ";
+    $arySelect[] = "    select";
+    $arySelect[] = "      p1.* ";
+    $arySelect[] = "    from";
+    $arySelect[] = "      m_product p1 ";
+    $arySelect[] = "      inner join ( ";
+    $arySelect[] = "        select";
+    $arySelect[] = "          max(lngrevisionno) lngrevisionno";
+    $arySelect[] = "          , strproductcode, strrevisecode ";
+    $arySelect[] = "        from";
+    $arySelect[] = "          m_product p2 ";
+    $arySelect[] = "        where";
+    $arySelect[] = "          lngrevisionno > 0 ";
+    $arySelect[] = "          and bytinvalidflag = false ";
+    $arySelect[] = "          and not exists ( ";
+    $arySelect[] = "            select";
+    $arySelect[] = "              strproductcode ";
+    $arySelect[] = "            from";
+    $arySelect[] = "              m_product p3 ";
+    $arySelect[] = "            where";
+    $arySelect[] = "              lngrevisionno < 0 ";
+    $arySelect[] = "              and p3.strproductcode = p2.strproductcode";
+    $arySelect[] = "          ) ";
+    $arySelect[] = "        group by";
+    $arySelect[] = "          strproductcode, strrevisecode";
+    $arySelect[] = "      ) p2 ";
+    $arySelect[] = "        on p1.strproductcode = p2.strproductcode ";
+    $arySelect[] = "        and p1.lngrevisionno = p2.lngrevisionno";
+    $arySelect[] = "        and p1.strrevisecode = p2.strrevisecode";
+    $arySelect[] = "  ) p ";
+    $arySelect[] = "    ON rd.strproductcode = p.strproductcode ";
+    $arySelect[] = "    and rd.strrevisecode = p.strrevisecode ";
+    $arySelect[] = "  LEFT JOIN m_salesclass sc ";
+    $arySelect[] = "    ON rd.lngsalesclasscode = sc.lngsalesclasscode ";
+    $arySelect[] = "  LEFT JOIN m_productunit pu ";
+    $arySelect[] = "    ON rd.lngproductunitcode = pu.lngproductunitcode ";
+    $arySelect[] = "  LEFT JOIN m_group g ";
+    $arySelect[] = "    ON p.lnginchargegroupcode = g.lnggroupcode ";
+    $arySelect[] = "  LEFT JOIN m_monetaryunit mu ";
+    $arySelect[] = "    ON r.lngmonetaryunitcode = mu.lngmonetaryunitcode ";
   
     // -------------------
     //  検索条件設定
