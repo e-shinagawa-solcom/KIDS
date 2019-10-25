@@ -56,8 +56,6 @@
 	$aryResult = fncAllCheck( $aryData, $aryCheck );
 	fncPutStringCheckError( $aryResult, $objDB );
 
-
-
 	// セッション確認
 	$objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 	
@@ -81,7 +79,6 @@
 	{
 		$aryData["popenview"] = 'hidden';
 	}
-
 	// 更新モード
 	if($_POST["strMode"] == "update"){
 		// 更新データ取得

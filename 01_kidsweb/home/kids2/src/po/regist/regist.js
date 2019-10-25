@@ -239,8 +239,8 @@ jQuery(function ($) {
             var param = {
                 lngOrderDetailNo: $(tr).children('.detailOrderDetailNo').text(),
                 lngSortKey: i + 1,
-                lngDeliveryMethodCode: $(tr).find('option:selected').val(),
-                strDeliveryMethodName: $(tr).find('option:selected').text(),
+                lngDeliveryMethodCode: $(tr).find('[name="optDelivery"] option:selected').val(),
+                strDeliveryMethodName: $(tr).find('[name="optDelivery"] option:selected').text(),
                 lngProductUnitCode: $(tr).find('.detailProductUnitCode').text(),
                 lngOrderNo: $(tr).find('.detailOrderNo').text(),
                 lngRevisionNo: $(tr).find('.detailRevisionNo').text(),

@@ -235,7 +235,7 @@ function fncGetOrderDetail($aryOrderNo, $lngRevisionNo, $objDB)
     $aryQuery[] = "  ,od.curproductprice";
     $aryQuery[] = "  ,od.lngproductquantity";
     $aryQuery[] = "  ,od.cursubtotalprice";
-    $aryQuery[] = "  ,od.curtaxprice";
+//    $aryQuery[] = "  ,od.curtaxprice";
     $aryQuery[] = "  ,mpu.strproductunitname";
     $aryQuery[] = "  ,od.lngdeliverymethodcode";
     $aryQuery[] = "  ,od.strnote";
@@ -785,8 +785,8 @@ function fncInsertPurchaseOrder($aryOrder, $aryOrderDetail, $objAuth, $objDB)
                 $aryQueryDetail[] = "  ," . $aryOrderDetailUpdate[$i]["lngstocksubjectcode"];
                 $aryQueryDetail[] = "  ," . $aryOrderDetailUpdate[$i]["lngstockitemcode"];
                 $aryQueryDetail[] = "  ,'" . $aryOrderDetailUpdate[$i]["strstockitemname"] . "'";
-                $aryQueryDetail[] = "  ," . $aryOrderDetailUpdate[$i]["lngdeliverymethodcode"];
-                $aryQueryDetail[] = "  ,'" . $aryOrderDetailUpdate[$i]["strdeliverymethodname"] . "'";
+                $aryQueryDetail[] = "  ," . $aryOrderDetail[$i]["lngdeliverymethodcode"];
+                $aryQueryDetail[] = "  ,'" . mb_convert_encoding($aryOrderDetail[$i]["strdeliverymethodname"], "EUC-JP", "auto") . "'";
                 $aryQueryDetail[] = "  ," . $aryOrderDetailUpdate[$i]["curproductprice"];
                 $aryQueryDetail[] = "  ," . $aryOrderDetailUpdate[$i]["lngproductquantity"];
                 $aryQueryDetail[] = "  ," . $aryOrderDetailUpdate[$i]["lngproductunitcode"];
