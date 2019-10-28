@@ -1,4 +1,4 @@
-
+var curtaxList;
 (function () {
     // フォーム
     var workForm = $('form');
@@ -84,12 +84,27 @@
                                 alert("消費税情報の取得に失敗しました。");
                                 exit;
                             } else {
-                                curtax = data.tax.curtax;
+/*
+                                curtax = data.tax.curtax * 100;
                                 lngtaxcode = data.tax.lngtaxcode
+*/
+                                curtaxList = '<select style="width:90px;" onchange="resetTaxPrice(this)">';
+                                for (var j = 0; j < data.tax.length; j++) {
+                                    var taxRow = data.tax[j];
+                                    if (j == 0) {
+                                        curtaxList += '<option value="' + taxRow.lngtaxcode + '" selected>' + taxRow.curtax * 100 + '</option>';
+                                        curtax =  taxRow.curtax * 100;
+                                    } else {
+                                        curtaxList += '<option value="' + taxRow.lngtaxcode + '">' + taxRow.curtax * 100 + '</option>';
+
+                                    }
+                                }
+                                curtaxList += '</select>';
                             }
                             lngtaxclasscode = 2;
                         } else {
                             curtax = 0;
+                            curtaxList = 0;
                             lngtaxclasscode = 1;
                         }
 
@@ -99,10 +114,10 @@
                             curtaxprice = 0;
                             //　2:外税
                         } else if (lngtaxclasscode == 2) {
-                            curtaxprice = Math.floor(row.cursubtotalprice * (1 + curtax));
+                            curtaxprice = Math.floor(row.cursubtotalprice * (curtax/100));
                             // 3:内税
                         } else {
-                            curtaxprice = row.cursubtotalprice - Math.floor((row.cursubtotalprice / (1 + curtax)) * curtax);
+                            curtaxprice = Math.floor((row.cursubtotalprice / (1 + (curtax/100))) * (curtax / 100));
                         }
 
                         var select = '<select style="width:90px;" onchange="resetTaxPrice(this)">';
@@ -116,7 +131,7 @@
                             }
                         }
                         select += '</select>';
-                        var detail_body = '<tr>'
+                        var detail_body = '<tr class="row'+ rowNum + '">'
                             + '<td class="col1">' + rowNum + '</td>'
                             + '<td class="col2"><input type="checkbox" style="width:10px;"></td>'
                             + '<td class="col3">[' + convertNull(row.strproductcode) + '] ' + convertNull(row.strproductname).substring(0, 28) + '</td>'
@@ -129,7 +144,7 @@
                             // 消費税区分
                             + '<td class="col10">' + select + '</td>'
                             // 消費税率
-                            + '<td class="col11">' + curtax + '</td>'
+                            + '<td class="col11">' + curtaxList + '</td>'
                             // 消費税額
                             + '<td class="col12">' + money_format(row.lngmonetaryunitcode, row.strmonetaryunitsign, curtaxprice) + '</td>'
                             + '<td class="col13">' + row.dtmdeliverydate + '</td>'
@@ -143,6 +158,7 @@
                             + '<td style="display:none">' + row.lngrevisionno + '</td>'
                             + '<td style="display:none">' + row.lngorderdetailno + '</td>'
                             + '<td style="display:none">' + lngtaxcode + '</td>'
+                            + '<td style="display:none">' + lngtaxclasscode + '</td>'
                             + '</tr>';
                         $("#tbl_order_detail").append(detail_body);
                     }
@@ -244,20 +260,30 @@
                     var lngTaxClassCode = $(this).find('td:nth-child(10)').find('select').val();
                     var strTaxClassName = $(this).find('td:nth-child(10)').find('select option:selected').text();
                     // 消費率
-                    var curTax = $(this).find('td:nth-child(11)').text();
+                    var curTax = 0;
+                    var lngTaxCode = null;
+                    if( lngTaxClassCode == "1")
+                    {
+                        lngTaxCode = null;
+                        curTax = 0;
+                    }
+                    else
+                    {
+                        lngTaxCode = $(this).find('td:nth-child(11)').find('select').val();
+                        curTax = $(this).find('td:nth-child(11)').find('select option:selected').text();
+                    }
                     // 消費税額                
                     var curTaxPrice = $(this).find('td:nth-child(19)').text();
                     // 納期
                     var dtmDeliveryDate = $(this).find('td:nth-child(13)').text();
                     // 消費税コード                
-                    var lngTaxCode = $(this).find('td:nth-child(23)').text();
+//                    var lngTaxCode = $(this).find('td:nth-child(23)').text();
 
                     // 納期がヘッダ部で入力した製品到着日と同月でない行が存在した場合
                     if (dtmDeliveryDate.substring(1, 7) != dtmExpirationDate.substring(1, 7)) {
                         alert("発注確定時の納期と納品日と一致しません。発注データを修正してください。");
                         exit;
                     }
-
                     detaildata[len - 1] = {
                         "lngOrderNo": lngOrderNo,
                         "lngOrderDetailNo": lngOrderDetailNo,
@@ -265,7 +291,7 @@
                         "lngStockDetailNo": lngStockDetailNo,
                         "lngTaxClassCode": lngTaxClassCode,
                         "strTaxClassName": strTaxClassName,
-                        "curTax": curTax,
+                        "curTax": curTax / 100,
                         "curTaxPrice": curTaxPrice,
                         "lngTaxCode": lngTaxCode
                     };
@@ -283,7 +309,7 @@
             formData.push({ name: "strPayConditionName", value: $('select[name="lngPayConditionCode"] option:selected').text() });
 
             var actionUrl = workForm.attr('action');
-            alert(actionUrl);
+//            alert(actionUrl);
             // リクエスト送信
             $.ajax({
                 url: actionUrl,
@@ -291,7 +317,7 @@
                 data: formData
             })
                 .done(function (response) {
-                    alert(response);
+//                    alert(response);
                     var w = window.open();
                     w.document.open();
                     w.document.write(response);
@@ -302,7 +328,7 @@
                 })
                 .fail(function (response) {
                     alert(response);
-                    alert("fail");
+//                    alert("fail");
                     // Ajaxリクエストが失敗
                 });
         }
@@ -321,28 +347,50 @@
  */
 function resetTaxPrice(objID) {
 
-    var lngtaxclasscode = objID.value;
     var children = objID.parentNode.parentNode.children;
+    var rowClass = objID.parentNode.parentNode.className;
+    var lngtaxclasscode = $('.'+rowClass).find('.col10').find('option:selected').val();
+    var lngoldtaxclasscode = children[23].innerText;
     // カートン入数の取得
     var cursubtotalprice = children[14].innerHTML;
-    var curtax = children[15].innerHTML;
+    var curtax;
     var lngmonetaryunitcode = children[16].innerHTML;
     var strmonetaryunitsign = children[17].innerHTML;
 
+    // 課税区分が変わったら消費税率も変わる
+    if ( lngtaxclasscode != lngoldtaxclasscode ){
+        if( lngtaxclasscode == 1 )
+        {
+            // 外税・内税→非課税
+            children[10].innerText = 0;
+        }
+        else if( lngoldtaxclasscode == 1 )
+        {
+            // 非課税→外税・内税
+            children[10].innerHTML = curtaxList;
+        }
+        // 外税⇔内税の場合は税率変わらない
+    }
+    if( lngtaxclasscode == 1 ){
+        curtax = children[10].innerHTML;
+    }
+    else{
+        curtax = $('.'+rowClass).find('.col11').find('option:selected').text();
+    }
     if (lngtaxclasscode == 1) {
         curtaxprice = 0;
         curtax = 0;
         //　2:外税
     } else if (lngtaxclasscode == 2) {
-        curtaxprice = Math.floor(cursubtotalprice * (1 + curtax));
+        curtaxprice = Math.floor(cursubtotalprice * (curtax / 100));
         // 3:内税
     } else {
-        curtaxprice = cursubtotalprice - Math.floor((cursubtotalprice / (1 + curtax)) * curtax);
+        curtaxprice = Math.floor((cursubtotalprice / (1 + (curtax/100))) * (curtax / 100));
     }
-
-    children[10].innerText = curtax;
     children[11].innerText = money_format(lngmonetaryunitcode, strmonetaryunitsign, String(curtaxprice));
+    children[15].innerText = curtax;
     children[18].innerText = curtaxprice;
+    children[23].innerText = lngtaxclasscode
 }
 /**
  * 文字変換（nullの場合、""に変換）

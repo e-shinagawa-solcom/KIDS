@@ -69,7 +69,7 @@ for ($i = 0; $i < count($aryDetailData); $i++) {
 	$aryQuery[] = "u.strUserDisplayCode AS lngusercode, ";
 	$aryQuery[] = "u.strUserDisplayName AS lngusername, ";
     $aryQuery[] = "To_char( od.dtmdeliverydate, 'YYYY/mm/dd' ) as dtmdeliverydate, "; // 納品日
-    $aryQuery[] = "od.lngdeliverymethodcode as lngdeliverymethodcode, "; // 運搬方法コード
+    $aryQuery[] = "pod.lngdeliverymethodcode as lngdeliverymethodcode, "; // 運搬方法コード
     $aryQuery[] = "dm.strdeliverymethodname as strdeliverymethodname, "; // 運搬方法名称
     $aryQuery[] = "od.lngconversionclasscode, "; // 換算区分コード / 1：単位計上/ 2：荷姿単位計上
     $aryQuery[] = "od.curproductprice as curproductprice, "; // 製品価格
@@ -82,7 +82,7 @@ for ($i = 0; $i < count($aryDetailData); $i++) {
     $aryQuery[] = "od.curtaxprice, "; // 消費税金額
 */
     $aryQuery[] = "od.cursubtotalprice as cursubtotalprice, "; // 小計金額
-    $aryQuery[] = "od.strnote, "; // 備考
+    $aryQuery[] = "od.strnote as strdetailnote,"; // 備考
     $aryQuery[] = "od.strmoldno as strSerialNo, "; // シリアル
     $aryQuery[] = "o.lngorderstatuscode as lngorderstatuscode, "; // 発注ステータス
     $aryQuery[] = "os.strorderstatusname as strorderstatusname, "; // 発注ステータス
@@ -96,7 +96,7 @@ for ($i = 0; $i < count($aryDetailData); $i++) {
     $aryQuery[] = "inner join  ";
     $aryQuery[] = "(";
     $aryQuery[] = "select";
-    $aryQuery[] = " lngorderno, lngorderstatuscode, lngmonetaryunitcode,lnggroupcode,lngusercode,";
+    $aryQuery[] = " lngorderno, lngrevisionno,lngorderstatuscode, lngmonetaryunitcode,lnggroupcode,lngusercode,";
     $aryQuery[] = " lngmonetaryratecode, lngcustomercompanycode, lngpayconditioncode ";
     $aryQuery[] = "FROM";
     $aryQuery[] = "  m_order ";
@@ -105,13 +105,27 @@ for ($i = 0; $i < count($aryDetailData); $i++) {
     $aryQuery[] = "  AND lngrevisionno = " . $aryDetailData[$i]["lngRevisionNo"] . " ";
     $aryQuery[] = "  AND bytinvalidflag = false ";
     $aryQuery[] = ") o on o.lngorderno = od.lngorderno";
-    $aryQuery[] = " LEFT JOIN m_product p on p.strproductcode = od.strproductcode";
+    $aryQuery[] = " AND o.lngrevisionno = od.lngrevisionno";
+    $aryQuery[] = " INNER JOIN m_product p on p.strproductcode = od.strproductcode and p.strrevisecode = od.strrevisecode";
+    $aryQuery[] = " INNER JOIN (SELECT strproductcode,strrevisecode,MAX(lngrevisionno) AS lngrevisionno FROM m_product GROUP BY strproductcode,strrevisecode) max_p_rev";
+    $aryQuery[] = " on max_p_rev.strproductcode = p.strproductcode and max_p_rev.strrevisecode = p.strrevisecode and max_p_rev.lngrevisionno = p.lngrevisionno";
+    $aryQuery[] = " INNER JOIN t_purchaseorderdetail pod";
+    $aryQuery[] = " ON pod.lngorderno = od.lngorderno";
+    $aryQuery[] = " and pod.lngorderdetailno = od.lngorderdetailno";
+    $aryQuery[] = " and pod.lngorderrevisionno = od.lngrevisionno";
+    $aryQuery[] = " INNER JOIN ( ";
+    $aryQuery[] = " SELECT lngpurchaseorderno, lngpurchaseorderdetailno, MAX(lngrevisionno) as lngrevisionno";
+    $aryQuery[] = " FROM t_purchaseorderdetail GROUP BY lngpurchaseorderno, lngpurchaseorderdetailno";
+    $aryQuery[] = " ) pod_rev_max";
+    $aryQuery[] = " on pod_rev_max.lngpurchaseorderno = pod.lngpurchaseorderno";
+    $aryQuery[] = " and pod_rev_max.lngpurchaseorderdetailno = pod.lngpurchaseorderdetailno";
+    $aryQuery[] = " and pod_rev_max.lngrevisionno = pod.lngrevisionno";
     $aryQuery[] = " LEFT JOIN m_stocksubject ss on ss.lngstocksubjectcode = od.lngstocksubjectcode";
     $aryQuery[] = " LEFT JOIN m_stockitem si on si.lngstocksubjectcode = od.lngstocksubjectcode and si.lngstockitemcode = od.lngstockitemcode";
     $aryQuery[] = " LEFT JOIN m_monetaryunit mu on mu.lngmonetaryunitcode = o.lngmonetaryunitcode";
     $aryQuery[] = " LEFT JOIN m_orderstatus os on os.lngorderstatuscode = o.lngorderstatuscode";
     $aryQuery[] = " LEFT JOIN m_productunit pu on pu.lngproductunitcode = od.lngproductunitcode";
-    $aryQuery[] = " LEFT JOIN m_deliverymethod dm on dm.lngdeliverymethodcode = od.lngdeliverymethodcode";
+    $aryQuery[] = " LEFT JOIN m_deliverymethod dm on dm.lngdeliverymethodcode = pod.lngdeliverymethodcode";
     $aryQuery[] = " LEFT JOIN m_company c on c.lngcompanycode = o.lngcustomercompanycode";
 	$aryQuery[] = " LEFT JOIN m_Group g on o.lnggroupcode = g.lnggroupcode";
 	$aryQuery[] = " LEFT JOIN m_User u on o.lngusercode = u.lngusercode";
@@ -130,7 +144,7 @@ for ($i = 0; $i < count($aryDetailData); $i++) {
             $aryNewResult["strGroupName"] = $detailDataResult["strgroupname"];
             $aryNewResult["lngUserCode"] = $detailDataResult["lngusercode"];
             $aryNewResult["strUserName"] = $detailDataResult["strusername"];
-            // 数量
+            // 明細行番号
             $detailDataResult["lngstockdetailno"] = $i+1;
             // 数量
             $detailDataResult["lngproductquantity"] = number_format($detailDataResult["lngproductquantity"]);

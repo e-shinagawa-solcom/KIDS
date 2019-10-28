@@ -953,7 +953,9 @@ function fncGetTaxInfo($dtmStockAppDate, $objDB)
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
     if ($lngResultNum) {
-        $objResult = $objDB->fetchObject($lngResultID, 0);
+        for ($i = 0; $i < $lngResultNum; $i++) {
+            $objResult[] = $objDB->fetchObject($lngResultID, $i);
+        }
     }
 
     $objDB->freeResult($lngResultID);
@@ -997,6 +999,9 @@ function fncGetTaxClassAry($objDB)
  */
 function fncGetCurConversionRate($dtmStockAppDate, $lngMonetaryRateCode, $lngMonetaryUnitCode, $objDB)
 {
+	if( $lngMonetaryUnitCode == 1 ){
+	    return 1;
+	}
     $aryQuery = array();
     $aryQuery[] = "SELECT mmr.curConversionRate ";
     $aryQuery[] = "FROM m_MonetaryRate mmr ";
