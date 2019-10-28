@@ -649,25 +649,23 @@ function fncSignatureCheckFile($strPath, $lnguc)
 }
 
 /**
- * 仕入先コードにより納品伝票種別取得クエリの生成
+ * 顧客コードにより納品伝票種別取得クエリの生成
  *
- * @param [type] $strShipperCode
+ * @param [type] $lngCompanyCode
  * @return void
  */
-function fncGetSlipKindQuery($strShipperCode)
+function fncGetSlipKindQuery($lngCompanyCode)
 {
     $aryQuery[] = "select";
     $aryQuery[] = "  sk.lngslipkindcode";
     $aryQuery[] = "  , sk.strslipkindname";
     $aryQuery[] = "  , sk.lngmaxline ";
     $aryQuery[] = "from";
-    $aryQuery[] = "  m_stockcompanycode sc ";
-    $aryQuery[] = "  inner join m_slipkindrelation skr ";
-    $aryQuery[] = "    on sc.lngcompanyno = skr.lngcompanycode ";
+    $aryQuery[] = "  m_slipkindrelation skr ";
     $aryQuery[] = "  inner join m_slipkind sk ";
     $aryQuery[] = "    on sk.lngslipkindcode = skr.lngslipkindcode ";
     $aryQuery[] = "where";
-    $aryQuery[] = "  sc.strstockcompanycode = '" . $strShipperCode . "'";
+    $aryQuery[] = "  skr.lngcompanycode = '" . $lngCompanyCode . "'";
     return join("", $aryQuery);
 }
 

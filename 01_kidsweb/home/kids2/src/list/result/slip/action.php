@@ -69,7 +69,7 @@ elseif ($lngResultNum === 0) {
     $aryParts = &$objMaster->aryData[0];
 
     // 納品伝票種別取得
-    $strQuery = fncGetSlipKindQuery($aryParts["strshippercode"]);
+    $strQuery = fncGetSlipKindQuery($aryParts["lngcustomercode"]);
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
     if ($lngResultNum < 1) {
         fncOutputError(9051, DEF_FATAL, "納品伝票種別データが存在しませんでした。", true, "", $objDB);
