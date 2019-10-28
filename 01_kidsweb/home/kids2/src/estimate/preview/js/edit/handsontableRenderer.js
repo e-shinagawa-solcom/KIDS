@@ -1120,6 +1120,11 @@ $(function() {
         setQuantityCalculateFlag(Number(areaCode[1]), calcFlag, 'quantity');
 
       } else if (className.includes('price')) {
+        if (Number(areaCode[1]) === 5) {
+          var cusComCol = getColumnForRowAndClassName(row, 'customerCompany', checkList); // 仕入先列を取得
+          assignValueForGlobal(row, cusComCol, '');  // 仕入先列の値をクリア
+        }
+
         calcFlag.subtotal = true;
 
       } else if (className.includes('conversionRate')) {

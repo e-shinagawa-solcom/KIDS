@@ -666,6 +666,8 @@ class estimateDB extends clsDB {
             }
         }
 
+        $strQuery .= " ORDER BY lngestimatedetailno ASC";
+
         list ($resultID, $resultNumber) = fncQuery($strQuery, $this);
 
         if ($resultNumber > 0) {

@@ -606,8 +606,11 @@ define ("DEF_STOCK_SUBJECT_CODE_EXPENSE" ,                 1230); // 経費
 define ("DEF_STOCK_SUBJECT_CODE_MATERIAL_TOOLS_COST",       403); // 材料ツール仕入高
 
 // 仕入部品マスタコード
+define ("DEF_STOCK_ITEM_CODE_MASS_PRODUCT", 1); // Mass Product
+
 define ("DEF_STOCK_ITEM_CODE_IMPORT_COST",  2); // 輸入費用
 define ("DEF_STOCK_ITEM_CODE_TARIFF",       3); // 関税
+
 // 帳票テンプレートディレクトリパス
 define ( "REPORT_TMPDIR",	PATH_HOME . "/report_tmp/" );
 // L/C帳票テンプレートファイル

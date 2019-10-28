@@ -96,6 +96,10 @@ class workSheetConst {
     // 製品売上合計
     const RECEIVE_PRODUCT_TOTAL_PRICE = 'receive_p_totalprice';
 
+    // 売上区分チェック用
+    const RECEIVE_PRODUCT_CLASS_CHECK = 'receive_p_class_check';
+
+
     // 固定費売上
     // 売上分類
     const RECEIVE_FIXED_COST_SALES_DIVISION_CODE ='receive_f_salesdivisioncode';
@@ -125,6 +129,10 @@ class workSheetConst {
     const RECEIVE_FIXED_COST_TOTAL_QUANTITY = 'receive_f_totalquantity';
     // 固定費売上合計
     const RECEIVE_FIXED_COST_TOTAL_PRICE = 'receive_f_totalprice';
+
+    // 売上区分チェック用
+    const RECEIVE_FIXED_COST_CLASS_CHECK = 'receive_f_class_check';
+
 
     // 発注明細
     // 固定費
@@ -159,6 +167,10 @@ class workSheetConst {
     // 償却対象外合計
     const ORDER_FIXED_COST_COST_NOT_DEPRECIATION = 'order_f_cost_not_depreciation';
 
+    // 仕入部品チェック用
+    const ORDER_FIXED_COST_ITEM_CHECK = 'order_f_item_check';
+
+
     // 部材費
     // 仕入科目
     const ORDER_ELEMENTS_COST_STOCK_SUBJECT_CODE = 'order_e_stocksubjectcode';
@@ -186,6 +198,10 @@ class workSheetConst {
     const ORDER_ELEMENTS_COST_NOTE = 'order_e_note';
     // 明細リスト終了
     const LIST_END = 'list_end';
+
+    // 仕入部品チェック用
+    const ORDER_ELEMENTS_COST_ITEM_CHECK = 'order_e_item_check';
+
 
     // 計算結果
     // 製品売上高タイトル
@@ -268,10 +284,29 @@ class workSheetConst {
     const CALCULATION_IMPORT_COST = 'calculation_import_cost';
     // 償却選択肢：○
     const HIDDEN_PAYOFF_CIRCLE = 'hdn_payoff_circle';
+    // 製品売上参照セル
+    const HIDDEN_PRODUCT_SALES = 'hdn_product_sales';
     // 本荷参照セル
     const HIDDEN_MAIN_PRODUCT = 'hdn_main_product';
-    // 通貨レート貼り付け位置決めセル
-    const MONETARY_RATE_LIST = 'monetary_rate_list_header';
+    // 輸入費用参照セル
+    const HIDDEN_IMPORT_COST = 'hdn_import_cost';
+    // 関税参照セル
+    const HIDDEN_TARIFF = 'hdn_tariff';
+    // 固定費売上用関税参照セル
+    const HIDDEN_TARIFF_SALES = 'hdn_tariff_sales';
+    // 金型海外償却参照セル
+    const HIDDEN_MOLD_OVERSEAS_DEPRECIATION = 'hdn_mold_overseas_depreciation';
+    // 輸入パーツ仕入高参照セル
+    const HIDDEN_IMPORT_PARTS_COST = 'hdn_import_parts_cost';
+    // 材料パーツ仕入高参照セル
+    const HIDDEN_MATERIAL_PARTS_COST = 'hdn_material_parts_cost';
+    // 材料ツール仕入高
+    const HIDDEN_MATERIAL_TOOLS_COST = 'hdn_material_tools_cost';
+    // Mass Product
+    const HIDDEN_MASS_PRODUCT = 'hdn_mass_product';
+    // 通貨選択肢:JP (日本円の選択肢)
+    const JPYEN_DISPLAY = 'JPYEN_display';
+
 
     // 製品売上の売上分類ドロップダウンリストのタイトルセル
     const RECEIVE_PRODUCT_SALES_DIVISION_DROPDOWN = 'receive_p_salesdivision_dropdown';
@@ -410,6 +445,13 @@ class workSheetConst {
         DEF_ATTRIBUTE_SUPPLIER => self::ORDER_AREA_CODE
     ];
 
+    // 対象エリアで使用する売上区分、仕入部品比較用のセル
+    const CLASS_ITEM_CHECK_CELL = [
+        DEF_AREA_PRODUCT_SALES => self::RECEIVE_PRODUCT_CLASS_CHECK,
+        DEF_AREA_FIXED_COST_SALES => self::RECEIVE_FIXED_COST_CLASS_CHECK,
+        DEF_AREA_FIXED_COST_ORDER => self::ORDER_FIXED_COST_CLASS_CHECK,
+        DEF_AREA_PARTS_COST_ORDER => self::ORDER_ELEMENTS_COST_CLASS_CHECK
+    ];
 
 
     // 名称リスト（項目別の括り) -------------------------------------------------------------------------------------------
@@ -435,7 +477,8 @@ class workSheetConst {
         'conversionRate' => self::RECEIVE_PRODUCT_CONVERSION_RATE,
         'subtotal' => self::RECEIVE_PRODUCT_SUBTOTAL_PRICE,
         'delivery' => self::RECEIVE_PRODUCT_DELIVERY_DATE,
-        'note' => self::RECEIVE_PRODUCT_NOTE
+        'note' => self::RECEIVE_PRODUCT_NOTE,
+        'classItemCheck' => self::RECEIVE_PRODUCT_CLASS_CHECK
     ];
 
     // 製品売上計算結果名称リスト
@@ -457,7 +500,8 @@ class workSheetConst {
         'conversionRate' => self::RECEIVE_FIXED_COST_CONVERSION_RATE,
         'subtotal' => self::RECEIVE_FIXED_COST_SUBTOTAL_PRICE,
         'delivery' => self::RECEIVE_FIXED_COST_DELIVERY_DATE,
-        'note' => self::RECEIVE_FIXED_COST_NOTE
+        'note' => self::RECEIVE_FIXED_COST_NOTE,
+        'classItemCheck' => self::RECEIVE_FIXED_COST_CLASS_CHECK
     ];
 
     // 固定費売上計算結果セル名称リスト
@@ -480,7 +524,8 @@ class workSheetConst {
         'conversionRate' => self::ORDER_FIXED_COST_CONVERSION_RATE,
         'subtotal' => self::ORDER_FIXED_COST_SUBTOTAL_PRICE,
         'delivery' => self::ORDER_FIXED_COST_DELIVERY_DATE,
-        'note' => self::ORDER_FIXED_COST_NOTE
+        'note' => self::ORDER_FIXED_COST_NOTE,
+        'classItemCheck' => self::ORDER_FIXED_COST_ITEM_CHECK
     ];
 
     // 固定費計算結果セル名称リスト
@@ -503,7 +548,8 @@ class workSheetConst {
         'subtotal' => self::ORDER_ELEMENTS_COST_SUBTOTAL_PRICE,
         'price' => self::ORDER_ELEMENTS_COST_PRODUCT_PRICE,
         'delivery' => self::ORDER_ELEMENTS_COST_DELIVERY_DATE,
-        'note' => self::ORDER_ELEMENTS_COST_NOTE
+        'note' => self::ORDER_ELEMENTS_COST_NOTE,
+        'classItemCheck' => self::ORDER_ELEMENTS_COST_ITEM_CHECK
     ];
 
     // 部材費フッターセル名称リスト
@@ -595,13 +641,24 @@ class workSheetConst {
         'costNotDepreciationHeader' => self::COST_NOT_DEPRECIATION_HEADER
     ];
 
-    // 欄外セルの名称リスト(行ごとのデータ除く)
+
+    // 枠外の検索用名称リスト(行ごとのデータ除く)
     const HIDDEN_NAME_LIST= [
         'calculationTariff' => self::CALCULATION_TARIFF,
-        'tariffTotal' => self::TARIFF_TOTAL,
         'calculationImportCost' => self::CALCULATION_IMPORT_COST,
+        'tariffTotal' => self::TARIFF_TOTAL,  
         'hiddenPayoffCircle' => self::HIDDEN_PAYOFF_CIRCLE,
-        'hiddenMainProduct' => self::HIDDEN_MAIN_PRODUCT
+        'hiddenProductSales' => self::HIDDEN_PRODUCT_SALES,
+        'hiddenMainProduct' => self::HIDDEN_MAIN_PRODUCT,
+        'hiddenImportCost' => self::HIDDEN_IMPORT_COST,
+        'hiddenTariff' => self::HIDDEN_TARIFF,
+        'hiddenTariffSales' => self::HIDDEN_TARIFF_SALES,
+        'hiddenMoldOverseasDepreciation' => self::HIDDEN_MOLD_OVERSEAS_DEPRECIATION,
+        'hiddenImportPartsCost' => self::HIDDEN_IMPORT_PARTS_COST,
+        'hiddenMaterialPartsCost' => self::HIDDEN_MATERIAL_PARTS_COST,
+        'hiddenMaterialToolsCost' => self::HIDDEN_MATERIAL_TOOLS_COST,
+        'hiddenMassProduct' => self::HIDDEN_MASS_PRODUCT,
+        'JPYENDisplay' => self::JPYEN_DISPLAY
     ];
 
 
@@ -624,7 +681,7 @@ class workSheetConst {
     ];
 
     // ワークシート全てのセル名称リスト
-    const ALL_WORK_SHEET_CELL_NAME_LIST_DOWNLOAD = [
+    const ALL_WORK_SHEET_CELL_NAME_LIST_PREVIEW = [
         self::SET_POSITION_NAME_LIST,
         self::PRODUCT_SALES_HEADER_NAME_LIST,
         self::PRODUCT_SALES_RESULT_NAME_LIST,
@@ -657,7 +714,7 @@ class workSheetConst {
 
     // 全てのセル名称を並列で使用する場合
     public static function getAllNameListForDownload() {
-        $beforeNameList = self::ALL_WORK_SHEET_CELL_NAME_LIST_DOWNLOAD;
+        $beforeNameList = self::ALL_WORK_SHEET_CELL_NAME_LIST_PREVIEW;
         foreach ($beforeNameList as $cellNameList) {
             foreach ($cellNameList as $cellName) {
                 $afterCellNameList[] = $cellName;
@@ -924,6 +981,7 @@ class workSheetConst {
         DEF_AREA_OTHER_COST_ORDER => self::ORDER_OTHER_COST_STOCK_ITEM_DROPDOWN
     ];
 
+
     const OTHER_DROPDOWN_CELL_NAME = [
         self::INCHARGE_GROUP_DROPDOWN,
         self::INCHARGE_USER_DROPDOWN,
@@ -932,4 +990,53 @@ class workSheetConst {
         self::SUPPLIER_DROPDOWN
     ];
 
+    
+    // ブック内の検索用セルの設定用配列(各エリアごとにセットするセルとそのセット条件を指定)
+    const ASSIGN_FOR_HIDDEN = [
+        DEF_AREA_PRODUCT_SALES => [
+            self::HIDDEN_PRODUCT_SALES => [
+                'divisionSubject' => DEF_SALES_DIVISION_CODE_PRODUCT_SALES // 製品売上
+            ],
+            self::HIDDEN_MAIN_PRODUCT => [
+                'divisionSubject' => DEF_SALES_DIVISION_CODE_PRODUCT_SALES, // 製品売上
+                'classItem' => DEF_SALES_CLASS_CODE_MAIN_PRODUCT // 本荷
+            ]
+        ],
+        DEF_AREA_FIXED_COST_SALES => [
+            self::HIDDEN_TARIFF_SALES => [
+                'divisionSubject' => DEF_SALES_DIVISION_CODE_FIXED_COST_SALES, // 固定費売上
+                'classItem' => 13 // 関税
+            ]
+        ],
+        DEF_AREA_FIXED_COST_ORDER => [
+            self::HIDDEN_MOLD_OVERSEAS_DEPRECIATION => [
+                'divisionSubject' => DEF_STOCK_SUBJECT_CODE_OVERSEA_MOLD_DEPRECIATION // 金型海外償却
+            ],
+            self::HIDDEN_MATERIAL_TOOLS_COST => [
+                'divisionSubject' => DEF_STOCK_SUBJECT_CODE_MATERIAL_TOOLS_COST // 材料ツール仕入高
+            ]
+        ],
+        DEF_AREA_PARTS_COST_ORDER => [
+            self::HIDDEN_IMPORT_PARTS_COST => [
+                'divisionSubject' => DEF_STOCK_SUBJECT_CODE_IMPORT_PARTS_COST // 輸入パーツ仕入高
+            ],
+            self::HIDDEN_MATERIAL_PARTS_COST => [
+                'divisionSubject' => DEF_STOCK_SUBJECT_CODE_MATERIAL_PARTS_COST // 材料パーツ仕入高
+            ],
+            self::HIDDEN_MASS_PRODUCT => [
+                'divisionSubject' => DEF_STOCK_SUBJECT_CODE_IMPORT_PARTS_COST, // 輸入パーツ仕入高
+                'classItem' => DEF_STOCK_ITEM_CODE_MASS_PRODUCT // Mass Product
+            ]
+        ],
+        DEF_AREA_OTHER_COST_ORDER => [
+            self::HIDDEN_IMPORT_COST => [
+                'divisionSubject' => DEF_STOCK_SUBJECT_CODE_CHARGE, // チャージ
+                'classItem' => DEF_STOCK_ITEM_CODE_IMPORT_COST // 輸入費用
+            ],
+            self::HIDDEN_TARIFF => [
+                'divisionSubject' => DEF_STOCK_SUBJECT_CODE_CHARGE, // チャージ
+                'classItem' => DEF_STOCK_ITEM_CODE_TARIFF // 関税
+            ]
+        ]
+    ];
 }

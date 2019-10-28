@@ -96,7 +96,7 @@
 	$spreadSheet = $objReader->load($tempFilePath);
 
 	// 必要な定数を取得する
-	$nameList = workSheetConst::getAllNameList();	
+	$nameList = workSheetConst::getAllNameListForDownload();	
 	$rowCheckNameList = workSheetConst::DETAIL_HEADER_CELL_NAME_LIST;
 	$targetAreaList = workSheetConst::TARGET_AREA_DISPLAY_NAME_LIST;
 
@@ -144,18 +144,15 @@
 	$sheet = $sheetInfo['sheet'];
 	$cellAddressList = $sheetInfo['cellAddress'];
 
-	// テンプレートの整形を行う
-	$objSheet->templateAdjust($estimateData);
-
 	// ワークシートオブジェクトに必要な値をセット
-	$objSheet->setDBEstimateData($productData, $estimateData);
+	$objSheet->setDBEstimateData($productData, $estimateData, workSheetConst::MODE_ESTIMATE_EDIT);
 
 	$hiddenList = array();
 
 	// 非表示リスト（無効リスト）を追加する
 	$objSheet->setHiddenRowList($hiddenList);
 
-	$viewData = $objSheet->makeDataOfSheet('edit');
+	$viewData = $objSheet->makeDataOfSheet();
 
 	// ドロップダウンデータの取得
 	$dropdownDSCI = $objDB->getDropdownForDivSubAndClsItm();

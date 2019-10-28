@@ -160,18 +160,15 @@ if ($maxRevisionNo !== $revisionNo || $minRevisionNo < 0) {
 	$objSheet->setUneditableFlag(true);
 }
 
-// テンプレートの整形を行う
-$objSheet->templateAdjust($estimateData);
-
 // ワークシートオブジェクトに必要な値をセット
-$objSheet->setDBEstimateData($productData, $estimateData);
+$objSheet->setDBEstimateData($productData, $estimateData, workSheetConst::MODE_ESTIMATE_PREVIEW);
 
 $hiddenList = array();
 
 // 非表示リスト（無効リスト）を追加する
 $objSheet->setHiddenRowList($hiddenList);
 
-$viewData = $objSheet->makeDataOfSheet('preview');
+$viewData = $objSheet->makeDataOfSheet();
 
 $viewDataList[0] = $viewData;
 

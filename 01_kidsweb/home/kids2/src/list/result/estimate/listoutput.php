@@ -213,9 +213,6 @@ else
 	$sheet = $sheetInfo['sheet'];
 	$cellAddressList = $sheetInfo['cellAddress'];
 
-	// テンプレートの整形を行う
-	$objSheet->templateAdjust($estimateData);
-
 	// ワークシートオブジェクトに必要な値をセット
 	$objSheet->setDBEstimateData($productData, $estimateData);
 

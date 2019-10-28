@@ -158,9 +158,6 @@ $objSheet = new estimateSheetController();
 // オブジェクトにデータをセットする
 $objSheet->dataInitialize($sheetInfo, $objDB);
 
-// テンプレートの整形を行う
-$objSheet->templateAdjust($estimateData);
-
 // ワークシートオブジェクトに必要な値をセット
 $objSheet->setDBEstimateData($productData, $estimateData, $mode);
 

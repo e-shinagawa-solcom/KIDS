@@ -319,15 +319,26 @@ abstract class estimateRowController {
         if ($this->importCostFlag || $this->tariffFlag) { // 輸入費用、関税の場合、パーセント入力フラグの判定を行う
             // 入力書式を取得する
             $dataType = $this->dataType;
-            if (!$dataType || $dataType['price'] === DataType::TYPE_FORMULA) {
+            if ($dataType) {
+                if ($dataType['price'] === DataType::TYPE_FORMULA) {
+                    if (is_numeric($this->customerCompany)) {
+                        $this->percentInputFlag = true;
+                    } else {
+                        // 単価が数式の場合、顧客先に数値が入っていない場合は無効にする
+                        return true;
+                        // $ret = true;
+                    }
+                }
+            } else {
                 if (is_numeric($this->customerCompany)) {
                     $this->percentInputFlag = true;
-                } else {
+                } else if (!is_numeric($this->price)) {
                     // 単価が数式の場合、顧客先に数値が入っていない場合は無効にする
                     return true;
                     // $ret = true;
                 }
             }
+
         } else { // 輸入費用、関税以外の場合
             // 顧客先のチェックを行う
             $this->validateCustomerCompany();
@@ -384,8 +395,18 @@ abstract class estimateRowController {
         // 通貨ごとの単価の小数点以下の桁数を取得
         $decimalDigit = workSheetConst::PRICE_DECIMAL_DIGIT;
 
+        // 文字列型に変換
+        $strPrice = (string)$price;
+
+        list($strInt, $strDecimal) = explode('.', $strPrice);
+
+        if (strlen($strDecimal) > $decimalDigit) {
+            $strDecimal = substr($strDecimal, 0, $decimalDigit);
+        }
+
+        $price = $strInt.'.'. $strDecimal;
+
         // 単価の小数点以下の処理
-        $price = floor($price * pow(10, $decimalDigit[$monetary])) / pow(10, $decimalDigit[$monetary]);
         $price = number_format($price, 4, '.', '');
 
         // 再計算結果をセットする
@@ -575,6 +596,8 @@ abstract class estimateRowController {
             $this->customerCompany = null;
             // パーセント値をセットする
             $this->percent = $percent;
+        } else {
+            $price = $this->price;
         }
 
         // 通貨ごとの単価の小数点以下の桁数を取得
