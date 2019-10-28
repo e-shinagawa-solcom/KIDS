@@ -69,28 +69,6 @@ function initLayoutNavigation()
 	{
 		SearchNaviBt3.innerHTML = schnaviJ3;
 	}
-	
-	///// 納品書検索//////
-	if (typeof(hogeNaviBt1)!='undefined')
-	{
-		hogeNaviBt1.innerHTML = hogenaviJ1;
-	}
-
-	if (typeof(hogeNaviBt3)!='undefined')
-	{
-		hogeNaviBt3.innerHTML = hogenaviJ3;
-	}
-
-	///// 発注書検索//////
-	if (typeof(DocSearchNaviBt1)!='undefined')
-	{
-		DocSearchNaviBt1.innerHTML = docschnaviJ1;
-	}
-
-	if (typeof(DocSearchNaviBt3)!='undefined')
-	{
-		DocSearchNaviBt3.innerHTML = docschnaviJ3;
-	}
 
 	///// LIST OUTPUT /////
 	if (typeof(ListExNaviBt1)!='undefined')

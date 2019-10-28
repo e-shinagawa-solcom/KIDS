@@ -444,6 +444,7 @@
 
                 $.ajax( search )
                 .done(function(response){
+                    console.log(response);
                     // 親ウィンドウの存在チェック
                     if (!window.opener || window.opener.closed)
                     {
@@ -483,6 +484,7 @@
                     }
                 })
                 .fail(function(response){
+                    console.log(response);
                     alert('検索に失敗しました。\n条件を変更して下さい。');
                     return;
                 });

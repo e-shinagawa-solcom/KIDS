@@ -5,17 +5,15 @@
 // ------------------------------------------------------------------
 //   Enterキー押下イベント
 // ------------------------------------------------------------------
-window.document.onkeydown=fncEnterKeyDown;
+window.document.onkeydown = fncEnterKeyDown;
 
-function fncEnterKeyDown( e )
-{
+function fncEnterKeyDown(e) {
     // Enterキー押下で明細追加
-	if( window.event.keyCode == 13)
-	{
-        if (document.activeElement.id == "BaseBack"){
+    if (window.event.keyCode == 13) {
+        if (document.activeElement.id == "BaseBack") {
             $("#AddBt").trigger('click');
         }
-	}
+    }
 }
 
 // ------------------------------------------------------------------
@@ -44,20 +42,20 @@ function toggleRow(row) {
     // TODO:同じ行のチェックボックスのON/OFFを切り替える
     var checked = $(row).find('input[name="edit"]').prop('checked');
     $(row).find('input[name="edit"]').prop('checked', !checked);
-    
+
     lastSelectedRow = row;
 }
 
 function selectRowsBetweenIndexes(indexes) {
     var trs = document.getElementById("DetailTable").tBodies[0].getElementsByTagName("tr");
-    indexes.sort(function(a, b) {
+    indexes.sort(function (a, b) {
         return a - b;
     });
 
     for (var i = indexes[0]; i <= indexes[1]; i++) {
-        trs[i-1].className = 'selected';
-        var checked = $(trs[i-1]).find('input[name="edit"]').prop('checked');
-        $(trs[i-1]).find('input[name="edit"]').prop('checked', !checked);
+        trs[i - 1].className = 'selected';
+        var checked = $(trs[i - 1]).find('input[name="edit"]').prop('checked');
+        $(trs[i - 1]).find('input[name="edit"]').prop('checked', !checked);
     }
 }
 
@@ -84,33 +82,33 @@ function SetSearchConditionWindowValue(search_condition) {
     $('input[name="strCustomerName"]').val(search_condition.strCompanyDisplayName);
 
     // 顧客に紐づく国コードによって消費税区分のプルダウンを変更する
-    if(search_condition.strCompanyDisplayCode != ""){
+    if (search_condition.strCompanyDisplayCode != "") {
         $.ajax({
             type: 'POST',
             url: postTarget,
             data: {
-                strMode : "get-lngcountrycode",
+                strMode: "get-lngcountrycode",
                 strSessionID: $('input[name="strSessionID"]').val(),
                 strcompanydisplaycode: search_condition.strCompanyDisplayCode,
             },
             async: true,
-        }).done(function(data){
+        }).done(function (data) {
             console.log("done:get-lngcountrycode");
-            if (data == "81"){
+            if (data == "81") {
                 // 81：「外税」を選択（他の項目も選択可能）
                 $("select[name='lngTaxClassCode'] option:not(:selected)").prop('disabled', false);
                 $("select[name='lngTaxClassCode']").val("2");
-    
-            }else{
+
+            } else {
                 // 81以外：「非課税」固定
                 $("select[name='lngTaxClassCode']").val("1");
                 $("select[name='lngTaxClassCode'] option:not(:selected)").prop('disabled', true);
             }
-        }).fail(function(error){
+        }).fail(function (error) {
             console.log("fail:get-lngcountrycode");
             console.log(error);
         });
-    }else{
+    } else {
         // 顧客コードが空なら固定解除
         $("select[name='lngTaxClassCode'] option:not(:selected)").prop('disabled', false);
     }
@@ -126,12 +124,12 @@ function SearchReceiveDetail(search_condition) {
         type: 'POST',
         url: postTarget,
         data: {
-            strMode : "search-detail",
+            strMode: "search-detail",
             strSessionID: $('input[name="strSessionID"]').val(),
             condition: search_condition,
         },
         async: true,
-    }).done(function(data){
+    }).done(function (data) {
         console.log("done:search-detail");
         console.log(data);
         // 検索結果をテーブルにセット
@@ -140,14 +138,18 @@ function SearchReceiveDetail(search_condition) {
         $('#DetailTable').tablesorter({
             headers: {
                 'not-sortable': { sorter: false },
-            }            
+            }
         });
 
-    }).fail(function(error){
+        $('#DetailTableBodyAllCheck').on('change', function () {
+            $('input[name="edit"]').prop('checked', this.checked);
+        });
+
+    }).fail(function (error) {
         console.log("fail:search-detail");
         console.log(error);
     });
-    
+
 }
 
 // 出力明細をすべてクリア
@@ -161,18 +163,18 @@ function ClearAllEditDetail() {
 // ------------------------------------------
 //   HTMLエレメント生成後の初期処理
 // ------------------------------------------
-jQuery(function($){
-    
+jQuery(function ($) {
+
     // 出力明細部の設定
     $("#EditTableBody").sortable();
-    $("#EditTableBody").on('sortstop', function(){
+    $("#EditTableBody").on('sortstop', function () {
         changeRowNum();
     });
 
     // 画面名ヘッダ画像切り替え
-    if ($('input[name="lngSlipNo"]').val()){
+    if ($('input[name="lngSlipNo"]').val()) {
         SegAHeader.innerHTML = '<img src="/img/type01/sc/screnew_title_ja.gif" width="927" height="30" border="0" alt="売上（納品書）修正">';
-    }else{
+    } else {
         SegAHeader.innerHTML = '<img src="/img/type01/sc/scr_title_ja.gif" width="927" height="30" border="0" alt="売上（納品書）登録">';
     }
 
@@ -184,15 +186,15 @@ jQuery(function($){
         $('input[name="dtmPaymentLimit"]'),
     ];
     // datepickerの設定
-    $.each(dateElements, function(){
+    $.each(dateElements, function () {
         this.datepicker({
-                showButtonPanel: true,
-                dateFormat: "yy/mm/dd",
-                onClose: function(){
-                    this.focus();
-                }
-            }).attr({
-                maxlength: "10"
+            showButtonPanel: true,
+            dateFormat: "yy/mm/dd",
+            onClose: function () {
+                this.focus();
+            }
+        }).attr({
+            maxlength: "10"
         });
     });
 
@@ -203,26 +205,26 @@ jQuery(function($){
     //   functions
     // ------------------------------------------
     // 追加バリデーションチェック
-    function validateAdd(tr){
+    function validateAdd(tr) {
         //明細選択エリアの納期
         var detailDeliveryDate = new Date($(tr).children('td.detailDeliveryDate').text());
 
         //ヘッダ・フッタ部の納品日と比較（同月以外は不正）
         var headerDeliveryDate = new Date($('input[name="dtmDeliveryDate"]').val());
         var sameMonth = (headerDeliveryDate.getYear() == detailDeliveryDate.getYear())
-                        && (headerDeliveryDate.getMonth() == detailDeliveryDate.getMonth());
-        if (!sameMonth){
+            && (headerDeliveryDate.getMonth() == detailDeliveryDate.getMonth());
+        if (!sameMonth) {
             alert("受注確定時の納期と納品日と一致しません。受注データを修正してください。");
             return false;
         }
 
         //出力明細の先頭行があればその納期と比較（同月以外は不正）
         var firstTr = $("#EditTableBody tr").eq(0);
-        if (0 < firstTr.length){
+        if (0 < firstTr.length) {
             var firstRowDate = new Date($(firstTr).children('td.detailDeliveryDate').text());
             var sameMonthDetail = (firstRowDate.getYear() == detailDeliveryDate.getYear())
-                                && (firstRowDate.getMonth() == detailDeliveryDate.getMonth());
-            if (!sameMonthDetail){
+                && (firstRowDate.getMonth() == detailDeliveryDate.getMonth());
+            if (!sameMonthDetail) {
                 alert("出力明細と納品月が異なる明細は選択できません。");
                 return false;
             }
@@ -233,8 +235,8 @@ jQuery(function($){
         var rn1 = $(tr).children('td.detailReceiveNo').text();
         var dn1 = $(tr).children('td.detailReceiveDetailNo').text();
         var rev1 = $(tr).children('td.detailReceiveRevisionNo').text();
-    
-        $("#EditTableBody tr").each(function(){
+
+        $("#EditTableBody tr").each(function () {
             var rn2 = $(this).children('td.detailReceiveNo').text();
             var dn2 = $(this).children('td.detailReceiveDetailNo').text();
             var rev2 = $(this).children('td.detailReceiveRevisionNo').text();
@@ -243,16 +245,16 @@ jQuery(function($){
             existsSameKey = existsSameKey || isSame;
         });
 
-        if (existsSameKey){
+        if (existsSameKey) {
             alert("重複する明細は選択できません。");
             return false;
         }
 
         return true;
     }
-    
+
     //出力明細一覧エリアに選択した明細を追加
-    function setEdit(tr){
+    function setEdit(tr) {
 
         var editTable = $('#EditTable');
         var tbody = $('#EditTableBody');
@@ -338,19 +340,19 @@ jQuery(function($){
         //明細統一フラグ（明細登録用）
         td = $(tr).find($('td.detailUnifiedFlg')).clone();
         $(editTr).append($(td));
-        
+
         // 出力明細テーブルに明細を追加
         $(tbody).append($(editTr));
         $(editTable).append($(tbody));
     }
 
-    
+
     // 合計金額・消費税額の更新
-    function updateAmount(){
+    function updateAmount() {
 
         // 税抜金額を取得して配列に格納
         var aryPrice = [];
-        $("#EditTableBody tr").each(function() {
+        $("#EditTableBody tr").each(function () {
             //カンマをはじいてから数値に変換
             var price = Number($(this).find($('td.detailSubTotalPrice')).html().split(',').join(''));
             aryPrice.push(price);
@@ -360,7 +362,7 @@ jQuery(function($){
         // 合計金額の算出
         // ----------------
         var totalAmount = 0;
-        aryPrice.forEach(function(price) {
+        aryPrice.forEach(function (price) {
             totalAmount += price;
         });
 
@@ -377,21 +379,18 @@ jQuery(function($){
 
         // 消費税額の計算
         var taxAmount = 0;
-        if (taxClassCode == "1")
-        {
+        if (taxClassCode == "1") {
             // 1:非課税
             taxAmount = 0;
         }
-        else if (taxClassCode == "2")
-        {
+        else if (taxClassCode == "2") {
             // 2:外税
             taxAmount = Math.floor(totalAmount * taxRate);
         }
-        else if (taxClassCode == "3")
-        {
+        else if (taxClassCode == "3") {
             // 3:内税
-            aryPrice.forEach(function(price) {
-                taxAmount += Math.floor( (price / (1+taxRate)) * taxRate );
+            aryPrice.forEach(function (price) {
+                taxAmount += Math.floor((price / (1 + taxRate)) * taxRate);
             });
         }
 
@@ -402,39 +401,39 @@ jQuery(function($){
         $('input[name="strTaxAmount"]').val(taxAmount);
     }
 
-    function getCheckedRows(){
+    function getCheckedRows() {
         var selected = getSelectedRows();
         var cnt = $(selected).length;
-        if(cnt === 0) {
+        if (cnt === 0) {
             console.log("なにもしない");
             return false;
         }
-        if(cnt > 1) {
+        if (cnt > 1) {
             //console.log("なにもしない。ただし後で処理が追加になるかもしれない。");
             alert("移動対象は1行のみ選択してください");
             return false;
         }
         return true;
     }
-    function getSelectedRows(){
+    function getSelectedRows() {
         return $('#EditTableBody tr.selected');
     }
-    function executeSort(mode){
+    function executeSort(mode) {
         var row = $('#EditTableBody').children('.selected');
-        switch(mode) {
+        switch (mode) {
             case 0:
                 $('#EditTableBody tr:first').before($(row));
                 break;
             case 1:
                 var rowPreview = $(row).prev('tr');
-                if(row.prev.length) {
+                if (row.prev.length) {
                     row.insertBefore(rowPreview);
                     var td = rowPreview.children('td[name="rownum"]')
                 }
                 break;
             case 2:
                 var rowNext = $(row).next('tr');
-                if(rowNext.length) {
+                if (rowNext.length) {
                     row.insertAfter(rowNext);
                     var td = rowNext.children('td[name="rownum"]')
                 }
@@ -447,73 +446,73 @@ jQuery(function($){
         }
         changeRowNum();
     }
-    function changeRowNum(){
-        $('#EditTableBody').find('[name="rownum"]').each(function(idx){
+    function changeRowNum() {
+        $('#EditTableBody').find('[name="rownum"]').each(function (idx) {
             $(this).html(idx + 1);
         });
     }
 
-    function isDate(d){
-        if(d == "") { return false; }
-        if(!d.match(/^\d{4}\/\d{1,2}\/\d{1,2}$/)) { return false; }
-    
+    function isDate(d) {
+        if (d == "") { return false; }
+        if (!d.match(/^\d{4}\/\d{1,2}\/\d{1,2}$/)) { return false; }
+
         var date = new Date(d);
-        if(date.getFullYear() != d.split("/")[0]
+        if (date.getFullYear() != d.split("/")[0]
             || date.getMonth() != d.split("/")[1] - 1
             || date.getDate() != d.split("/")[2]
-        ){
+        ) {
             return false;
         }
         return true;
     }
 
     // ヘッダ部・フッタ部入力エリアのPOST用データ収集
-    function getUpdateHeader(){
-        
+    function getUpdateHeader() {
+
         var result = {
             //起票者
-            strdrafteruserdisplaycode:  $('input[name="lngInsertUserCode"]').val(),
-            strdrafteruserdisplayname:  $('input[name="strInsertUserName"]').val(),
+            strdrafteruserdisplaycode: $('input[name="lngInsertUserCode"]').val(),
+            strdrafteruserdisplayname: $('input[name="strInsertUserName"]').val(),
             //顧客
-            strcompanydisplaycode:     $('input[name="lngCustomerCode"]').val(),
-            strcompanydisplayname:     $('input[name="strCustomerName"]').val(),
+            strcompanydisplaycode: $('input[name="lngCustomerCode"]').val(),
+            strcompanydisplayname: $('input[name="strCustomerName"]').val(),
             //顧客担当者
-            strcustomerusername:       $('input[name="strCustomerUserName"]').val(),
+            strcustomerusername: $('input[name="strCustomerUserName"]').val(),
             //納品日
-            dtmdeliverydate:           $('input[name="dtmDeliveryDate"]').val(),
+            dtmdeliverydate: $('input[name="dtmDeliveryDate"]').val(),
             //納品先
             strdeliveryplacecompanydisplaycode: $('input[name="lngDeliveryPlaceCode"]').val(),
-            strdeliveryplacename:      $('input[name="strDeliveryPlaceName"]').val(),
+            strdeliveryplacename: $('input[name="strDeliveryPlaceName"]').val(),
             //納品先担当者
-            strdeliveryplaceusername:  $('input[name="strDeliveryPlaceUserName"]').val(),
+            strdeliveryplaceusername: $('input[name="strDeliveryPlaceUserName"]').val(),
             //備考
-            strnote:                   $('textarea[name="strNote"]').val(),
+            strnote: $('textarea[name="strNote"]').val(),
             //消費税区分
-            lngtaxclasscode:           $('select[name="lngTaxClassCode"]').children('option:selected').val(),
-            strtaxclassname:           $('select[name="lngTaxClassCode"]').children('option:selected').text(),
+            lngtaxclasscode: $('select[name="lngTaxClassCode"]').children('option:selected').val(),
+            strtaxclassname: $('select[name="lngTaxClassCode"]').children('option:selected').text(),
             //消費税率
-            lngtaxcode:                $('select[name="lngTaxRate"]').children('option:selected').val(),
-            curtax:                    $('select[name="lngTaxRate"]').children('option:selected').text() * 0.01,
+            lngtaxcode: $('select[name="lngTaxRate"]').children('option:selected').val(),
+            curtax: $('select[name="lngTaxRate"]').children('option:selected').text() * 0.01,
             //消費税額
-            strtaxamount:              $('input[name="strTaxAmount"]').val(),
+            strtaxamount: $('input[name="strTaxAmount"]').val(),
             //支払期限
-            dtmpaymentlimit:           $('input[name="dtmPaymentLimit"]').val(),
+            dtmpaymentlimit: $('input[name="dtmPaymentLimit"]').val(),
             //支払方法
-            lngpaymentmethodcode:      $('select[name="lngPaymentMethodCode"]').children('option:selected').val(),
+            lngpaymentmethodcode: $('select[name="lngPaymentMethodCode"]').children('option:selected').val(),
             //合計金額
-            curtotalprice:             $('input[name="strTotalAmount"]').val(),
+            curtotalprice: $('input[name="strTotalAmount"]').val(),
         };
 
         return result;
     }
 
     // 出力明細一覧エリアのPOST用データ収集
-    function getUpdateDetail(){
+    function getUpdateDetail() {
         var result = [];
 
-        $.each($('#EditTableBody tr'), function(i, tr){
-            
-            var param ={
+        $.each($('#EditTableBody tr'), function (i, tr) {
+
+            var param = {
                 //No.（行番号）
                 rownumber: $(tr).children('[name="rownum"]').text(),
                 //顧客発注番号
@@ -576,24 +575,24 @@ jQuery(function($){
     function post_open(url, data, target, features) {
 
         window.open('', target, features);
-       
+
         // フォームを動的に生成
         var html = '<form id="temp_form" style="display:none;">';
-        for(var x in data) {
-          if(data[x] == undefined || data[x] == null) {
-            continue;
-          }
-          var _val = data[x].replace(/'/g, "\'");
-          html += "<input type='hidden' name='" + x + "' value='" + _val + "' >";
+        for (var x in data) {
+            if (data[x] == undefined || data[x] == null) {
+                continue;
+            }
+            var _val = data[x].replace(/'/g, "\'");
+            html += "<input type='hidden' name='" + x + "' value='" + _val + "' >";
         }
         html += '</form>';
         $("body").append(html);
-       
-        $('#temp_form').attr("action",url);
-        $('#temp_form').attr("target",target);
-        $('#temp_form').attr("method","POST");
+
+        $('#temp_form').attr("action", url);
+        $('#temp_form').attr("target", target);
+        $('#temp_form').attr("method", "POST");
         $('#temp_form').submit();
-       
+
         // フォームを削除
         $('#temp_form').remove();
     }
@@ -602,39 +601,38 @@ jQuery(function($){
     //   日付計算ヘルパ関数
     // --------------------------------------------------------------------------------
     // nヶ月前後の年月日を取得する
-    function getAddMonthDate(year,month,day,add){
+    function getAddMonthDate(year, month, day, add) {
         var addMonth = month + add;
-        var endDate = getEndOfMonth(year,addMonth);//add分を加えた月の最終日を取得
+        var endDate = getEndOfMonth(year, addMonth);//add分を加えた月の最終日を取得
 
         //引数で渡された日付がnヶ月後の最終日より大きければ日付を次月最終日に合わせる
         //5/31→6/30のように応当日が無い場合に必要
-        if(day > endDate){
+        if (day > endDate) {
             day = endDate;
-        }else{
+        } else {
             day = day - 1;
         }
 
-        var addMonthDate = new Date(year,addMonth - 1,day);
+        var addMonthDate = new Date(year, addMonth - 1, day);
         return addMonthDate;
     }
     //今月の月末日を取得
     //※次月の0日目＝今月の末日になる
-    function getEndOfMonth(year,month){
-        var endDate = new Date(year,month,0);
+    function getEndOfMonth(year, month) {
+        var endDate = new Date(year, month, 0);
         return endDate.getDate();
     }
 
     // 締め日をもとに月度を計算する
-    function getMonthlyBasedOnClosedDay(targetDate, closedDay)
-    {
+    function getMonthlyBasedOnClosedDay(targetDate, closedDay) {
         var targetYear = targetDate.getFullYear();
-        var targetMonth = targetDate.getMonth()+1;
+        var targetMonth = targetDate.getMonth() + 1;
         var targetDay = targetDate.getDate();
 
-        if (targetDay > closedDay){
+        if (targetDay > closedDay) {
             // 対象日 > 締め日 なら翌月度
             return getAddMonthDate(targetYear, targetMonth, 1, +1);
-        }else{
+        } else {
             // 対象日 <= 締め日 なら当月度
             return new Date(targetYear, targetMonth, 1);
         }
@@ -645,13 +643,12 @@ jQuery(function($){
     //    バリデーション関連
     // ------------------------------------------
     // 出力明細エリアに明細が1行以上存在するなら true
-    function existsEditDetail(){
+    function existsEditDetail() {
         return $("#EditTableBody tr").length > 0;
     }
 
     // 納品日の月が締済みであるなら true
-    function isClosedMonthOfDeliveryDate(deliveryDate, closedDay)
-    {
+    function isClosedMonthOfDeliveryDate(deliveryDate, closedDay) {
         // システム日付
         var nowDate = new Date();
         // 顧客の月度
@@ -665,12 +662,11 @@ jQuery(function($){
     }
 
     // 対象日付がシステム日付の前後一ヶ月以内なら true
-    function withinOneMonthBeforeAndAfter(targetDate)
-    {
+    function withinOneMonthBeforeAndAfter(targetDate) {
         // システム日付
         var nowDate = new Date();
         var nowYear = nowDate.getFullYear();
-        var nowMonth = nowDate.getMonth()+1;
+        var nowMonth = nowDate.getMonth() + 1;
         var nowDay = nowDate.getDate();
 
         // ひと月前
@@ -680,24 +676,24 @@ jQuery(function($){
 
         // 前後一ヶ月以内ならtrue
         var valid = (aMonthAgo.getTime() <= targetDate.getTime()) &&
-                    (aMonthLater.getTime() >= targetDate.getTime());
+            (aMonthLater.getTime() >= targetDate.getTime());
 
         return valid;
     }
 
     // 出力明細一覧エリアの明細に、ヘッダ部の納品日の月度と同月度ではない納期の明細が存在するなら true
-    function existsInDifferentDetailDeliveryMonthly(deliveryDate, closedDay){
+    function existsInDifferentDetailDeliveryMonthly(deliveryDate, closedDay) {
 
         // 納品日の月度
         var deliveryMonthly = getMonthlyBasedOnClosedDay(deliveryDate, closedDay);
 
         // 各明細の納期の月度を取得する
         var aryDetailDeliveryMonthly = [];
-        $("#EditTableBody tr").each(function(){
+        $("#EditTableBody tr").each(function () {
             // 明細の納期を取得
             var arr = $(this).children('td.detailDeliveryDate').text().split('/');
-            var detailDeliveryDate = new Date(arr[0], arr[1] -1, arr[2] );
-            
+            var detailDeliveryDate = new Date(arr[0], arr[1] - 1, arr[2]);
+
             // 納期の月度
             var detailDeliveryMonthly = getMonthlyBasedOnClosedDay(detailDeliveryDate, closedDay);
             // 配列に追加
@@ -705,7 +701,7 @@ jQuery(function($){
         });
 
         // 納期の月度が納品日の月度と一致しない明細が１つでもあったらエラー
-        var indifferentDetailExists = aryDetailDeliveryMonthly.some(function(element){ 
+        var indifferentDetailExists = aryDetailDeliveryMonthly.some(function (element) {
             return (element.getTime() != deliveryMonthly.getTime());
         });
 
@@ -713,36 +709,35 @@ jQuery(function($){
     }
 
     // 出力明細エリアの各明細の売上区分の統一性をチェック。チェックOKならtrue、NGならfalse
-    function checkEditDetailsAreSameSalesClass()
-    {
+    function checkEditDetailsAreSameSalesClass() {
         // 出力明細エリアにあるすべての明細の明細統一フラグと売上区分コードを取得する
         var aryDetailUnifiedFlg = [];
         var aryDetailSalesClassCode = [];
-        $("#EditTableBody tr").each(function(){
+        $("#EditTableBody tr").each(function () {
             // 明細統一フラグを取得して配列に追加
-            aryDetailUnifiedFlg .push($(this).children('td.detailUnifiedFlg').text());
+            aryDetailUnifiedFlg.push($(this).children('td.detailUnifiedFlg').text());
             // 売上区分コードを取得して配列に追加
-            aryDetailSalesClassCode .push($(this).children('td.detailSalesClassCode').text());
+            aryDetailSalesClassCode.push($(this).children('td.detailSalesClassCode').text());
         });
 
         // １．全行の売上区分マスタの明細統一フラグがfalse -> OKとしてチェック終了。そうでないなら２．へ
-        var allDetailUnifiedFlgIsFalse = aryDetailUnifiedFlg.every(function(element){ 
+        var allDetailUnifiedFlgIsFalse = aryDetailUnifiedFlg.every(function (element) {
             return (element.toUpperCase() == 'F');
         });
-        if (allDetailUnifiedFlgIsFalse){
+        if (allDetailUnifiedFlgIsFalse) {
             return true;
         }
-        
+
         // ２．売上区分マスタの明細統一フラグがtrueである明細の件数 != 出力明細一覧エリアの明細行数 を満たすなら NGとしてチェック終了。そうでないなら３．へ
-        var aryDetailUnifiedFlgIsTrue = aryDetailUnifiedFlg.filter(function(element){
+        var aryDetailUnifiedFlgIsTrue = aryDetailUnifiedFlg.filter(function (element) {
             return (element.toUpperCase() == 'T');
         });
-        if (aryDetailUnifiedFlgIsTrue.length != $("#EditTableBody tr").length){
+        if (aryDetailUnifiedFlgIsTrue.length != $("#EditTableBody tr").length) {
             return false;
         }
 
         // ３．出力明細一覧エリアの明細の売上区分コードがすべて同じ値 -> OKとしてチェック終了。そうでないなら NGとしてチェック終了
-        var allDetailSalesClassCodeHasSameValue = aryDetailSalesClassCode.every(function(element){ 
+        var allDetailSalesClassCodeHasSameValue = aryDetailSalesClassCode.every(function (element) {
             return (element == aryDetailSalesClassCode[0]);
         });
 
@@ -750,10 +745,9 @@ jQuery(function($){
     }
 
     // プレビュー前バリデーションチェック
-    function varidateBeforePreview(closedDay)
-    {
+    function varidateBeforePreview(closedDay) {
         // 出力明細エリアに明細が一行もない
-        if (!existsEditDetail()){
+        if (!existsEditDetail()) {
             alert("出力明細が選択されていません");
             return false;
         }
@@ -762,25 +756,25 @@ jQuery(function($){
         var deliveryDate = new Date($('input[name="dtmDeliveryDate"]').val());
 
         // 納品日の月が締済みである
-        if (isClosedMonthOfDeliveryDate(deliveryDate, closedDay)){
+        if (isClosedMonthOfDeliveryDate(deliveryDate, closedDay)) {
             alert("締済みのため、指定された納品日は無効です");
             return false;
         }
 
         // 納品日がシステム日付の前後一ヶ月以内にない
-        if (!withinOneMonthBeforeAndAfter(deliveryDate)){
+        if (!withinOneMonthBeforeAndAfter(deliveryDate)) {
             alert("納品日は今月の前後1ヶ月の間を指定してください");
             return false;
         }
 
         // 出力明細一覧エリアの明細に、ヘッダ部の納品日の月度と同月度ではない納期の明細が存在する
-        if (existsInDifferentDetailDeliveryMonthly(deliveryDate, closedDay)){
+        if (existsInDifferentDetailDeliveryMonthly(deliveryDate, closedDay)) {
             alert("出力明細には、入力された納品日と異なる月に納品された明細を指定できません");
             return false;
         }
 
         // 出力明細一覧エリアの明細各行の売上区分統一性チェック
-        if (!checkEditDetailsAreSameSalesClass()){
+        if (!checkEditDetailsAreSameSalesClass()) {
             alert("売上区分の混在ができない明細が選択されています");
             return false;
         }
@@ -790,7 +784,7 @@ jQuery(function($){
     }
 
     // プレビュー画面を表示する（バリデーションあり）
-    function displayPreview(){
+    function displayPreview() {
 
         // プレビュー画面のウィンドウ属性の定義
         var target = "previewWin";
@@ -801,14 +795,14 @@ jQuery(function($){
 
         // POSTデータ構築
         var data = {
-            strMode :      "display-preview",
-            strSessionID:  $('input[name="strSessionID"]').val(),
-            lngRenewTargetSlipNo:     $('input[name="lngSlipNo"]').val(),
-            strRenewTargetSlipCode:   $('input[name="strSlipCode"]').val(),
-            lngRenewTargetSalesNo:    $('input[name="lngSalesNo"]').val(),
-            strRenewTargetSalesCode:  $('input[name="strSalesCode"]').val(),
-            aryHeader:     getUpdateHeader(),
-            aryDetail:     getUpdateDetail(),
+            strMode: "display-preview",
+            strSessionID: $('input[name="strSessionID"]').val(),
+            lngRenewTargetSlipNo: $('input[name="lngSlipNo"]').val(),
+            strRenewTargetSlipCode: $('input[name="strSlipCode"]').val(),
+            lngRenewTargetSalesNo: $('input[name="lngSalesNo"]').val(),
+            strRenewTargetSalesCode: $('input[name="strSalesCode"]').val(),
+            aryHeader: getUpdateHeader(),
+            aryDetail: getUpdateDetail(),
         };
 
         $.ajax({
@@ -816,36 +810,36 @@ jQuery(function($){
             url: 'preview.php',
             data: data,
             async: true,
-        }).done(function(data){
+        }).done(function (data) {
             console.log("done");
-            
+
             var url = "/sc/regist2/preview.php" + "?strSessionID=" + $('input[name="strSessionID"]').val();
-            var previewWin = window.open('' , target , features );
+            var previewWin = window.open('', target, features);
             previewWin.document.write(data);
             previewWin.document.close();
-            
+
             //再読み込みなしでアドレスバーのURLのみ変更
-            previewWin.history.pushState(null,null,url);
-            
-        }).fail(function(error){
+            previewWin.history.pushState(null, null, url);
+
+        }).fail(function (error) {
             console.log("fail");
             console.log(error);
             emptyWin.close();
         });
     }
-    
+
     // ------------------------------------------
     //   events
     // ------------------------------------------
-    $("select[name='lngTaxClassCode']").on('change', function(){
+    $("select[name='lngTaxClassCode']").on('change', function () {
         updateAmount();
     });
 
-    $('select[name="lngTaxRate"]').on('change', function(){
+    $('select[name="lngTaxRate"]').on('change', function () {
         updateAmount();
     });
 
-    $('input[name="dtmDeliveryDate"]').on('change', function(){
+    $('input[name="dtmDeliveryDate"]').on('change', function () {
 
         // POST先
         var postTarget = $('input[name="ajaxPostTarget"]').val();
@@ -855,12 +849,12 @@ jQuery(function($){
             type: 'POST',
             url: postTarget,
             data: {
-                strMode : "change-deliverydate",
+                strMode: "change-deliverydate",
                 strSessionID: $('input[name="strSessionID"]').val(),
                 dtmDeliveryDate: $(this).val(),
             },
             async: true,
-        }).done(function(data){
+        }).done(function (data) {
             console.log("done:change-deliverydate");
             console.log(data);
 
@@ -871,7 +865,7 @@ jQuery(function($){
             //金額の更新
             updateAmount();
 
-        }).fail(function(error){
+        }).fail(function (error) {
             console.log("fail:change-deliverydate");
             console.log(error);
         });
@@ -882,55 +876,56 @@ jQuery(function($){
     //     alert(this.checked);
     //     $('input[name="edit"]').prop('checked', this.checked);
     // });
-    $('#DetailTableBodyAllCheck').on({
-        'click': function () {
-            var status = this.checked;
-            $('input[type="checkbox"][name="edit"]')
-                .each(function () {
-                    this.checked = status;
-                });
-        }
-    });
+    // $('input[id="DetailTableBodyAllCheck"').on({
+    //     'click': function () {
+    //         alert("test");
+    //         var status = this.checked;
+    //         $('input[type="checkbox"][name="edit"]')
+    //             .each(function () {
+    //                 this.checked = status;
+    //             });
+    //     }
+    // });
 
 
     // 検索条件入力ボタン押下
-    $('#SearchBt').on('click', function(){
+    $('#SearchBt').on('click', function () {
 
         //出力明細一覧エリアの1行目の売上区分コードを取得する
         var firstRowSalesClassCode = "";
         var firstTr = $("#EditTableBody tr").eq(0);
-        if (0 < firstTr.length){
+        if (0 < firstTr.length) {
             firstRowSalesClassCode = $(firstTr).children('.detailSalesClassCode').text();
         }
-        
+
         // 納品書明細検索条件入力画面を別窓で開く
         var url = "/sc/regist2/condition.php" + "?strSessionID=" + $('input[name="strSessionID"]').val();
         var data = {
             strSessionID: $('input[name="strSessionID"]').val(),
             //顧客コード（表示用会社コード）
-            strcompanydisplaycode:   $('input[name="lngCustomerCode"]').val(),
+            strcompanydisplaycode: $('input[name="lngCustomerCode"]').val(),
             //出力明細一覧エリアの1行目の売上区分コード
-            lngsalesclasscode:       firstRowSalesClassCode,
-          };
-        
+            lngsalesclasscode: firstRowSalesClassCode,
+        };
+
         var features = "width=710,height=460,top=10,left=10,status=yes,scrollbars=yes,directories=no,menubar=yes,resizable=yes,location=no,toolbar=no";
         post_open(url, data, "conditionWin", features);
     });
-    
+
     // 追加ボタン
-    $('#AddBt').on('click', function(){
-        
+    $('#AddBt').on('click', function () {
+
         var trArray = [];
 
         // 選択行の追加
-        $("#DetailTableBody tr").each(function(index, tr){
-            if ($(tr).attr('class') == "selected" || 
-                $(tr).find('input[name="edit"]').prop('checked') == true){
+        $("#DetailTableBody tr").each(function (index, tr) {
+            if ($(tr).attr('class') == "selected" ||
+                $(tr).find('input[name="edit"]').prop('checked') == true) {
                 trArray.push(tr);
             }
         });
 
-        if(trArray.length < 1){
+        if (trArray.length < 1) {
             //alert("明細行が選択されていません。");
             return false;
         }
@@ -938,18 +933,17 @@ jQuery(function($){
         // DBG:一時コメントアウト対象
         // 追加バリデーションチェック
         var invalid = false;
-        $.each($(trArray), function(i, v){
-            if (!invalid){
+        $.each($(trArray), function (i, v) {
+            if (!invalid) {
                 invalid = !validateAdd($(v));
             }
         });
-        if (invalid)
-        {
+        if (invalid) {
             return false;
         }
 
         // 明細追加
-        $.each($(trArray), function(i, v){
+        $.each($(trArray), function (i, v) {
             setEdit($(v));
         });
 
@@ -958,10 +952,10 @@ jQuery(function($){
     });
 
 
-    $('body').on('click', '#EditTableBody tr', function(e){
+    $('body').on('click', '#EditTableBody tr', function (e) {
         var tds = $(e.currentTarget).children('td');
         var checked = $(tds).hasClass('selected');
-        if(checked){
+        if (checked) {
             $(tds).removeClass('selected');
             $(this).removeClass('selected');
         } else {
@@ -969,65 +963,65 @@ jQuery(function($){
             $(this).addClass('selected');
         }
     });
-    $('#selectup').on('click', function(){
+    $('#selectup').on('click', function () {
         var selected = getCheckedRows();
-        if(!selected){ return false; }
+        if (!selected) { return false; }
         executeSort(0);
     });
-    $('#selectup1').on('click', function(){
+    $('#selectup1').on('click', function () {
         var selected = getCheckedRows();
-        if(!selected){ return false; }
+        if (!selected) { return false; }
         executeSort(1);
     });
-    $('#selectdown1').on('click', function(){
+    $('#selectdown1').on('click', function () {
         var selected = getCheckedRows();
-        if(!selected){ return false; }
+        if (!selected) { return false; }
         executeSort(2);
     });
-    $('#selectdown').on('click', function(){
+    $('#selectdown').on('click', function () {
         var selected = getCheckedRows();
-        if(!selected){ return false; }
+        if (!selected) { return false; }
         executeSort(3);
     });
-    $("#DeleteBt").on('click', function(){
+    $("#DeleteBt").on('click', function () {
         var selected = getSelectedRows();
-        if(!selected.length) { return false; }
+        if (!selected.length) { return false; }
         $(selected).remove();
         changeRowNum();
         updateAmount();
     });
-    $('#AllDeleteBt').on('click', function(){
+    $('#AllDeleteBt').on('click', function () {
         $('#EditTableBody').empty();
         updateAmount();
     });
 
-    $('#DateBtB').on('click', function(){
+    $('#DateBtB').on('click', function () {
         $('input[name="dtmDeliveryDate"]').focus();
     });
-    $('#DateBtC').on('click', function(){
+    $('#DateBtC').on('click', function () {
         $('input[name="dtmPaymentLimit"]').focus();
     });
 
     // プレビューボタン押下
-    $('#PreviewBt').on('click', function(){
+    $('#PreviewBt').on('click', function () {
 
         // POST先
         var postTarget = $('input[name="ajaxPostTarget"]').val();
 
         // POSTデータ構築
         var data = {
-            strMode :      "get-closedday",
-            strSessionID:  $('input[name="strSessionID"]').val(),
-            strcompanydisplaycode:   $('input[name="lngCustomerCode"]').val(),
+            strMode: "get-closedday",
+            strSessionID: $('input[name="strSessionID"]').val(),
+            strcompanydisplaycode: $('input[name="lngCustomerCode"]').val(),
         };
-        
+
         // プレビュー前のバリデーションに「締め日」が必要なのでajaxで取得する
         $.ajax({
             type: 'POST',
             url: postTarget,
             data: data,
             async: true,
-        }).done(function(data){
+        }).done(function (data) {
             console.log("done:get-closedday");
             console.log(data);
 
@@ -1035,26 +1029,26 @@ jQuery(function($){
             var closedDay = data;
 
             // 顧客コードに対応する締め日が取得できないとそもそもバリデーションできない
-            if (!closedDay){
+            if (!closedDay) {
                 alert("顧客コードに対応する締め日が取得できません。");
                 return false;
             }
-            
-            if (closedDay < 0){
+
+            if (closedDay < 0) {
                 alert("顧客コードに対応する締め日が負の値です。");
                 return false;
             }
-            
+
             // DBG:一時コメントアウト対象
             // プレビュー画面表示前のバリデーションチェック
-            if (!varidateBeforePreview(closedDay)){
+            if (!varidateBeforePreview(closedDay)) {
                 return false;
             }
 
             // プレビュー画面表示
             displayPreview();
-            
-        }).fail(function(error){
+
+        }).fail(function (error) {
             console.log("fail:get-closedday");
             console.log(error);
         });

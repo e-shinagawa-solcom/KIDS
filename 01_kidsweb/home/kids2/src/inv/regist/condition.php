@@ -54,9 +54,6 @@
     if( !empty($aryData["strSessionID"]) )
         setcookie("strSessionID", $aryData["strSessionID"], 0, "/");
 
-    // セッション確認
-    $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
-
     // 2200 請求管理
     if ( !fncCheckAuthority( DEF_FUNCTION_INV0, $objAuth ) )
     {
@@ -80,18 +77,16 @@
             {
                 $params[$key] = pg_escape_string($condition);
             }
-
             // SQL文取得
             $strQuery = fncGetSearchMSlipSQL ($params, false, $objDB);
-fncDebug("kids2.log", $strQuery, __FILE__, __LINE__, "a+" );
+// fncDebug("kids2.log", $strQuery, __FILE__, __LINE__, "a+" );
 //             error_log($strQuery,"3",LOG_FILE);
             // EUC-JPへ変換
 //            $strQuery = mb_convert_encoding($strQuery, "EUC-JP", "auto");
-
             // クエリ実行
             list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
-fncDebug("kids2.log", $lngResultNum, __FILE__, __LINE__, "a+" );
+// fncDebug("kids2.log", $lngResultNum, __FILE__, __LINE__, "a+" );
             // 結果件数を取得
             if($lngResultNum > 0)
             {

@@ -340,8 +340,7 @@ function fncGetReceiveDetail($aryCondition, $objDB)
     $arySelect[] = "        from";
     $arySelect[] = "          m_receive r2 ";
     $arySelect[] = "        where";
-    $arySelect[] = "          lngrevisionno > 0 ";
-    $arySelect[] = "          and bytinvalidflag = false ";
+    $arySelect[] = "          bytinvalidflag = false ";
     $arySelect[] = "          and not exists ( ";
     $arySelect[] = "            select";
     $arySelect[] = "              strreceivecode ";
@@ -373,7 +372,7 @@ function fncGetReceiveDetail($aryCondition, $objDB)
     $arySelect[] = "        from";
     $arySelect[] = "          m_product p2 ";
     $arySelect[] = "        where";
-    $arySelect[] = "          lngrevisionno > 0 ";
+    $arySelect[] = "          lngrevisionno >= 0 ";
     $arySelect[] = "          and bytinvalidflag = false ";
     $arySelect[] = "          and not exists ( ";
     $arySelect[] = "            select";
@@ -1537,13 +1536,13 @@ function fncRegisterSlipMaster($lngSlipNo, $lngRevisionNo, $lngSalesNo, $strSlip
     $v_lngtaxclasscode = $aryHeader["lngtaxclasscode"];                        //22:課税区分コード
     $v_strtaxclassname = withQuote($aryHeader["strtaxclassname"]);             //23:課税区分
     $v_curtax = $aryHeader["curtax"];                                          //24:消費税率
-    $v_strusercode = withQuote( $aryHeader["strdrafteruserdisplaycode"]);      //25:担当者コード
+    $v_lngusercode = nullIfEmpty( $aryHeader["lngdrafterusercode"]);      //25:担当者コード
     $v_strusername = withQuote($aryHeader["strdrafteruserdisplayname"]);       //26:担当者名
     $v_curtotalprice = $aryHeader["curtotalprice"];                            //27:合計金額
     $v_lngmonetaryunitcode = $aryDetail[0]["lngmonetaryunitcode"];             //28:通貨単位コード
     $v_strmonetaryunitsign = withQuote($aryDetail[0]["strmonetaryunitsign"]);  //29:通貨単位
     $v_dtminsertdate = "now()";                                                //30:作成日
-    $v_strinsertusercode = withQuote($objAuth->UserCode);                      //31:入力者コード
+    $v_lnginsertusercode = nullIfEmpty($objAuth->UserCode);                      //31:入力者コード
     $v_strinsertusername = withQuote($objAuth->UserDisplayName);               //32:入力者名
     $v_strnote = withQuote($aryHeader["strnote"]);                             //33:備考
     $v_lngprintcount = 0;                                                      //34:印刷回数
@@ -1615,13 +1614,13 @@ function fncRegisterSlipMaster($lngSlipNo, $lngRevisionNo, $lngSalesNo, $strSlip
     $aryInsert[] = " ," . $v_lngtaxclasscode;              //22:課税区分コード
     $aryInsert[] = " ," . $v_strtaxclassname;              //23:課税区分
     $aryInsert[] = " ," . $v_curtax;                       //24:消費税率
-    $aryInsert[] = " ," . $v_strusercode;                  //25:担当者コード
+    $aryInsert[] = " ," . $v_lngusercode;                  //25:担当者コード
     $aryInsert[] = " ," . $v_strusername;                  //26:担当者名
     $aryInsert[] = " ," . $v_curtotalprice;                //27:合計金額
     $aryInsert[] = " ," . $v_lngmonetaryunitcode;          //28:通貨単位コード
     $aryInsert[] = " ," . $v_strmonetaryunitsign;          //29:通貨単位
     $aryInsert[] = " ," . $v_dtminsertdate;                //30:作成日
-    $aryInsert[] = " ," . $v_strinsertusercode;            //31:入力者コード
+    $aryInsert[] = " ," . $v_lnginsertusercode;            //31:入力者コード
     $aryInsert[] = " ," . $v_strinsertusername;            //32:入力者名
     $aryInsert[] = " ," . $v_strnote;                      //33:備考
     $aryInsert[] = " ," . $v_lngprintcount;                //34:印刷回数

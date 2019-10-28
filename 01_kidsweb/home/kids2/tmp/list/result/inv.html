@@ -5,6 +5,26 @@
   <meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
   <meta name="generator" content="PhpSpreadsheet, https://github.com/PHPOffice/PhpSpreadsheet">
   <meta name="author" content="solcom" />
+  <script>
+    var reprint = parent.button.document.getElementById('rePrint');
+    reprint.style.display = "inline-block";
+
+    parent.button.document.getElementById('rePrintChk').onclick = function () {
+      if (this.checked) {
+        document.getElementById('reprintMsg1').innerHTML = "再印刷";
+        document.getElementById('reprintMsg2').innerHTML = "再印刷";
+
+
+      } else {
+        document.getElementById('reprintMsg1').innerHTML = "";
+        document.getElementById('reprintMsg2').innerHTML = "";
+      }
+      var printBtn = parent.button.document.getElementById('print');
+      printBtn.href = printBtn.getAttribute('href') + '&reprintFlag=' + this.checked;
+    }
+
+
+  </script>
 </head>
 
 <body>
@@ -285,6 +305,7 @@
     }
 
     td.style8 {
+      text-align: right;
       vertical-align: bottom;
       border-bottom: none #000000;
       border-top: none #000000;
@@ -2903,7 +2924,9 @@
       <tr class="row24">
         <td class="column0">&nbsp;</td>
         <td class="column1">&nbsp;</td>
-        <td class="column2">&nbsp;</td>
+        <td class="column2" style="vertical-align: top;">
+          <span id="reprintMsg1">_%reprintMsg%_</span>
+        </td>
         <td class="column3">&nbsp;</td>
         <td class="column4">&nbsp;</td>
         <td class="column5">&nbsp;</td>
@@ -3164,7 +3187,9 @@
       <tr class="row48">
         <td class="column0">&nbsp;</td>
         <td class="column1">&nbsp;</td>
-        <td class="column2">&nbsp;</td>
+        <td class="column2">
+          <span id="reprintMsg2">_%reprintMsg%_</span>
+        </td>
         <td class="column3">&nbsp;</td>
         <td class="column4">&nbsp;</td>
         <td class="column5">&nbsp;</td>

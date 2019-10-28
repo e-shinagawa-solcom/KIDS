@@ -67,7 +67,7 @@ if ($aryData["lngReportCode"]) {
         fncOutputError(9056, DEF_FATAL, "帳票コピーがありません。", true, "", $objDB);
     }
 
-    if (!$aryHtml[] = file_get_contents(SRC_ROOT . "list/result/cash/" . $strReportPathName . ".tmpl")) {
+    if (!$strHtml = file_get_contents(SRC_ROOT . "list/result/cash/" . $strReportPathName . ".tmpl")) {
         fncOutputError(9059, DEF_FATAL, "帳票データファイルが開けませんでした。", true, "", $objDB);
     }
     $objDB->freeResult($lngResultID);
@@ -79,6 +79,7 @@ if ($aryData["lngReportCode"]) {
 else {
     // データ取得クエリ
     $strQuery = fncGetListOutputQuery(DEF_REPORT_INV, $aryData["strReportKeyCode"], $objDB);
+
     $objMaster = new clsMaster();
     $objMaster->setMasterTableData($strQuery, $objDB);
     $aryParts = &$objMaster->aryData[0];
@@ -87,6 +88,7 @@ else {
 
     // 詳細取得
     $strQuery = fncGetInvDetailQuery($aryData["strReportKeyCode"], $aryParts["lngrevisionno"]);
+
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
     if ($lngResultNum < 1) {
         fncOutputError(9051, DEF_FATAL, "帳票詳細データが存在しませんでした。", true, "", $objDB);
@@ -101,7 +103,7 @@ else {
     for ($i = 0; $i < $lngResultNum; $i++) {
         $aryResult = $objDB->fetchArray($lngResultID, $i);
         for ($j = 0; $j < count($aryKeys); $j++) {
-            $aryDetail[$i][$aryKeys[$j] . $i] = $aryResult[$j];
+            $aryParts[$aryKeys[$j] . $i] = $aryResult[$j];
         }
     }
     $objDB->freeResult($lngResultID);
@@ -116,7 +118,6 @@ else {
     $aryParts["dtminsertdate"] = convert_jpdt($aryParts["dtminsertdate"],'.m.d',false);
     // 置き換え
     $objTemplate->replace($aryParts);
-    $objTemplate->replace($aryDetail);
     $objTemplate->complete();
     $strHtml = $objTemplate->strTemplate;
 

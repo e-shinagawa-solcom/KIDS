@@ -33,7 +33,6 @@ if ($_POST) {
 // 文字列チェック
 $aryCheck["strSessionID"] = "null:numenglish(32,32)";
 $aryCheck["strReportKeyCode"] = "null:number(0,99999999)";
-$strTemplateFile = "p";
 
 $aryResult = fncAllCheck($aryData, $aryCheck);
 fncPutStringCheckError($aryResult, $objDB);
@@ -86,12 +85,10 @@ elseif ($lngResultNum === 0) {
     for ($i = 0; $i < $lngResultNum; $i++) {
         $aryResult = $objDB->fetchArray($lngResultID, $i);
         for ($j = 0; $j < count($aryKeys); $j++) {
-            $aryDetail[$i][$aryKeys[$j] . $i] = $aryResult[$j];
+            $aryParts[$aryKeys[$j] . $i] = $aryResult[$j];
         }
     }
     $objDB->freeResult($lngResultID);
-
-    $objDB->close();
 
     // HTML出力
     $objTemplate = new clsTemplate();
@@ -99,20 +96,24 @@ elseif ($lngResultNum === 0) {
     $aryParts["totalprice_unitsign"] = ($aryParts["lngmonetaryunitcode"] == 1 ? "&yen; " : $aryParts["strmonetaryunitsign"]) . " " . $aryParts["totalprice"];
     $aryParts["dtminvoicedate"] = convert_jpdt($aryParts["dtminvoicedate"], '年m月');
     $aryParts["dtminsertdate"] = convert_jpdt($aryParts["dtminsertdate"],'.m.d',false);
+    if ($aryData["reprintFlag"]) {
+        $aryParts["reprintMsg"] = "再印刷";
+    } else {
+        $aryParts["reprintMsg"] = "";
+    }
     // 置き換え
     $objTemplate->replace($aryParts);
-    $objTemplate->replace($aryDetail);
     $objTemplate->complete();   
 
-	$strHtml = $objTemplate->strTemplate;
-
+    $strHtml = $objTemplate->strTemplate;
+    
     $objDB->transactionBegin();
 
     // シーケンス発行
     $lngSequence = fncGetSequence("t_Report.lngReportCode", $objDB);
 
     // 帳票テーブルにINSERT
-    $strQuery = "INSERT INTO t_Report VALUES ( $lngSequence, " . DEF_REPORT_SLIP . ", " . $aryParts["lngslipno"] . ", '', '$lngSequence' )";
+    $strQuery = "INSERT INTO t_Report VALUES ( $lngSequence, " . DEF_REPORT_INV . ", " . $aryParts["lnginvoiceno"] . ", '', '$lngSequence' )";
 
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
     
@@ -123,7 +124,7 @@ elseif ($lngResultNum === 0) {
 
     // 印刷回数の更新    
     $strQuery = "update m_invoice set lngprintcount = ".$aryParts["lngprintcount"] ." where lnginvoiceno = " .$aryParts["lnginvoiceno"] . " and lngrevisionno = " .$aryParts["lngrevisionno"];
-    
+    echo $strQuery;
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
     
     $objDB->freeResult($lngResultID);
@@ -143,13 +144,8 @@ elseif ($lngResultNum === 0) {
     $objDB->transactionCommit();
 }
 
+echo "<script language=javascript>parent.window.close();</script>";
+
 $objDB->close();
-
-
-
-header("location: /list/result/slip/download.php?strSessionID=" . $aryData["strSessionID"]
-. "&strReportKeyCode=" . $aryData["strReportKeyCode"]
-    . "&lngReportCode=" . $aryData["lngReportCode"]
-    . "&reprintFlag=" . $aryData["reprintFlag"]);
 
 return true;

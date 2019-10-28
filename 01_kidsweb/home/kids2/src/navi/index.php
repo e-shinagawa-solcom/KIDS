@@ -207,13 +207,13 @@
 			$strVisibility6	= ( !fncCheckAuthority( DEF_FUNCTION_DE0, $objAuth ) )	? 'style="visibility:hidden"' : '';
 			$strVisibility7	= ( !fncCheckAuthority( DEF_FUNCTION_LO0, $objAuth ) )	? 'style="visibility:hidden"' : '';
 
-			$aryData["strButton"]	 = '<span id="RegistNaviBt1"' . $strVisibility1 . ' onclick="top.location=\'/sc/regist2/index.php?strSessionID=' . $aryData["strSessionID"] . '\';"></span>';
-			$aryData["strButton"]	.= '<span id="SearchNaviBt1"' . $strVisibility2 . ' onclick="top.location=\'/sc/search/index.php?strSessionID=' . $aryData["strSessionID"] . '\';"></span>';
-			$aryData["strButton"]	.= '<span id="hogeNaviBt1"'. $strVisibility3 . ' onclick="top.location=\'/sc/search2/index.php?strSessionID=' . $aryData["strSessionID"] . '\';"></span>';
+			$aryData["strButton"]	 = '<span id="RegistNaviBt1"' . $strVisibility1 . ' onclick="top.location=\'/sc/regist2/index.php?strSessionID=' . $aryData["strSessionID"] . '\';" disabled></span>';
+			$aryData["strButton"]	.= '<span id="SearchNaviBt1"' . $strVisibility2 . ' onclick="top.location=\'/sc/search2/index.php?strSessionID=' . $aryData["strSessionID"] . '\';"></span>';
+			$aryData["strButton"]	.= '<span id="SearchNaviBtA"'. $strVisibility3 . ' onclick="top.location=\'/sc/search/index.php?strSessionID=' . $aryData["strSessionID"] . '\';"></span>';
 			
 			// $aryData["strButton"]	.= '<span id="RegistNaviBtA" ' . $strVisibility4 . ' onclick="top.location=\'/so/regist/index.php?strSessionID=' . $aryData["strSessionID"] . '\';"></span>';
-			$aryData["strButton"]	.= '<span id="SearchNaviBtA" ' . $strVisibility4 . ' onclick="top.location=\'/so/search/index.php?strSessionID=' . $aryData["strSessionID"] . '\';"></span>';
-			$aryData["strButton"]	.= '<span id="SearchNaviBtAA"' . $strVisibility5 . ' onclick="top.location=\'/inv/search/index.php?strSessionID=' . $aryData["strSessionID"] . '\';"></span>';
+			$aryData["strButton"]	.= '<span id="SearchNaviBtAA" ' . $strVisibility4 . ' onclick="top.location=\'/so/search/index.php?strSessionID=' . $aryData["strSessionID"] . '\';"></span>';
+			$aryData["strButton"]	.= '<span id="RegistNaviBtAA"' . $strVisibility5 . ' onclick="top.location=\'/inv/search/index.php?strSessionID=' . $aryData["strSessionID"] . '\';"></span>';
 			$aryData["strButton"]	.= '<span id="DataExNaviBt1"' . $strVisibility6 . ' onclick="top.location=\'/dataex/index.php?strSessionID=' . $aryData["strSessionID"] . '\';"></span>';
 			$aryData["strButton"]	.= '<span id="ListExNaviBt1"' . $strVisibility7 . ' onclick="top.location=\'/list/index.php?strSessionID=' . $aryData["strSessionID"] . '\';" ></span>';
 			

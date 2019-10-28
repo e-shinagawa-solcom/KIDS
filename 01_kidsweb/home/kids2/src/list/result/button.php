@@ -49,13 +49,13 @@ if (!fncCheckAuthority(DEF_FUNCTION_LO0, $objAuth) || !fncCheckAuthority(DEF_FUN
 if ($aryListOutputMenu[$aryData["lngReportClassCode"]]["file"] == "slip") {
 	$function = "fncDownload('slip/action.php?strSessionID=" . $aryData["strSessionID"]
 	 . "&strReportKeyCode=" . $aryData["strReportKeyCode"]
-	 . "&lngReportCod=" . $aryData["lngReportCode"] ."')";
+	 . "&lngReportCode=" . $aryData["lngReportCode"] ."')";
 	 $url = "#";
 } else {
 	$function = "fncPrintFrame( parent.list )";
 	$url = $aryListOutputMenu[$aryData["lngReportClassCode"]]["file"] . "/action.php?strSessionID=" . $aryData["strSessionID"]
 	. "&strReportKeyCode=" . $aryData["strReportKeyCode"]
-	. "&lngReportCod=" . $aryData["lngReportCode"];
+	. "&lngReportCode=" . $aryData["lngReportCode"];
 }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
@@ -71,6 +71,7 @@ if ($aryListOutputMenu[$aryData["lngReportClassCode"]]["file"] == "slip") {
 	<script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
 	<script src="/cmn/jquery/ui/jquery-ui-1.12.0.js"></script> -->
 	<script src="/list/result/slip/functions.js"></script>
+	<script src="/list/result/inv/functions.js"></script>
 </head>
 <body id="Backs" oncontextmenu="return false;">
 <div>

@@ -36,8 +36,14 @@ $aryListOutputMenu = array
 
     DEF_REPORT_SLIP => array
     (
-        "name" => "受注管理 納品書",
+        "name" => "売上管理 納品書",
         "file" => "slip",
+    ),
+
+    DEF_REPORT_INV => array
+    (
+        "name" => "請求管理 請求書",
+        "file" => "inv",
     ),
 );
 
@@ -228,12 +234,12 @@ function fncGetCopyFilePathQuery($lngReportClassCode, $strReportKeyCode, $lngRep
         $aryQuery[] = "FROM m_invoice i, t_Report r ";
 
         // 対象帳票指定
-        $aryQuery[] = "WHERE i.lngReportClassCode = " . $lngReportClassCode;
+        $aryQuery[] = "WHERE r.lngReportClassCode = " . $lngReportClassCode;
 
         $aryQuery[] = $strReportCodeConditions;
 
         // 帳票コード指定
-        $aryQuery[] = " AND i.strReportKeyCode = '" . $strReportKeyCode . "'";
+        $aryQuery[] = " AND r.strReportKeyCode = '" . $strReportKeyCode . "'";
         // リビジョンにマイナスの無い
         $aryQuery[] = " AND 0 <= ";
         $aryQuery[] = "( ";
@@ -548,6 +554,7 @@ function fncGetListOutputQuery($lngClassCode, $lngKeyCode, $objDB)
         $aryQuery[] = "    and s.lngrevisionno = s1.lngrevisionno ";
         $aryQuery[] = "WHERE s.lngslipno = " . $lngKeyCode;
     }  else if ($lngClassCode == DEF_REPORT_INV) {
+        $aryQuery[] = "select";
         $aryQuery[] = "  i.lnginvoiceno";
         $aryQuery[] = "  , i.lngrevisionno";
         $aryQuery[] = "  , i.strinvoicecode";
@@ -558,10 +565,10 @@ function fncGetListOutputQuery($lngClassCode, $lngKeyCode, $objDB)
         $aryQuery[] = "  , i.lngmonetaryunitcode";
         $aryQuery[] = "  , i.strmonetaryunitsign";
         $aryQuery[] = "  , round(i.curtax1 * 100) || '%' as curtax1";
-        $aryQuery[] = "  , to_char(i.curthismonthamount + i.curlastmonthbalance + i.curtaxprice1, '9,999,999,990') AS totalprice";
-        $aryQuery[] = "  , to_char(i.curthismonthamount, '9,999,999,990') AS curthismonthamount";
-        $aryQuery[] = "  , to_char(i.curlastmonthbalance, '9,999,999,990') AS curlastmonthbalance";
-        $aryQuery[] = "  , to_char(i.curtaxprice1, '9,999,999,990') AS curtaxprice1";
+        $aryQuery[] = "  , to_char(i.curthismonthamount + i.curlastmonthbalance + i.curtaxprice1, '9,999,999,990.99') AS totalprice";
+        $aryQuery[] = "  , to_char(i.curthismonthamount, '9,999,999,990.99') AS curthismonthamount";
+        $aryQuery[] = "  , to_char(i.curlastmonthbalance, '9,999,999,990.99') AS curlastmonthbalance";
+        $aryQuery[] = "  , to_char(i.curtaxprice1, '9,999,999,990.99') AS curtaxprice1";
         $aryQuery[] = "  , to_char(i.dtminvoicedate, 'mm月') as dtminvoicemonth";
         $aryQuery[] = "  , to_char(i.dtmchargeternstart, 'mm月') as dtmchargeternstart_month";
         $aryQuery[] = "  , to_char(i.dtmchargeternstart, 'dd日') as dtmchargeternstart_day";
@@ -570,7 +577,7 @@ function fncGetListOutputQuery($lngClassCode, $lngKeyCode, $objDB)
         $aryQuery[] = "  , id.detailcount";
         $aryQuery[] = "  , i.strnote";
         $aryQuery[] = "  , i.strusername";
-        $aryQuery[] = "  , to_char(i.dtminsertdate, 'yyyy/mm/dd') as dtminsertdate";
+        $aryQuery[] = "  , to_char(i.dtminsertdate, 'yyyy/mm/dd') as dtminsertdate ";
         $aryQuery[] = "FROM";
         $aryQuery[] = "  m_invoice i ";
         $aryQuery[] = "  inner join ( ";
@@ -598,7 +605,7 @@ function fncGetListOutputQuery($lngClassCode, $lngKeyCode, $objDB)
         $aryQuery[] = "      , lngrevisionno";
         $aryQuery[] = "  ) id ";
         $aryQuery[] = "    on id.lnginvoiceno = i.lnginvoiceno ";
-        $aryQuery[] = "    and id.lngrevisionno = i.lngrevisionno";
+        $aryQuery[] = "    and id.lngrevisionno = i.lngrevisionno ";
         $aryQuery[] = "WHERE i.lnginvoiceno = " . $lngKeyCode;
     }
 
@@ -802,7 +809,7 @@ function fncGetSlipForDownloadQuery($strReportKeyCode)
     $aryQuery[] = "  , s.strtaxclassname";
     $aryQuery[] = "  , s.curtax";
     $aryQuery[] = "  , s.lngpaymentmethodcode";
-    $aryQuery[] = "  , s.to_char(dtmpaymentlimit, 'dd/mm/yyyy') as dtmpaymentlimit";
+    $aryQuery[] = "  , to_char(s.dtmpaymentlimit, 'dd/mm/yyyy') as dtmpaymentlimit";
     $aryQuery[] = "  , s.dtminsertdate";
     $aryQuery[] = "  , s.strnote";
     $aryQuery[] = "  , s.strshippercode ";

@@ -11,13 +11,11 @@
 	left : 0px ;
 	top : 0px ;
 	width : 169px ;
-	height : 515px ;
-	border-style: solid;
-    border-width: 0px 1px 0px 0px;
-    border-color: #cdcdcd;
-	opacity: 0.9;
+	height : 552px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color : #cdcdcd ;
 	background-color: #72828b ;
-	box-sizing: border-box;
 }
 
 
@@ -155,7 +153,7 @@
 	left       : 9px ;
 	top        : 60px ;
 	z-index    : 2 ;
-	background : #transparent ;
+	background : transparent;
 }
 
 #EmailBt3
@@ -164,7 +162,7 @@
 	left       : 9px ;
 	top        : 60px ;
 	z-index    : 2 ;
-	background : #transparent ;
+	background : transparent;
 }
 
 
@@ -175,7 +173,7 @@
 	left       : 9px ;
 	top        : 100px ;
 	z-index    : 2 ;
-	background : #transparent ;
+	background : transparent;
 }
 
 #SessionBt3
@@ -184,7 +182,7 @@
 	left       : 9px ;
 	top        : 100px ;
 	z-index    : 2 ;
-	background : #transparent ;
+	background : transparent;
 }
 
 
@@ -195,7 +193,7 @@
 	left       : 9px ;
 	top        : 140px ;
 	z-index    : 2 ;
-	background : #transparent ;
+	background : transparent;
 }
 
 
@@ -206,7 +204,7 @@
 	left       : 9px ;
 	top        : 140px ;
 	z-index    : 2 ;
-	background : #transparent ;
+	background : transparent;
 }
 
 
@@ -223,7 +221,7 @@
 
 
 
-	/* ?o?^2 */
+	/* ÅÐÏ¿2 */
 	#RegistNaviBtA {
 		position : absolute ;
 		left : 9px ;
@@ -239,7 +237,7 @@
 		background-color: transparent ;
 	}
 
-	/* ????2 */
+	/* ¸¡º÷2 */
 	#SearchNaviBtA {
 		position : absolute ;
 		left : 9px ;
@@ -256,7 +254,7 @@
 	}
 
 
-	/* ?o?^3 */
+	/* ÅÐÏ¿3 */
 	#RegistNaviBtAA {
 		position : absolute ;
 		left : 9px ;
@@ -272,7 +270,7 @@
 		background-color: transparent ;
 	}
 
-	/* ????3 */
+	/* ¸¡º÷3 */
 	#SearchNaviBtAA {
 		position : absolute ;
 		left : 9px ;
@@ -289,7 +287,7 @@
 	}
 
 
-	/* ?o?^4 */
+	/* ÅÐÏ¿4 */
 	#RegistNaviBtAAA {
 		position : absolute ;
 		left : 9px ;
@@ -305,7 +303,7 @@
 		background-color: transparent ;
 	}
 
-	/* ????4 */
+	/* ¸¡º÷4 */
 	#SearchNaviBtAAA {
 		position : absolute ;
 		left : 9px ;
@@ -322,7 +320,7 @@
 	}
 
 
-	/* ?o?^5 */
+	/* ÅÐÏ¿5 */
 	#RegistNaviBtAAAA {
 		position : absolute ;
 		left : 9px ;
@@ -338,7 +336,7 @@
 		background-color: transparent ;
 	}
 
-	/* ????5 */
+	/* ¸¡º÷5 */
 	#SearchNaviBtAAAA {
 		position : absolute ;
 		left : 9px ;
@@ -356,7 +354,7 @@
 
 
 
-	/* ???????? */
+	/* °Æ·ï°ìÍ÷ */
 	#WFRegistNaviBt {
 		position : absolute ;
 		left : 9px ;
@@ -372,7 +370,7 @@
 		background-color: transparent ;
 	}
 
-	/* ???????? */
+	/* °Æ·ï¸¡º÷ */
 	#WFSearchNaviBt {
 		position : absolute ;
 		left : 9px ;
@@ -389,7 +387,7 @@
 	}
 
 
-	/* ?A?b?v???[?h */
+	/* ¥¢¥Ã¥×¥í¡¼¥É */
 	#UploadNaviBt1 {
 		position : absolute ;
 		left : 9px ;
