@@ -81,8 +81,8 @@ class deleteInsertData extends estimateInsertData {
 
             // 排他テーブルチェック（見積原価修正中でないことを確認)
             $check = $this->objDB->checkExclusiveStatus($editFunctionCode, $productCode, $reviseCode);
-            if ($check === true) { // 排他制御が有効な場合
-                return fncOutputError ( DEF_MESSAGE_CODE_EXCLUSIVE_CHECK_ERROR, DEF_WARNING, "$check->struserdisplayname", FALSE, "", $this->objDB );
+            if ($check !== false) { // 排他制御が有効な場合
+                return fncOutputError ( DEF_MESSAGE_CODE_EXCLUSIVE_CHECK_ERROR, DEF_WARNING, $check->struserdisplayname, FALSE, "", $this->objDB );
             }
 
             // 見積原価マスタ削除

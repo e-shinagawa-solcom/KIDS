@@ -24,7 +24,10 @@
 	require_once ( SRC_ROOT . "estimate/cmn/deleteInsertData.php");
 
 	// 見積原価DBクラス読み込み
-    require_once ( SRC_ROOT . "estimate/cmn/estimateDB.php");
+	require_once ( SRC_ROOT . "estimate/cmn/estimateDB.php");
+	
+	// html生成クラス読み込み
+	require_once ( SRC_ROOT . "estimate/cmn/makeHTML.php");
 
 	$objDB   = new estimateDB();
 	$objAuth = new clsAuth();
