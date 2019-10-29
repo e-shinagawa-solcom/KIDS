@@ -325,7 +325,8 @@ var renewInit = function(invoiceNo) {
 
     $.ajax( search )
         .done(function(response){
-            $.createTableRenew(response);
+            console.log(response);
+            $.createTable(response);
         })
         .fail(function(response){
             alert('検索に失敗しました');

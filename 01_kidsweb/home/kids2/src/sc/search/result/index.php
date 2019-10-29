@@ -504,7 +504,7 @@ foreach ($records as $i => $record) {
     }
 
     // 明細データの設定
-    fncSetDetailDataToTr($doc, $trBody, $bgcolor, $aryTableDetailHeaderName, $displayColumns, $detailData[0]);
+    fncSetDetailDataToTr($doc, $trBody, $bgcolor, $aryTableDetailHeaderName, $displayColumns, $detailData[0], $record["lngmonetaryunitcode"], $record["strmonetaryunitsign"]);
 
     // tbody > tr
     $tbody->appendChild($trBody);
@@ -517,7 +517,7 @@ foreach ($records as $i => $record) {
         }
         $trBody->setAttribute("id", $record["strsalescode"] . "_" . $record["lngrevisionno"] . "_" . $detailData[$i]["lngsalesdetailno"]);
 
-        fncSetDetailDataToTr($doc, $trBody, $bgcolor, $aryTableDetailHeaderName, $displayColumns, $detailData[$i]);
+        fncSetDetailDataToTr($doc, $trBody, $bgcolor, $aryTableDetailHeaderName, $displayColumns, $detailData[$i], $record["lngmonetaryunitcode"], $record["strmonetaryunitsign"]);
 
         $tbody->appendChild($trBody);
 

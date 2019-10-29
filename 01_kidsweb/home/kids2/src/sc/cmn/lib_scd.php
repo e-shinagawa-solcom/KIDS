@@ -260,7 +260,7 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 
 	// ∏‹µ“
 	$arySelectQuery[] = ", cust_c.strcompanydisplaycode as strCustomerDisplayCode";
-	$arySelectQuery[] = ", s.strCustomerName as strCustomerDisplayName";
+	$arySelectQuery[] = ", cust_c.strcompanydisplayname as strCustomerDisplayName";
 	// ∏‹µ“§ŒπÒ
 	$arySelectQuery[] = ", cust_c.lngCountryCode as lngcountrycode";
 	// ¿¡µ·ΩÒ»÷πÊ
@@ -272,6 +272,7 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 	// «º… ∆¸
 	$arySelectQuery[] = ", to_char( s.dtmDeliveryDate, 'YYYY/MM/DD HH:MI:SS' ) as dtmDeliveryDate";
 	// «º… ¿Ë
+	$arySelectQuery[] = " , delv_c.strcompanydisplaycode as strdeliveryplacecode";
 	$arySelectQuery[] = " , s.strDeliveryPlaceName as strDeliveryPlaceName";
 	// µØ…ºº‘
 	$arySelectQuery[] = ", insert_u.struserdisplaycode as strInsertUserCode";
@@ -719,7 +720,17 @@ function fncSetSlipTableRow ( $lngColumnCount, $aryHeadResult, $aryDetailResult,
 				// «º… ¿Ë
 				else if ( $strColumnName == "lngDeliveryPlaceCode" )
 				{
-					$TdData  .= $aryHeadResult["strdeliveryplacename"];
+					if ( $aryHeadResult["strdeliveryplacecode"] )
+					{
+						$strText .= "[" . $aryHeadResult["strdeliveryplacecode"] ."]";
+					}
+					else
+					{
+						$strText .= "     ";
+					}
+					$strText .= " " . $aryHeadResult["strdeliveryplacename"];
+					$TdData .= $strText;
+					// $TdData  .= $aryHeadResult["strdeliveryplacename"];
 				}
 				// «º… ≈¡…º•≥°º•…° «º… ΩÒNO°À
 				else if ( $strColumnName == "strSlipCode" )

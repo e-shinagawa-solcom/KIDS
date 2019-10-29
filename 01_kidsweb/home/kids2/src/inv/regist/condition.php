@@ -137,7 +137,7 @@
         $invoiceNo = (int)$aryData["invoiceNo"];
         $strQuery = fncGetSearchMSlipInvoiceNoSQL($invoiceNo);
         // EUC-JPへ変換
-        $strQuery = mb_convert_encoding($strQuery, "EUC-JP", "auto");
+        // $strQuery = mb_convert_encoding($strQuery, "EUC-JP", "auto");
         // クエリ実行
         list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
@@ -154,20 +154,19 @@
                 // 検索結果レコードをオブジェクトで取得し必要なjsonデータに加工する
                 foreach($objDB->fetchObject( $lngResultID, $i ) as $column => $val)
                 {
-                    $json[$i][$column] = $val;
+                    // $json[$i][$column] = $val;
+                    $json[$i][mb_convert_encoding($column,"UTF-8","auto")] = mb_convert_encoding($val,"UTF-8","auto");
                 }
             }
-
+            
+            $objDB->close();
             // レスポンスヘッダ設定
-//            header('Content-Type: application/json');
-            // json変換の為、一時的にUTF-8へ変換
-            mb_convert_variables('UTF-8', 'eucjp-win', $json);
-
+            header('Content-Type: application/json');
             echo json_encode($json);
         }
 
 
-        $objDB->close();
+        // $objDB->close();
         return true;
 
     }

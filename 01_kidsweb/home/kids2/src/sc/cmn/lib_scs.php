@@ -84,7 +84,7 @@ function fncGetSalesHeadNoToInfoSQL ( $lngSalesNo, $lngRevisionNo )
 
 	$aryQuery[] = " FROM m_Sales s ";
 	$aryQuery[] = " left join t_salesdetail tsd on tsd.lngsalesno = s.lngsalesno ";
-	$aryQuery[] = " LEFT JOIN m_Receive r ON tsd.lngReceiveNo = r.lngReceiveNo";
+	$aryQuery[] = " LEFT JOIN m_Receive r ON tsd.lngReceiveNo = r.lngReceiveNo and tsd.lngreceiverevisionno = r.lngrevisionno";
 	$aryQuery[] = " LEFT JOIN m_User input_u ON s.lngInputUserCode = input_u.lngUserCode";
 	$aryQuery[] = " LEFT JOIN m_Company cust_c ON s.lngCustomerCompanyCode = cust_c.lngCompanyCode";
 	$aryQuery[] = " LEFT JOIN m_Group inchg_g ON s.lngGroupCode = inchg_g.lngGroupCode";

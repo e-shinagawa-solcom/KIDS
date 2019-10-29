@@ -284,14 +284,14 @@ function fncGetSearchMSlipInvoiceNoSQL ( $lnginvoiceno )
     // From句
     $aryOutQuery[] = " FROM m_slip ms ";
     // JOIN
-    $aryOutQuery[] = " LEFT JOIN m_company mc ON (mc.lngcompanycode = to_number(ms.strcustomercode,'9999') ) ";
+    $aryOutQuery[] = " LEFT JOIN m_company mc ON (mc.lngcompanycode = ms.lngcustomercode ) ";
 
     // Where句
     // strslipcode を検索するサブクエリ
     $subQuery  = "select DISTINCT lngslipno from t_invoicedetail where lnginvoiceno = "  .$lnginvoiceno ."  ";
     $subQuery .= "AND lngrevisionno = (select DISTINCT ON (lnginvoiceno) lngrevisionno  from m_invoice where lnginvoiceno = " .$lnginvoiceno ." order by lnginvoiceno ASC , lngrevisionno DESC )";
 
-    $aryOutQuery[] = " WHERE lngrevisionno > 0 " ;    // 対象納品伝票番号の指定
+    $aryOutQuery[] = " WHERE lngrevisionno >= 0 " ;    // 対象納品伝票番号の指定
     $aryOutQuery[] = " AND ms.lngslipno IN ( " .$subQuery ." ) " ;
 
     // order句
@@ -658,16 +658,16 @@ function fncGetSearchInvoiceSQL ( $arySearchColumn, $arySearchDataColumn, $objDB
             }
 
             // 入力日
-            if ( $strSearchColumnName == "dtmIinsertDate" )
+            if ( $strSearchColumnName == "dtmInsertDate" )
             {
-                if ( $arySearchDataColumn["dtmIinsertDateFrom"] )
+                if ( $arySearchDataColumn["dtmInsertDateFrom"] )
                 {
-                    $dtmSearchDate = $arySearchDataColumn["dtmIinsertDateFrom"] . " 00:00:00";
+                    $dtmSearchDate = $arySearchDataColumn["dtmInsertDateFrom"] . " 00:00:00";
                     $aryQuery[] = " AND inv.dtminsertdate >= '" . $dtmSearchDate . "'";
                 }
-                if ( $arySearchDataColumn["dtmIinsertDateTo"] )
+                if ( $arySearchDataColumn["dtmInsertDateTo"] )
                 {
-                    $dtmSearchDate = $arySearchDataColumn["dtmIinsertDateTo"] . " 23:59:59";
+                    $dtmSearchDate = $arySearchDataColumn["dtmInsertDateTo"] . " 23:59:59";
                     $aryQuery[] = " AND inv.dtminsertdate <= '" . $dtmSearchDate . "'";
                 }
             }
@@ -691,7 +691,7 @@ function fncGetSearchInvoiceSQL ( $arySearchColumn, $arySearchDataColumn, $objDB
             {
                 if ( $arySearchDataColumn["lngInsertUserCode"] )
                 {
-                    $aryQuery[] = " AND inv.strusercode ~* '" . $arySearchDataColumn["lngInsertUserCode"] . "'";
+                    $aryQuery[] = " AND u.struserdisplaycode ~* '" . $arySearchDataColumn["lngInsertUserCode"] . "'";
                 }
                 if ( $arySearchDataColumn["strInsertUserName"] )
                 {
@@ -703,7 +703,7 @@ function fncGetSearchInvoiceSQL ( $arySearchColumn, $arySearchDataColumn, $objDB
             {
                 if ( $arySearchDataColumn["lngInputUserCode"] )
                 {
-                    $aryQuery[] = " AND inv.strinsertusercode ~* '" . $arySearchDataColumn["lngInputUserCode"] . "'";
+                    $aryQuery[] = " AND insert_u.struserdisplaycode ~* '" . $arySearchDataColumn["lngInputUserCode"] . "'";
                 }
                 if ( $arySearchDataColumn["strInputUserName"] )
                 {
@@ -774,7 +774,7 @@ function fncGetSearchInvoiceSQL ( $arySearchColumn, $arySearchDataColumn, $objDB
     $aryOutQuery[] = "    ,inv.dtminsertdate as dtminsertdate";                // 作成日
 
     // 顧客
-    $arySelectQuery[] = ", inv.strcustomercode as strcustomercode";               // 顧客コード
+    $arySelectQuery[] = ", cust_c.strcompanydisplaycode as strcustomercode";               // 顧客コード
     $arySelectQuery[] = ", inv.strcustomername as strcustomername";               // 顧客名
     $arySelectQuery[] = ", inv.strcustomercompanyname as strcustomercompanyname"; // 顧客社名
     // 顧客の国
@@ -806,10 +806,10 @@ function fncGetSearchInvoiceSQL ( $arySearchColumn, $arySearchDataColumn, $objDB
     // 消費税額1
     $arySelectQuery[] = ", To_char( inv.curtaxprice1, '9,999,999,990.99' ) as curtaxprice1";
     // 担当者
-    $arySelectQuery[] = ", inv.strusercode as strusercode";
+    $arySelectQuery[] = ", u.struserdisplaycode as strusercode";
     $arySelectQuery[] = ", inv.strusername as strusername";
     // 作成者
-    $arySelectQuery[] = ", inv.strinsertusercode as strinsertusercode";
+    $arySelectQuery[] = ", insert_u.struserdisplaycode as strinsertusercode";
     $arySelectQuery[] = ", inv.strinsertusername as strinsertusername";
     // 作成日
     $arySelectQuery[] = ", to_char( inv.dtminsertdate, 'YYYY/MM/DD' ) as dtminsertdate";
@@ -843,10 +843,11 @@ function fncGetSearchInvoiceSQL ( $arySearchColumn, $arySearchDataColumn, $objDB
     $aryFromQuery[] = " FROM m_invoice inv";
     $aryFromQuery[] = " LEFT JOIN m_sales sa ON inv.lnginvoiceno = sa.lnginvoiceno";
     $aryFromQuery[] = " LEFT JOIN m_SalesStatus ss ON sa.lngSalesStatusCode = ss.lngSalesStatusCode";
-    $aryFromQuery[] = " LEFT JOIN m_Company cust_c ON inv.strcustomercode = cust_c.strCompanyDisplayCode";
+    $aryFromQuery[] = " LEFT JOIN m_Company cust_c ON inv.lngcustomercode = cust_c.lngcompanycode";
     $aryFromQuery[] = " LEFT JOIN m_MonetaryUnit mu ON inv.lngmonetaryunitcode = mu.lngMonetaryUnitCode";
-    $aryFromQuery[] = " LEFT JOIN m_User insert_u ON inv.strInsertUserCode = insert_u.strUserDisplayCode";
-    $aryFromQuery[] = " LEFT JOIN m_Company delv_c ON inv.strcustomercode = delv_c.strcompanydisplaycode";
+    $aryFromQuery[] = " LEFT JOIN m_User insert_u ON inv.lngInsertUserCode = insert_u.lngusercode";
+    $aryFromQuery[] = " LEFT JOIN m_User u ON inv.lngusercode = u.lngusercode";
+    // $aryFromQuery[] = " LEFT JOIN m_Company delv_c ON inv.strcustomercode = delv_c.strcompanydisplaycode";
     //　請求書明細がない場合は不整合の為除外
     $aryFromQuery[] = " INNER JOIN t_invoicedetail inv_d ON inv.lnginvoiceno = inv_d.lnginvoiceno";
 
@@ -929,7 +930,7 @@ function fncGetSearchInvoiceDetailSQL ( $lnginvoiceno, $lngrevisionno=null )
     // 納品日
     $arySelectQuery[] = ", to_char( inv_d.dtmdeliverydate, 'YYYY/MM/DD HH:MI:SS' ) as dtmdeliverydate";
     // 納品場所コード
-    $arySelectQuery[] = ", inv_d.lngdeliveryplacecode as lngdeliveryplacecode";
+    $arySelectQuery[] = ", delv_c.strcompanydisplaycode as lngdeliveryplacecode";
     // 納品場所名
     $arySelectQuery[] = ", inv_d.strdeliveryplacename as strdeliveryplacename";
     // 小計
@@ -957,7 +958,7 @@ function fncGetSearchInvoiceDetailSQL ( $lnginvoiceno, $lngrevisionno=null )
     $aryFromQuery[] = " FROM t_invoicedetail inv_d ";
     $aryFromQuery[] = " LEFT JOIN m_slip slip_m ON inv_d.lngslipno = slip_m.lngslipno";
 //     $aryFromQuery[] = " LEFT JOIN m_Company cust_c ON inv_d.lngdeliveryplacecode = cust_c.lngdeliveryplacecode";
-//     $aryFromQuery[] = " LEFT JOIN m_Company delv_c ON s.lngDeliveryPlaceCode = delv_c.lngCompanyCode";
+    $aryFromQuery[] = " LEFT JOIN m_Company delv_c ON inv_d.lngDeliveryPlaceCode = delv_c.lngCompanyCode";
     // From句 クエリー連結
     $aryOutQuery[] = implode("\n", $aryFromQuery);
 
@@ -1598,7 +1599,7 @@ function fncSetInvoiceTableRow ( $lngColumnCount, $aryHeadResult, $aryDetailResu
                 for ( $k = 0; $k < $lngDetailCount; $k++ )
                 {
                     $strText = "";
-                    if ( $aryHeadResult["lngdeliveryplacecode"] )
+                    if ( $aryDetailResult[$k]["lngdeliveryplacecode"] )
                     {
                         $strText .= "[" . $aryDetailResult[$k]["lngdeliveryplacecode"] ."] ";
                     }
@@ -1720,7 +1721,7 @@ function fncGetInvoiceMSQL ( $lngInvoiceNo )
     // リビジョン番号
     $aryQuery[] = ", inv.lngrevisionno as lngrevisionno";
     // 顧客コード
-    $aryQuery[] = ", inv.strcustomercode as strcustomercode";
+    $aryQuery[] = ", cust_c.strcompanydisplaycode as strcustomercode";
     // 顧客名
     $aryQuery[] = ", inv.strcustomername as strcustomername";
     // 顧客社名
@@ -1752,10 +1753,10 @@ function fncGetInvoiceMSQL ( $lngInvoiceNo )
     // 消費税額1
     $aryQuery[] = ", To_char( inv.curtaxprice1, '9,999,999,990.99' ) as curtaxprice1";
     // 担当者
-    $aryQuery[] = ", inv.strusercode as strusercode";
+    $aryQuery[] = ", u.struserdisplaycode as strusercode";
     $aryQuery[] = ", inv.strusername as strusername";
     // 作成者
-    $aryQuery[] = ", inv.strinsertusercode as strinsertusercode";
+    $aryQuery[] = ", insert_u.struserdisplaycode as strinsertusercode";
     $aryQuery[] = ", inv.strinsertusername as strinsertusername";
     // 作成日
     $aryQuery[] = ", to_char( inv.dtminsertdate, 'YYYY/MM/DD HH:MI:SS' ) as dtminsertdate";
@@ -1765,7 +1766,9 @@ function fncGetInvoiceMSQL ( $lngInvoiceNo )
     $aryQuery[] = ", inv.lngprintcount as lngprintcount";
 
     $aryQuery[] = " FROM m_invoice inv ";
-
+    $aryQuery[] = " LEFT JOIN m_Company cust_c ON inv.lngcustomercode = cust_c.lngcompanycode";
+    $aryQuery[] = " LEFT JOIN m_User insert_u ON inv.lngInsertUserCode = insert_u.lngusercode";
+    $aryQuery[] = " LEFT JOIN m_User u ON inv.lngusercode = u.lngusercode";
     // WHERE
     $aryQuery[] = " WHERE inv.lnginvoiceno = ".$lngInvoiceNo. " ";
     // 削除済みは排除
@@ -1867,7 +1870,7 @@ function fncDeleteInvoice($lngInvoiceNo, $objDB, $objAuth)
     $aryQuery[] = " lnginvoiceno,";                     // 1:請求書番号
     $aryQuery[] = " lngrevisionno, ";                   // 2:リビジョン番号
     $aryQuery[] = " strinvoicecode, ";                  // 3:請求書コード
-    $aryQuery[] = " strinsertusercode, ";               // 4:入力者コード
+    $aryQuery[] = " lnginsertusercode, ";               // 4:入力者コード
     $aryQuery[] = " strinsertusername, ";               // 3:入力者名
     $aryQuery[] = " bytinvalidflag, ";                  // 5:無効フラグ
     $aryQuery[] = " dtminsertdate";                     // 6:登録日
@@ -1875,7 +1878,7 @@ function fncDeleteInvoice($lngInvoiceNo, $objDB, $objAuth)
     $aryQuery[] = $lngInvoiceNo . ", ";                 // 1:請求書番号
     $aryQuery[] = $lngMinRevisionNo . ", ";             // 2:リビジョン番号
     $aryQuery[] = "'" .$strInvoiceCode . "', ";         // 3:請求書コード
-    $aryQuery[] = "'" .$objAuth->UserCode . "', ";      // 4:入力者コード
+    $aryQuery[] = "" .$objAuth->UserCode . ", ";      // 4:入力者コード
     $aryQuery[] = "'" .$objAuth->UserFullName . "', ";  // 4:入力者名
     $aryQuery[] = "false, ";                            // 5:無効フラグ
     $aryQuery[] = "now()";                              // 6:登録日
@@ -2114,10 +2117,31 @@ function fncSetInvoiceDetailTableData ( $aryDetailResult, $aryHeadResult )
     $aryNewDetailResult["lngRevisionNo"]         = $aryDetailResult["lngrevisionno"];
     // 納品日
     $aryNewDetailResult["dtmDeliveryDate"]       = date('Y-m-d', strtotime($aryDetailResult["dtmdeliverydate"]));
+    // // 納品場所コード
+    // $aryNewDetailResult["lngDeliveryPlaceCode"]  = $aryDetailResult["lngdeliveryplacecode"];
+    // // 納品場所
+    // if ( $aryDetailResult["lngdeliveryplacecode"] )
+    // {
+    //     $aryNewResult["c"] = "[" . $aryResult["lngdeliveryplacecode"] ."]";
+    // }
+    // else
+    // {
+    //     $aryNewResult["strDeliveryPlaceName"] = "      ";
+    // }
+    // $aryNewDetailResult["strDeliveryPlaceName"]  = $aryDetailResult["c"];
     // 納品場所コード
-    $aryNewDetailResult["lngDeliveryPlaceCode"]  = $aryDetailResult["lngdeliveryplacecode"];
-    // 納品場所
-    $aryNewDetailResult["strDeliveryPlaceName"]  = $aryDetailResult["strdeliveryplacename"];
+    $aryNewDetailResult["lngDeliveryPlaceCode"]            = $aryDetailResult["lngdeliveryplacecode"];
+    $aryNewDetailResult["strDeliveryPlaceName"]            = $aryDetailResult["lngdeliveryplacecode"];
+    // 表示用納品場所
+    if ( $aryDetailResult["lngdeliveryplacecode"] )
+    {
+        $aryNewDetailResult["strDeliveryPlace"] = "[" . $aryDetailResult["lngdeliveryplacecode"] ."]";
+    }
+    else
+    {
+        $aryNewDetailResult["strDeliveryPlace"] = "      ";
+    }
+    $aryNewDetailResult["strDeliveryPlace"]               .= " " . $aryDetailResult["strdeliveryplacename"];
     // 税抜金額
     if ( !$aryDetailResult["cursubtotalprice"] )
     {

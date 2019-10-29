@@ -523,12 +523,13 @@ function fncGetDetailData($lngSalesNo, $lngRevisionNo, $objDB)
  * @param [type] $aryTableDetailHeaderName
  * @param [type] $displayColumns
  * @param [type] $detailData
+ * @param [type] $lngmonetaryunitcode
+ * @param [type] $strmonetaryunitsign
  * @return void
  */
-function fncSetDetailDataToTr($doc, $trBody, $bgcolor, $aryTableDetailHeaderName, $displayColumns, $detailData)
+function fncSetDetailDataToTr($doc, $trBody, $bgcolor, $aryTableDetailHeaderName, $displayColumns, $detailData, $lngmonetaryunitcode, $strmonetaryunitsign)
 {
-
-// 指定されたテーブル項目のセルを作成する
+    // 指定されたテーブル項目のセルを作成する
     foreach ($aryTableDetailHeaderName as $key => $value) {
         // 表示対象のカラムの場合
         if (array_key_exists($key, $displayColumns)) {
@@ -586,7 +587,7 @@ function fncSetDetailDataToTr($doc, $trBody, $bgcolor, $aryTableDetailHeaderName
                     break;
                 // 単価
                 case "curproductprice":
-                    $td = $doc->createElement("td", toMoneyFormat($detailData["lngmonetaryunitcode"], $detailData["strmonetaryunitsign"], $record["curproductprice"]));
+                    $td = $doc->createElement("td", toMoneyFormat($lngmonetaryunitcode, $strmonetaryunitsign, $detailData["curproductprice"]));
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
@@ -604,7 +605,7 @@ function fncSetDetailDataToTr($doc, $trBody, $bgcolor, $aryTableDetailHeaderName
                     break;
                 // 税抜金額
                 case "cursubtotalprice":
-                    $td = $doc->createElement("td", toMoneyFormat($detailData["lngmonetaryunitcode"], $detailData["strmonetaryunitsign"], $record["cursubtotalprice"]));
+                    $td = $doc->createElement("td", toMoneyFormat($lngmonetaryunitcode, $strmonetaryunitsign, $detailData["cursubtotalprice"]));
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
@@ -622,7 +623,7 @@ function fncSetDetailDataToTr($doc, $trBody, $bgcolor, $aryTableDetailHeaderName
                     break;
                 // 税額
                 case "curtaxprice":
-                    $td = $doc->createElement("td", toMoneyFormat($detailData["lngmonetaryunitcode"], $detailData["strmonetaryunitsign"], $record["curtaxprice"]));
+                    $td = $doc->createElement("td", toMoneyFormat($lngmonetaryunitcode, $strmonetaryunitsign, $detailData["curtaxprice"]));
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;

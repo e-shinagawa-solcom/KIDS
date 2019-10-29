@@ -181,7 +181,7 @@
 	}
 	else
 	{
-		$strMessage = fncOutputError( 603, DEF_WARNING, "" ,FALSE, "../inv/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+		$strMessage = fncOutputError( 9215, DEF_WARNING, "" ,FALSE, "../inv/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
 
 		// [lngLanguageCode]書き出し
 		$aryHtml["lngLanguageCode"] = $aryData["lngLanguageCode"];
