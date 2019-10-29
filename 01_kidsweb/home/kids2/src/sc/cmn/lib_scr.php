@@ -443,7 +443,7 @@ function fncGetReceiveDetail($aryCondition, $objDB)
     
     // 営業部署（コードで検索）
     if ($aryCondition["lngInChargeGroupCode"]){
-        $aryWhere[] = " AND g.lnggroupcode = " . $aryCondition["lngInChargeGroupCode"];
+        $aryWhere[] = " AND g.strgroupdisplaycode = " . $aryCondition["lngInChargeGroupCode"];
     }
 
     // 売上区分（コードで検索）
@@ -497,7 +497,7 @@ function fncGetReceiveDetail($aryCondition, $objDB)
     $strQuery .= implode("\n", $aryWhere);
     $strQuery .= "\n";
     $strQuery .= implode("\n", $aryOrder);
-
+echo $strQuery;
     // -------------------
     // クエリ実行
     // -------------------
@@ -1516,7 +1516,7 @@ function fncRegisterSlipMaster($lngSlipNo, $lngRevisionNo, $lngSalesNo, $strSlip
     $v_lngrevisionno = $lngRevisionNo;                                         //2:リビジョン番号
     $v_strslipcode = withQuote($strSlipCode);                                             //3:納品伝票コード
     $v_lngsalesno = $lngSalesNo;                                               //4:売上番号
-    $v_strcustomercode = nullIfEmptyWithQuote($aryCustomerCompany["lngcompanycode"]);                //5:顧客コード
+    $v_lngcustomercode = nullIfEmpty($aryCustomerCompany["lngcompanycode"]);                //5:顧客コード
     $v_strcustomercompanyname = withQuote($strCustomerCompanyName);                       //6:顧客社名
     $v_strcustomername = withQuote($strCustomerName);                                     //7:顧客名
     $v_strcustomeraddress1 = nullIfEmptyWithQuote($aryCustomerCompany["straddress1"]);               //8:顧客住所1
@@ -1594,7 +1594,7 @@ function fncRegisterSlipMaster($lngSlipNo, $lngRevisionNo, $lngSalesNo, $strSlip
     $aryInsert[] = " ," . $v_lngrevisionno;                //2:リビジョン番号
     $aryInsert[] = " ," . $v_strslipcode;                  //3:納品伝票コード
     $aryInsert[] = " ," . $v_lngsalesno;                   //4:売上番号
-    $aryInsert[] = " ," . $v_strcustomercode;              //5:顧客コード
+    $aryInsert[] = " ," . $v_lngcustomercode;              //5:顧客コード
     $aryInsert[] = " ," . $v_strcustomercompanyname;       //6:顧客社名
     $aryInsert[] = " ," . $v_strcustomername;              //7:顧客名
     $aryInsert[] = " ," . $v_strcustomeraddress1;          //8:顧客住所1

@@ -127,8 +127,8 @@
 	// TODO:要仕様確認
 	/*
 	//顧客
-	$aryCheck["lngCustomerCompanyCode"]		= "numenglish(0,4)";
-	$aryCheck["strCustomerCompanyName"]		= "length(0,50)";
+	$aryCheck["lngCustomerCode"]		= "numenglish(0,4)";
+	$aryCheck["strCustomerName"]		= "length(0,50)";
 	//課税区分
 	
 	//納品書NO.
@@ -170,6 +170,7 @@
 
 	// 検索SQLを実行し検索（ヒット）件数を取得する
 	$strQuery = fncGetSearchSlipSQL( $arySearchColumn, $aryData, $objDB, "", 0, $aryData["strSessionID"]);
+	
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
 	if ( $lngResultNum )

@@ -71,11 +71,11 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 			//   納品書マスタ（ヘッダ部）の検索条件
 			// ----------------------------------------------
 			// 顧客（売上先）
-			if ( $strSearchColumnName == "lngCustomerCompanyCode" )
+			if ( $strSearchColumnName == "lngCustomerCode" )
 			{
-				if ( $arySearchDataColumn["lngCustomerCompanyCode"] )
+				if ( $arySearchDataColumn["lngCustomerCode"] )
 				{
-					$aryQuery[] = " AND cust_c.strCompanyDisplayCode ~* '" . $arySearchDataColumn["lngCustomerCompanyCode"] . "'";
+					$aryQuery[] = " AND cust_c.strCompanyDisplayCode ~* '" . $arySearchDataColumn["lngCustomerCode"] . "'";
 				}
 //				if ( $arySearchDataColumn["strCustomerName"] )
 //				{
