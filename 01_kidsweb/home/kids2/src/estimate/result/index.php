@@ -153,7 +153,7 @@ if (!count($strErrorMessage)) {
 	// 見積原価のデータ取得
 	$selectQuery = 
 		"SELECT
-			TO_CHAR(mp.dtminsertdate, 'YYYY/MM/DD') AS dtminsertdate,
+			TO_CHAR(me.dtmInsertDate, 'YYYY/MM/DD') AS dtminsertdate,
 			mp.strproductcode,
 			mp.strproductname,
 			mp.strproductenglishname,
