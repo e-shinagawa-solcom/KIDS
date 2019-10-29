@@ -188,32 +188,36 @@ $(function(){
 
     var ret = [];
 
-    var beforeValue = '';
+    var beforeCompanyVal = '';
 
-    var className = 'customerCompany';
+    var companyClassName = 'customerCompany';
 
     var searchList = cellClass;
 
     var check = true;
 
+    var keyLength = Object.keys(cellValue).length;
+
     // セルに格納されたhtmlの文章から対象のチェックボックスを取得する
     // handsontableが画面外に表を作成しない(= 画面外の表にはhtmlが存在していない)ため、html要素からの取得は行っていない)
-    cellValue.forEach(function(value, row) {
-      // ボタンに対応するチェック済のチェックボックスを取得
-      if (value[confirmCol].match(buttonMatch) && value[confirmCol].match(checkedMatch)) {    
-        var col = getColumnForRowAndClassName(row, className, searchList);
-        if (beforeValue === '') {
-          beforeValue = value[col];
-        } else if (beforeValue !== value[col]) {
+    for (var row = 1; row < keyLength; row++) {
+      // 押下したボタンに対応する(エリアごと）かつチェック済のチェックボックスを取得
+      if (cellValue[row][confirmCol].match(buttonMatch) && cellValue[row][confirmCol].match(checkedMatch)) {   
+        var companyCol = getColumnForRowAndClassName(row, companyClassName, searchList);
+
+        if (beforeCompanyVal === '') {
+          beforeCompanyVal = cellValue[row][companyCol];
+        } else if (beforeCompanyVal !== cellValue[row][companyCol]) {
           check = false;
         }
-        ret.push(value);
+
+        if (check === false) {
+          alert('複数の顧客先が指定されています。');
+          return false;
+        }
+
+        ret.push(cellValue[row]);
       }
-    });
-    
-    if (check === false) {
-      alert('複数の顧客先は選択できません。');
-      return false;
     }
     
     var target = ret.map(function(value) { // チェックボックスに対応する受注又は発注番号を取得し、カンマ区切りの文字列生成
@@ -260,32 +264,45 @@ $(function(){
 
     var ret = [];
 
-    var beforeValue = '';
+    var beforeCompanyVal = '';
+    var beforeMonetaryVal = '';
 
-    var className = 'customerCompany';
+    var companyClassName = 'customerCompany';
+    var monetaryClassName = 'monetary';
 
     var searchList = cellClass;
 
     var check = true;
 
+    var keyLength = Object.keys(cellValue).length;
+
     // セルに格納されたhtmlの文章から対象のチェックボックスを取得する
     // handsontableが画面外に表を作成しない(= 画面外の表にはhtmlが存在していない)ため、html要素からの取得は行っていない)
-    cellValue.forEach(function(value, row) {
-      // ボタンに対応するチェック済のチェックボックスを取得
-      if (value[confirmCol].match(buttonMatch) && value[confirmCol].match(checkedMatch)) {    
-        var col = getColumnForRowAndClassName(row, className, searchList);
-        if (beforeValue === '') {
-          beforeValue = value[col];
-        } else if (beforeValue !== value[col]) {
+    for (var row = 1; row < keyLength; row++) {
+      // 押下したボタンに対応する(エリアごと）かつチェック済のチェックボックスを取得
+      if (cellValue[row][confirmCol].match(buttonMatch) && cellValue[row][confirmCol].match(checkedMatch)) {   
+        var companyCol = getColumnForRowAndClassName(row, companyClassName, searchList);
+        var monetaryCol = getColumnForRowAndClassName(row, monetaryClassName, searchList);
+
+        if (beforeCompanyVal === '') {
+          beforeCompanyVal = cellValue[row][companyCol];
+        } else if (beforeCompanyVal !== cellValue[row][companyCol]) {
           check = false;
         }
-        ret.push(value);
+
+        if (beforeMonetaryVal === '') {
+          beforeMonetaryVal = cellValue[row][monetaryCol];
+        } else if (beforeMonetaryVal !== cellValue[row][monetaryCol]) {
+          check = false;
+        }
+
+        if (check === false) {
+          alert('複数の仕入先または通貨が指定されています。');
+          return false;
+        }
+
+        ret.push(cellValue[row]);
       }
-    });
-    
-    if (check === false) {
-      alert('複数の仕入先が指定されています。');
-      return false;
     }
     
     var target = ret.map(function(value) { // チェックボックスに対応する受注又は発注番号を取得し、カンマ区切りの文字列生成
