@@ -81,7 +81,7 @@ function fncGetMaxStockSQL($displayColumns, $searchColumns, $from, $to, $searchV
     $aryQuery[] = "          on (sd1.lngStockNo) sd1.lngStockNo";
     $aryQuery[] = "        , sd1.lngStockDetailNo";
     $aryQuery[] = "        , sd1.lngRevisionNo ";
-    $aryQuery[] = "        , o.strordercode";
+    $aryQuery[] = "        , mp.strordercode";
     $aryQuery[] = "        , p.strProductCode";
     $aryQuery[] = "        , mg.strGroupDisplayCode";
     $aryQuery[] = "        , mg.strGroupDisplayName";
@@ -133,6 +133,14 @@ function fncGetMaxStockSQL($displayColumns, $searchColumns, $from, $to, $searchV
     $aryQuery[] = "        LEFT JOIN m_productunit pu ";
     $aryQuery[] = "          on pu.lngproductunitcode = sd1.lngproductunitcode";
     $aryQuery[] = "        LEFT JOIN m_Order o on sd1.lngOrderNo = o.lngOrderNo";
+    $aryQuery[] = "          and o.lngrevisionno = sd1.lngorderrevisionno ";
+    $aryQuery[] = "        LEFT JOIN t_purchaseorderdetail tpd ";
+    $aryQuery[] = "          on tpd.lngorderno = sd1.lngorderno ";
+    $aryQuery[] = "          and tpd.lngorderdetailno = sd1.lngorderdetailno ";
+    $aryQuery[] = "          and tpd.lngorderrevisionno = sd1.lngorderrevisionno ";
+    $aryQuery[] = "        LEFT JOIN m_purchaseorder mp ";
+    $aryQuery[] = "          on mp.lngpurchaseorderno = tpd.lngpurchaseorderno ";
+    $aryQuery[] = "          and mp.lngrevisionno = tpd.lngrevisionno ";
 
     // »Ø√ÌΩÒNo_from
     if (array_key_exists("strOrderCode", $searchColumns) &&
