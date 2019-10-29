@@ -23,6 +23,7 @@ require LIB_FILE;
 require LIB_ROOT . "clscache.php";
 require LIB_DEBUGFILE;
 require SRC_ROOT . "pc/cmn/lib_pcs.php";
+require_once LIB_DEBUGFILE;
 
 // DB接続
 $objDB = new clsDB();
@@ -57,6 +58,7 @@ $to = UtilSearchForm::extractArrayByTo($_REQUEST);
 $searchValue = $_REQUEST;
 $errorFlag = false;
 
+
 // クエリの組立に使用するフォームデータを抽出
 $optionColumns = array();
 $searchColumns = array();
@@ -84,9 +86,11 @@ foreach ($isSearch as $key => $flag) {
 }
 
 // 検索項目から一致する最新の仕入データを取得するSQL文の作成関数
-$subStrQuery = fncGetMaxStockSQL($displayColumns, $searchColumns, $from, $to, $searchValue, $optionColumns);
-
-$strQuery = fncGetStocksByStrStockCodeSQL($subStrQuery);
+$strQuery = fncGetMaxStockSQL($displayColumns, $searchColumns, $from, $to, $searchValue, $optionColumns);
+//fncDebug("kids2.log", $subStrQuery, __FILE__, __LINE__, "a+");
+// 検索速度遅かったため、fncGetMaxStockSQLに統合
+//$strQuery = fncGetStocksByStrStockCodeSQL($subStrQuery);
+//fncDebug("kids2.log", $strQuery, __FILE__, __LINE__, "a+");
 
 // 値をとる =====================================
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
