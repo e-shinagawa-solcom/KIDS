@@ -32,7 +32,27 @@ function fncGetMaxStockSQL($displayColumns, $searchColumns, $from, $to, $searchV
 // クエリの組立て
     $aryQuery = array();
     $aryQuery[] = "SELECT";
-    $aryQuery[] = " distinct s.strStockCode";
+    $aryQuery[] = "     s.lngstockno";
+    $aryQuery[] = "   , s.lngRevisionNo as lngRevisionNo";
+    $aryQuery[] = "   , sd.strordercode";
+    $aryQuery[] = "   , to_char(s.dtmInsertDate, 'YYYY/MM/DD HH24:MI:SS') as dtmInsertDate";
+    $aryQuery[] = "   , to_char(s.dtmappropriationdate, 'YYYY/MM/DD') as dtmappropriationdate";
+    $aryQuery[] = "   , to_char(s.dtmexpirationdate, 'YYYY/MM/DD') as dtmexpirationdate";
+    $aryQuery[] = "   , input_u.strUserDisplayCode as strInputUserDisplayCode";
+    $aryQuery[] = "   , input_u.strUserDisplayName as strInputUserDisplayName";
+    $aryQuery[] = "   , s.strStockCode as strStockCode";
+    $aryQuery[] = "   , s.strslipcode as strslipcode";
+    $aryQuery[] = "   , cust_c.strCompanyDisplayCode as strCustomerDisplayCode";
+    $aryQuery[] = "   , cust_c.strCompanyDisplayName as strCustomerDisplayName";
+    $aryQuery[] = "   , s.lngStockStatusCode as lngStockStatusCode";
+    $aryQuery[] = "   , rs.strStockStatusName as strStockStatusName";
+    $aryQuery[] = "   , s.lngpayconditioncode as lngpayconditioncode";
+    $aryQuery[] = "   , mp.strpayconditionname as strpayconditionname";
+    $aryQuery[] = "   , s.strNote as strNote";
+    $aryQuery[] = "   , To_char(s.curTotalPrice, '9,999,999,990.99') as curTotalPrice";
+    $aryQuery[] = "   , mu.strMonetaryUnitSign as strMonetaryUnitSign";
+    $aryQuery[] = "   , mu.lngmonetaryunitcode as lngmonetaryunitcode ";
+//    $aryQuery[] = " s.strStockCode";
     $aryQuery[] = "FROM";
     $aryQuery[] = "  m_Stock s ";
     $aryQuery[] = "  inner join ( ";
@@ -61,7 +81,7 @@ function fncGetMaxStockSQL($displayColumns, $searchColumns, $from, $to, $searchV
     $aryQuery[] = "          on (sd1.lngStockNo) sd1.lngStockNo";
     $aryQuery[] = "        , sd1.lngStockDetailNo";
     $aryQuery[] = "        , sd1.lngRevisionNo ";
-    $aryQuery[] = "        , o.strordercode";
+    $aryQuery[] = "        , mp.strordercode";
     $aryQuery[] = "        , p.strProductCode";
     $aryQuery[] = "        , mg.strGroupDisplayCode";
     $aryQuery[] = "        , mg.strGroupDisplayName";
@@ -113,6 +133,14 @@ function fncGetMaxStockSQL($displayColumns, $searchColumns, $from, $to, $searchV
     $aryQuery[] = "        LEFT JOIN m_productunit pu ";
     $aryQuery[] = "          on pu.lngproductunitcode = sd1.lngproductunitcode";
     $aryQuery[] = "        LEFT JOIN m_Order o on sd1.lngOrderNo = o.lngOrderNo";
+    $aryQuery[] = "          and o.lngrevisionno = sd1.lngorderrevisionno ";
+    $aryQuery[] = "        LEFT JOIN t_purchaseorderdetail tpd ";
+    $aryQuery[] = "          on tpd.lngorderno = sd1.lngorderno ";
+    $aryQuery[] = "          and tpd.lngorderdetailno = sd1.lngorderdetailno ";
+    $aryQuery[] = "          and tpd.lngorderrevisionno = sd1.lngorderrevisionno ";
+    $aryQuery[] = "        LEFT JOIN m_purchaseorder mp ";
+    $aryQuery[] = "          on mp.lngpurchaseorderno = tpd.lngpurchaseorderno ";
+    $aryQuery[] = "          and mp.lngrevisionno = tpd.lngrevisionno ";
 
     // 発注書No_from
     if (array_key_exists("strOrderCode", $searchColumns) &&
@@ -387,30 +415,43 @@ function fncGetStocksByStrStockCodeSQL($subStrQuery)
     $aryQuery[] = "        , sd1.strNote ";
     $aryQuery[] = "      FROM";
     $aryQuery[] = "        t_StockDetail sd1 ";
-    $aryQuery[] = "        LEFT JOIN (";
-    $aryQuery[] = "            select p1.*  from m_product p1 ";
-    $aryQuery[] = "        	inner join (select max(lngrevisionno) lngrevisionno, strproductcode from m_Product group by strProductCode) p2";
-    $aryQuery[] = "            on p1.lngrevisionno = p2.lngrevisionno and p1.strproductcode = p2.strproductcode";
-    $aryQuery[] = "          ) p ";
-    $aryQuery[] = "          ON sd1.strProductCode = p.strProductCode ";
-    $aryQuery[] = "        left join m_group mg ";
-    $aryQuery[] = "          on p.lnginchargegroupcode = mg.lnggroupcode ";
-    $aryQuery[] = "        left join m_user mu ";
-    $aryQuery[] = "          on p.lnginchargeusercode = mu.lngusercode ";
-    $aryQuery[] = "        left join m_tax mt ";
-    $aryQuery[] = "          on mt.lngtaxcode = sd1.lngtaxcode ";
-    $aryQuery[] = "        left join m_taxclass mtc ";
-    $aryQuery[] = "          on mtc.lngtaxclasscode = sd1.lngtaxclasscode ";
-    $aryQuery[] = "        LEFT JOIN m_Stocksubject ss ";
-    $aryQuery[] = "          on ss.lngStocksubjectcode = sd1.lngStocksubjectcode ";
-    $aryQuery[] = "        LEFT JOIN m_Stockitem si ";
-    $aryQuery[] = "          on si.lngStocksubjectcode = sd1.lngStocksubjectcode ";
-    $aryQuery[] = "          and si.lngStockitemcode = sd1.lngStockitemcode ";
-    $aryQuery[] = "        LEFT JOIN m_deliverymethod dm ";
-    $aryQuery[] = "          on dm.lngdeliverymethodcode = sd1.lngdeliverymethodcode ";
-    $aryQuery[] = "        LEFT JOIN m_productunit pu ";
-    $aryQuery[] = "          on pu.lngproductunitcode = sd1.lngproductunitcode";
-    $aryQuery[] = "        LEFT JOIN m_Order o on sd1.lngOrderNo = o.lngOrderNo";
+    $aryQuery[] = "      inner join ( ";
+    $aryQuery[] = "          select lngstockno, lngstockdetailno, max(lngrevisionno) as lngrevisionno ";
+    $aryQuery[] = "          from t_StockDetail group by lngstockno, lngstockdetailno ";
+    $aryQuery[] = "      ) sd_rev ";
+    $aryQuery[] = "        on sd_rev.lngstockno = sd1.lngstockno ";
+    $aryQuery[] = "        and sd_rev.lngstockdetailno = sd1.lngstockdetailno ";
+    $aryQuery[] = "        and sd_rev.lngrevisionno = sd1.lngrevisionno ";
+    $aryQuery[] = "      INNER JOIN t_purchaseorderdetail tp ";
+    $aryQuery[] = "        on tp.lngorderno = sd1.lngorderno ";
+    $aryQuery[] = "        and tp.lngorderdetailno = sd1.lngorderdetailno ";
+    $aryQuery[] = "        and tp.lngorderrevisionno = sd1.lngorderrevisionno ";
+    $aryQuery[] = "      INNER JOIN m_purchaseorder o  ";
+    $aryQuery[] = "        on o.lngpurchaseorderno = tp.lngpurchaseorderno ";
+    $aryQuery[] = "        and o.lngrevisionno = tp.lngrevisionno ";
+    $aryQuery[] = "      INNER JOIN ( ";
+    $aryQuery[] = "        select p1.*  from m_product p1  ";
+    $aryQuery[] = "        inner join (select max(lngrevisionno) lngrevisionno, strproductcode from m_Product group by strProductCode) p2 ";
+    $aryQuery[] = "        on p1.lngrevisionno = p2.lngrevisionno and p1.strproductcode = p2.strproductcode ";
+    $aryQuery[] = "      ) p  ";
+    $aryQuery[] = "        ON sd1.strProductCode = p.strProductCode  ";
+    $aryQuery[] = "      INNER join m_group mg  ";
+    $aryQuery[] = "        on p.lnginchargegroupcode = mg.lnggroupcode  ";
+    $aryQuery[] = "      left join m_user mu ";
+    $aryQuery[] = "        on p.lnginchargeusercode = mu.lngusercode ";
+    $aryQuery[] = "      left join m_tax mt ";
+    $aryQuery[] = "        on mt.lngtaxcode = sd1.lngtaxcode ";
+    $aryQuery[] = "      left join m_taxclass mtc ";
+    $aryQuery[] = "        on mtc.lngtaxclasscode = sd1.lngtaxclasscode ";
+    $aryQuery[] = "      LEFT JOIN m_Stocksubject ss ";
+    $aryQuery[] = "        on ss.lngStocksubjectcode = sd1.lngStocksubjectcode ";
+    $aryQuery[] = "      LEFT JOIN m_Stockitem si ";
+    $aryQuery[] = "        on si.lngStocksubjectcode = sd1.lngStocksubjectcode ";
+    $aryQuery[] = "        and si.lngStockitemcode = sd1.lngStockitemcode ";
+    $aryQuery[] = "      LEFT JOIN m_deliverymethod dm ";
+    $aryQuery[] = "        on dm.lngdeliverymethodcode = sd1.lngdeliverymethodcode ";
+    $aryQuery[] = "      LEFT JOIN m_productunit pu ";
+    $aryQuery[] = "        on pu.lngproductunitcode = sd1.lngproductunitcode";
     $aryQuery[] = ") as sd ";
     $aryQuery[] = "WHERE";
     $aryQuery[] = "  sd.lngStockNo = s.lngStockNo ";
@@ -466,7 +507,7 @@ function fncGetDetailData($lngStockNo, $lngRevisionNo, $objDB)
     $aryQuery[] = "  , mtc.strTaxClassName";
     $aryQuery[] = "  , mt.curtax";
     $aryQuery[] = "  , to_char(sd.curTaxPrice, '9,999,999,990.99') as curTaxPrice";
-    $aryQuery[] = "  , sd.strNote ";
+    $aryQuery[] = "  , sd.strNote as strdetailnote";
     $aryQuery[] = "FROM";
     $aryQuery[] = "  t_StockDetail sd ";
     $aryQuery[] = "  LEFT JOIN ( ";
@@ -511,7 +552,6 @@ function fncGetDetailData($lngStockNo, $lngRevisionNo, $objDB)
 
     // クエリを平易な文字列に変換
     $strQuery = implode("\n", $aryQuery);
-
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
     // 検索件数がありの場合
     if ($lngResultNum > 0) {
