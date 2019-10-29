@@ -105,11 +105,20 @@ class updateInsertData extends estimateInsertData {
         $this->preOrderRevisionNo = $this->getFirstRecordValue($orderTable, 'lngrevisionno', $searchRevision, 'max');
 
 
-        // 見積原価番号に紐付く受注コード、発注コードを取得する
-        $this->receiveCode = $this->getReceiveCode();
-        $this->orderCode = $this->getOrderCode();
-
-        
+        // 見積原価番号に紐付く受注コード、発注コードを取得する。取得できなかった場合はシーケンス処理により採番する
+        // 受注
+        if ($getReviseCode = $this->getReceiveCode()) {
+            $this->receiveCode = $getReviseCode;
+        } else {
+            $this->receiveCode = 'd'. fncGetDateSequence(date('Y'), date('m'), 'm_receive.strreceivecode', $this->objDB);
+        }
+        // 発注
+        if ($getOrderCode = $this->getOrderCode()) {
+            $this->orderCode = $getOrderCode;
+        } else {
+            $this->orderCode = fncGetDateSequence(date('Y'), date('m'), 'm_order.strordercode', $this->objDB);
+        }
+                
         // 明細行の登録
         foreach ($rowDataList as $rowData) {
             // 見積原価明細番号のインクリメント
@@ -164,7 +173,7 @@ class updateInsertData extends estimateInsertData {
             }
         }
 
-        // 受注マスタ、発注マスタからデータの削除を行う
+        // 受注マスタ、発注マスタからデータの削除を行う（削除された行がある場合）
         $this->insertDeleteRecord();
         
         return true;

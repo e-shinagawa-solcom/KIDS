@@ -125,6 +125,9 @@ class registInsertData extends estimateInsertData {
         $orderDetailNo = 0;    // 発注明細番号
 
         $rowDataList = $this->rowDataList;
+
+        $year = date('Y');
+        $month = date('m');
         
         // 明細行の登録
         foreach ($rowDataList as $rowData) {
@@ -146,7 +149,7 @@ class registInsertData extends estimateInsertData {
 
                 // 受注コードの取得
                 if (!isset($receiveCode)) {
-                    $receiveCode = $this->objDB->getReceiveCode();
+                    $receiveCode = 'd'. fncGetDateSequence($year, $month, 'm_receive.strreceivecode', $this->objDB);
                 }
 
                 // 受注マスタ登録処理
@@ -166,7 +169,7 @@ class registInsertData extends estimateInsertData {
 
                     // 発注コードの取得
                     if (!isset($orderCode)) {
-                        $orderCode = $this->objDB->getOrderCode();
+                        $orderCode = fncGetDateSequence($year, $month, 'm_order.strordercode', $this->objDB);
                     }
 
                     // 発注マスタ登録処理
