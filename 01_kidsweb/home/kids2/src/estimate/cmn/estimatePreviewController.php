@@ -111,8 +111,12 @@ class estimatePreviewController {
 
     protected function setProduct($product) {
         $inchargeUserDisplay = $this->objDB->getUserDisplayInfo($product->lnginchargeusercode);
-        $developUserDisplay = $this->objDB->getUserDisplayInfo($product->lngdevelopusercode);
 
+        if ($product->lngdevelopusercode) {
+            $developUserDisplay = $this->objDB->getUserDisplayInfo($product->lngdevelopusercode);
+        } else {
+            $developUserDisplay = null;
+        }
 
         if (!$this->groupDisplayList) {
             $this->setGroupDisplayList();
@@ -128,7 +132,7 @@ class estimatePreviewController {
             workSheetConst::RETAIL_PRICE => $product->curretailprice,
             workSheetConst::INCHARGE_GROUP_CODE => $groupDisplayCode. ":". $groupDisplayName,
             workSheetConst::INCHARGE_USER_CODE => $inchargeUserDisplay->struserdisplaycode. ":". $inchargeUserDisplay->struserdisplayname,
-            workSheetConst::DEVELOP_USER_CODE => $developUserDisplay->struserdisplaycode. ":". $developUserDisplay->struserdisplayname,
+            workSheetConst::DEVELOP_USER_CODE => $developUserDisplay ? $developUserDisplay->struserdisplaycode. ":". $developUserDisplay->struserdisplayname : '',
             workSheetConst::CARTON_QUANTITY => $product->lngcartonquantity,
         );
 
