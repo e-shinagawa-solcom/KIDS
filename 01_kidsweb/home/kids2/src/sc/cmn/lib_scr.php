@@ -497,7 +497,7 @@ function fncGetReceiveDetail($aryCondition, $objDB)
     $strQuery .= implode("\n", $aryWhere);
     $strQuery .= "\n";
     $strQuery .= implode("\n", $aryOrder);
-echo $strQuery;
+    
     // -------------------
     // クエリ実行
     // -------------------
