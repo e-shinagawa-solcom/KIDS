@@ -61,7 +61,10 @@ $lngStockStatusCode = DEF_STOCK_END;
 $aryData["lngCustomerCompanyCode"] = fncGetMasterValue("m_company", "strcompanydisplaycode", "lngcompanycode", $aryData["lngCustomerCode"] . ":str", '', $objDB);
 // 納品場所コードを取得
 $aryData["lngDeliveryPlaceCode"] = fncGetMasterValue("m_company", "strcompanydisplaycode", "lngcompanycode", $aryData["lngLocationCode"] . ":str", '', $objDB);
-
+// 担当者グループを取得
+$aryData["lngGroupCode"] = fncGetMasterValue("m_group", "strgroupdisplaycode", "lnggroupcode", $aryData["lngGroupCode"] . ":str", '', $objDB);
+// 担当者コードを取得
+$aryData["lngUserCode"] = fncGetMasterValue("m_user", "struserdisplaycode", "lngUserCode", $aryData["lngUserCode"] . ":str", '', $objDB);
 // 仕入登録
 $aryQuery = array();
 $aryQuery[] = "INSERT INTO m_stock( ";
@@ -93,6 +96,7 @@ $aryQuery[] = "'" . $aryData["dtmStockAppDate"] . "', "; // 5:計上日
 $aryQuery[] = "'" . $aryData["lngCustomerCompanyCode"] . "', "; // 6:仕入先コード
 $aryQuery[] = ($aryData["lngGroupCode"] == "" ? "null" : $aryData["lngGroupCode"]) . ", "; // 7:部門コード
 $aryQuery[] = ($aryData["lngUserCode"] == "" ? "null" : $aryData["lngUserCode"]) . ", "; // 8:担当者コード
+
 $aryQuery[] = $lngStockStatusCode . ", "; // 9:仕入状態コード
 $aryQuery[] = ($aryData["lngMonetaryUnitCode"] == "" ? "null" : $aryData["lngMonetaryUnitCode"]) . ", "; // 10:通貨単位コード
 $aryQuery[] = ($aryData["lngMonetaryRateCode"] == "" ? "null" : $aryData["lngMonetaryRateCode"]) . ", "; // 11:通貨レートコード
