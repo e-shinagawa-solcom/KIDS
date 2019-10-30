@@ -9,7 +9,8 @@
 <script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
 <link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
 <link rel="stylesheet" type="text/css" media="screen" href="/inv/cmn/form/css/regist-result.css">
-<
+
+<script type="text/javascript" language="javascript" src="/list/result/cmn/functions.js"></script>
 <script type="text/javascript" language="javascript" src="/cmn/processing_module.js"></script>
 
 
@@ -38,7 +39,7 @@
             </div>
             <div style="margin-top: 10px;">
                 <!-- previewボタン -->
-                <span class="p-btn" id="Prev" onclick="window.opener.location.reload();window.close();window.returnValue=Array( '_%strAction%_', '_%strSessionID%_' );return false;"><a href="#"><img  src="/img/type01/cmn/querybt/blownpreview_off_bt.gif" width="72" height="20" border="0" alt="閉じる"></a></span>
+                <span class="p-btn" id="Prev" onclick="fncListOutput('_%strPreviewUrl%_');return false;"><a href="#"><img  src="/img/type01/cmn/querybt/blownpreview_off_bt.gif" width="72" height="20" border="0" alt="閉じる"></a></span>
                 <!-- 閉じるボタン -->
                 <span class="p-btn" id="Close" onclick="window.opener.location.reload();window.close();window.returnValue=Array( '_%strAction%_', '_%strSessionID%_' );return false;"><a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="BlownCloseJOn(this);" onmouseout="BlownCloseJOff(this);" src="/img/type01/cmn/querybt/close_blown_off_ja_bt.gif" width="72" height="20" border="0" alt="閉じる"></a></span>
             </div>

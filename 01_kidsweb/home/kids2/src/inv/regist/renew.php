@@ -270,16 +270,20 @@
     else
     {
         $sql = fncGetSearchMSlipInvoiceNoSQL(2);
+        
         $aryNewResult['strMode']      = 'renewPrev';
         // 明細検索面
         $aryNewResult["invConditionUrl"] = '/inv/regist/condition.php?strSessionID=' . $aryData["strSessionID"] . '&lngFunctionCode=' . $aryData["lngFunctionCode"] . '&lngApplicantUserCodeVisible=1&lngInputUserCodeVisible=1&dtmStartDateVisible=1&lngInChargeCodeVisible=1&lngWorkflowStatusCodeVisible=1&lngWorkflowStatusCodeConditions=1&lngSelectFunctionCode=500';
 
         // 入力値用に変換
-        $aryNewResult['curThisMonthAmount']  = (int)preg_replace('/,/', '', $aryNewResult['curThisMonthAmount']);
-        $aryNewResult['curLastMonthBalance'] = (int)preg_replace('/,/', '', $aryNewResult['curLastMonthBalance']);
-        $aryNewResult['curSubTotal1'] = (int)preg_replace('/,/', '', $aryNewResult['curSubTotal1']);
-        $aryNewResult['curTaxPrice1'] = (int)preg_replace('/,/', '', $aryNewResult['curTaxPrice1']);
-
+        // $aryNewResult['curThisMonthAmount']  = (int)preg_replace('/,/', '', $aryNewResult['curThisMonthAmount']);
+        // $aryNewResult['curLastMonthBalance'] = (int)preg_replace('/,/', '', $aryNewResult['curLastMonthBalance']);
+        // $aryNewResult['curSubTotal1'] = (int)preg_replace('/,/', '', $aryNewResult['curSubTotal1']);
+        // $aryNewResult['curTaxPrice1'] = (int)preg_replace('/,/', '', $aryNewResult['curTaxPrice1']);
+        $aryNewResult['curThisMonthAmount']  = trim($aryNewResult['curThisMonthAmount']);
+        $aryNewResult['curLastMonthBalance'] = trim($aryNewResult['curLastMonthBalance']);
+        $aryNewResult['curSubTotal1'] = trim($aryNewResult['curSubTotal1']);
+        $aryNewResult['curTaxPrice1'] = trim($aryNewResult['curTaxPrice1']);
 
         // テンプレート読み込み
         echo fncGetReplacedHtmlWithBase("inv/base_inv.html", "inv/regist/renew.tmpl", $aryNewResult ,$objAuth );

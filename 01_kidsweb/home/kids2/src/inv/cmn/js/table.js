@@ -85,11 +85,11 @@ $(function() {
       $('.customer .customercode', $target_row).html('[' + customercode + '] ');
       $('.customer .customername', $target_row).html(customername);
       $('.deliverydate', $target_row).html(deliverydate);
-      $('.price', $target_row).html(curtotalprice);
+      $('.price', $target_row).html(convertNumber(curtotalprice));
       $('.taxclass .taxclasscode', $target_row).html('[' + taxclasscode + '] ');
       $('.taxclass .taxclassname', $target_row).html(taxclassname);
       $('.tax', $target_row).html(tax*100 + '¡ó');
-      $('.taxamount', $target_row).html(Math.round(taxamount));
+      $('.taxamount', $target_row).html(convertNumber(Math.round(taxamount)));
       $('.remarks', $target_row).html(strnote);
     });
   };
@@ -119,11 +119,11 @@ $(function() {
       $('.customer .customercode', $target_row).html('[' + customercode + '] ');
       $('.customer .customername', $target_row).html(customername);
       $('.deliverydate', $target_row).html(deliverydate);
-      $('.price', $target_row).html(curtotalprice);
+      $('.price', $target_row).html(convertNumber(curtotalprice));
       $('.taxclass .taxclasscode', $target_row).html('[' + taxclasscode + '] ');
       $('.taxclass .taxclassname', $target_row).html(taxclassname);
       $('.tax', $target_row).html(tax*100 + '¡ó');
-      $('.taxamount', $target_row).html(Math.round(taxamount));
+      $('.taxamount', $target_row).html(convertNumber(Math.round(taxamount)));
       $('.remarks', $target_row).html(strnote);
     });
   };
@@ -593,5 +593,16 @@ $(function() {
       }
     }
   });
+
+  function convertNumber(str) {
+    if (str != "" && str != undefined && str != "null") {
+      return Number(str).toLocaleString(undefined, {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+      });
+    } else {
+      return "";
+    }
+  }
 
 });

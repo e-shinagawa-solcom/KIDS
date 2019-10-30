@@ -91,7 +91,7 @@ function fncGetSearchMSlipSQL ( $aryCondtition = array(), $renew = false, $objDB
     // Ã´Åö¼ÔÌ¾
     $aryOutQuery[] = ", ms.strusername ";
     // ¹ç·×¶â³Û
-    $aryOutQuery[] = ", ms.curtotalprice ";
+    $aryOutQuery[] = ", ms.curtotalprice";
     // ÄÌ²ßÃ±°Ì¥³¡¼¥É
     $aryOutQuery[] = ", ms.lngmonetaryunitcode ";
     // ÄÌ²ßÃ±°Ì
@@ -1245,7 +1245,9 @@ function fncInvoiceInsert( $insertAry ,$objDB, $objAuth)
         fncOutputError ( 9051, DEF_ERROR, "", TRUE, "", $objDB );
     }
 
-    return true;
+    $aryResult["result"] = true;
+    $aryResult["strReportKeyCode"] = $sequence_m_lnginvoice;
+    return $aryResult;
 
 }
 
@@ -1507,17 +1509,17 @@ function fncSetInvoiceTableRow ( $lngColumnCount, $aryHeadResult, $aryDetailResu
             // Àè·îÀÁµá»Ä³Û
             else if ( $strColumnName == "curLastMonthBalance" )
             {
-                $TdData .= $aryHeadResult["curlastmonthbalance"];
+                $TdData .= toMoneyFormat($aryHeadResult["lngmonetaryunitcode"], $aryHeadResult["strmonetaryunitsign"], $aryHeadResult["curlastmonthbalance"]);
             }
             // Åö·îÀÁµá¶â³Û
             else if ( $strColumnName == "curThisMonthAmount" )
             {
-                $TdData .= $aryHeadResult["curthismonthamount"];
+                $TdData .= toMoneyFormat($aryHeadResult["lngmonetaryunitcode"], $aryHeadResult["strmonetaryunitsign"], $aryHeadResult["curthismonthamount"]);
             }
             // ¾ÃÈñÀÇ³Û
             else if ( $strColumnName == "curSubTotal1" )
             {
-                $TdData .= $aryHeadResult["cursubtotal1"];
+                $TdData .= toMoneyFormat($aryHeadResult["lngmonetaryunitcode"], $aryHeadResult["strmonetaryunitsign"], $aryHeadResult["cursubtotal1"]);
             }
             // ºîÀ®Æü
             else if ( $strColumnName == "dtmInsertDate" )
@@ -1618,11 +1620,11 @@ function fncSetInvoiceTableRow ( $lngColumnCount, $aryHeadResult, $aryDetailResu
                     $strText = "";
                     if ( !$aryDetailResult[$k]["cursubtotalprice"] )
                     {
-                        $strText .= "0.00";
+                        $strText .= toMoneyFormat($aryHeadResult["lngmonetaryunitcode"], $aryHeadResult["strmonetaryunitsign"], "0.00");
                     }
                     else
                     {
-                        $strText .= $aryDetailResult[$k]["cursubtotalprice"];
+                        $strText .= toMoneyFormat($aryHeadResult["lngmonetaryunitcode"], $aryHeadResult["strmonetaryunitsign"], $aryDetailResult[$k]["cursubtotalprice"]);
                     }
                     $TdData .= "<p>" .$strText ."</p>";
                 }
@@ -1649,7 +1651,7 @@ function fncSetInvoiceTableRow ( $lngColumnCount, $aryHeadResult, $aryDetailResu
             {
                 for ( $k = 0; $k < $lngDetailCount; $k++ )
                 {
-                    $TdData  .= "<p>" .$aryDetailResult[$k]["curtax"] ."</p>";
+                    $TdData  .= "<p>" . round($aryDetailResult[$k]["curtax"] * 100) . '%' ."</p>";
                 }
             }
             // ¾ÃÈñÀÇ³Ê
@@ -1658,7 +1660,8 @@ function fncSetInvoiceTableRow ( $lngColumnCount, $aryHeadResult, $aryDetailResu
                 for ( $k = 0; $k < $lngDetailCount; $k++ )
                 {
                     $cursubtotalprice = preg_replace('/,/','', $aryDetailResult[$k]["cursubtotalprice"]);
-                    $TdData  .= "<p>" .(int)($aryDetailResult[$k]["curtax"] * (int)$cursubtotalprice) ."</p>";
+                    $strText = number_format((int)($aryDetailResult[$k]["curtax"] * (int)$cursubtotalprice) ,2);
+                    $TdData  .= "<p>" .toMoneyFormat($aryHeadResult["lngmonetaryunitcode"], $aryHeadResult["strmonetaryunitsign"], $strText)."</p>";
                 }
             }
             // ÌÀºÙÈ÷¹Í
@@ -1735,9 +1738,9 @@ function fncGetInvoiceMSQL ( $lngInvoiceNo )
     // ÀÁµá´ü´Ö »ê
     $aryQuery[] = ", to_char( inv.dtmchargeternend, 'YYYY/MM/DD' ) as dtmchargeternend";
     // Á°·îÀÁµá»Ä³Û
-    $aryQuery[] = ", To_char( inv.curlastmonthbalance, '9,999,999,990.99' ) as curlastmonthbalance";
+    $aryQuery[] = ", To_char( inv.curlastmonthbalance, '9,999,999,990' ) as curlastmonthbalance";
     // ¸æÀÁµá¶â³Û
-    $aryQuery[] = ", To_char( inv.curthismonthamount, '9,999,999,990.99' ) as curthismonthamount";
+    $aryQuery[] = ", To_char( inv.curthismonthamount, '9,999,999,990' ) as curthismonthamount";
     // ÄÌ²ßÃ±°Ì¥³¡¼¥É
     $aryQuery[] = ", inv.lngmonetaryunitcode as lngmonetaryunitcode";
     // ÄÌ²ßÃ±°Ì
@@ -1747,11 +1750,11 @@ function fncGetInvoiceMSQL ( $lngInvoiceNo )
     // ²ÝÀÇ¶èÊ¬Ì¾
     $aryQuery[] = ", inv.strtaxclassname as strtaxclassname";
     // ÀÇÈ´¶â³Û1
-    $aryQuery[] = ", To_char( inv.cursubtotal1, '9,999,999,990.99' ) as cursubtotal1";
+    $aryQuery[] = ", To_char( inv.cursubtotal1, '9,999,999,990' ) as cursubtotal1";
     // ¾ÃÈñÀÇÎ¨1
     $aryQuery[] = ", inv.curtax1 as curtax1";
     // ¾ÃÈñÀÇ³Û1
-    $aryQuery[] = ", To_char( inv.curtaxprice1, '9,999,999,990.99' ) as curtaxprice1";
+    $aryQuery[] = ", To_char( inv.curtaxprice1, '9,999,999,990' ) as curtaxprice1";
     // Ã´Åö¼Ô
     $aryQuery[] = ", u.struserdisplaycode as strusercode";
     $aryQuery[] = ", inv.strusername as strusername";
@@ -2196,7 +2199,10 @@ function fncSetPreviewTableData ( $aryResult , $lngInvoiceNo, $objDB)
     $aryPrevResult['slipCodeList']  = $aryResult['slipCodeList'];
     $aryPrevResult['slipCodeArray'] = $slipCodeArray;
     $aryPrevResult['slipCodeCount'] = COUNT($slipCodeArray);
-
+    $i = 0;
+    foreach ($slipCodeArray as $slipCode) {
+        $aryPrevResult['strslipcode' . $i] = $slipCode;
+    }
     if(isset($aryResult['taxclass'])) {
         $taxclass = explode(' ' ,$aryResult['taxclass']);
         $taxclasscode = preg_replace('/[^0-9]/', '', $taxclass[0]);
@@ -2214,13 +2220,21 @@ function fncSetPreviewTableData ( $aryResult , $lngInvoiceNo, $objDB)
     $aryPrevResult["strCustomerName"] = $aryResult["strCustomerName"];
 
     // Á°·îÀÁµá»Ä³Û
-    $aryPrevResult['curLastMonthBalance'] = $aryResult["curlastmonthbalance"];
+    $aryPrevResult['curLastMonthBalance_desc'] = preg_match('/,/',$aryResult["curlastmonthbalance"]) ? $aryResult["curlastmonthbalance"] : number_format($aryResult["curlastmonthbalance"]);
     // º£·îÀÇÈ´¤­¶â³Û
-    $aryPrevResult['curSubTotal1']        = $aryResult["curthismonthamount"];
+    $aryPrevResult['curSubTotal1_desc']        = preg_match('/,/',$aryResult["curthismonthamount"]) ? $aryResult["curthismonthamount"] : number_format($aryResult["curthismonthamount"]);
     // ¾ÃÈñÀÇ³Û
-    $aryPrevResult['curTaxPrice1']        = $aryResult["curtaxprice"];
+    $aryPrevResult['curTaxPrice1_desc']        = preg_match('/,/',$aryResult["curtaxprice"]) ? $aryResult["curtaxprice"] : number_format($aryResult["curtaxprice"]);
     // ¤´ÀÁµá³Û
-    $aryPrevResult['curThisMonthAmount']  = $aryResult["notaxcurthismonthamount"];
+    $aryPrevResult['curThisMonthAmount_desc']  = preg_match('/,/',$aryResult["notaxcurthismonthamount"]) ? $aryResult["notaxcurthismonthamount"] : number_format($aryResult["notaxcurthismonthamount"]);
+    // Á°·îÀÁµá»Ä³Û
+    $aryPrevResult['curLastMonthBalance'] = preg_replace('/,/', '', $aryResult["curlastmonthbalance"]);
+    // º£·îÀÇÈ´¤­¶â³Û
+    $aryPrevResult['curSubTotal1']        = preg_replace('/,/', '', $aryResult["curthismonthamount"]);
+    // ¾ÃÈñÀÇ³Û
+    $aryPrevResult['curTaxPrice1']        = preg_replace('/,/', '', $aryResult["curtaxprice"]);
+    // ¤´ÀÁµá³Û
+    $aryPrevResult['curThisMonthAmount']  = preg_replace('/,/', '', $aryResult["notaxcurthismonthamount"]);
 
     // ¾ÃÈñÀÇÎ¨1
     $curtax1 = preg_replace('/[^0-9]/', '', $aryResult["tax"]);
@@ -2356,7 +2370,7 @@ function fncGetInvoiceAggregateSQL ( $invoiceMonth )
     // ¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
     $aryQuery[] = ", inv.lngrevisionno as lngrevisionno";
     // ¸ÜµÒ¥³¡¼¥É
-    $aryQuery[] = ", inv.strcustomercode as strcustomercode";
+    $aryQuery[] = ", cust_c.strCompanyDisplayCode as strcustomercode";
     // ¸ÜµÒÌ¾
     $aryQuery[] = ", inv.strcustomername as strcustomername";
     // ¸ÜµÒ¼ÒÌ¾
@@ -2388,10 +2402,10 @@ function fncGetInvoiceAggregateSQL ( $invoiceMonth )
     // ¾ÃÈñÀÇ³Û1
     $aryQuery[] = ", inv.curtaxprice1 as curtaxprice1";
     // Ã´Åö¼Ô
-    $aryQuery[] = ", inv.strusercode as strusercode";
+    $aryQuery[] = ", u.struserdisplaycode as strusercode";
     $aryQuery[] = ", inv.strusername as strusername";
     // ºîÀ®¼Ô
-    $aryQuery[] = ", inv.strinsertusercode as strinsertusercode";
+    $aryQuery[] = ", insert_u.struserdisplaycode as strinsertusercode";
     $aryQuery[] = ", inv.strinsertusername as strinsertusername";
     // ºîÀ®Æü
     $aryQuery[] = ", to_char( inv.dtminsertdate, 'YYYY/MM/DD HH:MI:SS' ) as dtminsertdate";
@@ -2401,6 +2415,9 @@ function fncGetInvoiceAggregateSQL ( $invoiceMonth )
     $aryQuery[] = ", inv.lngprintcount as lngprintcount";
 
     $aryQuery[] = " FROM m_invoice inv ";
+    $aryQuery[] = " LEFT JOIN m_Company cust_c ON inv.lngcustomercode = cust_c.lngcompanycode";
+    $aryQuery[] = " LEFT JOIN m_User insert_u ON inv.lngInsertUserCode = insert_u.lngusercode";
+    $aryQuery[] = " LEFT JOIN m_User u ON inv.lngusercode = u.lngusercode";
 
     // WHERE  dtminvoicedate
     $aryQuery[] = " WHERE inv.dtminvoicedate >= '" .$start->format('Y-m-d') ."'  AND inv.dtminvoicedate < '"  .$end->format('Y-m-d') ."' ";
@@ -2409,7 +2426,7 @@ function fncGetInvoiceAggregateSQL ( $invoiceMonth )
     $aryQuery[] = " SELECT DISTINCT(lnginvoiceno) FROM m_invoice WHERE lngrevisionno = -1";
     $aryQuery[] = " ) ";
 
-    $aryQuery[] = " ORDER BY inv.lnginvoiceno ASC , inv.lngrevisionno DESC , inv.lngmonetaryunitcode ASC, inv.strcustomercode ASC, inv.strinvoicecode ASC ";
+    $aryQuery[] = " ORDER BY inv.lnginvoiceno ASC , inv.lngrevisionno DESC , inv.lngmonetaryunitcode ASC, inv.lngcustomercode ASC, inv.strinvoicecode ASC ";
 
     $strQuery = implode( "\n", $aryQuery );
 

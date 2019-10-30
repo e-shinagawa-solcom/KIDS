@@ -179,8 +179,13 @@ img.toggle-display
 .regist-label-w190
 {
     width: 190px;
+    height: 27px;
 }
 
+.regist-label-box3
+{
+    height: 27px;
+}
 /* 検索フォーム チェックボックス input */
 .search-label--checkbox
 {
@@ -342,14 +347,14 @@ img.toggle-display
 .regist-box-area
 {
     text-align: left;
-    width: 927px;
+    width: 911px;
 
 }
 .regist-box1
 {
   float: left;
-  width: 470px;
-  margin-right : 5px;
+  width: 465px;
+  margin-right : 3px;
 }
 .w-465
 {
@@ -360,7 +365,7 @@ img.toggle-display
 {
   float: left;
   width: 190px;
-  margin-right : 5px;
+  margin-right : 3px;
 }
 .label-box2
 {
@@ -429,7 +434,7 @@ img.margin-30pxL
 {
     display: inline;
     position: absolute;
-    top: 665px;
+    top: 483px;
     left: 865px;
 }
 
@@ -441,7 +446,7 @@ img.margin-30pxL
     left: 0px;
 
     width: 980px;
-    height: 700px;
+    height: 515px;
 
     border-style: solid;
     border-width: 1px;
@@ -466,23 +471,30 @@ img.margin-30pxL
 .base-footer-regist
 {
     position : absolute;
-    top: 787px;
+    /* top: 787px; */
     left: 0;
 
     width: 982px;
     height: 35px;
     background-image: url("/img/type01/cmn/based/footer.gif");
 }
-
+.form-box__contents--with-scroll
+{
+    height: 89%;
+    margin: 40px 5px 20px;
+    padding: 3px 10px;
+    border: 1px solid #788787;
+    overflow-y: hidden;
+}
 /* 入力フォーム共通背景枠  */
 .form-box--notabs-for-regists
 {
     position: absolute;
     top: 10px;
-    left: 21px;
+    left: 20px;
 
     width: 950px;
-    height: 660px;
+    height: 480px;
 
     border-style: solid;
     border-width: 1px;
@@ -548,7 +560,7 @@ img.margin-30pxL
   align-items: flex-start;
 }
 .flex-inner-item {
-  height: 200px;
+  height: 130px;
   overflow: auto;
 }
 .flex-inner-item:first-child {
@@ -581,7 +593,7 @@ thead tr {
   color: #fff;
 }
 th {
-  height: 40px;
+  height: 25px;
 }
 td {
   background-color: #fff;
@@ -589,10 +601,10 @@ td {
 th,
 td {
   white-space: nowrap;
-  padding-left: .25em;
-  padding-right: .25em;
+  /* padding-left: .25em;
+  padding-right: .25em; */
   border-right: 1px solid #999;
-  border-bottom: 1px solid #999;
+  /* border-bottom: 1px solid #999; */
   user-select: none;
 }
 tr:last-child td {

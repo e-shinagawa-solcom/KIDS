@@ -120,7 +120,6 @@
         // *****************************************************
         //   INSERT処理実行（Submit時）
         // *****************************************************
-
         // DB登録の為のデータ配列を返す
         $insertData = fncInvoiceInsertReturnArray($aryData, $aryResult, $objAuth, $objDB);
 
@@ -198,7 +197,8 @@
         $objDB->transactionBegin();
 
         // 請求書マスタ・請求書明細・売上マスタを更新する
-        if (!fncInvoiceInsert( $insertData , $objDB, $objAuth))
+        $aryResult = fncInvoiceInsert( $insertData , $objDB, $objAuth);
+        if (!$aryResult["result"])
         {
             fncOutputError ( 9051, DEF_FATAL, "更新処理に伴う売上マスタテーブル処理失敗", TRUE, "", $objDB );
         }
@@ -210,6 +210,9 @@
         $insertData["strAction"] = "/inv/renew.php?strSessionID=";
         $insertData["strSessionID"] = $aryData["strSessionID"];
         $insertData["time"]  = date('Y-m-d h:i:s');
+
+        $insertData["strPreviewUrl"] = "/list/result/frameset.php?strSessionID=" 
+        .$aryData["strSessionID"] ."&lngReportClassCode=6&strReportKeyCode=" .$aryResult["strReportKeyCode"];
 
         // 言語コード：日本語
         $insertData["lngLanguageCode"] = 1;

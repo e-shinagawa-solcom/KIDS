@@ -377,6 +377,13 @@
                 let customerCode = $('input[name="lngCustomerCode"]').val();
                 let customerName = $('input[name="strCustomerName"]').val();
 
+                
+                if(parentCustomerCode != customerCode)
+                {
+                    bReset     = true;
+                    changeCode = true;
+                }
+
                 let $tableB = window.opener.$('#tableB');
                 // •∆°º•÷•ÎB <tbody>, <tr>
                 let $tableB_tbody = $('tbody', $tableB);
@@ -391,11 +398,6 @@
                         }
                     }
 
-                    if(parentCustomerCode != customerCode)
-                    {
-                        bReset     = true;
-                        changeCode = true;
-                    }
                     let taxClassCode = $('select[name="lngTaxClassCode"]').val();
                     if(taxClassCode != parentTaxCode){
                         bReset = true;
@@ -474,7 +476,7 @@
                             // ∫π∞˙πÁ∑◊≥€
                             window.opener.$('input[name="notaxcurthismonthamount"]').val(0).change();
                         }
-
+                        
                         // ∏‹µ“•≥°º•… —ππ
                         if(changeCode == true) {
                             window.opener.$('input[name="lngCustomerCode"]').val(customerCode);
@@ -558,7 +560,7 @@
                     }
                     if(tableB_row[i].cells[j].className == 'price right') {
                         // ¿«»¥∂‚
-                        price = tableB_row[i].cells[j].innerText;
+                        price = tableB_row[i].cells[j].innerText.replace(',', '');
                     }
                 }
 
@@ -584,10 +586,10 @@
             // ¡∞∑Ó¿¡µ·ªƒ≥€ + ≈ˆ∑Ó¿¡µ·≥€ + æ√»Ò¿«
             noTaxMonthAmount  = curLastMonthBalance + thisMonthAmount + taxPrice;
             // ∑Î≤Ã§Ú»À±…
-            $('input[name="curlastmonthbalance"]').val(Math.round(curLastMonthBalance)).change();
-            $('input[name="curthismonthamount"]').val(thisMonthAmount).change();
-            $('input[name="curtaxprice"]').val(Math.round(taxPrice)).change();
-            $('input[name="notaxcurthismonthamount"]').val(Math.round(noTaxMonthAmount)).change();
+            $('input[name="curlastmonthbalance"]').val(convertNumber(Math.round(curLastMonthBalance))).change();
+            $('input[name="curthismonthamount"]').val(convertNumber(thisMonthAmount)).change();
+            $('input[name="curtaxprice"]').val(convertNumber(Math.round(taxPrice))).change();
+            $('input[name="notaxcurthismonthamount"]').val(convertNumber(Math.round(noTaxMonthAmount))).change();
         };
         var result = setTimeout(chargetern, 500);
 
@@ -888,4 +890,17 @@
             return true;
         };
 
+
+        function convertNumber(str) {
+            if (str != "" && str != undefined && str != "null") {
+              return Number(str).toLocaleString(undefined, {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+              });
+            } else if (str == "0") {
+                return str;
+            } else {
+              return "";
+            }
+          }
 })();

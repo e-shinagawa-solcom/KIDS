@@ -1940,7 +1940,7 @@
         <td height=46 class=xl12213302 style='height:35.1pt'>¡¡</td>
         <td colspan=2 class=xl10513302>¸æÀÁµá¶â³Û</td>
         <td colspan=4 class=xl10713302 style='border-right:1.0pt solid black;
-        border-left:none'>_%curThisMonthAmount%_</td>
+        border-left:none'>_%strMonetaryUnitName%__%curThisMonthAmount_desc%_</td>
         <td class=xl6313302></td>
         <td colspan=5 class=xl13813302></td>
         <td class=xl12513302>¡¡</td>
@@ -2007,7 +2007,7 @@
         <td rowspan=2 class=xl8213302 style='border-bottom:.5pt solid black;
         border-top:none'>Åö·îÀÁµá³Û</td>
         <td colspan=3 rowspan=2 class=xl7013302 style='border-right:1.0pt solid black;
-        border-bottom:.5pt solid black'>_%curSubTotal1%_</td>
+        border-bottom:.5pt solid black'>_%curSubTotal1_desc%_</td>
         <td class=xl6553513302></td>
         <td class=xl6553513302></td>
         <td class=xl6553513302></td>
@@ -2019,9 +2019,9 @@
         <td class=xl6553513302></td>
         <td class=xl6553513302></td>
         <td class=xl6553513302></td>
-        <td colspan=2 rowspan=2 class=xl7613302 style='border-bottom:1.0pt solid black'>ÀÁµáÌÀºÙËç¿ô</td>
+        <td colspan=2 rowspan=2 class=xl7613302 style='border-bottom:1.0pt solid black'></td>
         <td colspan=2 rowspan=2 class=xl7713302 style='border-right:1.0pt solid black;
-        border-bottom:1.0pt solid black'>_%slipCodeCount%_Ëç</td>
+        border-bottom:1.0pt solid black'></td>
         <td class=xl12513302>¡¡</td>
     </tr>
     <tr height=10 style='mso-height-source:userset;height:8.1pt'>
@@ -2030,7 +2030,7 @@
         <td rowspan=2 class=xl8213302 style='border-bottom:.5pt solid black;
         border-top:none'>¾ÃÈñÀÇ(_%curTax1%_%)</td>
         <td colspan=3 rowspan=2 class=xl7013302 style='border-right:1.0pt solid black;
-        border-bottom:.5pt solid black'>_%curTaxPrice1%_</td>
+        border-bottom:.5pt solid black'>_%curTaxPrice1_desc%_</td>
         <td class=xl6553513302></td>
         <td class=xl6553513302></td>
         <td class=xl6553513302></td>
@@ -2053,7 +2053,7 @@
         <td class=xl6553513302></td>
         <td class=xl6613302 style='border-top:none'>º¹°ú¹ç·×³Û</td>
         <td colspan=3 class=xl8613302 style='border-right:1.0pt solid black;
-        border-left:none'>_%curThisMonthAmount%_</td>
+        border-left:none'>_%curThisMonthAmount_desc%_</td>
         <td class=xl6553513302></td>
         <td class=xl6553513302></td>
         <td class=xl6553513302></td>
@@ -2241,7 +2241,7 @@
         <td height=46 class=xl12213302 style='height:35.1pt'>¡¡</td>
         <td colspan=2 class=xl10513302>¸æÀÁµá¶â³Û</td>
         <td colspan=4 class=xl10713302 style='border-right:1.0pt solid black;
-        border-left:none'>_%curThisMonthAmount%_</td>
+        border-left:none'>_%strMonetaryUnitName%__%curThisMonthAmount_desc%_</td>
         <td class=xl6313302></td>
         <td colspan=5 class=xl13813302></td>
         <td class=xl12513302>¡¡</td>
@@ -2279,7 +2279,7 @@
         <td rowspan=2 class=xl8213302 style='border-bottom:.5pt solid black;
         border-top:none'>Á°·îÀÁµá»Ä³Û¡ÊÀÇ¹þ¤ß¡Ë</td>
         <td colspan=3 rowspan=2 class=xl7013302 style='border-right:1.0pt solid black;
-        border-bottom:.5pt solid black'>_%curLastMonthBalance%_</td>
+        border-bottom:.5pt solid black'>_%curLastMonthBalance_desc%_</td>
         <td class=xl6553513302></td>
         <td class=xl6553513302></td>
         <td class=xl6553513302></td>
@@ -2308,7 +2308,7 @@
         <td rowspan=2 class=xl8213302 style='border-bottom:.5pt solid black;
         border-top:none'>Åö·îÀÁµá³Û</td>
         <td colspan=3 rowspan=2 class=xl7013302 style='border-right:1.0pt solid black;
-        border-bottom:.5pt solid black'>_%curSubTotal1%_</td>
+        border-bottom:.5pt solid black'>_%curSubTotal1_desc%_</td>
         <td class=xl6553513302></td>
         <td class=xl6553513302></td>
         <td class=xl6553513302></td>
@@ -2331,7 +2331,7 @@
         <td rowspan=2 class=xl8213302 style='border-bottom:.5pt solid black;
         border-top:none'>¾ÃÈñÀÇ(_%curTax1%_%)</td>
         <td colspan=3 rowspan=2 class=xl7013302 style='border-right:1.0pt solid black;
-        border-bottom:.5pt solid black'>_%curTaxPrice1%_</td>
+        border-bottom:.5pt solid black'>_%curTaxPrice1_desc%_</td>
         <td class=xl6553513302></td>
         <td class=xl6553513302></td>
         <td class=xl6553513302></td>
@@ -2344,11 +2344,24 @@
         <td class=xl6553513302></td>
         <td class=xl6553513302></td>
         <td class=xl6913302 width=40 style='border-top:none;width:30pt'>¡¡</td>
-        <td rowspan=5 class=xl6913302 width=66 style='border-top:none;width:50pt'>¡¡</td>
+        <td rowspan=5 class=xl6913302 width=66 style='border-top:none;width:50pt'>
+            _%strslipcode0%_
+          <br>_%strslipcode1%_
+          <br>_%strslipcode2%_
+          <br>_%strslipcode3%_
+          <br>_%strslipcode4%_
+          <br>_%strslipcode5%_
+          <br>_%strslipcode6%_</td>
         <td rowspan=3 class=xl6913302 width=61 style='border-bottom:.5pt solid black;
-        border-top:none;width:46pt'>¡¡</td>
+        border-top:none;width:46pt'>_%strslipcode7%_
+          <br>_%strslipcode8%_
+          <br>_%strslipcode9%_
+          <br>_%strslipcode10%_</td>
         <td rowspan=3 class=xl6913302 width=61 style='border-bottom:.5pt solid black;
-        border-top:none;width:46pt'>¡¡</td>
+        border-top:none;width:46pt'>_%strslipcode11%_
+          <br>_%strslipcode12%_
+          <br>_%strslipcode13%_
+          <br>_%strslipcode14%_</td>
         <td class=xl12513302>¡¡</td>
     </tr>
     <tr height=32 style='mso-height-source:userset;height:24.0pt'>
@@ -2356,7 +2369,7 @@
         <td class=xl6553513302></td>
         <td class=xl6613302 style='border-top:none'>º¹°ú¹ç·×³Û</td>
         <td colspan=3 class=xl8613302 style='border-right:1.0pt solid black;
-        border-left:none'>_%curThisMonthAmount%_</td>
+        border-left:none'>_%curThisMonthAmount_desc%_</td>
         <td class=xl6553513302></td>
         <td class=xl6553513302></td>
         <td class=xl6553513302></td>

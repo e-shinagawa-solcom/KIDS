@@ -15,7 +15,7 @@
         sessionID = 'strSessionID=' + getUrlVars()["strSessionID"];
 
         // 別ウィンドウで表示
-        open(url + '?' + lnginvoiceno + '&' + sessionID, 'display-detail', 'resizable=yes, scrollbars=yes, menubar=no');
+        open(url + '?' + lnginvoiceno + '&' + sessionID, 'display-detail', 'width=1011, height=650,resizable=yes, scrollbars=yes, menubar=no');
     });
 
     $('img.delete.button').on('click', function(){
