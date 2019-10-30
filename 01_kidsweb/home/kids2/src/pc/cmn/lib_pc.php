@@ -143,7 +143,7 @@ function fncGetStockDetailNoToInfoSQL($lngStockNo, $lngRevisionNo)
     $aryQuery[] = ", sd.lngDeliveryMethodCode as lngDeliveryMethodCode";
     $aryQuery[] = ", dm.strDeliveryMethodName as strDeliveryMethodName";
     // 納期
-    // $aryQuery[] = ", sd.dtmDeliveryDate as dtmDeliveryDate";
+    $aryQuery[] = ", tod.dtmdeliverydate as dtmDeliveryDate";
     // 単価
     $aryQuery[] = ", To_char( sd.curProductPrice, '9,999,999,990.9999' )  as curProductPrice";
     // 単位
@@ -166,14 +166,31 @@ function fncGetStockDetailNoToInfoSQL($lngStockNo, $lngRevisionNo)
     $aryQuery[] = ", sd.strNote as strDetailNote";
 
     // 明細行を表示する場合
-    $aryQuery[] = " FROM t_StockDetail sd LEFT JOIN m_Product p USING (strProductCode)";
-    $aryQuery[] = " LEFT JOIN m_StockSubject ss USING (lngStockSubjectCode)";
-    $aryQuery[] = " LEFT JOIN m_DeliveryMethod dm USING (lngDeliveryMethodCode)";
-    $aryQuery[] = " LEFT JOIN m_ProductUnit pu ON sd.lngProductUnitCode = pu.lngProductUnitCode";
-    $aryQuery[] = " LEFT JOIN m_TaxClass tc USING (lngTaxClassCode)";
-    $aryQuery[] = " LEFT JOIN m_Tax t USING (lngTaxCode)";
-    $aryQuery[] = ", m_StockItem si ";
-
+    $aryQuery[] = " FROM t_StockDetail sd  ";
+    $aryQuery[] = " INNER JOIN t_orderdetail tod ";
+    $aryQuery[] = "     on tod.lngorderno = sd.lngorderno ";
+    $aryQuery[] = " and tod.lngorderdetailno = sd.lngorderdetailno ";
+    $aryQuery[] = " and tod.lngrevisionno = sd.lngorderrevisionno ";
+    $aryQuery[] = " inner JOIN m_Product p ";
+    $aryQuery[] = "     on p.strproductcode =  sd.strproductcode";
+    $aryQuery[] = " and p.strrevisecode = sd.strrevisecode ";
+    $aryQuery[] = " inner join( select lngproductno, strrevisecode, max(lngrevisionno) as lngrevisionno from m_product group by lngproductno, strrevisecode) p_rev";
+    $aryQuery[] = "     on p_rev.lngproductno = p.lngproductno";
+    $aryQuery[] = " and p_rev.strrevisecode = p.strrevisecode";
+    $aryQuery[] = " and p_rev.lngrevisionno = p.lngrevisionno";
+    $aryQuery[] = " inner JOIN m_StockSubject ss ";
+    $aryQuery[] = "     on ss.lngstocksubjectcode =  sd.lngStockSubjectCode ";
+    $aryQuery[] = " inner join m_StockItem si";
+    $aryQuery[] = "   on   si.lngStockSubjectCode = ss.lngStockSubjectCode";
+    $aryQuery[] = "   AND sd.lngStockItemCode = si.lngStockItemCode ";
+    $aryQuery[] = " inner JOIN m_DeliveryMethod dm ";
+    $aryQuery[] = "     on dm.lngdeliverymethodcode = sd.lngdeliverymethodcode ";
+    $aryQuery[] = " inner JOIN m_ProductUnit pu ";
+    $aryQuery[] = "    ON sd.lngProductUnitCode = pu.lngProductUnitCode ";
+    $aryQuery[] = " LEFT JOIN m_TaxClass tc ";
+    $aryQuery[] = "     on tc.lngTaxClassCode = sd.lngtaxclasscode ";
+    $aryQuery[] = " LEFT JOIN m_Tax t ";
+    $aryQuery[] = "     on t.lngTaxCode = sd.lngtaxcode";
     $aryQuery[] = " WHERE sd.lngStockNo = " . $lngStockNo . "";
     $aryQuery[] = " AND sd.lngRevisionNo = " . $lngRevisionNo . "";
     $aryQuery[] = " AND si.lngStockSubjectCode = ss.lngStockSubjectCode ";

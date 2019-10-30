@@ -50,7 +50,7 @@ $lngRevisionNo = $aryData["lngRevisionNo"];
 $strReturnPath = "../pc/search/index.php?strSessionID=" . $aryData["strSessionID"];
 // 指定仕入番号の仕入データ取得用SQL文の作成
 $strQuery = fncGetStockHeadNoToInfoSQL($lngStockNo, $lngRevisionNo);
-// echo $strQuery;
+//echo $strQuery . "<br>";
 // return;
 // 詳細データの取得
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
