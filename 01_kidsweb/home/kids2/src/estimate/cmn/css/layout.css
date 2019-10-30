@@ -233,18 +233,46 @@ div.action-buttons > button
 
 .status_applicate
 {
+	display: inline-block;
 	border: thin solid #000000;
 	border-radius: 5px;
 	color: #000000;
-	text-align: center;
+	width: 98%;
 }
 
 .status_order
 {
+	display: inline-block;
 	border: thin solid #000000;
 	border-radius: 5px;
 	color: #2dda66;
+	width: 98%;
+}
+
+.receive_status_end
+{
+	display: inline-block;
+	border: thin solid #000000;
+	border-radius: 5px;
+	color: #000000;
+	background-color: #66FFFF;
+	width: 98%;
+}
+
+.order_status_end
+{
+	display: inline-block;
+	border: thin solid #000000;
+	border-radius: 5px;
+	color: #000000;
+	background-color: #FFFF33;
+	width: 98%;
+}
+
+.status_display
+{
 	text-align: center;
+	vertical-align: middle;
 }
 
 .checkbox_applicate

@@ -847,7 +847,7 @@ class workSheetConst {
     ];
 
     // 垂直配置
-    const WORK_SHEET_VARTICAL_POSITION_DEFAULT = 'bottom';
+    const WORK_SHEET_VERTICAL_POSITION_DEFAULT = 'bottom';
 
     // 水平配置
     const WORK_SHEET_HORIZONTAL_POSITION = 'center';
@@ -872,7 +872,7 @@ class workSheetConst {
         'backgroundColor' => self::WORK_SHEET_BACKGROUND_COLOR_DEFAULT,
         'fontColor' => self::WORK_SHEET_FONT_COLOR_DEFAULT,
         'border' => self::WORK_SHEET_BORDER_INFO_DEFAULT,
-        'varticalPosition' => self::WORK_SHEET_VARTICAL_POSITION_DEFAULT,
+        'verticalPosition' => self::WORK_SHEET_VERTICAL_POSITION_DEFAULT,
         'horizontalPosition' => self::WORK_SHEET_HORIZONTAL_POSITION,
         'emphasis' => self::WORK_SHEET_EMPHASIS_DEFAULT
     ];

@@ -423,7 +423,7 @@ class estimateSheetController {
                     if ($setFormatFlag === true) {
                         $cellValue = trim($sheet->getCell($cellAddress)->getFormattedValue());
                     } else { // フォーマットセットフラグがfalseの時は計算値を直接与える（入力可能セルの一部について入力後にもセルの書式を反映させるため、書式をHandsontableで設定するための対応）
-                        $cellValue = $sheet->getCell($cellAddress)->getCalculatedValue();
+                        $cellValue =  $getValue;
                         if ($setFormatFlag === 'percent' && $cellValue) {
                             $cellValue = $cellValue * 100;
                         }
@@ -607,18 +607,35 @@ class estimateSheetController {
                 // 編集可能な場合のみボタンを生成する
                 if ($this->uneditableFlag === false) {
 
+
                     // ボタン生成処理
                     if ($receiveAreaCodeList[$areaCode]) {
                         // 受注の場合
-                        $data = $inputData[$workSheetRow]['data'];
+                        $data = $inputData[$workSheetRow]['data']; // 行データの取得
                         $statusCode = $data['statusCode'];
                         $receiveNo = $data['receiveNo'];
+                       
+                        preg_match('/\A(\d{4})\:/', $data['customerCompany'], $customerCompany);
+                        
+                        if (isset($customerCompany)) {
+                            $companyCode = $customerCompany[1]; // 会社コードの取得
+                        } else {
+                            $companyCode = '';
+                        }
+
                         switch($statusCode) {
                             case DEF_RECEIVE_APPLICATE:
                                 $name = "confirm". $areaCode;
-                                $htmlValue1 = "<div class=\"applicate\">";
-                                $htmlValue1 .= "<input type=\"checkbox\" class=\"checkbox_applicate\" name=\"". $name. "\" value=\"".$receiveNo . "\">";
-                                $htmlValue1 .= "</div>";
+
+                                if (isset($companyCode) && $companyCode !== DEF_DISPLAY_COMPANY_CODE_OTHERS) {
+                                    $htmlValue1 = "<div class=\"applicate\">";
+                                    $htmlValue1 .= "<input type=\"checkbox\" class=\"checkbox_applicate\" name=\"". $name. "\" value=\"".$receiveNo . "\">";
+                                    $htmlValue1 .= "</div>";
+    
+                                    $ColumnData1['value'] = $htmlValue1;
+                                }
+
+
                                 $mergedCellsList[] = array(
                                     'row' => $tableRow,
                                     'col' => 0,
@@ -627,24 +644,26 @@ class estimateSheetController {
                                 );
                                 
                                 $value3 = $receiveStatusMaster[$statusCode]['strreceivestatusname'];
-                                $htmlValue3 = "<div class=\"status_applicate\">". $value3. "</div>";
-
-                                $ColumnData1['value'] = $htmlValue1;
-                                $ColumnData3['value'] = $htmlValue3;
+                                $ColumnData3['value'] = "<div class=\"status_applicate\"><span class=\"status_display\">". $value3. "</span></div>";
+                                
                                 break;
                             case DEF_RECEIVE_ORDER:
                                 $value = $receiveStatusMaster[$statusCode]['strreceivestatusname'];
-                                $htmlValue = "<div class=\"status_order\">". $value. "</div>";
-                                $ColumnData3['value'] = $htmlValue;
+                                $ColumnData3['value'] = "<div class=\"status_order\"><span class=\"status_display\">". $value. "</span></div>";
+                                
                                 break;
                             case DEF_RECEIVE_END:
-                                $ColumnData1['value'] = $receiveStatusMaster[$statusCode]['strreceivestatusname'];
+                            case DEF_RECEIVE_CLOSED:
+                                $value = $receiveStatusMaster[$statusCode]['strreceivestatusname'];
+                                $ColumnData1['value'] = "<div class=\"receive_status_end\"><span class=\"status_display\">". $value. "</span></div>";
+
                                 $mergedCellsList[] = array(
                                     'row' => $tableRow,
                                     'col' => 0,
                                     'rowspan' => 1,
                                     'colspan' => 3,
                                 );
+
                                 break;
                             default:
                                 break;
@@ -654,28 +673,53 @@ class estimateSheetController {
                         $data = $inputData[$workSheetRow]['data'];
                         $statusCode = $data['statusCode'];
                         $orderNo = $data['orderNo'];
+
+                        preg_match('/\A(\d{4})\:/', $data['customerCompany'], $customerCompany);
+                        
+                        if (isset($customerCompany)) {
+                            $companyCode = $customerCompany[1]; // 会社コードの取得
+                        } else {
+                            $companyCode = '';
+                        }
+
                         switch($statusCode) {
                             case DEF_ORDER_APPLICATE:
-                                $name = "confirm". $areaCode;
-                                $htmlValue1 = "<div class=\"applicate\">";
-                                $htmlValue1 .= "<input type=\"checkbox\" class=\"checkbox_applicate\" name=\"". $name. "\" value=\"".$orderNo . "\">";
-                                $htmlValue1 .= "</div>";
+
+                                if (isset($companyCode) && $companyCode !== DEF_DISPLAY_COMPANY_CODE_OTHERS) {
+                                    $name = "confirm". $areaCode;
+                                    $htmlValue1 = "<div class=\"applicate\">";
+                                    $htmlValue1 .= "<input type=\"checkbox\" class=\"checkbox_applicate\" name=\"". $name. "\" value=\"".$orderNo . "\">";
+                                    $htmlValue1 .= "</div>";
+                                    $ColumnData1['value'] = $htmlValue1;
+                                }
+
                                 $value3 = $orderStatusMaster[$statusCode]['strorderstatusname'];
-                                $htmlValue3 = "<div class=\"status_applicate\">". $value3. "</div>";
-                                $ColumnData1['value'] = $htmlValue1;
-                                $ColumnData3['value'] = $htmlValue3;
+                                $ColumnData3['value'] = "<div class=\"status_applicate\"><span class=\"status_display\">". $value3. "</span></div>";
+
                                 break;
                             case DEF_ORDER_ORDER:
                                 $name = "cancel". $areaCode;
                                 $htmlValue2 = "<div class=\"order\">";
                                 $htmlValue2 .= "<input type=\"checkbox\" class=\"checkbox_cancel\" name=\"". $name. "\" value=\"".$orderNo . "\">";
                                 $htmlValue2 .= "</div>";
-                                $value3 = $orderStatusMaster[$statusCode]['strorderstatusname'];
-                                $htmlValue3 = "<div class=\"status_order\">". $value3. "</div>";
                                 $ColumnData2['value'] = $htmlValue2;
-                                $ColumnData3['value'] = $htmlValue3;
+                                
+                                $value3 = $orderStatusMaster[$statusCode]['strorderstatusname'];
+                                $ColumnData3['value'] = "<div class=\"status_order\"><span class=\"status_display\">". $value3. "</span></div>";
+
                                 break;
                             case DEF_ORDER_END:
+                            case DEF_ORDER_CLOSED:
+                                $value = $receiveStatusMaster[$statusCode]['strreceivestatusname'];
+                                $ColumnData1['value'] = "<div class=\"order_status_end\"><span class=\"status_display\">". $value. "</span></div>";
+
+                                $mergedCellsList[] = array(
+                                    'row' => $tableRow,
+                                    'col' => 0,
+                                    'rowspan' => 1,
+                                    'colspan' => 3,
+                                );
+                                
                                 break;
                             default:
                                 break;
