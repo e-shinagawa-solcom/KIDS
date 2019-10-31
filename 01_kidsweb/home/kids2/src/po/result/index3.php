@@ -31,6 +31,7 @@ require (LIB_FILE);
 require (SRC_ROOT . "po/cmn/lib_pos.php");
 require (SRC_ROOT . "po/cmn/lib_pos1.php");
 require (SRC_ROOT . "po/cmn/column.php");
+require_once (LIB_DEBUGFILE);
 
 // DB接続
 $objDB   = new clsDB();
@@ -83,9 +84,8 @@ $aryOrderNo = explode(",", $aryData["lngOrderNo"]);
 if($_POST){
 	for($i = 0; $i < count($aryOrderNo); $i++){
 		$lngorderno = intval(explode("_", $aryOrderNo[$i])[0]);
-		$lngrevisionno = intval(explode("_", $aryOrderNo[$i])[1]);
-	
-		// 確定取消対象となった発注明細に基づく発注書明細全件を取得
+		$lngrevisionno = fncGetLatestRevisionNo($lngorderno, $objDB);
+	// 確定取消対象となった発注明細に基づく発注書明細全件を取得
 		$aryPurchaseOrderDetail = fncGetDeletePurchaseOrderDetail($lngorderno, $lngrevisionno, $objDB);
 		$objDB->transactionBegin();
 		// 確定取り消しとなった発注明細に基づく発注マスタの発注ステータスを「仮発注」へ戻す
@@ -100,30 +100,30 @@ if($_POST){
 		$aryDetailNo = array_column($aryOrderDetail, "lngorderdetailno");
 		if( is_array($aryPurchaseOrderDetail) )
 		{
-		    $count = 1;
+		    $count = 0;
 			for($j = 0; $j < count($aryPurchaseOrderDetail); $j++){
 				if($aryPurchaseOrderDetail[$j]["lngorderdetailno"] != $aryDetailNo[0]){
-					$aryInsertPurchaseOrderDetail[$j]["lngpurchaseorderno"] = $aryPurchaseOrderDetail[$j]["lngpurchaseorderno"];
-					$aryInsertPurchaseOrderDetail[$j]["lngpurchaseorderdetailno"] = $count;
+					$aryInsertPurchaseOrderDetail[$count]["lngpurchaseorderno"] = $aryPurchaseOrderDetail[$j]["lngpurchaseorderno"];
+					$aryInsertPurchaseOrderDetail[$count]["lngpurchaseorderdetailno"] = $count + 1;
+					$aryInsertPurchaseOrderDetail[$count]["lngrevisionno"] = intval($aryPurchaseOrderDetail[$j]["lngrevisionno"]) + 1;
+					$aryInsertPurchaseOrderDetail[$count]["lngorderno"] = $aryPurchaseOrderDetail[$j]["lngorderno"];
+					$aryInsertPurchaseOrderDetail[$count]["lngorderdetailno"] = $aryPurchaseOrderDetail[$j]["lngorderdetailno"];
+					$aryInsertPurchaseOrderDetail[$count]["lngorderrevisionno"] = $aryPurchaseOrderDetail[$j]["lngorderrevisionno"];
+					$aryInsertPurchaseOrderDetail[$count]["lngstocksubjectcode"] = $aryPurchaseOrderDetail[$j]["lngstocksubjectcode"];
+					$aryInsertPurchaseOrderDetail[$count]["lngstockitemcode"] = $aryPurchaseOrderDetail[$j]["lngstockitemcode"];
+					$aryInsertPurchaseOrderDetail[$count]["strstockitemname"] = $aryPurchaseOrderDetail[$j]["strstockitemname"];
+					$aryInsertPurchaseOrderDetail[$count]["lngdeliverymethodcode"] = $aryPurchaseOrderDetail[$j]["lngdeliverymethodcode"];
+					$aryInsertPurchaseOrderDetail[$count]["strdeliverymethodname"] = $aryPurchaseOrderDetail[$j]["strdeliverymethodname"];
+					$aryInsertPurchaseOrderDetail[$count]["curproductprice"] = $aryPurchaseOrderDetail[$j]["curproductprice"];
+					$aryInsertPurchaseOrderDetail[$count]["lngproductquantity"] = $aryPurchaseOrderDetail[$j]["lngproductquantity"];
+					$aryInsertPurchaseOrderDetail[$count]["lngproductunitcode"] = $aryPurchaseOrderDetail[$j]["lngproductunitcode"];
+					$aryInsertPurchaseOrderDetail[$count]["strproductunitname"] = $aryPurchaseOrderDetail[$j]["strproductunitname"];
+					$aryInsertPurchaseOrderDetail[$count]["cursubtotalprice"] = $aryPurchaseOrderDetail[$j]["cursubtotalprice"];
+					$aryInsertPurchaseOrderDetail[$count]["dtmdeliverydate"] = $aryPurchaseOrderDetail[$j]["dtmdeliverydate"];
+					$aryInsertPurchaseOrderDetail[$count]["strnote"] = $aryPurchaseOrderDetail[$j]["strnote"];
+					$aryInsertPurchaseOrderDetail[$count]["lngsortkey"] = $count + 1;
+					$aryInsertPurchaseOrderDetail[$count]["lngprintcount"] = 0;
 					$count++;
-					$aryInsertPurchaseOrderDetail[$j]["lngrevisionno"] = intval($aryPurchaseOrderDetail[$j]["lngrevisionno"]) + 1;
-					$aryInsertPurchaseOrderDetail[$j]["lngorderno"] = $aryPurchaseOrderDetail[$j]["lngorderno"];
-					$aryInsertPurchaseOrderDetail[$j]["lngorderdetailno"] = $aryPurchaseOrderDetail[$j]["lngorderdetailno"];
-					$aryInsertPurchaseOrderDetail[$j]["lngorderrevisionno"] = $aryPurchaseOrderDetail[$j]["lngorderrevisionno"];
-					$aryInsertPurchaseOrderDetail[$j]["lngstocksubjectcode"] = $aryPurchaseOrderDetail[$j]["lngstocksubjectcode"];
-					$aryInsertPurchaseOrderDetail[$j]["lngstockitemcode"] = $aryPurchaseOrderDetail[$j]["lngstockitemcode"];
-					$aryInsertPurchaseOrderDetail[$j]["strstockitemname"] = $aryPurchaseOrderDetail[$j]["strstockitemname"];
-					$aryInsertPurchaseOrderDetail[$j]["lngdeliverymethodcode"] = $aryPurchaseOrderDetail[$j]["lngdeliverymethodcode"];
-					$aryInsertPurchaseOrderDetail[$j]["strdeliverymethodname"] = $aryPurchaseOrderDetail[$j]["strdeliverymethodname"];
-					$aryInsertPurchaseOrderDetail[$j]["curproductprice"] = $aryPurchaseOrderDetail[$j]["curproductprice"];
-					$aryInsertPurchaseOrderDetail[$j]["lngproductquantity"] = $aryPurchaseOrderDetail[$j]["lngproductquantity"];
-					$aryInsertPurchaseOrderDetail[$j]["lngproductunitcode"] = $aryPurchaseOrderDetail[$j]["lngproductunitcode"];
-					$aryInsertPurchaseOrderDetail[$j]["strproductunitname"] = $aryPurchaseOrderDetail[$j]["strproductunitname"];
-					$aryInsertPurchaseOrderDetail[$j]["cursubtotalprice"] = $aryPurchaseOrderDetail[$j]["cursubtotalprice"];
-					$aryInsertPurchaseOrderDetail[$j]["dtmdeliverydate"] = $aryPurchaseOrderDetail[$j]["dtmdeliverydate"];
-					$aryInsertPurchaseOrderDetail[$j]["strnote"] = $aryPurchaseOrderDetail[$j]["strnote"];
-					$aryInsertPurchaseOrderDetail[$j]["lngsortkey"] = $j + 1;
-					$aryInsertPurchaseOrderDetail[$j]["lngprintcount"] = 0;
 				}
 				else{
 					$aryCancelOrderDetail["lngpurchaseorderno"] = $aryPurchaseOrderDetail[$j]["lngpurchaseorderno"];
@@ -256,7 +256,7 @@ if($_POST){
 
 for($i = 0; $i < count($aryOrderNo); $i++){
 	$lngorderno = intval(explode("_", $aryOrderNo[$i])[0]);
-	$lngrevisionno = intval(explode("_", $aryOrderNo[$i])[1]);
+	$lngrevisionno = fncGetLatestRevisionNo($lngorderno, $objDB);
 
 	$aryOrder[] = fncGetOrder($lngorderno, $lngrevisionno, $objDB);
 }

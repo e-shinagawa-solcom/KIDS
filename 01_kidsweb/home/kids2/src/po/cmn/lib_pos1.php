@@ -1055,14 +1055,13 @@ function fncGetDeletePurchaseOrderDetail($lngOrderNo, $lngRevisionNo, $objDB){
 	$aryQuery[] = "INNER JOIN t_purchaseorderdetail all_detail";
 	$aryQuery[] = "    ON all_detail.lngpurchaseorderno = target.lngpurchaseorderno";
 	$aryQuery[] = "    AND all_detail.lngrevisionno = target.lngrevisionno ";
-	$aryQuery[] = "INNER JOIN(";
-	$aryQuery[] = "SELECT lngpurchaseorderno, lngpurchaseorderdetailno, MAX(lngrevisionno) AS lngrevisionno FROM t_purchaseorderdetail GROUP BY lngpurchaseorderno, lngpurchaseorderdetailno";
-	$aryQuery[] = ") rev_max ";
-	$aryQuery[] = "on rev_max.lngpurchaseorderno = target.lngpurchaseorderno ";
-	$aryQuery[] = "AND rev_max.lngpurchaseorderdetailno = target.lngpurchaseorderdetailno ";
-	$aryQuery[] = "AND rev_max.lngrevisionno = target.lngrevisionno ";
+	$aryQuery[] = "INNER JOIN m_purchaseorder mp on mp.lngpurchaseorderno = target.lngpurchaseorderno and mp.lngrevisionno = target.lngrevisionno ";
+	$aryQuery[] = "INNER JOIN( SELECT lngpurchaseorderno,  MAX(lngrevisionno) AS lngrevisionno FROM m_purchaseorder GROUP BY lngpurchaseorderno ) rev_max  ";
+	$aryQuery[] = "on rev_max.lngpurchaseorderno = mp.lngpurchaseorderno  ";
+	$aryQuery[] = "AND rev_max.lngrevisionno = mp.lngrevisionno  ";
 	$aryQuery[] = "WHERE target.lngorderno = "  . $lngOrderNo;
 	$aryQuery[] = " AND target.lngorderrevisionno = "  .$lngRevisionNo;
+	$aryQuery[] = " AND mp.lngpurchaseorderno not in (select lngpurchaseorderno from m_purchaseorder where lngrevisionno < 0 ) ";
 	$aryQuery[] = " ORDER BY";
 	$aryQuery[] = " all_detail.lngsortkey";
 
@@ -1363,7 +1362,6 @@ function fncGetOrder($lngOrderNo, $lngRevisionNo, $objDB){
 
 	$strQuery = "";
 	$strQuery = implode("\n", $aryQuery);
-	echo $strQuery;
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
 	if ( $lngResultNum )
@@ -1521,4 +1519,34 @@ function fncCancelPurchaseOrderHtml($aryOrder, $aryDetail, $strSessionID, $isDel
 
     return $strHtml;
 }
+
+
+function fncGetLatestRevisionNo($lngOrderNo, $objDB)
+{
+	$revision = -1;
+	// SQLºîÀ®
+	$aryOutQuery[] = "SELECT";
+	$aryOutQuery[] = "   max(lngrevisionno) as maxrevisionno";
+	$aryOutQuery[] = "  ,min(lngrevisionno) as minrevisionno";
+	$aryOutQuery[] = "FROM m_order";
+	$aryOutQuery[] = " where lngorderno = " . $lngOrderNo;
+
+	$strQuery = implode("\n", $aryOutQuery);
+
+	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
+
+	if ( $lngResultNum )
+	{
+		$aryResult = $objDB->fetchArray( $lngResultID, 0 );
+		if( $aryResult["minrevisionno"] >= 0 )
+		{
+			$revision = $aryResult["maxrevisionno"];
+		}
+	}
+	$objDB->freeResult( $lngResultID );
+
+	return $revision;
+
+}
+
 ?>
