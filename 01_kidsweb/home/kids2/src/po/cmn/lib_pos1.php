@@ -78,7 +78,7 @@ function fncGetPurchaseHeadNoToInfo ( $lngOrderNo, $lngRevisionNo, $objDB )
 	$aryQuery[] = ", o.lngPayConditionCode as lngPayConditionCode";
 	$aryQuery[] = ", pc.strPayConditionName as strPayConditionName";
 	// 発注有効期限日
-	$aryQuery[] = ", to_char( mp.dtmExpirationDate, 'YYYY/MM/DD' ) as dtmExpirationDate";
+	$aryQuery[] = ", to_char( tp.dtmExpirationDate, 'YYYY/MM/DD' ) as dtmExpirationDate";
 	// // 備考
 	// $aryQuery[] = ", o.strNote as strNote";
 	// 合計金額
@@ -97,9 +97,36 @@ function fncGetPurchaseHeadNoToInfo ( $lngOrderNo, $lngRevisionNo, $objDB )
 	$aryQuery[] = " LEFT JOIN m_OrderStatus os USING (lngOrderStatusCode)";
 	$aryQuery[] = " LEFT JOIN m_MonetaryUnit mu ON o.lngMonetaryUnitCode = mu.lngMonetaryUnitCode";
 	$aryQuery[] = " LEFT JOIN m_MonetaryRateClass mr ON o.lngMonetaryRateCode = mr.lngMonetaryRateCode";
-	$aryQuery[] = " LEFT JOIN t_purchaseorderdetail tp ON ot.lngorderno = tp.lngorderno AND ot.lngorderdetailno = tp.lngorderdetailno and ot.lngrevisionno = tp.lngrevisionno";
-	$aryQuery[] = " LEFT JOIN m_purchaseorder mp on  tp.lngpurchaseorderno = mp.lngpurchaseorderno and tp.lngrevisionno = mp.lngrevisionno";
-	$aryQuery[] = " LEFT JOIN m_PayCondition pc ON pc.lngPayConditionCode = mp.lngPayConditionCode";
+	$aryQuery[] = " LEFT JOIN ( ";
+	$aryQuery[] = "    select ";
+	$aryQuery[] = "	    tp.lngpurchaseorderno, ";
+	$aryQuery[] = "	    lngorderno, ";
+	$aryQuery[] = "		lngorderdetailno, ";
+	$aryQuery[] = "		lngorderrevisionno, ";
+	$aryQuery[] = "		mp.lngPayConditionCode, ";
+	$aryQuery[] = "     mp.dtmExpirationDate ";
+	$aryQuery[] = "	from t_purchaseorderdetail tp  ";
+	$aryQuery[] = "    INNER JOIN( ";
+	$aryQuery[] = "        select  ";
+	$aryQuery[] = "	        m_purchaseorder.* ";
+	$aryQuery[] = "	    from m_purchaseorder ";
+	$aryQuery[] = "	    inner join ( ";
+	$aryQuery[] = "	        select lngpurchaseorderno, MAX(lngrevisionno) as lngrevisionno ";
+	$aryQuery[] = "		    from m_purchaseorder group by lngpurchaseorderno ";
+	$aryQuery[] = "	    ) rev_max ";
+	$aryQuery[] = "	        on rev_max.lngpurchaseorderno = m_purchaseorder.lngpurchaseorderno ";
+	$aryQuery[] = "		    and rev_max.lngrevisionno = m_purchaseorder.lngrevisionno ";
+	$aryQuery[] = "	    where m_purchaseorder.lngpurchaseorderno not in (select lngpurchaseorderno from m_purchaseorder where lngrevisionno < 0 ) ";
+	$aryQuery[] = "    ) mp  ";
+	$aryQuery[] = "    on tp.lngpurchaseorderno = mp.lngpurchaseorderno  ";
+	$aryQuery[] = "    and tp.lngrevisionno = mp.lngrevisionno  ";
+	$aryQuery[] = ") tp ";
+	$aryQuery[] = "ON ot.lngorderno = tp.lngorderno  ";
+	$aryQuery[] = "AND ot.lngorderdetailno = tp.lngorderdetailno  ";
+	$aryQuery[] = "and ot.lngrevisionno = tp.lngorderrevisionno  ";
+
+	$aryQuery[] = "LEFT JOIN m_PayCondition pc  ";
+	$aryQuery[] = "ON pc.lngPayConditionCode = tp.lngPayConditionCode  ";
 
 	$aryQuery[] = " WHERE o.lngOrderNo = " . $lngOrderNo;
 	$aryQuery[] = " AND   o.lngRevisionNo = " . $lngRevisionNo;
