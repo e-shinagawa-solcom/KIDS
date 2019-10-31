@@ -238,12 +238,6 @@ $(function(){
         var windowName = 'window_confirm';
         var win = window.open(actionUrl, windowName, 'scrollbars=yes, width=1000, height=700, resizable=0 location=0');
 
-        win.onload = function() {
-          $(win).on('unload', function(){
-            location.reload();
-          });          
-        }
-
         return false;
 
       } else {
@@ -322,12 +316,6 @@ $(function(){
         var actionUrl = baseUrl + "?" + numberKey + "=" + target + "&strSessionID=" + sessionID;
         var windowName = 'window_confirm';
         var win = window.open(actionUrl, windowName, 'scrollbars=yes, width=1000, height=700, resizable=0 location=0');
-
-        win.onload = function() {
-          $(win).on('unload', function(){
-            location.reload();
-          });          
-        }
         
         return false;
 
@@ -373,12 +361,6 @@ $(function(){
         var actionUrl = baseUrl + "?" + numberKey + "=" + target[0] + "&strSessionID=" + sessionID;
         var windowName = 'window_confirm';
         var win = window.open(actionUrl, windowName, 'scrollbars=yes, width=1000, height=700, resizable=0 location=0');
-
-        win.onload = function() {
-          $(win).on('unload', function(){
-            location.reload();
-          });          
-        }
         
         return false;
 
