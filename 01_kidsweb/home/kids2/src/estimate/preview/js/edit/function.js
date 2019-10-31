@@ -1,3 +1,4 @@
+// ロード時の表の位置調整
 $(window).on('load',function(){
 	var height = $('#header').height();
 	var width = $('#sideMenu').width();
@@ -5,14 +6,7 @@ $(window).on('load',function(){
 	$('.grid').css({'margin-left': width + 'px'});
 });
 
-function urlCopy() {
-	$('body').append('<textarea id="currentURL" style="position:fixed;left:-100%;">'+location.href+'</textarea>');
-	$('#currentURL').select();
-	document.execCommand('copy');
-	$('#currentURL').remove();
-	alert("URLをコピーしました。");
-}
-
+// 編集中止
 function cancelEdit() {
 	var text = '編集内容を破棄して閲覧モードに戻ります。\nよろしいですか？';
 	var result = confirm(text);
@@ -75,6 +69,7 @@ function cancelEdit() {
 	}
 }
 
+// 編集モードから離れるときの処理
 window.onbeforeunload = function() {
     // 排他テーブルのレコード削除
 	$("<input>", {
@@ -95,6 +90,7 @@ window.onbeforeunload = function() {
 	});
 }
 
+// 閲覧モードへの遷移処理
 function previewModeTransition (actionUrl) {
 	var formData = $('#formData');
 	formData.attr('action', actionUrl);
