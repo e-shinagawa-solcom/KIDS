@@ -25,6 +25,6 @@ function fncCloseButton( strMode , obj )
 }
 
 // ÊÄ¤¸¤ëgif
-var closeJ1 = '/img/type01/estimate/regist/close/close_off_ja_bt.gif';
-var closeJ2 = '/img/type01/estimate/regist/close/close_off_on_ja_bt.gif';
-var closeJ3 = '/img/type01/estimate/regist/close/close_on_ja_bt.gif';
+var closeJ1 = '/img/type01/estimate/delete/close/close_off_ja_bt.gif';
+var closeJ2 = '/img/type01/estimate/delete/close/close_off_on_ja_bt.gif';
+var closeJ3 = '/img/type01/estimate/delete/close/close_on_ja_bt.gif';
