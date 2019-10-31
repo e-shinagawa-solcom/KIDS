@@ -641,6 +641,7 @@ function fncGetSearchPurchaseSQL ( $aryViewColumn, $arySearchColumn, $arySearchD
 //	$aryFromQuery[] = "	LEFT JOIN m_Product p ON od1.strProductCode = p.strProductCode";
 	$aryFromQuery[] = "	left join t_purchaseorderdetail tp on  od1.lngorderno = tp.lngorderno and od1.lngorderdetailno = tp.lngorderdetailno and od1.lngrevisionno = tp.lngrevisionno";
 	$aryFromQuery[] = "	left join m_purchaseorder mp on  tp.lngpurchaseorderno = mp.lngpurchaseorderno and tp.lngrevisionno = mp.lngrevisionno";
+	$aryFromQuery[] = "	where mp.lngpurchaseorderno not in (select lngpurchaseorderno from m_purchaseorder where lngrevisionno < 0) ";
 	$aryDetailWhereQuery[] = ") as od on od.lngOrderNo = o.lngOrderNo and od.lngrevisionno = o.lngrevisionno";
 	// where句（明細行） クエリー連結
 	$aryFromQuery[]  = "\n";
@@ -1965,7 +1966,7 @@ function fncSetPurchaseTable ( $aryResult, $arySearchColumn, $aryViewColumn, $ar
 				{
 					// 明細行数の調査
 					$strDetailQuery = fncGetOrderToProductSQL ( $aryDetailViewColumn, $aryResult[$i]["lngorderno"], $aryResult[$i]["lngrevisionno"], $aryData, $objDB );
-fncDebug("kids2.log", $strDetailQuery , __FILE__, __LINE__, "a" );
+//("kids2.log", $strDetailQuery , __FILE__, __LINE__, "a" );
 					// クエリー実行
 					if ( !$lngDetailResultID = $objDB->execute( $strDetailQuery ) )
 					{
