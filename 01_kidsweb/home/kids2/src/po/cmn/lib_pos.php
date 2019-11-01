@@ -539,7 +539,7 @@ function fncGetSearchPurchaseSQL ( $aryViewColumn, $arySearchColumn, $arySearchD
 	$aryFromQuery[] = "	) p ON od1.strProductCode = p.strProductCode and p.strrevisecode = od1.strrevisecode";
 
 //	$aryFromQuery[] = "	LEFT JOIN m_Product p ON od1.strProductCode = p.strProductCode";
-	$aryFromQuery[] = "	left join t_purchaseorderdetail tp on  od1.lngorderno = tp.lngorderno and od1.lngorderdetailno = tp.lngorderdetailno and od1.lngrevisionno = tp.lngrevisionno";
+	$aryFromQuery[] = "	left join t_purchaseorderdetail tp on  od1.lngorderno = tp.lngorderno and od1.lngorderdetailno = tp.lngorderdetailno and od1.lngrevisionno = tp.lngorderrevisionno";
 	$aryFromQuery[] = "	left join m_purchaseorder mp on  tp.lngpurchaseorderno = mp.lngpurchaseorderno and tp.lngrevisionno = mp.lngrevisionno";
 	$aryFromQuery[] = "	where mp.lngpurchaseorderno not in (select lngpurchaseorderno from m_purchaseorder where lngrevisionno < 0) ";
 	$aryDetailWhereQuery[] = ") as od on od.lngOrderNo = o.lngOrderNo and od.lngrevisionno = o.lngrevisionno";

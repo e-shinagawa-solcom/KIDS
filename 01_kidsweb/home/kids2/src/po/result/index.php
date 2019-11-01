@@ -192,7 +192,8 @@
 	
 	// 検索条件に一致する発注コードを取得するSQL文の作成
 	$strQuery = fncGetSearchPurchaseSQL( $aryViewColumn, $arySearchColumn, $aryData, $objDB, "", 0, FALSE );
-	// echo $strQuery;
+	echo $strQuery;
+	return;
 //fncDebug("kids2.log", $strQuery, __FILE__, __LINE__, "w" );
 	// 値をとる =====================================
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
