@@ -542,16 +542,9 @@ function fncGetReceiveDetailHtml($aryDetail, $isCreateNew){
         }
 
         //NO.
-        if ($isCreateNew){
-            // データ登録時、明細選択エリアのNo.は lngsortkey とする 
-            $strDisplayValue = htmlspecialchars($aryDetail[$i]["lngsortkey"]);
-            $strHtml .= "<td class='detailSortKey'>" . $strDisplayValue . "</td>";
-        }
-        else{
-            // データ修正時、出力明細一覧エリアのNo.は明細の配列のインデックス+1とする（行番号）
-            $rownumber = $i + 1;
-            $strHtml .= "<td name='rownum'>" . $rownumber . "</td>";
-        }
+        // データ修正時、出力明細一覧エリアのNo.は明細の配列のインデックス+1とする（行番号）
+        $rownumber = $i + 1;
+        $strHtml .= "<td name='rownum'>" . $rownumber . "</td>";
         //顧客発注番号
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["strcustomerreceivecode"]);
         $strHtml .= "<td class='detailCustomerReceiveCode'>" . $strDisplayValue . "</td>";

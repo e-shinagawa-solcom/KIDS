@@ -137,10 +137,11 @@ function SearchReceiveDetail(search_condition) {
         // jQueryUIのtablesorterでソート設定
         $('#DetailTable').tablesorter({
             headers: {
-                'not-sortable': { sorter: false },
+                0: { sorter: false },
+                1: { sorter: false }
             }
         });
-
+        
         $('#DetailTableBodyAllCheck').on('change', function () {
             $('input[name="edit"]').prop('checked', this.checked);
         });
@@ -163,7 +164,9 @@ function ClearAllEditDetail() {
 //   HTMLエレメント生成後の初期処理
 // ------------------------------------------
 jQuery(function ($) {
-    window.opener.$('input[name="locked"]').val("1");
+    if ($('input[name="lngSlipNo"]').val().length > 0) {
+        window.opener.$('input[name="locked"]').val("1");
+    }
     // 出力明細部の設定
     $("#EditTableBody").sortable();
     $("#EditTableBody").on('sortstop', function () {
