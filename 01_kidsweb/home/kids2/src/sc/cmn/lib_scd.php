@@ -522,7 +522,24 @@ function fncGetSlipToProductSQL ( $lngSlipNo, $lngRevisionNo, $aryData, $objDB )
 
 	// From句
 	$aryOutQuery[] = " FROM t_SlipDetail sd";
-	$aryOutQuery[] = "    LEFT JOIN m_Receive re ON sd.lngReceiveNo = re.lngReceiveNo";
+	$aryOutQuery[] = "  LEFT JOIN ( ";
+	$aryOutQuery[] = "    select";
+	$aryOutQuery[] = "      r1.* ";
+	$aryOutQuery[] = "    from";
+	$aryOutQuery[] = "      m_Receive r1 ";
+	$aryOutQuery[] = "      inner join ( ";
+	$aryOutQuery[] = "        select";
+	$aryOutQuery[] = "          max(lngRevisionNo) lngRevisionNo";
+	$aryOutQuery[] = "          , strreceivecode ";
+	$aryOutQuery[] = "        from";
+	$aryOutQuery[] = "          m_Receive ";
+	$aryOutQuery[] = "        group by";
+	$aryOutQuery[] = "          strreceivecode";
+	$aryOutQuery[] = "      ) r2 ";
+	$aryOutQuery[] = "        on r1.lngrevisionno = r2.lngRevisionNo ";
+	$aryOutQuery[] = "        and r1.strreceivecode = r2.strreceivecode";
+	$aryOutQuery[] = "  ) re ";
+	$aryOutQuery[] = "    ON sd.lngReceiveNo = re.lngReceiveNo ";
 
 	// Where句
 	$aryOutQuery[] = " WHERE sd.lngSlipNo = " . $lngSlipNo . " AND sd.lngRevisionNo = " . $lngRevisionNo . "";	// 対象納品伝票番号の指定
@@ -869,7 +886,6 @@ function fncSetSlipTableBody ( $aryResult, $arySearchColumn, $aryData, $aryUserA
 		$aryHeadViewColumn[] = "btnInvalid";
 	}
 	*/
-
 	// テーブルの形成
 	$lngResultCount = count($aryResult);
 	$lngColumnCount = 1;
@@ -930,6 +946,7 @@ function fncSetSlipTableBody ( $aryResult, $arySearchColumn, $aryData, $aryUserA
 
 				// 明細選択クエリー実行
 				$strDetailQuery = fncGetSlipToProductSQL ( $aryResult[$i]["lngslipno"], $aryResult[$i]["lngrevisionno"], $aryData, $objDB );
+
 //				fncDebug("kids2.log", $strDetailQuery, __FILE__, __LINE__, "a+");
 				if ( !$lngDetailResultID = $objDB->execute( $strDetailQuery ) )
 				{

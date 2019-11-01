@@ -63,7 +63,7 @@
         window.close();
     });
 
-    
+    // ウィンドウを閉じる前のイベント
     $(window).on("beforeunload", function(e) {
         // 親ウィンドウのロックを解除する
         if (window.opener.$('#lockId').length) {

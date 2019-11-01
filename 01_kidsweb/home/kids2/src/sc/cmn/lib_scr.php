@@ -22,9 +22,11 @@
 
 // 修正対象データに対してロックしている人を確認する
 // ロックしている人がいないなら空文字列を返す
-function fncGetExclusiveLockUser($lngFunctionCode, $strSlipCode, $objDB)
+function fncGetExclusiveLockUser($lngFunctionCode, $strSlipCode, $objAuth, $objDB)
 {
     $lockUserName = "";
+    $v_lngusercode = $objAuth->UserCode;                  //1:ユーザコード
+    $v_stripaddress = $objAuth->AccessIP;      //2:端末IPアドレス
 
     $aryQuery = array();
     $aryQuery [] = "SELECT ";
@@ -45,15 +47,24 @@ function fncGetExclusiveLockUser($lngFunctionCode, $strSlipCode, $objDB)
         for ( $i = 0; $i < $lngResultNum; $i++ ) {
             $aryResult[] = $objDB->fetchArray( $lngResultID, $i );
         }
-        // ロックしているユーザーの表示用ユーザー名を設定
-        $lockUserName = $aryResult[0]["struserdisplayname"];
+        if ($v_lngusercode != $aryResult[0]["lngusercode"] || $v_stripaddress != $aryResult[0]["stripaddress"]) {
+            // ロックしているユーザーの表示用ユーザー名を設定
+            $lockUserName = $aryResult[0]["struserdisplayname"];
+            $isLock = 1; // 別ユーザーロック中
+        } else {
+            $lockUserName = "";
+            $isLock = 2; // 同ユーザーロック中
+        }
     } else {
         // だれもロックしていない
-        $lockUserName = "";        
+        $lockUserName = "";
+        $isLock = 0; // 未ロック
     }
     $objDB->freeResult( $lngResultID );
 
-    return $lockUserName;
+    $aryResult["lockUserName"] = $lockUserName;
+    $aryResult["isLock"] = $isLock;
+    return $aryResult;
 }
 
 // 対象の機能IDに対して排他ロックを取る
@@ -1478,7 +1489,7 @@ function fncRegisterSalesDetail($itemMinIndex, $itemMaxIndex, $lngSalesNo, $lngR
         $aryInsert[] =") ";
         $strQuery = "";
         $strQuery .= implode("\n", $aryInsert);
-        
+        echo $strQuery;
         // 登録実行
         if ( !$lngResultID = $objDB->execute( $strQuery ) )
         {

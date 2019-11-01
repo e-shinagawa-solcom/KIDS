@@ -227,7 +227,22 @@ $(function() {
     // スキャンチェックボックス
     $.scanAllCheckbox();
   };
-
+  
+  $.createTableRenew = function(response) {
+    data = (response === undefined || response && !response.length) ? dataEmpty : Array.from(new Set(response));
+  
+    // テーブルB生成
+    $.createSkeletonTable(data, $tableB_row, domB, $tableB_tbody);
+    $.each(data, function(i) {
+      temp.push(data[i]);
+    });
+    $.addDataTableB();
+    // テーブルソート機能設定
+    $.setTableSorter();
+    // スキャンチェックボックス
+    $.scanAllCheckbox();
+    };
+  
   /**
    * ----------------------------------------------------------------------------------------------------
    * イベント設定

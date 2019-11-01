@@ -159,12 +159,11 @@ function ClearAllEditDetail() {
 }
 // ------------------------------------------------------------------
 
-
 // ------------------------------------------
 //   HTMLエレメント生成後の初期処理
 // ------------------------------------------
 jQuery(function ($) {
-
+    window.opener.$('input[name="locked"]').val("1");
     // 出力明細部の設定
     $("#EditTableBody").sortable();
     $("#EditTableBody").on('sortstop', function () {
