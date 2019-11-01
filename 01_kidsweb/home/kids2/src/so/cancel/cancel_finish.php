@@ -71,6 +71,7 @@ $objDB->freeResult( $lngResultID );
 $aryQuery = array();
 $aryQuery[] = "UPDATE m_receive ";
 $aryQuery[] = "set lngreceivestatuscode = " . DEF_RECEIVE_APPLICATE . " ";
+$aryQuery[] = ", strcustomerreceivecode = '' ";
 $aryQuery[] = "where lngreceiveno = " . $lngReceiveNo . " ";
 $aryQuery[] = "AND lngRevisionNo = " . $lngRevisionNo . " ";
 $strQuery = implode("\n", $aryQuery);

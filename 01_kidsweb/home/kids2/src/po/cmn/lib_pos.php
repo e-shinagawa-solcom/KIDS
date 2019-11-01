@@ -126,7 +126,7 @@ function fncGetSearchPurchaseSQL ( $aryViewColumn, $arySearchColumn, $arySearchD
 	}
 
 	//
-	$arySelectQuery[] = ", mu.strMonetaryUnitSign as strMonetaryUnitSign";
+	$arySelectQuery[] = ", mm.strMonetaryUnitSign as strMonetaryUnitSign";
 	$flgMonetaryUnit = TRUE;
 
 
@@ -268,6 +268,36 @@ function fncGetSearchPurchaseSQL ( $aryViewColumn, $arySearchColumn, $arySearchD
 					$flgCustomerCompany = TRUE;
 				}
 			}
+			
+			
+			// 部門
+			if ( $strSearchColumnName == "lngInChargeGroupCode" )
+			{
+				if ( $arySearchDataColumn["lngInChargeGroupCode"] )
+				{
+					$aryQuery[] = " AND mg.strGroupDisplayCode = '" . $arySearchDataColumn["lngInChargeGroupCode"] . "'";
+					$flgGroup = TRUE;
+				}
+				if ( $arySearchDataColumn["strInChargeGroupName"] )
+				{
+					$aryQuery[] = " AND UPPER(mg.strGroupDisplayName) LIKE UPPER('%" . $arySearchDataColumn["strInChargeGroupName"] . "%')";
+					$flgGroup = TRUE;
+				}
+			}
+			// 担当者
+			if ( $strSearchColumnName == "lngInChargeUserCode" )
+			{
+				if ( $arySearchDataColumn["lngInChargeUserCode"] )
+				{
+					$aryQuery[] = " AND mu.strUserDisplayCode = '" . $arySearchDataColumn["lngInChargeUserCode"] . "'";
+					$flgUser = TRUE;
+				}
+				if ( $arySearchDataColumn["strInChargeUserName"] )
+				{
+					$aryQuery[] = " AND UPPER(mu.strUserDisplayName) LIKE UPPER('%" . $arySearchDataColumn["strInChargeUserName"] . "%')";
+					$flgUser = TRUE;
+				}
+			}
 			// 状態
 			if ( $strSearchColumnName == "lngOrderStatusCode" )
 			{
@@ -362,14 +392,7 @@ function fncGetSearchPurchaseSQL ( $aryViewColumn, $arySearchColumn, $arySearchD
 			    if ( ( $arySearchDataColumn["strProductCodeFrom"] && $arySearchDataColumn["strProductCodeTo"] )
 			     && ( $arySearchDataColumn["strProductCodeFrom"] == $arySearchDataColumn["strProductCodeTo"] ) )
 			    {
-					if ( !$detailFlag )
-					{
-						$aryDetailTargetQuery[] = " where";
-					}
-					else
-					{
-						$aryDetailWhereQuery[] = "AND ";
-					}
+					$aryDetailWhereQuery[] = "AND ";
 					$aryDetailWhereQuery[] = "od1.strProductCode = '" . $arySearchDataColumn["strProductCodeFrom"] . "' ";
 					$detailFlag = TRUE;
 			    }
@@ -377,91 +400,16 @@ function fncGetSearchPurchaseSQL ( $aryViewColumn, $arySearchColumn, $arySearchD
 			    {
 					if ( $arySearchDataColumn["strProductCodeFrom"] )
 					{
-						if ( !$detailFlag )
-						{
-							$aryDetailTargetQuery[] = " where";
-						}
-						else
-						{
-							$aryDetailWhereQuery[] = "AND ";
-						}
+						$aryDetailWhereQuery[] = "AND ";
 						$aryDetailWhereQuery[] = "od1.strProductCode >= '" . $arySearchDataColumn["strProductCodeFrom"] . "' ";
 						$detailFlag = TRUE;
 					}
 					if ( $arySearchDataColumn["strProductCodeTo"] )
 					{
-						if ( !$detailFlag )
-						{
-							$aryDetailTargetQuery[] = " where";
-						}
-						else
-						{
-							$aryDetailWhereQuery[] = "AND ";
-						}
+						$aryDetailWhereQuery[] = "AND ";
 						$aryDetailWhereQuery[] = "od1.strProductCode <= '" . $arySearchDataColumn["strProductCodeTo"] . "' ";
 						$detailFlag = TRUE;
 					}
-				}
-			}
-			
-			// 部門
-			if ( $strSearchColumnName == "lngInChargeGroupCode" )
-			{
-				if( $arySearchDataColumn["lngInChargeGroupCode"] || $arySearchDataColumn["strInChargeGroupName"] )
-				{
-					if ( !$detailFlag )
-					{
-						$aryDetailTargetQuery[] = " where";
-					}
-					else
-					{
-						$aryDetailWhereQuery[] = "AND ";
-					}
-				}
-
-				if ( $arySearchDataColumn["lngInChargeGroupCode"] )
-				{
-					$aryDetailWhereQuery[] = " mg.strGroupDisplayCode = '" . $arySearchDataColumn["lngInChargeGroupCode"] . "'";
-					$detailFlag = TRUE;
-				}
-				if ( $arySearchDataColumn["strInChargeGroupName"] )
-				{
-					if( $arySearchDataColumn["lngInChargeGroupCode"] )
-					{
-						$aryDetailWhereQuery[] = "AND ";
-					}
-					$aryDetailWhereQuery[] = " UPPER(mg.strGroupDisplayName) LIKE UPPER('%" . $arySearchDataColumn["strInChargeGroupName"] . "%')";
-					$detailFlag = TRUE;
-				}
-			}
-			// 担当者
-			if ( $strSearchColumnName == "lngInChargeUserCode" )
-			{
-				if( $arySearchDataColumn["lngInChargeUserCode"] || $arySearchDataColumn["strInChargeUserName"] )
-				{
-					if ( !$detailFlag )
-					{
-						$aryDetailTargetQuery[] = " where";
-					}
-					else
-					{
-						$aryDetailWhereQuery[] = "AND ";
-					}
-				}
-
-				if ( $arySearchDataColumn["lngInChargeUserCode"] )
-				{
-					$aryDetailWhereQuery[] = " mu.strUserDisplayCode = '" . $arySearchDataColumn["lngInChargeUserCode"] . "'";
-					$detailFlag = TRUE;
-				}
-				if ( $arySearchDataColumn["strInChargeUserName"] )
-				{
-					if( $arySearchDataColumn["lngInChargeUserCode"] )
-					{
-						$aryDetailWhereQuery[] = "AND ";
-					}
-					$aryDetailWhereQuery[] = " UPPER(mu.strUserDisplayName) LIKE UPPER('%" . $arySearchDataColumn["strInChargeUserName"] . "%')";
-					$detailFlag = TRUE;
 				}
 			}
 			// 製品名称（日本語）
@@ -469,17 +417,7 @@ function fncGetSearchPurchaseSQL ( $aryViewColumn, $arySearchColumn, $arySearchD
 			{
 				if ( $arySearchDataColumn["strProductName"] )
 				{
-					if ( !$detailFlag )
-					{
-						$aryDetailTargetQuery[] = " where";
-					}
-					else
-					{
-						unset( $aryDetailTargetQuery );
-						$aryDetailTargetQuery[] = " where";
-
-						$aryDetailWhereQuery[] = "AND ";
-					}
+					$aryDetailWhereQuery[] = "AND ";
 					$aryDetailWhereQuery[] = "UPPER( p.strProductName ) LIKE UPPER( '%" . $arySearchDataColumn["strProductName"] . "%' ) ";
 					$detailFlag = TRUE;
 				}
@@ -489,17 +427,7 @@ function fncGetSearchPurchaseSQL ( $aryViewColumn, $arySearchColumn, $arySearchD
 			{
 				if ( $arySearchDataColumn["strProductEnglishName"] )
 				{
-					if ( !$detailFlag )
-					{
-						$aryDetailTargetQuery[] = " where";
-					}
-					else
-					{
-						unset( $aryDetailTargetQuery );
-						$aryDetailTargetQuery[] = " where";
-
-						$aryDetailWhereQuery[] = "AND ";
-					}
+					$aryDetailWhereQuery[] = "AND ";
 					$aryDetailWhereQuery[] = "UPPER( p.strProductEnglishName ) LIKE UPPER( '%" . $arySearchDataColumn["strProductEnglishName"] . "%' ) ";
 					$detailFlag = TRUE;
 				}
@@ -510,14 +438,7 @@ function fncGetSearchPurchaseSQL ( $aryViewColumn, $arySearchColumn, $arySearchD
 			{
 				if ( $arySearchDataColumn["lngStockSubjectCode"] )
 				{
-					if ( !$detailFlag )
-					{
-						$aryDetailTargetQuery[] = " where";
-					}
-					else
-					{
-						$aryDetailWhereQuery[] = "AND ";
-					}
+					$aryDetailWhereQuery[] = "AND ";
 					$aryDetailWhereQuery[] = "od1.lngStockSubjectCode = " . $arySearchDataColumn["lngStockSubjectCode"] . " ";
 					$detailFlag = TRUE;
 					$StockSubjectFlag = TRUE;
@@ -528,14 +449,7 @@ function fncGetSearchPurchaseSQL ( $aryViewColumn, $arySearchColumn, $arySearchD
 			{
 				if ( $arySearchDataColumn["lngStockItemCode"] )
 				{
-					if ( !$detailFlag )
-					{
-						$aryDetailTargetQuery[] = " where";
-					}
-					else
-					{
-						$aryDetailWhereQuery[] = "AND ";
-					}
+					$aryDetailWhereQuery[] = "AND ";
 					$aryDetailWhereQuery[] = "od1.lngStockItemCode = " . $arySearchDataColumn["lngStockItemCode"] . " ";
 					if ( $StockSubjectFlag != TRUE )
 					{
@@ -550,27 +464,13 @@ function fncGetSearchPurchaseSQL ( $aryViewColumn, $arySearchColumn, $arySearchD
 			{
 				if ( $arySearchDataColumn["dtmDeliveryDateFrom"] )
 				{
-					if ( !$detailFlag )
-					{
-						$aryDetailTargetQuery[] = " where";
-					}
-					else
-					{
-						$aryDetailWhereQuery[] = "AND ";
-					}
+					$aryDetailWhereQuery[] = "AND ";
 					$aryDetailWhereQuery[] = "od1.dtmDeliveryDate >= '" . $arySearchDataColumn["dtmDeliveryDateFrom"] . "' ";
 					$detailFlag = TRUE;
 				}
 				if ( $arySearchDataColumn["dtmDeliveryDateTo"] )
 				{
-					if ( !$detailFlag )
-					{
-						$aryDetailTargetQuery[] = " where";
-					}
-					else
-					{
-						$aryDetailWhereQuery[] = "AND ";
-					}
+					$aryDetailWhereQuery[] = "AND ";
 					$aryDetailWhereQuery[] = "od1.dtmDeliveryDate <= '" . $arySearchDataColumn["dtmDeliveryDateTo"] . "' ";
 					$detailFlag = TRUE;
 				}
@@ -647,10 +547,10 @@ function fncGetSearchPurchaseSQL ( $aryViewColumn, $arySearchColumn, $arySearchD
 	$aryFromQuery[]  = "\n";
 //	$strDetailQuery = implode("\n", $aryDetailFrom) . "\n";
 	// 明細行の検索対応
-	if ( $detailFlag )
-	{
-		$aryFromQuery[] = implode("\n", $aryDetailTargetQuery) . "\n";
-	}
+	// if ( $detailFlag )
+	// {
+	// 	$aryFromQuery[] = implode("\n", $aryDetailTargetQuery) . "\n";
+	// }
 	$aryFromQuery[] = implode("\n", $aryDetailWhereQuery) . "\n";
 
 
@@ -664,6 +564,16 @@ function fncGetSearchPurchaseSQL ( $aryViewColumn, $arySearchColumn, $arySearchD
 	{
 		$aryFromQuery[] = " LEFT JOIN m_Company cust_c ON o.lngCustomerCompanyCode = cust_c.lngCompanyCode";
 	}
+	
+	if ( $flgGroup )
+	{
+		$aryFromQuery[] = " LEFT JOIN m_group mg ON o.lnggroupcode = mg.lnggroupcode";
+	}
+	
+	if ( $flgUser )
+	{
+		$aryFromQuery[] = " LEFT JOIN m_User mu ON o.lngUserCode = mu.lngUserCode";
+	}
 	if ( $flgOrderStatus )
 	{
 		$aryFromQuery[] = " LEFT JOIN m_OrderStatus os USING (lngOrderStatusCode)";
@@ -674,7 +584,7 @@ function fncGetSearchPurchaseSQL ( $aryViewColumn, $arySearchColumn, $arySearchD
 	}
 	if ( $flgMonetaryUnit )
 	{
-		$aryFromQuery[] = " LEFT JOIN m_MonetaryUnit mu ON o.lngMonetaryUnitCode = mu.lngMonetaryUnitCode";
+		$aryFromQuery[] = " LEFT JOIN m_MonetaryUnit mm ON o.lngMonetaryUnitCode = mm.lngMonetaryUnitCode";
 	}
 	// if ( $flgWorkFlowStatus )
 	// {

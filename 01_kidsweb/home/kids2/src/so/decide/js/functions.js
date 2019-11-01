@@ -395,7 +395,10 @@
                 "lngProductUnitCode": lngProductUnitCode
             };
         });
-        
+        if (len == 0) {
+            alert("受注確定する明細行が選択されていません。");
+            exit;
+        }
         // 画面操作を無効する
         lockScreen("lockId");
 

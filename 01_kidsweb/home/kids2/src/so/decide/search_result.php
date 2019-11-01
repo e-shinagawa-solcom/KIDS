@@ -88,7 +88,7 @@ if ($aryData["strReceiveCode"] != "") {
     $aryQuery[] = " AND r1.strReceiveCode = '" . $aryData["strReceiveCode"] . "' ";
 }
 if ($aryData["lngCustomerCode"] != "") {
-    $aryQuery[] = " AND r1.lngcustomercompanycode = " . $aryData["lngCustomerCode"] . " ";
+    $aryQuery[] = " AND cust_c.strCompanyDisplayCode = '" . $aryData["lngCustomerCode"] . "' ";
 }
 if ($aryData["From_dtmDeliveryDate"] != "") {
     $aryQuery[] = " AND r1.dtmDeliveryDate >= '" . $aryData["From_dtmDeliveryDate"] . "' ";

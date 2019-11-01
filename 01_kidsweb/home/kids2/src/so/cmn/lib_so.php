@@ -122,6 +122,7 @@ function fncGetReceiveDetailNoToInfoSQL($lngReceiveNo, $lngRevisionNo)
     // À½ÉÊ¥³¡¼¥É¡¦Ì¾¾Î
     $aryQuery[] = ", rd.strProductCode as strProductCode";
     $aryQuery[] = ", p.strProductName as strProductName";
+    $aryQuery[] = ", p.strproductenglishname as strproductenglishname";
     // Çä¾å¶èÊ¬
     $aryQuery[] = ", rd.lngSalesClassCode as lngSalesClassCode";
     $aryQuery[] = ", ss.strSalesClassName as strSalesClassName";
@@ -158,10 +159,10 @@ function fncGetReceiveDetailNoToInfoSQL($lngReceiveNo, $lngRevisionNo)
     }
     $aryQuery[] = " LEFT JOIN (";
     $aryQuery[] = "   select p1.*  from m_product p1 ";
-    $aryQuery[] = "   inner join (select max(lngrevisionno) lngrevisionno, strproductcode from m_Product group by strProductCode) p2";
-    $aryQuery[] = "   on p1.lngrevisionno = p2.lngrevisionno and p1.strproductcode = p2.strproductcode";
+    $aryQuery[] = "   inner join (select max(lngrevisionno) lngrevisionno, strproductcode, strrevisecode from m_Product group by strProductCode, strrevisecode) p2";
+    $aryQuery[] = "   on p1.lngrevisionno = p2.lngrevisionno and p1.strproductcode = p2.strproductcode and p1.strrevisecode = p2.strrevisecode";
     $aryQuery[] = ") p ";
-    $aryQuery[] = " ON rd.strProductCode = p.strProductCode ";
+    $aryQuery[] = " ON rd.strProductCode = p.strProductCode and rd.strrevisecode = p.strrevisecode ";
     $aryQuery[] = " LEFT JOIN m_SalesClass ss USING (lngSalesClassCode)";
     $aryQuery[] = " LEFT JOIN m_ProductUnit pu ON rd.lngProductUnitCode = pu.lngProductUnitCode";
     $aryQuery[] = " WHERE rd.lngReceiveNo in (" . $lngReceiveNo . ") ";
