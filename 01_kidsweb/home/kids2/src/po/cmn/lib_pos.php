@@ -877,7 +877,7 @@ function fncGetSearchPurcheseOrderSQL( $aryViewColumn, $arySearchColumn, $arySea
 				$dtmSearchDate = $arySearchDataColumn["dtmInsertDateFrom"] . " 00:00:00";
 				$aryQuery[] = "AND   mp.dtminsertdate >= '" . $dtmSearchDate . "'";
 			}
-			if($arySearchDataColumn["dtmInsertDataTo"]){
+			if($arySearchDataColumn["dtmInsertDateTo"]){
 				$dtmSearchDate = $arySearchDataColumn["dtmInsertDateTo"] . " 23:59:59";
 				$aryQuery[] = "AND   mp.dtminsertdate <= '" . $dtmSearchDate . "'";
 			}
@@ -988,11 +988,11 @@ function fncGetSearchPurcheseOrderSQL( $aryViewColumn, $arySearchColumn, $arySea
 	$aryOutQuery[] = "  ,mp.strrevisecode as strReviseCode";
 	$aryOutQuery[] = implode("\n", $arySelectQuery);
 	$aryOutQuery[] = "FROM m_purchaseorder mp";
-	$aryOutQuery[] = "inner join m_user input_user on input_user.lngusercode = mp.lnginsertusercode";
-	$aryOutQuery[] = "inner join m_group mg on mg.lnggroupcode = mp.lnggroupcode";
-	$aryOutQuery[] = "inner join m_user mu on mu.lngusercode = mp.lngusercode";
-	$aryOutQuery[] = "inner join m_company mc_stock on mc_stock.lngcompanycode = mp.lngcustomercode";
-	$aryOutQuery[] = "inner join m_company mc_delivary on mc_delivary.lngcompanycode = mp.lngdeliveryplacecode";
+	$aryOutQuery[] = "left join m_user input_user on input_user.lngusercode = mp.lnginsertusercode";
+	$aryOutQuery[] = "left join m_group mg on mg.lnggroupcode = mp.lnggroupcode";
+	$aryOutQuery[] = "left join m_user mu on mu.lngusercode = mp.lngusercode";
+	$aryOutQuery[] = "left join m_company mc_stock on mc_stock.lngcompanycode = mp.lngcustomercode";
+	$aryOutQuery[] = "left join m_company mc_delivary on mc_delivary.lngcompanycode = mp.lngdeliveryplacecode";
 	$aryOutQuery[] = implode("\n", $aryQuery);
 	$aryOutQuery[] = "ORDER BY";
 	$aryOutQuery[] = "   mp.lngpurchaseorderno";

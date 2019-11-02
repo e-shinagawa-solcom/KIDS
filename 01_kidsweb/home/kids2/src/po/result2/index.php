@@ -58,9 +58,11 @@
 	$aryData['SearchColumn']=$isSearch;
 	$aryData['Admin'] = $_REQUEST["IsDisplay_btnAdmin"];
 	foreach($from as $key=> $item){
+//echo $key.'From' . "=" . $item . "<br>";
 		$aryData[$key.'From']=$item;
 	}
 	foreach($to as $key=> $item){
+//echo $key.'To' . "=" . $item . "<br>";
 		$aryData[$key.'To']=$item;
 	}
 	foreach($searchValue as $key=> $item){
@@ -71,7 +73,7 @@
 	// 検索表示項目取得
 	if(empty($isDisplay))
 	{
-		$strMessage = fncOutputError( 9058, DEF_WARNING, "" ,FALSE, "../so/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+		$strMessage = fncOutputError( 9058, DEF_WARNING, "" ,FALSE, "../so/search2/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
 
 		// [lngLanguageCode]書き出し
 		$aryHtml["lngLanguageCode"] = 1;
@@ -96,7 +98,7 @@
 	// 検索条件 $arySearchColumnに格納
 	if( empty ( $isSearch ) )
 	{
-	//	fncOutputError( 502, DEF_WARNING, "検索対象項目がチェックされていません",TRUE, "../so/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+	//	fncOutputError( 502, DEF_WARNING, "検索対象項目がチェックされていません",TRUE, "../so/search2/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
 		$bytSearchFlag = TRUE;
 	}
 
@@ -171,6 +173,7 @@
 	
 	// 検索条件に一致する発注コードを取得するSQL文の作成
 	$strQuery = fncGetSearchPurcheseOrderSQL( $aryViewColumn, $arySearchColumn, $aryData, $objDB, "", 0, FALSE );
+//echo $strQuery . "<br>";
 	// 値をとる =====================================
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
@@ -179,7 +182,7 @@
 		// 検索件数が指定数以上の場合エラーメッセージを表示する
 		if ( $lngResultNum > DEF_SEARCH_MAX )
 		{
-			$strMessage = fncOutputError( 9057, DEF_WARNING, DEF_SEARCH_MAX ,FALSE, "../po/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+			$strMessage = fncOutputError( 9057, DEF_WARNING, DEF_SEARCH_MAX ,FALSE, "../po/search2/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
 
 			// [lngLanguageCode]書き出し
 			$aryHtml["lngLanguageCode"] = $aryData["lngLanguageCode"];
@@ -209,7 +212,7 @@
 	}
 	else
 	{
-		$strMessage = fncOutputError( 503, DEF_WARNING, "" ,FALSE, "../po/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+		$strMessage = fncOutputError( 503, DEF_WARNING, "" ,FALSE, "../po/search2/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
 
 		// [lngLanguageCode]書き出し
 		$aryHtml["lngLanguageCode"] = $aryData["lngLanguageCode"];
