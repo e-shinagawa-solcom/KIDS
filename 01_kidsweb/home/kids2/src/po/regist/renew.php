@@ -87,7 +87,7 @@
 	{
 		$objDB->transactionBegin();
 		// 発注書マスタ更新
-		if(!fncUpdatePurchaseOrder($aryData, $objDB)) { return false; }
+		if(!fncUpdatePurchaseOrder($aryData, $objDB, $objAuth)) { return false; }
 
 		// 発注書明細更新
 		if(!fncUpdatePurchaseOrderDetail($aryData, $objDB)) { return false; }
