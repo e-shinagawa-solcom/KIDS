@@ -1669,7 +1669,7 @@ function fncSetPurchaseOrderHtml($aryViewColumn, $aryResult, $aryUserAuthority){
 				// 削除ボタン
 //				if($strColumn == "btnDelete" and $aryUserAuthority["Admin"]) {
 				if($strColumn == "btnDelete") {
-					$aryHtml[] = "  <td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/remove_off_bt.gif\" lngpurchaseorderno=\"" . $aryResult[$i]["lngpurchaseorderno"] . "\" class=\"record button\"></td>";
+					$aryHtml[] = "  <td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/remove_off_bt.gif\" lngpurchaseorderno=\"" . $aryResult[$i]["lngpurchaseorderno"] . "\" lngrevisionno = \"" . $aryResult[$i]["lngrevisionno"]. "\" class=\"delete button\"></td>";
 					// 現リビジョンのみ表示
 /*   最新リビジョンのみ取得に修正したため削除
 					if($aryResult[$i]["lngrevisionno"] == -1){
