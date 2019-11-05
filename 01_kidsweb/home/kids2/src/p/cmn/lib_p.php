@@ -30,7 +30,85 @@ function fncGetMaxProductSQL($displayColumns, $searchColumns, $from, $to, $searc
     // クエリの組立て
 $aryQuery = array();
 $aryQuery[] = "SELECT distinct";
-$aryQuery[] = "  p.strProductCode as strProductCode";
+$aryQuery[] = "  p.lngProductNo as lngProductNo";
+$aryQuery[] = "  , p.lngrevisionno as lngrevisionno";
+$aryQuery[] = "  , p.strrevisecode as strrevisecode";
+$aryQuery[] = "  , p.lngInChargeGroupCode as lngGroupCode";
+$aryQuery[] = "  , p.bytInvalidFlag as bytInvalidFlag";
+$aryQuery[] = "  , to_char(p.dtmInsertDate, 'YYYY/MM/DD') as dtmInsertDate";
+$aryQuery[] = "  , p.strProductCode as strProductCode";
+$aryQuery[] = "  , p.strProductName as strProductName";
+$aryQuery[] = "  , p.strproductenglishname as strproductenglishname";
+$aryQuery[] = "  , p.lngInputUserCode as lngInputUserCode";
+$aryQuery[] = "  , input_u.strUserDisplayCode as strInputUserDisplayCode";
+$aryQuery[] = "  , input_u.strUserDisplayName as strInputUserDisplayName";
+$aryQuery[] = "  , p.lngInChargeGroupCode as lngInChargeGroupCode";
+$aryQuery[] = "  , inchg_g.strGroupDisplayCode as strInChargeGroupDisplayCode";
+$aryQuery[] = "  , inchg_g.strGroupDisplayName as strInChargeGroupDisplayName";
+$aryQuery[] = "  , p.lngInChargeUserCode as lngInChargeUserCode";
+$aryQuery[] = "  , inchg_u.strUserDisplayCode as strInChargeUserDisplayCode";
+$aryQuery[] = "  , inchg_u.strUserDisplayName as strInChargeUserDisplayName";
+$aryQuery[] = "  , p.lngdevelopusercode as lngdevelopusercode";
+$aryQuery[] = "  , devp_u.strUserDisplayCode as strDevelopUserDisplayCode";
+$aryQuery[] = "  , devp_u.strUserDisplayName as strDevelopUserDisplayName";
+$aryQuery[] = "  , p.strGoodsCode";
+$aryQuery[] = "  , p.strGoodsName";
+$aryQuery[] = "  , p.lngCustomerCompanyCode";
+$aryQuery[] = "  , cust_c.strCompanyDisplayCode as strCustomerCompanyCode";
+$aryQuery[] = "  , cust_c.strCompanyDisplayName as strCustomerCompanyName";
+$aryQuery[] = "  , cust_u.strUserDisplayCode as strCustomerUserCode";
+$aryQuery[] = "  , cust_u.strUserDisplayName as strCustomerUserName";
+$aryQuery[] = "  , p.lngCustomerUserCode";
+$aryQuery[] = "  , p.lngPackingUnitCode";
+$aryQuery[] = "  , pack_pu.strProductUnitName as strPackingUnitName";
+$aryQuery[] = "  , p.lngProductUnitCode";
+$aryQuery[] = "  , proct_pu.strProductUnitName as strProductUnitName";
+$aryQuery[] = "  , trim(To_char(p.lngBoxQuantity, '9,999,999,999')) as lngBoxQuantity";
+$aryQuery[] = "  , trim(To_char(p.lngCartonQuantity, '9,999,999,999')) as lngCartonQuantity";
+$aryQuery[] = "  , trim( ";
+$aryQuery[] = "    To_char(p.lngProductionQuantity, '9,999,999,999')";
+$aryQuery[] = "  ) as lngProductionQuantity";
+$aryQuery[] = "  , p.lngProductionUnitCode";
+$aryQuery[] = "  , proctn_pu.strProductUnitName as strProductionUnitName";
+$aryQuery[] = "  , trim( ";
+$aryQuery[] = "    To_char(p.lngFirstDeliveryQuantity, '9,999,999,999')";
+$aryQuery[] = "  ) as lngFirstDeliveryQuantity";
+$aryQuery[] = "  , p.lngFirstDeliveryUnitCode";
+$aryQuery[] = "  , fird_pu.strProductUnitName as strFirstDeliveryUnitName";
+$aryQuery[] = "  , fatry_c.strCompanyDisplayCode as strFactoryCode";
+$aryQuery[] = "  , fatry_c.strCompanyDisplayName as strFactoryName";
+$aryQuery[] = "  , p.lngFactoryCode";
+$aryQuery[] = "  , afatry_c.strCompanyDisplayCode as strAssemblyFactoryCode";
+$aryQuery[] = "  , afatry_c.strCompanyDisplayName as strAssemblyFactoryName";
+$aryQuery[] = "  , p.lngAssemblyFactoryCode";
+$aryQuery[] = "  , dp_c.strCompanyDisplayCode as strDeliveryPlaceCode";
+$aryQuery[] = "  , dp_c.strCompanyDisplayName as strDeliveryPlaceName";
+$aryQuery[] = "  , p.lngDeliveryPlaceCode";
+$aryQuery[] = "  , To_char(dtmDeliveryLimitDate, 'YYYY/MM') as dtmDeliveryLimitDate";
+$aryQuery[] = "  , trim(To_char(p.curProductPrice, '9,999,999,990.99')) as curProductPrice";
+$aryQuery[] = "  , trim(To_char(p.curRetailPrice, '9,999,999,990.99')) as curRetailPrice";
+$aryQuery[] = "  , p.lngTargetAgeCode";
+$aryQuery[] = "  , m_t.strTargetAgeName";
+$aryQuery[] = "  , trim(To_char(p.lngRoyalty, '990.99')) as lngRoyalty";
+$aryQuery[] = "  , p.lngCertificateClassCode";
+$aryQuery[] = "  , m_cc.strcertificateclassname";
+$aryQuery[] = "  , p.lngCopyrightCode";
+$aryQuery[] = "  , m_c.strcopyrightname";
+$aryQuery[] = "  , p.strCopyrightDisplayStamp";
+$aryQuery[] = "  , p.strCopyrightDisplayPrint";
+$aryQuery[] = "  , p.lngProductFormCode";
+$aryQuery[] = "  , m_pf.strproductformname";
+$aryQuery[] = "  , p.strProductComposition";
+$aryQuery[] = "  , p.strAssemblyContents";
+$aryQuery[] = "  , p.strSpecificationDetails";
+$aryQuery[] = "  , p.strNote";
+$aryQuery[] = "  , To_char(p.dtmInsertDate, 'YYYY/MM/DD HH24:MI') as dtmInsertDate";
+$aryQuery[] = "  , p.strcopyrightnote";
+$aryQuery[] = "  , p.lngCategoryCode";
+$aryQuery[] = "  , m_cg.strcategoryname";
+$aryQuery[] = "  , To_char(p.dtmUpdateDate, 'YYYY/MM/DD HH24:MI') as dtmUpdateDate";
+$aryQuery[] = "  , gp.strgoodsplanprogressname";
+$aryQuery[] = "  , inchg_g.strgroupdisplaycolor ";
 $aryQuery[] = "FROM";
 $aryQuery[] = "  m_Product p ";
 $aryQuery[] = "  inner join ( ";
@@ -260,23 +338,16 @@ if (array_key_exists("lngCopyrightCode", $searchColumns) &&
 }
 
 if (!array_key_exists("admin", $optionColumns)) {
-    $aryQuery[] = "  AND not exists ( ";
-    $aryQuery[] = "    select";
-    $aryQuery[] = "      p1.strProductCode ";
-    $aryQuery[] = "    from";
-    $aryQuery[] = "      ( ";
-    $aryQuery[] = "        SELECT";
-    $aryQuery[] = "          min(lngRevisionNo) lngRevisionNo";
+    $aryQuery[] = "      AND not exists ( ";
+    $aryQuery[] = "        select";
+    $aryQuery[] = "          lngRevisionNo";
     $aryQuery[] = "          , strProductCode ";
     $aryQuery[] = "        FROM";
-    $aryQuery[] = "          m_product ";
-    $aryQuery[] = "        group by";
-    $aryQuery[] = "          strProductCode";
-    $aryQuery[] = "      ) as p1 ";
-    $aryQuery[] = "    where";
-    $aryQuery[] = "      p1.strProductCode = p.strProductCode";
-    $aryQuery[] = "      AND p1.lngRevisionNo < 0";
-    $aryQuery[] = "  ) ";
+    $aryQuery[] = "          m_product p1 ";
+    $aryQuery[] = "        where";
+    $aryQuery[] = "          p1.lngRevisionNo < 0 ";
+    $aryQuery[] = "          and p1.strproductcode = p.strproductcode";
+    $aryQuery[] = "      )";
 } else {
     $aryQuery[] = "  AND p.bytInvalidFlag = FALSE ";
     $aryQuery[] = "  AND p.lngRevisionNo >= 0 ";
@@ -290,7 +361,7 @@ return $strQuery;
 }
 
 
-function fncGetProductsByStrProductCodeSQL($subStrQuery)
+function fncGetProductsByStrProductCodeSQL($strProductCode, $lngRevisionNo)
 {
 // クエリの組立て
 $aryQuery = array();
@@ -431,9 +502,9 @@ $aryQuery[] = "    ON t_gp.lnggoodsplanprogresscode = m_gpp.lnggoodsplanprogress
 $aryQuery[] = " ) gp ON p.lngproductno = gp.lngproductno ";
 $aryQuery[] = "WHERE";
 $aryQuery[] = "  p.lngProductNo >= 0 ";
-$aryQuery[] = " AND p.strProductCode in (" . $subStrQuery . ")";
+$aryQuery[] = " AND p.strProductCode = '" . $strProductCode . "'";
 $aryQuery[] = "  AND p.bytInvalidFlag = FALSE ";
-$aryQuery[] = "  AND p.lngRevisionNo >= 0 ";
+$aryQuery[] = "  AND p.lngRevisionNo <> " . $lngRevisionNo . "";
 $aryQuery[] = "ORDER BY";
 $aryQuery[] = "  p.strProductCode, p.lngRevisionNo Desc";
 

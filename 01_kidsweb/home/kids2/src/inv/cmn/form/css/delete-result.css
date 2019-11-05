@@ -1,0 +1,62 @@
+<!--
+
+#Backs
+{
+	background-color : #d6d0b1 ;
+}
+
+#CompleteSet
+{
+    position : absolute ;
+    left : 350px ;
+    top : 290px ;
+    border-width: 0px ;
+    border-style: none ;
+    z-index : 3 ;
+    background : transparent ;
+
+}
+
+#BackSpace
+{
+    font-weight : bold ;
+    position : absolute ;
+    left : 215px ;
+    top : -5px ;
+    width : 95px ;
+    height : 27px ;
+    border-width: 1px ;
+    border-style: solid ;
+    background : d6d0b1 ; /* e8f0f1 */
+    border-color : #798787 #798787 #798787 #798787 ;
+    padding : 8px 0px 0px 8px ;
+    text-align : left ;
+}
+
+
+#CloseBt
+{
+    position : absolute ;
+    left : 229px ;
+    top : 3px ;
+    border-width: 0px ;
+    border-style: none ;
+    background : transparent ;
+}
+#FinishRegist
+{
+    font-family : Arial , ＭＳ Ｐゴシック, Osaka ;
+    font-weight : bold ;
+    position : absolute ;
+    left : 0px ;
+    top : -5px ;
+    width : 206px ;
+    height : 27px ;
+    border-width: 1px ;
+    border-style: solid ;
+    background : #f1f1f1 ; /* e8f0f1 */
+    border-color : #798787 #798787 #798787 #798787 ;
+    padding : 8px 0px 0px 8px ;
+    text-align : left ;
+}
+-->
