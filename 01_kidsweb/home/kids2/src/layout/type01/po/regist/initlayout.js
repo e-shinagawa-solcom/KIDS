@@ -263,7 +263,7 @@ function initLayoutPO()
 	// SegA07.style.color = fcolor;
 	// SegA08.style.color = fcolor;
 	// SegA09.style.color = fcolor;
-	SegA10.style.color = fcolor;
+	// SegA10.style.color = fcolor;
 	SegA11.style.color = fcolor;
 	SegA12.style.color = fcolor;
 	SegA13.style.color = fcolor;
@@ -281,7 +281,7 @@ function initLayoutPO()
 	// SegA07.style.background = segcolor;
 	// SegA08.style.background = segcolor;
 	// SegA09.style.background = segcolor;
-	SegA10.style.background = segcolor;
+	// SegA10.style.background = segcolor;
 	SegA11.style.background = segcolor;
 	SegA12.style.background = segcolor;
 	SegA13.style.background = segcolor;
@@ -299,7 +299,7 @@ function initLayoutPO()
 	// VarsA07.style.background = segcolor;
 	// VarsA08.style.background = segcolor;
 	// VarsA09.style.background = segcolor;
-	VarsA10.style.background = segcolor;
+	// VarsA10.style.background = segcolor;
 	VarsA11.style.background = segcolor;
 	VarsA12.style.background = segcolor;
 	VarsA13.style.background = segcolor;
@@ -317,7 +317,7 @@ function initLayoutPO()
 	// SegA07.style.borderColor = brcolor01;
 	// SegA08.style.borderColor = brcolor01;
 	// SegA09.style.borderColor = brcolor01;
-	SegA10.style.borderColor = brcolor01;
+	// SegA10.style.borderColor = brcolor01;
 	SegA11.style.borderColor = brcolor01;
 	SegA12.style.borderColor = brcolor01;
 	SegA13.style.borderColor = brcolor01;
@@ -335,7 +335,7 @@ function initLayoutPO()
 	// VarsA07.style.borderColor = brcolor02;
 	// VarsA08.style.borderColor = brcolor02;
 	// VarsA09.style.borderColor = brcolor02;
-	VarsA10.style.borderColor = brcolor02;
+	// VarsA10.style.borderColor = brcolor02;
 	VarsA11.style.borderColor = brcolor02;
 	VarsA12.style.borderColor = brcolor02;
 	VarsA13.style.borderColor = brcolor02;

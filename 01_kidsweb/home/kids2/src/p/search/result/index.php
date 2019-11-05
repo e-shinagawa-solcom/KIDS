@@ -109,12 +109,8 @@ if (empty($isDisplay)) {
     exit;
 }
 
-
 // 検索項目から一致する最新の仕入データを取得するSQL文の作成関数
-$subStrQuery = fncGetMaxProductSQL($displayColumns, $searchColumns, $from, $to, $searchValue, $optionColumns);
-
-$strQuery = fncGetProductsByStrProductCodeSQL($subStrQuery);
-
+$strQuery = fncGetMaxProductSQL($displayColumns, $searchColumns, $from, $to, $searchValue, $optionColumns);
 // 値をとる =====================================
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
@@ -165,6 +161,10 @@ $objDB->freeResult($lngResultID);
 // テンプレート読み込み
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate("/p/search/p_search_result.html");
+
+$aryResult["displayColumns"] = implode(",", $displayColumns);
+// テンプレート生成
+$objTemplate->replace($aryResult);
 
 // 検索結果テーブル生成の為DOMDocumentを使用
 $doc = new DOMDocument();
@@ -299,10 +299,6 @@ foreach ($records as $i => $record) {
     unset($aryQuery);
     // 削除フラグ
     $deletedFlag = false;
-    // 最新製品かどうかのフラグ
-    $isMaxproduct = false;
-    // リビジョン番号
-    $revisionNos = "";
     // 履歴有無フラグ
     $historyFlag = false;
 
@@ -323,22 +319,10 @@ foreach ($records as $i => $record) {
             $historyFlag = true;
         }
         for ($j = 0; $j < $lngResultNum; $j++) {
-            if ($j == 0) {
-                $maxProductInfo = $objDB->fetchArray($lngResultID, $j);
-                // 該当製品のリビジョン番号<0の場合、削除済となる
-                if ($maxProductInfo["lngrevisionno"] < 0) {
-                    $deletedFlag = true;
-                }
-                if ($maxProductInfo["lngrevisionno"] == $record["lngrevisionno"]) {
-                    $isMaxproduct = true;
-                }
-            } else {
-                $productInfo = $objDB->fetchArray($lngResultID, $j);
-                if ($revisionNos == "") {
-                    $revisionNos = $productInfo["lngrevisionno"];
-                } else {
-                    $revisionNos = $revisionNos . "," . $productInfo["lngrevisionno"];
-                }
+            $maxProductInfo = $objDB->fetchArray($lngResultID, 0);
+            // 該当製品のリビジョン番号<0の場合、削除済となる
+            if ($maxProductInfo["lngrevisionno"] < 0) {
+                $deletedFlag = true;
             }
         }
     }
@@ -355,20 +339,22 @@ foreach ($records as $i => $record) {
     // tbody > tr要素作成
     $trBody = $doc->createElement("tr");
     $trBody->setAttribute("id", $record["strproductcode"]);
-    if (!$isMaxproduct) {
-        $trBody->setAttribute("id", $record["strproductcode"] . "_" . $record["lngrevisionno"]);
-        $trBody->setAttribute("style", "display: none;");
-    }
+    // if (!$isMaxproduct) {
+    //     $trBody->setAttribute("id", $record["strproductcode"] . "_" . $record["lngrevisionno"]);
+    //     $trBody->setAttribute("style", "display: none;");
+    // }
 
     // 項番
-    if ($isMaxproduct) {
-        $index = $index + 1;
-        $subnum = 1;
-        $tdIndex = $doc->createElement("td", $index);
-    } else {
-        $subindex = $index . "." . ($subnum++);
-        $tdIndex = $doc->createElement("td", $subindex);
-    }
+    // if ($isMaxproduct) {
+    //     $index = $index + 1;
+    //     $subnum = 1;
+    //     $tdIndex = $doc->createElement("td", $index);
+    // } else {
+    //     $subindex = $index . "." . ($subnum++);
+    //     $tdIndex = $doc->createElement("td", $subindex);
+    // }
+    $index = $index + 1;
+    $tdIndex = $doc->createElement("td", $index);
     $tdIndex->setAttribute("class", $exclude);
     $tdIndex->setAttribute("style", $bgcolor);
     $trBody->appendChild($tdIndex);
@@ -403,12 +389,13 @@ foreach ($records as $i => $record) {
         $tdHistory->setAttribute("class", $exclude);
         $tdHistory->setAttribute("style", $bgcolor . "text-align: center;");
 
-        if ($isMaxproduct and $historyFlag) {
+        if ($historyFlag) {
             // 履歴ボタン
             $imgHistory = $doc->createElement("img");
             $imgHistory->setAttribute("src", "/img/type01/so/renew_off_bt.gif");
             $imgHistory->setAttribute("id", $record["strproductcode"]);
-            $imgHistory->setAttribute("revisionnos", $revisionNos);
+            $imgHistory->setAttribute("lngrevisionno", $record["lngrevisionno"]);
+            $imgHistory->setAttribute("rownum", $index);
             $imgHistory->setAttribute("class", "history button");
             // td > img
             $tdHistory->appendChild($imgHistory);
@@ -644,7 +631,7 @@ foreach ($records as $i => $record) {
                     $trBody->appendChild($td);
                     break;
                 // 上代
-                case "curretailprice":    
+                case "curretailprice":
                     if ($record["curretailprice"] != "") {
                         $textContent = "&yen;" . " " . $record["curretailprice"];
                     } else {
