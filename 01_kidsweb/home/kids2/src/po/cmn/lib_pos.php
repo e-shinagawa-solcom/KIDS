@@ -532,6 +532,7 @@ function fncGetSearchPurchaseSQL ( $aryViewColumn, $arySearchColumn, $arySearchD
 	$aryFromQuery[] = "	) mo_rev on  ";
 	$aryFromQuery[] = "	    mo_rev.lngorderno = mo.lngorderno ";
 	$aryFromQuery[] = "	    and mo_rev.lngrevisionno = mo.lngrevisionno ";
+/*
 	$aryFromQuery[] = "    INNER JOIN m_product p ";
 	$aryFromQuery[] = "        ON p.strproductcode = od1.strproductcode ";
 	$aryFromQuery[] = "		AND p.strrevisecode = od1.strrevisecode ";
@@ -540,6 +541,8 @@ function fncGetSearchPurchaseSQL ( $aryViewColumn, $arySearchColumn, $arySearchD
 	$aryFromQuery[] = "		 from m_product  ";
 	$aryFromQuery[] = "         group by lngproductno  ";
 	$aryFromQuery[] = "    ) p_rev ON p_rev.lngproductno = p.lngproductno  ";
+	$aryFromQuery[] = "    AND  p_rev.lngrevisionno = p.lngrevisionno  ";
+*/
 	$aryFromQuery[] = "	LEFT JOIN  ";
 	$aryFromQuery[] = "	( ";
 	$aryFromQuery[] = "        select  ";
