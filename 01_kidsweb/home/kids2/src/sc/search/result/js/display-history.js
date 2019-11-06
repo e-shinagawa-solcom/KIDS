@@ -7,12 +7,21 @@
         var rownum = $(this).attr('rownum');
         var displayColumns = $('input[name="displayColumns"]').val().split(',');
         var removeFlag = false;
+        
+        var row = $('tr[id="' + strSalesCode + '"]');
+        var detailnos = row.attr('detailnos').split(",");
         $('tr[id^="' + strSalesCode + '_"]')
             .each(function () {
+                var isMaxData = false;
                 var id = $(this).attr('id');
-                if (id != strSalesCode && id != (strSalesCode + "_" + lngRevisionNo + "_" + maxdetailno)) {
-                    removeFlag = true;
+                for (var i=0; i < detailnos.length; i++) {
+                    if (id == strSalesCode || id == (strSalesCode + "_" + lngRevisionNo + "_" + detailnos[i])) {
+                        isMaxData = true;
+                    }
+                }
+                if (!isMaxData) {
                     $(this).remove();
+                    removeFlag = true;
                 }
             });
         if (!removeFlag) {

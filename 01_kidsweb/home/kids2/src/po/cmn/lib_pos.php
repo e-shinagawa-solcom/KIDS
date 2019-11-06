@@ -318,7 +318,6 @@ $flgWorkFlowStatus = true;
             //
             // 明細テーブルの条件
             //
-
             // 製品コード
             if ($strSearchColumnName == "strProductCode") {
                 $strProductCodeArray = explode(",", $arySearchDataColumn["strProductCode"]);

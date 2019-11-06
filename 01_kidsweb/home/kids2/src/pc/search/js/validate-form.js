@@ -369,20 +369,9 @@
                 }
             },
             // À½ÉÊ¥³¡¼¥É            
-            From_strProductCode: {
+            strProductCode: {
                 required: function () {
-                    return $('input[name="IsSearch_strProductCode"]').get(0).checked && $('input[name="To_strProductCode"]').val() == "";
-                },
-                checkStrProductCode: function () {
-                    return $('input[name="IsSearch_strProductCode"]').get(0).checked;
-                }
-            },
-            To_strProductCode: {
-                required: function () {
-                    return $('input[name="IsSearch_strProductCode"]').get(0).checked && $('input[name="From_strProductCode"]').val() == "";
-                },
-                checkStrProductCode: function () {
-                    return $('input[name="IsSearch_strProductCode"]').get(0).checked;
+                    return $('input[name="IsSearch_strProductCode"]').get(0).checked
                 }
             },
             // À½ÉÊÌ¾¾Î            

@@ -158,25 +158,32 @@ function fncGetMaxStockSQL($displayColumns, $searchColumns, $from, $to, $searchV
         $aryQuery[] = " o.strOrderCode" .
             " >= " . "'" . $to["strOrderCode"] . "'";
     }
-
-    // 製品コード_from
     if (array_key_exists("strProductCode", $searchColumns) &&
-        array_key_exists("strProductCode", $from) && $from["strProductCode"]!='') {
+    array_key_exists("strProductCode", $searchValue)) {
         $detailConditionCount += 1;
-        $aryQuery[] = $detailConditionCount == 1 ? "WHERE " : "AND ";
-        $aryQuery[] = " sd1.strProductCode" .
-        " >= '" . pg_escape_string($from["strProductCode"]) . "'";
+        $aryQuery[] = $detailConditionCount == 1 ? "WHERE (" : "AND (";
+        $strProductCodeArray = explode(",", $searchValue["strProductCode"]);
+        $count = 0;
+        foreach ($strProductCodeArray as $strProductCode) {
+            $count += 1;
+            if ($count != 1) {
+                $aryQuery[] = " OR ";
+            }
+            if (strpos($strProductCode, '-') !== false) {
+                $aryQuery[] = "(sd1.strProductCode" .
+                " between '" . explode("-", $strProductCode)[0] . "'" .
+                " AND " . "'" . explode("-", $strProductCode)[1] . "')";
+            } else {
+                if (strpos($strProductCode, '_') !== false) {
+                    $aryQuery[] = "sd1.strProductCode = '" . explode("_", $strProductCode)[0] . "'";
+                    $aryQuery[] = " AND sd1.strrevisecode = '" . explode("_", $strProductCode)[1] . "'";
+                } else {
+                    $aryQuery[] = "sd1.strProductCode = '" . $strProductCode . "'";
+                }
+            }
+        }
+        $aryQuery[] = ")";
     }
-
-    // 製品コード_to
-    if (array_key_exists("strProductCode", $searchColumns) &&
-        array_key_exists("strProductCode", $to) && $to["strProductCode"]!='') {
-        $detailConditionCount += 1;
-        $aryQuery[] = $detailConditionCount == 1 ? "WHERE " : "AND ";
-        $aryQuery[] = " sd1.strProductCode" .
-        " <= " . "'" . pg_escape_string($to["strProductCode"]) . "'";
-    }
-
     // 営業部署
     if (array_key_exists("lngInChargeGroupCode", $searchColumns) &&
         array_key_exists("lngInChargeGroupCode", $searchValue)) {
@@ -337,6 +344,8 @@ function fncGetMaxStockSQL($displayColumns, $searchColumns, $from, $to, $searchV
 		$aryQuery[] = " AND s.bytInvalidFlag = FALSE ";
 		$aryQuery[] = " AND s.lngRevisionNo >= 0";
 	}
+    $aryQuery[] = "ORDER BY";
+    $aryQuery[] = " strStockCode, lngRevisionNo DESC";
 
     // クエリを平易な文字列に変換
     $strQuery = implode("\n", $aryQuery);
@@ -344,7 +353,7 @@ function fncGetMaxStockSQL($displayColumns, $searchColumns, $from, $to, $searchV
     return $strQuery;
 }
 
-function fncGetStocksByStrStockCodeSQL($subStrQuery)
+function fncGetStocksByStrStockCodeSQL($strStockCode, $lngRevisionNo)
 {
 
 	// クエリの組立て
@@ -455,8 +464,8 @@ function fncGetStocksByStrStockCodeSQL($subStrQuery)
     $aryQuery[] = ") as sd ";
     $aryQuery[] = "WHERE";
     $aryQuery[] = "  sd.lngStockNo = s.lngStockNo ";
-    $aryQuery[] = " AND s.strStockCode in (" . $subStrQuery .")";
-    $aryQuery[] = " AND s.lngrevisionno >= 0";
+    $aryQuery[] = " AND s.strStockCode = '" . $strStockCode ."'";
+    $aryQuery[] = " AND s.lngrevisionno <> " . $lngRevisionNo ." ";
     $aryQuery[] = " AND s.bytInvalidFlag = FALSE ";
     $aryQuery[] = "ORDER BY";
     $aryQuery[] = " strStockCode, lngRevisionNo DESC";
