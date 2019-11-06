@@ -33,7 +33,25 @@ function fncGetMaxSalesSQL($displayColumns, $searchColumns, $from, $to, $searchV
     // クエリの組立て
     $aryQuery = array();
     $aryQuery[] = "SELECT distinct";
-    $aryQuery[] = " s.strSalesCode as strSalesCode";
+    $aryQuery[] = "  s.lngSalesNo as lngSalesNo";
+    $aryQuery[] = "  , s.lngRevisionNo as lngRevisionNo";
+    $aryQuery[] = "  , to_char(s.dtmInsertDate, 'YYYY/MM/DD HH24:MI:SS') as dtmInsertDate";
+    $aryQuery[] = "  , to_char(s.dtmappropriationdate, 'YYYY/MM/DD') as dtmappropriationdate";
+    $aryQuery[] = "  , s.strSalesCode as strSalesCode";
+    $aryQuery[] = "  , sd.strCustomerReceiveCode as strCustomerReceiveCode";
+    $aryQuery[] = "  , s.strSlipCode as strSlipCode";
+    $aryQuery[] = "  , s.lngInputUserCode as lngInputUserCode";
+    $aryQuery[] = "  , input_u.strUserDisplayCode as strInputUserDisplayCode";
+    $aryQuery[] = "  , input_u.strUserDisplayName as strInputUserDisplayName";
+    $aryQuery[] = "  , s.lngCustomerCompanyCode";
+    $aryQuery[] = "  , cust_c.strCompanyDisplayCode as strCustomerCompanyCode";
+    $aryQuery[] = "  , cust_c.strCompanyDisplayName as strCustomerCompanyName";
+    $aryQuery[] = "  , s.lngSalesStatusCode as lngSalesStatusCode";
+    $aryQuery[] = "  , ss.strSalesStatusName as strSalesStatusName";
+    $aryQuery[] = "  , s.strNote as strNote";
+    $aryQuery[] = "  , To_char(s.curTotalPrice, '9,999,999,990.99') as curTotalPrice";
+    $aryQuery[] = "  , mu.strMonetaryUnitSign as strMonetaryUnitSign";
+    $aryQuery[] = "  , s.lngMonetaryUnitCode as lngMonetaryUnitCode ";
     $aryQuery[] = "FROM";
     $aryQuery[] = "  m_Sales s ";
     $aryQuery[] = "  inner join ( ";
@@ -331,7 +349,7 @@ function fncGetMaxSalesSQL($displayColumns, $searchColumns, $from, $to, $searchV
     return $strQuery;
 }
 
-function fncGetSalesByStrSalesCodeSQL($subStrQuery)
+function fncGetSalesByStrSalesCodeSQL($strSalesCode, $lngRevisionNo)
 {
     $aryQuery[] = "SELECT distinct";
     $aryQuery[] = "  s.lngSalesNo as lngSalesNo";
@@ -414,9 +432,9 @@ function fncGetSalesByStrSalesCodeSQL($subStrQuery)
     $aryQuery[] = "    ) as sd ";
     $aryQuery[] = "WHERE";
     $aryQuery[] = " sd.lngSalesNo = s.lngSalesNo ";
-    $aryQuery[] = " AND s.strSalesCode in (" . $subStrQuery . ")";
+    $aryQuery[] = " AND s.strSalesCode = '" . $strSalesCode . "'";
     $aryQuery[] = "  AND s.bytInvalidFlag = FALSE ";
-    $aryQuery[] = "  AND s.lngRevisionNo >= 0 ";
+    $aryQuery[] = "  AND s.lngRevisionNo <> ". $lngRevisionNo ." ";
     $aryQuery[] = "ORDER BY";
     $aryQuery[] = "  strSalesCode, lngRevisionNo DESC";
 
@@ -500,7 +518,7 @@ function fncGetDetailData($lngSalesNo, $lngRevisionNo, $objDB)
 
     // クエリを平易な文字列に変換
     $strQuery = implode("\n", $aryQuery);
-
+    
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
     // 検索件数がありの場合
     if ($lngResultNum > 0) {

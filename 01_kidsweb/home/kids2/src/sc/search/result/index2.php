@@ -1,130 +1,44 @@
 <?php
-
 // ----------------------------------------------------------------------------
 /**
- *       売上管理  検索
- *
+ *       売上検索 履歴取得イベント
  *
  *       処理概要
- *         ・検索結果画面表示処理
+ *         ・売上コード、リビジョン番号により売上履歴情報を取得する
  *
  *       更新履歴
  *
  */
 // ----------------------------------------------------------------------------
-
-// 設定読み込み
-include_once 'conf.inc';
-
-require_once SRC_ROOT . '/mold/lib/UtilSearchForm.class.php';
-
-// ライブラリ読み込み
+// 読み込み
+include 'conf.inc';
 require LIB_FILE;
-require LIB_ROOT . "clscache.php";
-require LIB_DEBUGFILE;
+include 'JSON.php';
 require SRC_ROOT . "sc/cmn/lib_sc.php";
 
-// DB接続
+//値の取得
+$postdata = file_get_contents("php://input");
+$aryData = json_decode($postdata, true);
 $objDB = new clsDB();
 $objAuth = new clsAuth();
-$objCache = new clsCache();
 $objDB->open("", "", "", "");
-
-//////////////////////////////////////////////////////////////////////////
-// セッション、権限確認
-//////////////////////////////////////////////////////////////////////////
-// セッション確認
-$objAuth = fncIsSession($_REQUEST["strSessionID"], $objAuth, $objDB);
-
-// ログインユーザーコードの取得
-$lngInputUserCode = $objAuth->UserCode;
-
-// 権限確認
-// 602 売上管理（受注検索）
-if (!fncCheckAuthority(DEF_FUNCTION_SC1, $objAuth)) {
-    fncOutputError(9060, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
+//JSONクラスインスタンス化
+$s = new Services_JSON();
+//値が存在しない場合は通常の POST で受ける
+if ($aryData == null) {
+    $aryData = $_POST;
 }
 
-//////////////////////////////////////////////////////////////////////////
-// POST(一部GET)データ取得
-//////////////////////////////////////////////////////////////////////////
-// フォームデータから各カテゴリの振り分けを行う
-$options = UtilSearchForm::extractArrayByOption($_REQUEST);
-$isDisplay = UtilSearchForm::extractArrayByIsDisplay($_REQUEST);
-$isSearch = UtilSearchForm::extractArrayByIsSearch($_REQUEST);
-$from = UtilSearchForm::extractArrayByFrom($_REQUEST);
-$to = UtilSearchForm::extractArrayByTo($_REQUEST);
-$searchValue = $_REQUEST;
-$errorFlag = false;
-
-// クエリの組立に使用するフォームデータを抽出
-$optionColumns = array();
-$searchColumns = array();
 $displayColumns = array();
-$conditions = array();
-
-// オプション項目の抽出
-foreach ($options as $key => $flag) {
-    if ($flag == "on") {
-        $optionColumns[$key] = $key;
-    }
-}
 // 表示項目の抽出
-foreach ($isDisplay as $key => $flag) {
-    if ($flag == "on") {
-        $displayColumns[$key] = $key;
-    }
+foreach ($aryData["displayColumns"] as $key) {
+    $displayColumns[$key] = $key;
 }
-
-// 検索項目の抽出
-foreach ($isSearch as $key => $flag) {
-    if ($flag == "on") {
-        $searchColumns[$key] = $key;
-    }
-}
-
-
-// 検索項目から一致する最新の仕入データを取得するSQL文の作成関数
-$strQuery = fncGetMaxSalesSQL($displayColumns, $searchColumns, $from, $to, $searchValue, $optionColumns);
+// 売上履歴情報取得SQL
+$strQuery = fncGetSalesByStrSalesCodeSQL($aryData["strSalesCode"], $aryData["lngRevisionNo"]);
 
 // 値をとる =====================================
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
-// 検索件数がありの場合
-if ($lngResultNum > 0) {
-    // 指定数以上の場合エラーメッセージを表示する
-    if ($lngResultNum > DEF_SEARCH_MAX) {
-        $errorFlag = true;
-        $lngErrorCode = 9057;
-        $aryErrorMessage = DEF_SEARCH_MAX;
-    }
-} else {
-    $errorFlag = true;
-    $lngErrorCode = 603;
-    $aryErrorMessage = "";
-}
-
-if ($errorFlag) {
-    // エラー画面の戻り先
-    $strReturnPath = "../sc/search/index.php?strSessionID=" . $aryData["strSessionID"];
-
-    $strMessage = fncOutputError($lngErrorCode, DEF_WARNING, $aryErrorMessage, false, $strReturnPath, $objDB);
-
-    // [strErrorMessage]書き出し
-    $aryHtml["strErrorMessage"] = $strMessage;
-
-    // テンプレート読み込み
-    $objTemplate = new clsTemplate();
-    $objTemplate->getTemplate("/result/error/parts.tmpl");
-
-    // テンプレート生成
-    $objTemplate->replace($aryHtml);
-    $objTemplate->complete();
-
-    // HTML出力
-    echo $objTemplate->strTemplate;
-
-    exit;
-}
 
 // 指定数以内であれば通常処理
 for ($i = 0; $i < $lngResultNum; $i++) {
@@ -133,29 +47,8 @@ for ($i = 0; $i < $lngResultNum; $i++) {
 
 $objDB->freeResult($lngResultID);
 
-// テンプレート読み込み
-$objTemplate = new clsTemplate();
-$objTemplate->getTemplate("/sc/search/sc_search_result.html");
-
-$aryResult["displayColumns"] = implode(",", $displayColumns);
-// テンプレート生成
-$objTemplate->replace($aryResult);
-
 // 検索結果テーブル生成の為DOMDocumentを使用
 $doc = new DOMDocument();
-// パースエラー抑制
-libxml_use_internal_errors(true);
-// DOMパース
-$doc->loadHTML(mb_convert_encoding($objTemplate->strTemplate, "utf8", "eucjp-win"));
-// パースエラークリア
-libxml_clear_errors();
-// パースエラー抑制解除
-libxml_use_internal_errors(false);
-
-// 検索結果テーブルの取得
-$table = $doc->getElementById("result");
-$thead = $table->getElementsByTagName("thead")->item(0);
-$tbody = $table->getElementsByTagName("tbody")->item(0);
 
 // キー文字列を小文字に変換
 $displayColumns = array_change_key_case($displayColumns, CASE_LOWER);
@@ -170,45 +63,6 @@ $existsHistory = array_key_exists("btnhistory", $displayColumns);
 
 // 詳細ボタンを表示
 $allowedDetail = fncCheckAuthority(DEF_FUNCTION_SC11, $objAuth);
-
-// -------------------------------------------------------
-// テーブルヘッダ作成
-// -------------------------------------------------------
-// thead > tr要素作成
-$trHead = $doc->createElement("tr");
-
-// クリップボード除外対象クラス
-$exclude = "exclude-in-clip-board-target";
-
-// 項番カラム
-$thIndex = $doc->createElement("th");
-$thIndex->setAttribute("class", $exclude);
-// コピーボタン
-$imgCopy = $doc->createElement("img");
-$imgCopy->setAttribute("src", "/img/type01/cmn/seg/copy_off_bt.gif");
-$imgCopy->setAttribute("class", "copy button");
-// 項番カラム > コピーボタン
-$thIndex->appendChild($imgCopy);
-// ヘッダに追加
-$trHead->appendChild($thIndex);
-
-// 詳細を表示
-if ($existsDetail) {
-    // 詳細カラム
-    $thDetail = $doc->createElement("th", toUTF8("詳細"));
-    $thDetail->setAttribute("class", $exclude);
-    // ヘッダに追加
-    $trHead->appendChild($thDetail);
-}
-
-// 履歴を表示
-if ($existsHistory) {
-    // 履歴カラム
-    $thHistory = $doc->createElement("th", toUTF8("履歴"));
-    $thHistory->setAttribute("class", $exclude);
-    // ヘッダに追加
-    $trHead->appendChild($thHistory);
-}
 
 $aryTableHeaderName = array();
 $aryTableHeaderName["dtminsertdate"] = "登録日";
@@ -237,30 +91,6 @@ $aryTableDetailHeaderName["lngtaxclasscode"] = "税区分";
 $aryTableDetailHeaderName["curtax"] = "税率";
 $aryTableDetailHeaderName["curtaxprice"] = "税額";
 $aryTableDetailHeaderName["strdetailnote"] = "明細備考";
-// TODO 要リファクタリング
-// 指定されたテーブル項目のカラムを作成する
-foreach ($aryTableHeaderName as $key => $value) {
-    if (array_key_exists($key, $displayColumns)) {
-        $th = $doc->createElement("th", toUTF8($value));
-        $trHead->appendChild($th);
-    }
-}
-
-// 指定されたテーブル項目のカラムを作成する
-foreach ($aryTableDetailHeaderName as $key => $value) {
-    if (array_key_exists($key, $displayColumns)) {
-        $th = $doc->createElement("th", toUTF8($value));
-        $trHead->appendChild($th);
-
-        if ($key == "strproductname") {
-            $th = $doc->createElement("th", toUTF8("製品名（英語）"));
-            $trHead->appendChild($th);
-        }
-    }
-}
-
-// thead > tr
-$thead->appendChild($trHead);
 
 // -------------------------------------------------------
 // テーブルセル作成
@@ -270,30 +100,6 @@ foreach ($records as $i => $record) {
     unset($aryQuery);
     // 明細番号
     $detailnos = "";
-    // 履歴有無フラグ
-    $historyFlag = false;
-
-    // 同じ売上NOの最新売上データのリビジョン番号を取得する
-    $aryQuery[] = "SELECT";
-    $aryQuery[] = " lngsalesno, lngrevisionno ";
-    $aryQuery[] = "FROM m_sales";
-    $aryQuery[] = "WHERE strsalescode='" . $record["strsalescode"] . "' ";
-    $aryQuery[] = "and lngrevisionno >= 0";
-    $aryQuery[] = "and bytInvalidFlag = FALSE ";
-    $aryQuery[] = "order by lngrevisionno desc";
-
-    // クエリを平易な文字列に変換
-    $strQuery = implode("\n", $aryQuery);
-
-    list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
-    // 検索件数がありの場合
-    if ($lngResultNum > 0) {
-        if ($lngResultNum > 1) {
-            $historyFlag = true;
-        }
-    }
-
-    $objDB->freeResult($lngResultID);
 
     // 詳細データを取得する
     $detailData = fncGetDetailData($record["lngsalesno"], $record["lngrevisionno"], $objDB);
@@ -303,7 +109,7 @@ foreach ($records as $i => $record) {
     if ($record["lngrevisionno"] < 0) {
         $bgcolor = "background-color: #B3E0FF;";
     } else {
-        $bgcolor = "background-color: #FFB2B2;";
+        $bgcolor = "background-color: #FEEF8B;";
     }
 
     // 明細番号取得
@@ -314,20 +120,22 @@ foreach ($records as $i => $record) {
             $detailnos = $detailnos . "," . $detailData[$i]["lngsalesdetailno"];
         }
     }
-
+    if ($rowspan == 0) {
+        $rowspan = 1;
+        $detailnos = "";
+    }
     // tbody > tr要素作成
     $trBody = $doc->createElement("tr");
-    $trBody->setAttribute("id", $record["strsalescode"]);
+    $trBody->setAttribute("id", $record["strsalescode"] . "_" . $record["lngrevisionno"]);
     $trBody->setAttribute("detailnos", $detailnos);
 
     // 項番
-    $index = $index + 1;
-    $tdIndex = $doc->createElement("td", $index);
+    $index +=1;
+    $tdIndex = $doc->createElement("td", $aryData["rownum"]. "." . $index);
     $tdIndex->setAttribute("class", $exclude);
     $tdIndex->setAttribute("style", $bgcolor);
     $tdIndex->setAttribute("rowspan", $rowspan);
     $trBody->appendChild($tdIndex);
-
     // 詳細を表示
     if ($existsDetail) {
         // 詳細セル
@@ -358,19 +166,6 @@ foreach ($records as $i => $record) {
         $tdHistory->setAttribute("class", $exclude);
         $tdHistory->setAttribute("style", $bgcolor. "text-align: center;");
         $tdHistory->setAttribute("rowspan", $rowspan);
-
-        if ($historyFlag and array_key_exists("admin", $optionColumns)) {
-            // 履歴ボタン
-            $imgHistory = $doc->createElement("img");
-            $imgHistory->setAttribute("src", "/img/type01/so/renew_off_bt.gif");
-            $imgHistory->setAttribute("id", $record["strsalescode"]);
-            $imgHistory->setAttribute("lngrevisionno", $record["lngrevisionno"]);
-            $imgHistory->setAttribute("rownum", $index);
-            $imgHistory->setAttribute("maxdetailno", $detailData[$rowspan - 1]["lngsalesdetailno"]);
-            $imgHistory->setAttribute("class", "history button");
-            // td > img
-            $tdHistory->appendChild($imgHistory);
-        }
         // tr > td
         $trBody->appendChild($tdHistory);
     }
@@ -434,29 +229,33 @@ foreach ($records as $i => $record) {
                 // [入力者表示コード] 入力者表示名
                 case "lnginputusercode":
                     $textContent = "[" . $record["strinputuserdisplaycode"] . "]" . " " . $record["strinputuserdisplayname"];
-                    $td = $doc->createElement("td", toUTF8($textContent));
+                    $td = $doc->createElement("td", $textContent);
                     $td->setAttribute("style", $bgcolor);
                     $td->setAttribute("rowspan", $rowspan);
                     $trBody->appendChild($td);
                     break;
                 // [顧客表示コード] 入力者表示名
                 case "lngcustomercompanycode":
-                    $textContent = "[" . $record["strcustomercompanycode"] . "]" . " " . $record["strcustomercompanyname"];
-                    $td = $doc->createElement("td", toUTF8($textContent));
+                    if ($record["strcustomercompanycode"] != '') {
+                        $textContent = "[" . $record["strcustomercompanycode"] . "]" . " " . $record["strcustomercompanyname"];
+                    } else {
+                        $textContent = "";
+                    }
+                    $td = $doc->createElement("td", $textContent);
                     $td->setAttribute("style", $bgcolor);
                     $td->setAttribute("rowspan", $rowspan);
                     $trBody->appendChild($td);
                     break;
                 // 状態
                 case "lngsalesstatuscode":
-                    $td = $doc->createElement("td", toUTF8($record["strsalesstatusname"]));
+                    $td = $doc->createElement("td", $record["strsalesstatusname"]);
                     $td->setAttribute("style", $bgcolor);
                     $td->setAttribute("rowspan", $rowspan);
                     $trBody->appendChild($td);
                     break;
                 // 備考
                 case "strnote":
-                    $td = $doc->createElement("td", toUTF8($record["strnote"]));
+                    $td = $doc->createElement("td", $record["strnote"]);
                     $td->setAttribute("style", $bgcolor);
                     $td->setAttribute("rowspan", $rowspan);
                     $trBody->appendChild($td);
@@ -475,21 +274,21 @@ foreach ($records as $i => $record) {
     // 明細データの設定
     fncSetDetailDataToTr($doc, $trBody, $bgcolor, $aryTableDetailHeaderName, $displayColumns, $detailData[0], $record["lngmonetaryunitcode"], $record["strmonetaryunitsign"]);
 
-    // tbody > tr
-    $tbody->appendChild($trBody);
-
+    $strHtml .= $doc->saveXML($trBody);
     // 明細行のtrの追加
     for ($i = 1; $i < $rowspan; $i++) {
         $trBody = $doc->createElement("tr");
+
         $trBody->setAttribute("id", $record["strsalescode"] . "_" . $record["lngrevisionno"] . "_" . $detailData[$i]["lngsalesdetailno"]);
 
         fncSetDetailDataToTr($doc, $trBody, $bgcolor, $aryTableDetailHeaderName, $displayColumns, $detailData[$i], $record["lngmonetaryunitcode"], $record["strmonetaryunitsign"]);
 
-        $tbody->appendChild($trBody);
-
+        $strHtml .= $doc->saveXML($trBody);
     }
+
+
 
 }
 
-// HTML出力
-echo $doc->saveHTML();
+// // HTML出力
+echo $strHtml;
