@@ -26,7 +26,8 @@ jQuery(function($){
         return true;
     }
     function getSelectedRows(){
-        return $('#DetailTableBody tr.selected');
+        //return $('#DetailTableBody tr.selected');
+        return $('#DetailTableBody tr');
     }
     function executeSort(mode){
         var row = $('#DetailTableBody').children('.selected');
@@ -65,7 +66,7 @@ jQuery(function($){
         }
         var expirationDate = $('input[name="dtmExpirationDate"]').val();
         result = validateDate(expirationDate);
-        result = validateDelivery(selectedRows);
+//        result = validateDelivery(selectedRows);
         result = validatePayCondition();
 
         return result;
@@ -199,8 +200,8 @@ jQuery(function($){
                 lngPayConditionCode: $('select[name="lngPayConditionCode"]').children('option:selected').val(),
                 strPayConditionName: $('select[name="lngPayConditionCode"]').children('option:selected').text(),
                 strLocationCode:     $('input[name="strLocationCode"]').val(),
-                strLocationName:     encodeURIComponent($('input[name="strLocationName"]').val()),
-                strNote:             encodeURIComponent($('input[name="strNote"]').val()),
+                strLocationName:     $('input[name="strLocationName"]').val(),
+                strNote:             $('input[name="strNote"]').val(),
                 strOrderCode:        $('input[name="strOrderCode"]').val(),
                 aryDetail:           getUpdateDetail(),
             }

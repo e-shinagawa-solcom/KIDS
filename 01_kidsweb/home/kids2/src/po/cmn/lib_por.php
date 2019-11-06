@@ -1277,6 +1277,7 @@ function fncUpdatePurchaseOrderDetail($aryPurchaseOrder, $objDB)
 {
     for ($i = 0; $i < count($aryPurchaseOrder["aryDetail"]); $i++) {
         $aryQuery = [];
+        $strDeliveryMethodName = fncGetMasterValue("m_deliverymethod", "lngdeliverymethodcode", "strdeliverymethodname", $aryPurchaseOrder["aryDetail"][$i]["lngDeliveryMethodCode"] . ":str", '', $objDB);
 /*
         $aryQuery[] = "UPDATE t_purchaseorderdetail SET";
         $aryQuery[] = "   lngdeliverymethodcode = " . $aryPurchaseOrder["aryDetail"][$i]["lngDeliveryMethodCode"];
@@ -1315,7 +1316,8 @@ function fncUpdatePurchaseOrderDetail($aryPurchaseOrder, $objDB)
         $aryQuery[] = "    lngstockitemcode,";
         $aryQuery[] = "    strstockitemname,";
         $aryQuery[] =      $aryPurchaseOrder["aryDetail"][$i]["lngDeliveryMethodCode"] . ",";
-        $aryQuery[] =      "'" . $aryPurchaseOrder["aryDetail"][$i]["strDeliveryMethodName"] . "',";
+//        $aryQuery[] =      "'" . $aryPurchaseOrder["aryDetail"][$i]["strDeliveryMethodName"] . "',";
+        $aryQuery[] =      "'" . $strDeliveryMethodName . "',";
         $aryQuery[] = "    curproductprice,";
         $aryQuery[] = "    lngproductquantity,";
         $aryQuery[] = "    lngproductunitcode,";
