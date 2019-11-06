@@ -92,10 +92,10 @@ foreach ($isSearch as $key => $flag) {
 }
 
 // 検索項目から一致する最新の受注データを取得するSQL文の作成関数
-$subStrQuery = fncGetMaxReceiveSQL($displayColumns, $searchColumns, $from, $to, $searchValue, $optionColumns);
-
-$strQuery = fncGetReceivesByStrReceiveCodeSQL($subStrQuery);
-
+$strQuery = fncGetMaxReceiveSQL($displayColumns, $searchColumns, $from, $to, $searchValue, $optionColumns);
+// // echo $subStrQuery;
+// $strQuery = fncGetReceivesByStrReceiveCodeSQL($subStrQuery);
+// echo $strQuery;
 // 値をとる =====================================
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 // 検索件数がありの場合
@@ -145,6 +145,10 @@ $objDB->freeResult($lngResultID);
 // テンプレート読み込み
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate("/so/search/so_search_result.html");
+
+$aryResult["displayColumns"] = implode(",", $displayColumns);
+// テンプレート生成
+$objTemplate->replace($aryResult);
 
 // 検索結果テーブル生成の為DOMDocumentを使用
 $doc = new DOMDocument();
@@ -283,14 +287,8 @@ foreach ($records as $i => $record) {
     unset($aryQuery);
     // 確定対象フラグ
     $decideObjFlag = false;
-    // リバイズ有無フラグ
-    $revisedFlag = false;
-    // 最新受注かどうかのフラグ
-    $isMaxReceive = false;
     // 履歴有無フラグ
     $historyFlag = false;
-    // リビジョン番号
-    $revisionNos = "";
 
     // 同じ受注NO,同じ明細番号の最新受注データのリビジョン番号を取得する
     $aryQuery[] = "SELECT";
@@ -313,56 +311,26 @@ foreach ($records as $i => $record) {
         if ($lngResultNum > 1) {
             $historyFlag = true;
         }
-        for ($j = 0; $j < $lngResultNum; $j++) {
-            if ($j == 0) {
-                $maxReceiveInfo = $objDB->fetchArray($lngResultID, $j);
-                if ($maxReceiveInfo["lngrevisionno"] != 0) {
-                    $revisedFlag = true;
-                }
-                if ($maxReceiveInfo["lngrevisionno"] == $record["lngrevisionno"]) {
-                    $isMaxReceive = true;
-                }
-            } else {
-                $receiveInfo = $objDB->fetchArray($lngResultID, $j);
-                if ($revisionNos == "") {
-                    $revisionNos = $receiveInfo["lngrevisionno"];
-                } else {
-                    $revisionNos = $revisionNos . "," . $receiveInfo["lngrevisionno"];
-                }
-            }
-        }
     }
 
     $objDB->freeResult($lngResultID);
 
     $decideObjFlag = fncCheckData($record["strreceivecode"], $objDB);
-    
+
     // 背景色設定
     if ($record["lngrevisionno"] < 0) {
         $bgcolor = "background-color: #B3E0FF;";
-    } else if ($isMaxReceive) {
-        $bgcolor = "background-color: #FFB2B2;";
     } else {
-        $bgcolor = "background-color: #FEEF8B;";
+        $bgcolor = "background-color: #FFB2B2;";
     }
 
     // tbody > tr要素作成
     $trBody = $doc->createElement("tr");
     $trBody->setAttribute("id", $record["strreceivecode"] . "_" . $record["lngreceivedetailno"]);
-    if (!$isMaxReceive) {
-        $trBody->setAttribute("id", $record["strreceivecode"] . "_" . $record["lngreceivedetailno"] . "_" . $record["lngrevisionno"]);
-        $trBody->setAttribute("style", "display: none;");
-    }
 
     // 項番
-    if ($isMaxReceive) {
-        $index = $index + 1;
-        $subnum = 1;
-        $tdIndex = $doc->createElement("td", $index);
-    } else {
-        $subindex = $index . "." . ($subnum++);
-        $tdIndex = $doc->createElement("td", $subindex);
-    }
+    $index = $index + 1;
+    $tdIndex = $doc->createElement("td", $index);
     $tdIndex->setAttribute("class", $exclude);
     $tdIndex->setAttribute("style", $bgcolor);
     $trBody->appendChild($tdIndex);
@@ -397,7 +365,7 @@ foreach ($records as $i => $record) {
         $tdDecide->setAttribute("style", $bgcolor . "text-align: center;");
 
         // 確定ボタンの表示
-        if ($allowedDecide and $isMaxReceive and $record["lngrevisionno"] >= 0 and $record["lngreceivestatuscode"] == DEF_RECEIVE_APPLICATE and $decideObjFlag) {
+        if ($allowedDecide and $record["lngrevisionno"] >= 0 and $record["lngreceivestatuscode"] == DEF_RECEIVE_APPLICATE and $decideObjFlag) {
             // 確定ボタン
             $imgDecide = $doc->createElement("img");
             $imgDecide->setAttribute("src", "/img/type01/so/renew_off_bt.gif");
@@ -418,12 +386,13 @@ foreach ($records as $i => $record) {
         $tdHistory->setAttribute("class", $exclude);
         $tdHistory->setAttribute("style", $bgcolor . "text-align: center;");
 
-        if ($isMaxReceive and $historyFlag and array_key_exists("admin", $optionColumns)) {
+        if ($historyFlag and array_key_exists("admin", $optionColumns)) {
             // 履歴ボタン
             $imgHistory = $doc->createElement("img");
             $imgHistory->setAttribute("src", "/img/type01/so/renew_off_bt.gif");
             $imgHistory->setAttribute("id", $record["strreceivecode"] . "_" . $record["lngreceivedetailno"]);
-            $imgHistory->setAttribute("revisionnos", $revisionNos);
+            $imgHistory->setAttribute("lngrevisionno", $record["lngrevisionno"]);
+            $imgHistory->setAttribute("rownum", $index);
             $imgHistory->setAttribute("class", "history button");
             // td > img
             $tdHistory->appendChild($imgHistory);
@@ -583,7 +552,7 @@ foreach ($records as $i => $record) {
         $tdCancel->setAttribute("style", $bgcolor . "text-align: center;");
 
         // 確定取消ボタンの表示
-        if ($allowedCancel and $isMaxReceive and $record["lngrevisionno"] >= 0 and $record["lngreceivestatuscode"] == DEF_RECEIVE_ORDER and $decideObjFlag) {
+        if ($allowedCancel and $record["lngrevisionno"] >= 0 and $record["lngreceivestatuscode"] == DEF_RECEIVE_ORDER and $decideObjFlag) {
             // 確定取消ボタン
             $imgCancel = $doc->createElement("img");
             $imgCancel->setAttribute("src", "/img/type01/so/cancel_off_bt.gif");

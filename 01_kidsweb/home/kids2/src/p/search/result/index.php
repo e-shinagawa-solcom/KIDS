@@ -394,8 +394,8 @@ foreach ($records as $i => $record) {
             $imgHistory = $doc->createElement("img");
             $imgHistory->setAttribute("src", "/img/type01/so/renew_off_bt.gif");
             $imgHistory->setAttribute("id", $record["strproductcode"]);
-            $imgHistory->setAttribute("lngrevisionno", $record["lngrevisionno"]);
             $imgHistory->setAttribute("rownum", $index);
+            $imgHistory->setAttribute("lngrevisionno", $record["lngrevisionno"]);
             $imgHistory->setAttribute("class", "history button");
             // td > img
             $tdHistory->appendChild($imgHistory);

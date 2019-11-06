@@ -32,9 +32,40 @@ function fncGetMaxReceiveSQL($displayColumns, $searchColumns, $from, $to, $searc
     // クエリの組立て
     $aryQuery = array();
     $aryQuery[] = "SELECT";
-    $aryQuery[] = "  distinct r.strReceiveCode ";
+    $aryQuery[] = "  distinct ";
+    $aryQuery[] = "  r.lngReceiveNo as lngReceiveNo";
+    $aryQuery[] = "  , r.lngRevisionNo as lngRevisionNo";
+    $aryQuery[] = "  , rd.lngReceiveDetailNo";
+    $aryQuery[] = "  , rd.strProductCode";
+    $aryQuery[] = "  , rd.strGroupDisplayCode";
+    $aryQuery[] = "  , rd.strGroupDisplayName";
+    $aryQuery[] = "  , rd.strUserDisplayCode";
+    $aryQuery[] = "  , rd.strUserDisplayName";
+    $aryQuery[] = "  , rd.strProductName";
+    $aryQuery[] = "  , rd.strProductEnglishName";
+    $aryQuery[] = "  , rd.lngSalesClassCode";
+    $aryQuery[] = "  , rd.strsalesclassname";
+    $aryQuery[] = "  , rd.strGoodsCode";
+    $aryQuery[] = "  , rd.curProductPrice";
+    $aryQuery[] = "  , rd.lngProductUnitCode";
+    $aryQuery[] = "  , rd.strproductunitname";
+    $aryQuery[] = "  , to_char(rd.lngProductQuantity, '9,999,999,990') as lngProductQuantity";
+    $aryQuery[] = "  , rd.curSubTotalPrice";
+    $aryQuery[] = "  , rd.strNote as strDetailNote";
+    $aryQuery[] = "  , to_char(r.dtmInsertDate, 'YYYY/MM/DD HH24:MI:SS') as dtmInsertDate";
+    $aryQuery[] = "  , input_u.strUserDisplayCode as strInputUserDisplayCode";
+    $aryQuery[] = "  , input_u.strUserDisplayName as strInputUserDisplayName";
+    $aryQuery[] = "  , r.strCustomerReceiveCode as strCustomerReceiveCode";
+    $aryQuery[] = "  , r.strReceiveCode";
+    $aryQuery[] = "  , cust_c.strCompanyDisplayCode as strCustomerDisplayCode";
+    $aryQuery[] = "  , cust_c.strCompanyDisplayName as strCustomerDisplayName";
+    $aryQuery[] = "  , to_char(rd.dtmDeliveryDate, 'YYYY/MM/DD') as dtmDeliveryDate";
+    $aryQuery[] = "  , r.lngReceiveStatusCode as lngReceiveStatusCode";
+    $aryQuery[] = "  , rs.strReceiveStatusName as strReceiveStatusName";
+    $aryQuery[] = "  , mu.strMonetaryUnitSign as strMonetaryUnitSign";
+    $aryQuery[] = "  , mu.lngmonetaryunitcode as lngmonetaryunitcode ";
     $aryQuery[] = "FROM";
-    $aryQuery[] = "  m_Receive r ";    
+    $aryQuery[] = "  m_Receive r ";
     $aryQuery[] = "  inner join ( ";
     $aryQuery[] = "    select";
     $aryQuery[] = "      max(lngrevisionno) lngrevisionno";
@@ -93,22 +124,35 @@ function fncGetMaxReceiveSQL($displayColumns, $searchColumns, $from, $to, $searc
     $aryQuery[] = "          on ms.lngsalesclasscode = rd1.lngsalesclasscode ";
     $aryQuery[] = "        left join m_productunit mp ";
     $aryQuery[] = "          on mp.lngproductunitcode = rd1.lngproductunitcode ";
-    // 製品コード_from
+
+    // 製品コード
     if (array_key_exists("strProductCode", $searchColumns) &&
-        array_key_exists("strProductCode", $from) && $from["strProductCode"] != '') {
+        array_key_exists("strProductCode", $searchValue)) {
         $detailConditionCount += 1;
         $aryQuery[] = $detailConditionCount == 1 ? "WHERE " : "AND ";
-        $aryQuery[] = " rd1.strProductCode" .
-        " >= '" . pg_escape_string($from["strProductCode"]) . "'";
+        $strProductCodeArray = explode(",", $searchValue["strProductCode"]);
+        $aryQuery[] = " (";
+        $count = 0;
+        foreach ($strProductCodeArray as $strProductCode) {
+            $count += 1;
+            if ($count != 1) {
+                $aryQuery[] = " OR ";
+            }
+            if (strpos($strProductCode, '-') !== false) {
+                $aryQuery[] = "(rd1.strProductCode" .
+                " between '" . explode("-", $strProductCode)[0] . "'" .
+                " AND " . "'" . explode("-", $strProductCode)[1] . "')";
+            } else {
+                if (strpos($strProductCode, '_') !== false) {
+                    $aryQuery[] = "rd1.strProductCode = '" . explode("_", $strProductCode)[0] . "'";
+                    $aryQuery[] = " AND rd1.strrevisecode = '" . explode("_", $strProductCode)[1] . "'";
+                } else {
+                    $aryQuery[] = "rd1.strProductCode = '" . $strProductCode . "'";
+                }
+            }
+        }
+        $aryQuery[] = ")";
     }
-    // 製品コード_to
-    if (array_key_exists("strProductCode", $searchColumns) &&
-    array_key_exists("strProductCode", $to) && $to["strProductCode"] != '') {
-    $detailConditionCount += 1;
-    $aryQuery[] = $detailConditionCount == 1 ? "WHERE " : "AND ";
-    $aryQuery[] = " rd1.strProductCode" .
-    " <= " . "'" . pg_escape_string($to["strProductCode"]) . "'";
-}
     // 製品名称
     if (array_key_exists("strProductName", $searchColumns) &&
         array_key_exists("strProductName", $searchValue)) {
@@ -239,20 +283,12 @@ function fncGetMaxReceiveSQL($displayColumns, $searchColumns, $from, $to, $searc
     if (!array_key_exists("admin", $optionColumns)) {
         $aryQuery[] = "  AND not exists ( ";
         $aryQuery[] = "    select";
-        $aryQuery[] = "      r1.strReceiveCode ";
-        $aryQuery[] = "    from";
-        $aryQuery[] = "      ( ";
-        $aryQuery[] = "        SELECT";
-        $aryQuery[] = "          min(lngRevisionNo) lngRevisionNo";
-        $aryQuery[] = "          , strReceiveCode ";
-        $aryQuery[] = "        FROM";
-        $aryQuery[] = "          m_Receive ";
-        $aryQuery[] = "        group by";
-        $aryQuery[] = "          strReceiveCode";
-        $aryQuery[] = "      ) as r1 ";
+        $aryQuery[] = "      strReceiveCode ";
+        $aryQuery[] = "    FROM";
+        $aryQuery[] = "      m_Receive r ";
         $aryQuery[] = "    where";
-        $aryQuery[] = "      r1.strReceiveCode = r.strReceiveCode";
-        $aryQuery[] = "      AND r1.lngRevisionNo < 0";
+        $aryQuery[] = "      r1.lngRevisionNo < 0 ";
+        $aryQuery[] = "      and r1.strReceiveCode = r.strReceiveCode";
         $aryQuery[] = "  ) ";
     } else {
         $aryQuery[] = " AND r.bytInvalidFlag = FALSE ";
@@ -261,11 +297,11 @@ function fncGetMaxReceiveSQL($displayColumns, $searchColumns, $from, $to, $searc
 
     // クエリを平易な文字列に変換
     $strQuery = implode("\n", $aryQuery);
-    
+
     return $strQuery;
 }
 
-function fncGetReceivesByStrReceiveCodeSQL($subStrQuery)
+function fncGetReceivesByStrReceiveCodeSQL($strReceiveCode, $lngReceiveDetailNo, $lngRevisionNo)
 {
     // 明細検索条件数
     $detailConditionCount = 0;
@@ -354,9 +390,10 @@ function fncGetReceivesByStrReceiveCodeSQL($subStrQuery)
     $aryQuery[] = "WHERE";
     $aryQuery[] = " rd.lngReceiveNo = r.lngReceiveNo ";
     $aryQuery[] = " AND rd.lngRevisionNo = r.lngRevisionNo ";
-    $aryQuery[] = " AND r.strReceiveCode in (" . $subStrQuery . ")";
+    $aryQuery[] = " AND r.strReceiveCode = '" . $strReceiveCode . "'";
+    $aryQuery[] = " AND rd.lngReceiveDetailNo = '" . $lngReceiveDetailNo . "'";
     $aryQuery[] = " AND r.bytInvalidFlag = FALSE ";
-    $aryQuery[] = " AND r.lngRevisionNo >= 0";
+    $aryQuery[] = " AND r.lngRevisionNo <> " . $lngRevisionNo . "";
 
     $aryQuery[] = "ORDER BY";
     $aryQuery[] = " r.strReceiveCode, rd.lngReceiveDetailNo, r.lngRevisionNo DESC";
@@ -374,7 +411,8 @@ function fncGetReceivesByStrReceiveCodeSQL($subStrQuery)
  * @param [type] $objDB
  * @return void [0:確定対象外データ　1：確定対象データ]
  */
-function fncCheckData($strstrreceivecode, $objDB) {
+function fncCheckData($strstrreceivecode, $objDB)
+{
     $result = 1;
     unset($aryQuery);
     $aryQuery[] = "SELECT";

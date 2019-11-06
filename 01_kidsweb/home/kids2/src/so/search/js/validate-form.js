@@ -50,7 +50,7 @@
         "checkStrReceiveCode",
         function (value, element, params) {
             if (params && value!="") {
-                return this.optional(element) || /^d\d{9}(_\d{2})?$/.test(value);
+                return this.optional(element) || /^d\d{8}(_\d{2})?$/.test(value);
             }
             return true;
         },
@@ -293,19 +293,8 @@
                 }
             },
             // 製品コード            
-            From_strProductCode: {
+            strProductCode: {
                 required: function () {
-                    return $('input[name="IsSearch_strProductCode"]').get(0).checked && $('input[name="To_strProductCode"]').val() == "";
-                },
-                checkStrProductCode: function() {
-                    return $('input[name="IsSearch_strProductCode"]').get(0).checked;
-                }
-            },
-            To_strProductCode: {
-                required: function () {
-                    return $('input[name="IsSearch_strProductCode"]').get(0).checked && $('input[name="From_strProductCode"]').val() == "";
-                },
-                checkStrProductCode: function() {
                     return $('input[name="IsSearch_strProductCode"]').get(0).checked;
                 }
             },

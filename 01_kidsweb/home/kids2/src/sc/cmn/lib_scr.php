@@ -1482,7 +1482,7 @@ function fncRegisterSalesDetail($itemMinIndex, $itemMaxIndex, $lngSalesNo, $lngR
         $aryInsert[] =") ";
         $strQuery = "";
         $strQuery .= implode("\n", $aryInsert);
-        echo $strQuery;
+        
         // епо©╪б╧т
         if ( !$lngResultID = $objDB->execute( $strQuery ) )
         {

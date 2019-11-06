@@ -138,7 +138,7 @@
 	$aryCheck["lngPayConditionCode"]	= "numenglish(0,3)";
 	$aryCheck["dtmExpirationDateFrom"] 	= "date(/)";
 	$aryCheck["dtmExpirationDateTo"]	= "date(/)";
-	$aryCheck["strProductCode"]			= "numenglish(0,5)";
+	// $aryCheck["strProductCode"]			= "numenglish(0,5)";
 	$aryCheck["strProductName"]			= "length(0,100)";
 	$aryCheck["lngStockSubjectCode"]	= "ascii(0,7)";
 	$aryCheck["lngStockItemCode"]		= "ascii(0,7)";
@@ -192,7 +192,7 @@
 	
 	// 検索条件に一致する発注コードを取得するSQL文の作成
 	$strQuery = fncGetSearchPurchaseSQL( $aryViewColumn, $arySearchColumn, $aryData, $objDB, "", 0, FALSE );
-
+echo $strQuery;
 //fncDebug("kids2.log", $strQuery, __FILE__, __LINE__, "w" );
 	// 値をとる =====================================
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
