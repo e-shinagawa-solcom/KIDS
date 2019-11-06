@@ -33,6 +33,7 @@
 	// require(SRC_ROOT."po/cmn/lib_pos1.php");
 	require(SRC_ROOT."po/cmn/lib_por.php");
 	require(SRC_ROOT."po/cmn/column.php");
+	require_once (LIB_DEBUGFILE);
 
 
 	$objDB		= new clsDB();
@@ -44,10 +45,13 @@
 	$aryData["lngLanguageCode"]     = $_COOKIE["lngLanguageCode"];
 	$aryData["dtmExpirationDate"]   = $_REQUEST["dtmExpirationDate"];
 	$aryData["lngPayConditionCode"] = $_REQUEST["lngPayConditionCode"];
-	$aryData["strPayConditionName"] = $_REQUEST["strPayConditionName"];
+//	$aryData["strPayConditionName"] = $_REQUEST["strPayConditionName"];
+	$aryData["strPayConditionName"] = mb_convert_encoding($_REQUEST["strPayConditionName"], "EUC-JP", "auto");
 	$aryData["strLocationCode"]     = $_REQUEST["strLocationCode"];
-	$aryData["strLocationName"]     = $_REQUEST["strLocationName"];
-	$aryData["strNote"]             = $_REQUEST["strNote"];
+//	$aryData["strLocationName"]     = $_REQUEST["strLocationName"];
+	$aryData["strLocationName"]     = mb_convert_encoding($_REQUEST["strLocationName"], "EUC-JP", "auto");
+//	$aryData["strNote"]             = $_REQUEST["strNote"];
+	$aryData["strNote"]             = mb_convert_encoding($_REQUEST["strNote"], "EUC-JP", "auto");
 	$aryData["strOrderCode"]        = $_REQUEST["strOrderCode"];
 	// $aryData["strProductCode"]      = $_REQUEST["strProductCode"];
 	// $aryData["strProductName"]      = $_REQUEST["strProductName"];
@@ -81,16 +85,19 @@
 	{
 		fncOutputError ( 9052, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 	}
+fncDebug("kids2.log", "pass-1", __FILE__, __LINE__, "a" );
 
 	// check
 	if( $_POST["strMode"] == "check" || $_POST["strMode"] == "renew" )
 	{
 		$objDB->transactionBegin();
 		// 発注書マスタ更新
+fncDebug("kids2.log", "pass-2", __FILE__, __LINE__, "a" );
 		if(!fncUpdatePurchaseOrder($aryData, $objDB, $objAuth)) { return false; }
-
+fncDebug("kids2.log", "pass-3", __FILE__, __LINE__, "a" );
 		// 発注書明細更新
 		if(!fncUpdatePurchaseOrderDetail($aryData, $objDB)) { return false; }
+fncDebug("kids2.log", "pass-4", __FILE__, __LINE__, "a" );
 
 		// 更新後のデータを再度読み込む
 		$updatedPurchaseOrder = fncGetPurchaseOrderEdit($aryData["lngPurchaseOrderNo"], $aryData["lngRevisionNo"], $objDB);
