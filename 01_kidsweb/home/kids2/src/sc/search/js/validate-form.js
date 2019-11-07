@@ -278,9 +278,6 @@
             strProductCode: {
                 required: function () {
                     return $('input[name="IsSearch_strProductCode"]').get(0).checked;
-                },
-                checkStrProductCode: function () {
-                    return $('input[name="IsSearch_strProductCode"]').get(0).checked;
                 }
             },
             // ÆþÎÏ¼Ô            

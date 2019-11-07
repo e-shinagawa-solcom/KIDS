@@ -1312,15 +1312,22 @@ $aryHtml[] = "\t<td></td>\n";
  *
  * @param    Array    $aryViewColumn        カラム情報
  * @param    Array    $aryResult            発注書データ
- * @param    Array    $aryUserAuthority    権限
+ * @param    Array    $aryUserAuthority 　  権限
+ * @param    boolean  $isMaxObj   　　　　　 最新対象
+ * @param    boolean  $rownum   　　　　　 　行番号
  * @access    public
  *
  */
-function fncSetPurchaseOrderHtml($aryViewColumn, $aryResult, $aryUserAuthority)
+function fncSetPurchaseOrderHtml($aryViewColumn, $aryResult, $aryUserAuthority, $isMaxObj, $rownum)
 {
     for ($i = 0; $i < count($aryResult); $i++) {
-        $aryHtml[] = "<tr>";
-        $aryHtml[] = "  <td class=\"rownum\">" . ($i + 1) . "</td>";
+        if ($isMaxObj) {
+            $aryHtml[] = "<tr id=".$aryResult[$i]["strordercode"] .">";
+            $aryHtml[] = "  <td class=\"rownum\">" . ($i + 1) . "</td>";
+        } else {
+            $aryHtml[] = "<tr id=".$aryResult[$i]["strordercode"]. "_" .$aryResult[$i]["lngrevisionno"] .">";            
+            $aryHtml[] = "  <td class=\"rownum\">" . $rownum .".".($i + 1) . "</td>";
+        }
         for ($j = 0; $j < count($aryViewColumn); $j++) {
             $strColumn = $aryViewColumn[$j];
             // 表示対象がボタンの場合
@@ -1329,41 +1336,13 @@ function fncSetPurchaseOrderHtml($aryViewColumn, $aryResult, $aryUserAuthority)
                 if ($strColumn == "btnEdit" and $aryUserAuthority["Edit"]) {
 
                     $aryHtml[] = "  <td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/detail_off_bt.gif\" lngpurchaseorderno=\"" . $aryResult[$i]["lngpurchaseorderno"] . "\" lngrevisionno=\"" . $aryResult[$i]["lngrevisionno"] . "\" class=\"edit button\"></td>";
-/*   最新リビジョンのみ取得に修正したため削除
-// 発注書データが旧リビジョンの場合、修正ボタンは非表示
-if($aryResult[$i]["lngrevisionno"] == -1){
-$aryHtml[] = "  <td></td>";
-} else {
-$aryHtml[] = "  <td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/detail_off_bt.gif\" lngpurchaseorderno=\"" . $aryResult[$i]["lngpurchaseorderno"] . "\" lngrevisionno=\"" . $aryResult[$i]["lngrevisionno"] . "\" class=\"edit button\"></td>";
-}
- */
-                }
-                // 履歴ボタン
-                if ($strColumn == "btnRecord") {
+                    // 履歴ボタン
+                } else if ($strColumn == "btnRecord" and $aryResult[$i]["lngrevisionno"] != 0) {
                     // 旧リビジョンの場合、履歴ボタンは非表示
                     $strOrderCode = sprintf("%s_%02d", $aryResult[$i]["strordercode"], $aryResult[$i]["lngrevisionno"]);
-                    $aryHtml[] = "  <td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/detail_off_bt.gif\" lngpurchaseorderno=\"" . $aryResult[$i]["lngpurchaseorderno"] . "\" strOrderCode=\"" . $strOrderCode . "\" class=\"record button\"></td>";
-/*   最新リビジョンのみ取得に修正したため削除
-if($aryResult[$i]["lngrevisionno"] == 1) {
-$aryHtml[] = "  <td></td>";
-} else {
-$strOrderCode = sprintf("%s_%02d", $aryResult[$i]["strordercode"], $aryResult[$i]["lngrevisionno"]);
-$aryHtml[] = "  <td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/detail_off_bt.gif\" lngpurchaseorderno=\"" . $aryResult[$i]["lngpurchaseorderno"] . "\" strOrderCode=\"" . $strOrderCode . "\" class=\"record button\"></td>";
-}
- */
-                }
-                // 削除ボタン
-                //                if($strColumn == "btnDelete" and $aryUserAuthority["Admin"]) {
-                if ($strColumn == "btnDelete") {
-                    $aryHtml[] = "  <td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/remove_off_bt.gif\" lngpurchaseorderno=\"" . $aryResult[$i]["lngpurchaseorderno"] . "\" lngrevisionno = \"" . $aryResult[$i]["lngrevisionno"] . "\" class=\"delete button\"></td>";
-                    // 現リビジョンのみ表示
-                    /*   最新リビジョンのみ取得に修正したため削除
-                if($aryResult[$i]["lngrevisionno"] == -1){
-                $aryHtml[] = "  <td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/remove_off_bt.gif\" lngpurchaseorderno=\"" . $aryResult[$i]["lngpurchaseorderno"] . "\" class=\"record button\"></td>";
+                    $aryHtml[] = "  <td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/detail_off_bt.gif\" rownum=\"". ($i + 1)."\" id=\"" . $aryResult[$i]["strordercode"] . "\" lngrevisionno=\"" . $aryResult[$i]["lngrevisionno"] . "\" class=\"history button\"></td>";
                 } else {
-                $aryHtml[] = "  <td></td>";
-                }
-                 */
+                    $aryHtml[] = "  <td></td>";
                 }
             } else {
                 // 発注NO.
@@ -1408,7 +1387,7 @@ $aryHtml[] = "  <td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/
                 }
                 // 支払条件
                 if ($strColumn == "lngPayConditionCode") {
-                    $aryHtml[] = "  <td class=\"td-strpaycnoditionname\">" . $aryResult[$i]["strpaycnoditionname"] . "</td>";
+                    $aryHtml[] = "  <td class=\"td-strpaycnoditionname\">" . $aryResult[$i]["strpayconditionname"] . "</td>";
                 }
                 // 税抜金額
                 if ($strColumn == "curTotalPrice") {
@@ -1632,11 +1611,12 @@ function fncSetPurchaseTable($aryResult, $arySearchColumn, $aryViewColumn, $aryD
  * @param    Array    $aryViewColumn        表示列
  * @param    Array    $aryUserAuthority    権限
  * @param    Array    $aryTitle            列名
- * @param    Object    $objDB                DBオブジェクト
- * @param    Object    $objCache            キャッシュオブジェクト
+ * @param    Object   $objDB                DBオブジェクト
+ * @param    Object   $objCache            キャッシュオブジェクト
  * @param    Array    $aryTableName        テーブル名
+ * @param    boolean  $isMaxObj           　最新対象
  */
-function fncSetPurchaseOrderTable($aryResult, $aryViewColumn, $aryData, $aryUserAuthority, $aryTitle, $objDB, $objCache, $aryTableName)
+function fncSetPurchaseOrderTable($aryResult, $aryViewColumn, $aryData, $aryUserAuthority, $aryTitle, $objDB, $objCache, $aryTableName, $isMaxObj)
 {
     // 表示カラムのヘッダ部と明細部の分離処理
     for ($i = 0; $i < count($aryViewColumn); $i++) {
@@ -1649,10 +1629,6 @@ function fncSetPurchaseOrderTable($aryResult, $aryViewColumn, $aryData, $aryUser
             }
         } else if ($strColumnName == "btnRecord") {
             $aryHeadViewColumn[] = $strColumnName;
-        } else if ($strColumnName == "btnDelete") {
-//            if($aryUserAuthority["Admin"]){
-            $aryHeadViewColumn[] = $strColumnName;
-//            }
         } else if ($strColumnName == "dtmInsertDate"
             or $strColumnName == "lngInputUserCode"
             or $strColumnName == "dtmExpirationDate"
@@ -1687,13 +1663,11 @@ function fncSetPurchaseOrderTable($aryResult, $aryViewColumn, $aryData, $aryUser
         $addTh = "\t<th>";
         $strColumnName = $aryViewColumn[$i];
 
-        if ($strColumnName == "btnPreview" or $strColumnName == "btnEdit" or $strColumnName == "btnRecord" or $strColumnName == "btnDelete") {
+        if ($strColumnName == "btnPreview" or $strColumnName == "btnEdit" or $strColumnName == "btnRecord") {
             // ソート項目以外の場合
             if (($strColumnName == "btnPreview" and $aryUserAuthority["Preview"])
                 or ($strColumnName == "btnEdit" and $aryUserAuthority["Edit"])
                 or ($strColumnName == "btnRecord")
-//                or ($strColumnName == "btnDelete" and $aryUserAuthority["Admin"])
-                 or ($strColumnName == "btnDelete")
             ) {
                 $addTh .= $aryTitle[$strColumnName];
             } else {
@@ -1715,7 +1689,7 @@ function fncSetPurchaseOrderTable($aryResult, $aryViewColumn, $aryData, $aryUser
     $aryHtml[] = "<tbody>";
     $lngResultCount = count($aryResult);
 
-    $aryHtml[] = fncSetPurchaseOrderHtml($aryViewColumn, $aryResult, $aryUserAuthority);
+    $aryHtml[] = fncSetPurchaseOrderHtml($aryViewColumn, $aryResult, $aryUserAuthority, $isMaxObj, null);
     $aryHtml[] = "</tbody>";
     $strHtml = implode("\n", $aryHtml);
 
@@ -1756,7 +1730,7 @@ function fncSetPurchaseOrderTable2($aryResult, $aryViewColumn, $aryData, $aryUse
 
                 // 履歴ボタン
                 if ($strColumnName == "btnRecord") {
-                    if ($aryHeadResult["lngRevisionNo"] > 0) {
+                    if ($aryHeadResult["lngRevisionNo"] > 0 and $aryUserAuthority["Admin"]) {
                         $aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/detail_off_bt.gif\" lngPurchaseOrderNo=\"" . $aryDetailResult[$i]["lngPurchaseOrderNo"] . "\" strOrderCode =\"" . $aryResult["strordercode"] . "\" class=\"fix button\"></td>\n";
                     } else {
                         $aryHtml[] = "\t<td></td>\n";
@@ -1844,4 +1818,53 @@ function fncResortSearchColumn2($aryViewColumn)
     if (in_array("btnDelete", $aryViewColumn)) {$aryResult[] = "btnDelete";}
 
     return $aryResult;
+}
+
+function fncGetPurchseOrderByOrderCodeSQL($strOrderCode, $lngRevisionNo)
+{
+    $aryQuery[] = "SELECT";
+    $aryQuery[] = "  mp.lngpurchaseorderno as lngPurchaseOrderNo";
+    $aryQuery[] = "  , mp.lngrevisionno as lngRevisionNo";
+    $aryQuery[] = "  , mp.strrevisecode as strReviseCode";
+    $aryQuery[] = "  , mp.strordercode as strOrderCode";
+    $aryQuery[] = "  , to_char(mp.dtmexpirationdate, 'YYYY/MM/DD') as dtmExpirationDate";
+    $aryQuery[] = "  , mp.strproductcode as strProductCode";
+    $aryQuery[] = "  , mp.strproductname as strProductName";
+    $aryQuery[] = "  , mp.strproductenglishname as strProductEnglishName";
+    $aryQuery[] = "  , to_char(mp.dtminsertdate, 'YYYY/MM/DD') as dtmInsertDate";
+    $aryQuery[] = "  , input_user.struserdisplaycode AS lngInsertUserCode";
+    $aryQuery[] = "  , mp.strinsertusername AS strInsertUserName";
+    $aryQuery[] = "  , mg.strgroupdisplaycode AS lngGroupCode";
+    $aryQuery[] = "  , mp.strgroupname as strGroupName";
+    $aryQuery[] = "  , mu.struserdisplaycode as lngUserCode";
+    $aryQuery[] = "  , mp.strusername as strUserName";
+    $aryQuery[] = "  , mc_stock.strcompanydisplaycode as lngCustomerCode";
+    $aryQuery[] = "  , mp.strcustomername as strCustomerName";
+    $aryQuery[] = "  , mp.lngpayconditioncode as lngPayConditionCode";
+    $aryQuery[] = "  , mp.strpayconditionname as strPayConditionName";
+    $aryQuery[] = "  , mp.lngmonetaryunitcode as lngMonetaryUnitCode";
+    $aryQuery[] = "  , mp.strmonetaryunitsign as strMonetaryUnitSign";
+    $aryQuery[] = "  , mp.curtotalprice as curTotalPrice";
+    $aryQuery[] = "  , mp.strdeliveryplacename as strDeliveryPlaceName";
+    $aryQuery[] = "  , mp.strnote as strNote ";
+    $aryQuery[] = "FROM";
+    $aryQuery[] = "  m_purchaseorder mp ";
+    $aryQuery[] = "  left join m_user input_user ";
+    $aryQuery[] = "    on input_user.lngusercode = mp.lnginsertusercode ";
+    $aryQuery[] = "  left join m_group mg ";
+    $aryQuery[] = "    on mg.lnggroupcode = mp.lnggroupcode ";
+    $aryQuery[] = "  left join m_user mu ";
+    $aryQuery[] = "    on mu.lngusercode = mp.lngusercode ";
+    $aryQuery[] = "  left join m_company mc_stock ";
+    $aryQuery[] = "    on mc_stock.lngcompanycode = mp.lngcustomercode ";
+    $aryQuery[] = "  left join m_company mc_delivary ";
+    $aryQuery[] = "    on mc_delivary.lngcompanycode = mp.lngdeliveryplacecode ";
+    $aryQuery[] = "WHERE";
+    $aryQuery[] = "  mp.strordercode = '".$strOrderCode ."' ";
+    $aryQuery[] = "  AND mp.lngrevisionno <> ".$lngRevisionNo ." ";
+    $aryQuery[] = "ORDER BY";
+    $aryQuery[] = "  mp.lngpurchaseorderno";
+    $aryQuery[] = "  , mp.lngrevisionno DESC";
+
+    return implode("\n", $aryQuery);
 }

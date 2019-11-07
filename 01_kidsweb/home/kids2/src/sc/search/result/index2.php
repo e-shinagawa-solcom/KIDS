@@ -34,6 +34,10 @@ $displayColumns = array();
 foreach ($aryData["displayColumns"] as $key) {
     $displayColumns[$key] = $key;
 }
+
+// セッション確認
+$objAuth = fncIsSession($_REQUEST["strSessionID"], $objAuth, $objDB);
+
 // 売上履歴情報取得SQL
 $strQuery = fncGetSalesByStrSalesCodeSQL($aryData["strSalesCode"], $aryData["lngRevisionNo"]);
 

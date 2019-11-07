@@ -42,12 +42,11 @@
 	$aryData["strSessionID"]        = $_REQUEST["strSessionID"];
 	$aryData["lngPurchaseOrderNo"]  = $_REQUEST["lngPurchaseOrderNo"];
 	$aryData["lngRevisionNo"]       = $_REQUEST["lngRevisionNo"];
-	$aryData["lngLanguageCode"]     = $_COOKIE["lngLanguageCode"];
 	$aryData["dtmExpirationDate"]   = $_REQUEST["dtmExpirationDate"];
 	$aryData["lngPayConditionCode"] = $_REQUEST["lngPayConditionCode"];
 //	$aryData["strPayConditionName"] = $_REQUEST["strPayConditionName"];
 	$aryData["strPayConditionName"] = mb_convert_encoding($_REQUEST["strPayConditionName"], "EUC-JP", "auto");
-	$aryData["strLocationCode"]     = $_REQUEST["strLocationCode"];
+	$aryData["lngLocationCode"]     = $_REQUEST["lngLocationCode"];
 //	$aryData["strLocationName"]     = $_REQUEST["strLocationName"];
 	$aryData["strLocationName"]     = mb_convert_encoding($_REQUEST["strLocationName"], "EUC-JP", "auto");
 //	$aryData["strNote"]             = $_REQUEST["strNote"];
@@ -58,7 +57,7 @@
 	// $aryData["strCustomerCode"]     = $_REQUEST["strCustomerCode"];
 	// $aryData["strCustomerName"]     = $_REQUEST["strCustomerName"];
 	$aryData["aryDetail"]           = $_REQUEST["aryDetail"];
-
+	
 	$objDB->open("", "", "", "");
 	
 	// 文字列チェック
@@ -143,7 +142,7 @@ fncDebug("kids2.log", "pass-4", __FILE__, __LINE__, "a" );
 	$aryNewResult["strGroupDisplayName"]      = $aryResult[0]["strgroupdisplayname"];
 	$aryNewResult["strProductName"]           = $aryResult[0]["strproductname"];
 	$aryNewResult["strProductEnglishName"]    = $aryResult[0]["strproductenglishname"];
-	$aryNewResult["strLocationCode"]          = $aryResult[0]["strdeliveryplacecode"];
+	$aryNewResult["lngLocationCode"]          = $aryResult[0]["strdeliveryplacecode"];
 	$aryNewResult["strLocationName"]          = $aryResult[0]["strdeliveryplacename"];
 	$aryNewResult["strNote"]                  = $aryResult[0]["strnote"];
 	$aryNewResult["lngPurchaseOrderNo"]       = $aryResult[0]["lngpurchaseorderno"];
@@ -162,7 +161,18 @@ fncDebug("kids2.log", "pass-4", __FILE__, __LINE__, "a" );
 	// ヘルプ対応
 	$aryNewResult["lngFunctionCode"] = DEF_FUNCTION_PO5;
 	
-	echo fncGetReplacedHtml( "po/regist/renew.tmpl", $aryNewResult ,$objAuth );
+				// テンプレート読み込み
+$objTemplate = new clsTemplate();
+$objTemplate->getTemplate("/po/regist/renew.html");
+
+// テンプレート生成
+$objTemplate->replace($aryNewResult);
+$objTemplate->complete();
+
+// HTML出力
+echo $objTemplate->strTemplate;
+
+	// echo fncGetReplacedHtml( "po/regist/renew.tmpl", $aryNewResult ,$objAuth );
 	
 	return true;
 	

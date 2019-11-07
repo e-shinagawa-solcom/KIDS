@@ -199,7 +199,7 @@ jQuery(function($){
                 dtmExpirationDate:   $('input[name="dtmExpirationDate"]').val(),
                 lngPayConditionCode: $('select[name="lngPayConditionCode"]').children('option:selected').val(),
                 strPayConditionName: $('select[name="lngPayConditionCode"]').children('option:selected').text(),
-                strLocationCode:     $('input[name="strLocationCode"]').val(),
+                lngLocationCode:     $('input[name="lngLocationCode"]').val(),
                 strLocationName:     $('input[name="strLocationName"]').val(),
                 strNote:             $('input[name="strNote"]').val(),
                 strOrderCode:        $('input[name="strOrderCode"]').val(),

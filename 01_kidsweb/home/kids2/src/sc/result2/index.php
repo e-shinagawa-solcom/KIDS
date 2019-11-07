@@ -170,7 +170,7 @@
 
 	// 検索SQLを実行し検索（ヒット）件数を取得する
 	$strQuery = fncGetSearchSlipSQL( $arySearchColumn, $aryData, $objDB, "", 0, $aryData["strSessionID"]);
-
+// echo $strQuery;
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
 	if ( $lngResultNum )
