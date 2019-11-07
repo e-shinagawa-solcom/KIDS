@@ -143,6 +143,7 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutMsw(); initLayout
         <span id="VarsA15">
         	<input style="ime-mode:disabled;" class="TxtStyle05L" type="text" name="strLocationCode" value="_%strLocationCode%_">&nbsp;
             <input style="ime-mode:disabled;" class="disTxt40L" type="text" name="strLocationName" value="_%strLocationName%_" contenteditable="false">
+            <img class="msw-button button" invokeMSWName="msw-location" inputCodeMSWName="lngDeliveryPlaceCode" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
         </span>
         <!-- 備考 -->
         <span id="SegA16">備考</span>
@@ -155,7 +156,11 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutMsw(); initLayout
         <input type="hidden" name="lngRevisionNo" value="_%lngRevisionNo%_">
         <input type="hidden" name="lngPayConditionCodeOrign" value="_%lngPayConditionCodeOrign%_">
     </div>
-
+    <div class="msw-loadpoints">
+		<!-- MSW 納品場所マスタ検索 -->
+		<iframe class="msw-location" src="/search/cmn/msw/location/mswlocation.html" frameborder="0">
+		</iframe>
+	</div>
     <div id="InputDetail">
         <table id="DetailTable" cellpadding="0" cellspacing="1" border="0">
             <thead id="DetailTableHead">
