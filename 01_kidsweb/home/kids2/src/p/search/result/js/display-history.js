@@ -39,7 +39,6 @@
             })
                 .done(function (response) {
                     console.log(response);
-                    // var data = JSON.parse(response);
                     var row = $('tr[id="' + strProductCode + '"]');
                     row.after(response);
 

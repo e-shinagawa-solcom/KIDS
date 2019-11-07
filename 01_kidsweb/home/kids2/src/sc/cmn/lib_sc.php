@@ -103,10 +103,11 @@ function fncGetMaxSalesSQL($displayColumns, $searchColumns, $from, $to, $searchV
     $aryQuery[] = "        t_SalesDetail sd1 ";
     $aryQuery[] = "        LEFT JOIN (";
     $aryQuery[] = "            select p1.*  from m_product p1 ";
-    $aryQuery[] = "        	inner join (select max(lngRevisionNo) lngRevisionNo, strproductcode from m_Product group by strProductCode) p2";
-    $aryQuery[] = "            on p1.lngRevisionNo = p2.lngRevisionNo and p1.strproductcode = p2.strproductcode";
+    $aryQuery[] = "        	inner join (select max(lngRevisionNo) lngRevisionNo, strproductcode, strrevisecode from m_Product group by strProductCode, strrevisecode) p2";
+    $aryQuery[] = "            on p1.lngRevisionNo = p2.lngRevisionNo and p1.strproductcode = p2.strproductcode and p1.strrevisecode = p2.strrevisecode";
     $aryQuery[] = "          ) p ";
     $aryQuery[] = "          ON sd1.strProductCode = p.strProductCode ";
+    $aryQuery[] = "          AND sd1.strrevisecode = p.strrevisecode ";
     $aryQuery[] = "        left join m_group mg ";
     $aryQuery[] = "          on p.lnginchargegroupcode = mg.lnggroupcode ";
     $aryQuery[] = "        left join m_user mu ";
@@ -120,7 +121,8 @@ function fncGetMaxSalesSQL($displayColumns, $searchColumns, $from, $to, $searchV
     $aryQuery[] = "        left join m_productunit mp ";
     $aryQuery[] = "          on mp.lngproductunitcode = sd1.lngproductunitcode ";
     $aryQuery[] = "        left join m_Receive r ";
-    $aryQuery[] = "          on r.lngreceiveno = sd1.lngreceiveno ";
+    $aryQuery[] = "          on sd1.lngreceiveno = r.lngreceiveno ";
+    $aryQuery[] = "          and sd1.lngreceiverevisionno = r.lngrevisionno ";
 
     // 製品コード
     if (array_key_exists("strProductCode", $searchColumns) &&
@@ -411,10 +413,11 @@ function fncGetSalesByStrSalesCodeSQL($strSalesCode, $lngRevisionNo)
     $aryQuery[] = "        t_SalesDetail sd1 ";
     $aryQuery[] = "        LEFT JOIN (";
     $aryQuery[] = "            select p1.*  from m_product p1 ";
-    $aryQuery[] = "        	inner join (select max(lngRevisionNo) lngRevisionNo, strproductcode from m_Product group by strProductCode) p2";
-    $aryQuery[] = "            on p1.lngRevisionNo = p2.lngRevisionNo and p1.strproductcode = p2.strproductcode";
+    $aryQuery[] = "        	inner join (select max(lngRevisionNo) lngRevisionNo, strproductcode, strrevisecode from m_Product group by strProductCode, strrevisecode) p2";
+    $aryQuery[] = "            on p1.lngRevisionNo = p2.lngRevisionNo and p1.strproductcode = p2.strproductcode and p1.strrevisecode = p2.strrevisecode";
     $aryQuery[] = "          ) p ";
     $aryQuery[] = "          ON sd1.strProductCode = p.strProductCode ";
+    $aryQuery[] = "          AND sd1.strrevisecode = p.strrevisecode ";
     $aryQuery[] = "        left join m_group mg ";
     $aryQuery[] = "          on p.lnginchargegroupcode = mg.lnggroupcode ";
     $aryQuery[] = "        left join m_user mu ";
@@ -428,7 +431,8 @@ function fncGetSalesByStrSalesCodeSQL($strSalesCode, $lngRevisionNo)
     $aryQuery[] = "        left join m_productunit mp ";
     $aryQuery[] = "          on mp.lngproductunitcode = sd1.lngproductunitcode ";
     $aryQuery[] = "        left join m_Receive r ";
-    $aryQuery[] = "          on r.lngreceiveno = sd1.lngreceiveno ";
+    $aryQuery[] = "          on sd1.lngreceiveno = r.lngreceiveno ";
+    $aryQuery[] = "          and sd1.lngreceiverevisionno = r.lngrevisionno ";
     $aryQuery[] = "    ) as sd ";
     $aryQuery[] = "WHERE";
     $aryQuery[] = " sd.lngSalesNo = s.lngSalesNo ";
@@ -489,16 +493,18 @@ function fncGetDetailData($lngSalesNo, $lngRevisionNo, $objDB)
     $aryQuery[] = "      inner join ( ";
     $aryQuery[] = "        select";
     $aryQuery[] = "          max(lngRevisionNo) lngRevisionNo";
-    $aryQuery[] = "          , strproductcode ";
+    $aryQuery[] = "          , strproductcode, strrevisecode ";
     $aryQuery[] = "        from";
     $aryQuery[] = "          m_Product ";
     $aryQuery[] = "        group by";
-    $aryQuery[] = "          strProductCode";
+    $aryQuery[] = "          strProductCode, strrevisecode";
     $aryQuery[] = "      ) p2 ";
     $aryQuery[] = "        on p1.lngRevisionNo = p2.lngRevisionNo ";
     $aryQuery[] = "        and p1.strproductcode = p2.strproductcode";
+    $aryQuery[] = "        and p1.strrevisecode = p2.strrevisecode";
     $aryQuery[] = "  ) p ";
     $aryQuery[] = "    ON sd.strProductCode = p.strProductCode ";
+    $aryQuery[] = "    AND sd.strrevisecode = p.strrevisecode ";
     $aryQuery[] = "  left join m_group mg ";
     $aryQuery[] = "    on p.lnginchargegroupcode = mg.lnggroupcode ";
     $aryQuery[] = "  left join m_user mu ";

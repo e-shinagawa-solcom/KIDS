@@ -111,10 +111,11 @@ function fncGetMaxStockSQL($displayColumns, $searchColumns, $from, $to, $searchV
     $aryQuery[] = "        t_StockDetail sd1 ";
     $aryQuery[] = "        LEFT JOIN (";
     $aryQuery[] = "            select p1.*  from m_product p1 ";
-    $aryQuery[] = "        	inner join (select max(lngrevisionno) lngrevisionno, strproductcode from m_Product group by strProductCode) p2";
-    $aryQuery[] = "            on p1.lngrevisionno = p2.lngrevisionno and p1.strproductcode = p2.strproductcode";
+    $aryQuery[] = "        	inner join (select max(lngrevisionno) lngrevisionno, strproductcode,strrevisecode from m_Product group by strProductCode,strrevisecode) p2";
+    $aryQuery[] = "            on p1.lngrevisionno = p2.lngrevisionno and p1.strproductcode = p2.strproductcode and p1.strrevisecode = p2.strrevisecode";
     $aryQuery[] = "          ) p ";
     $aryQuery[] = "          ON sd1.strProductCode = p.strProductCode ";
+    $aryQuery[] = "          AND sd1.strrevisecode = p.strrevisecode ";
     $aryQuery[] = "        left join m_group mg ";
     $aryQuery[] = "          on p.lnginchargegroupcode = mg.lnggroupcode ";
     $aryQuery[] = "        left join m_user mu ";
@@ -156,7 +157,7 @@ function fncGetMaxStockSQL($displayColumns, $searchColumns, $from, $to, $searchV
         $detailConditionCount += 1;
         $aryQuery[] = $detailConditionCount == 1 ? "WHERE " : "AND ";
         $aryQuery[] = " o.strOrderCode" .
-            " >= " . "'" . $to["strOrderCode"] . "'";
+            " <= " . "'" . $to["strOrderCode"] . "'";
     }
     if (array_key_exists("strProductCode", $searchColumns) &&
     array_key_exists("strProductCode", $searchValue)) {
@@ -263,7 +264,7 @@ function fncGetMaxStockSQL($displayColumns, $searchColumns, $from, $to, $searchV
     if (array_key_exists("dtmAppropriationDate", $searchColumns) &&
         array_key_exists("dtmAppropriationDate", $to) && $to["dtmAppropriationDate"] != '') {
         $aryQuery[] = "AND s.dtmAppropriationDate" .
-            " >= " . "'" . $to["dtmAppropriationDate"] . "'";
+            " <= " . "'" . $to["dtmAppropriationDate"] . "'";
     }
     // À½ÉÊÅþÃåÆü_from
     if (array_key_exists("dtmExpirationDate", $searchColumns) &&
@@ -440,10 +441,11 @@ function fncGetStocksByStrStockCodeSQL($strStockCode, $lngRevisionNo)
     $aryQuery[] = "        and o.lngrevisionno = tp.lngrevisionno ";
     $aryQuery[] = "      INNER JOIN ( ";
     $aryQuery[] = "        select p1.*  from m_product p1  ";
-    $aryQuery[] = "        inner join (select max(lngrevisionno) lngrevisionno, strproductcode from m_Product group by strProductCode) p2 ";
-    $aryQuery[] = "        on p1.lngrevisionno = p2.lngrevisionno and p1.strproductcode = p2.strproductcode ";
+    $aryQuery[] = "        inner join (select max(lngrevisionno) lngrevisionno, strproductcode, strrevisecode from m_Product group by strProductCode, strrevisecode) p2 ";
+    $aryQuery[] = "        on p1.lngrevisionno = p2.lngrevisionno and p1.strproductcode = p2.strproductcode and p1.strrevisecode = p2.strrevisecode";
     $aryQuery[] = "      ) p  ";
     $aryQuery[] = "        ON sd1.strProductCode = p.strProductCode  ";
+    $aryQuery[] = "        AND sd1.strrevisecode = p.strrevisecode  ";
     $aryQuery[] = "      INNER join m_group mg  ";
     $aryQuery[] = "        on p.lnginchargegroupcode = mg.lnggroupcode  ";
     $aryQuery[] = "      left join m_user mu ";
@@ -527,16 +529,18 @@ function fncGetDetailData($lngStockNo, $lngRevisionNo, $objDB)
     $aryQuery[] = "      inner join ( ";
     $aryQuery[] = "        select";
     $aryQuery[] = "          max(lngrevisionno) lngrevisionno";
-    $aryQuery[] = "          , strproductcode ";
+    $aryQuery[] = "          , strproductcode, strrevisecode ";
     $aryQuery[] = "        from";
     $aryQuery[] = "          m_Product ";
     $aryQuery[] = "        group by";
-    $aryQuery[] = "          strProductCode";
+    $aryQuery[] = "          strProductCode,strrevisecode";
     $aryQuery[] = "      ) p2 ";
     $aryQuery[] = "        on p1.lngrevisionno = p2.lngrevisionno ";
     $aryQuery[] = "        and p1.strproductcode = p2.strproductcode";
+    $aryQuery[] = "        and p1.strrevisecode = p2.strrevisecode";
     $aryQuery[] = "  ) p ";
     $aryQuery[] = "    ON sd.strProductCode = p.strProductCode ";
+    $aryQuery[] = "    AND sd.strrevisecode = p.strrevisecode ";
     $aryQuery[] = "  left join m_group mg ";
     $aryQuery[] = "    on p.lnginchargegroupcode = mg.lnggroupcode ";
     $aryQuery[] = "  left join m_user mu ";

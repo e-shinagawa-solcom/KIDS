@@ -35,6 +35,9 @@ foreach ($aryData["displayColumns"] as $key) {
     $displayColumns[$key] = $key;
 }
 
+// セッション確認
+$objAuth = fncIsSession($_REQUEST["strSessionID"], $objAuth, $objDB);
+
 // 仕入コードにより仕入履歴取得SQL
 $strQuery = fncGetStocksByStrStockCodeSQL($aryData["strStockCode"], $aryData["lngRevisionNo"]);
 echo $strQuery;

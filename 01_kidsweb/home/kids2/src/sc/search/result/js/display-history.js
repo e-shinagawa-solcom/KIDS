@@ -39,9 +39,11 @@
             })
                 .done(function (response) {
                     console.log(response);
-                    var row = $('tr[id="' + strSalesCode + "_" + lngRevisionNo + "_" + maxdetailno + '"]');
-                    row.after(response);
-
+                    if ($('tr[id="' + strSalesCode + "_" + lngRevisionNo + "_" + maxdetailno + '"]').length) {
+                        $('tr[id="' + strSalesCode + "_" + lngRevisionNo + "_" + maxdetailno + '"]').after(response);
+                    } else {
+                        $('tr[id="' + strSalesCode + '"]').after(response);
+                    }
                     // 詳細ボタンのイベント
                     $('img.detail.button').on('click', function () {
                         url = '/sc/detail/index.php';
