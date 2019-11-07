@@ -1168,7 +1168,7 @@ function fncGetPurchaseOrderDetailHtml($aryResult, $objDB)
  */
 function fncUpdatePurchaseOrder($aryPurchaseOrder, $objDB, $objAuth)
 {
-    $lngLocationCode = fncGetMasterValue("m_company", "strcompanydisplaycode", "lngcompanycode", $aryPurchaseOrder["strLocationCode"] . ":str", '', $objDB);
+    echo $aryPurchaseOrder["lngLocationCode"];
     $aryQuery[] = "INSERT INTO m_purchaseorder(";
     $aryQuery[] = "    lngpurchaseorderno,";
     $aryQuery[] = "    lngrevisionno,";
@@ -1230,7 +1230,7 @@ function fncUpdatePurchaseOrder($aryPurchaseOrder, $objDB, $objAuth)
     $aryQuery[] = "    txtsignaturefilename,";
     $aryQuery[] = "    lngusercode,";
     $aryQuery[] = "    strusername,";
-    $aryQuery[] =     $lngLocationCode . ",";
+    $aryQuery[] =     $aryPurchaseOrder["lngLocationCode"] . ",";
     $aryQuery[] = "    '" . mb_convert_encoding(urldecode($aryPurchaseOrder["strLocationName"]), "EUC-JP", "auto") . "',";
     $aryQuery[] = "    curtotalprice,";
     $aryQuery[] = "    CURRENT_TIMESTAMP,";
@@ -1241,18 +1241,6 @@ function fncUpdatePurchaseOrder($aryPurchaseOrder, $objDB, $objAuth)
     $aryQuery[] = "FROM m_purchaseorder";
     $aryQuery[] = "WHERE lngpurchaseorderno = " . $aryPurchaseOrder["lngPurchaseOrderNo"];
     $aryQuery[] = "    AND   lngrevisionno = " . $aryPurchaseOrder["lngRevisionNo"];
-/*
-    $aryQuery[] = "UPDATE m_purchaseorder SET";
-    $aryQuery[] = "   dtmexpirationdate = '" . $aryPurchaseOrder["dtmExpirationDate"] . "'";
-    $aryQuery[] = "  ,lngpayconditioncode = " . $aryPurchaseOrder["lngPayConditionCode"];
-    $aryQuery[] = "  ,strpayconditionname = '" . $aryPurchaseOrder["strPayConditionName"] . "'";
-    // $aryQuery[] = "  ,lngdeliveryplacecode = "  . $aryPurchaseOrder["lngLocationCode"];
-    $aryQuery[] = "  ,strdeliveryplacename = '" . mb_convert_encoding(urldecode($aryPurchaseOrder["strLocationName"]), "EUC-JP") . "'";
-    $aryQuery[] = "  ,lngdeliveryplacecode = " . $lngLocationCode;
-    $aryQuery[] = "  ,strNote = '" . mb_convert_encoding(urldecode($aryPurchaseOrder["strNote"]), "EUC-JP") . "'";
-    $aryQuery[] = "WHERE lngpurchaseorderno = " . $aryPurchaseOrder["lngPurchaseOrderNo"];
-    $aryQuery[] = "AND   lngrevisionno = " . $aryPurchaseOrder["lngRevisionNo"];
-*/
     $strQuery = "";
     $strQuery = implode("\n", $aryQuery);
 
