@@ -793,7 +793,8 @@ class workSheetConst {
 
     // 単価の小数点以下の桁数(キーは通貨コード)
     const PRICE_DECIMAL_DIGIT = [
-        DEF_MONETARY_YEN => 2,
+//        DEF_MONETARY_YEN => 2,
+        DEF_MONETARY_YEN => 4,
         DEF_MONETARY_USD => 4,
         DEF_MONETARY_HKD => 4,
     ];
