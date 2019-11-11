@@ -319,10 +319,11 @@ function fncAddColumnNameArrayKeyToCN ($aryColumnNames)
 }
 
 
-function fncJapaneseInvoiceExists($strCustomerCode, $lngSalesNo, $objDB)
+function fncJapaneseInvoiceExists($lngCustomerCode, $lngSalesNo, $objDB)
 {
 	// 顧客の国コード取得
-	$strCompanyQuery = "SELECT lngcountrycode FROM m_Company WHERE lngcompanycode = '" . $strCustomerCode . "'";
+	$strCompanyQuery = "SELECT lngcountrycode FROM m_Company WHERE strcompanydisplaycode = '" . $lngCustomerCode . "'";
+echo $strCompanyQuery;
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strCompanyQuery, $objDB );
 	if ( $lngResultNum )
 	{

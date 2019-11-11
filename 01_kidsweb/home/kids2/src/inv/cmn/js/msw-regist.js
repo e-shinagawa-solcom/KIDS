@@ -219,7 +219,7 @@
 
     // 検索結果から自/至を算出しセット
     function setResult(response) {
-//        console.log(response);
+       console.log(response);
         if (isEmpty(response[0].lngclosedday) == 0) {
             alert('締め日の取得に失敗しました。');
             return false;
@@ -233,7 +233,7 @@
         billingStart.val(start).change();
         billingEnd.val(end).change();
         // 請求月セット
-        var billingMonth = $('input[name="From_strInvoiceMonth"]');
+        var billingMonth = $('#invoiceMonth');
         billingMonth.val(end.split('/')[1]).change();
         return true;
 
@@ -559,11 +559,13 @@
                         deliverydate = tableB_row[i].cells[j].innerText;
                     }
                     if(tableB_row[i].cells[j].className == 'price right') {
+                        
+                console.log(tableB_row[i].cells[j].innerText);
                         // 税抜金
-                        price = tableB_row[i].cells[j].innerText.replace(',', '');
+                        price = tableB_row[i].cells[j].innerText.replace(/,/g, '');
                     }
                 }
-
+                console.log(price);
                 if(!deliverydate || !price) continue;
                 date = splitDate(deliverydate);
                 deliverydateStamp = new Date(deliverydate);
@@ -576,7 +578,8 @@
                     thisMonthAmount  += Number(price);
                 }
             }
-
+            console.log(lastMonthBalance);
+            console.log(tax);
             // 前月請求残額(消費税込み)
             curLastMonthBalance = lastMonthBalance+(lastMonthBalance * (tax*100))/100;
             // 消費税計算
@@ -702,7 +705,7 @@
         let isDeliveryDate = true;
 
         // 請求月
-        let invoicemonth = $('option:selected').val();
+        let invoicemonth = $('#invoiceMonth').val();
         let isSameMonth = true;
 
         $.each(deliveryDate, function(i, v) {
@@ -720,10 +723,10 @@
             alert('納品日は当月度の前後1ヶ月の間を指定してください');
             return false;
         }
-        if(isSameMonth == false) {
-            alert('出力明細には、入力された納品日と異なる月に納品された明細を指定できません');
-            return false;
-        }
+        // if(isSameMonth == false) {
+        //     alert('出力明細には、入力された納品日と異なる月に納品された明細を指定できません');
+        //     return false;
+        // }
 
         var strMode = $('input[name="strMode"]').val();
 

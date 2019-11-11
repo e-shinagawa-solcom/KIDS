@@ -67,8 +67,8 @@ $(function() {
     $.each(data, function(i, v) {
       var $target_row = $('tbody tr', $tableA).eq(i);
       var slipcode = v.strslipcode;
-      var customercode = v.strcompanydisplaycode;
-      var customername = v.strcustomername;
+      var customercode = v.lngdeliveryplacecode;
+      var customername = v.strdeliveryplacename;
       var deliverydate = v.dtmdeliverydate.replace(/-/g, '/');
       var curtotalprice = Number(v.curtotalprice);
       var taxclasscode = v.lngtaxclasscode;
@@ -101,8 +101,8 @@ $(function() {
     $.each(temp, function(i, v) {
       var $target_row = $('tbody tr', $tableB).eq(i);
       var slipcode = v.strslipcode;
-      var customercode = v.strcompanydisplaycode;
-      var customername = v.strcustomername;
+      var customercode = v.lngdeliveryplacecode;
+      var customername = v.strdeliveryplacename;
       var deliverydate = v.dtmdeliverydate.replace(/-/g, '/');
       var curtotalprice = Number(v.curtotalprice);
       var taxclasscode = v.lngtaxclasscode;

@@ -1,6 +1,7 @@
 <config>
 <header1>
     <link rel="stylesheet" href="/search/cmn/form/css/forms.css">
+    <link rel="stylesheet" href="/list/cmn/forms.css">
     <link rel="stylesheet" href="/search/cmn/form/css/tabs.css">
     <link rel="stylesheet" href="/search/cmn/navigate/css/navigate.css">
     <script src="/search/cmn/form/js/tab-function.js" defer></script>
@@ -26,9 +27,9 @@
     <!-- フォームボタン css -->
     <link rel="stylesheet" href="/search/cmn/css/form-buttons.css">
     <!-- フォーム ボタン -->
-    <script src="/search/cmn/js/form-buttons.js" defer></script>
+    <script src="/inv/cmn/js/search-form-buttons.js" defer></script>
     <!-- フォームバリデーション -->
-    <script src="/inv/cmn/js/validate-search_form.js" defer></script>
+    <script src="/list/search/inv/validate-form.js" defer></script>
     <!-- マスタ検索呼び出し -->
     <script src="/search/cmn/js/invoke-master-search.js" defer></script>
     <!-- COOKIE 表示チェックボックス 保存/復元 -->
@@ -62,6 +63,14 @@
     <div class="form-box__contents--with-scroll">
         <form name="SearchMoldHistory" method="post">
             <input type="submit">
+            <div class="option-box">
+                <div class="regist-line" _%AdminSet_visibility%_>
+                    <span class="regist-label">
+                        <span class="regist-label--text-only">管理者モード</span>
+                        <input name="Option_admin" type="checkbox">
+                    </span>
+                </div>
+            </div>
             <div class="regist-line">
                 <img class="toggle-search button" src="/img/type01/cmn/seg/off_bt.gif" alt="toggle search">
             </div>
@@ -72,32 +81,32 @@
 
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_lngCustomerCode" class="is-search" type="checkbox">
+                    <input name="IsSearch_lngCustomerCompanyCode" class="is-search" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label__text">顧客</span>
-                    <input class="TxtStyle05L" name="lngCustomerCode" type="text" iscustomer="yes" alt="Customer">
-                    <input class="disTxt46L" name="strCustomerName" type="text" readonly>
+                    <input class="TxtStyle05L" name="lngCustomerCompanyCode" type="text" iscustomer="yes" alt="CustomerCompany">
+                    <input class="disTxt46L" name="strCustomerCompanyName" type="text" readonly>
                     <img class="msw-button button" invokeMSWName="msw-customer" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
                 </span>
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_lngInvoiceNo" class="is-search" type="checkbox">
+                    <input name="IsSearch_strInvoiceCode" class="is-search" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label__text">請求書NO.</span>
-                    <input class="TxtStyle06L" name="lngInvoiceNo" type="text" onfocus="chColorOn(this);" onblur="chColorOff(this);">
+                    <input class="TxtStyle06L" name="strInvoiceCode" type="text" onfocus="chColorOn(this);" onblur="chColorOff(this);">
                 </span>
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_dtmDeliveryDate" class="is-search" type="checkbox">
+                    <input name="IsSearch_dtmInvoiceDate" class="is-search" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label__text">請求日</span>
-                    FROM <input class="TxtStyle05L" name="From_dtmDeliveryDate" type="text" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate(this);fncCopyValue( this , document.all.To_dtmDeliveryDate );" tabindex="" maxlength="10">
-                    TO <input class="TxtStyle05L" name="To_dtmDeliveryDate" type="text" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate(this);" tabindex="" maxlength="10">
+                    FROM <input class="TxtStyle05L" name="From_dtmInvoiceDate" type="text" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate(this);fncCopyValue( this , document.all.To_dtmDeliveryDate );" tabindex="" maxlength="10">
+                    TO <input class="TxtStyle05L" name="To_dtmInvoiceDate" type="text" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate(this);" tabindex="" maxlength="10">
                 </span>
             </div>
             <div class="regist-line">

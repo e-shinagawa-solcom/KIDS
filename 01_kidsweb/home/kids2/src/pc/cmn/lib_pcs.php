@@ -726,9 +726,9 @@ function fncCheckData($strstockcode, $objDB) {
     $result = 0;
     unset($aryQuery);
     $aryQuery[] = "SELECT";
-    $aryQuery[] = " max(lngrevisionno) lngrevisionno, bytInvalidFlag, strstockcode ";
+    $aryQuery[] = " min(lngrevisionno) lngrevisionno, bytInvalidFlag, strstockcode ";
     $aryQuery[] = "FROM m_stock ";
-    $aryQuery[] = "WHERE strstockcode='" . $strstockcode . "' ";
+    $aryQuery[] = "WHERE strstockcode='" . $strstockcode . "'";
     $aryQuery[] = "group by strstockcode, bytInvalidFlag";
 
     // クエリを平易な文字列に変換

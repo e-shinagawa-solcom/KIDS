@@ -79,9 +79,10 @@
 
     // 削除対象の請求書番号のマスタデータ確認
     $lngInvoiceNo = $aryData["lngInvoiceNo"];
+    $lngRevisionNo = $aryData["lngRevisionNo"];
 
     // 指定請求書番号の請求書マスタ取得用SQL文の作成
-    $strQuery = fncGetInvoiceMSQL ( $lngInvoiceNo );
+    $strQuery = fncGetInvoiceMSQL ( $lngInvoiceNo, $lngRevisionNo );
 
     // 詳細データの取得
     list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
@@ -119,7 +120,7 @@
         $objDB->transactionBegin();
 
         // 請求書マスタを削除
-        if (!fncDeleteInvoice($lngInvoiceNo, $objDB, $objAuth))
+        if (!fncDeleteInvoice($lngInvoiceNo, $lngRevisionNo, $objDB, $objAuth))
         {
            fncOutputError ( 9051, DEF_FATAL, "削除処理に伴う請求書マスタ処理失敗", TRUE, "", $objDB );
         }

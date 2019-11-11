@@ -92,8 +92,8 @@
 
     // 指定請求書番号の請求書マスタ取得用SQL文の作成
     $lngInvoiceNo = $aryData["lngInvoiceNo"];
-    $strQuery     = fncGetInvoiceMSQL ( $lngInvoiceNo );
-
+    $lngRevisionNo = $aryData["lngRevisionNo"];
+    $strQuery     = fncGetInvoiceMSQL ( $lngInvoiceNo, $lngRevisionNo);
     // 詳細データの取得
     list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
@@ -108,6 +108,7 @@
 
     $aryNewResult = fncSetInvoiceHeadTableData($aryResult);
     $aryNewResult['lngInvoiceNo'] = $aryData["lngInvoiceNo"];
+    $aryNewResult['lngRevisionNo'] = $aryData["lngRevisionNo"];
     $aryNewResult['strSessionID'] = $aryData["strSessionID"];
     $aryNewResult['actionName']   = 'renew.php';
 
@@ -120,7 +121,6 @@
         // テンプレート読み込み
         $objTemplate = new clsTemplate ();
         $objTemplate->getTemplate ("inv/base_preview.html");
-
 
         // プレースホルダー置換
         // mb_convert_variables("utf8", "eucjp-win", $recordMoldReport);
@@ -217,10 +217,10 @@
             }
             // 納品日と異なる月の明細の場合
             $deliveryDateMonth = date('m', strtotime($date));
-            if( (int)$baseMonth != (int)$deliveryDateMonth )
-            {
-                MoveToErrorPage("出力明細には、入力された納品日と異なる月に納品された明細を指定できません");
-            }
+            // if( (int)$baseMonth != (int)$deliveryDateMonth )
+            // {
+            //     MoveToErrorPage("出力明細には、入力された納品日と異なる月に納品された明細を指定できません");
+            // }
         }
 
         // --------------------------------
@@ -269,7 +269,7 @@
     }
     else
     {
-        $sql = fncGetSearchMSlipInvoiceNoSQL(2);
+        // $sql = fncGetSearchMSlipInvoiceNoSQL(2);
         
         $aryNewResult['strMode']      = 'renewPrev';
         // 明細検索面

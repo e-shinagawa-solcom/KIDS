@@ -21,91 +21,66 @@
  */
 // ----------------------------------------------------------------------------
 
+// 設定読み込み
+include_once 'conf.inc';
 
-    // 設定読み込み
-    include_once('conf.inc');
+// ライブラリ読み込み
+require LIB_FILE;
+require SRC_ROOT . "m/cmn/lib_m.php";
+require SRC_ROOT . "inv/cmn/lib_regist.php";
 
-    // ライブラリ読み込み
-    require (LIB_FILE);
-    require (SRC_ROOT . "m/cmn/lib_m.php");
-    require (SRC_ROOT . "inv/cmn/lib_regist.php");
+// オブジェクト生成
+$objDB = new clsDB();
+$objAuth = new clsAuth();
 
-    // オブジェクト生成
-    $objDB   = new clsDB();
-    $objAuth = new clsAuth();
+// DBオープン
+$objDB->open("", "", "", "");
 
-    // DBオープン
-    $objDB->open("", "", "", "");
+// パラメータ取得
+if ($_POST) {
+    $aryData = $_POST;
+} elseif ($_GET) {
+    $aryData = $_GET;
+}
 
-    // パラメータ取得
-    if ( $_POST )
-    {
-        $aryData = $_POST;
-    }
-    elseif ( $_GET )
-    {
-        $aryData = $_GET;
-    }
+// セッション確認
+$objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 
-    // セッション確認
-    $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
+// cookieにSET
+if (!empty($aryData["strSessionID"])) {
+    setcookie("strSessionID", $aryData["strSessionID"], 0, "/");
+}
 
-    // cookieにSET
-    if( !empty($aryData["strSessionID"]) )
-        setcookie("strSessionID", $aryData["strSessionID"], 0, "/");
+// セッション確認
+$objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 
-    // セッション確認
-    $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
+// 文字列チェック
+$aryCheck["strSessionID"] = "null:numenglish(32,32)";
+$aryResult = fncAllCheck($aryData, $aryCheck);
+fncPutStringCheckError($aryResult, $objDB);
 
+// 2200 請求管理
+if (!fncCheckAuthority(DEF_FUNCTION_INV0, $objAuth)) {
+    fncOutputError(9052, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
+}
 
-    // 文字列チェック
-    $aryCheck["strSessionID"]   = "null:numenglish(32,32)";
-    $aryResult = fncAllCheck( $aryData, $aryCheck );
-    fncPutStringCheckError( $aryResult, $objDB );
+// 2202 請求書検索
+if (!fncCheckAuthority(DEF_FUNCTION_INV2, $objAuth)) {
+    fncOutputError(9052, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
+}
+// 2203 請求管理（請求検索　管理モード）
+if (fncCheckAuthority(DEF_FUNCTION_INV3, $objAuth)) {
+    $aryData["AdminSet_visibility"] = 'style="visibility: visible"';
+} else {
+    $aryData["AdminSet_visibility"] = 'style="visibility: visible"';
+}
 
-    // 2200 請求管理
-    if ( !fncCheckAuthority( DEF_FUNCTION_INV0, $objAuth ) )
-    {
-        fncOutputError ( 9052, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
-    }
+// ヘルプ対応
+$aryData["lngFunctionCode"] = DEF_FUNCTION_INV0;
 
-    // 2202 請求書検索
-    if ( !fncCheckAuthority( DEF_FUNCTION_INV2, $objAuth ) )
-    {
-        fncOutputError ( 9052, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
-    }
+// テンプレート読み込み
+echo fncGetReplacedHtmlWithBase("inv/base_inv.html", "inv/search/search.tmpl", $aryData, $objAuth);
 
-    // ヘルプ対応
-    $aryData["lngFunctionCode"] = DEF_FUNCTION_INV0;
+$objDB->close();
 
-    // ユーザーコード取得
-    $lngUserCode = $objAuth->UserCode;
-    // 権限グループコード(ユーザー以下)チェック
-    $blnAG = fncCheckUserAuthorityGroupCode( $lngUserCode, $aryData["strSessionID"], $objDB );
-    // 「ユーザー」以下の場合
-    if( $blnAG )
-    {
-        // 承認ルート存在チェック
-        $blnWF = fncCheckWorkFlowRoot( $lngUserCode, $aryData["strSessionID"], $objDB );
-
-        // 承認ルートが存在しない場合
-        if( !$blnWF )
-        {
-            $aryData["registview"] = 'hidden';
-        }
-        else
-        {
-            $aryData["registview"] = 'visible';
-        }
-    }
-
-
-    // テンプレート読み込み
-    echo fncGetReplacedHtmlWithBase("inv/base_inv.html", "inv/search/search.tmpl", $aryData ,$objAuth );
-
-    $objDB->close();
-
-    return true;
-
-?>
-
+return true;

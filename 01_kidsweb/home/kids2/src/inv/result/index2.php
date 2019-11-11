@@ -76,9 +76,10 @@
 
     //詳細画面の表示
     $lngInvoiceNo = $aryData["lngInvoiceNo"];
+    $lngRevisionNo = $aryData["lngRevisionNo"];
 
     // 指定請求書番号の請求書マスタ取得用SQL文の作成
-    $strQuery = fncGetInvoiceMSQL ( $lngInvoiceNo );
+    $strQuery = fncGetInvoiceMSQL ( $lngInvoiceNo, $lngRevisionNo );
 
     // 詳細データの取得
     list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );

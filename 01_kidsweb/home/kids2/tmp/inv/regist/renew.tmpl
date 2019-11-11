@@ -286,6 +286,7 @@
             <input type="hidden" name="strSessionID"       value="_%strSessionID%_">
             <input type="hidden" name="invConditionUrl"    value="_%invConditionUrl%_">
             <input type="hidden" name="lngInvoiceNo"       value="_%lngInvoiceNo%_" >
+            <input type="hidden" name="lngRevisionNo"       value="_%lngRevisionNo%_" >
             <input type="hidden" name="strMode"            value="renewPrev" >
 		</form>
 	</div>
@@ -305,12 +306,13 @@
 </div>
 <script>
 // 修正初期状態
-var renewInit = function(invoiceNo) {
+var renewInit = function(invoiceNo, revisionNo) {
     // 入力値を取得
     // 顧客
     var params = {
         mode: 'ajaxRenew',
         invoiceNo: invoiceNo,
+        revisionNo: revisionNo,
         strSessionID: $('input[name="strSessionID"]').val(),
     }
 
@@ -326,6 +328,7 @@ var renewInit = function(invoiceNo) {
     $.ajax( search )
         .done(function(response){
             console.log(response);
+            
             $.createTableRenew(response);
         })
         .fail(function(response){
@@ -337,5 +340,5 @@ var renewInit = function(invoiceNo) {
 
      return false;
 };
-setTimeout(renewInit('_%lngInvoiceNo%_'),900);
+setTimeout(renewInit('_%lngInvoiceNo%_', '_%lngRevisionNo%_'),900);
 </script>

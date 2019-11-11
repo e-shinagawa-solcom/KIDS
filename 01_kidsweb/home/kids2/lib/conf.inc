@@ -348,6 +348,7 @@ define ( "DEF_FUNCTION_SC9",	609 );     //  609 売上管理（売上の受注Noを指定しな
 define ( "DEF_FUNCTION_SC10",	610 );     //  610 売上管理（行追加・行削除）
 define ( "DEF_FUNCTION_SC11",	611 );     //  611 売上管理（売上詳細表示）
 define ( "DEF_FUNCTION_SC12",	612 );     //  612 売上管理（売上納品書検索）
+define ( "DEF_FUNCTION_SC12",	613 );     //  613 売上管理（売上納品書検索　管理モード）
 
 
 define ( "DEF_FUNCTION_PC0",	700 );     //  700 仕入管理
@@ -441,9 +442,10 @@ define ( "DEF_FUNCTION_LC3",	2103 );	// 2103 L/C編集
 define ( "DEF_FUNCTION_LC4",	2104 );	// 2104 L/C帳票出力
 
 define ( "DEF_FUNCTION_INV0",	2200 );	// 2200 請求管理
-define ( "DEF_FUNCTION_INV1",	2201 );	//  請求書発行
+define ( "DEF_FUNCTION_INV1",	2201 );	// 2201 請求書発行
 define ( "DEF_FUNCTION_INV2",	2202 );	// 2202 請求書検索
-define ( "DEF_FUNCTION_INV3",	2203 );	// 2203 請求集計
+define ( "DEF_FUNCTION_INV4",	2203 ); // 2203 請求管理（請求書検索　管理モード）
+define ( "DEF_FUNCTION_INV3",	2204 );	// 2204 請求集計
 
 // エラー種類
 define ( "DEF_WARNING",		1 );           //  1 注意レベル（入力ミスなど）

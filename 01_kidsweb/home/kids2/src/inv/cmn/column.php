@@ -11,6 +11,7 @@
 // ------------------------------
 $arySearchTableTytle["btnDetail"]				= "æ‹∫Ÿ";
 $arySearchTableTytle["btnFix"]					= "Ω§¿µ";
+$arySearchTableTytle["btnHistory"]					= "Õ˙ŒÚ";
 $arySearchTableTytle["lngCustomerCode"]			= "∏‹µ“";
 $arySearchTableTytle["strInvoiceCode"]			= "¿¡µ·ΩÒ£Œ£œ.";
 $arySearchTableTytle["dtmInvoiceDate"]			= "¿¡µ·∆¸";

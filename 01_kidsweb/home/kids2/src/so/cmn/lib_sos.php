@@ -416,7 +416,7 @@ function fncCheckData($strstrreceivecode, $objDB)
     $result = 1;
     unset($aryQuery);
     $aryQuery[] = "SELECT";
-    $aryQuery[] = " max(lngrevisionno) lngrevisionno, bytInvalidFlag, strreceivecode ";
+    $aryQuery[] = " min(lngrevisionno) lngrevisionno, bytInvalidFlag, strreceivecode ";
     $aryQuery[] = "FROM m_receive ";
     $aryQuery[] = "WHERE strreceivecode='" . $strstrreceivecode . "' ";
     $aryQuery[] = "group by strreceivecode, bytInvalidFlag";

@@ -94,17 +94,19 @@ if (!fncCheckAuthority(DEF_FUNCTION_SC10, $objAuth)) {
     $aryData["adddelrowview"] = 'hidden';
 }
 
-// --------------------------------
-//    修正可能かどうかのチェック
-// --------------------------------
-// 顧客の国が日本で、かつ納品書ヘッダに紐づく請求書明細が存在する場合は修正不可
-if (fncJapaneseInvoiceExists($strCustomerCode, $lngSalesNo, $objDB)) {
-    MoveToErrorPage("請求書発行済みのため、修正できません");
-}
+if ($strMode == "") {    
+    // --------------------------------
+    //    修正可能かどうかのチェック
+    // --------------------------------
+    // 顧客の国が日本で、かつ納品書ヘッダに紐づく請求書明細が存在する場合は修正不可
+    if (fncJapaneseInvoiceExists($strCustomerCode, $lngSalesNo, $objDB)) {
+        MoveToErrorPage("請求書発行済みのため、修正できません");
+    }
 
-// 納品書明細に紐づく受注ステータスが「締済み」の場合は修正不可
-if (fncReceiveStatusIsClosed($lngSlipNo, $objDB)) {
-    MoveToErrorPage("締済みのため、修正できません");
+    // 納品書明細に紐づく受注ステータスが「締済み」の場合は修正不可
+    if (fncReceiveStatusIsClosed($lngSlipNo, $objDB)) {
+        MoveToErrorPage("締済みのため、修正できません");
+    }
 }
 
 //-------------------------------------------------------------------------

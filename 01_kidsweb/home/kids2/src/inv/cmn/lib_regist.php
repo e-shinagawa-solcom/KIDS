@@ -73,7 +73,8 @@ function fncGetSearchMSlipSQL ( $aryCondtition = array(), $renew = false, $objDB
     // 納品日
     $aryOutQuery[] = ", ms.dtmdeliverydate ";
     // 納品場所コード
-    $aryOutQuery[] = ", ms.lngdeliveryplacecode ";
+    // $aryOutQuery[] = ", ms.lngdeliveryplacecode ";
+    $aryOutQuery[] = ", mc2.strcompanydisplaycode as lngdeliveryplacecode";
     // 納品場所名
     $aryOutQuery[] = ", ms.strdeliveryplacename ";
     // 納品場所担当者名
@@ -114,6 +115,7 @@ function fncGetSearchMSlipSQL ( $aryCondtition = array(), $renew = false, $objDB
     $aryOutQuery[] = " rev_max on rev_max.lngslipno = ms.lngslipno and rev_max.lngrevisionno = ms.lngrevisionno";
     // JOIN
     $aryOutQuery[] = " LEFT JOIN m_company mc ON mc.lngcompanycode = ms.lngcustomercode ";
+    $aryOutQuery[] = " LEFT JOIN m_company mc2 ON mc2.lngcompanycode = ms.lngdeliveryplacecode ";
     $aryOutQuery[] = " LEFT JOIN m_user mu1 ON mu1.lngusercode = ms.lngusercode ";
     $aryOutQuery[] = " LEFT JOIN m_user mu2 ON mu2.lngusercode = ms.lnginsertusercode ";
 
@@ -223,7 +225,7 @@ function fncGetSearchMSlipSQL ( $aryCondtition = array(), $renew = false, $objDB
  *    @return Array     $strSQL 検索用SQL文 OR Boolean FALSE
  *    @access public
  */
-function fncGetSearchMSlipInvoiceNoSQL ( $lnginvoiceno )
+function fncGetSearchMSlipInvoiceNoSQL ( $lnginvoiceno, $lngrevisionno )
 {
 
     $aryOutQuery = array();
@@ -246,7 +248,7 @@ function fncGetSearchMSlipInvoiceNoSQL ( $lnginvoiceno )
     // 納品日
     $aryOutQuery[] = ", ms.dtmdeliverydate ";
     // 納品場所コード
-    $aryOutQuery[] = ", ms.lngdeliveryplacecode ";
+    $aryOutQuery[] = ", mc2.strcompanydisplaycode as lngdeliveryplacecode ";
     // 納品場所名
     $aryOutQuery[] = ", ms.strdeliveryplacename ";
     // 納品場所担当者名
@@ -285,11 +287,12 @@ function fncGetSearchMSlipInvoiceNoSQL ( $lnginvoiceno )
     $aryOutQuery[] = " FROM m_slip ms ";
     // JOIN
     $aryOutQuery[] = " LEFT JOIN m_company mc ON (mc.lngcompanycode = ms.lngcustomercode ) ";
+    $aryOutQuery[] = " LEFT JOIN m_company mc2 ON (mc2.lngcompanycode = ms.lngdeliveryplacecode ) ";
 
     // Where句
     // strslipcode を検索するサブクエリ
     $subQuery  = "select DISTINCT lngslipno from t_invoicedetail where lnginvoiceno = "  .$lnginvoiceno ."  ";
-    $subQuery .= "AND lngrevisionno = (select DISTINCT ON (lnginvoiceno) lngrevisionno  from m_invoice where lnginvoiceno = " .$lnginvoiceno ." order by lnginvoiceno ASC , lngrevisionno DESC )";
+    $subQuery .= "AND lngrevisionno = " .$lngrevisionno. " ";
 
     $aryOutQuery[] = " WHERE lngrevisionno >= 0 " ;    // 対象納品伝票番号の指定
     $aryOutQuery[] = " AND ms.lngslipno IN ( " .$subQuery ." ) " ;
@@ -602,15 +605,15 @@ function fncGetSearchInvoiceSQL ( $arySearchColumn, $arySearchDataColumn, $objDB
             //   納品書マスタ（ヘッダ部）の検索条件
             // ----------------------------------------------
             // 顧客（売上先）
-            if ( $strSearchColumnName == "lngCustomerCode" )
+            if ( $strSearchColumnName == "lngCustomerCompanyCode" )
             {
-                if ( $arySearchDataColumn["lngCustomerCode"] )
+                if ( $arySearchDataColumn["lngCustomerCompanyCode"] )
                 {
-                    $aryQuery[] = " AND cust_c.strCompanyDisplayCode ~* '" . $arySearchDataColumn["lngCustomerCode"] . "'";
+                    $aryQuery[] = " AND cust_c.strCompanyDisplayCode ~* '" . $arySearchDataColumn["lngCustomerCompanyCode"] . "'";
                 }
-                if ( $arySearchDataColumn["strCustomerName"] )
+                if ( $arySearchDataColumn["strCustomerCompanyName"] )
                 {
-                    $aryQuery[] = " AND UPPER(cust_c.strCompanyDisplayName) LIKE UPPER('%" . $arySearchDataColumn["strCustomerName"] . "%')";
+                    $aryQuery[] = " AND UPPER(cust_c.strCompanyDisplayName) LIKE UPPER('%" . $arySearchDataColumn["strCustomerCompanyName"] . "%')";
                 }
             }
 
@@ -624,12 +627,12 @@ function fncGetSearchInvoiceSQL ( $arySearchColumn, $arySearchDataColumn, $objDB
             }
 
             // 納品伝票コード（納品書NO）請求書明細テーブルから引く
-            if ( $strSearchColumnName == "lngInvoiceNo" )
+            if ( $strSearchColumnName == "strInvoiceCode" )
             {
-                if ( $arySearchDataColumn["lngInvoiceNo"] )
+                if ( $arySearchDataColumn["strInvoiceCode"] )
                 {
                     // カンマ区切りの入力値をOR条件に展開
-                    $arySCValue = preg_split('/[,\s]/', $arySearchDataColumn["lngInvoiceNo"]);
+                    $arySCValue = preg_split('/[,\s]/', $arySearchDataColumn["strInvoiceCode"]);
                     foreach($arySCValue as $strSCValue){
                         if(empty(trim($strSCValue)))
                             continue;
@@ -643,16 +646,16 @@ function fncGetSearchInvoiceSQL ( $arySearchColumn, $arySearchDataColumn, $objDB
             }
 
             // 請求日
-            if ( $strSearchColumnName == "dtmDeliveryDate" )
+            if ( $strSearchColumnName == "dtmInvoiceDate" )
             {
-                if ( $arySearchDataColumn["dtmDeliveryDateFrom"] )
+                if ( $arySearchDataColumn["dtmInvoiceDateFrom"] )
                 {
-                    $dtmSearchDate = $arySearchDataColumn["dtmDeliveryDateFrom"] . " 00:00:00";
+                    $dtmSearchDate = $arySearchDataColumn["dtmInvoiceDateFrom"] . " 00:00:00";
                     $aryQuery[] = " AND inv.dtminvoicedate >= '" . $dtmSearchDate . "'";
                 }
-                if ( $arySearchDataColumn["dtmDeliveryDateTo"] )
+                if ( $arySearchDataColumn["dtmInvoiceDateTo"] )
                 {
-                    $dtmSearchDate = $arySearchDataColumn["dtmDeliveryDateTo"] . " 23:59:59";
+                    $dtmSearchDate = $arySearchDataColumn["dtmInvoiceDateTo"] . " 23:59:59";
                     $aryQuery[] = " AND inv.dtminvoicedate <= '" . $dtmSearchDate . "'";
                 }
             }
@@ -968,6 +971,60 @@ function fncGetSearchInvoiceDetailSQL ( $lnginvoiceno, $lngrevisionno=null )
     return implode("\n", $aryOutQuery);
 }
 
+function fncGetSearchInvoiceByInvoiceCodeSQL($strInvoiceCode, $lngRevisionNo)
+{
+    $aryQuery[] = "SELECT";
+    $aryQuery[] = "  inv.lnginvoiceno as lnginvoiceno";
+    $aryQuery[] = "  , inv.lngrevisionno as lngrevisionno";
+    $aryQuery[] = "  , inv.dtminsertdate as dtminsertdate";
+    $aryQuery[] = "  , cust_c.strcompanydisplaycode as strcustomercode";
+    $aryQuery[] = "  , inv.strcustomername as strcustomername";
+    $aryQuery[] = "  , inv.strcustomercompanyname as strcustomercompanyname";
+    $aryQuery[] = "  , cust_c.lngCountryCode as lngcountrycode";
+    $aryQuery[] = "  , inv.strinvoicecode as strinvoicecode";
+    $aryQuery[] = "  , to_char(inv.dtminvoicedate, 'YYYY/MM/DD') as dtminvoicedate";
+    $aryQuery[] = "  , to_char(inv.dtmchargeternstart, 'YYYY/MM/DD') as dtmchargeternstart";
+    $aryQuery[] = "  , to_char(inv.dtmchargeternend, 'YYYY/MM/DD') as dtmchargeternend";
+    $aryQuery[] = "  , To_char(inv.curlastmonthbalance, '9,999,999,990.99') as curlastmonthbalance";
+    $aryQuery[] = "  , To_char(inv.curthismonthamount, '9,999,999,990.99') as curthismonthamount";
+    $aryQuery[] = "  , inv.lngmonetaryunitcode as lngmonetaryunitcode";
+    $aryQuery[] = "  , inv.strmonetaryunitsign as strmonetaryunitsign";
+    $aryQuery[] = "  , inv.lngtaxclasscode as lngtaxclasscode";
+    $aryQuery[] = "  , inv.strtaxclassname as strtaxclassname";
+    $aryQuery[] = "  , To_char(inv.cursubtotal1, '9,999,999,990.99') as cursubtotal1";
+    $aryQuery[] = "  , inv.curtax1 as curtax1";
+    $aryQuery[] = "  , To_char(inv.curtaxprice1, '9,999,999,990.99') as curtaxprice1";
+    $aryQuery[] = "  , u.struserdisplaycode as strusercode";
+    $aryQuery[] = "  , inv.strusername as strusername";
+    $aryQuery[] = "  , insert_u.struserdisplaycode as strinsertusercode";
+    $aryQuery[] = "  , inv.strinsertusername as strinsertusername";
+    $aryQuery[] = "  , to_char(inv.dtminsertdate, 'YYYY/MM/DD') as dtminsertdate";
+    $aryQuery[] = "  , inv.strnote as strnote";
+    $aryQuery[] = "  , inv.lngprintcount as lngprintcount";
+    $aryQuery[] = "  , sa.lngSalesStatusCode as lngSalesStatusCode";
+    $aryQuery[] = "  , ss.strSalesStatusName as strSalesStatusName ";
+    $aryQuery[] = "FROM";
+    $aryQuery[] = "  m_invoice inv ";
+    $aryQuery[] = "  LEFT JOIN m_sales sa ";
+    $aryQuery[] = "    ON inv.lnginvoiceno = sa.lnginvoiceno ";
+    $aryQuery[] = "  LEFT JOIN m_SalesStatus ss ";
+    $aryQuery[] = "    ON sa.lngSalesStatusCode = ss.lngSalesStatusCode ";
+    $aryQuery[] = "  LEFT JOIN m_Company cust_c ";
+    $aryQuery[] = "    ON inv.lngcustomercode = cust_c.lngcompanycode ";
+    $aryQuery[] = "  LEFT JOIN m_MonetaryUnit mu ";
+    $aryQuery[] = "    ON inv.lngmonetaryunitcode = mu.lngMonetaryUnitCode ";
+    $aryQuery[] = "  LEFT JOIN m_User insert_u ";
+    $aryQuery[] = "    ON inv.lngInsertUserCode = insert_u.lngusercode ";
+    $aryQuery[] = "  LEFT JOIN m_User u ";
+    $aryQuery[] = "    ON inv.lngusercode = u.lngusercode ";
+    $aryQuery[] = "WHERE";
+    $aryQuery[] = "  inv.bytinvalidflag = FALSE ";
+    $aryQuery[] = "  AND inv.lngrevisionno <> ". $lngRevisionNo. " ";
+    $aryQuery[] = "  AND inv.strinvoicecode = '". $strInvoiceCode. "'";
+    $aryQuery[] = " ORDER BY inv.lngrevisionno DESC";
+
+    return implode("\n", $aryQuery);
+}
 
 /**
  * 請求書登録関数
@@ -1279,6 +1336,7 @@ function fncSetInvoiceTableBody ( $aryResult, $arySearchColumn, $aryData,  $aryT
         $aryHeadViewColumn[] = "btnFix";
 //     }
 
+    $aryHeadViewColumn[] = "btnHistory";
     // ヘッダ部
     $aryHeadViewColumn[] = "lngCustomerCode";       // 顧客
     $aryHeadViewColumn[] = "strInvoiceCode";        // 請求書No
@@ -1363,7 +1421,7 @@ function fncSetInvoiceTableBody ( $aryResult, $arySearchColumn, $aryData,  $aryT
         $objDB->freeResult( $lngResultID );
 
         // １レコード分の出力
-        $aryHtml_add = fncSetInvoiceTableRow ( $lngColumnCount, $aryResult[$i], $aryDetailResult, $aryHeadViewColumn, $aryData, $lngDetailCount);
+        $aryHtml_add = fncSetInvoiceTableRow ( $lngColumnCount, $aryResult[$i], $aryDetailResult, $aryHeadViewColumn, $aryData, $lngDetailCount, true, null);
         $lngColumnCount++;
 
         $strColBuff = '';
@@ -1398,7 +1456,7 @@ function fncSetInvoiceTableBody ( $aryResult, $arySearchColumn, $aryData,  $aryT
  *    @param    Array    $aryUserAuthority        ユーザーの操作に対する権限が入った配列
  *    @access public
  */
-function fncSetInvoiceTableRow ( $lngColumnCount, $aryHeadResult, $aryDetailResult, $aryHeadViewColumn, $aryData, $lngDetailCount )
+function fncSetInvoiceTableRow ( $lngColumnCount, $aryHeadResult, $aryDetailResult, $aryHeadViewColumn, $aryData, $lngDetailCount, $isMaxObj, $rownum)
 {
     // 顧客の国が日本で、かつ納品書ヘッダに紐づく請求書明細が存在する
 //    $japaneseInvoiceExists = ($aryHeadResult["lngcountrycode"] == 81) && ($aryHeadResult["lnginvoiceno"] != null);
@@ -1409,11 +1467,17 @@ function fncSetInvoiceTableRow ( $lngColumnCount, $aryHeadResult, $aryDetailResu
         $lngDetailCount = count($aryDetailResult);
     }
 
+    $rowspan = $lngDetailCount == 0 ? 1 : $lngDetailCount;
+
     // 納品伝票明細に紐づく受注ステータスが「締済み」である
     $receiveStatusIsClosed = $aryDetailResult[$i]["lngreceivestatuscode"] == DEF_RECEIVE_CLOSED;
-
-    $aryHtml[] =  "<tr>";
-    $aryHtml[] =  "\t<td>" . ($lngColumnCount + $i) . "</td>";
+    if ($isMaxObj) {
+        $aryHtml[] = "<tr id=".$aryResult[$i]["strinvoicecode "] .">";
+        $aryHtml[] = "  <td class=\"rownum\">" . ($lngColumnCount + $i) . "</td>";
+    } else {
+        $aryHtml[] = "<tr id=".$aryResult[$i]["strinvoicecode "]. "_" .$aryResult[$i]["lngrevisionno"] .">";            
+        $aryHtml[] = "  <td class=\"rownum\">" . $rownum .".".($lngColumnCount + $i) . "</td>";
+    }
 
     // 表示対象カラムの配列より結果の出力
     for ( $j = 0; $j < count($aryHeadViewColumn); $j++ )
@@ -1422,7 +1486,7 @@ function fncSetInvoiceTableRow ( $lngColumnCount, $aryHeadResult, $aryDetailResu
         $TdData = "";
 
         // 表示対象がボタンの場合
-        if ( $strColumnName == "btnDetail" or $strColumnName == "btnFix" or $strColumnName == "btnDelete" or $strColumnName == "btnInvalid" )
+        if ( $strColumnName == "btnDetail" or $strColumnName == "btnFix" or $strColumnName == "btnHistory" or $strColumnName == "btnDelete" or $strColumnName == "btnInvalid" )
         {
             // ボタン種により変更
 
@@ -1431,11 +1495,11 @@ function fncSetInvoiceTableRow ( $lngColumnCount, $aryHeadResult, $aryDetailResu
             {
                 if ( $aryHeadResult["lngrevisionno"] >= 0 )
                 {
-                    $aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/detail_off_bt.gif\" lnginvoiceno=\"" . $aryHeadResult["lnginvoiceno"] . "\" class=\"detail button\"></td>\n";
+                    $aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\" rowspan=".$rowspan ."><img src=\"/mold/img/detail_off_bt.gif\" lnginvoiceno=\"" . $aryHeadResult["lnginvoiceno"] . "\" class=\"detail button\"></td>\n";
                 }
                 else
                 {
-                    $aryHtml[] = "\t<td></td>\n";
+                    $aryHtml[] = "\t<td rowspan=".$rowspan ."></td>\n";
                 }
             }
 
@@ -1445,17 +1509,26 @@ function fncSetInvoiceTableRow ( $lngColumnCount, $aryHeadResult, $aryDetailResu
                 // 納品書データの状態により分岐
                 // 最新納品書が削除データの場合も選択不可
                 if (
-                    /*$japaneseInvoiceExists
-                    or $receiveStatusIsClosed
-                    or */
                     $aryHeadResult["lngrevisionno"] < 0
                     or $bytDeleteFlag )
                 {
-                    $aryHtml[] = "\t<td></td>\n";
+                    $aryHtml[] = "\t<td rowspan=".$rowspan ."></td>\n";
                 }
                 else
                 {
-                    $aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/renew_off_bt.gif\" lnginvoiceno=\"" . $aryHeadResult["lnginvoiceno"] . "\" class=\"renew button\"></td>\n";
+                    $aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\" rowspan=".$rowspan ."><img src=\"/mold/img/renew_off_bt.gif\" lnginvoiceno=\"" . $aryHeadResult["lnginvoiceno"] . "\" class=\"renew button\"></td>\n";
+                }
+            }
+            // 履歴表示
+            if ( $strColumnName == "btnHistory" )
+            {
+                if ( $aryHeadResult["lngrevisionno"] <> 0 )
+                {
+                    $aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\" rowspan=".$rowspan ."><img src=\"/mold/img/renew_off_bt.gif\" rownum=\"". ($i + 1)."\" id=\"" . $aryHeadResult["strinvoicecode"] . "\" lngrevisionno=\"" . $aryHeadResult["lngrevisionno"] . "\" class=\"history button\"></td>\n";
+                }
+                else
+                {
+                    $aryHtml[] = "\t<td rowspan=".$rowspan ."></td>\n";
                 }
             }
 
@@ -1469,20 +1542,29 @@ function fncSetInvoiceTableRow ( $lngColumnCount, $aryHeadResult, $aryDetailResu
                         or */
                         $bytDeleteFlag )
                     {
-                        $aryHtml[] = "\t<td></td>\n";
+                        $aryHtml[] = "\t<td rowspan=".$rowspan ."></td>\n";
                     }
                     else
                     {
-                        $aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/remove_off_bt.gif\" lnginvoiceno=\"" . $aryHeadResult["lnginvoiceno"] . "\" class=\"delete button\"></td>\n";
+                        $aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\" rowspan=".$rowspan ."><img src=\"/mold/img/remove_off_bt.gif\" lnginvoiceno=\"" . $aryHeadResult["lnginvoiceno"] . "\" class=\"delete button\"></td>\n";
                     }
             }
         }
         // 表示対象がボタン以外の場合
         else if ($strColumnName != "") {
-            $TdData = "\t<td>";
+            
             $TdDataUse = true;
             $strText = "";
 
+            if ($strColumnName == "lngCustomerCode" || $strColumnName == "strInvoiceCode" || $strColumnName == "dtmInvoiceDate" 
+            || $strColumnName == "curLastMonthBalance" || $strColumnName == "curThisMonthAmount" || $strColumnName == "curSubTotal1" 
+            || $strColumnName == "dtmInsertDate" || $strColumnName == "lngUserCode" || $strColumnName == "lngInsertUserCode"
+            || $strColumnName == "strNote")
+            {
+                $TdData = "\t<td rowspan=".$rowspan .">";
+            } else {
+                $TdData = "\t<td>";
+            }
             // 顧客
             if ( $strColumnName == "lngCustomerCode" )
             {
@@ -1576,7 +1658,11 @@ function fncSetInvoiceTableRow ( $lngColumnCount, $aryHeadResult, $aryDetailResu
             {
                 for ( $k = 0; $k < $lngDetailCount; $k++ )
                 {
-                    $TdData .= "<p>" .$aryDetailResult[$k]["lnginvoicedetailno"] ."</p>";
+                    if ($k == 0) {
+                        $TdData .= $aryDetailResult[$k]["lnginvoicedetailno"];
+                    } else {
+                        $TdData = "<tr>" .$TdData. $aryDetailResult[$k]["lnginvoicedetailno"];
+                    }
                 }
             }
             // 納品日
@@ -1584,7 +1670,7 @@ function fncSetInvoiceTableRow ( $lngColumnCount, $aryHeadResult, $aryDetailResu
             {
                 for ( $k = 0; $k < $lngDetailCount; $k++ )
                 {
-                    $TdData .= "<p>" .str_replace( "-", "/", substr( $aryDetailResult[$k]["dtmdeliverydate"], 0, 19 ) ) ."</p>";
+                    $TdData .= str_replace( "-", "/", substr( $aryDetailResult[$k]["dtmdeliverydate"], 0, 19 ) );
                 }
             }
             // 納品伝票コード（納品書NO）
@@ -1592,7 +1678,7 @@ function fncSetInvoiceTableRow ( $lngColumnCount, $aryHeadResult, $aryDetailResu
             {
                 for ( $k = 0; $k < $lngDetailCount; $k++ )
                 {
-                    $TdData .= "<p>" .$aryDetailResult[$k]["lngslipno"] ."</p>";
+                    $TdData .= $aryDetailResult[$k]["lngslipno"];
                 }
             }
             // 納品先
@@ -1609,7 +1695,7 @@ function fncSetInvoiceTableRow ( $lngColumnCount, $aryHeadResult, $aryDetailResu
                  {
                         $strText .= " ";
                     }
-                    $TdData  .= "<p>" .$strText .$aryDetailResult[$k]["strdeliveryplacename"] ."</p>";
+                    $TdData  .= $strText .$aryDetailResult[$k]["strdeliveryplacename"];
                 }
             }
             // 合計金額
@@ -1626,7 +1712,7 @@ function fncSetInvoiceTableRow ( $lngColumnCount, $aryHeadResult, $aryDetailResu
                     {
                         $strText .= toMoneyFormat($aryHeadResult["lngmonetaryunitcode"], $aryHeadResult["strmonetaryunitsign"], $aryDetailResult[$k]["cursubtotalprice"]);
                     }
-                    $TdData .= "<p>" .$strText ."</p>";
+                    $TdData .= $strText ;
                 }
             }
             // 課税区分
@@ -1643,7 +1729,7 @@ function fncSetInvoiceTableRow ( $lngColumnCount, $aryHeadResult, $aryDetailResu
                         $strText .= "     ";
                     }
                     $strText .= " " . $aryDetailResult[$k]["strtaxclassname"];
-                    $TdData .= "<p>" .$strText ."</p>";
+                    $TdData .= $strText ;
                 }
             }
             // 税率
@@ -1651,7 +1737,7 @@ function fncSetInvoiceTableRow ( $lngColumnCount, $aryHeadResult, $aryDetailResu
             {
                 for ( $k = 0; $k < $lngDetailCount; $k++ )
                 {
-                    $TdData  .= "<p>" . round($aryDetailResult[$k]["curtax"] * 100) . '%' ."</p>";
+                    $TdData  .=  round($aryDetailResult[$k]["curtax"] * 100) . '%';
                 }
             }
             // 消費税格
@@ -1661,7 +1747,7 @@ function fncSetInvoiceTableRow ( $lngColumnCount, $aryHeadResult, $aryDetailResu
                 {
                     $cursubtotalprice = preg_replace('/,/','', $aryDetailResult[$k]["cursubtotalprice"]);
                     $strText = number_format((int)($aryDetailResult[$k]["curtax"] * (int)$cursubtotalprice) ,2);
-                    $TdData  .= "<p>" .toMoneyFormat($aryHeadResult["lngmonetaryunitcode"], $aryHeadResult["strmonetaryunitsign"], $strText)."</p>";
+                    $TdData  .= toMoneyFormat($aryHeadResult["lngmonetaryunitcode"], $aryHeadResult["strmonetaryunitsign"], $strText);
                 }
             }
             // 明細備考
@@ -1669,7 +1755,7 @@ function fncSetInvoiceTableRow ( $lngColumnCount, $aryHeadResult, $aryDetailResu
             {
                 for ( $k = 0; $k < $lngDetailCount; $k++ )
                 {
-                    $TdData  .= "<p>" .$aryDetailResult[$k]["strnote"]."</p>";
+                    $TdData  .= $aryDetailResult[$k]["strnote"];
                 }
             }
             else
@@ -1717,7 +1803,7 @@ function fncSetInvoiceTableRow ( $lngColumnCount, $aryHeadResult, $aryDetailResu
  *    @return strQuery     $strQuery 検索用SQL文
  *    @access public
  */
-function fncGetInvoiceMSQL ( $lngInvoiceNo )
+function fncGetInvoiceMSQL ( $lngInvoiceNo, $lngRevisionNo )
 {
     // 請求書番号番号
     $aryQuery[] = "SELECT distinct on (inv.lnginvoiceno) inv.lnginvoiceno as lnginvoiceno ";
@@ -1774,6 +1860,8 @@ function fncGetInvoiceMSQL ( $lngInvoiceNo )
     $aryQuery[] = " LEFT JOIN m_User u ON inv.lngusercode = u.lngusercode";
     // WHERE
     $aryQuery[] = " WHERE inv.lnginvoiceno = ".$lngInvoiceNo. " ";
+    $aryQuery[] = " AND inv.lngrevisionno = ".$lngRevisionNo. " ";
+
     // 削除済みは排除
     $aryQuery[] = " AND inv.lnginvoiceno NOT IN ( ";
     $aryQuery[] = " SELECT DISTINCT(lnginvoiceno) FROM m_invoice WHERE lngrevisionno = -1";
@@ -1847,10 +1935,10 @@ function fncSalesStatusIsClosed($lngInvoiceNo, $objDB)
  *    @return Boolean     true        実行成功
  *                        false        実行失敗 情報取得失敗
  */
-function fncDeleteInvoice($lngInvoiceNo, $objDB, $objAuth)
+function fncDeleteInvoice($lngInvoiceNo, $lngRevisionNo, $objDB, $objAuth)
 {
     // 請求書番号番の有効なマスタデータがあるか確認
-    $strQuery = fncGetInvoiceMSQL($lngInvoiceNo);
+    $strQuery = fncGetInvoiceMSQL($lngInvoiceNo, $lngRevisionNo);
     list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB);
     if ( $lngResultNum )
     {
@@ -2434,4 +2522,263 @@ function fncGetInvoiceAggregateSQL ( $invoiceMonth )
 }
 
 
+
+/**
+ * 請求コードによりデータの状態を確認する
+ *
+ * @param [type] $strinvoicecode
+ * @param [type] $objDB
+ * @return void [0：未削除データ　1：削除済データ]
+ */
+function fncCheckData($strinvoicecode, $objDB) {
+    $result = 0;
+    unset($aryQuery);
+    $aryQuery[] = "SELECT";
+    $aryQuery[] = " min(lngrevisionno) lngrevisionno, bytInvalidFlag, strinvoicecode ";
+    $aryQuery[] = "FROM m_invoice ";
+    $aryQuery[] = "WHERE strinvoicecode='" . $strinvoicecode . "'";
+    $aryQuery[] = "group by strinvoicecode, bytInvalidFlag";
+
+    // クエリを平易な文字列に変換
+    $strQuery = implode("\n", $aryQuery);
+    
+    list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
+
+    if ($lngResultNum) {
+        $resultObj = $objDB->fetchArray($lngResultID, 0);
+    }
+
+    $objDB->freeResult($lngResultID);
+
+    if ($resultObj["lngrevisionno"] < 0) {
+        $result = 1;
+    }
+    return $result;
+}
+
+/**
+ * 明細データの取得
+ *
+ * @param [type] $lngSalesNo
+ * @param [type] $lngRevisionNo
+ * @param [type] $objDB
+ * @return void
+ */
+function fncGetDetailData($lngInvoiceNo, $lngRevisionNo, $objDB)
+{
+    $detailData = array();
+    unset($aryQuery);
+    $aryQuery[] = "SELECT";
+    $aryQuery[] = "  inv_d.lnginvoiceno as lnginvoiceno";
+    $aryQuery[] = "  , inv_d.lngrevisionno as lngrevisionno";
+    $aryQuery[] = "  , inv_d.lnginvoicedetailno";
+    $aryQuery[] = "  , to_char(inv_d.dtmdeliverydate, 'YYYY/MM/DD HH:MI:SS') as dtmdeliverydate";
+    $aryQuery[] = "  , delv_c.strcompanydisplaycode as lngdeliveryplacecode";
+    $aryQuery[] = "  , inv_d.strdeliveryplacename as strdeliveryplacename";
+    $aryQuery[] = "  , To_char(inv_d.cursubtotalprice, '9,999,999,990.99') as cursubtotalprice";
+    $aryQuery[] = "  , inv_d.lngtaxclasscode as lngtaxclasscode";
+    $aryQuery[] = "  , inv_d.strtaxclassname as strtaxclassname";
+    $aryQuery[] = "  , inv_d.curtax as curtax";
+    $aryQuery[] = "  , inv_d.strnote as strnote";
+    $aryQuery[] = "  , inv_d.lngslipno as lngslipno";
+    $aryQuery[] = "  , inv_d.lngsliprevisionno as lngsliprevisionno";
+    $aryQuery[] = "  , slip_m.strslipcode as strslipcode ";
+    $aryQuery[] = "FROM";
+    $aryQuery[] = "  t_invoicedetail inv_d ";
+    $aryQuery[] = "  LEFT JOIN m_slip slip_m ";
+    $aryQuery[] = "    ON inv_d.lngslipno = slip_m.lngslipno ";
+    $aryQuery[] = "  LEFT JOIN m_Company delv_c ";
+    $aryQuery[] = "    ON inv_d.lngDeliveryPlaceCode = delv_c.lngCompanyCode ";
+    $aryQuery[] = "WHERE";
+    $aryQuery[] = "  inv_d.lnginvoiceno = " . $lngInvoiceNo;
+    $aryQuery[] = "  AND inv_d.lngrevisionno = " . $lngRevisionNo;
+    $aryQuery[] = "ORDER BY";
+    $aryQuery[] = "  inv_d.lnginvoicedetailno ASC";
+    // クエリを平易な文字列に変換
+    $strQuery = implode("\n", $aryQuery);
+
+    list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
+    // 検索件数がありの場合
+    if ($lngResultNum > 0) {
+        // 指定数以内であれば通常処理
+        for ($i = 0; $i < $lngResultNum; $i++) {
+            $detailData = pg_fetch_all($lngResultID);
+        }
+    }
+    $objDB->freeResult($lngResultID);
+
+    return $detailData;
+}
+
+/**
+ * 明細行データの生成
+ *
+ * @param [type] $doc
+ * @param [type] $trBody
+ * @param [type] $bgcolor
+ * @param [type] $aryTableDetailHeaderName
+ * @param [type] $displayColumns
+ * @param [type] $detailData
+ * @return void
+ */
+function fncSetDetailDataToTr($doc, $trBody, $bgcolor, $aryTableDetailHeaderName, $detailData, $headerData, $toUTF8Flag)
+{
+    // 指定されたテーブル項目のセルを作成する
+    foreach ($aryTableDetailHeaderName as $key => $value) {
+            // 項目別に表示テキストを設定
+            switch ($key) {                
+                // 請求書明細番号
+                case "lngInvoiceDetailNo":
+                    $td = $doc->createElement("td", $detailData["lnginvoicedetailno"]);
+                    $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+                // 納品日
+                case "dtmDeliveryDate":
+                    if ($toUTF8Flag) {
+                        $td = $doc->createElement("td", str_replace( "-", "/", toUTF8(substr( $detailData["dtmdeliverydate"], 0, 19 ))));
+                    } else {
+                        $td = $doc->createElement("td", str_replace( "-", "/", substr( $detailData["dtmdeliverydate"], 0, 19 )));
+                       
+                    }
+                    $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+                // 納品書NO
+                case "strSlipCode":
+                    $td = $doc->createElement("td", $detailData["lngslipno"]);
+                    $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+                // [納品先表示コード] 納品先表示名
+                case "lngDeliveryPlaceCode":
+                    if ($detailData["lngdeliveryplacecode"] != '') {
+                        $textContent = "[" . $detailData["lngdeliveryplacecode"] . "]" . " " . $detailData["strdeliveryplacename"];
+                    } else {
+                        $textContent = "     ";
+                    }
+                    if ($toUTF8Flag) {
+                        $textContent = toUTF8($textContent);
+                    }
+                    $td = $doc->createElement("td", $textContent);
+                    $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+                // 税抜金額
+                case "curSubTotalPrice":
+                    if ($detailData["cursubtotalprice"] != '') {
+                        $textContent = toMoneyFormat($headerData["lngmonetaryunitcode"], $headerData["strmonetaryunitsign"], "0.00");;
+                    } else {
+                        $textContent = toMoneyFormat($headerData["lngmonetaryunitcode"], $headerData["strmonetaryunitsign"], $detailData[$k]["cursubtotalprice"]);;
+                    }
+                    $td = $doc->createElement("td", $textContent);
+                    $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+                // 課税区分
+                case "lngTaxClassCode":
+                    if ($detailData["lngtaxclasscode"] != '') {
+                        $textContent = "[" . $detailData["lngtaxclasscode"] . "]" . " " . $detailData["strtaxclassname"];
+                    } else {
+                        $textContent = "     ";
+                    }                    
+                    if ($toUTF8Flag) {
+                        $textContent = toUTF8($textContent);
+                    }
+                    $td = $doc->createElement("td", $textContent);
+                    $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+                // 税率
+                case "curDetailTax":
+                    $textContent = round($detailData["curtax"] * 100) . '%';                    
+                    if ($toUTF8Flag) {
+                        $textContent = toUTF8($textContent);
+                    }
+                    $td = $doc->createElement("td", $textContent);
+                    $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+                // 消費額
+                case "curTaxPrice":
+                    $cursubtotalprice = preg_replace('/,/','', $detailData["cursubtotalprice"]);
+                    $strText = number_format((int)($detailData["curtax"] * (int)$cursubtotalprice) ,2);
+                    $textContent = toMoneyFormat($headerData["lngmonetaryunitcode"], $headerData["strmonetaryunitsign"], $strText);
+                    $td = $doc->createElement("td", $textContent);
+                    $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+                // 明細備考
+                case "strDetailNote":
+                    $textContent = $detailData["strnote"];
+                    if ($toUTF8Flag) {
+                        $textContent = toUTF8($textContent);
+                    }
+                    $td = $doc->createElement("td", $textContent);
+                    $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+            }
+
+    }
+    return $trBody;
+}
+
+function fncGetInvoicesByStrInvoiceCodeSQL($strinvoicecode, $lngrevisionno)
+{
+    $aryQuery[] = "SELECT distinct";
+    $aryQuery[] = "  inv.lnginvoiceno as lnginvoiceno";
+    $aryQuery[] = "  , inv.lngrevisionno as lngrevisionno";
+    $aryQuery[] = "  , inv.dtminsertdate as dtminsertdate";
+    $aryQuery[] = "  , cust_c.strcompanydisplaycode as strcustomercode";
+    $aryQuery[] = "  , inv.strcustomername as strcustomername";
+    $aryQuery[] = "  , inv.strcustomercompanyname as strcustomercompanyname";
+    $aryQuery[] = "  , cust_c.lngCountryCode as lngcountrycode";
+    $aryQuery[] = "  , inv.strinvoicecode as strinvoicecode";
+    $aryQuery[] = "  , to_char(inv.dtminvoicedate, 'YYYY/MM/DD') as dtminvoicedate";
+    $aryQuery[] = "  , to_char(inv.dtmchargeternstart, 'YYYY/MM/DD') as dtmchargeternstart";
+    $aryQuery[] = "  , to_char(inv.dtmchargeternend, 'YYYY/MM/DD') as dtmchargeternend";
+    $aryQuery[] = "  , To_char(inv.curlastmonthbalance, '9,999,999,990.99') as curlastmonthbalance";
+    $aryQuery[] = "  , To_char(inv.curthismonthamount, '9,999,999,990.99') as curthismonthamount";
+    $aryQuery[] = "  , inv.lngmonetaryunitcode as lngmonetaryunitcode";
+    $aryQuery[] = "  , inv.strmonetaryunitsign as strmonetaryunitsign";
+    $aryQuery[] = "  , inv.lngtaxclasscode as lngtaxclasscode";
+    $aryQuery[] = "  , inv.strtaxclassname as strtaxclassname";
+    $aryQuery[] = "  , To_char(inv.cursubtotal1, '9,999,999,990.99') as cursubtotal1";
+    $aryQuery[] = "  , inv.curtax1 as curtax1";
+    $aryQuery[] = "  , To_char(inv.curtaxprice1, '9,999,999,990.99') as curtaxprice1";
+    $aryQuery[] = "  , u.struserdisplaycode as strusercode";
+    $aryQuery[] = "  , inv.strusername as strusername";
+    $aryQuery[] = "  , insert_u.struserdisplaycode as strinsertusercode";
+    $aryQuery[] = "  , inv.strinsertusername as strinsertusername";
+    $aryQuery[] = "  , to_char(inv.dtminsertdate, 'YYYY/MM/DD') as dtminsertdate";
+    $aryQuery[] = "  , inv.strnote as strnote";
+    $aryQuery[] = "  , inv.lngprintcount as lngprintcount";
+    $aryQuery[] = "  , sa.lngSalesStatusCode as lngSalesStatusCode";
+    $aryQuery[] = "  , ss.strSalesStatusName as strSalesStatusName ";
+    $aryQuery[] = "FROM";
+    $aryQuery[] = "  m_invoice inv ";
+    $aryQuery[] = "  LEFT JOIN m_sales sa ";
+    $aryQuery[] = "    ON inv.lnginvoiceno = sa.lnginvoiceno ";
+    $aryQuery[] = "  LEFT JOIN m_SalesStatus ss ";
+    $aryQuery[] = "    ON sa.lngSalesStatusCode = ss.lngSalesStatusCode ";
+    $aryQuery[] = "  LEFT JOIN m_Company cust_c ";
+    $aryQuery[] = "    ON inv.lngcustomercode = cust_c.lngcompanycode ";
+    $aryQuery[] = "  LEFT JOIN m_MonetaryUnit mu ";
+    $aryQuery[] = "    ON inv.lngmonetaryunitcode = mu.lngMonetaryUnitCode ";
+    $aryQuery[] = "  LEFT JOIN m_User insert_u ";
+    $aryQuery[] = "    ON inv.lngInsertUserCode = insert_u.lngusercode ";
+    $aryQuery[] = "  LEFT JOIN m_User u ";
+    $aryQuery[] = "    ON inv.lngusercode = u.lngusercode ";
+    $aryQuery[] = "  INNER JOIN t_invoicedetail inv_d ";
+    $aryQuery[] = "    ON inv.lnginvoiceno = inv_d.lnginvoiceno ";
+    $aryQuery[] = "WHERE";
+    $aryQuery[] = "  inv.bytinvalidflag = FALSE ";
+    $aryQuery[] = "  AND inv.lngrevisionno <> " .$lngrevisionno. "";
+    $aryQuery[] = "  AND inv.strinvoicecode = '". $strinvoicecode."'";
+    $aryQuery[] = "ORDER BY";
+    $aryQuery[] = "  inv.lngrevisionno DESC";
+
+    return implode("\n", $aryQuery);
+}
 ?>

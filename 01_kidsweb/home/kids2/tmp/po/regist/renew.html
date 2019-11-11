@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <!-- 互換表示OFFを強制させる -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    php domパース用メタ要素 コメントアウトしていてもphpのdomElement->loadHTMLで認識される
+    -->
+    <meta charset="euc-jp">
+
+    <title>K.I.D.S.</title>
+    <link rel="stylesheet" href="/cmn/css/base/base-general.css">
+
+    <!-- スタイル初期化 & 各種コントロールスタイル -->
+
+    <link rel="stylesheet" type="text/css" media="screen" href="/so/decide/css/forms.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/so/decide/css/forms-confirm.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/so/decide/css/table-confirm.css">
+    <!-- jQuery -->
+    <script src="/cmn/jquery/jquery-3.1.0.js"></script>
+    <!-- jQuery Cookie -->
+    <script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
+    <!-- jQuery UI -->
+    <script src="/cmn/jquery/ui/jquery-ui-1.12.0.js"></script>
+    <link rel="stylesheet" href="/cmn/jquery/ui/jquery-ui-1.12.0.css">
+    <link rel="stylesheet" href="/cmn/jquery/ui/jquery-ui.theme.css">
+    <!-- jQuery UI datepickerローカライズ用スクリプト -->
+    <script src="/cmn/jquery/ui/datepicker-ja.js"></script>
+    <!-- jQuery Validation Plugin -->
+    <script src="/cmn/jquery/validation/jquery.validate.js"></script>
+    <!-- jQuery tooltipster -->
+    <script src="/cmn/jquery/tooltipster/js/tooltipster.bundle.js"></script>
+    <link rel="stylesheet" href="/cmn/jquery/tooltipster/css/tooltipster.bundle.css">
+    <!-- ボタン画像の共通の振る舞い CSS -->
+    <link rel="stylesheet" href="/cmn/css/base/button-behaivior.css">
+    <!-- msw汎用スタイル -->
+    <link rel="stylesheet" href="/pc/regist/css/msw.css">
+    <link rel="stylesheet" href="/po/regist/renewlayout.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
+    <!-- <link rel="stylesheet" href="/po/regist/layout.css"> -->
+    <!-- msw 表示 -->
+    <script src="/search/cmn/msw/cmn/js/msw.js" defer></script>
+    <!-- マスタ検索呼び出し -->
+    <script src="/search/cmn/js/invoke-master-search.js" defer></script>
+    <script type="text/javascript" language="javascript" src="/po/regist/functions.js"></script>
+    <script type="text/javascript" language="javascript" src="/po/regist/regist2.js"></script>
+    <!-- マスタ検索呼び出し -->
+    <script src="/search/cmn/js/invoke-master-search.js" defer></script>
+    <!-- datepickerの要素指定 -->
+    <script src="/po/regist/datepicker.js" defer></script>
+</head>
+
+<body class="background">
+
+    <!-- 入力フォーム -->
+    <div class="form-box">
+        <!-- フォームヘッダ -->
+        <div class="form-box__header">
+            <p class="form-box__header__title">発注書修正</p>
+        </div>
+        <!-- フォームコンテンツ -->
+        <div class="form-box__contents">
+            <form name="decideReceive" action="javascript:void(0);" method="post">
+                <input type="submit">
+                <div class="regist-tab-header">
+                    <div class="regist-line">
+                        <span class="regist-label">
+                            <span class="regist-label__text">発注No</span>
+                            <input style="ime-mode:disabled;" class="disTxt07L" type="text" name="strOrderCode" value="_%strOrderCode%_" maxlength="8"
+                                contenteditable="false" readonly>_
+                            <input style="ime-mode:disabled;" class="disTxt02L" type="text" name="lngRevisionNo" value="_%lngRevisionNo%_" maxlength="2"
+                                contenteditable="false" readonly>
+                        </span>
+                        <span class="regist-label">
+                            <span class="regist-label__text">仕入先</span>
+                            <input class="TxtStyle05L" name="strCustomerCode" value="_%strCustomerCode%_" type="text" readonly>
+                            <input class="disTxt46L" name="strCustomerName" type="text" value="_%strCustomerName%_" readonly>
+                        </span>
+                    </div>
+                    <div class="regist-line">
+                        <span class="regist-label" style="width: 272px;">
+                            <span class="regist-label__text">発注有効期限日</span>
+                            <input style="ime-mode:disabled;" class="Txt10L" type="text" name="dtmExpirationDate" value="_%dtmExpirationDate%_" maxlength="10"
+                                tabindex="1">
+                        </span>
+                        <span class="regist-label">
+                            <span class="regist-label__text">営業部署</span>
+                            <input class="TxtStyle05L" name="strGroupDisplayCode" value="_%strGroupDisplayCode%_" type="text" readonly>
+                            <input class="disTxt46L" name="strGroupDisplayName" type="text" value="_%strGroupDisplayName%_" readonly>
+                        </span>
+                    </div>
+                    <div class="regist-line">
+                        <span class="regist-label" style="width: 272px;">
+                            <span class="regist-label__text">製品コード</span>
+                            <input style="ime-mode:disabled;" class="disTxt07L" type="text" name="strProductCode" value="_%strProductCode%_" maxlength="5"
+                                readonly>
+                            <input type="hidden" name="strProductCode" value="_%strProductCode%_">
+                        </span>
+                        <span class="regist-label">
+                            <span class="regist-label__text">製品名</span>
+                            <input style="ime-mode:disabled;" class="disTxt46L" type="text" name="strProductName" value="_%strProductName%_" readonly>
+                        </span>
+                    </div>
+                    <div class="regist-line">
+                        <span class="regist-label" style="width: 272px;">
+                            <span class="regist-label__text">支払条件</span>
+                            <select name="lngPayConditionCode" _%PayConditionDisabled%_>
+                                _%lngPayConditionCode%_
+                            </select>
+                        </span>
+                        <span class="regist-label">
+                            <span class="regist-label__text">製品名（英語）</span>
+                            <input style="ime-mode:disabled;" class="disTxt46L" type="text" name="strProductEnglishName" value="_%strProductEnglishName%_"
+                                readonly>
+                    </div>
+                    <div class="regist-line">
+                        <span class="regist-label" style="width: 272px;">
+                            <span class="regist-label__text">通貨</span>
+                            <select name="lngMonetaryUnitCode" _%MonetaryUnitDisabled%_>
+                                _%lngMonetaryUnitCode%_
+                            </select>
+                        </span>
+                        <span class="regist-label">
+                            <span class="regist-label__text">納品場所</span>
+                            <input class="TxtStyle05L" name="lngLocationCode" type="text" value="_%lngLocationCode%_" alt="Location">
+                            <input class="disTxt46L" name="strLocationName" type="text" value="_%strLocationName%_" readonly>
+                            <img class="msw-button button" invokeMSWName="msw-location" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                        </span>
+                    </div>
+                    <div class="regist-line">
+                        <span class="regist-label">
+                            <span class="regist-label__text">備考</span>
+                            <input class="Txt100L" type="text" name="strNote" value="_%strnote%_" tabindex="19">
+                        </span>
+                        <input type="hidden" name="strSessionID" value="_%strSessionID%_">
+                        <input type="hidden" name="lngPurchaseOrderNo" value="_%lngPurchaseOrderNo%_">
+                        <input type="hidden" name="lngRevisionNo" value="_%lngRevisionNo%_">
+                        <input type="hidden" name="lngPayConditionCodeOrign" value="_%lngPayConditionCodeOrign%_">
+                    </div>
+                    <div class="regist-line" id="InputDetail">
+                        <table id="DetailTable" cellpadding="0" cellspacing="1" border="0">
+                            <thead id="DetailTableHead">
+                                <tr class="TrSegs">
+                                    <th>No.</th>
+                                    <th>発注No.</th>
+                                    <th>明細行番号</th>
+                                    <th>仕入科目</th>
+                                    <th>仕入部品</th>
+                                    <th>運搬方法</th>
+                                    <th>単価</th>
+                                    <th>数量</th>
+                                    <th>税抜価格</th>
+                                    <th>納期</th>
+                                    <th>備考</th>
+                                </tr>
+                            </thead>
+                            <tbody id="DetailTableBody">_%strPurchaseOrderDetail%_</tbody>
+                        </table>
+                    </div>
+
+                    <!-- 明細行替えボタン -->
+                    <!-- 最上行へ移動 -->
+                    <div id="selectup">
+                        <img onclick="" src="/img/type01/so/top.gif" alt="form row top">
+                    </div>
+                    <!-- 上の行へ移動 -->
+                    <div id="selectup1">
+                        <img onclick="" src="/img/type01/so/up.gif" alt="form row up">
+                    </div>
+                    <!-- 下の行へ移動 -->
+                    <div id="selectdown1">
+                        <img onclick="" src="/img/type01/so/down.gif" alt="form row down">
+                    </div>
+                    <!-- 最下行へ移動 -->
+                    <div id="selectdown">
+                        <img onclick="" src="/img/type01/so/bottom.gif" alt="form row button">
+                    </div>
+
+                    <!-- 確定登録ボタン -->
+                    <div id="FixEntryBtn">
+                        <img src="/img/type01/cmn/querybt/regist_blown_off_ja_bt.gif" alt="" style="width: 78px; height: 20px;">
+                    </div>
+
+                    <div id="SegHidden">
+                        <input type="hidden" name="strSessionID" value="_%strSessionID%_">
+                        <input type="hidden" name="strMode" value="_%strMode%_">
+                    </div>
+
+                </div>
+            </form>
+            <div class="msw-loadpoints">
+                <!-- MSW 部門マスタ検索 -->
+                <iframe class="msw-group" src="/search/cmn/msw/group/mswgroup.html" frameborder="0">
+                </iframe>
+                <!-- MSW 納品場所マスタ検索 -->
+                <iframe class="msw-location" src="/search/cmn/msw/location/mswlocation.html" frameborder="0">
+                </iframe>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -178,12 +178,12 @@
                     return $('input[name="IsSearch_dtmInsertDate"]').get(0).checked;
                 }
             },
-            To_dtmDeliveryDate: {
+            To_dtmInsertDate: {
                 required: function () {
                     return $('input[name="IsSearch_dtmInsertDate"]').get(0).checked && $('input[name="From_dtmInsertDate"]').val() == "";
                 },
                 checkDateFormat: function () {
-                    return $('input[name="IsSearch_dtmInsertDatee"]').get(0).checked;
+                    return $('input[name="IsSearch_dtmInsertDate"]').get(0).checked;
                 }
                 
             },

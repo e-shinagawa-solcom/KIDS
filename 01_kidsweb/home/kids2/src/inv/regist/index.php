@@ -183,11 +183,11 @@
                 MoveToErrorPage("納品日は当月度の前後1ヶ月の間を指定してください");
             }
             // 納品日と異なる月の明細の場合
-            $deliveryDateMonth = date('m', strtotime($date));
-            if( (int)$baseMonth != (int)$deliveryDateMonth )
-            {
-                MoveToErrorPage("出力明細には、入力された納品日と異なる月に納品された明細を指定できません");
-            }
+            // $deliveryDateMonth = date('m', strtotime($date));
+            // if( (int)$baseMonth != (int)$deliveryDateMonth )
+            // {
+            //     MoveToErrorPage("出力明細には、入力された納品日と異なる月に納品された明細を指定できません");
+            // }
         }
 
         // --------------------------------

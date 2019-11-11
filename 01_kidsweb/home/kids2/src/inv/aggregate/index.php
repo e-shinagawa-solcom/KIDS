@@ -73,7 +73,7 @@
     }
 
     // 2203 請求集計
-    if ( !fncCheckAuthority( DEF_FUNCTION_INV3, $objAuth ) )
+    if ( !fncCheckAuthority( DEF_FUNCTION_INV4, $objAuth ) )
     {
         fncOutputError ( 9052, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
     }

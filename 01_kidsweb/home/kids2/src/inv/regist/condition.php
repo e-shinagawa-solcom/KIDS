@@ -135,12 +135,12 @@
     {
         // SQL文取得
         $invoiceNo = (int)$aryData["invoiceNo"];
-        $strQuery = fncGetSearchMSlipInvoiceNoSQL($invoiceNo);
+        $revisionNo = (int)$aryData["revisionNo"];
+        $strQuery = fncGetSearchMSlipInvoiceNoSQL($invoiceNo, $revisionNo);
         // EUC-JPへ変換
         // $strQuery = mb_convert_encoding($strQuery, "EUC-JP", "auto");
         // クエリ実行
         list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
-
         // 結果件数を取得
         if($lngResultNum > 0)
         {

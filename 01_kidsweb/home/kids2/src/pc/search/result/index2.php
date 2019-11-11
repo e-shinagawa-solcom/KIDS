@@ -40,7 +40,6 @@ $objAuth = fncIsSession($_REQUEST["strSessionID"], $objAuth, $objDB);
 
 // 仕入コードにより仕入履歴取得SQL
 $strQuery = fncGetStocksByStrStockCodeSQL($aryData["strStockCode"], $aryData["lngRevisionNo"]);
-echo $strQuery;
 // 値をとる =====================================
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
