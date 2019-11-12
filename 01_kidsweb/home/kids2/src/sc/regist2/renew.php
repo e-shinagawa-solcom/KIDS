@@ -104,7 +104,7 @@ if ($strMode == "") {
     }
 
     // 納品書明細に紐づく受注ステータスが「締済み」の場合は修正不可
-    if (fncReceiveStatusIsClosed($lngSlipNo, $objDB)) {
+    if (fncReceiveStatusIsClosed($lngSlipNo, $lngRevisionNo, $objDB)) {
         MoveToErrorPage("締済みのため、修正できません");
     }
 }

@@ -1252,7 +1252,7 @@ function fncInvoiceInsert( $insertAry ,$objDB, $objAuth)
         $aryQuery[] = (int)$no+1 ." ,";                                 // 請求書明細番号
         $aryQuery[] =  $insertAry['lngrevisionno']." ,";                // リビジョン番号
         $aryQuery[] =  "'"  .$insertAry['dtminvoicedate'] ."' ,";       // 納品日
-        $aryQuery[] =  (int)$result['lngdeliveryplacecode'] .",";       // 納品場所コード
+        $aryQuery[] = "(select lngcompanycode from m_company where strcompanydisplaycode='". $result['lngdeliveryplacecode'] ."')  ,"; // 納品場所コード
         $aryQuery[] =  "'"  .$result['strdeliveryplacename'] ."' ,";    // 納品場所名
         $aryQuery[] =  "'"  .$result['curtotalprice'] ."' ,";           // 小計
         $aryQuery[] =  "'"  .$result['lngtaxclasscode'] ."' ,";         // 課税区分コード
@@ -1307,492 +1307,6 @@ function fncInvoiceInsert( $insertAry ,$objDB, $objAuth)
     return $aryResult;
 
 }
-
-
-/**
- * 請求書検索結果表示関数
- *
- *    請求書検索結果からテーブル構成で結果を出力する関数
- *
- *    @param  Array     $aryResult             検索結果が格納された配列
- *    @param  Array     $aryViewColumn         表示対象カラム名の配列
- *    @param  Array     $aryData             ＰＯＳＴデータ群
- *    @param    Array    $aryTytle            項目名が格納された配列（呼び出し元で日本語用、英語用の切り替え）
- *    @param  Object    $objDB               DBオブジェクト
- *    @param  Object    $objCache           キャッシュオブジェクト
- *    @access public
- */
-function fncSetInvoiceTableBody ( $aryResult, $arySearchColumn, $aryData,  $aryTytle, $objDB, $objCache)
-{
-    // 詳細ボタンの表示制御
-//     if ( $aryUserAuthority["Detail"] )
-//     {
-        $aryHeadViewColumn[] = "btnDetail";
-//     }
-
-    // 修正ボタンの表示制御
-//     if ( $aryUserAuthority["Fix"] )
-//     {
-        $aryHeadViewColumn[] = "btnFix";
-//     }
-
-    $aryHeadViewColumn[] = "btnHistory";
-    // ヘッダ部
-    $aryHeadViewColumn[] = "lngCustomerCode";       // 顧客
-    $aryHeadViewColumn[] = "strInvoiceCode";        // 請求書No
-    $aryHeadViewColumn[] = "dtmInvoiceDate";        // 請求日
-    $aryHeadViewColumn[] = "curLastMonthBalance";   // 先月請求残額
-    $aryHeadViewColumn[] = "curThisMonthAmount";    // 当月請求金額
-    $aryHeadViewColumn[] = "curSubTotal1";          // 消費税額
-    $aryHeadViewColumn[] = "dtmInsertDate";         // 作成日
-    $aryHeadViewColumn[] = "lngUserCode";           // 担当者
-    $aryHeadViewColumn[] = "lngInsertUserCode";     // 入力者
-    $aryHeadViewColumn[] = "lngPrintCount";         // 印刷回数
-    $aryHeadViewColumn[] = "strNote";               // 備考
-
-
-    // 明細部
-    $aryHeadViewColumn[] = "lngInvoiceDetailNo";    // 請求書明細番号
-    $aryHeadViewColumn[] = "dtmDeliveryDate";       // 納品日
-    $aryHeadViewColumn[] = "strSlipCode";           // 納品書NO
-    $aryHeadViewColumn[] = "lngDeliveryPlaceCode";  // 納品先
-    $aryHeadViewColumn[] = "curSubTotalPrice";      // 税抜金額
-    $aryHeadViewColumn[] = "lngTaxClassCode";       // 課税区分
-    $aryHeadViewColumn[] = "curDetailTax";          // 税率
-    $aryHeadViewColumn[] = "curTaxPrice";           // 消費額
-    $aryHeadViewColumn[] = "strDetailNote";         // 明細備考
-
-
-    // 削除ボタン（権限による表示/非表示切り替え）
-//     if ( $aryUserAuthority["Delete"] )
-//     {
-        $aryHeadViewColumn[] = "btnDelete";
-//     }
-
-
-    // テーブルの形成
-    $lngResultCount = count($aryResult);
-    $lngColumnCount = 1;
-
-    // 項目名列（先頭行）の生成 start=========================================
-    $aryHtml[] = "<thead>";
-    $aryHtml[] = "<tr>";
-    $aryHtml[] = "\t<th class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/copy_off_bt.gif\" class=\"copy button\"></th>";
-
-    // 表示対象カラムの配列より項目設定
-    for ( $j = 0; $j < count($aryHeadViewColumn); $j++ )
-    {
-        $Addth = "\t<th>";
-
-        $strColumnName = $aryHeadViewColumn[$j];
-        $Addth .= $aryTytle[$strColumnName];
-
-        $Addth .= "</th>";
-
-        $aryHtml[] = $Addth;
-    }
-    $aryHtml[] = "</tr>";
-    $aryHtml[] = "</thead>";
-    // 項目名列（先頭行）の生成 end=========================================
-
-    $aryHtml[] = "<tbody>";
-
-    for ( $i = 0; $i < $lngResultCount; $i++ )
-    {
-        // 請求書に紐づいている請求書明細一覧を取得し表示する
-        $lngInvoiceNo = $aryResult[$i]["lnginvoiceno"];
-        $invoiceDetailQuery = fncGetSearchInvoiceDetailSQL( $lngInvoiceNo );
-
-        // 値をとる =====================================
-        list ( $lngResultID, $lngResultNum ) = fncQuery( $invoiceDetailQuery, $objDB );
-
-        // 配列のクリア
-        $aryDetailResult = [];
-
-        if ( $lngResultNum )
-        {
-            for ( $j = 0; $j < $lngResultNum; $j++ )
-            {
-                $aryDetailResult[] = $objDB->fetchArray( $lngResultID, $j );
-            }
-            $lngDetailCount = $lngResultNum;
-        }
-
-        $objDB->freeResult( $lngResultID );
-
-        // １レコード分の出力
-        $aryHtml_add = fncSetInvoiceTableRow ( $lngColumnCount, $aryResult[$i], $aryDetailResult, $aryHeadViewColumn, $aryData, $lngDetailCount, true, null);
-        $lngColumnCount++;
-
-        $strColBuff = '';
-        for ( $k = 0; $k < count($aryHtml_add); $k++ )
-           {
-               $strColBuff .= $aryHtml_add[$k];
-           }
-        $aryHtml[] =$strColBuff;
-
-    }
-
-    $aryHtml[] = "</tbody>";
-
-    $strhtml = implode( "\n", $aryHtml );
-
-    return $strhtml;
-}
-
-
-
-/**
- * 請求書検索結果表示関数
- *
- *    請求書検索結果からテーブル構成で結果を出力する関数
- *    1レコード分のHTMLを取得
- *
- *    @param  Integer $lngColumnCount         行数
- *    @param  Array     $aryHeadResult             ヘッダ行の検索結果が格納された配列
- *    @param  Array     $aryDetailResult         明細行の検索結果が格納された配列
- *    @param  Array     $aryHeadViewColumn         ヘッダ表示対象カラム名の配列
- *    @param  Array     $aryData                 ＰＯＳＴデータ群
- *    @param    Array    $aryUserAuthority        ユーザーの操作に対する権限が入った配列
- *    @access public
- */
-function fncSetInvoiceTableRow ( $lngColumnCount, $aryHeadResult, $aryDetailResult, $aryHeadViewColumn, $aryData, $lngDetailCount, $isMaxObj, $rownum)
-{
-    // 顧客の国が日本で、かつ納品書ヘッダに紐づく請求書明細が存在する
-//    $japaneseInvoiceExists = ($aryHeadResult["lngcountrycode"] == 81) && ($aryHeadResult["lnginvoiceno"] != null);
-
-    // 明細行のカウント数
-    if(empty($lngDetailCount))
-    {
-        $lngDetailCount = count($aryDetailResult);
-    }
-
-    $rowspan = $lngDetailCount == 0 ? 1 : $lngDetailCount;
-
-    // 納品伝票明細に紐づく受注ステータスが「締済み」である
-    $receiveStatusIsClosed = $aryDetailResult[$i]["lngreceivestatuscode"] == DEF_RECEIVE_CLOSED;
-    if ($isMaxObj) {
-        $aryHtml[] = "<tr id=".$aryResult[$i]["strinvoicecode "] .">";
-        $aryHtml[] = "  <td class=\"rownum\">" . ($lngColumnCount + $i) . "</td>";
-    } else {
-        $aryHtml[] = "<tr id=".$aryResult[$i]["strinvoicecode "]. "_" .$aryResult[$i]["lngrevisionno"] .">";            
-        $aryHtml[] = "  <td class=\"rownum\">" . $rownum .".".($lngColumnCount + $i) . "</td>";
-    }
-
-    // 表示対象カラムの配列より結果の出力
-    for ( $j = 0; $j < count($aryHeadViewColumn); $j++ )
-    {
-        $strColumnName = $aryHeadViewColumn[$j];
-        $TdData = "";
-
-        // 表示対象がボタンの場合
-        if ( $strColumnName == "btnDetail" or $strColumnName == "btnFix" or $strColumnName == "btnHistory" or $strColumnName == "btnDelete" or $strColumnName == "btnInvalid" )
-        {
-            // ボタン種により変更
-
-            // 詳細表示
-            if ( $strColumnName == "btnDetail" )
-            {
-                if ( $aryHeadResult["lngrevisionno"] >= 0 )
-                {
-                    $aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\" rowspan=".$rowspan ."><img src=\"/mold/img/detail_off_bt.gif\" lnginvoiceno=\"" . $aryHeadResult["lnginvoiceno"] . "\" class=\"detail button\"></td>\n";
-                }
-                else
-                {
-                    $aryHtml[] = "\t<td rowspan=".$rowspan ."></td>\n";
-                }
-            }
-
-            // 修正
-            if ( $strColumnName == "btnFix" )
-            {
-                // 納品書データの状態により分岐
-                // 最新納品書が削除データの場合も選択不可
-                if (
-                    $aryHeadResult["lngrevisionno"] < 0
-                    or $bytDeleteFlag )
-                {
-                    $aryHtml[] = "\t<td rowspan=".$rowspan ."></td>\n";
-                }
-                else
-                {
-                    $aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\" rowspan=".$rowspan ."><img src=\"/mold/img/renew_off_bt.gif\" lnginvoiceno=\"" . $aryHeadResult["lnginvoiceno"] . "\" class=\"renew button\"></td>\n";
-                }
-            }
-            // 履歴表示
-            if ( $strColumnName == "btnHistory" )
-            {
-                if ( $aryHeadResult["lngrevisionno"] <> 0 )
-                {
-                    $aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\" rowspan=".$rowspan ."><img src=\"/mold/img/renew_off_bt.gif\" rownum=\"". ($i + 1)."\" id=\"" . $aryHeadResult["strinvoicecode"] . "\" lngrevisionno=\"" . $aryHeadResult["lngrevisionno"] . "\" class=\"history button\"></td>\n";
-                }
-                else
-                {
-                    $aryHtml[] = "\t<td rowspan=".$rowspan ."></td>\n";
-                }
-            }
-
-            // 削除
-            if ( $strColumnName == "btnDelete" /*and $aryUserAuthority["Delete"]*/ )
-            {
-                    // 納品書データの状態により分岐
-                    // 最新納品書が削除データの場合も選択不可
-                    if (/* $japaneseInvoiceExists
-                        or $receiveStatusIsClosed
-                        or */
-                        $bytDeleteFlag )
-                    {
-                        $aryHtml[] = "\t<td rowspan=".$rowspan ."></td>\n";
-                    }
-                    else
-                    {
-                        $aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\" rowspan=".$rowspan ."><img src=\"/mold/img/remove_off_bt.gif\" lnginvoiceno=\"" . $aryHeadResult["lnginvoiceno"] . "\" class=\"delete button\"></td>\n";
-                    }
-            }
-        }
-        // 表示対象がボタン以外の場合
-        else if ($strColumnName != "") {
-            
-            $TdDataUse = true;
-            $strText = "";
-
-            if ($strColumnName == "lngCustomerCode" || $strColumnName == "strInvoiceCode" || $strColumnName == "dtmInvoiceDate" 
-            || $strColumnName == "curLastMonthBalance" || $strColumnName == "curThisMonthAmount" || $strColumnName == "curSubTotal1" 
-            || $strColumnName == "dtmInsertDate" || $strColumnName == "lngUserCode" || $strColumnName == "lngInsertUserCode"
-            || $strColumnName == "strNote")
-            {
-                $TdData = "\t<td rowspan=".$rowspan .">";
-            } else {
-                $TdData = "\t<td>";
-            }
-            // 顧客
-            if ( $strColumnName == "lngCustomerCode" )
-            {
-                if ( $aryHeadResult["strcustomercode"] )
-                {
-                    $strText .= "[" . $aryHeadResult["strcustomercode"] ."]";
-                }
-                else
-                {
-                    $strText .= "     ";
-                }
-                $strText .= " " . $aryHeadResult["strcustomername"];
-                $TdData .= $strText;
-            }
-            // 請求書No
-            else if ($strColumnName == "strInvoiceCode"){
-                $TdData  .= $aryHeadResult["strinvoicecode"];
-            }
-            // 請求日
-            else if ( $strColumnName == "dtmInvoiceDate" )
-            {
-                $TdData .= str_replace( "-", "/", substr( $aryHeadResult["dtminvoicedate"], 0, 19 ) );
-            }
-            // 先月請求残額
-            else if ( $strColumnName == "curLastMonthBalance" )
-            {
-                $TdData .= toMoneyFormat($aryHeadResult["lngmonetaryunitcode"], $aryHeadResult["strmonetaryunitsign"], $aryHeadResult["curlastmonthbalance"]);
-            }
-            // 当月請求金額
-            else if ( $strColumnName == "curThisMonthAmount" )
-            {
-                $TdData .= toMoneyFormat($aryHeadResult["lngmonetaryunitcode"], $aryHeadResult["strmonetaryunitsign"], $aryHeadResult["curthismonthamount"]);
-            }
-            // 消費税額
-            else if ( $strColumnName == "curSubTotal1" )
-            {
-                $TdData .= toMoneyFormat($aryHeadResult["lngmonetaryunitcode"], $aryHeadResult["strmonetaryunitsign"], $aryHeadResult["cursubtotal1"]);
-            }
-            // 作成日
-            else if ( $strColumnName == "dtmInsertDate" )
-            {
-                $TdData .= str_replace( "-", "/", substr( $aryHeadResult["dtminsertdate"], 0, 19 ) );
-            }
-            // 担当者
-            else if ( $strColumnName == "lngUserCode" )
-            {
-                if ( $aryHeadResult["strusercode"] )
-                {
-                    $strText .= "[" . $aryHeadResult["strusercode"] ."]";
-                }
-                else
-                {
-                    $strText .= "     ";
-                }
-                $strText .= " " . $aryHeadResult["strusername"];
-                $TdData .= $strText;
-            }
-            // 作成者
-            else if ( $strColumnName == "lngInsertUserCode" )
-            {
-                if ( $aryHeadResult["strinsertusercode"] )
-                {
-                    $strText .= "[" . $aryHeadResult["strinsertusercode"] ."]";
-                }
-                else
-                {
-                    $strText .= "     ";
-                }
-                $strText .= " " . $aryHeadResult["strinsertusername"];
-                $TdData .= $strText;
-            }
-            // 印刷回数
-            else if ( $strColumnName == "lngPrintCount" )
-            {
-                if(empty($aryHeadResult["lngprintcount"]))
-                {
-                    $TdData .= '0';
-                }
-                else
-              {
-                  $TdData .= $aryHeadResult["lngprintcount"];
-                }
-            }
-            // 備考
-            else if ( $strColumnName == "strNote" )
-            {
-                $TdData .= $aryHeadResult["strnote"];
-            }
-            // 請求書明細番号
-            else if ( $strColumnName == "lngInvoiceDetailNo" )
-            {
-                for ( $k = 0; $k < $lngDetailCount; $k++ )
-                {
-                    if ($k == 0) {
-                        $TdData .= $aryDetailResult[$k]["lnginvoicedetailno"];
-                    } else {
-                        $TdData = "<tr>" .$TdData. $aryDetailResult[$k]["lnginvoicedetailno"];
-                    }
-                }
-            }
-            // 納品日
-            else if ( $strColumnName == "dtmDeliveryDate" )
-            {
-                for ( $k = 0; $k < $lngDetailCount; $k++ )
-                {
-                    $TdData .= str_replace( "-", "/", substr( $aryDetailResult[$k]["dtmdeliverydate"], 0, 19 ) );
-                }
-            }
-            // 納品伝票コード（納品書NO）
-            else if ( $strColumnName == "strSlipCode" )
-            {
-                for ( $k = 0; $k < $lngDetailCount; $k++ )
-                {
-                    $TdData .= $aryDetailResult[$k]["lngslipno"];
-                }
-            }
-            // 納品先
-            else if ( $strColumnName == "lngDeliveryPlaceCode" )
-            {
-                for ( $k = 0; $k < $lngDetailCount; $k++ )
-                {
-                    $strText = "";
-                    if ( $aryDetailResult[$k]["lngdeliveryplacecode"] )
-                    {
-                        $strText .= "[" . $aryDetailResult[$k]["lngdeliveryplacecode"] ."] ";
-                    }
-                    else
-                 {
-                        $strText .= " ";
-                    }
-                    $TdData  .= $strText .$aryDetailResult[$k]["strdeliveryplacename"];
-                }
-            }
-            // 合計金額
-            else if ( $strColumnName == "curSubTotalPrice" )
-            {
-                for ( $k = 0; $k < $lngDetailCount; $k++ )
-                {
-                    $strText = "";
-                    if ( !$aryDetailResult[$k]["cursubtotalprice"] )
-                    {
-                        $strText .= toMoneyFormat($aryHeadResult["lngmonetaryunitcode"], $aryHeadResult["strmonetaryunitsign"], "0.00");
-                    }
-                    else
-                    {
-                        $strText .= toMoneyFormat($aryHeadResult["lngmonetaryunitcode"], $aryHeadResult["strmonetaryunitsign"], $aryDetailResult[$k]["cursubtotalprice"]);
-                    }
-                    $TdData .= $strText ;
-                }
-            }
-            // 課税区分
-            else if ($strColumnName == "lngTaxClassCode"){
-                for ( $k = 0; $k < $lngDetailCount; $k++ )
-                {
-                    $strText = "";
-                    if ( $aryDetailResult[$k]["lngtaxclasscode"] )
-                    {
-                        $strText .= "[" . $aryDetailResult[$k]["lngtaxclasscode"] ."]";
-                    }
-                    else
-                    {
-                        $strText .= "     ";
-                    }
-                    $strText .= " " . $aryDetailResult[$k]["strtaxclassname"];
-                    $TdData .= $strText ;
-                }
-            }
-            // 税率
-            else if ( $strColumnName == "curDetailTax" )
-            {
-                for ( $k = 0; $k < $lngDetailCount; $k++ )
-                {
-                    $TdData  .=  round($aryDetailResult[$k]["curtax"] * 100) . '%';
-                }
-            }
-            // 消費税格
-            else if ( $strColumnName == "curTaxPrice" )
-            {
-                for ( $k = 0; $k < $lngDetailCount; $k++ )
-                {
-                    $cursubtotalprice = preg_replace('/,/','', $aryDetailResult[$k]["cursubtotalprice"]);
-                    $strText = number_format((int)($aryDetailResult[$k]["curtax"] * (int)$cursubtotalprice) ,2);
-                    $TdData  .= toMoneyFormat($aryHeadResult["lngmonetaryunitcode"], $aryHeadResult["strmonetaryunitsign"], $strText);
-                }
-            }
-            // 明細備考
-            else if ( $strColumnName == "strDetailNote" )
-            {
-                for ( $k = 0; $k < $lngDetailCount; $k++ )
-                {
-                    $TdData  .= $aryDetailResult[$k]["strnote"];
-                }
-            }
-            else
-            {
-                //（カラム名を小文字変換）
-                $strLowColumnName = strtolower($strColumnName);
-                if(empty($strLowColumnName))
-                    continue;
-
-                // 備考
-                if ( $strLowColumnName == "strnote" )
-                {
-                    $strText .= nl2br($aryHeadResult[$strLowColumnName]);
-                }
-                // 詳細項目
-                else if ( array_key_exists( $strLowColumnName , $aryDetailResult[$i] ) )
-                {
-                    $strText .= $aryDetailResult[$i][$strLowColumnName];
-                }
-                // その他の項目
-                else
-                {
-                    $strText .= $aryHeadResult[$strLowColumnName];
-                }
-                $TdData .= $strText;
-            }
-            $TdData .= "</td>\n";
-            if ($TdDataUse) {
-                $aryHtml[] = $TdData;
-            }
-        }
-    }
-    $aryHtml[] = "</tr>";
-
-    return $aryHtml;
-}
-
 
 /**
  * 指定された請求書番号から請求書マスタ情報を取得するＳＱＬ文を作成
@@ -2587,6 +2101,7 @@ function fncGetDetailData($lngInvoiceNo, $lngRevisionNo, $objDB)
     $aryQuery[] = "  t_invoicedetail inv_d ";
     $aryQuery[] = "  LEFT JOIN m_slip slip_m ";
     $aryQuery[] = "    ON inv_d.lngslipno = slip_m.lngslipno ";
+    $aryQuery[] = "    and inv_d.lngsliprevisionno = slip_m.lngrevisionno ";
     $aryQuery[] = "  LEFT JOIN m_Company delv_c ";
     $aryQuery[] = "    ON inv_d.lngDeliveryPlaceCode = delv_c.lngCompanyCode ";
     $aryQuery[] = "WHERE";
@@ -2610,6 +2125,144 @@ function fncGetDetailData($lngInvoiceNo, $lngRevisionNo, $objDB)
     return $detailData;
 }
 
+/**
+ * ヘッダー部データの生成
+ *
+ * @param [type] $doc
+ * @param [type] $trBody
+ * @param [type] $bgcolor
+ * @param [type] $aryTableHeaderName
+ * @param [type] $record
+ * @param [type] $toUTF8Flag
+ * @return void
+ */
+function fncSetHeaderDataToTr($doc, $trBody, $bgcolor, $rowspan, $aryTableHeaderName, $record, $toUTF8Flag)
+{
+    foreach ($aryTableHeaderName as $key => $value) {
+        // 項目別に表示テキストを設定
+        switch ($key) {
+            // 顧客
+            case "lngCustomerCode":
+                if ($record["strcustomercode"] != '') {
+                    $textContent = "[" . $record["strcustomercode"] . "]" . " " . $record["strcustomername"];
+                } else {
+                    $textContent .= "     ";
+                }
+                if ($toUTF8Flag) {
+                    $textContent = toUTF8($textContent);
+                }
+                $td = $doc->createElement("td", $textContent);
+                $td->setAttribute("style", $bgcolor);
+                $td->setAttribute("rowspan", $rowspan);
+                $trBody->appendChild($td);
+                break;
+            // 請求書NO.
+            case "strInvoiceCode":
+                $td = $doc->createElement("td", $record["strinvoicecode"]);
+                $td->setAttribute("style", $bgcolor);
+                $td->setAttribute("rowspan", $rowspan);
+                $trBody->appendChild($td);
+                break;
+            // 請求日.
+            case "dtmInvoiceDate":
+                $textContent = str_replace("-", "/", substr($record["dtminvoicedate"], 0, 19));
+                if ($toUTF8Flag) {
+                    $textContent = toUTF8($textContent);
+                }
+                $td = $doc->createElement("td", $textContent);
+                $td->setAttribute("style", $bgcolor);
+                $td->setAttribute("rowspan", $rowspan);
+                $trBody->appendChild($td);
+                break;
+            // 先月請求残額
+            case "curLastMonthBalance":
+                $td = $doc->createElement("td", toMoneyFormat($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], $record["curlastmonthbalance"]));
+                $td->setAttribute("style", $bgcolor);
+                $td->setAttribute("rowspan", $rowspan);
+                $trBody->appendChild($td);
+                break;
+            // 当月請求金額.
+            case "curThisMonthAmount":
+                $td = $doc->createElement("td", toMoneyFormat($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], $record["curthismonthamount"]));
+                $td->setAttribute("style", $bgcolor);
+                $td->setAttribute("rowspan", $rowspan);
+                $trBody->appendChild($td);
+                break;
+            // 消費税額
+            case "curSubTotal1":
+                $td = $doc->createElement("td", toMoneyFormat($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], $record["cursubtotal1"]));
+                $td->setAttribute("style", $bgcolor);
+                $td->setAttribute("rowspan", $rowspan);
+                $trBody->appendChild($td);
+                break;
+            // 作成日
+            case "dtmInsertDate":            
+                $textContent = str_replace("-", "/", substr($record["dtminsertdate"], 0, 19));
+                if ($toUTF8Flag) {
+                    $textContent = toUTF8($textContent);
+                }
+                $td = $doc->createElement("td", $textContent);
+                $td->setAttribute("style", $bgcolor);
+                $td->setAttribute("rowspan", $rowspan);
+                $trBody->appendChild($td);
+                break;
+            // [担当者] 担当者表示名
+            case "lngUserCode":
+                if ($record["strusercode"] != '') {
+                    $textContent = "[" . $record["strusercode"] . "]" . " " . $record["strusername"];
+                } else {
+                    $textContent .= "     ";
+                };
+                if ($toUTF8Flag) {
+                    $textContent = toUTF8($textContent);
+                }
+                $td = $doc->createElement("td", $textContent);
+                $td->setAttribute("style", $bgcolor);
+                $td->setAttribute("rowspan", $rowspan);
+                $trBody->appendChild($td);
+                break;
+            // 入力者
+            case "lngInsertUserCode":
+
+                if ($record["strinsertusercode"] != '') {
+                    $textContent = "[" . $record["strinsertusercode"] . "]" . " " . $record["strinsertusername"];
+                } else {
+                    $textContent .= "     ";
+                }
+                if ($toUTF8Flag) {
+                    $textContent = toUTF8($textContent);
+                }
+                $td = $doc->createElement("td", $textContent);
+                $td->setAttribute("style", $bgcolor);
+                $td->setAttribute("rowspan", $rowspan);
+                $trBody->appendChild($td);
+                break;
+            // 印刷回数
+            case "lngPrintCount":
+                if (empty($record["lngprintcount"])) {
+                    $textContent = '0';
+                } else {
+                    $textContent = $record["lngprintcount"];
+                }
+                $td = $doc->createElement("td", $textContent);
+                $td->setAttribute("style", $bgcolor);
+                $td->setAttribute("rowspan", $rowspan);
+                $trBody->appendChild($td);
+                break;
+            // 備考
+            case "strNote":          
+                $textContent = $record["strnote"];
+                if ($toUTF8Flag) {
+                    $textContent = toUTF8($textContent);
+                }
+                $td = $doc->createElement("td", $textContent);
+                $td->setAttribute("style", $bgcolor);
+                $td->setAttribute("rowspan", $rowspan);
+                $trBody->appendChild($td);
+                break;
+        }
+    }
+}
 /**
  * 明細行データの生成
  *
@@ -2669,7 +2322,7 @@ function fncSetDetailDataToTr($doc, $trBody, $bgcolor, $aryTableDetailHeaderName
                     if ($detailData["cursubtotalprice"] != '') {
                         $textContent = toMoneyFormat($headerData["lngmonetaryunitcode"], $headerData["strmonetaryunitsign"], "0.00");;
                     } else {
-                        $textContent = toMoneyFormat($headerData["lngmonetaryunitcode"], $headerData["strmonetaryunitsign"], $detailData[$k]["cursubtotalprice"]);;
+                        $textContent = toMoneyFormat($headerData["lngmonetaryunitcode"], $headerData["strmonetaryunitsign"], $detailData["cursubtotalprice"]);;
                     }
                     $td = $doc->createElement("td", $textContent);
                     $td->setAttribute("style", $bgcolor);

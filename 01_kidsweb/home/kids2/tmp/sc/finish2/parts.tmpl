@@ -94,7 +94,7 @@
         </table>
         <div class="close-footer">
             <!-- 閉じるボタン -->
-            <span id="CloseBt" onclick="window.close();return false;">
+            <span id="CloseBt" onclick="window.opener.location.reload();window.close();return false;">
                 <a href="#">
                     <img onmouseover="BlownCloseJOn(this);" onmouseout="BlownCloseJOff(this);"
                          src="/img/type01/cmn/querybt/close_blown_off_ja_bt.gif" 

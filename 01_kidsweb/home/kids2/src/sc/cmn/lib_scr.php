@@ -454,7 +454,7 @@ function fncGetReceiveDetail($aryCondition, $objDB)
     
     // 営業部署（コードで検索）
     if ($aryCondition["lngInChargeGroupCode"]){
-        $aryWhere[] = " AND g.strgroupdisplaycode = " . $aryCondition["lngInChargeGroupCode"];
+        $aryWhere[] = " AND g.strgroupdisplaycode = '" . $aryCondition["lngInChargeGroupCode"] ."'";
     }
 
     // 売上区分（コードで検索）
@@ -724,11 +724,10 @@ function fncNotReceivedDetailExists($aryDetail, $objDB)
         . " FROM"
         . "  m_receive"
         . " WHERE"
-        . "  lngreceivestatuscode <> 2"
+        . "  lngreceivestatuscode not in (2, 4)"
         . "  AND lngreceiveno = " . $lngReceiveNo
         . "  AND lngrevisionno = " . $lngRevisionNo
         ;
-
         list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
         if ( $lngResultID ) {
             // 受注状態コードが2以外の明細が存在するならtrueを返して検索打ち切り

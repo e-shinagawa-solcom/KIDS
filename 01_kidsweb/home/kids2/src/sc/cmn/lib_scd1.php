@@ -26,7 +26,7 @@
 *	@return strQuery 	$strQuery 検索用SQL文
 *	@access public
 */
-function fncGetSlipHeadNoToInfoSQL ( $lngSlipNo )
+function fncGetSlipHeadNoToInfoSQL ( $lngSlipNo, $lngRevisionNo )
 {
 	// 納品伝票番号、リビジョン番号
 	$aryQuery[] = "SELECT distinct on (s.lngSlipNo) s.lngSlipNo as lngslipno, s.lngRevisionNo as lngrevisionno";
@@ -69,6 +69,7 @@ function fncGetSlipHeadNoToInfoSQL ( $lngSlipNo )
 
 	// WHERE句
 	$aryQuery[] = " WHERE s.lngSlipNo = " . $lngSlipNo . "";
+	$aryQuery[] = " AND s.lngRevisionNo = " . $lngRevisionNo . "";
 
 	$strQuery = implode( "\n", $aryQuery );
 
@@ -84,7 +85,7 @@ function fncGetSlipHeadNoToInfoSQL ( $lngSlipNo )
 *	@return strQuery 	$strQuery 	検索用SQL文
 *	@access public
 */
-function fncGetSlipDetailNoToInfoSQL ( $lngSlipNo )
+function fncGetSlipDetailNoToInfoSQL ( $lngSlipNo, $lngRevisionNo )
 {
 	// ソートキー
 	$aryQuery[] = "SELECT distinct on (sd.lngSortKey) sd.lngSortKey as lngrecordno, ";
@@ -123,11 +124,12 @@ function fncGetSlipDetailNoToInfoSQL ( $lngSlipNo )
 	$aryQuery[] = " FROM t_SlipDetail sd";
 
 	$aryQuery[] = " WHERE sd.lngSlipNo = " . $lngSlipNo . "";
+	$aryQuery[] = " AND sd.lngRevisionNo = " . $lngRevisionNo . "";
 
 	$aryQuery[] = " ORDER BY sd.lngSortKey ASC ";
 
 	$strQuery = implode( "\n", $aryQuery );
-
+	
 	return $strQuery;
 }
 
@@ -323,7 +325,7 @@ function fncJapaneseInvoiceExists($lngCustomerCode, $lngSalesNo, $objDB)
 {
 	// 顧客の国コード取得
 	$strCompanyQuery = "SELECT lngcountrycode FROM m_Company WHERE strcompanydisplaycode = '" . $lngCustomerCode . "'";
-echo $strCompanyQuery;
+
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strCompanyQuery, $objDB );
 	if ( $lngResultNum )
 	{
@@ -357,10 +359,10 @@ echo $strCompanyQuery;
 
 }
 
-function fncReceiveStatusIsClosed($lngSlipNo, $objDB)
+function fncReceiveStatusIsClosed($lngSlipNo, $lngRevisionNo, $objDB)
 {
 	// 納品伝票明細データの取得
-	$strQuery = fncGetSlipDetailNoToInfoSQL ( $lngSlipNo );
+	$strQuery = fncGetSlipDetailNoToInfoSQL ( $lngSlipNo, $lngRevisionNo );
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
 	if ( $lngResultNum )

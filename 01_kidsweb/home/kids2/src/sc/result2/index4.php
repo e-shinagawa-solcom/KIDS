@@ -1,20 +1,20 @@
 <?php
 // ----------------------------------------------------------------------------
 /**
- *       請求書検索 履歴取得イベント
+ *       納品書検索 履歴取得イベント
  *
  *       処理概要
- *         ・請求書コード、リビジョン番号により請求履歴情報を取得する
+ *         ・納品書コード、リビジョン番号により納品書履歴情報を取得する
  *
  *       更新履歴
  *
  */
 
- // 読み込み
+// 読み込み
 include 'conf.inc';
 require LIB_FILE;
 include 'JSON.php';
-require SRC_ROOT . "inv/cmn/lib_regist.php";
+require SRC_ROOT . "sc/cmn/lib_scd.php";
 
 //値の取得
 $postdata = file_get_contents("php://input");
@@ -33,7 +33,7 @@ if ($aryData == null) {
 $objAuth = fncIsSession($_REQUEST["strSessionID"], $objAuth, $objDB);
 
 // 請求コードにより仕入履歴取得SQL
-$strQuery = fncGetInvoicesByStrInvoiceCodeSQL($aryData["strInvoiceCode"], $aryData["lngRevisionNo"]);
+$strQuery = fncGetSlipsByStrSlipCodeSQL($aryData["strSlipCode"], $aryData["lngRevisionNo"]);
 // 値をとる =====================================
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
@@ -47,34 +47,33 @@ $objDB->freeResult($lngResultID);
 // 検索結果テーブル生成の為DOMDocumentを使用
 $doc = new DOMDocument();
 // 詳細ボタンを表示
-$allowedDetail = fncCheckAuthority(DEF_FUNCTION_PC4, $objAuth);
+$allowedDetail = fncCheckAuthority(DEF_FUNCTION_SC4, $objAuth);
 // 修正を表示
-$allowedFix = fncCheckAuthority(DEF_FUNCTION_PC5, $objAuth);
+$allowedFix = fncCheckAuthority(DEF_FUNCTION_SC5, $objAuth);
 // 削除を表示
-$allowedDelete = fncCheckAuthority(DEF_FUNCTION_PC6, $objAuth);
+$allowedDelete = fncCheckAuthority(DEF_FUNCTION_SC6, $objAuth);
 
 // ヘッダ部
 $aryTableHeaderName["lngCustomerCode"] = "顧客";
-$aryTableHeaderName["strInvoiceCode"] = "請求書No";
-$aryTableHeaderName["dtmInvoiceDate"] = "請求日";
-$aryTableHeaderName["curLastMonthBalance"] = "先月請求残額";
-$aryTableHeaderName["curThisMonthAmount"] = "当月請求金額";
-$aryTableHeaderName["curSubTotal1"] = "消費税額";
-$aryTableHeaderName["dtmInsertDate"] = "作成日";
-$aryTableHeaderName["lngUserCode"] = "担当者";
-$aryTableHeaderName["lngInsertUserCode"] = "入力者";
-$aryTableHeaderName["lngPrintCount"] = "印刷回数";
+$aryTableHeaderName["lngTaxClassCode"] = "課税区分";
+$aryTableHeaderName["strSlipCode"] = "納品書NO";
+$aryTableHeaderName["dtmDeliveryDate"] = "納品日";
+$aryTableHeaderName["lngDeliveryPlaceCode"] = "納品先";
+$aryTableHeaderName["lngInsertUserCode"] = "起票者";
 $aryTableHeaderName["strNote"] = "備考";
+$aryTableHeaderName["curTotalPrice"] = "合計金額";
 
 // 明細部
-$aryTableDetailHeaderName["lngInvoiceDetailNo"] = "請求書明細番号";
-$aryTableDetailHeaderName["dtmDeliveryDate"] = "納品日";
-$aryTableDetailHeaderName["strSlipCode"] = "納品書NO";
-$aryTableDetailHeaderName["lngDeliveryPlaceCode"] = "納品先";
+$aryTableDetailHeaderName["lngRecordNo"] = "明細行NO";
+$aryTableDetailHeaderName["strCustomerSalesCode"] = "注文書NO";
+$aryTableDetailHeaderName["strGoodsCode"] = "顧客品番";
+$aryTableDetailHeaderName["strProductName"] = "品名";
+$aryTableDetailHeaderName["strSalesClassName"] = "売上区分";
+$aryTableDetailHeaderName["curProductPrice"] = "単価";
+$aryTableDetailHeaderName["lngQuantity"] = "入数";
+$aryTableDetailHeaderName["lngProductQuantity"] = "数量";
+$aryTableDetailHeaderName["strProductUnitName"] = "単位";
 $aryTableDetailHeaderName["curSubTotalPrice"] = "税抜金額";
-$aryTableDetailHeaderName["lngTaxClassCode"] = "課税区分";
-$aryTableDetailHeaderName["curDetailTax"] = "税率";
-$aryTableDetailHeaderName["curTaxPrice"] = "消費額";
 $aryTableDetailHeaderName["strDetailNote"] = "明細備考";
 
 // -------------------------------------------------------
@@ -84,7 +83,7 @@ $aryTableDetailHeaderName["strDetailNote"] = "明細備考";
 foreach ($records as $i => $record) {
 
     // 詳細データを取得する
-    $detailData = fncGetDetailData($record["lnginvoiceno"], $record["lngrevisionno"], $objDB);
+    $detailData = fncGetDetailData($record["lngslipno"], $record["lngrevisionno"], $objDB);
 
     $rowspan = count($detailData);
     // 背景色設定
@@ -96,20 +95,20 @@ foreach ($records as $i => $record) {
     // 明細番号取得
     for ($i = $rowspan; $i > 0; $i--) {
         if ($detailnos == "") {
-            $detailnos = $detailData[$i]["lnginvoicedetailno"];
+            $detailnos = $detailData[$i]["lngslipdetailno"];
         } else {
-            $detailnos = $detailnos . "," . $detailData[$i]["lnginvoicedetailno"];
+            $detailnos = $detailnos . "," . $detailData[$i]["lngslipdetailno"];
         }
     }
 
     // tbody > tr要素作成
     $trBody = $doc->createElement("tr");
-    $trBody->setAttribute("id", $record["strinvoicecode"] . "_" . $record["lngrevisionno"]);
+    $trBody->setAttribute("id", $record["strslipcode"] . "_" . $record["lngrevisionno"]);
     $trBody->setAttribute("detailnos", $detailnos);
 
     // 項番
     $index = $index + 1;
-    $tdIndex = $doc->createElement("td", $aryData["rownum"]. "." . $index);
+    $tdIndex = $doc->createElement("td", $aryData["rownum"] . "." . $index);
     $tdIndex->setAttribute("class", $exclude);
     $tdIndex->setAttribute("style", $bgcolor);
     $tdIndex->setAttribute("rowspan", $rowspan);
@@ -126,7 +125,7 @@ foreach ($records as $i => $record) {
         // 詳細ボタン
         $imgDetail = $doc->createElement("img");
         $imgDetail->setAttribute("src", "/img/type01/pc/detail_off_bt.gif");
-        $imgDetail->setAttribute("lnginvoiceno", $record["lnginvoiceno"]);
+        $imgDetail->setAttribute("lngslipno", $record["lngslipno"]);
         $imgDetail->setAttribute("revisionno", $record["lngrevisionno"]);
         $imgDetail->setAttribute("class", "detail button");
         // td > img
@@ -172,13 +171,12 @@ foreach ($records as $i => $record) {
     for ($i = 1; $i < $rowspan; $i++) {
         $trBody = $doc->createElement("tr");
 
-        $trBody->setAttribute("id", $record["strinvoicecode"] . "_" . $record["lngrevisionno"] . "_" . $detailData[$i]["lnginvoicedetailno"]);
+        $trBody->setAttribute("id", $record["strslipcode"] . "_" . $record["lngrevisionno"] . "_" . $detailData[$i]["lngslipdetailno"]);
 
         fncSetDetailDataToTr($doc, $trBody, $bgcolor, $aryTableDetailHeaderName, $detailData[$i], $record, false);
-        
-		// tbody > tr
+
+        // tbody > tr
         $strHtml .= $doc->saveXML($trBody);
-        
 
     }
 }

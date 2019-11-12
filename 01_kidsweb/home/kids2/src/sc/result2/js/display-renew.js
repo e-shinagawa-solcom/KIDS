@@ -4,7 +4,7 @@
         var url = '/sc/regist2/renew.php';
 
         var lngslipno = 'lngSlipNo=' + $(this).attr('lngslipno');
-        var lngrevisionno = 'lngRevisionNo=' + $(this).attr('lngrevisionno');
+        var lngrevisionno = 'lngRevisionNo=' + $(this).attr('revisionno');
         var strslipcode = 'strSlipCode=' + $(this).attr('strslipcode');
         var lngsalesno = 'lngSalesNo=' + $(this).attr('lngsalesno');
         var strsalescode = 'strSalesCode=' + $(this).attr('strsalescode');

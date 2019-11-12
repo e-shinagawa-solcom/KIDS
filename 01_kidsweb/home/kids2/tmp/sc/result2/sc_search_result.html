@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <!-- 互換表示OFFを強制させる -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -24,7 +25,7 @@
 
     <!-- tablesorterのbind -->
     <script src="/sc/result2/js/tablesorter.js" defer=""></script>
-    <link rel="stylesheet" href="/mold/cmn/search/result/css/table.css">
+    <link rel="stylesheet" href="/p/cmn/search/result/css/table.css">
 
     <!-- 詳細画面表示 -->
     <script src="/sc/result2/js/display-detail.js" defer=""></script>
@@ -32,18 +33,23 @@
     <script src="/sc/result2/js/display-delete.js" defer=""></script>
     <!-- 修正画面表示 -->
     <script src="/sc/result2/js/display-renew.js" defer=""></script>
+    <!-- 履歴ボタンイベント -->
+    <script src="/sc/result2/js/display-history.js" defer=""></script>
     <!-- 検索結果をクリップボードへコピーする処理 -->
     <script src="/sc/result2/js/clipboard.js" defer=""></script>
-    <!-- 結果行選択 -->
-    <script src="/search/cmn/result/trclicked.js" defer=""></script>
 </head>
+
 <body class="search-result-background">
     <div class="result-table-wrap">
         <table id="result" class="tablesorter">
-            _%strHtml%_
+            <thead>
+            </thead>
+            <tbody>
+            </tbody>
         </table>
     </div>
-    
-<input type="hidden" value="" name="locked">
+    <input type="hidden" name="displayColumns" value="_%displayColumns%_">
+    <input type="hidden" value="" name="locked">
 </body>
+
 </html>

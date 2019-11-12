@@ -29,9 +29,7 @@ require_once SRC_ROOT . '/mold/lib/UtilSearchForm.class.php';
 // ライブラリ読み込み
 require LIB_FILE;
 require LIB_ROOT . "clscache.php";
-require SRC_ROOT . "sc/cmn/lib_scd.php";
 require SRC_ROOT . "inv/cmn/lib_regist.php";
-require SRC_ROOT . "inv/cmn/column.php";
 require LIB_DEBUGFILE;
 
 // DB接続
@@ -382,111 +380,9 @@ foreach ($aryResult as $i => $record) {
     // tr > td
     $trBody->appendChild($tdHistory);
 
-    // TODO 要リファクタリング
-    // 指定されたテーブル項目のセルを作成する
-    foreach ($aryTableHeaderName as $key => $value) {
-        // 項目別に表示テキストを設定
-        switch ($key) {
-            // 顧客
-            case "lngCustomerCode":
-                if ($record["strcustomercode"] != '') {
-                    $textContent = "[" . $record["strcustomercode"] . "]" . " " . $record["strcustomername"];
-                } else {
-                    $textContent .= "     ";
-                }
-                $td = $doc->createElement("td", toUTF8($textContent));
-                $td->setAttribute("style", $bgcolor);
-                $td->setAttribute("rowspan", $rowspan);
-                $trBody->appendChild($td);
-                break;
-            // 請求書NO.
-            case "strInvoiceCode":
-                $td = $doc->createElement("td", $record["strinvoicecode"]);
-                $td->setAttribute("style", $bgcolor);
-                $td->setAttribute("rowspan", $rowspan);
-                $trBody->appendChild($td);
-                break;
-            // 請求日.
-            case "dtmInvoiceDate":
-                $td = $doc->createElement("td", toUTF8(str_replace("-", "/", substr($record["dtminvoicedate"], 0, 19))));
-                $td->setAttribute("style", $bgcolor);
-                $td->setAttribute("rowspan", $rowspan);
-                $trBody->appendChild($td);
-                break;
-            // 先月請求残額
-            case "curLastMonthBalance":
-                $td = $doc->createElement("td", toMoneyFormat($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], $record["curlastmonthbalance"]));
-                $td->setAttribute("style", $bgcolor);
-                $td->setAttribute("rowspan", $rowspan);
-                $trBody->appendChild($td);
-                break;
-            // 当月請求金額.
-            case "curThisMonthAmount":
-                $td = $doc->createElement("td", toMoneyFormat($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], $record["curthismonthamount"]));
-                $td->setAttribute("style", $bgcolor);
-                $td->setAttribute("rowspan", $rowspan);
-                $trBody->appendChild($td);
-                break;
-            // 消費税額
-            case "curSubTotal1":
-                $td = $doc->createElement("td", toMoneyFormat($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], $record["cursubtotal1"]));
-                $td->setAttribute("style", $bgcolor);
-                $td->setAttribute("rowspan", $rowspan);
-                $trBody->appendChild($td);
-                break;
-            // 作成日
-            case "dtmInsertDate":
-                $td = $doc->createElement("td", toUTF8(str_replace("-", "/", substr($record["dtminsertdate"], 0, 19))));
-                $td->setAttribute("style", $bgcolor);
-                $td->setAttribute("rowspan", $rowspan);
-                $trBody->appendChild($td);
-                break;
-            // [担当者] 担当者表示名
-            case "lngUserCode":
-                if ($record["strusercode"] != '') {
-                    $textContent = "[" . $record["strusercode"] . "]" . " " . $record["strusername"];
-                } else {
-                    $textContent .= "     ";
-                }
-                $td = $doc->createElement("td", toUTF8($textContent));
-                $td->setAttribute("style", $bgcolor);
-                $td->setAttribute("rowspan", $rowspan);
-                $trBody->appendChild($td);
-                break;
-            // 入力者
-            case "lngInsertUserCode":
-
-                if ($record["strinsertusercode"] != '') {
-                    $textContent = "[" . $record["strinsertusercode"] . "]" . " " . $record["strinsertusername"];
-                } else {
-                    $textContent .= "     ";
-                }
-                $td = $doc->createElement("td", toUTF8($textContent));
-                $td->setAttribute("style", $bgcolor);
-                $td->setAttribute("rowspan", $rowspan);
-                $trBody->appendChild($td);
-                break;
-            // 印刷回数
-            case "lngPrintCount":
-                if (empty($record["lngprintcount"])) {
-                    $textContent = '0';
-                } else {
-                    $textContent = $record["lngprintcount"];
-                }
-                $td = $doc->createElement("td", toUTF8($textContent));
-                $td->setAttribute("style", $bgcolor);
-                $td->setAttribute("rowspan", $rowspan);
-                $trBody->appendChild($td);
-                break;
-            // 備考
-            case "strNote":
-                $td = $doc->createElement("td", toUTF8($record["strnote"]));
-                $td->setAttribute("style", $bgcolor);
-                $td->setAttribute("rowspan", $rowspan);
-                $trBody->appendChild($td);
-                break;
-        }
-    }
+    // ヘッダー部データの設定
+    fncSetHeaderDataToTr($doc, $trBody, $bgcolor, $rowspan, $aryTableHeaderName, $record, true);
+    
 
     // 明細データの設定
     fncSetDetailDataToTr($doc, $trBody, $bgcolor, $aryTableDetailHeaderName, $detailData[0], $record, true);

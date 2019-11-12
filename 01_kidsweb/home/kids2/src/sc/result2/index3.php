@@ -72,7 +72,7 @@ if ( !fncCheckAuthority( DEF_FUNCTION_SC6, $objAuth ) )
 }
 
 // 削除対象の納品伝票番号の納品情報取得
-$strQuery = fncGetSlipHeadNoToInfoSQL ( $aryData["lngSlipNo"] );
+$strQuery = fncGetSlipHeadNoToInfoSQL ( $aryData["lngSlipNo"], $aryData["lngRevisionNo"] );
 
 list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 if ( $lngResultNum == 1 )

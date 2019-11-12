@@ -203,13 +203,17 @@ function fncGetMaxReceiveSQL($displayColumns, $searchColumns, $from, $to, $searc
     // 納期_from
     if (array_key_exists("dtmDeliveryDate", $searchColumns) &&
         array_key_exists("dtmDeliveryDate", $from) && $from["dtmDeliveryDate"] != '') {
-        $aryQuery[] = "AND rd1.dtmdeliverydate" .
+        $detailConditionCount += 1;
+        $aryQuery[] = $detailConditionCount == 1 ? "WHERE " : "AND ";
+        $aryQuery[] = "rd1.dtmdeliverydate" .
             " >= '" . $from["dtmDeliveryDate"] . "'";
     }
     // 納期_to
     if (array_key_exists("dtmDeliveryDate", $searchColumns) &&
         array_key_exists("dtmDeliveryDate", $to) && $to["dtmDeliveryDate"] != '') {
-        $aryQuery[] = "AND rd1.dtmdeliverydate" .
+        $detailConditionCount += 1;
+        $aryQuery[] = $detailConditionCount == 1 ? "WHERE " : "AND ";
+        $aryQuery[] = "rd1.dtmdeliverydate" .
             " <= " . "'" . $to["dtmDeliveryDate"] . "'";
     }
     $aryQuery[] = "    ) as rd ";
@@ -436,4 +440,222 @@ function fncCheckData($strstrreceivecode, $objDB)
         $result = 0;
     }
     return $result;
+}
+
+/**
+ * ヘッダー部データの生成
+ *
+ * @param [type] $doc
+ * @param [type] $trBody
+ * @param [type] $bgcolor
+ * @param [type] $aryTableHeaderName
+ * @param [type] $record
+ * @param [type] $toUTF8Flag
+ * @return void
+ */
+function fncSetHeaderDataToTr($doc, $trBody, $bgcolor, $aryTableHeaderName, $displayColumns, $record, $toUTF8Flag)
+{
+    // 指定されたテーブル項目のセルを作成する
+    foreach ($aryTableHeaderName as $key => $value) {
+        // 表示対象のカラムの場合
+        if (array_key_exists($key, $displayColumns)) {
+            // 項目別に表示テキストを設定
+            switch ($key) {
+                // 登録日
+                case "dtminsertdate":
+                    $td = $doc->createElement("td", $record["dtminsertdate"]);
+                    $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+                // [入力者表示コード] 入力者表示名
+                case "lnginputusercode":
+                    $textContent = "[" . $record["strinputuserdisplaycode"] . "]" . " " . $record["strinputuserdisplayname"];                        
+                    if ($toUTF8Flag) {
+                        $textContent = toUTF8($textContent);
+                    }
+                    $td = $doc->createElement("td", $textContent);
+                    $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+                // 顧客受注番号
+                case "strcustomerreceivecode":
+                    $td = $doc->createElement("td", $record["strcustomerreceivecode"]);
+                    $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+                // 受注ＮＯ.
+                case "strreceivecode":
+                    $textContent = $record["strreceivecode"];
+                    if ($toUTF8Flag) {
+                        $textContent = toUTF8($textContent);
+                    }
+                    $td = $doc->createElement("td", $textContent);
+                    $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+                // リビジョン番号
+                case "lngrevisionno":
+                    $td = $doc->createElement("td", $record["lngrevisionno"]);
+                    $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+                // 製品コード
+                case "strproductcode":
+                    $td = $doc->createElement("td", $record["strproductcode"]);
+                    $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+                // 製品マスタ.製品コード(日本語)
+                case "strproductname":
+                    $textContent = $record["strproductname"];
+                    if ($toUTF8Flag) {
+                        $textContent = toUTF8($textContent);
+                    }
+                    $td = $doc->createElement("td", $textContent);
+                    $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+                // 製品マスタ.製品名称(英語)
+                case "strproductenglishname":
+                    $textContent = $record["strproductenglishname"];
+                    if ($toUTF8Flag) {
+                        $textContent = toUTF8($textContent);
+                    }
+                    $td = $doc->createElement("td", $textContent);
+                    $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+                // [営業部署表示コード] 営業部署表示名
+                case "lnginchargegroupcode":
+                    if ($record["strgroupdisplaycode"] != '') {
+                        $textContent = "[" . $record["strgroupdisplaycode"] . "]" . " " . $record["strgroupdisplayname"];
+                    } else {
+                        $textContent = "    ";
+                    }
+                    if ($toUTF8Flag) {
+                        $textContent = toUTF8($textContent);
+                    }
+                    $td = $doc->createElement("td", $textContent);
+                    $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+                // [開発担当者表示コード] 開発担当者表示名
+                case "lnginchargeusercode":
+                    if ($record["struserdisplaycode"] != '') {
+                        $textContent = "[" . $record["struserdisplaycode"] . "]" . " " . $record["struserdisplayname"];
+                    } else {
+                        $textContent = "    ";
+                    }
+                    if ($toUTF8Flag) {
+                        $textContent = toUTF8($textContent);
+                    }
+                    $td = $doc->createElement("td", $textContent);
+                    $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+                // 売上区分
+                case "lngsalesclasscode":                    
+                    if ($record["lngsalesclasscode"] != '') {
+                        $textContent = "[" . $record["lngsalesclasscode"] . "]" . " " . $record["strsalesclassname"];
+                    } else {
+                        $textContent = "    ";
+                    }
+                    if ($toUTF8Flag) {
+                        $textContent = toUTF8($textContent);
+                    }
+                    $td = $doc->createElement("td", $textContent);
+                    $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+                // 顧客品番
+                case "strgoodscode":
+                    $td = $doc->createElement("td", $record["strgoodscode"]);
+                    $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+                // [顧客表示コード] 顧客表示名
+                case "lngcustomercompanycode":
+                    if ($record["strcustomerdisplaycode"] != '') {
+                        $textContent = "[" . $record["strcustomerdisplaycode"] . "]" . " " . $record["strcustomerdisplayname"];
+                    } else {
+                        $textContent = "    ";
+                    }
+                    if ($toUTF8Flag) {
+                        $textContent = toUTF8($textContent);
+                    }
+                    $td = $doc->createElement("td", $textContent);
+                    $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+                // 納期
+                case "dtmdeliverydate":                
+                    $textContent = $record["dtmdeliverydate"];
+                    if ($toUTF8Flag) {
+                        $textContent = toUTF8($textContent);
+                    }
+                    $td = $doc->createElement("td", $textContent);
+                    $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+                // 状態
+                case "lngreceivestatuscode":
+                    $textContent = $record["strreceivestatusname"];
+                    if ($toUTF8Flag) {
+                        $textContent = toUTF8($textContent);
+                    }
+                    $td = $doc->createElement("td", $textContent);
+                    $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+                // 明細行番号
+                case "lngrecordno":
+                    $td = $doc->createElement("td", $record["lngreceivedetailno"]);
+                    $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+                // 単価
+                case "curproductprice":
+                    $td = $doc->createElement("td", toMoneyFormat($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], $record["curproductprice"]));
+                    $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+                // 単位
+                case "lngproductunitcode":
+                    $textContent = $record["lngproductunitname"];
+                    if ($toUTF8Flag) {
+                        $textContent = toUTF8($textContent);
+                    }
+                    $td = $doc->createElement("td", $textContent);
+                    $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+                // 数量
+                case "lngproductquantity":
+                    $textContent = $record["lngproductquantity"];
+                    if ($toUTF8Flag) {
+                        $textContent = toUTF8($textContent);
+                    }
+                    $td = $doc->createElement("td", $textContent);
+                    $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+                // 税抜金額
+                case "cursubtotalprice":
+                    $td = $doc->createElement("td", toMoneyFormat($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], $record["cursubtotalprice"]));
+                    $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+                // 明細備考
+                case "strdetailnote":
+                    $textContent = $record["strdetailnote"];
+                    if ($toUTF8Flag) {
+                        $textContent = toUTF8($textContent);
+                    }
+                    $td = $doc->createElement("td", $textContent);
+                    $td->setAttribute("style", $bgcolor);
+                    $trBody->appendChild($td);
+                    break;
+            }
+        }
+    }
 }

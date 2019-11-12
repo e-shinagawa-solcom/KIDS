@@ -70,9 +70,10 @@
 
 	//詳細画面の表示
 	$lngSlipNo = $aryData["lngSlipNo"];
+	$lngRevisionNo = $aryData["lngRevisionNo"];
 
 	// 指定納品伝票番号の納品書データ取得用SQL文の作成
-	$strQuery = fncGetSlipHeadNoToInfoSQL ( $lngSlipNo );
+	$strQuery = fncGetSlipHeadNoToInfoSQL ( $lngSlipNo, $lngRevisionNo );
 
 	// 詳細データの取得
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
@@ -98,8 +99,6 @@
 	// 取得データを表示用に整形
 	$aryNewResult = fncSetSlipHeadTableData ( $aryResult );
 
-//fncDebug('sc_result_index2.txt', $aryNewResult, __FILE__, __LINE__);
-
 	// ヘッダ部のカラム名の設定（キーの頭に"CN"を付与する）
 	$aryHeadColumnNames_CN = fncAddColumnNameArrayKeyToCN ( $aryHeadColumnNames );
 	// 詳細部のカラム名の設定（キーの頭に"CN"を付与する）
@@ -108,7 +107,7 @@
 	////////// 明細行の取得 ////////////////////
 
 	// 指定納品伝票番号の売上明細データ取得用SQL文の作成
-	$strQuery = fncGetSlipDetailNoToInfoSQL ( $lngSlipNo );
+	$strQuery = fncGetSlipDetailNoToInfoSQL ( $lngSlipNo, $lngRevisionNo );
 
 	// 明細データの取得
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );

@@ -93,9 +93,7 @@ foreach ($isSearch as $key => $flag) {
 
 // 検索項目から一致する最新の受注データを取得するSQL文の作成関数
 $strQuery = fncGetMaxReceiveSQL($displayColumns, $searchColumns, $from, $to, $searchValue, $optionColumns);
-// // echo $subStrQuery;
-// $strQuery = fncGetReceivesByStrReceiveCodeSQL($subStrQuery);
-// echo $strQuery;
+
 // 値をとる =====================================
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 // 検索件数がありの場合
@@ -401,148 +399,8 @@ foreach ($records as $i => $record) {
         $trBody->appendChild($tdHistory);
     }
 
-    // TODO 要リファクタリング
-    // 指定されたテーブル項目のセルを作成する
-    foreach ($aryTableHeaderName as $key => $value) {
-        // 表示対象のカラムの場合
-        if (array_key_exists($key, $displayColumns)) {
-            // 項目別に表示テキストを設定
-            switch ($key) {
-                // 登録日
-                case "dtminsertdate":
-                    $td = $doc->createElement("td", $record["dtminsertdate"]);
-                    $td->setAttribute("style", $bgcolor);
-                    $trBody->appendChild($td);
-                    break;
-                // [入力者表示コード] 入力者表示名
-                case "lnginputusercode":
-                    $textContent = "[" . $record["strinputuserdisplaycode"] . "]" . " " . $record["strinputuserdisplayname"];
-                    $td = $doc->createElement("td", toUTF8($textContent));
-                    $td->setAttribute("style", $bgcolor);
-                    $trBody->appendChild($td);
-                    break;
-                // 顧客受注番号
-                case "strcustomerreceivecode":
-                    $td = $doc->createElement("td", $record["strcustomerreceivecode"]);
-                    $td->setAttribute("style", $bgcolor);
-                    $trBody->appendChild($td);
-                    break;
-                // 受注ＮＯ.
-                case "strreceivecode":
-                    $td = $doc->createElement("td", toUTF8($record["strreceivecode"]));
-                    $td->setAttribute("style", $bgcolor);
-                    $trBody->appendChild($td);
-                    break;
-                // リビジョン番号
-                case "lngrevisionno":
-                    $td = $doc->createElement("td", $record["lngrevisionno"]);
-                    $td->setAttribute("style", $bgcolor);
-                    $td->setAttribute("rowspan", $rowspan);
-                    $trBody->appendChild($td);
-                    break;
-                // 製品コード
-                case "strproductcode":
-                    $td = $doc->createElement("td", $record["strproductcode"]);
-                    $td->setAttribute("style", $bgcolor);
-                    $trBody->appendChild($td);
-                    break;
-                // 製品マスタ.製品コード(日本語)
-                case "strproductname":
-                    $td = $doc->createElement("td", toUTF8($record["strproductname"]));
-                    $td->setAttribute("style", $bgcolor);
-                    $trBody->appendChild($td);
-                    break;
-                // 製品マスタ.製品名称(英語)
-                case "strproductenglishname":
-                    $td = $doc->createElement("td", toUTF8($record["strproductenglishname"]));
-                    $td->setAttribute("style", $bgcolor);
-                    $trBody->appendChild($td);
-                    break;
-                // [営業部署表示コード] 営業部署表示名
-                case "lnginchargegroupcode":
-                    $textContent = "[" . $record["strgroupdisplaycode"] . "]" . " " . $record["strgroupdisplayname"];
-                    $td = $doc->createElement("td", toUTF8($textContent));
-                    $td->setAttribute("style", $bgcolor);
-                    $trBody->appendChild($td);
-                    break;
-                // [開発担当者表示コード] 開発担当者表示名
-                case "lnginchargeusercode":
-                    $textContent = "[" . $record["struserdisplaycode"] . "]" . " " . $record["struserdisplayname"];
-                    $td = $doc->createElement("td", toUTF8($textContent));
-                    $td->setAttribute("style", $bgcolor);
-                    $trBody->appendChild($td);
-                    break;
-                // 売上区分
-                case "lngsalesclasscode":
-                    $textContent = "[" . $record["lngsalesclasscode"] . "]" . " " . $record["strsalesclassname"];
-                    $td = $doc->createElement("td", toUTF8($textContent));
-                    $td->setAttribute("style", $bgcolor);
-                    $trBody->appendChild($td);
-                    break;
-                // 顧客品番
-                case "strgoodscode":
-                    $td = $doc->createElement("td", toUTF8($record["strgoodscode"]));
-                    $td->setAttribute("style", $bgcolor);
-                    $trBody->appendChild($td);
-                    break;
-                // [顧客表示コード] 顧客表示名
-                case "lngcustomercompanycode":
-                    $textContent = "[" . $record["strcustomerdisplaycode"] . "]" . " " . $record["strcustomerdisplayname"];
-                    $td = $doc->createElement("td", toUTF8($textContent));
-                    $td->setAttribute("style", $bgcolor);
-                    $trBody->appendChild($td);
-                    break;
-                // 納期
-                case "dtmdeliverydate":
-                    $td = $doc->createElement("td", toUTF8($record["dtmdeliverydate"]));
-                    $td->setAttribute("style", $bgcolor);
-                    $trBody->appendChild($td);
-                    break;
-                // 状態
-                case "lngreceivestatuscode":
-                    $td = $doc->createElement("td", toUTF8($record["strreceivestatusname"]));
-                    $td->setAttribute("style", $bgcolor);
-                    $trBody->appendChild($td);
-                    break;
-                // 明細行番号
-                case "lngrecordno":
-                    $td = $doc->createElement("td", $record["lngreceivedetailno"]);
-                    $td->setAttribute("style", $bgcolor);
-                    $trBody->appendChild($td);
-                    break;
-                // 単価
-                case "curproductprice":
-                    $td = $doc->createElement("td", toMoneyFormat($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], $record["curproductprice"]));
-                    $td->setAttribute("style", $bgcolor);
-                    $trBody->appendChild($td);
-                    break;
-                // 単位
-                case "lngproductunitcode":
-                    $td = $doc->createElement("td", toUTF8($record["lngproductunitname"]));
-                    $td->setAttribute("style", $bgcolor);
-                    $trBody->appendChild($td);
-                    break;
-                // 数量
-                case "lngproductquantity":
-                    $td = $doc->createElement("td", toUTF8($record["lngproductquantity"]));
-                    $td->setAttribute("style", $bgcolor);
-                    $trBody->appendChild($td);
-                    break;
-                // 税抜金額
-                case "cursubtotalprice":
-                    $td = $doc->createElement("td", toMoneyFormat($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], $record["cursubtotalprice"]));
-                    $td->setAttribute("style", $bgcolor);
-                    $trBody->appendChild($td);
-                    break;
-                // 明細備考
-                case "strdetailnote":
-                    $td = $doc->createElement("td", toUTF8($record["strdetailnote"]));
-                    $td->setAttribute("style", $bgcolor);
-                    $trBody->appendChild($td);
-                    break;
-            }
-        }
-    }
+    // ヘッダー部データ設定
+    fncSetHeaderDataToTr($doc, $trBody, $bgcolor, $aryTableHeaderName, $displayColumns, $record, true);
 
     // 確定取消項目を表示
     if ($existsCancel) {

@@ -61,13 +61,26 @@ if ( !fncCheckAuthority( DEF_FUNCTION_SC2, $objAuth ) )
 	fncOutputError ( 9052, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
 
-// 文字列チェック
-$aryCheck["strSessionID"]          = "null:numenglish(32,32)";
-$aryResult = fncAllCheck( $aryData, $aryCheck );
-fncPutStringCheckError( $aryResult, $objDB );
-
+// 603 売上管理（売上検索　管理モード）
+if ( fncCheckAuthority( DEF_FUNCTION_SC3, $objAuth ) )
+{
+    $aryData["AdminSet_visibility"] = 'style="visibility: visible"';
+}
+else
+{
+    $aryData["btnInvalidVisible"] = "";
+}
 // ヘルプ対応
 $aryData["lngFunctionCode"] = DEF_FUNCTION_SC2;
+
+// 売上区分プルダウンメニュー 生成
+$aryData["lngSalesClassCode"] = "<option value=\"\"></option>\n";
+$aryData["lngSalesClassCode"] .= fncGetPulldown("m_salesclass", "lngsalesclasscode", "lngsalesclasscode, strsalesclassname", "", '', $objDB);
+
+// 消費税区分プルダウンメニュー 生成
+$aryData["lngTaxClassCode"] = "<option value=\"\"></option>\n";
+$aryData["lngTaxClassCode"] .= fncGetPulldown("m_taxClass", "lngTaxClassCode", "lngTaxClassCode, strtaxclassname", "", '', $objDB);
+
 
 // テンプレート読み込み
 echo fncGetReplacedHtmlWithBase("search/base_search.html", "sc/search2/sc_search.tmpl", $aryData ,$objAuth );
