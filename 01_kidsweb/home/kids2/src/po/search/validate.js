@@ -15,7 +15,7 @@ jQuery(function($){
         $(v).datepicker();
     });
 
-    $('input[name="IsDisplay_btnAdmin"]').prop('checked', false);
+    $('input[name="Option_admin"]').prop('checked', false);
 
     // 登録ボタンイベント横取り
     var events = $._data($('img.search').get(0), 'events');
@@ -278,7 +278,6 @@ jQuery(function($){
             $('input[name="IsDisplay_lngStockSubjectCode"]'),
             $('input[name="IsDisplay_lngStockItemCode"]'),
             $('input[name="IsDisplay_dtmDeliveryDate"]'),
-            $('input[name="IsDisplay_strNote"]'),
             $('input[name="IsDisplay_lngRecordNo"]'),
             $('input[name="IsDisplay_curProductPrice"]'),
             $('input[name="IsDisplay_lngProductQuantity"]'),
@@ -302,7 +301,7 @@ jQuery(function($){
     }
 
     // events
-    $('input[name="IsDisplay_btnAdmin"]').on('change', function(){
+    $('input[name="Option_admin"]').on('change', function(){
         changeAdmin($(this).prop('checked'));
     });
 });

@@ -2,343 +2,434 @@
 
 // ----------------------------------------------------------------------------
 /**
-*       発注管理  検索
-*
-*
-*       @package    K.I.D.S.
-*       @license    http://www.kuwagata.co.jp/
-*       @copyright  KUWAGATA CO., LTD.
-*       @author     K.I.D.S. Groups <info@kids-groups.com>
-*       @access     public
-*       @version    2.00
-*
-*
-*       処理概要
-*         ・検索結果画面表示処理
-*
-*       更新履歴
-*
-*/
+ *       発注管理  検索
+ *
+ *
+ *       @package    K.I.D.S.
+ *       @license    http://www.kuwagata.co.jp/
+ *       @copyright  KUWAGATA CO., LTD.
+ *       @author     K.I.D.S. Groups <info@kids-groups.com>
+ *       @access     public
+ *       @version    2.00
+ *
+ *
+ *       処理概要
+ *         ・検索結果画面表示処理
+ *
+ *       更新履歴
+ *
+ */
 // ----------------------------------------------------------------------------
 
+// 設定読み込み
+include_once 'conf.inc';
+
+require_once SRC_ROOT . '/mold/lib/UtilSearchForm.class.php';
+
+// ライブラリ読み込み
+require LIB_FILE;
+require LIB_ROOT . "clscache.php";
+require SRC_ROOT . "po/cmn/lib_pos.php";
+require SRC_ROOT . "po/cmn/column.php";
+require LIB_DEBUGFILE;
+
+// DB接続
+$objDB = new clsDB();
+$objAuth = new clsAuth();
+$objCache = new clsCache();
+$objDB->open("", "", "", "");
 
 
-	// 設定読み込み
-	include_once('conf.inc');
-	
-	require_once(SRC_ROOT.'/mold/lib/UtilSearchForm.class.php');
+//////////////////////////////////////////////////////////////////////////
+// POST(一部GET)データ取得
+//////////////////////////////////////////////////////////////////////////
+// フォームデータから各カテゴリの振り分けを行う
+$options = UtilSearchForm::extractArrayByOption($_REQUEST);
+$isDisplay = UtilSearchForm::extractArrayByIsDisplay($_REQUEST);
+$isSearch = UtilSearchForm::extractArrayByIsSearch($_REQUEST);
+$from = UtilSearchForm::extractArrayByFrom($_REQUEST);
+$to = UtilSearchForm::extractArrayByTo($_REQUEST);
+$searchValue = $_REQUEST;
+$errorFlag = false;
 
-	// ライブラリ読み込み
-	require (LIB_FILE);
-	require (LIB_ROOT . "clscache.php" );
-	require (SRC_ROOT . "po/cmn/lib_pos.php");
-	require (SRC_ROOT . "po/cmn/column.php");
-	require (LIB_DEBUGFILE);
+// クエリの組立に使用するフォームデータを抽出
+$optionColumns = array();
+$searchColumns = array();
+$displayColumns = array();
+$conditions = array();
 
-	// DB接続
-	$objDB   = new clsDB();
-	$objAuth = new clsAuth();
-	$objCache = new clsCache();
-	$objDB->open( "", "", "", "" );
+// オプション項目の抽出
+foreach ($options as $key => $flag) {
+    if ($flag == "on") {
+        $optionColumns[$key] = $key;
+    }
+}
+// 表示項目の抽出
+foreach ($isDisplay as $key => $flag) {
+    if ($flag == "on") {
+        $displayColumns[$key] = $key;
+    }
+}
 
-	//////////////////////////////////////////////////////////////////////////
-	// POST(一部GET)データ取得
-	//////////////////////////////////////////////////////////////////////////
-	// フォームデータから各カテゴリの振り分けを行う
-	$options = UtilSearchForm::extractArrayByOption($_REQUEST);
-	$isDisplay = UtilSearchForm::extractArrayByIsDisplay($_REQUEST);
-	$isSearch = UtilSearchForm::extractArrayByIsSearch($_REQUEST);
-	$from = UtilSearchForm::extractArrayByFrom($_REQUEST);
-	$to = UtilSearchForm::extractArrayByTo($_REQUEST);
-	$searchValue = $_REQUEST;
-	// $adminMode = $_REQUEST["admin-mode"] ? true : false;
-	
-	$isDisplay=array_keys($isDisplay);
-	$isSearch=array_keys($isSearch);
-	$aryData['ViewColumn']=$isDisplay;
-	$aryData['SearchColumn']=$isSearch;
-	$aryData['Admin'] = $_REQUEST["IsDisplay_btnAdmin"];
-	foreach($from as $key=> $item){
-		$aryData[$key.'From']=$item;
-	}
-	foreach($to as $key=> $item){
-		$aryData[$key.'To']=$item;
-	}
-	foreach($searchValue as $key=> $item){
-		$aryData[$key]=$item;
-	}
-	
-	
-	// 検索表示項目取得
-	if(empty($isDisplay))
-	{
-		$strMessage = fncOutputError( 9058, DEF_WARNING, "" ,FALSE, "../so/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+// 検索項目の抽出
+foreach ($isSearch as $key => $flag) {
+    if ($flag == "on") {
+        $searchColumns[$key] = $key;
+    }
+}
 
-		// [lngLanguageCode]書き出し
-		$aryHtml["lngLanguageCode"] = 1;
+//////////////////////////////////////////////////////////////////////////
+// セッション、権限確認
+//////////////////////////////////////////////////////////////////////////
+// セッション確認
+$objAuth = fncIsSession($_REQUEST["strSessionID"], $objAuth, $objDB);
 
-		// [strErrorMessage]書き出し
-		$aryHtml["strErrorMessage"] = $strMessage;
+// 権限確認
+// 502 発注管理（発注検索）
+if (!fncCheckAuthority(DEF_FUNCTION_PO2, $objAuth)) {
+    fncOutputError(9060, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
+}
 
-		// テンプレート読み込み
-		$objTemplate = new clsTemplate();
-		$objTemplate->getTemplate( "/result/error/parts.tmpl" );
-		
-		// テンプレート生成
-		$objTemplate->replace( $aryHtml );
-		$objTemplate->complete();
-		// HTML出力
-		echo $objTemplate->strTemplate;
+// 検索条件に一致する発注コードを取得するSQL文の作成
+$strQuery = fncGetSearchPurchaseSQL($displayColumns, $searchColumns, $from, $to, $searchValue, $optionColumns);
 
-		exit;
-	}
-	
-	// 検索条件項目取得
-	// 検索条件 $arySearchColumnに格納
-	if( empty ( $isSearch ) )
-	{
-	//	fncOutputError( 502, DEF_WARNING, "検索対象項目がチェックされていません",TRUE, "../so/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
-		$bytSearchFlag = TRUE;
-	}
+// 値をとる =====================================
+list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
-	//////////////////////////////////////////////////////////////////////////
-	// セッション、権限確認
-	//////////////////////////////////////////////////////////////////////////
-	// セッション確認
-	$objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
+if ($lngResultNum) {
+    // 検索件数が指定数以上の場合エラーメッセージを表示する
+    if ($lngResultNum > DEF_SEARCH_MAX) {
+        $strMessage = fncOutputError(9057, DEF_WARNING, DEF_SEARCH_MAX, false, "../po/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
 
-	// 権限確認
-	// 502 発注管理（発注検索）
-	if ( !fncCheckAuthority( DEF_FUNCTION_PO2, $objAuth ) )
-	{
-		fncOutputError ( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
-	}
+        // [strErrorMessage]書き出し
+        $aryHtml["strErrorMessage"] = $strMessage;
 
-	//////////////////////////////////////////////////////////////////////////
-	// 文字列チェック
-	//////////////////////////////////////////////////////////////////////////
-	$aryCheck["strSessionID"]			= "null:numenglish(32,32)";
-	$aryCheck["dtmInsertDateFrom"] 		= "date(/)";
-	$aryCheck["dtmInsertDateTo"]		= "date(/)";
-	$aryCheck["dtmOrderAppDateFrom"] 	= "date(/)";
-	$aryCheck["dtmOrderAppDateTo"]		= "date(/)";
-	$aryCheck["strOrderCodeFrom"]		= "ascii(0,10)";
-	$aryCheck["strOrderCodeTo"]			= "ascii(0,10)";
-	$aryCheck["lngInputUserCode"]		= "numenglish(0,3)";
-	$aryCheck["strInputUserName"]		= "length(0,50)";
-	$aryCheck["lngCustomerCode"]		= "numenglish(0,4)";
-	$aryCheck["strCustomerName"]		= "length(0,50)";
-	$aryCheck["lngInChargeGroupCode"]	= "numenglish(0,2)";
-	$aryCheck["strInChargeGroupName"]	= "length(0,50)";
-	$aryCheck["lngInChargeUserCode"]	= "numenglish(0,3)";
-	$aryCheck["strInChargeUserName"]	= "length(0,50)";
-	// 2004.04.14 suzukaze update start
-	//$aryCheck["lngOrderStatusCode"]		= "length(0,50)";
-	// 2004.04.14 suzukaze update end
-	$aryCheck["lngPayConditionCode"]	= "numenglish(0,3)";
-	$aryCheck["dtmExpirationDateFrom"] 	= "date(/)";
-	$aryCheck["dtmExpirationDateTo"]	= "date(/)";
-	// $aryCheck["strProductCode"]			= "numenglish(0,5)";
-	$aryCheck["strProductName"]			= "length(0,100)";
-	$aryCheck["lngStockSubjectCode"]	= "ascii(0,7)";
-	$aryCheck["lngStockItemCode"]		= "ascii(0,7)";
+        // テンプレート読み込み
+        $objTemplate = new clsTemplate();
+        $objTemplate->getTemplate("/result/error/parts.tmpl");
 
-	// 文字列チェック
-	$aryCheckResult = fncAllCheck( $aryData, $aryCheck );
-	fncPutStringCheckError( $aryCheckResult, $objDB );
+        // テンプレート生成
+        $objTemplate->replace($aryHtml);
+        $objTemplate->complete();
 
-	// 502 発注管理（発注検索）
-	if ( !fncCheckAuthority( DEF_FUNCTION_PO2, $objAuth ) )
-	{
-		fncOutputError ( 9052, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
-	}
+        // HTML出力
+        echo $objTemplate->strTemplate;
 
-	// 503 発注管理（発注検索　管理モード）
-	if ( fncCheckAuthority( DEF_FUNCTION_PO3, $objAuth ) and isset( $aryData["Admin"]) )
-	{
-		$aryUserAuthority["Admin"] = 1;		// 503 管理モードでの検索
-	}
-	// 504 発注管理（詳細表示）
-	if ( fncCheckAuthority( DEF_FUNCTION_PO4, $objAuth ) )
-	{
-		$aryUserAuthority["Detail"] = 1;	// 504 詳細表示
-	}
-	// 505 発注管理（修正）
-	if ( fncCheckAuthority( DEF_FUNCTION_PO5, $objAuth ) )
-	{
-		$aryUserAuthority["Fix"] = 1;		// 505 修正
-	}
-	// 506 発注管理（削除）
-	if ( fncCheckAuthority( DEF_FUNCTION_PO6, $objAuth ) )
-	{
-		$aryUserAuthority["Delete"] = 1;	// 506 削除
+        exit;
+    }
+
+    for ($i = 0; $i < $lngResultNum; $i++) {
+        $records[] = $objDB->fetchArray($lngResultID, $i);
 	}
 	
-	// 表示項目  $aryViewColumnに格納
-	// $aryViewColumn=$isDisplay;
-	$aryViewColumn=fncResortSearchColumn($isDisplay);
-	// 検索項目  $arySearchColumnに格納
-	$arySearchColumn=$isSearch;
+} else {
+    $strMessage = fncOutputError(503, DEF_WARNING, "", false, "../po/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
 
-	// クッキー取得
-	$aryData["lngLanguageCode"] = 1;
+    // [strErrorMessage]書き出し
+    $aryHtml["strErrorMessage"] = $strMessage;
 
-	reset($aryViewColumn);
-	if ( !$bytSearchFlag )
-	{
-		reset($arySearchColumn);
-	}
-	reset($aryData);
-	
-	// 検索条件に一致する発注コードを取得するSQL文の作成
-	$strQuery = fncGetSearchPurchaseSQL( $aryViewColumn, $arySearchColumn, $aryData, $objDB, "", 0, FALSE );
-//echo $strQuery;
-//fncDebug("kids2.log", $strQuery, __FILE__, __LINE__, "w" );
-	// 値をとる =====================================
-	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
-//	fncDebug("kids2.log", "found " . $lngResultNum . " records", __FILE__, __LINE__, "a" );
+    // テンプレート読み込み
+    $objTemplate = new clsTemplate();
+    $objTemplate->getTemplate("/result/error/parts.tmpl");
 
-	if ( $lngResultNum )
-	{
-		// 検索件数が指定数以上の場合エラーメッセージを表示する
-		if ( $lngResultNum > DEF_SEARCH_MAX )
-		{
-			$strMessage = fncOutputError( 9057, DEF_WARNING, DEF_SEARCH_MAX ,FALSE, "../po/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+    // テンプレート生成
+    $objTemplate->replace($aryHtml);
+    $objTemplate->complete();
 
-			// [lngLanguageCode]書き出し
-			$aryHtml["lngLanguageCode"] = $aryData["lngLanguageCode"];
+    // HTML出力
+    echo $objTemplate->strTemplate;
 
-			// [strErrorMessage]書き出し
-			$aryHtml["strErrorMessage"] = $strMessage;
+    exit;
+}
 
-			// テンプレート読み込み
-			$objTemplate = new clsTemplate();
-			$objTemplate->getTemplate( "/result/error/parts.tmpl" );
-			
-			// テンプレート生成
-			$objTemplate->replace( $aryHtml );
-			$objTemplate->complete();
+$objDB->freeResult($lngResultID);
 
-			// HTML出力
-			echo $objTemplate->strTemplate;
+// テンプレート読み込み
+$objTemplate = new clsTemplate();
+$objTemplate->getTemplate("/po/result/po_search_result.html");
 
-			exit;
-		}
+$aryResult["displayColumns"] = implode(",", $displayColumns);
+// テンプレート生成
+$objTemplate->replace($aryResult);
 
-		// 指定数以内であれば通常処理
-//	    fncDebug("kids2.log", "passed" , __FILE__, __LINE__, "a" );
-		for ( $i = 0; $i < $lngResultNum; $i++ )
-		{
-			$aryResult[] = $objDB->fetchArray( $lngResultID, $i );
-		}
-//	    fncDebug("kids2.log", "passed" , __FILE__, __LINE__, "a" );
-	}
-	else
-	{
-		$strMessage = fncOutputError( 503, DEF_WARNING, "" ,FALSE, "../po/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+// 検索結果テーブル生成の為DOMDocumentを使用
+$doc = new DOMDocument();
+// パースエラー抑制
+libxml_use_internal_errors(true);
+// DOMパース
+$doc->loadHTML(mb_convert_encoding($objTemplate->strTemplate, "utf8", "eucjp-win"));
+// パースエラークリア
+libxml_clear_errors();
+// パースエラー抑制解除
+libxml_use_internal_errors(false);
 
-		// [lngLanguageCode]書き出し
-		$aryHtml["lngLanguageCode"] = $aryData["lngLanguageCode"];
+// 検索結果テーブルの取得
+$table = $doc->getElementById("result");
+$thead = $table->getElementsByTagName("thead")->item(0);
+$tbody = $table->getElementsByTagName("tbody")->item(0);
 
-		// [strErrorMessage]書き出し
-		$aryHtml["strErrorMessage"] = $strMessage;
+// キー文字列を小文字に変換
+$displayColumns = array_change_key_case($displayColumns, CASE_LOWER);
 
-		// テンプレート読み込み
-		$objTemplate = new clsTemplate();
-		$objTemplate->getTemplate( "/result/error/parts.tmpl" );
-		
-		// テンプレート生成
-		$objTemplate->replace( $aryHtml );
-		$objTemplate->complete();
+// -------------------------------------------------------
+// 各種ボタン表示チェック/権限チェック
+// -------------------------------------------------------
+// 詳細カラムを表示
+$existsDetail = array_key_exists("btndetail", $displayColumns);
+// 確定カラムを表示
+$existsDecide = array_key_exists("btndecide", $displayColumns);
+// 履歴カラムを表示
+$existsHistory = array_key_exists("btnhistory", $displayColumns);
+// 確定取消カラムを表示
+$existsCancel = array_key_exists("btncancel", $displayColumns);
 
-		// HTML出力
-		echo $objTemplate->strTemplate;
+// 詳細ボタンを表示
+$allowedDetail = fncCheckAuthority(DEF_FUNCTION_SO3, $objAuth);
+// 確定ボタンを表示
+$allowedDecide = fncCheckAuthority(DEF_FUNCTION_SO4, $objAuth);
+// 確定取消カラムを表示
+$allowedCancel = fncCheckAuthority(DEF_FUNCTION_SO5, $objAuth);
 
-		exit;
-	}
+// -------------------------------------------------------
+// テーブルヘッダ作成
+// -------------------------------------------------------
+// thead > tr要素作成
+$trHead = $doc->createElement("tr");
 
+// クリップボード除外対象クラス
+$exclude = "exclude-in-clip-board-target";
 
-	$objDB->freeResult( $lngResultID );
+// 項番カラム
+$thIndex = $doc->createElement("th");
+$thIndex->setAttribute("class", $exclude);
+// コピーボタン
+$imgCopy = $doc->createElement("img");
+$imgCopy->setAttribute("src", "/img/type01/cmn/seg/copy_off_bt.gif");
+$imgCopy->setAttribute("class", "copy button");
+// 項番カラム > コピーボタン
+$thIndex->appendChild($imgCopy);
+// ヘッダに追加
+$trHead->appendChild($thIndex);
 
-	// 言語の設定
-	if ( $aryData["lngLanguageCode"] == 1 )
-	{
-		$aryTytle = $arySearchTableTytle;
-	}
-	else
-	{
-		$aryTytle = $arySearchTableTytleEng;
-	}
+// 詳細を表示
+if ($existsDetail) {
+    // 詳細カラム
+    $thDetail = $doc->createElement("th", toUTF8("詳細"));
+    $thDetail->setAttribute("class", $exclude);
+    // ヘッダに追加
+    $trHead->appendChild($thDetail);
+}
 
-//	    fncDebug("kids2.log", "passed" , __FILE__, __LINE__, "a" );
-	// テーブル構成で検索結果を取得、ＨＴＭＬ形式で出力する
-	$aryHtml["strHtml"] = fncSetPurchaseTable ( $aryResult, $arySearchColumn, $aryViewColumn, $aryData, $aryUserAuthority, $aryTytle, $objDB, $objCache, $aryTableViewName );
-//	    fncDebug("kids2.log", "passed" , __FILE__, __LINE__, "a" );
+// 確定項目を表示
+if ($existsDecide) {
+    // 確定カラム
+    $thDecide = $doc->createElement("th", toUTF8("確定"));
+    $thDecide->setAttribute("class", $exclude);
+    // ヘッダに追加
+    $trHead->appendChild($thDecide);
+}
 
-	// POSTされたデータをHiddenにて設定する
-	unset($ary_keys);
-	$ary_Keys = array_keys( $aryData );
-//	    fncDebug("kids2.log", "passed" , __FILE__, __LINE__, "a" );
-	while ( list ($strKeys, $strValues ) = each ( $ary_Keys ) )
-	{
-		if( $strValues == "ViewColumn")
-		{
-			reset( $aryData["ViewColumn"] );
-			for ( $i = 0; $i < count( $aryData["ViewColumn"] ); $i++ )
-			{
-				$aryHidden[] = "<input type='hidden' name='ViewColumn[]' value='" .$aryData["ViewColumn"][$i]. "'>";
-			}
-		}
-		elseif( $strValues == "SearchColumn")
-		{
-			reset( $aryData["SearchColumn"] );
-			for ( $j = 0; $j < count( $aryData["SearchColumn"] ); $j++ )
-			{
-				$aryHidden[] = "<input type='hidden' name='SearchColumn[]' value='". $aryData["SearchColumn"][$j] ."'>";
-			}
-		}
-		elseif( $strValues == "strSort" || $strValues == "strSortOrder" )
-		{
-			//何もしない
-		} 
-		else
-		{
-			// 配列の値の場合（状態、ワークフロー状態）
-			if( is_array($aryData[$strValues]) )
-			{
-				for($k = 0; $k < count($aryData[$strValues]); $k++ )
-				{
-					$aryHidden[] = '<input type="hidden" name="'.$strValues.'['.$k.']" value="'. $aryData[$strValues][$k] .'">';
-				}
-			}
-			else
-			{
-				$aryHidden[] = '<input type="hidden" name="'. $strValues.'" value="'.$aryData[$strValues].'">';
-			}
-		}
-	}
-//	    fncDebug("kids2.log", "passed" , __FILE__, __LINE__, "a" );
+// 履歴項目を表示
+if ($existsHistory) {
+    // 履歴カラム
+    $thHistory = $doc->createElement("th", toUTF8("履歴"));
+    $thHistory->setAttribute("class", $exclude);
+    // ヘッダに追加
+    $trHead->appendChild($thHistory);
+}
+$aryTableHeaderName = array();
+$aryTableHeaderName["dtminsertdate"] = "登録日";
+$aryTableHeaderName["lnginputusercode"] = "入力者";
+$aryTableHeaderName["strordercode"] = "発注ＮＯ.";
+$aryTableHeaderName["lngrevisionno"] = "リビジョン番号";
+$aryTableHeaderName["strproductcode"] = "製品コード";
+$aryTableHeaderName["strproductname"] = "製品名";
+$aryTableHeaderName["strproductenglishname"] = "製品名（英語）";
+$aryTableHeaderName["lnginchargegroupcode"] = "営業部署";
+$aryTableHeaderName["lnginchargeusercode"] = "開発担当者";
+$aryTableHeaderName["lngcustomercode"] = "仕入先";
+$aryTableHeaderName["lngstocksubjectcode"] = "仕入科目";
+$aryTableHeaderName["lngstockitemcode"] = "仕入部品";
+$aryTableHeaderName["dtmdeliverydate"] = "納期";
+$aryTableHeaderName["lngorderstatuscode"] = "状態";
+$aryTableHeaderName["strgoodscode"] = "顧客品番";
+$aryTableHeaderName["lngcustomercompanycode"] = "顧客";
+$aryTableHeaderName["lngreceivestatuscode"] = "状態";
+$aryTableHeaderName["lngrecordno"] = "明細行番号";
+$aryTableHeaderName["curproductprice"] = "単価";
+$aryTableHeaderName["lngproductquantity"] = "数量";
+$aryTableHeaderName["cursubtotalprice"] = "税抜金額";
+$aryTableHeaderName["strdetailnote"] = "明細備考";
+// TODO 要リファクタリング
+// 指定されたテーブル項目のカラムを作成する
+foreach ($aryTableHeaderName as $key => $value) {
+    if (array_key_exists($key, $displayColumns)) {
+        $th = $doc->createElement("th", toUTF8($value));
+        $trHead->appendChild($th);
+    }
+}
 
-	$aryHidden[] = "<input type='hidden' name='strSort'>";
-	$aryHidden[] = "<input type='hidden' name='strSortOrder'>";
-	$strHidden = implode ("\n", $aryHidden );
+// 削除項目を表示
+if ($existsCancel) {
+    // 削除カラム
+    $thCancel = $doc->createElement("th", toUTF8("確定取消"));
+    $thCancel->setAttribute("class", $exclude);
+    // ヘッダに追加
+    $trHead->appendChild($thCancel);
+}
 
-	$aryHtml["strHidden"] = $strHidden;
+// thead > tr
+$thead->appendChild($trHead);
 
-	// テンプレート読み込み
-	$objTemplate = new clsTemplate();
-	$objTemplate->getTemplate( "/po/result/po_search_result.html" );
-	
-	// テンプレート生成
-	$objTemplate->replace( $aryHtml );
-	$objTemplate->complete();
+// -------------------------------------------------------
+// テーブルセル作成
+// -------------------------------------------------------
+// 検索結果件数分走査
+foreach ($records as $i => $record) {
+    unset($aryQuery);
+    // 確定対象フラグ
+    $decideObjFlag = false;
+    // 履歴有無フラグ
+    $historyFlag = false;
 
-	// HTML出力
-	echo $objTemplate->strTemplate;
+    // 同じ受注NO,同じ明細番号の最新受注データのリビジョン番号を取得する
+    $aryQuery[] = "SELECT";
+    $aryQuery[] = " o.lngorderno, o.lngrevisionno ";
+    $aryQuery[] = "FROM m_order o inner join t_orderdetail od ";
+    $aryQuery[] = "on o.lngorderno = od.lngorderno ";
+    $aryQuery[] = "AND o.lngrevisionno = od.lngrevisionno ";
+    $aryQuery[] = "WHERE o.strordercode='" . $record["strordercode"] . "' ";
+    $aryQuery[] = "and od.lngorderdetailno=" . $record["lngorderdetailno"] . " ";
+    $aryQuery[] = "and o.lngrevisionno >= 0";
+    $aryQuery[] = "and o.bytInvalidFlag = FALSE ";
+    $aryQuery[] = "order by o.lngorderno desc, o.lngrevisionno desc";
 
-	$objCache->Release();
-//    fncDebug("kids2.log", "passed" , __FILE__, __LINE__, "a" );
+    // クエリを平易な文字列に変換
+    $strQuery = implode("\n", $aryQuery);
+    list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
+    // 検索件数がありの場合
+    if ($lngResultNum > 0) {
+        if ($lngResultNum > 1) {
+            $historyFlag = true;
+        }
+    }
 
-	return true;
+    $objDB->freeResult($lngResultID);
 
-?>
+    $decideObjFlag = fncCheckData($record["strordercode"], $objDB);
+
+    // 背景色設定
+    if ($record["lngrevisionno"] < 0) {
+        $bgcolor = "background-color: #B3E0FF;";
+    } else {
+        $bgcolor = "background-color: #FFB2B2;";
+    }
+
+    // tbody > tr要素作成
+    $trBody = $doc->createElement("tr");
+    $trBody->setAttribute("id", $record["strordercode"] . "_" . $record["lngorderdetailno"]);
+
+    // 項番
+    $index = $index + 1;
+    $tdIndex = $doc->createElement("td", $index);
+    $tdIndex->setAttribute("class", $exclude);
+    $tdIndex->setAttribute("style", $bgcolor);
+    $trBody->appendChild($tdIndex);
+
+    // 詳細を表示
+    if ($existsDetail) {
+        // 詳細セル
+        $tdDetail = $doc->createElement("td");
+        $tdDetail->setAttribute("class", $exclude);
+        $tdDetail->setAttribute("style", $bgcolor . "text-align: center;");
+
+        // 詳細ボタンの表示
+        if ($allowedDetail and $record["lngrevisionno"] >= 0) {
+            // 詳細ボタン
+            $imgDetail = $doc->createElement("img");
+            $imgDetail->setAttribute("src", "/img/type01/so/detail_off_bt.gif");
+            $imgDetail->setAttribute("id", $record["lngorderno"]);
+            $imgDetail->setAttribute("revisionno", $record["lngrevisionno"]);
+            $imgDetail->setAttribute("class", "detail button");
+            // td > img
+            $tdDetail->appendChild($imgDetail);
+        }
+        // tr > td
+        $trBody->appendChild($tdDetail);
+    }
+
+    // 確定項目を表示
+    if ($existsDecide) {
+        // 確定セル
+        $tdDecide = $doc->createElement("td");
+        $tdDecide->setAttribute("class", $exclude);
+        $tdDecide->setAttribute("style", $bgcolor . "text-align: center;");
+
+        // 確定ボタンの表示
+        if ($allowedDecide and $record["lngrevisionno"] >= 0 and $record["lngorderstatuscode"] == DEF_ORDER_APPLICATE and $decideObjFlag) {
+            // 確定ボタン
+            $imgDecide = $doc->createElement("img");
+            $imgDecide->setAttribute("src", "/img/type01/so/renew_off_bt.gif");
+            $imgDecide->setAttribute("id", $record["lngorderno"]);
+            $imgDecide->setAttribute("revisionno", $record["lngrevisionno"]);
+            $imgDecide->setAttribute("class", "decide button");
+            // td > img
+            $tdDecide->appendChild($imgDecide);
+        }
+        // tr > td
+        $trBody->appendChild($tdDecide);
+    }
+
+    // 履歴項目を表示
+    if ($existsHistory) {
+        // 履歴セル
+        $tdHistory = $doc->createElement("td");
+        $tdHistory->setAttribute("class", $exclude);
+        $tdHistory->setAttribute("style", $bgcolor . "text-align: center;");
+        if ($historyFlag and array_key_exists("admin", $optionColumns)) {
+            // 履歴ボタン
+            $imgHistory = $doc->createElement("img");
+            $imgHistory->setAttribute("src", "/img/type01/so/renew_off_bt.gif");
+            $imgHistory->setAttribute("id", $record["strordercode"] . "_" . $record["lngorderdetailno"]);
+            $imgHistory->setAttribute("lngrevisionno", $record["lngrevisionno"]);
+            $imgHistory->setAttribute("rownum", $index);
+            $imgHistory->setAttribute("class", "history button");
+            // td > img
+            $tdHistory->appendChild($imgHistory);
+        }
+        // tr > td
+        $trBody->appendChild($tdHistory);
+    }
+
+    // ヘッダー部データ設定
+    fncSetHeaderDataToTr($doc, $trBody, $bgcolor, $aryTableHeaderName, $displayColumns, $record, true);
+
+    // 確定取消項目を表示
+    if ($existsCancel) {
+        // 確定取消セル
+        $tdCancel = $doc->createElement("td");
+        $tdCancel->setAttribute("class", $exclude);
+        $tdCancel->setAttribute("style", $bgcolor . "text-align: center;");
+
+        // 確定取消ボタンの表示
+        if ($allowedCancel and $record["lngrevisionno"] >= 0 and $record["lngorderstatuscode"] == DEF_ORDER_ORDER and $decideObjFlag) {
+            // 確定取消ボタン
+            $imgCancel = $doc->createElement("img");
+            $imgCancel->setAttribute("src", "/img/type01/so/cancel_off_bt.gif");
+            $imgCancel->setAttribute("id", $record["lngorderno"]);
+            $imgCancel->setAttribute("revisionno", $record["lngrevisionno"]);
+            $imgCancel->setAttribute("class", "cancel button");
+            // td > img
+            $tdCancel->appendChild($imgCancel);
+        }
+        // tr > td
+        $trBody->appendChild($tdCancel);
+    }
+
+    // tbody > tr
+    $tbody->appendChild($trBody);
+
+}
+
+// HTML出力
+echo $doc->saveHTML();

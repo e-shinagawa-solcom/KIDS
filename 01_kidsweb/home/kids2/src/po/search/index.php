@@ -63,12 +63,6 @@ if ( !fncCheckAuthority( DEF_FUNCTION_PO0, $objAuth ) )
     fncOutputError ( 9052, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
 
-// // 501 発注管理（発注登録）
-// if ( fncCheckAuthority( DEF_FUNCTION_PO1, $objAuth ) )
-// {
-// 	$aryData["strRegistURL"]   = "regist/index.php?strSessionID=" . $aryData["strSessionID"];
-// }
-
 // 502 発注管理（発注検索）
 if ( fncCheckAuthority( DEF_FUNCTION_PO2, $objAuth ) )
 {

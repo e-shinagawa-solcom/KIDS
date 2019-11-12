@@ -68,9 +68,13 @@
 	<div class="form-box__contents--with-scroll">
 		<form name="SearchMoldHistory" method="post">
             <input type="submit">
-            <div class="admin-mode" style="display:_%displayMode%_;">
-                管理者モード
-                <span><input type="checkbox" class="admin-checkbox" name="IsDisplay_btnAdmin"></span>
+            <div class="option-box">
+                <div class="regist-line" _%AdminSet_visibility%_>
+                    <span class="regist-label">
+                        <span class="regist-label--text-only">管理者モード</span>
+                        <input name="Option_admin" type="checkbox">
+                    </span>
+                </div>
             </div>
             <div class="regist-line">
                 <img class="toggle-search button" src="/img/type01/cmn/seg/off_bt.gif" alt="toggle search">
@@ -90,8 +94,8 @@
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_btnFix" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_btnFix" class="is-display" type="checkbox">
+                    <input name="IsSearch_btnDecide" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_btnDecide" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label--text-only">確定</span>
@@ -99,8 +103,8 @@
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_Record" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_Record" class="is-display" type="checkbox">
+                    <input name="IsSearch_btnHistory" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_btnHistory" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label--text-only">履歴</span>
@@ -268,15 +272,6 @@
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_strNote" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_strNote" class="is-display" type="checkbox">
-                </span>
-                <span class="regist-label">
-                    <span class="regist-label--text-only">備考</span>
-                </span>
-            </div>
-            <div class="regist-line">
-                <span class="search-label--checkbox">
                     <input name="IsSearch_lngRecordNo" class="is-search" type="checkbox" disabled>
                     <input name="IsDisplay_lngRecordNo" class="is-display" type="checkbox">
                 </span>
@@ -322,8 +317,8 @@
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_btnDelete" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_btnDelete" class="is-display" type="checkbox">
+                    <input name="IsSearch_btnCancel" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_btnCancel" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label--text-only">確定取消</span>

@@ -24,16 +24,16 @@
 
     <!-- tablesorterのbind -->
     <script src="/po/result/js/tablesorter.js" defer=""></script>
-    <link rel="stylesheet" href="/mold/cmn/search/result/css/table.css">
+    <link rel="stylesheet" href="/so/cmn/search/result/css/table.css">
 
     <!-- 詳細画面表示 -->
     <script src="/po/result/js/display-detail.js" defer=""></script>
     <!-- 削除画面表示 -->
     <script src="/po/result/js/display-delete.js" defer=""></script>
+    <!-- 履歴ボタンイベント -->
+    <script src="/po/result/js/display-history.js" defer=""></script>
     <!-- 検索結果をクリップボードへコピーする処理 -->
     <script src="/po/result/js/clipboard.js" defer=""></script>
-    <!-- 結果行選択 -->
-    <script src="/search/cmn/result/trclicked.js" defer=""></script>
     <!-- 発注画面表示 -->
     <script src="/po/result/js/display-regist.js" defer=""></script>
     <script src="/po/result/js/revision.js" defer=""></script>
@@ -41,8 +41,12 @@
 <body class="search-result-background">
     <div class="result-table-wrap">
         <table id="result" class="tablesorter">
-            _%strHtml%_
+            <thead>
+            </thead>
+            <tbody>
+            </tbody>
         </table>
     </div>
+    <input type="hidden" name="displayColumns" value="_%displayColumns%_">
 </body>
 </html>
