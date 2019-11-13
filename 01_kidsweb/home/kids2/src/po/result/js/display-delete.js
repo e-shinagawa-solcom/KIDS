@@ -2,11 +2,7 @@
 (function(){
     $('img.remove.button').on('click', function(){
         url = '/po/result/index3.php';
-        strordercode = $(this).parent().parent().find($('td.td-strordercode')).text();
-        lngrevisionno = parseInt(strordercode.split('_')[1], 10);
-        lngorderno = 'lngOrderNo=' + $(this).attr('lngorderno') + '_' + lngrevisionno;
-        // lngorderno = 'lngOrderNo=' + $(this).attr('lngorderno');
-        // lngorderno = 'lngOrderNo=1018_' + lngrevisionno + ',437_2';
+        lngorderno = 'lngOrderNo=' + $(this).attr('lngorderno');
         sessionID = 'strSessionID=' + getUrlVars()["strSessionID"];
 
         // 別ウィンドウで表示

@@ -2,9 +2,9 @@
 (function(){
     $('img.detail.button').on('click', function(){
         url = '/po/result/index2.php';
-        lngorderno = 'lngOrderNo=' + $(this).attr('lngorderno');
+        lngorderno = 'lngOrderNo=' + $(this).attr('id');
         sessionID = 'strSessionID=' + getUrlVars()["strSessionID"];
-        lngrevisionno = 'lngRevisionNo=' + $(this).attr('lngrevisionno');
+        lngrevisionno = 'lngRevisionNo=' + $(this).attr('revisionno');
 
         // 別ウィンドウで表示
         open(url + '?' + lngorderno + '&' + lngrevisionno + '&' + sessionID, 'display-detail', 'resizable=yes, scrollbars=yes, menubar=no');

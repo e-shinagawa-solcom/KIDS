@@ -836,6 +836,7 @@ function fncCreatePurchaseOrderHtml($aryPurchaseOrder, $strSessionID)
                 $aryHtml[] = "  <tr>";
                 $aryHtml[] = "    <td class=\"ordercodetd\">" . sprintf("%s_%02d", $aryPurchaseOrder[$i]["strordercode"], $aryPurchaseOrder[$i]["lngrevisionno"]) . "</td>";
                 $aryHtml[] = "    <td class=\"orderbuttontd\"><a href=\"" . $strUrl . "\"><img src=\"/img/type01/cmn/querybt/preview_off_ja_bt.gif\" alt=\"preview\"></a></td>";
+                $aryHtml[] = "    <td class=\"orderbuttontd\"><a href=\"#\" onclick=\"window.opener.location.reload();window.close();return false;\"><img src=\"/img/type01/cmn/querybt/close_blown_off_ja_bt.gif\" alt=\"close\"></a></td>";
                 $aryHtml[] = "  </tr>";
                 $aryHtml[] = "</table> ";
                 $aryHtml[] = "<br>";
@@ -1000,7 +1001,6 @@ function fncGetPurchaseOrderDetailHtml($aryResult, $objDB)
  */
 function fncUpdatePurchaseOrder($aryPurchaseOrder, $objDB, $objAuth)
 {
-    echo $aryPurchaseOrder["lngLocationCode"];
     $aryQuery[] = "INSERT INTO m_purchaseorder(";
     $aryQuery[] = "    lngpurchaseorderno,";
     $aryQuery[] = "    lngrevisionno,";

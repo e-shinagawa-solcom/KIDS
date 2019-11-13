@@ -372,7 +372,7 @@ foreach ($records as $i => $record) {
             $imgDecide->setAttribute("src", "/img/type01/so/renew_off_bt.gif");
             $imgDecide->setAttribute("id", $record["lngorderno"]);
             $imgDecide->setAttribute("revisionno", $record["lngrevisionno"]);
-            $imgDecide->setAttribute("class", "decide button");
+            $imgDecide->setAttribute("class", "fix button");
             // td > img
             $tdDecide->appendChild($imgDecide);
         }
@@ -416,9 +416,9 @@ foreach ($records as $i => $record) {
             // 確定取消ボタン
             $imgCancel = $doc->createElement("img");
             $imgCancel->setAttribute("src", "/img/type01/so/cancel_off_bt.gif");
-            $imgCancel->setAttribute("id", $record["lngorderno"]);
+            $imgCancel->setAttribute("lngorderno", $record["lngorderno"]);
             $imgCancel->setAttribute("revisionno", $record["lngrevisionno"]);
-            $imgCancel->setAttribute("class", "cancel button");
+            $imgCancel->setAttribute("class", "remove button");
             // td > img
             $tdCancel->appendChild($imgCancel);
         }

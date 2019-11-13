@@ -1035,6 +1035,7 @@ function fncGetDeletePurchaseOrderDetail($lngOrderNo, $lngRevisionNo, $objDB){
 
 	$strQuery = "";
 	$strQuery = implode("\n", $aryQuery);
+
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
 	if ( $lngResultNum )
@@ -1267,6 +1268,7 @@ function fncInsertPurchaseOrder($aryOrder, $objDB){
 
 	$strQuery = "";
 	$strQuery = implode("\n", $aryQuery );
+	
 	if ( !$lngResultID = $objDB->execute( $strQuery ) )
 	{
 		fncOutputError ( 9051, DEF_ERROR, "発注書マスタへの更新処理に失敗しました。", TRUE, "", $objDB );
@@ -1432,6 +1434,7 @@ function fncCancelPurchaseOrderHtml($aryOrder, $aryDetail, $strSessionID, $isDel
 		if( !$isDeleted ){
 			$aryHtml[] = "    <td class=\"orderbuttontd\"><a href=\"" . $strUrl . "\"><img src=\"/img/type01/cmn/querybt/preview_off_ja_bt.gif\" alt=\"preview\"></a></td>";
 		}
+		$aryHtml[] = "    <td class=\"orderbuttontd\"><a href=\"#\" onclick=\"window.opener.location.reload();window.close();return false;\"><img src=\"/img/type01/cmn/querybt/close_blown_off_ja_bt.gif\" alt=\"close\"></a></td>";
 		$aryHtml[] = "  </tr>";
 		$aryHtml[] = "</table>";
 		$aryHtml[] = "<p class=\"caption\">取消対象</p>";
