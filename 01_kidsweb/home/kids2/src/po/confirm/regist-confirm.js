@@ -20,8 +20,10 @@ function RegistPO(){
     }).done(function (data) {
         console.log("done");
         console.log(data);
-        $('html').html(data);
-        //document.write(data);
+        //$('html').html(data);
+        document.open();
+        document.write(data);
+        document.close();
     }).fail(function (error) {
         console.log("fail");
         console.log(error);

@@ -107,7 +107,7 @@
 		// テンプレート読み込み
 		$objTemplate = new clsTemplate();
 		
-		header("Content-type: text/plain; charset=EUC-JP");
+//		header("Content-type: text/plain; charset=EUC-JP");
 		$objTemplate->getTemplate( "/po/finish/parts.tmpl" );
 		
 		// テンプレート生成

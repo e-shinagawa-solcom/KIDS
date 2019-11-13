@@ -405,7 +405,15 @@ function fncPayConditionCodeMatch($aryData , $aryHeadColumnNames , $aryPoDitail 
 			$aryData["lngMatchResult1"] = $strPayMode;
 			$aryData["lngMatchResult2"] = $aryData["lngPayConditionCode"];
 			$aryData["lngMatchResult3"] = $Code[0];
-			$aryData["strOnloadfnc"] = "fncPayConditionConfirm( '".$strPayMode."' , '".$aryData["lngPayConditionCode"]."' , '".$Code[0]."' )";
+//			$aryData["strOnloadfnc"] = "fncPayConditionConfirm( '".$strPayMode."' , '".$aryData["lngPayConditionCode"]."' , '".$Code[0]."' )";
+			$aryData["strOptionalScript"] = '	<script type="text/javascript" language="javascript" src="/po/cmn/resultexstr.js"></script>
+	<script>
+    	if( $(\'input[name="isPayConditionMatch"]\') && $(\'input[name="isPayConditionMatch"]\').val() == "false" )
+    	{
+        	fncPayConditionConfirm($(\'input[name="lngMatchResult1"]\').val(),$(\'input[name="lngMatchResult2"]\').val(),$(\'input[name="lngMatchResult3"]\').val());
+    	}
+	</script>';
+
 		}
 			
 	}

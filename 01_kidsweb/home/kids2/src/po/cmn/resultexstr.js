@@ -109,7 +109,7 @@ function fncSetWFMessage( obj , objHdn )
 //2007.08.10 matsuki update start
 function fncPayConditionConfirm( strPayMode , lngPayConditionCode , lngPayConditionCodeCrt)
 {
-console.log("called fncPayConditionConfirm");
+//console.log("called fncPayConditionConfirm");
 //alert("strPayMode=" + strPayMode +"\nlngPayConditionCode=" + lngPayConditionCode + "\nlngPayConditionCodeCrt=" + lngPayConditionCodeCrt + "\n");
 	var strMessage;
 	var strMessageArray_J = new Array(
@@ -127,7 +127,7 @@ console.log("called fncPayConditionConfirm");
 	var lngPayMode = eval(strPayMode);
 //	window.lngPayConditionCode.selectedIndex = eval(lngPayConditionCode);//ユーザーが設定した値をセット
 var list = document.getElementById("lngPayConditionCodeList");
-    console.log(document);
+//    console.log(document);
     list.selectedIndex = eval(lngPayConditionCode);//ユーザーが設定した値をセット
 	//objHdn.value = obj.value;
 

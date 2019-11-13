@@ -13,7 +13,6 @@
 <link rel="stylesheet" type="text/css" media="screen" href="/po/confirm/layout.css">
 
 <script type="text/javascript" language="javascript" src="/cmn/processing_module.js"></script>
-<script type="text/javascript" language="javascript" src="/po/cmn/resultexstr.js"></script>
 <script type="text/javascript" language="javascript" src="/po/confirm/regist-confirm.js"></script>
 
 <script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
@@ -35,7 +34,7 @@
 	<tr>
 		<td>
 <!--日本語 -->
-			<form name="form1" action="_%strAction%_" method="POST">
+			<form name="form1">
 				<span id="objQuery"></span>
 				<input type="hidden" name="strSessionID" value="_%strSessionID%_">
 				<input type="hidden" name="lngOrderNo" value="_%lngOrderNo%_"><!-- 発注ＮＯ． -->
@@ -180,13 +179,8 @@ _%strDetailTable%_
         </td>
 	</tr>
 </table>
+_%strOptionalScript%_
 </body>
 
-<script>
-    if( $('input[name="isPayConditionMatch"]') && $('input[name="isPayConditionMatch"]').val() == "false" )
-    {
-        fncPayConditionConfirm($('input[name="lngMatchResult1"]').val(),$('input[name="lngMatchResult2"]').val(),$('input[name="lngMatchResult3"]').val());
-    }
-</script>
 
 </html>
