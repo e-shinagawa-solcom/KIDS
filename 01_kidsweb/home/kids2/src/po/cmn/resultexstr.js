@@ -107,8 +107,10 @@ function fncSetWFMessage( obj , objHdn )
 
 
 //2007.08.10 matsuki update start
-function fncPayConditionConfirm( strPayMode , lngPayConditionCode , lngPayConditionCodeCrt )
+function fncPayConditionConfirm( strPayMode , lngPayConditionCode , lngPayConditionCodeCrt)
 {
+console.log("called fncPayConditionConfirm");
+//alert("strPayMode=" + strPayMode +"\nlngPayConditionCode=" + lngPayConditionCode + "\nlngPayConditionCodeCrt=" + lngPayConditionCodeCrt + "\n");
 	var strMessage;
 	var strMessageArray_J = new Array(
 									"設定されている支払条件は発注内容から推奨される支払条件と一致していません。\n推奨される支払い条件に変更しますか？",
@@ -123,10 +125,14 @@ function fncPayConditionConfirm( strPayMode , lngPayConditionCode , lngPayCondit
 									"Confirm 'Pay Condition'.");
 	
 	var lngPayMode = eval(strPayMode);
-	window.lngPayConditionCode.selectedIndex = eval(lngPayConditionCode);//ユーザーが設定した値をセット
+//	window.lngPayConditionCode.selectedIndex = eval(lngPayConditionCode);//ユーザーが設定した値をセット
+var list = document.getElementById("lngPayConditionCodeList");
+    console.log(document);
+    list.selectedIndex = eval(lngPayConditionCode);//ユーザーが設定した値をセット
 	//objHdn.value = obj.value;
 
 	// 英語切替
+/*
 	if( g_lngCode == 0 ){
 		strConfirm = strMessageArray_E[lngPayMode];
 		strAlert = strMessageArray_E[3];
@@ -135,23 +141,28 @@ function fncPayConditionConfirm( strPayMode , lngPayConditionCode , lngPayCondit
 		
 	}
 	else {
+*/
 		strConfirm = strMessageArray_J[lngPayMode];
 		strAlert = strMessageArray_J[3];
+/*
 	}
-	
+*/	
 	if( lngPayMode != 1 ){//1の場合のみconfirmではなくalertにする
 		
 		result = confirm(strConfirm);
 		if (result == true ){
-			window.lngPayConditionCode.selectedIndex = eval(lngPayConditionCodeCrt);//正しい値をselect
+//			window.lngPayConditionCode.selectedIndex = eval(lngPayConditionCodeCrt);//正しい値をselect
 			window.form1.lngPayConditionCode.value = lngPayConditionCodeCrt;
+//			document.lngPayConditionCode.selectedIndex = eval(lngPayConditionCodeCrt);//正しい値をselect
+			document.getElementById("lngPayConditionCodeList").value = lngPayConditionCodeCrt;
 			//送信する値にも正しい値をセット
 		}
 		
 		else{
 		 alert(strAlert);
 		 //window.frmPayConditionCode.lngPayConditionCode.disabled = true;
-		 window.strRecommendPayCondition.innerHTML = '<marquee behavior="scroll" scrolldelay="150">推奨される支払条件：' + window.lngPayConditionCode.options[lngPayConditionCodeCrt].text + '</marquee>';
+//		 window.strRecommendPayCondition.innerHTML = '<marquee behavior="scroll" scrolldelay="150">推奨される支払条件：' + window.lngPayConditionCode.options[lngPayConditionCodeCrt].text + '</marquee>';
+		 document.getElementById("strRecommendPayCondition").innerHTML = '<marquee behavior="scroll" scrolldelay="150">推奨される支払条件：' + document.getElementById("lngPayConditionCodeList").options[lngPayConditionCodeCrt].text + '</marquee>';
 		}
 	}
 	
@@ -165,9 +176,8 @@ function fncPayConditionConfirm( strPayMode , lngPayConditionCode , lngPayCondit
 
 function fncPayConditionFrmChanged(){
 	//選択された値を送信フォームにも反映
-	window.form1.lngPayConditionCode.value = window.lngPayConditionCode.selectedIndex;
+	window.form1.lngPayConditionCode.value = window.lngPayConditionCodeList.value;
 }
-
 
 //2007.08.10 matsuki update end
 //-->

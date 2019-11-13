@@ -262,11 +262,11 @@ function fncPayConditionCodeMatch($aryData , $aryHeadColumnNames , $aryPoDitail 
 	$flgPayConditionsMatch = true;
 	$flgForeignTable = false;//該当テーブルに存在するかどうか
 		
-	
 	//関数内での支払条件を判断
 	$arystockitemcode = array("1", "2", "3" ,"7","9","11");
 	//$bytcompanyforeignflag	= fncGetMasterValue( "m_company", "strcompanydisplaycode", "bytcompanyforeignflag", $aryData["lngCustomerCode"] , '', $objDB);
-	$strCountryCode = fncGetMasterValue( "m_company", "strcompanydisplaycode", "lngcountrycode", $aryData["lngCustomerCode"] . ":str", '', $objDB);
+	$strcompanydisplaycode = fncGetMasterValue( "m_company", "lngcompanycode", "strcompanydisplaycode",  $aryData["lngCustomerCode"].":str", '', $objDB);
+	$strCountryCode = fncGetMasterValue( "m_company", "lngcompanycode", "lngcountrycode", $aryData["lngCustomerCode"] . ":str", '', $objDB);
 				
 				
 	//2008.02.21 matsuki update start
@@ -278,27 +278,39 @@ function fncPayConditionCodeMatch($aryData , $aryHeadColumnNames , $aryPoDitail 
 		$bytcompanyforeignflag = "t";
 	//2008.02.21 matsuki update end
 	
-	if( $bytcompanyforeignflag == "t"){//取引先海外フラグtrue{
+	if( $bytcompanyforeignflag == "t")
+	{
+//echo "仕入先は海外<br>";
+	    //取引先海外フラグtrue
 		//以下は明細登録の内容
 				
 		//2007.12.14 matsuki update start
 				
 		$aryforeigntable = fncSetForeignTabel();
-		for( $i = 0; $i < count( $aryforeigntable ) ; $i++ ){
-			if( $aryforeigntable[$i] == $aryData["lngCustomerCode"] ){	//該当の場合は明細登録をチェック
+		for( $i = 0; $i < count( $aryforeigntable ) ; $i++ )
+		{
+			if( $aryforeigntable[$i] == $strcompanydisplaycode )
+			{	//該当の場合は明細登録をチェック
 				$flgForeignTable = true;
 				break;
 			}
 		}
 		
-		if($flgForeignTable){
-			for( $i = 0; $i < $cnt; $i++ ){
+		if($flgForeignTable)
+		{
+//echo "チェック対象仕入先<br>";
+			for( $i = 0; $i < $cnt; $i++ )
+			{
 				$Code[$i]= "2";//初期値2(T/T)にセット
-				if(  $aryPoDitail[$i]["strStockSubjectCode"] == "402"){
-					for( $j = 0; $j < count( $arystockitemcode ); $j++ ){
+				if(  $aryPoDitail[$i]["lngStockSubjectCode"] == "402")
+				{
+					for( $j = 0; $j < count( $arystockitemcode ); $j++ )
+					{
 							
-						if( $aryPoDitail[$i]["strStockItemCode"] == $arystockitemcode[$j]){
+						if( $aryPoDitail[$i]["strStockItemCode"] == $arystockitemcode[$j])
+						{
 							$Code[$i]="1";//L/Cにセット
+//echo "L/C推奨明細検出<br>";
 							break;
 						}
 					}
@@ -306,62 +318,102 @@ function fncPayConditionCodeMatch($aryData , $aryHeadColumnNames , $aryPoDitail 
 			}
 		}
 		
-		else{//該当テーブルに存在しない発注先の場合、推奨される支払い条件は全てT/T
+		else
+		{//該当テーブルに存在しない発注先の場合、推奨される支払い条件は全てT/T
+//echo "チェック不要仕入先。推奨はT/T<br>";
 			for( $i = 0; $i < $cnt; $i++ )
+			{
 				$Code[$i]= "2";
+			}
 		}
 	
 				
-		if ( $aryData["lngMonetaryUnitCode"] == 'US$' ){//USドルの場合に限る
-			if( $Code[0] == "1" && $aryData["curAllTotalPrice"] < 30000 ){//1件目の明細内容のみから推奨する支払条件決定 上記は満たしているが合計金額が不足している
-					$Code[0]="2";
+		if ( $aryData["lngMonetaryUnitCode"] == 2 )
+		{
+//echo "USドルのためチェック必要<br>";
+		    //USドルの場合に限る
+			if( in_array("1", $Code) && $aryData["curAllTotalPrice"] < 30000 )
+			{
+//echo "L/C推奨明細検出、かつUSドル 30000未満のためT/T推奨<br>";
+				//一度L/Cにセットしたが戻す
+				for( $i = 0; $i < $cnt; $i++ )
+				{
+					for( $j = 0; $j < count( $arystockitemcode ); $j++ )
+					{
+							
+						if( $aryPoDitail[$i]["strStockItemCode"] == $arystockitemcode[$j])
+						{
+							$Code[$i]="2";
+						}
+					}
+				}
 			}
 		}
-		else $Code[0]="2";//USドルの場合以外はT/T推奨
-			
-		if( $cnt >1 )//明細が1件以上ある場合
-			for ( $i = 0; $i < $cnt; $i++ ){
-				if ($Code[$i] == $Code[0] ){//全ての明細が1件目と一致しているか
+		else
+		{
+//echo "USドル以外のためT/T推奨<br>";
+			$Code[0]="2";//USドルの場合以外はT/T推奨
+		}	
+		if( $cnt >1 )
+		{
+		    //明細が1件以上ある場合
+			for ( $i = 0; $i < $cnt; $i++ )
+			{
+				if ($Code[$i] != $Code[0] )
+				{//全ての明細が1件目と一致しているか
 					$flgPayConditionsMatch = false;
 					break;
 				}
 			}
-					
+		}			
 								
 		//ユーザーが設定した支払条件と発注条件によって判断された支払い条件がマッチしてるかどうか
 		$flgPayConditionCodeMatch = ( $aryData["lngPayConditionCode"] == $Code[0] )? true:false;
-		if ($flgPayConditionCodeMatch == true && $flgPayConditionsMatch == true ){
-		//支払い条件がマッチしているのでフォーム不要
+		if ($flgPayConditionCodeMatch == true && $flgPayConditionsMatch == true )
+		{
+			//支払い条件がマッチしているのでフォーム不要
 			$frmPayConditionTable = $aryData["strPayConditionName"];
+			$aryData["isPayConditionMatch"] = "false";
 		}
-		else{
-					
+		else
+		{
+//echo "修正を推奨<br>";
 			$strhtml= fncPulldownMenu( 2, 0, '', $objDB );//第二引数がselected 今のところonloadで適宜設定している
 			$frmPayConditionTable = '<span id="VarsA10">
-						<select name="lngPayConditionCode" tabindex="3" onchange = "fncPayConditionFrmChanged();">
+						<select id="lngPayConditionCodeList" tabindex="3" onchange = "fncPayConditionFrmChanged();">
 							'.$strhtml.
 						'</select></span>';
 			
-			if ($flgPayConditionCodeMatch == false && $flgPayConditionsMatch == true ){//選択している支払い条件が間違っているが全ての明細は一致
+			if ($flgPayConditionCodeMatch == false && $flgPayConditionsMatch == true )
+			{
+			    //選択している支払い条件が間違っているが全ての明細は一致
 				$strPayMode = "0";
 			}
 					
-			else if ( $flgPayConditionCodeMatch == true && $flgPayConditionsMatch == false ){//選択している支払い条件は合致しているが全ての明細が一致せず
-						$strPayMode = "1";
+			else if ( $flgPayConditionCodeMatch == true && $flgPayConditionsMatch == false )
+			{
+			    //選択している支払い条件は合致しているが全ての明細が一致せず
+				$strPayMode = "1";
 			}
 			
-			else {
+			else
+			{
 				$strPayMode = "2";//選択している支払い条件は合致しておらず、さらに全ての明細が一致せず
 			}	
 			//bodyのOnload関数に関数を追加
+			$aryData["isPayConditionMatch"] = "false";
+			$aryData["lngMatchResult1"] = $strPayMode;
+			$aryData["lngMatchResult2"] = $aryData["lngPayConditionCode"];
+			$aryData["lngMatchResult3"] = $Code[0];
 			$aryData["strOnloadfnc"] = "fncPayConditionConfirm( '".$strPayMode."' , '".$aryData["lngPayConditionCode"]."' , '".$Code[0]."' )";
-				
 		}
 			
 	}
-	else //海外取引先でない場合は上記の処理を行わない
+	else{
+//echo "仕入先は国内<br>";
+		 //海外取引先でない場合は上記の処理を行わない
 		$frmPayConditionTable = $aryData["strPayConditionName"];
-			
+	}		
 	//2007.12.14 matsuki update end
 
 	$aryData["strPayConditionTable"]='<tr> 

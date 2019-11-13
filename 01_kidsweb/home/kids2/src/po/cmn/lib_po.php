@@ -721,51 +721,56 @@ fnccheckの換算レートdisableからpostされてないのでこめんと
 	
 	function fncDetailHidden( $aryData, $strMode, $objDB)
 	{
-
 		
 		if( $strMode == "insert" )
 		{
 			for ($i = 0; $i < count( $aryData ); $i++ )
 			{
-
-// 2004.03.25 suzukaze update start
 				// 明細行番号
+				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][lngOrderNo]\" value=\"".$aryData[$i]["lngOrderNo"]."\">";
 				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][lngOrderDetailNo]\" value=\"".$aryData[$i]["lngOrderDetailNo"]."\">";
-// 2004.03.25 suzukaze update end
-
+				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][lngSortKey]\" value=\"".$aryData[$i]["lngSortKey"]."\">";
+				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][lngRevisionNo]\" value=\"".$aryData[$i]["lngRevisionNo"]."\">";
+				// 運搬方法
+				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][lngCarrierCode]\" value=\"".$aryData[$i]["lngDeliveryMethodCode"]."\">";
+				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][strDeliveryMethodName]\" value=\"".mb_convert_encoding($aryData[$i]["strDeliveryMethodName"],"EUC-JP","auto")."\">";
+				// 単位
+				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][lngProductUnitCode]\" value=\"".$aryData[$i]["lngProductUnitCode"]."\">";
+				// 仕入科目
+				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][lngStockSubjectCode]\" value=\"".$aryData[$i]["lngStockSubjectCode"]."\">";
+				// 仕入部品
+				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][strStockItemCode]\" value=\"".$aryData[$i]["strStockItemCode"]."\">";
+				// 通貨
+				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][lngMonetaryUnitCode]\" value=\"".$aryData[$i]["lngMonetaryUnitCode"]."\">";
+				// 仕入先
+				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][lngCustomerCompanyCode]\" value=\"".$aryData[$i]["lngCustomerCompanyCode"]."\">";
+				// 単価
+				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][curProductPrice]\" value=\"".$aryData[$i]["curProductPrice"]."\">";
+				// 数量
+				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][lngProductQuantity]\" value=\"".$aryData[$i]["lngProductQuantity"]."\">";
+				// 税抜金額
+				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][curSubtotalPrice]\" value=\"".$aryData[$i]["curSubtotalPrice"]."\">";
+				// 納期
+				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][dtmDeliveryDate]\" value=\"".$aryData[$i]["dtmDeliveryDate"]."\">";
+				// 備考
+				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][strDetailNote]\" value=\"".fncHTMLSpecialChars(mb_convert_encoding($aryData[$i]["strDetailNote"],"EUC-JP","auto"))."\">";
+				
+				
+				
 				// 製品
 				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][strProductCode]\" value=\"".$aryData[$i]["strProductCode"]."\">";
-				
 				//$strStockSubjectName = "";
 				//$strStockSubjectName = fncGetMasterValue( "m_stocksubject", "lngstocksubjectcode", "strstocksubjectname", $aryData[$i]["strStockSubjectCode"],'', $objDB );
 				//$strStockItemName = "";
 				//$strStockItemName = fncGetMasterValue( "m_stockitem", "lngstockitemcode","strstockitemname" , $aryData[$i]["strStockItemCode"], "lngstocksubjectcode = ".$aryData[$i]["strStockSubjectCode"],$objDB );
-				// 仕入科目
-				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][strStockSubjectCode]\" value=\"".$aryData[$i]["strStockSubjectCode"]."\">";
-				// 仕入部品
-				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][strStockItemCode]\" value=\"".$aryData[$i]["strStockItemCode"]."\">";
 				// 換算区分コード
 				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][lngConversionClassCode]\" value=\"".$aryData[$i]["lngConversionClassCode"]."\">";
 				// ForList
 				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][curProductPriceForList]\" value=\"".$aryData[$i]["curProductPriceForList"]."\">";
-				// 単価
-				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][curProductPrice]\" value=\"".$aryData[$i]["curProductPrice"]."\">";
-				// 単位
-				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][lngProductUnitCode]\" value=\"".$aryData[$i]["lngProductUnitCode"]."\">";
-				// 数量
-				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][lngGoodsQuantity]\" value=\"".$aryData[$i]["lngGoodsQuantity"]."\">";
-				// 税抜金額
-				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][curTotalPrice]\" value=\"".$aryData[$i]["curTotalPrice"]."\">";
-				// 運搬方法
-				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][lngCarrierCode]\" value=\"".$aryData[$i]["lngCarrierCode"]."\">";
-				// 備考
-				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][strDetailNote]\" value=\"".fncHTMLSpecialChars($aryData[$i]["strDetailNote"])."\">";
 				// 単価リスト
 				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][lngGoodsPriceCode]\" value=\"".$aryData[$i]["lngGoodsPriceCode"]."\">";
 				// シリアルNO
 				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][strSerialNo]\" value=\"".$aryData[$i]["strSerialNo"]."\">";
-				// 納期
-				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][dtmDeliveryDate]\" value=\"".$aryData[$i]["dtmDeliveryDate"]."\">";
 				
 				// 単価リストの表示用value
 				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][lngProductUnitCodeName]\" value=\"".$aryData[$i]["lngProductUnitCodeName"]."\">";

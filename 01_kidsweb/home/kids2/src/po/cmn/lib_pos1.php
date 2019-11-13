@@ -843,65 +843,6 @@ function fncGetCancelOrder($lngOrderNo, $lngRevisionNo, $objDB){
 }
 
 /**
- * 発注書マスタ検索(発注コードで検索)
- * 
- * @param	String		$strOrderCode	発注コード
- * @param	Integer		$lngRevisionNo	リビジョン番号
- * @param	Object		$objDB			DBオブジェクト
- * @access	public
- * 
- */
-function fncGetPurchaseOrder($strOrderCode, $lngRevisionNo, $objDB){
-	$arySql[] = "SELECT";
-	$arySql[] = "   lngpurchaseorderno";
-	$arySql[] = "  ,lngrevisionno";
-	$arySql[] = "  ,strordercode"; 
-	$arySql[] = "  ,lngcustomercode"; 
-	$arySql[] = "  ,strcustomername"; 
-	$arySql[] = "  ,strcustomercompanyaddreess"; 
-	$arySql[] = "  ,strcustomercompanytel"; 
-	$arySql[] = "  ,strcustomercompanyfax"; 
-	$arySql[] = "  ,strproductcode"; 
-	$arySql[] = "  ,strrevisecode"; 
-	$arySql[] = "  ,strproductname"; 
-	$arySql[] = "  ,strproductenglishname"; 
-	$arySql[] = "  ,TO_CHAR(dtmexpirationdate, 'YYYY/MM/DD')"; 
-	$arySql[] = "  ,lngmonetaryunitcode"; 
-	$arySql[] = "  ,strmonetaryunitsign"; 
-	$arySql[] = "  ,lngmonetaryratecode"; 
-	$arySql[] = "  ,strmonetaryratename";
-	$arySql[] = "  ,lngpayconditioncode";
-	$arySql[] = "  ,strpayconditionname";
-	$arySql[] = "  ,lnggroupcode";
-	$arySql[] = "  ,strgroupname";
-	$arySql[] = "  ,txtsignaturefilename";
-	$arySql[] = "  ,lngusercode";
-	$arySql[] = "  ,strusername";
-	$arySql[] = "  ,lngdeliveryplacecode";
-	$arySql[] = "  ,strdeliveryplacename";
-	$arySql[] = "  ,curtotalprice";
-	$arySql[] = "  ,TO_CHAR(dtminsertdate, 'YYYY/MM/DD')";
-	$arySql[] = "  ,lnginsertusercode";
-	$arySql[] = "  ,strinsertusername"; 
-	$arySql[] = "  ,strnote"; 
-	$arySql[] = "  ,lngprintcount"; 
-	$arySql[] = "FROM m_purchaseorder";
-	$arySql[] = "WHERE strordercode = '" . $strOrderCode . "'";
-	$arySql[] = "AND   lngrevisionno = " . intval($lngRevisionNo);
-
-	$strQuery = implode("\n", $arySql);
-
-	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
-	if ( $lngResultNum == 1 )
-	{
-		$aryPurchaseOrder = $objDB->fetchArray( $lngResultID, 0 );
-	}
-	$objDB->freeResult( $lngResultID );
-
-	return $aryPurchaseOrder;
-}
-
-/**
  * 発注書マスタ検索(発注書番号で検索)
  * 
  * @param	Integer		$lngPurchaseOrderCode	発注書番号

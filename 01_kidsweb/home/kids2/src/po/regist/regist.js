@@ -245,13 +245,14 @@ jQuery(function ($) {
                 lngOrderNo: $(tr).find('.detailOrderNo').text(),
                 lngRevisionNo: $(tr).find('.detailRevisionNo').text(),
                 lngStockSubjectCode: $(tr).find('.detailStockSubjectCode').text(),
-                lngStockItemCode: $(tr).find('.detailStockItemCode').text(),
+                strStockItemCode: $(tr).find('.detailStockItemCode').text(),
                 lngMonetaryUnitCode: $(tr).find('.detailMonetaryUnitCode').text(),
                 lngCustomerCompanyCode: $(tr).find('.detailCustomerCompanyCode').text(),
                 curProductPrice: $(tr).find('.detailProductPrice').text(),
                 lngProductQuantity: $(tr).find('.detailProductQuantity').text(),
                 curSubtotalPrice: $(tr).find('.detailSubtotalPrice').text(),
                 dtmDeliveryDate: $(tr).find('.detailDeliveryDate').text(),
+                strDetailNote: $(tr).find('.detailNote').text(),
             };
             result.push(param);
         });
@@ -382,7 +383,7 @@ jQuery(function ($) {
         }
         $.ajax({
             type: 'POST',
-            url: 'index.php',
+            url: '/po/confirm/index.php?strSessionID=' + $('input[name="strSessionID"]').val(),
             data: {
                 strSessionID: $('input[name="strSessionID"]').val(),
                 lngOrderNo: $('input[name="lngOrderNo"]').val(),
@@ -392,6 +393,7 @@ jQuery(function ($) {
                 dtmExpirationDate: $('input[name="dtmExpirationDate"]').val(),
                 lngLocationCode: $('input[name="lngLocationCode"]').val(),
                 strNote: $('input[name="strNote"]').val(),
+                strProductCode: $('input[name="strProductCode"]').val(),
                 aryDetail: getUpdateDetail(),
             },
             async: true,
