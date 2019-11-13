@@ -5,7 +5,7 @@
     $('img.fix.button').on('click',function(){
         url='/po/regist/index.php';
         // lngorderno = 'lngOrderNo=' + $(this).attr('lngorderno') + ',4840';
-        lngorderno = 'lngOrderNo=' + $(this).attr('lngorderno');
+        lngorderno = 'lngOrderNo=' + $(this).attr('id');
         sessionID = 'strSessionID=' + getUrlVars()["strSessionID"];
 
         // 別ウィンドウで表示

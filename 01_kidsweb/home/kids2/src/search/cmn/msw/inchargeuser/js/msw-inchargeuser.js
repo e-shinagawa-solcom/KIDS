@@ -61,7 +61,7 @@
                     }
                 };
                 break;
-            // 製品名称のみ入力
+            // 担当者名称のみ入力
             case '01':
                 var condition = {
                     data: {
@@ -73,7 +73,7 @@
                     }
                 };
                 break;
-            // 製品コードのみ入力
+            // 担当者コードのみ入力
             case '10':
                 var condition = {
                     data: {
