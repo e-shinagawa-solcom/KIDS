@@ -128,7 +128,6 @@ class updateInsertData extends estimateInsertData {
             $this->updateTableEstimateDetail($rowData, $estimateDetailNo);
 
             $salesOrder = $rowData['salesOrder'];
-
             // 受注の場合
             if ($salesOrder === DEF_ATTRIBUTE_CLIENT) {
 
@@ -138,8 +137,8 @@ class updateInsertData extends estimateInsertData {
                 // 受注マスタ登録処理
                 $this->updateMasterReceive($rowData);
 
-                if ($rowData['receiveStatusCode'] === DEF_RECEIVE_END
-                    || $rowData['receiveStatusCode'] === DEF_RECEIVE_CLOSED) {
+                if ($rowData['receiveStatusCode'] == DEF_RECEIVE_END
+                    || $rowData['receiveStatusCode'] == DEF_RECEIVE_CLOSED) {
                     // 納品済、または締め済の場合
                     $this->updateTableSalesDetail($rowData);
                     $this->updateTableSlipDetail($rowData);
@@ -157,13 +156,12 @@ class updateInsertData extends estimateInsertData {
                     // 発注マスタ登録処理
                     $this->updateMasterOrder($rowData);
                 }
-
-                if ($rowData['orderStatusCode'] === DEF_ORDER_ORDER) {
+                if ($rowData['orderStatusCode'] == DEF_ORDER_ORDER) {
                     // 発注の場合
                     $this->updateTablePurchaseOrderDetail($rowData);
 
-                } else if ($rowData['orderStatusCode'] === DEF_ORDER_END
-                    || $rowData['orderStatusCode'] === DEF_ORDER_CLOSED) {
+                } else if ($rowData['orderStatusCode'] == DEF_ORDER_END
+                    || $rowData['orderStatusCode'] == DEF_ORDER_CLOSED) {
 
                     // 納品済、または締め済の場合
                     $this->updateTablePurchaseOrderDetail($rowData);
@@ -888,16 +886,15 @@ class updateInsertData extends estimateInsertData {
     protected function updateTableSalesDetail($rowData) {
 
         $receiveNo = $rowData['receiveNo'];
-        $receiveDetailNo = $rowData['receiveDetailNo'];
         $preReceiveRevisionNo = $this->preReceiveRevisionNo;
         
         $strQuery = "UPDATE";
         $strQuery .= " t_salesdetail";
         $strQuery .= " SET";
-        $strQuery .= " lngreceiverevisionno = lngreceiverevisionno + 1";
+        $strQuery .= " lngreceiverevisionno = " . $preReceiveRevisionNo . " + 1";
         $strQuery .= " WHERE lngreceiveno = ". $receiveNo;
-        $strQuery .= " AND lngreceivedetailno = ". $receiveDetailNo;
         $strQuery .= " AND lngreceiverevisionno = ". $preReceiveRevisionNo;
+        $strQuery .= " AND lngsalesno not in (select lngsalesno from m_sales where lngrevisionno < 0)";
 
         // クエリの実行
         list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
@@ -917,16 +914,15 @@ class updateInsertData extends estimateInsertData {
     protected function updateTableSlipDetail($rowData) {
 
         $receiveNo = $rowData['receiveNo'];
-        $receiveDetailNo = $rowData['receiveDetailNo'];
         $preReceiveRevisionNo = $this->preReceiveRevisionNo;
         
         $strQuery = "UPDATE";
         $strQuery .= " t_slipdetail";
         $strQuery .= " SET";
-        $strQuery .= " lngreceiverevisionno = lngreceiverevisionno + 1";
+        $strQuery .= " lngreceiverevisionno = " . $preReceiveRevisionNo . " + 1";
         $strQuery .= " WHERE lngreceiveno = ". $receiveNo;
-        $strQuery .= " AND lngreceivedetailno = ". $receiveDetailNo;
         $strQuery .= " AND lngreceiverevisionno = ". $preReceiveRevisionNo;
+        $strQuery .= " AND lngslipno not in (select lngslipno from m_slip where lngrevisionno < 0)";
 
         // クエリの実行
         list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
@@ -946,17 +942,18 @@ class updateInsertData extends estimateInsertData {
     protected function updateTablePurchaseOrderDetail($rowData) {
 
         $orderNo = $rowData['orderNo'];
-        $orderDetailNo = $rowData['orderDetailNo'];
         $preOrderRevisionNo = $this->preOrderRevisionNo;
+
+
+
         
         $strQuery = "UPDATE";
         $strQuery .= " t_purchaseorderdetail";
         $strQuery .= " SET";
-        $strQuery .= " lngorderrevisionno = lngorderrevisionno + 1";
+        $strQuery .= " lngorderrevisionno =" . $preOrderRevisionNo . " + 1";
         $strQuery .= " WHERE lngorderno = ". $orderNo;
-        $strQuery .= " AND lngorderdetailno = ". $orderDetailNo;
         $strQuery .= " AND lngorderrevisionno = ". $preOrderRevisionNo;
-
+        $strQuery .= " AND lngpurchaseorderno not in (select lngpurchaseorderno from m_purchaseorder where lngrevisionno < 0)";
         // クエリの実行
         list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
 
@@ -975,16 +972,15 @@ class updateInsertData extends estimateInsertData {
     protected function updateTableStockDetail($rowData) {
  
         $orderNo = $rowData['orderNo'];
-        $orderDetailNo = $rowData['orderDetailNo'];
         $preOrderRevisionNo = $this->preOrderRevisionNo;
         
         $strQuery = "UPDATE";
         $strQuery .= " t_stockdetail";
         $strQuery .= " SET";
-        $strQuery .= " lngorderrevisionno = lngorderrevisionno + 1";
+        $strQuery .= " lngorderrevisionno = " . $preOrderRevisionNo . " + 1";
         $strQuery .= " WHERE lngorderno = ". $orderNo;
-        $strQuery .= " AND lngorderdetailno = ". $orderDetailNo;
         $strQuery .= " AND lngorderrevisionno = ". $preOrderRevisionNo;
+        $strQuery .= " AND lngstockno not in (select lngstockno from m_stock where lngrevisionno < 0)";
 
         // クエリの実行
         list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
