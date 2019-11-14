@@ -814,14 +814,16 @@ jQuery(function ($) {
             async: true,
         }).done(function (data) {
             console.log("done");
+            console.log(data);
 
             var url = "/sc/regist2/preview.php" + "?strSessionID=" + $('input[name="strSessionID"]').val();
             var previewWin = window.open('', target, features);
+            previewWin.document.open();
             previewWin.document.write(data);
             previewWin.document.close();
 
             //再読み込みなしでアドレスバーのURLのみ変更
-            previewWin.history.pushState(null, null, url);
+            emptyWin.history.pushState(null, null, url);
 
         }).fail(function (error) {
             console.log("fail");

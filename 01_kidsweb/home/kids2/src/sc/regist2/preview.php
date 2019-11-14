@@ -79,7 +79,6 @@
 	{
 		$aryData["adddelrowview"] = 'hidden';
 	}
-
 	//-------------------------------------------------------------------------
 	//  プレビュー画面表示
 	//-------------------------------------------------------------------------
@@ -115,8 +114,11 @@
 		//  プレビュー生成
 		// --------------------------
 		//登録データとExcelテンプレートとからプレビューHTMLを生成する
+		// $aryGenerateResult = fncGenerateReportImage("html", $aryHeader, $aryDetail, 
+		// 	null, null, null, null, null, 
+		// 	$objDB);
 		$aryGenerateResult = fncGenerateReportImage("html", $aryHeader, $aryDetail, 
-			null, null, null, null, null, 
+		$lngRenewTargetSlipNo, null, $strRenewTargetSlipCode, $lngRenewTargetSalesNo,  null, 
 			$objDB);
 
 		// --------------------------
@@ -125,7 +127,7 @@
 		// テンプレートから構築したHTMLを出力
 		$aryData["PREVIEW_STYLE"] = $aryGenerateResult["PreviewStyle"];
 		$aryData["PREVIEW_DATA"] = $aryGenerateResult["PreviewData"];
-		$aryData["strComfirmMessage"] = mb_convert_encoding("以下の内容で売上（納品書）を登録します。よろしいですか？","UTF-8", "auto");
+		$aryData["strComfirmMessage"] = "以下の内容で売上（納品書）を登録します。よろしいですか？";
 		$objTemplate = new clsTemplate();
 		$objTemplate->getTemplate( "sc/regist2/preview.tmpl" );
 		$objTemplate->replace( $aryData );
@@ -273,8 +275,8 @@
 		$dtmInsertDate = fncGetInsertDateBySlipCode($strSlipCode, $objDB);
 
 		// 帳票テンプレートに設定する納品書データの読み込み（ヘッダ・フッタ部）
-		$aryHeader = fncGetHeaderBySlipNo($lngSlipNo, $lngRevisionNo, $objDB);
-
+		$aryHeader = fncGetHeaderBySlipNo($lngSlipNo, $objDB);
+		$lngRevisionNo = $aryHeader["$lngRevisionNo"];
 		// 帳票テンプレートに設定する納品書データの読み込み（明細部）
 		$aryDetail = fncGetDetailBySlipNo($lngSlipNo, $lngRevisionNo, $objDB);
 

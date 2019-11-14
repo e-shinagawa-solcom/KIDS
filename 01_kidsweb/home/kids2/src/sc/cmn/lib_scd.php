@@ -581,7 +581,7 @@ function fncSetHeaderDataToTr($doc, $trBody, $bgcolor, $rowspan, $aryTableHeader
                 if ($record["strdeliveryplacecode"] != '') {
                     $textContent = "[" . $record["strdeliveryplacecode"] . "]" . " " . $record["strdeliveryplacename"];
                 } else {
-                    $textContent .= "     ";
+                    $textContent = "     ";
 				}
 				if ($toUTF8Flag) {
 					$textContent = toUTF8($textContent);

@@ -1,6 +1,7 @@
 <!--
 
 
+
 	/************************** v2 tomita update **************************/
 	#SegDept
 	{
@@ -70,16 +71,142 @@
 	{
 		position         : absolute ;
 		left             : 10px ;
-		top              : 171px ;
-		width            : 880px;
-		height           : 109px;
-		visibility       : hidden ;
+		top              : 170px ;
+		width            : 800px;
+		height           : 135px;
 		border           : 1px solid #798787;
-		background       : #7e888f ;
-		filter:progid:DXImageTransform.Microsoft.Alpha( opacity=90 );
+		background       : #ffffff ;
+		overflow         : auto;
+	}
+
+	#SegEditIN
+	{
+		position         : absolute ;
+		left             : 10px ;
+		top              : 320px ;
+		width            : 775px;
+		height           : 135px;
+		border           : 1px solid #798787;
+		background       : #ffffff ;
+		overflow         : auto;
+		z-index: 2;
 	}
 	/**********************************************************************/
 
+	#Preview{
+		position: absolute;
+		top: 520px;
+		left: 822px;
+	}
+	/* ¸????÷ž????????ţ?�ĎĽ�?ĽżĽó */
+	#SearchBt{
+		position: absolute;
+		top: 200px;
+		left: 830px;
+	}
+	/* ????????Ľ??ĽżĽó */
+	#AddBt{
+		position: absolute;
+		top: 260px;
+		left: 830px;
+	}
+	/* ??????üĽ??ĽżĽó */
+	#DeleteBt{
+		position: absolute;
+		top: 350px;
+		left: 830px;
+	}
+	/* ??´??????üĽ??ĽżĽó */
+	#AllDeleteBt{
+		position: absolute;
+		top: 420px;
+		left: 830px;
+	}
+	/* Ľ??Ľ??Ľ??Ľĺ??źĽ??ĽżĽó */
+	#PreviewBt {
+		position: absolute;
+		top: 475px;
+		left: 840px;
+	}
+
+	#selectup{
+		position: absolute;
+		top: 318px;
+		left: 785px;
+	}
+	#selectup1{
+		position: absolute;
+		top: 345px;
+		left: 777px;
+	}
+	#selectdown1{
+		z-index: 1;
+		position: absolute;
+		top: 405px;
+		left: 777px;
+	}
+	#selectdown{
+		padding :0;
+		position: absolute;
+		top: 434px;
+		left: 785px;
+	}
+
+	#DetailTable {
+		table-layout: fixed;
+	}
+	tr.TrSegs th {
+		font-weight: bold;
+		font-size: 9pt;
+		color: #ffffff;
+		background-color: #7e888f;
+		padding: 4px 3px 1px 3px;
+		white-space: nowrap;
+	}
+	tr.TrSegs th.sortable {
+		padding: 4px 20px 1px 3px;
+	}
+	#DetailTableBody tr td {
+		font-size: 9pt;
+		color: #666666;
+		white-space: nowrap;
+	}
+	#DetailTableBody tr td:nth-child(1){
+		width: 300px;
+	}
+	.forEdit{
+		display: none;
+	}
+	#EditTable{
+		table-layout: auto;
+	}
+	#EditTableBody tr td {
+		font-size: 9pt;
+		color: #666666;
+		white-space: nowrap;
+	}
+	#DetailTableBodyAllCheck{
+		width: 20px;
+	}
+	.detailCheckBox{
+		width: 20px;
+		text-align: center;
+		vertical-align: middle;
+	}
+	.detailCheckBox input{
+		width: 20px;
+	}
+	/*
+	#EditTableHead tr th:nth-child(1){
+		width: 30px;
+	}
+	#EditTableHead tr th:nth-child(2){
+		width: 100px;
+	}
+	*/
+	.selected {
+		background-color: #87cefa;
+	}
 
 #TaxBt
 {
@@ -96,8 +223,8 @@
 #TaxStatus
 {
 	position : absolute ;
-	left : 615px ;
-	top : 182px ;
+	left : 644px ;
+	top : 278px ;
 	visibility : hidden ;
 	border-width: 0px ;
 	border-style: none ;
@@ -194,8 +321,8 @@
 /* START INPUT A SEGMENTS */
 #InputA {
 	position : absolute ;
-	left : 5px ;
-	top : 15px ;
+	left : 34px ;
+	top : 10px ;
 	z-index : 0 ;
 	visibility : visible ;
 	border-width: 0px ;
@@ -221,14 +348,15 @@
 
 /* START BODYS */
 #SegABodys {
-	left : 10px ;
-	top : 31px ;
-	width : 927px ;
-	height : 310px ;
+	position: absolute;
+	left : 0px ;
+	top : 30px ;
+	width : 925px; ;
+	height : 440px ;
 	border-width: 1px ;
 	border-style: solid ;
 	border-color: #cdcdcd ;
-	background-color: #ffffff ;
+	background-color:rgb(214, 208, 177);
 }
 /* END BODYS */
 
@@ -237,379 +365,455 @@
 #SegABottom {
 	position : absolute ;
 	left : 0px ;
-	top : 308px ;
+	top : 460px ;
 	width : 766px ;
 	height : 7px ;
 	border-width: 0px ;
 	border-style: none ;
-	background-color: #ffffff ;
+	background-color:rgb(214, 208, 177);
 }
 /* END BOTTOM */
 
 
-/* START SEGMENTS */
-#SegA01 {
+/* ľŻ??źź?? */
+#SegADrafter {
 	font-weight : bold ;
+	color : #666666 ;
 	position : absolute ;
 	left : 10px ;
 	top : 40px ;
 	width : 120px ;
-	height : 27px ;
+	height : 20px ;
 	border-width: 1px ;
 	border-style: solid ;
-	border-color: #798787 #ffffff #798787 #798787 ;
-	background-color: #ffffff ;
-	padding : 8px 0px 0px 8px ;
+	border-color: #798787 #e8f0f1 #798787 #798787;
+	background-color: #e8f0f1 ;
+	padding : 5px 0px 0px 8px ;
 }
-
-#SegA02 {
-	font-weight : bold ;
+#VarsADrafter {
 	position : absolute ;
-	left : 10px ;
-	top : 70px ;
-	width : 120px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #798787 #ffffff #798787 #798787 ;
-	background-color: #ffffff ;
-	padding : 8px 0px 0px 8px ;
-}
-
-#SegA03 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 110px ;
-	width : 120px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #798787 #ffffff #798787 #798787 ;
-	background-color: #ffffff ;
-	padding : 8px 0px 0px 8px ;
-}
-
-#SegA04 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 144px ;
-	width : 170px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #798787 #ffffff #798787 #798787 ;
-	background-color: #ffffff ;
-	padding : 8px 0px 0px 8px ;
-}
-
-#SegA05 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 170px ;
-	width : 170px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #798787 #ffffff #798787 #798787 ;
-	background-color: #ffffff ;
-	padding : 8px 0px 0px 8px ;
-}
-
-#SegA0405 {
-	position : absolute ;
-	left : 562px ;
-	top : 144px ;
-	width : 33 ;
-	height : 53px ;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #798787 #798787 #798787 #798787 ;
-	background-color: transparent ;
-}
-
-#SegA11 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 204px ;
-	width : 170px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #798787 #ffffff #798787 #798787 ;
-	background-color: #ffffff ;
-	padding : 8px 0px 0px 8px ;
-}
-
-#SegA12 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 248px ;
-	width : 120px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #798787 #ffffff #798787 #798787 ;
-	background-color: #ffffff ;
-	padding : 8px 0px 0px 8px ;
-}
-
-#SegA13 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 10px ;
-	top : 278px ;
-	width : 120px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #798787 #ffffff #798787 #798787 ;
-	background-color: #ffffff ;
-	padding : 8px 0px 0px 8px ;
-}
-
-#SegA06 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 712px ;
+	left : 60px ;
 	top : 40px ;
-	width : 100px ;
-	height : 27px ;
+	height : 22px ;
+	width: 235px;
 	border-width: 1px ;
 	border-style: solid ;
-	border-color: #798787 #ffffff #798787 #798787 ;
-	background-color: #ffffff ;
-	padding : 8px 0px 0px 8px ;
+	border-color: #798787 #798787 #798787 #e8f0f1;
+	background-color: #e8f0f1 ;
+	padding : 3px 0px 0px 8px ;
+}
+/* ľŻ??źź??????????Ľ??ĽżĽó */
+#MSWBtDrafter {
+	position : absolute ;
+	left : 280px ;
+	top : 43px ;
+	width : 19px ;
+	height : 19px ;
+	border-width : 0px ;
+	border-style : none ;
+	background-color : #ffffff ;
 }
 
-#SegA07 {
+/* ??ź??????ü */
+#SegADeliveryDate {
 	font-weight : bold ;
+	color : #666666 ;
 	position : absolute ;
-	left : 712px ;
+	left : 10px ;
 	top : 70px ;
-	width : 100px ;
-	height : 27px ;
+	width : 120px ;
+	height : 20px ;
 	border-width: 1px ;
 	border-style: solid ;
-	border-color: #798787 #ffffff #798787 #798787 ;
-	background-color: #ffffff ;
-	padding : 8px 0px 0px 8px ;
+	border-color: #798787 #e8f0f1 #798787 #798787;
+	background-color: #e8f0f1 ;
+	padding : 5px 0px 0px 8px ;
+}
+#VarsADeliveryDate{
+	position : absolute ;
+	left : 60px ;
+	top : 70px ;
+	height : 22px ;
+	width: 110px;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #798787 #798787 #e8f0f1;
+	background-color: #e8f0f1 ;
+	padding : 3px 0px 0px 8px ;
+}
+/* ??ź??????ü????????Ľ??ĽżĽó */
+#DateBtB {
+	position : absolute ;
+	left : 154px ;
+	top : 73px ;
+	width : 19px ;
+	height : 19px ;
+	border-width : 0px ;
+	border-style : none ;
+	background-color : #ffffff ;
 }
 
-#SegA08 {
+/* ¸??ľ?? */
+#SegACustomer {
 	font-weight : bold ;
 	position : absolute ;
-	left : 712px ;
+	left : 310px ;
+	top : 40px ;
+	width : 170px ;
+	height : 20px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #e8f0f1 #798787 #798787;
+	background-color: #e8f0f1 ;
+	padding : 5px 0px 0px 8px ;
+}
+#VarsACustomer {
+	position : absolute ;
+	left : 360px ;
+	top : 40px ;
+	height : 22px ;
+	width: 295px;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #798787 #798787 #e8f0f1;
+	background-color: #e8f0f1 ;
+	padding : 3px 0px 0px 10px ;
+}
+
+/* ¸??ľ????????´Ĺöź?? */
+#SegACustomerUserName {
+	font-weight : bold ;
+	position : absolute ;
+	left : 672px ;
+	top : 40px ;
+	width : 170px ;
+	height : 20px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #e8f0f1 #798787 #798787;
+	background-color: #e8f0f1 ;
+	padding : 5px 0px 0px 8px ;
+}
+#VarsACustomerUserName {
+	font-weight : bold ;
+	position : absolute ;
+	left : 762px ;
+	top : 40px ;
+	height : 22px ;
+	width: 160px;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #798787 #798787 #e8f0f1;
+	background-color: #e8f0f1 ;
+	padding : 3px 0px 0px 0px ;
+}
+/* ¸??ľ??????????Ľ??ĽżĽó */
+#MSWBtCustomerName {
+	position : absolute ;
+	left : 644px ;
+	top : 43px ;
+	width : 19px ;
+	height : 19px ;
+	border-width : 0px ;
+	border-style : none ;
+	background-color : #ffffff ;
+}
+
+
+/* ??ź???????? */
+#SegADeliveryPlaceName {
+	font-weight : bold ;
+	position : absolute ;
+	left : 310px ;
+	top : 70px ;
+	width : 170px ;
+	height : 20px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #e8f0f1 #798787 #798787;
+	background-color: #e8f0f1 ;
+	padding : 5px 0px 0px 8px ;
+}
+#VarsADeliveryPlaceName {
+	position : absolute ;
+	left : 360px ;
+	top : 70px ;
+	height : 22px ;
+	width: 295px;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #798787 #798787 #e8f0f1;
+	background-color: #e8f0f1 ;
+	padding : 3px 0px 0px 10px ;
+}
+/* ??ź????????????????Ľ??ĽżĽó */
+#MSWBtDeliveryPlaceName {
+	position : absolute ;
+	left : 644px ;
+	top : 73px ;
+	width : 19px ;
+	height : 19px ;
+	border-width : 0px ;
+	border-style : none ;
+	background-color : #ffffff ;
+}
+
+/* ??ź??????????´Ĺöź?? */
+#SegADeliveryPlaceUserName {
+	font-weight : bold ;
+	position : absolute ;
+	left : 672px ;
+	top : 70px ;
+	width : 170px ;
+	height : 20px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #e8f0f1 #798787 #798787;
+	background-color: #e8f0f1 ;
+	padding : 5px 0px 0px 8px ;
+}
+#VarsADeliveryPlaceUserName {
+	font-weight : bold ;
+	position : absolute ;
+	left : 762px ;
+	top : 70px ;
+	height : 22px ;
+	width: 160px;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #798787 #798787 #e8f0f1;
+	background-color: #e8f0f1 ;
+	padding : 3px 0px 0px 0px ;
+}
+
+/* ??÷š?? */ 
+#SegANote {
+	font-weight : bold ;
+	position : absolute ;
+	left : 10px ;
 	top : 100px ;
 	width : 100px ;
-	height : 27px ;
+	height : 50px ;
 	border-width: 1px ;
 	border-style: solid ;
-	border-color: #798787 #ffffff #798787 #798787 ;
-	background-color: #ffffff ;
-	padding : 8px 0px 0px 8px ;
+	border-color: #798787 #e8f0f1 #798787 #798787;
+	background-color: #e8f0f1 ;
+	padding : 5px 0px 0px 8px ;
 }
-
-#SegA09 {
-	font-weight : bold ;
+#VarsANote {
 	position : absolute ;
-	left : 712px ;
-	top : 130px ;
-	width : 100px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #798787 #ffffff #798787 #798787 ;
-	background-color: #ffffff ;
-	padding : 8px 0px 0px 8px ;
-}
-
-#SegA10 {
-	font-weight : bold ;
-	position : absolute ;
-	left : 712px ;
-	top : 160px ;
-	width : 100px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #798787 #ffffff #798787 #798787 ;
-	background-color: #ffffff ;
-	padding : 8px 0px 0px 8px ;
-}
-/* END SEGMENTS */
-
-
-/* START VARS */
-#VarsA01 {
-	position : absolute ;
-	left : 129px ;
-	top : 40px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #798787 #798787 #798787 #ffffff ;
-	background-color: #ffffff ;
-	padding : 3px 35px 0px 8px ;
-}
-
-#VarsA02 {
-	position : absolute ;
-	left : 129px ;
-	top : 70px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #798787 #ffffff #798787 #ffffff ;
-	background-color: #ffffff ;
-	padding : 3px 0px 0px 8px ;
-}
-
-
-#VarsA03 {
-	position : absolute ;
-	left : 129px ;
-	top : 110px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #798787 #ffffff #798787 #ffffff ;
-	background-color: #ffffff ;
-	padding : 3px 33px 0px 8px ;
-}
-
-
-#VarsA04 {
-	position : absolute ;
-	left : 178px ;
-	top : 144px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #798787 #ffffff #798787 #ffffff ;
-	background-color: #ffffff ;
-	padding : 3px 0px 0px 8px ;
-}
-
-
-#VarsA05 {
-	position : absolute ;
-	left : 178px ;
-	top : 170px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #798787 #ffffff #798787 #ffffff ;
-	background-color: #ffffff ;
-	padding : 3px 0px 0px 8px ;
-}
-
-
-#VarsA11 {
-	position : absolute ;
-	left : 171px ;
-	top : 204px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #798787 #ffffff #798787 #ffffff ;
-	background-color: #ffffff ;
-	padding : 3px 33px 0px 8px ;
-}
-
-
-#VarsA12 {
-	position : absolute ;
-	left : 129px ;
-	top : 248px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #798787 #ffffff #798787 #ffffff ;
-	background-color: #ffffff ;
-	padding : 3px 35px 0px 8px ;
-}
-
-#VarsA13 {
-	position : absolute ;
-	left : 129px ;
-	top : 278px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #798787 #ffffff #798787 #ffffff ;
-	background-color: #ffffff ;
-	padding : 3px 0px 0px 8px ;
-}
-
-
-#VarsA06 {
-	position : absolute ;
-	left : 811px ;
-	top : 40px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #798787 #798787 #798787 #ffffff ;
-	background-color: #ffffff ;
-	padding : 3px 0px 0px 8px ;
-}
-
-#VarsA07 {
-	position : absolute ;
-	left : 811px ;
-	top : 70px ;
-	height : 27px ;
-	border-width: 1px ;
-	border-style: solid ;
-	border-color: #798787 #798787 #798787 #ffffff ;
-	background-color: #ffffff ;
-	padding : 3px 0px 0px 8px ;
-}
-
-#VarsA08 {
-	position : absolute ;
-	left : 811px ;
+	left : 60px ;
 	top : 100px ;
-	height : 27px ;
+	height : 52px ;
+	width: 235px;
 	border-width: 1px ;
 	border-style: solid ;
-	border-color: #798787 #798787 #798787 #ffffff ;
-	background-color: #ffffff ;
+	border-color: #798787 #798787 #798787 #e8f0f1;
+	background-color: #e8f0f1 ;
 	padding : 3px 0px 0px 8px ;
 }
+#VarsANote textarea {
+	width: 230px;
+	height: 47px;
+	text-align : left;
+	ime-mode:enabled;
+	resize:none;
+}
 
-#VarsA09 {
+/* ž????????????????Ź */
+#SegATaxClass {
+	font-weight : bold ;
 	position : absolute ;
-	left : 811px ;
+	left : 310px ;
+	top : 100px ;
+	width : 170px ;
+	height : 20px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #e8f0f1 #798787 #798787;
+	background-color: #e8f0f1 ;
+	padding : 5px 0px 0px 8px ;
+}
+#VarsATaxClass {
+	position : absolute ;
+	left : 390px ;
+	top : 100px ;
+	height : 22px ;
+	width: 110px;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #798787 #798787 #e8f0f1;
+	background-color: #e8f0f1 ;
+	padding : 3px 0px 0px 0px ;
+}
+
+/* ž???????????��? */
+#SegATaxRate {
+	font-weight : bold ;
+	position : absolute ;
+	left : 507px ;
+	top : 100px ;
+	width : 100px ;
+	height : 20px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #e8f0f1 #798787 #798787;
+	background-color: #e8f0f1 ;
+	padding : 5px 0px 0px 8px ;
+}
+#VarsATaxRate {
+	position : absolute ;
+	left : 576px ;
+	top : 100px ;
+	height : 22px ;
+	width: 89px;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #798787 #798787 #e8f0f1;
+	background-color: #e8f0f1 ;
+	padding : 3px 0px 0px 0px ;
+}
+
+/* ž????????????Ű */
+#SegATaxAmount {
+	font-weight : bold ;
+	position : absolute ;
+	left : 672px ;
+	top : 100px ;
+	width : 170px ;
+	height : 20px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #e8f0f1 #798787 #798787;
+	background-color: #e8f0f1 ;
+	padding : 5px 0px 0px 8px ;
+}
+#VarsATaxAmount {
+	position : absolute ;
+	left : 762px ;
+	top : 100px ;
+	height : 22px ;
+	width: 160px;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #798787 #798787 #e8f0f1;
+	background-color: #e8f0f1 ;
+	padding : 3px 0px 0px 0px ;
+}
+
+
+/* ťŮ??§´ü¸?? */
+#SegAPaymentLimit {
+	font-weight : bold ;
+	position : absolute ;
+	left : 310px ;
 	top : 130px ;
-	height : 27px ;
+	width : 170px ;
+	height : 20px ;
 	border-width: 1px ;
 	border-style: solid ;
-	border-color: #798787 #798787 #798787 #ffffff ;
-	background-color: #ffffff ;
-	padding : 3px 0px 0px 8px ;
+	border-color: #798787 #e8f0f1 #798787 #798787;
+	background-color: #e8f0f1 ;
+	padding : 5px 0px 0px 8px ;
+}
+#VarsAPaymentLimit {
+	position : absolute ;
+	left : 390px ;
+	top : 130px ;
+	height : 22px ;
+	width: 90px;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #798787 #798787 #e8f0f1;
+	background-color: #e8f0f1 ;
+	padding : 3px 20px 0px 0px ;
+}
+/* ťŮ??§´ü¸??????????Ľ??ĽżĽó */
+#DateBtC {
+	position : absolute ;
+	left : 475px ;
+	top : 133px ;
+	width : 19px ;
+	height : 19px ;
+	border-width : 0px ;
+	border-style : none ;
+	background-color : #ffffff ;
 }
 
-#VarsA10 {
+/* ťŮ??§??ý???? */
+#SegAPaymentMethod {
+	font-weight : bold ;
 	position : absolute ;
-	left : 811px ;
-	top : 160px ;
-	height : 27px ;
+	left : 507px ;
+	top : 130px ;
+	width : 100px ;
+	height : 20px ;
 	border-width: 1px ;
 	border-style: solid ;
-	border-color: #798787 #798787 #798787 #ffffff ;
-	background-color: #ffffff ;
-	padding : 3px 0px 0px 8px ;
+	border-color: #798787 #e8f0f1 #798787 #798787;
+	background-color: #e8f0f1 ;
+	padding : 5px 0px 0px 8px ;
 }
+#VarsAPaymentMethod {
+	position : absolute ;
+	left : 576px ;
+	top : 130px ;
+	height : 22px ;
+	width: 89px;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #798787 #798787 #e8f0f1;
+	background-color: #e8f0f1 ;
+	padding : 3px 0px 0px 0px ;
+}
+
+/* šç??????â??Ű */
+#SegATotalAmount {
+	font-weight : bold ;
+	position : absolute ;
+	left : 672px ;
+	top : 130px ;
+	width : 170px ;
+	height : 20px ;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #e8f0f1 #798787 #798787;
+	background-color: #e8f0f1 ;
+	padding : 5px 0px 0px 8px ;
+}
+#VarsATotalAmount {
+	position : absolute ;
+	left : 762px ;
+	top : 130px ;
+	height : 22px ;
+	width: 160px;
+	border-width: 1px ;
+	border-style: solid ;
+	border-color: #798787 #798787 #798787 #e8f0f1;
+	background-color: #e8f0f1 ;
+	padding : 3px 0px 0px 0px ;
+}
+
 /* END VARS */
 /************************************** END INPUT A **************************************/
 
+/********************* START DATE BUTTON *********************/
+#DateBtA {
+	position : absolute ;
+	left : 227px ;
+	top : 95px ;
+	width : 19px ;
+	height : 19px ;
+	border-width : 0px ;
+	border-style : none ;
+	background-color : #ffffff ;
+}
+/********************** END DATE BUTTON **********************/
 
+
+/********************* START MSW BUTTON *********************/
+
+/********************** END MSW BUTTON **********************/
 
 
 
@@ -628,8 +832,8 @@
 /* START INPUT B SEGMENTS */
 #InputB {
 	position : absolute ;
-	left : 5px ;
-	top : 15px ;
+	left : 34px ;
+	top : 111px ;
 	z-index : 0 ;
 	visibility : hidden ;
 	border-width: 0px ;
@@ -1229,7 +1433,7 @@
 	height : 27px ;
 	border-width: 1px ;
 	border-style: solid ;
-	border-color: #cdcdcd #cdcdcd #cdcdcd #ffffff ;
+	border-color: #cdcdcd #cdcdcd #cdcdcd #72828b ;
 	background-color: transparent ;
 	padding : 3px 94px 0px 8px ;
 }
@@ -1242,7 +1446,7 @@
 	text-align : right ;
 	border-width: 1px ;
 	border-style: solid ;
-	border-color: #798787 #798787 #798787 #ffffff ;
+	border-color: #798787 #798787 #798787 #72828b ;
 	background-color: #ffffff ;
 	padding : 3px 0px 0px 0px ;
 }
@@ -1289,8 +1493,8 @@
 /* START INPUT C SEGMENTS */
 #InputC {
 	position : absolute ;
-	left : 5px ;
-	top : 374px ;
+	left : 34px ;
+	top : 470px ;
 	z-index : 0 ;
 	visibility: hidden ;
 	border-width: 0px ;
@@ -1377,8 +1581,8 @@
 #TabA {
 	font-weight : normal ;
 	position : absolute ;
-	left : 937px ;
-	top : 2px ;
+	left : 966px ;
+	top : 98px ;
 	z-index : 3 ;
 	border-width: 0px ;
 	background-color: transparent ;
@@ -1387,8 +1591,8 @@
 #TabB {
 	font-weight : normal ;
 	position : absolute ;
-	left : 937px ;
-	top : 276px ;
+	left : 966px ;
+	top : 372px ;
 	z-index : 3 ;
 	border-width: 0px ;
 	background-color: transparent ;
@@ -1492,51 +1696,6 @@
 
 
 
-/********************* START DATE BUTTON *********************/
-#DateBtA {
-	position : absolute ;
-	left : 227px ;
-	top : 44px ;
-	width : 19px ;
-	height : 19px ;
-	border-width : 0px ;
-	border-style : none ;
-	background-color : #ffffff ;
-}
-
-#DateBtB {
-	position : absolute ;
-	left : 227px ;
-	top : 252px ;
-	width : 19px ;
-	height : 19px ;
-	border-width : 0px ;
-	border-style : none ;
-	background-color : #ffffff ;
-}
-
-#DateBtC {
-	position : absolute ;
-	left : 889px ;
-	top : 104px ;
-	width : 19px ;
-	height : 19px ;
-	border-width : 0px ;
-	border-style : none ;
-	background-color : #ffffff ;
-}
-/********************** END DATE BUTTON **********************/
-
-
-
-
-
-
-
-
-
-
-
 
 /********************* START PACKING UNIT BUTTON *********************/
 #PunitBt {
@@ -1553,8 +1712,6 @@
 
 
 
-
-
 #WFrootBt {
 	position : absolute ;
 	top : 334px ;
@@ -1563,6 +1720,8 @@
 	border-style: none ;
 	background-color: transparent ;
 }
+
+
 
 
 #WFRootFrame {
@@ -1585,7 +1744,7 @@
 	border-width: 0px ;
 	border-style: none ;
 	background-color: transparent ;
-	filter:progid:DXImageTransform.Microsoft.Alpha(opacity=90);
+	filter:progid:DXImageTransform.Microsoft.Alpha(opacity=98);
 }
 
 
@@ -1594,64 +1753,6 @@
 
 
 
-
-/********************* START MSW BUTTON *********************/
-/* START [SUPPLIER] BUTTON */
-#MSWBt08 {
-	position : absolute ;
-	left : 569px ;
-	top : 114px ;
-	width : 19px ;
-	height : 19px ;
-	border-width : 0px ;
-	border-style : none ;
-	background-color : #ffffff ;
-}
-/* END [SUPPLIER] BUTTON */
-
-
-/* START [DEPT & IN CHARGE NAME] BUTTON */
-#MSWBt02 {
-	position : absolute ;
-	left : 569px ;
-	top : 160px ;
-	width : 19px ;
-	height : 19px ;
-	border-width : 0px ;
-	border-style : none ;
-	background-color : #ffffff ;
-}
-/* END [DEPT & IN CHARGE NAME] BUTTON */
-
-
-/* START [GOODS] BUTTON */
-#MSWBt03 {
-	position : absolute ;
-	left : 895px ;
-	top : 44px ;
-	width : 19px ;
-	height : 19px ;
-	border-width : 0px ;
-	border-style : none ;
-	background-color : #ffffff ;
-}
-/* END [GOODS] BUTTON */
-
-
-/* START [LOCATION] BUTTON */
-#MSWBt04 {
-	position : absolute ;
-	left : 569px ;
-	top : 208px ;
-	width : 19px ;
-	height : 19px ;
-	border-width : 0px ;
-	border-style : none ;
-	background-color : #ffffff ;
-}
-/* END [GOODS] BUTTON */
-
-/********************** END MSW BUTTON **********************/
 
 
 
@@ -1660,8 +1761,8 @@
 /* START [SUPPLIER] */
 #MiFrame08 {
 	position : absolute ;
-	left : 95px ;
-	top : 154px ;
+	left : 124px ;
+	top : 250px ;
 	z-index : 8 ;
 	visibility: hidden ;
 	border-width: 0px ;
@@ -1674,8 +1775,8 @@
 /* START [DEPT & IN CHARGE NAME] */
 #MiFrame02 {
 	position : absolute ;
-	left : 76px ;
-	top : 159px ;
+	left : 105px ;
+	top : 305px ;
 	z-index : 8 ;
 	position : absolute ;
 	visibility: hidden ;
@@ -1689,8 +1790,8 @@
 /* START [PRODUCTS] */
 #MiFrame03 {
 	position : absolute ;
-	left : 199px ;
-	top : 84px ;
+	left : 228px ;
+	top : 180px ;
 	z-index : 8 ;
 	position : absolute ;
 	visibility: hidden ;
@@ -1704,8 +1805,8 @@
 /* START [LOCATION] */
 #MiFrame04 {
 	position : absolute ;
-	left : 95px ;
-	top : 159px ;
+	left : 345px ;
+	top : 288px ;
 	z-index : 8 ;
 	position : absolute ;
 	visibility: hidden ;
@@ -1719,8 +1820,8 @@
 /* START [DATE] */
 #MiFrame10 {
 	position : absolute ;
-	left : 15px ;
-	top : 84px ;
+	left : 44px ;
+	top : 180px ;
 	z-index : 8 ;
 	position : absolute ;
 	visibility: hidden ;
@@ -1734,8 +1835,8 @@
 /* START [DATE2] */
 #MiFrame10_2 {
 	position : absolute ;
-	left : 15px ;
-	top : 292px ;
+	left : 44px ;
+	top : 200px ;
 	z-index : 8 ;
 	position : absolute ;
 	visibility: hidden ;
@@ -1749,8 +1850,8 @@
 /* START [DATE3] */
 #MiFrame10_3 {
 	position : absolute ;
-	left : 566px ;
-	top : 144px ;
+	left : 595px ;
+	top : 240px ;
 	z-index : 8 ;
 	position : absolute ;
 	visibility: hidden ;
@@ -1766,11 +1867,12 @@
 
 
 
+
 #ErrorMessageFrame
 {
 	position : absolute ;
-	top : 19px ;
-	left : -18px ;
+	top : 115px ;
+	left : 11px ;
 	z-index : 11 ;
 	visibility: hidden ;
 	border-width: 0px ;
@@ -1788,6 +1890,8 @@
 	background-color: transparent ;
 	filter:progid:DXImageTransform.Microsoft.Alpha(opacity=90);
 }
+
+
 
 
 

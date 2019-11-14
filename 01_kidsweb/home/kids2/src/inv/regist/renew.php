@@ -92,8 +92,7 @@
 
     // 指定請求書番号の請求書マスタ取得用SQL文の作成
     $lngInvoiceNo = $aryData["lngInvoiceNo"];
-    $lngRevisionNo = $aryData["lngRevisionNo"];
-    $strQuery     = fncGetInvoiceMSQL ( $lngInvoiceNo, $lngRevisionNo);
+    $strQuery     = fncGetInvoiceMSQL ( $lngInvoiceNo, null);
     // 詳細データの取得
     list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
@@ -108,7 +107,6 @@
 
     $aryNewResult = fncSetInvoiceHeadTableData($aryResult);
     $aryNewResult['lngInvoiceNo'] = $aryData["lngInvoiceNo"];
-    $aryNewResult['lngRevisionNo'] = $aryData["lngRevisionNo"];
     $aryNewResult['strSessionID'] = $aryData["strSessionID"];
     $aryNewResult['actionName']   = 'renew.php';
 
@@ -286,7 +284,18 @@
         $aryNewResult['curTaxPrice1'] = trim($aryNewResult['curTaxPrice1']);
 
         // テンプレート読み込み
-        echo fncGetReplacedHtmlWithBase("inv/base_inv.html", "inv/regist/renew.tmpl", $aryNewResult ,$objAuth );
+        $objTemplate = new clsTemplate();
+        $objTemplate->getTemplate( "inv/regist/renew.tmpl" );
+        
+        // テンプレート生成
+        $objTemplate->replace( $aryNewResult );
+        $objTemplate->complete();
+        
+        // HTML出力
+        echo $objTemplate->strTemplate;
+
+        // テンプレート読み込み
+        // echo fncGetReplacedHtmlWithBase("inv/base_inv.html", "inv/regist/renew.tmpl", $aryNewResult ,$objAuth );
 
     }
 

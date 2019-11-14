@@ -52,8 +52,6 @@ $strMode = $_POST["strMode"];
 $lngSlipNo = $_GET["lngSlipNo"];
 // 納品伝票コード
 $strSlipCode = $_GET["strSlipCode"];
-// 納品書のリビジョン番号
-$lngRevisionNo = $_GET["lngRevisionNo"];
 // 売上番号
 $lngSalesNo = $_GET["lngSalesNo"];
 // 売上コード
@@ -204,8 +202,8 @@ if ($aryLockInfo["isLock"] == 1) {
 // 修正対象データ取得
 //-------------------------------------------------------------------------
 // 納品伝票番号に紐づくヘッダ・フッタ部のデータ読み込み
-$aryHeader = fncGetHeaderBySlipNo($lngSlipNo, $lngRevisionNo, $objDB);
-
+$aryHeader = fncGetHeaderBySlipNo($lngSlipNo, $objDB);
+$lngRevisionNo = $aryHeader["$lngRevisionNo"];
 // 納品伝票番号に紐づく受注明細情報を取得する
 $aryDetail = fncGetDetailBySlipNo($lngSlipNo, $lngRevisionNo, $objDB);
 
@@ -293,8 +291,17 @@ $aryData["strTotalAmount"] = $aryHeader["curtotalprice"];
 // ajax POST先をこのファイルにする
 $aryData["ajaxPostTarget"] = "renew.php";
 
-// 納品書修正画面表示（テンプレートは売上（納品書）登録画面と共通）
-echo fncGetReplacedHtml("sc/regist2/parts.tmpl", $aryData, $objAuth);
+// 納品書修正画面表示
+// テンプレート読み込み
+$objTemplate = new clsTemplate();
+$objTemplate->getTemplate( "sc/regist2/renew.html" );
+
+// テンプレート生成
+$objTemplate->replace( $aryData );
+$objTemplate->complete();
+
+// HTML出力
+echo $objTemplate->strTemplate;
 
 // DB切断
 $objDB->close();

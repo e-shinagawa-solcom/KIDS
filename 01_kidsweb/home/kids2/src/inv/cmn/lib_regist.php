@@ -1317,7 +1317,7 @@ function fncInvoiceInsert( $insertAry ,$objDB, $objAuth)
  *    @return strQuery     $strQuery 検索用SQL文
  *    @access public
  */
-function fncGetInvoiceMSQL ( $lngInvoiceNo, $lngRevisionNo )
+function fncGetInvoiceMSQL ( $lngInvoiceNo, $lngRevisionNo)
 {
     // 請求書番号番号
     $aryQuery[] = "SELECT distinct on (inv.lnginvoiceno) inv.lnginvoiceno as lnginvoiceno ";
@@ -1374,7 +1374,11 @@ function fncGetInvoiceMSQL ( $lngInvoiceNo, $lngRevisionNo )
     $aryQuery[] = " LEFT JOIN m_User u ON inv.lngusercode = u.lngusercode";
     // WHERE
     $aryQuery[] = " WHERE inv.lnginvoiceno = ".$lngInvoiceNo. " ";
-    $aryQuery[] = " AND inv.lngrevisionno = ".$lngRevisionNo. " ";
+    if ($lngRevisionNo == null) {
+        $aryQuery[] = " and inv.lngrevisionno = (SELECT MAX(lngrevisionno) FROM m_invoice WHERE lnginvoiceno = " . $lngInvoiceNo.")";
+    } else {        
+        $aryQuery[] = " AND inv.lngrevisionno = ".$lngRevisionNo. " ";
+    }
 
     // 削除済みは排除
     $aryQuery[] = " AND inv.lnginvoiceno NOT IN ( ";
