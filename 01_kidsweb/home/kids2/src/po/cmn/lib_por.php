@@ -243,7 +243,12 @@ function fncGetOrderDetail($aryOrderNo, $lngRevisionNo, $objDB)
     $aryQuery[] = "  ,mo.lngorderno";
     $aryQuery[] = "  ,mo.lngmonetaryunitcode";
     $aryQuery[] = "  ,mo.lngcustomercompanycode";
-    $aryQuery[] = "FROM m_order mo";
+    $aryQuery[] = "FROM m_order m_key ";
+    $aryQuery[] = "INNER JOIN m_order mo";
+    $aryQuery[] = "  ON mo.strordercode = m_key.strordercode";
+    $aryQuery[] = "  AND mo.lngrevisionno = m_key.lngrevisionno";
+    $aryQuery[] = "  AND mo.lngcustomercompanycode = m_key.lngcustomercompanycode";
+    $aryQuery[] = "  AND mo.lngmonetaryunitcode = m_key.lngmonetaryunitcode ";
     $aryQuery[] = "INNER JOIN t_orderdetail od";
     $aryQuery[] = "  ON  mo.lngorderno = od.lngorderno";
     $aryQuery[] = "  AND mo.lngrevisionno = od.lngrevisionno";
@@ -265,8 +270,8 @@ function fncGetOrderDetail($aryOrderNo, $lngRevisionNo, $objDB)
     $aryQuery[] = "LEFT JOIN m_productunit mpu";
     $aryQuery[] = "  ON  od.lngproductunitcode = mpu.lngproductunitcode";
     $aryQuery[] = "WHERE mo.lngorderstatuscode = 1";
-    $aryQuery[] = " and mo.lngorderno in (" . $aryOrderNo . ") AND mo.lngrevisionno = " . $lngRevisionNo . "";
-
+    $aryQuery[] = " AND m_key.lngorderno in (" . $aryOrderNo . ") AND m_key.lngrevisionno = " . $lngRevisionNo . "";
+ 
     $strQuery = implode("\n", $aryQuery);
 
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
