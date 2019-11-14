@@ -28,7 +28,7 @@
 	// 読み込み
 	include('conf.inc');
 	require(LIB_FILE);
-	// require(SRC_ROOT."po/cmn/lib_po.php");
+	require(SRC_ROOT."po/cmn/lib_po.php");
 	// require(SRC_ROOT."po/cmn/lib_pop.php");
 	// require(SRC_ROOT."po/cmn/lib_pos1.php");
 	require(SRC_ROOT."po/cmn/lib_por.php");
@@ -132,9 +132,9 @@ fncDebug("kids2.log", "pass-4", __FILE__, __LINE__, "a" );
 	$aryNewResult["lngRevisionNo"]            = sprintf("%02d", $aryResult[0]["lngrevisionno"]);
 	$aryNewResult["dtmExpirationDate"]        = $aryResult[0]["dtmexpirationdate"];
 	$aryNewResult["strProductCode"]           = $aryResult[0]["strproductcode"];
-	$aryNewResult["lngPayConditionCode"]      = fncPulldownMenu(0, $aryResult[0]["lngpayconditioncode"], "", $objDB);
+	$aryNewResult["lngPayConditionCode"]      = fncPulldownMenu(2, $aryResult[0]["lngpayconditioncode"], "", $objDB);
 	$aryNewResult["PayConditionDisabled"]     = "";
-	$aryNewResult["lngMonetaryUnitCode"]      = fncPulldownMenu(1, $aryResult[0]["lngmonetaryunitcode"], "", $objDB);
+	$aryNewResult["lngMonetaryUnitCode"]      = fncPulldownMenu(0, $aryResult[0]["lngmonetaryunitcode"], "", $objDB);
 	$aryNewResult["MonetaryUnitDisabled"]     = "disabled";
 	$aryNewResult["strCustomerCode"]          = $aryResult[0]["strcustomercode"];
 	$aryNewResult["strCustomerName"]          = $aryResult[0]["strcustomername"];
