@@ -79,14 +79,8 @@
             }
             // SQL文取得
             $strQuery = fncGetSearchMSlipSQL ($params, false, $objDB);
-// fncDebug("kids2.log", $strQuery, __FILE__, __LINE__, "a+" );
-//             error_log($strQuery,"3",LOG_FILE);
-            // EUC-JPへ変換
-//            $strQuery = mb_convert_encoding($strQuery, "EUC-JP", "auto");
             // クエリ実行
             list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
-
-// fncDebug("kids2.log", $lngResultNum, __FILE__, __LINE__, "a+" );
             // 結果件数を取得
             if($lngResultNum > 0)
             {
@@ -94,19 +88,13 @@
                 for ($i = 0; $i < $lngResultNum; $i++)
                 {
 
-    //                 $resultDataSet[] = pg_fetch_array($objResult, $i, PGSQL_ASSOC);
                     $resultDataSet[] = $objDB->fetchObject( $lngResultID, $i );
-    //                 $resultDataSet[] = $objDB->fetchArray( $lngResultID, $i );
                     // 検索結果レコードをオブジェクトで取得し必要なjsonデータに加工する
                     foreach($objDB->fetchObject( $lngResultID, $i ) as $column => $val)
                     {
                         $json[$i][mb_convert_encoding($column,"UTF-8","auto")] = mb_convert_encoding($val,"UTF-8","auto");
                     }
-//                     $json[$i]['sql'] = $strQuery;
                 }
-
-                // json変換の為、一時的にUTF-8へ変換
-//                mb_convert_variables('UTF-8', 'euc-jp', $json);
 			    $objDB->close();
 	            // レスポンスヘッダ設定
 	            header('Content-Type: application/json');
@@ -137,8 +125,6 @@
         $invoiceNo = (int)$aryData["invoiceNo"];
         $revisionNo = (int)$aryData["revisionNo"];
         $strQuery = fncGetSearchMSlipInvoiceNoSQL($invoiceNo, $revisionNo);
-        // EUC-JPへ変換
-        // $strQuery = mb_convert_encoding($strQuery, "EUC-JP", "auto");
         // クエリ実行
         list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
         // 結果件数を取得
@@ -148,9 +134,7 @@
             for ($i = 0; $i < $lngResultNum; $i++)
             {
 
-                //                 $resultDataSet[] = pg_fetch_array($objResult, $i, PGSQL_ASSOC);
                 $resultDataSet[] = $objDB->fetchObject( $lngResultID, $i );
-                //                 $resultDataSet[] = $objDB->fetchArray( $lngResultID, $i );
                 // 検索結果レコードをオブジェクトで取得し必要なjsonデータに加工する
                 foreach($objDB->fetchObject( $lngResultID, $i ) as $column => $val)
                 {
@@ -186,8 +170,6 @@
     $aryData["DeliveryFrom"] = date('Y/m/d', strtotime('first day of ' . null));
     $aryData["DeliveryTo"]   = date('Y/m/d', strtotime('last day of '  . null));
 
-    // テンプレート読み込み
-//     echo fncGetReplacedHtml( "/inv/regist/condition.tmpl", $aryData, $objAuth );
     // テンプレート読み込み
     echo fncGetReplacedHtmlWithBase("inv/base_condition.html", "inv/regist/condition.tmpl", $aryData ,$objAuth );
 

@@ -176,7 +176,6 @@
             // ÀÁµáÆü
             ActionDate: {
                 checkDateFormat: true,
-                equalsOrGreaterThanToday: true,
                 required: true
             },
 

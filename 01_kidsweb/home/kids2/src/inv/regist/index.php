@@ -173,22 +173,22 @@
             MoveToErrorPage("締め日の取得ができませんでした。");
         }
 
-        $baseDateTime = new DateTime($closeDay);
-        foreach($aryDeliveryDate as $date){
-            $deliveryDateTiem = new DateTime($date);
-            $diff = $baseDateTime->diff($deliveryDateTiem);
-            // 納品日がシステム日付の1か月前後でない場合
-            if($diff->format('%a') > 30)
-            {
-                MoveToErrorPage("納品日は当月度の前後1ヶ月の間を指定してください");
-            }
-            // 納品日と異なる月の明細の場合
-            // $deliveryDateMonth = date('m', strtotime($date));
-            // if( (int)$baseMonth != (int)$deliveryDateMonth )
-            // {
-            //     MoveToErrorPage("出力明細には、入力された納品日と異なる月に納品された明細を指定できません");
-            // }
-        }
+        // $baseDateTime = new DateTime($closeDay);
+        // foreach($aryDeliveryDate as $date){
+        //     $deliveryDateTiem = new DateTime($date);
+        //     $diff = $baseDateTime->diff($deliveryDateTiem);
+        //     // 納品日がシステム日付の1か月前後でない場合
+        //     if($diff->format('%a') > 30)
+        //     {
+        //         MoveToErrorPage("納品日は当月度の前後1ヶ月の間を指定してください");
+        //     }
+        //     // 納品日と異なる月の明細の場合
+        //     $deliveryDateMonth = date('m', strtotime($date));
+        //     if( (int)$baseMonth != (int)$deliveryDateMonth )
+        //     {
+        //         MoveToErrorPage("出力明細には、入力された納品日と異なる月に納品された明細を指定できません");
+        //     }
+        // }
 
         // --------------------------------
         //    登録処理

@@ -1211,7 +1211,7 @@ function fncInvoiceInsert( $insertAry ,$objDB, $objAuth)
     $aryQuery[] = ") ";
 
     $strQuery = implode("\n",  $aryQuery );
-
+    
     if( !$lngResultID = $objDB->execute( $strQuery ) )
     {
         fncOutputError ( 9051, DEF_ERROR, "", TRUE, "", $objDB );
