@@ -105,7 +105,7 @@ for ($i = 0; $i < count($aryDetailData); $i++) {
     $aryQuery[] = "  AND lngrevisionno = " . $aryDetailData[$i]["lngRevisionNo"] . " ";
     $aryQuery[] = "  AND bytinvalidflag = false ";
     $aryQuery[] = ") o on o.lngorderno = od.lngorderno";
-    $aryQuery[] = " LEFT JOIN m_product p on p.strproductcode = od.strproductcode";
+    $aryQuery[] = " LEFT JOIN m_product p on p.strproductcode = od.strproductcode and p.strrevisecode = od.strrevisecode and p.lngrevisionno = od.lngrevisionno";
     $aryQuery[] = " LEFT JOIN m_stocksubject ss on ss.lngstocksubjectcode = od.lngstocksubjectcode";
     $aryQuery[] = " LEFT JOIN m_stockitem si on si.lngstocksubjectcode = od.lngstocksubjectcode and si.lngstockitemcode = od.lngstockitemcode";
     $aryQuery[] = " LEFT JOIN m_monetaryunit mu on mu.lngmonetaryunitcode = o.lngmonetaryunitcode";

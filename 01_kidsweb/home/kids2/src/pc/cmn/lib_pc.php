@@ -37,11 +37,12 @@ function fncGetStockHeadNoToInfoSQL($lngStockNo, $lngRevisionNo)
     // 仕入No
     $aryQuery[] = ", s.strStockCode as strStockCode";
     // 発注No
-    $aryQuery[] = ", o.strOrderCode strOrderCode";
+    $aryQuery[] = ", mp.strordercode strOrderCode";
     // 発注コード
-    $aryQuery[] = ", o.lngOrderNo as lngOrderNo";
+    $aryQuery[] = ", tsd.lngOrderNo as lngOrderNo";
     // 発注コード
-    $aryQuery[] = ", o.strOrderCode as strRealOrderCode";
+    $aryQuery[] = ", mp.strordercode as strRealOrderCode";
+
     // 伝票コード
     $aryQuery[] = ", s.strSlipCode as strSlipCode";
     // 入力者
@@ -84,20 +85,31 @@ function fncGetStockHeadNoToInfoSQL($lngStockNo, $lngRevisionNo)
     // 備考
     $aryQuery[] = ", s.strNote as strNote";
     // 合計金額
-    $aryQuery[] = ", To_char( s.curTotalPrice, '9,999,999,990.99' ) as curTotalPrice";
+    $aryQuery[] = ", To_char( s.curTotalPrice, '9,999,999,990.99' ) as curTotalPrice ";
 
-    $aryQuery[] = " FROM m_Stock s LEFT JOIN (";
-    $aryQuery[] = " SELECT sd.lngStockNo, o.lngorderno, o.strOrderCode FROM T_StockDetail sd, m_Order o where sd.lngOrderNo = o.lngOrderNo";
-    $aryQuery[] = " AND sd.lngStockNo = " . $lngStockNo . ") o on s.lngstockno = o.lngStockNo";
-    $aryQuery[] = " LEFT JOIN m_User input_u ON s.lngInputUserCode = input_u.lngUserCode";
-    $aryQuery[] = " LEFT JOIN m_Company cust_c ON s.lngCustomerCompanyCode = cust_c.lngCompanyCode";
-    $aryQuery[] = " LEFT JOIN m_Company delv_c ON s.lngDeliveryPlaceCode = delv_c.lngCompanyCode";
-    $aryQuery[] = " LEFT JOIN m_Group inchg_g ON s.lngGroupCode = inchg_g.lngGroupCode";
-    $aryQuery[] = " LEFT JOIN m_User inchg_u ON s.lngUserCode = inchg_u.lngUserCode";
-    $aryQuery[] = " LEFT JOIN m_StockStatus ss USING (lngStockStatusCode)";
-    $aryQuery[] = " LEFT JOIN m_PayCondition pc ON s.lngPayConditionCode = pc.lngPayConditionCode";
-    $aryQuery[] = " LEFT JOIN m_MonetaryUnit mu ON s.lngMonetaryUnitCode = mu.lngMonetaryUnitCode";
-    $aryQuery[] = " LEFT JOIN m_MonetaryRateClass mr ON s.lngMonetaryRateCode = mr.lngMonetaryRateCode";
+    $aryQuery[] = "FROM m_Stock s ";
+    $aryQuery[] = "INNER JOIN t_stockdetail tsd ";
+    $aryQuery[] = "    on tsd.lngstockno = s.lngstockno ";
+    $aryQuery[] = "    and tsd.lngrevisionno = s.lngrevisionno ";
+
+    $aryQuery[] = "INNER JOIN t_purchaseorderdetail tpd ";
+    $aryQuery[] = "    on tpd.lngorderno = tsd.lngorderno ";
+    $aryQuery[] = "    and tpd.lngorderdetailno = tsd.lngorderdetailno ";
+    $aryQuery[] = "    and tpd.lngorderrevisionno = tsd.lngorderrevisionno ";
+
+    $aryQuery[] = "INNER JOIN m_purchaseorder mp ";
+    $aryQuery[] = "    on mp.lngpurchaseorderno = tpd.lngpurchaseorderno ";
+    $aryQuery[] = "    and mp.lngrevisionno = tpd.lngrevisionno ";
+    
+    $aryQuery[] = "LEFT JOIN m_User input_u ON s.lngInputUserCode = input_u.lngUserCode";
+    $aryQuery[] = "LEFT JOIN m_Company cust_c ON s.lngCustomerCompanyCode = cust_c.lngCompanyCode";
+    $aryQuery[] = "LEFT JOIN m_Company delv_c ON s.lngDeliveryPlaceCode = delv_c.lngCompanyCode";
+    $aryQuery[] = "LEFT JOIN m_Group inchg_g ON s.lngGroupCode = inchg_g.lngGroupCode";
+    $aryQuery[] = "LEFT JOIN m_User inchg_u ON s.lngUserCode = inchg_u.lngUserCode";
+    $aryQuery[] = "LEFT JOIN m_StockStatus ss USING (lngStockStatusCode)";
+    $aryQuery[] = "LEFT JOIN m_PayCondition pc ON s.lngPayConditionCode = pc.lngPayConditionCode";
+    $aryQuery[] = "LEFT JOIN m_MonetaryUnit mu ON s.lngMonetaryUnitCode = mu.lngMonetaryUnitCode";
+    $aryQuery[] = "LEFT JOIN m_MonetaryRateClass mr ON s.lngMonetaryRateCode = mr.lngMonetaryRateCode";
 
     $aryQuery[] = " WHERE s.lngStockNo = " . $lngStockNo . "";
     $aryQuery[] = " AND s.lngRevisionNo = " . $lngRevisionNo . "";
@@ -851,7 +863,7 @@ function fncStockDeleteSetStatus($aryStockData, $objDB)
  * @param [DB] $objDB
  * @return void
  */
-function fncGetPoInfoSQL($strOrderCode, $objDB)
+function fncGetPoInfoSQL($strOrderCode, $objDB, $isAll = false)
 {
     // SQL生成
     $aryQuery[] = " SELECT ";
@@ -926,7 +938,15 @@ function fncGetPoInfoSQL($strOrderCode, $objDB)
     $aryQuery[] = "  LEFT JOIN m_productunit pu on pu.lngproductunitcode = od.lngproductunitcode";
     $aryQuery[] = "  LEFT JOIN m_company c on c.lngcompanycode = mo.lngcustomercompanycode";
     $aryQuery[] = "  LEFT JOIN m_company dp_c on dp_c.lngcompanycode = mo.lngdeliveryplacecode";
-    $aryQuery[] = " WHERE mo.lngorderstatuscode = 2";
+    if( $isAll == false )
+    {
+    	$aryQuery[] = " WHERE mo.lngorderstatuscode = 2";
+    }
+    else
+    {
+    	$aryQuery[] = " WHERE mo.lngorderstatuscode >= 2";
+    }
+    
     $aryQuery[] = " and mpo.strordercode = '" . $strOrderCode . "'"; // 
     $aryQuery[] = " AND not exists (select lngpurchaseorderno from m_purchaseorder mpo1 where mpo1.lngpurchaseorderno = mpo.lngpurchaseorderno and mpo1.lngrevisionno = -1)";
     $aryQuery[] = "  ORDER BY od.lngSortKey";

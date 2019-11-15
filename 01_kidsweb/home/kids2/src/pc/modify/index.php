@@ -87,7 +87,7 @@ if ($lngResultNum) {
 $objDB->freeResult($lngResultID);
 
 // 発注情報を取得
-$aryOrderDetail = fncGetPoInfoSQL($aryStock["strrealordercode"], $objDB);
+$aryOrderDetail = fncGetPoInfoSQL($aryStock["strrealordercode"], $objDB, true);
 
 // 消費税情報を取得
 $taxObj = fncGetTaxInfo($aryStock["dtmstockappdate"], $objDB);
