@@ -81,8 +81,11 @@ for ($i = 0; $i < count($aryDetailData); $i++) {
     $aryQuery[] = "od.lngtaxcode, "; // 消費税コード
     $aryQuery[] = "od.curtaxprice, "; // 消費税金額
 */
+    $aryQuery[] = "tpd.lngdeliverymethodcode,"; // 運搬方法
+    $aryQuery[] = "tpd.strdeliverymethodname,"; // 運搬方法名
+    $aryQuery[] = "tpd.strnote,"; // 明細備考
     $aryQuery[] = "od.cursubtotalprice as cursubtotalprice, "; // 小計金額
-    $aryQuery[] = "od.strnote, "; // 備考
+    $aryQuery[] = "od.strnote as strdetailnote, "; // 備考
     $aryQuery[] = "od.strmoldno as strSerialNo, "; // シリアル
     $aryQuery[] = "o.lngorderstatuscode as lngorderstatuscode, "; // 発注ステータス
     $aryQuery[] = "os.strorderstatusname as strorderstatusname, "; // 発注ステータス
@@ -105,6 +108,10 @@ for ($i = 0; $i < count($aryDetailData); $i++) {
     $aryQuery[] = "  AND lngrevisionno = " . $aryDetailData[$i]["lngRevisionNo"] . " ";
     $aryQuery[] = "  AND bytinvalidflag = false ";
     $aryQuery[] = ") o on o.lngorderno = od.lngorderno";
+    $aryQuery[] = "INNER JOIN t_purchaseorderdetail tpd";
+    $aryQuery[] = "    ON tpd.lngorderno = od.lngorderno";
+    $aryQuery[] = "    AND tpd.lngorderdetailno = od.lngorderdetailno";
+    $aryQuery[] = "    AND tpd.lngorderrevisionno = od.lngrevisionno";
     $aryQuery[] = " LEFT JOIN m_product p on p.strproductcode = od.strproductcode and p.strrevisecode = od.strrevisecode and p.lngrevisionno = od.lngrevisionno";
     $aryQuery[] = " LEFT JOIN m_stocksubject ss on ss.lngstocksubjectcode = od.lngstocksubjectcode";
     $aryQuery[] = " LEFT JOIN m_stockitem si on si.lngstocksubjectcode = od.lngstocksubjectcode and si.lngstockitemcode = od.lngstockitemcode";
@@ -138,7 +145,7 @@ for ($i = 0; $i < count($aryDetailData); $i++) {
             // 小計金額
             $cursubtotalprice = $detailDataResult["cursubtotalprice"];
             $detailDataResult["cursubtotalprice"] = toMoneyFormat($detailDataResult["lngmonetaryunitcode"], $detailDataResult["strmonetaryunitsign"], $detailDataResult["cursubtotalprice"]);
-/*
+
             // 税率
             $detailDataResult["curTax"] = $aryDetailData[$i]["curTax"];
             // 消費税区分
@@ -148,7 +155,7 @@ for ($i = 0; $i < count($aryDetailData); $i++) {
             // 消費税額
             $detailDataResult["curtaxprice"] = toMoneyFormat($detailDataResult["lngmonetaryunitcode"], $detailDataResult["strmonetaryunitsign"], $aryDetailData[$i]["curTaxPrice"]);
 
-*/            // 合計金額の設定(小計金額の合計)
+            // 合計金額の設定(小計金額の合計)
             $curtotalprice += $cursubtotalprice;
         }
     }
