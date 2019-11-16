@@ -984,7 +984,7 @@ function fncGetTaxInfo($dtmStockAppDate, $objDB)
         . "GROUP BY lngtaxcode, curtax "
         . "ORDER BY lngpriority ";
 
-    $objResult = null;
+    $objResult = array();
 
     // 税率などの取得クエリーの実行
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);

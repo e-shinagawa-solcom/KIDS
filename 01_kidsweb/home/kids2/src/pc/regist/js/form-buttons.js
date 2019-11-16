@@ -350,6 +350,12 @@ function resetTaxPrice(objID) {
     var children = objID.parentNode.parentNode.children;
     var rowClass = objID.parentNode.parentNode.className;
     var lngtaxclasscode = $('.'+rowClass).find('.col10').find('option:selected').val();
+    
+    if(!curtaxList)
+    {
+        curtaxList = $("#taxList").html();
+    }
+
     var lngoldtaxclasscode = children[23].innerText;
     // カートン入数の取得
     var cursubtotalprice = children[14].innerHTML;

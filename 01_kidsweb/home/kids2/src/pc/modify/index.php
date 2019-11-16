@@ -99,7 +99,7 @@ if ($taxObj == null) {
     fncOutputError(703, DEF_ERROR, "¾ÃÈñÀÇ¾ðÊó¤Î¼èÆÀ¤Ë¼ºÇÔ¤·¤Þ¤·¤¿¡£", true, $strReturnPath, $objDB);
 }
 
-$aryTaxclass = fncGetTaxClassAry($objDB);
+//$aryTaxclass = fncGetTaxClassAry($objDB);
 
 // ÄÌ²ß
 $aryStock["lngmonetaryunitcode"] = fncGetPulldown("m_monetaryunit", "lngmonetaryunitcode", "strmonetaryunitname", $aryStock["lngmonetaryunitcode"], '', $objDB);
@@ -191,6 +191,7 @@ foreach ($aryOrderDetail as $orderDetail) {
 
     // tbody > trÍ×ÁÇºîÀ®
     $trBody = $doc->createElement("tr");
+    $trBody->setAttribute("class", "row".$num);
 
     // No.
     $td = $doc->createElement("td", $num);
@@ -267,12 +268,57 @@ foreach ($aryOrderDetail as $orderDetail) {
     $td->appendChild($select);
     $trBody->appendChild($td);
 
-    
-    // ¾ÃÈñÀÇÎ¨
+    // ¾ÃÈñÀÇÎ¨ 
+    $td = $doc->createElement("td");
+    $td->setAttribute("class", "col11");
+    if($orderDetail["lngcountrycode"] == 81 && (!$lngtaxclasscode || $lngtaxclasscode != 1))
+    {
+        $select = $doc->createElement("select");
+        $select->setAttribute("style", "width: 90px;");
+        $select->setAttribute("onchange", "resetTaxPrice(this)");
+        foreach ($taxObj as $tax) {
+            $option = $doc->createElement("option", $tax->curtax);
+            $option->setAttribute("value", $tax->lngtaxcode);
+            if ($lngtaxcode == $tax->lngtaxcode) {
+                $option->setAttribute("selected", "selected");
+            }
+            $select->appendChild($option);
+        }
+        $td->appendChild($select);
+    }
+    else
+    {
+        $td = $doc->createElement("td", $curtax);
+    }
+	$trBody->appendChild($td);
+
+    // ¾ÃÈñÀÇÎ¨¥×¥ë¥À¥¦¥óÉü¸µÍÑ
+    if( $num == 1 )
+    {
+        $hidden = $doc->getElementById("taxList");
+        $select = $doc->createElement("select");
+        $select->setAttribute("style", "width: 90px;");
+        $select->setAttribute("onchange", "resetTaxPrice(this)");
+        $count = 0;
+        foreach ($taxObj as $tax) {
+            $option = $doc->createElement("option", $tax->curtax);
+            $option->setAttribute("value", $tax->lngtaxcode);
+            if ($count == 0) {
+                $option->setAttribute("selected", "selected");
+            }
+            $select->appendChild($option);
+            $count++;
+        }
+        $hidden->appendChild($select);
+    }
+//    $doc->getElementById("taxList")->textContent = mb_convert_encoding("Éü¸µÍÑ","UTF-8","EUC-JP");
+
+/*    
+    // ¾ÃÈñÀÇÎ¨   $taxObj
     $td = $doc->createElement("td", $curtax);
     $td->setAttribute("class", "col11");
     $trBody->appendChild($td);
-
+*/
     // ¾ÃÈñÀÇ³Û
     $td = $doc->createElement("td", toMoneyFormat($orderDetail["lngmonetaryunitcode"], $orderDetail["strmonetaryunitsign"], $curtaxprice));
     $td->setAttribute("class", "col12");
@@ -329,7 +375,12 @@ foreach ($aryOrderDetail as $orderDetail) {
     $trBody->appendChild($td);
 
     // ¾ÃÈñÀÇ¥³¡¼¥É
-    $td = $doc->createElement("td", $taxObj->lngtaxcode);
+    $td = $doc->createElement("td", $lngtaxcode);
+    $td->setAttribute("style", "display:none");
+    $trBody->appendChild($td);
+    
+    // ²ÝÀÇ¶èÊ¬¥³¡¼¥É
+    $td = $doc->createElement("td", $lngtaxclasscode);
     $td->setAttribute("style", "display:none");
     $trBody->appendChild($td);
     

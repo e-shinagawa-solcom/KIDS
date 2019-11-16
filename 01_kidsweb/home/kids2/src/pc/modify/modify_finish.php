@@ -85,6 +85,38 @@ $aryData["lngCustomerCompanyCode"] = fncGetMasterValue("m_company", "strcompanyd
 // 納品場所コードを取得
 $aryData["lngDeliveryPlaceCode"] = fncGetMasterValue("m_company", "strcompanydisplaycode", "lngcompanycode", $aryData["lngLocationCode"] . ":str", '', $objDB);
 
+
+// 仕入修正対象となる発注書に紐づく発注のステータスを"本発注"に戻す
+$aryQuery = array();
+
+$aryQuery[] = "UPDATE m_order ";
+$aryQuery[] = "SET lngorderstatuscode = " . DEF_ORDER_ORDER . " ";
+$aryQuery[] = "FROM (";
+$aryQuery[] = "    SELECT ";
+$aryQuery[] = "        t_purchaseorderdetail.lngorderno,";
+$aryQuery[] = "        t_purchaseorderdetail.lngorderrevisionno";
+$aryQuery[] = "    FROM m_purchaseorder";
+$aryQuery[] = "    INNER JOIN t_purchaseorderdetail";
+$aryQuery[] = "        ON t_purchaseorderdetail.lngpurchaseorderno = m_purchaseorder.lngpurchaseorderno";
+$aryQuery[] = "        AND t_purchaseorderdetail.lngrevisionno = m_purchaseorder.lngrevisionno";
+$aryQuery[] = "    where m_purchaseorder.strordercode = '" . $aryData["strOrderCode"] ."' ";
+$aryQuery[] = "        AND m_purchaseorder.lngrevisionno = ";
+$aryQuery[] = "        (SELECT MAX(lngrevisionno) FROM m_purchaseorder WHERE strordercode = '" . $aryData["strOrderCode"] ."')";
+$aryQuery[] = ") get_order_key ";
+$aryQuery[] = "WHERE m_order.lngorderno = get_order_key.lngorderno";
+$aryQuery[] = "    AND m_order.lngrevisionno = get_order_key.lngorderrevisionno";
+
+$strQuery = implode("\n", $aryQuery);
+
+
+if (!$lngResultID = $objDB->execute($strQuery)) {
+    fncOutputError(9051, DEF_ERROR, "", true, "", $objDB);
+}
+
+$objDB->freeResult($lngResultID);
+
+
+
 // 仕入登録
 $aryQuery = array();
 $aryQuery[] = "INSERT INTO m_stock( ";
@@ -143,32 +175,36 @@ foreach ($aryDetailData as $data) {
     // 明細行
     $aryQuery = array();
     $aryQuery[] = "SELECT ";
-    $aryQuery[] = "lngorderdetailno, "; // 発注明細番号
-    $aryQuery[] = "lngrevisionno, "; // リビジョン番号
-    $aryQuery[] = "strproductcode, "; // 製品コード
-    $aryQuery[] = "strrevisecode, "; // リバイズ番号
-    $aryQuery[] = "lngstocksubjectcode, "; // 仕入科目コード
-    $aryQuery[] = "lngstockitemcode, "; // 仕入部品コード
-    $aryQuery[] = "To_char( dtmdeliverydate, 'YYYY/mm/dd' ) as dtmdeliverydate, "; // 納品日
-    $aryQuery[] = "lngdeliverymethodcode as lngCarrierCode, "; // 運搬方法コード
-    $aryQuery[] = "lngconversionclasscode, "; // 換算区分コード / 1：単位計上/ 2：荷姿単位計上
-    $aryQuery[] = "curproductprice, "; // 製品価格
-    $aryQuery[] = "lngproductquantity, "; // 製品数量
-    $aryQuery[] = "lngproductunitcode, "; // 製品単位コード
+    $aryQuery[] = "t_orderdetail.lngorderdetailno, "; // 発注明細番号
+    $aryQuery[] = "t_orderdetail.lngrevisionno, "; // リビジョン番号
+    $aryQuery[] = "t_orderdetail.strproductcode, "; // 製品コード
+    $aryQuery[] = "t_orderdetail.strrevisecode, "; // リバイズ番号
+    $aryQuery[] = "t_orderdetail.lngstocksubjectcode, "; // 仕入科目コード
+    $aryQuery[] = "t_orderdetail.lngstockitemcode, "; // 仕入部品コード
+    $aryQuery[] = "To_char( t_orderdetail.dtmdeliverydate, 'YYYY/mm/dd' ) as dtmdeliverydate, "; // 納品日
+    $aryQuery[] = "t_purchaseorderdetail.lngdeliverymethodcode as lngCarrierCode, "; // 運搬方法コード
+    $aryQuery[] = "t_orderdetail.lngconversionclasscode, "; // 換算区分コード / 1：単位計上/ 2：荷姿単位計上
+    $aryQuery[] = "t_orderdetail.curproductprice, "; // 製品価格
+    $aryQuery[] = "t_orderdetail.lngproductquantity, "; // 製品数量
+    $aryQuery[] = "t_orderdetail.lngproductunitcode, "; // 製品単位コード
 /*
     $aryQuery[] = "lngtaxclasscode, "; // 消費税区分コード
     $aryQuery[] = "lngtaxcode, "; // 消費税コード
     $aryQuery[] = "curtaxprice, "; // 消費税金額
 */
-    $aryQuery[] = "cursubtotalprice, "; // 小計金額
-    $aryQuery[] = "strnote, "; // 備考
-    $aryQuery[] = "strmoldno as strSerialNo, "; // シリアル
-    $aryQuery[] = "lngsortkey "; // シリアル
+    $aryQuery[] = "t_orderdetail.cursubtotalprice, "; // 小計金額
+    $aryQuery[] = "t_orderdetail.strnote, "; // 備考
+    $aryQuery[] = "t_orderdetail.strmoldno as strSerialNo, "; // シリアル
+    $aryQuery[] = "t_orderdetail.lngsortkey "; // シリアル
     $aryQuery[] = "FROM t_orderdetail ";
+    $aryQuery[] = "INNER JOIN t_purchaseorderdetail ";
+    $aryQuery[] = "ON t_purchaseorderdetail.lngorderno = t_orderdetail.lngorderno ";
+    $aryQuery[] = "AND t_purchaseorderdetail.lngorderdetailno = t_orderdetail.lngorderdetailno ";
+    $aryQuery[] = "AND t_purchaseorderdetail.lngorderrevisionno = t_orderdetail.lngrevisionno ";
     $aryQuery[] = "WHERE ";
-    $aryQuery[] = "lngorderno = " . $data["lngOrderNo"];
-    $aryQuery[] = " AND lngrevisionno = " . $data["lngRevisionNo"];
-    $aryQuery[] = " AND lngorderdetailno = " . $data["lngOrderDetailNo"];
+    $aryQuery[] = "t_orderdetail.lngorderno = " . $data["lngOrderNo"];
+    $aryQuery[] = " AND t_orderdetail.lngrevisionno = " . $data["lngRevisionNo"];
+    $aryQuery[] = " AND t_orderdetail.lngorderdetailno = " . $data["lngOrderDetailNo"];
     $aryQuery[] = " ORDER BY lngSortKey";
     $strQuery = implode("\n", $aryQuery);
     
@@ -211,6 +247,7 @@ foreach ($aryDetailData as $data) {
             $aryQuery[] = "lngrevisionno, "; // 3:リビジョン番号
             $aryQuery[] = "lngorderno, "; // 3:リビジョン番号            
             $aryQuery[] = "lngorderdetailno, "; // 4:発注明細番号
+            $aryQuery[] = "lngorderrevisionno, "; // 4:発注明細リビジョン番号
             $aryQuery[] = "strproductcode, "; // 5:製品コード
             $aryQuery[] = "strrevisecode, "; // 6:リバイスコード
             $aryQuery[] = "lngstocksubjectcode, "; // 7:仕入科目コード
@@ -233,6 +270,7 @@ foreach ($aryDetailData as $data) {
             $aryQuery[] = $lngrevisionno . ", "; // 3:リビジョン番号
             $aryQuery[] = $data["lngOrderNo"] . ", "; // 4:発注番号
             $aryQuery[] = $data["lngOrderDetailNo"] . ", "; // 4:発注明細番号
+            $aryQuery[] = $data["lngRevisionNo"] . ", "; // 4:発注明細番号
             $aryQuery[] = "'" . $detailDataResult["strproductcode"] . "', "; // 5:製品コード
             $aryQuery[] = "'" . $detailDataResult["strrevisecode"] . "', "; // 6:リバイスコード
             $aryQuery[] = $detailDataResult["lngstocksubjectcode"] . ", "; // 7:仕入科目コード
@@ -242,7 +280,7 @@ foreach ($aryDetailData as $data) {
             $aryQuery[] = $detailDataResult["curproductprice"] . ", "; // 9:製品価格
             $aryQuery[] = $detailDataResult["lngproductquantity"] . ", "; // 10:製品数量
             $aryQuery[] = $detailDataResult["lngproductunitcode"] . ", "; // 11:製品単位コード
-            $aryQuery[] = $data["lngTaxClassCode"] . ", "; // 12:消費税区分コード
+            $aryQuery[] = ($data["lngTaxClassCode"] == null ? "NULL" : $data["lngTaxClassCode"]) . ", "; // 12:消費税区分コード
             $aryQuery[] = $data["lngTaxCode"] . ", "; // 13:消費税コード
             $aryQuery[] = $data["curTaxPrice"] . ", "; // 14:税額
             $aryQuery[] = $detailDataResult["cursubtotalprice"] . ", "; // 15:小計金額 / 税抜小計金額
@@ -251,12 +289,12 @@ foreach ($aryDetailData as $data) {
             $aryQuery[] = $detailDataResult["lngsortkey"] == "" ? "null" : $detailDataResult["lngsortkey"] . " "; // 18:表示用ソートキー
             $aryQuery[] = " )";
             $strQuery = implode("\n", $aryQuery);
-
             if (!$lngResultID = $objDB->execute($strQuery)) {
                 fncOutputError(9051, DEF_ERROR, "", true, "", $objDB);
             }
 
             $objDB->freeResult($lngResultID);
+            
         }
     }
 
@@ -267,7 +305,6 @@ foreach ($aryDetailData as $data) {
     $aryQuery[] = "where lngorderno = " . $data["lngOrderNo"] . " ";
     $aryQuery[] = "AND lngrevisionno = " . $data["lngRevisionNo"] . " ";
     $strQuery = implode("\n", $aryQuery);
-
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
     $objDB->freeResult($lngResultID);
