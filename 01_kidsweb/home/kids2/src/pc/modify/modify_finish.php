@@ -85,6 +85,8 @@ $aryData["lngCustomerCompanyCode"] = fncGetMasterValue("m_company", "strcompanyd
 // 納品場所コードを取得
 $aryData["lngDeliveryPlaceCode"] = fncGetMasterValue("m_company", "strcompanydisplaycode", "lngcompanycode", $aryData["lngLocationCode"] . ":str", '', $objDB);
 
+$aryData["lngGroupCode"] = fncGetMasterValue("m_group", "strgroupdisplaycode", "lnggroupcode", $aryData["lngGroupCode"] . ":str", '', $objDB);
+$aryData["lngUserCode"] = fncGetMasterValue("m_user", "struserdisplaycode", "lngusercode", $aryData["lngUserCode"] . ":str", '', $objDB);
 
 // 仕入修正対象となる発注書に紐づく発注のステータスを"本発注"に戻す
 $aryQuery = array();
