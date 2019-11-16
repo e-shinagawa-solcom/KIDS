@@ -164,7 +164,6 @@ $aryQuery[] = "now()"; // 21:登録日
 $aryQuery[] = " )";
 
 $strQuery = implode("\n", $aryQuery);
-
 if (!$lngResultID = $objDB->execute($strQuery)) {
     fncOutputError(9051, DEF_ERROR, "", true, "", $objDB);
 }
@@ -281,7 +280,7 @@ foreach ($aryDetailData as $data) {
             $aryQuery[] = $detailDataResult["lngproductquantity"] . ", "; // 10:製品数量
             $aryQuery[] = $detailDataResult["lngproductunitcode"] . ", "; // 11:製品単位コード
             $aryQuery[] = ($data["lngTaxClassCode"] == null ? "NULL" : $data["lngTaxClassCode"]) . ", "; // 12:消費税区分コード
-            $aryQuery[] = $data["lngTaxCode"] . ", "; // 13:消費税コード
+            $aryQuery[] = ($data["lngTaxCode"] == null ? "NULL" : $data["lngTaxCode"] ) . ", "; // 13:消費税コード
             $aryQuery[] = $data["curTaxPrice"] . ", "; // 14:税額
             $aryQuery[] = $detailDataResult["cursubtotalprice"] . ", "; // 15:小計金額 / 税抜小計金額
             $aryQuery[] = "'" . $detailDataResult["strnote"] . "', "; // 16:備考

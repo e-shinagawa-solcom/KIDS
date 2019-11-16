@@ -61,11 +61,13 @@ var curtaxList;
                         var lngmonetaryunitcode = row.lngmonetaryunitcode;
                         // 通貨レートコード
                         var lngmonetaryratecode = row.lngmonetaryratecode;
-                        $('select[name="lngMonetaryUnitCode"]').val(lngmonetaryunitcode);
+                        $('input[name="lngMonetaryUnitCode"]').val(lngmonetaryunitcode);
+                        $('input[name="strMonetaryUnitName"]').val(row.strmonetaryunitname);
                         $('select[name="lngMonetaryRateCode"]').val(lngmonetaryratecode);
                         $('input[name="lngOrderStatusCode"]').val(row.strorderstatusname);
                         $('input[name="curConversionRate"]').val(row.curconversionrate);
-                        $('select[name="lngPayConditionCode"]').val(row.lngpayconditioncode);
+                        $('input[name="lngPayConditionCode"]').val(row.lngpayconditioncode);
+                        $('input[name="strPayConditionName"]').val(row.strpayconditionname);
                         $('input[name="lngCustomerCode"]').val(row.strcompanydisplaycode);
                         $('input[name="strCustomerName"]').val(row.strcompanydisplayname);
                         $('input[name="strReviseCode"]').val(row.strrevisecode);
@@ -175,6 +177,7 @@ var curtaxList;
                     for (var i = 1; i <= columnNum; i++) {
                         $(".table-description thead tr th:nth-child(" + i + ")").width(widthArry[i - 1] + 1);
                     }
+                    $('select[name="lngMonetaryRateCode"]').change();
 
                 })
                 .fail(function (response) {
@@ -187,7 +190,7 @@ var curtaxList;
 
 
     // 通貨変更イベント
-    $('select[name="lngMonetaryUnitCode"]').on('change', function () {
+    $('input[name="lngMonetaryUnitCode"]').on('change', function () {
         // リクエスト送信
         $.ajax({
             url: '/pc/regist/getMonetaryRate.php',
@@ -217,7 +220,7 @@ var curtaxList;
             type: 'post',
             data: {
                 'strSessionID': $.cookie('strSessionID'),
-                'lngMonetaryUnitCode': $('select[name="lngMonetaryUnitCode"]').val(),
+                'lngMonetaryUnitCode': $('input[name="lngMonetaryUnitCode"]').val(),
                 'lngMonetaryRateCode': $(this).val(),
                 'dtmStockAppDate': $('input[name="dtmStockAppDate"]').val()
             }
@@ -305,8 +308,10 @@ var curtaxList;
             formData.push({ name: "detailData", value: JSON.stringify(detaildata) });
             formData.push({ name: "strSessionID", value: $.cookie('strSessionID') });
             formData.push({ name: "strMonetaryRateName", value: $('select[name="lngMonetaryRateCode"] option:selected').text() });
-            formData.push({ name: "strMonetaryUnitName", value: $('select[name="lngMonetaryUnitCode"] option:selected').text() });
-            formData.push({ name: "strPayConditionName", value: $('select[name="lngPayConditionCode"] option:selected').text() });
+            formData.push({ name: "lngMonetaryUnitCode", value: $('input[name="lngMonetaryUnitCode"]').val() });
+            formData.push({ name: "lngPayConditionCode", value: $('input[name="lngPayConditionCode"]').val() });
+            formData.push({ name: "strMonetaryUnitName", value: $('input[name="strMonetaryUnitName"]').val() });
+            formData.push({ name: "strPayConditionName", value: $('input[name="strPayConditionName"]').val() });
 
             var actionUrl = workForm.attr('action');
 //            alert(actionUrl);

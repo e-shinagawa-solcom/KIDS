@@ -102,11 +102,11 @@ if ($taxObj == null) {
 //$aryTaxclass = fncGetTaxClassAry($objDB);
 
 // 通貨
-$aryStock["lngmonetaryunitcode"] = fncGetPulldown("m_monetaryunit", "lngmonetaryunitcode", "strmonetaryunitname", $aryStock["lngmonetaryunitcode"], '', $objDB);
+//$aryStock["lngmonetaryunitcode"] = fncGetPulldown("m_monetaryunit", "lngmonetaryunitcode", "strmonetaryunitname", $aryStock["lngmonetaryunitcode"], '', $objDB);
 // レートタイプ
 $aryStock["lngmonetaryratecode"] = fncGetPulldown("m_monetaryrateclass", "lngmonetaryratecode", "strmonetaryratename", $aryStock["lngmonetaryratecode"], '', $objDB);
 // 支払条件
-$aryStock["lngpayconditioncode"] = fncGetPulldown("m_paycondition", "lngpayconditioncode", "strpayconditionname", $aryStock["lngpayconditioncode"], '', $objDB);
+//$aryStock["lngpayconditioncode"] = fncGetPulldown("m_paycondition", "lngpayconditioncode", "strpayconditionname", $aryStock["lngpayconditioncode"], '', $objDB);
 // フォームURL
 $aryStock["actionUrl"] = "/pc/modify/modify_confirm.php";
 $objDB->close();

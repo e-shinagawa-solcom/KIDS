@@ -97,18 +97,15 @@
 
 					<span class="regist-label regist-label--right">
 						<span class="regist-label__text">通貨</span>
-						<select name="lngMonetaryUnitCode" tabindex="13" class="Slt93">
-							_%lngMonetaryUnitCode%_
-						</select>
+						<input style="ime-mode:disabled;" class="disTxt07L" type="text" readonly name="strMonetaryUnitName" tabindex="13" class="Slt93">
+						<input type="hidden" name="lngMonetaryUnitCode">
 					</span>
 				</div>
 				<div class="regist-line">
 					<span class="regist-label">
-						<span class="regist-label__required-mark">◎</span>
 						<span class="regist-label__required-text">仕入先</span>
-						<input class="TxtStyle05L" name="lngCustomerCode" type="text" alt="Customer">
+						<input class="TxtStyle05L" name="lngCustomerCode" type="text" readonly alt="Customer">
 						<input class="disTxt46L" name="strCustomerName" type="text" readonly>
-						<img class="msw-button button" invokeMSWName="msw-supplier" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
 					</span>
 					<span class="regist-label regist-label--right">
 						<span class="regist-label__text">レートタイプ</span>
@@ -119,11 +116,9 @@
 				</div>
 				<div class="regist-line">
 					<span class="regist-label">
-						<span class="regist-label__required-mark">◎</span>
 						<span class="regist-label__required-text">納品場所</span>
-						<input class="TxtStyle05L" name="lngLocationCode" type="text" alt="Location">
+						<input class="TxtStyle05L" name="lngLocationCode" type="text" readonly alt="Location">
 						<input class="disTxt46L" name="strLocationName" type="text" readonly>
-						<img class="msw-button button" invokeMSWName="msw-location" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
 					</span>
 					<span class="regist-label regist-label--right">
 						<span class="regist-label__text">適用レート</span>
@@ -140,9 +135,8 @@
 					</span>
 					<span class="regist-label regist-label--right">
 						<span class="regist-label__text">支払条件</span>
-						<select name="lngPayConditionCode" tabindex="16" class="Slt93">
-							_%lngPayConditionCode%_
-						</select>
+						<input style="ime-mode:disabled;" class="disTxt07L" type="text" readonly name="strPayConditionName" tabindex="13" class="Slt93">
+						<input type="hidden" name="lngPayConditionCode">
 					</span>
 				</div>
 				<div class="regist-line">

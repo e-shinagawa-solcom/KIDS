@@ -903,7 +903,8 @@ function fncGetPoInfoSQL($strOrderCode, $objDB, $isAll = false)
     $aryQuery[] = " mu.strmonetaryunitsign as strmonetaryunitsign,";  // ÄÌ²ßÃ±°ÌÌ¾¾Î
     $aryQuery[] = " c.lngcountrycode as lngcountrycode,";  // ¹ñ¥³¡¼¥É
     $aryQuery[] = " mo.lngmonetaryratecode as lngmonetaryratecode,";  // ÄÌ²ß¥ì¡¼¥È¥³¡¼¥É
-    $aryQuery[] = " mpo.lngpayconditioncode as lngpayconditioncode";  // »ÙÊ§¾ò·ï
+    $aryQuery[] = " mpo.lngpayconditioncode as lngpayconditioncode,";  // »ÙÊ§¾ò·ï
+    $aryQuery[] = " dp_pc.strpayconditionname as strpayconditionname";  // »ÙÊ§¾ò·ïÌ¾
     $aryQuery[] = " FROM t_orderdetail od";
     $aryQuery[] = " inner join m_order mo";
     $aryQuery[] = " on mo.lngorderno = od.lngorderno";
@@ -938,6 +939,8 @@ function fncGetPoInfoSQL($strOrderCode, $objDB, $isAll = false)
     $aryQuery[] = "  LEFT JOIN m_productunit pu on pu.lngproductunitcode = od.lngproductunitcode";
     $aryQuery[] = "  LEFT JOIN m_company c on c.lngcompanycode = mo.lngcustomercompanycode";
     $aryQuery[] = "  LEFT JOIN m_company dp_c on dp_c.lngcompanycode = mo.lngdeliveryplacecode";
+    $aryQuery[] = "  LEFT JOIN m_paycondition dp_pc on dp_pc.lngpayconditioncode = mpo.lngpayconditioncode";
+    
     if( $isAll == false )
     {
     	$aryQuery[] = " WHERE mo.lngorderstatuscode = 2";

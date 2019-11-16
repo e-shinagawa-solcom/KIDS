@@ -81,7 +81,6 @@
 							 tabindex="1">
 						</span>
 						<span class="regist-label">
-							<span class="regist-label__required-mark">◎</span>
 							<span class="regist-label__required-text">発注NO.</span>
 							<input style="ime-mode:disabled;" class="disTxt10L" type="text" name="strOrderCode" value="_%strrealordercode%_" maxlength="10"
 							 tabindex="3" readonly>
@@ -111,18 +110,15 @@
 
 						<span class="regist-label regist-label--right">
 							<span class="regist-label__text">通貨</span>
-							<select name="lngMonetaryUnitCode" tabindex="13" class="Slt93">
-								_%lngMonetaryUnitCode%_
-							</select>
+							<input class="disTxt07L" type="text" readonly name="strMonetaryUnitName" value="_%strMonetaryUnitName%_" tabindex="13">
+							<input type="hidden" name="lngMonetaryUnitCode" value="_%lngMonetaryUnitCode%_">
 						</span>
 					</div>
 					<div class="regist-line">
 						<span class="regist-label">
-							<span class="regist-label__required-mark">◎</span>
 							<span class="regist-label__required-text">仕入先</span>
-							<input class="TxtStyle05L" name="lngCustomerCode" type="text" value="_%strcustomerdisplaycode%_">
+							<input class="TxtStyle05L" name="lngCustomerCode" type="text" readonly value="_%strcustomerdisplaycode%_">
 							<input class="disTxt46L" name="strCustomerName" type="text" value="_%strcustomerdisplayname%_" readonly>
-							<img class="msw-button button" invokeMSWName="msw-supplier" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
 						</span>
 						<span class="regist-label regist-label--right">
 							<span class="regist-label__text">レートタイプ</span>
@@ -133,11 +129,9 @@
 					</div>
 					<div class="regist-line">
 						<span class="regist-label">
-							<span class="regist-label__required-mark">◎</span>
 							<span class="regist-label__required-text">納品場所</span>
-							<input class="TxtStyle05L" name="lngLocationCode" type="text" value="_%strdeliverydisplaycode%_">
+							<input class="TxtStyle05L" name="lngLocationCode" type="text" readonly value="_%strdeliverydisplaycode%_">
 							<input class="disTxt46L" name="strLocationName" type="text" value="_%strdeliverydisplayname%_" readonly>
-							<img class="msw-button button" invokeMSWName="msw-location" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
 						</span>
 						<span class="regist-label regist-label--right">
 							<span class="regist-label__text">適用レート</span>
@@ -154,9 +148,8 @@
 						</span>
 						<span class="regist-label regist-label--right">
 							<span class="regist-label__text">支払条件</span>
-							<select name="lngPayConditionCode" tabindex="16" class="Slt93">
-								_%lngPayConditionCode%_
-							</select>
+							<input class="disTxt07L" type="text" readonly name="strPayConditionName" value="_%strPayConditionName%_" tabindex="16">
+							<input type="hidden" name="lngPayConditionCode" value="_%lngPayConditionCode%_">
 						</span>
 						<span style="visibility:hidden" id="taxList">
 						</span>
