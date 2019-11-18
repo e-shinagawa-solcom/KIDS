@@ -749,13 +749,14 @@ abstract class estimateRowController {
     // 通貨レートのチェックを行う
     protected function validateConversionRate() {
         $conversionRate = $this->conversionRate;
-        if ($conversionRate) {
-            $this->messageCode['classItem'] = DEF_MESSAGE_CODE_NOT_ENTRY_ERROR;
+        if (!$conversionRate) {
+            $this->messageCode['conversionRate'] = DEF_MESSAGE_CODE_NOT_ENTRY_ERROR;
+            return true;
         }
         if (preg_match("/\A\d{0,15}(\.[0-9]+)?\z/", $conversionRate) && $conversionRate > 0) { // 整数部分が15ケタ以内か確認
             return true;
         } else {
-            $this->messageCode['classItem'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
+            $this->messageCode['conversionRate'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
         }
 
         return true;
