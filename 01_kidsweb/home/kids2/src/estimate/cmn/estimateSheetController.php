@@ -1661,7 +1661,7 @@ class estimateSheetController {
     protected function setDropdownForCompany() {
         $dropdown = $this->objDB->getDropdownForCompany();
 
-        // 会社を顧客先と仕入先に分類する
+        // 会社を顧客先と仕入先/工場に分類する
         foreach ($dropdown as $list) {
             $companyAttribute = $list->lngattributecode;
             $newCompanyList[$companyAttribute][] = $list->customercompany;

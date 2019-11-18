@@ -4,8 +4,7 @@ require_once ( 'conf.inc' );		// 設定読み込み
 require_once ( LIB_FILE );			// ライブラリ読み込み
 
 require_once (SRC_ROOT. "/estimate/cmn/const/workSheetConst.php"); // ワークシート処理用定数ファイル
-
-
+include_once (LIB_DEBUGFILE);
 // 見積原価DBデータ処理クラス
 class estimateDB extends clsDB {
     public function __construct() {
@@ -79,10 +78,9 @@ class estimateDB extends clsDB {
                 }
             }
 
-            if (!$orderAttribute) {
+           if (!$orderAttribute) {
                 return false;
             }
-
             $strQuery = "SELECT";
             $strQuery .= " mc.lngcompanycode,";
             $strQuery .= " mc.strcompanydisplaycode,";
@@ -93,7 +91,14 @@ class estimateDB extends clsDB {
             $strQuery .= " ON mar.lngcompanycode = mc.lngcompanycode";
             $strQuery .= " INNER JOIN m_attribute ma";
             $strQuery .= " ON mar.lngattributecode = ma.lngattributecode";
-            $strQuery .= " WHERE mar.lngattributecode = ". $orderAttribute;
+            if( $orderAttribute == DEF_ATTRIBUTE_SUPPLIER )
+            {
+                $strQuery .= " WHERE mar.lngattributecode IN( ". $orderAttribute . "," . DEF_ATTRIBUTE_FACTORY . ")";
+            }
+            else
+            {
+                $strQuery .= " WHERE mar.lngattributecode = ". $orderAttribute;
+            }
             $strQuery .= " ORDER BY mc.strcompanydisplaycode";
 
             $queryResult = fncQuery($strQuery, $this); // [0]:結果ID [1]:取得行数
@@ -849,17 +854,21 @@ class estimateDB extends clsDB {
         if (!$this->isOpen()) {
             return false;
         } else {
-            $strQuery = "SELECT";
-            $strQuery .= " mc.strcompanydisplaycode ||':'|| coalesce(mc.strshortname, '')";
-            $strQuery .= " as customercompany,";
-            $strQuery .= " mar.lngattributecode as lngattributecode";
-            $strQuery .= " FROM m_attributerelation mar";
-            $strQuery .= " INNER JOIN m_company mc";
-            $strQuery .= " ON mar.lngcompanycode = mc.lngcompanycode";
-            $strQuery .= " INNER JOIN m_attribute ma";
-            $strQuery .= " ON mar.lngattributecode = ma.lngattributecode";
-            $strQuery .= " WHERE mar.lngattributecode in (". DEF_ATTRIBUTE_CLIENT. ", ". DEF_ATTRIBUTE_SUPPLIER. ")" ;
-            $strQuery .= " ORDER BY lngattributecode ASC, mc.strcompanydisplaycode ASC";
+            $strQuery  = "select distinct";
+            $strQuery .= "    customercompany,";
+            $strQuery .= "    lngattributecode ";
+            $strQuery .= "FROM (";
+            $strQuery .= "    SELECT";
+            $strQuery .= "        mc.strcompanydisplaycode ||':'|| coalesce(mc.strshortname, '') as customercompany,";
+            $strQuery .= "        case mar.lngattributecode when 4 then 3 else mar.lngattributecode end as lngattributecode";
+            $strQuery .= "    FROM m_attributerelation mar";
+            $strQuery .= "    INNER JOIN m_company mc";
+            $strQuery .= "        ON mar.lngcompanycode = mc.lngcompanycode";
+            $strQuery .= "    INNER JOIN m_attribute ma";
+            $strQuery .= "     ON mar.lngattributecode = ma.lngattributecode";
+            $strQuery .= "   WHERE mar.lngattributecode in (". DEF_ATTRIBUTE_CLIENT. ", ". DEF_ATTRIBUTE_SUPPLIER . "," . DEF_ATTRIBUTE_FACTORY . ")" ;
+            $strQuery .= ") A";
+            $strQuery .= " ORDER BY lngattributecode ASC, customercompany ASC";
 
             list ($resultID, $resultNumber) = fncQuery($strQuery, $this);
 
