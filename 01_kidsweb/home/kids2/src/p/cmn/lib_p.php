@@ -322,13 +322,13 @@ if (array_key_exists("lngCertificateClassCode", $searchColumns) &&
 if (array_key_exists("dtmDeliveryLimitDate", $searchColumns) &&
     array_key_exists("dtmDeliveryLimitDate", $from) && $from["dtmDeliveryLimitDate"] != '') {
     $aryQuery[] = " AND p.dtmDeliveryLimitDate" .
-        " <= '" . $from["dtmDeliveryLimitDate"] . "'";
+        " >= '" . $from["dtmDeliveryLimitDate"] . "'";
 }
 // 納期_to
 if (array_key_exists("dtmDeliveryLimitDate", $searchColumns) &&
     array_key_exists("dtmDeliveryLimitDate", $to) && $to["dtmDeliveryLimitDate"] != '') {
     $aryQuery[] = " AND p.dtmDeliveryLimitDate" .
-        " >= " . "'" . $to["dtmDeliveryLimitDate"] . "'";
+        " <= " . "'" . $to["dtmDeliveryLimitDate"] . "'";
 }
 
 // 版権元
