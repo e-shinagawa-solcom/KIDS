@@ -261,10 +261,15 @@ $body = '';
 for ($i = 0; $i < $lngResultNum; ++$i) {
 
 	$result = pg_fetch_array($lngResultID, $i, PGSQL_ASSOC);
-
+    // 背景色設定
+    if ($record["lngrevisionno"] < 0) {
+        $bgcolor = "background-color: #B3E0FF;";
+    } else {
+        $bgcolor = "background-color: #FEEF8B;";
+    }
 	$estimateNo = htmlspecialchars($result['lngestimateno'], ENT_QUOTES);
 
-	$body .= "<tr id=\"". ($estimateNo."_".$result["lngrevisionno"]). "\" class=\"estimate_search_result\" style=\"background:#FFFFFF\" onclick=\"fncSelectTrColor( this );\">";
+	$body .= "<tr id=\"". ($estimateNo."_".$result["lngrevisionno"]). "\" class=\"estimate_search_result\" style=\"" . $bgcolor . "\ onclick=\"fncSelectTrColor( this );\">";
 
 	$number = $i + 1;
 

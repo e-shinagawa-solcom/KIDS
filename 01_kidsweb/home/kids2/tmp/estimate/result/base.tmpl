@@ -14,6 +14,7 @@
 <link rel="stylesheet" type="text/css" media="screen" href="/estimate/cmn/css/layout.css">
 <link rel="stylesheet" type="text/css" media="screen" href="/estimate/result/css/layout.css">
 <script src="/estimate/result/js/function.js"></script>
+<script src="/p/search/result/js/clipboard.js" defer=""></script>
 
 </head>
 
@@ -21,9 +22,9 @@
 <input type="hidden" value="" name="copyhidden">
 
 <span id="COPYAREA1">
-<table class="estimate_search">
+<table class="estimate_search" id="result">
 <tr>
-<th valign="top" valign="center"><a href="#" onclick="fncDoCopy( copyhidden , document.getElementById('COPYAREA1') , document.getElementById('COPYAREA2') );return false;"><img onmouseover="CopyOn(this);" onmouseout="CopyOff(this);" src="/img/type01/cmn/seg/copy_off_bt.gif" width="15" height="15" border="0" alt="COPY" rowspan="2"></a></td>
+<th valign="top" valign="center"><img src="/img/type01/cmn/seg/copy_off_bt.gif" class="copy button"></td>
 	_%HEADER%_
 </tr>
 <!--

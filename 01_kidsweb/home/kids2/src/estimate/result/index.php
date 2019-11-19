@@ -497,11 +497,18 @@ $body = '';
 
 for ($i = 0; $i < $resultNum; ++$i) {
 
-    $result = pg_fetch_array($resultID, $i, PGSQL_ASSOC);
+	$result = pg_fetch_array($resultID, $i, PGSQL_ASSOC);
+    // ÇØ·Ê¿§ÀßÄê
+    if ($result["lngrevisionno"] < 0) {
+        $bgcolor = "background-color: #B3E0FF;";
+    } else {
+        $bgcolor = "background-color: #FFB2B2;";
+	}
+	
 
     $estimateNo = htmlspecialchars($result['lngestimateno'], ENT_QUOTES);
 
-    $body .= "<tr id=\"" . $estimateNo . "\" class=\"estimate_search_result\" style=\"background:#FFFFFF\" onclick=\"fncSelectTrColor( this );\">";
+    $body .= "<tr id=\"" . $estimateNo . "\" class=\"estimate_search_result\" style=\"" . $bgcolor . "\" onclick=\"fncSelectTrColor( this );\">";
 
     $number = $i + 1;
 
@@ -509,16 +516,16 @@ for ($i = 0; $i < $resultNum; ++$i) {
 
     foreach ($displayColumns as $column) {
         if ($column === 'btnDetail') { // ¾ÜºÙ
-            $body .= "<td bgcolor=\"#FFFFFF\" align=\"center\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $resultNum . "_',1 );\">";
+            $body .= "<td align=\"center\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $resultNum . "_',1 );\">";
             $body .= "<button type=\"button\" class=\"cells btnDetail\" action=\"/estimate/preview/index.php?strSessionID=" . $strSessionID . "&estimateNo=" . $estimateNo . "\" value=\"" . $result['lngrevisionno'] . "\">";
-            $body .= "<img onmouseover=\"DetailOn(this);\" onmouseout=\"DetailOff(this);\" src=\"/img/" . LAYOUT_CODE . "/wf/result/detail_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"DETAIL\">";
+            $body .= "<img onmouseover=\"DetailOn(this);\" onmouseout=\"DetailOff(this);\" src=\"/img/type01/pc/detail_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"DETAIL\">";
             $body .= "</button></td>";
 
         } else if ($column === 'btnHistory') { // ÍúÎò
             if (array_key_exists("admin", $optionColumns) && $result["lngrevisionno"] <> 0) {
-                $body .= "<td bgcolor=\"#FFFFFF\" align=\"center\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $resultNum . "_',1 );\">";
+                $body .= "<td align=\"center\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $resultNum . "_',1 );\">";
                 $body .= "<button type=\"button\" class=\"cells btnHistory\" rownum=\"" . $number . "\" estimateNo=\"" . $estimateNo . "\" revisionNo=\"" . $result['lngrevisionno'] . "\" >";
-                $body .= "<img onmouseover=\"RenewOn(this);\" onmouseout=\"RenewOff(this);\" src=\"/img/" . LAYOUT_CODE . "/cmn/seg/renew_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"HISTORY\">";
+                $body .= "<img onmouseover=\"RenewOn(this);\" onmouseout=\"RenewOff(this);\" src=\"/img/type01/pc/renew_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"HISTORY\">";
                 $body .= "</button></td>";
             } else {
                 $body .= "<td nowrap align=\"left\"></td>";
@@ -526,9 +533,9 @@ for ($i = 0; $i < $resultNum; ++$i) {
 
 		} else if ($column === 'btnDelete') { // ºï½ü
             if ($result['deleteflag'] === 'f') {
-                $body .= "<td bgcolor=\"#FFFFFF\" align=\"center\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $resultNum . "_',1 );\">";
+                $body .= "<td align=\"center\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $resultNum . "_',1 );\">";
                 $body .= "<button type=\"button\" class=\"cells btnDelete\" action=\"/estimate/delete/index.php\" value=\"" . $result['lngrevisionno'] . "\">";
-                $body .= "<img onmouseover=\"RemoveOn(this);\" onmouseout=\"RemoveOff(this);\" src=\"/img/" . LAYOUT_CODE . "/cmn/seg/remove_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"DELETE\">";
+                $body .= "<img onmouseover=\"RemoveOn(this);\" onmouseout=\"RemoveOff(this);\" src=\"/img/type01/pc/delete_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"DELETE\">";
 
                 $body .= "</button></td>";
             } else {
