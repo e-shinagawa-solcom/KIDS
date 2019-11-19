@@ -286,6 +286,7 @@ define ( "DEF_AUTHG_GUEST",		130 );	// ゲスト
 define ( "DEF_ATTRIBUTE_HEADOFFICE",	1 );	// 本社
 define ( "DEF_ATTRIBUTE_CLIENT",		2 );	// 顧客
 define ( "DEF_ATTRIBUTE_SUPPLIER",      3 );    // 仕入先
+define ( "DEF_ATTRIBUTE_FACTORY",       4 );    // 工場
 define ( "DEF_ATTRIBUTE_DELIVERY",      5 );    // 納品場所・倉庫
 
 // m_ReportClass.lngReportClassCode
