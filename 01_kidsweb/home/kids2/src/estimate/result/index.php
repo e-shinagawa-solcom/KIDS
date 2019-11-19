@@ -1,158 +1,163 @@
 <?
-/** 
-*	見積原価管理 検索結果表示画面
-*
-*	@package   kuwagata
-*	@license   http://www.wiseknot.co.jp/ 
-*	@copyright Copyright &copy; 2004, AntsBizShare 
-*	@author    Kenji Chiba
-*	@access    public
-*	@version   1.00
-*
-*/
+/**
+ *    見積原価管理 検索結果表示画面
+ *
+ *    @package   kuwagata
+ *    @license   http://www.wiseknot.co.jp/
+ *    @copyright Copyright &copy; 2004, AntsBizShare
+ *    @author    Kenji Chiba
+ *    @access    public
+ *    @version   1.00
+ *
+ */
 // -------------------------------------------------------------------------
 
-
 // 設定読み込み
-include_once ('conf.inc');
-require_once ( LIB_DEBUGFILE );
-require_once (SRC_ROOT.'/mold/lib/UtilSearchForm.class.php');
+include_once 'conf.inc';
+require_once LIB_DEBUGFILE;
+require_once SRC_ROOT . '/mold/lib/UtilSearchForm.class.php';
 
 // ライブラリ読み込み
-require_once (LIB_FILE);
-require_once (SRC_ROOT. "estimate/cmn/makeHTML.php");
+require_once LIB_FILE;
+require_once SRC_ROOT . "estimate/cmn/makeHTML.php";
 
 // DB接続
-$objDB   = new clsDB();
+$objDB = new clsDB();
 $objAuth = new clsAuth();
-$objDB->open( "", "", "", "" );
+$objDB->open("", "", "", "");
 
 $aryData = $_REQUEST;
 
 $strSessionID = $aryData["strSessionID"];
 
 // フォームデータから各カテゴリの振り分けを行う
-	$options = UtilSearchForm::extractArrayByOption($aryData);
-	$isDisplay = UtilSearchForm::extractArrayByIsDisplay($aryData);
-	$isSearch = UtilSearchForm::extractArrayByIsSearch($aryData);
-	$from = UtilSearchForm::extractArrayByFrom($aryData);
-	$to = UtilSearchForm::extractArrayByTo($aryData);
-	
-	$displayColumns = array_keys($isDisplay);
-	$searchColumns = array_keys($isSearch);
+$options = UtilSearchForm::extractArrayByOption($aryData);
+$isDisplay = UtilSearchForm::extractArrayByIsDisplay($aryData);
+$isSearch = UtilSearchForm::extractArrayByIsSearch($aryData);
+$from = UtilSearchForm::extractArrayByFrom($aryData);
+$to = UtilSearchForm::extractArrayByTo($aryData);
 
-	//////////////////////////////////////////////////////////////////////////
-	// POST(一部GET)データ取得
-	//////////////////////////////////////////////////////////////////////////
+$optionColumns = array();
+// オプション項目の抽出
+foreach ($options as $key => $flag) {
+    if ($flag == "on") {
+        $optionColumns[$key] = $key;
+    }
+}
 
-	$searchData = array();
-	
-	// 検索条件の配列を生成する
-	foreach ($searchColumns as $column) {
-		// 	範囲指定の場合
-		if (isset($from[$column]) || isset($to[$column])) {
-			$searchData[$column] = array(
-				'from' => $from[$column],
-				'to' => $to[$column]
-			);
-		} else {
-			$searchData[$column] = $aryData[$column];
-		}
-	}
+$displayColumns = array_keys($isDisplay);
+$searchColumns = array_keys($isSearch);
+
+//////////////////////////////////////////////////////////////////////////
+// POST(一部GET)データ取得
+//////////////////////////////////////////////////////////////////////////
+
+$searchData = array();
+
+// 検索条件の配列を生成する
+foreach ($searchColumns as $column) {
+    //     範囲指定の場合
+    if (isset($from[$column]) || isset($to[$column])) {
+        $searchData[$column] = array(
+            'from' => $from[$column],
+            'to' => $to[$column],
+        );
+    } else {
+        $searchData[$column] = $aryData[$column];
+    }
+}
 
 //////////////////////////////////////////////////////////////////////////
 // セッション、権限確認
 //////////////////////////////////////////////////////////////////////////
 // セッション確認
-$objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
+$objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 
 // 権限確認
-if ( !fncCheckAuthority( DEF_FUNCTION_E2, $objAuth ) )
-{
-	fncOutputError ( 9052, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
+if (!fncCheckAuthority(DEF_FUNCTION_E2, $objAuth)) {
+    fncOutputError(9052, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
 
-
 // 検索結果のカラム表記の言語設定
-$aryColumnLang = Array (
-	"btnDetail"						=> "詳細",
-	"btnHistory"					=> "履歴",
-	"dtmInsertDate"		    		=> "作成日",
-	"strProductCode"				=> "製品コード",
-	"strProductName"				=> "製品名称(日本語)",
-	"strProductEnglishName"			=> "製品名称(英語)",
-	"lngInChargeGroupCode"      	=> "営業部署",
-	"lngInChargeUserCode"	        => "担当",
-	"lngDevelopUserCode"		    => "開発担当者",
-	"dtmDeliveryLimitDate"			=> "客先納品日",
-	"curRetailPrice"				=> "上代",
-	"lngInputUserCode"              => "入力者",
-	"lngCartonQuantity"				=> "カートン入数",
-	"lngProductionQuantity"			=> "生産数",
-	"curSalesAmount"			    => "製品売上高",
-	"curSalesProfit"                => "製品利益",
-	"curSalesProfitRate"            => "製品利益率",
-	"curFixedCostSales"             => "固定費売上高",
-	"curFixedCostSalesProfit"       => "固定費利益",
-	"curFixedCostSalesProfitRate"   => "固定費利益率",
-	"curTotalSales"                 => "総売上高",
-	"curTotalPrice"                 => "売上総利益",
-	"curTotalPriceRate"             => "売上総利益率",
-	"curIndirectManufacturingCost"  => "間接製造経費",
-	"curStandardRate"               => "間接製造経費率",
-	"curProfit"                     => "営業利益",
-	"curProfitRate"                 => "営業利益率",
-	"curMemberCostPieces"           => "pcs部材費用",
-	"curMemberCost"                 => "部材費合計",
-	"curFixedCostPieces"            => "pcs償却費用",
-	"curFixedCost"                  => "償却費合計",
-	"curManufacturingCostPieces"    => "pcsコスト",
-	"curManufacturingCost"          => "製造費用合計",
-	"btnDelete"                     => "削除"
+$aryColumnLang = array(
+    "btnDetail" => "詳細",
+    "btnHistory" => "履歴",
+    "dtmInsertDate" => "作成日",
+    "strProductCode" => "製品コード",
+    "strProductName" => "製品名称(日本語)",
+    "strProductEnglishName" => "製品名称(英語)",
+    "lngInChargeGroupCode" => "営業部署",
+    "lngInChargeUserCode" => "担当",
+    "lngDevelopUserCode" => "開発担当者",
+    "dtmDeliveryLimitDate" => "客先納品日",
+    "curRetailPrice" => "上代",
+    "lngInputUserCode" => "入力者",
+    "lngCartonQuantity" => "カートン入数",
+    "lngProductionQuantity" => "生産数",
+    "curSalesAmount" => "製品売上高",
+    "curSalesProfit" => "製品利益",
+    "curSalesProfitRate" => "製品利益率",
+    "curFixedCostSales" => "固定費売上高",
+    "curFixedCostSalesProfit" => "固定費利益",
+    "curFixedCostSalesProfitRate" => "固定費利益率",
+    "curTotalSales" => "総売上高",
+    "curTotalPrice" => "売上総利益",
+    "curTotalPriceRate" => "売上総利益率",
+    "curIndirectManufacturingCost" => "間接製造経費",
+    "curStandardRate" => "間接製造経費率",
+    "curProfit" => "営業利益",
+    "curProfitRate" => "営業利益率",
+    "curMemberCostPieces" => "pcs部材費用",
+    "curMemberCost" => "部材費合計",
+    "curFixedCostPieces" => "pcs償却費用",
+    "curFixedCost" => "償却費合計",
+    "curManufacturingCostPieces" => "pcsコスト",
+    "curManufacturingCost" => "製造費用合計",
+    "btnDelete" => "削除",
 );
 
 //////////////////////////////////////////////////////////////////////////
 // 文字列チェック
 //////////////////////////////////////////////////////////////////////////
 
-$aryCheck["strSessionID"]                = "null:numenglish(32,32)";
-$aryCheck["strProductName"]              = "length(0,80)";
-$aryCheck["strProductEnglishName"]       = "ascii(0,80)";
-$aryCheck["lngInChargeGroupCode"]        = "numenglish(0,32767)";
-$aryCheck["lngInChargeUserCode"]         = "numenglish(0,32767)";
-$aryCheck["lngDevelopUserCode"]          = "numenglish(0,32767)";
-$aryCheck["lngInputUserCode"]            = "numenglish(0,32767)";
-$aryCheck["dtmCreationDateFrom"]         = "date(/)";
-$aryCheck["dtmCreationDateTo"]           = "date(/)";
-$aryCheck["dtmDeliveryLimitDateFrom"]    = "date(/)";
-$aryCheck["dtmDeliveryLimitDateTo"]      = "date(/)";
+$aryCheck["strSessionID"] = "null:numenglish(32,32)";
+$aryCheck["strProductName"] = "length(0,80)";
+$aryCheck["strProductEnglishName"] = "ascii(0,80)";
+$aryCheck["lngInChargeGroupCode"] = "numenglish(0,32767)";
+$aryCheck["lngInChargeUserCode"] = "numenglish(0,32767)";
+$aryCheck["lngDevelopUserCode"] = "numenglish(0,32767)";
+$aryCheck["lngInputUserCode"] = "numenglish(0,32767)";
+$aryCheck["dtmCreationDateFrom"] = "date(/)";
+$aryCheck["dtmCreationDateTo"] = "date(/)";
+$aryCheck["dtmDeliveryLimitDateFrom"] = "date(/)";
+$aryCheck["dtmDeliveryLimitDateTo"] = "date(/)";
 
 $linkedProductCode = str_replace('-', ',', $aryData['strProductCode']);
 $productCodes = explode(',', $linkedProductCode);
 
 for ($i = 0; $i < count($productCodes); ++$i) {
-	$key = 'strProductCode'. $i;
-	$aryData[$key] = $productCodes[$i];
-	$aryCheck[$key] = "intstring(5)";
+    $key = 'strProductCode' . $i;
+    $aryData[$key] = $productCodes[$i];
+    $aryCheck[$key] = "intstring(5)";
 }
 
 // 文字列チェック
-$aryCheckResult = fncAllCheck( $aryData, $aryCheck );
+$aryCheckResult = fncAllCheck($aryData, $aryCheck);
 
 // エラーメッセージを出力する
 $strErrorMessage = array();
 
-foreach ( $aryCheckResult as $value ) {
-	if ($value)	{
-		list ($lngErrorNo, $errorReplace) = explode (":", $value);
-		$strErrorMessage[] = fncOutputError ( $lngErrorNo, DEF_ERROR, $errorReplace, FALSE, "", $objDB );
-	}
+foreach ($aryCheckResult as $value) {
+    if ($value) {
+        list($lngErrorNo, $errorReplace) = explode(":", $value);
+        $strErrorMessage[] = fncOutputError($lngErrorNo, DEF_ERROR, $errorReplace, false, "", $objDB);
+    }
 }
 
 if (!count($strErrorMessage)) {
-	// 見積原価のデータ取得
-	$selectQuery = 
-		"SELECT
+    // 見積原価のデータ取得
+    $selectQuery =
+        "SELECT
 			TO_CHAR(me.dtmInsertDate, 'YYYY/MM/DD') AS dtminsertdate,
 			mp.strproductcode,
 			mp.strproductname,
@@ -188,29 +193,29 @@ if (!count($strErrorMessage)) {
 			mp.strrevisecode,
 			me.lngrevisionno,
 			me.lngrevisionno AS lngmaxrevisionno
-			
+
 		FROM m_estimate me
-		
+
 		INNER JOIN m_product mp
 			ON mp.strproductcode = me.strproductcode
 			AND mp.strrevisecode = me.strrevisecode
 			AND mp.lngrevisionno = me.lngproductrevisionno
-		
+
 		INNER JOIN m_group mg
 			ON mg.lnggroupcode = mp.lnginchargegroupcode
-		
+
 		INNER JOIN m_user mu1
 			ON mu1.lngusercode = mp.lnginchargeusercode
-		
+
 		LEFT OUTER JOIN m_user mu2
 			ON mu2.lngusercode = mp.lngdevelopusercode
-		
+
 		INNER JOIN m_user mu3
 			ON mu3.lngusercode = mp.lnginputusercode
-		
+
 		LEFT OUTER JOIN
 		(
-			SELECT 
+			SELECT
 				me.lngestimateno,
 				me.lngrevisionno,
 				SUM(CASE WHEN mscdl.lngestimateareaclassno = 2 THEN ted.curconversionrate * ted.cursubtotalprice ELSE 0 END) AS curfixedcostsales,
@@ -223,7 +228,7 @@ if (!count($strErrorMessage)) {
 				AND me.lngrevisionno = ted.lngrevisionno
 			LEFT OUTER JOIN  m_salesclassdivisonlink mscdl
 				ON mscdl.lngsalesclasscode = ted.lngsalesclasscode
-				AND mscdl.lngsalesdivisioncode = ted.lngsalesdivisioncode		
+				AND mscdl.lngsalesdivisioncode = ted.lngsalesdivisioncode
 			LEFT OUTER JOIN m_stockitem msi
 				ON msi.lngstocksubjectcode = ted.lngstocksubjectcode
 				AND msi.lngstockitemcode = ted.lngstockitemcode
@@ -243,10 +248,10 @@ if (!count($strErrorMessage)) {
 				AND mo.lngrevisionno = tod.lngrevisionno
 			GROUP BY me.lngestimateno, me.lngrevisionno
 		) tsum
-			
+
 			ON tsum.lngestimateno = me.lngestimateno
 			AND tsum.lngrevisionno = me.lngrevisionno
-			
+
 		INNER JOIN
 		(
 			SELECT
@@ -255,159 +260,157 @@ if (!count($strErrorMessage)) {
 			FROM m_estimate
 			GROUP BY lngestimateno";
 
-	// // 管理者モードでない場合
-	if (!$options['admin']) {
-		$selectQuery .=
-			" HAVING MIN(lngrevisionno) >= 0";
+    // 管理者モードでない場合
+    if (!array_key_exists("admin", $optionColumns)) {
+        $selectQuery .=
+            " HAVING MIN(lngrevisionno) >= 0";
 
-	}
-			
-	$selectQuery .=
+    }
 
-		") maxrev
+    $selectQuery .=
+
+        ") maxrev
 
 			ON maxrev.lngestimateno = me.lngestimateno
 			AND maxrev.lngrevisionno = me.lngrevisionno";
-		
-	// WHERE句生成
-	$where = '';
 
-	foreach ($searchData as $key => $condition) {
-		$fromCondition = '';
-		$toCondition = '';
-		$search = '';
-		$searchs = array();
-		$searchNumber = array();
+    // WHERE句生成
+    $where = '';
 
-		// 検索条件を振り分ける
-		switch ($key) {
-			// 入力日
-			case 'dtmInsertDate':
-				if ($condition['from']) {
-					$fromCondition = "me.dtminsertdate >= TO_TIMESTAMP('".$condition['from']." 00:00:00', 'YYYY/MM/DD HH24:MI:SS')";                                 
-				}
-				if ($condition['to']) {
-					$toCondition = "me.dtminsertdate <= TO_TIMESTAMP('".$condition['to']." 23:59:59', 'YYYY/MM/DD HH24:MI:SS')";
-				}
-				break;
+    foreach ($searchData as $key => $condition) {
+        $fromCondition = '';
+        $toCondition = '';
+        $search = '';
+        $searchs = array();
+        $searchNumber = array();
 
-			// 製品コード
-			case 'strProductCode':
-			    if (strlen($condition)) {
-					$conditions = explode(',', $condition);
-					foreach ($conditions as $value) {
-						if (preg_match('/\A(\d+)-(\d+)\z/', $value, $matches)) {
-							$rangeFlag = true;
-							$searchs[] = "mp.strProductCode BETWEEN '". $matches[1]. "' AND '". $matches[2]. "'";
-						} else {
-							$searchNumber[] = "'". $value. "'";
-						}					
-					}
-					$numbers = implode(',', $searchNumber);
-					if ($numbers) {
-						$searchs[] = "mp.strProductCode IN (". $numbers. ")";
-					}
-					$search = "(". implode(' OR ', $searchs). ")";
-				}
-				break;
+        // 検索条件を振り分ける
+        switch ($key) {
+            // 入力日
+            case 'dtmInsertDate':
+                if ($condition['from']) {
+                    $fromCondition = "me.dtminsertdate >= TO_TIMESTAMP('" . $condition['from'] . " 00:00:00', 'YYYY/MM/DD HH24:MI:SS')";
+                }
+                if ($condition['to']) {
+                    $toCondition = "me.dtminsertdate <= TO_TIMESTAMP('" . $condition['to'] . " 23:59:59', 'YYYY/MM/DD HH24:MI:SS')";
+                }
+                break;
 
-			// 製品名称
-			case 'strProductName';
-			    if (strlen($condition)) {
-					$search = "mp.strProductName LIKE '%". $condition. "%'";
-				}
-				break;
+            // 製品コード
+            case 'strProductCode':
+                if (strlen($condition)) {
+                    $conditions = explode(',', $condition);
+                    foreach ($conditions as $value) {
+                        if (preg_match('/\A(\d+)-(\d+)\z/', $value, $matches)) {
+                            $rangeFlag = true;
+                            $searchs[] = "mp.strProductCode BETWEEN '" . $matches[1] . "' AND '" . $matches[2] . "'";
+                        } else {
+                            $searchNumber[] = "'" . $value . "'";
+                        }
+                    }
+                    $numbers = implode(',', $searchNumber);
+                    if ($numbers) {
+                        $searchs[] = "mp.strProductCode IN (" . $numbers . ")";
+                    }
+                    $search = "(" . implode(' OR ', $searchs) . ")";
+                }
+                break;
 
-			// 製品名称(英語)
-			case 'strProductEnglishName';
-				if (strlen($condition)) {
-					$search = "mp.strproductenglishname LIKE '%". $condition. "%'";
-				}				
-			    break;
+            // 製品名称
+            case 'strProductName';
+                if (strlen($condition)) {
+                    $search = "mp.strProductName LIKE '%" . $condition . "%'";
+                }
+                break;
 
-			// 営業部署
-			case 'lngInChargeGroupCode':
-			    if (strlen($condition)) {
-					$search = "mg.strgroupdisplaycode = '". $condition. "'";
-				}
-				break;
+            // 製品名称(英語)
+            case 'strProductEnglishName';
+                if (strlen($condition)) {
+                    $search = "mp.strproductenglishname LIKE '%" . $condition . "%'";
+                }
+                break;
 
-			// 担当
-			case 'lngInChargeUserCode':
-				if (strlen($condition)) {
-					$search = "mu1.struserdisplaycode = '". $condition. "'";
-				}
-				break;
+            // 営業部署
+            case 'lngInChargeGroupCode':
+                if (strlen($condition)) {
+                    $search = "mg.strgroupdisplaycode = '" . $condition . "'";
+                }
+                break;
 
-			// 開発担当者
-			case 'lngDevelopUserCode':
-				if (strlen($condition)) {
-					$search = "mu2.struserdisplaycode = '". $condition. "'";
-				}
-				break;
-			
-			// 入力者
-			case 'lngInputUserCode':
-				if (strlen($condition)) {
-					$search = "mu3.struserdisplaycode = '". $condition. "'";
-				}
-			    break;
-			
-			// // 納期
-			// case 'dtmDeliveryLimitDate';
-			// 	if ($condition['from']) {
-			// 		$fromCondition = "mp.dtmdeliverylimitdate >= TO_DATE('".$condition['from']."', 'YYYY/MM/DD')";                                 
-			// 	}
-			// 	if ($condition['to']) {
-			// 		$toCondition = "mp.dtmdeliverylimitdate <= TO_DATE('".$condition['to']."', 'YYYY/MM/DD')";
-			// 	}
-			// 	break;
-			
-			default:
-				break;
-		}
+            // 担当
+            case 'lngInChargeUserCode':
+                if (strlen($condition)) {
+                    $search = "mu1.struserdisplaycode = '" . $condition . "'";
+                }
+                break;
 
-		if ($fromCondition && $toCondition) {
-			$search = $fromCondition. " AND ". $toCondition; 
-		} else if ($fromCondition) {
-			$search = $fromCondition;
-		} else if ($toCondition) {
-			$search = $toCondition;
-		}
+            // 開発担当者
+            case 'lngDevelopUserCode':
+                if (strlen($condition)) {
+                    $search = "mu2.struserdisplaycode = '" . $condition . "'";
+                }
+                break;
 
-		if ($search) {
-			if ($where) {
-				$where .= " AND ". $search;
-			} else {
-				$where = " WHERE ". $search;
-			}
-		}
-	}
+            // 入力者
+            case 'lngInputUserCode':
+                if (strlen($condition)) {
+                    $search = "mu3.struserdisplaycode = '" . $condition . "'";
+                }
+                break;
 
-	// ソート設定
-	list ($column, $sortNum, $DESC ) = explode ( "_", $aryData["strSort"] );
+            // // 納期
+            // case 'dtmDeliveryLimitDate';
+            //     if ($condition['from']) {
+            //         $fromCondition = "mp.dtmdeliverylimitdate >= TO_DATE('".$condition['from']."', 'YYYY/MM/DD')";
+            //     }
+            //     if ($condition['to']) {
+            //         $toCondition = "mp.dtmdeliverylimitdate <= TO_DATE('".$condition['to']."', 'YYYY/MM/DD')";
+            //     }
+            //     break;
 
-	if ($column) {
-		$orderBy = " ORDER BY ". $sortNum. " ". $DESC. ", me.dtmInsertDate DESC\n";
-	}
-	else {
-		$orderBy = " ORDER BY me.dtmInsertDate DESC\n";
-	}
+            default:
+                break;
+        }
 
-	$strQuery = $selectQuery.$where.$orderBy;
+        if ($fromCondition && $toCondition) {
+            $search = $fromCondition . " AND " . $toCondition;
+        } else if ($fromCondition) {
+            $search = $fromCondition;
+        } else if ($toCondition) {
+            $search = $toCondition;
+        }
 
-	list($resultID, $resultNum) = fncQuery($strQuery, $objDB);
+        if ($search) {
+            if ($where) {
+                $where .= " AND " . $search;
+            } else {
+                $where = " WHERE " . $search;
+            }
+        }
+    }
 
-	if ($resultNum > 1000) {
-		$strErrorMessage = fncOutputError( 9057, DEF_WARNING, "1000", FALSE, "/estimate/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB );
-	} else if ($resultNum < 1) {
-		$strErrorMessage = fncOutputError( 1507, DEF_WARNING, "", FALSE, "/estimate/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB );
-	}
+    // ソート設定
+    list($column, $sortNum, $DESC) = explode("_", $aryData["strSort"]);
+
+    if ($column) {
+        $orderBy = " ORDER BY " . $sortNum . " " . $DESC . ", me.dtmInsertDate DESC\n";
+    } else {
+        $orderBy = " ORDER BY me.dtmInsertDate DESC\n";
+    }
+
+    $strQuery = $selectQuery . $where . $orderBy;
+
+    list($resultID, $resultNum) = fncQuery($strQuery, $objDB);
+    if ($resultNum > 1000) {
+        $strErrorMessage = fncOutputError(9057, DEF_WARNING, "1000", false, "/estimate/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
+    } else if ($resultNum < 1) {
+        $strErrorMessage = fncOutputError(1507, DEF_WARNING, "", false, "/estimate/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
+    }
 }
 
 // 検索でエラーが発生したらエラーメッセージを画面に出力する
 if ($strErrorMessage) {
-	makeHTML::outputErrorWindow($strErrorMessage);
+    makeHTML::outputErrorWindow($strErrorMessage);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -421,75 +424,73 @@ $sort = 0;
 // ヘッダ部の作成
 foreach ($displayColumns as $column) {
 
-	$title = htmlspecialchars($aryColumnLang[$column], ENT_QUOTES);
+    $title = htmlspecialchars($aryColumnLang[$column], ENT_QUOTES);
 
-	if ($column === 'btnDetail'
-	    || $column === 'btnHistory'
-		|| $column === 'btnDelete') {
-		$header .= "<th nowrap>" . $title . "</th>";
-	} else {
-		++$sort;
-		$header .= "<th class=\"sortColumns\" nowrap onmouseover=\"SortOn( this );\" onmouseout=\"SortOff( this );\" data-value=\"column_". $sort. "_ASC\"><a href=\"#\">" . $title . "</a></th>";
-	}
-	++$columns;
+    if ($column === 'btnDetail'
+        || $column === 'btnHistory'
+        || $column === 'btnDelete') {
+        $header .= "<th nowrap>" . $title . "</th>";
+    } else {
+        ++$sort;
+        $header .= "<th class=\"sortColumns\" nowrap onmouseover=\"SortOn( this );\" onmouseout=\"SortOff( this );\" data-value=\"column_" . $sort . "_ASC\"><a href=\"#\">" . $title . "</a></th>";
+    }
+    ++$columns;
 }
-
 
 // 取得した検索結果を変換するための配列
 // カンマ区切りにする項目
 $commaSeparateList = array(
-	"curRetailPrice"				=> true,
-	"lngCartonQuantity"				=> true,
-	"lngProductionQuantity"			=> true,
-	"curSalesAmount"			    => true,
-	"curSalesProfit"                => true,
-	"curSalesProfitRate"            => true,
-	"curFixedCostSales"             => true,
-	"curFixedCostSalesProfit"       => true,
-	"curFixedCostSalesProfitRate"   => true,
-	"curTotalSales"                 => true,
-	"curTotalPrice"                 => true,
-	"curTotalPriceRate"             => true,
-	"curIndirectManufacturingCost"  => true,
-	"curStandardRate"               => true,
-	"curProfit"                     => true,
-	"curProfitRate"                 => true,
-	"curMemberCostPieces"           => true,
-	"curMemberCost"                 => true,
-	"curFixedCostPieces"            => true,
-	"curFixedCost"                  => true,
-	"curManufacturingCostPieces"    => true,
-	"curManufacturingCost"          => true
+    "curRetailPrice" => true,
+    "lngCartonQuantity" => true,
+    "lngProductionQuantity" => true,
+    "curSalesAmount" => true,
+    "curSalesProfit" => true,
+    "curSalesProfitRate" => true,
+    "curFixedCostSales" => true,
+    "curFixedCostSalesProfit" => true,
+    "curFixedCostSalesProfitRate" => true,
+    "curTotalSales" => true,
+    "curTotalPrice" => true,
+    "curTotalPriceRate" => true,
+    "curIndirectManufacturingCost" => true,
+    "curStandardRate" => true,
+    "curProfit" => true,
+    "curProfitRate" => true,
+    "curMemberCostPieces" => true,
+    "curMemberCost" => true,
+    "curFixedCostPieces" => true,
+    "curFixedCost" => true,
+    "curManufacturingCostPieces" => true,
+    "curManufacturingCost" => true,
 );
 
 // 円マークをつける項目
 $yenAddList = array(
-	"curRetailPrice"				=> true,
-	"curSalesAmount"			    => true,
-	"curSalesProfit"                => true,
-	"curFixedCostSales"             => true,
-	"curFixedCostSalesProfit"       => true,
-	"curTotalSales"                 => true,
-	"curTotalPrice"                 => true,
-	"curIndirectManufacturingCost"  => true,
-	"curProfit"                     => true,
-	"curMemberCostPieces"           => true,
-	"curMemberCost"                 => true,
-	"curFixedCostPieces"            => true,
-	"curFixedCost"                  => true,
-	"curManufacturingCostPieces"    => true,
-	"curManufacturingCost"          => true
+    "curRetailPrice" => true,
+    "curSalesAmount" => true,
+    "curSalesProfit" => true,
+    "curFixedCostSales" => true,
+    "curFixedCostSalesProfit" => true,
+    "curTotalSales" => true,
+    "curTotalPrice" => true,
+    "curIndirectManufacturingCost" => true,
+    "curProfit" => true,
+    "curMemberCostPieces" => true,
+    "curMemberCost" => true,
+    "curFixedCostPieces" => true,
+    "curFixedCost" => true,
+    "curManufacturingCostPieces" => true,
+    "curManufacturingCost" => true,
 );
 
 // パーセント表記にする項目
 $percentList = array(
-	"curSalesProfitRate"            => true,
-	"curFixedCostSalesProfitRate"   => true,
-	"curTotalPriceRate"             => true,
-	"curProfitRate"                 => true,
-	"curStandardRate"               => true,
+    "curSalesProfitRate" => true,
+    "curFixedCostSalesProfitRate" => true,
+    "curTotalPriceRate" => true,
+    "curProfitRate" => true,
+    "curStandardRate" => true,
 );
-
 
 // 検索結果の表を作成
 $body = '';
@@ -497,82 +498,88 @@ $body = '';
 for ($i = 0; $i < $resultNum; ++$i) {
 
 	$result = pg_fetch_array($resultID, $i, PGSQL_ASSOC);
+    // 背景色設定
+    if ($result["lngrevisionno"] < 0) {
+        $bgcolor = "background-color: #B3E0FF;";
+    } else {
+        $bgcolor = "background-color: #FFB2B2;";
+	}
+	
 
-	$estimateNo = htmlspecialchars($result['lngestimateno'], ENT_QUOTES);
+    $estimateNo = htmlspecialchars($result['lngestimateno'], ENT_QUOTES);
 
-	$body .= "<tr id=\"". $estimateNo."\" class=\"estimate_search_result\" style=\"background:#FFFFFF\" onclick=\"fncSelectTrColor( this );\">";
+    $body .= "<tr id=\"" . $estimateNo . "\" class=\"estimate_search_result\" style=\"" . $bgcolor . "\" onclick=\"fncSelectTrColor( this );\">";
 
-	$number = $i + 1;
+    $number = $i + 1;
 
-	$body .= "<td nowrap>". $number. "</td>";	
+    $body .= "<td nowrap>" . $number . "</td>";
 
-	foreach ($displayColumns as $column) {
-		if ($column === 'btnDetail') { // 詳細
-				$body .= "<td bgcolor=\"#FFFFFF\" align=\"center\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $resultNum . "_',1 );\">";
-				$body .= "<button type=\"button\" class=\"cells btnDetail\" action=\"/estimate/preview/index.php?strSessionID=". $strSessionID. "&estimateNo=". $estimateNo."\" value=\"". $result['lngrevisionno']. "\">";
-				$body .= "<img onmouseover=\"DetailOn(this);\" onmouseout=\"DetailOff(this);\" src=\"/img/". LAYOUT_CODE. "/wf/result/detail_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"DETAIL\">";
-				$body .= "</button></td>";
+    foreach ($displayColumns as $column) {
+        if ($column === 'btnDetail') { // 詳細
+            $body .= "<td align=\"center\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $resultNum . "_',1 );\">";
+            $body .= "<button type=\"button\" class=\"cells btnDetail\" action=\"/estimate/preview/index.php?strSessionID=" . $strSessionID . "&estimateNo=" . $estimateNo . "\" value=\"" . $result['lngrevisionno'] . "\">";
+            $body .= "<img onmouseover=\"DetailOn(this);\" onmouseout=\"DetailOff(this);\" src=\"/img/type01/pc/detail_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"DETAIL\">";
+            $body .= "</button></td>";
 
-		} else if ($column === 'btnHistory') { // 履歴
-			if ($result['lngmaxrevisionno'] > 1 && $result['lngrevisionno'] === $result['lngmaxrevisionno'] ) {
-				$body .= "<td bgcolor=\"#FFFFFF\" align=\"center\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $resultNum . "_',1 );\">";
-				$body .= "<button type=\"button\" class=\"cells btnHistory\">";
-				$body .= "<img onmouseover=\"RenewOn(this);\" onmouseout=\"RenewOff(this);\" src=\"/img/". LAYOUT_CODE. "/cmn/seg/renew_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"HISTORY\">";
-				$body .= "</button></td>";
-			} else {
-				$body .= "<td nowrap align=\"left\"></td>";
-			}
+        } else if ($column === 'btnHistory') { // 履歴
+            if (array_key_exists("admin", $optionColumns) && $result["lngrevisionno"] <> 0) {
+                $body .= "<td align=\"center\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $resultNum . "_',1 );\">";
+                $body .= "<button type=\"button\" class=\"cells btnHistory\" rownum=\"" . $number . "\" estimateNo=\"" . $estimateNo . "\" revisionNo=\"" . $result['lngrevisionno'] . "\" >";
+                $body .= "<img onmouseover=\"RenewOn(this);\" onmouseout=\"RenewOff(this);\" src=\"/img/type01/pc/renew_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"HISTORY\">";
+                $body .= "</button></td>";
+            } else {
+                $body .= "<td nowrap align=\"left\"></td>";
+            }
 
 		} else if ($column === 'btnDelete') { // 削除
-			if ($result['lngrevisionno'] === $result['lngmaxrevisionno']
-				&& $result['deleteflag'] === 't') {
-				$body .= "<td bgcolor=\"#FFFFFF\" align=\"center\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $resultNum . "_',1 );\">";
-				$body .= "<button type=\"button\" class=\"cells btnDelete\" action=\"/estimate/delete/index.php\" value=\"". $result['lngrevisionno']. "\">";
-				$body .= "<img onmouseover=\"RemoveOn(this);\" onmouseout=\"RemoveOff(this);\" src=\"/img/". LAYOUT_CODE. "/cmn/seg/remove_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"DELETE\">";
-				
-				$body .= "</button></td>";
-			} else {
-				$body .= "<td nowrap align=\"left\"></td>";
-			}
+            if ($result['deleteflag'] === 'f') {
+                $body .= "<td align=\"center\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $resultNum . "_',1 );\">";
+                $body .= "<button type=\"button\" class=\"cells btnDelete\" action=\"/estimate/delete/index.php\" value=\"" . $result['lngrevisionno'] . "\">";
+                $body .= "<img onmouseover=\"RemoveOn(this);\" onmouseout=\"RemoveOff(this);\" src=\"/img/type01/pc/delete_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"DELETE\">";
 
-		} else {
+                $body .= "</button></td>";
+            } else {
+                $body .= "<td nowrap align=\"left\"></td>";
+            }
 
-			$key = strtolower($column);
+        } else {
 
-			$param = $result[$key];
+            $key = strtolower($column);
 
-			if (strlen($param)) {
-				if (!is_numeric($param)) {
-					$param = htmlspecialchars($param, ENT_QUOTES);
-				}
-	
-				if ($commaSeparateList[$column]) {
-					$param = number_format($param, 2);
-				}
-	
-				if ($yenAddList[$column]) {
-					$param = '&yen '. $param;
-				}
-	
-				if ($percentList[$column]) {
-					$param = $param. '%';
-				}
-			}
+            $param = $result[$key];
 
-			$body .= "<td nowrap align=\"left\">". $param . "</td>";
-		}
-	}
-	$body .= "</tr>";
+            if (strlen($param)) {
+                if (!is_numeric($param)) {
+                    $param = htmlspecialchars($param, ENT_QUOTES);
+                }
+
+                if ($commaSeparateList[$column]) {
+                    $param = number_format($param, 2);
+                }
+
+                if ($yenAddList[$column]) {
+                    $param = '&yen ' . $param;
+                }
+
+                if ($percentList[$column]) {
+                    $param = $param . '%';
+                }
+            }
+
+            $body .= "<td nowrap align=\"left\">" . $param . "</td>";
+        }
+    }
+    $body .= "</tr>";
 }
 
 // 同じ項目のソートは逆順にする処理
-list ( $column, $sortNum, $DESC ) = explode ( "_", $aryData["strSort"] );
+list($column, $sortNum, $DESC) = explode("_", $aryData["strSort"]);
 
-if ( $DESC == 'ASC' ) {
-	$pattern = $aryData["strSort"];
-	$replace = str_replace('ASC', 'DESC', $pattern);
+if ($DESC == 'ASC') {
+    $pattern = $aryData["strSort"];
+    $replace = str_replace('ASC', 'DESC', $pattern);
 
-	$header = str_replace ($pattern, $replace, $header);
+    $header = str_replace($pattern, $replace, $header);
 }
 
 // 検索画面の情報をhiddenで渡す
@@ -582,15 +589,15 @@ $form = makeHTML::getHiddenData($aryData);
 
 // ベーステンプレート読み込み
 $objTemplate = new clsTemplate();
-$objTemplate->getTemplate( "estimate/result/base.tmpl" );
+$objTemplate->getTemplate("estimate/result/base.tmpl");
 
 $baseData['strSessionID'] = $strSessionID;
 $baseData['FORM'] = $form;
 $baseData['HEADER'] = $header;
 $baseData['tabledata'] = $body;
-
+$baseData["displayColumns"] = implode(",", $displayColumns);
 // ベーステンプレート生成
-$objTemplate->replace( $baseData );
+$objTemplate->replace($baseData);
 $objTemplate->complete();
 
 // HTML出力
@@ -598,6 +605,4 @@ echo $objTemplate->strTemplate;
 
 $objDB->close();
 
-
-return TRUE;
-?>
+return true;

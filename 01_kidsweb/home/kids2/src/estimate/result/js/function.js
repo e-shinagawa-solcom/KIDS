@@ -1,4 +1,4 @@
-$(function() {
+$(function () {
 
 	// $('button[class*="btnHistory"]').on('click', function() {
 	// 	var estimateNo = $(this).parent().parent().attr('id');
@@ -14,7 +14,7 @@ $(function() {
 	// 		return decodeURIComponent(results[2].replace(/\+/g, " "));
 	// 	};
 
-    //     var numberForm = $("<input>", {
+	//     var numberForm = $("<input>", {
 	// 		type: 'hidden',
 	// 		name: 'estimateNo',
 	// 		value: estimateNo
@@ -35,25 +35,25 @@ $(function() {
 	// 		async: false,
 	// 		data: form.serialize(),
 	// 		timeout: 10000,  // 単位はミリ秒
- 
+
 	// 		// 送信前
 	// 		beforeSend: function(xhr, settings) {
 	// 			// ボタンを無効化し、二重送信を防止
 	// 			$(this).attr('disabled', true);
 	// 		},
-		
+
 	// 	}).done(function (response) {
-		
+
 
 	// 	}).fail(function (xhr,textStatus,errorThrown) {
 	// 		alert('DBエラー');
-			
+
 	// 	}).always(function(jqXHR, textStatus) {
 	// 		$(this).attr('disabled', false);
 	// 	});
 	// });
-	
-	$('button[class*="btnDetail"]').on('click', function() {
+
+	$('button[class*="btnDetail"]').on('click', function () {
 		var url = $(this).attr('action');
 		var value = $(this).val();
 
@@ -65,7 +65,7 @@ $(function() {
 			target: windowName
 		});
 
-		if (value) {		
+		if (value) {
 			// フォームに処理モードを追加
 			formData.append($("<input>", {
 				type: 'hidden',
@@ -73,7 +73,7 @@ $(function() {
 				value: value
 			}));
 		}
-		
+
 		var windowResult = open('about:blank', windowName, 'scrollbars=yes, width=985, height=700, resizable=0 location=0');
 
 		// formの追加
@@ -87,7 +87,7 @@ $(function() {
 
 	});
 
-	$('button[class*="btnDelete"]').on('click', function() {
+	$('button[class*="btnDelete"]').on('click', function () {
 		var url = $(this).attr('action');
 		var value = $(this).val();
 		var estimateNo = $(this).parent().parent().attr('id');
@@ -121,7 +121,7 @@ $(function() {
 			name: 'revisionNo',
 			value: value
 		}));
-		
+
 		var windowResult = open('about:blank', windowName, 'scrollbars=yes, width=985, height=700, resizable=0 location=0');
 
 		// formの追加
@@ -134,18 +134,51 @@ $(function() {
 		formData.remove();
 	});
 
-	$('.sortColumns').on('click', function() {
+	$('.sortColumns').on('click', function () {
 		var sortKey = $(this).attr('data-value');
 		var form = $('#displayColumns');
 
-		var baseUrl = "/estimate/result/index.php"
+		var baseUrl = "/estimate/result/index.php";
 		var sessionID = $('input[name="strSessionID"]').val();
 
 		var actionUrl = baseUrl + '?strSessionID=' + sessionID + '&strSort=' + sortKey;
 
 		form.attr('action', actionUrl);
 
-		form.submit();	
+		form.submit();
 	});
 
+
+	// 履歴ボタンのイベント
+	$('button[class*="btnHistory"]').on('click', function () {
+		var lngEstimateNo = $(this).attr('estimateNo');
+		var lngRevisionNo = $(this).attr('revisionNo');
+		var displayColumns = $('input[name="displayColumns"]').val().split(',');
+		var rownum = $(this).attr('rownum');
+		var sessionID = $('input[name="strSessionID"]').val();
+		if ($('tr[id^="' + lngEstimateNo + '_"]').length) {
+			$('tr[id^="' + lngEstimateNo + '_"]').remove();
+		} else {
+			// リクエスト送信
+			$.ajax({
+				url: '/estimate/result/searchHistoryPreview.php',
+				type: 'post',
+				data: {
+					'strSessionID': sessionID,
+					'lngEstimateNo': lngEstimateNo,
+					'lngRevisionNo': lngRevisionNo,
+					'displayColumns': displayColumns,
+					'rownum': rownum,
+				}
+			})
+				.done(function (response) {
+					console.log(response);
+					$('tr[id="' + lngEstimateNo + '"]').after(response);
+				})
+				.fail(function (response) {
+					console.log(response);
+					alert("fail");
+				})
+		}
+	});
 });
