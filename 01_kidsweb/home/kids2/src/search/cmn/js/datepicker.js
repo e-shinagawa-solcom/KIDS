@@ -1,25 +1,27 @@
-
 // datepickerの要素指定
-(function(){
+(function () {
 
     // datepicker対象要素
     var dateElements = [
-          $('input[name$="ActionDate"]:not([type])')
-        , $('input[name$="DtmAppropriationDate"]:not([type])')
-        , $('input[name$="Created"]:not([type])')
-        , $('input[name$="Updated"]:not([type])')
+        $('input[name="ActionDate"]')
+        , $('input[name="DtmAppropriationDate"]')
+        , $('input[name="Created"]')
+        , $('input[name="Updated"]')
     ];
 
     // datepickerの設定
-    $.each(dateElements, function(){
+    $.each(dateElements, function () {
         this.datepicker({
-                showButtonPanel: true,
-                dateFormat: "yy/mm/dd",
-                onClose: function(){
-                    this.focus();
-                }
-            }).attr({
-                maxlength: "10"
+            buttonImage: "/img/type01/date/open_off_on_bt.gif",
+            buttonImageOnly: true,           // 画像として表示
+            showOn: "both",
+            showButtonPanel: true,
+            dateFormat: "yy/mm/dd",
+            onClose: function () {
+                this.focus();
+            }
+        }).attr({
+            maxlength: "10"
         });
     });
 })();
