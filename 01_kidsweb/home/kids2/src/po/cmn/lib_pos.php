@@ -443,6 +443,11 @@ function fncGetSearchPurcheseOrderSQL($aryViewColumn, $arySearchColumn, $arySear
     }
 
     $aryQuery[] = "WHERE mp.lngpurchaseorderno >= 0";
+    if( $bytAdminMode == false )
+    {
+        //管理者モード以外の場合は削除されたデータは対象としない
+        $aryQuery[] = " AND mp.lngpurchaseorderno NOT IN (SELECT lngpurchaseorderno from m_purchaseorder where lngrevisionno < 0)";
+    }
     // 検索用カラムに設定されている内容を検索条件に文字列設定
     for ($i = 0; $i < count($arySearchColumn); $i++) {
         $strSearchColumnName = $arySearchColumn[$i];

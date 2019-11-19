@@ -55,6 +55,11 @@ $isSearch = array_keys($isSearch);
 $aryData['ViewColumn'] = $isDisplay;
 $aryData['SearchColumn'] = $isSearch;
 $aryData['Admin'] = $_REQUEST["IsDisplay_btnAdmin"];
+
+$isAdmin = mb_strtoupper($aryData['Admin']) == "ON" ? true : false; 
+
+//echo "Admin=" . $aryData['Admin']  . "<br>";
+
 foreach ($from as $key => $item) {
 //echo $key.'From' . "=" . $item . "<br>";
     $aryData[$key . 'From'] = $item;
@@ -163,7 +168,7 @@ if (!$bytSearchFlag) {
 reset($aryData);
 
 // 検索条件に一致する発注コードを取得するSQL文の作成
-$strQuery = fncGetSearchPurcheseOrderSQL($aryViewColumn, $arySearchColumn, $aryData, $objDB, "", 0, false);
+$strQuery = fncGetSearchPurcheseOrderSQL($aryViewColumn, $arySearchColumn, $aryData, $objDB, "", 0, $isAdmin);
 
 // 値をとる =====================================
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
@@ -232,6 +237,7 @@ if ($aryData["lngLanguageCode"] == 1) {
 // テーブル構成で検索結果を取得、ＨＴＭＬ形式で出力する
 // $aryHtml["strHtml"] = fncSetPurchaseTable ( $aryResult, $arySearchColumn, $aryViewColumn, $aryData, $aryUserAuthority, $aryTytle, $objDB, $objCache, $aryTableViewName );
 $aryHtml["strHtml"] = fncSetPurchaseOrderTable($aryResult, $aryViewColumn, $aryData, $aryUserAuthority, $aryTytle, $objDB, $objCache, $aryTableViewName, true);
+
 
 // POSTされたデータをHiddenにて設定する
 unset($ary_keys);
