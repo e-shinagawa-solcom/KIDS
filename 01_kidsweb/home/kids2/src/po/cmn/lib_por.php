@@ -980,7 +980,7 @@ function fncGetPurchaseOrderDetailHtml($aryResult, $objDB)
         $aryHtml[] = "  <tr>";
         $aryHtml[] = "      <td name=\"rownum\">" . ($i + 1) . "</td>";
         $aryHtml[] = "      <td class=\"detailOrderCode\">" . sprintf("%s_%02d", $aryResult[$i]["strordercode"], $aryResult[$i]["lngrevisionno"]) . "</td>";
-        $aryHtml[] = "      <td class=\"detailPurchaseorderdetailno\">" . $aryResult[$i]["lngpurchaseorderdetailno"] . "</td>";
+        $aryHtml[] = "      <td class=\"detailPurchaseorderDetailNo\">" . $aryResult[$i]["lngpurchaseorderdetailno"] . "</td>";
         $aryHtml[] = "      <td class=\"detailStockSubjectCode\">" . sprintf("[%s] %s", $aryResult[$i]["lngstocksubjectcode"], $aryResult[$i]["strstocksubjectname"]) . "</td>";
         $aryHtml[] = "      <td class=\"detailStockItemCode\">" . sprintf("[%s] %s", $aryResult[$i]["lngstockitemcode"], $aryResult[$i]["strstockitemname"]) . "</td>";
         $aryHtml[] = "      <td class=\"detailDeliveryMethodCode\"><select name=\"lngdeliverymethodcode\">" . fncGetPulldownMenu(2, $aryResult[$i]["lngdeliverymethodcode"], "", $objDB) . "</select></td>";
