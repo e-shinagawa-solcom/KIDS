@@ -1006,6 +1006,7 @@ function fncGetPurchaseOrderDetailHtml($aryResult, $objDB)
  */
 function fncUpdatePurchaseOrder($aryPurchaseOrder, $objDB, $objAuth)
 {
+    $lngcompanycode = fncGetMasterValue("m_company", "strcompanydisplaycode", "lngcompanycode", $aryPurchaseOrder["lngLocationCode"]  . ":str", '',$objDB);
     $aryQuery[] = "INSERT INTO m_purchaseorder(";
     $aryQuery[] = "    lngpurchaseorderno,";
     $aryQuery[] = "    lngrevisionno,";
@@ -1067,7 +1068,7 @@ function fncUpdatePurchaseOrder($aryPurchaseOrder, $objDB, $objAuth)
     $aryQuery[] = "    txtsignaturefilename,";
     $aryQuery[] = "    lngusercode,";
     $aryQuery[] = "    strusername,";
-    $aryQuery[] =     $aryPurchaseOrder["lngLocationCode"] . ",";
+    $aryQuery[] =     $lngcompanycode . ",";
     $aryQuery[] = "    '" . mb_convert_encoding(urldecode($aryPurchaseOrder["strLocationName"]), "EUC-JP", "auto") . "',";
     $aryQuery[] = "    curtotalprice,";
     $aryQuery[] = "    CURRENT_TIMESTAMP,";
