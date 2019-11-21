@@ -86,7 +86,9 @@ function fncGetOrder_r($lngOrderNo, $objDB)
     $aryQuery[] = "LEFT JOIN m_group mg";
     $aryQuery[] = "  ON  mo.lnggroupcode = mg.lnggroupcode";
     $aryQuery[] = "LEFT JOIN m_product mpd";
-    $aryQuery[] = "  ON  od.strproductcode = mpd.strproductcode";
+    $aryQuery[] = "  ON  od.strproductcode = mpd.strproductcode ";
+    $aryQuery[] = "  AND mpd.lngrevisionno = od.lngrevisionno ";
+    $aryQuery[] = "  AND mpd.strrevisecode = od.strrevisecode ";
     $aryQuery[] = "LEFT JOIN m_company mc2";
     $aryQuery[] = "  ON  mo.lngdeliveryplacecode = mc2.lngcompanycode";
     $aryQuery[] = "LEFT JOIN m_monetaryunit mm";
@@ -254,6 +256,8 @@ function fncGetOrderDetail($aryOrderNo, $lngRevisionNo, $objDB)
     $aryQuery[] = "  AND mo.lngrevisionno = od.lngrevisionno";
     $aryQuery[] = "LEFT JOIN m_product mp";
     $aryQuery[] = "  ON  od.strproductcode = mp.strproductcode";
+    $aryQuery[] = "  and mp.strrevisecode = od.strrevisecode";
+    $aryQuery[] = "  and mp.lngrevisionno = od.lngrevisionno";
     $aryQuery[] = "LEFT JOIN m_company mc";
     $aryQuery[] = "  ON  mo.lngcustomercompanycode = mc.lngcompanycode";
     $aryQuery[] = "LEFT JOIN m_stocksubject mss";
@@ -273,7 +277,6 @@ function fncGetOrderDetail($aryOrderNo, $lngRevisionNo, $objDB)
     $aryQuery[] = " AND m_key.lngorderno in (" . $aryOrderNo . ") AND m_key.lngrevisionno = " . $lngRevisionNo . "";
  
     $strQuery = implode("\n", $aryQuery);
-
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
     if (!$lngResultNum) {
         return false;
