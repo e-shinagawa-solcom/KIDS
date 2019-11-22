@@ -346,6 +346,8 @@ function fncGetOrderDetail2($lngOrderNo, $lngOrderDetailNo, $lngRevisioNno, $obj
     $aryQuery[] = "  AND mo.lngrevisionno = od.lngrevisionno ";
     $aryQuery[] = "LEFT JOIN m_product mp ";
     $aryQuery[] = "  ON  od.strproductcode = mp.strproductcode ";
+    $aryQuery[] = "  AND  od.strrevisecode = mp.strrevisecode ";
+    $aryQuery[] = "  AND  od.lngrevisionno = mp.lngrevisionno ";
     $aryQuery[] = "LEFT JOIN m_monetaryunit mm ";
     $aryQuery[] = "  ON  mo.lngmonetaryunitcode = mm.lngmonetaryunitcode ";
     $aryQuery[] = "LEFT JOIN m_group mg ";
