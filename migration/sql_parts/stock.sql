@@ -218,7 +218,7 @@ begin
            ,header.bytinvalidflag
            ,header.dtminsertdate
         );
-        RAISE INFO 'header: % % %', stockno, header.lngrevisionno, header.strstockcode;
+--        RAISE INFO 'header: % % %', stockno, header.lngrevisionno, header.strstockcode;
         open cur_detail(header.lngstockno, header.lngrevisionno, header.lngorderno);
         LOOP
             FETCH cur_detail into detail;
