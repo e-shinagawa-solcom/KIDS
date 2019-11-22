@@ -441,4 +441,7 @@ begin
     update m_mold
     set moldno = substring(moldno,1,5) || '_00-' || substring(moldno,7,2);
 
+    update t_stockdetail
+    set strmoldno = substring(strmoldno,1,5) || '_00-' || substring(strmoldno,7,2)
+    where strmoldno is not null;
 END $$
