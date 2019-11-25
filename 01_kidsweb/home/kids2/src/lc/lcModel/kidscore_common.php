@@ -637,11 +637,8 @@ function fncGetPurchaseOrderDetail($objDB, $lngpurchaseorderno, $lngrevisionno)
             , tp.dtmdeliverydate
             , tp.strnote
             , tp.lngsortkey
-            , o.dtmappropriationdateq 
         from
             t_purchaseorderdetail tp 
-            left join m_order o 
-            on tp.lngorderno = o.lngorderno 
         where
             tp.lngpurchaseorderno = $1
             and tp.lngrevisionno = $2
