@@ -35,13 +35,13 @@ function fncGetLcData($objDB, $lcModel, $usrId, $datetime)
         $strWorkDate = "9999/99/99";
 
         foreach ($orderArry as $orderData) {
-            $pono = $orderData["lngpurchaseorderno"];
+            $pono = $orderData["strordercode"];
             $poreviseno = $orderData["lngrevisionno"];
             $intPayFlg = false;
             $payconditioncode = $orderData["lngpayconditioncode"];
 
             // 発注書明細データを取得する
-            $orderDetailArry = fncGetPurchaseOrderDetail($objDB, $pono, $poreviseno);
+            $orderDetailArry = fncGetPurchaseOrderDetail($objDB, $orderData["lngpurchaseorderno"], $poreviseno);
             // // ワークフロー状態を取得する
             // $strDataState = fncWorkFlowStatus($orderData);
             // 発注データのリビジョン番号 < 0の場合
@@ -77,6 +77,8 @@ function fncGetLcData($objDB, $lcModel, $usrId, $datetime)
                     if ($payconditioncode == DEF_PAYCONDITION_LC || ($payconditioncode == DEF_PAYCONDITION_TT && $intPayFlg)) {
                         // po行番号の設定
                         $lngsortkey = $orderDetailData["lngpurchaseorderdetailno"];
+                        $polineno = sprintf("%02s", $lngsortkey % 100);
+                        /*
                         $sortKeylen = strlen($lngsortkey);
                         if ($sortKeylen == 1) {
                             $polineno = sprintf("%02s", $lngsortkey);
@@ -91,6 +93,7 @@ function fncGetLcData($objDB, $lcModel, $usrId, $datetime)
                                 $polineno = substr($lngsortkey, 1, 2);
                             }
                         }
+                        */
                         // 納品場所名称と荷揚地の取得
                         $companyNameAndCountryName = fncGetCompanyNameAndCountryName($objDB, $orderData["lngdeliveryplacecode"]);
 
@@ -128,11 +131,11 @@ function fncGetLcData($objDB, $lcModel, $usrId, $datetime)
                                 $lcModel->updateAcLcUpdatedate($pono, $polineno, $poreviseno, $lcstate);
                             }
                         } else {
-                            $reviseNum = 0;
+                            $reviseNum = 0;  // 毎回0だが、大丈夫？
                             if ($orderData["lngrevisionno"] != 0) {
                                 $reviseDataArry[$reviseNum]["pono"] = $pono;
                                 $reviseDataArry[$reviseNum]["polineno"] = $polineno;
-                                $reviseDataArry[$reviseNum]["poreviseno"] = $poreviseno;
+                                $reviseDataArry[$reviseNum]["poreviseno"] = sprintf("%02s", $poreviseno % 100);
                                 $reviseDataArry[$reviseNum]["money"] = $orderDetailData["cursubtotalprice"];
                                 $reviseDataArry[$reviseNum]["state"] = $lcstate;
                                 $reviseNum += 1;
@@ -142,7 +145,7 @@ function fncGetLcData($objDB, $lcModel, $usrId, $datetime)
                             $data = array();
                             $data["pono"] = $pono;
                             $data["polineno"] = $polineno;
-                            $data["poreviseno"] = $poreviseno;
+                            $data["poreviseno"] = sprintf("%02s", $poreviseno % 100);
                             $data["postate"] = "承認済";
                             $data["opendate"] = date("Ym");
                             $data["unloadingareas"] = $companyNameAndCountryName->strcountryenglishname;

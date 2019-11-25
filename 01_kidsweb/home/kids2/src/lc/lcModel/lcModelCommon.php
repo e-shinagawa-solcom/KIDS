@@ -1838,10 +1838,10 @@ class lcModel
                 updatetime,
                 shipym
             )
-            values (" . $data["pono"]
-            . "," . $data["polineno"]
-            . "," . $data["poreviseno"]
-            . "," . ($data["postate"] == null ? "NULL" : "'" . $data["postate"] . "'")
+            values ('" . $data["pono"]
+            . "','" . $data["polineno"]
+            . "','" . $data["poreviseno"]
+            . "'," . ($data["postate"] == null ? "NULL" : "'" . $data["postate"] . "'")
             . "," . ($data["opendate"] == null ? "NULL" : "'" . $data["opendate"] . "'")
             . "," . ($data["unloadingareas"] == null ? "NULL" : "'" . $data["unloadingareas"] . "'")
             . "," . ($data["payfcd"] == null ? "NULL" : "'" . $data["payfcd"] . "'")
