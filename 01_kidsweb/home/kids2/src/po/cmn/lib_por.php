@@ -86,7 +86,9 @@ function fncGetOrder_r($lngOrderNo, $objDB)
     $aryQuery[] = "LEFT JOIN m_group mg";
     $aryQuery[] = "  ON  mo.lnggroupcode = mg.lnggroupcode";
     $aryQuery[] = "LEFT JOIN m_product mpd";
-    $aryQuery[] = "  ON  od.strproductcode = mpd.strproductcode";
+    $aryQuery[] = "  ON  od.strproductcode = mpd.strproductcode ";
+    $aryQuery[] = "  AND mpd.lngrevisionno = od.lngrevisionno ";
+    $aryQuery[] = "  AND mpd.strrevisecode = od.strrevisecode ";
     $aryQuery[] = "LEFT JOIN m_company mc2";
     $aryQuery[] = "  ON  mo.lngdeliveryplacecode = mc2.lngcompanycode";
     $aryQuery[] = "LEFT JOIN m_monetaryunit mm";
@@ -254,6 +256,8 @@ function fncGetOrderDetail($aryOrderNo, $lngRevisionNo, $objDB)
     $aryQuery[] = "  AND mo.lngrevisionno = od.lngrevisionno";
     $aryQuery[] = "LEFT JOIN m_product mp";
     $aryQuery[] = "  ON  od.strproductcode = mp.strproductcode";
+    $aryQuery[] = "  and mp.strrevisecode = od.strrevisecode";
+    $aryQuery[] = "  and mp.lngrevisionno = od.lngrevisionno";
     $aryQuery[] = "LEFT JOIN m_company mc";
     $aryQuery[] = "  ON  mo.lngcustomercompanycode = mc.lngcompanycode";
     $aryQuery[] = "LEFT JOIN m_stocksubject mss";
@@ -273,7 +277,6 @@ function fncGetOrderDetail($aryOrderNo, $lngRevisionNo, $objDB)
     $aryQuery[] = " AND m_key.lngorderno in (" . $aryOrderNo . ") AND m_key.lngrevisionno = " . $lngRevisionNo . "";
  
     $strQuery = implode("\n", $aryQuery);
-
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
     if (!$lngResultNum) {
         return false;
@@ -343,6 +346,8 @@ function fncGetOrderDetail2($lngOrderNo, $lngOrderDetailNo, $lngRevisioNno, $obj
     $aryQuery[] = "  AND mo.lngrevisionno = od.lngrevisionno ";
     $aryQuery[] = "LEFT JOIN m_product mp ";
     $aryQuery[] = "  ON  od.strproductcode = mp.strproductcode ";
+    $aryQuery[] = "  AND  od.strrevisecode = mp.strrevisecode ";
+    $aryQuery[] = "  AND  od.lngrevisionno = mp.lngrevisionno ";
     $aryQuery[] = "LEFT JOIN m_monetaryunit mm ";
     $aryQuery[] = "  ON  mo.lngmonetaryunitcode = mm.lngmonetaryunitcode ";
     $aryQuery[] = "LEFT JOIN m_group mg ";
@@ -980,7 +985,7 @@ function fncGetPurchaseOrderDetailHtml($aryResult, $objDB)
         $aryHtml[] = "  <tr>";
         $aryHtml[] = "      <td name=\"rownum\">" . ($i + 1) . "</td>";
         $aryHtml[] = "      <td class=\"detailOrderCode\">" . sprintf("%s_%02d", $aryResult[$i]["strordercode"], $aryResult[$i]["lngrevisionno"]) . "</td>";
-        $aryHtml[] = "      <td class=\"detailPurchaseorderdetailno\">" . $aryResult[$i]["lngpurchaseorderdetailno"] . "</td>";
+        $aryHtml[] = "      <td class=\"detailPurchaseorderDetailNo\">" . $aryResult[$i]["lngpurchaseorderdetailno"] . "</td>";
         $aryHtml[] = "      <td class=\"detailStockSubjectCode\">" . sprintf("[%s] %s", $aryResult[$i]["lngstocksubjectcode"], $aryResult[$i]["strstocksubjectname"]) . "</td>";
         $aryHtml[] = "      <td class=\"detailStockItemCode\">" . sprintf("[%s] %s", $aryResult[$i]["lngstockitemcode"], $aryResult[$i]["strstockitemname"]) . "</td>";
         $aryHtml[] = "      <td class=\"detailDeliveryMethodCode\"><select name=\"lngdeliverymethodcode\">" . fncGetPulldownMenu(2, $aryResult[$i]["lngdeliverymethodcode"], "", $objDB) . "</select></td>";
@@ -1006,6 +1011,7 @@ function fncGetPurchaseOrderDetailHtml($aryResult, $objDB)
  */
 function fncUpdatePurchaseOrder($aryPurchaseOrder, $objDB, $objAuth)
 {
+    $lngcompanycode = fncGetMasterValue("m_company", "strcompanydisplaycode", "lngcompanycode", $aryPurchaseOrder["lngLocationCode"]  . ":str", '',$objDB);
     $aryQuery[] = "INSERT INTO m_purchaseorder(";
     $aryQuery[] = "    lngpurchaseorderno,";
     $aryQuery[] = "    lngrevisionno,";
@@ -1067,7 +1073,7 @@ function fncUpdatePurchaseOrder($aryPurchaseOrder, $objDB, $objAuth)
     $aryQuery[] = "    txtsignaturefilename,";
     $aryQuery[] = "    lngusercode,";
     $aryQuery[] = "    strusername,";
-    $aryQuery[] =     $aryPurchaseOrder["lngLocationCode"] . ",";
+    $aryQuery[] =     $lngcompanycode . ",";
     $aryQuery[] = "    '" . mb_convert_encoding(urldecode($aryPurchaseOrder["strLocationName"]), "EUC-JP", "auto") . "',";
     $aryQuery[] = "    curtotalprice,";
     $aryQuery[] = "    CURRENT_TIMESTAMP,";

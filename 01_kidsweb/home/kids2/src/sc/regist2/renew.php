@@ -102,7 +102,7 @@ if ($strMode == "") {
     }
 
     // 納品書明細に紐づく受注ステータスが「締済み」の場合は修正不可
-    if (fncReceiveStatusIsClosed($lngSlipNo, $lngRevisionNo, $objDB)) {
+    if (fncReceiveStatusIsClosed($lngSlipNo, $objDB)) {
         MoveToErrorPage("締済みのため、修正できません");
     }
 }
@@ -203,7 +203,7 @@ if ($aryLockInfo["isLock"] == 1) {
 //-------------------------------------------------------------------------
 // 納品伝票番号に紐づくヘッダ・フッタ部のデータ読み込み
 $aryHeader = fncGetHeaderBySlipNo($lngSlipNo, $objDB);
-$lngRevisionNo = $aryHeader["$lngRevisionNo"];
+$lngRevisionNo = $aryHeader["lngrevisionno"];
 // 納品伝票番号に紐づく受注明細情報を取得する
 $aryDetail = fncGetDetailBySlipNo($lngSlipNo, $lngRevisionNo, $objDB);
 

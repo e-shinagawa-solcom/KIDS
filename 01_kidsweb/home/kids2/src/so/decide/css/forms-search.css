@@ -158,12 +158,25 @@ img.toggle-display
     width: 18px;
     height: 18px;
 }
+/* フォーム ボタン */
+.form-buttons
+{
+    position: absolute; 
+    top: 200px;
+    left: 21px;
 
-.search
-{
-    padding-left: 10px;
+    width: 550px;
+    text-align: right;
 }
-.clear
+
+/* クリアボタン */
+.form-buttons__clear
 {
-    padding-left: 400px;
+    float: right;
+}
+
+/* 登録ボタン */
+.form-buttons__search
+{
+    float: left;
 }

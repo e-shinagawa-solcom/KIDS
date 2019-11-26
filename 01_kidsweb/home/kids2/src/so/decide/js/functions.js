@@ -223,9 +223,9 @@
 
         url = '/so/decide/search_init.php';
         sessionID = 'strSessionID=' + $.cookie('strSessionID');
-        strReceiveCode = 'strReceiveCode=' + $(this).attr('code');
+        lngCustomerCode = 'lngCustomerCode=' + $('input[name="lngCustomerCode"]').val();
         // 別ウィンドウで表示
-        window.open(url + '?' + sessionID + '&' + strReceiveCode, '_blank', 'width=730, height=570, resizable=yes, scrollbars=yes, menubar=no');
+        window.open(url + '?' + sessionID + '&' + lngCustomerCode, '_blank', 'width=730, height=570, resizable=yes, scrollbars=yes, menubar=no');
     });
 
     // 行を一つ上に移動するボタン

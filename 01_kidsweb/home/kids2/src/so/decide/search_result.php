@@ -99,15 +99,17 @@ if ($aryData["To_dtmDeliveryDate"] != "") {
 $aryQuery[] = " ) r USING (lngReceiveNo, lngRevisionNo)";    
 $aryQuery[] = "        LEFT JOIN (";
 $aryQuery[] = "            select p1.*  from m_product p1 ";
-$aryQuery[] = "        	inner join (select max(lngrevisionno) lngrevisionno, strproductcode from m_Product group by strProductCode) p2";
+$aryQuery[] = "        	inner join (select max(lngrevisionno) lngrevisionno, strproductcode, strrevisecode from m_Product group by strProductCode, strrevisecode) p2";
 $aryQuery[] = "            on p1.lngrevisionno = p2.lngrevisionno and p1.strproductcode = p2.strproductcode";
 $aryQuery[] = "          ) p ";
-$aryQuery[] = "          ON rd.strProductCode = p.strProductCode ";
+$aryQuery[] = "          ON rd.strProductCode = p.strProductCode AND rd.strrevisecode = p.strrevisecode ";
 $aryQuery[] = " LEFT JOIN m_SalesClass ss USING (lngSalesClassCode)";
 $aryQuery[] = " LEFT JOIN m_ProductUnit pu ON rd.lngProductUnitCode = pu.lngProductUnitCode";
 $aryQuery[] = " LEFT JOIN t_estimatedetail ed USING (lngestimateno, lngestimatedetailno)";
+$aryQuery[] = " WHERE not exists (select strreceivecode from m_receive where lngrevisionno < 0  and strreceivecode = r.strreceivecode)";
+
 if ($aryData["strProductCode"] != "") {
-    $aryQuery[] = " WHERE rd.strProductCode = '" . $aryData["strProductCode"] . "' ";
+    $aryQuery[] = " and rd.strProductCode = '" . $aryData["strProductCode"] . "' ";
 }
 $aryQuery[] = " ORDER BY rd.lngSortKey ASC ";
 

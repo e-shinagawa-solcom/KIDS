@@ -36,6 +36,7 @@ function fncGetMaxReceiveSQL($displayColumns, $searchColumns, $from, $to, $searc
     $aryQuery[] = "  r.lngReceiveNo as lngReceiveNo";
     $aryQuery[] = "  , r.lngRevisionNo as lngRevisionNo";
     $aryQuery[] = "  , rd.lngReceiveDetailNo";
+    $aryQuery[] = "  , rd.lngReceiveDetailNo as lngdetailno";
     $aryQuery[] = "  , rd.strProductCode";
     $aryQuery[] = "  , rd.strGroupDisplayCode";
     $aryQuery[] = "  , rd.strGroupDisplayName";
@@ -57,6 +58,7 @@ function fncGetMaxReceiveSQL($displayColumns, $searchColumns, $from, $to, $searc
     $aryQuery[] = "  , input_u.strUserDisplayName as strInputUserDisplayName";
     $aryQuery[] = "  , r.strCustomerReceiveCode as strCustomerReceiveCode";
     $aryQuery[] = "  , r.strReceiveCode";
+    $aryQuery[] = "  , r.strReceiveCode as strCode";
     $aryQuery[] = "  , cust_c.strCompanyDisplayCode as strCustomerDisplayCode";
     $aryQuery[] = "  , cust_c.strCompanyDisplayName as strCustomerDisplayName";
     $aryQuery[] = "  , to_char(rd.dtmDeliveryDate, 'YYYY/MM/DD') as dtmDeliveryDate";
@@ -413,11 +415,11 @@ function fncGetReceivesByStrReceiveCodeSQL($strReceiveCode, $lngReceiveDetailNo,
  *
  * @param [type] $strstrreceivecode
  * @param [type] $objDB
- * @return void [0:確定対象外データ　1：確定対象データ]
+ * @return void [true:削除済・無効データ　false：有効データ]
  */
 function fncCheckData($strstrreceivecode, $objDB)
 {
-    $result = 1;
+    $result = false;
     unset($aryQuery);
     $aryQuery[] = "SELECT";
     $aryQuery[] = " min(lngrevisionno) lngrevisionno, bytInvalidFlag, strreceivecode ";
@@ -437,7 +439,7 @@ function fncCheckData($strstrreceivecode, $objDB)
     $objDB->freeResult($lngResultID);
 
     if ($resultObj["lngrevisionno"] < 0 || $resultObj["bytInvalidFlag"]) {
-        $result = 0;
+        $result = true;
     }
     return $result;
 }

@@ -2,7 +2,7 @@
 (function(){
     $('img.detail.button').on('click', function(){
         url = '/sc/result2/index2.php';
-        lngslipno = 'lngSlipNo=' + $(this).attr('lngslipno');
+        lngslipno = 'lngSlipNo=' + $(this).attr('id');
         lngrevisionno = 'lngRevisionNo=' + $(this).attr('revisionno');
         sessionID = 'strSessionID=' + getUrlVars()["strSessionID"];
 

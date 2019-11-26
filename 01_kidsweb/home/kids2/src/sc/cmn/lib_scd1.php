@@ -85,7 +85,7 @@ function fncGetSlipHeadNoToInfoSQL ( $lngSlipNo, $lngRevisionNo )
 *	@return strQuery 	$strQuery 	検索用SQL文
 *	@access public
 */
-function fncGetSlipDetailNoToInfoSQL ( $lngSlipNo, $lngRevisionNo )
+function fncGetSlipDetailNoToInfoSQL ( $lngSlipNo)
 {
 	// ソートキー
 	$aryQuery[] = "SELECT distinct on (sd.lngSortKey) sd.lngSortKey as lngrecordno, ";
@@ -124,8 +124,8 @@ function fncGetSlipDetailNoToInfoSQL ( $lngSlipNo, $lngRevisionNo )
 	$aryQuery[] = " FROM t_SlipDetail sd";
 
 	$aryQuery[] = " WHERE sd.lngSlipNo = " . $lngSlipNo . "";
-	$aryQuery[] = " AND sd.lngRevisionNo = " . $lngRevisionNo . "";
-
+	$aryQuery[] = " AND sd.lngRevisionNo = (SELECT MAX( s.lngRevisionNo ) FROM m_slip s WHERE s.lngSlipNo = sd.lngSlipNo)";
+	
 	$aryQuery[] = " ORDER BY sd.lngSortKey ASC ";
 
 	$strQuery = implode( "\n", $aryQuery );
@@ -359,7 +359,7 @@ function fncJapaneseInvoiceExists($lngCustomerCode, $lngSalesNo, $objDB)
 
 }
 
-function fncReceiveStatusIsClosed($lngSlipNo, $lngRevisionNo, $objDB)
+function fncReceiveStatusIsClosed($lngSlipNo, $objDB)
 {
 	// 納品伝票明細データの取得
 	$strQuery = fncGetSlipDetailNoToInfoSQL ( $lngSlipNo, $lngRevisionNo );

@@ -276,7 +276,7 @@
 
 		// 帳票テンプレートに設定する納品書データの読み込み（ヘッダ・フッタ部）
 		$aryHeader = fncGetHeaderBySlipNo($lngSlipNo, $objDB);
-		$lngRevisionNo = $aryHeader["$lngRevisionNo"];
+		$lngRevisionNo = $aryHeader["lngrevisionno"];
 		// 帳票テンプレートに設定する納品書データの読み込み（明細部）
 		$aryDetail = fncGetDetailBySlipNo($lngSlipNo, $lngRevisionNo, $objDB);
 

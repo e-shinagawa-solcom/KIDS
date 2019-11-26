@@ -26,6 +26,7 @@ include_once 'conf.inc';
 
 require_once SRC_ROOT . '/mold/lib/UtilSearchForm.class.php';
 require SRC_ROOT . "so/cmn/lib_sos.php";
+require SRC_ROOT . "search/cmn/lib_search.php";
 
 // ライブラリ読み込み
 require LIB_FILE;
@@ -170,259 +171,44 @@ $displayColumns = array_change_key_case($displayColumns, CASE_LOWER);
 // -------------------------------------------------------
 // 各種ボタン表示チェック/権限チェック
 // -------------------------------------------------------
-// 詳細カラムを表示
-$existsDetail = array_key_exists("btndetail", $displayColumns);
-// 確定カラムを表示
-$existsDecide = array_key_exists("btndecide", $displayColumns);
-// 履歴カラムを表示
-$existsHistory = array_key_exists("btnhistory", $displayColumns);
-// 確定取消カラムを表示
-$existsCancel = array_key_exists("btncancel", $displayColumns);
+$aryAuthority = fncGetAryAuthority('so', $objAuth);
 
-// 詳細ボタンを表示
-$allowedDetail = fncCheckAuthority(DEF_FUNCTION_SO3, $objAuth);
-// 確定ボタンを表示
-$allowedDecide = fncCheckAuthority(DEF_FUNCTION_SO4, $objAuth);
-// 確定取消カラムを表示
-$allowedCancel = fncCheckAuthority(DEF_FUNCTION_SO5, $objAuth);
-
+// 管理者モードチェック
+$isadmin = array_key_exists("admin", $optionColumns);
+// -------------------------------------------------------
+// テーブルヘッダ作成
+// -------------------------------------------------------
+// thead > tr要素作成
 // -------------------------------------------------------
 // テーブルヘッダ作成
 // -------------------------------------------------------
 // thead > tr要素作成
 $trHead = $doc->createElement("tr");
-
-// クリップボード除外対象クラス
-$exclude = "exclude-in-clip-board-target";
-
-// 項番カラム
-$thIndex = $doc->createElement("th");
-$thIndex->setAttribute("class", $exclude);
-// コピーボタン
-$imgCopy = $doc->createElement("img");
-$imgCopy->setAttribute("src", "/img/type01/cmn/seg/copy_off_bt.gif");
-$imgCopy->setAttribute("class", "copy button");
-// 項番カラム > コピーボタン
-$thIndex->appendChild($imgCopy);
-// ヘッダに追加
-$trHead->appendChild($thIndex);
-
-// 詳細を表示
-if ($existsDetail) {
-    // 詳細カラム
-    $thDetail = $doc->createElement("th", toUTF8("詳細"));
-    $thDetail->setAttribute("class", $exclude);
-    // ヘッダに追加
-    $trHead->appendChild($thDetail);
-}
-
-// 確定項目を表示
-if ($existsDecide) {
-    // 確定カラム
-    $thDecide = $doc->createElement("th", toUTF8("確定"));
-    $thDecide->setAttribute("class", $exclude);
-    // ヘッダに追加
-    $trHead->appendChild($thDecide);
-}
-
-// 履歴項目を表示
-if ($existsHistory) {
-    // 履歴カラム
-    $thHistory = $doc->createElement("th", toUTF8("履歴"));
-    $thHistory->setAttribute("class", $exclude);
-    // ヘッダに追加
-    $trHead->appendChild($thHistory);
-}
-$aryTableHeaderName = array();
-$aryTableHeaderName["dtminsertdate"] = "登録日";
-$aryTableHeaderName["lnginputusercode"] = "入力者";
-$aryTableHeaderName["strcustomerreceivecode"] = "顧客受注番号";
-$aryTableHeaderName["strreceivecode"] = "受注ＮＯ.";
-$aryTableHeaderName["lngrevisionno"] = "リビジョン番号";
-$aryTableHeaderName["strproductcode"] = "製品コード";
-$aryTableHeaderName["strproductname"] = "製品名";
-$aryTableHeaderName["strproductenglishname"] = "製品名（英語）";
-$aryTableHeaderName["lnginchargegroupcode"] = "営業部署";
-$aryTableHeaderName["lnginchargeusercode"] = "開発担当者";
-$aryTableHeaderName["lngsalesclasscode"] = "売上区分";
-$aryTableHeaderName["strgoodscode"] = "顧客品番";
-$aryTableHeaderName["lngcustomercompanycode"] = "顧客";
-$aryTableHeaderName["dtmdeliverydate"] = "納期";
-$aryTableHeaderName["lngreceivestatuscode"] = "状態";
-// $aryTableHeaderName["strnote"] = "備考";
-$aryTableHeaderName["lngrecordno"] = "明細行番号";
-$aryTableHeaderName["curproductprice"] = "単価";
-$aryTableHeaderName["lngproductunitcode"] = "単位";
-$aryTableHeaderName["lngproductquantity"] = "数量";
-$aryTableHeaderName["cursubtotalprice"] = "税抜金額";
-$aryTableHeaderName["strdetailnote"] = "明細備考";
-// TODO 要リファクタリング
-// 指定されたテーブル項目のカラムを作成する
-foreach ($aryTableHeaderName as $key => $value) {
-    if (array_key_exists($key, $displayColumns)) {
-        $th = $doc->createElement("th", toUTF8($value));
-        $trHead->appendChild($th);
-    }
-}
-
-// 削除項目を表示
-if ($existsCancel) {
-    // 削除カラム
-    $thCancel = $doc->createElement("th", toUTF8("確定取消"));
-    $thCancel->setAttribute("class", $exclude);
-    // ヘッダに追加
-    $trHead->appendChild($thCancel);
-}
-
-// thead > tr
+fncSetTheadData($doc, $trHead, $aryTableHeadBtnName, $aryTableBackBtnName, $aryTableHeaderName_SO, null, $displayColumns);
 $thead->appendChild($trHead);
-
+// return;
 // -------------------------------------------------------
 // テーブルセル作成
 // -------------------------------------------------------
 // 検索結果件数分走査
 foreach ($records as $i => $record) {
-    unset($aryQuery);
-    // 確定対象フラグ
-    $decideObjFlag = false;
-    // 履歴有無フラグ
-    $historyFlag = false;
+    $index = $index + 1;
 
-    // 同じ受注NO,同じ明細番号の最新受注データのリビジョン番号を取得する
-    $aryQuery[] = "SELECT";
-    $aryQuery[] = " r.lngreceiveno, r.lngrevisionno ";
-    $aryQuery[] = "FROM m_receive r inner join t_receivedetail rd ";
-    $aryQuery[] = "on r.lngreceiveno = rd.lngreceiveno ";
-    $aryQuery[] = "AND r.lngrevisionno = rd.lngrevisionno ";
-    $aryQuery[] = "WHERE r.strreceivecode='" . $record["strreceivecode"] . "' ";
-    $aryQuery[] = "and rd.lngreceivedetailno=" . $record["lngreceivedetailno"] . " ";
-    $aryQuery[] = "and r.lngrevisionno >= 0";
-    $aryQuery[] = "and r.bytInvalidFlag = FALSE ";
-    $aryQuery[] = "order by lngreceiveno desc, r.lngrevisionno desc";
-
-    // クエリを平易な文字列に変換
-    $strQuery = implode("\n", $aryQuery);
-
-    list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
-    // 検索件数がありの場合
-    if ($lngResultNum > 0) {
-        if ($lngResultNum > 1) {
-            $historyFlag = true;
-        }
-    }
-
-    $objDB->freeResult($lngResultID);
-
-    $decideObjFlag = fncCheckData($record["strreceivecode"], $objDB);
-
-    // 背景色設定
-    if ($record["lngrevisionno"] < 0) {
-        $bgcolor = "background-color: #B3E0FF;";
-    } else {
-        $bgcolor = "background-color: #FFB2B2;";
-    }
+    $bgcolor = fncSetBgColor('so', $record["strreceivecode"], true, $objDB);
 
     // tbody > tr要素作成
     $trBody = $doc->createElement("tr");
+
     $trBody->setAttribute("id", $record["strreceivecode"] . "_" . $record["lngreceivedetailno"]);
 
-    // 項番
-    $index = $index + 1;
-    $tdIndex = $doc->createElement("td", $index);
-    $tdIndex->setAttribute("class", $exclude);
-    $tdIndex->setAttribute("style", $bgcolor);
-    $trBody->appendChild($tdIndex);
-
-    // 詳細を表示
-    if ($existsDetail) {
-        // 詳細セル
-        $tdDetail = $doc->createElement("td");
-        $tdDetail->setAttribute("class", $exclude);
-        $tdDetail->setAttribute("style", $bgcolor . "text-align: center;");
-
-        // 詳細ボタンの表示
-        if ($allowedDetail and $record["lngrevisionno"] >= 0) {
-            // 詳細ボタン
-            $imgDetail = $doc->createElement("img");
-            $imgDetail->setAttribute("src", "/img/type01/so/detail_off_bt.gif");
-            $imgDetail->setAttribute("id", $record["lngreceiveno"]);
-            $imgDetail->setAttribute("revisionno", $record["lngrevisionno"]);
-            $imgDetail->setAttribute("class", "detail button");
-            // td > img
-            $tdDetail->appendChild($imgDetail);
-        }
-        // tr > td
-        $trBody->appendChild($tdDetail);
-    }
-
-    // 確定項目を表示
-    if ($existsDecide) {
-        // 確定セル
-        $tdDecide = $doc->createElement("td");
-        $tdDecide->setAttribute("class", $exclude);
-        $tdDecide->setAttribute("style", $bgcolor . "text-align: center;");
-
-        // 確定ボタンの表示
-        if ($allowedDecide and $record["lngrevisionno"] >= 0 and $record["lngreceivestatuscode"] == DEF_RECEIVE_APPLICATE and $decideObjFlag) {
-            // 確定ボタン
-            $imgDecide = $doc->createElement("img");
-            $imgDecide->setAttribute("src", "/img/type01/so/renew_off_bt.gif");
-            $imgDecide->setAttribute("id", $record["lngreceiveno"]);
-            $imgDecide->setAttribute("revisionno", $record["lngrevisionno"]);
-            $imgDecide->setAttribute("class", "decide button");
-            // td > img
-            $tdDecide->appendChild($imgDecide);
-        }
-        // tr > td
-        $trBody->appendChild($tdDecide);
-    }
-
-    // 履歴項目を表示
-    if ($existsHistory) {
-        // 履歴セル
-        $tdHistory = $doc->createElement("td");
-        $tdHistory->setAttribute("class", $exclude);
-        $tdHistory->setAttribute("style", $bgcolor . "text-align: center;");
-
-        if ($historyFlag and array_key_exists("admin", $optionColumns)) {
-            // 履歴ボタン
-            $imgHistory = $doc->createElement("img");
-            $imgHistory->setAttribute("src", "/img/type01/so/renew_off_bt.gif");
-            $imgHistory->setAttribute("id", $record["strreceivecode"] . "_" . $record["lngreceivedetailno"]);
-            $imgHistory->setAttribute("lngrevisionno", $record["lngrevisionno"]);
-            $imgHistory->setAttribute("rownum", $index);
-            $imgHistory->setAttribute("class", "history button");
-            // td > img
-            $tdHistory->appendChild($imgHistory);
-        }
-        // tr > td
-        $trBody->appendChild($tdHistory);
-    }
+    // 先頭ボタン設定
+    fncSetHeadBtnToTr($doc, $trBody, $bgcolor, $aryTableHeadBtnName, $displayColumns, $record, 1, $aryAuthority, true, $isadmin, $index, 'so', null);
 
     // ヘッダー部データ設定
-    fncSetHeaderDataToTr($doc, $trBody, $bgcolor, $aryTableHeaderName, $displayColumns, $record, true);
+    fncSetHeadDataToTr($doc, $trBody, $bgcolor, $aryTableHeaderName_SO, $displayColumns, $record, 1, true);
 
-    // 確定取消項目を表示
-    if ($existsCancel) {
-        // 確定取消セル
-        $tdCancel = $doc->createElement("td");
-        $tdCancel->setAttribute("class", $exclude);
-        $tdCancel->setAttribute("style", $bgcolor . "text-align: center;");
-
-        // 確定取消ボタンの表示
-        if ($allowedCancel and $record["lngrevisionno"] >= 0 and $record["lngreceivestatuscode"] == DEF_RECEIVE_ORDER and $decideObjFlag) {
-            // 確定取消ボタン
-            $imgCancel = $doc->createElement("img");
-            $imgCancel->setAttribute("src", "/img/type01/so/cancel_off_bt.gif");
-            $imgCancel->setAttribute("id", $record["lngreceiveno"]);
-            $imgCancel->setAttribute("revisionno", $record["lngrevisionno"]);
-            $imgCancel->setAttribute("class", "cancel button");
-            // td > img
-            $tdCancel->appendChild($imgCancel);
-        }
-        // tr > td
-        $trBody->appendChild($tdCancel);
-    }
+    // フッターボタン表示
+    fncSetBackBtnToTr($doc, $trBody, $bgcolor, $aryTableBackBtnName, $displayColumns, $record, 1, $aryAuthority, true, $isadmin, 'so');
 
     // tbody > tr
     $tbody->appendChild($trBody);

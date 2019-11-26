@@ -445,8 +445,11 @@ define ( "DEF_FUNCTION_LC4",	2104 );	// 2104 L/C帳票出力
 define ( "DEF_FUNCTION_INV0",	2200 );	// 2200 請求管理
 define ( "DEF_FUNCTION_INV1",	2201 );	// 2201 請求書発行
 define ( "DEF_FUNCTION_INV2",	2202 );	// 2202 請求書検索
-define ( "DEF_FUNCTION_INV4",	2203 ); // 2203 請求管理（請求書検索　管理モード）
-define ( "DEF_FUNCTION_INV3",	2204 );	// 2204 請求集計
+define ( "DEF_FUNCTION_INV3",	2203 ); // 2203 請求管理（請求書検索　管理モード）
+define ( "DEF_FUNCTION_INV4",	2204 );	// 2204 請求書詳細
+define ( "DEF_FUNCTION_INV5",	2205 );	// 2205 請求書修正
+define ( "DEF_FUNCTION_INV6",	2206 );	// 2206 請求書削除
+define ( "DEF_FUNCTION_INV7",	2207 );	// 2207 請求書集計
 
 // エラー種類
 define ( "DEF_WARNING",		1 );           //  1 注意レベル（入力ミスなど）

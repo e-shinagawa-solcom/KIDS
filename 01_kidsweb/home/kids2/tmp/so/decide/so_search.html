@@ -16,29 +16,29 @@
 	<!-- タブ切り替え共通処理 -->
 	<!-- jQuery -->
 	<script src="/cmn/jquery/jquery-3.1.0.js"></script>
-    <!-- jQuery Cookie -->
+	<!-- jQuery Cookie -->
 	<script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
-    <!-- jQuery UI -->
+	<!-- jQuery UI -->
 	<script src="/cmn/jquery/ui/jquery-ui-1.12.0.js"></script>
-    <link rel="stylesheet" href="/cmn/jquery/ui/jquery-ui-1.12.0.css">
-    <link rel="stylesheet" href="/cmn/jquery/ui/jquery-ui.theme.css">
-    <!-- jQuery UI datepickerローカライズ用スクリプト -->
+	<link rel="stylesheet" href="/cmn/jquery/ui/jquery-ui-1.12.0.css">
+	<link rel="stylesheet" href="/cmn/jquery/ui/jquery-ui.theme.css">
+	<!-- jQuery UI datepickerローカライズ用スクリプト -->
 	<script src="/cmn/jquery/ui/datepicker-ja.js"></script>
-    <!-- jQuery Validation Plugin -->
-    <script src="/cmn/jquery/validation/jquery.validate.js"></script>
-    <!-- jQuery tooltipster -->
-    <script src="/cmn/jquery/tooltipster/js/tooltipster.bundle.js"></script>
-    <link rel="stylesheet" href="/cmn/jquery/tooltipster/css/tooltipster.bundle.css">
+	<!-- jQuery Validation Plugin -->
+	<script src="/cmn/jquery/validation/jquery.validate.js"></script>
+	<!-- jQuery tooltipster -->
+	<script src="/cmn/jquery/tooltipster/js/tooltipster.bundle.js"></script>
+	<link rel="stylesheet" href="/cmn/jquery/tooltipster/css/tooltipster.bundle.css">
 	<!-- msw 表示 -->
 	<script src="/search/cmn/msw/cmn/js/msw.js" defer></script>
-    <!-- マスタ検索呼び出し -->
+	<!-- マスタ検索呼び出し -->
 	<script src="/search/cmn/js/invoke-master-search.js" defer></script>
-    <!-- フォーム ボタン -->
+	<!-- フォーム ボタン -->
 	<script src="/so/decide/js/form-buttons.js" defer></script>
-    <!-- フォームバリデーション -->
+	<!-- フォームバリデーション -->
 	<script src="/so/decide/js/validate-form.js" defer></script>
-    <!-- ボタン画像の共通の振る舞い CSS -->
-    <link rel="stylesheet" href="/cmn/css/base/button-behaivior.css">
+	<!-- ボタン画像の共通の振る舞い CSS -->
+	<link rel="stylesheet" href="/cmn/css/base/button-behaivior.css">
 </head>
 
 <body class="background--noframes">
@@ -68,7 +68,7 @@
 					<div class="regist-line">
 						<span class="regist-label">
 							<span class="regist-label__text">顧客</span>
-							<input class="TxtStyle05L" name="lngCustomerCode" type="text" iscustomer="yes" alt="Customer">
+							<input class="TxtStyle05L" name="lngCustomerCode" value="_%lngCustomerCode%_" type="text" iscustomer="yes" alt="Customer">
 							<input class="disTxt46L" name="strCustomerName" type="text" readonly>
 							<img class="msw-button button" invokeMSWName="msw-customer" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
 						</span>
@@ -93,13 +93,22 @@
 			</iframe>
 		</div>
 
-		<br><br><br>
+		<br>
+		<br>
+		<br>
 
-	<!-- フォーム ボタン -->
-	<div class="form-buttons">
-		<img class="search button" src="/img/type01/so/search_brown_off_ja_bt.gif" alt="form search">
-		<img class="clear button" src="/img/type01/so/clear_off_ja_bt.gif" alt="form clear">
-		<img class="close button" src="/img/type01/so/close_off_ja_bt.gif" alt="form close">
+		<!-- フォーム ボタン -->
+		<div class="form-buttons">
+			<div class="form-buttons__search">
+				<img class="search button" src="/img/type01/so/search_brown_off_ja_bt.gif" alt="form search">
+			</div>
+			<div class="form-buttons__clear">
+				<img class="clear button" src="/img/type01/so/clear_off_ja_bt.gif" alt="form clear">
+				<img class="close button" src="/img/type01/so/close_off_ja_bt.gif" alt="form close">
+			</div>
+			<div>
+			</div>
+		</div>
 	</div>
 	</div>
 </body>

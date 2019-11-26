@@ -184,13 +184,11 @@ $thead = $table->getElementsByTagName("thead")->item(0);
 $tbody = $table->getElementsByTagName("tbody")->item(0);
 
 // 詳細ボタンを表示
-$allowedDetail = fncCheckAuthority(DEF_FUNCTION_PC4, $objAuth);
+$allowedDetail = fncCheckAuthority(DEF_FUNCTION_INV4, $objAuth);
 // 修正を表示
-$allowedFix = fncCheckAuthority(DEF_FUNCTION_PC5, $objAuth);
+$allowedFix = fncCheckAuthority(DEF_FUNCTION_INV5, $objAuth);
 // 削除を表示
-$allowedDelete = fncCheckAuthority(DEF_FUNCTION_PC6, $objAuth);
-// 無効カラムを表示
-$allowedInvalid = fncCheckAuthority(DEF_FUNCTION_PC7, $objAuth);
+$allowedDelete = fncCheckAuthority(DEF_FUNCTION_INV6, $objAuth);
 
 // -------------------------------------------------------
 // テーブルヘッダ作成

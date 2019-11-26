@@ -2420,7 +2420,7 @@ function toUTF8($str)
 function toMoneyFormat($lngmonetaryunitcode, $strmonetaryunitsign, $price)
 {
     if ($lngmonetaryunitcode == 1) {
-        return "&yen;" . " " . $price;
+        return "&yen;" . " " . toUTF8($price);
     } else {
         return toUTF8($strmonetaryunitsign . " " . $price);
     }

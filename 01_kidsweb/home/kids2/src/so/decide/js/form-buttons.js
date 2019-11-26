@@ -31,7 +31,7 @@
             window.opener.$('#lockId').remove();
         }
     });
-
+    $('input[name="lngCustomerCode"]').change();
     var parantExistanceFlag = true;
 
     // 検索ボタン押下時の処理
@@ -45,6 +45,11 @@
 
             //親画面に値を挿入
             if (parantExistanceFlag) {
+
+                var lngCustomerCode = $('input[name="lngCustomerCode"]').val();
+                if (lngCustomerCode.length == 0) {
+                    alert("顧客コードを設定してください。")
+                }
                 var formData = workForm.serializeArray();
                 // リクエスト送信
                 $.ajax({
@@ -82,10 +87,10 @@
                                 tblchkbox.append(chkboxstr);
 
                                 var detailstr = '<tr>'
-                                    + '<td style="width: 25px;">' + (i + 1) + '</td>'
+                                    + '<td style="width: 25px;"></td>'
                                     + '<td style="width: 100px;">' + row.strreceivecode + '</td>'
                                     + '<td style="width: 70px;">' + row.lngreceivedetailno + '</td>'
-                                    + '<td style="width: 250px;">[' + convertNull(row.strproductcode) + '] ' + convertNull(row.strproductname) + '</td>'
+                                    + '<td style="width: 250px;" nowrap>[' + convertNull(row.strproductcode) + '] ' + convertNull(row.strproductname) + '</td>'
                                     + '<td>' + convertNull(row.dtmdeliverydate) + '</td>'
                                     + '<td style="width: 120px;">[' + convertNull(row.lngsalesclasscode) + '] ' + convertNull(row.strsalesclassname) + '</td>'
                                     + '<td style="width: 250px;">[' + convertNull(row.strcustomerdisplaycode) + '] ' + convertNull(row.strcustomerdisplayname) + '</td>'
@@ -94,6 +99,10 @@
                                 tbl.append(detailstr);
                             }
                         }
+
+                        tbl.find('tr').each(function (i, e) {
+                            $(this).find('td').first().html(i+1);
+                        });
                     })
                     .fail(function (response) {
                         console.log("処理結果：" + JSON.stringify(response));

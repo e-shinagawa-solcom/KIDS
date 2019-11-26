@@ -34,9 +34,10 @@
                 type: 'post',
                 data: {
                     'strSessionID': $.cookie('strSessionID'),
-                    'strReceiveCode': strReceiveCode[0],
-                    'lngReceiveDetailNo': strReceiveCode[1],
+                    'strCode': strReceiveCode[0],
+                    'lngDetailNo': strReceiveCode[1],
                     'lngRevisionNo': lngRevisionNo,
+                    'type': 'so',
                     'rownum': rownum,
                     'displayColumns': displayColumns,
                 }
