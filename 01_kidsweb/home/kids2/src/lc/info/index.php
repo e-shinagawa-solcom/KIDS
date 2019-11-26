@@ -46,6 +46,7 @@ $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 
 //ユーザーID取得(半角スペースがあるため)
 $usrId = trim($objAuth->UserID);
+$usrName = trim($objAuth->UserDisplayName);
 
 // // 2100 LC管理
 // if ( !fncCheckAuthority( DEF_FUNCTION_LC0, $objAuth ) )
@@ -70,16 +71,17 @@ $userAuth = substr($loginUserAuth, 1, 1);
 //ログイン状況の最大管理番号の取得
 $maxLgno = $lcModel->getMaxLoginStateNum();
 
+
 // T_Aclcinfo初期化フラグがtrueの場合
-if ($aryData["aclcinitFlg"]) {
+if ($aryData["aclcinitFlg"] == "true") {
     // t_aclcinfoデータの登録・更新処理
     // kidscore2から時間と日付を取得する
     $curDate = fncGetCurDate($objDB);
-    $date = explode(" ", $curDate)[0];
-    $time = explode(" ", $curDate)[1];
+//    $date = explode(" ", $curDate)[0];
+//    $time = explode(" ", $curDate)[1];
 
     // L/Cデータを取得する
-    fncGetLcData($objDB, $lcModel, $usrId, $date, $time);
+    fncGetLcData($objDB, $lcModel, $usrName, $curDate);
     // lcgetdateを更新する
     $updCount = $lcModel->updateLcGetDate($maxLgno, date('Ymd h:m:s', strtotime($curDate)));
 

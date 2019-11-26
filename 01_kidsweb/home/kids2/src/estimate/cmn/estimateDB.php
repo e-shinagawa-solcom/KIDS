@@ -551,7 +551,7 @@ class estimateDB extends clsDB {
             $strQuery .= " WHERE strproductcode = '". $productCode. "'";
             $strQuery .= " AND strrevisecode = '". $reviseCode. "'";
             $strQuery .= " AND lngrevisionno";
-            if ($revisionNo) {
+            if ($revisionNo != null) {
                 // リビジョン番号が指定されている場合
                 $strQuery .= " = ". $revisionNo;
             } else {

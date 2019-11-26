@@ -1560,13 +1560,14 @@ class lcModel
 
         //クエリ実行
         $result = $db->delete($sql, $bind);
-
+/*
         if (!$result) {
             echo "ACL/C情報削除失敗しました。\n";
             exit;
         }
-
         return pg_affected_rows($result);
+*/
+        return $result;
 
     }
 
@@ -1789,53 +1790,100 @@ class lcModel
         $db = $this->lcConn;
         //クエリの生成
         $sql = "
-            insert into t_aclcinfo
-            values (" . $data["pono"]
-            . "," . $data["polineno"]
-            . "," . $data["poreviseno"]
-            . "," . $data["postate"]
-            . "," . $data["opendate"]
-            . "," . $data["unloadingareas"]
-            . "," . $data["payfcd"]
-            . "," . $data["payfnameomit"]
-            . "," . $data["payfnameformal"]
-            . "," . $data["productcd"]
-            . "," . $data["productname"]
-            . "," . $data["productnamee"]
+            insert into t_aclcinfo(
+                pono,
+                polineno,
+                poreviseno,
+                postate,
+                opendate,
+                portplace,
+                payfcd,
+                payfnameomit,
+                payfnameformal,
+                productcd,
+                productname,
+                productnamee,
+                productnumber,
+                unitname,
+                unitprice,
+                moneyprice,
+                shipstartdate,
+                shipenddate,
+                sumdate,
+                poupdatedate,
+                deliveryplace,
+                currencyclass,
+                lcnote,
+                shipterm,
+                validterm,
+                bankcd,
+                bankname,
+                bankreqdate,
+                lcno,
+                lcamopen,
+                validmonth,
+                usancesettlement,
+                bldetail1date,
+                bldetail1money,
+                bldetail2date,
+                bldetail2money,
+                bldetail3date,
+                bldetail3money,
+                lcstate,
+                entryuser,
+                entrydate,
+                entrytime,
+                updateuser,
+                updatedate,
+                updatetime,
+                shipym
+            )
+            values ('" . $data["pono"]
+            . "','" . $data["polineno"]
+            . "','" . $data["poreviseno"]
+            . "'," . ($data["postate"] == null ? "NULL" : "'" . $data["postate"] . "'")
+            . "," . ($data["opendate"] == null ? "NULL" : "'" . $data["opendate"] . "'")
+            . "," . ($data["unloadingareas"] == null ? "NULL" : "'" . $data["unloadingareas"] . "'")
+            . "," . ($data["payfcd"] == null ? "NULL" : "'" . $data["payfcd"] . "'")
+            . "," . ($data["payfnameomit"] == null ? "NULL" : "'" . $data["payfnameomit"] . "'")
+            . "," . ($data["payfnameformal"] == null ? "NULL" : "'" . $data["payfnameformal"] . "'")
+            . "," . ($data["productcd"] == null ? "NULL" : "'" . $data["productcd"] . "'")
+            . "," . ($data["productname"] == null ? "NULL" : "'" . $data["productname"] . "'")
+            . "," . ($data["productnamee"] == null ? "NULL" : "'" . $data["productnamee"] . "'")
             . "," . $data["productnumber"]
-            . "," . $data["unitname"]
+            . "," . ($data["unitname"] == NULL ? "null" : "'" . $data["unitname"] . "'")
             . "," . $data["unitprice"]
             . "," . $data["moneyprice"]
-            . "," . $data["shipstartdate"]
-            . "," . $data["shipenddate"]
-            . "," . $data["sumdate"]
-            . "," . $data["poupdatedate"]
-            . "," . $data["deliveryplace"]
-            . "," . $data["currencyclass"]
-            . "," . $data["lcnote"]
-            . "," . $data["shipterm"]
-            . "," . $data["validterm"]
-            . "," . $data["bankcd"]
-            . "," . $data["bankname"]
-            . "," . $data["bankreqdate"]
-            . "," . $data["lcno"]
-            . "," . $data["lcamopen"]
-            . "," . $data["validmonth"]
-            . "," . $data["usancesettlement"]
-            . "," . $data["bldetail1date"]
-            . "," . $data["bldetail1money"]
-            . "," . $data["bldetail2date"]
-            . "," . $data["bldetail2money"]
-            . "," . $data["bldetail3date"]
-            . "," . $data["bldetail3money"]
-            . "," . $data["lcstate"]
-            . "," . $data["entryuser"]
-            . "," . $data["entrydate"]
-            . "," . $data["entrytime"]
-            . "," . $data["updateuser"]
-            . "," . $data["updatedate"]
-            . "," . $data["updatetime"]
-            . "," . $data["shipym"]
+            . "," . ($data["shipstartdate"] == null ? "NULL" : "'" . $data["shipstartdate"] . "'")
+            . "," . ($data["shipenddate"] == null ? "NULL" : "'" . $data["shipenddate"] . "'")
+            . "," . ($data["sumdate"] == null ? "NULL" : "'" . $data["sumdate"] . "'")
+            . "," . ($data["poupdatedate"] == null ? "NULL" : "'" .$data["poupdatedate"] . "'")
+            . "," . ($data["deliveryplace"] == null ? "NULL" : "'" . $data["deliveryplace"] . "'")
+            . "," . ($data["currencyclass"] == null ? "NULL" : "'" . $data["currencyclass"] . "'")
+            . "," . ($data["lcnote"] == null ? "NULL" : "'" . $data["lcnote"] . "'")
+            . "," . ($data["shipterm"] == null ? "NULL" : "'" . $data["shipterm"] . "'")
+            . "," . ($data["validterm"] == null ? "NULL" : "'" . $data["validterm"] . "'")
+            . "," . ($data["bankcd"] == null ? "NULL" : "'" . $data["bankcd"] . "'")
+            . "," . ($data["bankname"] == null ? "NULL" : "'" . $data["bankname"] . "'")
+            . "," . ($data["bankreqdate"] == null ? "NULL" : "'" . $data["bankreqdate"] . "'")
+            . "," . ($data["lcno"] == null ? "NULL" : "'" . $data["lcno"] . "'")
+            . "," . ($data["lcamopen"] == null ? "NULL" : "'" . $data["lcamopen"] . "'")
+            . "," . ($data["validmonth"] == null ? "NULL" : "'" . $data["validmonth"] . "'")
+            . "," . ($data["usancesettlement"] == null ? "NULL" : $data["usancesettlement"])
+            . "," . ($data["bldetail1date"] == null ? "NULL" : "'" . $data["bldetail1date"] . "'")
+            . "," . ($data["bldetail1money"] == null ? "NULL" : $data["bldetail1money"])
+            . "," . ($data["bldetail2date"] == null ? "NULL" : "'" . $data["bldetail2date"] . "'")
+            . "," . ($data["bldetail2money"] == null ? "NULL" : $data["bldetail2money"])
+            . "," . ($data["bldetail3date"] == null ? "NULL" : "'" . $data["bldetail3date"] . "'")
+            . "," . ($data["bldetail3money"] == null ? "NULL" : $data["bldetail3money"])
+            . "," . ($data["lcstate"] == null ? "NULL" : $data["lcstate"])
+            . "," . ($data["entryuser"] == null ? "NULL" : "'" . $data["entryuser"] . "'")
+            . "," . ($data["entrydate"] == null ? "NULL" : "'" . $data["entrydate"] . "'")
+            . "," . ($data["entrytime"] == null ? "NULL" : "'" . $data["entrytime"] . "'")
+            . "," . ($data["updateuser"] == null ? "NULL" : "'" . $data["updateuser"] . "'")
+            . "," . ($data["updatedate"] == null ? "NULL" : "'" .$data["updatedate"] . "'")
+            . "," . ($data["updatetime"] == null ? "NULL" : "'" . $data["updatetime"] . "'")
+            . "," . ($data["shipym"] == null ? "NULL" : "'" . $data["shipym"] . "'")
             . ")";
 
         //バインドの設定
@@ -1877,10 +1925,10 @@ class lcModel
         //クエリ実行
         $result = $db->update($sql, $bind);
 
-        if (!$result) {
-            echo "LC状態によりACL/C情報の状態更新失敗しました。\n";
-            exit;
-        }
+//        if (!$result) {
+//            echo "LC状態によりACL/C情報の状態更新失敗しました。\n";
+//            exit;
+//        }
 
         return $result;
     }
@@ -2257,7 +2305,7 @@ class lcModel
                         lgno =  $2
                 "; //バインドの設定
         $bind = array($lcgetdate, $lgno);
-
+echo "lgno: " . $lgno .",lcgetdate:" . $lcgetdate . "<br>";
         //クエリ実行
         $result = $db->update($sql, $bind);
 
