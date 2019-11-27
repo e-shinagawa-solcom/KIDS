@@ -140,7 +140,7 @@ foreach ($acLcInfoArry as $acLcInfo) {
     $data["lcstate"] = $acLcInfo["lcstate"];
     $data["shipym"] = $acLcInfo["shipym"];
     $count = fncInsertLcInfo($objDB, $data);
-
+}
 
 $objDB->transactionCommit();
 // $data["from"] = "201905";
