@@ -251,6 +251,9 @@ foreach ($records as $i => $record) {
     fncSetDetailDataToTr($doc, $trBody, $bgcolor, $aryTableDetailHeaderName_SLIP, null, $detailData[0], true);
     // tbody > tr
     $tbody->appendChild($trBody);
+    
+    // フッターボタン表示
+    fncSetBackBtnToTr($doc, $trBody, $bgcolor, $aryTableBackBtnName_SLIP, null, $record, $rowspan, $aryAuthority, true, $isadmin, 'slip');
 
     // 明細行のtrの追加
     for ($i = 1; $i < $rowspan; $i++) {
@@ -264,9 +267,6 @@ foreach ($records as $i => $record) {
         $tbody->appendChild($trBody);
 
     }
-    
-    // フッターボタン表示
-    fncSetBackBtnToTr($doc, $trBody, $bgcolor, $aryTableBackBtnName_SLIP, null, $record, $rowspan, $aryAuthority, true, $isadmin, 'slip');
 
     // tbody > tr
     $tbody->appendChild($trBody);

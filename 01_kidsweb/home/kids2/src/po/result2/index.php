@@ -30,6 +30,7 @@ require_once SRC_ROOT . '/mold/lib/UtilSearchForm.class.php';
 require LIB_FILE;
 require LIB_ROOT . "clscache.php";
 require SRC_ROOT . "po/cmn/lib_pos.php";
+require SRC_ROOT . "search/cmn/lib_search.php";
 require SRC_ROOT . "po/cmn/column2.php";
 require LIB_DEBUGFILE;
 
@@ -49,12 +50,35 @@ $isSearch = UtilSearchForm::extractArrayByIsSearch($_REQUEST);
 $from = UtilSearchForm::extractArrayByFrom($_REQUEST);
 $to = UtilSearchForm::extractArrayByTo($_REQUEST);
 $searchValue = $_REQUEST;
+// クエリの組立に使用するフォームデータを抽出
+$optionColumns = array();
+$displayColumns = array();
+
+// オプション項目の抽出
+foreach ($options as $key => $flag) {
+    if ($flag == "on") {
+        $optionColumns[$key] = $key;
+    }
+}
+
+// 表示項目の抽出
+foreach ($isDisplay as $key => $flag) {
+    if ($flag == "on") {
+        if ($key == "strProductCode") {
+            $displayColumns[$key] = $key;
+            $displayColumns["strproductname"] = "strproductname";
+            $displayColumns["strproductenglishname"] = "strproductenglishname";
+        } else {
+            $displayColumns[$key] = $key;
+        }
+        
+    }
+}
 
 $isDisplay = array_keys($isDisplay);
 $isSearch = array_keys($isSearch);
 $aryData['ViewColumn'] = $isDisplay;
 $aryData['SearchColumn'] = $isSearch;
-$aryData['Admin'] = $_REQUEST["IsDisplay_btnAdmin"];
 
 $isAdmin = mb_strtoupper($aryData['Admin']) == "ON" ? true : false; 
 
@@ -158,9 +182,6 @@ $aryViewColumn = fncResortSearchColumn2($isDisplay);
 // 検索項目  $arySearchColumnに格納
 $arySearchColumn = $isSearch;
 
-// クッキー取得
-$aryData["lngLanguageCode"] = 1;
-
 reset($aryViewColumn);
 if (!$bytSearchFlag) {
     reset($arySearchColumn);
@@ -177,9 +198,6 @@ if ($lngResultNum) {
     // 検索件数が指定数以上の場合エラーメッセージを表示する
     if ($lngResultNum > DEF_SEARCH_MAX) {
         $strMessage = fncOutputError(9057, DEF_WARNING, DEF_SEARCH_MAX, false, "../po/search2/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
-
-        // [lngLanguageCode]書き出し
-        $aryHtml["lngLanguageCode"] = $aryData["lngLanguageCode"];
 
         // [strErrorMessage]書き出し
         $aryHtml["strErrorMessage"] = $strMessage;
@@ -200,7 +218,7 @@ if ($lngResultNum) {
 
     // 指定数以内であれば通常処理
     for ($i = 0; $i < $lngResultNum; $i++) {
-        $aryResult[] = $objDB->fetchArray($lngResultID, $i);
+        $records[] = $objDB->fetchArray($lngResultID, $i);
     }
 } else {
     $strMessage = fncOutputError(503, DEF_WARNING, "", false, "../po/search2/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
@@ -227,63 +245,78 @@ if ($lngResultNum) {
 
 $objDB->freeResult($lngResultID);
 
-// 言語の設定
-if ($aryData["lngLanguageCode"] == 1) {
-    $aryTytle = $arySearchTableTytle;
-} else {
-    $aryTytle = $arySearchTableTytleEng;
-}
 
-// テーブル構成で検索結果を取得、ＨＴＭＬ形式で出力する
-// $aryHtml["strHtml"] = fncSetPurchaseTable ( $aryResult, $arySearchColumn, $aryViewColumn, $aryData, $aryUserAuthority, $aryTytle, $objDB, $objCache, $aryTableViewName );
-$aryHtml["strHtml"] = fncSetPurchaseOrderTable($aryResult, $aryViewColumn, $aryData, $aryUserAuthority, $aryTytle, $objDB, $objCache, $aryTableViewName, true);
-
-
-// POSTされたデータをHiddenにて設定する
-unset($ary_keys);
-$ary_Keys = array_keys($aryData);
-while (list($strKeys, $strValues) = each($ary_Keys)) {
-    if ($strValues == "ViewColumn") {
-        reset($aryData["ViewColumn"]);
-        for ($i = 0; $i < count($aryData["ViewColumn"]); $i++) {
-            $aryHidden[] = "<input type='hidden' name='ViewColumn[]' value='" . $aryData["ViewColumn"][$i] . "'>";
-        }
-    } elseif ($strValues == "SearchColumn") {
-        reset($aryData["SearchColumn"]);
-        for ($j = 0; $j < count($aryData["SearchColumn"]); $j++) {
-            $aryHidden[] = "<input type='hidden' name='SearchColumn[]' value='" . $aryData["SearchColumn"][$j] . "'>";
-        }
-    } elseif ($strValues == "strSort" || $strValues == "strSortOrder") {
-        //何もしない
-    } else {
-        // 配列の値の場合（状態、ワークフロー状態）
-        if (is_array($aryData[$strValues])) {
-            for ($k = 0; $k < count($aryData[$strValues]); $k++) {
-                $aryHidden[] = '<input type="hidden" name="' . $strValues . '[' . $k . ']" value="' . $aryData[$strValues][$k] . '">';
-            }
-        } else {
-            $aryHidden[] = '<input type="hidden" name="' . $strValues . '" value="' . $aryData[$strValues] . '">';
-        }
-    }
-}
-
-$aryHidden[] = "<input type='hidden' name='strSort'>";
-$aryHidden[] = "<input type='hidden' name='strSortOrder'>";
-$strHidden = implode("\n", $aryHidden);
-
-$aryHtml["strHidden"] = $strHidden;
-$aryHtml["displayColumns"] = implode(",", $aryViewColumn);
 // テンプレート読み込み
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate("/po/result2/po_search_result.html");
 
+$aryResult["displayColumns"] = implode(",", $displayColumns);
 // テンプレート生成
-$objTemplate->replace($aryHtml);
-$objTemplate->complete();
+$objTemplate->replace($aryResult);
+
+// 検索結果テーブル生成の為DOMDocumentを使用
+$doc = new DOMDocument();
+// パースエラー抑制
+libxml_use_internal_errors(true);
+// DOMパース
+$doc->loadHTML(mb_convert_encoding($objTemplate->strTemplate, "utf8", "eucjp-win"));
+// パースエラークリア
+libxml_clear_errors();
+// パースエラー抑制解除
+libxml_use_internal_errors(false);
+
+// 検索結果テーブルの取得
+$table = $doc->getElementById("result");
+$thead = $table->getElementsByTagName("thead")->item(0);
+$tbody = $table->getElementsByTagName("tbody")->item(0);
+
+// キー文字列を小文字に変換
+$displayColumns = array_change_key_case($displayColumns, CASE_LOWER);
+// -------------------------------------------------------
+// 各種ボタン表示チェック/権限チェック
+// -------------------------------------------------------
+$aryAuthority = fncGetAryAuthority('purchaseorder', $objAuth);
+
+// 管理者モードチェック
+$isadmin = array_key_exists("admin", $optionColumns);
+// -------------------------------------------------------
+// テーブルヘッダ作成
+// -------------------------------------------------------
+// thead > tr要素作成
+// -------------------------------------------------------
+// テーブルヘッダ作成
+// -------------------------------------------------------
+// thead > tr要素作成
+$trHead = $doc->createElement("tr");
+fncSetTheadData($doc, $trHead, $aryTableHeadBtnName, $aryTableBackBtnName, $aryTableHeaderName_PURORDER, null, $displayColumns);
+$thead->appendChild($trHead);
+// return;
+// -------------------------------------------------------
+// テーブルセル作成
+// -------------------------------------------------------
+// 検索結果件数分走査
+foreach ($records as $i => $record) {
+    $index = $index + 1;
+    $bgcolor = fncSetBgColor('purchaseorder', $record["strordercode"], true, $objDB);
+
+    // tbody > tr要素作成
+    $trBody = $doc->createElement("tr");
+
+    $trBody->setAttribute("id", $record["strordercode"]);
+
+    // 先頭ボタン設定
+    fncSetHeadBtnToTr($doc, $trBody, $bgcolor, $aryTableHeadBtnName, $displayColumns, $record, 1, $aryAuthority, true, $isadmin, $index, 'purchaseorder', null);
+
+    // ヘッダー部データ設定
+    fncSetHeadDataToTr($doc, $trBody, $bgcolor, $aryTableHeaderName_PURORDER, $displayColumns, $record, 1, true);
+
+    // フッターボタン表示
+    fncSetBackBtnToTr($doc, $trBody, $bgcolor, $aryTableBackBtnName, $displayColumns, $record, 1, $aryAuthority, true, $isadmin, 'purchaseorder');
+
+    // tbody > tr
+    $tbody->appendChild($trBody);
+
+}
 
 // HTML出力
-echo $objTemplate->strTemplate;
-
-$objCache->Release();
-
-return true;
+echo $doc->saveHTML();

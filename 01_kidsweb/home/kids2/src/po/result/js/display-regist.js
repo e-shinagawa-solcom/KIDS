@@ -2,7 +2,7 @@
 // display-regist.js
 //
 (function(){
-    $('img.fix.button').on('click',function(){
+    $('img.decide.button').on('click',function(){
         url='/po/regist/index.php';
         // lngorderno = 'lngOrderNo=' + $(this).attr('lngorderno') + ',4840';
         lngorderno = 'lngOrderNo=' + $(this).attr('id');

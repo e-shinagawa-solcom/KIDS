@@ -2,7 +2,7 @@
 (function(){
     $('img.detail.button').on('click', function(){
         url = '/inv/result/index2.php';
-        lnginvoiceno = 'lngInvoiceNo=' + $(this).attr('lnginvoiceno');
+        lnginvoiceno = 'lngInvoiceNo=' + $(this).attr('id');
         lngRevisionNo = 'lngRevisionNo=' + $(this).attr('revisionno');
         sessionID = 'strSessionID=' + getUrlVars()["strSessionID"];
 
@@ -10,9 +10,9 @@
         open(url + '?' + lnginvoiceno + '&' + lngRevisionNo + '&' + sessionID, 'display-detail', 'resizable=yes, scrollbars=yes, menubar=no');
     });
 
-    $('img.renew.button').on('click', function(){
+    $('img.fix.button').on('click', function(){
         url = '/inv/regist/renew.php';
-        lnginvoiceno = 'lngInvoiceNo=' + $(this).attr('lnginvoiceno');
+        lnginvoiceno = 'lngInvoiceNo=' + $(this).attr('id');
         lngRevisionNo = 'lngRevisionNo=' + $(this).attr('revisionno');
         sessionID = 'strSessionID=' + getUrlVars()["strSessionID"];
 

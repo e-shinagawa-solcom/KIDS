@@ -30,7 +30,8 @@
     <script src="/po/result2/js/display-edit.js" defer=""></script>
     <script src="/po/result2/js/display-delete.js" defer=""></script>
     <!-- 履歴表示 -->
-    <script src="/po/result2/js/display-history.js" defer></script>
+    <!-- <script src="/po/result2/js/display-history.js" defer></script> -->
+    <script src="/search/cmn/result/display-history.js" defer></script>
     <!-- 検索結果をクリップボードへコピーする処理 -->
     <script src="/po/result2/js/clipboard.js" defer=""></script>
     <!-- 結果行選択 -->
@@ -40,7 +41,10 @@
 <body class="search-result-background">
     <div class="result-table-wrap">
         <table id="result" class="tablesorter">
-            _%strHtml%_
+            <thead>
+            </thead>
+            <tbody>
+            </tbody>
         </table>
     </div>    
     <input type="hidden" name="displayColumns" value="_%displayColumns%_">

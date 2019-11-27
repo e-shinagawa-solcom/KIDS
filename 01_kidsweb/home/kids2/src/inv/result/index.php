@@ -30,6 +30,7 @@ require_once SRC_ROOT . '/mold/lib/UtilSearchForm.class.php';
 require LIB_FILE;
 require LIB_ROOT . "clscache.php";
 require SRC_ROOT . "inv/cmn/lib_regist.php";
+require SRC_ROOT . "search/cmn/lib_search.php";
 require LIB_DEBUGFILE;
 
 // DB接続
@@ -183,120 +184,40 @@ $table = $doc->getElementById("result");
 $thead = $table->getElementsByTagName("thead")->item(0);
 $tbody = $table->getElementsByTagName("tbody")->item(0);
 
-// 詳細ボタンを表示
-$allowedDetail = fncCheckAuthority(DEF_FUNCTION_INV4, $objAuth);
-// 修正を表示
-$allowedFix = fncCheckAuthority(DEF_FUNCTION_INV5, $objAuth);
-// 削除を表示
-$allowedDelete = fncCheckAuthority(DEF_FUNCTION_INV6, $objAuth);
+
 
 // -------------------------------------------------------
+// 各種ボタン表示チェック/権限チェック
+// -------------------------------------------------------
+$aryAuthority = fncGetAryAuthority('inv', $objAuth);
+
+// 管理者モードチェック
+$isadmin = array_key_exists("admin", $optionColumns);
+
 // テーブルヘッダ作成
 // -------------------------------------------------------
 // thead > tr要素作成
 $trHead = $doc->createElement("tr");
-
-// クリップボード除外対象クラス
-$exclude = "exclude-in-clip-board-target";
-
-// 項番カラム
-$thIndex = $doc->createElement("th");
-$thIndex->setAttribute("class", $exclude);
-// コピーボタン
-$imgCopy = $doc->createElement("img");
-$imgCopy->setAttribute("src", "/img/type01/cmn/seg/copy_off_bt.gif");
-$imgCopy->setAttribute("class", "copy button");
-// 項番カラム > コピーボタン
-$thIndex->appendChild($imgCopy);
-// ヘッダに追加
-$trHead->appendChild($thIndex);
-
-// 詳細カラム
-$thDetail = $doc->createElement("th", toUTF8("詳細"));
-$thDetail->setAttribute("class", $exclude);
-// ヘッダに追加
-$trHead->appendChild($thDetail);
-
-// 修正カラム
-$thFix = $doc->createElement("th", toUTF8("修正"));
-$thFix->setAttribute("class", $exclude);
-// ヘッダに追加
-$trHead->appendChild($thFix);
-
-// 履歴カラム
-$thHistory = $doc->createElement("th", toUTF8("履歴"));
-$thHistory->setAttribute("class", $exclude);
-// ヘッダに追加
-$trHead->appendChild($thHistory);
-
-// ヘッダ部
-$aryTableHeaderName["lngCustomerCode"] = "顧客";
-$aryTableHeaderName["strInvoiceCode"] = "請求書No";
-$aryTableHeaderName["dtmInvoiceDate"] = "請求日";
-$aryTableHeaderName["curLastMonthBalance"] = "先月請求残額";
-$aryTableHeaderName["curThisMonthAmount"] = "当月請求金額";
-$aryTableHeaderName["curSubTotal1"] = "消費税額";
-$aryTableHeaderName["dtmInsertDate"] = "作成日";
-$aryTableHeaderName["lngUserCode"] = "担当者";
-$aryTableHeaderName["lngInsertUserCode"] = "入力者";
-$aryTableHeaderName["lngPrintCount"] = "印刷回数";
-$aryTableHeaderName["strNote"] = "備考";
-
-// 明細部
-$aryTableDetailHeaderName["lngInvoiceDetailNo"] = "請求書明細番号";
-$aryTableDetailHeaderName["dtmDeliveryDate"] = "納品日";
-$aryTableDetailHeaderName["strSlipCode"] = "納品書NO";
-$aryTableDetailHeaderName["lngDeliveryPlaceCode"] = "納品先";
-$aryTableDetailHeaderName["curSubTotalPrice"] = "税抜金額";
-$aryTableDetailHeaderName["lngTaxClassCode"] = "課税区分";
-$aryTableDetailHeaderName["curDetailTax"] = "税率";
-$aryTableDetailHeaderName["curTaxPrice"] = "消費額";
-$aryTableDetailHeaderName["strDetailNote"] = "明細備考";
-
-// TODO 要リファクタリング
-// 指定されたテーブル項目のカラムを作成する
-foreach ($aryTableHeaderName as $key => $value) {
-    $th = $doc->createElement("th", toUTF8($value));
-    $trHead->appendChild($th);
-}
-// 明細ヘッダーを作成する
-foreach ($aryTableDetailHeaderName as $key => $value) {
-    $th = $doc->createElement("th", toUTF8($value));
-    $trHead->appendChild($th);
-}
-// 削除項目を表示
-// 削除カラム
-$thDelete = $doc->createElement("th", toUTF8("削除"));
-$thDelete->setAttribute("class", $exclude);
-// ヘッダに追加
-$trHead->appendChild($thDelete);
-
-// thead > tr
+fncSetTheadData($doc, $trHead, $aryTableHeadBtnName_INV, $aryTableBackBtnName_INV, $aryTableHeaderName_INV, $aryTableDetailHeaderName_INV, null);
 $thead->appendChild($trHead);
-
 // -------------------------------------------------------
 // テーブルセル作成
 // -------------------------------------------------------
 // 検索結果件数分走査
 foreach ($aryResult as $i => $record) {
-    unset($aryQuery);
-    // 削除フラグ
-    $deletedFlag = false;
+    $index = $index + 1;
 
-    $deletedFlag = fncCheckData($record["strinvoicecode"], $objDB);
+    $bgcolor = fncSetBgColor('inv', $record["strinvoicecode"], true, $objDB);
+
+    $detailData = array();
+    $rowspan == 0;
 
     // 詳細データを取得する
-    $detailData = fncGetDetailData($record["lnginvoiceno"], $record["lngrevisionno"], $objDB);
-
+    $detailData = fncGetDetailData('inv', $record["lnginvoiceno"], $record["lngrevisionno"], $objDB);
     $rowspan = count($detailData);
-    // 背景色設定
-    if ($record["lngrevisionno"] < 0) {
-        $bgcolor = "background-color: #B3E0FF;";
-    } else {
-        $bgcolor = "background-color: #FFB2B2;";
-    }
+
     // 明細番号取得
-    for ($i = $rowspan; $i > 0; $i--) {
+    for ($i = $rowspan; $i >= 0; $i--) {
         if ($detailnos == "") {
             $detailnos = $detailData[$i]["lnginvoicedetailno"];
         } else {
@@ -304,124 +225,48 @@ foreach ($aryResult as $i => $record) {
         }
     }
 
+    if ($rowspan == 0) {
+        $rowspan = 1;
+    }
     // tbody > tr要素作成
     $trBody = $doc->createElement("tr");
+
     $trBody->setAttribute("id", $record["strinvoicecode"]);
     $trBody->setAttribute("detailnos", $detailnos);
 
-    // 項番
-    $index = $index + 1;
-    $tdIndex = $doc->createElement("td", $index);
-    $tdIndex->setAttribute("class", $exclude);
-    $tdIndex->setAttribute("style", $bgcolor);
-    $tdIndex->setAttribute("rowspan", $rowspan);
-    $trBody->appendChild($tdIndex);
+    $maxdetailno = $detailData[$rowspan - 1]["lnginvoicedetailno"];
 
-    // 詳細セル
-    $tdDetail = $doc->createElement("td");
-    $tdDetail->setAttribute("class", $exclude);
-    $tdDetail->setAttribute("style", $bgcolor . "text-align: center;");
-    $tdDetail->setAttribute("rowspan", $rowspan);
+    // 先頭ボタン設定
+    fncSetHeadBtnToTr($doc, $trBody, $bgcolor, $aryTableHeadBtnName_INV, null, $record, $rowspan, $aryAuthority, true, $isadmin, $index, 'inv', $maxdetailno);
 
-    // 詳細ボタンの表示
-    if ($allowedDetail && $record["lngrevisionno"] >= 0) {
-        // 詳細ボタン
-        $imgDetail = $doc->createElement("img");
-        $imgDetail->setAttribute("src", "/img/type01/pc/detail_off_bt.gif");
-        $imgDetail->setAttribute("lnginvoiceno", $record["lnginvoiceno"]);
-        $imgDetail->setAttribute("revisionno", $record["lngrevisionno"]);
-        $imgDetail->setAttribute("class", "detail button");
-        // td > img
-        $tdDetail->appendChild($imgDetail);
-    }
-    // tr > td
-    $trBody->appendChild($tdDetail);
+    // ヘッダー部データ設定
+    fncSetHeadDataToTr($doc, $trBody, $bgcolor, $aryTableHeaderName_INV, null, $record, $rowspan, true);
 
-    // 修正セル
-    $tdFix = $doc->createElement("td");
-    $tdFix->setAttribute("class", $exclude);
-    $tdFix->setAttribute("style", $bgcolor . "text-align: center;");
-    $tdFix->setAttribute("rowspan", $rowspan);
-
-    // 修正ボタンの表示
-    if ($allowedFix && $record["lngrevisionno"] >= 0 && !$deletedFlag) {
-        // 修正ボタン
-        $imgFix = $doc->createElement("img");
-        $imgFix->setAttribute("src", "/img/type01/pc/renew_off_bt.gif");
-        $imgFix->setAttribute("lnginvoiceno", $record["lnginvoiceno"]);
-        $imgFix->setAttribute("revisionno", $record["lngrevisionno"]);
-        $imgFix->setAttribute("class", "renew button");
-        // td > img
-        $tdFix->appendChild($imgFix);
-    }
-    // tr > td
-    $trBody->appendChild($tdFix);
-
-    // 履歴セル
-    $tdHistory = $doc->createElement("td");
-    $tdHistory->setAttribute("class", $exclude);
-    $tdHistory->setAttribute("style", $bgcolor . "text-align: center;");
-    $tdHistory->setAttribute("rowspan", $rowspan);
-
-    if ($record["lngrevisionno"] <> 0 and array_key_exists("admin", $optionColumns)) {
-        // 履歴ボタン
-        $imgHistory = $doc->createElement("img");
-        $imgHistory->setAttribute("src", "/img/type01/so/renew_off_bt.gif");
-        $imgHistory->setAttribute("id", $record["strinvoicecode"]);
-        $imgHistory->setAttribute("lngrevisionno", $record["lngrevisionno"]);
-        $imgHistory->setAttribute("rownum", $index);
-        $imgHistory->setAttribute("maxdetailno", $detailData[$rowspan - 1]["lnginvoicedetailno"]);
-        $imgHistory->setAttribute("class", "history button");
-        // td > img
-        $tdHistory->appendChild($imgHistory);
-    }
-    // tr > td
-    $trBody->appendChild($tdHistory);
-
-    // ヘッダー部データの設定
-    fncSetHeaderDataToTr($doc, $trBody, $bgcolor, $rowspan, $aryTableHeaderName, $record, true);
-    
-
+    $detailData[0]["lngmonetaryunitcode"] = $record["lngmonetaryunitcode"];
+    $detailData[0]["strmonetaryunitsign"] = $record["strmonetaryunitsign"];
     // 明細データの設定
-    fncSetDetailDataToTr($doc, $trBody, $bgcolor, $aryTableDetailHeaderName, $detailData[0], $record, true);
-
+    fncSetDetailDataToTr($doc, $trBody, $bgcolor, $aryTableDetailHeaderName_INV, null, $detailData[0], true);
     // tbody > tr
     $tbody->appendChild($trBody);
-
-    // 削除セル
-    $tdDelete = $doc->createElement("td");
-    $tdDelete->setAttribute("class", $exclude);
-    $tdDelete->setAttribute("style", $bgcolor . "text-align: center;");
-    $tdDelete->setAttribute("rowspan", $rowspan);
-
-    // 削除ボタンの表示
-    if (!$deletedFlag) {
-        // 削除ボタン
-        $imgDelete = $doc->createElement("img");
-        $imgDelete->setAttribute("src", "/img/type01/pc/delete_off_bt.gif");
-        $imgDelete->setAttribute("lnginvoiceno", $record["lnginvoiceno"]);
-        $imgDelete->setAttribute("revisionno", $record["lngrevisionno"]);
-        $imgDelete->setAttribute("class", "delete button");
-        // td > img
-        $tdDelete->appendChild($imgDelete);
-    }
-    // tr > td
-    $trBody->appendChild($tdDelete);
-
-    // tbody > tr
-    $tbody->appendChild($trBody);
+    
+    // フッターボタン表示
+    fncSetBackBtnToTr($doc, $trBody, $bgcolor, $aryTableBackBtnName_INV, null, $record, $rowspan, $aryAuthority, true, $isadmin, 'inv');
 
     // 明細行のtrの追加
     for ($i = 1; $i < $rowspan; $i++) {
         $trBody = $doc->createElement("tr");
-
         $trBody->setAttribute("id", $record["strinvoicecode"] . "_" . $record["lngrevisionno"] . "_" . $detailData[$i]["lnginvoicedetailno"]);
-
-        fncSetDetailDataToTr($doc, $trBody, $bgcolor, $aryTableDetailHeaderName, $detailData[$i], $record, true);
+        $detailData[$i]["lngmonetaryunitcode"] = $record["lngmonetaryunitcode"];
+        $detailData[$i]["strmonetaryunitsign"] = $record["strmonetaryunitsign"];
+        fncSetDetailDataToTr($doc, $trBody, $bgcolor, $aryTableDetailHeaderName_INV, null, $detailData[$i], true);
 
         $tbody->appendChild($trBody);
 
     }
+
+    // tbody > tr
+    $tbody->appendChild($trBody);
+
 }
 
 // HTML出力

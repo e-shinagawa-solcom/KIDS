@@ -7,7 +7,7 @@
         var rownum = $(this).attr('rownum');
         var displayColumns = $('input[name="displayColumns"]').val().split(',');
         var removeFlag = false;
-        if (type == 'sc' || type == 'slip' || type == 'pc') {
+        if (type == 'sc' || type == 'slip' || type == 'pc' || type == 'inv') {
             var strCode = id;
             var maxdetailno = $(this).attr('maxdetailno');
             var row = $('tr[id="' + id + '"]');
@@ -25,7 +25,7 @@
                         removeFlag = true;
                     }
                 });
-        } else if (type == 'so') {
+        } else if (type == 'so' || type == 'po') {
             if ($('tr[id^="' + id + '_"]').length) {
                 $('tr[id^="' + id + '_"]').remove();
                 removeFlag = true;
@@ -53,10 +53,10 @@
             })
                 .done(function (response) {
                     console.log(response);
-                    if (type == 'so') {
+                    if (type == 'so' || type == 'po') {
                         var row = $('tr[id="' + id + '"]');
                         row.after(response);
-                    } else if (type == 'sc' || type == 'slip' || type == 'pc') {
+                    } else if (type == 'sc' || type == 'slip' || type == 'pc' || type == 'inv') {
                         if ($('tr[id="' + id + "_" + lngRevisionNo + "_" + maxdetailno + '"]').length) {
                             $('tr[id="' + id + "_" + lngRevisionNo + "_" + maxdetailno + '"]').after(response);
                         } else {
@@ -68,6 +68,8 @@
                     $('img.detail.button').on('click', function () {
                         if (type == 'purchaseorder') { // 発注書
                         } else if (type == 'po') { // 発注
+                            url = '/po/result/index2.php';
+                            lngPkNo = 'lngOrderNo=' + $(this).attr('id');
                         } else if (type == 'so') { // 受注
                             url = '/so/detail/index.php';
                             lngPkNo = 'lngReceiveNo=' + $(this).attr('id');
@@ -80,7 +82,9 @@
                         } else if (type == 'pc') { // 仕入                            
                             url = '/pc/detail/index.php';
                             lngPkNo = 'lngStockNo=' + $(this).attr('id');
-                        } else if (type == 'inv') {
+                        } else if (type == 'inv') {           
+                            url = '/inv/result/index2.php';
+                            lngPkNo = 'lngInvoiceNo=' + $(this).attr('id');
                         } else if (type == 'estimate') {
                         }
                         sessionID = 'strSessionID=' + $.cookie('strSessionID');

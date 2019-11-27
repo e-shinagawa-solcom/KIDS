@@ -53,6 +53,29 @@ $aryTableHeaderName_SO["lngproductquantity"] = "数量";
 $aryTableHeaderName_SO["cursubtotalprice"] = "税抜金額";
 $aryTableHeaderName_SO["strdetailnote"] = "明細備考";
 
+$aryTableHeaderName_PO["dtminsertdate"] = "登録日";
+$aryTableHeaderName_PO["lnginputusercode"] = "入力者";
+$aryTableHeaderName_PO["strordercode"] = "発注ＮＯ.";
+$aryTableHeaderName_PO["lngrevisionno"] = "リビジョン番号";
+$aryTableHeaderName_PO["strproductcode"] = "製品コード";
+$aryTableHeaderName_PO["strproductname"] = "製品名";
+$aryTableHeaderName_PO["strproductenglishname"] = "製品名（英語）";
+$aryTableHeaderName_PO["lnginchargegroupcode"] = "営業部署";
+$aryTableHeaderName_PO["lnginchargeusercode"] = "開発担当者";
+$aryTableHeaderName_PO["lngcustomercode"] = "仕入先";
+$aryTableHeaderName_PO["lngstocksubjectcode"] = "仕入科目";
+$aryTableHeaderName_PO["lngstockitemcode"] = "仕入部品";
+$aryTableHeaderName_PO["dtmdeliverydate"] = "納期";
+$aryTableHeaderName_PO["lngorderstatuscode"] = "状態";
+$aryTableHeaderName_PO["strgoodscode"] = "顧客品番";
+$aryTableHeaderName_PO["lngcustomercompanycode"] = "顧客";
+$aryTableHeaderName_PO["lngreceivestatuscode"] = "状態";
+$aryTableHeaderName_PO["lngrecordno"] = "明細行番号";
+$aryTableHeaderName_PO["curproductprice"] = "単価";
+$aryTableHeaderName_PO["lngproductquantity"] = "数量";
+$aryTableHeaderName_PO["cursubtotalprice"] = "税抜金額";
+$aryTableHeaderName_PO["strdetailnote"] = "明細備考";
+
 $aryTableHeaderName_SC["dtminsertdate"] = "登録日";
 $aryTableHeaderName_SC["dtmappropriationdate"] = "請求日";
 $aryTableHeaderName_SC["strsalescode"] = "売上NO.";
@@ -138,21 +161,63 @@ $aryTableDetailHeaderName_PC["lngtaxclasscode"] = "税区分";
 $aryTableDetailHeaderName_PC["curtax"] = "税率";
 $aryTableDetailHeaderName_PC["curtaxprice"] = "税額";
 $aryTableDetailHeaderName_PC["strdetailnote"] = "明細備考";
-$aryTableHeaderName = array();
-$aryTableHeaderName["dtminsertdate"] = "登録日";
+
+$aryTableHeadBtnName_INV["btndetail"] = "詳細";
+$aryTableHeadBtnName_INV["btnfix"] = "修正";
+$aryTableHeadBtnName_INV["btnhistory"] = "履歴";
+$aryTableBackBtnName_INV["btndelete"] = "削除";
+// ヘッダ部
+$aryTableHeaderName_INV["lngcustomercode"] = "顧客";
+$aryTableHeaderName_INV["strinvoicecode"] = "請求書No";
+$aryTableHeaderName_INV["dtminvoicedate"] = "請求日";
+$aryTableHeaderName_INV["curlastmonthbalance"] = "先月請求残額";
+$aryTableHeaderName_INV["curthismonthamount"] = "当月請求金額";
+$aryTableHeaderName_INV["cursubtotal"] = "消費税額";
+$aryTableHeaderName_INV["dtminsertdate"] = "作成日";
+$aryTableHeaderName_INV["lngusercode"] = "担当者";
+$aryTableHeaderName_INV["lnginsertusercode"] = "入力者";
+$aryTableHeaderName_INV["lngprintcount"] = "印刷回数";
+$aryTableHeaderName_INV["strnote"] = "備考";
+
+// 明細部
+$aryTableDetailHeaderName_INV["lnginvoicedetailno"] = "請求書明細番号";
+$aryTableDetailHeaderName_INV["dtmdeliverydate"] = "納品日";
+$aryTableDetailHeaderName_INV["strslipcode"] = "納品書NO";
+$aryTableDetailHeaderName_INV["lngdeliveryplacecode"] = "納品先";
+$aryTableDetailHeaderName_INV["cursubtotalprice"] = "税抜金額";
+$aryTableDetailHeaderName_INV["lngtaxclasscode"] = "課税区分";
+$aryTableDetailHeaderName_INV["curtax"] = "税率";
+$aryTableDetailHeaderName_INV["curtaxprice"] = "消費額";
+$aryTableDetailHeaderName_INV["strdetailnote"] = "明細備考";
+
+$aryTableHeaderName_PURORDER = array();
+$aryTableHeaderName_PURORDER["dtminsertdate"] = "登録日";
+$aryTableHeaderName_PURORDER["strordercode"] = "発注書ＮＯ.";
+$aryTableHeaderName_PURORDER["lnginputusercode"] = "入力者";
+$aryTableHeaderName_PURORDER["dtmexpirationdate"] = "発注有効期限日";
+$aryTableHeaderName_PURORDER["strproductcode"] = "製品コード";
+$aryTableHeaderName_PURORDER["strproductname"] = "製品名";
+$aryTableHeaderName_PURORDER["strproductenglishname"] = "製品名（英語）";
+$aryTableHeaderName_PURORDER["lnginchargegroupcode"] = "営業部署";
+$aryTableHeaderName_PURORDER["lnginchargeusercode"] = "開発担当者";
+$aryTableHeaderName_PURORDER["lngcustomercode"] = "仕入先";
+$aryTableHeaderName_PURORDER["lngpayconditioncode"] = "支払条件";
+$aryTableHeaderName_PURORDER["lngmonetaryunitcode"] = "通貨";
+$aryTableHeaderName_PURORDER["cursubtotalprice"] = "税抜金額";
+$aryTableHeaderName_PURORDER["lngdeliveryplacecode"] = "納品場所";
+$aryTableHeaderName_PURORDER["lngprintcount"] = "印刷回数";
+$aryTableHeaderName_PURORDER["strnote"] = "備考";
+
 $aryTableHeaderName["strstockcode"] = "仕入ＮＯ.";
 $aryTableHeaderName["strsalescode"] = "売上NO.";
 $aryTableHeaderName["lngrevisionno"] = "リビジョン番号";
 $aryTableHeaderName["strcustomerreceivecode"] = "顧客受注番号";
 $aryTableHeaderName["strslipcode"] = "納品書NO.";
-$aryTableHeaderName["strordercode"] = "発注書ＮＯ.";
 $aryTableHeaderName["strslipcode"] = "納品書ＮＯ.";
 $aryTableHeaderName["strreceivecode"] = "受注ＮＯ.";
-$aryTableHeaderName["lnginputusercode"] = "入力者";
 $aryTableHeaderName["lngcustomercode"] = "仕入先";
 $aryTableHeaderName["lngcustomercompanycode"] = "顧客";
 $aryTableHeaderName["lngpayconditioncode"] = "支払条件";
-$aryTableHeaderName["dtmexpirationdate"] = "製品到着日";
 $aryTableHeaderName["strnote"] = "備考";
 $aryTableHeaderName["curtotalprice"] = "合計金額";
 $aryTableHeaderName["lngtaxclasscode"] = "課税区分";
@@ -269,19 +334,20 @@ function fncGetHistoryDataByPKSQL($type, $strCode, $lngRevisionNo, $lngDetailNo,
         $aryQuery[] = "  , o.lngOrderStatusCode as lngOrderStatusCode";
         $aryQuery[] = "  , os.strOrderStatusName as strOrderStatusName";
         $aryQuery[] = "  , os.strOrderStatusName as strStatusName";
+        $aryQuery[] = "  , mm.lngMonetaryUnitCode as lngMonetaryUnitCode";
         $aryQuery[] = "  , mm.strMonetaryUnitSign as strMonetaryUnitSign";
         $aryQuery[] = "  , od.strProductCode";
         $aryQuery[] = "  , od.strProductName";
         $aryQuery[] = "  , od.strProductEnglishName";
-        $aryQuery[] = "  , od.lngInChargeGroupCode";
-        $aryQuery[] = "  , od.strInChargeGroupName";
-        $aryQuery[] = "  , od.lngInChargeUserCode";
-        $aryQuery[] = "  , od.strInChargeUserName";
+        $aryQuery[] = "  , od.lngInChargeGroupCode as strgroupdisplaycode";
+        $aryQuery[] = "  , od.strInChargeGroupName as strgroupdisplayname";
+        $aryQuery[] = "  , od.lngInChargeUserCode as struserdisplaycode";
+        $aryQuery[] = "  , od.strInChargeUserName as struserdisplayname";
         $aryQuery[] = "  , od.lngStockSubjectCode";
         $aryQuery[] = "  , od.strStockSubjectName";
         $aryQuery[] = "  , od.lngStockItemCode";
         $aryQuery[] = "  , od.strstockitemname";
-        $aryQuery[] = "  , to_char(od.dtmDeliveryDate, 'YYYY/MM/DD HH:MI:SS') as dtmDeliveryDate";
+        $aryQuery[] = "  , od.dtmDeliveryDate";
         $aryQuery[] = "  , od.curProductPrice";
         $aryQuery[] = "  , od.lngProductQuantity";
         $aryQuery[] = "  , od.curSubTotalPrice";
@@ -645,9 +711,9 @@ function fncGetHistoryDataByPKSQL($type, $strCode, $lngRevisionNo, $lngDetailNo,
         $aryQuery[] = "  , inv.lnginvoiceno as lnginvoiceno";
         $aryQuery[] = "  , inv.lngrevisionno as lngrevisionno";
         $aryQuery[] = "  , inv.dtminsertdate as dtminsertdate";
-        $aryQuery[] = "  , cust_c.strcompanydisplaycode as strcustomercode";
+        $aryQuery[] = "  , cust_c.strcompanydisplaycode as strcustomerdisplaycode";
         $aryQuery[] = "  , inv.strcustomername as strcustomername";
-        $aryQuery[] = "  , inv.strcustomercompanyname as strcustomercompanyname";
+        $aryQuery[] = "  , inv.strcustomercompanyname as strcustomerdisplayname";
         $aryQuery[] = "  , cust_c.lngCountryCode as lngcountrycode";
         $aryQuery[] = "  , inv.strinvoicecode as strinvoicecode";
         $aryQuery[] = "  , inv.strinvoicecode as strcode";
@@ -853,6 +919,7 @@ function fncGetHistoryDataByPKSQL($type, $strCode, $lngRevisionNo, $lngDetailNo,
         $aryQuery[] = "  me.lngrevisionno DESC";
     }
     $strQuery = implode("\n", $aryQuery);
+    echo $strQuery;
     // 値をとる =====================================
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
@@ -886,10 +953,12 @@ function fncGetDetailData($type, $lngPkNo, $lngRevisionNo, $objDB)
         $aryQuery[] = "  , inv_d.lngrevisionno as lngrevisionno";
         $aryQuery[] = "  , inv_d.lnginvoicedetailno";
         $aryQuery[] = "  , inv_d.lnginvoicedetailno as lngdetailno";
+        $aryQuery[] = "  , inv_d.lnginvoicedetailno as lngrecodeno";
         $aryQuery[] = "  , to_char(inv_d.dtmdeliverydate, 'YYYY/MM/DD HH:MI:SS') as dtmdeliverydate";
-        $aryQuery[] = "  , delv_c.strcompanydisplaycode as lngdeliveryplacecode";
+        $aryQuery[] = "  , delv_c.strcompanydisplaycode as strdeliveryplacecode";
         $aryQuery[] = "  , inv_d.strdeliveryplacename as strdeliveryplacename";
         $aryQuery[] = "  , To_char(inv_d.cursubtotalprice, '9,999,999,990.99') as cursubtotalprice";
+        $aryQuery[] = "  , To_char(inv_d.curtax * inv_d.cursubtotalprice, '9,999,999,990.99') as curtaxprice";
         $aryQuery[] = "  , inv_d.lngtaxclasscode as lngtaxclasscode";
         $aryQuery[] = "  , inv_d.strtaxclassname as strtaxclassname";
         $aryQuery[] = "  , inv_d.curtax as curtax";
@@ -1202,6 +1271,31 @@ function fncSetHeadBtnToTr($doc, $trBody, $bgcolor, $aryTableHeadBtnName, $displ
                             // td > img
                             $td->appendChild($imgFix);
                         }
+                    } else if ($type == 'inv') {
+                        // 修正ボタンの表示
+                        if (!$isadmin and $isMaxData and $aryAuthority[$key] && $record["lngrevisionno"] >= 0 && $bgcolor != "background-color: #B3E0FF;") {
+                            // 修正ボタン
+                            $imgFix = $doc->createElement("img");
+                            $imgFix->setAttribute("src", "/img/type01/pc/renew_off_bt.gif");
+                            $imgFix->setAttribute("id", $record["lnginvoiceno"]);
+                            $imgFix->setAttribute("revisionno", $record["lngrevisionno"]);
+                            $imgFix->setAttribute("class", "fix button");
+                            // td > img
+                            $td->appendChild($imgFix);
+                        }
+
+                    } else if ($type == 'purchaseorder') {
+                        // 修正ボタンの表示
+                        if (!$isadmin and $isMaxData and $aryAuthority[$key] && $record["lngrevisionno"] >= 0 && $bgcolor != "background-color: #B3E0FF;") {
+                            // 修正ボタン
+                            $imgFix = $doc->createElement("img");
+                            $imgFix->setAttribute("src", "/img/type01/pc/renew_off_bt.gif");
+                            $imgFix->setAttribute("id", $record["lngpurchaseorderno"]);
+                            $imgFix->setAttribute("revisionno", $record["lngrevisionno"]);
+                            $imgFix->setAttribute("class", "fix button");
+                            // td > img
+                            $td->appendChild($imgFix);
+                        }
                     }
                     // tr > td
                     $trBody->appendChild($td);
@@ -1224,6 +1318,12 @@ function fncSetHeadBtnToTr($doc, $trBody, $bgcolor, $aryTableHeadBtnName, $displ
                             $imgHistory->setAttribute("id", $record["strstockcode"]);
                         } else if ($type == 'slip') {
                             $imgHistory->setAttribute("id", $record["lngslipno"]);
+                        } else if ($type == 'inv') {
+                            $imgHistory->setAttribute("id", $record["strinvoicecode"]);
+                        } else if ($type == 'po') {
+                            $imgHistory->setAttribute("id", $record["strordercode"] . "_" . $record["lngdetailno"]);
+                        } else if ($type == 'purchaseorder') {
+                            $imgHistory->setAttribute("id", $record["strordercode"]);
                         }
                         $imgHistory->setAttribute("lngrevisionno", $record["lngrevisionno"]);
                         $imgHistory->setAttribute("rownum", $index);
@@ -1247,6 +1347,12 @@ function fncSetHeadBtnToTr($doc, $trBody, $bgcolor, $aryTableHeadBtnName, $displ
                             $isDecideObj = true;
                         }
                         $id = $record["lngreceiveno"];
+                    }
+                    if ($type == 'po') {
+                        if ($record["lngorderstatuscode"] == DEF_ORDER_APPLICATE) {
+                            $isDecideObj = true;
+                        }
+                        $id = $record["lngorderno"];
                     }
 
                     // 確定ボタンの表示
@@ -1290,6 +1396,12 @@ function fncSetBackBtnToTr($doc, $trBody, $bgcolor, $aryTableBackBtnName, $displ
                         }
                         $id = $record["lngreceiveno"];
                     }
+                    if ($type == 'po') {
+                        if ($record["lngorderstatuscode"] == DEF_ORDER_ORDER) {
+                            $isDecideObj = true;
+                        }
+                        $id = $record["lngorderno"];
+                    }
                     // 確定取消ボタンの表示
                     if (!$isadmin and $isMaxData and $aryAuthority[$key] and $record["lngrevisionno"] >= 0 and $isDecideObj) {
                         // 確定取消ボタン
@@ -1310,11 +1422,20 @@ function fncSetBackBtnToTr($doc, $trBody, $bgcolor, $aryTableBackBtnName, $displ
                     $td->setAttribute("rowspan", $rowspan);
 
                     // 削除ボタンの表示
-                    if ($type == 'pc' and !$isadmin and $isMaxData and $aryAuthority[$key] and $record["lngstockstatuscode"] != DEF_STOCK_CLOSED && $bgcolor != "background-color: #B3E0FF;") {
+                    if ($type == 'pc' and !$isadmin and $isMaxData and $aryAuthority[$key] and $record["lngstockstatuscode"] != DEF_STOCK_CLOSED and $bgcolor != "background-color: #B3E0FF;") {
                         // 削除ボタン
                         $imgDelete = $doc->createElement("img");
                         $imgDelete->setAttribute("src", "/img/type01/pc/delete_off_bt.gif");
                         $imgDelete->setAttribute("id", $record["lngstockno"]);
+                        $imgDelete->setAttribute("revisionno", $record["lngrevisionno"]);
+                        $imgDelete->setAttribute("class", "delete button");
+                        // td > img
+                        $td->appendChild($imgDelete);
+                    } else if ($type == 'inv' and !$isadmin and $isMaxData and $bgcolor != "background-color: #B3E0FF;") {
+                        // 削除ボタン
+                        $imgDelete = $doc->createElement("img");
+                        $imgDelete->setAttribute("src", "/img/type01/pc/delete_off_bt.gif");
+                        $imgDelete->setAttribute("lnginvoiceno", $record["lnginvoiceno"]);
                         $imgDelete->setAttribute("revisionno", $record["lngrevisionno"]);
                         $imgDelete->setAttribute("class", "delete button");
                         // td > img
@@ -1476,12 +1597,19 @@ function fncSetTextContent($record, $key, $toUTF8Flag)
         case "curtotalprice":
             $textContent = $record["curtotalprice"];
             break;
+        // 通貨
+        case "lngmonetaryunitcode":
+            $textContent = $record["strmonetaryunitname"];
+            if ($toUTF8Flag) {
+                $textContent = toUTF8($textContent);
+            }
+            break;
         // 先月請求残額
-        case "curLastMonthBalance":
+        case "curlastmonthbalance":
             $textContent = toMoneyFormat($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], $record["curlastmonthbalance"]);
             break;
         // 当月請求金額.
-        case "curThisMonthAmount":
+        case "curthismonthamount":
             $textContent = toMoneyFormat($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], $record["curthismonthamount"]);
             break;
         // 税区分
@@ -1568,18 +1696,9 @@ function fncSetTextContent($record, $key, $toUTF8Flag)
                 $textContent = toUTF8($textContent);
             }
             break;
-        // 税率
-        case "curtax":
-            $textContent = $record["curtax"];
-            break;
-        // 税額
-        case "curtaxprice":
-            $textContent = toMoneyFormat($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], $record["curtaxprice"]);
-            break;
         // 単価
         case "curproductprice":
             $textContent = toMoneyFormat($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], $record["curproductprice"]);
-            // $textContent = $record["strmonetaryunitsign"].$record["curproductprice"];
             break;
         // 入数
         case "lngquantity":
@@ -1591,11 +1710,22 @@ function fncSetTextContent($record, $key, $toUTF8Flag)
             break;
         // 税抜金額
         case "cursubtotalprice":
-            $textContent = toMoneyFormat($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], $record["cursubtotalprice"]);
+            if ($record["cursubtotalprice"] == '') {
+                $textContent = toMoneyFormat($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], "0.00");
+            } else {
+                $textContent = toMoneyFormat($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], $record["cursubtotalprice"]);
+            }
+            break;
+        // 消費税額
+        case "cursubtotal":
+            $textContent = toMoneyFormat($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], $record["cursubtotal"]);
             break;
         // 明細備考
         case "strdetailnote":
             $textContent = $record["strnote"];
+            if ($toUTF8Flag) {
+                $textContent = toUTF8($textContent);
+            }
             break;
         // [営業部署表示コード] 営業部署表示名
         case "lnginchargegroupcode":
@@ -1664,7 +1794,10 @@ function fncSetTextContent($record, $key, $toUTF8Flag)
             break;
         // 税率
         case "curtax":
-            $textContent = $record["curtax"];
+            $textContent = round($record["curtax"] * 100) . '%';
+            if ($toUTF8Flag) {
+                $textContent = toUTF8($textContent);
+            }
             break;
         // 税額
         case "curtaxprice":
@@ -1681,10 +1814,6 @@ function fncSetTextContent($record, $key, $toUTF8Flag)
         // 数量
         case "lngproductquantity":
             $textContent = $record["lngproductquantity"];
-            break;
-        // 税抜金額
-        case "cursubtotalprice":
-            $textContent = toMoneyFormat($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], $record["cursubtotalprice"]);
             break;
         // 明細備考
         case "strdetailnote":
@@ -1723,10 +1852,18 @@ function fncGetAryAuthority($type, $objAuth)
 {
     $aryAuthority = array();
     if ($type == 'purchaseorder') { // 発注書
+        // 詳細ボタンを表示
         $aryAuthority["btndetail"] = fncCheckAuthority(DEF_FUNCTION_PO12, $objAuth);
+        // 修正を表示
+        $aryAuthority["btnfix"] = fncCheckAuthority(DEF_FUNCTION_PO13, $objAuth);
+
     } else if ($type == 'po') { // 発注
         // 詳細ボタンを表示
-        $aryAuthority["btndetail"] = fncCheckAuthority(DEF_FUNCTION_SO3, $objAuth);
+        $aryAuthority["btndetail"] = fncCheckAuthority(DEF_FUNCTION_PO4, $objAuth);
+        // 確定ボタンを表示
+        $aryAuthority["btndecide"] = fncCheckAuthority(DEF_FUNCTION_PO5, $objAuth);
+        // 確定取消カラムを表示
+        $aryAuthority["btncancel"] = fncCheckAuthority(DEF_FUNCTION_PO6, $objAuth);
     } else if ($type == 'so') { // 受注
         // 詳細ボタンを表示
         $aryAuthority["btndetail"] = fncCheckAuthority(DEF_FUNCTION_SO3, $objAuth);
@@ -1753,10 +1890,13 @@ function fncGetAryAuthority($type, $objAuth)
         $aryAuthority["btndelete"] = fncCheckAuthority(DEF_FUNCTION_PC6, $objAuth);
         // 無効カラムを表示
         $aryAuthority["btninvalid"] = fncCheckAuthority(DEF_FUNCTION_PC7, $objAuth);
-
     } else if ($type == 'inv') {
         // 詳細ボタンを表示
         $aryAuthority["btndetail"] = fncCheckAuthority(DEF_FUNCTION_INV4, $objAuth);
+        // 修正を表示
+        $aryAuthority["btnfix"] = fncCheckAuthority(DEF_FUNCTION_INV5, $objAuth);
+        // 削除を表示
+        $aryAuthority["btndelete"] = fncCheckAuthority(DEF_FUNCTION_INV6, $objAuth);
     } else if ($type == 'estimate') {
     }
     return $aryAuthority;
