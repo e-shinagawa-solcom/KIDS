@@ -39,6 +39,7 @@
         var lngRevisionNo = $(this).attr('lngrevisionno');
         var maxdetailno = $(this).attr('maxdetailno');
         var rownum = $(this).attr('rownum');
+        var type = $(this).attr('type');
         var displayColumns = $('input[name="displayColumns"]').val().split(',');
         var removeFlag = false;
         var row = $('tr[id="' + strStockCode + '"]');
@@ -59,16 +60,29 @@
             });
         if (!removeFlag) {
             // リクエスト送信
-            $.ajax({
-                url: '/pc/search/result/index2.php',
-                type: 'post',
-                data: {
-                    'strSessionID': $.cookie('strSessionID'),
-                    'strStockCode': strStockCode,
-                    'lngRevisionNo': lngRevisionNo,
-                    'rownum': rownum,
-                    'displayColumns': displayColumns,
-                }
+            // $.ajax({
+            //     url: '/pc/search/result/index2.php',
+            //     type: 'post',
+            //     data: {
+            //         'strSessionID': $.cookie('strSessionID'),
+            //         'strStockCode': strStockCode,
+            //         'lngRevisionNo': lngRevisionNo,
+            //         'rownum': rownum,
+            //         'displayColumns': displayColumns,
+            //     }
+
+                $.ajax({
+                    url: '/search/result/history/index.php',
+                    type: 'post',
+                    data: {
+                        'strSessionID': $.cookie('strSessionID'),
+                        'strCode': strStockCode,
+                        'lngRevisionNo': lngRevisionNo,
+                        'rownum': rownum,
+                        'type': type,
+                        'displayColumns': displayColumns,
+                    },
+                    async: true,
             })
                 .done(function (response) {
                     console.log(response);
@@ -92,6 +106,10 @@
                 .fail(function (response) {
                     console.log(response);
                     alert("fail");
+                })
+                .always(function (response) {
+                    console.log(response);
+                    alert("test1");
                 })
         }
     });
