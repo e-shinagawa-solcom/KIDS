@@ -241,7 +241,7 @@ class lcModel
             $bind = array($lgno);
 
             //クエリ実行
-            $result = $db->update($sql, $bind);
+            $result = $db->executeNonQuery($sql, $bind);
 
             //結果
             $return_res = 0; //ログイン者がいない
@@ -289,7 +289,7 @@ class lcModel
                     $bind = array($lgno);
 
                     //クエリ実行
-                    $result = $db->update($sql, $bind);
+                    $result = $db->executeNonQuery($sql, $bind);
 
                     $return_res = 1; //同一IDでログインしている
                 } else {
@@ -313,7 +313,7 @@ class lcModel
                     $bind = array($lgstate, $lgno);
 
                     //クエリ実行
-                    $result = $db->update($sql, $bind);
+                    $result = $db->executeNonQuery($sql, $bind);
                 }
             } else {
                 $lgstate = '01000000';
@@ -331,7 +331,7 @@ class lcModel
                 $bind = array($lgstate, $lgno);
 
                 //クエリ実行
-                $result = $db->update($sql, $bind);
+                $result = $db->executeNonQuery($sql, $bind);
             }
             return $return_res;
         } else {
@@ -444,7 +444,7 @@ class lcModel
         $bind = array($param["lgno"]);
 
         //クエリ実行
-        $result = $db->update($sql, $bind);
+        $result = $db->executeNonQuery($sql, $bind);
 
         //検索結果返却
         return $result;
@@ -584,7 +584,7 @@ class lcModel
         $bind = array(sprintf('%08d', ($lgno + 1)), $lgusrname);
 
         //クエリ実行
-        $result = $db->insert($sql, $bind);
+        $result = $db->executeNonQuery($sql, $bind);
 
         return $result;
     }
@@ -827,7 +827,7 @@ class lcModel
             //$bind = array($data["pono"],$data["poreviseno"],$data["polineno"]);
 
             //クエリ実行
-            //$result = $db->update($sql, $bind);
+            //$result = $db->executeNonQuery($sql, $bind);
 
             if (count($result) > 0) {
                 return $result;
@@ -863,7 +863,7 @@ class lcModel
         //バインドの設定
         $bind = array($lgusrname);
         //クエリ実行
-        $result = $db->update($sql, $bind);
+        $result = $db->executeNonQuery($sql, $bind);
 
         //データ新規追加
         //basenoの最大値＋１の値を取得
@@ -908,7 +908,7 @@ class lcModel
         );
 
         //クエリ実行
-        $result = $db->insert($sql, $bind);
+        $result = $db->executeNonQuery($sql, $bind);
 
         return true;
     }
@@ -1033,7 +1033,7 @@ class lcModel
                     $data[$i]["bankcd"],
                 );
                 //クエリ実行
-                $result = $db->update($sql, $bind);
+                $result = $db->executeNonQuery($sql, $bind);
             } else {
                 //データ新規追加(画面上では新規追加は行われない？)
                 //banknoの最大値＋１の値を取得
@@ -1088,7 +1088,7 @@ class lcModel
                 );
 
                 //クエリ実行
-                $result = $db->insert($sql, $bind);
+                $result = $db->executeNonQuery($sql, $bind);
             }
         }
 
@@ -1184,7 +1184,7 @@ class lcModel
                     );
 
                     //クエリ実行
-                    $result = $db->update($sql, $bind);
+                    $result = $db->executeNonQuery($sql, $bind);
 
                     //取得したpayfinfoの名称類と入力された名称が異なる場合はt_AcLcInfoの更新を行う←仕様書にはt_AcLcInfoとあるがt_lcinfoではないのか？
                     if ($hit_payfinfo->payfomitname != $data[$i]["payfomitname"] || $hit_payfinfo->payfformalname != $data[$i]["payfformalname"]) {
@@ -1203,7 +1203,7 @@ class lcModel
                             $data[$i]["payfformalname"],
                         );
                         //クエリ実行
-                        $result = $db->update($sql, $bind);
+                        $result = $db->executeNonQuery($sql, $bind);
                     }
                 } else {
                     //データ新規追加
@@ -1262,7 +1262,7 @@ class lcModel
                     );
 
                     //クエリ実行
-                    $result = $db->insert($sql, $bind);
+                    $result = $db->executeNonQuery($sql, $bind);
                 }
             } else {
                 //削除処理
@@ -1270,7 +1270,7 @@ class lcModel
                 //バインドの設定
                 $bind = array($data[$i]["payfcd"]);
                 //クエリ実行
-                $result = $db->delete($sql, $bind);
+                $result = $db->executeNonQuery($sql, $bind);
             }
         }
 
@@ -1559,14 +1559,14 @@ class lcModel
         $bind = array($date, $date, $time);
 
         //クエリ実行
-        $result = $db->delete($sql, $bind);
-/*
-        if (!$result) {
+        $result = $db->executeNonQuery($sql, $bind);
+
+        if ($result < 0) {
             echo "ACL/C情報削除失敗しました。\n";
             exit;
         }
-        return pg_affected_rows($result);
-*/
+//        return pg_affected_rows($result);
+
         return $result;
 
     }
@@ -1593,9 +1593,9 @@ class lcModel
         $bind = array($pono, $postate);
 
         //クエリ実行
-        $result = $db->update($sql, $bind);
+        $result = $db->executeNonQuery($sql, $bind);
 
-        if (!$result) {
+        if ($result < 0) {
             echo "ACL/C情報の状態更新失敗しました。\n";
             exit;
         }
@@ -1768,9 +1768,9 @@ class lcModel
         $bind = array($poupdatedate, $lcstate, $pono, $polineno, $poreviseno);
 
         //クエリ実行
-        $result = $db->update($sql, $bind);
+        $result = $db->executeNonQuery($sql, $bind);
 
-        if (!$result) {
+        if ($result < 0) {
             echo "ACL/C情報の更新日の更新失敗しました。\n";
             exit;
         }
@@ -1890,9 +1890,9 @@ class lcModel
         $bind = array();
 
         //クエリ実行
-        $result = $db->insert($sql, $bind);
+        $result = $db->executeNonQuery($sql, $bind);
 
-        if (!$result) {
+        if ($result < 0) {
             echo "ACL/C情報の登録失敗しました。\n";
             exit;
         }
@@ -1923,12 +1923,12 @@ class lcModel
         $bind = array($pono);
 
         //クエリ実行
-        $result = $db->update($sql, $bind);
+        $result = $db->executeNonQuery($sql, $bind);
 
-//        if (!$result) {
-//            echo "LC状態によりACL/C情報の状態更新失敗しました。\n";
-//            exit;
-//        }
+        if ($result < 0) {
+            echo "LC状態によるACL/C情報の状態更新に失敗しました。\n";
+            exit;
+        }
 
         return $result;
     }
@@ -1987,9 +1987,9 @@ class lcModel
         $bind = array($opendate, $pono);
 
         //クエリ実行
-        $result = $db->update($sql, $bind);
+        $result = $db->executeNonQuery($sql, $bind);
 
-        if (!$result) {
+        if ($result < 0) {
             echo "ACL/C情報のオープン月の更新失敗しました。\n";
             exit;
         }
@@ -2078,9 +2078,9 @@ class lcModel
         $bind = array();
 
         //クエリ実行
-        $result = $db->update($sql, $bind);
+        $result = $db->executeNonQuery($sql, $bind);
 
-        if (!$result) {
+        if ($result < 0) {
             echo "ACL/C情報の更新失敗しました。\n";
             exit;
         }
@@ -2113,9 +2113,9 @@ class lcModel
         $bind = array($pono, $poreviseno);
 
         //クエリ実行
-        $result = $db->update($sql, $bind);
+        $result = $db->executeNonQuery($sql, $bind);
 
-        if (!$result) {
+        if ($result < 0) {
             echo "ACL/C情報の状態(リバイズ)更新失敗しました。\n";
             exit;
         }
@@ -2148,7 +2148,7 @@ class lcModel
         //バインドの設定
         $bind = array($lcstate, $postate, $pono, $polineno, $poreviseno);
         //クエリ実行
-        $result = $db->update($sql, $bind);
+        $result = $db->executeNonQuery($sql, $bind);
 
         return $result;
     }
@@ -2214,7 +2214,7 @@ class lcModel
         $bind = array($lcstate, $pono, $poreviseno);
 
         //クエリ実行
-        $result = $db->update($sql, $bind);
+        $result = $db->executeNonQuery($sql, $bind);
 
         return $result;
     }
@@ -2305,11 +2305,10 @@ class lcModel
                         lgno =  $2
                 "; //バインドの設定
         $bind = array($lcgetdate, $lgno);
-echo "lgno: " . $lgno .",lcgetdate:" . $lcgetdate . "<br>";
         //クエリ実行
-        $result = $db->update($sql, $bind);
+        $result = $db->executeNonQuery($sql, $bind);
 
-        if (!$result) {
+        if ($result < 0) {
             echo "L/C取得日時の更新失敗しました。\n";
             exit;
         }
@@ -2340,10 +2339,10 @@ echo "lgno: " . $lgno .",lcgetdate:" . $lcgetdate . "<br>";
         $bind = array($lgno);
 
         //クエリ実行
-        $result = $db->update($sql, $bind);
+        $result = $db->executeNonQuery($sql, $bind);
 
-        if (!$result) {
-            echo "利用状態の初期化失敗しました。\n";
+        if ($result < 0) {
+            echo "利用状態の初期化に失敗しました。\n";
             exit;
         }
 
@@ -2456,10 +2455,10 @@ echo "lgno: " . $lgno .",lcgetdate:" . $lcgetdate . "<br>";
             , $data["poreviseno"]);
         return $bind;
         //クエリ実行
-        $result = $db->update($sql, $bind);
+        $result = $db->executeNonQuery($sql, $bind);
 
-        if (!$result) {
-            echo "ACL/C情報(全項目)の更新失敗しました。\n";
+        if ($result < 0) {
+            echo "ACL/C情報(全項目)の更新に失敗しました。\n";
             exit;
         }
 
@@ -2496,7 +2495,7 @@ echo "lgno: " . $lgno .",lcgetdate:" . $lcgetdate . "<br>";
         $bind = array($param["lgno"]);
 
         //クエリ実行
-        $result = $db->update($sql, $bind);
+        $result = $db->executeNonQuery($sql, $bind);
 
         //検索結果返却
         return $result;
@@ -2524,10 +2523,10 @@ echo "lgno: " . $lgno .",lcgetdate:" . $lcgetdate . "<br>";
         $bind = array($lcimpdate, $lgno);
 
         //クエリ実行
-        $result = $db->update($sql, $bind);
+        $result = $db->executeNonQuery($sql, $bind);
 
-        if (!$result) {
-            echo "L/Cインポート日時の更新失敗しました。\n";
+        if ($result < 0) {
+            echo "L/Cインポート日時の更新nに失敗しました。\n";
             exit;
         }
 
@@ -2556,10 +2555,10 @@ echo "lgno: " . $lgno .",lcgetdate:" . $lcgetdate . "<br>";
         $bind = array($lcexpdate, $lgno);
 
         //クエリ実行
-        $result = $db->update($sql, $bind);
+        $result = $db->executeNonQuery($sql, $bind);
 
-        if (!$result) {
-            echo "L/Cエクスポート日時の更新失敗しました。\n";
+        if ($result < 0) {
+            echo "L/Cエクスポート日時の更新に失敗しました。\n";
             exit;
         }
 

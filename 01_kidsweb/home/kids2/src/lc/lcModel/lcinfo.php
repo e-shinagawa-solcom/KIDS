@@ -23,7 +23,9 @@ function fncGetLcData($objDB, $lcModel, $usrId, $datetime)
     $time = str_replace(":", "", explode(".",explode(" ", $datetime)[1])[0]);
     // リバイズ情報の初期化
     $reviseDataArry = array();
-
+    $reviseNum = 0;
+//echo "lcGetDate:" . $lcGetDate . "<br>";
+//echo "orderCount:" . $orderCount . "<br>";
     // 発注件数 > 0 の場合、t_aclcinfoへデータの登録・更新処理
     if ($orderCount > 0) {
         // t_aclcinfoデータの削除
@@ -39,6 +41,7 @@ function fncGetLcData($objDB, $lcModel, $usrId, $datetime)
             $poreviseno = $orderData["lngrevisionno"];
             $intPayFlg = false;
             $payconditioncode = $orderData["lngpayconditioncode"];
+            $loadFlg = 0;
 
             // 発注書明細データを取得する
             $orderDetailArry = fncGetPurchaseOrderDetail($objDB, $orderData["lngpurchaseorderno"], $poreviseno);
@@ -131,7 +134,6 @@ function fncGetLcData($objDB, $lcModel, $usrId, $datetime)
                                 $lcModel->updateAcLcUpdatedate($pono, $polineno, $poreviseno, $lcstate);
                             }
                         } else {
-                            $reviseNum = 0;  // 毎回0だが、大丈夫？
                             if ($orderData["lngrevisionno"] != 0) {
                                 $reviseDataArry[$reviseNum]["pono"] = $pono;
                                 $reviseDataArry[$reviseNum]["polineno"] = $polineno;
@@ -193,9 +195,17 @@ function fncGetLcData($objDB, $lcModel, $usrId, $datetime)
                             $data["updatetime"] = $time;
                             $data["shipym"] = substr(str_replace("-", "", $dtmdeliverydate), 0 ,6);
                             $lcModel->insertAcLcInfo($data);
+                            $loadFlg = 1;
                         }
                     } else {
                         $lcModel->updateAcLcStateByLcState($pono);
+                    }
+                }
+                // オープン年月の更新（明細行単位の納品日が一番若い月のものを設定）
+                if( $loadFlg == 1 )
+                {
+                    if( count($acLcInfoArry) > 0){
+                        $lcModel->updateAcLcOpendate($pono,$acLcInfoArry["opendate"]);
                     }
                 }
             }
@@ -217,7 +227,7 @@ function fncGetLcData($objDB, $lcModel, $usrId, $datetime)
     // リバイズ情報があった場合、リバイズ情報継承処理を行う
     if (count($reviseDataArry) > 0) {
         foreach ($reviseDataArry as $reviseData) {
-            fncSetRevData($reviseData);
+            fncSetRevData($lcModel, $reviseData);
         }
     }
 

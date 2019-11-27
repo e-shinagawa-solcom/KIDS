@@ -13,6 +13,8 @@ require LIB_FILE;
 //PHP標準のJSON変換メソッドはエラーになるので外部のライブラリ(恐らくエンコードの問題)
 require_once 'JSON.php';
 
+require_once(LIB_DEBUGFILE);
+
 //値の取得
 $postdata = file_get_contents("php://input");
 $data = json_decode($postdata, true);
