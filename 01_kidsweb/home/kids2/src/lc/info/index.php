@@ -71,7 +71,6 @@ $userAuth = substr($loginUserAuth, 1, 1);
 //ログイン状況の最大管理番号の取得
 $maxLgno = $lcModel->getMaxLoginStateNum();
 
-
 // T_Aclcinfo初期化フラグがtrueの場合
 if ($aryData["aclcinitFlg"] == "true") {
     // t_aclcinfoデータの登録・更新処理
@@ -89,65 +88,66 @@ if ($aryData["aclcinitFlg"] == "true") {
         $lcModel->updateLgStateToInit($maxLgno);
     }
 
-    // ackidsのデータをkidscore2に登録
-    // トランザクションを開始する
-    $objDB->transactionBegin();
-    // L/C情報データの削除を行う
-    fncDeleteLcInfo($objDB);
-    //ACL/C情報データの取得
-    $acLcInfoArry = $lcModel->getAcLcInfo();
-    foreach ($acLcInfoArry as $acLcInfo) {
-        $data = array();
-        $data["pono"] = $acLcInfo["pono"];
-        $data["polineno"] = $acLcInfo["polineno"];
-        $data["poreviseno"] = $acLcInfo["poreviseno"];
-        $data["postate"] = $acLcInfo["postate"];
-        $data["opendate"] = $acLcInfo["opendate"];
-        $data["portplace"] = $acLcInfo["portplace"];
-        $data["payfcd"] = $acLcInfo["payfcd"];
-        $data["payfnameomit"] = $acLcInfo["payfnameomit"];
-        $data["payfnameformal"] = $acLcInfo["payfnameformal"];
-        $data["productcd"] = $acLcInfo["productcd"];
-        $data["productname"] = $acLcInfo["productname"];
-        $data["productnamee"] = $acLcInfo["productnamee"];
-        $data["productnumber"] = $acLcInfo["productnumber"];
-        $data["unitname"] = $acLcInfo["unitname"];
-        $data["unitprice"] = $acLcInfo["unitprice"];
-        $data["moneyprice"] = $acLcInfo["moneyprice"];
-        $data["shipstartdate"] = $acLcInfo["shipstartdate"];
-        $data["shipenddate"] = $acLcInfo["shipenddate"];
-        $data["sumdate"] = $acLcInfo["sumdate"];
-        $data["poupdatedate"] = $acLcInfo["poupdatedate"];
-        $data["deliveryplace"] = $acLcInfo["deliveryplace"];
-        $data["currencyclass"] = $acLcInfo["currencyclass"];
-        $data["lcnote"] = $acLcInfo["lcnote"];
-        $data["shipterm"] = $acLcInfo["shipterm"];
-        $data["validterm"] = $acLcInfo["validterm"];
-        $data["bankcd"] = $acLcInfo["bankcd"];
-        $data["bankname"] = $acLcInfo["bankname"];
-        $data["bankreqdate"] = $acLcInfo["bankreqdate"];
-        $data["lcno"] = $acLcInfo["lcno"];
-        $data["lcamopen"] = $acLcInfo["lcamopen"];
-        $data["validmonth"] = $acLcInfo["validmonth"];
-        $data["usancesettlement"] = $acLcInfo["usancesettlement"];
-        $data["bldetail1date"] = $acLcInfo["bldetail1date"];
-        $data["bldetail1money"] = $acLcInfo["bldetail1money"];
-        $data["bldetail2date"] = $acLcInfo["bldetail2date"];
-        $data["bldetail2money"] = $acLcInfo["bldetail2money"];
-        $data["bldetail3date"] = $acLcInfo["bldetail3date"];
-        $data["bldetail3money"] = $acLcInfo["bldetail3money"];
-        $data["lcstate"] = $acLcInfo["lcstate"];
-        $data["shipym"] = $acLcInfo["shipym"];
-        fncInsertLcInfo($objDB, $data);
-    }
-    
-    $objDB->transactionCommit;
-    // $data["from"] = "201905";
-    // $data["mode"] = "0";
-    // $result = fncGetLcInfoData($objDB, $data);
-    // var_dump($result);
-
 }
+
+// ackidsのデータをkidscore2に登録
+// トランザクションを開始する
+$objDB->transactionBegin();
+// L/C情報データの削除を行う
+fncDeleteLcInfo($objDB);
+//ACL/C情報データの取得
+$acLcInfoArry = $lcModel->getAcLcInfo();
+foreach ($acLcInfoArry as $acLcInfo) {
+    $data = array();
+    $data["pono"] = $acLcInfo["pono"];
+    $data["polineno"] = $acLcInfo["polineno"];
+    $data["poreviseno"] = $acLcInfo["poreviseno"];
+    $data["postate"] = $acLcInfo["postate"];
+    $data["opendate"] = $acLcInfo["opendate"];
+    $data["portplace"] = $acLcInfo["portplace"];
+    $data["payfcd"] = $acLcInfo["payfcd"];
+    $data["payfnameomit"] = $acLcInfo["payfnameomit"];
+    $data["payfnameformal"] = $acLcInfo["payfnameformal"];
+    $data["productcd"] = $acLcInfo["productcd"];
+    $data["productname"] = $acLcInfo["productname"];
+    $data["productnamee"] = $acLcInfo["productnamee"];
+    $data["productnumber"] = $acLcInfo["productnumber"];
+    $data["unitname"] = $acLcInfo["unitname"];
+    $data["unitprice"] = $acLcInfo["unitprice"];
+    $data["moneyprice"] = $acLcInfo["moneyprice"];
+    $data["shipstartdate"] = $acLcInfo["shipstartdate"];
+    $data["shipenddate"] = $acLcInfo["shipenddate"];
+    $data["sumdate"] = $acLcInfo["sumdate"];
+    $data["poupdatedate"] = $acLcInfo["poupdatedate"];
+    $data["deliveryplace"] = $acLcInfo["deliveryplace"];
+    $data["currencyclass"] = $acLcInfo["currencyclass"];
+    $data["lcnote"] = $acLcInfo["lcnote"];
+    $data["shipterm"] = $acLcInfo["shipterm"];
+    $data["validterm"] = $acLcInfo["validterm"];
+    $data["bankcd"] = $acLcInfo["bankcd"];
+    $data["bankname"] = $acLcInfo["bankname"];
+    $data["bankreqdate"] = $acLcInfo["bankreqdate"];
+    $data["lcno"] = $acLcInfo["lcno"];
+    $data["lcamopen"] = $acLcInfo["lcamopen"];
+    $data["validmonth"] = $acLcInfo["validmonth"];
+    $data["usancesettlement"] = $acLcInfo["usancesettlement"];
+    $data["bldetail1date"] = $acLcInfo["bldetail1date"];
+    $data["bldetail1money"] = $acLcInfo["bldetail1money"];
+    $data["bldetail2date"] = $acLcInfo["bldetail2date"];
+    $data["bldetail2money"] = $acLcInfo["bldetail2money"];
+    $data["bldetail3date"] = $acLcInfo["bldetail3date"];
+    $data["bldetail3money"] = $acLcInfo["bldetail3money"];
+    $data["lcstate"] = $acLcInfo["lcstate"];
+    $data["shipym"] = $acLcInfo["shipym"];
+    $count = fncInsertLcInfo($objDB, $data);
+}
+
+$objDB->transactionCommit();
+// $data["from"] = "201905";
+// $data["mode"] = "0";
+// $result = fncGetLcInfoData($objDB, $data);
+// var_dump($result);
+
 
 //行背景設定取得
 $background_color = $lcModel->getBackColor();

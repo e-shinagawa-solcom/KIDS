@@ -10,7 +10,48 @@
 function fncInsertLcInfo($objDB, $data)
 {
     $sql = "
-        insert into t_lcinfo
+        insert into t_lcinfo(
+            payfnameomit,
+            opendate,
+            portplace,
+            pono,
+            polineno,
+            poreviseno,
+            postate,
+            payfcd,
+            productcd,
+            productname,
+            productnumber,
+            unitname,
+            unitprice,
+            moneyprice,
+            shipstartdate,
+            shipenddate,
+            sumdate,
+            poupdatedate,
+            deliveryplace,
+            currencyclass,
+            lcnote,
+            shipterm,
+            validterm,
+            bankname,
+            bankreqdate,
+            lcno,
+            lcamopen,
+            validmonth,
+            usancesettlement,
+            bldetail1date,
+            bldetail1money,
+            bldetail2date,
+            bldetail2money,
+            bldetail3date,
+            bldetail3money,
+            payfnameformal,
+            productnamee,
+            lcstate,
+            bankcd,
+            shipym
+        )
         values ($1
         ,$2
         ,$3
@@ -98,7 +139,7 @@ function fncInsertLcInfo($objDB, $data)
 
     if (!$result) {
         echo "L/C情報登録失敗しました。\n";
-        exit;
+        exit("L/C情報登録失敗しました。");
     } else {
         return pg_affected_rows($result);
     }
@@ -542,7 +583,7 @@ function fncGetPurchaseOrderData($objDB, $date)
     from
         m_purchaseorder 
     where
-        dtminsertdate > $1 
+        dtminsertdate > to_timestamp($1,'YYYYMMDD HH24:MI:SS')
     order by
         strordercode
         , lngpurchaseorderno

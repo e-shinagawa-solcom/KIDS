@@ -147,13 +147,13 @@ class lcConnect
     }
 
     /**
-     * INSERT文の時に使用する関数
+     * SELECT文以外の時に使用する関数
      *
      * @param [string] $query
      * @param [array] $params
      * @return void
      */
-    public function insert($query, $params)
+    public function executeNonQuery($query, $params)
     {
         if (count($params) > 0) {
             $result = pg_query_params($this->ConnectID, $query, $params);
@@ -162,55 +162,7 @@ class lcConnect
         }
 
         if (!$result) {
-            exit("Failed : $query\n");
-        }
-
-        $result = pg_affected_rows($result);
-
-        return $result;
-    }
-
-    /**
-     * UPDATE文の時に使用する関数
-     *
-     * @param [string] $query
-     * @param [array] $params
-     * @return void
-     */
-    public function update($query, $params)
-    {
-        if (count($params) > 0) {
-            $result = pg_query_params($this->ConnectID, $query, $params);
-        } else {
-            $result = pg_query($this->ConnectID, $query);
-        }
-
-        if (!$result) {
-            exit("Failed : $query\n");
-        }
-
-        $result = pg_affected_rows($result);
-
-        return $result;
-    }
-
-    /**
-     * DELETE文の時に使用する関数
-     *
-     * @param [string] $query
-     * @param [array] $params
-     * @return void
-     */
-    public function delete($query, $params)
-    {
-        if (count($params) > 0) {
-            $result = pg_query_params($this->ConnectID, $query, $params);
-        } else {
-            $result = pg_query($this->ConnectID, $query);
-        }
-
-        if (!$result) {
-            exit("Failed : $query\n");
+           return -1;
         }
 
         $result = pg_affected_rows($result);
