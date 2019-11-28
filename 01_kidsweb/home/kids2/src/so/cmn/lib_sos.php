@@ -34,6 +34,7 @@ function fncGetMaxReceiveSQL($displayColumns, $searchColumns, $from, $to, $searc
     $aryQuery[] = "SELECT";
     $aryQuery[] = "  distinct ";
     $aryQuery[] = "  r.lngReceiveNo as lngReceiveNo";
+    $aryQuery[] = "  , r.lngReceiveNo as lngpkno";
     $aryQuery[] = "  , r.lngRevisionNo as lngRevisionNo";
     $aryQuery[] = "  , rd.lngReceiveDetailNo";
     $aryQuery[] = "  , rd.lngReceiveDetailNo as lngdetailno";

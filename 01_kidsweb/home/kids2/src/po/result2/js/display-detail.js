@@ -1,13 +1,13 @@
 
 (function(){
-    $('img.fix.button').on('click', function(){
-        url = '/po/regist/renew.php';
-        lngorderno = 'lngPurchaseOrderNo=' + $(this).attr('id');
-        lngrevisionno = 'lngRevisionNo=' + $(this).attr('revisionno');
+    $('img.detail.button').on('click', function(){
+        url = '/po/result2/index2.php';
+        lngPurchaseOrderNo = 'lngPurchaseOrderNo=' + $(this).attr('id');
         sessionID = 'strSessionID=' + getUrlVars()["strSessionID"];
+        lngrevisionno = 'lngRevisionNo=' + $(this).attr('revisionno');
 
         // 別ウィンドウで表示
-        open(url + '?' + lngorderno + '&' + lngrevisionno + '&' + sessionID, 'display-detail', 'resizable=yes, scrollbars=yes, menubar=no');
+        open(url + '?' + lngPurchaseOrderNo + '&' + lngrevisionno + '&' + sessionID, 'display-detail', 'resizable=yes, scrollbars=yes, menubar=no');
     });
 })();
 

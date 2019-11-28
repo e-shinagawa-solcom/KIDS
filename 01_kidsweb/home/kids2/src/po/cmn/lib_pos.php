@@ -448,7 +448,7 @@ function fncGetSearchPurcheseOrderSQL($aryViewColumn, $arySearchColumn, $arySear
     }
 
     $aryQuery[] = "WHERE mp.lngpurchaseorderno >= 0";
-    if( $bytAdminMode == false )
+    if(!$bytAdminMode)
     {
         //管理者モード以外の場合は削除されたデータは対象としない
         $aryQuery[] = " AND mp.lngpurchaseorderno NOT IN (SELECT lngpurchaseorderno from m_purchaseorder where lngrevisionno < 0)";
@@ -482,7 +482,7 @@ function fncGetSearchPurcheseOrderSQL($aryViewColumn, $arySearchColumn, $arySear
         }
 
         // 発注有効期限
-        if ($arySearchColumnName == "dtmExpirationDate") {
+        if ($strSearchColumnName == "dtmExpirationDate") {
             if ($arySearchDataColumn["dtmExpirationDateFrom"]) {
                 $dtmSearchDate = $arySearchDataColumn["dtmExpirationDateFrom"] . " 00:00:00";
                 $aryQuery[] = "AND   mp.dtmexpirationdate >= '" . $dtmSearchDate . "'";
@@ -571,6 +571,7 @@ function fncGetSearchPurcheseOrderSQL($aryViewColumn, $arySearchColumn, $arySear
     // SQL作成
     $aryOutQuery[] = "SELECT";
     $aryOutQuery[] = "   mp.lngpurchaseorderno as lngPurchaseOrderNo";
+    $aryOutQuery[] = "  ,mp.lngpurchaseorderno as lngpkno";
     $aryOutQuery[] = "  ,mp.lngrevisionno as lngRevisionNo";
     $aryOutQuery[] = "  ,mp.strrevisecode as strReviseCode";
     $aryOutQuery[] = implode("\n", $arySelectQuery);

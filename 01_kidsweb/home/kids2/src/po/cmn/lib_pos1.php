@@ -372,7 +372,6 @@ function fncSetPurchaseHeadTabelData ( $aryResult )
 			}
 			$aryNewResult[$strColumnName] .= " " . $aryResult["strinchargegroupdisplayname"];
 		}
-
 		// 担当者
 		else if ( $strColumnName == "lnginchargeusercode" )
 		{
@@ -413,6 +412,49 @@ function fncSetPurchaseHeadTabelData ( $aryResult )
 			{
 				$aryNewResult[$strColumnName] .= $aryResult["curtotalprice"];
 			}
+		}
+
+		// 印刷回数
+		else if ( $strColumnName == "lngprintcount" )
+		{
+			if ($aryResult["lngprintcount"] == '' )
+			{
+				$aryNewResult[$strColumnName] = "0";
+			}
+			else
+			{
+				$aryNewResult[$strColumnName] = $aryResult["lngprintcount"];
+			}
+		}
+
+		// 製品コード
+		else if ( $strColumnName == "strproductcode" )
+		{
+			$aryNewResult[$strColumnName] = $aryResult["strproductcode"];
+		}
+
+		// 再販コード
+		else if ( $strColumnName == "strrevisecode" )
+		{
+			$aryNewResult[$strColumnName] = $aryResult["strrevisecode"];
+		}
+
+		// 製品名
+		else if ( $strColumnName == "strproductname" )
+		{
+			$aryNewResult[$strColumnName] = $aryResult["strproductname"];
+		}
+
+		// 製品名（英語）
+		else if ( $strColumnName == "strproductenglishname" )
+		{
+			$aryNewResult[$strColumnName] = $aryResult["strproductenglishname"];
+		}
+
+		// 状態
+		else if ( $strColumnName == "lngorderstatuscode" )
+		{
+			$aryNewResult[$strColumnName] = $aryResult["strorderstatusname"];
 		}
 
 		// 状態
@@ -919,6 +961,8 @@ function fncGetPurchaseOrderDetailSQL($lngOrderNo, $lngRevisionNo){
 	$arySql[] = "  ,lngorderno";
 	$arySql[] = "  ,lngorderdetailno";
 	$arySql[] = "  ,lngorderrevisionno";
+	$arySql[] = "  ,pd.lngstocksubjectcode";
+	$arySql[] = "  ,mss.strstocksubjectname";
 	$arySql[] = "  ,lngstockitemcode";
 	$arySql[] = "  ,strstockitemname";
 	$arySql[] = "  ,lngdeliverymethodcode";
@@ -930,8 +974,10 @@ function fncGetPurchaseOrderDetailSQL($lngOrderNo, $lngRevisionNo){
 	$arySql[] = "  ,cursubtotalprice";
 	$arySql[] = "  ,to_char(dtmdeliverydate, 'YYYY/MM/DD') AS dtmdeliverydate";
 	$arySql[] = "  ,strnote";
+	$arySql[] = "  ,strnote as strdetailnote";
 	$arySql[] = "  ,lngsortkey";
-	$arySql[] = "FROM t_purchaseorderdetail";
+	$arySql[] = "FROM t_purchaseorderdetail pd";
+    $arySql[] = "LEFT JOIN m_stocksubject mss ON pd.lngstocksubjectcode = mss.lngstocksubjectcode";
 	$arySql[] = "WHERE lngpurchaseorderno = " . intval($lngOrderNo);
 	$arySql[] = "AND   lngrevisionno = " . intval($lngRevisionNo);
 

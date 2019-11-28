@@ -358,16 +358,6 @@ if (!count($strErrorMessage)) {
                 }
                 break;
 
-            // // Ç¼´ü
-            // case 'dtmDeliveryLimitDate';
-            //     if ($condition['from']) {
-            //         $fromCondition = "mp.dtmdeliverylimitdate >= TO_DATE('".$condition['from']."', 'YYYY/MM/DD')";
-            //     }
-            //     if ($condition['to']) {
-            //         $toCondition = "mp.dtmdeliverylimitdate <= TO_DATE('".$condition['to']."', 'YYYY/MM/DD')";
-            //     }
-            //     break;
-
             default:
                 break;
         }
@@ -399,7 +389,7 @@ if (!count($strErrorMessage)) {
     }
 
     $strQuery = $selectQuery . $where . $orderBy;
-
+    
     list($resultID, $resultNum) = fncQuery($strQuery, $objDB);
     if ($resultNum > 1000) {
         $strErrorMessage = fncOutputError(9057, DEF_WARNING, "1000", false, "/estimate/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
@@ -522,7 +512,7 @@ for ($i = 0; $i < $resultNum; ++$i) {
             $body .= "</button></td>";
 
         } else if ($column === 'btnHistory') { // ÍúÎò
-            if (array_key_exists("admin", $optionColumns) && $result["lngrevisionno"] <> 0) {
+            if ($result["lngrevisionno"] <> 0) {
                 $body .= "<td align=\"center\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $resultNum . "_',1 );\">";
                 $body .= "<button type=\"button\" class=\"cells btnHistory\" rownum=\"" . $number . "\" estimateNo=\"" . $estimateNo . "\" revisionNo=\"" . $result['lngrevisionno'] . "\" >";
                 $body .= "<img onmouseover=\"RenewOn(this);\" onmouseout=\"RenewOff(this);\" src=\"/img/type01/pc/renew_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"HISTORY\">";
@@ -532,7 +522,7 @@ for ($i = 0; $i < $resultNum; ++$i) {
             }
 
 		} else if ($column === 'btnDelete') { // ºï½ü
-            if ($result['deleteflag'] === 'f') {
+            if (!array_key_exists("admin", $optionColumns) and $result['deleteflag'] === 'f') {
                 $body .= "<td align=\"center\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $resultNum . "_',1 );\">";
                 $body .= "<button type=\"button\" class=\"cells btnDelete\" action=\"/estimate/delete/index.php\" value=\"" . $result['lngrevisionno'] . "\">";
                 $body .= "<img onmouseover=\"RemoveOn(this);\" onmouseout=\"RemoveOff(this);\" src=\"/img/type01/pc/delete_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"DELETE\">";

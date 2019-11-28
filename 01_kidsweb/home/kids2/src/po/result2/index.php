@@ -80,9 +80,8 @@ $isSearch = array_keys($isSearch);
 $aryData['ViewColumn'] = $isDisplay;
 $aryData['SearchColumn'] = $isSearch;
 
-$isAdmin = mb_strtoupper($aryData['Admin']) == "ON" ? true : false; 
-
-//echo "Admin=" . $aryData['Admin']  . "<br>";
+// 管理者モードチェック
+$isadmin = array_key_exists("admin", $optionColumns);
 
 foreach ($from as $key => $item) {
 //echo $key.'From' . "=" . $item . "<br>";
@@ -189,7 +188,7 @@ if (!$bytSearchFlag) {
 reset($aryData);
 
 // 検索条件に一致する発注コードを取得するSQL文の作成
-$strQuery = fncGetSearchPurcheseOrderSQL($aryViewColumn, $arySearchColumn, $aryData, $objDB, "", 0, $isAdmin);
+$strQuery = fncGetSearchPurcheseOrderSQL($aryViewColumn, $arySearchColumn, $aryData, $objDB, "", 0, $isadmin);
 
 // 値をとる =====================================
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
@@ -222,9 +221,6 @@ if ($lngResultNum) {
     }
 } else {
     $strMessage = fncOutputError(503, DEF_WARNING, "", false, "../po/search2/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
-
-    // [lngLanguageCode]書き出し
-    $aryHtml["lngLanguageCode"] = $aryData["lngLanguageCode"];
 
     // [strErrorMessage]書き出し
     $aryHtml["strErrorMessage"] = $strMessage;
@@ -276,9 +272,6 @@ $displayColumns = array_change_key_case($displayColumns, CASE_LOWER);
 // 各種ボタン表示チェック/権限チェック
 // -------------------------------------------------------
 $aryAuthority = fncGetAryAuthority('purchaseorder', $objAuth);
-
-// 管理者モードチェック
-$isadmin = array_key_exists("admin", $optionColumns);
 // -------------------------------------------------------
 // テーブルヘッダ作成
 // -------------------------------------------------------

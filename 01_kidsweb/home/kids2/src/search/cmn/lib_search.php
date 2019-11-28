@@ -283,19 +283,21 @@ function fncGetHistoryDataByPKSQL($type, $strCode, $lngRevisionNo, $lngDetailNo,
         $aryQuery[] = "  , input_user.struserdisplaycode AS lngInsertUserCode";
         $aryQuery[] = "  , input_user.struserdisplaycode AS strinputuserdisplaycode";
         $aryQuery[] = "  , mp.strinsertusername AS strInsertUserName";
-        $aryQuery[] = "  , mp.strinsertusername AS strinputuserdisplayname";
-        $aryQuery[] = "  , mg.strgroupdisplaycode AS lngGroupCode";
-        $aryQuery[] = "  , mp.strgroupname as strGroupName";
-        $aryQuery[] = "  , mu.struserdisplaycode as lngUserCode";
-        $aryQuery[] = "  , mp.strusername as strUserName";
-        $aryQuery[] = "  , mc_stock.strcompanydisplaycode as lngCustomerCode";
-        $aryQuery[] = "  , mp.strcustomername as strCustomerName";
+        $aryQuery[] = "  , mp.strinsertusername AS strinputuserdisplayname";        
+        $aryQuery[] = "  , mg.strgroupdisplaycode AS strgroupdisplaycode";
+        $aryQuery[] = "  , mp.strgroupname as strgroupdisplayname";
+        $aryQuery[] = "  , mu.struserdisplaycode as struserdisplaycode";
+        $aryQuery[] = "  , mp.strusername as struserdisplayname";
+        $aryQuery[] = "  , mc_stock.strcompanydisplaycode as strcustomerdisplaycode";
+        $aryQuery[] = "  , mp.strcustomername as strcustomerdisplayname";
         $aryQuery[] = "  , mp.lngpayconditioncode as lngPayConditionCode";
         $aryQuery[] = "  , mp.strpayconditionname as strPayConditionName";
         $aryQuery[] = "  , mp.lngmonetaryunitcode as lngMonetaryUnitCode";
+        $aryQuery[] = "  , mp.strmonetaryunitname";
         $aryQuery[] = "  , mp.strmonetaryunitsign as strMonetaryUnitSign";
         $aryQuery[] = "  , mp.curtotalprice as curTotalPrice";
-        $aryQuery[] = "  , mp.strdeliveryplacename as strDeliveryPlaceName";
+        $aryQuery[] = "  , mp.strdeliveryplacename as strdeliveryplacename";
+        $aryQuery[] = "  , mc_delivary.strcompanydisplaycode as strdeliveryplacecode";
         $aryQuery[] = "  , mp.strnote as strNote ";
         $aryQuery[] = "FROM";
         $aryQuery[] = "  m_purchaseorder mp ";
@@ -1504,8 +1506,15 @@ function fncSetTextContent($record, $key, $toUTF8Flag)
         case "strgoodscode":
         case "strsalesclassname": // NO.
         case "strmoldno":
-        case "strproductenglishname":
             $textContent = $record[$key];
+            break;
+        case "strproductenglishname":
+            $textContent = $record["strproductenglishname"];
+            if ($toUTF8Flag) {
+                $textContent = toUTF8($textContent);
+            } else {
+                $textContent = htmlspecialchars($textContent);
+            }
             break;
         case "lngrecordno":
             $textContent = $record["lngdetailno"];

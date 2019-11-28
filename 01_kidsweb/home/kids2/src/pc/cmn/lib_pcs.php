@@ -149,7 +149,7 @@ function fncGetMaxStockSQL($displayColumns, $searchColumns, $from, $to, $searchV
         array_key_exists("strOrderCode", $from) && $from["strOrderCode"]!='') {
         $detailConditionCount += 1;
         $aryQuery[] = $detailConditionCount == 1 ? "WHERE " : "AND ";
-        $aryQuery[] = " o.strOrderCode" .
+        $aryQuery[] = " mp.strOrderCode" .
             " >= '" . $from["strOrderCode"] . "'";
     }
     // 発注書No_to
@@ -157,7 +157,7 @@ function fncGetMaxStockSQL($displayColumns, $searchColumns, $from, $to, $searchV
         array_key_exists("strOrderCode", $to) && $to["strOrderCode"]!='') {
         $detailConditionCount += 1;
         $aryQuery[] = $detailConditionCount == 1 ? "WHERE " : "AND ";
-        $aryQuery[] = " o.strOrderCode" .
+        $aryQuery[] = " mp.strOrderCode" .
             " <= " . "'" . $to["strOrderCode"] . "'";
     }
     if (array_key_exists("strProductCode", $searchColumns) &&
@@ -223,8 +223,8 @@ function fncGetMaxStockSQL($displayColumns, $searchColumns, $from, $to, $searchV
         array_key_exists("lngStockItemCode", $searchValue)) {
         $detailConditionCount += 1;
         $aryQuery[] = $detailConditionCount == 1 ? "WHERE " : "AND ";
-
-        $aryQuery[] = "sd1.lngStockItemCode = " . explode("-", $searchValue["lngStockItemCode"])[1] . "";
+        $aryQuery[] = "sd1.lngStockSubjectCode = " . explode("-", $searchValue["lngStockItemCode"])[0] . "";
+        $aryQuery[] = " AND sd1.lngStockItemCode = " . explode("-", $searchValue["lngStockItemCode"])[1] . "";
     }
     // 顧客品番
     if (array_key_exists("strGoodsCode", $searchColumns) &&

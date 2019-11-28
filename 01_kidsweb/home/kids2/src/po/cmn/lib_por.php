@@ -919,17 +919,38 @@ function fncGetPurchaseOrderEdit($lngpurchaseorderno, $lngrevisionno, $objDB)
     $aryQuery[] = "  ,mp.lnggroupcode";
     $aryQuery[] = "  ,mg.strgroupdisplaycode";
     $aryQuery[] = "  ,mg.strgroupdisplayname";
+    $aryQuery[] = "  ,mp.lnggroupcode as lnginchargegroupcode";
+    $aryQuery[] = "  ,mg.strgroupdisplaycode as strinchargegroupdisplaycode";
+    $aryQuery[] = "  ,mg.strgroupdisplayname as strinchargegroupdisplayname";
+    $aryQuery[] = "  ,mp.lngusercode as lnginchargeusercode";
+    $aryQuery[] = "  ,mu1.struserdisplaycode as strinchargeuserdisplaycode";
+    $aryQuery[] = "  ,mu1.struserdisplayname as strinchargeuserdisplayname";
+    $aryQuery[] = "  ,mp.lnginsertusercode as lnginputusercode";
+    $aryQuery[] = "  ,mu2.struserdisplaycode as strinputuserdisplaycode";
+    $aryQuery[] = "  ,mu2.struserdisplayname as strinputuserdisplayname";
+    $aryQuery[] = "  ,mp.strcustomercompanyaddreess";
+    $aryQuery[] = "  ,mp.strcustomercompanytel";
+    $aryQuery[] = "  ,mp.strcustomercompanyfax";
     $aryQuery[] = "  ,mp.lngcustomercode";
     $aryQuery[] = "  ,mc1.strcompanydisplaycode as strcustomercode";
     $aryQuery[] = "  ,mc1.strcompanydisplayname as strcustomername";
+    $aryQuery[] = "  ,mc1.strcompanydisplaycode as strcustomerdisplaycode";
+    $aryQuery[] = "  ,mc1.strcompanydisplayname as strcustomerdisplayname";
     $aryQuery[] = "  ,mp.lngdeliveryplacecode";
     $aryQuery[] = "  ,mc2.strcompanydisplaycode as strdeliveryplacecode";
     $aryQuery[] = "  ,mc2.strcompanydisplayname as strdeliveryplacename";
+    $aryQuery[] = "  ,mc2.strcompanydisplaycode as strdeliverydisplaycode";
+    $aryQuery[] = "  ,mc2.strcompanydisplayname as strdeliverydisplayname";
     $aryQuery[] = "  ,mp.lngpayconditioncode";
+    $aryQuery[] = "  ,mp.strpayconditionname";
     $aryQuery[] = "  ,mp.lngmonetaryunitcode";
+    $aryQuery[] = "  ,mp.strmonetaryunitname";
     $aryQuery[] = "  ,mp.strmonetaryunitsign";
+    $aryQuery[] = "  ,mp.lngmonetaryratecode";
+    $aryQuery[] = "  ,mp.strmonetaryratename";
     $aryQuery[] = "  ,mp.curtotalprice";
     $aryQuery[] = "  ,mp.strnote";
+    $aryQuery[] = "  ,mp.lngprintcount";
     $aryQuery[] = "  ,pd.lngpurchaseorderdetailno";
     $aryQuery[] = "  ,pd.lngstocksubjectcode";
     $aryQuery[] = "  ,mss.strstocksubjectname";
@@ -948,6 +969,8 @@ function fncGetPurchaseOrderEdit($lngpurchaseorderno, $lngrevisionno, $objDB)
     $aryQuery[] = "FROM m_purchaseorder mp";
     $aryQuery[] = "LEFT JOIN t_purchaseorderdetail pd ON mp.lngpurchaseorderno = pd.lngpurchaseorderno AND mp.lngrevisionno = pd.lngrevisionno";
     $aryQuery[] = "LEFT JOIN m_group mg ON mp.lnggroupcode = mg.lnggroupcode";
+    $aryQuery[] = "LEFT JOIN m_user mu1 ON mp.lngusercode = mu1.lngusercode";
+    $aryQuery[] = "LEFT JOIN m_user mu2 ON mp.lnginsertusercode = mu2.lngusercode";
     $aryQuery[] = "LEFT JOIN m_company mc1 ON mp.lngcustomercode = mc1.lngcompanycode";
     $aryQuery[] = "LEFT JOIN m_company mc2 ON mp.lngdeliveryplacecode = mc2.lngcompanycode";
     $aryQuery[] = "LEFT JOIN m_stocksubject mss ON pd.lngstocksubjectcode = mss.lngstocksubjectcode";
@@ -957,9 +980,9 @@ function fncGetPurchaseOrderEdit($lngpurchaseorderno, $lngrevisionno, $objDB)
     $aryQuery[] = "ORDER BY";
     $aryQuery[] = "   pd.lngsortkey";
 
-    $srtQuery = "";
+    $strQuery = "";
     $strQuery = implode("\n", $aryQuery);
-
+    
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
     if (!$lngResultNum) {
         return false;

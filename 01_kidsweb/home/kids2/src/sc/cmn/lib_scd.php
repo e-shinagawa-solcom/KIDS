@@ -297,6 +297,7 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 	$aryDetailFrom = array();
 	$aryDetailFrom[] = ", (SELECT distinct on ( sd1.lngSlipNo ) sd1.lngSlipNo ";
 	$aryDetailFrom[] = "	,sd1.lngSlipDetailNo";				// 納品伝票明細番号
+	$aryDetailFrom[] = "	,sd1.lngrevisionno";	// リビジョン番号
 	$aryDetailFrom[] = "	,sd1.lngSortKey as lngRecordNo";	// 明細行NO
 	$aryDetailFrom[] = "	,sd1.strCustomerSalesCode";			// 注文書NO
 	$aryDetailFrom[] = "	,sd1.strGoodsCode";					// 顧客品番
@@ -325,6 +326,7 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 
 	// 明細行用の条件連結
 	$aryOutQuery[] = " AND sd.lngSlipNo = s.lngSlipNo";
+	$aryOutQuery[] = " AND sd.lngrevisionno = s.lngrevisionno";
 
 
 	/////////////////////////////////////////////////////////////

@@ -25,7 +25,7 @@
                         removeFlag = true;
                     }
                 });
-        } else if (type == 'so' || type == 'po') {
+        } else if (type == 'so' || type == 'po' || type == 'purchaseorder') {
             if ($('tr[id^="' + id + '_"]').length) {
                 $('tr[id^="' + id + '_"]').remove();
                 removeFlag = true;
@@ -53,7 +53,7 @@
             })
                 .done(function (response) {
                     console.log(response);
-                    if (type == 'so' || type == 'po') {
+                    if (type == 'so' || type == 'po' || type == 'purchaseorder') {
                         var row = $('tr[id="' + id + '"]');
                         row.after(response);
                     } else if (type == 'sc' || type == 'slip' || type == 'pc' || type == 'inv') {
@@ -67,6 +67,8 @@
                     // 詳細ボタンのイベント
                     $('img.detail.button').on('click', function () {
                         if (type == 'purchaseorder') { // 発注書
+                            url = '/po/result2/index2.php';
+                            lngPkNo = 'lngPurchaseOrderNo=' + $(this).attr('id');
                         } else if (type == 'po') { // 発注
                             url = '/po/result/index2.php';
                             lngPkNo = 'lngOrderNo=' + $(this).attr('id');

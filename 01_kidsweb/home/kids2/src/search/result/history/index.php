@@ -55,6 +55,7 @@ $aryAuthority = fncGetAryAuthority('so', $objAuth);
 
 // ヘッダーの設定
 if ($type == 'purchaseorder') { // 発注書
+    $aryTableHeaderName = $aryTableHeaderName_PURORDER;
 } else if ($type == 'po') { // 発注
     $aryTableHeaderName = $aryTableHeaderName_PO;
 } else if ($type == 'so') { // 受注
