@@ -178,10 +178,10 @@
     // 締め日を取得する
     var isCloseDay;
     var selectClosedDay = function () {
+
         var customerCode = $('input[name="lngCustomerCode"]');
         var customerName = $('input[name="strCustomerName"]');
         var billingDate = $('input[name="ActionDate"]');
-
         // 請求日が未入力
         if (isEmpty(billingDate.val()) == '0') {
             console.log('none 請求日');
@@ -225,6 +225,7 @@
 
     // 検索結果から自/至を算出しセット
     function setResult(response) {
+
         console.log(response);
         if (isEmpty(response[0].lngclosedday) == 0) {
             alert('締め日の取得に失敗しました。');
@@ -236,10 +237,11 @@
         // 自/至セット
         var billingStart = $('input[name="dtmchargeternstart"]');
         var billingEnd = $('input[name="dtmchargeternend"]');
+        var billingMonth = $('#invoiceMonth');
+
         billingStart.val(start).change();
         billingEnd.val(end).change();
         // 請求月セット
-        var billingMonth = $('#invoiceMonth');
         billingMonth.val(end.split('/')[1]).change();
         return true;
 
@@ -281,9 +283,9 @@
             var date1 = new Date(yyyy, mm, dd);
             date1.setMonth(date1.getMonth() - 2);
             date1.setDate(1);
-            var start = date1.getFullYear() + '/' + (date1.getMonth()+1) + '/' + date1.getDate();
-            var date2 = new Date(date1.getFullYear(), date1.getMonth()+1, 0);
-            var end = date2.getFullYear() + '/' + (date2.getMonth()+1) + '/' + date2.getDate();
+            var start = date1.getFullYear() + '/' + (date1.getMonth() + 1) + '/' + date1.getDate();
+            var date2 = new Date(date1.getFullYear(), date1.getMonth() + 1, 0);
+            var end = date2.getFullYear() + '/' + (date2.getMonth() + 1) + '/' + date2.getDate();
         }
         else {
             // 至 ：請求日の日 <= 締め日の場合、請求月先月の締め日、それ以外の場合は、請求月の締め日            
@@ -450,12 +452,17 @@
                         }
                         var msg = '選択された明細を全てクリアしますが、よろしいですか？';
                         var $tableA_rows = window.opener.$('#tableA tbody tr');
-                        var $tableA_rows_length = $tableA_rows.length;                
+                        var $tableA_rows_length = $tableA_rows.length;
                         var warn = ($tableA_rows_length > 0) ? true : false;
                         if (warn && window.confirm(msg) === false) {
                             return;
                         }
 
+                        // 顧客コード変更
+                        if (changeCode == true) {
+                            window.opener.$('input[name="lngCustomerCode"]').val(customerCode).change();
+                            window.opener.$('input[name="strCustomerName"]').val(customerName);
+                        }
                         // TABLE作成
                         window.opener.$.createTable(response);
 
@@ -473,11 +480,16 @@
                             window.opener.$('input[name="notaxcurthismonthamount"]').val(0).change();
                         }
 
-                        // 顧客コード変更
-                        if (changeCode == true) {
-                            window.opener.$('input[name="lngCustomerCode"]').val(customerCode);
-                            window.opener.$('input[name="strCustomerName"]').val(customerName);
+                        // 通貨変更
+                        var lngMoneyClassCode = $('select[name="lngMoneyClassCode"] option:selected').val();
+                        if (lngMoneyClassCode == '1') {
+                            window.opener.$('span.moneyclass').text("\xA5");
+                        } else {
+                            window.opener.$('span.moneyclass').text($('select[name="lngMoneyClassCode"] option:selected').text());
+
                         }
+
+
                         window.close();
                     }
                 })
@@ -490,110 +502,6 @@
         }
     });
 
-    // 金額計算
-    function billingAmount() {
-
-        // 出力明細一覧取得
-        tableB = $('#tableB');
-        tableB_tbody = $('tbody', $tableB);
-        tableB_row = $('tbody tr', $tableB);
-
-        // 出力明細一覧エリアの1行目の消費税率を取得する
-        let tax = false;
-        for (var i = 0, rowlen = tableB_row.length; i < rowlen; i++) {
-            if (tax !== false) continue;
-            for (var j = 0, collen = tableB_row[i].cells.length; j < collen; j++) {
-                if (tax !== false || !tableB_row[i].cells[j]) continue;
-                if (tableB_row[i].cells[j].className == 'tax right') {
-                    // 消費税率
-                    console.log(tableB_row[i].cells[j].innerText);
-                    strtax = tableB_row[i].cells[j].innerText.replace(/[^0-9]/g, '');
-                    tax = Number(strtax) / 100;
-                }
-            }
-        }
-
-        // 前月請求残額
-        // 納品日が「自」以前である明細の税抜金額の合計+その合計に対して課税区分に応じて計算された消費税
-        let lastMonthBalance = 0;
-        let curLastMonthBalance = 0;
-        // 当月請求額
-        // 納品日が「自」以降である明細の税抜金額の合計
-        let thisMonthAmount = 0;
-        // 消費税
-        // 当月請求額に対して課税区分に応じて計算
-        let taxPrice = 0;
-        // 差引合計額
-        // 前月請求残額 + 当月請求額 + 消費税"
-        let noTaxMonthAmount = 0;
-
-        // 「自」「至」を計算する
-        selectClosedDay();
-
-        var chargetern = function () {
-            // 「自」取得
-            let chargeternstart = $('input[name="dtmchargeternstart"]').val();
-            let cs = isEmpty(chargeternstart);
-            // 「至」取得
-            let chargeternend = $('input[name="dtmchargeternend"]').val();
-            let ce = isEmpty(chargeternend);
-
-            if (cs == 0 || ce == 0) return false;
-
-            startStamp = new Date(chargeternstart);
-            endStamp = new Date(chargeternend);
-
-            for (var i = 0, rowlen = tableB_row.length; i < rowlen; i++) {
-                let deliverydate = false;
-                let price = false;
-                let data = false;
-
-                for (var j = 0, collen = tableB_row[i].cells.length; j < collen; j++) {
-                    if (!tableB_row[i].cells[j].innerText) continue;
-                    if (tableB_row[i].cells[j].className == 'deliverydate') {
-                        // 納品日
-                        deliverydate = tableB_row[i].cells[j].innerText;
-                    }
-                    if (tableB_row[i].cells[j].className == 'price right') {
-
-                        console.log(tableB_row[i].cells[j].innerText);
-                        // 税抜金
-                        price = tableB_row[i].cells[j].innerText.replace(/,/g, '');
-                    }
-                }
-                console.log(price);
-                if (!deliverydate || !price) continue;
-                date = splitDate(deliverydate);
-                deliverydateStamp = new Date(deliverydate);
-
-                if (deliverydateStamp <= startStamp) {
-                    // 前月請求残額
-                    lastMonthBalance += Number(price);
-                } else {
-                    // 当月請求額
-                    thisMonthAmount += Number(price);
-                }
-            }
-            console.log(lastMonthBalance);
-            console.log(tax);
-            // 前月請求残額(消費税込み)
-            curLastMonthBalance = lastMonthBalance + (lastMonthBalance * (tax * 100)) / 100;
-            // 消費税計算
-            // 当月請求額に対して課税区分に応じて計算
-            taxPrice = (thisMonthAmount * (tax * 100)) / 100;
-            // 差引合計額
-            // 前月請求残額 + 当月請求額 + 消費税
-            noTaxMonthAmount = curLastMonthBalance + thisMonthAmount + taxPrice;
-            // 結果を繁栄
-            $('input[name="curlastmonthbalance"]').val(convertNumber(Math.round(curLastMonthBalance))).change();
-            $('input[name="curthismonthamount"]').val(convertNumber(thisMonthAmount)).change();
-            $('input[name="curtaxprice"]').val(convertNumber(Math.round(taxPrice))).change();
-            $('input[name="notaxcurthismonthamount"]').val(convertNumber(Math.round(noTaxMonthAmount))).change();
-        };
-        var result = setTimeout(chargetern, 500);
-
-    }
-
     // PREVIEWボタン押下処理 (preview)
     $('img.preview-button').on({
         'click': function () {
@@ -601,8 +509,8 @@
             if ($('form[name="Invoice"]').valid() == false) {
                 return;
             }
-            // 金額計算
-            billingAmount();
+            // // 金額計算
+            // billingAmount();
             // プレビュー画面呼び出し (遅延させないとINPUT取得できない)
             var prev = setTimeout(previewDrow, 800);
         }
@@ -676,10 +584,10 @@
         if (isCloseDay != 0) {
             if (systemDate.getDate() > isCloseDay) {
                 var ternstart = new Date(systemDate.getFullYear(), systemDate.getMonth(), isCloseDay + 1);
-            } else {                
-                systemDate.setMonth(systemDate.getMonth() -1);
+            } else {
+                systemDate.setMonth(systemDate.getMonth() - 1);
                 var ternstart = new Date(systemDate.getFullYear(), systemDate.getMonth(), isCloseDay);
-            }            
+            }
         } else {
             var ternstart = new Date(systemDate.getFullYear(), systemDate.getMonth(), 1);
         }

@@ -100,7 +100,7 @@ $objDB->freeResult( $lngResultID );
 if ($aryResult["lngmonetaryunitcode"] == 1) {
     $aryResult["strmonetaryunitsign"] = "&yen;";
 }
-
+$aryDetailResult["strdetailnote"] = ($aryDetailResult["strdetailnote"] == null) ? " ":$aryDetailResult["strdetailnote"];
 // テンプレート読み込み
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate( "so/cancel/so_confirm_cancel.html" );

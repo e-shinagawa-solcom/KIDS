@@ -31,8 +31,9 @@
 	<link rel="stylesheet" href="/cmn/jquery/tooltipster/css/tooltipster.bundle.css">
 	<!-- msw 表示 -->
 	<script src="/search/cmn/msw/cmn/js/msw.js" defer></script>
+    <script src="/search/cmn/js/date.js" defer></script>
 	<!-- マスタ検索呼び出し -->
-	<script src="/search/cmn/js/invoke-master-search.js" defer></script>
+	<script src="/so/decide/js/invoke-master-search.js" defer></script>
 	<!-- フォーム ボタン -->
 	<script src="/so/decide/js/form-buttons.js" defer></script>
 	<!-- フォームバリデーション -->
@@ -56,31 +57,38 @@
 					<div class="regist-line">
 						<span class="regist-label">
 							<span class="regist-label__text">製品コード</span>
-							<input class="TxtStyle04L" name="strProductCode" value="" type="text">
-						</span>
-					</div>
-					<div class="regist-line">
-						<span class="regist-label">
-							<span class="regist-label__text">受注No.</span>
-							<input class="TxtStyle04L" name="strReceiveCode" value="_%strReceiveCode%_" type="text">
+							<input class="TxtStyle04L" name="strProductCode" value="_%strProductCode%_" type="text">
 						</span>
 					</div>
 					<div class="regist-line">
 						<span class="regist-label">
 							<span class="regist-label__text">顧客</span>
-							<input class="TxtStyle05L" name="lngCustomerCode" value="_%lngCustomerCode%_" type="text" iscustomer="yes" alt="Customer">
+							<input class="TxtStyle05L" name="lngCustomerCode"  type="text" alt="Customer">
 							<input class="disTxt46L" name="strCustomerName" type="text" readonly>
-							<img class="msw-button button" invokeMSWName="msw-customer" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+							<img class="msw-button button" invokeMSWName="msw-socustomer" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+						</span>
+					</div>
+					<div class="regist-line">
+						<span class="regist-label">
+							<span class="regist-label__text">売上分類</span>
+							<select name="lngSalesDivisionCode" class="Slt13">
+								_%lngSalesDivisionCode%_ 
+							</select>
+						</span>
+					</div>
+					<div class="regist-line">
+						<span class="regist-label">
+							<span class="regist-label__text">売上区分</span>
+							<select name="lngSalesClassCode" class="Slt13">
+								_%lngSalesClassCode%_ 
+							</select>
 						</span>
 					</div>
 					<div class="regist-line">
 						<span class="regist-label">
 							<span class="regist-label__text">納期</span>
-							FROM
-							<input name="From_dtmDeliveryDate" class="TxtStyle05L" type="text" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate( this );fncCopyValue( this , document.all.To_dtmDeliveryDate );"
-							 tabindex="" maxlength="10"> TO
-							<input name="To_dtmDeliveryDate" class="TxtStyle05L" type="text" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate(this);"
-							 tabindex="" maxlength="10">
+							 FROM <input name="From_dtmDeliveryDate" class="TxtStyle05L is-from-date" type="text" value="" alt="dtmDeliveryDate" tabindex="" maxlength="10">
+							 TO <input name="To_dtmDeliveryDate" class="TxtStyle05L" type="text" value="" tabindex="" maxlength="10">
 						</span>
 					</div>
 				</div>
@@ -89,7 +97,7 @@
 
 		<div class="msw-loadpoints">
 			<!-- MSW 顧客マスタ検索 -->
-			<iframe class="msw-customer" src="/search/cmn/msw/customer/mswcustomer.html" frameborder="0">
+			<iframe class="msw-socustomer" src="/search/cmn/msw/socustomer/mswsocustomer.html" frameborder="0">
 			</iframe>
 		</div>
 

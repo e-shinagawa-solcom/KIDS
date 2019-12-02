@@ -94,7 +94,8 @@
                 </div>
                 <div class="regist-box3">
                     <span class="regist-label">
-                        <span class="regist-label__text130">Àè·îÀÁµá»Ä³Û(ÀÇ¹þ)</span>
+                        <span class="regist-label__text115">Àè·îÀÁµá»Ä³Û(ÀÇ¹þ)</span>
+                        <span class="regist-label__text20 moneyclass">_%strMonetaryUnitSign%_</span>
                         <input class="disTxt14R" name="curlastmonthbalance" type="text" readonly value="_%curLastMonthBalance%_">
                     </span>
                 </div>
@@ -113,7 +114,6 @@
                         <span class="regist-label">
                             <span class="regist-label__text50">ÀÁµáÆü</span>
                             <input name="ActionDate" class="TxtStyle05L billing-date" autocomplete="off" value="_%dtmInvoiceDate%_" >
-                            <span class="billing-button"><img class="billing-button-img button"  src="/img/type01/date/open_off_bt.gif" alt="msw"></span>
                         </span>
                     </div>
                 </div>
@@ -126,7 +126,8 @@
                 </div>
                 <div class="regist-box3">
                     <span class="regist-label">
-                        <span class="regist-label__text130">Åö·îÀÁµá³Û</span>
+                        <span class="regist-label__text115">Åö·îÀÁµá³Û</span>
+                        <span class="regist-label__text20 moneyclass">_%strMonetaryUnitSign%_</span>
                         <input class="disTxt14R" name="curthismonthamount" type="text" readonly value="_%curThisMonthAmount%_" >
                     </span>
                 </div>
@@ -136,36 +137,33 @@
             <div class="regist-box-area">
                 <div class="regist-box1">
                     <div class="regist-line regist-float">
-                        <span class="regist-label w-465">
+                        <span class="regist-label w-465" style="height:58px;">
                             <span class="regist-label__text50">È÷¹Í</span>
-                            <input class="disTxt4xL" name="strnote" type="text"  onfocus="chColorOn(this);" onblur="chColorOff(this);" value="_%strNote%_" >
+                            <span class="regist-label__required-mark">¡ý</span>
+                            <span class="regist-label__text50">Ã¢¤·</span>
+                            <input class="TxtStyle04L" name="description" type="text" value="_%description%_">
+                            <span class="regist-label__text50">Âå¤È¤·¤Æ</span>
+                            <br><br><span class="regist-label__text50"></span>
+                            <input class="Txt54L" name="strnote" type="text" value="_%strNote%_" onfocus="chColorOn(this);" onblur="chColorOff(this);" >
                         </span>
                     </div>
                 </div>
                 <div class="regist-box2">
                     <span class="regist-label regist-label-w190">
                         <span class="regist-label__text50">»ê</span>
-                        <input class="TxtStyle04L" name="dtmchargeternend"  type="text"  value="_%dtmChargeternEnd%_"  maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="">
+                        <input class="TxtStyle04L" name="dtmchargeternend"  type="text" value="_%dtmChargeternEnd%_"  maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="">
                     </span>
 
                 </div>
                 <div class="regist-box3">
-                    <span class="regist-label">
-                        <span class="regist-label__text130">¾ÃÈñÀÇ</span>
-                        <input class="disTxt14R" name="curtaxprice" type="text" readonly value="_%curTaxPrice1%_" >
+                    <span class="regist-label regist-label-box3">
+                        <span class="regist-label__text115">¾ÃÈñÀÇ</span>
+                        <span class="regist-label__text20 moneyclass">_%strMonetaryUnitSign%_</span>
+                        <input class="disTxt14R" name="curtaxprice" type="text" value="_%curTaxPrice1%_"   readonly>
                     </span>
                 </div>
-                <div class="regist-clear"></div>
-            </div>
-
-            <div class="regist-box-area">
-                <div class="regist-box1">
-                    <div class="regist-line regist-float">
-                        <span style="display:none;"></span>
-                    </div>
-                </div>
                 <div class="regist-box2">
-                    <span class="regist-label regist-label-w190">
+                    <span class="regist-label regist-label-w190" style="margin-top:5px;" >
                         <span class="regist-label__text177">
                             ºÆ°õºþ¤òÈ÷¹Í¤ËÌÀµ­¤¹¤ë<input name="strnotecheck" class="is-search" type="checkbox">
                         </span>
@@ -173,15 +171,19 @@
 
                 </div>
                 <div class="regist-box3">
-                    <span class="regist-label">
-                        <span class="regist-label__text130">º¹¤·°ú¤­¹ç·×³Û</span>
-                        <input class="disTxt14R" name="notaxcurthismonthamount" type="text" readonly value="_%curSubTotal1%_">
+                    <span class="regist-label regist-label-box3" style="margin-top:5px;">
+                        <span class="regist-label__text115">º¹¤·°ú¤­¹ç·×³Û</span>
+                        <span class="regist-label__text20 moneyclass">_%strMonetaryUnitSign%_</span>
+                        <input class="disTxt14R" name="notaxcurthismonthamount" value="_%curSubTotal1%_" type="text" readonly>
                     </span>
                 </div>
+            </div>
+
+            <div class="regist-box-area">
+                
                 <div class="regist-clear"></div>
             </div>
             <hr />
-
 
             <div class="flex-container">
                 <div class="flex-item">

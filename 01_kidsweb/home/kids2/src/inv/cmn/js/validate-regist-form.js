@@ -178,6 +178,10 @@
                 checkDateFormat: true,
                 required: true
             },
+            // ただし
+            description: {
+            	required: true
+            },
 
 
         },
@@ -207,7 +211,11 @@
             // 当月請求額
             curthismonthamount: {
                 required:  msgSlipEmpty
-            }
+            },
+            // ただし
+            description: {
+            	required: '但し' + msgEmpty
+            },
 
         }
     });

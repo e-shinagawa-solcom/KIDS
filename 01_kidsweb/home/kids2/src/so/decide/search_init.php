@@ -52,6 +52,13 @@ if ( !fncCheckAuthority( DEF_FUNCTION_SO2, $objAuth ) )
 	fncOutputError ( 9052, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
 
+// 売上分類
+$aryData["lngSalesDivisionCode"] = fncGetPulldown( "m_salesdivision", "lngsalesdivisioncode", "lngsalesdivisioncode, strsalesdivisionname", 1, '', $objDB );
+
+// // 売上区分
+// $aryData["lngSalesClassCode"] = fncGetPulldown( "m_salesclass", "lngsalesclasscode", "lngsalesclasscode, strsalesclassname", 1, '', $objDB );
+
+
 // テンプレート読み込み
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate( "so/decide/so_search.html" );

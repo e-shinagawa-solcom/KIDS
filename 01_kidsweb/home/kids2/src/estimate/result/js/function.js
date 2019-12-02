@@ -53,7 +53,7 @@ $(function () {
 	// 	});
 	// });
 
-	$('button[class*="btnDetail"]').on('click', function () {
+	$('img.detail.button').on('click', function () {
 		var url = $(this).attr('action');
 		var value = $(this).val();
 
@@ -87,7 +87,7 @@ $(function () {
 
 	});
 
-	$('button[class*="btnDelete"]').on('click', function () {
+	$('img.delete.button').on('click', function () {
 		var url = $(this).attr('action');
 		var value = $(this).val();
 		var estimateNo = $(this).parent().parent().attr('id');
@@ -150,7 +150,7 @@ $(function () {
 
 
 	// 履歴ボタンのイベント
-	$('button[class*="btnHistory"]').on('click', function () {
+	$('img.history.button').on('click', function () {
 		var lngEstimateNo = $(this).attr('estimateNo');
 		var lngRevisionNo = $(this).attr('revisionNo');
 		var displayColumns = $('input[name="displayColumns"]').val().split(',');

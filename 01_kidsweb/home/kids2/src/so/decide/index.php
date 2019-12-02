@@ -62,8 +62,8 @@ if ($lngResultNum) {
 $objDB->freeResult($lngResultID);
 // 取得データの調整
 $aryNewResult = array();
-$aryNewResult["strcustomerdisplaycode"] = $aryResult[0]["strcustomerdisplaycode"];
-$aryNewResult["strcustomerdisplayname"] = $aryResult[0]["strcustomerdisplayname"];
+$aryNewResult["strproductcode"] = $aryResult[0]["strproductcode"]. "_".$aryResult[0]["strrevisecode"];
+$aryNewResult["strproductname"] = $aryResult[0]["strproductname"];
 $aryNewResult["strreceivecode"] = $aryResult[0]["strreceivecode"];
 $aryNewResult["strnote"] = $aryResult[0]["strnote"];
 
@@ -133,30 +133,10 @@ foreach ($aryDetailResult as $detailResult) {
     $td->setAttribute("style", "width: 25px;");
     $trBody->appendChild($td);
 
-    // 受注番号
-    $td = $doc->createElement("td", $aryResult[0]["strreceivecode"]);
-    // $td->setAttribute("style", "width: 100px;");
-    $trBody->appendChild($td);
-
     // 明細行番号
     $td = $doc->createElement("td", $detailResult["lngreceivedetailno"]);
-    // $td->setAttribute("style", "width: 70px;");
     $trBody->appendChild($td);
 
-    // 製品名
-    $textContent = "[" . $detailResult["strproductcode"] . "]" . " " . $detailResult["strproductname"];
-    $td = $doc->createElement("td", toUTF8($textContent));
-    // $td->setAttribute("style", "width: 250px;");
-    $trBody->appendChild($td);
-
-    // 納期
-    $td = $doc->createElement("td", toUTF8($detailResult["dtmdeliverydate"]));
-    $trBody->appendChild($td);
-    // 売上区分
-    $textContent = "[" . $detailResult["lngsalesclasscode"] . "]" . " " . $detailResult["strsalesclassname"];
-    $td = $doc->createElement("td", toUTF8($textContent));
-    // $td->setAttribute("style", "width: 120px;");
-    $trBody->appendChild($td);
     // 顧客
     if ($aryResult[0]["strcustomerdisplaycode"] != "") {
         $textContent = "[" . $aryResult[0]["strcustomerdisplaycode"] . "]" . " " . $aryResult[0]["strcustomerdisplayname"];
@@ -164,7 +144,20 @@ foreach ($aryDetailResult as $detailResult) {
         $textContent = "";
     }
     $td = $doc->createElement("td", toUTF8($textContent));
-    // $td->setAttribute("style", "width: 250px;");
+    $trBody->appendChild($td);
+
+    // 売上分類
+    $textContent = "[" . $detailResult["lngsalesdivisioncode"] . "]" . " " . $detailResult["strsalesdivisionname"];
+    $td = $doc->createElement("td", toUTF8($textContent));
+    $trBody->appendChild($td);
+
+    // 売上区分
+    $textContent = "[" . $detailResult["lngsalesclasscode"] . "]" . " " . $detailResult["strsalesclassname"];
+    $td = $doc->createElement("td", toUTF8($textContent));
+    $trBody->appendChild($td);
+
+    // 納期
+    $td = $doc->createElement("td", toUTF8($detailResult["dtmdeliverydate"]));
     $trBody->appendChild($td);
     // tbody > tr
     $tbodyDetail->appendChild($trBody);

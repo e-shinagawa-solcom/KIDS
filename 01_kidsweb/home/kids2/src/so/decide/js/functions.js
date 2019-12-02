@@ -79,27 +79,28 @@
                     }
                     // var decide_body = '<tr id="' + detail_id + '" rownum="' + rowNum + '" onclick="rowSelect(this);">'
                     var decide_body = '<tr id="' + detail_id + '" rownum="' + rowNum + '" >'
-                        + '<td>' + row.strreceivecode + '</td>'
-                        + '<td>' + row.lngreceivedetailno + '</td>'
-                        + '<td><input type="text" class="form-control form-control-sm txt-kids" style="width:90px;" value="' + convertNull(row.strcustomerreceivecode) + '"></td>'
-                        + '<td style="white-space: nowrap;">[' + convertNull(row.strproductcode) + '] ' + convertNull(row.strproductname) + '</td>'
-                        + '<td>' + convertNull(row.strgoodscode) + '</td>'
-                        + '<td>' + convertNull(row.dtmdeliverydate) + '</td>'
-                        + '<td style="white-space: nowrap;" >[' + convertNull(row.lngsalesclasscode) + '] ' + convertNull(row.strsalesclassname) + '</td>'
-                        + '<td>' + money_format(row.lngmonetaryunitcode, row.strmonetaryunitsign, row.curproductprice) + '</td>'
-                        + '<td>' + select + '</td>' //単位
-                        + '<td>' + lngunitquantity + '</td>'
-                        + '<td style="text-align: center;"><img class="button" src="/img/type01/so/product_off_ja_bt.gif" onclick="showProductInfo(this)" lngproductno="' + row.lngproductno + '" lngrevisionno="' + row.lngproductrevisionno + '"></td>'
-                        + '<td>' + lngproductquantity + '</td>'
-                        + '<td style="white-space: nowrap;">' + money_format(row.lngmonetaryunitcode, row.strmonetaryunitsign, row.cursubtotalprice) + '</td>'
-                        + '<td><input type="text" class="form-control form-control-sm txt-kids" style="width:240px;" value="' + convertNull(row.strdetailnote) + '"></td>'
-                        + '<td style="display:none">[' + convertNull(row.strcompanydisplaycode) + '] ' + convertNull(row.strcompanydisplayname) + '</td>'
-                        + '<td style="display:none">' + row.lngreceiveno + '</td>'
-                        + '<td style="display:none">' + row.lngrevisionno + '</td>'
-                        + '<td style="display:none">' + convertNullToZero(row.lngcartonquantity) + '</td>'
-                        + '<td style="display:none">' + convertNullToZero(row.lngproductquantity) + '</td>'
-                        + '<td style="display:none">' + row.lngproductrevisionno + '</td>'
-                        + '<td style="display:none">' + row.strproductcode + '</td>'
+                        + '<td id="lngreceivedetailno">' + row.lngreceivedetailno + '</td>' // 明細行番号
+                        + '<td id="strcustomerreceivecode"><input type="text" class="form-control form-control-sm txt-kids" style="width:90px;" value="' + convertNull(row.strcustomerreceivecode) + '"></td>' //顧客受注番号
+                        + '<td id="strcompanydisplaycode" style="white-space: nowrap;">[' + convertNull(row.strcompanydisplaycode) + '] ' + convertNull(row.strcompanydisplayname) + '</td>' //顧客
+                        + '<td id="strgoodscode">' + convertNull(row.strgoodscode) + '</td>'//顧客品番
+                        + '<td id="dtmdeliverydate">' + convertNull(row.dtmdeliverydate) + '</td>'//納期
+                        + '<td id="lngsalesdivisioncode" style="white-space: nowrap;" >[' + convertNull(row.lngsalesdivisioncode) + '] ' + convertNull(row.strsalesdivisionname) + '</td>'//売上分類
+                        + '<td id="lngsalesclasscode" style="white-space: nowrap;" >[' + convertNull(row.lngsalesclasscode) + '] ' + convertNull(row.strsalesclassname) + '</td>'//売上区分
+                        + '<td id="curproductprice">' + money_format(row.lngmonetaryunitcode, row.strmonetaryunitsign, row.curproductprice) + '</td>'//単価
+                        + '<td id="lngproductunitcode">' + select + '</td>' //単位
+                        + '<td id="lngunitquantity">' + lngunitquantity + '</td>'//入数
+                        + '<td style="text-align: center;"><img class="button" src="/img/type01/so/product_off_ja_bt.gif" onclick="showProductInfo(this)" lngproductno="' + row.lngproductno + '" lngrevisionno="' + row.lngproductrevisionno + '"></td>'//製品
+                        + '<td>' + lngproductquantity + '</td>'//数量
+                        + '<td id="cursubtotalprice" style="white-space: nowrap;">' + money_format(row.lngmonetaryunitcode, row.strmonetaryunitsign, row.cursubtotalprice) + '</td>'//小計
+                        + '<td id="strdetailnote"><input type="text" class="form-control form-control-sm txt-kids" style="width:240px;" value="' + convertNull(row.strdetailnote) + '"></td>'//明細備考
+                        + '<td id="strproductcode" style="display:none">' + row.strproductcode + '</td>'//製品コード
+                        + '<td id="strproductname" style="display:none">[' + convertNull(row.strproductcode) + '] ' + convertNull(row.strproductname) + '</td>'//製品コード
+                        + '<td id="lngreceiveno" style="display:none">' + row.lngreceiveno + '</td>'//受注番号
+                        + '<td id="strreceivecode" style="display:none">' + row.strreceivecode + '</td>'//受注コード
+                        + '<td id="lngrevisionno" style="display:none">' + row.lngrevisionno + '</td>'//リビジョン番号
+                        + '<td id="lngcartonquantity" style="display:none">' + convertNullToZero(row.lngcartonquantity) + '</td>'//カートン入数
+                        + '<td id="lngproductquantity" style="display:none">' + convertNullToZero(row.lngproductquantity) + '</td>'//数量
+                        + '<td id="lngproductrevisionno" style="display:none">' + row.lngproductrevisionno + '</td>'//製品リビジョン番号
                         + '</tr>';
                     $("#table_decide_body").append(decide_body);
                 }
@@ -223,9 +224,9 @@
 
         url = '/so/decide/search_init.php';
         sessionID = 'strSessionID=' + $.cookie('strSessionID');
-        lngCustomerCode = 'lngCustomerCode=' + $('input[name="lngCustomerCode"]').val();
+        param = 'strproductcode=' + $('input[name="strProductCode"]').val();
         // 別ウィンドウで表示
-        window.open(url + '?' + sessionID + '&' + lngCustomerCode, '_blank', 'width=730, height=570, resizable=yes, scrollbars=yes, menubar=no');
+        window.open(url + '?' + sessionID + '&' + param, '_blank', 'width=730, height=570, resizable=yes, scrollbars=yes, menubar=no');
     });
 
     // 行を一つ上に移動するボタン
@@ -353,45 +354,45 @@
         var len = 0;
         $("#table_decide_body tr").each(function (i, e) {
             len += 1;
-            // 受注番号
-            var strReceiveCode = $(this).find('td').first().text();
+            // // 受注番号
+            var strReceiveCode = $(this).find('#strreceivecode').text();
             // 受注明細番号
-            var lngReceiveDetailNo = $(this).find('td:nth-child(2)').text();
+            var lngReceiveDetailNo = $(this).find('#lngreceivedetailno').text();
             // 顧客受注番号
-            var strCustomerReceiveCode = $(this).find('td:nth-child(3)').find('input:text').val();
+            var strCustomerReceiveCode = $(this).find('#strcustomerreceivecode').find('input:text').val();
             if (strCustomerReceiveCode == "") {
                 alert(len + "行目の顧客受注番号が入力されていません。");
                 exit;
             }
-            var lngproductquantity = $(this).find('td:nth-child(12)').text();
+            var lngproductquantity = $(this).find('#lngproductquantity').text();
             if (lngproductquantity.indexOf('.') != -1) {
                 alert(len + "行目の見積原価計算書上の数量が入数で割り切れません。");
                 exit;
             }
 
-            var strDetailNote = $(this).find('td:nth-child(14)').find('input:text').val();
-            var strProductUnitName = $(this).find('td:nth-child(9)').find('select option:selected').text();
-            var lngProductUnitCode = $(this).find('td:nth-child(9)').find('select option:selected').val();
+            var strDetailNote = $(this).find('#strdetailnote').find('input:text').val();
+            var strProductUnitName = $(this).find('#lngproductunitcode').find('select option:selected').text();
+            var lngProductUnitCode = $(this).find('#lngproductunitcode').find('select option:selected').val();
 
             params[len - 1] = {
                 "strReceiveCode": strReceiveCode,
                 "lngReceiveDetailNo": lngReceiveDetailNo,
                 "strCustomerReceiveCode": strCustomerReceiveCode,
-                "strProductCode": $(this).find('td:nth-child(4)').text(),
-                "strGoodsCode": $(this).find('td:nth-child(5)').text(),
-                "dtmDeliveryDate": $(this).find('td:nth-child(6)').text(),
-                "lngSalesClassCode": $(this).find('td:nth-child(7)').text(),
-                "curProductPrice": $(this).find('td:nth-child(8)').text(),
+                "strProductCode": $(this).find('#strproductname').text(),
+                "strGoodsCode": $(this).find('#strgoodscode').text(),
+                "dtmDeliveryDate": $(this).find('#dtmdeliverydate').text(),
+                "lngSalesClassCode": $(this).find('#lngsalesclasscode').text(),
+                "curProductPrice": $(this).find('#curproductprice').text(),
                 "strProductUnitName": strProductUnitName,
-                "lngUnitQuantity": $(this).find('td:nth-child(10)').text(),
-                "lngProductQuantity": $(this).find('td:nth-child(12)').text(),
-                "curSubtotalPrice": $(this).find('td:nth-child(13)').text(),
+                "lngUnitQuantity": $(this).find('#lngunitquantity').text(),
+                "lngProductQuantity": $(this).find('#lngproductquantity').text(),
+                "curSubtotalPrice": $(this).find('#cursubtotalprice').text(),
                 "strDetailNote": strDetailNote,
-                "strCompanyDisplayCode": $(this).find('td:nth-child(15)').text(),
-                "lngReceiveNo": $(this).find('td:nth-child(16)').text(),
-                "lngRevisionNo": $(this).find('td:nth-child(17)').text(),
-                "lngRevisionNo_product": $(this).find('td:nth-child(20)').text(),
-                "strProductCode_product": $(this).find('td:nth-child(21)').text(),
+                "strCompanyDisplayCode": $(this).find('#strcompanydisplaycode').text(),
+                "lngReceiveNo": $(this).find('#lngreceiveno').text(),
+                "lngRevisionNo": $(this).find('#lngrevisionno').text(),
+                "lngRevisionNo_product": $(this).find('#lngproductrevisionno').text(),
+                "strProductCode_product": $(this).find('#strproductcode').text(),
                 "lngProductUnitCode": lngProductUnitCode
             };
         });
@@ -476,10 +477,9 @@ function resetData(objID) {
     var val = objID.value;
     var children = objID.parentNode.parentNode.children;
     // カートン入数の取得
-    var lngcartonquantity = children[17].innerHTML;
+    var lngcartonquantity = children[19].innerHTML;
     // 製品数量の取得
-    var lngproductquantity = children[18].innerHTML;
-
+    var lngproductquantity = children[20].innerHTML;
     // 入数・数量計算
     var lngunitquantitynew = 1;
     var lngproductquantitynew = lngproductquantity / lngunitquantitynew;

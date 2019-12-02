@@ -54,6 +54,10 @@ $aryQuery[] = ", p.lngRevisionNo as lngProductRevisionNo";
 $aryQuery[] = ", r.strCompanyDisplayCode as strCompanyDisplayCode";// 顧客コード・名称
 $aryQuery[] = ", r.strCompanyDisplayName as strCompanyDisplayName";
 $aryQuery[] = ", p.lngproductno as lngproductno";
+// 売上分類
+$aryQuery[] = ", sd.lngsalesdivisioncode";
+$aryQuery[] = ", sd.strsalesdivisionname";
+
 $aryQuery[] = ", rd.lngSalesClassCode as lngSalesClassCode";// 売上区分
 $aryQuery[] = ", ss.strSalesClassName as strSalesClassName";
 $aryQuery[] = ", p.strGoodsCode as strGoodsCode";// 顧客品番
@@ -80,7 +84,9 @@ $aryQuery[] = "   select p1.*  from m_product p1 ";
 $aryQuery[] = "     inner join (select max(lngRevisionNo) lngRevisionNo, strproductcode from m_Product group by strProductCode) p2";
 $aryQuery[] = "     on p1.lngRevisionNo = p2.lngRevisionNo and p1.strproductcode = p2.strproductcode";
 $aryQuery[] = " ) p USING (strProductCode)";
-$aryQuery[] = " LEFT JOIN m_SalesClass ss USING (lngSalesClassCode)";
+$aryQuery[] = " LEFT JOIN m_SalesClass ss on rd.lngSalesClassCode = ss.lngSalesClassCode";
+$aryQuery[] = " LEFT JOIN m_salesclassdivisonlink ssdl on ssdl.lngSalesClassCode = ss.lngSalesClassCode";
+$aryQuery[] = " LEFT JOIN m_salesdivision sd on sd.lngsalesdivisioncode = ssdl.lngsalesdivisioncode";
 $aryQuery[] = " LEFT JOIN m_ProductUnit pu ON rd.lngProductUnitCode = pu.lngProductUnitCode";
 $aryQuery[] = " LEFT JOIN t_estimatedetail ed on rd.lngestimateno = ed.lngestimateno";
 $aryQuery[] = " and rd.lngestimatedetailno = ed.lngestimatedetailno ";
@@ -127,19 +133,4 @@ $objDB->close();
 //結果出力
 mb_convert_variables('UTF-8', 'EUC-JP', $result);
 echo $s->encodeUnsafe($result);
-
-
-
-/**
- * LC情報取得
- *
- * @param [object] $objDB
- * @param [array] $data
- * @return void
- */
-function getLcInfo($objDB, $data)
-{
-    $result = fncGetLcInfoData($objDB, $data);
-    return $result;
-}
 

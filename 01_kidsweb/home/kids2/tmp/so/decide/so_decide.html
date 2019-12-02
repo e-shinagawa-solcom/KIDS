@@ -51,9 +51,9 @@
 			<div class="regist-tab-header">
 				<div class="regist-line">
 					<span class="regist-label">
-						<span class="regist-label__text">顧客</span>
-						<input class="TxtStyle05L" name="lngCustomerCode" readonly value="_%strcustomerdisplaycode%_">
-						<input class="disTxt46L" name="strCustomerName" readonly value="_%strcustomerdisplayname%_">
+						<span class="regist-label__text">製品コード</span>
+						<input class="TxtStyle05L" name="strProductCode" readonly value="_%strproductcode%_">
+						<input class="disTxt46L" name="strProductName" readonly value="_%strproductname%_">
 					</span>
 				</div>
 				<div class="regist-line">
@@ -78,12 +78,11 @@
 												<!-- 水平ヘッダ -->
 												<tr>
 													<th>No.</th>
-													<th>受注No.</th>
 													<th>明細行番号</th>
-													<th>製品名</th>
-													<th>納期</th>
-													<th>売上区分</th>
 													<th>顧客</th>
+													<th>売上分類</th>
+													<th>売上区分</th>
+													<th>納期</th>
 												</tr>
 											</thead>
 										</table>
@@ -131,13 +130,13 @@
 										<table class="table-decide-description" name="DECIDE_T">
 											<thead>
 												<tr>
-													<th>受注No.</th>
 													<th>明細
 														<br>行番号</th>
 													<th>◎顧客受注番号</th>
-													<th>製品名</th>
+													<th>顧客</th>
 													<th>顧客品番</th>
 													<th>納期</th>
+													<th>売上分類</th>
 													<th>売上区分</th>
 													<th>単価</th>
 													<th>単位</th>
@@ -146,7 +145,6 @@
 													<th>数量</th>
 													<th>小計</th>
 													<th>明細備考</th>
-													<th style="display:none">顧客</th>
 													<th style="display:none">受注番号</th>
 													<th style="display:none">リビジョン番号</th>
 													<th style="display:none">カートン入数</th>

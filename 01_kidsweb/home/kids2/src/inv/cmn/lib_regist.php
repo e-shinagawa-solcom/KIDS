@@ -819,6 +819,8 @@ function fncGetSearchInvoiceSQL ( $arySearchColumn, $arySearchDataColumn, $objDB
     $arySelectQuery[] = ", to_char( inv.dtminsertdate, 'YYYY/MM/DD' ) as dtminsertdate";
     // 備考
     $arySelectQuery[] = ", inv.strnote as strnote";
+    // 但し書き
+    $arySelectQuery[] = ", inv.description as description";
     // 印刷回数
     $arySelectQuery[] = ", inv.lngprintcount as lngprintcount";
 
@@ -1126,6 +1128,8 @@ function fncInvoiceInsertReturnArray($aryData, $aryResult=null, $objAuth, $objDB
     $insertAry['strinsertusername'] = $objAuth->UserDisplayName;
     // 備考
     $insertAry['strnote'] = $aryData['strnote'];
+    // 説明
+    $insertAry['description'] = $aryData['description'];
 
     return $insertAry;
 }
@@ -1181,7 +1185,8 @@ function fncInvoiceInsert( $insertAry ,$objDB, $objAuth)
     $aryQuery[] = "strinsertusername, ";        // 作成者名
     $aryQuery[] = "strnote, ";                  // 備考
      $aryQuery[] = "lngprintcount, ";         // 印刷回数
-    $aryQuery[] = "bytinvalidflag ";            // 無効フラグ
+    $aryQuery[] = "bytinvalidflag, ";            // 無効フラグ
+    $aryQuery[] = "description ";            // 説明
     $aryQuery[] = ") values (";
     // 請求書番号
     $aryQuery[] = $sequence_m_lnginvoice ." ,";
@@ -1209,7 +1214,8 @@ function fncInvoiceInsert( $insertAry ,$objDB, $objAuth)
     $aryQuery[] = "'" .$objAuth->UserDisplayName ."' ,";                              // 作成者名
     $aryQuery[] = "'" .$insertAry['strnote'] ."', ";                                        // 備考
     $aryQuery[] = "0 ,";                                                                 // 印刷回数
-    $aryQuery[] = "FALSE ";                                                                 // 無効フラグ
+    $aryQuery[] = "FALSE, ";                                                                 // 無効フラグ
+    $aryQuery[] = "'" .$insertAry['description'] ."'";                                        // 備考
     $aryQuery[] = ") ";
 
     $strQuery = implode("\n",  $aryQuery );
@@ -1369,6 +1375,8 @@ function fncGetInvoiceMSQL ( $lngInvoiceNo, $lngRevisionNo)
     $aryQuery[] = ", inv.strnote as strnote";
     // 印刷回数
     $aryQuery[] = ", inv.lngprintcount as lngprintcount";
+    // 説明
+    $aryQuery[] = ", inv.description as description";
 
     $aryQuery[] = " FROM m_invoice inv ";
     $aryQuery[] = " LEFT JOIN m_Company cust_c ON inv.lngcustomercode = cust_c.lngcompanycode";
@@ -1700,6 +1708,8 @@ function fncSetInvoiceHeadTableData ( $aryResult )
     $aryNewResult["dtmInsertDate"]          = $aryResult["dtminsertdate"];
     // 備考
     $aryNewResult["strNote"]                = $aryResult["strnote"];
+    // 備考
+    $aryNewResult["description"]                = $aryResult["description"];
     // 印刷回数
     $aryNewResult["lngPrintCount"]          = $aryResult["lngprintcount"];
 
@@ -1890,6 +1900,8 @@ function fncSetPreviewTableData ( $aryResult , $lngInvoiceNo, $objDB)
     $monetaryUnitCode = 1;
     $aryPrevResult['strMonetaryUnitName'] = fncGetMonetaryunitSign( $monetaryUnitCode ,$objDB);
 
+    // 備考
+    $aryPrevResult['description'] = $aryResult['description'];
     // 備考
     $aryPrevResult['strNote'] = $aryResult['strnote'];
     // 再印刷

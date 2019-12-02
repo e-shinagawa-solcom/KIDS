@@ -26,6 +26,10 @@
     height:30px;
     text-align: center;
 }
+.table-description td{
+    /* height:30px; */
+    text-align: left;
+}
 .table-description th,
 .table-description td{
     border: 1px solid #798787;

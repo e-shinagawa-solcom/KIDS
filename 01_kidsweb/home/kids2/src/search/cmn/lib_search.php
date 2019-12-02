@@ -177,6 +177,7 @@ $aryTableHeaderName_INV["dtminsertdate"] = "作成日";
 $aryTableHeaderName_INV["lngusercode"] = "担当者";
 $aryTableHeaderName_INV["lnginsertusercode"] = "入力者";
 $aryTableHeaderName_INV["lngprintcount"] = "印刷回数";
+$aryTableHeaderName_INV["description"] = "但し書き";
 $aryTableHeaderName_INV["strnote"] = "備考";
 
 // 明細部
@@ -440,8 +441,8 @@ function fncGetHistoryDataByPKSQL($type, $strCode, $lngRevisionNo, $lngDetailNo,
         $aryQuery[] = "  , input_u.strUserDisplayCode as strInputUserDisplayCode";
         $aryQuery[] = "  , input_u.strUserDisplayName as strInputUserDisplayName";
         $aryQuery[] = "  , r.strCustomerReceiveCode as strCustomerReceiveCode";
-        $aryQuery[] = "  , cust_c.strCompanyDisplayCode as strCustomerDisplayCode";
-        $aryQuery[] = "  , cust_c.strCompanyDisplayName as strCustomerDisplayName";
+        $aryQuery[] = "  , cust_c.strCompanyDisplayCode as strcompanydisplaycode";
+        $aryQuery[] = "  , cust_c.strCompanyDisplayName as strcompanydisplayname";
         $aryQuery[] = "  , to_char(rd.dtmDeliveryDate, 'YYYY/MM/DD') as dtmDeliveryDate";
         $aryQuery[] = "  , r.lngReceiveStatusCode as lngReceiveStatusCode";
         $aryQuery[] = "  , rs.strReceiveStatusName as strReceiveStatusName";
@@ -737,6 +738,7 @@ function fncGetHistoryDataByPKSQL($type, $strCode, $lngRevisionNo, $lngDetailNo,
         $aryQuery[] = "  , inv.strinsertusername as strinsertusername";
         $aryQuery[] = "  , to_char(inv.dtminsertdate, 'YYYY/MM/DD') as dtminsertdate";
         $aryQuery[] = "  , inv.strnote as strnote";
+        $aryQuery[] = "  , inv.description as description";
         $aryQuery[] = "  , inv.lngprintcount as lngprintcount";
         $aryQuery[] = "  , sa.lngSalesStatusCode as lngSalesStatusCode";
         $aryQuery[] = "  , ss.strSalesStatusName as strSalesStatusName ";
@@ -1519,9 +1521,11 @@ function fncSetTextContent($record, $key, $toUTF8Flag)
         case "lngrecordno":
             $textContent = $record["lngdetailno"];
             break;
+        // 但し書き
+        case "description":
         // 備考
         case "strnote":
-            $textContent = $record["strnote"];
+            $textContent = $record[$key];
             if ($toUTF8Flag) {
                 $textContent = toUTF8($textContent);
             }
@@ -1731,7 +1735,7 @@ function fncSetTextContent($record, $key, $toUTF8Flag)
             break;
         // 明細備考
         case "strdetailnote":
-            $textContent = $record["strnote"];
+            $textContent = $record["strdetailnote"];
             if ($toUTF8Flag) {
                 $textContent = toUTF8($textContent);
             }

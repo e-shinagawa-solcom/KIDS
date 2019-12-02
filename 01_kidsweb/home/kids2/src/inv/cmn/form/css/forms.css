@@ -241,6 +241,15 @@ img.toggle-display
     background-color: #e8f0f1;
 }
 
+.regist-label__text20
+{
+    display: inline-block;
+    width: 20px;
+    font-weight: bold;
+    background-color: #e8f0f1;
+    text-align: right;
+}
+
 .regist-label__text50
 {
     display: inline-block;
@@ -347,7 +356,7 @@ img.toggle-display
 .regist-box-area
 {
     text-align: left;
-    width: 911px;
+    width: 928px;
 
 }
 .regist-box1
@@ -375,7 +384,7 @@ img.toggle-display
 .regist-box3
 {
   float: left;
-  width: 250px;
+  width: 260px;
 }
 .regist-clear {
   border: none;

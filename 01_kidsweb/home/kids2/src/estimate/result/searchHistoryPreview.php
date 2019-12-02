@@ -15,6 +15,7 @@ include 'conf.inc';
 require LIB_FILE;
 include 'JSON.php';
 require_once (SRC_ROOT. "estimate/cmn/makeHTML.php");
+require SRC_ROOT . "search/cmn/lib_search.php";
 
 //値の取得
 $postdata = file_get_contents("php://input");
@@ -261,12 +262,9 @@ $body = '';
 for ($i = 0; $i < $lngResultNum; ++$i) {
 
 	$result = pg_fetch_array($lngResultID, $i, PGSQL_ASSOC);
-    // 背景色設定
-    if ($record["lngrevisionno"] < 0) {
-        $bgcolor = "background-color: #B3E0FF;";
-    } else {
-        $bgcolor = "background-color: #FEEF8B;";
-    }
+    
+	$bgcolor = fncSetBgColor('estimate', $result["lngestimateno"], true, $objDB);
+	
 	$estimateNo = htmlspecialchars($result['lngestimateno'], ENT_QUOTES);
 
 	$body .= "<tr id=\"". ($estimateNo."_".$result["lngrevisionno"]). "\" class=\"estimate_search_result\" style=\"" . $bgcolor . "\ onclick=\"fncSelectTrColor( this );\">";

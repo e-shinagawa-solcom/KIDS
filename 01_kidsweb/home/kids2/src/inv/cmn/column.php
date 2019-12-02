@@ -54,6 +54,7 @@ $aryHeadColumnNames["curTaxPrice1"]         = "消費税額";
 $aryHeadColumnNames["dtmInsertDate"]        = "作成日";
 $aryHeadColumnNames["strUser"]              = "担当者";
 $aryHeadColumnNames["strInsertUser"]        = "作成者" ;
+$aryHeadColumnNames["description"]          = "但し書き";
 $aryHeadColumnNames["strNote"]              = "備考";
 $aryHeadColumnNames["lngPrintCount"]        = "印刷回数";
 

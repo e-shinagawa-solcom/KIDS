@@ -47,6 +47,8 @@ $aryQuery[] = ", p.strProductName as strProductName";
 $aryQuery[] = ", r.strCompanyDisplayCode as strCustomerDisplayCode"; // ¸ÜµÒ¥³¡¼¥É¡¦Ì¾¾Î
 $aryQuery[] = ", r.strCompanyDisplayName as strCustomerDisplayName";
 $aryQuery[] = ", p.lngproductno as lngproductno";
+$aryQuery[] = ", sd.lngsalesdivisioncode"; // Çä¾å¶èÊ¬
+$aryQuery[] = ", sd.strsalesdivisionname";
 $aryQuery[] = ", rd.lngSalesClassCode as lngSalesClassCode"; // Çä¾å¶èÊ¬
 $aryQuery[] = ", ss.strSalesClassName as strSalesClassName";
 $aryQuery[] = ", p.strGoodsCode as strGoodsCode"; // ¸ÜµÒÉÊÈÖ
@@ -84,17 +86,8 @@ $aryQuery[] = "      LEFT JOIN m_Company cust_c ";
 $aryQuery[] = "        ON r1.lngCustomerCompanyCode = cust_c.lngCompanyCode ";
 $aryQuery[] = "    WHERE";
 $aryQuery[] = "      r1.lngreceivestatuscode = " . DEF_RECEIVE_APPLICATE ." ";
-if ($aryData["strReceiveCode"] != "") {
-    $aryQuery[] = " AND r1.strReceiveCode = '" . $aryData["strReceiveCode"] . "' ";
-}
 if ($aryData["lngCustomerCode"] != "") {
     $aryQuery[] = " AND cust_c.strCompanyDisplayCode = '" . $aryData["lngCustomerCode"] . "' ";
-}
-if ($aryData["From_dtmDeliveryDate"] != "") {
-    $aryQuery[] = " AND r1.dtmDeliveryDate >= '" . $aryData["From_dtmDeliveryDate"] . "' ";
-}
-if ($aryData["To_dtmDeliveryDate"] != "") {
-    $aryQuery[] = " AND r1.dtmDeliveryDate <= '" . $aryData["To_dtmDeliveryDate"] . "' ";
 }
 $aryQuery[] = " ) r USING (lngReceiveNo, lngRevisionNo)";    
 $aryQuery[] = "        LEFT JOIN (";
@@ -103,18 +96,38 @@ $aryQuery[] = "        	inner join (select max(lngrevisionno) lngrevisionno, str
 $aryQuery[] = "            on p1.lngrevisionno = p2.lngrevisionno and p1.strproductcode = p2.strproductcode";
 $aryQuery[] = "          ) p ";
 $aryQuery[] = "          ON rd.strProductCode = p.strProductCode AND rd.strrevisecode = p.strrevisecode ";
-$aryQuery[] = " LEFT JOIN m_SalesClass ss USING (lngSalesClassCode)";
+$aryQuery[] = " LEFT JOIN m_SalesClass ss on rd.lngSalesClassCode = ss.lngSalesClassCode";
+$aryQuery[] = " LEFT JOIN m_salesclassdivisonlink ssdl on ssdl.lngSalesClassCode = ss.lngSalesClassCode";
+$aryQuery[] = " LEFT JOIN m_salesdivision sd on sd.lngsalesdivisioncode = ssdl.lngsalesdivisioncode";
 $aryQuery[] = " LEFT JOIN m_ProductUnit pu ON rd.lngProductUnitCode = pu.lngProductUnitCode";
-$aryQuery[] = " LEFT JOIN t_estimatedetail ed USING (lngestimateno, lngestimatedetailno)";
+$aryQuery[] = " LEFT JOIN t_estimatedetail ed on ed.lngestimateno = rd.lngestimateno";
+$aryQuery[] = " and ed.lngrevisionno = rd.lngestimaterevisionno";
+$aryQuery[] = " and ed.lngestimatedetailno = rd.lngestimatedetailno";
 $aryQuery[] = " WHERE not exists (select strreceivecode from m_receive where lngrevisionno < 0  and strreceivecode = r.strreceivecode)";
 
 if ($aryData["strProductCode"] != "") {
-    $aryQuery[] = " and rd.strProductCode = '" . $aryData["strProductCode"] . "' ";
+    if (strpos($aryData["strProductCode"], '_') !== false) {
+        $aryQuery[] = " AND rd.strProductCode = '" . explode("_", $aryData["strProductCode"])[0] . "'";
+        $aryQuery[] = " AND rd.strrevisecode = '" . explode("_", $aryData["strProductCode"])[1] . "'";
+    } else {
+        $aryQuery[] = " AND rd.strProductCode = '" . $aryData["strProductCode"] . "'";
+    }
+}
+if ($aryData["lngSalesDivisionCode"] != "") {
+    $aryQuery[] = " AND sd.lngSalesDivisionCode = '" . $aryData["lngSalesDivisionCode"] . "' ";
+}
+if ($aryData["lngSalesClassCode"] != "") {
+    $aryQuery[] = " AND rd.lngSalesClassCode = '" . $aryData["lngSalesClassCode"] . "' ";
+}
+if ($aryData["From_dtmDeliveryDate"] != "") {
+    $aryQuery[] = " AND rd.dtmDeliveryDate >= '" . $aryData["From_dtmDeliveryDate"] . "' ";
+}
+if ($aryData["To_dtmDeliveryDate"] != "") {
+    $aryQuery[] = " AND rd.dtmDeliveryDate <= '" . $aryData["To_dtmDeliveryDate"] . "' ";
 }
 $aryQuery[] = " ORDER BY rd.lngSortKey ASC ";
 
 $strQuery = implode("\n", $aryQuery);
-
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 $result = array();
 if ($lngResultNum) {

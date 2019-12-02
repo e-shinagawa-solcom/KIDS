@@ -31,7 +31,7 @@
             window.opener.$('#lockId').remove();
         }
     });
-    $('input[name="lngCustomerCode"]').change();
+
     var parantExistanceFlag = true;
 
     // 検索ボタン押下時の処理
@@ -45,10 +45,19 @@
 
             //親画面に値を挿入
             if (parantExistanceFlag) {
+                var strProductCode = $('input[name="strProductCode"]').val();
+                var strProductName = $('input[name="strProductName"]').val();
+                if (strProductCode.length == 0) {
+                    alert("製品コードを設定してください。");
+                    return;
+                }
 
-                var lngCustomerCode = $('input[name="lngCustomerCode"]').val();
-                if (lngCustomerCode.length == 0) {
-                    alert("顧客コードを設定してください。")
+                // 親製品コード
+                var parentStrProductCode = window.opener.$('input[name="strProductCode"]').val();
+                var lngSalesDivisionCode = $('select[name="lngSalesDivisionCode"] option:selected').val();
+                if (lngSalesDivisionCode === undefined) {
+                    alert("売上分類コードを設定してください。");
+                    return;
                 }
                 var formData = workForm.serializeArray();
                 // リクエスト送信
@@ -61,11 +70,27 @@
                     .done(function (response) {
                         console.log("取得データ：" + response);
                         var response = JSON.parse(response);
-                        var data = response.result;                        
                         if (response.count == 0) {
                             alert("該当する受注明細が存在しません。");
+                            exit;
                         }
-                        
+
+                        let changeCode = false;
+
+                        if (parentStrProductCode != strProductCode) {
+                            var msg = '選択された明細を全てクリアしますが、よろしいですか？';
+                            var $tableA_rows = window.opener.$('#tbl_detail tbody tr');
+                            var $tableA_rows_length = $tableA_rows.length;
+                            var warn = ($tableA_rows_length > 0) ? true : false;
+                            if (warn && window.confirm(msg) === false) {
+                                exit;
+                            }
+                            window.opener.$('input[name="strProductCode"]').val(strProductCode);
+                            window.opener.$('#tbl_detail tbody tr').remove();
+                            window.opener.$('#tbl_detail_chkbox tbody tr').remove();
+                        }
+
+                        var data = response.result;
                         var tblchkbox = window.opener.$("#tbl_detail_chkbox");
                         var tbl = window.opener.$("#tbl_detail");
                         var tmp_id = "";
@@ -79,30 +104,30 @@
                                     isInserted = true;
                                 }
                             });
+                            var strProductName = row.strproductname;
 
                             if (!isInserted) {
                                 var chkboxstr = '<tr><td style="width: 30px;">'
                                     + '<input id="' + chkbox_id + '" style="width: 10px;" type="checkbox">'
                                     + '</td></tr>';
                                 tblchkbox.append(chkboxstr);
-
                                 var detailstr = '<tr>'
                                     + '<td style="width: 25px;"></td>'
-                                    + '<td style="width: 100px;">' + row.strreceivecode + '</td>'
-                                    + '<td style="width: 70px;">' + row.lngreceivedetailno + '</td>'
-                                    + '<td style="width: 250px;" nowrap>[' + convertNull(row.strproductcode) + '] ' + convertNull(row.strproductname) + '</td>'
-                                    + '<td>' + convertNull(row.dtmdeliverydate) + '</td>'
-                                    + '<td style="width: 120px;">[' + convertNull(row.lngsalesclasscode) + '] ' + convertNull(row.strsalesclassname) + '</td>'
-                                    + '<td style="width: 250px;">[' + convertNull(row.strcustomerdisplaycode) + '] ' + convertNull(row.strcustomerdisplayname) + '</td>'
+                                    + '<td style="width: 49px;">' + row.lngreceivedetailno + '</td>'
+                                    + '<td style="width: 249px;">[' + convertNull(row.strcustomerdisplaycode) + '] ' + convertNull(row.strcustomerdisplayname) + '</td>'
+                                    + '<td style="width: 119px;">[' + convertNull(row.lngsalesdivisioncode) + '] ' + convertNull(row.strsalesdivisionname) + '</td>'
+                                    + '<td style="width: 119px;">[' + convertNull(row.lngsalesclasscode) + '] ' + convertNull(row.strsalesclassname) + '</td>'
+                                    + '<td style="width: 119px;">' + convertNull(row.dtmdeliverydate) + '</td>'
                                     + '</tr>';
-
                                 tbl.append(detailstr);
                             }
                         }
 
                         tbl.find('tr').each(function (i, e) {
-                            $(this).find('td').first().html(i+1);
+                            $(this).find('td').first().html(i + 1);
                         });
+                        
+                        window.opener.$('input[name="strProductName"]').val(strProductName);
                     })
                     .fail(function (response) {
                         console.log("処理結果：" + JSON.stringify(response));
@@ -125,8 +150,8 @@
     });
 })();
 
- 
-$(window).on("beforeunload", function(e) {
+
+$(window).on("beforeunload", function (e) {
     // 親ウィンドウのロックを解除する
     if (window.opener.$('#lockId').length) {
         window.opener.$('#lockId').remove();

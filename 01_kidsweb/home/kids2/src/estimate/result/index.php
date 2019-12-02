@@ -20,6 +20,7 @@ require_once SRC_ROOT . '/mold/lib/UtilSearchForm.class.php';
 // ライブラリ読み込み
 require_once LIB_FILE;
 require_once SRC_ROOT . "estimate/cmn/makeHTML.php";
+require SRC_ROOT . "search/cmn/lib_search.php";
 
 // DB接続
 $objDB = new clsDB();
@@ -389,7 +390,7 @@ if (!count($strErrorMessage)) {
     }
 
     $strQuery = $selectQuery . $where . $orderBy;
-    
+
     list($resultID, $resultNum) = fncQuery($strQuery, $objDB);
     if ($resultNum > 1000) {
         $strErrorMessage = fncOutputError(9057, DEF_WARNING, "1000", false, "/estimate/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
@@ -487,14 +488,9 @@ $body = '';
 
 for ($i = 0; $i < $resultNum; ++$i) {
 
-	$result = pg_fetch_array($resultID, $i, PGSQL_ASSOC);
-    // 背景色設定
-    if ($result["lngrevisionno"] < 0) {
-        $bgcolor = "background-color: #B3E0FF;";
-    } else {
-        $bgcolor = "background-color: #FFB2B2;";
-	}
-	
+    $result = pg_fetch_array($resultID, $i, PGSQL_ASSOC);
+    
+    $bgcolor = fncSetBgColor('estimate', $result["lngestimateno"], true, $objDB);
 
     $estimateNo = htmlspecialchars($result['lngestimateno'], ENT_QUOTES);
 
@@ -507,15 +503,14 @@ for ($i = 0; $i < $resultNum; ++$i) {
     foreach ($displayColumns as $column) {
         if ($column === 'btnDetail') { // 詳細
             $body .= "<td align=\"center\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $resultNum . "_',1 );\">";
-            $body .= "<button type=\"button\" class=\"cells btnDetail\" action=\"/estimate/preview/index.php?strSessionID=" . $strSessionID . "&estimateNo=" . $estimateNo . "\" value=\"" . $result['lngrevisionno'] . "\">";
-            $body .= "<img onmouseover=\"DetailOn(this);\" onmouseout=\"DetailOff(this);\" src=\"/img/type01/pc/detail_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"DETAIL\">";
+            // $body .= "<button type=\"button\" class=\"cells btnDetail\" action=\"/estimate/preview/index.php?strSessionID=" . $strSessionID . "&estimateNo=" . $estimateNo . "\" value=\"" . $result['lngrevisionno'] . "\">";
+            $body .= "<img src=\"/img/type01/pc/detail_off_bt.gif\" class=\"detail button\" width=\"15\" height=\"15\" border=\"0\" alt=\"DETAIL\" action=\"/estimate/preview/index.php?strSessionID=" . $strSessionID . "&estimateNo=" . $estimateNo . "\" value=\"" . $result['lngrevisionno'] . "\">";
             $body .= "</button></td>";
 
         } else if ($column === 'btnHistory') { // 履歴
             if ($result["lngrevisionno"] <> 0) {
                 $body .= "<td align=\"center\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $resultNum . "_',1 );\">";
-                $body .= "<button type=\"button\" class=\"cells btnHistory\" rownum=\"" . $number . "\" estimateNo=\"" . $estimateNo . "\" revisionNo=\"" . $result['lngrevisionno'] . "\" >";
-                $body .= "<img onmouseover=\"RenewOn(this);\" onmouseout=\"RenewOff(this);\" src=\"/img/type01/pc/renew_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"HISTORY\">";
+                $body .= "<img src=\"/img/type01/pc/renew_off_bt.gif\" class=\"history button\"  width=\"15\" height=\"15\" border=\"0\" alt=\"HISTORY\"  rownum=\"" . $number . "\" estimateNo=\"" . $estimateNo . "\" revisionNo=\"" . $result['lngrevisionno'] . "\">";
                 $body .= "</button></td>";
             } else {
                 $body .= "<td nowrap align=\"left\"></td>";
@@ -524,8 +519,7 @@ for ($i = 0; $i < $resultNum; ++$i) {
 		} else if ($column === 'btnDelete') { // 削除
             if (!array_key_exists("admin", $optionColumns) and $result['deleteflag'] === 'f') {
                 $body .= "<td align=\"center\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $resultNum . "_',1 );\">";
-                $body .= "<button type=\"button\" class=\"cells btnDelete\" action=\"/estimate/delete/index.php\" value=\"" . $result['lngrevisionno'] . "\">";
-                $body .= "<img onmouseover=\"RemoveOn(this);\" onmouseout=\"RemoveOff(this);\" src=\"/img/type01/pc/delete_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"DELETE\">";
+                $body .= "<img src=\"/img/type01/pc/delete_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"DELETE\" class=\"delete button\" action=\"/estimate/delete/index.php\" value=\"" . $result['lngrevisionno'] . "\">";
 
                 $body .= "</button></td>";
             } else {

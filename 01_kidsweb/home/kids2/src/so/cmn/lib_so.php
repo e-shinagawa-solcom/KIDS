@@ -41,6 +41,10 @@ function fncGetReceiveHeadNoToInfoSQL($lngReceiveNo, $lngRevisionNo, $lngreceive
     $aryQuery[] = ", r.strCustomerReceiveCode as strCustomerReceiveCode";
     // 受注コード
     $aryQuery[] = ", r.strReceiveCode as strReceiveCode";
+    // 製品コード
+    $aryQuery[] = "  , p.strproductcode";
+    $aryQuery[] = "  , p.strproductname";
+    $aryQuery[] = "  , p.strrevisecode";
     // 入力者
     $aryQuery[] = ", r.lngInputUserCode as lngInputUserCode";
     $aryQuery[] = ", input_u.strUserDisplayCode as strInputUserDisplayCode";
@@ -83,7 +87,44 @@ function fncGetReceiveHeadNoToInfoSQL($lngReceiveNo, $lngRevisionNo, $lngreceive
         $aryQuery[] = "    on r.lngrevisionno = r1.lngRevisionNo ";
         $aryQuery[] = "    and r.strreceivecode = r1.strReceiveCode ";
     }
-    $aryQuery[] = " LEFT JOIN t_ReceiveDetail USING (lngReceiveNo)";
+    $aryQuery[] = "  LEFT JOIN t_ReceiveDetail rd ";
+    $aryQuery[] = "    USING (lngReceiveNo) ";
+    $aryQuery[] = "  LEFT JOIN ( ";
+    $aryQuery[] = "    select";
+    $aryQuery[] = "      p1.strproductcode";
+    $aryQuery[] = "      , p1.strproductname";
+    $aryQuery[] = "	  , p1.strrevisecode";
+    $aryQuery[] = "    from";
+    $aryQuery[] = "      m_product p1 ";
+    $aryQuery[] = "      inner join ( ";
+    $aryQuery[] = "        select";
+    $aryQuery[] = "          max(p2.lngRevisionNo) lngRevisionNo";
+    $aryQuery[] = "          , p2.strproductcode";
+    $aryQuery[] = "          , p2.strrevisecode ";
+    $aryQuery[] = "        from";
+    $aryQuery[] = "          m_Product p2 ";
+    $aryQuery[] = "        where";
+    $aryQuery[] = "          p2.bytinvalidflag = false ";
+    $aryQuery[] = "          and not exists ( ";
+    $aryQuery[] = "            select";
+    $aryQuery[] = "              strproductcode ";
+    $aryQuery[] = "            from";
+    $aryQuery[] = "              m_product p3 ";
+    $aryQuery[] = "            where";
+    $aryQuery[] = "              p3.lngRevisionNo < 0 ";
+    $aryQuery[] = "              and p3.strproductcode = p2.strproductcode ";
+    $aryQuery[] = "              and p3.strrevisecode = p2.strrevisecode";
+    $aryQuery[] = "          ) ";
+    $aryQuery[] = "        group by";
+    $aryQuery[] = "          p2.strProductCode";
+    $aryQuery[] = "          , p2.strrevisecode";
+    $aryQuery[] = "      ) p4 ";
+    $aryQuery[] = "        on p1.lngRevisionNo = p4.lngRevisionNo ";
+    $aryQuery[] = "        and p1.strproductcode = p4.strproductcode ";
+    $aryQuery[] = "        and p1.strrevisecode = p4.strrevisecode";
+    $aryQuery[] = "  ) p ";
+    $aryQuery[] = "    ON rd.strProductCode = p.strProductCode ";
+    $aryQuery[] = "    and rd.strrevisecode = p.strrevisecode ";
     $aryQuery[] = " LEFT JOIN m_User input_u ON r.lngInputUserCode = input_u.lngUserCode";
     $aryQuery[] = " LEFT JOIN m_Company cust_c ON r.lngCustomerCompanyCode = cust_c.lngCompanyCode";
     $aryQuery[] = " LEFT JOIN m_Group inchg_g ON r.lngGroupCode = inchg_g.lngGroupCode";
@@ -100,7 +141,7 @@ function fncGetReceiveHeadNoToInfoSQL($lngReceiveNo, $lngRevisionNo, $lngreceive
     }
 
     $strQuery = implode("\n", $aryQuery);
-
+    
     return $strQuery;
 }
 
@@ -126,6 +167,9 @@ function fncGetReceiveDetailNoToInfoSQL($lngReceiveNo, $lngRevisionNo)
     // 売上区分
     $aryQuery[] = ", rd.lngSalesClassCode as lngSalesClassCode";
     $aryQuery[] = ", ss.strSalesClassName as strSalesClassName";
+    // 売上分類
+    $aryQuery[] = ", sd.lngsalesdivisioncode";
+    $aryQuery[] = ", sd.strsalesdivisionname";
     // 顧客品番
     $aryQuery[] = ", p.strGoodsCode as strGoodsCode";
     // 納期
@@ -163,7 +207,9 @@ function fncGetReceiveDetailNoToInfoSQL($lngReceiveNo, $lngRevisionNo)
     $aryQuery[] = "   on p1.lngrevisionno = p2.lngrevisionno and p1.strproductcode = p2.strproductcode and p1.strrevisecode = p2.strrevisecode";
     $aryQuery[] = ") p ";
     $aryQuery[] = " ON rd.strProductCode = p.strProductCode and rd.strrevisecode = p.strrevisecode ";
-    $aryQuery[] = " LEFT JOIN m_SalesClass ss USING (lngSalesClassCode)";
+    $aryQuery[] = " LEFT JOIN m_SalesClass ss on rd.lngSalesClassCode = ss.lngSalesClassCode";
+    $aryQuery[] = " LEFT JOIN m_salesclassdivisonlink ssdl on ssdl.lngSalesClassCode = ss.lngSalesClassCode";
+    $aryQuery[] = " LEFT JOIN m_salesdivision sd on sd.lngsalesdivisioncode = ssdl.lngsalesdivisioncode";
     $aryQuery[] = " LEFT JOIN m_ProductUnit pu ON rd.lngProductUnitCode = pu.lngProductUnitCode";
     $aryQuery[] = " WHERE rd.lngReceiveNo in (" . $lngReceiveNo . ") ";
     if ($lngRevisionNo != "") {

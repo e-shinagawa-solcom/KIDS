@@ -23,18 +23,6 @@
             $(this).blur();
         }
     });
-
-    // 受注コードの書式チェック
-    $.validator.addMethod(
-        "checkStrReceiveCode",
-        function (value, element, params) {
-            if (params) {
-                return this.optional(element) || /^d\d{8}(_\d{2})?$/.test(value);
-            }
-            return true;
-        },
-        msgSpecialFormat
-    );
 　　// 製品コードの書式チェック
     $.validator.addMethod(
         "checkStrProductCode",

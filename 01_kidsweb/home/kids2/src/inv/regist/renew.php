@@ -156,7 +156,6 @@
         {
             MoveToErrorPage("締済みのため、修正できません");
         }
-
         // DB登録の為のデータ配列を返す
         $insertData = fncInvoiceInsertReturnArray($aryData, $aryResult, $objAuth, $objDB);
 

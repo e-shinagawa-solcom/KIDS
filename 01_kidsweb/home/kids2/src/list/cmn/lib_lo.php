@@ -576,6 +576,7 @@ function fncGetListOutputQuery($lngClassCode, $lngKeyCode, $objDB)
         $aryQuery[] = "  , to_char(i.dtmchargeternend, 'ddÆü') as dtmchargeternend_day";
         $aryQuery[] = "  , id.detailcount";
         $aryQuery[] = "  , i.strnote";
+        $aryQuery[] = "  , i.description";
         $aryQuery[] = "  , i.strusername";
         $aryQuery[] = "  , to_char(i.dtminsertdate, 'yyyy/mm/dd') as dtminsertdate ";
         $aryQuery[] = "FROM";

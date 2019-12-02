@@ -81,7 +81,7 @@
                 <div class="regist-box2">
                     <span class="regist-label  regist-label-w190"">
                         <span class="regist-label__text50">ÀÁµá·î</span>
-                        <input id="invoiceMonth"  class="TxtStyle05L" name="From_strInvoiceMonth" readonly >
+                        <input id="invoiceMonth"  class="TxtStyle05L" name="From_strInvoiceMonth">
                         </input>
                         <span class="regist-label__bold">·îÊ¬</span>
                     </span>
@@ -89,8 +89,9 @@
                 </div>
                 <div class="regist-box3">
                     <span class="regist-label regist-label-box3">
-                        <span class="regist-label__text130">Àè·îÀÁµá»Ä³Û(ÀÇ¹þ)</span>
-                        <input class="disTxt14R" name="curlastmonthbalance" type="text" readonly>
+                        <span class="regist-label__text115">Á°·îÀÁµá»Ä³Û(ÀÇ¹þ)</span>
+                        <span class="regist-label__text20 moneyclass"></span>
+                        <input class="disTxt14R" name="curlastmonthbalance" type="text" value="0">
                     </span>
                 </div>
                 <div class="regist-clear"></div>
@@ -120,7 +121,8 @@
                 </div>
                 <div class="regist-box3">
                     <span class="regist-label regist-label-box3">
-                        <span class="regist-label__text130">Åö·îÀÁµá³Û</span>
+                        <span class="regist-label__text115">Åö·îÀÁµá³Û</span>
+                        <span class="regist-label__text20 moneyclass"></span>
                         <input class="disTxt14R" name="curthismonthamount" type="text" readonly>
                     </span>
                 </div>
@@ -130,9 +132,14 @@
             <div class="regist-box-area">
                 <div class="regist-box1">
                     <div class="regist-line regist-float">
-                        <span class="regist-label w-465">
+                        <span class="regist-label w-465" style="height:58px;">
                             <span class="regist-label__text50">È÷¹Í</span>
-                            <input class="disTxt4xL" name="strnote" type="text"  onfocus="chColorOn(this);" onblur="chColorOff(this);" >
+                            <span class="regist-label__required-mark">¡ý</span>
+                            <span class="regist-label__text50">Ã¢¤·</span>
+                            <input class="TxtStyle04L" name="description" type="text">
+                            <span class="regist-label__text50">Âå¤È¤·¤Æ</span>
+                            <br><br><span class="regist-label__text50"></span>
+                            <input class="Txt54L" name="strnote" type="text"  onfocus="chColorOn(this);" onblur="chColorOff(this);" >
                         </span>
                     </div>
                 </div>
@@ -145,21 +152,13 @@
                 </div>
                 <div class="regist-box3">
                     <span class="regist-label regist-label-box3">
-                        <span class="regist-label__text130">¾ÃÈñÀÇ</span>
+                        <span class="regist-label__text115">¾ÃÈñÀÇ</span>
+                        <span class="regist-label__text20 moneyclass"></span>
                         <input class="disTxt14R" name="curtaxprice" type="text" readonly>
                     </span>
                 </div>
-                <div class="regist-clear"></div>
-            </div>
-
-            <div class="regist-box-area">
-                <div class="regist-box1">
-                    <div class="regist-line regist-float">
-                        <span style="display:none;"></span>
-                    </div>
-                </div>
                 <div class="regist-box2">
-                    <span class="regist-label regist-label-w190">
+                    <span class="regist-label regist-label-w190" style="margin-top:5px;" >
                         <span class="regist-label__text177">
                             ºÆ°õºþ¤òÈ÷¹Í¤ËÌÀµ­¤¹¤ë<input name="strnotecheck" class="is-search" type="checkbox">
                         </span>
@@ -167,11 +166,16 @@
 
                 </div>
                 <div class="regist-box3">
-                    <span class="regist-label regist-label-box3">
-                        <span class="regist-label__text130">º¹¤·°ú¤­¹ç·×³Û</span>
+                    <span class="regist-label regist-label-box3" style="margin-top:5px;">
+                        <span class="regist-label__text115">º¹¤·°ú¤­¹ç·×³Û</span>
+                        <span class="regist-label__text20 moneyclass"></span>
                         <input class="disTxt14R" name="notaxcurthismonthamount" type="text" readonly>
                     </span>
                 </div>
+            </div>
+
+            <div class="regist-box-area">
+                
                 <div class="regist-clear"></div>
             </div>
             <hr />

@@ -60,8 +60,8 @@ function fncGetMaxReceiveSQL($displayColumns, $searchColumns, $from, $to, $searc
     $aryQuery[] = "  , r.strCustomerReceiveCode as strCustomerReceiveCode";
     $aryQuery[] = "  , r.strReceiveCode";
     $aryQuery[] = "  , r.strReceiveCode as strCode";
-    $aryQuery[] = "  , cust_c.strCompanyDisplayCode as strCustomerDisplayCode";
-    $aryQuery[] = "  , cust_c.strCompanyDisplayName as strCustomerDisplayName";
+    $aryQuery[] = "  , cust_c.strCompanyDisplayCode as strcompanydisplaycode";
+    $aryQuery[] = "  , cust_c.strCompanyDisplayName as strcompanydisplayname";
     $aryQuery[] = "  , to_char(rd.dtmDeliveryDate, 'YYYY/MM/DD') as dtmDeliveryDate";
     $aryQuery[] = "  , r.lngReceiveStatusCode as lngReceiveStatusCode";
     $aryQuery[] = "  , rs.strReceiveStatusName as strReceiveStatusName";
