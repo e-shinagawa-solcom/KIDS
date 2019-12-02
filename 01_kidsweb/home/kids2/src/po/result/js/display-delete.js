@@ -1,8 +1,8 @@
 
 (function(){
-    $('img.remove.button').on('click', function(){
+    $('img.cancel.button').on('click', function(){
         url = '/po/result/index3.php';
-        lngorderno = 'lngOrderNo=' + $(this).attr('lngorderno');
+        lngorderno = 'lngOrderNo=' + $(this).attr('id');
         sessionID = 'strSessionID=' + getUrlVars()["strSessionID"];
 
         // 別ウィンドウで表示
