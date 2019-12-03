@@ -103,6 +103,7 @@ function SetSearchConditionWindowValue(search_condition) {
                 // 81°Ê³°¡§¡ÖÈó²ÝÀÇ¡×¸ÇÄê
                 $("select[name='lngTaxClassCode']").val("1");
                 $("select[name='lngTaxClassCode'] option:not(:selected)").prop('disabled', true);
+                $('select[name="lngTaxRate"]').val('');
             }
         }).fail(function (error) {
             console.log("fail:get-lngcountrycode");
@@ -511,6 +512,8 @@ jQuery(function ($) {
             dtmpaymentlimit: $('input[name="dtmPaymentLimit"]').val(),
             //»ÙÊ§ÊýË¡
             lngpaymentmethodcode: $('select[name="lngPaymentMethodCode"]').children('option:selected').val(),
+            //»ÙÊ§ÊýË¡
+            strpaymentmethodname: $('select[name="lngPaymentMethodCode"]').children('option:selected').text(),
             //¹ç·×¶â³Û
             curtotalprice: $('input[name="strTotalAmount"]').val(),
         };

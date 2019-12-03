@@ -1917,8 +1917,6 @@ function fncGenerateReportImage($strMode, $aryHeader, $aryDetail,
 
             }
         } else if ($lngSlipKindCode == 3) {
-            
-
                 // // 日本語対応
                 ini_set('default_charset', 'EUC-JP');
             $strTemplateHeaderPath = "list/result/slip_debit_header.html";
@@ -1943,7 +1941,8 @@ function fncGenerateReportImage($strMode, $aryHeader, $aryDetail,
             // 合計金額
             $curTotalPrice = ($lngmonetaryunitcode == 1 ? "&yen; " : $strmonetaryunitsign) . " " . number_format($aryHeader["curtotalprice"], 2, '.', ',');
 
-            $aryParts["curtotalprice"] = $curTotalPrice;
+            $aryParts["curtotalprice"] = $curTotalPrice;            
+            $aryParts["strpaymentmethodname"] = $aryHeader["strpaymentmethodname"];
             $aryParts["nameofbank"] = $aryHeader["lngpaymentmethodcode"] == 1 ? "MUFG BANK, LTD." : "";
             $aryParts["nameofbranch"] = $aryHeader["lngpaymentmethodcode"] == 1 ? "ASAKUSA BRANCH" : "";
             $aryParts["addressofbank1"] = $aryHeader["lngpaymentmethodcode"] == 1 ? "4-2, ASAKUSA 1-CHOME, " : "";
