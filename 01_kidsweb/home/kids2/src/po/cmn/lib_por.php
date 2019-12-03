@@ -40,6 +40,7 @@ function fncGetOrder_r($lngOrderNo, $objDB)
     // $aryQuery[] = "  ,mo.dtmexpirationdate";
     $aryQuery[] = "  ,TO_CHAR(NOW(), 'YYYY/MM/DD') AS dtmexpirationdate";
     $aryQuery[] = "  ,od.strproductcode";
+    $aryQuery[] = "  ,od.strrevisecode";
     $aryQuery[] = "  ,mo.lngpayconditioncode";
     $aryQuery[] = "  ,mo.lngmonetaryunitcode";
     $aryQuery[] = "  ,mc.strcompanydisplaycode";
@@ -125,7 +126,38 @@ function fncGetOrder_r($lngOrderNo, $objDB)
     $objDB->freeResult($lngResultID);
     return $aryResult;
 }
+/**
+ * 排他制御チェック
+ *
+ * @param [type] $lngFunctionCode
+ * @param [type] $strProductCode
+ * @param [type] $lngRevisionNo
+ * @param [type] $objDB
+ * @return void [true：排他制御発生　false：排他制御発生していない]
+ */
+function fncCheckExclusiveControl($lngFunctionCode, $strProductCode, $lngRevisionNo, $objDB)
+{
+    $strQuery = "select";
+    $strQuery .= "  lngfunctioncode,strexclusivekey1,strexclusivekey2  ";
+    $strQuery .= "from";
+    $strQuery .= "  t_exclusivecontrol ";
+    $strQuery .= "where";
+    $strQuery .= "  lngfunctioncode = " . $lngFunctionCode;
+    $strQuery .= "  and strexclusivekey1 = '" . $strProductCode . "' ";
+    $strQuery .= "  and strexclusivekey2 = '" . $lngRevisionNo . "' ";
 
+    // 検索クエリーの実行
+    list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
+
+    if ($lngResultNum >= 1) {
+        $result = true;
+    } else {
+        $result = false;
+    }
+    $objDB->freeResult($lngResultID);
+
+    return $result;
+}
 /**
  * 会社マスタ検索
  *

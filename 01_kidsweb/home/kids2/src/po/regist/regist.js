@@ -394,6 +394,7 @@ jQuery(function ($) {
                 lngLocationCode: $('input[name="lngLocationCode"]').val(),
                 strNote: $('input[name="strNote"]').val(),
                 strProductCode: $('input[name="strProductCode"]').val(),
+                strReviseCode: $('input[name="strReviseCode"]').val(),
                 aryDetail: getUpdateDetail(),
             },
             async: true,

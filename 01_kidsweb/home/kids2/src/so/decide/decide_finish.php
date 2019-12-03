@@ -43,7 +43,7 @@ if (!fncCheckAuthority(DEF_FUNCTION_SO4, $objAuth)) {
 }
 
 // 排他制御チェック
-if (fncCheckExclusiveControl(DEF_FUNCTION_E3, $aryData["detailData"][0]["strProductCode_product"], $aryData["detailData"][0]["lngRevisionNo_product"], $objDB)) {
+if (fncCheckExclusiveControl(DEF_FUNCTION_E3, $aryData["detailData"][0]["strProductCode_product"], $aryData["detailData"][0]["strReviseCode"], $objDB)) {
     fncOutputError(9213, DEF_ERROR, "", true, "../so/decide/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
 }
 

@@ -51,6 +51,7 @@ $aryQuery[] = ", rd.strProductCode as strProductCode";// 製品コード・名称
 $aryQuery[] = ", p.strProductName as strProductName";
 $aryQuery[] = ", p.lngProductNo as lngProductNo";
 $aryQuery[] = ", p.lngRevisionNo as lngProductRevisionNo";
+$aryQuery[] = ", p.strrevisecode as strrevisecode";
 $aryQuery[] = ", r.strCompanyDisplayCode as strCompanyDisplayCode";// 顧客コード・名称
 $aryQuery[] = ", r.strCompanyDisplayName as strCompanyDisplayName";
 $aryQuery[] = ", p.lngproductno as lngproductno";

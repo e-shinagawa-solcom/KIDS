@@ -892,12 +892,7 @@ function fncGetCustomerCompanyName($lngCountryCode, $aryCompanyInfo)
 // 顧客名を取得
 function fncGetCustomerName($aryCompanyInfo)
 {
-    // m_companyprintnameが見つかった場合はm_company.strcompanyname（設計書より）
-    if (strlen($aryCompanyInfo["strprintcompanyname"]) != 0) {
-        return $aryCompanyInfo["strcompanyname"];
-    } else {
-        return null;
-    }
+    return $aryCompanyInfo["strcompanyname"];
 }
 
 // ユーザーコードに紐づくユーザー情報を取得
@@ -1372,7 +1367,7 @@ function fncRegisterSalesDetail($itemMinIndex, $itemMaxIndex, $lngSalesNo, $lngR
         $v_lngproductquantity = $d["lngproductquantity"]; //10:製品数量
         $v_lngproductunitcode = $d["lngproductunitcode"]; //11:製品単位コード
         $v_lngtaxclasscode = $aryHeader["lngtaxclasscode"]; //12:消費税区分コード
-        $v_lngtaxcode = $aryHeader["lngtaxcode"]; //13:消費税率コード
+        $v_lngtaxcode = nullIfEmpty($aryHeader["lngtaxcode"]); //13:消費税率コード
         $v_curtaxprice = $curTaxPrice; //14:消費税金額
         $v_cursubtotalprice = $d["cursubtotalprice"]; //15:小計金額
         $v_strnote = withQuote($d["strnote"]); //16:備考

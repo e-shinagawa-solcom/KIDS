@@ -254,9 +254,9 @@ function fncGetSearchPurchaseSQL($displayColumns, $searchColumns, $from, $to, $s
         array_key_exists("strOrderCode", $from) && $from["strOrderCode"] != '') {
         if (strpos($from["strOrderCode"], "-")) {
             // リバイズコード付の発注Ｎｏのリバイズコードは検索結果では最新版を表示するため、無視する
-            $strNewOrderCode_from = preg_replace(strstr($from["strOrderCodeFrom"], "_"), "", $from["strOrderCodeFrom"]);
+            $strNewOrderCode_from = preg_replace(strstr($from["strOrderCode"], "_"), "", $from["strOrderCode"]);
         } else {
-            $strNewOrderCode_from = $from["strOrderCodeFrom"];
+            $strNewOrderCode_from = $from["strOrderCode"];
         }
     }
     if (array_key_exists("strOrderCode", $searchColumns) &&

@@ -141,7 +141,7 @@ function SearchReceiveDetail(search_condition) {
                 1: { sorter: false }
             }
         });
-        
+
         $('#DetailTableBodyAllCheck').on('change', function () {
             $('input[name="edit"]').prop('checked', this.checked);
         });
@@ -164,6 +164,16 @@ function ClearAllEditDetail() {
 //   HTMLエレメント生成後の初期処理
 // ------------------------------------------
 jQuery(function ($) {
+
+    // 消費税率の設定
+    var taxClassCode = $('select[name="lngTaxClassCode"]').children('option:selected').val();
+    if (taxClassCode == 1) {
+        $('select[name="lngTaxRate"]').val('');
+    } else {
+        $('select[name="lngTaxRate"]').prop("selectedIndex", 0);
+    }
+
+
     if ($('input[name="lngSlipNo"]').val().length > 0) {
         window.opener.$('input[name="locked"]').val("1");
     }
@@ -836,7 +846,18 @@ jQuery(function ($) {
     //   events
     // ------------------------------------------
     $("select[name='lngTaxClassCode']").on('change', function () {
+        // 消費税区分を取得
+        var taxClassCode = $('select[name="lngTaxClassCode"]').children('option:selected').val();
+        if (taxClassCode == 1) {
+            // $('select[name="lngTaxRate"]').append('<option value=""></option>');
+            $('select[name="lngTaxRate"]').val('');
+        } else {
+            $('select[name="lngTaxRate"]').prop("selectedIndex", 0);
+        }
+
         updateAmount();
+
+
     });
 
     $('select[name="lngTaxRate"]').on('change', function () {

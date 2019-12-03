@@ -100,7 +100,7 @@
                         + '<td id="lngrevisionno" style="display:none">' + row.lngrevisionno + '</td>'//リビジョン番号
                         + '<td id="lngcartonquantity" style="display:none">' + convertNullToZero(row.lngcartonquantity) + '</td>'//カートン入数
                         + '<td id="lngproductquantity" style="display:none">' + convertNullToZero(row.lngproductquantity) + '</td>'//数量
-                        + '<td id="lngproductrevisionno" style="display:none">' + row.lngproductrevisionno + '</td>'//製品リビジョン番号
+                        + '<td id="strrevisecode" style="display:none">' + row.strrevisecode + '</td>'//製品リビジョン番号
                         + '</tr>';
                     $("#table_decide_body").append(decide_body);
                 }
@@ -391,7 +391,7 @@
                 "strCompanyDisplayCode": $(this).find('#strcompanydisplaycode').text(),
                 "lngReceiveNo": $(this).find('#lngreceiveno').text(),
                 "lngRevisionNo": $(this).find('#lngrevisionno').text(),
-                "lngRevisionNo_product": $(this).find('#lngproductrevisionno').text(),
+                "strReviseCode": $(this).find('#strrevisecode').text(),
                 "strProductCode_product": $(this).find('#strproductcode').text(),
                 "lngProductUnitCode": lngProductUnitCode
             };
@@ -401,7 +401,7 @@
             exit;
         }
         // 画面操作を無効する
-        lockScreen("lockId");
+        // lockScreen("lockId");
 
         // リクエスト送信
         $.ajax({

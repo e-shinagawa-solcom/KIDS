@@ -615,6 +615,7 @@ function fncCheckExclusiveControl($lngFunctionCode, $strProductCode, $lngRevisio
     $strQuery .= "  lngfunctioncode = " . $lngFunctionCode;
     $strQuery .= "  and strexclusivekey1 = '" . $strProductCode . "' ";
     $strQuery .= "  and strexclusivekey2 = '" . $lngRevisionNo . "' ";
+
     // 検索クエリーの実行
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
@@ -626,5 +627,4 @@ function fncCheckExclusiveControl($lngFunctionCode, $strProductCode, $lngRevisio
     $objDB->freeResult($lngResultID);
 
     return $result;
-
 }

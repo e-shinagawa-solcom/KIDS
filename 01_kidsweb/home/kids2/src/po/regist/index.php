@@ -166,6 +166,7 @@
 	// $aryData["strReviseCode"]         = str_pad($aryOrderHeader[0]["lngrevisionno"],2,"0",STR_PAD_LEFT);
 	$aryData["dtmExpirationDate"]     = str_replace("-", "/", $aryOrderHeader[0]["dtmexpirationdate"]);
 	$aryData["strProductCode"]        = $aryOrderHeader[0]["strproductcode"];
+	$aryData["strReviseCode"]        = $aryOrderHeader[0]["strrevisecode"];
 	$aryData["strNote"]               = $aryOrderHeader[0]["strnote"];
 	// $aryData["lngCustomerCode"]       = $aryOrderHeader[0]["strcompanydisplaycode"];
 	// $aryData["strCustomerName"]       = $aryOrderHeader[0]["strcompanydisplayname"];
