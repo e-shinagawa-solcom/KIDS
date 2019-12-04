@@ -137,35 +137,6 @@ if (!fncCheckAuthority(DEF_FUNCTION_PO10, $objAuth)) {
     fncOutputError(9060, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
 
-//////////////////////////////////////////////////////////////////////////
-// 文字列チェック
-//////////////////////////////////////////////////////////////////////////
-$aryCheck["strSessionID"] = "null:numenglish(32,32)";
-$aryCheck["dtmInsertDateFrom"] = "date(/)";
-$aryCheck["dtmInsertDateTo"] = "date(/)";
-$aryCheck["lngInputUserCode"] = "numenglish(0,3)";
-$aryCheck["strInputUserName"] = "length(0,50)";
-$aryCheck["From_dtmExpirationDate"] = "date(/)";
-$aryCheck["To_dtmExpirationDate"] = "date(/)";
-$aryCheck["strOrderCode"] = "ascii(0,10)";
-$aryCheck["strProductCode"] = "numenglish(0,5)";
-$aryCheck["strProductName"] = "length(0,100)";
-$aryCheck["lngInChargeGroupCode"] = "numenglish(0,2)";
-$aryCheck["strInChargeGroupName"] = "length(0,50)";
-$aryCheck["lngInChargeUserCode"] = "numenglish(0,3)";
-$aryCheck["strInChargeUserName"] = "length(0,50)";
-$aryCheck["lngCustomerCode"] = "numenglish(0,4)";
-$aryCheck["strCustomerName"] = "length(0,50)";
-$aryCheck["lngDeliveryPlaceCode"] = "numenglish(0,4)";
-$aryCheck["strDeliveryPlaceName"] = "length(0,50)";
-$aryCheck["lngMonetaryunitCode"] = "numenglish(0,3)";
-$aryCheck["lngMonetaryrateCode"] = "numenglish(0,3)";
-$aryCheck["lngPayConditionCode"] = "numenglish(0,3)";
-
-// 文字列チェック
-$aryCheckResult = fncAllCheck($aryData, $aryCheck);
-fncPutStringCheckError($aryCheckResult, $objDB);
-
 // 511 発注管理（発注書検索　管理モード）
 if (fncCheckAuthority(DEF_FUNCTION_PO11, $objAuth) and isset($aryData["Admin"])) {
     $aryUserAuthority["Admin"] = 1; // 511 管理モードでの検索

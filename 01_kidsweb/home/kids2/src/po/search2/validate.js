@@ -2,18 +2,18 @@
 // validation.js
 //
 jQuery(function($){
-    // datepicker設定
-    var datePickerTargets = [
-        $('input[name$="From_dtmInsertDate"]'),
-        $('input[name$="To_dtmInsertDate"]'),
-        $('input[name$="From_dtmExpirationDate"]'),
-        $('input[name$="To_dtmExpirationDate"]'),
-        $('input[name$="From_dtmDeliverDate"]'),
-        $('input[name$="To_dtmDeliverDate"]'),
-    ];
-    $.each(datePickerTargets, function(i, v){
-        $(v).datepicker();
-    });
+    // // datepicker設定
+    // var datePickerTargets = [
+    //     $('input[name$="From_dtmInsertDate"]'),
+    //     $('input[name$="To_dtmInsertDate"]'),
+    //     $('input[name$="From_dtmExpirationDate"]'),
+    //     $('input[name$="To_dtmExpirationDate"]'),
+    //     $('input[name$="From_dtmDeliverDate"]'),
+    //     $('input[name$="To_dtmDeliverDate"]'),
+    // ];
+    // $.each(datePickerTargets, function(i, v){
+    //     $(v).datepicker();
+    // });
 
     // 登録ボタンイベント横取り
     var events = $._data($('img.search').get(0), 'events');
@@ -221,14 +221,24 @@ jQuery(function($){
             result = false;
             return false;
         }
-        if(orderCode.length){
-            if(!orderCode.match(/^\d{8}(_\d{2})?$/)){
-                alert("発注書NO.の書式に誤りがあります");
-                result = false;
-                return false;
+        var codeList = orderCode.split(",");
+        $.each(codeList, function (ind, val) {
+            if (val.indexOf('-') !== -1) {
+                var val1 = val.split("-")[0];
+                var val2 = val.split("-")[1];
+                if(!val1.match(/^\d{8}(_\d{2})?$/) || !val2.match(/^\d{8}(_\d{2})?$/)){
+                    alert("発注書NO.の書式に誤りがあります");
+                    result = false;
+                    return false;
+                }
+            } else if(val.length){
+                if(!val.match(/^\d{8}(_\d{2})?$/)){
+                    alert("発注書NO.の書式に誤りがあります");
+                    result = false;
+                    return false;
+                }
             }
-        }
-
+        });
         return result;
     }
     // 製品コードチェック
@@ -240,14 +250,24 @@ jQuery(function($){
             result = false;
             return false;
         }
-        if(productCode.length){
-            if(!productCode.match(/^\d{5}(_\d{2})?$/)){
-                alert("製品コードの書式に誤りがあります");
-                result = false;
-                return false;
+        var codeList = productCode.split(",");
+        $.each(codeList, function (ind, val) {
+            if (val.indexOf('-') !== -1) {
+                var val1 = val.split("-")[0];
+                var val2 = val.split("-")[1];
+                if(!val1.match(/^\d{5}(_\d{2})?$/) || !val2.match(/^\d{5}(_\d{2})?$/)){
+                    alert("製品コードの書式に誤りがあります");
+                    result = false;
+                    return false;
+                }
+            } else if(val.length){
+                if(!val.match(/^\d{5}(_\d{2})?$/)){
+                    alert("製品コードの書式に誤りがあります");
+                    result = false;
+                    return false;
+                }
             }
-        }
-
+        });
         return result;
     }
     // 各入力チェック

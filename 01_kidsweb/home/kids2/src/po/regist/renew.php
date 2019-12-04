@@ -92,10 +92,8 @@ fncDebug("kids2.log", "pass-1", __FILE__, __LINE__, "a" );
 		$objDB->transactionBegin();
 		// 発注書マスタ更新
 fncDebug("kids2.log", "pass-2", __FILE__, __LINE__, "a" );
-var_dump($aryData);
 		if(!fncUpdatePurchaseOrder($aryData, $objDB, $objAuth)) { return false; }
 fncDebug("kids2.log", "pass-3", __FILE__, __LINE__, "a" );
-var_dump($aryData);
 		// 発注書明細更新
 		if(!fncUpdatePurchaseOrderDetail($aryData, $objDB)) { return false; }
 fncDebug("kids2.log", "pass-4", __FILE__, __LINE__, "a" );

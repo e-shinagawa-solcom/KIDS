@@ -943,6 +943,8 @@ function fncGetPurchaseOrderEdit($lngpurchaseorderno, $lngrevisionno, $objDB)
     $aryQuery[] = "  ,mp.lngrevisionno";
     $aryQuery[] = "  ,mp.strrevisecode";
     $aryQuery[] = "  ,mp.strordercode";
+    $aryQuery[] = "  ,mo.strordercode as order_strordercode";
+    $aryQuery[] = "  ,mo.lngrevisionno as order_lngrevisionno";
     $aryQuery[] = "  ,TO_CHAR(mp.dtmexpirationdate, 'YYYY/MM/DD') as dtmexpirationdate";
     $aryQuery[] = "  ,mp.strproductcode";
     $aryQuery[] = "  ,mp.strproductname";
@@ -1000,6 +1002,7 @@ function fncGetPurchaseOrderEdit($lngpurchaseorderno, $lngrevisionno, $objDB)
     $aryQuery[] = "  ,pd.lngsortkey";
     $aryQuery[] = "FROM m_purchaseorder mp";
     $aryQuery[] = "LEFT JOIN t_purchaseorderdetail pd ON mp.lngpurchaseorderno = pd.lngpurchaseorderno AND mp.lngrevisionno = pd.lngrevisionno";
+    $aryQuery[] = "LEFT JOIN m_order mo ON pd.lngorderno = mo.lngorderno AND pd.lngorderrevisionno = mo.lngrevisionno";
     $aryQuery[] = "LEFT JOIN m_group mg ON mp.lnggroupcode = mg.lnggroupcode";
     $aryQuery[] = "LEFT JOIN m_user mu1 ON mp.lngusercode = mu1.lngusercode";
     $aryQuery[] = "LEFT JOIN m_user mu2 ON mp.lnginsertusercode = mu2.lngusercode";
@@ -1008,13 +1011,13 @@ function fncGetPurchaseOrderEdit($lngpurchaseorderno, $lngrevisionno, $objDB)
     $aryQuery[] = "LEFT JOIN m_stocksubject mss ON pd.lngstocksubjectcode = mss.lngstocksubjectcode";
     $aryQuery[] = "LEFT JOIN m_stockitem msi ON pd.lngstockitemcode = msi.lngstockitemcode AND pd.lngstocksubjectcode = msi.lngstocksubjectcode";
     $aryQuery[] = "WHERE mp.lngpurchaseorderno = " . $lngpurchaseorderno;
-    $aryQuery[] = "AND   mp.lngrevisionno = " . $lngrevisionno;
-    $aryQuery[] = "ORDER BY";
+    $aryQuery[] = "AND mp.lngrevisionno = (SELECT MAX( po1.lngRevisionNo ) FROM m_purchaseorder po1 WHERE po1.lngpurchaseorderno = mp.lngpurchaseorderno )";
+    $aryQuery[] = " ORDER BY";
     $aryQuery[] = "   pd.lngsortkey";
 
     $strQuery = "";
     $strQuery = implode("\n", $aryQuery);
-    
+
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
     if (!$lngResultNum) {
         return false;
@@ -1039,7 +1042,7 @@ function fncGetPurchaseOrderDetailHtml($aryResult, $objDB)
     for ($i = 0; $i < count($aryResult); $i++) {
         $aryHtml[] = "  <tr>";
         $aryHtml[] = "      <td name=\"rownum\">" . ($i + 1) . "</td>";
-        $aryHtml[] = "      <td class=\"detailOrderCode\">" . sprintf("%s_%02d", $aryResult[$i]["strordercode"], $aryResult[$i]["lngrevisionno"]) . "</td>";
+        $aryHtml[] = "      <td class=\"detailOrderCode\">" . sprintf("%s_%02d", $aryResult[$i]["order_strordercode"], $aryResult[$i]["order_lngrevisionno"]) . "</td>";
         $aryHtml[] = "      <td class=\"detailPurchaseorderDetailNo\">" . $aryResult[$i]["lngpurchaseorderdetailno"] . "</td>";
         $aryHtml[] = "      <td class=\"detailStockSubjectCode\">" . sprintf("[%s] %s", $aryResult[$i]["lngstocksubjectcode"], $aryResult[$i]["strstocksubjectname"]) . "</td>";
         $aryHtml[] = "      <td class=\"detailStockItemCode\">" . sprintf("[%s] %s", $aryResult[$i]["lngstockitemcode"], $aryResult[$i]["strstockitemname"]) . "</td>";
@@ -1136,9 +1139,9 @@ function fncUpdatePurchaseOrder($aryPurchaseOrder, $objDB, $objAuth)
     $aryQuery[] = "    '" . $objAuth->UserDisplayName . "',";
     $aryQuery[] = "    '" . mb_convert_encoding(urldecode($aryPurchaseOrder["strNote"]), "EUC-JP", "auto") . "',";
     $aryQuery[] =      0 . " ";
-    $aryQuery[] = "FROM m_purchaseorder";
+    $aryQuery[] = "FROM m_purchaseorder po";
     $aryQuery[] = "WHERE lngpurchaseorderno = " . $aryPurchaseOrder["lngPurchaseOrderNo"];
-    $aryQuery[] = "    AND   lngrevisionno = " . $aryPurchaseOrder["lngRevisionNo"];
+    $aryQuery[] = "    AND   lngrevisionno = (SELECT MAX( po1.lngRevisionNo ) FROM m_purchaseorder po1 WHERE po1.lngpurchaseorderno = po.lngpurchaseorderno )";
     $strQuery = "";
     $strQuery = implode("\n", $aryQuery);
 
@@ -1206,10 +1209,10 @@ function fncUpdatePurchaseOrderDetail($aryPurchaseOrder, $objDB)
         $aryQuery[] = "    dtmdeliverydate,";
         $aryQuery[] = "    strnote,";
         $aryQuery[] =      $aryPurchaseOrder["aryDetail"][$i]["lngSortKey"] . " ";
-        $aryQuery[] = "FROM t_purchaseorderdetail";
+        $aryQuery[] = "FROM t_purchaseorderdetail pod";
         $aryQuery[] = "WHERE lngpurchaseorderno = " . $aryPurchaseOrder["lngPurchaseOrderNo"];
         $aryQuery[] = "AND   lngpurchaseorderdetailno = " . $aryPurchaseOrder["aryDetail"][$i]["lngPurchaseOrderDetailNo"];
-        $aryQuery[] = "AND   lngrevisionno = " . $aryPurchaseOrder["lngRevisionNo"];
+        $aryQuery[] = "AND   lngrevisionno = (SELECT MAX( pod1.lngRevisionNo ) FROM t_purchaseorderdetail pod1 WHERE pod1.lngPurchaseOrderNo = pod.lngPurchaseOrderNo )";
 
         $strQuery = "";
         $strQuery = implode("\n", $aryQuery);
@@ -1238,7 +1241,7 @@ function fncCreatePurchaseOrderUpdateHtml($aryPurchaseOrder, $strSessionID)
     $aryHtml[] = "<p class=\"caption\">発注書NO " . $aryPurchaseOrder[0]["strordercode"] . "の修正が完了しました。</p>";
     $aryHtml[] = "<table class=\"ordercode\">";
     $aryHtml[] = "  <tr>";
-    $aryHtml[] = "    <td class=\"orderbuttontd\" id=\"btnClose\"><img src=\"/img/type01/cmn/querybt/close_blown_off_ja_bt.gif\" alt=\"\" onclick=\"window.open('about:blank','_self').close()\"></td>";
+    $aryHtml[] = "    <td class=\"orderbuttontd\" id=\"btnClose\"><img src=\"/img/type01/cmn/querybt/close_blown_off_ja_bt.gif\" alt=\"\" onclick=\"window.opener.location.reload();window.open('about:blank','_self').close()\"></td>";
     $aryHtml[] = "    <td class=\"orderbuttontd\"><a href=\"" . $strUrl . "\"><img src=\"/img/type01/cmn/querybt/preview_off_ja_bt.gif\" alt=\"preview\"></a></td>";
     $aryHtml[] = "  </tr>";
     $aryHtml[] = "</table> ";

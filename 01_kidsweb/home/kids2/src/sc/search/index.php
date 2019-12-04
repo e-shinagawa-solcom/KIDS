@@ -89,7 +89,7 @@ $aryResult = fncAllCheck( $aryData, $aryCheck );
 fncPutStringCheckError( $aryResult, $objDB );
 
 // 売上ステータス
-$aryData["lngSalesStatusCode"] 		= fncGetCheckBoxObject( "m_salesstatus", "lngsalesstatuscode", "strsalesstatusname", "lngSalesStatusCode[]", 'where lngSalesStatusCode not in (1)', $objDB );
+$aryData["lngSalesStatusCode"] 		= fncGetCheckBoxObject( "m_salesstatus", "lngsalesstatuscode", "strsalesstatusname", "lngSalesStatusCode[]", 'where lngSalesStatusCode not in (1,2,3)', $objDB );
 
 // 売上区分
 $aryData["lngSalesClassCode"]		= fncGetPulldown( "m_salesclass", "lngsalesclasscode", "lngsalesclasscode, strsalesclassname", 1, '', $objDB );

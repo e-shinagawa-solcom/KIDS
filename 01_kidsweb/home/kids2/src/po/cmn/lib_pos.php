@@ -429,7 +429,7 @@ function fncGetSearchPurcheseOrderSQL($aryViewColumn, $arySearchColumn, $arySear
 
         // ¹ç·×¶â³Û
         if ($strViewColumnName == "curTotalPrice") {
-            $arySelectQuery[] = "  ,mp.curtotalprice as curTotalPrice";
+            $arySelectQuery[] = "  ,To_char(mp.curtotalprice, '9,999,999,990.99') as curtotalprice";
         }
 
         // È÷¹Í
@@ -495,14 +495,60 @@ function fncGetSearchPurcheseOrderSQL($aryViewColumn, $arySearchColumn, $arySear
 
         // È¯ÃíNO.
         if ($strSearchColumnName == "strOrderCode") {
-            $aryQuery[] = "AND   mp.strordercode = '" . $arySearchDataColumn["strOrderCode"] . "'";
-        }
-
-        // À½ÉÊ
-        if ($strSearchColumnName == "strProductCode") {
-            if ($arySearchDataColumn["strProductCode"]) {
-                $aryQuery[] = "AND   mp.strProductCode = '" . $arySearchDataColumn["strProductCode"] . "'";
+            $strOrderCodeArray = explode(",", $arySearchDataColumn["strOrderCode"]);
+            $aryQuery[] = " AND (";
+            $count = 0;
+            foreach ($strOrderCodeArray as $strOrderCode) {
+                $count += 1;
+                if ($count != 1) {
+                    $aryQuery[] = " OR ";
+                }
+                if (strpos($strOrderCode, '-') !== false) {
+                    $aryQuery[] = "(mp.strordercode" .
+                    " between '" . explode("-", $strOrderCode)[0] . "'" .
+                    " AND " . "'" . explode("-", $strOrderCode)[1] . "')";
+                } else {
+                    if (strpos($strOrderCode, '_') !== false) {
+                        $aryQuery[] = "mp.strordercode = '" . explode("_", $strOrderCode)[0] . "'";
+                        if (explode("_", $strOrderCode)[1] == '00') {
+                            $aryQuery[] = " AND mp.lngrevisionno = 0 ";
+                        } else {
+                            $aryQuery[] = " AND mp.lngrevisionno = " . ltrim(explode("_", $strOrderCode)[1], '0') . "";
+                        }
+                    } else {
+                        $aryQuery[] = "mp.strordercode = '" . $strOrderCode . "'";
+                    }
+                }
             }
+            $aryQuery[] = ")";
+        }
+        // À½ÉÊ
+        if ($strSearchColumnName == "strProductCode") {            
+            $strProductCodeArray = explode(",", $arySearchDataColumn["strProductCode"]);
+            $aryQuery[] = " AND (";
+            $count = 0;
+            foreach ($strProductCodeArray as $strProductCode) {
+                $count += 1;
+                if ($count != 1) {
+                    $aryQuery[] = " OR ";
+                }
+                if (strpos($strProductCode, '-') !== false) {
+                    $aryQuery[] = "(mp.strProductCode" .
+                    " between '" . explode("-", $strProductCode)[0] . "'" .
+                    " AND " . "'" . explode("-", $strProductCode)[1] . "')";
+                } else {
+                    if (strpos($strProductCode, '_') !== false) {
+                        $aryQuery[] = "mp.strProductCode = '" . explode("_", $strProductCode)[0] . "'";
+                        $aryQuery[] = " AND mp.strrevisecode = '" . explode("_", $strProductCode)[1] . "'";
+                    } else {
+                        $aryQuery[] = "mp.strProductCode = '" . $strProductCode . "'";
+                    }
+                }
+            }
+            $aryQuery[] = ")";
+            // if ($arySearchDataColumn["strProductCode"]) {
+            //     $aryQuery[] = "AND   mp.strProductCode = '" . $arySearchDataColumn["strProductCode"] . "'";
+            // }
 //            if($arySearchDataColumn["strProductName"]){
             //                $aryQuery[] = "AND   UPPER(mp.strproductname) LIKE UPPER('%" . $arySearchDataColumn["strProductName"] . "%')";
             //            }

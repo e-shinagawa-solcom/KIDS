@@ -98,6 +98,7 @@ function SetSearchConditionWindowValue(search_condition) {
                 // 81：「外税」を選択（他の項目も選択可能）
                 $("select[name='lngTaxClassCode'] option:not(:selected)").prop('disabled', false);
                 $("select[name='lngTaxClassCode']").val("2");
+                $('select[name="lngTaxRate"]').prop("selectedIndex", 0);
 
             } else {
                 // 81以外：「非課税」固定
@@ -1032,7 +1033,12 @@ jQuery(function ($) {
 
     // プレビューボタン押下
     $('#PreviewBt').on('click', function () {
-
+        // 納品先
+        var lngDeliveryPlaceCode = $('input[name="lngDeliveryPlaceCode"]').val();
+        if (lngDeliveryPlaceCode.length == 0) {
+            alert("納品先を設定してください。");
+            return;
+        }
         // POST先
         var postTarget = $('input[name="ajaxPostTarget"]').val();
 
