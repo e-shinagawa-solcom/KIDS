@@ -126,6 +126,7 @@ function fncGetLcData($objDB, $lcModel, $usrId, $datetime)
                                 if ($lcstate == 0) {
                                     $bankReqDate = $lcModel->getAcLcBankReqDate($pono);
                                     if ($bankReqDate != "") {
+                                        // 有効データで銀行依頼日がある場合、アメンド要(有効)となる
                                         $lcstate = 7;
                                     }
                                 }
@@ -135,6 +136,7 @@ function fncGetLcData($objDB, $lcModel, $usrId, $datetime)
                             }
                         } else {
                             if ($orderData["lngrevisionno"] != 0) {
+                            // リバイズ対象データとして記録（のちに処理）
                                 $reviseDataArry[$reviseNum]["pono"] = $pono;
                                 $reviseDataArry[$reviseNum]["polineno"] = $polineno;
                                 $reviseDataArry[$reviseNum]["poreviseno"] = sprintf("%02s", $poreviseno % 100);
@@ -201,17 +203,23 @@ function fncGetLcData($objDB, $lcModel, $usrId, $datetime)
                         $lcModel->updateAcLcStateByLcState($pono);
                     }
                 }
+                // ↑明細単位のループここまで
+                
                 // オープン年月の更新（明細行単位の納品日が一番若い月のものを設定）
                 if( $loadFlg == 1 )
                 {
-                    if( count($acLcInfoArry) > 0){
-                        $lcModel->updateAcLcOpendate($pono,$acLcInfoArry["opendate"]);
+                    if( !is_array($acLcInfoArry))
+                    {
+                        $acLcInfoArry[] = $acLcInfoArry;
+                    }
+                    if( $acLcInfoArry[0]["opendate"] = null){
+                        $lcModel->updateAcLcOpendate($pono,$acLcInfoArry[0]["opendate"]);
                     }
                 }
             }
+            // ↑発注書単位のループここまで
         }
 
-// この処理はここで正しいか？ 処理対象は最後に読み込んだ行のみとなるが。
         // 発注明細のオープン月設定
         // 基準日の取得
         $baseDate = $lcModel->getBaseDate();
@@ -221,10 +229,9 @@ function fncGetLcData($objDB, $lcModel, $usrId, $datetime)
             $opendate = date("Ym", strtotime($strWorkDate . "-1 month"));
         }
         $lcModel->updateAcLcOpendate($pono, $opendate);
-// ここまで疑問
     }
-
     // リバイズ情報があった場合、リバイズ情報継承処理を行う
+
     if (count($reviseDataArry) > 0) {
         foreach ($reviseDataArry as $reviseData) {
             fncSetRevData($lcModel, $reviseData);
@@ -254,16 +261,18 @@ function fncSetRevData($lcModel, $reviseData)
     $reviseLcInfoArry = $lcModel->getReviseAcLcInfo($reviseData["pono"], $reviseData["polineno"]);
     $argIntAmdFlg = 0;
     $revDataArry = array();
-
+    if(!is_array($reviseLcInfoArry)){
+        $reviseLcInfoArry[] = $reviseLcInfoArry;
+    }
     foreach ($reviseLcInfoArry as $reviseLcInfo) {
         // 上記で取得した銀行依頼日が空ではない場合
-        if ($reviseLcInfo["bankreqdate"] != "") {
+        if ($reviseLcInfo["bankreqdate"] != null) {
             if (count($revDataArry) == 0) {
                 $revDataArry[0] = $reviseLcInfo;
             }
         }
         // 上記で取得した銀行依頼日が空ではない、かつ　リバイズ情報のporeviseno <> "00"の場合
-        if ($reviseLcInfo["bankreqdate"] != "" && $reviseData["poreviseno"] != "00") {
+        if ($reviseLcInfo["bankreqdate"] != null && $reviseData["poreviseno"] != "00") {
             $argIntAmdFlg = 1;
             break;
         }
@@ -273,17 +282,18 @@ function fncSetRevData($lcModel, $reviseData)
         // リバイズ情報のpolineno > 1の場合
         if ($reviseData["polineno"] > 1) {
             reset($reviseLcInfoArry);
-            $reviseLcInfoArry = $lcModel->getReviseAcLcInfo($reviseData["pono"], sprintf("%02s", $reviseData["polineno"] - 1));
+            // 見つからなかったので全リビジョンの値を取得
+            $reviseLcInfoArry = $lcModel->getReviseAcLcInfo($reviseData["pono"], $reviseData["polineno"] );
 
             foreach ($reviseLcInfoArry as $reviseLcInfo) {
                 // 上記で取得した銀行依頼日が空ではない場合
-                if ($reviseLcInfo["bankreqdate"] != "") {
+                if ($reviseLcInfo["bankreqdate"] != null) {
                     if (count($revDataArry) == 0) {
                         $revDataArry[0] = $reviseLcInfo;
                     }
                 }
-                // 上記で取得した銀行依頼日が空ではない、かつ　リバイズ情報のporeviseno <> "00"の場合
-                if ($reviseLcInfo["bankreqdate"] != "" && $reviseData["poreviseno"] != "00") {
+                // 上記で取得した銀行依頼日が空ではない、かつリバイズ情報のporeviseno <> "00"の場合
+                if ($reviseLcInfo["bankreqdate"] != null && $reviseData["poreviseno"] != "00") {
                     $argIntAmdFlg = 1;
                     break;
                 }
@@ -298,7 +308,7 @@ function fncSetRevData($lcModel, $reviseData)
             $data["pono"] = $reviseData["pono"];
             $data["polineno"] = $reviseData["polineno"];
             $data["poreviseno"] = $reviseData["poreviseno"];
-
+            $data["opendate"] = $revData["opendate"];
             $data["bankcd"] = ($revData["bankcd"] == "") ? null : $revData["bankcd"];
             $data["bankname"] = ($revData["bankname"] == "") ? null : $revData["bankname"];
             $data["bankreqdate"] = null;

@@ -209,14 +209,14 @@ function fncGetLcInfoData($objDB, $data)
             if ($data["from"] != "" && $data["to"] == "") {
                 $sql .= "where opendate = '" . $data["from"] . "'";
             } else if ($data["from"] != "" && $data["to"] != "") {
-                $sql .= " where opendate between '" . $data["from"] . "' and " . $data["to"] . "'";
+                $sql .= " where opendate between '" . $data["from"] . "' and '" . $data["to"] . "'";
             }
             if ($data["payfcd"] != "") {
                 $sql .= " and payfcd = '" . $data["payfcd"] . "'";
             }
-            if ($data["payfnameomit"] != "") {
-                $sql .= " and payfnameomit = '" . $data["payfnameomit"] . "'";
-            }
+//            if ($data["payfnameomit"] != "") {
+//                $sql .= " and payfnameomit = '" . $data["payfnameomit"] . "'";
+//            }
             if ($data["getDataModeFlg"] == 1) {
                 $sql .= " and lcstate in (0,3,4,7,8) ";
             }
@@ -585,8 +585,8 @@ function fncGetPurchaseOrderData($objDB, $date)
     where
         dtminsertdate > to_timestamp($1,'YYYYMMDD HH24:MI:SS')
     order by
-        strordercode
-        , lngpurchaseorderno
+          lngpurchaseorderno
+        , lngrevisionno
     ";
     //バインドの設定
     $bind = array($date);

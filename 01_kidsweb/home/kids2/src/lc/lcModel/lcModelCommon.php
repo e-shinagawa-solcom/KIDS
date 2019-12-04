@@ -2029,8 +2029,7 @@ class lcModel
                 t_aclcinfo
             where pono = $1
                 and polineno = $2
-            order by poreviseno desc
-        ";
+            order by poreviseno desc";
         //バインドの設定
         $bind = array($pono, $polineno);
 
@@ -2056,24 +2055,24 @@ class lcModel
         $sql = "
                 update
                     t_aclcinfo
-                set opendate = '" . $data["opendate"] . "'"
-            . ", bankcd = '" . $data["bankcd"] . "'"
-            . ", bankname = '" . $data["bankname"] . "'"
-            . ", bankreqdate = " . $data["bankreqdate"]
-            . ", lcno = '" . $data["lcno"] . "'"
-            . ", lcamopen = '" . $data["lcamopen"] . "'"
-            . ", validmonth = '" . $data["validmonth"] . "'"
-            . ", usancesettlement = " . $data["usancesettlement"]
-            . ", bldetail1date = " . $data["bldetail1date"]
-            . ", bldetail1money = " . $data["bldetail1money"]
-            . ", bldetail2date = " . $data["bldetail2date"]
-            . ", bldetail2money = " . $data["bldetail2money"]
-            . ", bldetail3date = " . $data["bldetail3date"]
-            . ", bldetail3money = " . $data["bldetail3money"]
+                set opendate = " . ($data["opendate"] == null ? "NULL" : "'" . $data["opendate"] . "'")
+            . ", bankcd = " . ($data["bankcd"] == null ? "NULL" : "'" . $data["bankcd"] . "'")
+            . ", bankname = " . ($data["bankname"] == null ? "NULL" : "'" . $data["bankname"] . "'")
+            . ", bankreqdate = " . ($data["bankreqdate"] == null ? "NULL" : $data["bankreqdate"])
+            . ", lcno = " . ($data["lcno"] == null ? "NULL" : "'" . $data["lcno"] . "'")
+            . ", lcamopen = " . ($data["lcamopen"] == null ? "NULL" : "'" . $data["lcamopen"] . "'")
+            . ", validmonth =" . ($data["validmonth"] == null ? "NULL" : "'" . $data["validmonth"] . "'")
+            . ", usancesettlement = " . ($data["usancesettlement"] == null ? "NULL" : $data["usancesettlement"])
+            . ", bldetail1date = " . ($data["bldetail1date"] == null ? "NULL" : $data["bldetail1date"])
+            . ", bldetail1money = " . ($data["bldetail1money"] == null ? "NULL" : $data["bldetail1money"])
+            . ", bldetail2date = " . ($data["bldetail2date"] == null ? "NULL" : $data["bldetail2date"])
+            . ", bldetail2money = " . ($data["bldetail2money"] == null ? "NULL" : $data["bldetail2money"])
+            . ", bldetail3date = " . ($data["bldetail3date"] == null ? "NULL" : $data["bldetail3date"])
+            . ", bldetail3money = " . ($data["bldetail3money"] == null ? "NULL" : $data["bldetail3money"])
             . ", lcstate = " . $data["lcstate"]
-            . "where pono = " . $data["pono"]
-            . "and polineno = " . $data["polineno"]
-            . "and poreviseno = " . $data["poreviseno"];
+            . " where pono = " . "'" . $data["pono"] . "'"
+            . " and polineno = " . "'" . $data["polineno"] . "'"
+            . " and poreviseno = " . "'" . $data["poreviseno"] . "'";
         //バインドの設定
         $bind = array();
 
@@ -2106,7 +2105,7 @@ class lcModel
                     t_aclcinfo
                 set lcstate = 1
                 where pono = $1
-                and poreviseno = $2
+                and poreviseno < $2
                 and lcstate not in (1, 2, 5, 10)
             ";
         //バインドの設定
