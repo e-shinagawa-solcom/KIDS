@@ -329,6 +329,7 @@ function reportThreeOutput($objDB, $spreadsheet, $currencyClass, $objectYm)
             $insertData["pono"] = $lcinfo["pono"] . sprintf("%02s", $lcinfo["polineno"]);
             $insertData["factoryname"] = $lcinfo["payfnameformal"];
             $insertData["productcd"] = $lcinfo["productcd"];
+            $insertData["productrevisecd"] = $lcinfo["productrevisecd"];
             $insertData["productname"] = $lcinfo["productname"];
             $insertData["productnumber"] = $lcinfo["productnumber"];
             $insertData["unitname"] = $lcinfo["unitname"];
@@ -604,6 +605,7 @@ function reportSixOutput($objDB, $spreadsheet, $currencyClass, $bankLst, $data)
             $insertData["bankreqdate"] = $lcinfo["bankreqdate"];
             $insertData["pono"] = $lcinfo["pono"] . sprintf("%02s", $lcinfo["polineno"]);
             $insertData["productcd"] = $lcinfo["productcd"];
+            $insertData["productrevisecd"] = $lcinfo["productrevisecd"];
             $insertData["productname"] = $lcinfo["productname"];
             $insertData["productnumber"] = $lcinfo["productnumber"];
             $insertData["unitname"] = $lcinfo["unitname"];

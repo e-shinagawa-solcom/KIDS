@@ -113,6 +113,7 @@ function setLcInfoTable(data, phpData) {
 			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.postate) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.payfcd) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.productcd) + '</td>' +
+			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.productrevisecd) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.productname) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertNumber(row.productnumber, "", 0) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.unitname) + '</td>' +

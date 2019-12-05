@@ -612,6 +612,7 @@ class lcModel
 					postate,
 					payfcd,
 					productcd,
+					productrevisecd,
 					productname,
 					productnumber,
 					unitname,
@@ -720,6 +721,7 @@ class lcModel
 					postate,
 					payfcd,
 					productcd,
+					productrevisecd,
 					productname,
 					productnumber,
 					unitname,
@@ -1453,6 +1455,7 @@ class lcModel
                 , payfnameomit
                 , payfnameformal
                 , productcd
+                , productrevisecd
                 , productname
                 , productnamee
                 , productnumber
@@ -1801,6 +1804,7 @@ class lcModel
                 payfnameomit,
                 payfnameformal,
                 productcd,
+                productrevisecd,
                 productname,
                 productnamee,
                 productnumber,
@@ -1848,6 +1852,7 @@ class lcModel
             . "," . ($data["payfnameomit"] == null ? "NULL" : "'" . $data["payfnameomit"] . "'")
             . "," . ($data["payfnameformal"] == null ? "NULL" : "'" . $data["payfnameformal"] . "'")
             . "," . ($data["productcd"] == null ? "NULL" : "'" . $data["productcd"] . "'")
+            . "," . ($data["productrevisecd"] == null ? "NULL" : "'" . $data["productrevisecd"] . "'")
             . "," . ($data["productname"] == null ? "NULL" : "'" . $data["productname"] . "'")
             . "," . ($data["productnamee"] == null ? "NULL" : "'" . $data["productnamee"] . "'")
             . "," . $data["productnumber"]
@@ -2369,43 +2374,44 @@ class lcModel
                     ,payfnameomit = $5
                     ,payfnameformal = $6
                     ,productcd = $7
-                    ,productname = $8
-                    ,productnamee = $9
-                    ,productnumber = $10
-                    ,unitname = $11
-                    ,unitprice = $12
-                    ,moneyprice = $13
-                    ,shipstartdate = $14
-                    ,shipenddate = $15
-                    ,sumdate = $16
-                    ,poupdatedate = $17
-                    ,deliveryplace = $18
-                    ,currencyclass = $19
-                    ,lcnote = $20
-                    ,shipterm = $21
-                    ,validterm = $22
-                    ,bankcd = $23
-                    ,bankname = $24
-                    ,bankreqdate = $25
-                    ,lcno = $26
-                    ,lcamopen = $27
-                    ,validmonth = $28
-                    ,usancesettlement = $29
-                    ,bldetail1date = $30
-                    ,bldetail1money = $31
-                    ,bldetail2date = $32
-                    ,bldetail2money = $33
-                    ,bldetail3date = $34
-                    ,bldetail3money = $35
-                    ,lcstate = $36
-                    ,updateuser = $37
-                    ,updatedate = $38
-                    ,updatetime = $39
-                    ,invalidflag = $40
-                    ,shipym = $41
-                where pono = $42
-                and polineno = $43
-                and poreviseno = $44
+                    ,productrevisecd = $8
+                    ,productname = $9
+                    ,productnamee = $10
+                    ,productnumber = $11
+                    ,unitname = $12
+                    ,unitprice = $13
+                    ,moneyprice = $14
+                    ,shipstartdate = $15
+                    ,shipenddate = $16
+                    ,sumdate = $17
+                    ,poupdatedate = $18
+                    ,deliveryplace = $19
+                    ,currencyclass = $20
+                    ,lcnote = $21
+                    ,shipterm = $22
+                    ,validterm = $23
+                    ,bankcd = $24
+                    ,bankname = $25
+                    ,bankreqdate = $26
+                    ,lcno = $27
+                    ,lcamopen = $28
+                    ,validmonth = $29
+                    ,usancesettlement = $30
+                    ,bldetail1date = $31
+                    ,bldetail1money = $32
+                    ,bldetail2date = $33
+                    ,bldetail2money = $34
+                    ,bldetail3date = $35
+                    ,bldetail3money = $36
+                    ,lcstate = $37
+                    ,updateuser = $38
+                    ,updatedate = $39
+                    ,updatetime = $40
+                    ,invalidflag = $41
+                    ,shipym = $42
+                where pono = $43
+                and polineno = $44
+                and poreviseno = $45
             ";
         //バインドの設定
         $bind = array($data["postate"]
@@ -2415,6 +2421,7 @@ class lcModel
             , $data["payfnameomit"]
             , $data["payfnameformal"]
             , $data["productcd"]
+            , $data["productrevisecd"]
             , $data["productname"]
             , $data["productnamee"]
             , $data["productnumber"]

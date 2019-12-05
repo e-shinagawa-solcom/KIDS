@@ -20,6 +20,7 @@ function fncInsertLcInfo($objDB, $data)
             postate,
             payfcd,
             productcd,
+            productrevisecd,
             productname,
             productnumber,
             unitname,
@@ -91,7 +92,8 @@ function fncInsertLcInfo($objDB, $data)
         ,$37
         ,$38
         ,$39
-        ,$40)";
+        ,$40
+        ,$41)";
 
     //バインドの設定
     $bind = array($data["payfnameomit"]
@@ -103,6 +105,7 @@ function fncInsertLcInfo($objDB, $data)
         , $data["postate"]
         , $data["payfcd"]
         , $data["productcd"]
+        , $data["productrevisecd"]
         , $data["productname"]
         , $data["productnumber"]
         , $data["unitname"]
@@ -166,6 +169,7 @@ function fncGetLcInfoData($objDB, $data)
             postate,
             payfcd,
             productcd,
+            productrevisecd,
             productname,
             productnumber,
             unitname,
@@ -289,6 +293,7 @@ function fncGetLcInfoSingle($objDB, $data)
             postate,
             payfcd,
             productcd,
+            productrevisecd,
             productname,
             productnumber,
             unitname,

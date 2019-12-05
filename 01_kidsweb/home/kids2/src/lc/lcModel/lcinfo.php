@@ -159,6 +159,7 @@ function fncGetLcData($objDB, $lcModel, $usrId, $datetime)
                             $data["payfnameomit"] = $payfinfo->payfomitname;
                             $data["payfnameformal"] = $payfinfo->payfformalname;
                             $data["productcd"] = $orderData["strproductcode"];
+                            $data["productrevisecd"] = $orderData["strrevisecode"];
                             $data["productname"] = $orderData["strproductname"];
                             $data["productnamee"] = $orderData["strproductenglishname"];
                             $data["productnumber"] = $orderDetailData["lngproductquantity"];

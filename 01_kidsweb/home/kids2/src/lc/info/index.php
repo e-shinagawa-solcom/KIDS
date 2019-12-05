@@ -112,6 +112,7 @@ if( $aryData["reSearchFlg"] != true )
         $data["payfnameomit"] = $acLcInfo["payfnameomit"];
         $data["payfnameformal"] = $acLcInfo["payfnameformal"];
         $data["productcd"] = $acLcInfo["productcd"];
+        $data["productrevisecd"] = $acLcInfo["productrevisecd"];
         $data["productname"] = $acLcInfo["productname"];
         $data["productnamee"] = $acLcInfo["productnamee"];
         $data["productnumber"] = $acLcInfo["productnumber"];
