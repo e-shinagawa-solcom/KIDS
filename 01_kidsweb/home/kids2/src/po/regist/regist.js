@@ -296,6 +296,7 @@ jQuery(function ($) {
              * 'Shift' => is represented by 'e.shiftKey' */
             if (e.ctrlKey || e.metaKey) {
                 /* If pressed highlight the other row that was clicked */
+                $("#EditTable tbody tr:nth-child(" + (row.index() + 1) + ")").css("background-color", "#bbbbbb");
                 $("#EditTable tbody tr:nth-child(" + (row.index() + 1) + ")").addClass("selected");
 
             } else if (e.shiftKey) {
