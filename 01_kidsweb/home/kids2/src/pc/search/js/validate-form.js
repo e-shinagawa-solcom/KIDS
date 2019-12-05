@@ -16,6 +16,7 @@
     var msgSpecialFormat = "書式に誤りがあります。"
     var msgLessThanToday = "未来の日付が指定されました。";
     var msgLessThantToDate = "FROMにTOより未来の日付が指定されました。";
+    var msgLessThantTo = "FROMにTOより大きいNO.が指定されました。";
 
     // validationキック
     $('.hasDatepicker').on({
@@ -185,6 +186,19 @@
         msgLessThantToDate
     );
 
+    // FROM_XXXXがTO_XXXXより小さいか()
+    $.validator.addMethod(
+        "isGreaterThanFrom",
+        function (value, element, params) {
+            if (params[0] && value!='') {
+                if (value < params[1]) {
+                    return false;
+                }
+            }
+            return true;
+        },
+        msgLessThantTo
+    );
 
     // 検証設定
     form.validate({
@@ -295,6 +309,9 @@
                 },
                 checkAscii: function () {
                     return $('input[name="IsSearch_strStockCode"]').get(0).checked;
+                },
+                isGreaterThanFrom: function () {
+                    return [$('input[name="IsSearch_strStockCode"]').get(0).checked, 'input[name="From_strStockCode"]'];
                 }
             },
             // 発注書NO.
@@ -312,6 +329,9 @@
                 },
                 checkAscii: function () {
                     return $('input[name="IsSearch_strOrderCode"]').get(0).checked;
+                },
+                isGreaterThanFrom: function () {
+                    return [$('input[name="IsSearch_strOrderCode"]').get(0).checked, 'input[name="From_strOrderCode"]'];
                 }
             },
 

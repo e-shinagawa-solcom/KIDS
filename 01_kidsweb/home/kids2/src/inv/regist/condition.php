@@ -134,7 +134,7 @@
             for ($i = 0; $i < $lngResultNum; $i++)
             {
 
-                $resultDataSet[] = $objDB->fetchObject( $lngResultID, $i );
+                // $resultDataSet[] = $objDB->fetchObject( $lngResultID, $i );
                 // 検索結果レコードをオブジェクトで取得し必要なjsonデータに加工する
                 foreach($objDB->fetchObject( $lngResultID, $i ) as $column => $val)
                 {
@@ -147,6 +147,8 @@
             // レスポンスヘッダ設定
             header('Content-Type: application/json');
             echo json_encode($json);
+        } else {
+            echo "納品書マスタデータが取得できません。";
         }
 
 

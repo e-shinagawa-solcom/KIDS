@@ -336,7 +336,7 @@ var renewInit = function(invoiceNo, revisionNo) {
             $.createTableRenew(response);
         })
         .fail(function(response){
-            alert('検索に失敗しました');
+            alert(response.responseText);
             console.log(response);
 
             return;

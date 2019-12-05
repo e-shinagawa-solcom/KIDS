@@ -1398,7 +1398,7 @@ function fncGetOrder($lngOrderNo, $lngRevisionNo, $objDB){
  */
 function fncCancelOrderHtml($aryOrder){
 	foreach($aryOrder as $row){
-		$aryHtml[] = "<table cellpadding=\"5\" cellspacing=\"0\" border=\"0\" bgcolor=\"#6f8180\" align=\"center\">";
+		$aryHtml[] = "<table cellpadding=\"5\" cellspacing=\"1\" border=\"0\" bgcolor=\"#6f8180\" align=\"center\">";
 		$aryHtml[] = "  <tr>";
 		$aryHtml[] = "    <td class=\"SegColumn\">ÅÐÏ¿Æü</td>";
 		$aryHtml[] = "    <td class=\"Segs\">" . $row["dtminsertdate"] . "</td>";

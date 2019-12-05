@@ -115,7 +115,7 @@ $aryData["lngStockSubjectCode"]		= fncGetPulldown( "m_stocksubject", "lngstocksu
 // 仕入部品
 $aryData["lngStockItemCode"] 		= fncGetPulldown( "m_stockitem", "lngstocksubjectcode || '-' || lngstockitemcode", "lngstockitemcode, 	strstockitemname", 0, '', $objDB );
 // 仕入状態
-$aryData["lngOrderStatusCode"] = fncGetCheckBoxObject("m_orderstatus", "lngorderstatuscode", "strorderstatusname", "lngOrderStatusCode[]", 'where lngOrderStatusCode not in (1)', $objDB);
+$aryData["lngOrderStatusCode"] = fncGetCheckBoxObject("m_orderstatus", "lngorderstatuscode", "strorderstatusname", "lngOrderStatusCode[]", 'where lngOrderStatusCode not in (3,99)', $objDB);
 
 // 仕入部品復元用
 $TmpAry = explode("\n",$aryData["lngStockItemCode"]);
