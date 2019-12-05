@@ -30,4 +30,10 @@
         //ウィンドウを閉じる
         window.close();
     });
+
+    
+    
+    $(window).on("beforeunload", function(e) {
+        window.opener.opener.location.reload();
+    });
 })();

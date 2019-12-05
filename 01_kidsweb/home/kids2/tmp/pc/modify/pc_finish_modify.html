@@ -17,6 +17,7 @@
 
     <!-- 完了画面共通  CSS -->
     <link rel="stylesheet" href="/pc/cmn/css/forms-finish.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/pc/cmn/css/table-confirm.css">
 
     <!-- スタイル初期化 & 各種コントロールスタイル -->
     <link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
@@ -30,14 +31,32 @@
 <body class="finish-background">
     <div class="centering">
         <span>
-            
+            下記の仕入修正を完了いたしました。
         </span>
         <div class="finish-box">
-            <span class="finish-box__message">登録完了
+            <span class="finish-box__message">修正完了
             </span>
             <span class="finish-box__button">
                 <img class="close button" style="position: relative;top: 6px;" src="/img/type01/cmn/querybt/close_blown_off_ja_bt.gif" alt="close">
             </span>
+        </div>
+        <div style="width: 35%;white-space: nowrap; overflow: auto;">
+            <table class="table-description" id="table_detail">
+                <thead>
+                    <tr>
+                        <th>仕入NO.</th>
+                        <th>計上日</th>
+                        <th>発注書NO.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>_%strStockCode%_</td>
+                        <td>_%dtmStockAppDate%_</td>
+                        <td>_%strOrderCode%_</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </body>
