@@ -129,7 +129,7 @@ jQuery(function ($) {
         return true;
     }
     function getSelectedRows() {
-        return $('#EditTableBody tr');
+        return $('#EditTableBody .selected');
     }
     function executeSort(mode) {
         var row = $('#EditTableBody').children('.selected');
@@ -297,6 +297,7 @@ jQuery(function ($) {
             if (e.ctrlKey || e.metaKey) {
                 /* If pressed highlight the other row that was clicked */
                 $("#EditTable tbody tr:nth-child(" + (row.index() + 1) + ")").css("background-color", "#bbbbbb");
+                $("#EditTable tbody tr:nth-child(" + (row.index() + 1) + ")").addClass("selected");
 
             } else if (e.shiftKey) {
                 /* If pressed highlight the other row that was clicked */
@@ -306,11 +307,14 @@ jQuery(function ($) {
                 });
                 for (var i = indexes[0]; i <= indexes[1]; i++) {
                     $("#EditTable tbody tr:nth-child(" + (i + 1) + ")").css("background-color", "#bbbbbb");
+                    $("#EditTable tbody tr:nth-child(" + (i + 1) + ")").addClass("selected");
                 }
             } else {
                 /* Otherwise just highlight one row and clean others */
                 $("#EditTable tbody tr").css("background-color", "#ffffff");
+                $("#EditTable tbody tr").removeClass("selected");
                 $("#EditTable tbody tr:nth-child(" + (row.index() + 1) + ")").css("background-color", "#bbbbbb");
+                $("#EditTable tbody tr:nth-child(" + (row.index() + 1) + ")").addClass("selected");
                 lastSelectedRow = row;
             }
 

@@ -26,8 +26,8 @@ jQuery(function($){
         return true;
     }
     function getSelectedRows(){
-        //return $('#DetailTableBody tr.selected');
-        return $('#DetailTableBody tr');
+            return $('tr[class*="selected"]');
+        //return $('#DetailTableBody tr');
     }
     function executeSort(mode){
         var row = $('#DetailTableBody').children('.selected');
