@@ -1,7 +1,7 @@
 <config>
 	<header1>
 		<link rel="stylesheet" href="/mold/cmn/form/css/forms.css">
-		<link rel="stylesheet" href="/mold/cmn/form/css/forms-validation.css">
+		<!-- <link rel="stylesheet" href="/mold/cmn/form/css/forms-validation.css"> -->
 		<link rel="stylesheet" href="/mold/cmn/form/css/tabs.css">
 		<link rel="stylesheet" href="/mold/cmn/navigate/css/navigate.css">
 
@@ -10,10 +10,11 @@
 		<link rel="stylesheet" href="/mold/cmn/confirm/css/confirm-in-iframe.css">
 		<!-- タブ切り替え共通処理 -->
 		<script src="/mold/cmn/form/js/tab-function.js" defer></script>
+        <script src="/search/cmn/js/date.js" defer></script>
 		<!-- セレクトボックス共通処理 -->
 		<script src="/mold/cmn/form/js/util-selectbox.js" defer></script>
 		<!-- msw表示切替 -->
-		<script src="/mold/cmn/msw/cmn/js/msw.js" defer></script>
+		<!-- <script src="/mold/cmn/msw/cmn/js/msw.js" defer></script> -->
 	</header1>
 
 	<header2>
@@ -36,7 +37,7 @@
 		<!-- フォーム検証 -->
 		<script src="/pc/regist/js/validate-form.js" defer></script>
 		<!-- msw表示切替 -->
-		<script src="/pc/regist/js/msw.js" defer></script>
+		<!-- <script src="/pc/regist/js/msw.js" defer></script> -->
 	</header3>
 
 	<bodyonload>
@@ -66,12 +67,12 @@
 					<span class="regist-label">
 						<span class="regist-label__required-mark">◎</span>
 						<span class="regist-label__required-text">仕入日</span>
-						<input style="ime-mode:disabled;" class="Txt10L" type="text" name="dtmStockAppDate" value="_%dtmStockAppDate%_" maxlength="10"
+						<input style="ime-mode:disabled;" class="Txt10L is-date" type="text" name="dtmStockAppDate" value="_%dtmStockAppDate%_" maxlength="10"
 						 tabindex="1">
 					</span>
 					<span class="regist-label">
 						<span class="regist-label__required-mark">◎</span>
-						<span class="regist-label__required-text">発注NO.</span>
+						<span class="regist-label__required-text">発注書NO.</span>
 						<input style="ime-mode:disabled;" class="Txt10L" type="text" name="strOrderCode" maxlength="10"
 						 tabindex="3">
 						<img class="getpoinfo button" tabindex="4" src="/img/type01/cmn/seg/dataopen_off_bt.gif">
@@ -81,13 +82,13 @@
 
 					<span class="regist-label regist-label--right">
 						<span class="regist-label__text">状態</span>
-						<input class="disTxt07L" type="text" name="lngOrderStatusCode" size="7" maxlength="7" contenteditable="false">
+						<input class="disTxt07L" type="text" name="lngOrderStatusCode" size="7" maxlength="7" readonly>
 					</span>
 				</div>
 				<div class="regist-line">
 					<span class="regist-label">
 						<span class="regist-label__text">仕入NO.</span>
-						<input class="disTxt10L" type="text" name="lngStockCode" maxlength="10" contenteditable="false">
+						<input class="disTxt10L" type="text" name="lngStockCode" maxlength="10" readonly>
 					</span>
 					<span class="regist-label" style="margin-left: 19px;">
 						<span class="regist-label__required-mark">◎</span>
@@ -130,7 +131,7 @@
 				<div class="regist-line">
 					<span class="regist-label">
 						<span class="regist-label__text">製品到着日</span>
-						<input style="ime-mode:disabled;" class="Txt10L" type="text" name="dtmExpirationDate" maxlength="10"
+						<input style="ime-mode:disabled;" class="Txt10L is-date" type="text" name="dtmExpirationDate" maxlength="10"
 						 tabindex="1">
 					</span>
 					<span class="regist-label regist-label--right">
@@ -187,14 +188,6 @@
 		</div>
 	</div>
 </form>
-<div class="msw-loadpoints">
-	<!-- MSW 仕入先マスタ検索 -->
-	<iframe class="msw-supplier" src="/mold/cmn/msw/supplier/mswsupplier.html" frameborder="0">
-	</iframe>
-	<!-- MSW 納品場所マスタ検索 -->
-	<iframe class="msw-location" src="/mold/cmn/msw/location/mswlocation.html" frameborder="0">
-	</iframe>
-</div>
 
 <!-- フォーム ボタン -->
 <div class="form-buttons">

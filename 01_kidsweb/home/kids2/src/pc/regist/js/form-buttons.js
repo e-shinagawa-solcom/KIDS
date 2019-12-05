@@ -38,6 +38,7 @@ var curtaxList;
                 }
             })
                 .done(function (response) {
+                    console.log(response);
                     var data = JSON.parse(response);
                     if (data.orderdetail.length == 0) {
                         alert("該当する発注データがありません。");
@@ -203,6 +204,7 @@ var curtaxList;
             }
         })
             .done(function (response) {
+                console.log(response);
                 var data = JSON.parse(response);
                 $('input[name="curConversionRate"]').val(data.curconversionrate);
             })
@@ -226,6 +228,7 @@ var curtaxList;
             }
         })
             .done(function (response) {
+                console.log(response);
                 var data = JSON.parse(response);
                 $('input[name="curConversionRate"]').val(data.curconversionrate);
             })
@@ -322,14 +325,18 @@ var curtaxList;
                 data: formData
             })
                 .done(function (response) {
-//                    alert(response);
-                    var w = window.open();
-                    w.document.open();
-                    w.document.write(response);
-                    w.document.close();
-                    w.onunload = function () {
-                        window.opener.location.reload();
-                    }
+                    console.log(response);
+                    var w = window.open("", 'Regist Confirm', "width=1011px, height=600px, scrollbars=yes, resizable=yes");
+                w.document.open();
+                w.document.write(response);
+                w.document.close();
+                    // var w = window.open();
+                    // w.document.open();
+                    // w.document.write(response);
+                    // w.document.close();
+                    // w.onunload = function () {
+                    //     window.opener.location.reload();
+                    // }
                 })
                 .fail(function (response) {
                     alert(response);

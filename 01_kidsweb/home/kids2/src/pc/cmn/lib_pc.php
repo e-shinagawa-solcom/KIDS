@@ -570,7 +570,7 @@ function fncStockDeleteSetStatus($aryStockData, $objDB)
     $strQuery = "SELECT o.lngOrderNo as lngOrderNo, o.strOrderCode as strOrderCode, "
         . "o.lngOrderStatusCode as lngOrderStatusCode, o.lngMonetaryUnitCode as lngMonetaryUnitCode FROM m_Order o "
         . "WHERE o.strOrderCode = ( "
-        . "SELECT o1.strOrderCode FROM m_Order o1 WHERE o1.lngOrderNo = " . $aryStockData["lngorderno"] . " ) "
+        . "SELECT o1.strOrderCode FROM m_Order o1 WHERE o1.lngOrderNo = " . $aryStockData["lngorderno"] . " AND o1.lngRevisionNo = " . $aryStockData["lngrevisionno"] . ") "
         . "AND o.bytInvalidFlag = FALSE "
         . "AND o.lngRevisionNo >= 0 "
         . "AND o.lngRevisionNo = ( "
@@ -913,22 +913,42 @@ function fncGetPoInfoSQL($strOrderCode, $objDB, $isAll = false)
     $aryQuery[] = " on pod.lngorderno = od.lngorderno";
     $aryQuery[] = " and pod.lngorderdetailno = od.lngorderdetailno";
     $aryQuery[] = " and pod.lngorderrevisionno = od.lngrevisionno";
-    $aryQuery[] = " inner join m_purchaseorder mpo";
-    $aryQuery[] = " on mpo.lngpurchaseorderno = pod.lngpurchaseorderno";
-    $aryQuery[] = " and mpo.lngrevisionno = pod.lngrevisionno";
-    $aryQuery[] = " inner join (";
-    $aryQuery[] = " select ";
-    $aryQuery[] = " lngpurchaseorderno,";
-    $aryQuery[] = " max(lngrevisionno) as lngrevisionno";
-    $aryQuery[] = " from m_purchaseorder";
-    $aryQuery[] = " group by lngpurchaseorderno";
-    $aryQuery[] = " ) max_rev";
-    $aryQuery[] = " on max_rev.lngpurchaseorderno = mpo.lngpurchaseorderno";
-    $aryQuery[] = " and max_rev.lngrevisionno = mpo.lngrevisionno";
+    $aryQuery[] = "  inner join ( ";
+    $aryQuery[] = "    select";
+    $aryQuery[] = "      mpo1.lngpurchaseorderno";
+    $aryQuery[] = "      , mpo1.lngrevisionno";
+    $aryQuery[] = "      , mpo1.strordercode ";
+    $aryQuery[] = "      , mpo1.lngpayconditioncode ";
+    $aryQuery[] = "    from";
+    $aryQuery[] = "      m_purchaseorder mpo1 ";
+    $aryQuery[] = "      inner join ( ";
+    $aryQuery[] = "        select";
+    $aryQuery[] = "          lngpurchaseorderno";
+    $aryQuery[] = "          , max(lngrevisionno) as lngrevisionno ";
+    $aryQuery[] = "        from";
+    $aryQuery[] = "          m_purchaseorder ";
+    $aryQuery[] = "        group by";
+    $aryQuery[] = "          lngpurchaseorderno";
+    $aryQuery[] = "      ) max_rev ";
+    $aryQuery[] = "        on max_rev.lngpurchaseorderno = mpo1.lngpurchaseorderno ";
+    $aryQuery[] = "        and max_rev.lngrevisionno = mpo1.lngrevisionno ";
+    $aryQuery[] = "    where";
+    $aryQuery[] = "      not exists ( ";
+    $aryQuery[] = "        select";
+    $aryQuery[] = "          mpo2.lngpurchaseorderno ";
+    $aryQuery[] = "        from";
+    $aryQuery[] = "          m_purchaseorder mpo2 ";
+    $aryQuery[] = "        where";
+    $aryQuery[] = "          mpo2.lngpurchaseorderno = mpo1.lngpurchaseorderno ";
+    $aryQuery[] = "          and mpo2.lngrevisionno = - 1";
+    $aryQuery[] = "      )";
+    $aryQuery[] = "  ) mpo ";
+    $aryQuery[] = "    on mpo.lngpurchaseorderno = pod.lngpurchaseorderno ";
+    $aryQuery[] = "    and mpo.lngrevisionno = pod.lngrevisionno ";
     $aryQuery[] = "  LEFT JOIN (";
     $aryQuery[] = "    select p1.*  from m_product p1 ";
-    $aryQuery[] = "    inner join (select max(lngrevisionno) lngrevisionno, strproductcode from m_Product group by strProductCode) p2";
-    $aryQuery[] = "    on p1.lngrevisionno = p2.lngrevisionno and p1.strproductcode = p2.strproductcode";
+    $aryQuery[] = "    inner join (select max(lngrevisionno) lngrevisionno, strproductcode, strrevisecode from m_Product group by strProductCode, strrevisecode) p2";
+    $aryQuery[] = "    on p1.lngrevisionno = p2.lngrevisionno and p1.strproductcode = p2.strproductcode and p1.strrevisecode = p2.strrevisecode";
     $aryQuery[] = " ) p ";
     $aryQuery[] = "  on p.strproductcode = od.strproductcode";
     $aryQuery[] = "  and p.strrevisecode = od.strrevisecode";
@@ -951,11 +971,9 @@ function fncGetPoInfoSQL($strOrderCode, $objDB, $isAll = false)
     }
     
     $aryQuery[] = " and mpo.strordercode = '" . $strOrderCode . "'"; // 
-    $aryQuery[] = " AND not exists (select lngpurchaseorderno from m_purchaseorder mpo1 where mpo1.lngpurchaseorderno = mpo.lngpurchaseorderno and mpo1.lngrevisionno = -1)";
     $aryQuery[] = "  ORDER BY od.lngSortKey";
 
     $strQuery = implode("\n", $aryQuery);
-
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
     $aryOrderDetail = array();

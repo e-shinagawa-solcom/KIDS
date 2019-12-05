@@ -183,7 +183,7 @@ foreach ($aryDetailData as $data) {
     $aryQuery[] = "t_orderdetail.lngstocksubjectcode, "; // 仕入科目コード
     $aryQuery[] = "t_orderdetail.lngstockitemcode, "; // 仕入部品コード
     $aryQuery[] = "To_char( t_orderdetail.dtmdeliverydate, 'YYYY/mm/dd' ) as dtmdeliverydate, "; // 納品日
-    $aryQuery[] = "t_purchaseorderdetail.lngdeliverymethodcode as lngCarrierCode, "; // 運搬方法コード
+    $aryQuery[] = "pod.lngdeliverymethodcode as lngCarrierCode, "; // 運搬方法コード
     $aryQuery[] = "t_orderdetail.lngconversionclasscode, "; // 換算区分コード / 1：単位計上/ 2：荷姿単位計上
     $aryQuery[] = "t_orderdetail.curproductprice, "; // 製品価格
     $aryQuery[] = "t_orderdetail.lngproductquantity, "; // 製品数量
@@ -198,17 +198,47 @@ foreach ($aryDetailData as $data) {
     $aryQuery[] = "t_orderdetail.strmoldno as strSerialNo, "; // シリアル
     $aryQuery[] = "t_orderdetail.lngsortkey "; // シリアル
     $aryQuery[] = "FROM t_orderdetail ";
-    $aryQuery[] = "INNER JOIN t_purchaseorderdetail ";
-    $aryQuery[] = "ON t_purchaseorderdetail.lngorderno = t_orderdetail.lngorderno ";
-    $aryQuery[] = "AND t_purchaseorderdetail.lngorderdetailno = t_orderdetail.lngorderdetailno ";
-    $aryQuery[] = "AND t_purchaseorderdetail.lngorderrevisionno = t_orderdetail.lngrevisionno ";
+    $aryQuery[] = "  INNER JOIN t_purchaseorderdetail pod ";
+    $aryQuery[] = "    ON pod.lngorderno = t_orderdetail.lngorderno ";
+    $aryQuery[] = "    AND pod.lngorderdetailno = t_orderdetail.lngorderdetailno ";
+    $aryQuery[] = "    AND pod.lngorderrevisionno = t_orderdetail.lngrevisionno ";
+    $aryQuery[] = "  inner join ( ";
+    $aryQuery[] = "    select";
+    $aryQuery[] = "      mpo1.lngpurchaseorderno";
+    $aryQuery[] = "      , mpo1.lngrevisionno ";
+    $aryQuery[] = "    from";
+    $aryQuery[] = "      m_purchaseorder mpo1 ";
+    $aryQuery[] = "      inner join ( ";
+    $aryQuery[] = "        select";
+    $aryQuery[] = "          lngpurchaseorderno";
+    $aryQuery[] = "          , max(lngrevisionno) as lngrevisionno ";
+    $aryQuery[] = "        from";
+    $aryQuery[] = "          m_purchaseorder ";
+    $aryQuery[] = "        group by";
+    $aryQuery[] = "          lngpurchaseorderno";
+    $aryQuery[] = "      ) max_rev ";
+    $aryQuery[] = "        on max_rev.lngpurchaseorderno = mpo1.lngpurchaseorderno ";
+    $aryQuery[] = "        and max_rev.lngrevisionno = mpo1.lngrevisionno ";
+    $aryQuery[] = "    where";
+    $aryQuery[] = "      not exists ( ";
+    $aryQuery[] = "        select";
+    $aryQuery[] = "          mpo2.lngpurchaseorderno ";
+    $aryQuery[] = "        from";
+    $aryQuery[] = "          m_purchaseorder mpo2 ";
+    $aryQuery[] = "        where";
+    $aryQuery[] = "          mpo2.lngpurchaseorderno = mpo1.lngpurchaseorderno ";
+    $aryQuery[] = "          and mpo2.lngrevisionno = - 1";
+    $aryQuery[] = "      )";
+    $aryQuery[] = "  ) mpo ";
+    $aryQuery[] = "    on mpo.lngpurchaseorderno = pod.lngpurchaseorderno ";
+    $aryQuery[] = "    and mpo.lngrevisionno = pod.lngrevisionno ";
     $aryQuery[] = "WHERE ";
     $aryQuery[] = "t_orderdetail.lngorderno = " . $data["lngOrderNo"];
     $aryQuery[] = " AND t_orderdetail.lngrevisionno = " . $data["lngRevisionNo"];
     $aryQuery[] = " AND t_orderdetail.lngorderdetailno = " . $data["lngOrderDetailNo"];
     $aryQuery[] = " ORDER BY lngSortKey";
     $strQuery = implode("\n", $aryQuery);
-    
+
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
     if ($lngResultNum) {

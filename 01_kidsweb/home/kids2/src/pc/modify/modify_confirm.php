@@ -44,7 +44,7 @@ if (!fncCheckAuthority(DEF_FUNCTION_PC5, $objAuth)) {
     fncOutputError(9018, DEF_WARNING, "アクセス権限がありません。", true, $strReturnPath, $objDB);
 }
 
-$lngUserCode = $objAuth->UserCode;
+$lngUserCode = trim($objAuth->UserID);
 $strUserName = $objAuth->UserDisplayName;
 
 $curtotalprice = 0;
@@ -67,10 +67,10 @@ for ($i = 0; $i < count($aryDetailData); $i++) {
 	$aryQuery[] = "g.strGroupDisplayCode AS lnggroupcode, ";
 	$aryQuery[] = "g.strGroupDisplayName AS strgroupname, ";
 	$aryQuery[] = "u.strUserDisplayCode AS lngusercode, ";
-	$aryQuery[] = "u.strUserDisplayName AS lngusername, ";
+	$aryQuery[] = "u.strUserDisplayName AS strusername, ";
     $aryQuery[] = "To_char( od.dtmdeliverydate, 'YYYY/mm/dd' ) as dtmdeliverydate, "; // 納品日
-    $aryQuery[] = "od.lngdeliverymethodcode as lngdeliverymethodcode, "; // 運搬方法コード
-    $aryQuery[] = "dm.strdeliverymethodname as strdeliverymethodname, "; // 運搬方法名称
+    // $aryQuery[] = "od.lngdeliverymethodcode as lngdeliverymethodcode, "; // 運搬方法コード
+    // $aryQuery[] = "dm.strdeliverymethodname as strdeliverymethodname, "; // 運搬方法名称
     $aryQuery[] = "od.lngconversionclasscode, "; // 換算区分コード / 1：単位計上/ 2：荷姿単位計上
     $aryQuery[] = "od.curproductprice as curproductprice, "; // 製品価格
     $aryQuery[] = "od.lngproductquantity, "; // 製品数量
@@ -81,9 +81,9 @@ for ($i = 0; $i < count($aryDetailData); $i++) {
     $aryQuery[] = "od.lngtaxcode, "; // 消費税コード
     $aryQuery[] = "od.curtaxprice, "; // 消費税金額
 */
-    $aryQuery[] = "tpd.lngdeliverymethodcode,"; // 運搬方法
-    $aryQuery[] = "tpd.strdeliverymethodname,"; // 運搬方法名
-    $aryQuery[] = "tpd.strnote,"; // 明細備考
+    $aryQuery[] = "pod.lngdeliverymethodcode,"; // 運搬方法
+    $aryQuery[] = "pod.strdeliverymethodname,"; // 運搬方法名
+    $aryQuery[] = "pod.strnote,"; // 明細備考
     $aryQuery[] = "od.cursubtotalprice as cursubtotalprice, "; // 小計金額
     $aryQuery[] = "od.strnote as strdetailnote, "; // 備考
     $aryQuery[] = "od.strmoldno as strSerialNo, "; // シリアル
@@ -108,10 +108,41 @@ for ($i = 0; $i < count($aryDetailData); $i++) {
     $aryQuery[] = "  AND lngrevisionno = " . $aryDetailData[$i]["lngRevisionNo"] . " ";
     $aryQuery[] = "  AND bytinvalidflag = false ";
     $aryQuery[] = ") o on o.lngorderno = od.lngorderno";
-    $aryQuery[] = "INNER JOIN t_purchaseorderdetail tpd";
-    $aryQuery[] = "    ON tpd.lngorderno = od.lngorderno";
-    $aryQuery[] = "    AND tpd.lngorderdetailno = od.lngorderdetailno";
-    $aryQuery[] = "    AND tpd.lngorderrevisionno = od.lngrevisionno";
+    $aryQuery[] = "  inner join t_purchaseorderdetail pod ";
+    $aryQuery[] = "    on pod.lngorderno = od.lngorderno ";
+    $aryQuery[] = "    and pod.lngorderdetailno = od.lngorderdetailno ";
+    $aryQuery[] = "    and pod.lngorderrevisionno = od.lngrevisionno ";
+    $aryQuery[] = "  inner join ( ";
+    $aryQuery[] = "    select";
+    $aryQuery[] = "      mpo1.lngpurchaseorderno";
+    $aryQuery[] = "      , mpo1.lngrevisionno";
+    $aryQuery[] = "      , mpo1.lngpayconditioncode ";
+    $aryQuery[] = "    from";
+    $aryQuery[] = "      m_purchaseorder mpo1 ";
+    $aryQuery[] = "      inner join ( ";
+    $aryQuery[] = "        select";
+    $aryQuery[] = "          lngpurchaseorderno";
+    $aryQuery[] = "          , max(lngrevisionno) as lngrevisionno ";
+    $aryQuery[] = "        from";
+    $aryQuery[] = "          m_purchaseorder ";
+    $aryQuery[] = "        group by";
+    $aryQuery[] = "          lngpurchaseorderno";
+    $aryQuery[] = "      ) max_rev ";
+    $aryQuery[] = "        on max_rev.lngpurchaseorderno = mpo1.lngpurchaseorderno ";
+    $aryQuery[] = "        and max_rev.lngrevisionno = mpo1.lngrevisionno ";
+    $aryQuery[] = "    where";
+    $aryQuery[] = "      not exists ( ";
+    $aryQuery[] = "        select";
+    $aryQuery[] = "          mpo2.lngpurchaseorderno ";
+    $aryQuery[] = "        from";
+    $aryQuery[] = "          m_purchaseorder mpo2 ";
+    $aryQuery[] = "        where";
+    $aryQuery[] = "          mpo2.lngpurchaseorderno = mpo1.lngpurchaseorderno ";
+    $aryQuery[] = "          and mpo2.lngrevisionno = - 1";
+    $aryQuery[] = "      )";
+    $aryQuery[] = "  ) mpo ";
+    $aryQuery[] = "    on mpo.lngpurchaseorderno = pod.lngpurchaseorderno ";
+    $aryQuery[] = "    and mpo.lngrevisionno = pod.lngrevisionno ";
     $aryQuery[] = " LEFT JOIN m_product p on p.strproductcode = od.strproductcode and p.strrevisecode = od.strrevisecode and p.lngrevisionno = od.lngrevisionno";
     $aryQuery[] = " LEFT JOIN m_stocksubject ss on ss.lngstocksubjectcode = od.lngstocksubjectcode";
     $aryQuery[] = " LEFT JOIN m_stockitem si on si.lngstocksubjectcode = od.lngstocksubjectcode and si.lngstockitemcode = od.lngstockitemcode";
@@ -127,6 +158,7 @@ for ($i = 0; $i < count($aryDetailData); $i++) {
     $aryQuery[] = "  AND od.lngorderdetailno = " . $aryDetailData[$i]["lngOrderDetailNo"] . " ";
     $aryQuery[] = " ORDER BY od.lngSortKey";
     $strQuery = implode("\n", $aryQuery);
+    // echo $strQuery;
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
     if ($lngResultNum) {
         if ($lngResultNum == 1) {
@@ -183,7 +215,6 @@ $aryData["dtminsertdate"] = date('Y/m/d', time());
 $aryData["lnginputusercode"] = $lngUserCode;
 // 入力者名称
 $aryNewResult["strinputusername"] = $strUserName;
-
 // テンプレート読み込み
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate("pc/modify/pc_confirm_modify.html");
