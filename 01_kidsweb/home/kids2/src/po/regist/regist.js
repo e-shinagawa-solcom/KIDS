@@ -129,7 +129,7 @@ jQuery(function ($) {
         return true;
     }
     function getSelectedRows() {
-        return $('#EditTableBody tr');
+        return $('#EditTableBody .selected');
     }
     function executeSort(mode) {
         var row = $('#EditTableBody').children('.selected');
@@ -297,7 +297,7 @@ jQuery(function ($) {
             if (e.ctrlKey || e.metaKey) {
                 /* If pressed highlight the other row that was clicked */
                 $("#EditTable tbody tr:nth-child(" + (row.index() + 1) + ")").css("background-color", "#bbbbbb");
-
+ 
             } else if (e.shiftKey) {
                 /* If pressed highlight the other row that was clicked */
                 var indexes = [lastSelectedRow.index(), row.index()];
