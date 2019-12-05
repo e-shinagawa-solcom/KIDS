@@ -685,7 +685,12 @@ foreach ($records as $i => $record) {
                     break;
                 // 製品構成
                 case "strproductcomposition":
-                    $td = $doc->createElement("td", toUTF8("全" . $record["strproductcomposition"] . "種アッセンブリ"));
+                    if ($record["strproductcomposition"] != '') {
+                        $textContent = toUTF8("全" . $record["strproductcomposition"] . "種アッセンブリ");
+                    } else {
+                        $textContent = "";
+                    }
+                    $td = $doc->createElement("td", $textContent);
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;

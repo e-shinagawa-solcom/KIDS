@@ -118,11 +118,17 @@ $objDB->transactionCommit();
 $objDB->close();
 
 
+
+$aryResult["strStockCode"] = $strStockCode;
+$aryResult["dtmStockAppDate"] = $aryStockResult["dtmstockappdate"];
+$aryResult["strOrderCode"] = $aryStockResult["strordercode"];
+
 // テンプレート読み込み
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate( "/pc/delete/pc_finish_delete.html" );
 
 // テンプレート生成
+$objTemplate->replace($aryResult);
 $objTemplate->complete();
 
 // HTML出力

@@ -6,4 +6,5 @@
         // 親ウィンドウを閉じる
         window.opener.close();
     });
+
 })();

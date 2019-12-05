@@ -345,11 +345,16 @@ $objDB->transactionCommit();
 
 $objDB->close();
 
+
+$aryResult["strStockCode"] = $strstockcode;
+$aryResult["dtmStockAppDate"] = $aryData["dtmStockAppDate"];
+$aryResult["strOrderCode"] = $aryData["strOrderCode"];
 // テンプレート読み込み
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate( "/pc/modify/pc_finish_modify.html" );
 
 // テンプレート生成
+$objTemplate->replace($aryResult);
 $objTemplate->complete();
 
 // HTML出力
