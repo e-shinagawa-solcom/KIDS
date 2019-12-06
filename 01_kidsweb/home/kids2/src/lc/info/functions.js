@@ -402,7 +402,7 @@ function reflectLcInfo() {
 						}
 					})
 						.done(function (data) {
-							if (data == true) {
+							if (data == "true") {
 								alert("反映が完了しました。");
 							} else {
 								alert("反映でエラーが発生しました。");

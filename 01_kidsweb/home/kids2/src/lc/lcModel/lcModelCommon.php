@@ -1,7 +1,6 @@
 <?php
 //クラスファイルの読み込み
 require_once 'db_common.php';
-
 // ----------------------------------------------------------------------------
 /**
  *       LC関連画面クラス
@@ -2459,7 +2458,7 @@ class lcModel
             , $data["pono"]
             , $data["polineno"]
             , $data["poreviseno"]);
-        return $bind;
+        //return $bind;
         //クエリ実行
         $result = $db->executeNonQuery($sql, $bind);
 
