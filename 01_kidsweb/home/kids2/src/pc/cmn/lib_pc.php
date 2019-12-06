@@ -40,6 +40,8 @@ function fncGetStockHeadNoToInfoSQL($lngStockNo, $lngRevisionNo)
     $aryQuery[] = ", mp.strordercode strOrderCode";
     // 発注コード
     $aryQuery[] = ", tsd.lngOrderNo as lngOrderNo";
+    // 発注明細番号
+    $aryQuery[] = ", tsd.lngorderrevisionno as lngorderrevisionno";
     // 発注コード
     $aryQuery[] = ", mp.strordercode as strRealOrderCode";
 

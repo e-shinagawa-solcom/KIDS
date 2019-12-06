@@ -207,8 +207,14 @@ function fncGetReceiveDetailNoToInfoSQL($lngReceiveNo, $lngRevisionNo)
     $aryQuery[] = "   on p1.lngrevisionno = p2.lngrevisionno and p1.strproductcode = p2.strproductcode and p1.strrevisecode = p2.strrevisecode";
     $aryQuery[] = ") p ";
     $aryQuery[] = " ON rd.strProductCode = p.strProductCode and rd.strrevisecode = p.strrevisecode ";
+    $aryQuery[] = "  LEFT JOIN t_estimatedetail me ";
+    $aryQuery[] = "    on rd.lngestimateno = me.lngestimateno ";
+    $aryQuery[] = "    and rd.lngestimatedetailno = me.lngestimatedetailno ";
+    $aryQuery[] = "    and rd.lngestimaterevisionno = me.lngrevisionno ";
     $aryQuery[] = " LEFT JOIN m_SalesClass ss on rd.lngSalesClassCode = ss.lngSalesClassCode";
-    $aryQuery[] = " LEFT JOIN m_salesclassdivisonlink ssdl on ssdl.lngSalesClassCode = ss.lngSalesClassCode";
+    $aryQuery[] = "  LEFT JOIN m_salesclassdivisonlink ssdl ";
+    $aryQuery[] = "    on ssdl.lngSalesClassCode = me.lngSalesClassCode ";
+    $aryQuery[] = "    and ssdl.lngsalesdivisioncode = me.lngsalesdivisioncode ";
     $aryQuery[] = " LEFT JOIN m_salesdivision sd on sd.lngsalesdivisioncode = ssdl.lngsalesdivisioncode";
     $aryQuery[] = " LEFT JOIN m_ProductUnit pu ON rd.lngProductUnitCode = pu.lngProductUnitCode";
     $aryQuery[] = " WHERE rd.lngReceiveNo in (" . $lngReceiveNo . ") ";
