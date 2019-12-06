@@ -68,6 +68,7 @@ function lcInit( json_obj )
 			$("#payfnameformal").val(lc_data.payfnameformal);
 			$("#polineno").val(lc_data.polineno);
 			$("#productcd").val(lc_data.productcd);
+			$("#productrevisecd").val(lc_data.productrevisecd);
 			$("#productname").val(lc_data.productname);
 			$("#opendate").val(lc_data.opendate);
 			$("#moneyprice").val(lc_data.moneyprice);

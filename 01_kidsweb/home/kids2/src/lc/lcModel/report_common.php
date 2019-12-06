@@ -423,12 +423,14 @@ function fncInsertReportImpLcOrderInfo($objDB, $data)
                 ,$14
                 ,$15
                 ,$16
-                ,$17)";
+                ,$17
+                ,$18)";
 
     //バインドの設定
     $bind = array($data["bankreqdate"]
         , $data["pono"]
         , $data["productcd"]
+        , $data["productrevisecd"]
         , $data["productname"]
         , $data["productnumber"]
         , $data["unitname"]
@@ -519,13 +521,15 @@ function fncInsertReportByLcDetail($objDB, $data)
                 ,$14
                 ,$15
                 ,$16
-                ,$17)";
+                ,$17
+                ,$18)";
 
     //バインドの設定
     $bind = array($data["lcno"]
         , $data["pono"]
         , $data["factoryname"]
         , $data["productcd"]
+        , $data["productrevisecd"]
         , $data["productname"]
         , $data["productnumber"]
         , $data["unitname"]
@@ -715,6 +719,7 @@ function fncGetReportByLcDetail($objDB)
                     pono,
                     substr(factoryname, 0 ,24) as factoryname,
                     productcd,
+                    productrevisecd,
                     substr(productname, 0 ,22) as productname,
                     productnumber,
                     unitname,
@@ -787,6 +792,7 @@ function fncGetReportImpLcOrderInfo($objDB)
                     to_char(bankreqdate, 'MM月DD日') as bankreqdate,
                     pono,
                     productcd,
+                    productrevisecd,
                     substr(productname, 0, 24) as productname,
                     productnumber,
                     unitname,
@@ -803,7 +809,7 @@ function fncGetReportImpLcOrderInfo($objDB)
                     reserve1
 				from
                     t_reportimportlcorderinfo
-                order by productcd, pono
+                order by productcd, productrevisecd, pono
             ";
 
     $result = pg_query($objDB->ConnectID, $sql);
@@ -950,6 +956,7 @@ function fncGetLcInfoForReportTwo($objDB, $opendate, $currencyclass)
             postate,
             payfcd,
             productcd,
+            productrevisecd,
             productname,
             productnumber,
             unitname,
@@ -1029,6 +1036,7 @@ function fncGetLcInfoForReportFive($objDB, $startYmd, $endYmd, $currencyclass, $
             postate,
             payfcd,
             productcd,
+            productrevisecd,
             productname,
             productnumber,
             unitname,
@@ -1164,6 +1172,7 @@ function fncGetLcInfoForReportSix($objDB, $currencyclass, $data)
             postate,
             payfcd,
             productcd,
+            productrevisecd,
             productname,
             productnumber,
             unitname,
@@ -1204,7 +1213,7 @@ function fncGetLcInfoForReportSix($objDB, $currencyclass, $data)
         . $where .
         "   and currencyclass = $5
             and (lcstate = 0 or lcstate = 3 or lcstate = 4 or lcstate = 7 or lcstate = 8)
-        order by productcd, pono, polineno
+        order by productcd, productrevisecd, pono, polineno
         ";
     // クエリへの設定値の定義
     $bind = array(str_replace("/", "", $data["openYm"]),

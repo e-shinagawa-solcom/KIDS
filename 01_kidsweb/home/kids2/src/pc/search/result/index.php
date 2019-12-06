@@ -233,7 +233,7 @@ foreach ($records as $i => $record) {
     for ($i = 1; $i < $rowspan; $i++) {
         $trBody = $doc->createElement("tr");
         $trBody->setAttribute("id", $record["strstockcode"] . "_" . $record["lngrevisionno"] . "_" . $detailData[$i]["lngstockdetailno"]);
-
+        $trBody->setAttribute("class", "tablesorter-childRow");
         $detailData[$i]["lngmonetaryunitcode"] = $record["lngmonetaryunitcode"];
         $detailData[$i]["strmonetaryunitsign"] = $record["strmonetaryunitsign"];
         fncSetDetailDataToTr($doc, $trBody, $bgcolor, $aryTableDetailHeaderName_PC, $displayColumns, $detailData[$i], true);
