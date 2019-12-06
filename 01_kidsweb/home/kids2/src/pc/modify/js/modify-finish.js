@@ -4,7 +4,7 @@
         //ウィンドウを閉じる
         window.close();
         // 親ウィンドウを閉じる
-        window.opener.close();
+        window.opener.location.reload();
     });
 
 })();

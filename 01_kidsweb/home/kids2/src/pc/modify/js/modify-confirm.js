@@ -34,6 +34,6 @@
     
     
     $(window).on("beforeunload", function(e) {
-        window.opener.opener.location.reload();
+        window.opener.location.reload();
     });
 })();

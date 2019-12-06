@@ -107,17 +107,21 @@ if (!list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB)) {
 }
 $objDB->freeResult($lngResultID);
 
-// 該当仕入削除による状態変更関数呼び出し
-if (fncStockDeleteSetStatus($aryStockResult, $objDB) != 0) {
-    fncOutputError(9051, DEF_ERROR, "データが異常です", true, $strReturnPath, $objDB);
-}
+// 発注更新
+$aryQuery = array();
+$aryQuery[] = "UPDATE m_order ";
+$aryQuery[] = "set lngorderstatuscode = " . DEF_ORDER_ORDER . " ";
+$aryQuery[] = "where lngorderno = " . $aryStockResult["lngorderno"] . " ";
+$aryQuery[] = "AND lngrevisionno = " . $aryStockResult["lngorderrevisionno"] . " ";
+$strQuery = implode("\n", $aryQuery);
+list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
+
+$objDB->freeResult($lngResultID);
 
 // トランザクションコミット
 $objDB->transactionCommit();
 
 $objDB->close();
-
-
 
 $aryResult["strStockCode"] = $strStockCode;
 $aryResult["dtmStockAppDate"] = $aryStockResult["dtmstockappdate"];
@@ -125,7 +129,7 @@ $aryResult["strOrderCode"] = $aryStockResult["strordercode"];
 
 // テンプレート読み込み
 $objTemplate = new clsTemplate();
-$objTemplate->getTemplate( "/pc/delete/pc_finish_delete.html" );
+$objTemplate->getTemplate("/pc/delete/pc_finish_delete.html");
 
 // テンプレート生成
 $objTemplate->replace($aryResult);

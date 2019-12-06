@@ -330,10 +330,24 @@ var taxList;
             })
                 .done(function (response) {
                     console.log(response);
-                    var w = window.open("", 'Regist Confirm', "width=1011px, height=600px, scrollbars=yes, resizable=yes");
-                    w.document.open();
-                    w.document.write(response);
-                    w.document.close();
+
+                    if (actionUrl.indexOf('modify') > -1) {
+                        // var w = window.open();
+                        // w.document.open();
+                        // w.document.write(response);
+                        // w.document.close();
+                        // w.onunload = function () {
+                        //     window.opener.location.reload();
+                        // }
+                        document.open();
+        document.write(response);
+        document.close();
+                    } else {
+                        var w = window.open("", 'Regist Confirm', "width=1011px, height=600px, scrollbars=yes, resizable=yes");
+                        w.document.open();
+                        w.document.write(response);
+                        w.document.close();
+                    }
                     // var w = window.open();
                     // w.document.open();
                     // w.document.write(response);
