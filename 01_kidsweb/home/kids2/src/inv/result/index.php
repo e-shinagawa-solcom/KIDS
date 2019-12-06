@@ -256,6 +256,7 @@ foreach ($aryResult as $i => $record) {
     for ($i = 1; $i < $rowspan; $i++) {
         $trBody = $doc->createElement("tr");
         $trBody->setAttribute("id", $record["strinvoicecode"] . "_" . $record["lngrevisionno"] . "_" . $detailData[$i]["lnginvoicedetailno"]);
+        $trBody->setAttribute("class", "tablesorter-childRow");
         $detailData[$i]["lngmonetaryunitcode"] = $record["lngmonetaryunitcode"];
         $detailData[$i]["strmonetaryunitsign"] = $record["strmonetaryunitsign"];
         fncSetDetailDataToTr($doc, $trBody, $bgcolor, $aryTableDetailHeaderName_INV, null, $detailData[$i], true);

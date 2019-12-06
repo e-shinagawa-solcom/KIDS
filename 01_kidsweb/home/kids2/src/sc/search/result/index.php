@@ -219,7 +219,6 @@ foreach ($records as $i => $record) {
     $detailData[0]["lngmonetaryunitcode"] = $record["lngmonetaryunitcode"];
     $detailData[0]["strmonetaryunitsign"] = $record["strmonetaryunitsign"];
     // 明細データの設定
-    // fncSetDetailDataToTr($doc, $trBody, $bgcolor, $aryTableDetailHeaderName, $displayColumns, $detailData[0], $record["lngmonetaryunitcode"], $record["strmonetaryunitsign"]);
     fncSetDetailDataToTr($doc, $trBody, $bgcolor, $aryTableDetailHeaderName_SC, $displayColumns, $detailData[0], true);
     // tbody > tr
     $tbody->appendChild($trBody);
@@ -228,10 +227,9 @@ foreach ($records as $i => $record) {
     for ($i = 1; $i < $rowspan; $i++) {
         $trBody = $doc->createElement("tr");
         $trBody->setAttribute("id", $record["strsalescode"] . "_" . $record["lngrevisionno"] . "_" . $detailData[$i]["lngsalesdetailno"]);
-
+        $trBody->setAttribute("class", "tablesorter-childRow");
         $detailData[$i]["lngmonetaryunitcode"] = $record["lngmonetaryunitcode"];
         $detailData[$i]["strmonetaryunitsign"] = $record["strmonetaryunitsign"];
-        // fncSetDetailDataToTr($doc, $trBody, $bgcolor, $aryTableDetailHeaderName, $displayColumns, $detailData[$i], $record["lngmonetaryunitcode"], $record["strmonetaryunitsign"]);
         fncSetDetailDataToTr($doc, $trBody, $bgcolor, $aryTableDetailHeaderName_SC, $displayColumns, $detailData[$i], true);
 
         $tbody->appendChild($trBody);
