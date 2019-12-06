@@ -412,4 +412,10 @@ jQuery(function ($) {
             console.log(error);
         });
     });
+    $('#ClearBtn').on('click', function () {
+        $('input[name="lngLocationCode"]').val(''); //保存場所コード
+        $('input[name="strLocationName"]').val(''); //保存場所
+        $('input[name="strNote"]').val(''); //備考
+        
+    });
 });
