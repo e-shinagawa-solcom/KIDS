@@ -51,6 +51,7 @@ function lcInit(json_obj) {
 function setLcInfoTable(data, phpData) {
 	//既存データの削除
 	$("#lc_table_body").empty();
+	$("#lc_table_radio").empty();
 
 	for (var i = 0; i < data.length; i++) {
 		//行データ
@@ -102,7 +103,7 @@ function setLcInfoTable(data, phpData) {
 		'</tr>';
 		$("#lc_table_radio").append(lc_table_radio);
 
-		var lc_table_body = '<tr>' +
+		var lc_table_body = '<tr id="'+ i+ '">' +
 			// '<td style="text-align: left;"><input type="radio" name="selectRow" value="' + i + '" class="form-control form-control-sm"></td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.payfnameomit) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + strIns(row.opendate, 4, '/') + '</td>' +
@@ -144,6 +145,12 @@ function setLcInfoTable(data, phpData) {
 			'</tr>';
 		$("#lc_table_body").append(lc_table_body);
 	}
+console.log(data.length);
+    for (var i = 0; i <= data.length; i++) {
+		var height = $("#lc_table_radio tr:nth-child(" + i + ") td:nth-child(1)").height();
+		$("#lc_table_body tr:nth-child(" + i + ") td:nth-child(1)").height(height);
+	}
+	
 
 	//0件の場合はエラー
 	lcInfoHit = true;

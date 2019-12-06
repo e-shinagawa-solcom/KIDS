@@ -252,7 +252,7 @@ foreach ($aryOrderDetail as $orderDetail) {
     $td = $doc->createElement("td");
     $td->setAttribute("class", "col10");
     $select = $doc->createElement("select");
-    $select->setAttribute("onchange", "resetTaxPrice(this)");
+    $select->setAttribute("onchange", "resetTaxPrice(this,1)");
     $select->setAttribute("style", "width: 90px;");
     foreach ($aryTaxclass as $taxclass) {
         $option = $doc->createElement("option", toUTF8($taxclass["strtaxclassname"]));
@@ -271,13 +271,14 @@ foreach ($aryOrderDetail as $orderDetail) {
     // 消費税率 
     $td = $doc->createElement("td");
     $td->setAttribute("class", "col11");
-    if($orderDetail["lngcountrycode"] == 81 && (!$lngtaxclasscode || $lngtaxclasscode != 1))
+    // if($orderDetail["lngcountrycode"] == 81 && (!$lngtaxclasscode || $lngtaxclasscode != 1))
+    if(!$lngtaxclasscode || $lngtaxclasscode != 1)
     {
         $select = $doc->createElement("select");
         $select->setAttribute("style", "width: 90px;");
-        $select->setAttribute("onchange", "resetTaxPrice(this)");
+        $select->setAttribute("onchange", "resetTaxPrice(this,2)");
         foreach ($taxObj as $tax) {
-            $option = $doc->createElement("option", $tax->curtax);
+            $option = $doc->createElement("option", $tax->curtax * 100);
             $option->setAttribute("value", $tax->lngtaxcode);
             if ($lngtaxcode == $tax->lngtaxcode) {
                 $option->setAttribute("selected", "selected");
@@ -289,6 +290,7 @@ foreach ($aryOrderDetail as $orderDetail) {
     else
     {
         $td = $doc->createElement("td", $curtax);
+        $td->setAttribute("class", "col11");
     }
 	$trBody->appendChild($td);
 
@@ -298,10 +300,10 @@ foreach ($aryOrderDetail as $orderDetail) {
         $hidden = $doc->getElementById("taxList");
         $select = $doc->createElement("select");
         $select->setAttribute("style", "width: 90px;");
-        $select->setAttribute("onchange", "resetTaxPrice(this)");
+        $select->setAttribute("onchange", "resetTaxPrice(this,2)");
         $count = 0;
         foreach ($taxObj as $tax) {
-            $option = $doc->createElement("option", $tax->curtax);
+            $option = $doc->createElement("option", $tax->curtax * 100);
             $option->setAttribute("value", $tax->lngtaxcode);
             if ($count == 0) {
                 $option->setAttribute("selected", "selected");
@@ -336,51 +338,61 @@ foreach ($aryOrderDetail as $orderDetail) {
 
     // 税抜金額（金額フォーマット変換前）
     $td = $doc->createElement("td", $orderDetail["cursubtotalprice"]);
+    $td->setAttribute("class", "cursubtotalprice");
     $td->setAttribute("style", "display:none");
     $trBody->appendChild($td);
 
     // 税率
     $td = $doc->createElement("td", $taxObj->curtax);
+    $td->setAttribute("class", "curtax");
     $td->setAttribute("style", "display:none");
     $trBody->appendChild($td);
 
     // 単位コード
     $td = $doc->createElement("td", $orderDetail["lngmonetaryunitcode"]);
+    $td->setAttribute("class", "lngmonetaryunitcode");
     $td->setAttribute("style", "display:none");
     $trBody->appendChild($td);
 
     // 単位記号
     $td = $doc->createElement("td", $orderDetail["strmonetaryunitsign"]);
+    $td->setAttribute("class", "strmonetaryunitsign");
     $td->setAttribute("style", "display:none");
     $trBody->appendChild($td);
 
     // 税額
     $td = $doc->createElement("td", $curtaxprice);
+    $td->setAttribute("class", "curtaxprice");
     $td->setAttribute("style", "display:none");
     $trBody->appendChild($td);
 
     // 発注番号
     $td = $doc->createElement("td", $orderDetail["lngorderno"]);
+    $td->setAttribute("class", "lngorderno");
     $td->setAttribute("style", "display:none");
     $trBody->appendChild($td);
 
     // 発注リビジョン番号
     $td = $doc->createElement("td", $orderDetail["lngrevisionno"]);
+    $td->setAttribute("class", "lngrevisionno");
     $td->setAttribute("style", "display:none");
     $trBody->appendChild($td);
 
     // 発注明細番号
     $td = $doc->createElement("td", $orderDetail["lngorderdetailno"]);
+    $td->setAttribute("class", "lngorderdetailno");
     $td->setAttribute("style", "display:none");
     $trBody->appendChild($td);
 
     // 消費税コード
     $td = $doc->createElement("td", $lngtaxcode);
+    $td->setAttribute("class", "lngtaxcode");
     $td->setAttribute("style", "display:none");
     $trBody->appendChild($td);
     
     // 課税区分コード
     $td = $doc->createElement("td", $lngtaxclasscode);
+    $td->setAttribute("class", "lngtaxclasscode");
     $td->setAttribute("style", "display:none");
     $trBody->appendChild($td);
     

@@ -12,7 +12,7 @@
 
 .simulate-labels >label
 {
-    width: 100px;
+    width: 90px;
     font-size: 0.8em;
 }
 .result
@@ -140,7 +140,7 @@
     left: 0px;
     top: 22px;
     width: 30px;
-    height: 345px;
+    height: 328px;
     overflow-x: hidden;
     overflow-y: hidden;
 }

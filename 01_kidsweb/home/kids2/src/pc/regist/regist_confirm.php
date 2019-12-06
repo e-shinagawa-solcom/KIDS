@@ -149,10 +149,10 @@ for ($i = 0; $i < count($aryDetailData); $i++) {
             // 数量
             $detailDataResult["lngproductquantity"] = number_format($detailDataResult["lngproductquantity"]);
             // 単価
-            $detailDataResult["curproductprice"] = toMoneyFormat($detailDataResult["lngmonetaryunitcode"], $detailDataResult["strmonetaryunitsign"], $detailDataResult["curproductprice"]);
+            $detailDataResult["curproductprice"] = toMoneyFormat($detailDataResult["lngmonetaryunitcode"], $detailDataResult["strmonetaryunitsign"], number_format($detailDataResult["curproductprice"],2 ));
             // 小計金額
             $cursubtotalprice = $detailDataResult["cursubtotalprice"];
-            $detailDataResult["cursubtotalprice"] = toMoneyFormat($detailDataResult["lngmonetaryunitcode"], $detailDataResult["strmonetaryunitsign"], $detailDataResult["cursubtotalprice"]);
+            $detailDataResult["cursubtotalprice"] = toMoneyFormat($detailDataResult["lngmonetaryunitcode"], $detailDataResult["strmonetaryunitsign"], number_format($detailDataResult["cursubtotalprice"],2 ));
             // 税率
             $detailDataResult["curTax"] = $aryDetailData[$i]["curTax"];
             // 消費税区分
@@ -160,7 +160,7 @@ for ($i = 0; $i < count($aryDetailData); $i++) {
             // 消費税区分名称
             $detailDataResult["strtaxclassname"] = mb_convert_encoding($aryDetailData[$i]["strTaxClassName"], 'EUC-JP', 'UTF-8');
             // 消費税額
-            $detailDataResult["curtaxprice"] = toMoneyFormat($detailDataResult["lngmonetaryunitcode"], $detailDataResult["strmonetaryunitsign"], $aryDetailData[$i]["curTaxPrice"]);
+            $detailDataResult["curtaxprice"] = toMoneyFormat($detailDataResult["lngmonetaryunitcode"], $detailDataResult["strmonetaryunitsign"], number_format($aryDetailData[$i]["curTaxPrice"],2 ));
             // 合計金額の設定(小計金額の合計)
             $curtotalprice += $cursubtotalprice;
         }
@@ -180,7 +180,7 @@ for ($i = 0; $i < count($aryDetailData); $i++) {
 
 // 合計金額の設定
 $strmonetaryunitsign = fncGetMasterValue("m_monetaryunit", "lngmonetaryunitcode", "strmonetaryunitsign", $aryData["lngMonetaryUnitCode"], '', $objDB);
-$aryNewResult["curtotalprice"] = toMoneyFormat($aryData["lngMonetaryUnitCode"], $strmonetaryunitsign, $curtotalprice);
+$aryNewResult["curtotalprice"] = toMoneyFormat($aryData["lngMonetaryUnitCode"], $strmonetaryunitsign, number_format($curtotalprice,2 ));
 $aryData["curTotalPrice"] =   $curtotalprice;        
 $aryNewResult["strDetailTable"] = implode ("\n", $aryDetailTable );
 // 作成日
@@ -195,8 +195,8 @@ $objTemplate = new clsTemplate();
 $objTemplate->getTemplate("pc/regist/pc_confirm_regist.html");
 mb_convert_variables('EUC-JP', 'UTF-8', $aryData);
 // テンプレート生成
-$objTemplate->replace($aryData);
 $objTemplate->replace($aryNewResult);
+$objTemplate->replace($aryData);
 $objTemplate->complete();
 
 // 検索結果テーブル生成の為DOMDocumentを使用

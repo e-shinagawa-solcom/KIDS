@@ -363,6 +363,10 @@ var taxList;
  */
 function resetTaxPrice(objID, type) {
 
+    if (!taxList) {
+        taxList = $('#taxList').html();
+    }
+    console.log(taxList);
     var children = objID.parentNode.parentNode.children;
     var rowClass = objID.parentNode.parentNode.className;
     var curtax;
@@ -382,6 +386,8 @@ function resetTaxPrice(objID, type) {
             $('.' + rowClass).find('.col11').append(taxList);
             curtax = $('.' + rowClass).find('.col11').find('option:selected').text();
             console.log(curtax);
+            console.log(rowClass);
+            console.log(taxList);
         }
     } else if (type == 2) {
         // ≤›¿«∂Ë ¨§¨ —§Ô§√§ø§Èæ√»Ò¿«Œ®§‚ —§Ô§Î
