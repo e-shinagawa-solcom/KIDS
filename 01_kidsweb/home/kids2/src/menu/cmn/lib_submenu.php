@@ -91,7 +91,8 @@
 
 //		$aryData["lngSubRef_lc_0"]		= '/lc/info/index.php?strSessionID=' . $aryData["strSessionID"];
 		$aryData["lngSubRef_lc_0"]		= '/lc/info/start.php?strSessionID=' . $aryData["strSessionID"];
-		$aryData["lngSubRef_lc_1"]		= '/lc/set/index.php?strSessionID=' . $aryData["strSessionID"];
+//		$aryData["lngSubRef_lc_1"]		= '/lc/set/index.php?strSessionID=' . $aryData["strSessionID"];
+		$aryData["lngSubRef_lc_1"]		= '/lc/set/start.php?strSessionID=' . $aryData["strSessionID"];
 
 		$aryData["lngSubRef_inv_0"]		= '/inv/regist/index.php?strSessionID=' . $aryData["strSessionID"];
 		$aryData["lngSubRef_inv_1"]		= '/inv/search/index.php?strSessionID=' . $aryData["strSessionID"];

@@ -27,7 +27,7 @@ function lcInit( json_obj )
 	session_id = phpData.session_id;
 
 	//userAuthの2桁目が1の場合は「L/C設定変更」が利用可能
-	var auth = phpData.login_user_auth.usrauth.substr(1, 1);
+	var auth = phpData.login_user_auth.substr(1, 1);
 	if(auth != "1")
 	{
 		$("#lcsetBtn").prop("disabled", true);
@@ -38,7 +38,7 @@ function lcInit( json_obj )
 		if( res = confirm("下記のログイン情報はログアウトしていません。\r\n" + phpData.lcInfoDate.lcgetdate + " " + phpData.lcInfoDate.lgusrname  + "強制ログアウトを実行しますか。") )
 		{
 			$.ajax({
-				url:'../lcModel/lcModelAjax.php',
+				url:'../lcModel/lcinfo_ajax.php',
 				type:'POST',
 				data:{
 					'method': 'logoutState',
@@ -75,13 +75,17 @@ function initLcinfo(sessionId)
 	.done(function(data) {
 		// Ajaxリクエストが成功
 		var data = JSON.parse(data);
-		if (data.lcgetdate != "" || data.lcgetdate != null) {
+		if (data.lcgetdate != "" && data.lcgetdate != null) {
 			if( res = confirm("既にL/C情報の取得を行っています。最新の情報を取得しますか。")) 
 			{
 				location.href="/lc/info/index.php?strSessionID=" + data.strSessionID + "&aclcinitFlg=true"
 			} else {
 				location.href="/lc/info/index.php?strSessionID=" + data.strSessionID + "&aclcinitFlg=false"			
 			}
+		}
+		else
+		{
+			location.href="/lc/info/index.php?strSessionID=" + data.strSessionID + "&aclcinitFlg=true"
 		}
 	})
 	.fail(function() {

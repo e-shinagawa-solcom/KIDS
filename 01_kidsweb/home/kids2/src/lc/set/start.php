@@ -2,11 +2,8 @@
 
 // ----------------------------------------------------------------------------
 /**
-*       LC管理  機能選択画面
-*
-*       処理概要
-*         ・メニュー画面にてLC管理ボタンを直接押下した際に機能選択画面を表示する
-*
+*       LC管理  LC情報開始
+*       initLcInfoを実行させるだけの空の画面です。
 */
 // ----------------------------------------------------------------------------
 
@@ -26,8 +23,7 @@
 	//-------------------------------------------------------------------------
 	// ■ パラメータ取得
 	//-------------------------------------------------------------------------
-	$aryData = $_POST;
-
+	$aryData = $_REQUEST;
 	// 文字列チェック
 	$aryCheck["strSessionID"]          = "null:numenglish(32,32)";
 	$aryResult = fncAllCheck( $aryData, $aryCheck );
@@ -42,7 +38,8 @@
 	$user_id = trim($objAuth->UserID);
 	
 	$objDB->close();
-	
+
+// select-function/index.phpのログイン状況操作と同等の処理
 	//経理サブシステムDB接続
 	$lcModel		= new lcModel();
 
@@ -84,9 +81,13 @@
 	$aryData["user_nm"] = $login_state["lgusrname"];
 	$aryData["session_id"] = $aryData["strSessionID"];
 
-	echo fncGetReplacedHtmlWithBase("lc/base_lc.html", "lc/select-function/parts.tmpl", $aryData ,$objAuth );
 
-	//初期処理実行
+// ここまでselect-function/index.phpのログイン状況操作と同等の処理
+	
+	//HTMLへの引き渡しデータ
+	$aryData["session_id"] = $aryData["strSessionID"];
+
+	echo fncGetReplacedHtmlWithBase("lc/base_lc.html", "lc/set/start.tmpl", $aryData ,$objAuth );
 	//jsへの引き渡しデータ
 	$lcInfoDate = array(
 	    "lcgetdate" => $lcgetdate->lcgetdate, 
@@ -100,7 +101,9 @@
 		"login_user_auth"=> $login_user_auth
 	);
 	mb_convert_variables('UTF-8' , 'EUC-JP' , $arr );
-	echo "<script>$(function(){lcInit('". json_encode($arr) ."');});</script>";
+	echo "<script>
+	    $(function(){lcInit('". json_encode($arr) ."');});
+	    document.location.href='/lc/set/index.php?strSessionID=" .$aryData["strSessionID"] . "';</script>";
 
 	return true;
 ?>

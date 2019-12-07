@@ -461,6 +461,8 @@ class lcModel
         //クラスの生成
         $db = $this->lcConn;
         //クエリの生成
+        // Webアプリケーションへの移行により、logoutせずに終了するケースがあるため、
+        // 直近のlgnoのみを取得する。
         $sql = "
 				select
 					m_acuserinfo.usrid,
@@ -474,6 +476,7 @@ class lcModel
 				where
 					m_acuserinfo.usrname = m_acloginstate.lgusrname and
 					lginymd is not null and lgoutymd is null
+				order by lgno desc limit 1;
 
             ";
         //バインドの設定
@@ -524,7 +527,7 @@ class lcModel
         //クエリ実行
         $result = $db->select_single($sql, array());
 
-        return $result->lcgetdate;
+        return $result;
     }
 
     // ---------------------------------------------------------------
