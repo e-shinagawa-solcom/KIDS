@@ -102,8 +102,9 @@ $replacement[TableMoldHistory::UpdateBy] = $utilUser->selectDisplayCodeByUserCod
 
 // 製品コードの取得
 $replacement[TableMold::ProductCode] = $mold[TableMold::ProductCode];
+$replacement[TableMold::strReviseCode] = $mold[TableMold::strReviseCode];
 // 製品名称の取得
-$replacement["ProductName"] = $utilProduct->selectProductNameByProductCode($replacement[TableMold::ProductCode]);
+$replacement["ProductName"] = $utilProduct->selectProductNameByProductCode($replacement[TableMold::ProductCode], $replacement[TableMold::strReviseCode]);
 
 // テンプレート読み込み
 $objTemplate = new clsTemplate ();

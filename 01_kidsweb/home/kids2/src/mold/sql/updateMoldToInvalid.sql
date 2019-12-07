@@ -3,18 +3,20 @@ update
 set
     deleteflag = true
 where
-    (moldno, vendercode, productcode) in (
+    (moldno, vendercode, productcode, strrevisecode) in (
         select
             mm.moldno,
             mm.vendercode,
             mm.productcode
+            mm.strrevisecode
         from
             m_mold mm
             LEFT OUTER JOIN (
                 select
                     tsd.strmoldno,
                     s1.lngcustomercompanycode,
-                    tsd.strproductcode
+                    tsd.strproductcode,
+                    tds.strrevisecode
                 from
                     t_stockdetail tsd
                     inner join (
@@ -63,10 +65,13 @@ where
                 group by
                     tsd.strmoldno,
                     s1.lngcustomercompanycode,
-                    tsd.strproductcode
+                    tsd.strproductcode,
+                    tds.strrevisecode
                 order by
                     tsd.strproductcode,
+                    tds.strrevisecode,
                     tsd.strmoldno
+                    
             ) as src ON src.strmoldno = mm.moldno
         WHERE
             src.strmoldno is null

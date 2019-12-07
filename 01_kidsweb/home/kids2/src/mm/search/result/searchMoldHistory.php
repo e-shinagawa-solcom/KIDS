@@ -93,7 +93,8 @@ $query[] = "    , tmrr.revision";
 $query[] = "    , ms.dtmappropriationdate";   // 仕入マスタ.仕入計上日
 $query[] = "    , mo.strOrderCode AS strOrderCode";   // 発注マスタ.発注コード
 $query[] = "    , '[' || mc.strCompanyDisplayCode || ']' || mc.strCompanyDisplayname AS strCompanyDisplayCode";   // [会社マスタ.表示会社コード] 会社マスタ.表示会社名称
-$query[] = "    , mp.strproductcode";            // 製品マスタ.製品コード
+$query[] = "    , mp.strproductcode || '_' || mp.strrevisecode as strproductcode";            // 製品マスタ.製品コード
+$query[] = "    , mp.strrevisecode";            // 製品マスタ.製品コード
 $query[] = "    , mp.strproductname";            // 製品マスタ.製品コード(日本語)
 $query[] = "    , mp.strproductenglishname";     // 製品マスタ.製品名称(英語)
 $query[] = "    , mp.strgoodscode";              // 製品マスタ.顧客品番
@@ -205,21 +206,25 @@ $query[] = "    FROM";
 $query[] = "      m_product p ";
 $query[] = "      inner join ( ";
 $query[] = "        SELECT";
-$query[] = "          MAX(lngproductno) lngproductno";
-$query[] = "          , strproductcode ";
+$query[] = "          MAX(lngrevisionno) lngrevisionno";
+$query[] = "          , lngproductno ";
+$query[] = "          , strrevisecode ";
 $query[] = "        FROM";
 $query[] = "          m_product ";
 $query[] = "        WHERE";
 $query[] = "          bytInvalidFlag = false ";
 $query[] = "        group by";
-$query[] = "          strproductcode";
+$query[] = "          lngproductno, strrevisecode";
 $query[] = "      ) p1 ";
 $query[] = "        on p.lngproductno = p1.lngproductno ";
+$query[] = "        and  p.strrevisecode = p1.strrevisecode ";
+$query[] = "        and  p.lngrevisionno = p1.lngrevisionno ";
 $query[] = "    where";
-$query[] = "      lngrevisionno >= 0";
+$query[] = "      p.lngrevisionno >= 0";
 $query[] = "  ) mp ";
 $query[] = "  ON";
 $query[] = "     ms.strproductcode = mp.strproductcode";
+$query[] = "     AND ms.strrevisecode = mp.strrevisecode";
 $query[] = "  LEFT JOIN m_group mg ";
 $query[] = "    ON mp.lnginchargegroupcode = mg.lnggroupcode ";
 $query[] = "  LEFT JOIN m_user mu ";
@@ -230,6 +235,7 @@ $query[] = "  LEFT JOIN m_user mu_c";
 $query[] = "    ON tmh.createby = mu_c.lngusercode ";
 $query[] = "  LEFT OUTER JOIN m_order mo ";
 $query[] = "    ON ms.lngorderno = mo.lngorderno ";
+$query[] = "    and ms.lngrevisionno = mo.lngrevisionno ";
 $query[] = "  LEFT JOIN m_Company mc ";
 $query[] = "    ON ms.lngCustomerCompanyCode = mc.lngCompanyCode ";
 $query[] = "  LEFT JOIN m_Company mc_sf";

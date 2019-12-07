@@ -104,7 +104,7 @@ if($moldReportId && (0 <= $revision) && (0 <= $version))
 
 		// 製品名称の取得(_%ProductName%_)
 		$recordMoldReport["ProductName"] =
-			$utilProduct->selectProductNameByProductCode($recordMoldReport[TableMoldReport::ProductCode]);
+			$utilProduct->selectProductNameByProductCode($recordMoldReport[TableMoldReport::ProductCode], $recordMoldReport[TableMoldReport::strReviseCode]);
 
 		// 表示会社名を取得
 		// _%SendTo%_

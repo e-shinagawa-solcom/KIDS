@@ -126,6 +126,18 @@ class TableMoldReport extends TableMetaData
 
 	/**
 	 * <pre>
+	 * 再販コード
+	 *
+	 * 型(postgresql): text
+	 * </pre>
+	 *
+	 * 関連: 仕入詳細.再販コード
+	 * @var string
+	 */
+	const strReviseCode = "strrevisecode";
+
+	/**
+	 * <pre>
 	 * 顧客品番(商品コード)
 	 *
 	 * 型(postgresql): text

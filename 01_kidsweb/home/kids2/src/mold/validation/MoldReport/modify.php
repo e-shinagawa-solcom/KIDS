@@ -254,9 +254,10 @@ if (!count($errMstList))
 	foreach ($molds as $index => $moldNo)
 	{
 		if (!$utilMold->existsMoldNoWithProductCode($moldNo,
-				$_REQUEST[FormMoldReport::ProductCode]))
+				$_REQUEST[FormMoldReport::ProductCode],
+				$_REQUEST[FormMoldReport::ReviseCode]))
 		{
-			$message = "[金型NO]製品コード(".$_REQUEST[FormMoldReport::ProductCode].")と".
+			$message = "[金型NO]製品コード(".$_REQUEST[FormMoldReport::ProductCode]."_".$_REQUEST[FormMoldReport::ReviseCode].")と".
 					"金型NO(".$moldNo.")組合せが不一致です。";
 
 			array_key_exists("MoldNo<->ProductCode", $errSemanticList) ?

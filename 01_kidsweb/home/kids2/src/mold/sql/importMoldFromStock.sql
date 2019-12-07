@@ -3,17 +3,20 @@ insert into m_mold
       moldno
     , vendercode
     , productcode
+    , strrevisecode
 )
 SELECT
       src.strmoldno
     , src.lngcustomercompanycode
     , src.strproductcode
+    , src.strrevisecode
 FROM
 (
     SELECT
           tsd.strmoldno
         , ms.lngcustomercompanycode
         , tsd.strproductcode
+        , tsd.strrevisecode
     FROM
         t_stockdetail tsd
     INNER JOIN

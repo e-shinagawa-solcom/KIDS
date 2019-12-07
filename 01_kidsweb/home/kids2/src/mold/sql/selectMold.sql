@@ -2,6 +2,7 @@ SELECT
       moldno
     , vendercode
     , productcode
+    , strrevisecode
     , created
     , createby
     , updated

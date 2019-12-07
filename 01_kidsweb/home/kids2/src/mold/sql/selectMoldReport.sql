@@ -8,6 +8,7 @@ SELECT
     , attention
     , carboncopy
     , productcode
+    , strrevisecode
     , goodscode
     , requestcategory
     , actionrequestdate
@@ -30,6 +31,7 @@ SELECT
     , updateby
     , version
     , deleteflag
+    , strrevisecode
 FROM
     m_moldreport
 WHERE

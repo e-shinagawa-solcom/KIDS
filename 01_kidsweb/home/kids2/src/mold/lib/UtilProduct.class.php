@@ -66,14 +66,15 @@ class UtilProduct extends WithQuery
 	 * @param string $productCode 製品コード
 	 * @return 製品名称
 	 */
-	public function selectProductNameByProductCode($productCode)
+	public function selectProductNameByProductCode($productCode, $reviseCode)
 	{
 		$result = false;
 
 		$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
 		// クエリパラメータ作成(SELECT)
 		$param = array(
-				"productCode" => pg_escape_string($productCode)
+				"productCode" => pg_escape_string($productCode),
+				"strReviseCode" => pg_escape_string($reviseCode)
 		);
 
 		// 業務コードの説明を取得する

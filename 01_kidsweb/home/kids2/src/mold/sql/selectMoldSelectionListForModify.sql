@@ -62,6 +62,7 @@ FROM
         m_mold mm
     WHERE
         mm.productcode = $1
+        and mm.strrevisecode = $2
 
     AND mm.moldno not in
         (
@@ -84,6 +85,7 @@ FROM
                             m_mold
                         WHERE
                             productcode = $1
+                        AND strrevisecode = $2
                         AND deleteflag = false
                     )
                 AND deleteflag = false
@@ -113,6 +115,7 @@ FROM
                     ex_tmh.moldno = ex_mm.moldno
                 WHERE
                     ex_mm.productcode = $1
+                AND ex_mm.strrevisecode = $2
                 AND ex_tmh.status in ('10', '20')
                 AND ex_tmh.deleteflag = false
                 GROUP BY
@@ -138,7 +141,7 @@ FROM
             WHERE
                     tmrd.deleteflag = false
                 AND status = '00'
-                AND not mmr.moldreportid = $2
+                AND not mmr.moldreportid = $3
         )
 ) as ml
 ORDER BY

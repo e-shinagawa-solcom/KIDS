@@ -21,6 +21,7 @@ INSERT INTO m_moldreport
     , MarginalNote
     , CreateBy
     , UpdateBy
+    , strReviseCode
 )
 VALUES
 (
@@ -45,6 +46,7 @@ VALUES
     , $19
     , $20
     , $21
+    , $22
 )
 RETURNING
     *

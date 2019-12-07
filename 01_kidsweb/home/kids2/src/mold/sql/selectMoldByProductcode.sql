@@ -2,6 +2,7 @@ SELECT
       moldno
     , vendercode
     , productcode
+    , strrevisecode
     , created
     , createby
     , updated
@@ -12,5 +13,6 @@ FROM
     m_mold
 WHERE
     productcode = $1
+    AND strrevisecode = $2
 AND deleteflag = false
 ;

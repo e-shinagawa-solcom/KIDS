@@ -71,7 +71,8 @@ try
 
 	// 製品コード/名称
 	$productCode = $infoMold[TableMold::ProductCode];
-	$productName = $utilProduct->selectProductNameByProductCode($productCode);
+	$reviseCode = $infoMold[TableMold::strReviseCode];
+	$productName = $utilProduct->selectProductNameByProductCode($productCode, $reviseCode);
 
 	switch ($status)
 	{

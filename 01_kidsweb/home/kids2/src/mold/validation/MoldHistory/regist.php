@@ -151,9 +151,10 @@ if (!count($errMstList))
 	{
 		// 「金型NO」 <=> 「製品コード」関連チェック
 		if (!$utilMold->existsMoldNoWithProductCode($moldNo,
-				$_REQUEST[FormMoldHistory::ProductCode]))
+				$_REQUEST[FormMoldHistory::ProductCode],
+				$_REQUEST[FormMoldHistory::ReviseCode]))
 		{
-			$message = "[金型NO]製品コード(".$_REQUEST[FormMoldHistory::ProductCode].")と".
+			$message = "[金型NO]製品コード(".$_REQUEST[FormMoldHistory::ProductCode]."_".$_REQUEST[FormMoldHistory::ReviseCode].")と".
 					"金型NO(".$moldNo.")組合せが不一致です。";
 
 			array_key_exists("MoldNo<->ProductCode", $errSemanticList) ?

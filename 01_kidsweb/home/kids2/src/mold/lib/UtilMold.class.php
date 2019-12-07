@@ -202,7 +202,8 @@ class UtilMold extends WithQuery
 						TableMoldReport::Note => $formData[FormMoldReport::Note],
 						TableMoldReport::MarginalNote => $formData[FormMoldReport::MarginalNote],
 						TableMoldReport::CreateBy => $this->getUserCode(),
-						TableMoldReport::UpdateBy => $this->getUserCode()
+						TableMoldReport::UpdateBy => $this->getUserCode(),
+						TableMoldReport::ReviseCode => $formData[FormMoldReport::ReviseCode]
 				);
 				break;
 
@@ -227,7 +228,8 @@ class UtilMold extends WithQuery
 						TableMoldReport::Note => $formData[FormMoldReport::Note],
 						TableMoldReport::MarginalNote => $formData[FormMoldReport::MarginalNote],
 						TableMoldReport::CreateBy => $this->getUserCode(),
-						TableMoldReport::UpdateBy => $this->getUserCode()
+						TableMoldReport::UpdateBy => $this->getUserCode(),
+						TableMoldReport::ReviseCode => $formData[FormMoldReport::ReviseCode]
 				);
 				break;
 
@@ -1452,17 +1454,18 @@ class UtilMold extends WithQuery
 	 * @param string $productCode 製品コード
 	 * @return boolean
 	 */
-	public function existsMoldNoWithProductCode($moldNo, $productCode)
+	public function existsMoldNoWithProductCode($moldNo, $productCode, $revisecode)
 	{
 		$result = false;
 
-		if(is_string($moldNo) && is_string($productCode))
+		if(is_string($moldNo) && is_string($productCode) && is_string($revisecode))
 		{
 			$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
 			// クエリパラメータ作成(SELECT)
 			$param = array(
 					"moldno" => pg_escape_string($moldNo),
-					"productcode" => pg_escape_string($productCode)
+					"productcode" => pg_escape_string($productCode),
+					"revisecode" => pg_escape_string($revisecode)
 			);
 
 			// 業務コードの説明を取得する
@@ -1491,7 +1494,8 @@ class UtilMold extends WithQuery
 			throw new InvalidArgumentException(
 					"引数の型が不正です。".
 					"引数1:".gettype($moldNo).
-					"引数2:".gettype($productCode)
+					"引数2:".gettype($productCode).
+					"引数3:".gettype($revisecode)
 					);
 		}
 
@@ -2084,7 +2088,8 @@ class UtilMold extends WithQuery
 						TableMoldReport::Note => $formData[FormMoldReport::Note],
 						TableMoldReport::MarginalNote => $formData[FormMoldReport::MarginalNote],
 						TableMoldReport::CreateBy => $this->getUserCode(),
-						TableMoldReport::UpdateBy => $this->getUserCode()
+						TableMoldReport::UpdateBy => $this->getUserCode(),
+						TableMoldReport::ReviseCode => $formData[FormMoldReport::ReviseCode]
 				);
 				break;
 
@@ -2110,7 +2115,8 @@ class UtilMold extends WithQuery
 						TableMoldReport::Note => $formData[FormMoldReport::Note],
 						TableMoldReport::MarginalNote => $formData[FormMoldReport::MarginalNote],
 						TableMoldReport::CreateBy => $this->getUserCode(),
-						TableMoldReport::UpdateBy => $this->getUserCode()
+						TableMoldReport::UpdateBy => $this->getUserCode(),
+						TableMoldReport::ReviseCode => $formData[FormMoldReport::ReviseCode]
 				);
 				break;
 
@@ -2195,13 +2201,14 @@ class UtilMold extends WithQuery
 	 * @param $productCode 製品コード
 	 * @return 索引結果連想配列
 	 */
-	public function selectMoldSelectionListForModify($productCode, $moldReportId)
+	public function selectMoldSelectionListForModify($productCode, $reviseCode, $moldReportId)
 	{
 		$result = false;
 
 		// クエリパラメータ作成(SELECT)
 		$param = array(
 				"productcode" => pg_escape_string($productCode),
+				"revisecode" => pg_escape_string($reviseCode),
 				"moldreportid" => pg_escape_string($moldReportId)
 		);
 
