@@ -517,7 +517,7 @@ for ($i = 0; $i < $resultNum; ++$i) {
             }
 
 		} else if ($column === 'btnDelete') { // ºï½ü
-            if (!array_key_exists("admin", $optionColumns) and $result['deleteflag'] === 'f') {
+            if (!array_key_exists("admin", $optionColumns) and $result['deleteflag'] === 't') {
                 $body .= "<td align=\"center\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $resultNum . "_',1 );\">";
                 $body .= "<img src=\"/img/type01/pc/delete_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"DELETE\" class=\"delete button\" action=\"/estimate/delete/index.php\" value=\"" . $result['lngrevisionno'] . "\">";
 

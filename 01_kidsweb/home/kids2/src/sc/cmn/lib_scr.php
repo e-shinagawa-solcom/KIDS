@@ -1929,7 +1929,7 @@ function fncGenerateReportImage($strMode, $aryHeader, $aryDetail,
             $aryParts["strcustomeraddress2"] = $aryCustomerCompany["straddress2"]; //9:∏‹µ“ΩªΩÍ2
             $aryParts["strcustomeraddress3"] = $aryCustomerCompany["straddress3"]; //10:∏‹µ“ΩªΩÍ3
             $aryParts["strcustomeraddress4"] = $aryCustomerCompany["straddress4"]; //11:∏‹µ“ΩªΩÍ4
-            $aryParts["dtmpaymentlimit"] = $aryHeader["dtmpaymentlimit"];
+            $aryParts["dtmdeliverydate"] = $aryHeader["dtmdeliverydate"];            
             $lngmonetaryunitcode = $aryDetail[0]["lngmonetaryunitcode"];
             $strmonetaryunitsign = $aryDetail[0]["strmonetaryunitsign"];
             // ∏‹µ“≈≈œ√»÷πÊ
