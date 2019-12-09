@@ -168,25 +168,24 @@ foreach ($aryDetailData as $data) {
             $detailDataResult = $objDB->fetchArray($lngResultID, 0);
             $objDB->freeResult($lngResultID);
             $strSerialNo = "";
-            if ($detailDataResult["strSerialNo"] == "null" or $detailDataResult["strSerialNo"] == "") {
-
+            if ($detailDataResult["strSerialNo"] == null or $detailDataResult["strSerialNo"] == "null" or $detailDataResult["strSerialNo"] == "") {
                 // 仕入科目が４３３（金型海外償却）、仕入部品が１（Injection Mold）の場合
                 // 仕入科目が４３１（金型償却高）、　仕入部品が８（金型）の場合
-                if (($detailDataResult["strStockSubjectCode"] == DEF_MOLD_STOCK_SUBJECT
-                    and $detailDataResult["strStockItemCode"] == DEF_MOLD_STOCK_ITEM)
-                    or ($detailDataResult["strStockSubjectCode"] == DEF_MOLD_STOCK_SUBJECT_ADD
-                        and $detailDataResult["strStockItemCode"] == DEF_MOLD_STOCK_ITEM_ADD)) {
-                    $strSerialNo = fncGetMoldNo($detailDataResult["strProductCode"], $detailDataResult["strStockSubjectCode"], $detailDataResult["strStockItemCode"], $objDB);
+                if (($detailDataResult["lngstocksubjectcode"] == DEF_MOLD_STOCK_SUBJECT
+                    and $detailDataResult["lngstockitemcode"] == DEF_MOLD_STOCK_ITEM)
+                    or ($detailDataResult["lngstocksubjectcode"] == DEF_MOLD_STOCK_SUBJECT_ADD
+                        and $detailDataResult["lngstockitemcode"] == DEF_MOLD_STOCK_ITEM_ADD)) {
+                    $strSerialNo = fncGetMoldNo($detailDataResult["strproductcode"], $detailDataResult["strReviseCode"], $detailDataResult["lngstocksubjectcode"], $detailDataResult["lngstockitemcode"], $objDB);
                 }
             } else
             // 指定されている仕入科目、仕入部品が金型番号使用でない場合は金型番号箇所にはNULL指定
             {
                 // 仕入科目が４３３（金型海外償却）、仕入部品が１（Injection Mold）の場合
                 // 仕入科目が４３１（金型償却高）、　仕入部品が８（金型）の場合
-                if (($detailDataResult["strStockSubjectCode"] == DEF_MOLD_STOCK_SUBJECT
-                    and $detailDataResult["strStockItemCode"] == DEF_MOLD_STOCK_ITEM)
-                    or ($detailDataResult["strStockSubjectCode"] == DEF_MOLD_STOCK_SUBJECT_ADD
-                        and $detailDataResult["strStockItemCode"] == DEF_MOLD_STOCK_ITEM_ADD)) {
+                if (($detailDataResult["lngstocksubjectcode"] == DEF_MOLD_STOCK_SUBJECT
+                    and $detailDataResult["lngstockitemcode"] == DEF_MOLD_STOCK_ITEM)
+                    or ($detailDataResult["lngstocksubjectcode"] == DEF_MOLD_STOCK_SUBJECT_ADD
+                        and $detailDataResult["lngstockitemcode"] == DEF_MOLD_STOCK_ITEM_ADD)) {
                     $strSerialNo = $detailDataResult["strSerialNo"];
                 }
             }

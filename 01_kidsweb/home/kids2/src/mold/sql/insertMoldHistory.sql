@@ -9,7 +9,9 @@ INSERT INTO t_moldhistory
   , remark2
   , remark3
   , remark4
+  , craeted
   , CreateBy
+  , updated
   , UpdateBy
 )
 VALUES
@@ -23,7 +25,9 @@ VALUES
   , $7
   , $8
   , $9
+  , NOW()
   , $10
+  , NOW()
   , $11
 )
 RETURNING
@@ -37,6 +41,8 @@ RETURNING
     , remark2
     , remark3
     , remark4
+    , Created
     , CreateBy
+    , Updated
     , UpdateBy
 ;

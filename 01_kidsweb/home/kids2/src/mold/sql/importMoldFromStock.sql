@@ -4,12 +4,16 @@ insert into m_mold
     , vendercode
     , productcode
     , strrevisecode
+    , created
+    , updated
 )
 SELECT
       src.strmoldno
     , src.lngcustomercompanycode
     , src.strproductcode
     , src.strrevisecode
+    , src.current
+    , src.current
 FROM
 (
     SELECT
@@ -17,6 +21,7 @@ FROM
         , ms.lngcustomercompanycode
         , tsd.strproductcode
         , tsd.strrevisecode
+        , NOW() as current
     FROM
         t_stockdetail tsd
     INNER JOIN
