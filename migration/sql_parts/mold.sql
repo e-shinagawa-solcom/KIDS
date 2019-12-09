@@ -444,4 +444,10 @@ begin
     update t_stockdetail
     set strmoldno = substring(strmoldno,1,5) || '_00-' || substring(strmoldno,7,2)
     where strmoldno is not null;
+    
+    -- t_sequence‚Ì‹àŒ^”Ô†ˆÚs
+    update t_sequence 
+    set strsequencename = strsequencename || '_00'
+    where strsequencename like 'm_OrderDetail.strMoldNo._____';
+
 END $$
