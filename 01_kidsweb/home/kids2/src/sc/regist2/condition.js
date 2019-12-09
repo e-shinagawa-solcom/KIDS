@@ -11,7 +11,15 @@ jQuery(function($){
         // 顧客名の表示のためchangeイベントを手動発生
         $('input[name="lngCustomerCode"]').trigger('change');
     }
-
+    
+    // 納期の設定    
+    var now = new Date();
+    now.setDate(1);("00" + (now.getMonth() + 1)).slice(-2)
+    var start = now.getFullYear() + '/' + ("00" + (now.getMonth() + 1)).slice(-2) + '/' + ("00" + now.getDate()).slice(-2);
+    var date2 = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+    var end = date2.getFullYear() + '/' + ("00" + (date2.getMonth() + 1)).slice(-2) + '/' + date2.getDate();
+    $('input[name="From_dtmDeliveryDate"]').val(start);
+    $('input[name="To_dtmDeliveryDate"]').val(end);
     // ------------------------------------
     //  events
     // ------------------------------------

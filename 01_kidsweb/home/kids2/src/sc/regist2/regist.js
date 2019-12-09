@@ -146,6 +146,32 @@ function SearchReceiveDetail(search_condition) {
 
         $('#DetailTableBodyAllCheck').on('change', function () {
             $('input[name="edit"]').prop('checked', this.checked);
+            if (this.checked) {
+                // $("#DetailTableBody tr").addClass('selected');
+            } else {
+                $("#DetailTableBody tr").removeClass('selected');
+            }
+        });
+        var checkboxclick = false;
+        $('input[name="edit"]').on('click', function () {
+            checkboxclick = true;
+        });
+        $("#DetailTableBody tr").on('click', function () {
+            var checked = $(this).find('input[name="edit"]').prop('checked');
+            if (checkboxclick) {
+                if (!checked) {
+                    $(this).addClass('selected');
+                } else {
+                    $(this).removeClass('selected');
+                }
+            } else {
+                if (checked) {
+                    $(this).addClass('selected');
+                } else {
+                    $(this).removeClass('selected');
+                }
+            }
+            checkboxclick = false;
         });
 
     }).fail(function (error) {
@@ -167,6 +193,10 @@ function ClearAllEditDetail() {
 // ------------------------------------------
 jQuery(function ($) {
 
+    // 支払期限の設定
+    var now = new Date();
+    now.setMonth(now.getMonth() + 1);
+    $('input[name="dtmPaymentLimit"]').val(now.getFullYear() + "/" + ("00" + (now.getMonth() + 1)).slice(-2) + "/" + ("00" + now.getDate()).slice(-2));
     // 消費税率の設定
     var taxClassCode = $('select[name="lngTaxClassCode"]').children('option:selected').val();
     if (taxClassCode == 1) {
@@ -244,25 +274,31 @@ jQuery(function ($) {
             }
         }
 
-        //重複する明細の追加を禁止（重複判定：受注明細のキー）
-        var existsSameKey = false;
-        var rn1 = $(tr).children('td.detailReceiveNo').text();
-        var dn1 = $(tr).children('td.detailReceiveDetailNo').text();
-        var rev1 = $(tr).children('td.detailReceiveRevisionNo').text();
+        // //重複する明細の追加を禁止（重複判定：受注明細のキー）
+        // var existsSameKey = false;
+        // var isSame = false;
+        // var rn1 = $(tr).children('td.detailReceiveNo').text();
+        // var dn1 = $(tr).children('td.detailReceiveDetailNo').text();
+        // var rev1 = $(tr).children('td.detailReceiveRevisionNo').text();
 
-        $("#EditTableBody tr").each(function () {
-            var rn2 = $(this).children('td.detailReceiveNo').text();
-            var dn2 = $(this).children('td.detailReceiveDetailNo').text();
-            var rev2 = $(this).children('td.detailReceiveRevisionNo').text();
+        // $("#EditTableBody tr").each(function () {
+        //     var rn2 = $(this).children('td.detailReceiveNo').text();
+        //     var dn2 = $(this).children('td.detailReceiveDetailNo').text();
+        //     var rev2 = $(this).children('td.detailReceiveRevisionNo').text();
 
-            var isSame = (rn1 == rn2) && (dn1 == dn2) && (rev1 == rev2);
-            existsSameKey = existsSameKey || isSame;
-        });
+        //     if ((rn1 == rn2) && (dn1 == dn2) && (rev1 == rev2)) {
+        //         isSame = true;
+        //     } else {
+        //         existsSameKey = false;
+        //     }
+        //     var isSame = (rn1 == rn2) && (dn1 == dn2) && (rev1 == rev2);
+        //     existsSameKey = existsSameKey || isSame;
+        // });
 
-        if (existsSameKey) {
-            alert("重複する明細は選択できません。");
-            return false;
-        }
+        // if (existsSameKey) {
+        //     alert("重複する明細は選択できません。");
+        //     return false;
+        // }
 
         return true;
     }
@@ -274,90 +310,109 @@ jQuery(function ($) {
         var tbody = $('#EditTableBody');
         var editTr = $('<tr></tr>');
 
-        // No.
-        var i = $(tbody).find('tr').length;
-        var td = $('<td></td>').text(i + 1);
-        $(td).attr('name', 'rownum');
-        $(editTr).append($(td));
-        // 顧客受注番号
-        td = $(tr).find($('td.detailCustomerReceiveCode')).clone();
-        $(editTr).append($(td));
-        // 受注番号
-        td = $(tr).find($('td.detailReceiveCode')).clone();
-        $(editTr).append($(td));
-        // 顧客品番
-        td = $(tr).find($('td.detailGoodsCode')).clone();
-        $(editTr).append($(td));
-        // 製品コード
-        td = $(tr).find($('td.detailProductCode')).clone();
-        $(editTr).append($(td));
-        // 製品名
-        td = $(tr).find($('td.detailProductName')).clone();
-        $(editTr).append($(td));
-        // 製品名（英語）
-        td = $(tr).find($('td.detailProductEnglishName')).clone();
-        $(editTr).append($(td));
-        // 営業部署
-        td = $(tr).find($('td.detailSalesDeptName')).clone();
-        $(editTr).append($(td));
-        // 売上区分
-        td = $(tr).find($('td.detailSalesClassName')).clone();
-        $(editTr).append($(td));
-        // 納期
-        td = $(tr).find($('td.detailDeliveryDate')).clone();
-        $(editTr).append($(td));
-        // 入数
-        td = $(tr).find($('td.detailUnitQuantity')).clone();
-        $(editTr).append($(td));
-        // 単価
-        td = $(tr).find($('td.detailProductPrice')).clone();
-        $(editTr).append($(td));
-        // 単位
-        td = $(tr).find($('td.detailProductUnitName')).clone();
-        $(editTr).append($(td));
-        // 数量
-        td = $(tr).find($('td.detailProductQuantity')).clone();
-        $(editTr).append($(td));
-        // 税抜金額
-        td = $(tr).find($('td.detailSubTotalPrice')).clone();
-        $(editTr).append($(td));
-        //受注番号（明細登録用）
-        td = $(tr).find($('td.detailReceiveNo')).clone();
-        $(editTr).append($(td));
-        //受注明細番号（明細登録用）
-        td = $(tr).find($('td.detailReceiveDetailNo')).clone();
-        $(editTr).append($(td));
-        //リビジョン番号（明細登録用）
-        td = $(tr).find($('td.detailReceiveRevisionNo')).clone();
-        $(editTr).append($(td));
-        //再販コード（明細登録用）
-        td = $(tr).find($('td.detailReviseCode')).clone();
-        $(editTr).append($(td));
-        //売上区分コード（明細登録用）
-        td = $(tr).find($('td.detailSalesClassCode')).clone();
-        $(editTr).append($(td));
-        //製品単位コード（明細登録用）
-        td = $(tr).find($('td.detailProductUnitCode')).clone();
-        $(editTr).append($(td));
-        //備考（明細登録用）
-        td = $(tr).find($('td.detailNote')).clone();
-        $(editTr).append($(td));
-        //通貨単位コード（明細登録用）
-        td = $(tr).find($('td.detailMonetaryUnitCode')).clone();
-        $(editTr).append($(td));
-        //通貨レートコード（明細登録用）
-        td = $(tr).find($('td.detailMonetaryRateCode')).clone();
-        $(editTr).append($(td));
-        //通貨単位記号（明細登録用）
-        td = $(tr).find($('td.detailMonetaryUnitSign')).clone();
-        $(editTr).append($(td));
-        //明細統一フラグ（明細登録用）
-        td = $(tr).find($('td.detailUnifiedFlg')).clone();
-        $(editTr).append($(td));
+        // 重複チェック
+        var rn1 = $(tr).children('td.detailReceiveNo').text();
+        var dn1 = $(tr).children('td.detailReceiveDetailNo').text();
+        var rev1 = $(tr).children('td.detailReceiveRevisionNo').text();
 
-        // 出力明細テーブルに明細を追加
-        $(tbody).append($(editTr));
-        $(editTable).append($(tbody));
+        var isSame = false;
+        $("#EditTableBody tr").each(function () {
+            var rn2 = $(this).children('td.detailReceiveNo').text();
+            var dn2 = $(this).children('td.detailReceiveDetailNo').text();
+            var rev2 = $(this).children('td.detailReceiveRevisionNo').text();
+
+            isSame = (rn1 == rn2) && (dn1 == dn2) && (rev1 == rev2);
+            if (isSame) {
+                return false;
+            }
+        });
+        if (!isSame) {
+
+            // No.
+            var i = $(tbody).find('tr').length;
+            var td = $('<td></td>').text(i + 1);
+            $(td).attr('name', 'rownum');
+            $(editTr).append($(td));
+            // 顧客受注番号
+            td = $(tr).find($('td.detailCustomerReceiveCode')).clone();
+            $(editTr).append($(td));
+            // 受注番号
+            td = $(tr).find($('td.detailReceiveCode')).clone();
+            $(editTr).append($(td));
+            // 顧客品番
+            td = $(tr).find($('td.detailGoodsCode')).clone();
+            $(editTr).append($(td));
+            // 製品コード
+            td = $(tr).find($('td.detailProductCode')).clone();
+            $(editTr).append($(td));
+            // 製品名
+            td = $(tr).find($('td.detailProductName')).clone();
+            $(editTr).append($(td));
+            // 製品名（英語）
+            td = $(tr).find($('td.detailProductEnglishName')).clone();
+            $(editTr).append($(td));
+            // 営業部署
+            td = $(tr).find($('td.detailSalesDeptName')).clone();
+            $(editTr).append($(td));
+            // 売上区分
+            td = $(tr).find($('td.detailSalesClassName')).clone();
+            $(editTr).append($(td));
+            // 納期
+            td = $(tr).find($('td.detailDeliveryDate')).clone();
+            $(editTr).append($(td));
+            // 入数
+            td = $(tr).find($('td.detailUnitQuantity')).clone();
+            $(editTr).append($(td));
+            // 単価
+            td = $(tr).find($('td.detailProductPrice')).clone();
+            $(editTr).append($(td));
+            // 単位
+            td = $(tr).find($('td.detailProductUnitName')).clone();
+            $(editTr).append($(td));
+            // 数量
+            td = $(tr).find($('td.detailProductQuantity')).clone();
+            $(editTr).append($(td));
+            // 税抜金額
+            td = $(tr).find($('td.detailSubTotalPrice')).clone();
+            $(editTr).append($(td));
+            //受注番号（明細登録用）
+            td = $(tr).find($('td.detailReceiveNo')).clone();
+            $(editTr).append($(td));
+            //受注明細番号（明細登録用）
+            td = $(tr).find($('td.detailReceiveDetailNo')).clone();
+            $(editTr).append($(td));
+            //リビジョン番号（明細登録用）
+            td = $(tr).find($('td.detailReceiveRevisionNo')).clone();
+            $(editTr).append($(td));
+            //再販コード（明細登録用）
+            td = $(tr).find($('td.detailReviseCode')).clone();
+            $(editTr).append($(td));
+            //売上区分コード（明細登録用）
+            td = $(tr).find($('td.detailSalesClassCode')).clone();
+            $(editTr).append($(td));
+            //製品単位コード（明細登録用）
+            td = $(tr).find($('td.detailProductUnitCode')).clone();
+            $(editTr).append($(td));
+            //備考（明細登録用）
+            td = $(tr).find($('td.detailNote')).clone();
+            $(editTr).append($(td));
+            //通貨単位コード（明細登録用）
+            td = $(tr).find($('td.detailMonetaryUnitCode')).clone();
+            $(editTr).append($(td));
+            //通貨レートコード（明細登録用）
+            td = $(tr).find($('td.detailMonetaryRateCode')).clone();
+            $(editTr).append($(td));
+            //通貨単位記号（明細登録用）
+            td = $(tr).find($('td.detailMonetaryUnitSign')).clone();
+            $(editTr).append($(td));
+            //明細統一フラグ（明細登録用）
+            td = $(tr).find($('td.detailUnifiedFlg')).clone();
+            $(editTr).append($(td));
+
+            // 出力明細テーブルに明細を追加
+            $(tbody).append($(editTr));
+            $(editTable).append($(tbody));
+        }
     }
 
 
@@ -901,10 +956,7 @@ jQuery(function ($) {
 
     });
 
-    // $('#DetailTableBodyAllCheck').on('change', function(){
-    //     alert(this.checked);
-    //     $('input[name="edit"]').prop('checked', this.checked);
-    // });
+
     // $('input[id="DetailTableBodyAllCheck"').on({
     //     'click': function () {
     //         alert("test");
