@@ -41,7 +41,7 @@ $objAuth = fncIsSession($_REQUEST["strSessionID"], $objAuth, $objDB);
 $lngInputUserCode = $objAuth->UserCode;
 
 // 権限確認
-// 602 売上管理（受注検索）
+// 602 売上管理（売上検索）
 if (!fncCheckAuthority(DEF_FUNCTION_SC1, $objAuth)) {
     fncOutputError(9060, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
@@ -84,9 +84,8 @@ foreach ($isSearch as $key => $flag) {
     }
 }
 
-// 検索項目から一致する最新の仕入データを取得するSQL文の作成関数
+// 検索項目から一致する最新の売上データを取得するSQL文の作成関数
 $strQuery = fncGetMaxSalesSQL($displayColumns, $searchColumns, $from, $to, $searchValue, $optionColumns);
-
 // 値をとる =====================================
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 // 検索件数がありの場合

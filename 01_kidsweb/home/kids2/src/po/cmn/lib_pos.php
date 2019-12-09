@@ -234,7 +234,7 @@ function fncGetSearchPurchaseSQL($displayColumns, $searchColumns, $from, $to, $s
     }
     if (array_key_exists("dtmInsertDate", $searchColumns) &&
         array_key_exists("dtmInsertDate", $to) && $to["dtmInsertDate"] != '') {
-        $dtmSearchDate = $to["dtmInsertDate"] . " 23:59:59";
+        $dtmSearchDate = $to["dtmInsertDate"] . " 23:59:59.99999";
         $aryQuery[] = " AND o.dtmInsertDate <= '" . $dtmSearchDate . "'";
     }
 
@@ -246,7 +246,7 @@ function fncGetSearchPurchaseSQL($displayColumns, $searchColumns, $from, $to, $s
     }
     if (array_key_exists("dtmAppropriation", $searchColumns) &&
         array_key_exists("dtmAppropriation", $to) && $to["dtmAppropriation"] != '') {
-        $dtmSearchDate = $to["dtmAppropriation"] . " 23:59:59";
+        $dtmSearchDate = $to["dtmAppropriation"] . " 23:59:59.99999";
         $aryQuery[] = " AND o.dtmAppropriationDate <= '" . $dtmSearchDate . "'";
     }
     // È¯Ãí£Î£ï
@@ -465,7 +465,7 @@ function fncGetSearchPurcheseOrderSQL($aryViewColumn, $arySearchColumn, $arySear
                 $aryQuery[] = "AND   mp.dtminsertdate >= '" . $dtmSearchDate . "'";
             }
             if ($arySearchDataColumn["dtmInsertDateTo"]) {
-                $dtmSearchDate = $arySearchDataColumn["dtmInsertDateTo"] . " 23:59:59";
+                $dtmSearchDate = $arySearchDataColumn["dtmInsertDateTo"] . " 23:59:59.99999";
                 $aryQuery[] = "AND   mp.dtminsertdate <= '" . $dtmSearchDate . "'";
             }
         }
@@ -488,7 +488,7 @@ function fncGetSearchPurcheseOrderSQL($aryViewColumn, $arySearchColumn, $arySear
                 $aryQuery[] = "AND   mp.dtmexpirationdate >= '" . $dtmSearchDate . "'";
             }
             if ($arySearchDataColumn["dtmExpirationDateTo"]) {
-                $dtmSearchDate = $arySearchDataColumn["dtmExpirationDateTo"] . " 23:59:59";
+                $dtmSearchDate = $arySearchDataColumn["dtmExpirationDateTo"] . " 23:59:59.99999";
                 $aryQuery[] = "AND   mp.dtmexpirationdate <= '" . $dtmSearchDate . "'";
             }
         }

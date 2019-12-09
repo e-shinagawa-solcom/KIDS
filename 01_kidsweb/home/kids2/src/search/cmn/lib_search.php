@@ -609,7 +609,7 @@ function fncGetHistoryDataByPKSQL($type, $strCode, $lngRevisionNo, $lngDetailNo,
         $aryQuery[] = "  , s.lngRevisionNo as lngRevisionNo";
         $aryQuery[] = "  , s.dtmInsertDate as dtmInsertDate";
         $aryQuery[] = "  , cust_c.strcompanydisplaycode as strCustomerDisplayCode";
-        $aryQuery[] = "  , cust_c.strcompanydisplayname as strCustomerDisplayName";
+        $aryQuery[] = "  , s.strcustomername as strCustomerDisplayName";
         $aryQuery[] = "  , cust_c.lngCountryCode as lngcountrycode";
         $aryQuery[] = "  , sa.lngInvoiceNo as lnginvoiceno";
         $aryQuery[] = "  , s.strTaxClassName as strTaxClassName";

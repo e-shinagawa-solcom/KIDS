@@ -463,7 +463,7 @@ function fncGetReceiveDetail($aryCondition, $objDB)
 
     // Ç¼ÉÊÆü(TO)
     if ($aryCondition["To_dtmDeliveryDate"]) {
-        $dtmSearchDate = $aryCondition["To_dtmDeliveryDate"] . " 23:59:59";
+        $dtmSearchDate = $aryCondition["To_dtmDeliveryDate"] . " 23:59:59.99999";
         $aryWhere[] = " AND rd.dtmdeliverydate <= '" . $dtmSearchDate . "'";
     }
 

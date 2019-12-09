@@ -114,7 +114,7 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 				}
 				if ( $arySearchDataColumn["dtmDeliveryDateTo"] )
 				{
-					$dtmSearchDate = $arySearchDataColumn["dtmDeliveryDateTo"] . " 23:59:59";
+					$dtmSearchDate = $arySearchDataColumn["dtmDeliveryDateTo"] . " 23:59:59.99999";
 					$aryQuery[] = " AND s.dtmDeliveryDate <= '" . $dtmSearchDate . "'";
 				}
 			}
@@ -242,7 +242,7 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 	$aryOutQuery[] = "	,s.dtmInsertDate as dtmInsertDate";			//ºîÀ®Æü
 	// ¸ÜµÒ
 	$arySelectQuery[] = ", cust_c.strcompanydisplaycode as strCustomerDisplayCode";
-	$arySelectQuery[] = ", cust_c.strcompanydisplayname as strCustomerDisplayName";
+	$arySelectQuery[] = ", s.strcustomername as strCustomerDisplayName";
 	// ¸ÜµÒ¤Î¹ñ
 	$arySelectQuery[] = ", cust_c.lngCountryCode as lngcountrycode";
 	// ÀÁµá½ñÈÖ¹æ
@@ -252,7 +252,7 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 	// Ç¼ÉÊÅÁÉ¼¥³¡¼¥É¡ÊÇ¼ÉÊ½ñNO¡Ë
 	$arySelectQuery[] = ", s.strSlipCode as strSlipCode";
 	// Ç¼ÉÊÆü
-	$arySelectQuery[] = ", to_char( s.dtmDeliveryDate, 'YYYY/MM/DD HH:MI:SS' ) as dtmDeliveryDate";
+	$arySelectQuery[] = ", to_char( s.dtmDeliveryDate, 'YYYY/MM/DD' ) as dtmDeliveryDate";
 	// Ç¼ÉÊÀè
 	$arySelectQuery[] = " , delv_c.strcompanydisplaycode as strdeliveryplacecode";
 	$arySelectQuery[] = " , s.strDeliveryPlaceName as strDeliveryPlaceName";

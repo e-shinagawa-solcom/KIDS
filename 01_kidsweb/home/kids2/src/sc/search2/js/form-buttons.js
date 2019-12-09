@@ -13,10 +13,8 @@
     });
 
     // クリアボタン
-    btnClear.on('click', function(){
-        // テキスト入力箇所をリセット
-        workForm.find('input[type="text"], textarea').val('');
-        workForm.find('select').val('');
+    btnClear.on('click', function () {
+        window.location.reload();
     });
 
     // 検索ボタン押下時の処理

@@ -194,7 +194,7 @@ function fncGetMaxSalesSQL($displayColumns, $searchColumns, $from, $to, $searchV
         array_key_exists("lngSalesClassCode", $searchValue)) {
         $detailConditionCount += 1;
         $aryQuery[] = $detailConditionCount == 1 ? "WHERE " : "AND ";
-        $aryQuery[] = "rd1.lngSalesClassCode = '" . pg_escape_string($searchValue["lngSalesClassCode"]) . "'";
+        $aryQuery[] = "sd1.lngSalesClassCode = '" . pg_escape_string($searchValue["lngSalesClassCode"]) . "'";
     }
 
     $aryQuery[] = "    ) as sd ";
@@ -212,7 +212,7 @@ function fncGetMaxSalesSQL($displayColumns, $searchColumns, $from, $to, $searchV
 
         if ($to["dtmInsertDate"] != '') {
             $aryQuery[] = "AND s.dtmInsertDate" .
-                " <= '" . $to["dtmInsertDate"] . " 00:00:00'";
+                " <= '" . $to["dtmInsertDate"] . " 23:59:59.99999'";
         }
     }
 
@@ -267,11 +267,11 @@ function fncGetMaxSalesSQL($displayColumns, $searchColumns, $from, $to, $searchV
                 $aryQuery[] = " OR ";
             }
             if (strpos($strCustomerReceiveCode, '-') !== false) {
-                $aryQuery[] = "(s.strCustomerReceiveCode" .
+                $aryQuery[] = "(sd.strCustomerReceiveCode" .
                 " between '" . explode("-", $strCustomerReceiveCode)[0] . "'" .
                 " AND " . "'" . explode("-", $strCustomerReceiveCode)[1] . "')";
             } else {
-                $aryQuery[] = "s.strCustomerReceiveCode = '" . $strCustomerReceiveCode . "'";
+                $aryQuery[] = "sd.strCustomerReceiveCode = '" . $strCustomerReceiveCode . "'";
             }
 
         }
