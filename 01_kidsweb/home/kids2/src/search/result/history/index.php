@@ -34,12 +34,14 @@ $strCode = $aryData["strCode"];
 $lngRevisionNo = $aryData["lngRevisionNo"];
 $lngDetailNo = $aryData["lngDetailNo"];
 $displayColumns = array();
-// 表示項目の抽出
-foreach ($aryData["displayColumns"] as $key) {
-    $displayColumns[$key] = $key;
+if ($aryData["displayColumns"]) {
+    // 表示項目の抽出
+    foreach ($aryData["displayColumns"] as $key) {
+        $displayColumns[$key] = $key;
+    }
+    // キー文字列を小文字に変換
+    $displayColumns = array_change_key_case($displayColumns, CASE_LOWER);
 }
-// キー文字列を小文字に変換
-$displayColumns = array_change_key_case($displayColumns, CASE_LOWER);
 // セッション確認
 $objAuth = fncIsSession($_REQUEST["strSessionID"], $objAuth, $objDB);
 // コード、履歴データにより履歴取得SQL
@@ -146,7 +148,7 @@ foreach ($records as $i => $record) {
         for ($i = 1; $i < $rowspan; $i++) {
             $trBody = $doc->createElement("tr");
             $trBody->setAttribute("id", $strcode . "_" . $lngrevisionno . "_" . $detailData[$i]["lngrecodeno"]);
-            $trBody->setAttribute("class", "tablesorter-childRow");
+            $trBody->setAttribute("class", "detail tablesorter-childRow");
             $detailData[$i]["lngmonetaryunitcode"] = $record["lngmonetaryunitcode"];
             $detailData[$i]["strmonetaryunitsign"] = $record["strmonetaryunitsign"];
             fncSetDetailDataToTr($doc, $trBody, $bgcolor, $aryTableDetailHeaderName, $displayColumns, $detailData[$i], false);

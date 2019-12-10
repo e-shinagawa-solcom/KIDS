@@ -5,7 +5,9 @@
         var lngRevisionNo = $(this).attr('lngrevisionno');
         var type = $(this).attr('type');
         var rownum = $(this).attr('rownum');
-        var displayColumns = $('input[name="displayColumns"]').val().split(',');
+        if (type == 'sc' || type == 'so' || type == 'pc' || type == 'po' || type == 'purchaseorder') {
+            var displayColumns = $('input[name="displayColumns"]').val().split(',');
+        }
         var removeFlag = false;
         if (type == 'sc' || type == 'slip' || type == 'pc' || type == 'inv') {
             var strCode = id;
