@@ -1506,10 +1506,17 @@ function fncSetTextContent($record, $key, $toUTF8Flag)
         case "strcustomerreceivecode":
         case "dtmdeliverydate":
         case "strcustomersalescode":
-        case "strgoodscode":
         case "strsalesclassname": // NO.
         case "strmoldno":
             $textContent = $record[$key];
+            break;
+        case "strgoodscode":
+            $textContent = $record[$key];
+            if ($toUTF8Flag) {
+                $textContent = toUTF8($textContent);
+            } else {
+                $textContent = htmlspecialchars($textContent);
+            }
             break;
         case "strproductenglishname":
             $textContent = $record["strproductenglishname"];
