@@ -236,8 +236,8 @@ $aryData["strEditTableBody"] = $strDetailHtml;
 //  ヘッダ・フッダ部
 // -------------------------
 // 起票者
-$aryData["lngInsertUserCode"] = $aryHeader["strdrafteruserdisplaycode"];
-$aryData["strInsertUserName"] = $aryHeader["strdrafteruserdisplayname"];
+$aryData["lngUserCode"] = $aryHeader["strdrafteruserdisplaycode"];
+$aryData["strUserName"] = $aryHeader["strdrafteruserdisplayname"];
 
 // 顧客
 $aryData["lngCustomerCode"] = $aryHeader["strcompanydisplaycode"];

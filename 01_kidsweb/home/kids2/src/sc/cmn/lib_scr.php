@@ -214,7 +214,7 @@ function fncGetHeaderBySlipNo($lngSlipNo, $objDB)
     $aryQuery[] = "  Null as strtaxamount, "; //消費税額
     $aryQuery[] = "  s.curtotalprice "; //合計金額
     $aryQuery[] = " FROM m_slip s ";
-    $aryQuery[] = "   LEFT JOIN m_user u_ins ON s.lnginsertusercode = u_ins.lngusercode ";
+    $aryQuery[] = "   LEFT JOIN m_user u_ins ON s.lngusercode = u_ins.lngusercode ";
     $aryQuery[] = "   LEFT JOIN m_company c_cust ON s.lngcustomercode = c_cust.lngcompanycode ";
     $aryQuery[] = "   LEFT JOIN m_company c_deli ON s.lngdeliveryplacecode = c_deli.lngcompanycode ";
     $aryQuery[] = " WHERE ";
@@ -1194,7 +1194,7 @@ function fncRegisterSalesAndSlip(
 
         // 納品伝票マスタ登録
         if (!fncRegisterSlipMaster($lngSlipNo, $lngRevisionNo, $lngSalesNo, $strSlipCode, $strCustomerCompanyName, $strCustomerName, $aryCustomerCompany, $lngDeliveryPlaceCode,
-            $aryHeader, $aryDetail, $objDB, $objAuth)) {
+        $aryDrafter,$aryHeader, $aryDetail, $objDB, $objAuth)) {
             // 失敗
             $aryRegisterResult["result"] = false;
             return $aryRegisterResult;
@@ -1441,7 +1441,7 @@ function fncRegisterSalesDetail($itemMinIndex, $itemMaxIndex, $lngSalesNo, $lngR
 
 // 納品伝票マスタ登録
 function fncRegisterSlipMaster($lngSlipNo, $lngRevisionNo, $lngSalesNo, $strSlipCode, $strCustomerCompanyName, $strCustomerName, $aryCustomerCompany, $lngDeliveryPlaceCode,
-    $aryHeader, $aryDetail, $objDB, $objAuth) {
+$aryDrafter, $aryHeader, $aryDetail, $objDB, $objAuth) {
     // 仕入先コードの取得（空の場合は明示的にNullをセット）
     if (strlen($aryCustomerCompany["strstockcompanycode"]) != 0) {
         $strShipperCode = withQuote($aryCustomerCompany["strstockcompanycode"]);
@@ -1480,8 +1480,8 @@ function fncRegisterSlipMaster($lngSlipNo, $lngRevisionNo, $lngSalesNo, $strSlip
     $v_lngtaxclasscode = $aryHeader["lngtaxclasscode"]; //22:課税区分コード
     $v_strtaxclassname = withQuote($aryHeader["strtaxclassname"]); //23:課税区分
     $v_curtax = $aryHeader["curtax"]; //24:消費税率
-    $v_lngusercode = nullIfEmpty($aryHeader["lngdrafterusercode"]); //25:担当者コード
-    $v_strusername = withQuote($aryHeader["strdrafteruserdisplayname"]); //26:担当者名
+    $v_lngusercode = nullIfEmpty($aryDrafter["lngusercode"]); //25:担当者コード
+    $v_strusername = withQuote($aryDrafter["struserdisplayname"]); //26:担当者名
     $v_curtotalprice = $aryHeader["curtotalprice"]; //27:合計金額
     $v_lngmonetaryunitcode = $aryDetail[0]["lngmonetaryunitcode"]; //28:通貨単位コード
     $v_strmonetaryunitsign = withQuote($aryDetail[0]["strmonetaryunitsign"]); //29:通貨単位
@@ -2096,9 +2096,9 @@ function fncSetSlipDataToWorkSheet(
         $v_strrevisecode = $d["strrevisecode"]; //9:再販コード
         $v_strproductname = $d["strproductname"]; //10:製品名
         $v_strproductenglishname = $d["strproductenglishname"]; //11:製品名（英語）
-        $v_curproductprice = $d["curproductprice"]; //12:単価
-        $v_lngquantity = $d["lngunitquantity"]; //13:入数
-        $v_lngproductquantity = $d["lngproductquantity"]; //14:数量
+        $v_curproductprice = number_format($d["curproductprice"]); //12:単価
+        $v_lngquantity = number_format($d["lngunitquantity"]); //13:入数
+        $v_lngproductquantity = number_format($d["lngproductquantity"]); //14:数量
         $v_lngproductunitcode = $d["lngproductunitcode"]; //15:製品単位コード
         $v_strproductunitname = $d["strproductunitname"]; //16:製品単位名
         $v_cursubtotalprice = $d["cursubtotalprice"]; //17:小計

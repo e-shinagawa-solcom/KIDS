@@ -113,7 +113,7 @@ $aryTableHeaderName_SLIP["lngtaxclasscode"] = "課税区分";
 $aryTableHeaderName_SLIP["strslipcode"] = "納品書NO";
 $aryTableHeaderName_SLIP["dtmdeliverydate"] = "納品日";
 $aryTableHeaderName_SLIP["lngdeliveryplacecode"] = "納品先";
-$aryTableHeaderName_SLIP["lnginsertusercode"] = "起票者";
+$aryTableHeaderName_SLIP["lngusercode"] = "起票者";
 $aryTableHeaderName_SLIP["strnote"] = "備考";
 $aryTableHeaderName_SLIP["curtotalprice"] = "合計金額";
 
@@ -615,11 +615,11 @@ function fncGetHistoryDataByPKSQL($type, $strCode, $lngRevisionNo, $lngDetailNo,
         $aryQuery[] = "  , s.strTaxClassName as strTaxClassName";
         $aryQuery[] = "  , s.strSlipCode as strSlipCode";
         $aryQuery[] = "  , s.strSlipCode as strCode";
-        $aryQuery[] = "  , to_char(s.dtmDeliveryDate, 'YYYY/MM/DD HH:MI:SS') as dtmDeliveryDate";
+        $aryQuery[] = "  , to_char(s.dtmDeliveryDate, 'YYYY/MM/DD') as dtmDeliveryDate";
         $aryQuery[] = "  , delv_c.strcompanydisplaycode as strdeliveryplacecode";
         $aryQuery[] = "  , s.strDeliveryPlaceName as strDeliveryPlaceName";
-        $aryQuery[] = "  , insert_u.struserdisplaycode as strInsertUserCode";
-        $aryQuery[] = "  , s.strInsertUserName as strInsertUserName";
+        $aryQuery[] = "  , u.struserdisplaycode as strusercode";
+        $aryQuery[] = "  , s.strusername as strusername";
         $aryQuery[] = "  , s.strNote as strNote";
         $aryQuery[] = "  , To_char(s.curTotalPrice, '9,999,999,990.99') as curTotalPrice";
         $aryQuery[] = "  , sa.strSalesCode as strSalesCode";
@@ -639,8 +639,8 @@ function fncGetHistoryDataByPKSQL($type, $strCode, $lngRevisionNo, $lngDetailNo,
         $aryQuery[] = "    ON s.lngCustomerCode = cust_c.lngCompanyCode ";
         $aryQuery[] = "  LEFT JOIN m_MonetaryUnit mu ";
         $aryQuery[] = "    ON s.lngMonetaryUnitCode = mu.lngMonetaryUnitCode ";
-        $aryQuery[] = "  LEFT JOIN m_User insert_u ";
-        $aryQuery[] = "    ON s.lngInsertUserCode = insert_u.lngusercode ";
+        $aryQuery[] = "  LEFT JOIN m_User u ";
+        $aryQuery[] = "    ON s.lngusercode = u.lngusercode ";
         $aryQuery[] = "  LEFT JOIN m_Company delv_c ";
         $aryQuery[] = "    ON s.lngDeliveryPlaceCode = delv_c.lngCompanyCode";
         $aryQuery[] = "WHERE";

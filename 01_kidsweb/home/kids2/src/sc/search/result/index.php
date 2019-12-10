@@ -86,6 +86,7 @@ foreach ($isSearch as $key => $flag) {
 
 // 検索項目から一致する最新の売上データを取得するSQL文の作成関数
 $strQuery = fncGetMaxSalesSQL($displayColumns, $searchColumns, $from, $to, $searchValue, $optionColumns);
+
 // 値をとる =====================================
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 // 検索件数がありの場合

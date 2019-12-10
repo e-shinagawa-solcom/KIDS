@@ -257,8 +257,8 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 	$arySelectQuery[] = " , delv_c.strcompanydisplaycode as strdeliveryplacecode";
 	$arySelectQuery[] = " , s.strDeliveryPlaceName as strDeliveryPlaceName";
 	// 起票者
-	$arySelectQuery[] = ", insert_u.struserdisplaycode as strInsertUserCode";
-	$arySelectQuery[] = ", s.strInsertUserName as strInsertUserName";
+	$arySelectQuery[] = ", u.struserdisplaycode as strusercode";
+	$arySelectQuery[] = ", s.strUserName as strusername";
 	// 備考
 	$arySelectQuery[] = ", s.strNote as strNote";
 	// 合計金額
@@ -288,14 +288,14 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 	$aryFromQuery[] = " LEFT JOIN m_SalesStatus ss ON sa.lngSalesStatusCode = ss.lngSalesStatusCode";
 	$aryFromQuery[] = " LEFT JOIN m_Company cust_c ON s.lngCustomerCode = cust_c.lngCompanyCode";
 	$aryFromQuery[] = " LEFT JOIN m_MonetaryUnit mu ON s.lngMonetaryUnitCode = mu.lngMonetaryUnitCode";
-	$aryFromQuery[] = " LEFT JOIN m_User insert_u ON s.lngInsertUserCode = insert_u.lngusercode";
+	$aryFromQuery[] = " LEFT JOIN m_User u ON s.lngusercode = u.lngusercode";
 	$aryFromQuery[] = " LEFT JOIN m_Company delv_c ON s.lngDeliveryPlaceCode = delv_c.lngCompanyCode";
 	// From句 クエリー連結
 	$aryOutQuery[] = implode("\n", $aryFromQuery);
 
 	// 明細検索用テーブル結合条件
 	$aryDetailFrom = array();
-	$aryDetailFrom[] = ", (SELECT distinct on ( sd1.lngSlipNo ) sd1.lngSlipNo ";
+	$aryDetailFrom[] = ", (SELECT sd1.lngSlipNo ";
 	$aryDetailFrom[] = "	,sd1.lngSlipDetailNo";				// 納品伝票明細番号
 	$aryDetailFrom[] = "	,sd1.lngrevisionno";	// リビジョン番号
 	$aryDetailFrom[] = "	,sd1.lngSortKey as lngRecordNo";	// 明細行NO

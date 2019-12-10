@@ -43,11 +43,12 @@
 	$aryData["strDefaultCompanyDisplayCode"] = $_POST["strcompanydisplaycode"];
 
 	// 売上区分コードの初期値。画面にも保存しておく
-	$lngDefaultSalesClassCode = $_POST["lngsalesclasscode"];
-	$aryData["lngDefaultSalesClassCode"] = $lngDefaultSalesClassCode;
+	// $lngDefaultSalesClassCode = $_POST["lngsalesclasscode"];
+	// $aryData["lngDefaultSalesClassCode"] = $lngDefaultSalesClassCode;
 
 	// 売上区分プルダウン（親画面の出力明細一覧エリアの1行目の売上区分コードを初期値選択）
-	$optSalesClass .= fncGetPulldown("m_salesclass", "lngsalesclasscode","strsalesclassname", $lngDefaultSalesClassCode, "", $objDB);
+	// $optSalesClass .= fncGetPulldown("m_salesclass", "lngsalesclasscode","strsalesclassname", $lngDefaultSalesClassCode, "", $objDB);
+	$optSalesClass .= fncGetPulldown("m_salesclass", "lngsalesclasscode","strsalesclassname", "", "", $objDB);
 	$aryData["optSalesClass"] = $optSalesClass;
 
 	// --------------------------

@@ -136,11 +136,11 @@ function SearchReceiveDetail(search_condition) {
         console.log(data);
         // 検索結果をテーブルにセット
         $('#DetailTableBody').html(data);
+        $("#DetailTable").trigger("update");
         // jQueryUIのtablesorterでソート設定
         $('#DetailTable').tablesorter({
             headers: {
-                0: { sorter: false },
-                1: { sorter: false }
+                0: { sorter: false }
             }
         });
 
@@ -209,11 +209,11 @@ jQuery(function ($) {
     if ($('input[name="lngSlipNo"]').val().length > 0) {
         window.opener.$('input[name="locked"]').val("1");
     }
-    // 出力明細部の設定
-    $("#EditTableBody").sortable();
-    $("#EditTableBody").on('sortstop', function () {
-        changeRowNum();
-    });
+    // // 出力明細部の設定
+    // $("#EditTableBody").sortable();
+    // $("#EditTableBody").on('sortstop', function () {
+    //     changeRowNum();
+    // });
 
     // 画面名ヘッダ画像切り替え
     if ($('input[name="lngSlipNo"]').val()) {
@@ -466,8 +466,8 @@ jQuery(function ($) {
         // ------------------
         // フォームに値を設定
         // ------------------
-        $('input[name="strTotalAmount"]').val(totalAmount);
-        $('input[name="strTaxAmount"]').val(taxAmount);
+        $('input[name="strTotalAmount"]').val(convertNumber(totalAmount,4));
+        $('input[name="strTaxAmount"]').val(convertNumber(taxAmount,4));
     }
 
     function getCheckedRows() {
@@ -563,7 +563,7 @@ jQuery(function ($) {
             lngtaxcode: $('select[name="lngTaxRate"]').children('option:selected').val(),
             curtax: $('select[name="lngTaxRate"]').children('option:selected').text() * 0.01,
             //消費税額
-            strtaxamount: $('input[name="strTaxAmount"]').val(),
+            strtaxamount: Number(($('input[name="strTaxAmount"]').val()).split(',').join('')),
             //支払期限
             dtmpaymentlimit: $('input[name="dtmPaymentLimit"]').val(),
             //支払方法
@@ -571,7 +571,7 @@ jQuery(function ($) {
             //支払方法
             strpaymentmethodname: $('select[name="lngPaymentMethodCode"]').children('option:selected').text(),
             //合計金額
-            curtotalprice: $('input[name="strTotalAmount"]').val(),
+            curtotalprice: Number(($('input[name="strTotalAmount"]').val()).split(',').join('')),
         };
 
         return result;
@@ -1030,20 +1030,64 @@ jQuery(function ($) {
 
         // 合計金額・消費税額の更新
         updateAmount();
+
+        
+        var rows = $('#EditTableBody tr');
+        var lastSelectedRow;
+        /* Create 'click' event handler for rows */
+        rows.on('click', function (e) {
+            /* Get current row */
+            var row = $(this);
+
+            /* Check if 'Ctrl', 'cmd' or 'Shift' keyboard key was pressed
+             * 'Ctrl' => is represented by 'e.ctrlKey' or 'e.metaKey'
+             * 'Shift' => is represented by 'e.shiftKey' */
+            if (e.ctrlKey || e.metaKey) {
+                /* If pressed highlight the other row that was clicked */
+                $("#EditTableBody tr:nth-child(" + (row.index() + 1) + ")").addClass('selected');
+                
+            } else if (e.shiftKey) {
+                /* If pressed highlight the other row that was clicked */
+                var indexes = [lastSelectedRow.index(), row.index()];
+                indexes.sort(function (a, b) {
+                    return a - b;
+                });
+                for (var i = indexes[0]; i <= indexes[1]; i++) {
+                    $("#EditTableBody tr:nth-child(" + (i + 1) + ")").addClass('selected');
+                }
+            } else {
+                /* Otherwise just highlight one row and clean others */
+                $("#EditTableBody tr").removeClass('selected');
+                $("#EditTableBody tr:nth-child(" + (row.index() + 1) + ")").addClass('selected');
+                lastSelectedRow = row;
+            }
+
+        });
+
+        /* This 'event' is used just to avoid that the table text 
+         * gets selected (just for styling). 
+         * For example, when pressing 'Shift' keyboard key and clicking 
+         * (without this 'event') the text of the 'table' will be selected.
+         * You can remove it if you want, I just tested this in 
+         * Chrome v30.0.1599.69 */
+        $(document).bind('selectstart dragstart', function (e) {
+            e.preventDefault(); return false;
+        });
+
     });
 
 
-    $('body').on('click', '#EditTableBody tr', function (e) {
-        var tds = $(e.currentTarget).children('td');
-        var checked = $(tds).hasClass('selected');
-        if (checked) {
-            $(tds).removeClass('selected');
-            $(this).removeClass('selected');
-        } else {
-            $(tds).addClass('selected');
-            $(this).addClass('selected');
-        }
-    });
+    // $('body').on('click', '#EditTableBody tr', function (e) {
+    //     var tds = $(e.currentTarget).children('td');
+    //     var checked = $(tds).hasClass('selected');
+    //     if (checked) {
+    //         $(tds).removeClass('selected');
+    //         $(this).removeClass('selected');
+    //     } else {
+    //         $(tds).addClass('selected');
+    //         $(this).addClass('selected');
+    //     }
+    // });
     $('#selectup').on('click', function () {
         var selected = getCheckedRows();
         if (!selected) { return false; }
@@ -1140,4 +1184,18 @@ jQuery(function ($) {
         });
 
     });
+
+    function convertNumber(str, fracctiondigits) {
+        console.log(str);
+        if ((str != "" && str != undefined && str != "null") || str == 0) {
+            console.log("null以外の場合：" + str);
+            return Number(str).toLocaleString(undefined, {
+                minimumFractionDigits: fracctiondigits,
+                maximumFractionDigits: fracctiondigits
+            });
+        } else {
+            console.log("nullの場合：" + str);
+            return "";
+        }
+    }
 });

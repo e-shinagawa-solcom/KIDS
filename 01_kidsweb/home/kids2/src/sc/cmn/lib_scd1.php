@@ -56,6 +56,9 @@ function fncGetSlipHeadNoToInfoSQL ( $lngSlipNo, $lngRevisionNo )
 	// 入力者＝起票者
 	$aryQuery[] = ", u.struserdisplaycode as strinsertusercode";	//入力者コード
 	$aryQuery[] = ", s.strInsertUserName as strinsertusername";	//入力者名
+	// 起票者
+	$aryQuery[] = ", u2.struserdisplaycode as strusercode";	//入力者コード
+	$aryQuery[] = ", s.strusername as strusername";	//入力者名
 	// 印刷回数
 	$aryQuery[] = ", s.lngPrintCount as lngprintcount";
 	// 売上番号
@@ -66,6 +69,7 @@ function fncGetSlipHeadNoToInfoSQL ( $lngSlipNo, $lngRevisionNo )
 	$aryQuery[] = " LEFT JOIN m_MonetaryUnit mu ON s.lngMonetaryUnitCode = mu.lngMonetaryUnitCode";
 	$aryQuery[] = " LEFT JOIN m_company c ON s.lngCustomerCode = c.lngcompanycode";
 	$aryQuery[] = " LEFT JOIN m_user u ON s.lngInsertUserCode = u.lngusercode";
+	$aryQuery[] = " LEFT JOIN m_user u2 ON s.lngUserCode = u2.lngusercode";
 
 	// WHERE句
 	$aryQuery[] = " WHERE s.lngSlipNo = " . $lngSlipNo . "";
@@ -205,8 +209,17 @@ function fncSetSlipHeadTableData ( $aryResult )
 	}
 	$aryNewResult["strInsertUser"] .= " " . $aryResult["strinsertusername"];
 
-	// 起票者＝入力者
-	$aryNewResult["strDrafter"] = $aryNewResult["strInsertUser"];
+
+	// 起票者
+	if ( $aryResult["strusercode"] )
+	{
+		$aryNewResult["strDrafter"] = "[" . $aryResult["strusercode"] ."]";
+	}
+	else
+	{
+		$aryNewResult["strDrafter"] = "      ";
+	}
+	$aryNewResult["strDrafter"] .= " " . $aryResult["strusername"];
 
 	// 印刷回数
 	$aryNewResult["lngPrintCount"] = $aryResult["lngprintcount"];
