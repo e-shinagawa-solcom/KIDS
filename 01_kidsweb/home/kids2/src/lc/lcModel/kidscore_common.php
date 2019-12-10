@@ -1145,7 +1145,12 @@ function fncGetPayfInfo($objDB)
     //クエリの生成
     $sql = "
 				select
-					*
+					trim(payfcd) as payfcd
+				   ,payfomitname
+				   ,payfformalname
+				   ,payfsendname
+				   ,payfsendfax
+				   ,invalidflag
 				from
 					m_payfinfo
 				order by payfcd
@@ -1174,7 +1179,11 @@ function fncGetBankInfo($objDB)
     //クエリの生成
     $sql = "
 				select
-					*
+					trim(bankcd) as bankcd
+				   ,bankomitname
+				   ,bankformalname
+				   ,bankdivrate
+				   ,invalidflag
 				from
 					m_bank
 				order by bankcd

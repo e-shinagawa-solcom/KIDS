@@ -150,10 +150,10 @@ function addPayfInfo(){
 		//新規行の追加
 		var html = "<tr id='payf_data_"+ payfcd +"'>" + 
 			"<td><input type='text' class='form-control txt-kids' name='payfcd' value='" + payfcd + "' ></td>" + 
-			"<td><input type='text' class='form-control txt-kids' name='payfomitname' value='' ></td>" + 
-			"<td><input type='text' class='form-control txt-kids' name='payfformalname' value='' ></td>" + 
-			"<td><input type='text' class='form-control txt-kids' name='payfsendname' value='' ></td>" + 
-			"<td><input type='text' class='form-control txt-kids' name='payfsendfax' value='' ></td>" + 
+			"<td><input type='text' class='form-control txt-kids' name='payfomitname'></td>" + 
+			"<td><input type='text' class='form-control txt-kids' name='payfformalname'></td>" + 
+			"<td><input type='text' class='form-control txt-kids' name='payfsendname'></td>" + 
+			"<td><input type='text' class='form-control txt-kids' name='payfsendfax'></td>" + 
 			"<td><input type='checkbox' name='invalidflag' value='1'></td>" + 
 			"</tr>";
 		$("#payf_body").append(html);
@@ -283,7 +283,7 @@ function reflection(){
 				for(var i=0; i < settingData.bank_info.length;i++){console.log("test22");
 					var bankcd = settingData.bank_info[i].bankcd;
 					//行のDOM取得
-					var row = $("#bank_data_"+ bankcd);
+					var row = $('#' + 'bank_data_'+ bankcd);
 					var bankcd = row.find("input[name='bankcd']").val();
 					var bankomitname = row.find("input[name='bankomitname']").val();
 					var bankformalname = row.find("input[name='bankformalname']").val();
@@ -336,7 +336,8 @@ function reflection(){
 					if(settingData.payf_info[i].del_flg != true){
 						var payfcd = settingData.payf_info[i].payfcd;
 						//行のDOM取得
-						var row = $("#payf_data_"+ payfcd);
+						var id = "payf_data_"+ payfcd;
+						var row = $('#' + id);
 						var payfcd = row.find("input[name='payfcd']").val();
 						var payfomitname = row.find("input[name='payfomitname']").val();
 						var payfformalname = row.find("input[name='payfformalname']").val();
