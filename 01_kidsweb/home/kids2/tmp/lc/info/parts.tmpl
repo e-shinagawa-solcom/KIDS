@@ -9,8 +9,12 @@
 		Loading();
 	</bodyonload>
 </config>
+<script src="/cmn/jquery/tablesorter/jquery.tablesorter.js"></script>
+<script src="/cmn/jquery/tablesorter/jquery.tablesorter.widgets.js"></script>
+<link rel="stylesheet" href="/cmn/jquery/tablesorter/themes/blue/style.css">
 <link rel="stylesheet" href="/lc/info/css/forms.css">
 <script type="text/javascript" language="javascript" src="/lc/info/functions.js"></script>
+<script type="text/javascript" language="javascript" src="/lc/info/table.js"></script>
 <script type="text/javascript" language="javascript" src="/lc/info/datepicker.js"></script>
 <script type="text/javascript" language="javascript" src="/cmn/js/functions.js"></script>
 <!-- msw表示切替 -->
@@ -41,8 +45,8 @@
 		<div class="form-box__contents">
 			<div class="condition">
 				<div class="input-group">
-					<div class="col-9 block input-group">
-						<div class="col-2">
+					<div class="col-8 block input-group">
+						<div class="col-1">
 							<label>条件</label>
 						</div>
 						<div class="col-4 input-group">
@@ -74,6 +78,29 @@
 							</div>
 						</div>
 					</div>
+					<div class="col-4 input-group">
+						<div class="col-4 mt-1">
+							<label>取得日時： </label>
+						</div>
+						<div class="col-8 mt-1">
+							<label>_%lc_info_date%_</label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="condition">
+				<div class="input-group">
+					<div class="col-8 block input-group">
+						<div class="col-10 simulate-labels pr-0 pl-0 pt-0">
+							<label style="background-color: rgb(192,192,192);">有効</label>
+							<label style="background-color: rgb(255,200,50);">リバイズ</label>
+							<label style="background-color: rgb(255,128,128);">削除</label>
+							<label style="background-color: rgb(50,255,50);">過去日調査要</label>
+							<label style="background-color: rgb(100,100,255);">アメンド要</label>
+							<label style="background-color: rgb(255,180,180);">T／T（無効）</label>
+						</div>
+					</div>
+					
 					<div class="col-3 input-group">
 						<div class="col-6 mt-1">
 							<!-- 条件クリアボタン -->
@@ -82,20 +109,6 @@
 						<div class="col-6 mt-1">
 							<!-- 抽出ボタン -->
 							<button type="button" class="btn btn-light btn-xs btn-kids-sm" id="getBtn" onclick="getLcInfo(1)">抽出</button>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="condition">
-				<div class="input-group">
-					<div class="col-9 block input-group">
-						<div class="col-10 simulate-labels pr-0 pl-0 pt-0">
-							<label style="background-color: rgb(192,192,192);">有効</label>
-							<label style="background-color: rgb(255,200,50);">リバイズ</label>
-							<label style="background-color: rgb(255,128,128);">削除</label>
-							<label style="background-color: rgb(50,255,50);">過去日調査要</label>
-							<label style="background-color: rgb(100,100,255);">アメンド要</label>
-							<label style="background-color: rgb(255,180,180);">T／T（無効）</label>
 						</div>
 					</div>
 				</div>
@@ -108,7 +121,7 @@
 			</div>
 			<div class="result">
 				<div style="position:relative;width:99.5%;height:368px;background-color:#f0f0f6;border:1px solid #798787">
-					<table class="table" style="width:30px;position:absolute;left:0px;top:0px;">
+					<table class="tablesorter" style="width:30px;position:absolute;left:0px;top:0px;">
 						<thead>
 							<tr>
 								<th>選択</th>
@@ -118,8 +131,8 @@
 					</table>
 
 					<div id="header_h">
-						<table class="table" name="T">
-							<thead>
+						<table class="tablesorter table" name="T" id="lc_head">
+							<thead id="lc_table_head">
 								<!-- 水平ヘッダ -->
 								<tr>
 									<th>仕入先名</th>
@@ -131,18 +144,18 @@
 									<th>状態</th>
 									<th>仕入先CD</th>
 									<th>商品CD</th>
-									<th>再販CD</th>
+									<th>再販No.</th>
 									<th>商品名</th>
 									<th>数量</th>
 									<th>単位</th>
 									<th>単価</th>
 									<th>金額</th>
+									<th>通貨</th>
 									<th>船積開始</th>
 									<th>船積終了</th>
 									<th>計上</th>
 									<th>更新</th>
 									<th>納入P</th>
-									<th>通貨</th>
 									<th>備考</th>
 									<th>船積期限</th>
 									<th>有効期限</th>
@@ -158,21 +171,63 @@
 									<th>決済2金額</th>
 									<th>決済3日付</th>
 									<th>決済3金額</th>
-									<th>状態</th>
+									<th style="display:none">状態</th>
 								</tr>
 							</thead>
 						</table>
 					</div>
 
 					<div id="header_v">
-						<table class="table" name="TV">
+						<table class="tablesorter" name="TV">
 							<tbody id="lc_table_radio">
 							</tbody>
 						</table>
 					</div>
 
 					<div id="data">
-						<table class="table" name="T">
+						<table class="tablesorter" name="T" id="lc_table">						
+							<thead style="display:none;">
+								<!-- 水平ヘッダ -->
+								<tr>
+									<th>仕入先名</th>
+									<th>発行月</th>
+									<th>荷揚地</th>
+									<th>PONo.</th>
+									<th>行No.</th>
+									<th>REV.No.</th>
+									<th>状態</th>
+									<th>仕入先CD</th>
+									<th>商品CD</th>
+									<th>再販No.</th>
+									<th>商品名</th>
+									<th>数量</th>
+									<th>単位</th>
+									<th>単価</th>
+									<th>金額</th>
+									<th>通貨</th>
+									<th>船積開始</th>
+									<th>船積終了</th>
+									<th>計上</th>
+									<th>更新</th>
+									<th>納入P</th>
+									<th>備考</th>
+									<th>船積期限</th>
+									<th>有効期限</th>
+									<th>発行銀行</th>
+									<th>依頼日</th>
+									<th>L/Cno</th>
+									<th>発行日</th>
+									<th>有効日</th>
+									<th>決済額</th>
+									<th>決済1日付</th>
+									<th>決済1金額</th>
+									<th>決済2日付</th>
+									<th>決済2金額</th>
+									<th>決済3日付</th>
+									<th>決済3金額</th>
+									<th style="display:none">状態</th>
+								</tr>
+							</thead>
 							<tbody id="lc_table_body">
 							</tbody>
 						</table>
@@ -190,8 +245,6 @@
 
 		</div>
 		<div class="col-9" style="margin-top: 3px;" align="right">
-			<!-- PONOソート -->
-			<button type="button" class="btn btn-light btn-xs btn-kids" id="ponoSortBtn" onclick="getLcInfo(1)">PONoソート</button>
 			<!-- 編集 -->
 			<button type="button" class="btn btn-light btn-xs btn-kids" id="editBtn" onclick="openEdit()">編集</button>
 			<!-- 帳票出力 -->

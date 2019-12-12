@@ -205,24 +205,33 @@ function fncGetLcInfoData($objDB, $data)
             t_lcinfo
         ";
 
+    $condcount = 0;
     switch ($data["mode"]) {
         case "0":
             break;
         case "1":
             //Ãê½Ð¾ò·ï
             if ($data["from"] != "" && $data["to"] == "") {
-                $sql .= "where opendate = '" . $data["from"] . "'";
+                $condcount += 1;
+                $sql .= ($condcount == 1) ? " where " : " and ";
+                $sql .= "opendate = '" . $data["from"] . "'";
             } else if ($data["from"] != "" && $data["to"] != "") {
-                $sql .= " where opendate between '" . $data["from"] . "' and '" . $data["to"] . "'";
+                $condcount += 1;
+                $sql .= ($condcount == 1) ? " where " : " and ";
+                $sql .= " opendate between '" . $data["from"] . "' and '" . $data["to"] . "'";
             }
-            if ($data["payfcd"] != "") {
-                $sql .= " and payfcd = '" . $data["payfcd"] . "'";
+            if ($data["payfcd"] != "") {                
+                $condcount += 1;
+                $sql .= ($condcount == 1) ? " where " : " and ";
+                $sql .= " payfcd = '" . $data["payfcd"] . "'";
             }
 //            if ($data["payfnameomit"] != "") {
 //                $sql .= " and payfnameomit = '" . $data["payfnameomit"] . "'";
 //            }
-            if ($data["getDataModeFlg"] == 1) {
-                $sql .= " and lcstate in (0,3,4,7,8) ";
+            if ($data["getDataModeFlg"] == 1) {                
+                $condcount += 1;
+                $sql .= ($condcount == 1) ? " where " : " and ";
+                $sql .= " lcstate in (0,3,4,7,8) ";
             }
             break;
         case "2":

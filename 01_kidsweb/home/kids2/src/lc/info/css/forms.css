@@ -12,7 +12,7 @@
 
 .simulate-labels >label
 {
-    width: 90px;
+    width: 80px;
     font-size: 0.8em;
 }
 .result
@@ -24,15 +24,22 @@
     height: 105px;
 
 }
-
-.table {
-    width: 445%;
-    max-width: 450%;
+table.tablesorter {
+    font-family: arial;
+    background-color: #CDCDCD;
+    margin: 0px 0pt 0px;
+    font-size: 8pt;
+    width: 100%;
+    text-align: left;
+}
+table.tablesorter {
+    /* width: 445%;
+    max-width: 450%; */
     margin-bottom: 0rem;
 }
 
-.table>thead>tr>th,
-.table>tbody>tr>td {
+table.tablesorter>thead>tr>th,
+table.tablesorter>tbody>tr>td {
     line-height: 15px;
     padding: 2px;
     vertical-align: top;
@@ -40,16 +47,15 @@
     white-space: nowrap;
     font-size: 10px;
     background-color: #F0F0F6;
-    width: 60px;
+    /* width: 60px; */
 }
-
-.table>thead>tr>th {
+table.tablesorter>thead>tr>th {
     text-align: center;
     background-color: #799797;
     color: white;
     font-weight: normal;
 }
-
+/* 
 .table>thead>tr>th:nth-child(1),
 .table>tbody>tr>td:nth-child(1) {
     width: 100px;
@@ -107,7 +113,7 @@
 .table>thead>tr>th:nth-child(22),
 .table>tbody>tr>td:nth-child(22) {
     width: 400px;
-}
+} */
 
 /*
   データ域        90×3+110 = 380

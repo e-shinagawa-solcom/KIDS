@@ -34,7 +34,7 @@ function lcInit(json_obj) {
 		getSearchConditions();
 
 		//抽出フラグが来てる場合は抽出処理
-		getLcInfo(1);
+		getLcInfo(1, 2);
 	} else {
 		//抽出条件をcookieから削除
 		delSearchConditions();
@@ -99,11 +99,11 @@ function setLcInfoTable(data, phpData) {
 		}
 
 		var lc_table_radio = '<tr>' +
-		'<td style="padding-left: 8px;"><input type="radio" name="selectRow" value="' + i + '" class="form-control form-control-sm" style="width:12px;height: 15px;background-color: #f0f0f6;"></td>' +
-		'</tr>';
+			'<td style="padding-left: 8px;"><input type="radio" name="selectRow" value="' + (i+1) + '" class="form-control form-control-sm" style="width:12px;height: 15px;background-color: #f0f0f6;"></td>' +
+			'</tr>';
 		$("#lc_table_radio").append(lc_table_radio);
 
-		var lc_table_body = '<tr id="'+ i+ '">' +
+		var lc_table_body = '<tr id="' + i + '">' +
 			// '<td style="text-align: left;"><input type="radio" name="selectRow" value="' + i + '" class="form-control form-control-sm"></td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.payfnameomit) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + strIns(row.opendate, 4, '/') + '</td>' +
@@ -116,16 +116,16 @@ function setLcInfoTable(data, phpData) {
 			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.productcd) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.productrevisecd) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.productname) + '</td>' +
-			'<td style="background-color: rgb(' + background_color + ');">' + convertNumber(row.productnumber, "", 0) + '</td>' +
+			'<td style="background-color: rgb(' + background_color + ');text-align:right;">' + convertNumber(row.productnumber, "", 0) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.unitname) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertNumber(row.unitprice, "", 4) + '</td>' +
-			'<td style="background-color: rgb(' + background_color + ');">' + convertNumber(row.moneyprice, row.currencyclass, 0) + '</td>' +
+			'<td style="background-color: rgb(' + background_color + ');text-align:right;">' + convertNumber(row.moneyprice, row.currencyclass, 0) + '</td>' +
+			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.currencyclass) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.shipstartdate) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.shipenddate) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.sumdate) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.poupdatedate) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.deliveryplace) + '</td>' +
-			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.currencyclass) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.lcnote) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.shipterm) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.validterm) + '</td>' +
@@ -141,16 +141,35 @@ function setLcInfoTable(data, phpData) {
 			'<td style="background-color: rgb(' + background_color + ');">' + convertNumber(row.bldetail2money, row.currencyclass, 0) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.bldetail3date) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertNumber(row.bldetail3money, row.currencyclass, 0) + '</td>' +
-			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.lcstate) + '</td>' +
+			'<td style="display:none;">' + row.lcstate + '</td>' +
 			'</tr>';
 		$("#lc_table_body").append(lc_table_body);
 	}
-console.log(data.length);
-    for (var i = 0; i <= data.length; i++) {
+	console.log(data.length);
+	for (var i = 0; i <= data.length; i++) {
 		var height = $("#lc_table_radio tr:nth-child(" + i + ") td:nth-child(1)").height();
 		$("#lc_table_body tr:nth-child(" + i + ") td:nth-child(1)").height(height);
 	}
-	
+
+	var width = 0;
+	for (var i = 1; i <= 36; i++) {
+		var head_width = $("#lc_table_head tr th:nth-child(" + i + ")").width();
+		var body_width = $("#lc_table_body tr td:nth-child(" + i + ")").width();
+		if (head_width > body_width) {
+			$("#lc_table_body tr td:nth-child(" + i + ")").width(head_width);
+			$("#lc_table_head tr th:nth-child(" + i + ")").width(head_width);
+			width += head_width;
+		} else {
+			$("#lc_table_body tr td:nth-child(" + i + ")").width(body_width);
+			$("#lc_table_head tr th:nth-child(" + i + ")").width(body_width);
+			width += body_width;
+		}
+
+		console.log(body_width);
+		$("[name='T']").width(width + 250);
+	}
+
+
 
 	//0件の場合はエラー
 	lcInfoHit = true;
@@ -166,8 +185,8 @@ console.log(data.length);
 //---------------------------------------------------
 // 抽出処理
 //---------------------------------------------------
-function getLcInfo(mode) {
-	
+function getLcInfo(mode, type = 1) {
+
 	var error = false;
 	var error_msg = "";
 	//mode：0 全件, 1 検索条件含む抽出処理
@@ -175,11 +194,11 @@ function getLcInfo(mode) {
 		var from = $("#startYm").val().replace("/", "");
 		var to = $("#endYm").val().replace("/", "");
 
-		//年月（FROM）が空の場合、エラー
-		if (from == "") {
+		if (from == "" && to == "" && $("#payfCode").val() == "" && $("#payfName").val() == "" && type == 1) {
 			error = true;
-			error_msg += "FROMが空です。\r\n";
+			error_msg += "条件を入力してください。\r\n";
 		}
+
 		//年月（FROM）日付ではない場合、エラー
 		if (from != "" && !from.match(/(\d{4})(\d{2})/)) {
 			error = true;
@@ -283,7 +302,7 @@ function getSimulateLcInfo() {
 			.fail(function () {
 				// Ajaxリクエストが失敗
 			});
-			$("#masking_loader").css("display", "none");
+		$("#masking_loader").css("display", "none");
 	} else {
 		//検索フォームエラー出力
 		alert(error_msg);
@@ -296,18 +315,27 @@ function getSimulateLcInfo() {
 function openEdit() {
 	//行が選択されているかどうか
 	var sel = $('input[name=selectRow]:checked').val();
-	var rowData = tableData[sel];
 	if (sel == undefined) {
 		alert("編集するL/C情報を選択してください。");
-	} else if (rowData["lcstate"] != 0 &&
-		rowData["lcstate"] != 3 &&
-		rowData["lcstate"] != 4 &&
-		rowData["lcstate"] != 7 &&
-		rowData["lcstate"] != 8 &&
-		rowData["lcstate"] != 9) {
+		return;
+	}
+	var row = $('#lc_table_body tr:nth-child(' + sel + ')');
+	console.log(row.text());
+	var pono = row.find('td:nth-child(4)').text();
+	var polineno = row.find('td:nth-child(5)').text();
+	var poreviseno = row.find('td:nth-child(6)').text();
+	var lcstate = row.find('td:nth-child(37)').text();
+	
+	if (lcstate != 0 &&
+		lcstate != 3 &&
+		lcstate != 4 &&
+		lcstate != 7 &&
+		lcstate != 8 &&
+		lcstate != 9) {
 		alert("選択されたL/C情報は編集することが出来ません。");
 	} else {
-		location.href = '/lc/edit/index.php?strSessionID=' + phpData["session_id"] + '&pono=' + rowData["pono"] + '&polineno=' + rowData["polineno"] + '&poreviseno=' + rowData["poreviseno"];
+		location.href = '/lc/edit/index.php?strSessionID=' + phpData["session_id"] + '&pono=' + pono + '&polineno='
+		 + polineno + '&poreviseno=' + poreviseno;
 	}
 }
 
@@ -326,7 +354,7 @@ function formClear() {
 //---------------------------------------------------
 function strIns(str, idx, val) {
 	if (str != "" && str != null && str != "null") {
-		var res = str.slice(0, idx) + val + str.slice(idx);
+		var res = str.slice(2, idx) + val + str.slice(idx);
 		return res;
 	} else {
 		return "";
@@ -363,14 +391,14 @@ function switchGetModeBtn(flg, serch_flg) {
 
 	//抽出実行
 	if (serch_flg) {
-		getLcInfo(1);
+		getLcInfo(1, 2);
 	}
 }
 
 
 
 //---------------------------------------------------
-//有効・全データボタンイベント
+//反映データボタンイベント
 //---------------------------------------------------
 function reflectLcInfo() {
 	// 反映イベントの初期処理
@@ -548,23 +576,23 @@ function importFile() {
  */
 function exportFile() {
 	// ファイルエクスポート処理を行う
-	location.href = '/lc/info/export.php?sessionid=' + phpData["session_id"] + 
-	'&mode=1' + 
-	'&from=' + $("#startYm").val() + 
-	'&to=' + $("#endYm").val() +
-	'&payfcd=' + $("#payfCode").val() + 
-	'&getDataModeFlg=' + getDataModeFlg;
+	location.href = '/lc/info/export.php?sessionid=' + phpData["session_id"] +
+		'&mode=1' +
+		'&from=' + $("#startYm").val() +
+		'&to=' + $("#endYm").val() +
+		'&payfcd=' + $("#payfCode").val() +
+		'&getDataModeFlg=' + getDataModeFlg;
 }
 
 function convertNumber(str, currencyclass, fracctiondigits) {
 	if (str != "" && str != undefined && str != "null") {
 		if (currencyclass != "") {
-			if (currencyclass == '円') {			
+			if (currencyclass == '円') {
 				return Number(str).toLocaleString(undefined, {
 					minimumFractionDigits: 0,
 					maximumFractionDigits: 0
 				});
-			} else {			
+			} else {
 				return Number(str).toLocaleString(undefined, {
 					minimumFractionDigits: 2,
 					maximumFractionDigits: 2

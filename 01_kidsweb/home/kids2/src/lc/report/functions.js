@@ -31,8 +31,8 @@ function lcInit(json_obj) {
 	session_id = phpData.session_id;
 
 	//初期値設定
-	$("#openYm").val(phpData.openDate);
-	$("#objectYm").val(phpData.openDate);
+	// $("#openYm").val(phpData.openDate);
+	// $("#objectYm").val(phpData.openDate);
 
 	//セレクトフォーム取得
 	$("#masking_loader").css("display", "block");

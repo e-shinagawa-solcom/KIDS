@@ -68,6 +68,9 @@ $loginUserAuth = $lcModel->getUserAuth($usrId);
 
 $userAuth = substr($loginUserAuth, 1, 1);
 
+//LC情報取得日の取得
+$lcgetdate = $lcModel->getLcInfoDate();
+
 //ログイン状況の最大管理番号の取得
 $maxLgno = $lcModel->getMaxLoginStateNum();
 
@@ -162,7 +165,7 @@ $lcModel->close();
 
 //HTMLへの引き渡しデータ
 //$aryData["chkEpRes"] = $chkEpRes;
-
+$aryData["lc_info_date"] = date('Y/m/d H:i:s',  strtotime($lcgetdate->lcgetdate));
 echo fncGetReplacedHtmlWithBase("lc/base_lc.html", "lc/info/parts.tmpl", $aryData, $objAuth);
 
 //初期処理実行
