@@ -72,6 +72,7 @@ try
 	// 製品コード/名称
 	$productCode = $infoMold[TableMold::ProductCode];
 	$reviseCode = $infoMold[TableMold::strReviseCode];
+echo "reviseCode:" . $reviseCode . "<br>";
 	$productName = $utilProduct->selectProductNameByProductCode($productCode, $reviseCode);
 
 	switch ($status)
@@ -101,6 +102,7 @@ catch (SQLException $e)
 $replacement = $record;
 $replacement[TableMoldHistory::ActionDate] = str_replace("-", "/", $record[TableMoldHistory::ActionDate]);
 $replacement[FormMoldHistory::ProductCode] = $productCode;
+$replacement[FormMoldHistory::strReviseCode] = $reviseCode;
 $replacement[FormMoldHistory::ProductName] = $productName;
 $replacement[TableMoldHistory::SourceFactory] = $displaySrcFactoryCode;
 $replacement[FormMoldHistory::SourceFactoryName] = $displaySrcFactoryName;
