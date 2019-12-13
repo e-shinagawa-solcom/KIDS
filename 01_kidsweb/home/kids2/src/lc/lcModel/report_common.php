@@ -377,7 +377,8 @@ function fncInsertReportUnSettedPrice($objDB, $data)
                 ,$3
                 ,$4
                 ,$5
-                ,$6)";
+                ,$6
+                ,$7)";
 
     //バインドの設定
     $bind = array($data["managementno"]
@@ -385,6 +386,7 @@ function fncInsertReportUnSettedPrice($objDB, $data)
         , $data["payeeformalname"]
         , $data["shipstartdate"]
         , $data["lcno"]
+        , $data["productcode"]
         , $data["usancesettlement"]);
 
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
@@ -862,6 +864,7 @@ function fncGetReportUnSettedPrice($objDB)
                     substr(payeeformalname, 0, 40) as payeeformalname,
                     to_char(shipstartdate, 'MM月DD日') as shipstartdate,
                     lcno,
+                    productcode,
                     usancesettlement
 				from
                     t_reportunsettedprice
@@ -1071,7 +1074,7 @@ function fncGetLcInfoForReportFive($objDB, $startYmd, $endYmd, $currencyclass, $
         from
             t_lcinfo
         WHERE
-            shipstartdate between $1 and $2
+            shipstartdate between to_date($1,'YYYY/MM/DD') and to_date($2,'YYYY/MM/DD')
             and payfnameomit is not null
             and currencyclass = $3"
         . $where .
@@ -1081,7 +1084,6 @@ function fncGetLcInfoForReportFive($objDB, $startYmd, $endYmd, $currencyclass, $
     // クエリへの設定値の定義
     $bind = array($startYmd, $endYmd, $currencyclass);
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
-
     if (!$result) {
         echo "帳票5出力用のL/C別合計の取得失敗しました。\n";
         exit;
@@ -1208,7 +1210,7 @@ function fncGetLcInfoForReportSix($objDB, $currencyclass, $data)
             t_lcinfo
         WHERE
             opendate = $1
-            and shipstartdate between $2 and $3
+            and shipstartdate between to_date($2,'YYYY/MM/DD') and to_date($3,'YYYY/MM/DD')
             and payfcd = $4"
         . $where .
         "   and currencyclass = $5

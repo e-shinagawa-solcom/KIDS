@@ -410,6 +410,7 @@ function reportFiveOutput($objDB, $spreadsheet, $currencyClass, $bankLst, $data)
             $insertData["payeeformalname"] = $lcinfo["payfnameformal"];
             $insertData["shipstartdate"] = $lcinfo["shipstartdate"];
             $insertData["lcno"] = $lcinfo["lcno"];
+            $insertData["productcode"] = $lcinfo["productcd"]. "_". $lcinfo["productrevisecd"];
             $insertData["usancesettlement"] = $lcinfo["moneyprice"] -
                 ($lcinfo["bldetail1money"] + $lcinfo["bldetail2money"] + $lcinfo["bldetail3money"]);
 

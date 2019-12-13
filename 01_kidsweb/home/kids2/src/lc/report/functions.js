@@ -150,6 +150,9 @@ function printBtn() {
 			}
 		}
 
+		console.log($("#setChk").prop("checked"));
+		console.log($("#unsetChk").prop("checked"));
+		console.log($("#impletterChk").prop("checked"));
 		//½ÐÎÏ½èÍý
 		$("#masking_loader").css("display", "block");
 		$.ajax({
@@ -177,8 +180,8 @@ function printBtn() {
 			}
 		})
 			.done(function (data) {
-				// var w = window.open("", "L/CÄ¢É¼", "width=700,height=250,scrollbars=yes,resizable=yes,status=yes");	
-				var w = window.open();				
+				var w = window.open("", "L/CÄ¢É¼", "width=700,height=250,scrollbars=yes,resizable=yes,status=yes");	
+				// var w = window.open();				
 				w.document.open();
 				w.document.write(data);
 				w.document.close();
@@ -219,6 +222,7 @@ function lcreportInit(json_header_obj, json_main_obj ) {
 	alert(reportMain[0].pono);
 }
 function lcreport6Init(json_obj) {
+	console.log(json_obj);
 	reportResult = JSON.parse(json_obj);
 	var num = 0;
 	if (reportResult.report_6.length > 0) {
@@ -344,6 +348,11 @@ function lcreport6Init(json_obj) {
 			}
 		}
 	}
+	if (num == 0) {
+		this.report.location.href = "/lc/report/html/error.html";
+		return;
+	}
+	console.log(displayLst[0]);
 	this.report.location.href = displayLst[0][1];
 }
 
@@ -640,7 +649,8 @@ function setReport5Data(reportData, startIndex, endIndex) {
 		tblTbody.rows[row].cells[9].innerHTML = convertNull(reportmain[i].payeeformalname);
 		tblTbody.rows[row].cells[10].innerHTML = convertNull(reportmain[i].shipstartdate);
 		tblTbody.rows[row].cells[11].innerHTML = convertNull(reportmain[i].lcno);
-		tblTbody.rows[row].cells[12].innerHTML = convertNumber(reportmain[i].usancesettlement, currencyclass);
+		tblTbody.rows[row].cells[12].innerHTML = convertNull(reportmain[i].productcode);
+		tblTbody.rows[row].cells[13].innerHTML = convertNumber(reportmain[i].usancesettlement, currencyclass);
 		row += 1;
 	}
 }

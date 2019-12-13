@@ -472,7 +472,6 @@ function reportFiveOutput($objDB, $spreadsheet, $currencyClass, $bankLst, $data)
     fncDeleteReportUnSettedPrice($objDB);
     // L/C情報取得
     $lcinfoLst = fncGetLcInfoForReportFive($objDB, $data["startDate"], $data["endDate"], $currencyClass, 1);
-
     // （臨時テーブル）帳票未決済額テーブルにデータを登録する
     if ($lcinfoLst && count($lcinfoLst) > 0) {
         $data = array();
@@ -483,6 +482,7 @@ function reportFiveOutput($objDB, $spreadsheet, $currencyClass, $bankLst, $data)
             $insertData["payeeformalname"] = $lcinfo["payfnameformal"];
             $insertData["shipstartdate"] = $lcinfo["shipstartdate"];
             $insertData["lcno"] = $lcinfo["lcno"];
+            $insertData["productcode"] = $lcinfo["productcd"]. "_". $lcinfo["productrevisecd"];
             $insertData["usancesettlement"] = $lcinfo["moneyprice"] -
                 ($lcinfo["bldetail1money"] + $lcinfo["bldetail2money"] + $lcinfo["bldetail3money"]);
 
