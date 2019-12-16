@@ -259,8 +259,11 @@ foreach ($aryOrderDetail as $orderDetail) {
         $option->setAttribute("value", $taxclass["lngtaxclasscode"]);
         if ($lngtaxclasscode == $taxclass["lngtaxclasscode"]) {
             $option->setAttribute("selected", "selected");
+            $select->appendChild($option);
         }
-        $select->appendChild($option);
+        else if($orderDetail["lngcountrycode"] == 81){
+            $select->appendChild($option);
+        }
     }
     if ($isStocked) {
         $chkBox->setAttribute('checked', 'checked');

@@ -135,7 +135,9 @@ var taxList;
                             if (taxclassRow.lngtaxclasscode == lngtaxclasscode) {
                                 select += '<option value="' + taxclassRow.lngtaxclasscode + '" selected>' + taxclassRow.strtaxclassname + '</option>'
                             } else {
-                                select += '<option value="' + taxclassRow.lngtaxclasscode + '">' + taxclassRow.strtaxclassname + '</option>'
+                                if (lngcountrycode == 81) {   // ≥§≥∞§œ»Û≤›¿«∏«ƒÍ
+                                    select += '<option value="' + taxclassRow.lngtaxclasscode + '">' + taxclassRow.strtaxclassname + '</option>'
+                                }
 
                             }
                         }
