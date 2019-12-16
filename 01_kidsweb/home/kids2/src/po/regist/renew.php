@@ -132,7 +132,7 @@ fncDebug("kids2.log", "pass-4", __FILE__, __LINE__, "a" );
 	$aryNewResult["lngRevisionNo"]            = sprintf("%02d", $aryResult[0]["lngrevisionno"]);
 	$aryNewResult["dtmExpirationDate"]        = $aryResult[0]["dtmexpirationdate"];
 	$aryNewResult["strProductCode"]           = $aryResult[0]["strproductcode"];
-	$aryNewResult["lngPayConditionCode"]      = fncPulldownMenu(2, $aryResult[0]["lngpayconditioncode"], "", $objDB);
+//	$aryNewResult["lngPayConditionCode"]      = fncPulldownMenu(2, $aryResult[0]["lngpayconditioncode"], "", $objDB);
 	$aryNewResult["PayConditionDisabled"]     = "";
 	$aryNewResult["lngMonetaryUnitCode"]      = fncPulldownMenu(0, $aryResult[0]["lngmonetaryunitcode"], "", $objDB);
 	$aryNewResult["MonetaryUnitDisabled"]     = "disabled";
@@ -148,6 +148,15 @@ fncDebug("kids2.log", "pass-4", __FILE__, __LINE__, "a" );
 	$aryNewResult["lngPurchaseOrderNo"]       = $aryResult[0]["lngpurchaseorderno"];
 	// $aryNewResult["lngRevisionNo"]            = $aryResult[0]["lngrevisionno"];
 	$aryNewResult["lngPayConditionCodeOrign"] = $aryResult[0]["lngpayconditioncode"];
+	if($aryResult[0]["lngcountrycode"] != 81){
+	    $aryNewResult["inputPayCondition"] = "select";
+		$aryNewResult["lngPayConditionCode"]      = fncPulldownMenu(2, $aryResult[0]["lngpayconditioncode"], "", $objDB);
+	}
+	else{
+	    $aryNewResult["inputPayCondition"] = "select";
+//	    $aryNewResult["PayConditionDisabled"] = "readonly";
+		$aryNewResult["lngPayConditionCode"]      = fncPulldownMenu(2, $aryResult[0]["lngpayconditioncode"], "where lngPayConditionCode=" . $aryResult[0]["lngpayconditioncode"], $objDB);
+	}
 
 	// лю╨ы
 	$aryNewResult["strPurchaseOrderDetail"] = fncGetPurchaseOrderDetailHtml($aryResult, $objDB);

@@ -67,6 +67,7 @@ function fncGetOrder_r($lngOrderNo, $objDB)
     $aryQuery[] = "  ,mu.struserdisplaycode";
     $aryQuery[] = "  ,mu.struserdisplayname";
     $aryQuery[] = "  ,mc2.lngcompanycode as lngcompanycode2";
+    $aryQuery[] = "  ,mc.lngcountrycode as lngcountrycode";
     $aryQuery[] = "FROM m_order mo";
     $aryQuery[] = "  inner join ( ";
     $aryQuery[] = "    select";
@@ -970,6 +971,7 @@ function fncGetPurchaseOrderEdit($lngpurchaseorderno, $lngrevisionno, $objDB)
     $aryQuery[] = "  ,mc1.strcompanydisplayname as strcustomername";
     $aryQuery[] = "  ,mc1.strcompanydisplaycode as strcustomerdisplaycode";
     $aryQuery[] = "  ,mc1.strcompanydisplayname as strcustomerdisplayname";
+    $aryQuery[] = "  ,mc1.lngcountrycode as lngcountrycode";
     $aryQuery[] = "  ,mp.lngdeliveryplacecode";
     $aryQuery[] = "  ,mc2.strcompanydisplaycode as strdeliveryplacecode";
     $aryQuery[] = "  ,mc2.strcompanydisplayname as strdeliveryplacename";

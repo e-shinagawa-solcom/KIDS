@@ -104,7 +104,7 @@ fnccheckの換算レートdisableからpostされてないのでこめんと
 				$strPulldownMenu = fncGetPulldown( "m_monetaryrateclass", "lngmonetaryratecode", "strmonetaryratename", $lngValueCode, '', $objDB );
 				break;
 			case 2:		// 支払条件
-				$strPulldownMenu = fncGetPulldown( "m_paycondition", "lngpayconditioncode", "strpayconditionname", $lngValueCode, '', $objDB );
+				$strPulldownMenu = fncGetPulldown( "m_paycondition", "lngpayconditioncode", "strpayconditionname", $lngValueCode, $strWhere, $objDB );
 				break;
 			case 3:		// 仕入科目
 				$strPulldownMenu = fncGetPulldown2( "m_stocksubject", "lngstocksubjectcode", "strstocksubjectname", $lngValueCode, 'WHERE bytdisplayflag = TRUE AND bytinvalidflag = FALSE', $objDB );

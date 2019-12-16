@@ -179,7 +179,15 @@
 	$aryData["strLocationName"]       = $aryOrderHeader[0]["strcompanydisplayname2"];
 	$aryData["lngRevisionNo"]         = $aryOrderHeader[0]["lngrevisionno"];
 	
-	$aryData["lngPayConditionCode"]      = fncPulldownMenu(2, 0, "", $objDB);
+	if($aryOrderHeader[0]["lngcountrycode"] != 81){
+	    $aryData["inputPayCondition"] = "select";
+		$aryData["lngPayConditionCode"]      = fncPulldownMenu(2, 0, "", $objDB);
+	}
+	else{
+	    $aryData["inputPayCondition"] = "select";
+//	    $aryData["PayConditionDisabled"] = "readonly";
+		$aryData["lngPayConditionCode"]      = fncPulldownMenu(2, 0, "where lngPayConditionCode=0", $objDB);
+	}
 	// лю╨ы
 	// $aryDetail = [];
 	// for($i = 0; $i < count($aryOrderHeader); $i++){
