@@ -771,7 +771,7 @@ function fncInsertPurchaseOrderByDetail($aryOrder, $aryOrderDetail, $objAuth, $o
                     $aryQuery[] = "  ,'" . $paycondition["strpayconditionname"] . "'";
                     $aryQuery[] = "  ," . $aryOrderDetailUpdate[$i]["lnggroupcode"];
                     $aryQuery[] = "  ,'" . $aryOrderDetailUpdate[$i]["strgroupdisplayname"] . "'";
-                    $aryQuery[] = "  ,'" . $aryOrderDetailUpdate[$i]["txtsignaturefilename"] . "'";
+                    $aryQuery[] = "  , (select txtsignaturefilename from m_signature where lnggroupcode = " . $aryOrderDetailUpdate[$i]["lnggroupcode"] . " and dtmapplystartdate <= NOW() and dtmapplyenddate >= NOW())";
                     $aryQuery[] = "  ," . $aryOrderDetailUpdate[$i]["lngusercode"];
                     $aryQuery[] = "  ,'" . $aryOrderDetailUpdate[$i]["struserdisplayname"] . "'";
                     $aryQuery[] = "  ," . $delivery["lngcompanycode"];
