@@ -166,7 +166,7 @@ jQuery(function ($) {
     }
     function validationCheck2() {
         var result = true;
-        if (!getSelectedRows().length) {
+        if (!$('#EditTableBody tr').length) {
             // 発注明細行が1件も選択されていない場合
             alert("発注確定する明細行が選択されていません。");
             result = false;
@@ -202,8 +202,8 @@ jQuery(function ($) {
             alert('納品場所が指定されていません。');
             result = false;
         }
-        var details = getSelectedRows();
         /* 運搬方法は"-"も可とする
+        var details = getSelectedRows();
                 var message = [];
                 $.each(details, function(i, tr){
                     var selected = $(tr).find('option:selected').val();
@@ -235,7 +235,7 @@ jQuery(function ($) {
     }
     function getUpdateDetail() {
         var result = [];
-        $.each(getSelectedRows(), function (i, tr) {
+        $('#EditTableBody tr').each(function (i, tr) {
             var param = {
                 lngOrderDetailNo: $(tr).children('.detailOrderDetailNo').text(),
                 lngSortKey: i + 1,
