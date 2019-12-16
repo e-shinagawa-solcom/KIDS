@@ -59,7 +59,8 @@ jQuery(function($){
     }
     function validationCheck(){
         var result = true;
-        var selectedRows = getSelectedRows();
+//        var selectedRows = getSelectedRows();
+        var selectedRows = $('#DetailTableBody tr');
         if(!selectedRows.length){
             alert("発注書修正をおこなう明細行が選択されていません。");
             return false;
@@ -132,7 +133,8 @@ jQuery(function($){
     }
     function getUpdateDetail(){
         var result = [];
-        $.each(getSelectedRows(), function(i, tr){
+//        $.each(getSelectedRows(), function(i, tr){
+        $('#DetailTableBody tr').each(function(i, tr){
             var param = {
                 lngSortKey:               $(tr).find('td[name="rownum"]').text(),
                 lngPurchaseOrderDetailNo: $(tr).find('.detailPurchaseorderDetailNo').text(),

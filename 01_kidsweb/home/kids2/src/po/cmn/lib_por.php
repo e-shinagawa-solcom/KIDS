@@ -1214,7 +1214,7 @@ function fncUpdatePurchaseOrderDetail($aryPurchaseOrder, $objDB)
         $aryQuery[] = "FROM t_purchaseorderdetail pod";
         $aryQuery[] = "WHERE lngpurchaseorderno = " . $aryPurchaseOrder["lngPurchaseOrderNo"];
         $aryQuery[] = "AND   lngpurchaseorderdetailno = " . $aryPurchaseOrder["aryDetail"][$i]["lngPurchaseOrderDetailNo"];
-        $aryQuery[] = "AND   lngrevisionno = (SELECT MAX( pod1.lngRevisionNo ) FROM t_purchaseorderdetail pod1 WHERE pod1.lngPurchaseOrderNo = pod.lngPurchaseOrderNo )";
+        $aryQuery[] = "AND   lngrevisionno = (SELECT MAX( pod1.lngRevisionNo ) FROM t_purchaseorderdetail pod1 WHERE pod1.lngPurchaseOrderNo = pod.lngPurchaseOrderNo and  pod1.lngpurchaseorderdetailno = pod.lngpurchaseorderdetailno)";
 
         $strQuery = "";
         $strQuery = implode("\n", $aryQuery);
