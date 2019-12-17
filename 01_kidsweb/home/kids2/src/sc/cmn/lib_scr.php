@@ -250,7 +250,7 @@ function fncGetDetailBySlipNo($lngSlipNo, $lngRevisionNo, $objDB)
     for ($i = 0; $i < count($aryDetailKey); $i++) {
 
         $aryCondition = array();
-        $aryCondition["lngReceiveNo"] = $aryDetailKey[$i]["lngreceiveno"];
+        $aryCondition["strreceivecode"] = $aryDetailKey[$i]["lngreceiveno"];
         $aryCondition["lngReceiveDetailNo"] = $aryDetailKey[$i]["lngreceivedetailno"];
         $aryCondition["lngReceiveRevisionNo"] = $aryDetailKey[$i]["lngreceiverevisionno"];
 
@@ -421,8 +421,8 @@ function fncGetReceiveDetail($aryCondition, $objDB)
     }
 
     // 受注番号
-    if ($aryCondition["lngReceiveNo"]) {
-        $aryWhere[] = " AND r.lngreceiveno = " . $aryCondition["lngReceiveNo"];
+    if ($aryCondition["strreceivecode"]) {
+        $aryWhere[] = " AND r.strreceivecode = " . $aryCondition["strreceivecode"];
     }
 
     // 受注明細番号
