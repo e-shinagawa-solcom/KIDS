@@ -9,7 +9,7 @@ INSERT INTO t_moldhistory
   , remark2
   , remark3
   , remark4
-  , craeted
+  , created
   , CreateBy
   , updated
   , UpdateBy

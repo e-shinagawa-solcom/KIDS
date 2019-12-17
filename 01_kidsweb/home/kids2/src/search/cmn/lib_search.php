@@ -1509,6 +1509,11 @@ function fncSetTextContent($record, $key, $toUTF8Flag)
         case "strsalesclassname": // NO.
         case "strmoldno":
             $textContent = $record[$key];
+            if ($toUTF8Flag) {
+                $textContent = toUTF8($textContent);
+            } else {
+                $textContent = htmlspecialchars($textContent);
+            }
             break;
         case "strgoodscode":
             $textContent = $record[$key];
@@ -1528,6 +1533,9 @@ function fncSetTextContent($record, $key, $toUTF8Flag)
             break;
         case "lngrecordno":
             $textContent = $record["lngdetailno"];
+            if ($toUTF8Flag) {
+                $textContent = toUTF8($textContent);
+            }
             break;
         // 但し書き
         case "description":
@@ -1724,10 +1732,16 @@ function fncSetTextContent($record, $key, $toUTF8Flag)
         // 入数
         case "lngquantity":
             $textContent = $record["lngquantity"];
+            if ($toUTF8Flag) {
+                $textContent = toUTF8($textContent);
+            }
             break;
         // 数量
         case "lngproductquantity":
             $textContent = $record["lngproductquantity"];
+            if ($toUTF8Flag) {
+                $textContent = toUTF8($textContent);
+            }
             break;
         // 税抜金額
         case "cursubtotalprice":
@@ -1831,14 +1845,23 @@ function fncSetTextContent($record, $key, $toUTF8Flag)
         // 入数
         case "lngquantity":
             $textContent = $record["lngquantity"];
+            if ($toUTF8Flag) {
+                $textContent = toUTF8($textContent);
+            }
             break;
         // 数量
         case "lngproductquantity":
             $textContent = $record["lngproductquantity"];
+            if ($toUTF8Flag) {
+                $textContent = toUTF8($textContent);
+            }
             break;
         // 明細備考
         case "strdetailnote":
             $textContent = $record["strnote"];
+            if ($toUTF8Flag) {
+                $textContent = toUTF8($textContent);
+            }
             break;
         // 納品先
         case "lngdeliveryplacecode":
@@ -1864,6 +1887,9 @@ function fncSetTextContent($record, $key, $toUTF8Flag)
             break;
         default:
             $textContent = $record[$key];
+            if ($toUTF8Flag) {
+                $textContent = toUTF8($textContent);
+            }
             break;
     }
     return $textContent;

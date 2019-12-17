@@ -76,7 +76,6 @@ class UtilProduct extends WithQuery
 				"productCode" => pg_escape_string($productCode),
 				"strReviseCode" => pg_escape_string($reviseCode)
 		);
-
 		// 業務コードの説明を取得する
 		pg_prepare(static::$db->ConnectID, "", $query);
 		$pgResult = pg_execute("", $param);

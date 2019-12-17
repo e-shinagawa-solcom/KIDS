@@ -1,7 +1,17 @@
 (function() {
     var apply = function(handleName, docMsw){
+        // var code = $('input[name=' + handleName + ']');
+        // code.val(docMsw.find('select.result-select').find('option:selected').attr('code'));
+        
+        console.log(handleName);
         var code = $('input[name=' + handleName + ']');
-        code.val(docMsw.find('select.result-select').find('option:selected').attr('code'));
+        var val = docMsw.find('select.result-select').find('option:selected').attr('code');
+        if (val.indexOf('_') > -1) {
+            code.val(val.split('_')[0]);
+            $('input[name=ReviseCode]').val(val.split('_')[1]);
+        } else {
+            code.val(docMsw.find('select.result-select').find('option:selected').attr('code'));
+        }
         // mswの非表示
         invokeMswClose(docMsw);
         // 顧客コードチェンジイベントキック
@@ -38,7 +48,11 @@
 
             //【注意】2つ前の要素がマスタのコード値を持つinput要素でないとうまく動かない
             var handleName = $(this).prev().prev().attr('name');
-
+            if (mswName == 'msw-product') {
+                var handleName = $(this).prev().prev().prev().prev().attr('name');
+            } else {
+                var handleName = $(this).prev().prev().attr('name');
+            }
             // handleNameが取れなかったらinputCodeMSWNameにセットされた値をinput要素のname属性とみなす（2019/9/15 追加）
             if (!handleName){
                 handleName = $(this).attr('inputCodeMSWName');
@@ -86,6 +100,8 @@
 
             // msw内の最初のinputにフォーカス
             docMsw.find('input[tabindex="1"]').focus();
+            
+            docMsw.find('input[tabindex="1"]').val($('input[name=' + handleName + ']').val());
         }
     });
 

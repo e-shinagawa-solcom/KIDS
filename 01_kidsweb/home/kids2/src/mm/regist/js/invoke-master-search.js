@@ -14,10 +14,32 @@
     // ヘッダタブ 製品コード イベント登録
     $('input[name="ProductCode"]').on({
         'change': function(){
-            // 製品名称索引
-            selectProductName($(this));
-            // 金型リスト索引
-            selectMoldSelectionList($(this));
+            
+            revisecode = $('input[name="ReviseCode"]').val();
+            if (revisecode != "") {
+                // 製品名称索引
+                selectProductByCode($(this), revisecode);
+                // 金型リスト索引
+                selectMoldSelectionListByReviseCode($(this), revisecode);
+            } else {
+                // 製品名称索引
+                selectProductName($(this));
+            }
+        }
+    });
+    
+
+    // ヘッダタブ 製品コード イベント登録
+    $('input[name="ReviseCode"]').on({
+        'change': function () {
+            var revisecode = $(this).val();
+            var productcode = $('input[name="ProductCode"]');
+            if (productcode.val() != "") {
+                // 製品名称索引
+                selectProductByCode(productcode, revisecode);
+                // 金型リスト索引
+                selectMoldSelectionListByReviseCode(productcode, revisecode);
+            }
         }
     });
     // 保管元工場/移動先工場-表示会社コード イベント登録
@@ -32,6 +54,54 @@
         }
     });
 
+
+    // --------------------------------------------------------------------------
+    // 製品コード、再販コードによるデータ索引
+    // --------------------------------------------------------------------------
+    // 製品コード、再販コードから製品名称を検索
+    var selectProductByCode = function (invoker, revisecode) {
+        console.log("製品コード->製品名称 change");
+        // 検索条件
+        var condition = {
+            data: {
+                QueryName: 'selectProductByCode',
+                Conditions: {
+                    ProductCode: invoker.val(),
+                    ReviseCode: revisecode
+                }
+            }
+        };
+
+        // リクエスト送信
+        $.ajax($.extend({}, searchMaster, condition))
+            .done(function (response) {
+                console.log(response);
+                console.log(response.length);
+                console.log("製品コード->製品名称 done");
+                // ヘッダタブ/詳細タブの製品コード及び製品名称に値をセット
+                $('input[name="ProductCode"]').val(invoker.val());
+                $('input[name="ReviseCode"]').val(response[0].revisecode);
+                $('input[name="ProductName"]').val(response[0].productname);
+
+                // JQuery Validation Pluginで検知させる為イベントキック
+                $('input[name="ProductCode"]').trigger('blur');
+                $('input[name="ReviseCode"]').trigger('blur');
+                $('input[name="ProductName"]').trigger('blur');
+            })
+            .fail(function (response) {
+                console.log("製品コード->製品名称 fail");
+                console.log(response.responseText);
+                // ヘッダタブ/詳細タブの製品コード及び製品名称の値をリセット
+                $('input[name="ProductCode"]').val('');
+                $('input[name="ReviseCode"]').val('');
+                $('input[name="ProductName"]').val('');
+
+                // JQuery Validation Pluginで検知させる為イベントキック
+                $('input[name="ProductCode"]').trigger('blur');
+                $('input[name="ReviseCode"]').trigger('blur');
+                $('input[name="ProductName"]').trigger('blur');
+            });
+    };
     // --------------------------------------------------------------------------
     // 製品コードによるデータ索引
     // --------------------------------------------------------------------------
@@ -54,8 +124,14 @@
         .done(function(response){
             console.log("製品コード->製品名称 done");
             // ヘッダタブ/詳細タブの製品コード及び製品名称に値をセット
-            $('input[name="ProductCode"]').val(invoker.val());
-            $('input[name="ProductName"]').val(response[0].productname);
+            $('input[name="ProductCode"]').val(invoker.val());            
+            if (response.length == 1) {
+                $('input[name="ReviseCode"]').val(response[0].revisecode);
+                $('input[name="ProductName"]').val(response[0].productname);
+                revisecode = response[0].revisecode;
+                // 金型リスト索引
+                selectMoldSelectionListByReviseCode(invoker, revisecode);
+            }
 
             // JQuery Validation Pluginで検知させる為イベントキック
             $('input[name="ProductCode"]').trigger('blur');
@@ -75,15 +151,16 @@
     };
 
     // 製品コードから金型リストを索引
-    var selectMoldSelectionList = function(invoker){
+    var selectMoldSelectionListByReviseCode = function(invoker, revisecode){
         console.log("製品コード->金型リスト change");
 
         // 検索条件
         var condition = {
             data: {
-                QueryName: 'selectMoldSelectionList',
+                QueryName: 'selectMoldSelectionListByReviseCode',
                 Conditions: {
-                    ProductCode: $(invoker).val()
+                    ProductCode: $(invoker).val(),
+                    ReviseCode: revisecode
                 }
             }
         };
@@ -199,7 +276,6 @@
         var targetCssSelector = 'input[name="' + $(invoker).attr('name') + 'Name"]';
         // 索引結果0件の時のコード欄のCSSセレクタの作成
         var targetCodeCssSelector = 'input[name="' + $(invoker).attr('name') +'"]';
-
         // 検索条件
         var condition = {
             data: {
@@ -216,10 +292,21 @@
             console.log("工場-表示会社コード->表示名 done");
             // 工場-表示名に値をセット
             $(targetCssSelector).val(response[0].companydisplayname);
+            if ($(invoker).attr('name')=="SourceFactory") {
+                $('input[name="SourceFactoryName"] + img').css('visibility', 'hidden');
+            }
         })
         .fail(function(response){
             console.log("工場-表示会社コード->表示名 fail");
             console.log(response.responseText);
+            var listlength = $('.mold-selection__choosen-list').find('option').length;
+            if ($(invoker).attr('name')=="SourceFactory") {
+                if (listlength > 0) {
+                    $('input[name="SourceFactoryName"] + img').css('visibility', 'visible');
+                } else {
+                    $('input[name="SourceFactoryName"] + img').css('visibility', 'hidden');
+                }
+            }
             // 工場-コード、表示名の値をリセットし、コード欄にフォーカス
             $(targetCssSelector).val('');
             $(targetCodeCssSelector).val('').focus();

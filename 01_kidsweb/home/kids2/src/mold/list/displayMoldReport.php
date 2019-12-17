@@ -104,7 +104,7 @@ if($moldReportId && (0 <= $revision) && (0 <= $version))
 
 		// 製品名称の取得(_%ProductName%_)
 		$recordMoldReport["ProductName"] =
-			$utilProduct->selectProductNameByProductCode($recordMoldReport[TableMoldReport::ProductCode], $recordMoldReport[TableMoldReport::strReviseCode]);
+			$utilProduct->selectProductNameByProductCode($recordMoldReport[TableMoldReport::ProductCode], $recordMoldReport[TableMoldReport::ReviseCode]);
 
 		// 表示会社名を取得
 		// _%SendTo%_
@@ -386,6 +386,7 @@ if($moldReportId && (0 <= $revision) && (0 <= $version))
 	}
 	catch (SQLException $e)
 	{
+		echo ($e->getMessage());
 		// 情報の取得に失敗しました。
 		fncOutputError(9061, DEF_WARNING, " 対象のデータが変更された可能性があります。", TRUE, "", $objDB);
 	}

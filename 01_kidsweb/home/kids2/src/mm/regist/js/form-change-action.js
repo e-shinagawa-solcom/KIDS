@@ -22,5 +22,6 @@ $('input[name="ProductCode"]').on({
     'change': function(){
         // 保管工場リセット
         $('input[name="SourceFactory"]').val('').trigger('change');
+        $('input[name="SourceFactoryName"] + img').css('visibility', 'hidden');
     }
 });

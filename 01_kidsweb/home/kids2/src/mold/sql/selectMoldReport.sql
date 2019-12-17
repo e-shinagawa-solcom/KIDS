@@ -31,7 +31,6 @@ SELECT
     , updateby
     , version
     , deleteflag
-    , strrevisecode
 FROM
     m_moldreport
 WHERE

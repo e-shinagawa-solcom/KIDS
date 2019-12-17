@@ -14,8 +14,20 @@
     // ヘッダタブ 製品コード イベント登録
     $('input.mold-product-code').on({
         'change': function(){
+            var revisecode = $('input[name="ReviseCode"]').val();
             // 金型リスト索引
-            selectMoldSelectionList($(this));
+            selectMoldSelectionList($(this), revisecode);
+        }
+    });
+    // ヘッダタブ 再販コード イベント登録
+    $('input[name="ReviseCode"]').on({
+        'change': function () {
+            var revisecode = $(this).val();
+            var productcode = $('input.mold-product-code');
+            if (productcode.val() != "") {
+                // 金型リスト索引
+                selectMoldSelectionList(productcode, revisecode);
+            }
         }
     });
     // 事業部(顧客)-表示会社コード イベント登録
@@ -89,17 +101,26 @@
             $('input[name="UpdateByName"]').focus();
         }
     });
+    
     // 製品コードから金型リストを索引
-    var selectMoldSelectionList = function(invoker){
+    var selectMoldSelectionList = function (invoker, revisecode) {
         console.log("製品コード->金型リスト change");
-
+        var queryname = 'selectMoldByProductcode';
+        var conditions = {
+            ProductCode: $(invoker).val()
+        };
+        if (revisecode != "") {
+            queryname = 'selectMoldByCode';
+            conditions = {
+                ProductCode: $(invoker).val(),
+                ReviseCode: revisecode
+            };
+        }
         // 検索条件
         var condition = {
             data: {
-                QueryName: 'selectMoldByProductcode',
-                Conditions: {
-                    ProductCode: $(invoker).val()
-                }
+                QueryName: queryname,
+                Conditions: conditions
             }
         };
 

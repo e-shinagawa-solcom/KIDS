@@ -118,6 +118,8 @@ $replacement["Revision"] = sprintf("00", $revision);
 // 製品コード
 $replacement["Header_ProductCode"] =$report[TableMoldReport::ProductCode];
 $replacement["Detail_ProductCode"] =$report[TableMoldReport::ProductCode];
+$replacement["Header_ReviseCode"] =$report[TableMoldReport::ReviseCode];
+$replacement["Detail_ReviseCode"] =$report[TableMoldReport::ReviseCode];
 
 // 依頼日
 $replacement[FormMoldReport::RequestDate] = str_replace ( "-", "/", $report[TableMoldReport::RequestDate]);
@@ -154,6 +156,7 @@ $replacement[FormMoldReport::Note] = $report[TableMoldReport::Note];
 // 欄外備考
 $replacement[FormMoldReport::MarginalNote] = $report[TableMoldReport::MarginalNote];
 
+// var_dump($replacement);
 // テンプレート読み込み
 $template = fncGetReplacedHtmlWithBase("base_mold_noframes.html", "mr/modify/mr_modify.tmpl", $replacement ,$objAuth );
 

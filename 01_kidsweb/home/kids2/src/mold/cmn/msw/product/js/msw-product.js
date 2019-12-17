@@ -1,6 +1,7 @@
 (function() {
     var mswBox = $('.msw-box');
     var productCode = mswBox.find('.input-code');
+    var reviseCode = mswBox.find('.revise-code');
     var productName = mswBox.find('.input-name');
     var btnSearch = mswBox.find('.search-btn img');
 
@@ -44,9 +45,9 @@
     });
     var selectProducts = function() {
         $('select').find('option').remove();
-        switch (isEmpty(productCode.val()) + isEmpty(productName.val())) {
+        switch (isEmpty(productCode.val()) + isEmpty(productName.val()) + isEmpty(reviseCode.val())) {
             // どちらも未入力
-            case '00':
+            case '000':
                 var condition = {
                     data: {
                         QueryName: 'selectProducts'
@@ -54,7 +55,7 @@
                 };
                 break;
             // 製品名称のみ入力
-            case '01':
+            case '010':
                 var condition = {
                     data: {
                         QueryName: 'selectProductByProductName',
@@ -65,7 +66,7 @@
                 };
                 break;
             // 製品コードのみ入力
-            case '10':
+            case '100':
                 var condition = {
                     data: {
                         QueryName: 'selectProductByProductCode',
@@ -75,13 +76,62 @@
                     }
                 };
                 break;
+            // 再販コードのみ入力
+            case '001':
+                    var condition = {
+                        data: {
+                            QueryName: 'selectProductByReviseCode',
+                            Conditions: {
+                                ReviseCode: reviseCode.val()
+                            }
+                        }
+                    };
+                    break;
+            // 製品コード、再販コードのみ入力
+            case '101':
+                    var condition = {
+                        data: {
+                            QueryName: 'selectProductByCode',
+                            Conditions: {
+                                ProductCode: productCode.val(),
+                                ReviseCode: reviseCode.val()
+                            }
+                        }
+                    };
+                    break;
+            
+            // 製品名称、再販コードのみ入力
+            case '011':
+                    var condition = {
+                        data: {
+                            QueryName: 'selectProductByNameAndReviseCode',
+                            Conditions: {
+                                ReviseCode: reviseCode.val(),
+                                ProductName: productName.val()
+                            }
+                        }
+                    };
+                    break;
             // どちらも入力
-            case '11':
+            case '110':
+                var condition = {
+                    data: {
+                        QueryName: 'selectProductByProductCodeAndName',
+                        Conditions: {
+                            ProductCode: productCode.val(),
+                            ProductName: productName.val()
+                        }
+                    }
+                };
+                break;
+            // どちらも入力
+            case '111':
                 var condition = {
                     data: {
                         QueryName: 'selectProductByCodeAndName',
                         Conditions: {
                             ProductCode: productCode.val(),
+                            ReviseCode: reviseCode.val(),
                             ProductName: productName.val()
                         }
                     }
@@ -112,10 +162,10 @@
             $('.result-select').append(
                 $('<option>')
                 .attr({
-                    code: this.productcode,
+                    code: this.productcode + "_" + this.revisecode,
                     name: this.productname
                 })
-                .html(this.productcode + '&nbsp;&nbsp;&nbsp;' + this.productname)
+                .html(this.productcode + "_" + this.revisecode + '&nbsp;&nbsp;&nbsp;' + this.productname)
             );
         });
     }
