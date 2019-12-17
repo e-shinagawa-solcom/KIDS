@@ -110,9 +110,8 @@ switch ($recordMoldReport[TableMoldReport::ReportCategory])
 		$replacement[TableMoldReport::DestinationFactory] = $utilCompany->selectDisplayCodeByCompanyCode($replacement[TableMoldReport::DestinationFactory]);
 		break;
 }
-
 // 製品名称の取得
-$replacement["ProductName"] = $utilProduct->selectProductNameByProductCode($replacement[TableMoldReport::ProductCode], $replacement[TableMoldReport::strReviseCode]);
+$replacement["ProductName"] = $utilProduct->selectProductNameByProductCode($replacement[TableMoldReport::ProductCode], $replacement[TableMoldReport::ReviseCode]);
 
 // TO項目(仕入元会社)の索引 暫定的に最初の金型の仕入元を取得する
 $venderInfo = $utilMold->getVenderInfomation($recordMoldReportDetail[0][TableMoldReportDetail::MoldNo]);

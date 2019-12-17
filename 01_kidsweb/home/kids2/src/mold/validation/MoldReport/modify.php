@@ -244,7 +244,7 @@ if (!count($errMstList))
 	}
 
 	// 登録可能な金型番号リスト
-	$moldSelectionList = $utilMold->selectMoldSelectionListForModify($_REQUEST[FormMoldReport::ProductCode],$_REQUEST[FormMoldReport::MoldReportId]);
+	$moldSelectionList = $utilMold->selectMoldSelectionListForModify($_REQUEST[FormMoldReport::ProductCode],$_REQUEST[FormMoldReport::ReviseCode],$_REQUEST[FormMoldReport::MoldReportId]);
 	// ホワイトリスト作成
 	foreach ($moldSelectionList as $row => $columns)
 	{
@@ -265,6 +265,8 @@ if (!count($errMstList))
 			$errSemanticList["MoldNo<->ProductCode"] += $message;
 		}
 
+		$usedMoldNoList = array();
+		
 		// ホワイトリストが0でないの場合
 		if (count($moldNoList))
 		{

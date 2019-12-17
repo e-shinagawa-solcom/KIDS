@@ -20,8 +20,9 @@ FROM
     on mp.strproductcode = mp1.strproductcode 
     and mp.lngrevisionno = mp1.lngrevisionno 
     and mp.strrevisecode = mp1.strrevisecode 
-where
-  mp.strproductcode = $1 
+where 
+  mp.strrevisecode = $1
+  and mp.strproductname LIKE '%' || $2 || '%' 
   and not exists ( 
     select
       strproductcode 

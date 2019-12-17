@@ -50,10 +50,21 @@
             console.log("工場-表示会社コード->表示名 done");
             // 工場-表示名に値をセット
             $(targetCssSelector).val(response[0].companydisplayname);
+            if ($(invoker).attr('name')=="SourceFactory") {
+                $('input[name="SourceFactoryName"] + img').css('visibility', 'hidden');
+            }
         })
         .fail(function(response){
             console.log("工場-表示会社コード->表示名 fail");
-            console.log(response.responseText);
+            console.log(response.responseText);            
+            var listlength = $('.mold-selection__choosen-list').find('option').length;
+            if ($(invoker).attr('name')=="SourceFactory") {
+                if (listlength > 0) {
+                    $('input[name="SourceFactoryName"] + img').css('visibility', 'visible');
+                } else {
+                    $('input[name="SourceFactoryName"] + img').css('visibility', 'hidden');
+                }
+            }
             // 工場-コード、表示名の値をリセットし、コード欄にフォーカス
             $(targetCssSelector).val('');
             $(targetCodeCssSelector).val('').focus();

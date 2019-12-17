@@ -103,7 +103,7 @@ div.centering
 /* 帳票プレビューBOX ラップbox ボタン */
 .report-box__wrap-box-button
 {
-    margin-left:-4px;
-    padding: 5px 15px;
+    margin-left:-5px;
+    padding: 4px 15px 6px;
     border: 1px solid #798787;
 }

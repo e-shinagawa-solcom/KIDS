@@ -302,11 +302,12 @@ foreach ($records as $i => $record) {
     // 履歴有無フラグ
     $historyFlag = false;
 
-    // 同じ仕入NOの最新仕入データのリビジョン番号を取得する
+    // 同じ製品コードの最新商品データのリビジョン番号を取得する
     $aryQuery[] = "SELECT";
     $aryQuery[] = " lngproductno, lngrevisionno ";
     $aryQuery[] = "FROM m_product ";
     $aryQuery[] = "WHERE strproductcode='" . $record["strproductcode"] . "' ";
+    $aryQuery[] = "and strrevisecode='" . $record["strrevisecode"] . "' ";
     $aryQuery[] = "order by lngrevisionno desc";
 
     // クエリを平易な文字列に変換

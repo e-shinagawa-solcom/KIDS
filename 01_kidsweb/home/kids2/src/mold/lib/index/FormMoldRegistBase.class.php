@@ -15,7 +15,7 @@ class FormMoldRegistBase
 	 * 再販コード
 	 * @var string
 	 */
-	const strReviseCode = "strReviseCode";
+	const ReviseCode = "ReviseCode";
 
 	/**
 	 * 製品名称(日本語)

@@ -103,7 +103,6 @@ class FormCache extends WithQuery
 							"createby" => $this->getUserCode(),
 							"updateby" => $this->getUserCode()
 					);
-
 					// キャッシュデータの挿入
 					$pgResultInsert = pg_insert(static::$db->ConnectID, T_CACHE, $paramInsert);
 

@@ -461,7 +461,6 @@ $query[] = "    , mr.revision";
 
 // クエリを平易な文字列に変換
 $query = implode("\n",$query);
-
 // クエリ実行
 $lngResultID = pg_query($query);
 

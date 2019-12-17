@@ -21,7 +21,8 @@ FROM
     and mp.lngrevisionno = mp1.lngrevisionno 
     and mp.strrevisecode = mp1.strrevisecode 
 where
-  mp.strproductcode = $1 
+  mp.strproductcode = $1
+  and mp.strrevisecode = $2
   and not exists ( 
     select
       strproductcode 

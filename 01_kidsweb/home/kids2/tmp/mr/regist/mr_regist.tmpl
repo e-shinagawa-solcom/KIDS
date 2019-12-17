@@ -1,7 +1,6 @@
 <config>
 <header1>
 	<link rel="stylesheet" href="/mold/cmn/form/css/forms.css">
-    <link rel="stylesheet" href="/mold/cmn/form/css/forms-validation.css">
 	<link rel="stylesheet" href="/mold/cmn/form/css/tabs.css">
 	<link rel="stylesheet" href="/mold/cmn/navigate/css/navigate.css">
 
@@ -13,7 +12,7 @@
     <!-- セレクトボックス共通処理 -->
 	<script src="/mold/cmn/form/js/util-selectbox.js" defer></script>
 	<!-- msw表示切替 -->
-	<script src="/mold/cmn/msw/cmn/js/msw.js" defer></script>
+    <script src="/search/cmn/msw/cmn/js/msw.js" defer></script>
 </header1>
 
 <header2>
@@ -75,8 +74,8 @@
 						<span class="regist-label__required-mark">◎</span>
 						<span class="regist-label__text">製品コード</span>
 						<input class="TxtStyle05L" name="ProductCode" autofocus>
-						<span>_</span>
-						<input class="TxtStyle01L" name="strReviseCode">
+						<span class="regist-label__required-mark" style="right:2px;">_</span>
+						<input class="TxtStyle01L" name="ReviseCode">
 						<input class="disTxt46L" name="ProductName" readonly>
 						<img class="msw-button button" invokeMSWName="msw-product" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
 					</span>
@@ -206,8 +205,10 @@
 						<span class="regist-label__required-mark">◎</span>
 						<span class="regist-label__text">製品コード</span>
 						<input class="TxtStyle05L" name="ProductCode" readonly>
+						<span class="regist-label__required-mark" style="right:2px;">_</span>
+						<input class="TxtStyle01L" name="ReviseCode" readonly>
 						<input class="disTxt46L" name="ProductName" readonly>
-						<img class="msw-button button" invokeMSWName="msw-product" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+						<img class="msw-button button" id="detail-product" invokeMSWName="msw-product" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
 					</span>
 					<span class="regist-label">
 						<span class="regist-label__required-mark">◎</span>
@@ -286,13 +287,13 @@
 		<iframe class="msw-product" src="/mold/cmn/msw/product/mswproduct.html" frameborder="0">
 		</iframe>
 		<!-- MSW 工場マスタ検索 -->
-		<iframe class="msw-factory" src="/mold/cmn/msw/factory/mswfactory.html" frameborder="0">
+		<iframe class="msw-factory" src="/search/cmn/msw/factory/mswfactory.html" frameborder="0">
 		</iframe>
 		<!-- MSW 顧客マスタ検索 -->
 		<iframe class="msw-customer" src="/search/cmn/msw/customer/mswcustomer.html" frameborder="0">
 		</iframe>
 		<!-- MSW 担当部署マスタ検索 -->
-		<iframe class="msw-group" src="/mold/cmn/msw/group/mswgroup.html" frameborder="0">
+		<iframe class="msw-group" src="/search/cmn/msw/group/mswgroup.html" frameborder="0">
 		</iframe>
 		<!-- MSW 担当者マスタ検索 -->
 		<iframe class="msw-inchargeuser" src="/search/cmn/msw/inchargeuser/mswinchargeuser.html" frameborder="0">
@@ -308,6 +309,6 @@
 
 <!-- 右サイドバー タブ -->
 <div class="tabs">
-	<img class="tabs__header" src="/img/type01/cmn/seg/h_tab_off.gif" alt="tab header" disabled>
+	<img class="tabs__header" src="/img/type01/cmn/seg/h_tab_off.gif" alt="tab header" style="pointer-events:none;">
 	<img class="tabs__detail" src="/img/type01/cmn/seg/d_tab_on.gif" alt="tab footer">
 </div>

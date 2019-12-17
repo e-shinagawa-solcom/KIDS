@@ -98,7 +98,6 @@ if($resultFormCache && pg_num_rows($resultFormCache) == 1)
 		// DBエラー
 		fncOutputError ( 9051, DEF_ERROR, "選択された金型情報が変更されています。", TRUE, "", $objDB );
 	}
-
 	// 金型帳票マスタへのINSERT
 	if ($resultMoldReport = $utilMold->insertMoldReport($workFormData))
 	{

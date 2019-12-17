@@ -134,7 +134,7 @@ class TableMoldReport extends TableMetaData
 	 * 関連: 仕入詳細.再販コード
 	 * @var string
 	 */
-	const strReviseCode = "strrevisecode";
+	const ReviseCode = "strrevisecode";
 
 	/**
 	 * <pre>
