@@ -785,7 +785,7 @@ function fncGetDateSequence( $year, $month, $strSequenceName, $objDB )
 *	@access public
 */
 // -----------------------------------------------------------------
-function fncGetMoldNo( $strProductCode, $lngStockSubjectCode, $lngStockItemCode, $objDB )
+function fncGetMoldNo( $strProductCode, $strReviseCode, $lngStockSubjectCode, $lngStockItemCode, $objDB )
 {
 // 2004.05.31 suzukaze update start
 	// 仕入科目コード != 433 または 仕入部品コード != 1
@@ -813,7 +813,7 @@ function fncGetMoldNo( $strProductCode, $lngStockSubjectCode, $lngStockItemCode,
 // 2004.05.31 suzukaze update end
 
 	// シーケンス名の生成(YYMMXXX)
-	$strSequenceName = sprintf( "m_OrderDetail.strMoldNo.%05d", $strProductCode );
+	$strSequenceName = sprintf( "m_OrderDetail.strMoldNo.%05d_%02d", $strProductCode, $strReviseCode );
 	// トランザクション開始
 	//$objDB->transactionBegin();
 
@@ -865,13 +865,13 @@ function fncGetMoldNo( $strProductCode, $lngStockSubjectCode, $lngStockItemCode,
 	// 100を超えていた場合、16進変換(100='a0'とする)
 	if ( $lngSequence > 99 )
 	{
-		$lngSequence = sprintf ( "%05d", $strProductCode ) . "-" . dechex ( $lngSequence + 60 );
+		$lngSequence = sprintf ( "%05d_%02d", $strProductCode, $strReviseCode ) . "-" . dechex ( $lngSequence + 60 );
 	}
 
 	// 100未満の場合、0埋2桁フォーマット
 	else
 	{
-		$lngSequence = sprintf ( "%05d-%02d", $strProductCode, $lngSequence );
+		$lngSequence = sprintf ( "%05d_%02d-%02d", $strProductCode, $strReviseCode, $lngSequence );
 	}
 
 	return $lngSequence;
