@@ -1,13 +1,13 @@
 
 
-var KidsLogoImg = '<img src="/img/type01/cmn/kids_logo_center.gif" width=182" height="26" border="0" alt="Kuwagata Integrated Dealing System">';
+var KidsLogoImg = '<img src="/img/type01/cmn/kids_logo_center_gold.gif" width=182" height="26" border="0" alt="Kuwagata Integrated Dealing System">';
 
 
 var loginBt1 = '<a href="#"><img name="loginbutton" onfocus="LoginOn(this);" onblur="LoginOff(this);" onmouseover="LoginOn(this);" onmouseout="LoginOff(this);fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + login1 + '" width="82" height="24" border="0" alt="LOGIN" tabindex="3"></a>';
 
 var darkcloseBtJ1 = '<a href="#"><img onmouseover="DarkCloseJOn(this);" onmouseout="DarkCloseJOff(this);fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + darkclose1J + '" width="72" height="20" border="0" alt="ÊÄ¤¸¤ë"></a>';
 
-var darkcloseBtE1 = '<a href="#"><img onmouseover="DarkCloseEOn(this);" onmouseout="DarkCloseEOff(this);fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + darkclose1E + '" width="72" height="20" border="0" alt="CLOSE"></a>';
+var darkcloseBtE1 = '<a href="#"><img onmouseover="DarkCloseEOn_Gold(this);" onmouseout="DarkCloseEOff_Gold(this);fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + darkclose1E_Gold + '" width="72" height="20" border="0" alt="CLOSE"></a>';
 
 
 var ralowBt1 ='<a href="#"><img onmouseover="fncDarkRAllowButton( \'on\' , this );" onmouseout="fncDarkRAllowButton( \'off\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + ralowbt1 + '" width="19" height="19" border="0"></a>';
@@ -15,13 +15,17 @@ var ralowBt1 ='<a href="#"><img onmouseover="fncDarkRAllowButton( \'on\' , this 
 
 ///// CSS VALUE /////
 var fcolor = '#ffffff'; //¹àÌÜ¥Õ¥©¥ó¥È¥«¥é¡¼
-var segcolor = '#72828b'; //¹àÌÜÇØ·Ê¿§ e8f0f1
+//var segcolor = '#72828b'; //¹àÌÜÇØ·Ê¿§ e8f0f1
+var segcolor = '#FFD700'; //¹àÌÜÇØ·Ê¿§ gold
 var segbody = '#d6d0b1'; //INPUT A BODY ÇØ·Ê¿§
-var brcolor01 = '#cdcdcd #72828b #cdcdcd #cdcdcd'; //¹àÌÜ±¦¶õ¤­BORDER 798787
-var brcolor02 = '#cdcdcd #cdcdcd #cdcdcd #72828b'; //¹àÌÜº¸¶õ¤­BORDER
+//var brcolor01 = '#cdcdcd #72828b #cdcdcd #cdcdcd'; //¹àÌÜ±¦¶õ¤­BORDER 798787
+//var brcolor02 = '#cdcdcd #cdcdcd #cdcdcd #72828b'; //¹àÌÜº¸¶õ¤­BORDER
 var brcolor03 = '#798787 #e8f0f1 #798787 #e8f0f1'; //¹àÌÜº¸±¦¶õ¤­BORDER
+var brcolor01 = '#cdcdcd #FFD700 #cdcdcd #cdcdcd'; //¹àÌÜ±¦¶õ¤­BORDER 798787
+var brcolor02 = '#cdcdcd #cdcdcd #cdcdcd #FFD700'; //¹àÌÜº¸¶õ¤­BORDER
 
-var bodycolor = '#72828b';
+//var bodycolor = '#72828b';
+var bodycolor = '#FFD700';
 
 
 function initLayoutLogin()

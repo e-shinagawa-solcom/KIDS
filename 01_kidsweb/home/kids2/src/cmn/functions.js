@@ -3962,6 +3962,13 @@ function DarkCloseEOn(obj) {
 	obj.src = darkclose2E;
 }
 
+function DarkCloseEOff_Gold(obj) {
+	obj.src = darkclose1E_Gold;
+}
+
+function DarkCloseEOn_Gold(obj) {
+	obj.src = darkclose2E_Gold;
+}
 
 
 

@@ -303,6 +303,8 @@
 	var darkclose1E = '/img/type01/cmn/querybt/close_dark_off_en_bt.gif';
 	var darkclose2E = '/img/type01/cmn/querybt/close_dark_off_on_en_bt.gif';
 	var darkclose3E = '/img/type01/cmn/querybt/close_dark_on_en_bt.gif';
+	var darkclose1E_Gold = '/img/type01/login/close_dark_off_en_bt_gold.gif';
+	var darkclose2E_Gold = '/img/type01/login/close_dark_off_on_en_bt_gold.gif';
 
 
 	///// DELETE BT IMAGE /////
