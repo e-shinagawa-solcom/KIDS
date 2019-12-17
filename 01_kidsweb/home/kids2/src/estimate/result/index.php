@@ -197,9 +197,16 @@ if (!count($strErrorMessage)) {
 
 		FROM m_estimate me
 
-		INNER JOIN m_product mp
-			ON mp.strproductcode = me.strproductcode
-			AND mp.strrevisecode = me.strrevisecode
+		INNER JOIN m_product mp";
+
+        // 管理者モードでない場合
+        if (!array_key_exists("admin", $optionColumns)) {
+            $selectQuery = $selectQuery . " ON mp.strproductcode = me.strproductcode";
+        }
+        else{
+            $selectQuery = $selectQuery . " ON mp.strproductcode = substr(me.strproductcode, 1, 5)";
+        }
+		$selectQuery = $selectQuery . " AND mp.strrevisecode = me.strrevisecode
 			AND mp.lngrevisionno = me.lngproductrevisionno
 
 		INNER JOIN m_group mg
