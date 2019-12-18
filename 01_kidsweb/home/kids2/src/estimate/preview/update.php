@@ -281,7 +281,8 @@
 		$aryHtml["lngLanguageCode"] = $aryData["lngLanguageCode"];
 
 		// [strErrorMessage]書き出し
-		$aryHtml["strErrorMessage"] = mb_convert_encoding($strMessage, 'EUC-JP', 'UTF-8');
+//		$aryHtml["strErrorMessage"] = mb_convert_encoding($strMessage, 'EUC-JP', 'UTF-8');
+		$aryHtml["strErrorMessage"] = $strMessage;
 
 		// テンプレート読み込み
 		$objTemplate = new clsTemplate();
