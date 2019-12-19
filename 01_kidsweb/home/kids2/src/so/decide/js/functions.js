@@ -52,6 +52,11 @@
                 $("#table_decide_no").empty();
                 $("#table_decide_body").empty();
 
+                // 一度設定したthedaのwidthを削除
+                for (var i = 1; i <= 14; i++) {
+                    var width = $(".table-decide-description thead tr th:nth-child(" + i + ")").css('width', '');
+                }
+
                 for (var i = 0; i < data.receiveDetail.length; i++) {
                     var rowNum = i + 1;
                     var id = "decide_no_" + rowNum;
