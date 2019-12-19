@@ -176,7 +176,7 @@ function fncGetCopyFilePathQuery($lngReportClassCode, $strReportKeyCode, $lngRep
 
     // 商品企画書出力コピーファイル取得クエリ生成
     if ($lngReportClassCode == DEF_REPORT_PRODUCT) {
-        $aryQuery[] = "SELECT r.strReportPathName ";
+        $aryQuery[] = "SELECT distinct r.strReportPathName ";
         $aryQuery[] = "FROM t_GoodsPlan gp, t_Report r ";
         $aryQuery[] = "WHERE r.lngReportClassCode = " . $lngReportClassCode;
         $aryQuery[] = $strReportCodeConditions;
@@ -192,7 +192,7 @@ function fncGetCopyFilePathQuery($lngReportClassCode, $strReportKeyCode, $lngRep
 
     // 発注帳票出力コピーファイル取得クエリ生成
     elseif ($lngReportClassCode == DEF_REPORT_ORDER) {
-        $aryQuery[] = "SELECT r.strReportPathName ";
+        $aryQuery[] = "SELECT distinct r.strReportPathName ";
         $aryQuery[] = "FROM m_purchaseorder po, t_Report r ";
 
         // 対象帳票(製品企画 or 発注)指定
@@ -211,7 +211,7 @@ function fncGetCopyFilePathQuery($lngReportClassCode, $strReportKeyCode, $lngRep
     }
     // 納品書帳票出力コピーファイル取得クエリ生成
     elseif ($lngReportClassCode == DEF_REPORT_SLIP) {
-        $aryQuery[] = "SELECT r.strReportPathName ";
+        $aryQuery[] = "SELECT distinct r.strReportPathName ";
         $aryQuery[] = "FROM m_slip s, t_Report r ";
 
         // 対象帳票指定
@@ -230,7 +230,7 @@ function fncGetCopyFilePathQuery($lngReportClassCode, $strReportKeyCode, $lngRep
     }
     // 請求書帳票出力コピーファイル取得クエリ生成
     elseif ($lngReportClassCode == DEF_REPORT_INV) {
-        $aryQuery[] = "SELECT r.strReportPathName ";
+        $aryQuery[] = "SELECT distinct r.strReportPathName ";
         $aryQuery[] = "FROM m_invoice i, t_Report r ";
 
         // 対象帳票指定
@@ -250,7 +250,7 @@ function fncGetCopyFilePathQuery($lngReportClassCode, $strReportKeyCode, $lngRep
 
     // 見積原価帳票出力コピーファイル取得クエリ生成
     elseif ($lngReportClassCode == DEF_REPORT_ESTIMATE) {
-        $aryQuery[] = "SELECT r.strReportPathName ";
+        $aryQuery[] = "SELECT distinct r.strReportPathName ";
         $aryQuery[] = "FROM t_Report r ";
         $aryQuery[] = "LEFT OUTER JOIN m_Estimate e ON ( to_number ( r.strReportKeyCode, '9999999') = e.lngEstimateNo ) ";
         $aryQuery[] = "WHERE r.lngReportClassCode = " . $lngReportClassCode;
@@ -313,6 +313,9 @@ function fncGetListOutputQuery($lngClassCode, $lngKeyCode, $objDB)
     if ($lngClassCode == DEF_REPORT_PRODUCT) {
         $aryQuery[] = "SELECT DISTINCT ON (p.lngProductNo)";
         $aryQuery[] = "   p.lngProductNo";
+        $aryQuery[] = " , p.lngRevisionNo";
+        $aryQuery[] = " , p.lngprintcount";
+        $aryQuery[] = " , p.strrevisecode";
         $aryQuery[] = " , p.lngInChargeGroupCode as lngGroupCode";
         //  作成日
         $aryQuery[] = " , To_Char( p.dtminsertdate, 'YYYY/MM/DD' ) as dtminsertdate";
@@ -321,7 +324,7 @@ function fncGetListOutputQuery($lngClassCode, $lngKeyCode, $objDB)
         //  企画進行状況
         $aryQuery[] = " , t_gp.lngGoodsPlanProgressCode";
         //  改訂番号
-        $aryQuery[] = " , t_gp.lngRevisionNo";
+        // $aryQuery[] = " , t_gp.lngRevisionNo";
         //  改訂日時
         $aryQuery[] = " , To_Char( p.dtmUpdateDate, 'YYYY/MM/DD' ) as dtmRevisionDate";
         //  製品コード
@@ -415,16 +418,17 @@ function fncGetListOutputQuery($lngClassCode, $lngKeyCode, $objDB)
         $aryQuery[] = "  inner join ( ";
         $aryQuery[] = "    select";
         $aryQuery[] = "      max(lngrevisionno) lngrevisionno";
-        $aryQuery[] = "      , strproductcode ";
+        $aryQuery[] = "      , strproductcode, strrevisecode ";
         $aryQuery[] = "    from";
         $aryQuery[] = "      m_Product ";
         $aryQuery[] = "    where";
         $aryQuery[] = "      bytInvalidFlag = false ";
         $aryQuery[] = "    group by";
-        $aryQuery[] = "      strProductCode";
+        $aryQuery[] = "      strProductCode,strrevisecode";
         $aryQuery[] = "  ) p1 ";
         $aryQuery[] = "    on p.strProductCode = p1.strProductCode ";
         $aryQuery[] = "    and p.lngrevisionno = p1.lngrevisionno ";
+        $aryQuery[] = "    and p.strrevisecode = p1.strrevisecode ";
         //  追加表示用の参照マスタ対応
         $aryQuery[] = " LEFT JOIN m_User input_u ON p.lngInputUserCode = input_u.lngUserCode";
         $aryQuery[] = " LEFT JOIN m_Group inchg_g ON p.lngInChargeGroupCode = inchg_g.lngGroupCode";
@@ -444,12 +448,28 @@ function fncGetListOutputQuery($lngClassCode, $lngKeyCode, $objDB)
         $aryQuery[] = " LEFT JOIN m_CertificateClass certificate ON p.lngCertificateClassCode = certificate.lngCertificateClassCode";
         $aryQuery[] = " LEFT JOIN m_Copyright copyright ON p.lngCopyrightCode = copyright.lngCopyrightCode";
         $aryQuery[] = " LEFT JOIN m_Category category ON p.lngCategoryCode = category.lngCategoryCode";
-        $aryQuery[] = ", t_GoodsPlan t_gp ";
-
-        $aryQuery[] = "WHERE p.lngProductNo = " . $lngKeyCode;
-
+        $aryQuery[] = "  , ( ";
+        $aryQuery[] = "      select";
+        $aryQuery[] = "        gp1.* ";
+        $aryQuery[] = "      from";
+        $aryQuery[] = "        t_GoodsPlan gp1 ";
+        $aryQuery[] = "        inner join ( ";
+        $aryQuery[] = "          SELECT";
+        $aryQuery[] = "            MAX(lngRevisionNo) lngRevisionNo";
+        $aryQuery[] = "            , lngProductNo";
+        $aryQuery[] = "            , strrevisecode ";
+        $aryQuery[] = "          FROM";
+        $aryQuery[] = "            t_GoodsPlan ";
+        $aryQuery[] = "          group by";
+        $aryQuery[] = "            lngProductNo";
+        $aryQuery[] = "            , strrevisecode";
+        $aryQuery[] = "        ) gp2 ";
+        $aryQuery[] = "          on gp1.lngProductNo = gp2.lngProductNo ";
+        $aryQuery[] = "          and gp1.lngRevisionNo = gp2.lngRevisionNo";
+        $aryQuery[] = "    ) t_gp ";
+        $aryQuery[] = "WHERE t_gp.lnggoodsplancode = " . $lngKeyCode;
         $aryQuery[] = " AND t_gp.lngProductNo = p.lngProductNo";
-        $aryQuery[] = " AND t_gp.lngRevisionNo = ( SELECT MAX( t_gp1.lngRevisionNo ) FROM t_GoodsPlan t_gp1 WHERE t_gp1.lngProductNo = p.lngProductNo )";
+        $aryQuery[] = " AND t_gp.strReviseCode = p.strReviseCode";
     }
 
     /////////////////////////////////////////////////////////////////////////
@@ -558,6 +578,7 @@ function fncGetListOutputQuery($lngClassCode, $lngKeyCode, $objDB)
         $aryQuery[] = "  i.lnginvoiceno";
         $aryQuery[] = "  , i.lngrevisionno";
         $aryQuery[] = "  , i.strinvoicecode";
+        $aryQuery[] = "  , i.lngprintcount";
         $aryQuery[] = "  , to_char(i.dtminvoicedate, 'yyyy/mm/dd') as dtminvoicedate";
         $aryQuery[] = "  , to_char(i.dtminvoicedate, 'dd日') as dtminvoicedate_day";
         $aryQuery[] = "  , i.strcustomername";
@@ -830,4 +851,49 @@ function fncGetSlipForDownloadQuery($strReportKeyCode)
     $aryQuery[] = "WHERE lngslipno = " . $strReportKeyCode;
     return join("", $aryQuery);
 }
-return true;
+
+/**
+ * 印刷回数の更新
+ *
+ * @param [type] $lngClassCode
+ * @param [type] $aryParts
+ * @param [type] $objDB
+ * @return void
+ */
+function fncUpdatePrintCount($lngClassCode, $aryParts, $objDB)
+{
+    $strQuery = "";
+    // 印刷回数の設定
+    $aryParts["lngprintcount"] += 1;
+
+    if ($lngClassCode == DEF_REPORT_PRODUCT) {
+    // 印刷回数の更新    
+	$strQuery = "update m_product set lngprintcount = ".$aryParts["lngprintcount"] 
+	." where lngproductno = " .$aryParts["lngproductno"]
+	. " and lngrevisionno = " .$aryParts["lngrevisionno"]
+	. " and strrevisecode = '" .$aryParts["strrevisecode"] . "'";
+    } else if ($lngClassCode == DEF_REPORT_ORDER) {
+        $strQuery = "update m_purchaseorder set lngprintcount = ".$aryParts["lngprintcount"]
+         ." where lngpurchaseorderno = " .$aryParts["lngpurchaseorderno"]
+          . " and lngrevisionno = " .$aryParts["lngrevisionno"];    
+    } else if ($lngClassCode == DEF_REPORT_SLIP) {
+        $strQuery = "update m_slip set lngprintcount = ".$aryParts["lngprintcount"]
+         ." where lngslipno = " .$aryParts["lngslipno"]
+         . " and lngrevisionno = " .$aryParts["lngrevisionno"];    
+    } else if ($lngClassCode == DEF_REPORT_INV) {
+        $strQuery = "update m_invoice set lngprintcount = " . $aryParts["lngprintcount"]
+         . " where lnginvoiceno = " . $aryParts["lnginvoiceno"]
+          . " and lngrevisionno = " . $aryParts["lngrevisionno"];
+    } else if ($lngClassCode == DEF_REPORT_ESTIMATE) {
+        $strQuery = "update m_estimate set lngprintcount = " . $aryParts["lngprintcount"]
+        . " where lngestimateno = " . $aryParts["lngestimateno"]
+         . " and lngrevisionno = " . $aryParts["lngrevisionno"];
+    }
+    
+    $objDB->freeResult($lngResultID);
+    list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
+    
+    $objDB->freeResult($lngResultID);
+
+    return;
+}

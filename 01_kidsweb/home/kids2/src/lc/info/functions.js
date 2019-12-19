@@ -169,6 +169,9 @@ function setLcInfoTable(data, phpData) {
 		$("[name='T']").width(width + 250);
 	}
 
+	
+	$("#lc_head").trigger("update");
+	$("#lc_table").trigger("update");
 
 
 	//0件の場合はエラー

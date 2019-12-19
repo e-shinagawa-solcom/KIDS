@@ -102,13 +102,13 @@ else {
     // テンプレートパス設定
     if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_EXCLUSIVE) {
         $strTemplatePath = REPORT_TMPDIR . REPORT_SLIP_EXCLUSIVE;
-        $downloadFileName = REPORT_SLIP_EXCLUSIVE;
+        // $downloadFileName = REPORT_SLIP_EXCLUSIVE;
     } else if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_COMM) {
         $strTemplatePath = REPORT_TMPDIR . REPORT_SLIP_COMM;
-        $downloadFileName = REPORT_SLIP_COMM;
+        // $downloadFileName = REPORT_SLIP_COMM;
     } else if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_DEBIT) {
         $strTemplatePath = REPORT_TMPDIR . REPORT_SLIP_DEBIT;
-        $downloadFileName = REPORT_SLIP_DEBIT;
+        // $downloadFileName = REPORT_SLIP_DEBIT;
     }
 
     // 帳票テンプレートファイルの読込

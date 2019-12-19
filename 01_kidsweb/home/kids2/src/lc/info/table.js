@@ -8,7 +8,7 @@ $(document).ready(function () {
         } else {
             sortval = 1;
         }
-        var r = $('#lc_table').tablesorter()
+        var r = $('#lc_table').tablesorter();
         r.trigger('sorton', [[[(sortkey), sortval]]]);
     });
 });

@@ -82,18 +82,6 @@ if ( $lngResultNum > 0 )
 	unset ( $objResult );
 }
 
-$copyDisabled = "visible";
-
-// コピーファイルパスが存在しない または
-// 帳票コードが無い または コピーフラグが偽(コピー選択ではない) かつ
-// コピー解除権限がある場合、
-// コピーマークの非表示
-if ( !$strReportPathName || ( !( $aryData["lngReportCode"] || $aryData["bytCopyFlag"] ) && fncCheckAuthority( DEF_FUNCTION_LO4, $objAuth ) ) )
-{
-	$copyDisabled = "hidden";
-}
-
-
 ///////////////////////////////////////////////////////////////////////////
 // 帳票コードが真の場合、ファイルデータを取得
 ///////////////////////////////////////////////////////////////////////////
@@ -104,7 +92,7 @@ if ( $aryData["lngReportCode"] )
 		fncOutputError ( 9056, DEF_FATAL, "帳票コピーがありません。", TRUE, "", $objDB );
 	}
 
-	if ( !$aryHtml[] =  file_get_contents ( SRC_ROOT . "list/result/cash/" . $strReportPathName . ".tmpl" ) )
+	if ( !$strHtml =  file_get_contents ( SRC_ROOT . "list/result/cash/" . $strReportPathName . ".tmpl" ) )
 	{
 		fncOutputError ( 9059, DEF_FATAL, "帳票データファイルが開けませんでした。", TRUE, "", $objDB );
 	}
@@ -219,7 +207,6 @@ else
 	$objDB->close();
 
 	$objWriter = new HtmlWriter($spreadSheet);
-}
 
 // 置換文字列生成
 $time = new DateTime();
@@ -244,8 +231,10 @@ $output .= $objWriter->generateHTMLFooter();
 
 $output = mb_convert_encoding($output, 'EUC-JP', 'UTF-8');
 
-// 置換文字列をhtmlの円マーク出力文字に変換してhtmlを出力
-echo str_replace($replace, '&yen;', $output);
+$strHtml = str_replace($replace, '&yen;', $output);
+}
 
+// 置換文字列をhtmlの円マーク出力文字に変換してhtmlを出力
+echo $strHtml;
 return TRUE;
 ?>

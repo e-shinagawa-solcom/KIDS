@@ -74,6 +74,7 @@ $aryQuery[] = "  , g.strgroupdisplaycode";
 $aryQuery[] = "  , g.strgroupdisplayname";
 $aryQuery[] = "  , u2.struserdisplaycode";
 $aryQuery[] = "  , u2.struserdisplayname";
+$aryQuery[] = "  , po.lngprintcount";
 $aryQuery[] = "  , po.lngpurchaseorderno AS strReportKeyCode ";
 $aryQuery[] = "FROM";
 $aryQuery[] = "  m_purchaseorder po ";
@@ -189,6 +190,7 @@ if ($lngResultNum > 0) {
 
 // 帳票データ取得クエリ実行・テーブル生成
 $strQuery = implode("\n", $aryQuery);
+
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
 // 検索件数がありの場合
@@ -240,8 +242,8 @@ for ($i = 0; $i < $lngResultNum; $i++) {
 
     $aryParts["strResult"] .= "<td align=center>";
 
-    // コピーファイルパスが存在している場合、コピー帳票出力ボタン表示
-    if ($aryReportCode[$objResult->strreportkeycode] != null) {
+    // 印刷回数が0より大きい場合、コピー帳票出力ボタン表示
+    if (intval($objResult->lngprintcount) > 0) {
         // コピー帳票出力ボタン表示
         $aryParts["strResult"] .= "<a href=\"#\"><img onclick=\"fncListOutput( '/list/result/frameset.php?strSessionID=" . $searchValue["strSessionID"] . "&lngReportClassCode=" . DEF_REPORT_ORDER . "&strReportKeyCode=" . $objResult->strreportkeycode . "&lngReportCode=" . $aryReportCode[$objResult->strreportkeycode] . "' );return false;\" onmouseover=\"fncCopyPreviewButton( 'on' , this );\" onmouseout=\"fncCopyPreviewButton( 'off' , this );fncAlphaOff( this );\" onmousedown=\"fncAlphaOn( this );\" onmouseup=\"fncAlphaOff( this );\" src=\"/img/type01/list/copybig_off_bt.gif\" width=\"72\" height=\"20\" border=\"0\" alt=\"COPY PREVIEW\"></a>";
     }

@@ -13,8 +13,6 @@
         <script src="/search/cmn/search/js/toggleCheckbox.js" defer></script>
         <!-- 検索画面共通入力補助 -->
         <script src="/search/cmn/search/js/input-assist.js" defer></script>
-        <!-- msw 表示 -->
-        <script src="/search/cmn/msw/cmn/js/msw.js" defer></script>
         <!-- COOKIE関連の処理(検索画面) -->
         <script src="/search/cmn/search/js/cookie-functions.js" defer></script>
     </header1>
@@ -32,8 +30,9 @@
         <!-- フォームバリデーション -->
         <script src="/list/search/p/validate-form.js" defer></script>
         <!-- マスタ検索呼び出し -->
-        <script src="/p/cmn/js/invoke-master-search.js" defer></script>
-        <script src="/p/cmn/js/msw.js" defer></script>
+        <script src="/search/cmn/js/invoke-master-search.js" defer></script>
+        <!-- msw 表示 -->
+        <script src="/search/cmn/msw/cmn/js/msw.js" defer></script>
         <!-- COOKIE 表示チェックボックス 保存/復元 -->
         <script src="/search/cmn/js/cookie-display-items.js" defer></script>
         <!-- キーバインド -->
@@ -116,8 +115,8 @@
                 </span>
                 <span class="regist-label">
                     <span class="regist-label__text">製品コード</span>
-                    FROM<input class="TxtStyle05L" name="From_strProductCode" type="text" value="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCopyValue( this , document.all.To_strProductCode );" tabindex="">
-                    TO <input class="TxtStyle05L" name="To_strProductCode"  type="text" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate(this);" tabindex="" maxlength="10">
+                    FROM<input class="TxtStyle05L" name="From_strProductCode" type="text" value="" maxlength="10" tabindex="">
+                    TO <input class="TxtStyle05L" name="To_strProductCode"  type="text" value="" tabindex="" maxlength="10">
 				
                 </span>
             </div>
@@ -139,7 +138,7 @@
                     <span class="regist-label__text">入力者</span>
                     <input class="TxtStyle05L" name="lngInputUserCode"  type="text" alt="InputUser">
                     <input class="disTxt46L" name="strInputUserName"  type="text" readonly>
-                    <img class="msw-button button" invokeMSWName="msw-user" msw-before="pickupGroupCodeToNull" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                    <img class="msw-button button" invokeMSWName="msw-inputuser" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
                 </span>
             </div>
             <div class="regist-line">
@@ -161,7 +160,7 @@
                     <span class="regist-label__text">担当者</span>
                     <input class="TxtStyle05L" name="lngInChargeUserCode" type="text" alt="InChargeUser">
                     <input class="disTxt46L" name="strInChargeUserName" type="text" readonly>
-                    <img class="msw-button button" invokeMSWName="msw-user" msw-before="pickupGroupCode" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                    <img class="msw-button button" invokeMSWName="msw-inchargeuser" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
                 </span>
             </div>
             <input type="hidden" name="ActionScriptName" value="/list/p/result/index.php">
@@ -169,11 +168,14 @@
         </form>
     </div>
     <div class="msw-loadpoints">
-        <!-- MSW 担当部署マスタ検索 -->
-        <iframe class="msw-group" src="/search/cmn/msw/group/mswgroup.html" frameborder="0">
-        </iframe>
-        <!-- MSW 担当者マスタ検索 -->
-        <iframe class="msw-user" src="/search/cmn/msw/user/mswuser.html" frameborder="0">
-        </iframe>
+		<!-- MSW 担当部署マスタ検索 -->
+		<iframe class="msw-group" src="/search/cmn/msw/group/mswgroup.html" frameborder="0">
+		</iframe>
+		<!-- MSW 担当者マスタ検索 -->
+		<iframe class="msw-inchargeuser" src="/search/cmn/msw/inchargeuser/mswinchargeuser.html" frameborder="0">
+		</iframe>
+        <!-- MSW 入力者マスタ検索 -->
+        <iframe class="msw-inputuser" src="/search/cmn/msw/inputuser/mswinputuser.html" frameborder="0">
+            </iframe>
     </div>
 </div>

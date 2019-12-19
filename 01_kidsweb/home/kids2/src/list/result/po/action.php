@@ -75,19 +75,24 @@ if ( $lngResultNum === 1 )
 	$objDB->freeResult( $lngResultID );
 	//echo "コピーファイル有り。";
 }
+// データ取得クエリ
+$strQuery = fncGetListOutputQuery( DEF_REPORT_ORDER, $aryData["strReportKeyCode"], $objDB );
+
+
+$objMaster = new clsMaster();
+$objMaster->setMasterTableData( $strQuery, $objDB );
+
+$aryParts =& $objMaster->aryData[0];
+
+if ( $lngResultNum === 1 )
+{
+    // 印刷回数を更新する
+	fncUpdatePrintCount(DEF_REPORT_ORDER, $aryParts, $objDB);
+}
 
 // 帳票が存在しない場合、コピー帳票ファイルを生成、保存
 elseif ( $lngResultNum === 0 )
 {
-	// データ取得クエリ
-	$strQuery = fncGetListOutputQuery( DEF_REPORT_ORDER, $aryData["strReportKeyCode"], $objDB );
-
-
-	$objMaster = new clsMaster();
-	$objMaster->setMasterTableData( $strQuery, $objDB );
-
-	$aryParts =& $objMaster->aryData[0];
-
 	// 詳細取得
     $aryQuery[] = "select";
     $aryQuery[] = "  pod.lngpurchaseorderno";
@@ -267,17 +272,10 @@ elseif ( $lngResultNum === 0 )
 
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
     
-    $objDB->freeResult($lngResultID);
+    $objDB->freeResult($lngResultID);    
 
-    // 印刷回数の設定
-    $aryParts["lngprintcount"] += 1;
-
-    // 印刷回数の更新    
-    $strQuery = "update m_purchaseorder set lngprintcount = ".$aryParts["lngprintcount"] ." where lngpurchaseorderno = " .$aryParts["lngpurchaseorderno"] . " and lngrevisionno = " .$aryParts["lngrevisionno"];
-    
-    list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
-    
-    $objDB->freeResult($lngResultID);
+    // 印刷回数を更新する
+    fncUpdatePrintCount(DEF_REPORT_ORDER, $aryParts, $objDB);
 
 	// 帳票ファイルオープン
 	if ( !$fp = fopen ( SRC_ROOT . "list/result/cash/" . $lngSequence . ".tmpl", "w" ) )
