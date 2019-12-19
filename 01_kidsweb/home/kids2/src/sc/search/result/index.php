@@ -190,15 +190,6 @@ foreach ($records as $i => $record) {
     $detailData = fncGetDetailData('sc', $record["lngsalesno"], $record["lngrevisionno"], $objDB);
     $rowspan = count($detailData);
 
-    // 明細番号取得
-    for ($i = $rowspan; $i >= 0; $i--) {
-        if ($detailnos == "") {
-            $detailnos = $detailData[$i]["lngsalesdetailno"];
-        } else {
-            $detailnos = $detailnos . "," . $detailData[$i]["lngsalesdetailno"];
-        }
-    }
-
     if ($rowspan == 0) {
         $rowspan = 1;
     }
@@ -206,35 +197,21 @@ foreach ($records as $i => $record) {
     $trBody = $doc->createElement("tr");
 
     $trBody->setAttribute("id", $record["strsalescode"]);
-    $trBody->setAttribute("detailnos", $detailnos);
 
     $maxdetailno = $detailData[$rowspan - 1]["lngsalesdetailno"];
 
     // 先頭ボタン設定
-    fncSetHeadBtnToTr($doc, $trBody, $bgcolor, $aryTableHeadBtnName, $displayColumns, $record, $rowspan, $aryAuthority, true, $isadmin, $index, 'sc', $maxdetailno);
+    fncSetHeadBtnToTr($doc, $trBody, $bgcolor, $aryTableHeadBtnName, $displayColumns, $record, $aryAuthority, true, $isadmin, $index, 'sc', $maxdetailno);
 
     // ヘッダー部データ設定
-    fncSetHeadDataToTr($doc, $trBody, $bgcolor, $aryTableHeaderName_SC, $displayColumns, $record, $rowspan, true);
-
-    $detailData[0]["lngmonetaryunitcode"] = $record["lngmonetaryunitcode"];
-    $detailData[0]["strmonetaryunitsign"] = $record["strmonetaryunitsign"];
+    fncSetHeadDataToTr($doc, $trBody, $bgcolor, $aryTableHeaderName_SC, $displayColumns, $record, true);
+    
     // 明細データの設定
-    fncSetDetailDataToTr($doc, $trBody, $bgcolor, $aryTableDetailHeaderName_SC, $displayColumns, $detailData[0], true);
+    fncSetDetailTable($doc, $trBody, $bgcolor, $aryTableDetailHeaderName_SC, $displayColumns, $record, $detailData, true, true);
+
     // tbody > tr
     $tbody->appendChild($trBody);
 
-    // 明細行のtrの追加
-    for ($i = 1; $i < $rowspan; $i++) {
-        $trBody = $doc->createElement("tr");
-        $trBody->setAttribute("id", $record["strsalescode"] . "_" . $record["lngrevisionno"] . "_" . $detailData[$i]["lngsalesdetailno"]);
-        $trBody->setAttribute("class", "tablesorter-childRow");
-        $detailData[$i]["lngmonetaryunitcode"] = $record["lngmonetaryunitcode"];
-        $detailData[$i]["strmonetaryunitsign"] = $record["strmonetaryunitsign"];
-        fncSetDetailDataToTr($doc, $trBody, $bgcolor, $aryTableDetailHeaderName_SC, $displayColumns, $detailData[$i], true);
-
-        $tbody->appendChild($trBody);
-
-    }
     // tbody > tr
     $tbody->appendChild($trBody);
 

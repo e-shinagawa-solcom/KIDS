@@ -125,36 +125,22 @@ foreach ($records as $i => $record) {
     $index = $index + 1;
     $subindex = $aryData["rownum"] . "." . $index;
 
-    fncSetHeadBtnToTr($doc, $trBody, $bgcolor, $aryTableHeadBtnName, $displayColumns, $record, $rowspan, $aryAuthority, false, false, $subindex, 'sc', null);
+    // 先頭ボタンの設定
+    fncSetHeadBtnToTr($doc, $trBody, $bgcolor, $aryTableHeadBtnName, $displayColumns, $record, $aryAuthority, false, false, $subindex, 'sc', null);
 
     // ヘッダーデータの設定
-    fncSetHeadDataToTr($doc, $trBody, $bgcolor, $aryTableHeaderName, $displayColumns, $record, $rowspan, false);
+    fncSetHeadDataToTr($doc, $trBody, $bgcolor, $aryTableHeaderName, $displayColumns, $record, false);
 
-    // 明細データの設定
+    // 明細部データ設定
     if (count($detailData) > 0) {
-        $detailData[0]["lngmonetaryunitcode"] = $record["lngmonetaryunitcode"];
-        $detailData[0]["strmonetaryunitsign"] = $record["strmonetaryunitsign"];
-        fncSetDetailDataToTr($doc, $trBody, $bgcolor, $aryTableDetailHeaderName, $displayColumns, $detailData[0], false);
-
+        fncSetDetailTable($doc, $trBody, $bgcolor, $aryTableDetailHeaderName, $displayColumns, $record, $detailData, false, false);
     }
 
-    fncSetBackBtnToTr($doc, $trBody, $bgcolor, $aryTableBackBtnName, $displayColumns, $record, $rowspan, $aryAuthority, false, false, $type);
+    // 末尾ボタンの設定
+    fncSetBackBtnToTr($doc, $trBody, $bgcolor, $aryTableBackBtnName, $displayColumns, $record, $aryAuthority, false, false, $type);
 
     // tbody > tr
     $strHtml .= $doc->saveXML($trBody);
-
-    if (count($detailData) > 0) {
-        // 明細行のtrの追加
-        for ($i = 1; $i < $rowspan; $i++) {
-            $trBody = $doc->createElement("tr");
-            $trBody->setAttribute("id", $strcode . "_" . $lngrevisionno . "_" . $detailData[$i]["lngrecodeno"]);
-            $trBody->setAttribute("class", "detail tablesorter-childRow");
-            $detailData[$i]["lngmonetaryunitcode"] = $record["lngmonetaryunitcode"];
-            $detailData[$i]["strmonetaryunitsign"] = $record["strmonetaryunitsign"];
-            fncSetDetailDataToTr($doc, $trBody, $bgcolor, $aryTableDetailHeaderName, $displayColumns, $detailData[$i], false);
-            $strHtml .= $doc->saveXML($trBody);
-        }
-    }
 }
 
 // HTML出力
