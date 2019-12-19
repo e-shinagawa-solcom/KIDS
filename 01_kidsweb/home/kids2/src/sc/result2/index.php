@@ -218,16 +218,6 @@ foreach ($records as $i => $record) {
     $detailData = fncGetDetailData('slip', $record["lngslipno"], $record["lngrevisionno"], $objDB);
     $rowspan = count($detailData);
 
-    // 明細番号取得
-    for ($i = $rowspan; $i >= 0; $i--) {
-
-        if ($detailnos == "") {
-            $detailnos = $detailData[$i]["lngslipdetailno"];
-        } else {
-            $detailnos = $detailnos . "," . $detailData[$i]["lngslipdetailno"];
-        }
-    }
-
     if ($rowspan == 0) {
         $rowspan = 1;
     }
@@ -235,38 +225,20 @@ foreach ($records as $i => $record) {
     $trBody = $doc->createElement("tr");
 
     $trBody->setAttribute("id", $record["lngslipno"]);
-    $trBody->setAttribute("detailnos", $detailnos);
 
     $maxdetailno = $detailData[$rowspan - 1]["lngslipdetailno"];
 
     // 先頭ボタン設定
-    fncSetHeadBtnToTr($doc, $trBody, $bgcolor, $aryTableHeadBtnName_SLIP, null, $record, $rowspan, $aryAuthority, true, $isadmin, $index, 'slip', $maxdetailno);
+    fncSetHeadBtnToTr($doc, $trBody, $bgcolor, $aryTableHeadBtnName_SLIP, null, $record, $aryAuthority, true, $isadmin, $index, 'slip', $maxdetailno);
 
     // ヘッダー部データ設定
-    fncSetHeadDataToTr($doc, $trBody, $bgcolor, $aryTableHeaderName_SLIP, null, $record, $rowspan, true);
+    fncSetHeadDataToTr($doc, $trBody, $bgcolor, $aryTableHeaderName_SLIP, null, $record, true);
 
-    $detailData[0]["lngmonetaryunitcode"] = $record["lngmonetaryunitcode"];
-    $detailData[0]["strmonetaryunitsign"] = $record["strmonetaryunitsign"];
-    // 明細データの設定
-    fncSetDetailDataToTr($doc, $trBody, $bgcolor, $aryTableDetailHeaderName_SLIP, null, $detailData[0], true);
-    // tbody > tr
-    $tbody->appendChild($trBody);
+    // 明細部データ設定
+    fncSetDetailTable($doc, $trBody, $bgcolor, $aryTableDetailHeaderName_SLIP, null, $record, $detailData, true, true);
     
     // フッターボタン表示
-    fncSetBackBtnToTr($doc, $trBody, $bgcolor, $aryTableBackBtnName_SLIP, null, $record, $rowspan, $aryAuthority, true, $isadmin, 'slip');
-
-    // 明細行のtrの追加
-    for ($i = 1; $i < $rowspan; $i++) {
-        $trBody = $doc->createElement("tr");
-        $trBody->setAttribute("id", $record["lngslipno"] . "_" . $record["lngrevisionno"] . "_" . $detailData[$i]["lngslipdetailno"]);
-        $trBody->setAttribute("class", "tablesorter-childRow");
-        $detailData[$i]["lngmonetaryunitcode"] = $record["lngmonetaryunitcode"];
-        $detailData[$i]["strmonetaryunitsign"] = $record["strmonetaryunitsign"];
-        fncSetDetailDataToTr($doc, $trBody, $bgcolor, $aryTableDetailHeaderName_SLIP, null, $detailData[$i], true);
-
-        $tbody->appendChild($trBody);
-
-    }
+    fncSetBackBtnToTr($doc, $trBody, $bgcolor, $aryTableBackBtnName_SLIP, null, $record, $aryAuthority, true, $isadmin, 'slip');
 
     // tbody > tr
     $tbody->appendChild($trBody);

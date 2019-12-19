@@ -14,7 +14,7 @@ var ralowBt1 ='<a href="#"><img onmouseover="fncDarkRAllowButton( \'on\' , this 
 
 
 ///// CSS VALUE /////
-var fcolor = '#ffffff'; //¹àÌÜ¥Õ¥©¥ó¥È¥«¥é¡¼
+var fcolor = '#000000'; //¹àÌÜ¥Õ¥©¥ó¥È¥«¥é¡¼
 //var segcolor = '#72828b'; //¹àÌÜÇØ·Ê¿§ e8f0f1
 var segcolor = '#FFD700'; //¹àÌÜÇØ·Ê¿§ gold
 var segbody = '#d6d0b1'; //INPUT A BODY ÇØ·Ê¿§

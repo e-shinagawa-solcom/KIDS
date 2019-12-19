@@ -269,13 +269,13 @@ foreach ($records as $i => $record) {
     $trBody->setAttribute("id", $record["strordercode"]);
 
     // 先頭ボタン設定
-    fncSetHeadBtnToTr($doc, $trBody, $bgcolor, $aryTableHeadBtnName, $displayColumns, $record, 1, $aryAuthority, true, $isadmin, $index, 'purchaseorder', null);
+    fncSetHeadBtnToTr($doc, $trBody, $bgcolor, $aryTableHeadBtnName, $displayColumns, $record, $aryAuthority, true, $isadmin, $index, 'purchaseorder', null);
 
     // ヘッダー部データ設定
-    fncSetHeadDataToTr($doc, $trBody, $bgcolor, $aryTableHeaderName_PURORDER, $displayColumns, $record, 1, true);
+    fncSetHeadDataToTr($doc, $trBody, $bgcolor, $aryTableHeaderName_PURORDER, $displayColumns, $record, true);
 
     // フッターボタン表示
-    fncSetBackBtnToTr($doc, $trBody, $bgcolor, $aryTableBackBtnName, $displayColumns, $record, 1, $aryAuthority, true, $isadmin, 'purchaseorder');
+    fncSetBackBtnToTr($doc, $trBody, $bgcolor, $aryTableBackBtnName, $displayColumns, $record, $aryAuthority, true, $isadmin, 'purchaseorder');
 
     // tbody > tr
     $tbody->appendChild($trBody);

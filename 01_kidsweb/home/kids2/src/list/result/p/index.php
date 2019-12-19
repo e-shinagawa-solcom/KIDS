@@ -70,28 +70,33 @@ $strCopyQuery = "SELECT gp.lngProductNo AS strReportKeyCode, r.lngReportCode FRO
 
 // 商品企画書取得クエリ生成
 $aryQuery[] = "SELECT p.strProductCode, p.strProductName,";
+$aryQuery[] = " p.strrevisecode AS strrevisecode,";
 $aryQuery[] = " u1.strUserDisplayCode AS strInputUserDisplayCode,";
 $aryQuery[] = " u1.strUserDisplayName AS strInputUserDisplayName,";
 $aryQuery[] = " g.strGroupDisplayCode AS strInChargeGroupDisplayCode,";
 $aryQuery[] = " g.strGroupDisplayName AS strInChargeGroupDisplayName,";
 $aryQuery[] = " u2.strUserDisplayCode AS strInChargeUserDisplayCode,";
 $aryQuery[] = " u2.strUserDisplayName AS strInChargeUserDisplayName,";
-$aryQuery[] = " gp.lngProductNo AS strReportKeyCode ";
+$aryQuery[] = " p.lngprintcount,";
+$aryQuery[] = " gp.lnggoodsplancode AS strReportKeyCode ";
 $aryQuery[] = "FROM";
 $aryQuery[] = "  m_product p ";
 $aryQuery[] = "  inner join ( ";
 $aryQuery[] = "    select";
 $aryQuery[] = "      max(lngrevisionno) lngrevisionno";
 $aryQuery[] = "      , strproductcode ";
+$aryQuery[] = "      , strrevisecode ";
 $aryQuery[] = "    from";
 $aryQuery[] = "      m_Product ";
 $aryQuery[] = "    where";
 $aryQuery[] = "      bytInvalidFlag = false ";
 $aryQuery[] = "    group by";
 $aryQuery[] = "      strProductCode";
+$aryQuery[] = "      ,strrevisecode";
 $aryQuery[] = "  ) p1 ";
 $aryQuery[] = "    on p.strProductCode = p1.strProductCode ";
 $aryQuery[] = "    and p.lngrevisionno = p1.lngrevisionno ";
+$aryQuery[] = "    and p.strrevisecode = p1.strrevisecode ";
 $aryQuery[] = " LEFT JOIN m_User u1 ON p.lngInputUserCode = u1.lngUserCode";
 $aryQuery[] = " LEFT JOIN m_User u2 ON p.lngInChargeUserCode = u2.lngUserCode";
 $aryQuery[] = " LEFT JOIN m_Group g ON p.lngInChargeGroupCode = g.lngGroupCode";
@@ -113,7 +118,8 @@ $aryQuery[] = "          on gp1.lngProductNo = gp2.lngProductNo ";
 $aryQuery[] = "          and gp1.lngRevisionNo = gp2.lngRevisionNo";
 $aryQuery[] = "    ) gp ";
 $aryQuery[] = " WHERE p.lngProductNo = gp.lngProductNo";
-$aryQuery[] = "  AND not exists ( ";
+$aryQuery[] = " AND p.strrevisecode = gp.strrevisecode";
+$aryQuery[] = " AND not exists ( ";
 $aryQuery[] = "    select";
 $aryQuery[] = "      p1.strproductcode ";
 $aryQuery[] = "    from";
@@ -203,6 +209,7 @@ if (array_key_exists("lngInChargeUserCode", $searchColumns) &&
 }
 $aryQuery[] = " AND p.bytinvalidflag = false";
 $aryQuery[] = " ORDER BY p.strProductCode ASC";
+
 // ナンバーをキーとする連想配列に帳票コードを取得
 list($lngResultID, $lngResultNum) = fncQuery($strCopyQuery, $objDB);
 
@@ -217,20 +224,22 @@ if ($lngResultNum > 0) {
 
 // 帳票データ取得クエリ実行・テーブル生成
 $strQuery = join("\n", $aryQuery);
+
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 for ($i = 0; $i < $lngResultNum; $i++) {
     $objResult = $objDB->fetchObject($lngResultID, $i);
 
     $aryParts["strResult"] .= "<tr class=\"Segs\">\n";
-    $aryParts["strResult"] .= "<td>" . $objResult->strproductcode . "</td>\n";
+    $aryParts["strResult"] .= "<td>" . $objResult->strproductcode . "_" . $objResult->strrevisecode . "</td>\n";
     $aryParts["strResult"] .= "<td>" . $objResult->strproductname . "</td>\n";
     $aryParts["strResult"] .= "<td>" . $objResult->strinputuserdisplaycode . ":" . $objResult->strinputuserdisplayname . "</td>\n";
     $aryParts["strResult"] .= "<td>" . $objResult->strinchargegroupdisplaycode . ":" . $objResult->strinchargegroupdisplayname . "</td>\n";
     $aryParts["strResult"] .= "<td>" . $objResult->strinchargeuserdisplaycode . ":" . $objResult->strinchargeuserdisplayname . "</td>\n";
     $aryParts["strResult"] .= "<td align=center>";
 
-    // コピーファイルパスが存在している場合、コピー帳票出力ボタン表示
-    if ($aryReportCode[$objResult->strreportkeycode] != null) {
+    // 印刷回数が0より大きい場合、コピー帳票出力ボタン表示
+    if (intval($objResult->lngprintcount) > 0) {
+
         // コピー帳票出力ボタン表示
         $aryParts["strResult"] .= "<a href=\"#\"><img onclick=\"fncListOutput( '/list/result/frameset.php?strSessionID=" . $searchValue["strSessionID"] . "&lngReportClassCode=" . DEF_REPORT_PRODUCT . "&strReportKeyCode=" . $objResult->strreportkeycode . "&lngReportCode=" . $aryReportCode[$objResult->strreportkeycode] . "' );return false;\" onmouseover=\"fncCopyPreviewButton( 'on' , this );\" onmouseout=\"fncCopyPreviewButton( 'off' , this );fncAlphaOff( this );\" onmousedown=\"fncAlphaOn( this );\" onmouseup=\"fncAlphaOff( this );\" src=\"/img/type01/list/copybig_off_bt.gif\" width=\"72\" height=\"20\" border=\"0\" alt=\"COPY PREVIEW\"></a>";
     }

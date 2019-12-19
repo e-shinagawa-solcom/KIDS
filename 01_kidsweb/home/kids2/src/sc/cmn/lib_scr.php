@@ -244,13 +244,12 @@ function fncGetDetailBySlipNo($lngSlipNo, $lngRevisionNo, $objDB)
 {
     // 明細部のキーを取得する
     $aryDetailKey = fncGetDetailKeyBySlipNo($lngSlipNo, $lngRevisionNo, $objDB);
-
     // 明細部のキーに紐づく受注明細情報を取得する
     $aryDetail = array();
     for ($i = 0; $i < count($aryDetailKey); $i++) {
 
         $aryCondition = array();
-        $aryCondition["strreceivecode"] = $aryDetailKey[$i]["lngreceiveno"];
+        $aryCondition["lngReceiveNo"] = $aryDetailKey[$i]["lngreceiveno"];
         $aryCondition["lngReceiveDetailNo"] = $aryDetailKey[$i]["lngreceivedetailno"];
         $aryCondition["lngReceiveRevisionNo"] = $aryDetailKey[$i]["lngreceiverevisionno"];
 
@@ -421,8 +420,13 @@ function fncGetReceiveDetail($aryCondition, $objDB)
     }
 
     // 受注番号
+    if ($aryCondition["lngReceiveNo"]) {
+        $aryWhere[] = " AND r.lngReceiveNo = " . $aryCondition["lngReceiveNo"];
+    }
+
+    // 受注コード
     if ($aryCondition["strreceivecode"]) {
-        $aryWhere[] = " AND r.strreceivecode = " . $aryCondition["strreceivecode"];
+        $aryWhere[] = " AND r.strreceivecode = '" . $aryCondition["strReceiveCode"] . "'";
     }
 
     // 受注明細番号
@@ -492,6 +496,7 @@ function fncGetReceiveDetail($aryCondition, $objDB)
     $strQuery .= implode("\n", $aryWhere);
     $strQuery .= "\n";
     $strQuery .= implode("\n", $aryOrder);
+
     // -------------------
     // クエリ実行
     // -------------------

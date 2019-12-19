@@ -9,27 +9,32 @@
             var displayColumns = $('input[name="displayColumns"]').val().split(',');
         }
         var removeFlag = false;
-        if (type == 'sc' || type == 'slip' || type == 'pc' || type == 'inv') {
-            var strCode = id;
-            var maxdetailno = $(this).attr('maxdetailno');
-            var row = $('tr[id="' + id + '"]');
-            var detailnos = row.attr('detailnos').split(",");
-            $('tr[id^="' + id + '_"]')
-                .each(function () {
-                    var isMaxData = false;
-                    for (var i = 0; i < detailnos.length; i++) {
-                        if ($(this).attr('id') == id || $(this).attr('id') == (id + "_" + lngRevisionNo + "_" + detailnos[i])) {
-                            isMaxData = true;
-                        }
-                    }
-                    if (!isMaxData) {
-                        $(this).remove();
-                        removeFlag = true;
-                    }
-                });
-        } else if (type == 'so' || type == 'po' || type == 'purchaseorder') {
+        // if (type == 'inv') {
+        //     var strCode = id;
+        //     var maxdetailno = $(this).attr('maxdetailno');
+        //     var row = $('tr[id="' + id + '"]');
+        //     var detailnos = row.attr('detailnos').split(",");
+        //     $('tr[id^="' + id + '_"]')
+        //         .each(function () {
+        //             var isMaxData = false;
+        //             for (var i = 0; i < detailnos.length; i++) {
+        //                 if ($(this).attr('id') == id || $(this).attr('id') == (id + "_" + lngRevisionNo + "_" + detailnos[i])) {
+        //                     isMaxData = true;
+        //                 }
+        //             }
+        //             if (!isMaxData) {
+        //                 $(this).remove();
+        //                 removeFlag = true;
+        //             }
+        //         });
+        // } else 
+        if (type == 'so' || type == 'po' || type == 'pc' || type == 'purchaseorder' || type == 'slip' || type == 'sc' || type == 'inv') {
             if ($('tr[id^="' + id + '_"]').length) {
-                $('tr[id^="' + id + '_"]').remove();
+                $('tr[id^="' + id + '_"]').remove();                
+
+                $("#result").trigger("update");
+                $(".tablesorter-child").trigger("update");
+
                 removeFlag = true;
             } else {
                 var strReceiveCode = id.split('_');
@@ -55,16 +60,23 @@
             })
                 .done(function (response) {
                     console.log(response);
-                    if (type == 'so' || type == 'po' || type == 'purchaseorder') {
-                        var row = $('tr[id="' + id + '"]');
-                        row.after(response);
-                    } else if (type == 'sc' || type == 'slip' || type == 'pc' || type == 'inv') {
-                        if ($('tr[id="' + id + "_" + lngRevisionNo + "_" + maxdetailno + '"]').length) {
-                            $('tr[id="' + id + "_" + lngRevisionNo + "_" + maxdetailno + '"]').after(response);
-                        } else {
-                            $('tr[id="' + id + '"]').after(response);
-                        }
-                    }
+                    // if (type == 'so' || type == 'po' || type == 'purchaseorder') {
+                    // }
+
+
+                    var row = $('tr[id="' + id + '"]');
+                    row.after(response);
+
+                    $("#result").trigger("update");
+                    $(".tablesorter-child").trigger("update");
+                    
+                    $(".tablesorter-child thead").css('display', '');
+                    $(".tablesorter-child").css('table-layout', '');
+                    $("#result").css('table-layout', '');
+                    $("#result").css('width', '');
+                    $(".tablesorter-child").css('width', '');                    
+
+                    resetTable();
 
                     // 詳細ボタンのイベント
                     $('img.detail.button').on('click', function () {
@@ -86,7 +98,7 @@
                         } else if (type == 'pc') { // 仕入                            
                             url = '/pc/detail/index.php';
                             lngPkNo = 'lngStockNo=' + $(this).attr('id');
-                        } else if (type == 'inv') {           
+                        } else if (type == 'inv') {
                             url = '/inv/result/index2.php';
                             lngPkNo = 'lngInvoiceNo=' + $(this).attr('id');
                         } else if (type == 'estimate') {
@@ -105,7 +117,7 @@
         }
         // ヘッダーをクリックする時、明細行を削除する
         $('th').on('click', function () {
-            $('tr.detail').remove();
+            // $('tr.detail').remove();
         });
     });
 })();

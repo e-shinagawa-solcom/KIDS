@@ -57,18 +57,21 @@ if ($lngResultNum === 1) {
     $objDB->freeResult($lngResultID);
 }
 
+// データ取得クエリ
+$strQuery = fncGetListOutputQuery(DEF_REPORT_INV, $aryData["strReportKeyCode"], $objDB);
+
+$objMaster = new clsMaster();
+$objMaster->setMasterTableData($strQuery, $objDB);
+
+$aryParts = &$objMaster->aryData[0];
+
+unset($aryQuery);
+
+if ($lngResultNum === 1) {
+    // 印刷回数を更新する
+    fncUpdatePrintCount(DEF_REPORT_INV, $aryParts, $objDB);
 // 帳票が存在しない場合、コピー帳票ファイルを生成、保存
-elseif ($lngResultNum === 0) {
-    // データ取得クエリ
-    $strQuery = fncGetListOutputQuery(DEF_REPORT_INV, $aryData["strReportKeyCode"], $objDB);
-
-    $objMaster = new clsMaster();
-    $objMaster->setMasterTableData($strQuery, $objDB);
-
-    $aryParts = &$objMaster->aryData[0];
-
-    unset($aryQuery);
-
+} else if ($lngResultNum === 0) {
     // 詳細取得
     $strQuery = fncGetInvDetailQuery($aryData["strReportKeyCode"], $aryParts["lngrevisionno"]);
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
@@ -95,7 +98,7 @@ elseif ($lngResultNum === 0) {
     $objTemplate->getTemplate("list/result/inv.html");
     $aryParts["totalprice_unitsign"] = ($aryParts["lngmonetaryunitcode"] == 1 ? "&yen; " : $aryParts["strmonetaryunitsign"]) . " " . $aryParts["totalprice"];
     $aryParts["dtminvoicedate"] = convert_jpdt($aryParts["dtminvoicedate"], '年m月');
-    $aryParts["dtminsertdate"] = convert_jpdt($aryParts["dtminsertdate"],'.m.d',false);
+    $aryParts["dtminsertdate"] = convert_jpdt($aryParts["dtminsertdate"], '.m.d', false);
     if ($aryData["reprintFlag"]) {
         $aryParts["reprintMsg"] = "再印刷";
     } else {
@@ -103,10 +106,10 @@ elseif ($lngResultNum === 0) {
     }
     // 置き換え
     $objTemplate->replace($aryParts);
-    $objTemplate->complete();   
+    $objTemplate->complete();
 
     $strHtml = $objTemplate->strTemplate;
-    
+
     $objDB->transactionBegin();
 
     // シーケンス発行
@@ -116,18 +119,11 @@ elseif ($lngResultNum === 0) {
     $strQuery = "INSERT INTO t_Report VALUES ( $lngSequence, " . DEF_REPORT_INV . ", " . $aryParts["lnginvoiceno"] . ", '', '$lngSequence' )";
 
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
-    
+
     $objDB->freeResult($lngResultID);
 
-    // 印刷回数の設定
-    $aryParts["lngprintcount"] += 1;
-
-    // 印刷回数の更新    
-    $strQuery = "update m_invoice set lngprintcount = ".$aryParts["lngprintcount"] ." where lnginvoiceno = " .$aryParts["lnginvoiceno"] . " and lngrevisionno = " .$aryParts["lngrevisionno"];
-    echo $strQuery;
-    list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
-    
-    $objDB->freeResult($lngResultID);
+    // 印刷回数を更新する
+    fncUpdatePrintCount(DEF_REPORT_INV, $aryParts, $objDB);
 
     // 帳票ファイルオープン
     if (!$fp = fopen(SRC_ROOT . "list/result/cash/" . $lngSequence . ".tmpl", "w")) {

@@ -191,6 +191,8 @@
         "isGreaterThanFrom",
         function (value, element, params) {
             if (params[0] && value!='') {
+                console.log(value);
+                console.log(params[1]);
                 if (value < params[1]) {
                     return false;
                 }
@@ -311,7 +313,7 @@
                     return $('input[name="IsSearch_strStockCode"]').get(0).checked;
                 },
                 isGreaterThanFrom: function () {
-                    return [$('input[name="IsSearch_strStockCode"]').get(0).checked, 'input[name="From_strStockCode"]'];
+                    return [$('input[name="IsSearch_strStockCode"]').get(0).checked, $('input[name="From_strStockCode"]').val()];
                 }
             },
             // È¯Ãí½ñNO.
@@ -331,7 +333,7 @@
                     return $('input[name="IsSearch_strOrderCode"]').get(0).checked;
                 },
                 isGreaterThanFrom: function () {
-                    return [$('input[name="IsSearch_strOrderCode"]').get(0).checked, 'input[name="From_strOrderCode"]'];
+                    return [$('input[name="IsSearch_strOrderCode"]').get(0).checked, $('input[name="From_strOrderCode"]').val()];
                 }
             },
 

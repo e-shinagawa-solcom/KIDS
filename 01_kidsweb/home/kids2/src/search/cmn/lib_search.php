@@ -1158,7 +1158,7 @@ function fncGetDetailData($type, $lngPkNo, $lngRevisionNo, $objDB)
     return $detailData;
 }
 
-function fncSetHeadDataToTr($doc, $trBody, $bgcolor, $aryTableHeaderName, $displayColumns, $record, $rowspan, $toUTF8Flag)
+function fncSetHeadDataToTr($doc, $trBody, $bgcolor, $aryTableHeaderName, $displayColumns, $record, $toUTF8Flag)
 {
     // TODO 要リファクタリング
     // 指定されたテーブル項目のセルを作成する
@@ -1167,12 +1167,8 @@ function fncSetHeadDataToTr($doc, $trBody, $bgcolor, $aryTableHeaderName, $displ
         // 表示対象のカラムの場合
         if ($displayColumns == null or array_key_exists($key, $displayColumns)) {
             $textContent = fncSetTextContent($record, $key, $toUTF8Flag);
-            // if ($toUTF8Flag) {
-            //     $textContent = toUTF8($textContent);
-            // }
             $td = $doc->createElement("td", $textContent);
             $td->setAttribute("style", $bgcolor);
-            $td->setAttribute("rowspan", $rowspan);
             $trBody->appendChild($td);
         }
     }
@@ -1191,14 +1187,12 @@ function fncSetHeadDataToTr($doc, $trBody, $bgcolor, $aryTableHeaderName, $displ
  */
 function fncSetDetailDataToTr($doc, $trBody, $bgcolor, $aryTableDetailHeaderName, $displayColumns, $detailData, $toUTF8Flag)
 {
+
     // 指定されたテーブル項目のセルを作成する
     foreach ($aryTableDetailHeaderName as $key => $value) {
         // 表示対象のカラムの場合
         if ($displayColumns == null or array_key_exists($key, $displayColumns)) {
             $textContent = fncSetTextContent($detailData, $key, $toUTF8Flag);
-            // if ($toUTF8Flag) {
-            //     $textContent = toUTF8($textContent);
-            // }
             $td = $doc->createElement("td", $textContent);
             $td->setAttribute("style", $bgcolor);
             $trBody->appendChild($td);
@@ -1208,12 +1202,69 @@ function fncSetDetailDataToTr($doc, $trBody, $bgcolor, $aryTableDetailHeaderName
     return $trBody;
 }
 
-function fncSetHeadBtnToTr($doc, $trBody, $bgcolor, $aryTableHeadBtnName, $displayColumns, $record, $rowspan, $aryAuthority, $isMaxData, $isadmin, $index, $type, $maxdetailno)
+function fncSetDetailTable($doc, $trBody, $bgcolor, $aryTableDetailName, $displayColumns, $record, $detailData, $toUTF8Flag, $isMaxData) 
+{
+    $detailtbloutputflag = false;
+    // 明細テーブル出力するかの判断
+    if ($aryTableDetailName != null) {
+        foreach ($aryTableDetailName as $key => $value) {
+            if ($displayColumns == null or array_key_exists($key, $displayColumns)) {
+                $detailtbloutputflag = true;
+                break;
+            }
+        }
+    }
+
+    if ($detailtbloutputflag) {
+        $table = $doc->createElement("table");
+        $table->setAttribute("class", "tablesorter-child subtable");
+        // theadの作成
+        $thead = $doc->createElement("thead");
+        $trHead = $doc->createElement("tr");
+        // $trHead->setAttribute("style", "display:none;");
+        $colspan = 0;
+        if ($aryTableDetailName != null) {
+            foreach ($aryTableDetailName as $key => $value) {
+                if ($displayColumns == null or array_key_exists($key, $displayColumns)) {
+                    if (!$isMaxData) {
+                        $value = mb_convert_encoding($value, "eucjp-win", "utf-8");
+                    }
+                    $th = $doc->createElement("th", $value);
+                    $trHead->appendChild($th);
+                    $colspan += 1;
+                }
+            }
+        }
+        $thead->appendChild($trHead);
+        $table->appendChild($thead);
+
+        // tbodyの作成
+        $tbody = $doc->createElement("tbody");
+        for ($i = 0; $i < count($detailData); $i++) {
+            $tr = $doc->createElement("tr");
+            $detailData[$i]["lngmonetaryunitcode"] = $record["lngmonetaryunitcode"];
+            $detailData[$i]["strmonetaryunitsign"] = $record["strmonetaryunitsign"];
+            fncSetDetailDataToTr($doc, $tr, $bgcolor, $aryTableDetailName, $displayColumns, $detailData[$i], $toUTF8Flag);
+            $tbody->appendChild($tr);
+        }
+        $tr = $doc->createElement("tr");
+        $table->appendChild($tbody);
+
+        $td = $doc->createElement("td");
+        $td->setAttribute("style", "padding:0em;");
+        $td->setAttribute("colspan", $colspan);
+        $td->appendChild($table);
+        $trBody->appendChild($td);
+    }
+
+    return $trBody;
+}
+
+function fncSetHeadBtnToTr($doc, $trBody, $bgcolor, $aryTableHeadBtnName, $displayColumns, $record, $aryAuthority, $isMaxData, $isadmin, $index, $type, $maxdetailno)
 {
     // 項番
     $td = $doc->createElement("td", $index);
     $td->setAttribute("style", $bgcolor);
-    $td->setAttribute("rowspan", $rowspan);
     $trBody->appendChild($td);
 
     // TODO 要リファクタリング
@@ -1227,7 +1278,6 @@ function fncSetHeadBtnToTr($doc, $trBody, $bgcolor, $aryTableHeadBtnName, $displ
                 case "btndetail":
                     $td = $doc->createElement("td");
                     $td->setAttribute("style", $bgcolor . "text-align: center;");
-                    $td->setAttribute("rowspan", $rowspan);
                     // 詳細ボタンの表示
                     if ($aryAuthority[$key] && $record["lngrevisionno"] >= 0) {
                         // 詳細ボタン
@@ -1246,7 +1296,6 @@ function fncSetHeadBtnToTr($doc, $trBody, $bgcolor, $aryTableHeadBtnName, $displ
                 case "btnfix":
                     $td = $doc->createElement("td");
                     $td->setAttribute("style", $bgcolor . "text-align: center;");
-                    $td->setAttribute("rowspan", $rowspan);
                     // 修正ボタンの表示
 
                     if ($type == 'slip') {
@@ -1309,7 +1358,6 @@ function fncSetHeadBtnToTr($doc, $trBody, $bgcolor, $aryTableHeadBtnName, $displ
                     // 履歴セル
                     $td = $doc->createElement("td");
                     $td->setAttribute("style", $bgcolor . "text-align: center;");
-                    $td->setAttribute("rowspan", $rowspan);
 
                     if ($isMaxData and $record["lngrevisionno"] != 0) {
                         // 履歴ボタン
@@ -1345,7 +1393,6 @@ function fncSetHeadBtnToTr($doc, $trBody, $bgcolor, $aryTableHeadBtnName, $displ
                     // 確定セル
                     $td = $doc->createElement("td");
                     $td->setAttribute("style", $bgcolor . "text-align: center;");
-                    $td->setAttribute("rowspan", $rowspan);
                     $isDecideObj = false;
                     if ($type == 'so') {
                         if ($record["lngreceivestatuscode"] == DEF_RECEIVE_APPLICATE) {
@@ -1380,7 +1427,7 @@ function fncSetHeadBtnToTr($doc, $trBody, $bgcolor, $aryTableHeadBtnName, $displ
     return $trBody;
 }
 
-function fncSetBackBtnToTr($doc, $trBody, $bgcolor, $aryTableBackBtnName, $displayColumns, $record, $rowspan, $aryAuthority, $isMaxData, $isadmin, $type)
+function fncSetBackBtnToTr($doc, $trBody, $bgcolor, $aryTableBackBtnName, $displayColumns, $record, $aryAuthority, $isMaxData, $isadmin, $type)
 {
     // TODO 要リファクタリング
     // 指定されたテーブル項目のセルを作成する
@@ -1424,7 +1471,6 @@ function fncSetBackBtnToTr($doc, $trBody, $bgcolor, $aryTableBackBtnName, $displ
                 case "btndelete":
                     $td = $doc->createElement("td");
                     $td->setAttribute("style", $bgcolor . "text-align: center;");
-                    $td->setAttribute("rowspan", $rowspan);
 
                     // 削除ボタンの表示
                     if ($type == 'pc' and !$isadmin and $isMaxData and $aryAuthority[$key] and $record["lngstockstatuscode"] != DEF_STOCK_CLOSED and $bgcolor != "background-color: #B3E0FF;") {
@@ -1452,7 +1498,6 @@ function fncSetBackBtnToTr($doc, $trBody, $bgcolor, $aryTableBackBtnName, $displ
                 case "btninvalid":
                     $td = $doc->createElement("td");
                     $td->setAttribute("style", $bgcolor . "text-align: center;");
-                    $td->setAttribute("rowspan", $rowspan);
                     // 無効ボタンの表示
                     if ($type == 'pc' and !$isadmin and $isMaxData and $aryAuthority[$key] && $record["lngstockstatuscode"] != DEF_STOCK_CLOSED) {
                         // 無効ボタン
@@ -2050,10 +2095,13 @@ function fncSetTheadData($doc, $trHead, $aryTableHeadBtnName, $aryTableBackBtnNa
             $trHead->appendChild($th);
         }
     }
+    $colnum = 0;
     if ($aryTableDetailName != null) {
         foreach ($aryTableDetailName as $key => $value) {
             if ($displayColumns == null or array_key_exists($key, $displayColumns)) {
+                $colnum += 1;
                 $th = $doc->createElement("th", $value);
+                $th->setAttribute('childsortkey', $colnum);
                 $trHead->appendChild($th);
             }
         }

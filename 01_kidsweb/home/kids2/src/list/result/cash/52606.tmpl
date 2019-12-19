@@ -4,9 +4,10 @@ xmlns:x="urn:schemas-microsoft-com:office:excel"
 xmlns="http://www.w3.org/TR/REC-html40">
 
 <head>
-<title>PURCHASE ORDER</title>
-<meta http-equiv="content-type" content="text/html; charset=euc-jp">
-<link rel=File-List href="po.files/po.xml">
+<meta http-equiv=Content-Type content="text/html; charset=euc-jp">
+<meta name=ProgId content=Excel.Sheet>
+<meta name=Generator content="Microsoft Excel 11">
+<link rel=File-List href="p.xml">
 <!--[if !mso]>
 <style>
 v\:* {behavior:url(#default#VML);}
@@ -15,35 +16,126 @@ x\:* {behavior:url(#default#VML);}
 .shape {behavior:url(#default#VML);}
 </style>
 <![endif]-->
-<style id="LIST_30882_Styles">
+<style id="LIST_12824_Styles">
 <!--
 
+
+
+/*-----------------------------------------
+
+	★署名・判イメージサイズ
+		縦 : 47px
+		横 : 170px
+
+-----------------------------------------*/
+
+
+
+/****************** 表示用 ******************/
 @media screen
 {
+	/********* 署名・判 *********/
+	#sigAssent
+	{
+		position   : absolute ;
+		top        : 679px;
+		left       : 312px;
+		background : transparent;
+	}
+	#sigAssent img
+	{
+		width  : 171px;
+		height : 25px;
+	}
+
+	#sigCreate
+	{
+		position   : absolute ;
+		top        : 679px;
+		left       : 486px;
+		background : transparent;
+	}
+	#sigCreate img
+	{
+		width  : 171px;
+		height : 25px;
+	}
+	/****************************/
+
+
+
 	#strFormatCode
 	{
-	/*
 		position    : absolute ;
-		left        : 563px ;
-		top         : 790px ;
-	*/
+		left        : 590px ;
+		top         : 713px ;
 		font-family : ＭＳ Ｐゴシック ;
 		font-size   : 12px ;
 		text-align  : right ;
 	}
+
+	#strRoot
+	{
+		position    : absolute ;
+		left        : 10px ;
+		top         : 713px ;
+		font-family : ＭＳ Ｐゴシック ;
+		font-size   : 12px ;
+		text-align  : left ;
+	}
 }
+
+/****************** 印刷用 ******************/
 @media print
 {
+	/********* 署名・判 *********/
+	#sigAssent
+	{
+		position   : absolute ;
+		top        : 874px;
+		left       : 292px;
+		background : transparent;
+	}
+	#sigAssent img
+	{
+		width  : 170px;
+		height : 47px;
+	}
+
+	#sigCreate
+	{
+		position   : absolute ;
+		top        : 874px;
+		left       : 465px;
+		background : transparent;
+	}
+	#sigCreate img
+	{
+		width  : 170px;
+		height : 47px;
+	}
+	/****************************/
+
+
+
 	#strFormatCode
 	{
-	/*
 		position    : absolute ;
-		left        : 523px ;
-		top         : 946px ;
-	*/
+		left        : 590px ;
+		top         : 933px ;
 		font-family : ＭＳ Ｐゴシック ;
 		font-size   : 12px ;
 		text-align  : right ;
+	}
+
+	#strRoot
+	{
+		position    : absolute ;
+		left        : 10px ;
+		top         : 933px ;
+		font-family : ＭＳ Ｐゴシック ;
+		font-size   : 12px ;
+		text-align  : left ;
 	}
 }
 
@@ -62,7 +154,15 @@ body
 table
 	{mso-displayed-decimal-separator:"\.";
 	mso-displayed-thousand-separator:"\,";}
-.font530882
+.font012824
+	{color:windowtext;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;}
+.font512824
 	{color:windowtext;
 	font-size:6.0pt;
 	font-weight:400;
@@ -70,31 +170,7 @@ table
 	text-decoration:none;
 	font-family:"ＭＳ Ｐゴシック", monospace;
 	mso-font-charset:128;}
-.font630882
-	{color:windowtext;
-	font-size:9.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;}
-.font730882
-	{color:windowtext;
-	font-size:11.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;}
-.font830882
-	{color:windowtext;
-	font-size:9.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:"ＭＳ Ｐゴシック", monospace;
-	mso-font-charset:128;}
-.xl1530882
+.xl1512824
 	{padding:0px;
 	mso-ignore:padding;
 	color:windowtext;
@@ -110,7 +186,7 @@ table
 	mso-background-source:auto;
 	mso-pattern:auto;
 	white-space:nowrap;}
-.xl2830882
+.xl2812824
 	{padding:0px;
 	mso-ignore:padding;
 	color:windowtext;
@@ -126,57 +202,33 @@ table
 	mso-background-source:auto;
 	mso-pattern:auto;
 	white-space:nowrap;}
-.xl2930882
+.xl2912824
 	{padding:0px;
 	mso-ignore:padding;
 	color:windowtext;
-	font-size:9.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:"\@";
-	text-align:center;
-	vertical-align:middle;
-	border-top:.5pt solid windowtext;
-	border-right:none;
-	border-bottom:.5pt solid windowtext;
-	border-left:.5pt solid windowtext;
-	background:silver;
-	mso-pattern:auto none;
-	white-space:nowrap;}
-.xl3030882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:9.0pt;
+	font-size:11.0pt;
 	font-weight:400;
 	font-style:normal;
 	text-decoration:none;
 	font-family:"ＭＳ Ｐゴシック", monospace;
 	mso-font-charset:128;
-	mso-number-format:"\@";
-	text-align:center;
+	mso-number-format:General;
+	text-align:general;
 	vertical-align:middle;
-	border-top:.5pt solid windowtext;
-	border-right:none;
-	border-bottom:.5pt solid windowtext;
-	border-left:.5pt solid windowtext;
 	mso-background-source:auto;
 	mso-pattern:auto;
 	white-space:nowrap;}
-.xl3130882
+.xl3012824
 	{padding:0px;
 	mso-ignore:padding;
 	color:windowtext;
-	font-size:9.0pt;
+	font-size:11.0pt;
 	font-weight:400;
 	font-style:normal;
 	text-decoration:none;
 	font-family:"ＭＳ Ｐゴシック", monospace;
 	mso-font-charset:128;
-	mso-number-format:"\@";
+	mso-number-format:General;
 	text-align:center;
 	vertical-align:middle;
 	border-top:.5pt solid windowtext;
@@ -186,7 +238,167 @@ table
 	mso-background-source:auto;
 	mso-pattern:auto;
 	white-space:nowrap;}
-.xl3230882
+.xl3112824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:1.0pt solid windowtext;
+	border-bottom:.5pt solid windowtext;
+	border-left:none;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;}
+.xl3212824
+	{color:windowtext;
+	font-size:9.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:"\@";
+	text-align:left;
+	vertical-align:middle;
+	border-top:none;
+	border-right:none;
+	border-bottom:.5pt solid windowtext;
+	border-left:.5pt solid windowtext;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;
+	padding-left:18px;
+	mso-char-indent-count:1;}
+.xl3312824
+	{color:windowtext;
+	font-size:9.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:"\@";
+	text-align:left;
+	vertical-align:middle;
+	border-top:none;
+	border-right:none;
+	border-bottom:.5pt solid windowtext;
+	border-left:none;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;
+	padding-left:18px;
+	mso-char-indent-count:1;}
+.xl3412824
+	{color:windowtext;
+	font-size:9.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:"\@";
+	text-align:left;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:none;
+	border-bottom:.5pt solid windowtext;
+	border-left:none;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;
+	padding-left:18px;
+	mso-char-indent-count:1;}
+.xl3512824
+	{color:windowtext;
+	font-size:9.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:"\@";
+	text-align:left;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:1.0pt solid windowtext;
+	border-bottom:.5pt solid windowtext;
+	border-left:none;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;
+	padding-left:18px;
+	mso-char-indent-count:1;}
+.xl3612824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:9.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:none;
+	border-bottom:.5pt solid windowtext;
+	border-left:.5pt solid windowtext;
+	background:silver;
+	mso-pattern:auto none;
+	white-space:nowrap;}
+.xl3712824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:9.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:none;
+	border-bottom:.5pt solid windowtext;
+	border-left:none;
+	background:silver;
+	mso-pattern:auto none;
+	white-space:nowrap;}
+.xl3812824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:9.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:.5pt solid windowtext;
+	border-bottom:.5pt solid windowtext;
+	border-left:none;
+	background:silver;
+	mso-pattern:auto none;
+	white-space:nowrap;}
+.xl3912824
 	{color:windowtext;
 	font-size:9.0pt;
 	font-weight:400;
@@ -206,7 +418,7 @@ table
 	white-space:nowrap;
 	padding-left:18px;
 	mso-char-indent-count:1;}
-.xl3330882
+.xl4012824
 	{color:windowtext;
 	font-size:9.0pt;
 	font-weight:400;
@@ -226,183 +438,167 @@ table
 	white-space:nowrap;
 	padding-left:18px;
 	mso-char-indent-count:1;}
-.xl3430882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:12.0pt;
-	font-weight:400;
-	font-style:normal;
-	text-decoration:none;
-	font-family:"ＭＳ Ｐゴシック", monospace;
-	mso-font-charset:128;
-	mso-number-format:"\@";
-	text-align:center;
-	vertical-align:middle;
-	border-top:.5pt solid windowtext;
-	border-right:none;
-	border-bottom:none;
-	border-left:none;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:nowrap;}
-.xl3530882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:12.0pt;
-	font-weight:400;
-	font-style:normal;
-	text-decoration:none;
-	font-family:"ＭＳ Ｐゴシック", monospace;
-	mso-font-charset:128;
-	mso-number-format:"\@";
-	text-align:center;
-	vertical-align:middle;
-	border-top:.5pt solid windowtext;
-	border-right:.5pt solid windowtext;
-	border-bottom:none;
-	border-left:none;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:nowrap;}
-.xl3630882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:12.0pt;
-	font-weight:400;
-	font-style:normal;
-	text-decoration:none;
-	font-family:"ＭＳ Ｐゴシック", monospace;
-	mso-font-charset:128;
-	mso-number-format:"\@";
-	text-align:center;
-	vertical-align:middle;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:nowrap;}
-.xl3730882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:12.0pt;
-	font-weight:400;
-	font-style:normal;
-	text-decoration:none;
-	font-family:"ＭＳ Ｐゴシック", monospace;
-	mso-font-charset:128;
-	mso-number-format:"\@";
-	text-align:center;
-	vertical-align:middle;
-	border-top:none;
-	border-right:.5pt solid windowtext;
-	border-bottom:none;
-	border-left:none;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:nowrap;}
-.xl3830882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:12.0pt;
-	font-weight:400;
-	font-style:normal;
-	text-decoration:none;
-	font-family:"ＭＳ Ｐゴシック", monospace;
-	mso-font-charset:128;
-	mso-number-format:"\@";
-	text-align:center;
-	vertical-align:middle;
-	border-top:none;
-	border-right:none;
-	border-bottom:.5pt solid windowtext;
-	border-left:none;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:nowrap;}
-.xl3930882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:12.0pt;
-	font-weight:400;
-	font-style:normal;
-	text-decoration:none;
-	font-family:"ＭＳ Ｐゴシック", monospace;
-	mso-font-charset:128;
-	mso-number-format:"\@";
-	text-align:center;
-	vertical-align:middle;
-	border-top:none;
-	border-right:.5pt solid windowtext;
-	border-bottom:.5pt solid windowtext;
-	border-left:none;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:nowrap;}
-.xl4030882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
+.xl4112824
+	{color:windowtext;
 	font-size:9.0pt;
-	font-weight:700;
+	font-weight:400;
 	font-style:normal;
 	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:"\@";
-	text-align:center;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:.5pt solid windowtext;
+	border-bottom:.5pt solid windowtext;
+	border-left:none;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;
+	padding-left:18px;
+	mso-char-indent-count:1;}
+.xl4212824
+	{color:windowtext;
+	font-size:9.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:1.0pt solid windowtext;
+	border-bottom:.5pt solid windowtext;
+	border-left:none;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;
+	padding-left:18px;
+	mso-char-indent-count:1;}
+.xl4312824
+	{color:windowtext;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:left;
 	vertical-align:middle;
 	border-top:.5pt solid windowtext;
 	border-right:none;
-	border-bottom:none;
+	border-bottom:.5pt solid windowtext;
+	border-left:.5pt solid windowtext;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;
+	padding-left:18px;
+	mso-char-indent-count:1;}
+.xl4412824
+	{color:windowtext;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:none;
+	border-bottom:.5pt solid windowtext;
+	border-left:none;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;
+	padding-left:18px;
+	mso-char-indent-count:1;}
+.xl4512824
+	{color:windowtext;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:.5pt solid windowtext;
+	border-bottom:.5pt solid windowtext;
+	border-left:none;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;
+	padding-left:18px;
+	mso-char-indent-count:1;}
+.xl4612824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:none;
+	border-bottom:.5pt solid windowtext;
 	border-left:.5pt solid windowtext;
 	background:silver;
 	mso-pattern:auto none;
 	white-space:nowrap;}
-.xl4130882
+.xl4712824
 	{padding:0px;
 	mso-ignore:padding;
 	color:windowtext;
-	font-size:9.0pt;
-	font-weight:700;
+	font-size:11.0pt;
+	font-weight:400;
 	font-style:normal;
 	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:"\@";
-	text-align:center;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:left;
 	vertical-align:middle;
 	border-top:.5pt solid windowtext;
 	border-right:none;
-	border-bottom:none;
+	border-bottom:.5pt solid windowtext;
 	border-left:none;
 	background:silver;
 	mso-pattern:auto none;
 	white-space:nowrap;}
-.xl4230882
+.xl4812824
 	{padding:0px;
 	mso-ignore:padding;
 	color:windowtext;
-	font-size:9.0pt;
-	font-weight:700;
+	font-size:11.0pt;
+	font-weight:400;
 	font-style:normal;
 	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:"\@";
-	text-align:center;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:left;
 	vertical-align:middle;
 	border-top:.5pt solid windowtext;
 	border-right:.5pt solid windowtext;
-	border-bottom:none;
+	border-bottom:.5pt solid windowtext;
 	border-left:none;
 	background:silver;
 	mso-pattern:auto none;
 	white-space:nowrap;}
-.xl4330882
+.xl4912824
 	{padding:0px;
 	mso-ignore:padding;
 	color:windowtext;
@@ -412,25 +608,148 @@ table
 	text-decoration:none;
 	font-family:"ＭＳ Ｐゴシック", monospace;
 	mso-font-charset:128;
-	mso-number-format:"\@";
-	text-align:right;
-	vertical-align:middle;
-	border:.5pt solid windowtext;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:bottom;
+	border-top:none;
+	border-right:none;
+	border-bottom:1.0pt solid windowtext;
+	border-left:none;
 	mso-background-source:auto;
 	mso-pattern:auto;
 	white-space:nowrap;}
-.xl4430882
+.xl5012824
 	{padding:0px;
 	mso-ignore:padding;
 	color:windowtext;
 	font-size:9.0pt;
-	font-weight:700;
+	font-weight:400;
 	font-style:normal;
 	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:"\@";
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:middle;
+	border-top:none;
+	border-right:none;
+	border-bottom:.5pt solid windowtext;
+	border-left:1.0pt solid windowtext;
+	background:silver;
+	mso-pattern:auto none;
+	white-space:nowrap;}
+.xl5112824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:9.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:middle;
+	border-top:none;
+	border-right:none;
+	border-bottom:.5pt solid windowtext;
+	border-left:none;
+	background:silver;
+	mso-pattern:auto none;
+	white-space:nowrap;}
+.xl5212824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:9.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:middle;
+	border-top:none;
+	border-right:.5pt solid windowtext;
+	border-bottom:.5pt solid windowtext;
+	border-left:none;
+	background:silver;
+	mso-pattern:auto none;
+	white-space:nowrap;}
+.xl5312824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:General;
 	text-align:center;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:none;
+	border-bottom:.5pt solid windowtext;
+	border-left:1.0pt solid windowtext;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;}
+.xl5412824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:9.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:none;
+	border-bottom:.5pt solid windowtext;
+	border-left:1.0pt solid windowtext;
+	background:silver;
+	mso-pattern:auto none;
+	white-space:nowrap;}
+.xl5512824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:9.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:"\@";
+	text-align:left;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:none;
+	border-bottom:.5pt solid windowtext;
+	border-left:.5pt solid windowtext;
+	background:silver;
+	mso-pattern:auto none;
+	white-space:nowrap;}
+.xl5612824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:9.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:"\@";
+	text-align:left;
 	vertical-align:middle;
 	border-top:.5pt solid windowtext;
 	border-right:none;
@@ -439,18 +758,18 @@ table
 	background:silver;
 	mso-pattern:auto none;
 	white-space:nowrap;}
-.xl4530882
+.xl5712824
 	{padding:0px;
 	mso-ignore:padding;
 	color:windowtext;
 	font-size:9.0pt;
-	font-weight:700;
+	font-weight:400;
 	font-style:normal;
 	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
 	mso-number-format:"\@";
-	text-align:center;
+	text-align:left;
 	vertical-align:middle;
 	border-top:.5pt solid windowtext;
 	border-right:.5pt solid windowtext;
@@ -459,7 +778,187 @@ table
 	background:silver;
 	mso-pattern:auto none;
 	white-space:nowrap;}
-.xl4630882
+.xl5812824
+	{color:windowtext;
+	font-size:9.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:"\@";
+	text-align:left;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:none;
+	border-bottom:none;
+	border-left:.5pt solid windowtext;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;
+	padding-left:18px;
+	mso-char-indent-count:1;}
+.xl5912824
+	{color:windowtext;
+	font-size:9.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:"\@";
+	text-align:left;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:none;
+	border-bottom:none;
+	border-left:none;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;
+	padding-left:18px;
+	mso-char-indent-count:1;}
+.xl6012824
+	{color:windowtext;
+	font-size:9.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:"\@";
+	text-align:left;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:1.0pt solid windowtext;
+	border-bottom:none;
+	border-left:none;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;
+	padding-left:18px;
+	mso-char-indent-count:1;}
+.xl6112824
+	{color:windowtext;
+	font-size:9.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:"\@";
+	text-align:left;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:none;
+	border-bottom:.5pt solid windowtext;
+	border-left:.5pt solid windowtext;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;
+	padding-left:18px;
+	mso-char-indent-count:1;}
+.xl6212824
+	{color:windowtext;
+	font-size:9.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:"\@";
+	text-align:left;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:.5pt solid windowtext;
+	border-bottom:.5pt solid windowtext;
+	border-left:none;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;
+	padding-left:18px;
+	mso-char-indent-count:1;}
+.xl6312824
+	{color:windowtext;
+	font-size:9.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:none;
+	border-bottom:none;
+	border-left:.5pt solid windowtext;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;
+	padding-left:18px;
+	mso-char-indent-count:1;}
+.xl6412824
+	{color:windowtext;
+	font-size:9.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:none;
+	border-bottom:none;
+	border-left:none;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;
+	padding-left:18px;
+	mso-char-indent-count:1;}
+.xl6512824
+	{color:windowtext;
+	font-size:9.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:1.0pt solid windowtext;
+	border-bottom:none;
+	border-left:none;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;
+	padding-left:18px;
+	mso-char-indent-count:1;}
+.xl6612824
+	{color:windowtext;
+	font-size:9.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:"\@";
+	text-align:left;
+	vertical-align:middle;
+	border-top:none;
+	border-right:.5pt solid windowtext;
+	border-bottom:.5pt solid windowtext;
+	border-left:none;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;
+	padding-left:18px;
+	mso-char-indent-count:1;}
+.xl6712824
 	{padding:0px;
 	mso-ignore:padding;
 	color:windowtext;
@@ -472,10 +971,314 @@ table
 	mso-number-format:General;
 	text-align:left;
 	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:none;
+	border-bottom:.5pt solid windowtext;
+	border-left:1.0pt solid windowtext;
+	background:silver;
+	mso-pattern:auto none;
+	white-space:nowrap;}
+.xl6812824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:8.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:none;
+	border-bottom:.5pt solid windowtext;
+	border-left:none;
+	background:silver;
+	mso-pattern:auto none;
+	white-space:nowrap;}
+.xl6912824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:8.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:none;
+	border-bottom:.5pt solid windowtext;
+	border-left:.5pt solid windowtext;
+	background:silver;
+	mso-pattern:auto none;
+	white-space:nowrap;}
+.xl7012824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:8.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:.5pt solid windowtext;
+	border-bottom:.5pt solid windowtext;
+	border-left:none;
+	background:silver;
+	mso-pattern:auto none;
+	white-space:nowrap;}
+.xl7112824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:9.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:middle;
+	border-top:none;
+	border-right:none;
+	border-bottom:.5pt solid windowtext;
+	border-left:.5pt solid windowtext;
+	background:silver;
+	mso-pattern:auto none;
+	white-space:nowrap;}
+.xl7212824
+	{color:windowtext;
+	font-size:9.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:"\@";
+	text-align:left;
+	vertical-align:middle;
+	border-top:none;
+	border-right:1.0pt solid windowtext;
+	border-bottom:.5pt solid windowtext;
+	border-left:none;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;
+	padding-left:18px;
+	mso-char-indent-count:1;}
+.xl7312824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:none;
+	border-bottom:.5pt solid windowtext;
+	border-left:1.0pt solid windowtext;
+	background:silver;
+	mso-pattern:auto none;
+	white-space:nowrap;}
+.xl7412824
+	{color:windowtext;
+	font-size:9.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:"\@";
+	text-align:left;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:.5pt solid windowtext;
+	border-bottom:none;
+	border-left:none;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;
+	padding-left:18px;
+	mso-char-indent-count:1;}
+.xl7512824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:9.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:"\@";
+	text-align:left;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:none;
+	border-bottom:none;
+	border-left:.5pt solid windowtext;
+	background:silver;
+	mso-pattern:auto none;
+	white-space:nowrap;}
+.xl7612824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:9.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:"\@";
+	text-align:left;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:none;
+	border-bottom:none;
+	border-left:none;
+	background:silver;
+	mso-pattern:auto none;
+	white-space:nowrap;}
+.xl7712824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:9.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:"\@";
+	text-align:left;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:none;
+	border-bottom:.5pt solid windowtext;
+	border-left:1.0pt solid windowtext;
+	background:silver;
+	mso-pattern:auto none;
+	white-space:nowrap;}
+.xl7812824
+	{color:windowtext;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:middle;
+	border-top:1.0pt solid windowtext;
+	border-right:none;
+	border-bottom:.5pt solid windowtext;
+	border-left:.5pt solid windowtext;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;
+	padding-left:18px;
+	mso-char-indent-count:1;}
+.xl7912824
+	{color:windowtext;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:middle;
+	border-top:1.0pt solid windowtext;
+	border-right:none;
+	border-bottom:.5pt solid windowtext;
+	border-left:none;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;
+	padding-left:18px;
+	mso-char-indent-count:1;}
+.xl8012824
+	{color:windowtext;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:middle;
+	border-top:1.0pt solid windowtext;
+	border-right:1.0pt solid windowtext;
+	border-bottom:.5pt solid windowtext;
+	border-left:none;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;
+	padding-left:18px;
+	mso-char-indent-count:1;}
+.xl8112824
+	{color:windowtext;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:1.0pt solid windowtext;
+	border-bottom:.5pt solid windowtext;
+	border-left:none;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;
+	padding-left:18px;
+	mso-char-indent-count:1;}
+.xl8212824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:12.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:bottom;
+	border-top:none;
+	border-right:none;
+	border-bottom:1.0pt solid windowtext;
+	border-left:none;
 	mso-background-source:auto;
 	mso-pattern:auto;
 	white-space:nowrap;}
-.xl4730882
+.xl8312824
 	{padding:0px;
 	mso-ignore:padding;
 	color:windowtext;
@@ -487,54 +1290,136 @@ table
 	mso-font-charset:128;
 	mso-number-format:General;
 	text-align:right;
-	vertical-align:middle;
+	vertical-align:bottom;
 	mso-background-source:auto;
 	mso-pattern:auto;
 	white-space:nowrap;}
-.xl4830882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:10.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:General;
-	text-align:center;
-	vertical-align:middle;
-	border-top:.5pt solid windowtext;
-	border-right:none;
-	border-bottom:none;
-	border-left:none;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:nowrap;}
-.xl4930882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:10.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:General;
-	text-align:center;
-	vertical-align:middle;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:nowrap;}
-
-
-/*
-.xl5030882
+.xl8412824
 	{padding:0px;
 	mso-ignore:padding;
 	color:windowtext;
 	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:"\@";
+	text-align:right;
+	vertical-align:bottom;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;}
+.xl8512824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:9.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:"\@";
+	text-align:left;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:none;
+	border-bottom:none;
+	border-left:1.0pt solid windowtext;
+	background:silver;
+	mso-pattern:auto none;
+	white-space:nowrap;}
+.xl8612824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:9.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:"\@";
+	text-align:left;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:.5pt solid windowtext;
+	border-bottom:none;
+	border-left:none;
+	background:silver;
+	mso-pattern:auto none;
+	white-space:nowrap;}
+.xl8712824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:18.0pt;
+	font-weight:700;
+	font-style:normal;
+	text-decoration:underline;
+	text-underline-style:single;
+	font-family:"ＭＳ Ｐ明朝", serif;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;}
+.xl8812824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:9.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:right;
+	vertical-align:top;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;}
+.xl8912824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:9.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:"\@";
+	text-align:right;
+	vertical-align:top;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;}
+.xl9012824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:18.0pt;
+	font-weight:700;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐ明朝", serif;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;}
+.xl9112824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:9.0pt;
 	font-weight:400;
 	font-style:normal;
 	text-decoration:none;
@@ -546,12 +1431,47 @@ table
 	mso-background-source:auto;
 	mso-pattern:auto;
 	white-space:nowrap;}
-*/
-
-
-.xl5130882
-	{color:windowtext;
+.xl9212824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:none;
+	border-bottom:.5pt solid windowtext;
+	border-left:.5pt solid windowtext;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;}
+.xl9312824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
 	font-size:10.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;}
+.xl9412824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:11.0pt;
 	font-weight:400;
 	font-style:normal;
 	text-decoration:none;
@@ -560,57 +1480,434 @@ table
 	mso-number-format:General;
 	text-align:left;
 	vertical-align:middle;
-	border:.5pt solid windowtext;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:normal;
-	padding-left:18px;
-	mso-char-indent-count:1;}
-.xl5230882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:9.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:General;
-	text-align:center;
-	vertical-align:middle;
-	border-top:none;
+	border-top:1.0pt solid windowtext;
 	border-right:none;
-	border-bottom:1.0pt solid windowtext;
-	border-left:none;
-	mso-background-source:auto;
-	mso-pattern:auto;
+	border-bottom:none;
+	border-left:1.0pt solid windowtext;
+	background:silver;
+	mso-pattern:auto none;
 	white-space:nowrap;}
-.xl5330882
+.xl9512824
 	{padding:0px;
 	mso-ignore:padding;
 	color:windowtext;
-	font-size:8.0pt;
+	font-size:11.0pt;
 	font-weight:400;
 	font-style:normal;
 	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
 	mso-number-format:General;
-	text-align:right;
+	text-align:left;
 	vertical-align:middle;
 	border-top:1.0pt solid windowtext;
 	border-right:none;
 	border-bottom:none;
 	border-left:none;
-	mso-background-source:auto;
-	mso-pattern:auto;
+	background:silver;
+	mso-pattern:auto none;
 	white-space:nowrap;}
-.xl5430882
+.xl9612824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:middle;
+	border-top:1.0pt solid windowtext;
+	border-right:.5pt solid windowtext;
+	border-bottom:none;
+	border-left:none;
+	background:silver;
+	mso-pattern:auto none;
+	white-space:nowrap;}
+.xl9712824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:middle;
+	border-top:none;
+	border-right:none;
+	border-bottom:.5pt solid windowtext;
+	border-left:1.0pt solid windowtext;
+	background:silver;
+	mso-pattern:auto none;
+	white-space:nowrap;}
+.xl9812824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:middle;
+	border-top:none;
+	border-right:none;
+	border-bottom:.5pt solid windowtext;
+	border-left:none;
+	background:silver;
+	mso-pattern:auto none;
+	white-space:nowrap;}
+.xl9912824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:middle;
+	border-top:none;
+	border-right:.5pt solid windowtext;
+	border-bottom:.5pt solid windowtext;
+	border-left:none;
+	background:silver;
+	mso-pattern:auto none;
+	white-space:nowrap;}
+.xl10012824
 	{padding:0px;
 	mso-ignore:padding;
 	color:windowtext;
 	font-size:9.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:none;
+	border-bottom:.5pt solid windowtext;
+	border-left:.5pt solid windowtext;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;}
+.xl10112824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:9.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:1.0pt solid windowtext;
+	border-bottom:.5pt solid windowtext;
+	border-left:none;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;}
+.xl10212824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:9.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:"\@";
+	text-align:left;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:none;
+	border-bottom:none;
+	border-left:1.0pt solid windowtext;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;}
+.xl10312824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:9.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:"\@";
+	text-align:left;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:none;
+	border-bottom:none;
+	border-left:none;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;}
+.xl10412824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:9.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:"\@";
+	text-align:left;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:1.0pt solid windowtext;
+	border-bottom:none;
+	border-left:none;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;}
+.xl10512824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:9.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:"\@";
+	text-align:center;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:none;
+	border-bottom:.5pt solid windowtext;
+	border-left:.5pt solid windowtext;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;}
+.xl10612824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:9.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:"\@";
+	text-align:center;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:none;
+	border-bottom:.5pt solid windowtext;
+	border-left:none;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;}
+.xl10712824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:9.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:"\@";
+	text-align:center;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:1.0pt solid windowtext;
+	border-bottom:.5pt solid windowtext;
+	border-left:none;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;}
+.xl10812824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:8.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:"\@";
+	text-align:left;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:none;
+	border-bottom:.5pt solid windowtext;
+	border-left:1.0pt solid windowtext;
+	background:silver;
+	mso-pattern:auto none;
+	white-space:nowrap;}
+.xl10912824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:8.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:"\@";
+	text-align:left;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:none;
+	border-bottom:.5pt solid windowtext;
+	border-left:none;
+	background:silver;
+	mso-pattern:auto none;
+	white-space:nowrap;}
+.xl11012824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:8.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:"\@";
+	text-align:left;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:.5pt solid windowtext;
+	border-bottom:.5pt solid windowtext;
+	border-left:none;
+	background:silver;
+	mso-pattern:auto none;
+	white-space:nowrap;}
+.xl11112824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:9.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:.5pt solid windowtext;
+	border-bottom:.5pt solid windowtext;
+	border-left:none;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;}
+.xl11212824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:8.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:none;
+	border-right:none;
+	border-bottom:none;
+	border-left:1.0pt solid windowtext;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;}
+.xl11312824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:8.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;}
+.xl11412824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:8.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:none;
+	border-right:.5pt solid windowtext;
+	border-bottom:none;
+	border-left:none;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;}
+.xl11512824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:8.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:none;
+	border-right:none;
+	border-bottom:1.0pt solid windowtext;
+	border-left:1.0pt solid windowtext;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;}
+.xl11612824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:8.0pt;
 	font-weight:400;
 	font-style:normal;
 	text-decoration:none;
@@ -626,39 +1923,7 @@ table
 	mso-background-source:auto;
 	mso-pattern:auto;
 	white-space:nowrap;}
-.xl5530882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:9.0pt;
-	font-weight:400;
-	font-style:normal;
-	text-decoration:none;
-	font-family:"ＭＳ Ｐゴシック", monospace;
-	mso-font-charset:128;
-	mso-number-format:General;
-	text-align:center;
-	vertical-align:middle;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:nowrap;}
-.xl5630882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:9.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:General;
-	text-align:center;
-	vertical-align:middle;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:nowrap;}
-.xl5730882
+.xl11712824
 	{padding:0px;
 	mso-ignore:padding;
 	color:windowtext;
@@ -666,796 +1931,206 @@ table
 	font-weight:400;
 	font-style:normal;
 	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:General;
-	text-align:left;
-	vertical-align:middle;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:nowrap;}
-.xl5830882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:8.0pt;
-	font-weight:400;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:"\@";
-	text-align:left;
-	vertical-align:middle;
-	border-top:.5pt solid windowtext;
-	border-right:none;
-	border-bottom:.5pt solid windowtext;
-	border-left:.5pt solid windowtext;
-	background:silver;
-	mso-pattern:auto none;
-	white-space:nowrap;}
-.xl5930882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:8.0pt;
-	font-weight:400;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:"\@";
-	text-align:left;
-	vertical-align:middle;
-	border-top:.5pt solid windowtext;
-	border-right:none;
-	border-bottom:.5pt solid windowtext;
-	border-left:none;
-	background:silver;
-	mso-pattern:auto none;
-	white-space:nowrap;}
-.xl6030882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:8.0pt;
-	font-weight:400;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:"\@";
-	text-align:left;
-	vertical-align:middle;
-	border-top:.5pt solid windowtext;
-	border-right:.5pt solid windowtext;
-	border-bottom:.5pt solid windowtext;
-	border-left:none;
-	background:silver;
-	mso-pattern:auto none;
-	white-space:nowrap;}
-.xl6130882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:9.0pt;
-	font-weight:400;
-	font-style:normal;
-	text-decoration:none;
 	font-family:"ＭＳ Ｐゴシック", monospace;
 	mso-font-charset:128;
-	mso-number-format:"\@";
-	text-align:center;
-	vertical-align:middle;
-	border-top:.5pt solid windowtext;
-	border-right:.5pt solid windowtext;
-	border-bottom:.5pt solid windowtext;
-	border-left:none;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:nowrap;}
-.xl6230882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:9.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:General;
-	text-align:left;
-	vertical-align:middle;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:nowrap;}
-.xl6330882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:9.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:General;
-	text-align:right;
-	vertical-align:middle;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:nowrap;}
-.xl6430882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:9.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:"\@";
-	text-align:center;
-	vertical-align:middle;
-	border-top:.5pt solid windowtext;
-	border-right:.5pt solid windowtext;
-	border-bottom:.5pt solid windowtext;
-	border-left:.5pt solid windowtext;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:nowrap;}
-.xl6530882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:9.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
 	mso-number-format:General;
 	text-align:center;
 	vertical-align:middle;
-	border-top:.5pt solid windowtext;
-	border-right:none;
-	border-bottom:.5pt solid windowtext;
-	border-left:.5pt solid windowtext;
+	border-top:none;
+	border-right:.5pt solid windowtext;
+	border-bottom:1.0pt solid windowtext;
+	border-left:none;
 	mso-background-source:auto;
 	mso-pattern:auto;
 	white-space:nowrap;}
-.xl6630882
-	{color:windowtext;
+.xl11812824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:12px;
+	font-weight:normal;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"Arial , ＭＳ Ｐゴシック";
+	mso-font-charset:128;
+	mso-number-format:"\@";
+	text-align:left;
+	vertical-align:top;
+	border-top:none;
+	border-right:none;
+	border-bottom:none;
+	border-left:1.0pt solid windowtext;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;}
+.xl11912824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
 	font-size:10.0pt;
-	font-weight:400;
+	font-weight:700;
 	font-style:normal;
 	text-decoration:none;
 	font-family:"ＭＳ Ｐゴシック", monospace;
 	mso-font-charset:128;
 	mso-number-format:"\@";
-	text-align:left;
+	text-align:center;
+	vertical-align:middle;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;}
+.xl12012824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:10.0pt;
+	font-weight:700;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:"\@";
+	text-align:center;
 	vertical-align:middle;
 	border-top:none;
+	border-right:1.0pt solid windowtext;
+	border-bottom:none;
+	border-left:none;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;}
+.xl12112824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:10.0pt;
+	font-weight:700;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:"\@";
+	text-align:center;
+	vertical-align:middle;
+	border-top:none;
+	border-right:none;
+	border-bottom:.5pt solid windowtext;
+	border-left:1.0pt solid windowtext;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;}
+.xl12212824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:10.0pt;
+	font-weight:700;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:"\@";
+	text-align:center;
+	vertical-align:middle;
+	border-top:none;
+	border-right:none;
+	border-bottom:.5pt solid windowtext;
+	border-left:none;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;}
+.xl12312824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:10.0pt;
+	font-weight:700;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:"\@";
+	text-align:center;
+	vertical-align:middle;
+	border-top:none;
+	border-right:1.0pt solid windowtext;
+	border-bottom:.5pt solid windowtext;
+	border-left:none;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;}
+.xl12412824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:9.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:none;
+	border-bottom:none;
+	border-left:1.0pt solid windowtext;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;}
+.xl12512824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:9.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:left;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
 	border-right:none;
 	border-bottom:none;
 	border-left:none;
 	mso-background-source:auto;
 	mso-pattern:auto;
-	white-space:normal;
-	padding-left:18px;
-	mso-char-indent-count:1;}
-.xl6730882
-	{color:windowtext;
-	font-size:10.0pt;
+	white-space:nowrap;}
+.xl12612824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:9.0pt;
 	font-weight:400;
 	font-style:normal;
 	text-decoration:none;
 	font-family:"ＭＳ Ｐゴシック", monospace;
 	mso-font-charset:128;
-	mso-number-format:"\@";
+	mso-number-format:General;
 	text-align:left;
 	vertical-align:middle;
-	border:.5pt solid windowtext;
+	border-top:.5pt solid windowtext;
+	border-right:.5pt solid windowtext;
+	border-bottom:none;
+	border-left:none;
 	mso-background-source:auto;
 	mso-pattern:auto;
-	white-space:normal;
-	padding-left:18px;
-	mso-char-indent-count:1;}
-.xl6830882
+	white-space:nowrap;}
+.xl12712824
 	{padding:0px;
 	mso-ignore:padding;
 	color:windowtext;
-	font-size:16.0pt;
-	font-weight:700;
+	font-size:11.0pt;
+	font-weight:400;
 	font-style:normal;
-	text-decoration:underline;
-	text-underline-style:single;
-	font-family:Georgia, serif;
-	mso-font-charset:0;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
 	mso-number-format:General;
 	text-align:center;
-	vertical-align:middle;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:nowrap;}
-.xl6930882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:10.0pt;
-	font-weight:400;
-	font-style:normal;
-	text-decoration:none;
-	font-family:"ＭＳ Ｐゴシック", monospace;
-	mso-font-charset:128;
-	mso-number-format:"\@";
-	text-align:center;
-	vertical-align:middle;
-	border-top:none;
-	border-right:none;
-	border-bottom:.5pt solid windowtext;
-	border-left:.5pt solid windowtext;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:nowrap;}
-.xl7030882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:10.0pt;
-	font-weight:400;
-	font-style:normal;
-	text-decoration:none;
-	font-family:"ＭＳ Ｐゴシック", monospace;
-	mso-font-charset:128;
-	mso-number-format:"\@";
-	text-align:center;
-	vertical-align:middle;
-	border-top:none;
-	border-right:none;
-	border-bottom:.5pt solid windowtext;
-	border-left:none;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:nowrap;}
-.xl7130882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:10.0pt;
-	font-weight:400;
-	font-style:normal;
-	text-decoration:none;
-	font-family:"ＭＳ Ｐゴシック", monospace;
-	mso-font-charset:128;
-	mso-number-format:"\@";
-	text-align:center;
-	vertical-align:middle;
-	border-top:none;
-	border-right:.5pt solid windowtext;
-	border-bottom:.5pt solid windowtext;
-	border-left:none;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:nowrap;}
-.xl7230882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:11.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:"\@";
-	text-align:center;
-	vertical-align:middle;
-	border-top:.5pt solid windowtext;
-	border-right:none;
-	border-bottom:none;
-	border-left:.5pt solid windowtext;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:nowrap;}
-.xl7330882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:11.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:"\@";
-	text-align:center;
-	vertical-align:middle;
-	border-top:.5pt solid windowtext;
-	border-right:none;
-	border-bottom:none;
-	border-left:none;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:nowrap;}
-.xl7430882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:11.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:"\@";
-	text-align:center;
-	vertical-align:middle;
-	border-top:.5pt solid windowtext;
-	border-right:.5pt solid windowtext;
-	border-bottom:none;
-	border-left:none;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:nowrap;}
-.xl7530882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:11.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:"\@";
-	text-align:center;
-	vertical-align:middle;
-	border-top:none;
-	border-right:none;
-	border-bottom:.5pt solid windowtext;
-	border-left:.5pt solid windowtext;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:nowrap;}
-.xl7630882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:11.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:"\@";
-	text-align:center;
-	vertical-align:middle;
-	border-top:none;
-	border-right:none;
-	border-bottom:.5pt solid windowtext;
-	border-left:none;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:nowrap;}
-.xl7730882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:11.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:"\@";
-	text-align:center;
-	vertical-align:middle;
-	border-top:none;
-	border-right:.5pt solid windowtext;
-	border-bottom:.5pt solid windowtext;
-	border-left:none;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:nowrap;}
-.xl7830882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:13.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:"ＭＳ Ｐゴシック", monospace;
-	mso-font-charset:128;
-	mso-number-format:"\@";
-	text-align:left;
-	vertical-align:bottom;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:normal;}
-.xl7930882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:13.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:"ＭＳ Ｐゴシック", monospace;
-	mso-font-charset:128;
-	mso-number-format:"\@";
-	text-align:left;
-	vertical-align:bottom;
-	border-top:none;
-	border-right:.5pt solid windowtext;
-	border-bottom:none;
-	border-left:none;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:normal;}
-.xl8030882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:9.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:"\@";
-	text-align:center;
-	vertical-align:middle;
-	border-top:none;
-	border-right:none;
-	border-bottom:.5pt solid windowtext;
-	border-left:none;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:nowrap;}
-.xl8130882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:9.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:"\@";
-	text-align:center;
-	vertical-align:middle;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:nowrap;}
-.xl8230882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:10.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:"\@";
-	text-align:left;
-	vertical-align:middle;
-	border-top:.5pt solid windowtext;
-	border-right:none;
-	border-bottom:none;
-	border-left:.5pt solid windowtext;
-	background:silver;
-	mso-pattern:auto none;
-	white-space:nowrap;}
-.xl8330882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:10.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:"\@";
-	text-align:left;
-	vertical-align:middle;
-	border-top:.5pt solid windowtext;
-	border-right:none;
-	border-bottom:none;
-	border-left:none;
-	background:silver;
-	mso-pattern:auto none;
-	white-space:nowrap;}
-.xl8430882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:10.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:"\@";
-	text-align:left;
-	vertical-align:middle;
-	border-top:.5pt solid windowtext;
-	border-right:.5pt solid windowtext;
-	border-bottom:none;
-	border-left:none;
-	background:silver;
-	mso-pattern:auto none;
-	white-space:nowrap;}
-.xl8530882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:10.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:"\@";
-	text-align:left;
-	vertical-align:middle;
-	border-top:none;
-	border-right:none;
-	border-bottom:.5pt solid windowtext;
-	border-left:.5pt solid windowtext;
-	background:silver;
-	mso-pattern:auto none;
-	white-space:nowrap;}
-.xl8630882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:10.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:"\@";
-	text-align:left;
-	vertical-align:middle;
-	border-top:none;
-	border-right:none;
-	border-bottom:.5pt solid windowtext;
-	border-left:none;
-	background:silver;
-	mso-pattern:auto none;
-	white-space:nowrap;}
-.xl8730882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:10.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:"\@";
-	text-align:left;
-	vertical-align:middle;
-	border-top:none;
-	border-right:.5pt solid windowtext;
-	border-bottom:.5pt solid windowtext;
-	border-left:none;
-	background:silver;
-	mso-pattern:auto none;
-	white-space:nowrap;}
-.xl8830882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:9.0pt;
-	font-weight:400;
-	font-style:normal;
-	text-decoration:none;
-	font-family:"ＭＳ Ｐゴシック", monospace;
-	mso-font-charset:128;
-	mso-number-format:"\@";
-	text-align:left;
-	vertical-align:middle;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:normal;}
-.xl8930882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:9.0pt;
-	font-weight:400;
-	font-style:normal;
-	text-decoration:none;
-	font-family:"ＭＳ Ｐゴシック", monospace;
-	mso-font-charset:128;
-	mso-number-format:"\@";
-	text-align:left;
-	vertical-align:middle;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:nowrap;}
-.xl9030882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:8.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:"\@";
-	text-align:left;
-	vertical-align:middle;
-	border-top:.5pt solid windowtext;
-	border-right:none;
-	border-bottom:none;
-	border-left:.5pt solid windowtext;
-	background:silver;
-	mso-pattern:auto none;
-	white-space:nowrap;}
-.xl9130882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:9.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:"\@";
-	text-align:left;
-	vertical-align:middle;
-	border-top:.5pt solid windowtext;
-	border-right:none;
-	border-bottom:none;
-	border-left:none;
-	background:silver;
-	mso-pattern:auto none;
-	white-space:nowrap;}
-.xl9230882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:9.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:"\@";
-	text-align:left;
-	vertical-align:middle;
-	border-top:none;
-	border-right:none;
-	border-bottom:.5pt solid windowtext;
-	border-left:.5pt solid windowtext;
-	background:silver;
-	mso-pattern:auto none;
-	white-space:nowrap;}
-.xl9330882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:9.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:"\@";
-	text-align:left;
-	vertical-align:middle;
-	border-top:none;
-	border-right:none;
-	border-bottom:.5pt solid windowtext;
-	border-left:none;
-	background:silver;
-	mso-pattern:auto none;
-	white-space:nowrap;}
-.xl9430882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:14.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:"ＭＳ Ｐゴシック", monospace;
-	mso-font-charset:128;
-	mso-number-format:"\@";
-	text-align:center;
-	vertical-align:middle;
-	border-top:.5pt solid windowtext;
-	border-right:none;
-	border-bottom:none;
-	border-left:.5pt solid windowtext;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:nowrap;}
-.xl9530882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:14.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:"ＭＳ Ｐゴシック", monospace;
-	mso-font-charset:128;
-	mso-number-format:"\@";
-	text-align:center;
-	vertical-align:middle;
-	border-top:.5pt solid windowtext;
-	border-right:none;
-	border-bottom:none;
-	border-left:none;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:nowrap;}
-.xl9630882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:14.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:"ＭＳ Ｐゴシック", monospace;
-	mso-font-charset:128;
-	mso-number-format:"\@";
-	text-align:center;
-	vertical-align:middle;
-	border-top:none;
-	border-right:none;
-	border-bottom:.5pt solid windowtext;
-	border-left:.5pt solid windowtext;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:nowrap;}
-.xl9730882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:14.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:"ＭＳ Ｐゴシック", monospace;
-	mso-font-charset:128;
-	mso-number-format:"\@";
-	text-align:center;
-	vertical-align:middle;
-	border-top:none;
-	border-right:none;
-	border-bottom:.5pt solid windowtext;
-	border-left:none;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:nowrap;}
-.xl9830882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:11.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:"ＭＳ Ｐゴシック", monospace;
-	mso-font-charset:128;
-	mso-number-format:"\@";
-	text-align:left;
 	vertical-align:bottom;
 	border-top:.5pt solid windowtext;
 	border-right:none;
@@ -1464,18 +2139,18 @@ table
 	mso-background-source:auto;
 	mso-pattern:auto;
 	white-space:nowrap;}
-.xl9930882
+.xl12812824
 	{padding:0px;
 	mso-ignore:padding;
 	color:windowtext;
 	font-size:11.0pt;
-	font-weight:700;
+	font-weight:400;
 	font-style:normal;
 	text-decoration:none;
 	font-family:"ＭＳ Ｐゴシック", monospace;
 	mso-font-charset:128;
-	mso-number-format:"\@";
-	text-align:left;
+	mso-number-format:General;
+	text-align:center;
 	vertical-align:bottom;
 	border-top:.5pt solid windowtext;
 	border-right:.5pt solid windowtext;
@@ -1484,198 +2159,103 @@ table
 	mso-background-source:auto;
 	mso-pattern:auto;
 	white-space:nowrap;}
-.xl10030882
+.xl12912824
 	{padding:0px;
 	mso-ignore:padding;
 	color:windowtext;
 	font-size:11.0pt;
-	font-weight:700;
+	font-weight:400;
 	font-style:normal;
 	text-decoration:none;
 	font-family:"ＭＳ Ｐゴシック", monospace;
 	mso-font-charset:128;
-	mso-number-format:"\@";
-	text-align:left;
-	vertical-align:top;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:bottom;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;}
+.xl13012824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:bottom;
+	border-top:none;
+	border-right:.5pt solid windowtext;
+	border-bottom:none;
+	border-left:none;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;}
+.xl13112824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:bottom;
 	border-top:none;
 	border-right:none;
-	border-bottom:.5pt solid windowtext;
+	border-bottom:1.0pt solid windowtext;
 	border-left:none;
 	mso-background-source:auto;
 	mso-pattern:auto;
 	white-space:nowrap;}
-.xl10130882
+.xl13212824
 	{padding:0px;
 	mso-ignore:padding;
 	color:windowtext;
 	font-size:11.0pt;
-	font-weight:700;
+	font-weight:400;
 	font-style:normal;
 	text-decoration:none;
 	font-family:"ＭＳ Ｐゴシック", monospace;
 	mso-font-charset:128;
-	mso-number-format:"\@";
-	text-align:left;
-	vertical-align:top;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:bottom;
 	border-top:none;
 	border-right:.5pt solid windowtext;
-	border-bottom:.5pt solid windowtext;
+	border-bottom:1.0pt solid windowtext;
 	border-left:none;
 	mso-background-source:auto;
 	mso-pattern:auto;
 	white-space:nowrap;}
-.xl10230882
+.xl13312824
 	{padding:0px;
 	mso-ignore:padding;
 	color:windowtext;
-	font-size:16.0pt;
-	font-weight:700;
+	font-size:11.0pt;
+	font-weight:400;
 	font-style:normal;
 	text-decoration:none;
 	font-family:"ＭＳ Ｐゴシック", monospace;
 	mso-font-charset:128;
-	mso-number-format:"\@";
+	mso-number-format:General;
 	text-align:center;
-	vertical-align:middle;
-	border-top:none;
-	border-right:.5pt solid windowtext;
+	vertical-align:bottom;
+	border-top:.5pt solid windowtext;
+	border-right:none;
 	border-bottom:none;
 	border-left:.5pt solid windowtext;
 	mso-background-source:auto;
 	mso-pattern:auto;
 	white-space:nowrap;}
-.xl10330882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:11.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:"ＭＳ Ｐゴシック", monospace;
-	mso-font-charset:128;
-	mso-number-format:"\@";
-	text-align:center;
-	vertical-align:top;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:normal;}
-.xl10430882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:11.0pt;
-	font-weight:400;
-	font-style:normal;
-	text-decoration:none;
-	font-family:"ＭＳ Ｐゴシック", monospace;
-	mso-font-charset:128;
-	mso-number-format:"\@";
-	text-align:center;
-	vertical-align:top;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:normal;}
-.xl10530882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:8.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:"\@";
-	text-align:center;
-	vertical-align:middle;
-	border-top:.5pt solid windowtext;
-	border-right:none;
-	border-bottom:.5pt solid windowtext;
-	border-left:.5pt solid windowtext;
-	background:silver;
-	mso-pattern:auto none;
-	white-space:nowrap;}
-.xl10630882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:8.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:"\@";
-	text-align:center;
-	vertical-align:middle;
-	border-top:.5pt solid windowtext;
-	border-right:none;
-	border-bottom:.5pt solid windowtext;
-	border-left:none;
-	background:silver;
-	mso-pattern:auto none;
-	white-space:nowrap;}
-.xl10730882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:8.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:"\@";
-	text-align:center;
-	vertical-align:middle;
-	border-top:.5pt solid windowtext;
-	border-right:.5pt solid windowtext;
-	border-bottom:.5pt solid windowtext;
-	border-left:none;
-	background:silver;
-	mso-pattern:auto none;
-	white-space:nowrap;}
-
-.strKuwagata
-{
-	font-family     : Arial , sans-serif ;
-	color           : windowtext ;
-	font-weight     : 700 ;
-	font-style      : normal ;
-	font-size       : 14.0pt ;
-	text-decoration :none;
-}
-
-.strPurchaseOrder
-{
-	font-family     : Times New Roman , Arial , sans-serif ;
-	color           : windowtext ;
-	font-size       : 16.0pt ;
-	font-weight     : 700 ;
-	font-style      : normal ;
-	text-decoration : underline ;
-	text-align      : center ;
-	vertical-align  : middle ;
-	padding         : 0px ;
-}
-
-.xl10830882
-{
-	padding:0px;
-	width : 319px;
-	height : 62px ;
-	color:windowtext;
-	font-size:14.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Arial, sans-serif;
-	text-align:left;
-	vertical-align:top;
-}
-
-.xl10930882
+.xl13412824
 	{padding:0px;
 	mso-ignore:padding;
 	color:windowtext;
@@ -1686,199 +2266,39 @@ table
 	font-family:"ＭＳ Ｐゴシック", monospace;
 	mso-font-charset:128;
 	mso-number-format:General;
-	text-align:left;
-	vertical-align:top;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:nowrap;}
-.xl11030882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:11.0pt;
-	font-weight:400;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:General;
 	text-align:center;
-	vertical-align:top;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:normal;}
-.xl11130882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:10.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:General;
-	text-align:center;
-	vertical-align:top;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:normal;}
-.xl11230882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:8.0pt;
-	font-weight:400;
-	font-style:normal;
-	text-decoration:none;
-	font-family:"ＭＳ Ｐゴシック", monospace;
-	mso-font-charset:128;
-	mso-number-format:"\@";
-	text-align:center;
-	vertical-align:middle;
-	border-top:.5pt solid windowtext;
+	vertical-align:bottom;
+	border-top:none;
 	border-right:none;
-	border-bottom:.5pt solid windowtext;
+	border-bottom:none;
 	border-left:.5pt solid windowtext;
 	mso-background-source:auto;
 	mso-pattern:auto;
 	white-space:nowrap;}
-.xl11330882
+.xl13512824
 	{padding:0px;
 	mso-ignore:padding;
 	color:windowtext;
-	font-size:8.0pt;
+	font-size:11.0pt;
 	font-weight:400;
 	font-style:normal;
 	text-decoration:none;
 	font-family:"ＭＳ Ｐゴシック", monospace;
 	mso-font-charset:128;
-	mso-number-format:"\@";
-	text-align:center;
-	vertical-align:middle;
-	border-top:.5pt solid windowtext;
-	border-right:none;
-	border-bottom:.5pt solid windowtext;
-	border-left:none;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:nowrap;}
-.xl11430882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:8.0pt;
-	font-weight:400;
-	font-style:normal;
-	text-decoration:none;
-	font-family:"ＭＳ Ｐゴシック", monospace;
-	mso-font-charset:128;
-	mso-number-format:"\@";
-	text-align:center;
-	vertical-align:middle;
-	border-top:.5pt solid windowtext;
-	border-right:.5pt solid windowtext;
-	border-bottom:.5pt solid windowtext;
-	border-left:none;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:nowrap;}
-.xl11530882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:8.0pt;
-	font-weight:400;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:"\@";
-	text-align:left;
-	vertical-align:middle;
-	border-top:none;
-	border-right:none;
-	border-bottom:.5pt solid windowtext;
-	border-left:.5pt solid windowtext;
-	background:silver;
-	mso-pattern:auto none;
-	white-space:nowrap;}
-.xl11630882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:8.0pt;
-	font-weight:400;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:"\@";
-	text-align:left;
-	vertical-align:middle;
-	border-top:none;
-	border-right:none;
-	border-bottom:.5pt solid windowtext;
-	border-left:none;
-	background:silver;
-	mso-pattern:auto none;
-	white-space:nowrap;}
-.xl11730882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:8.0pt;
-	font-weight:400;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:"\@";
-	text-align:left;
-	vertical-align:middle;
-	border-top:none;
-	border-right:.5pt solid windowtext;
-	border-bottom:.5pt solid windowtext;
-	border-left:none;
-	background:silver;
-	mso-pattern:auto none;
-	white-space:nowrap;}
-.xl11830882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:13.0pt;
-	font-weight:400;
-	font-style:normal;
-	text-decoration:none;
-	font-family:"ＭＳ Ｐゴシック", monospace;
-	mso-font-charset:128;
-	mso-number-format:"\@";
-	text-align:right;
-	vertical-align:middle;
-	border:.5pt solid windowtext;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:normal;}
-.xl11930882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:9.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
 	mso-number-format:General;
-	text-align:left;
-	vertical-align:middle;
-	border:.5pt solid windowtext;
-	background:silver;
-	mso-pattern:auto none;
+	text-align:center;
+	vertical-align:bottom;
+	border-top:none;
+	border-right:none;
+	border-bottom:1.0pt solid windowtext;
+	border-left:.5pt solid windowtext;
+	mso-background-source:auto;
+	mso-pattern:auto;
 	white-space:nowrap;}
-.xl12030882
-	{color:windowtext;
+.xl13612824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
 	font-size:9.0pt;
 	font-weight:400;
 	font-style:normal;
@@ -1886,177 +2306,184 @@ table
 	font-family:"ＭＳ Ｐゴシック", monospace;
 	mso-font-charset:128;
 	mso-number-format:General;
-	text-align:left;
-	vertical-align:middle;
-	border-top:.5pt solid windowtext;
-	border-right:.5pt solid windowtext;
-	border-bottom:.5pt solid windowtext;
-	border-left:none;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:nowrap;
-	padding-left:18px;
-	mso-char-indent-count:1;}
-.xl12130882
-	{color:windowtext;
-	font-size:10.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:General;
-	text-align:right;
-	vertical-align:middle;
-	border-top:.5pt solid windowtext;
-	border-right:none;
-	border-bottom:.5pt solid windowtext;
-	border-left:.5pt solid windowtext;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:nowrap;
-	padding-right:18px;
-	mso-char-indent-count:1;}
-.xl12230882
-	{color:windowtext;
-	font-size:10.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:General;
-	text-align:right;
-	vertical-align:middle;
-	border-top:none;
-	border-right:none;
-	border-bottom:.5pt solid windowtext;
-	border-left:none;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:nowrap;
-	padding-right:18px;
-	mso-char-indent-count:1;}
-.xl12330882
-	{color:windowtext;
-	font-size:10.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:General;
-	text-align:right;
-	vertical-align:middle;
-	border-top:none;
-	border-right:.5pt solid windowtext;
-	border-bottom:.5pt solid windowtext;
-	border-left:none;
-	mso-background-source:auto;
-	mso-pattern:auto;
-	white-space:nowrap;
-	padding-right:18px;
-	mso-char-indent-count:1;}
-.xl12430882
-	{color:windowtext;
-	font-size:14.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:"ＭＳ Ｐゴシック", monospace;
-	mso-font-charset:128;
-	mso-number-format:"\@";
-	text-align:left;
-	vertical-align:middle;
-	border-top:none;
-	border-right:none;
-	border-bottom:.5pt solid windowtext;
-	border-left:.5pt solid windowtext;
-	background:silver;
-	mso-pattern:auto none;
-	white-space:nowrap;
-	padding-left:18px;
-	mso-char-indent-count:1;}
-.xl12530882
-	{color:windowtext;
-	font-size:14.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:"ＭＳ Ｐゴシック", monospace;
-	mso-font-charset:128;
-	mso-number-format:"\@";
-	text-align:left;
-	vertical-align:middle;
-	border-top:none;
-	border-right:none;
-	border-bottom:.5pt solid windowtext;
-	border-left:none;
-	background:silver;
-	mso-pattern:auto none;
-	white-space:nowrap;
-	padding-left:18px;
-	mso-char-indent-count:1;}
-.xl12630882
-	{color:windowtext;
-	font-size:14.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:"ＭＳ Ｐゴシック", monospace;
-	mso-font-charset:128;
-	mso-number-format:"\@";
-	text-align:left;
-	vertical-align:middle;
-	border-top:.5pt solid windowtext;
-	border-right:none;
-	border-bottom:.5pt solid windowtext;
-	border-left:none;
-	background:silver;
-	mso-pattern:auto none;
-	white-space:nowrap;
-	padding-left:18px;
-	mso-char-indent-count:1;}
-.xl12730882
-	{color:windowtext;
-	font-size:14.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:"ＭＳ Ｐゴシック", monospace;
-	mso-font-charset:128;
-	mso-number-format:"\@";
-	text-align:left;
-	vertical-align:middle;
-	border-top:.5pt solid windowtext;
-	border-right:.5pt solid windowtext;
-	border-bottom:.5pt solid windowtext;
-	border-left:none;
-	background:silver;
-	mso-pattern:auto none;
-	white-space:nowrap;
-	padding-left:18px;
-	mso-char-indent-count:1;}
-.xl12830882
-	{padding:0px;
-	mso-ignore:padding;
-	color:windowtext;
-	font-size:10.0pt;
-	font-weight:700;
-	font-style:normal;
-	text-decoration:none;
-	font-family:Arial, sans-serif;
-	mso-font-charset:0;
-	mso-number-format:General;
 	text-align:center;
 	vertical-align:middle;
 	border-top:.5pt solid windowtext;
 	border-right:none;
-	border-bottom:.5pt solid windowtext;
+	border-bottom:none;
 	border-left:none;
 	mso-background-source:auto;
 	mso-pattern:auto;
 	white-space:nowrap;}
+.xl13712824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:9.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:General;
+	text-align:center;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:.5pt solid windowtext;
+	border-bottom:none;
+	border-left:none;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;}
+.xl13812824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:6.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:"\@";
+	text-align:center;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:none;
+	border-bottom:none;
+	border-left:.5pt solid windowtext;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;}
+.xl13912824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:6.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:"\@";
+	text-align:center;
+	vertical-align:middle;
+	border-top:.5pt solid windowtext;
+	border-right:1.0pt solid windowtext;
+	border-bottom:none;
+	border-left:none;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;}
+.xl14012824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:6.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:"\@";
+	text-align:center;
+	vertical-align:middle;
+	border-top:none;
+	border-right:none;
+	border-bottom:none;
+	border-left:.5pt solid windowtext;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;}
+.xl14112824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:6.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:"\@";
+	text-align:center;
+	vertical-align:middle;
+	border-top:none;
+	border-right:1.0pt solid windowtext;
+	border-bottom:none;
+	border-left:none;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;}
+.xl14212824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:6.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:"\@";
+	text-align:center;
+	vertical-align:middle;
+	border-top:none;
+	border-right:none;
+	border-bottom:1.0pt solid windowtext;
+	border-left:.5pt solid windowtext;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;}
+.xl14312824
+	{padding:0px;
+	mso-ignore:padding;
+	color:windowtext;
+	font-size:6.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:"\@";
+	text-align:center;
+	vertical-align:middle;
+	border-top:none;
+	border-right:1.0pt solid windowtext;
+	border-bottom:1.0pt solid windowtext;
+	border-left:none;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	white-space:nowrap;}
+
+.xl14412824
+	{mso-style-parent:style0;
+	font-size:9.0pt;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	text-align:left;
+	border-top:1.0pt solid black;
+	border-right:none;
+	border-bottom:none;
+	border-left:none;
+	white-space:normal;}
+.xl14512824
+	{mso-style-parent:style0;
+	font-size:9.0pt;
+	font-family:"ＭＳ Ｐゴシック", monospace;
+	mso-font-charset:128;
+	mso-number-format:"\@";
+	text-align:right;
+	border-top:1.0pt solid black;
+	border-right:none;
+	border-bottom:none;
+	border-left:none;
+	white-space:normal;}
+.xl14612824
+	{mso-style-parent:style0;
+	text-align:center;
+	white-space:normal;}
+
 ruby
 	{ruby-align:left;}
 rt
@@ -2068,715 +2495,758 @@ rt
 	font-family:"ＭＳ Ｐゴシック", monospace;
 	mso-font-charset:128;
 	mso-char-type:katakana;}
--->
-</style>
+--></style>
 </head>
 
 <body onLoad="this.focus();">
 
-<div id="LIST_30882" align=center x:publishsource="Excel">
-<table x:str border=0 cellpadding=0 cellspacing=0 width=696 style='border-collapse:collapse;table-layout:fixed;width:528pt'>
 
-
-
-	<col width=29 span=24 style='mso-width-source:userset;mso-width-alt:928;width:22pt'>
-	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
-		<td height=12 class=xl1530882 width=29 style='height:9.0pt;width:22pt'></td>
-		<td width=29 style='width:22pt' align=left valign=top>
-			<!--[if gte vml 1]>
-			<v:shapetype id="_x0000_t75" coordsize="21600,21600" o:spt="75" o:preferrelative="t" path="m@4@5l@4@11@9@11@9@5xe" filled="f" stroked="f">
-			<v:stroke joinstyle="miter"/>
-			<v:formulas>
-				<v:f eqn="if lineDrawn pixelLineWidth 0"/>
-				<v:f eqn="sum @0 1 0"/>
-				<v:f eqn="sum 0 0 @1"/>
-				<v:f eqn="prod @2 1 2"/>
-				<v:f eqn="prod @3 21600 pixelWidth"/>
-				<v:f eqn="prod @3 21600 pixelHeight"/>
-				<v:f eqn="sum @0 0 1"/>
-				<v:f eqn="prod @6 1 2"/>
-				<v:f eqn="prod @7 21600 pixelWidth"/>
-				<v:f eqn="sum @8 21600 0"/>
-				<v:f eqn="prod @7 21600 pixelHeight"/>
-				<v:f eqn="sum @10 21600 0"/>
-			</v:formulas>
-			<v:path o:extrusionok="f" gradientshapeok="t" o:connecttype="rect"/>
-			<o:lock v:ext="edit" aspectratio="t"/>
-			</v:shapetype><v:shape id="_x0000_s51201" style='position:absolute;margin-left:10.5pt;margin-top:0;width:97.5pt;height:46.5pt;z-index:1'>
-			<v:imagedata src="rogo_po.wmz" o:title="logo"/>
-			<x:ClientData ObjectType="Pict">
-				<x:SizeWithCells/>
-				<x:CF>PictOld</x:CF>
-			</x:ClientData>
-			</v:shape>
-			<![endif]-->
-			<![if !vml]>
-			<span style='mso-ignore:vglayout;position:absolute;z-index:1;margin-left:14px;margin-top:0px;width:130px;height:62px'>
-				<img width=130 height=62 src="rogo_po.gif" v:shapes="_x0000_s51201">
-			</span>
-			<![endif]>
-			<span style='mso-ignore:vglayout2'>
-				<table cellpadding=0 cellspacing=0>
-					<tr>
-						<td height=12 class=xl1530882 width=29 style='height:9.0pt;width:22pt'></td>
-					</tr>
-				</table>
-			</span>
-		</td>
-		<td class=xl1530882 width=29 style='width:22pt'></td>
-		<td class=xl1530882 width=29 style='width:22pt'></td>
-		<td class=xl1530882 width=29 style='width:22pt'></td>
-		<td class=xl1530882 width=29 style='width:22pt'></td>
-		<td colspan=11 rowspan=5 class=xl10830882 width=319 valign="top" align="left">
-			<table cellspacing="0" cellpadding="0" border="0" width="319" height="60">
-				<tr>
-					<td align="left" valign="top">
-						<span class="strKuwagata">KUWAGATA&nbsp;CO.,&nbsp;LTD</span><br>
-						<span class="font630882">
-						7F.,&nbsp;NISSAY&nbsp;Asakusa&nbsp;Building.,&nbsp;<br>
-						12-14&nbsp;KOMAGATA&nbsp;1-CHOME,&nbsp;TAITOU-KU,&nbsp;TOKYO,&nbsp;<br>
-						111-0043&nbsp;JAPAN.<br>TEL&nbsp;:&nbsp;(81)-3-3845-5925&nbsp;&nbsp;&nbsp;&nbsp;FAX&nbsp;:&nbsp;(81)-3-3845-0547
-						</span>
-					</td>
-				</tr>
-			</table>
-		</td>
-
-
-
-		<!-- ページ番号 -->
-		<td colspan=2 rowspan=2 class=xl11030882 width=58 style='width:44pt'>
-			No.
-		</td>
-		<td colspan=3 rowspan=2 class=xl10330882 width=87 style='width:66pt'>
-			1/1
-		</td>
-		<td class=xl2830882 width=29 style='width:22pt'></td>
-		<td class=xl2830882 width=29 style='width:22pt'></td>
-	</tr>
-
-
-
-	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
-		<td height=12 class=xl1530882 style='height:9.0pt'></td>
-		<td class=xl1530882></td>
-		<td class=xl1530882></td>
-		<td class=xl1530882></td>
-		<td class=xl1530882></td>
-		<td class=xl1530882></td>
-		<td class=xl2830882></td>
-		<td class=xl2830882></td>
-	</tr>
-	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
-		<td height=12 class=xl1530882 style='height:9.0pt'></td>
-		<td class=xl1530882></td>
-		<td class=xl1530882></td>
-		<td class=xl1530882></td>
-		<td class=xl1530882></td>
-		<td class=xl1530882></td>
-
-
-
-		<!-- 計上日 -->
-		<td colspan=2 rowspan=2 class=xl11030882 width=58 style='width:44pt'>
-			Date.
-		</td>
-		<td colspan=3 rowspan=2 class=xl10430882 width=87 style='width:66pt'>
-			2018-08-22 21:08:46.026607
-		</td>
-		<td class=xl2830882></td>
-		<td class=xl2830882></td>
-	</tr>
-
-
-
-	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
-		<td height=12 class=xl1530882 style='height:9.0pt'></td>
-		<td class=xl1530882></td>
-		<td class=xl1530882></td>
-		<td class=xl1530882></td>
-		<td class=xl1530882></td>
-		<td class=xl1530882></td>
-		<td class=xl2830882></td>
-		<td class=xl2830882></td>
-	</tr>
-	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
-		<td height=12 class=xl1530882 style='height:9.0pt'></td>
-		<td class=xl1530882></td>
-		<td class=xl1530882></td>
-		<td class=xl1530882></td>
-		<td class=xl1530882></td>
-		<td class=xl1530882></td>
-		<td colspan=5 class=xl11130882 width=145 style='width:110pt'></td>
-		<td class=xl2830882></td>
-		<td class=xl2830882></td>
-	</tr>
-	<tr height=26 style='mso-height-source:userset;height:19.5pt'>
-		<td colspan=22 height=26 class="strPurchaseOrder" style='height:19.5pt'>
-			PURCHASE ORDER
-		</td>
-		<td class=xl1530882></td>
-		<td class=xl1530882></td>
-	</tr>
-	<tr height=17 style='mso-height-source:userset;height:12.95pt'>
-
-
-
-		<!-- 宛名 -->
-		<td colspan=16 rowspan=2 height=34 class=xl7830882 width=464 style='border-right:.5pt solid black;height:25.9pt;width:352pt'>
-			TO: エムアイシー（MIC）
-		</td>
-
-
-		<!-- 発注番号 -->
-		<td colspan=3 rowspan=2 class=xl8230882 style='border-right:.5pt solid black; border-bottom:.5pt solid black'>
-			<span style='mso-spacerun:yes'>&nbsp;</span>P.O. No.
-		</td>
-		<td colspan=3 rowspan=2 class=xl7230882 style='border-right:.5pt solid black; border-bottom:.5pt solid black'>
-			18080074
-		</td>
-		<td class=xl1530882></td>
-		<td class=xl1530882></td>
-	</tr>
-
-
-
-	<tr height=17 style='mso-height-source:userset;height:12.95pt'>
-		<td height=17 class=xl1530882 style='height:12.95pt'></td>
-		<td class=xl1530882></td>
-	</tr>
-	<tr height=24 style='mso-height-source:userset;height:18.0pt'>
-
-
-
-		<!-- 住所 -->
-		<td colspan=16 rowspan=2 height=48 class=xl8830882 width=464 style='height:36.0pt;width:352pt'>
-			東京都 台東区 駒形1-12-14 日本生命浅草ビル4F<br>
-			TEL. 03-3842-0832<span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;</span>FAX. 03-3842-0837
-		</td>
-
-
-
-		<!-- 発注有効期限 -->
-		<td colspan=3 class=xl11530882 style='border-right:.5pt solid black'>
-			<span style='mso-spacerun:yes'>&nbsp;</span>P.O. Due Date
-		</td>
-		<td colspan=3 class=xl6930882 style='border-right:.5pt solid black;border-left:none'>
-			2018-09-30
-		</td>
-		<td class=xl1530882></td>
-		<td class=xl1530882></td>
-	</tr>
-
-
-
-	<tr height=24 style='mso-height-source:userset;height:18.0pt'>
-
-
-
-		<!-- 通貨 -->
-		<td colspan=3 height=24 class=xl5830882 style='border-right:.5pt solid black;height:18.0pt'>
-			<span style='mso-spacerun:yes'>&nbsp;</span>Currency
-		</td>
-		<td colspan=3 class=xl3030882 style='border-right:.5pt solid black;border-left:none'>
-			日本円
-		</td>
-		<td class=xl1530882></td>
-		<td class=xl1530882></td>
-	</tr>
-	<tr height=24 style='mso-height-source:userset;height:18.0pt'>
-		<td colspan=3 rowspan=2 height=48 class=xl9030882 style='border-bottom:.5pt solid black;height:36.0pt'>
-			<span style='mso-spacerun:yes'>&nbsp;</span>
-			Products name
-		</td>
-
-
-
-		<!-- 商品コード -->
-		<td colspan=2 rowspan=2 class=xl9430882 style='border-bottom:.5pt solid black'>
-			00006
-		</td>
-
-
-
-		<!-- 商品名称(日本語) -->
-		<td colspan=10 class=xl9830882 style='border-right:.5pt solid black'>
-			営業第二 特別注文
-		</td>
-
-
-
-		<td rowspan=2 class=xl10230882>&nbsp;&nbsp;</td>
-
-
-
-		<!-- 支払条件 -->
-		<td colspan=3 class=xl5830882 style='border-right:.5pt solid black;border-left:none'>
-			<span style='mso-spacerun:yes'>&nbsp;</span>Pay Condition
-		</td>
-		<td colspan=3 class=xl3030882 style='border-right:.5pt solid black;border-left:none'>
-			−
-		</td>
-		<td class=xl1530882></td>
-		<td class=xl1530882></td>
-	</tr>
-	<tr height=24 style='mso-height-source:userset;height:18.0pt'>
-
-
-
-		<!-- 商品名称(英語) -->
-		<td colspan=10 height=24 class=xl10030882 style='border-right:.5pt solid black;height:18.0pt'>SPECIAL ORDER IN SALES TEAM No.2</td>
-
-
-
-		<!-- 担当者 -->
-		<td colspan=3 class=xl5830882 style='border-right:.5pt solid black;border-left:none'>
-			<span style='mso-spacerun:yes'>&nbsp;</span>In Charge
-		</td>
-		<td colspan=3 class=xl11230882 style='border-right:.5pt solid black;border-left:none'>
-			 
-		</td>
-		<td class=xl1530882></td>
-		<td class=xl1530882></td>
-	</tr>
-
-
-
-	<tr height=1 style='mso-height-source:userset;height:.95pt'>
-		<td colspan=22 height=1 class=xl8030882 style='height:.95pt'>&nbsp;&nbsp;</td>
-		<td class=xl1530882></td>
-		<td class=xl1530882></td>
-	</tr>
-	<tr height=18 style='mso-height-source:userset;height:14.1pt'>
-		<td height=18 class=xl2930882 style='height:14.1pt;border-top:none'>No.</td>
-		<td colspan=8 class=xl10530882 style='border-right:.5pt solid black'>
-			Products parts / Means of transport / Remark
-		</td>
-		<td colspan=5 class=xl2930882 style='border-right:.5pt solid black;border-left:none'>
-			Price / Unit
-		</td>
-		<td colspan=5 class=xl4030882 style='border-right:.5pt solid black;border-left:none'>
-			Total
-		</td>
-		<td colspan=3 class=xl2930882 style='border-right:.5pt solid black;border-left:none'>
-			Delivery Date
-		</td>
-		<td class=xl1530882></td>
-		<td class=xl1530882></td>
-	</tr>
-
-
-
-	<!-- 明細 1 -->
-	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
-		<td rowspan=5 height=60 class=xl6430882 style='height:45.0pt;border-top:none'>
-			1
-		</td>
-		<td colspan=8 rowspan=5 height=60 width=232 style='height:45.0pt;width:176pt' align=left valign=top>
-
-			<!--[if gte vml 1]>
-
-
-			<!-- [COPY] イメージ定義 -->
-			<v:shape id="_x0000_s51205" type="#_x0000_t75" style='position:absolute;margin-left:55.5pt;margin-top:122.25pt;width:363.75pt;height:98.25pt;rotation:310;z-index:-1;visibility:;'>
-			<!-- [COPY] イメージ定義 // -->
-
-
-				<v:imagedata src="rogo_copy.wmz" o:title="copy"/>
-				<x:ClientData ObjectType="Pict">
-					<x:SizeWithCells/>
-					<x:CF>PictOld</x:CF>
-				</x:ClientData>
-
-			</v:shape>
-			<![endif]-->
-
-
-			<![if !vml]>
-			<span style='mso-ignore:vglayout;position:absolute;z-index:-1;margin-left:110px;margin-top:1px;width:414px;height:456px;visibility:;'>
-				<img width=414 height=456 src="rogo_copy.gif" v:shapes="_x0000_s51205">
-			</span>
-			<![endif]>
-
-
-			<span style='mso-ignore:vglayout2'>
-				<table cellpadding=0 cellspacing=0>
-					<tr>
-						<td colspan=8 rowspan=5 height=81 class=xl6630882 width=232 style='height:81px;width:176pt'>
-							− <br>
-							−<span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br>
-							MJ ユニフォーム試作
-						</td>
-					</tr>
-				</table>
-			</span>
-
-		</td>
-		<td colspan=5 rowspan=5 class=xl11830882 width=145 style='width:110pt' x:str="\        100,000 &#10;             1(set) ">
-			\        100,000<br>
-			             1(set)<span style='mso-spacerun:yes'>&nbsp;</span>
-		</td>
-		<td colspan=5 rowspan=5 class=xl4330882>
-			\        100,000
-		</td>
-		<td colspan=3 rowspan=5 class=xl3430882 style='border-right:.5pt solid black;border-bottom:.5pt solid black'>
-			2018/08/22
-		</td>
-
-		<td class=xl1530882></td>
-		<td class=xl1530882></td>
-	</tr>
-
-
-
-	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
-		<td height=12 class=xl1530882 style='height:9.0pt'></td>
-		<td class=xl1530882></td>
-	</tr>
-	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
-		<td height=12 class=xl1530882 style='height:9.0pt'></td>
-		<td class=xl1530882></td>
-	</tr>
-	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
-		<td height=12 class=xl1530882 style='height:9.0pt'></td>
-		<td class=xl1530882></td>
-	</tr>
-	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
-		<td height=12 class=xl1530882 style='height:9.0pt'></td>
-		<td class=xl1530882></td>
-	</tr>
-
-
-
-	<!-- 明細 2 -->
-	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
-		<td rowspan=5 height=60 class=xl6530882 style='height:45.0pt;border-top:none' x:num>2</td>
-		<td colspan=8 rowspan=5 class=xl5130882 width=232 style='width:176pt'>
-			 <br>
-			<span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br>
-			
-		</td>
-		<td colspan=5 rowspan=5 class=xl11830882 width=145 style='width:110pt' x:str=" &#10; ">
-			 <br>
-			<span style='mso-spacerun:yes'>&nbsp;</span>
-		</td>
-		<td colspan=5 rowspan=5 class=xl4330882>
-			
-		</td>
-		<td colspan=3 rowspan=5 class=xl3430882 style='border-right:.5pt solid black;border-bottom:.5pt solid black'>
-			
-		</td>
-		<td class=xl1530882></td>
-		<td class=xl1530882></td>
-	</tr>
-
-
-
-	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
-		<td height=12 class=xl1530882 style='height:9.0pt'></td>
-		<td class=xl1530882></td>
-	</tr>
-	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
-		<td height=12 class=xl1530882 style='height:9.0pt'></td>
-		<td class=xl1530882></td>
-	</tr>
-	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
-		<td height=12 class=xl1530882 style='height:9.0pt'></td>
-		<td class=xl1530882></td>
-	</tr>
-	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
-		<td height=12 class=xl1530882 style='height:9.0pt'></td>
-		<td class=xl1530882></td>
-	</tr>
-
-
-
-	<!-- 明細 3 -->
-	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
-		<td rowspan=5 height=60 class=xl6530882 style='height:45.0pt;border-top:none' x:num>3</td>
-		<td colspan=8 rowspan=5 class=xl5130882 width=232 style='width:176pt'>
-			 <br>
-		    <span
-		  style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		  </span><br>
-			
-		</td>
-		<td colspan=5 rowspan=5 class=xl11830882 width=145 style='width:110pt' x:str=" &#10; ">
-			 <br>
-			<span style='mso-spacerun:yes'>&nbsp;</span>
-		</td>
-		<td colspan=5 rowspan=5 class=xl4330882>
-			
-		</td>
-		<td colspan=3 rowspan=5 class=xl3430882 style='border-right:.5pt solid black;border-bottom:.5pt solid black'>
-			
-		</td>
-		<td class=xl1530882></td>
-		<td class=xl1530882></td>
-	</tr>
-
-
-
-	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
-		<td height=12 class=xl1530882 style='height:9.0pt'></td>
-		<td class=xl1530882></td>
-	</tr>
-	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
-		<td height=12 class=xl1530882 style='height:9.0pt'></td>
-		<td class=xl1530882></td>
-	</tr>
-	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
-		<td height=12 class=xl1530882 style='height:9.0pt'></td>
-		<td class=xl1530882></td>
-	</tr>
-	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
-		<td height=12 class=xl1530882 style='height:9.0pt'></td>
-		<td class=xl1530882></td>
-	</tr>
-
-
-
-	<!-- 明細 4 -->
-	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
-		<td rowspan=5 height=60 class=xl6530882 style='height:45.0pt;border-top:none' x:num>4</td>
-		<td colspan=8 rowspan=5 class=xl5130882 width=232 style='width:176pt'>
-			 <br>
-		    <span
-		  style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		  </span><br>
-			
-		</td>
-		<td colspan=5 rowspan=5 class=xl11830882 width=145 style='width:110pt' x:str=" &#10; ">
-			 <br>
-			<span style='mso-spacerun:yes'>&nbsp;</span>
-		</td>
-		<td colspan=5 rowspan=5 class=xl4330882>
-			
-		</td>
-		<td colspan=3 rowspan=5 class=xl3430882 style='border-right:.5pt solid black;border-bottom:.5pt solid black'>
-			
-		</td>
-		<td class=xl1530882></td>
-		<td class=xl1530882></td>
-	</tr>
-
-
-
-	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
-		<td height=12 class=xl1530882 style='height:9.0pt'></td>
-		<td class=xl1530882></td>
-	</tr>
-	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
-		<td height=12 class=xl1530882 style='height:9.0pt'></td>
-		<td class=xl1530882></td>
-	</tr>
-	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
-		<td height=12 class=xl1530882 style='height:9.0pt'></td>
-		<td class=xl1530882></td>
-	</tr>
-	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
-		<td height=12 class=xl1530882 style='height:9.0pt'></td>
-		<td class=xl1530882></td>
-	</tr>
-
-
-
-	<!-- 明細 5 -->
-	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
-		<td rowspan=5 height=60 class=xl6530882 style='height:45.0pt;border-top:none' x:num>5</td>
-		<td colspan=8 rowspan=5 class=xl5130882 width=232 style='width:176pt'>
-			 <br>
-		    <span
-		  style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		  </span><br>
-			
-		</td>
-		<td colspan=5 rowspan=5 class=xl11830882 width=145 style='width:110pt' x:str=" &#10; ">
-			 <br>
-			<span style='mso-spacerun:yes'>&nbsp;</span>
-		</td>
-		<td colspan=5 rowspan=5 class=xl4330882>
-			
-		</td>
-		<td colspan=3 rowspan=5 class=xl3430882 style='border-right:.5pt solid black;border-bottom:.5pt solid black'>
-			
-		</td>
-		<td class=xl1530882></td>
-		<td class=xl1530882></td>
-	</tr>
-
-
-
-	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
-		<td height=12 class=xl1530882 style='height:9.0pt'></td>
-		<td class=xl1530882></td>
-	</tr>
-	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
-		<td height=12 class=xl1530882 style='height:9.0pt'></td>
-		<td class=xl1530882></td>
-	</tr>
-	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
-		<td height=12 class=xl1530882 style='height:9.0pt'></td>
-		<td class=xl1530882></td>
-	</tr>
-	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
-		<td height=12 class=xl1530882 style='height:9.0pt'></td>
-		<td class=xl1530882></td>
-	</tr>
-
-
-
-	<!-- 合計金額(税抜) -->
-	<tr height=24 style='mso-height-source:userset;height:18.0pt'>
-		<td colspan=14 height=24 class=xl12130882 style='border-right:.5pt solid black;height:18.0pt'>
-			Total Amount
-		</td>
-		<td colspan=8 class=xl12430882 style='border-right:.5pt solid black;border-left:none'>
-			\ 100000.0000
-		</td>
-		<td class=xl1530882></td>
-		<td class=xl1530882></td>
-	</tr>
-
-
-
-	<tr height=1 style='mso-height-source:userset;height:.95pt'>
-		<td colspan=22 height=1 class=xl12830882 style='height:.95pt'>&nbsp;&nbsp;</td>
-		<td class=xl1530882></td>
-		<td class=xl1530882></td>
-	</tr>
-
-
-
-	<!-- 納品場所 -->
-	<tr height=21 style='mso-height-source:userset;height:15.95pt'>
-		<td colspan=3 height=21 class=xl11930882 style='height:15.95pt'>
-			<span style='mso-spacerun:yes'>&nbsp;</span>Location
-		</td>
-		<td colspan=19 class=xl3230882 style='border-right:.5pt solid black;border-left:none'>
-			クワガタ(KUWAGATA)
-		</td>
-		<td class=xl1530882></td>
-		<td class=xl1530882></td>
-	</tr>
-
-
-
-	<!-- 備考 -->
-	<tr height=21 style='mso-height-source:userset;height:15.95pt'>
-		<td colspan=3 height=21 class=xl11930882 style='height:15.95pt'>
-			<span style='mso-spacerun:yes'>&nbsp;</span>Remark
-		</td>
-		<td colspan=19 class=xl3230882 style='border-right:.5pt solid black;border-left:none'>
-			
-		</td>
-		<td class=xl1530882></td>
-		<td class=xl1530882></td>
-	</tr>
-
-
-
-	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
-		<td colspan=22 height=12 class=xl4830882 style='height:9.0pt'>&nbsp;&nbsp;</td>
-		<td class=xl1530882></td>
-		<td class=xl1530882></td>
-	</tr>
-
-
-
-	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
-		<td colspan=14 height=12 class=xl5730882 style='height:9.0pt'>
-			*Please make sure that you fill in the P.O. No. on the D/N &amp; Inv.*
-		</td>
-		<td colspan=8 class=xl4930882></td>
-		<td class=xl1530882></td>
-		<td class=xl1530882></td>
-	</tr>
-	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
-		<td colspan=14 height=12 class=xl4630882 style='height:9.0pt'>
-			お手数ですが、納品書には弊社発注No.の記入をお願いいたします。
-		</td>
-		<td colspan=8 class=xl4930882></td>
-		<td class=xl1530882></td>
-		<td class=xl1530882></td>
-	</tr>
-		<tr height=12 style='mso-height-source:userset;height:9.0pt'>
-		<td colspan=14 height=12 class=xl4630882 style='height:9.0pt'>
-			お支払条件は、現行の「お支払方法等についてのお願い」の通りです。
-		</td>
-		<td colspan=8 class=xl4930882></td>
-		<td class=xl1530882></td>
-		<td class=xl1530882></td>
-	</tr>
-	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
-		<td colspan=11 rowspan=2 height=24 class=xl6230882 style='height:18.0pt'>
-			KUWAGATA CO., LTD
-		</td>
-		<td colspan=11 rowspan=2 class=xl6330882>
-			ACCEPTED AND CONFIRMED BY
-		</td>
-		<td class=xl1530882></td>
-		<td class=xl1530882></td>
-	</tr>
-
-
-
-	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
-		<td height=12 class=xl1530882 style='height:9.0pt'></td>
-		<td class=xl1530882></td>
-	</tr>
-	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
-		<td colspan=22 rowspan=3 height=36 class=xl5630882 style='height:27.0pt'></td>
-		<td class=xl1530882></td>
-		<td class=xl1530882></td>
-	</tr>
-	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
-		<td height=12 class=xl1530882 style='height:9.0pt'></td>
-		<td class=xl1530882></td>
-	</tr>
-	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
-		<td height=12 class=xl1530882 style='height:9.0pt'></td>
-		<td class=xl1530882></td>
-	</tr>
-
-
-
-	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
-		<td colspan=8 height=12 class=xl5230882 style='height:9.0pt'>&nbsp;&nbsp;</td>
-		<td colspan=6 class=xl5530882></td>
-		<td colspan=8 class=xl5430882>&nbsp;&nbsp;</td>
-		<td class=xl1530882></td>
-		<td class=xl1530882></td>
-	</tr>
-
-
-
-	<!-- 最終承認者 -->
-	<tr height=12 style='mso-height-source:userset;height:9.0pt'>
-		<td colspan=8 height=12 class=xl5330882 style='height:9.0pt'>
-			Authorized Signature
-		</td>
-		<td colspan=6 class=xl5530882></td>
-		<td colspan=8 class=xl5330882>
-			Authorized Signature
-		</td>
-		<td class=xl1530882></td>
-		<td class=xl1530882></td>
-	</tr>
-	<tr height=18 style='mso-height-source:userset;height:14.1pt'>
-		<td colspan=8 height=18 class=xl4730882 style='height:14.1pt'>
-			
-		</td>
-		<td colspan=6 class=xl5030882></td>
-		<td colspan=8 class=xl5030882 align="right" id="strFormatCode">Format&nbsp;Code&nbsp:&nbsp;2004-6-1</td>
-		<td class=xl1530882></td>
-		<td class=xl1530882></td>
-	</tr>
-
-
-
+<!-- 署名・判 -->
+<div id="sigAssent"><img src="/img/signature/default.gif" border="0"></div>
+<div id="sigCreate"><img src="/img/signature/default.gif" border="0"></div>
+
+
+
+<div id="LIST_12824" align=left x:publishsource="Excel">
+
+<table x:str border=0 cellpadding=0 cellspacing=0 width=841 style='border-collapse:
+ collapse;table-layout:fixed;width:638pt'>
+ <col width=29 span=29 style='mso-width-source:userset;mso-width-alt:928;
+ width:22pt'>
+ <tr height=12 style='mso-height-source:userset;height:9.0pt'>
+  <td colspan=6 rowspan=2 height=24 width=174 style='height:18.0pt;width:132pt'
+  align=left valign=top><!--[if gte vml 1]><v:shapetype id="_x0000_t75"
+   coordsize="21600,21600" o:spt="75" o:preferrelative="t" path="m@4@5l@4@11@9@11@9@5xe"
+   filled="f" stroked="f">
+   <v:stroke joinstyle="miter"/>
+   <v:formulas>
+    <v:f eqn="if lineDrawn pixelLineWidth 0"/>
+    <v:f eqn="sum @0 1 0"/>
+    <v:f eqn="sum 0 0 @1"/>
+    <v:f eqn="prod @2 1 2"/>
+    <v:f eqn="prod @3 21600 pixelWidth"/>
+    <v:f eqn="prod @3 21600 pixelHeight"/>
+    <v:f eqn="sum @0 0 1"/>
+    <v:f eqn="prod @6 1 2"/>
+    <v:f eqn="prod @7 21600 pixelWidth"/>
+    <v:f eqn="sum @8 21600 0"/>
+    <v:f eqn="prod @7 21600 pixelHeight"/>
+    <v:f eqn="sum @10 21600 0"/>
+   </v:formulas>
+   <v:path o:extrusionok="f" gradientshapeok="t" o:connecttype="rect"/>
+   <o:lock v:ext="edit" aspectratio="t"/>
+  </v:shapetype><v:shape id="_x0000_s52225" type="#_x0000_t75" style='position:absolute;
+   margin-left:0;margin-top:0;width:50.25pt;height:24pt;z-index:1'>
+   <v:imagedata src="rogo_p.wmz" o:title="logo"/>
+   <x:ClientData ObjectType="Pict">
+    <x:SizeWithCells/>
+    <x:CF>PictOld</x:CF>
+   </x:ClientData>
+  </v:shape><![endif]--><![if !vml]><span style='mso-ignore:vglayout;
+  position:absolute;z-index:1;margin-left:0px;margin-top:0px;width:67px;
+  height:32px'><img width=67 height=32 src="rogo_p.gif"
+  v:shapes="_x0000_s52225"></span><![endif]><span style='mso-ignore:vglayout2'>
+  <table cellpadding=0 cellspacing=0>
+   <tr>
+    <td colspan=6 rowspan=2 height=24 class=xl9012824 width=174
+    style='height:18.0pt;width:132pt'></td>
+   </tr>
+  </table>
+  </span></td>
+  <td colspan=10 rowspan=2 class=xl8712824 width=290 style='width:220pt'>商 品 化
+  企 画 書</td>
+  <td colspan=3 rowspan=2 class=xl8812824 width=87 style='width:66pt'>更新日 :</td>
+  <td colspan=3 rowspan=2 class=xl8912824 width=87 style='width:66pt'>2019/12/19</td>
+  <td class=xl2812824 width=29 style='width:22pt'></td>
+  <td class=xl2812824 width=29 style='width:22pt'></td>
+  <td class=xl1512824 width=29 style='width:22pt'></td>
+  <td class=xl1512824 width=29 style='width:22pt'></td>
+  <td class=xl1512824 width=29 style='width:22pt'></td>
+  <td class=xl1512824 width=29 style='width:22pt'></td>
+  <td class=xl1512824 width=29 style='width:22pt'></td>
+ </tr>
+ <tr height=12 style='mso-height-source:userset;height:9.0pt'>
+  <td height=12 class=xl2812824 style='height:9.0pt'></td>
+  <td class=xl2812824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+ </tr>
+ <tr height=1 style='mso-height-source:userset;height:.95pt'>
+  <td colspan=22 height=1 class=xl9112824 style='height:.95pt'></td>
+  <td class=xl2812824></td>
+  <td class=xl2812824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+ </tr>
+ <tr height=24 style='mso-height-source:userset;height:18.0pt'>
+  <td colspan=3 height=24 class=xl8212824 style='height:18.0pt'>製品コード :</td>
+  <td colspan=4 class=xl4912824>07741</td>
+  <td class=xl2912824></td>
+  <td class=xl2912824></td>
+  <td class=xl2912824></td>
+  <td class=xl2912824></td>
+  <td class=xl2912824></td>
+  <td class=xl2912824></td>
+  <td class=xl2912824></td>
+  <td class=xl2912824></td>
+  <td class=xl2912824></td>
+  <td colspan=3 class=xl8312824>納　期<span style='mso-spacerun:yes'>&nbsp;
+  </span>:</td>
+  <td colspan=3 class=xl8412824></td>
+  <td class=xl2812824></td>
+  <td class=xl2812824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+ </tr>
+ <tr height=1 style='mso-height-source:userset;height:.95pt'>
+  <td colspan=22 height=1 class=xl9312824 style='height:.95pt'></td>
+  <td class=xl2812824></td>
+  <td class=xl2812824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+ </tr>
+ <tr height=24 style='mso-height-source:userset;height:18.0pt'>
+  <td colspan=3 rowspan=2 height=48 class=xl9412824 style='border-right:.5pt solid black;
+  border-bottom:.5pt solid black;height:36.0pt'><span
+  style='mso-spacerun:yes'>&nbsp;</span>製品名称</td>
+  <td colspan=19 class=xl7812824 style='border-right:1.0pt solid black;
+  border-left:none'>テスト</td>
+  <td class=xl2812824></td>
+  <td class=xl2812824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+ </tr>
+ <tr height=24 style='mso-height-source:userset;height:18.0pt'>
+  <td colspan=19 height=24 class=xl4312824 style='border-right:1.0pt solid black;
+  height:18.0pt;border-left:none'>test test</td>
+  <td class=xl2812824></td>
+  <td class=xl2812824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+ </tr> 
+ <tr height=17 style='mso-height-source:userset;height:12.95pt'>
+  <td colspan=3 height=17 class=xl5012824 style='border-right:.5pt solid black;
+  height:12.95pt'><span style='mso-spacerun:yes'>&nbsp;</span>営業部署</td>
+  <td colspan=5 class=xl3212824 style='border-right:.5pt solid black'>41 トイコレクターズ</td>
+  <td colspan=3 class=xl7112824 style='border-right:.5pt solid black;
+  border-left:none'><span style='mso-spacerun:yes'>&nbsp;</span>担当者</td>
+  <td colspan=4 class=xl3212824 style='border-right:.5pt solid black;
+  border-left:none'>201 小林　貴也</td>
+  <td colspan=3 class=xl3612824 style='border-right:.5pt solid black;
+  border-left:none'><span style='mso-spacerun:yes'>&nbsp;</span>開発担当者</td>
+  <td colspan=4 class=xl3212824 style='border-right:1.0pt solid black;
+  border-left:none'>096 早川　裕太</td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+ </tr>
+ <tr>
+  <td colspan=3 height=17 class=xl5012824 style='border-right:.5pt solid black;
+  height:12.95pt'><span style='mso-spacerun:yes'>&nbsp;</span>カテゴリ</td>
+  <td colspan=12 class=xl3912824 style='border-right:.5pt solid black'></td>
+
+ </tr>
+ <tr height=3 style='mso-height-source:userset;height:6.0pt'>
+  <td colspan=3 height=3 class=xl5312824 style='height:6.0pt'><img src="dot.gif" height="3" width="1"></td>
+  <td colspan=12 class=xl3012824><img src="dot.gif" height="3" width="1"></td>
+  <td colspan=3 class=xl3012824><img src="dot.gif" height="3" width="1"></td>
+  <td colspan=4 class=xl3012824 style='border-right:1.0pt solid black'><img src="dot.gif" height="3" width="1"></td>
+ </tr>
+ <tr height=17 style='mso-height-source:userset;height:12.95pt'>
+  <td colspan=3 height=17 class=xl5012824 style='border-right:.5pt solid black;
+  height:12.95pt'><span style='mso-spacerun:yes'>&nbsp;</span>顧客</td>
+  <td colspan=12 class=xl3912824 style='border-right:.5pt solid black'> </td>
+  <td colspan=3 class=xl3612824 style='border-right:.5pt solid black;
+  border-left:none'><span style='mso-spacerun:yes'>&nbsp;</span>顧客担当者</td>
+  <td colspan=4 class=xl3912824 style='border-right:1.0pt solid black;
+  border-left:none'> </td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+ </tr>
+ <tr height=17 style='mso-height-source:userset;height:12.95pt'>
+  <td colspan=3 height=17 class=xl5012824 style='border-right:.5pt solid black;
+  height:12.95pt'><span style='mso-spacerun:yes'>&nbsp;</span>顧客品番</td>
+  <td colspan=19 class=xl3212824 style='border-right:1.0pt solid black;
+  border-left:none'>test</td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+ </tr>
+ <tr height=17 style='mso-height-source:userset;height:12.95pt'>
+  <td colspan=3 height=17 class=xl5412824 style='border-right:.5pt solid black;
+  height:12.95pt'><span style='mso-spacerun:yes'>&nbsp;</span>商品名</td>
+  <td colspan=19 class=xl3912824 style='border-right:1.0pt solid black;
+  border-left:none'></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+ </tr>
+ <tr height=17 style='mso-height-source:userset;height:12.95pt'>
+  <td colspan=3 height=17 class=xl5012824 style='border-right:.5pt solid black;
+  height:12.95pt'><span style='mso-spacerun:yes'>&nbsp;</span>商品形態</td>
+  <td colspan=5 class=xl3212824 style='border-right:.5pt solid black'></td>
+  <td colspan=3 class=xl7112824 style='border-right:.5pt solid black;
+  border-left:none'><span style='mso-spacerun:yes'>&nbsp;</span>内箱(袋)入数</td>
+  <td colspan=4 class=xl3212824 style='border-right:.5pt solid black;
+  border-left:none'></td>
+  <td colspan=3 class=xl3612824 style='border-right:.5pt solid black;
+  border-left:none'><span style='mso-spacerun:yes'>&nbsp;</span>カートン入数</td>
+  <td colspan=4 class=xl3212824 style='border-right:1.0pt solid black;
+  border-left:none'>           100pcs</td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+ </tr>
+ <tr height=17 style='mso-height-source:userset;height:12.95pt'>
+  <td colspan=3 height=17 class=xl6912824 style='border-right:.5pt solid black;
+  height:12.95pt'><span style='mso-spacerun:yes'>&nbsp;</span>生産予定数()</td>
+  <td colspan=5 class=xl3912824>        10,600</td>
+  <td colspan=3 class=xl6912824 style='border-right:.5pt solid black'><span
+  style='mso-spacerun:yes'>&nbsp;</span>初回納品数()</td>
+  <td colspan=4 class=xl3912824 style='border-left:none'></td>
+  <td colspan=3 class=xl3612824 style='border-right:.5pt solid black'><span
+  style='mso-spacerun:yes'>&nbsp;</span>証紙</td>
+  <td colspan=4 class=xl6112824 style='border-right:1.0pt solid black;
+  border-left:none'></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+ </tr>
+ <tr height=17 style='mso-height-source:userset;height:12.95pt'>
+  <td colspan=3 height=17 class=xl5412824 style='border-right:.5pt solid black;
+  height:12.95pt'><span style='mso-spacerun:yes'>&nbsp;</span>生産工場</td>
+  <td colspan=19 class=xl3912824 style='border-right:1.0pt solid black;
+  border-left:none'> </td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+ </tr>
+ <tr height=17 style='mso-height-source:userset;height:12.95pt'>
+  <td colspan=3 height=17 class=xl5412824 style='border-right:.5pt solid black;
+  height:12.95pt'><span style='mso-spacerun:yes'>&nbsp;</span>ｱｯｾﾝﾌﾞﾘ工場</td>
+  <td colspan=19 class=xl6312824 style='border-right:1.0pt solid black;
+  border-left:none'> </td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+ </tr>
+ <tr height=17 style='mso-height-source:userset;height:12.95pt'>
+  <td colspan=3 height=17 class=xl5412824 style='border-right:.5pt solid black;
+  height:12.95pt'><span style='mso-spacerun:yes'>&nbsp;</span>納品場所</td>
+  <td colspan=19 class=xl3912824 style='border-right:1.0pt solid black;
+  border-left:none'> </td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+ </tr>
+ <tr height=17 style='mso-height-source:userset;height:12.95pt'>
+  <td colspan=3 height=17 class=xl5412824 style='border-right:.5pt solid black;
+  height:12.95pt'><span style='mso-spacerun:yes'>&nbsp;</span>納価(pcs単価)</td>
+  <td colspan=5 class=xl6112824 style='border-right:.5pt solid black;
+  border-left:none'></td>
+  <td colspan=3 class=xl5512824 style='border-right:.5pt solid black;
+  border-left:none'><span style='mso-spacerun:yes'>&nbsp;</span>上代(pcs単価)</td>
+  <td colspan=11 class=xl5812824 style='border-right:1.0pt solid black;
+  border-left:none'>         1,250.00</td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+ </tr>
+ <tr height=17 style='mso-height-source:userset;height:12.95pt'>
+  <td colspan=3 height=17 class=xl7712824 style='border-right:.5pt solid black;
+  height:12.95pt'><span style='mso-spacerun:yes'>&nbsp;</span>対象年齢</td>
+  <td colspan=5 class=xl5812824 style='border-right:.5pt solid black;
+  border-left:none'></td>
+  <td colspan=3 class=xl7512824 style='border-left:none'><span
+  style='mso-spacerun:yes'>&nbsp;</span>ﾛｲﾔﾘﾃｨ(%)</td>
+  <td colspan=11 class=xl5812824 style='border-right:1.0pt solid black'>%</td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+ </tr>
+ <tr height=17 style='mso-height-source:userset;height:12.95pt'>
+  <td colspan=3 height=17 class=xl8512824 style='border-right:.5pt solid black;
+  height:12.95pt'><span style='mso-spacerun:yes'>&nbsp;</span>版権元</td>
+  <td colspan=19 class=xl6112824 style='border-right:1.0pt solid black;
+  border-left:none'> </td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+ </tr>
+ <tr height=17 style='mso-height-source:userset;height:12.95pt'>
+  <td colspan=3 height=17 class=xl10812824 style='border-right:.5pt solid black;
+  height:12.95pt'><span style='mso-spacerun:yes'>&nbsp;</span>版権表示(刻印)</td>
+  <td colspan=19 class=xl3212824 style='border-right:1.0pt solid black;
+  border-left:none'></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+ </tr>
+ <tr height=17 style='mso-height-source:userset;height:12.95pt'>
+  <td colspan=3 height=17 class=xl10812824 style='border-right:.5pt solid black;
+  height:12.95pt'><span style='mso-spacerun:yes'>&nbsp;</span>版権表示(印刷物)</td>
+  <td colspan=19 class=xl6112824 style='border-right:1.0pt solid black;
+  border-left:none'></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+ </tr>
+ <tr height=17 style='mso-height-source:userset;height:12.95pt'>
+  <td colspan=3 height=17 class=xl7712824 style='border-right:.5pt solid black;
+  height:12.95pt'><span style='mso-spacerun:yes'>&nbsp;</span>製品構成</td>
+  <td colspan=5 class=xl6112824 style='border-left:none'></td>
+  <td colspan=3 class=xl5512824 style='border-right:.5pt solid black'><span
+  style='mso-spacerun:yes'>&nbsp;</span>ｱｯｾﾝﾌﾞﾘ内容</td>
+  <td colspan=11 class=xl10512824 style='border-right:1.0pt solid black;
+  border-left:none'></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+ </tr>
+ <tr height=17 style='mso-height-source:userset;height:12.95pt'>
+  <td colspan=22 height=17 class=xl10212824 style='border-right:1.0pt solid black;
+  height:12.95pt'>仕様詳細</td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+ </tr>
+ <tr height=17 style='mso-height-source:userset;height:12.95pt'>
+  <td colspan=22 rowspan=26 height=250 class=xl11812824 style='border-right:
+  1.0pt solid black;border-bottom:.5pt solid black;height:192.7pt'></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+ </tr>
+ <tr height=17 style='mso-height-source:userset;height:12.95pt'>
+  <td height=17 class=xl1512824 style='height:12.95pt'></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+ </tr>
+ <tr height=9 style='mso-height-source:userset;height:6.95pt'>
+  <td height=9 class=xl1512824 style='height:6.95pt'></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+ </tr>
+ <tr height=9 style='mso-height-source:userset;height:6.95pt'>
+  <td height=9 class=xl1512824 style='height:6.95pt'></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+ </tr>
+ <tr height=9 style='mso-height-source:userset;height:6.95pt'>
+  <td height=9 class=xl1512824 style='height:6.95pt'></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+ </tr>
+ <tr height=9 style='mso-height-source:userset;height:6.95pt'>
+  <td height=9 class=xl1512824 style='height:6.95pt'></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+ </tr>
+ <tr height=9 style='mso-height-source:userset;height:6.95pt'>
+  <td height=9 class=xl1512824 style='height:6.95pt'></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+ </tr>
+ <tr height=9 style='mso-height-source:userset;height:6.95pt'>
+  <td height=9 class=xl1512824 style='height:6.95pt'></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+ </tr>
+ <tr height=9 style='mso-height-source:userset;height:6.95pt'>
+  <td height=9 class=xl1512824 style='height:6.95pt'></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+ </tr>
+ <tr height=9 style='mso-height-source:userset;height:6.95pt'>
+  <td height=9 class=xl1512824 style='height:6.95pt'></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+ </tr>
+ <tr height=9 style='mso-height-source:userset;height:6.95pt'>
+  <td height=9 class=xl1512824 style='height:6.95pt'></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+ </tr>
+ <tr height=9 style='mso-height-source:userset;height:6.95pt'>
+  <td height=9 class=xl1512824 style='height:6.95pt'></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+ </tr>
+ <tr height=9 style='mso-height-source:userset;height:6.95pt'>
+  <td height=9 class=xl1512824 style='height:6.95pt'></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+ </tr>
+ <tr height=9 style='mso-height-source:userset;height:6.95pt'>
+  <td height=9 class=xl1512824 style='height:6.95pt'></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+ </tr>
+ <tr height=9 style='mso-height-source:userset;height:6.95pt'>
+  <td height=9 class=xl1512824 style='height:6.95pt'></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+ </tr>
+ <tr height=9 style='mso-height-source:userset;height:6.95pt'>
+  <td height=9 class=xl1512824 style='height:6.95pt'></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+ </tr>
+ <tr height=9 style='mso-height-source:userset;height:6.95pt'>
+  <td height=9 class=xl1512824 style='height:6.95pt'></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+ </tr>
+ <tr height=9 style='mso-height-source:userset;height:6.95pt'>
+  <td height=9 class=xl1512824 style='height:6.95pt'></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+ </tr>
+ <tr height=9 style='mso-height-source:userset;height:6.95pt'>
+  <td height=9 class=xl1512824 style='height:6.95pt'></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+ </tr>
+ <tr height=9 style='mso-height-source:userset;height:6.95pt'>
+  <td height=9 class=xl1512824 style='height:6.95pt'></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+ </tr>
+ <tr height=9 style='mso-height-source:userset;height:6.95pt'>
+  <td height=9 class=xl1512824 style='height:6.95pt'></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+ </tr>
+ <tr height=9 style='mso-height-source:userset;height:6.95pt'>
+  <td height=9 class=xl1512824 style='height:6.95pt'></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+ </tr>
+ <tr height=9 style='mso-height-source:userset;height:6.95pt'>
+  <td height=9 class=xl1512824 style='height:6.95pt'></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+ </tr>
+ <tr height=9 style='mso-height-source:userset;height:6.95pt'>
+  <td height=9 class=xl1512824 style='height:6.95pt'></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+ </tr>
+ <tr height=9 style='mso-height-source:userset;height:6.95pt'>
+  <td height=9 class=xl1512824 style='height:6.95pt'></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+ </tr>
+ <tr height=9 style='mso-height-source:userset;height:6.95pt'>
+  <td height=9 class=xl1512824 style='height:6.95pt'></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+ </tr>
+ <tr height=17 style='mso-height-source:userset;height:12.95pt'>
+  <td colspan=10 height=17 class=xl12412824 style='border-right:.5pt solid black;height:12.95pt'>検討事項</td>
+  <td colspan=6 class=xl13612824 style='width:200pt;border-right:.5pt solid black'>承認</td>
+  <td colspan=6 class=xl10012824 style='border-right:.5pt solid black;border-left:none'>作成</td>
+<!--  <td colspan=2 class=xl10012824 style='border-right:.5pt solid black;border-left:none'>確認</td> -->
+
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+
+<!--
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+-->
+ </tr>
+ <tr height=9 style='mso-height-source:userset;height:6.95pt'>
+  <td colspan=10 rowspan=3 height=27 class=xl11212824 style='border-right:.5pt solid black;border-bottom:1.0pt solid black;height:20.85pt'>　</td>
+  <td colspan=6 rowspan=3 class=xl12712824 style='border-right:.5pt solid black;border-bottom:1.0pt solid black'></td>
+  <td colspan=6 rowspan=3 class=xl13312824 style='border-right:.5pt solid black;border-bottom:1.0pt solid black'></td>
+<!--   <td colspan=2 rowspan=3 class=xl13312824 style='border-right:.5pt solid black;border-bottom:1.0pt solid black'>　</td> -->
+
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+
+<!--
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+-->
+ </tr>
+ <tr height=9 style='mso-height-source:userset;height:6.95pt'>
+  <td height=9 class=xl1512824 style='height:6.95pt'></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+<!--
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+-->
+ </tr>
+ <tr height=9 style='mso-height-source:userset;height:6.95pt'>
+  <td height=9 class=xl1512824 style='height:6.95pt'></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+<!--
+  <td class=xl1512824></td>
+  <td class=xl1512824></td>
+-->
+ </tr>
+
+
+<tr height=18 style='mso-height-source:userset;height:13.5pt'>
+  <td colspan=16 height=18 class=xl14412824 width=464 style='height:13.5pt;
+  width:352pt'>作成：営業部→確認：品証チーム担当→承認：営業部門長→管理：営業部
+<!-----------------------------><!--Excel の Web ページとして発行 ウィザードのアウトプットの終わり-->
+<!-----------------------------></td>
+  <td colspan=2 class=xl14612824 style='mso-ignore:colspan'></td>
+  <td colspan=4 class=xl14512824 width=116 style='width:88pt'>2004-12-1</td>
+  <td colspan=7 class=xl14612824 style='mso-ignore:colspan'></td>
+ </tr>
+
+ <![if supportMisalignedColumns]>
+ <tr height=0 style='display:none'>
+  <td width=29 style='width:22pt'></td>
+  <td width=29 style='width:22pt'></td>
+  <td width=29 style='width:22pt'></td>
+  <td width=29 style='width:22pt'></td>
+  <td width=29 style='width:22pt'></td>
+  <td width=29 style='width:22pt'></td>
+  <td width=29 style='width:22pt'></td>
+  <td width=29 style='width:22pt'></td>
+  <td width=29 style='width:22pt'></td>
+  <td width=29 style='width:22pt'></td>
+  <td width=29 style='width:22pt'></td>
+  <td width=29 style='width:22pt'></td>
+  <td width=29 style='width:22pt'></td>
+  <td width=29 style='width:22pt'></td>
+  <td width=29 style='width:22pt'></td>
+  <td width=29 style='width:22pt'></td>
+  <td width=29 style='width:22pt'></td>
+  <td width=29 style='width:22pt'></td>
+  <td width=29 style='width:22pt'></td>
+  <td width=29 style='width:22pt'></td>
+  <td width=29 style='width:22pt'></td>
+  <td width=29 style='width:22pt'></td>
+  <td width=29 style='width:22pt'></td>
+  <td width=29 style='width:22pt'></td>
+  <td width=29 style='width:22pt'></td>
+  <td width=29 style='width:22pt'></td>
+  <td width=29 style='width:22pt'></td>
+  <td width=29 style='width:22pt'></td>
+  <td width=29 style='width:22pt'></td>
+ </tr>
+ <![endif]>
 </table>
+
 </div>
 
+
+<!----------------------------->
+<!--Excel の Web ページとして発行 ウィザードのアウトプットの終わり-->
+<!----------------------------->
 </body>
+
 </html>
+

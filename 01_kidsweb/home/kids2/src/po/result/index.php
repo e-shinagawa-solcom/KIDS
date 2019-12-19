@@ -206,13 +206,13 @@ foreach ($records as $i => $record) {
     $trBody->setAttribute("id", $record["strordercode"] . "_" . $record["lngorderdetailno"]);
 
     // 先頭ボタン設定
-    fncSetHeadBtnToTr($doc, $trBody, $bgcolor, $aryTableHeadBtnName, $displayColumns, $record, 1, $aryAuthority, true, $isadmin, $index, 'po', null);
+    fncSetHeadBtnToTr($doc, $trBody, $bgcolor, $aryTableHeadBtnName, $displayColumns, $record, $aryAuthority, true, $isadmin, $index, 'po', null);
 
     // ヘッダー部データ設定
-    fncSetHeadDataToTr($doc, $trBody, $bgcolor, $aryTableHeaderName_PO, $displayColumns, $record, 1, true);
+    fncSetHeadDataToTr($doc, $trBody, $bgcolor, $aryTableHeaderName_PO, $displayColumns, $record, true);
 
     // フッターボタン表示
-    fncSetBackBtnToTr($doc, $trBody, $bgcolor, $aryTableBackBtnName, $displayColumns, $record, 1, $aryAuthority, true, $isadmin, 'po');
+    fncSetBackBtnToTr($doc, $trBody, $bgcolor, $aryTableBackBtnName, $displayColumns, $record, $aryAuthority, true, $isadmin, 'po');
 
     // tbody > tr
     $tbody->appendChild($trBody);
