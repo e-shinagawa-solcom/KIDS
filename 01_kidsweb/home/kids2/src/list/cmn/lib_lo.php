@@ -565,8 +565,8 @@ function fncGetListOutputQuery($lngClassCode, $lngKeyCode, $objDB)
         $aryQuery[] = "  , i.lngmonetaryunitcode";
         $aryQuery[] = "  , i.strmonetaryunitsign";
         $aryQuery[] = "  , round(i.curtax1 * 100) || '%' as curtax1";
-        $aryQuery[] = "  , to_char(i.curthismonthamount + i.curlastmonthbalance + i.curtaxprice1, '9,999,999,990.99') AS totalprice";
-        $aryQuery[] = "  , to_char(i.curthismonthamount, '9,999,999,990.99') AS curthismonthamount";
+        $aryQuery[] = "  , to_char(i.cursubtotal1 + i.curlastmonthbalance + i.curtaxprice1, '9,999,999,990.99') AS totalprice";
+        $aryQuery[] = "  , to_char(i.cursubtotal1, '9,999,999,990.99') AS curthismonthamount";
         $aryQuery[] = "  , to_char(i.curlastmonthbalance, '9,999,999,990.99') AS curlastmonthbalance";
         $aryQuery[] = "  , to_char(i.curtaxprice1, '9,999,999,990.99') AS curtaxprice1";
         $aryQuery[] = "  , to_char(i.dtminvoicedate, 'mm·î') as dtminvoicemonth";

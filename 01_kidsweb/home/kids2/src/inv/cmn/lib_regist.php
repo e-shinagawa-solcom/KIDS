@@ -1199,13 +1199,15 @@ function fncInvoiceInsert( $insertAry ,$objDB, $objAuth)
     $aryQuery[] = "'". $insertAry['dtmchargeternstart'] ."'  ,";                            // ¿¡µ·¥¸¥÷(FROM)
     $aryQuery[] = "'". $insertAry['dtmchargeternend'] ."'  ,";                              // ¿¡µ·¥¸¥÷(TO)
     $aryQuery[] = $insertAry['curlastmonthbalance'] ." ,";                                  // ¡∞∑Ó¿¡µ·ªƒ≥€
-    $aryQuery[] = (int)$insertAry['cursubtotal1']." ,";                                     // ∏Ê¿¡µ·∂‚≥€
+//    $aryQuery[] = (int)$insertAry['cursubtotal1']." ,";                                     // ∏Ê¿¡µ·∂‚≥€
+    $aryQuery[] = (int)$insertAry['curthismonthamount']." ,";                                     // ∏Ê¿¡µ·∂‚≥€
     $aryQuery[] = $insertAry['lngmonetaryunitcode'] ." ,";                                  // ƒÃ≤ﬂ√±∞Ã•≥°º•… default ?
     $aryQuery[] = "'". preg_replace('/\\\/','°Ô',$insertAry['strmonetaryunitsign']) ."'  ,";// ƒÃ≤ﬂ√±∞Ã \§Œ•§•Û•µ°º•»§¨§«§≠§ §§§Œ§«¡¥≥—¬–±˛
     $aryQuery[] = (int)$insertAry['lngtaxclasscode'] ." , ";                                // ≤›¿«∂Ë ¨•≥°º•…
     $aryQuery[] = "'" .$insertAry['strtaxclassname']."' , ";                                // ≤›¿«∂Ë ¨Ãæ
-    $aryQuery[] =  $insertAry['curthismonthamount'] .",";                                   // ¿«»¥§≠∂‚≥€1
-    $aryQuery[] = (int)$insertAry['curtax1'] .",";                                          // æ√»Ò¿«Œ®1
+//    $aryQuery[] =  $insertAry['curthismonthamount'] .",";                                   // ¿«»¥§≠∂‚≥€1
+    $aryQuery[] =  $insertAry['cursubtotal1'] .",";                                   // ¿«»¥§≠∂‚≥€1
+    $aryQuery[] = $insertAry['curtax1'] / 100 .",";                                          // æ√»Ò¿«Œ®1
     $aryQuery[] = (int)$insertAry['curtaxprice1'] .",";                                     // æ√»Ò¿«≥€1
     $aryQuery[] = "now() ,";                                                                // ∫Ó¿Æ∆¸
     $aryQuery[] = "(select lngusercode from m_user where struserdisplaycode = '". $insertAry['strusercode'] ."')  ,";                                   // √¥≈ˆº‘•≥°º•…

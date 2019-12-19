@@ -724,9 +724,11 @@ $(function () {
           // lastMonthBalance += Number(price);
         } else {
           // ≈ˆ∑Ó¿¡µ·≥€
-          thisMonthAmount += Number(price);
+//          thisMonthAmount += Number(price);
         }
+        thisMonthAmount += Number(price);
       }
+
       // console.log(lastMonthBalance);
       console.log(tax);
       // ¡∞∑Ó¿¡µ·ªƒ≥€(æ√»Ò¿«π˛§ﬂ)

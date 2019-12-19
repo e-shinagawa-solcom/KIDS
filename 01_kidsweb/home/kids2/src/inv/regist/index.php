@@ -153,6 +153,10 @@
         }
         // 消費税率が同じかチェック
         $baseTax = null;
+        if( !is_array($aryCurTax) )
+        {
+            $aryCurTax[] = $aryCurTax;
+        }
         foreach($aryCurTax as $tax){
             $baseTax = empty($baseTax) ? $tax : $baseTax;
             if($baseTax != $tax)

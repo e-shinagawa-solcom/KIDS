@@ -1,5 +1,7 @@
 (function () {
     $(window).on("beforeunload", function(e) {
-        window.opener.location.reload();
+        if(window.opener.locaton.pathname.indexof("/list") >= 0){
+            window.opener.location.reload();
+        }
     });
 })();
