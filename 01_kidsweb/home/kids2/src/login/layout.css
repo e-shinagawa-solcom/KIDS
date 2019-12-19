@@ -42,7 +42,7 @@
 	background-color: transparent ;
 	border-width: 1px ;
 	border-style: solid ;
-	border-color: #ffffff ;
+	border-color: #000000 ;
 	padding : 2px ;
 	box-sizing: border-box
 }
@@ -57,7 +57,7 @@
 	background-color: transparent ;
 	border-width: 1px ;
 	border-style: solid ;
-	border-color: #ffffff ;
+	border-color: #000000 ;
 	padding : 2px ;
 	box-sizing: border-box
 }
@@ -70,7 +70,7 @@
 	height : 27px ;
 	border-width: 1px ;
 	border-style: solid ;
-	border-color: #ffffff ;
+	border-color: #000000 ;
 	background-color: transparent ;
 	display: flex; 
 }
@@ -80,7 +80,7 @@
 {
 	font-family : Arial ;
 	font-weight : normal ;
-	color : #ffffff ;
+	color : #000000 ;
 	background-color: transparent ;
 	padding: 7px;
 }
@@ -100,17 +100,17 @@
 {
 	font-family : Arial ;
 	font-weight : bold ;
-	color : #ffffff ;
+	color : #000000 ;
 	margin: 0 48 0 10;
-	background-color: #ffffff ;
+/*	background-color: #000000 ;*/
 }
 
 #sPASSWD
 {
 	font-family : Arial ; /* £Í£Ó £Ð¥´¥·¥Ã¥¯, Osaka */
 	font-weight : bold ;
-	color : #ffffff ;
-	background-color: #ffffff ;
+	color : #000000 ;
+/*	background-color: #000000 ; */
 }
 
 #sUIDVars
