@@ -209,6 +209,7 @@ $aryDetail = fncGetDetailBySlipNo($lngSlipNo, $lngRevisionNo, $objDB);
 
 // 明細部のHTMLを生成
 $isCreateNew = false; //修正モード用
+
 $strDetailHtml = fncGetReceiveDetailHtml($aryDetail, $isCreateNew);
 
 //-------------------------------------------------------------------------

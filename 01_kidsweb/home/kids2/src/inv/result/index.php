@@ -216,15 +216,6 @@ foreach ($aryResult as $i => $record) {
     $detailData = fncGetDetailData('inv', $record["lnginvoiceno"], $record["lngrevisionno"], $objDB);
     $rowspan = count($detailData);
 
-    // 明細番号取得
-    for ($i = $rowspan; $i >= 0; $i--) {
-        if ($detailnos == "") {
-            $detailnos = $detailData[$i]["lnginvoicedetailno"];
-        } else {
-            $detailnos = $detailnos . "," . $detailData[$i]["lnginvoicedetailno"];
-        }
-    }
-
     if ($rowspan == 0) {
         $rowspan = 1;
     }
@@ -232,38 +223,20 @@ foreach ($aryResult as $i => $record) {
     $trBody = $doc->createElement("tr");
 
     $trBody->setAttribute("id", $record["strinvoicecode"]);
-    $trBody->setAttribute("detailnos", $detailnos);
 
     $maxdetailno = $detailData[$rowspan - 1]["lnginvoicedetailno"];
 
     // 先頭ボタン設定
-    fncSetHeadBtnToTr($doc, $trBody, $bgcolor, $aryTableHeadBtnName_INV, null, $record, $rowspan, $aryAuthority, true, $isadmin, $index, 'inv', $maxdetailno);
+    fncSetHeadBtnToTr($doc, $trBody, $bgcolor, $aryTableHeadBtnName_INV, null, $record, $aryAuthority, true, $isadmin, $index, 'inv', $maxdetailno);
 
     // ヘッダー部データ設定
-    fncSetHeadDataToTr($doc, $trBody, $bgcolor, $aryTableHeaderName_INV, null, $record, $rowspan, true);
-
-    $detailData[0]["lngmonetaryunitcode"] = $record["lngmonetaryunitcode"];
-    $detailData[0]["strmonetaryunitsign"] = $record["strmonetaryunitsign"];
-    // 明細データの設定
-    fncSetDetailDataToTr($doc, $trBody, $bgcolor, $aryTableDetailHeaderName_INV, null, $detailData[0], true);
-    // tbody > tr
-    $tbody->appendChild($trBody);
+    fncSetHeadDataToTr($doc, $trBody, $bgcolor, $aryTableHeaderName_INV, null, $record, true);
+    
+    // 明細部データ設定
+    fncSetDetailTable($doc, $trBody, $bgcolor, $aryTableDetailHeaderName_INV, null, $record, $detailData, true, true);
     
     // フッターボタン表示
-    fncSetBackBtnToTr($doc, $trBody, $bgcolor, $aryTableBackBtnName_INV, null, $record, $rowspan, $aryAuthority, true, $isadmin, 'inv');
-
-    // 明細行のtrの追加
-    for ($i = 1; $i < $rowspan; $i++) {
-        $trBody = $doc->createElement("tr");
-        $trBody->setAttribute("id", $record["strinvoicecode"] . "_" . $record["lngrevisionno"] . "_" . $detailData[$i]["lnginvoicedetailno"]);
-        $trBody->setAttribute("class", "tablesorter-childRow");
-        $detailData[$i]["lngmonetaryunitcode"] = $record["lngmonetaryunitcode"];
-        $detailData[$i]["strmonetaryunitsign"] = $record["strmonetaryunitsign"];
-        fncSetDetailDataToTr($doc, $trBody, $bgcolor, $aryTableDetailHeaderName_INV, null, $detailData[$i], true);
-
-        $tbody->appendChild($trBody);
-
-    }
+    fncSetBackBtnToTr($doc, $trBody, $bgcolor, $aryTableBackBtnName_INV, null, $record, $aryAuthority, true, $isadmin, 'inv');
 
     // tbody > tr
     $tbody->appendChild($trBody);
