@@ -67,7 +67,9 @@ $aryQuery[] = " e.lngestimatestatuscode,";
 $aryQuery[] = " e.lngrevisionno,";
 $aryQuery[] = " e.lngEstimateNo AS strReportKeyCode,";
 $aryQuery[] = " e.strProductCode,";
+$aryQuery[] = " e.strrevisecode,";
 $aryQuery[] = " e.lngInputUserCode,";
+$aryQuery[] = " e.lngprintcount,";
 $aryQuery[] = " p.strProductName,";
 $aryQuery[] = " g.strGroupDisplayCode AS strInchargeGroupDisplayCode,";
 $aryQuery[] = " g.strGroupDisplayName AS strInchargeGroupDisplayName,";
@@ -78,9 +80,12 @@ $aryQuery[] = " u2.strUserDisplayName AS strInputUserDisplayName";
 $aryQuery[] = "FROM m_Estimate e";
 $aryQuery[] = " INNER JOIN ( ";
 $aryQuery[] = " select p1.*  from m_product p1 ";
-$aryQuery[] = " inner join (select max(lngproductno) lngproductno, strproductcode from m_Product group by strProductCode) p2";
-$aryQuery[] = " on p1.lngproductno = p2.lngproductno";
+$aryQuery[] = " inner join (select max(lngrevisionno) lngrevisionno, strproductcode,strrevisecode from m_Product group by strProductCode,strrevisecode) p2";
+$aryQuery[] = " on p1.strproductcode = p2.strproductcode";
+$aryQuery[] = " and p1.lngrevisionno = p2.lngrevisionno";
+$aryQuery[] = " and p1.strrevisecode = p2.strrevisecode";
 $aryQuery[] = " ) p ON p.strProductCode       = e.strProductCode";
+$aryQuery[] = " AND p.strrevisecode       = e.strrevisecode";
 $aryQuery[] = "  AND p.bytInvalidFlag = FALSE";
 $aryQuery[] = "  LEFT OUTER JOIN ( ";
 $aryQuery[] = "    select distinct";
@@ -191,7 +196,7 @@ for ($i = 0; $i < $lngResultNum; $i++) {
 
     $aryParts["strResult"] .= "<tr class=\"Segs\">\n";
 
-    $aryParts["strResult"] .= "<td>" . $objResult->strproductcode . "</td>\n";
+    $aryParts["strResult"] .= "<td>" . $objResult->strproductcode . "_". $objResult->strrevisecode . "</td>\n";
     $aryParts["strResult"] .= "<td>" . $objResult->strproductname . "</td>\n";
     $aryParts["strResult"] .= "<td>" . $objResult->strinputuserdisplaycode . ":" . $objResult->strinputuserdisplayname . "</td>\n";
     $aryParts["strResult"] .= "<td>" . $objResult->strinchargegroupdisplaycode . ":" . $objResult->strinchargegroupdisplayname . "</td>\n";
@@ -199,8 +204,8 @@ for ($i = 0; $i < $lngResultNum; $i++) {
 
     $aryParts["strResult"] .= "<td align=center>";
 
-    // コピーファイルパスが存在している場合、コピー帳票出力ボタン表示
-    if ($aryReportCode[$objResult->strreportkeycode] != null) {
+    // 印刷回数が0より大きい場合、コピー帳票出力ボタン表示
+    if (intval($objResult->lngprintcount) > 0) {
         // コピー帳票出力ボタン表示
         $aryParts["strResult"] .= "<a href=\"#\"><img onclick=\"fncListOutput( '/list/result/frameset.php?strSessionID=" . $searchValue["strSessionID"] . "&lngReportClassCode=" . DEF_REPORT_ESTIMATE . "&strReportKeyCode=" . $objResult->strreportkeycode . "&lngReportCode=" . $aryReportCode[$objResult->strreportkeycode] . "' );return false;\" onmouseover=\"fncCopyPreviewButton( 'on' , this );\" onmouseout=\"fncCopyPreviewButton( 'off' , this );fncAlphaOff( this );\" onmousedown=\"fncAlphaOn( this );\" onmouseup=\"fncAlphaOff( this );\" src=\"/img/type01/list/copybig_off_bt.gif\" width=\"72\" height=\"20\" border=\"0\" alt=\"COPY PREVIEW\"></a>";
     }

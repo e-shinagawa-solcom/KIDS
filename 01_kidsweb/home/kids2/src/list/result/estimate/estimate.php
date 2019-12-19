@@ -151,6 +151,7 @@ function fncGetEstimate($lngEstimateNo, $objDB)
     $aryQuery[] = " e.curManufacturingCost, ";
     $aryQuery[] = " to_char(e.dtmInsertDate,'YYYY/MM/DD') AS dtmInsertDate ";
     $aryQuery[] = " ,e.strNote ";
+    $aryQuery[] = " ,e.lngprintcount ";
 
     $aryQuery[] = "FROM m_Estimate e ";
     $aryQuery[] = " INNER JOIN m_Product p ON ( e.strProductCode = p.strProductCode AND p.bytInvalidFlag = FALSE ) ";
@@ -159,6 +160,7 @@ function fncGetEstimate($lngEstimateNo, $objDB)
     $aryQuery[] = "WHERE e.lngEstimateNo = " . $lngEstimateNo;
     $aryQuery[] = " AND e.lngRevisionNo = (SELECT MAX(e2.lngRevisionNo) FROM m_Estimate e2 WHERE e.lngEstimateNo = e2.lngEstimateNo)";
 
+    echo join(" ", $aryQuery);
     list($lngResultID, $lngResultNum) = fncQuery(join(" ", $aryQuery), $objDB);
     unset($aryQuery);
 

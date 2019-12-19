@@ -44,7 +44,7 @@ elseif ( $_GET )
 $aryCheck["strSessionID"]       = "null:numenglish(32,32)";
 $aryCheck["strReportKeyCode"]   = "null";
 $aryCheck["lngReportCode"]      = "ascii(1,7)";
-$aryCheck["strReportKeyCode"]   = "null:number(0,9999)";
+$aryCheck["strReportKeyCode"]   = "null:number(0,9999999)";
 
 
 $aryResult = fncAllCheck( $aryData, $aryCheck );
@@ -68,18 +68,6 @@ if ( $lngResultNum > 0 )
 	$strReportPathName = $objResult->strreportpathname;
 	unset ( $objResult );
 }
-
-$copyDisabled = "visible";
-
-// コピーファイルパスが存在しない または
-// 帳票コードが無い または コピーフラグが偽(コピー選択ではない) かつ
-// コピー解除権限がある場合、
-// コピーマークの非表示
-if ( !$strReportPathName || ( !( $aryData["lngReportCode"] || $aryData["bytCopyFlag"] ) && fncCheckAuthority( DEF_FUNCTION_LO4, $objAuth ) ) )
-{
-	$copyDisabled = "hidden";
-}
-
 
 ///////////////////////////////////////////////////////////////////////////
 // 帳票コードが真の場合、ファイルデータを取得
@@ -110,7 +98,6 @@ else
 	$objMaster->setMasterTableData( $strQuery, $objDB );
 
 	$aryParts =& $objMaster->aryData[0];
-	$aryParts["copyDisabled"] = $copyDisabled;
 
 
 	/////////////////////////////////////////////////////////////////

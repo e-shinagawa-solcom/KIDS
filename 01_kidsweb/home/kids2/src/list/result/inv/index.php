@@ -68,6 +68,7 @@ $aryQuery[] = "  , u1.strGroupDisplayCode AS strGroupDisplayCode";
 $aryQuery[] = "  , u1.strGroupDisplayName AS strGroupDisplayName";
 $aryQuery[] = "  , u1.strUserDisplayCode AS strUserDisplayCode";
 $aryQuery[] = "  , u1.strUserDisplayName AS strUserDisplayName";
+$aryQuery[] = "  , i.lngprintcount";
 $aryQuery[] = "  , i.lnginvoiceno AS strReportKeyCode ";
 $aryQuery[] = "FROM";
 $aryQuery[] = "  m_invoice i ";
@@ -269,8 +270,8 @@ for ($i = 0; $i < $lngResultNum; $i++) {
 
     $aryParts["strResult"] .= "<td align=center>";
 
-    // コピーファイルパスが存在している場合、コピー帳票出力ボタン表示
-    if ($aryReportCode[$objResult->strreportkeycode] != null) {
+    // 印刷回数が0より大きい場合、コピー帳票出力ボタン表示
+    if (intval($objResult->lngprintcount) > 0) {
         // コピー帳票出力ボタン表示
         $aryParts["strResult"] .= "<a href=\"#\"><img onclick=\"fncListOutput( '/list/result/frameset.php?strSessionID=" . $searchValue["strSessionID"] . "&lngReportClassCode=" . DEF_REPORT_INV . "&strReportKeyCode=" . $objResult->strreportkeycode . "&lngReportCode=" . $aryReportCode[$objResult->strreportkeycode] . "' );return false;\" onmouseover=\"fncCopyPreviewButton( 'on' , this );\" onmouseout=\"fncCopyPreviewButton( 'off' , this );fncAlphaOff( this );\" onmousedown=\"fncAlphaOn( this );\" onmouseup=\"fncAlphaOff( this );\" src=\"/img/type01/list/copybig_off_bt.gif\" width=\"72\" height=\"20\" border=\"0\" alt=\"COPY PREVIEW\"></a>";
     }

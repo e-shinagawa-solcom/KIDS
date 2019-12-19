@@ -1,170 +1,248 @@
 <?
-/** 
-*	Ä¢É¼½ĞÎÏ ¸«ÀÑ¸¶²Á·×»» °õºş´°Î»²èÌÌ
-*
-*	@package   KIDS
-*	@copyright Copyright &copy; 2004, AntsBizShare 
-*	@author    Kenji Chiba
-*	@access    public
-*	@version   1.00
-*/
-// °õºş¥×¥ì¥Ó¥å¡¼²èÌÌ( * ¤Ï»ØÄêÄ¢É¼¤Î¥Õ¥¡¥¤¥ëÌ¾ )
+/**
+ *    å¸³ç¥¨å‡ºåŠ› è¦‹ç©åŸä¾¡è¨ˆç®— å°åˆ·å®Œäº†ç”»é¢
+ *
+ *    @package   KIDS
+ *    @copyright Copyright &copy; 2004, AntsBizShare
+ *    @author    Kenji Chiba
+ *    @access    public
+ *    @version   1.00
+ */
+// å°åˆ·ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼ç”»é¢( * ã¯æŒ‡å®šå¸³ç¥¨ã®ãƒ•ã‚¡ã‚¤ãƒ«å )
 // listoutput.php -> strSessionID       -> action.php
 // listoutput.php -> strReportKeyCode   -> action.php
 // listoutput.php -> lngReportCode      -> action.php
 
-// ÀßÄêÆÉ¤ß¹ş¤ß
-include_once('conf.inc');
-require( LIB_DEBUGFILE );
+// è¨­å®šèª­ã¿è¾¼ã¿
+include_once 'conf.inc';
+require LIB_DEBUGFILE;
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹ş¤ß
+
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require (LIB_FILE);
 require (SRC_ROOT . "list/cmn/lib_lo.php");
 require (SRC_ROOT . "list/result/estimate/estimate.php");
+require_once ( VENDOR_AUTOLOAD_FILE );
 
-$objDB   = new clsDB();
+require_once (SRC_ROOT . "/estimate/cmn/estimateDB.php");
+require_once (SRC_ROOT . "/estimate/cmn/estimatePreviewController.php");
+
+require_once ( SRC_ROOT . "estimate/cmn/estimateSheetController.php" );
+require_once ( SRC_ROOT . "estimate/cmn/makeHTML.php" );
+
+use PhpOffice\PhpSpreadsheet\Reader\Xlsx as XlsxReader;
+use PhpOffice\PhpSpreadsheet\Writer\Html as HtmlWriter;
+
+$objDB   = new estimateDB();
 $objAuth = new clsAuth();
+
+$objDB->InputEncoding = 'UTF-8';
 $objDB->open( "", "", "", "" );
 
 //////////////////////////////////////////////////////////////////////////
-// POST(°ìÉôGET)¥Ç¡¼¥¿¼èÆÀ
+// POST(ä¸€éƒ¨GET)ãƒ‡ãƒ¼ã‚¿å–å¾—
 //////////////////////////////////////////////////////////////////////////
-if ( $_POST )
-{
-	$aryData = $_POST;
-}
-elseif ( $_GET )
-{
-	$aryData = $_GET;
+if ($_POST) {
+    $aryData = $_POST;
+} elseif ($_GET) {
+    $aryData = $_GET;
 }
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
-$aryCheck["strSessionID"]       = "null:numenglish(32,32)";
-$aryCheck["strReportKeyCode"]   = "null:number(0,99999999)";
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
+$aryCheck["strSessionID"] = "null:numenglish(32,32)";
+$aryCheck["strReportKeyCode"] = "null:number(0,99999999)";
 $strTemplateFile = "p";
 
-$aryResult = fncAllCheck( $aryData, $aryCheck );
-fncPutStringCheckError( $aryResult, $objDB );
+$aryResult = fncAllCheck($aryData, $aryCheck);
+fncPutStringCheckError($aryResult, $objDB);
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
-$objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
+$objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 
-// ¸¢¸Â³ÎÇ§
-if ( !fncCheckAuthority( DEF_FUNCTION_LO0, $objAuth ) )
-{
-	fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", TRUE, "", $objDB );
+// æ¨©é™ç¢ºèª
+if (!fncCheckAuthority(DEF_FUNCTION_LO0, $objAuth)) {
+    fncOutputError(9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", true, "", $objDB);
 }
 
+// æŒ‡å®šã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰ã®å¸³ç¥¨ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—
+$strQuery = fncGetCopyFilePathQuery(DEF_REPORT_ESTIMATE, $aryData["strReportKeyCode"], $aryData["lngReportCode"]);
 
-// »ØÄê¥­¡¼¥³¡¼¥É¤ÎÄ¢É¼¥Ç¡¼¥¿¤ò¼èÆÀ
-$strQuery = fncGetCopyFilePathQuery( DEF_REPORT_ESTIMATE, $aryData["strReportKeyCode"], $aryData["lngReportCode"] );
+list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
-list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
+if ($lngResultNum === 1) {
+    $objResult = $objDB->fetchObject($lngResultID, 0);
+    $strListOutputPath = $objResult->strreportpathname;
+    unset($objResult);
+    $objDB->freeResult($lngResultID);
+    //echo "ã‚³ãƒ”ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«æœ‰ã‚Šã€‚";
+}
+// GETãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚ˆã‚Šãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’å–å¾—
+$estimateNo = $aryData["strReportKeyCode"]; // è¦‹ç©åŸä¾¡ç•ªå·
 
-if ( $lngResultNum === 1 )
-{
-	$objResult = $objDB->fetchObject( $lngResultID, 0 );
-	$strListOutputPath = $objResult->strreportpathname;
-	unset ( $objResult );
-	$objDB->freeResult( $lngResultID );
-	//echo "¥³¥Ô¡¼¥Õ¥¡¥¤¥ëÍ­¤ê¡£";
+// ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·ã®å–å¾—
+if (isset($aryData['revisionNo'])) {
+	$revisionNo = $aryData['revisionNo'];
+	$estimate = $objDB->getEstimateDetail($estimateNo, $revisionNo);
+} else {
+	// ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·ãŒPOSTã•ã‚Œãªã‹ã£ãŸå ´åˆã¯æœ€æ–°ã®ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
+	$estimate = $objDB->getEstimateDetail($estimateNo);
 }
 
-// Ä¢É¼¤¬Â¸ºß¤·¤Ê¤¤¾ì¹ç¡¢¥³¥Ô¡¼Ä¢É¼¥Õ¥¡¥¤¥ë¤òÀ¸À®¡¢ÊİÂ¸
-elseif ( $lngResultNum === 0 )
-{
-	// ¸«ÀÑ¸¶²Á¥Ş¥¹¥¿¥Ç¡¼¥¿¼èÆÀ
-	$aryEstimateData = fncGetEstimate( $aryData["strReportKeyCode"], $objDB );
+$firstEstimateDetail = current($estimate);
 
+if (!isset($revisionNo)) {
+	$revisionNo = $firstEstimateDetail->lngrevisionno;
+}
 
-	// ¥³¥á¥ó¥È¡Ê¥Ğ¥Ã¥Õ¥¡¡Ë¼èÆÀ
-	$strBuffRemark	= $aryEstimateData["strRemark"];
-
-//fncDebug( 'es_list.txt', $aryEstimateData, __FILE__, __LINE__);
-
-
-	// ¸«ÀÑ¸¶²Á¤Î¥Ç¥Õ¥©¥ë¥ÈÃÍ¤ËÂĞ¤¹¤ëÆşÎÏÃÍ¤Î¼èÆÀ
-	// 2005/06/10 ABE Yuuki
-	//¼õÃí²Á³Û¤ò½Ğ¤¹¤¿¤á¤Ë¼ÂÀÓÇ¼²Á/curReceiveProductPrice¤ò°ú¿ô¤ËÄÉ²Ã
-	$aryDefaultValue = fncGetEstimateDefaultValue( $aryData["strReportKeyCode"], $aryEstimateData["lngReceiveProductQuantity"], 
-		$aryEstimateData["lngProductionQuantity"], $aryEstimateData["curProductPrice"], $aryRate, $objDB , $aryEstimateData["curReceiveProductPrice"]);
-	//old
-	//$aryDefaultValue = fncGetEstimateDefaultValue( $aryData["strReportKeyCode"], $aryEstimateData["lngReceiveProductQuantity"], 
-	//	$aryEstimateData["lngProductionQuantity"], $aryEstimateData["curProductPrice"], $aryRate, $objDB );
-
-	list ( $aryDetail, $aryOrderDetail ) = fncGetEstimateDetail( $aryData["strReportKeyCode"], $aryEstimateData["strProductCode"], $aryRate, $aryDefaultValue, $objDB );
-
-	list ( $aryDetail, $aryCalculated, $aryHiddenString ) = fncGetEstimateDetailHtml( $aryDetail, $aryOrderDetail, $aryDefaultValue, "list/result/e_detail.tmpl", "list/result/e_subject.tmpl", $objDB );
-	unset ( $aryHiddenString );
-	unset ( $aryRate );
-
-	// ÇÛÎó¤Î¥Ş¡¼¥¸
-	$aryEstimateData = array_merge( $aryEstimateData, $aryCalculated );
-
-	// É¸½à³ä¹ç¼èÆÀ
-	$aryEstimateData["curStandardRate"] = fncGetEstimateDefault( $objDB );
-
-	// ¼ÒÆâUS¥É¥ë¥ì¡¼¥È¼èÆÀ
-	$aryEstimateData["curConversionRate"] = fncGetUSConversionRate( $aryEstimateData["dtmInsertDate"], $objDB );
-
-	// ·×»»·ë²Ì¤ò¼èÆÀ
-	$aryEstimateData = fncGetEstimateCalculate( $aryEstimateData );
-
-	// ¥«¥ó¥Ş½èÍı
-	$aryEstimateData = fncGetCommaNumber( $aryEstimateData );
-
-	// ¥³¥á¥ó¥È
-	$aryEstimateData["strRemarkDisp"]	= nl2br($strBuffRemark);
-
-	// ¥Ù¡¼¥¹¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹ş¤ß
-	$objTemplate = new clsTemplate();
-	$objTemplate->getTemplate( "list/result/e_base.tmpl" );
-
-	// ¥Ù¡¼¥¹¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
-	$objTemplate->replace( $aryEstimateData );
-	$objTemplate->replace( $aryDetail );
-	$objTemplate->complete();
-
-	$strBodyHtml = $objTemplate->strTemplate;
-
-	// ---------------------------------------- modifyed by Kazushi Saito 2004/04/22 ¢­
-	$strHtml = $strBodyHtml;
-	// ---------------------------------------- modifyed by Kazushi Saito 2004/04/22 ¢¬
-
-	$objDB->transactionBegin();
-
-	// ¥·¡¼¥±¥ó¥¹È¯¹Ô
-	$lngSequence = fncGetSequence( "t_Report.lngReportCode", $objDB );
-
-	// Ä¢É¼¥Æ¡¼¥Ö¥ë¤ËINSERT
-	$strQuery = "INSERT INTO t_Report VALUES ( $lngSequence, " . DEF_REPORT_ESTIMATE . ", " . $aryData["strReportKeyCode"] . ", '', '$lngSequence' )";
-
-	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
-
-	// Ä¢É¼¥Õ¥¡¥¤¥ë¥ª¡¼¥×¥ó
-	if ( !$fp = fopen ( SRC_ROOT . "list/result/cash/" . $lngSequence . ".tmpl", "w" ) )
-	{
-		list ( $lngResultID, $lngResultNum ) = fncQuery( "ROLLBACK", $objDB );
-		fncOutputError ( 9059, DEF_FATAL, "Ä¢É¼¥Õ¥¡¥¤¥ë¤Î¥ª¡¼¥×¥ó¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£", TRUE, "", $objDB );
+// æœ€å¤§ã®ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·ã®å–å¾—
+if (isset($_POST['maxRevisionNo'])) {
+	$maxRevisionNo = $_POST['maxRevisionNo'];
+} else {
+	$result = $objDB->getEstimateDetail($estimateNo);
+	if ($result) {
+		$firstRecord = current($result);
+		$maxRevisionNo = $firstRecord->lngrevisionno;
 	}
+}
+$aryParts["lngestimateno"] = $firstEstimateDetail->lngestimateno;
+$aryParts["lngrevisionno"] = $maxRevisionNo;
+if ($lngResultNum === 1) {	
+    // å°åˆ·å›æ•°ã‚’æ›´æ–°ã™ã‚‹
+	fncUpdatePrintCount(DEF_REPORT_ESTIMATE, $aryParts, $objDB);
+// å¸³ç¥¨ãŒå­˜åœ¨ã—ãªã„å ´åˆã€ã‚³ãƒ”ãƒ¼å¸³ç¥¨ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ç”Ÿæˆã€ä¿å­˜
+}
+// å¸³ç¥¨ãŒå­˜åœ¨ã—ãªã„å ´åˆã€ã‚³ãƒ”ãƒ¼å¸³ç¥¨ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ç”Ÿæˆã€ä¿å­˜
+elseif ($lngResultNum === 0) {
+    $productCode = $firstEstimateDetail->strproductcode;
+    $reviseCode = $firstEstimateDetail->strrevisecode;
+    $productRevisionNo = $firstEstimateDetail->lngproductrevisionno;
 
-	// Ä¢É¼¥Õ¥¡¥¤¥ë¤Ø¤Î½ñ¤­¹ş¤ß
-	if ( !fwrite ( $fp, $strHtml ) )
-	{
-		list ( $lngResultID, $lngResultNum ) = fncQuery( "ROLLBACK", $objDB );
-		fncOutputError ( 9059, DEF_FATAL, "Ä¢É¼¥Õ¥¡¥¤¥ë¤Î½ñ¤­¹ş¤ß¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£", TRUE, "", $objDB );
-	}
+    // è£½å“ãƒã‚¹ã‚¿ã®æƒ…å ±å–å¾—
+    $product = $objDB->getProduct($productCode, $reviseCode, $productRevisionNo);
 
-	$objDB->transactionCommit();
-	//echo "¥³¥Ô¡¼¥Õ¥¡¥¤¥ëºîÀ®";
+    $objPreview = new estimatePreviewController();
+    $objPreview->dataInitialize($product, $estimate, $objDB);
+
+    $productData = $objPreview->getProduct();
+
+    $estimateData = $objPreview->getEstimate();
+
+    $tempFilePath = EXCEL_TMP_ROOT . 'workSheetPrintTmp.xlsx';
+
+    $objReader = new XlsxReader();
+
+    $spreadSheet = $objReader->load($tempFilePath);
+
+    // å¿…è¦ãªå®šæ•°ã‚’å–å¾—ã™ã‚‹
+    $nameList = workSheetConst::getAllNameListForDownload();
+    $rowCheckNameList = workSheetConst::DETAIL_HEADER_CELL_NAME_LIST;
+    $targetAreaList = workSheetConst::TARGET_AREA_DISPLAY_NAME_LIST;
+
+    // phpSpreadSheetã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‹ã‚‰ã‚·ãƒ¼ãƒˆã®æƒ…å ±ã‚’å–å¾—
+    $allSheetInfo = estimateSheetController::getSheetInfo($spreadSheet, $nameList, $rowCheckNameList);
+
+    $sheetInfo = estimateSheetController::getFirstElement($allSheetInfo);
+
+    if ($sheetInfo['displayInvalid']) {
+        // ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”¨ã®ã‚·ãƒ¼ãƒˆãŒç„¡åŠ¹ã«ãªã£ã¦ã„ãªã„å ´åˆã€ã‚¨ãƒ©ãƒ¼ã‚’å‡ºåŠ›ã™ã‚‹
+        if (!$sheetDataList) {
+            $strMessage = 'ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç•°å¸¸';
+
+            // [strErrorMessage]æ›¸ãå‡ºã—
+            $aryHtml["strErrorMessage"] = $strMessage;
+
+            // ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
+            $objTemplate = new clsTemplate();
+            $objTemplate->getTemplate("/result/error/parts.tmpl");
+
+            // ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
+            $objTemplate->replace($aryHtml);
+            $objTemplate->complete();
+
+            // HTMLå‡ºåŠ›
+            echo $objTemplate->strTemplate;
+
+            $objDB->close();
+
+            exit;
+        }
+    }
+
+    $objSheet = null;
+
+    // ã‚·ãƒ¼ãƒˆãŒè¡¨ç¤ºç„¡åŠ¹ã§ãªã„å ´åˆã¯ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆå‡¦ç†ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç”Ÿæˆ
+    $objSheet = new estimateSheetController();
+
+    // ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«ãƒ‡ãƒ¼ã‚¿ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
+    $objSheet->dataInitialize($sheetInfo, $objDB);
+
+    // phpSpreadSheetã§ç”Ÿæˆã—ãŸã‚·ãƒ¼ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ã‚°ãƒ­ãƒ¼ãƒãƒ«å‚ç…§ç”¨ã«ã‚»ãƒƒãƒˆã™ã‚‹
+    $sheet = $sheetInfo['sheet'];
+    $cellAddressList = $sheetInfo['cellAddress'];
+
+    // ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«å¿…è¦ãªå€¤ã‚’ã‚»ãƒƒãƒˆ
+    $objSheet->setDBEstimateData($productData, $estimateData);
+
+    $objWriter = new HtmlWriter($spreadSheet);
+
+// ç½®æ›æ–‡å­—åˆ—ç”Ÿæˆ
+    $time = new DateTime();
+    $replace = '_%' . md5($time->format('YmdHisu')) . '%_';
+
+    $output = $objWriter->generateHTMLHeader();
+    $output .= $objWriter->generateStyles();
+
+    $customCSS = "<style>";
+    $customCSS .= "table {table-layout: fixed; width: 950px; white-space:nowrap;}";
+    $customCSS .= "td {overflow: hidden;}";
+    $customCSS .= "</style>";
+
+    $output .= $customCSS;
+
+	// æ–‡å­—åŒ–ã‘å¯¾ç­–ï¼šã‚¨ã‚¯ã‚»ãƒ«ã®Â¥ãƒãƒ¼ã‚¯ã‚’ç½®æ›æ–‡å­—åˆ—ã«ç½®æ›(UTF-8 â†’ EUC-JPã®å¤‰æ›æ™‚ã«ä¸Šæ‰‹ãå¤‰æ›ã§ããªã„ãŸã‚)
+    $sheetData = str_replace('Â¥', $replace, $objWriter->generateSheetData());
+
+    $output .= $sheetData;
+
+    $output .= $objWriter->generateHTMLFooter();
+
+    $output = mb_convert_encoding($output, 'EUC-JP', 'UTF-8');
+
+    $strHtml = $output;
+
+    $objDB->transactionBegin();
+
+    // ã‚·ãƒ¼ã‚±ãƒ³ã‚¹ç™ºè¡Œ
+    $lngSequence = fncGetSequence("t_Report.lngReportCode", $objDB);
+
+    // å¸³ç¥¨ãƒ†ãƒ¼ãƒ–ãƒ«ã«INSERT
+    $strQuery = "INSERT INTO t_Report VALUES ( $lngSequence, " . DEF_REPORT_ESTIMATE . ", " . $aryData["strReportKeyCode"] . ", '', '$lngSequence' )";
+
+    list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
+
+	$objDB->freeResult($lngResultID);
+	
+    // å°åˆ·å›æ•°ã‚’æ›´æ–°ã™ã‚‹
+    fncUpdatePrintCount(DEF_REPORT_ESTIMATE, $aryParts, $objDB);
+
+    // å¸³ç¥¨ãƒ•ã‚¡ã‚¤ãƒ«ã‚ªãƒ¼ãƒ—ãƒ³
+    if (!$fp = fopen(SRC_ROOT . "list/result/cash/" . $lngSequence . ".tmpl", "w")) {
+        list($lngResultID, $lngResultNum) = fncQuery("ROLLBACK", $objDB);
+        fncOutputError(9059, DEF_FATAL, "å¸³ç¥¨ãƒ•ã‚¡ã‚¤ãƒ«ã®ã‚ªãƒ¼ãƒ—ãƒ³ã«å¤±æ•—ã—ã¾ã—ãŸã€‚", true, "", $objDB);
+    }
+
+    // å¸³ç¥¨ãƒ•ã‚¡ã‚¤ãƒ«ã¸ã®æ›¸ãè¾¼ã¿
+    if (!fwrite($fp, $strHtml)) {
+        list($lngResultID, $lngResultNum) = fncQuery("ROLLBACK", $objDB);
+        fncOutputError(9059, DEF_FATAL, "å¸³ç¥¨ãƒ•ã‚¡ã‚¤ãƒ«ã®æ›¸ãè¾¼ã¿ã«å¤±æ•—ã—ã¾ã—ãŸã€‚", true, "", $objDB);
+    }
+
+    $objDB->transactionCommit();
+    //echo "ã‚³ãƒ”ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«ä½œæˆ";
 }
 //echo "<script language=javascript>window.form1.submit();window.returnValue=true;window.close();</script>";
 echo "<script language=javascript>parent.window.close();</script>";
 
-
 $objDB->close();
 
-
-
-return TRUE;
-?>
+return true;

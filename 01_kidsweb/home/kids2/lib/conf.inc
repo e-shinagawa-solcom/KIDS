@@ -620,6 +620,9 @@ define ("DEF_STOCK_ITEM_CODE_TARIFF",       3); // 関税
 
 // 帳票テンプレートディレクトリパス
 define ( "REPORT_TMPDIR",	PATH_HOME . "/report_tmp/" );
+define ( "REPORT_SLIP_EXCLUSIVE",	"slip_exclusive.xlsx" );
+define ( "REPORT_SLIP_COMM",	"slip_comm.xlsx" );
+define ( "REPORT_SLIP_DEBIT",	"slip_debitnote.xlsx" );
 // L/C帳票テンプレートファイル
 define ( "REPORT_LC_TMPFILE",	"帳票テンプレート.xls" );
 // L/C帳票テンプレートファイル

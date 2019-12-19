@@ -57,9 +57,6 @@ if ($lngResultNum === 1) {
     unset($objResult);
     $objDB->freeResult($lngResultID);
 }
-
-// 帳票が存在しない場合、コピー帳票ファイルを生成、保存
-elseif ($lngResultNum === 0) {
     // データ取得クエリ
     $strQuery = fncGetListOutputQuery(DEF_REPORT_SLIP, $aryData["strReportKeyCode"], $objDB);
 
@@ -67,6 +64,15 @@ elseif ($lngResultNum === 0) {
     $objMaster->setMasterTableData($strQuery, $objDB);
 
     $aryParts = &$objMaster->aryData[0];
+if ( $lngResultNum === 1 )
+{
+    // 印刷回数を更新する
+	fncUpdatePrintCount(DEF_REPORT_SLIP, $aryParts, $objDB);
+}
+
+// 帳票が存在しない場合、コピー帳票ファイルを生成、保存
+elseif ($lngResultNum === 0) {
+
 
     // 納品伝票種別取得
     $strQuery = fncGetSlipKindQuery($aryParts["lngcustomercode"]);
@@ -225,14 +231,7 @@ elseif ($lngResultNum === 0) {
     $objDB->freeResult($lngResultID);
 
     // 印刷回数の設定
-    $aryParts["lngprintcount"] += 1;
-
-    // 印刷回数の更新    
-    $strQuery = "update m_slip set lngprintcount = ".$aryParts["lngprintcount"] ." where lngslipno = " .$aryParts["lngslipno"] . " and lngrevisionno = " .$aryParts["lngrevisionno"];
-    
-    list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
-    
-    $objDB->freeResult($lngResultID);
+    fncUpdatePrintCount(DEF_REPORT_SLIP, $aryParts, $objDB); 
 
     // 帳票ファイルオープン
     if (!$fp = fopen(SRC_ROOT . "list/result/cash/" . $lngSequence . ".tmpl", "w")) {
