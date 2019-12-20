@@ -623,7 +623,8 @@ class estimateDB extends clsDB {
             $strQuery .= " mp.strrevisecode,";
             $strQuery .= " mp.lngrevisionno AS lngproductrevisionno,";
             $strQuery .= " minRev.lngrevisionno AS minrevisionno,";
-            $strQuery .= " TO_CHAR(me.dtminsertdate, 'YYYY/MM/DD') AS dtminsertdate";
+            $strQuery .= " TO_CHAR(me.dtminsertdate, 'YYYY/MM/DD') AS dtminsertdate,";
+            $strQuery .= " me.lngprintcount";
 
             $strQuery .= " FROM t_estimatedetail ted";
             $strQuery .= " INNER JOIN m_estimate me";
