@@ -39,7 +39,7 @@
         function (value, element, params) {
             if (params) {
                 return this.optional(element) || /^[a-zA-Z0-9-, ]+$/.test(value);
-            } 
+            }
             return true;
         },
         msgSpecialFormat
@@ -56,7 +56,7 @@
         },
         msgSpecialFormat
     );
-　　// 製品コードの書式チェック
+    　　// 製品コードの書式チェック
     $.validator.addMethod(
         "checkStrProductCode",
         function (value, element, params) {
@@ -73,6 +73,13 @@
         "checkDateFormat",
         function (value, element, params) {
             if (params) {
+                if (/^[0-9]{8}$/.test(value)) {
+                    var str = value.trim();
+                    var y = str.substr(0, 4);
+                    var m = str.substr(4, 2);
+                    var d = str.substr(6, 2);
+                    value = y + "/" + m + "/" + d;
+                }
                 // yyyy/mm/dd形式か
                 if (!(regDate.test(value))) {
                     return false;
@@ -97,6 +104,13 @@
         "isLessThanToday",
         function (value, element, params) {
             if (params) {
+                if (/^[0-9]{8}$/.test(value)) {
+                    var str = value.trim();
+                    var y = str.substr(0, 4);
+                    var m = str.substr(4, 2);
+                    var d = str.substr(6, 2);
+                    value = y + "/" + m + "/" + d;
+                }
                 var regResult = regDate.exec(value);
                 var yyyy = regResult[1];
                 var mm = regResult[2];
@@ -137,9 +151,24 @@
         "isGreaterThanFromDate",
         function (value, element, params) {
             if (params[0]) {
-                // FROM_XXXXが入力された場合、
-                if ($(params[1]).val() != "") {
-                    var regResult = regDate.exec($(params[1]).val());
+                if (/^[0-9]{8}$/.test(value)) {
+                    var str = value.trim();
+                    var y = str.substr(0, 4);
+                    var m = str.substr(4, 2);
+                    var d = str.substr(6, 2);
+                    value = y + "/" + m + "/" + d;
+                }
+                var params1 = $(params[1]).val();
+                // FROM_XXXXが入力された場合、                
+                if (params1 != "") {
+                    if (/^[0-9]{8}$/.test(params1)) {
+                        var str = params1.trim();
+                        var y = str.substr(0, 4);
+                        var m = str.substr(4, 2);
+                        var d = str.substr(6, 2);
+                        params1 = y + "/" + m + "/" + d;
+                    }
+                    var regResult = regDate.exec(params1);
                     var yyyy = regResult[1];
                     var mm = regResult[2];
                     var dd = regResult[3];
@@ -231,79 +260,79 @@
             // ログイン許可
             bytInvalidFlag: {
                 required: function () {
-                    return $('input[name="IsSearch_bytInvalidFlagConditions"]').get(0).checked ;
+                    return $('input[name="IsSearch_bytInvalidFlagConditions"]').get(0).checked;
                 }
             },
             // ユーザーコード
             lngUserCode: {
                 required: function () {
-                    return $('input[name="IsSearch_lngUserCodeConditions"]').get(0).checked ;
+                    return $('input[name="IsSearch_lngUserCodeConditions"]').get(0).checked;
                 }
             },
             // ユーザーID
             strUserID: {
                 required: function () {
-                    return $('input[name="IsSearch_strUserIDConditions"]').get(0).checked ;
+                    return $('input[name="IsSearch_strUserIDConditions"]').get(0).checked;
                 }
             },
             // メール配信許可
             bytMailTransmitFlag: {
                 required: function () {
-                    return $('input[name="IsSearch_bytMailTransmitFlagConditions"]').get(0).checked ;
+                    return $('input[name="IsSearch_bytMailTransmitFlagConditions"]').get(0).checked;
                 }
             },
             // メールアドレス
             strMailAddress: {
                 required: function () {
-                    return $('input[name="IsSearch_strMailAddressConditions"]').get(0).checked ;
+                    return $('input[name="IsSearch_strMailAddressConditions"]').get(0).checked;
                 }
             },
             // ユーザー表示
             bytUserDisplayFlag: {
                 required: function () {
-                    return $('input[name="IsSearch_bytUserDisplayFlagConditions"]').get(0).checked ;
+                    return $('input[name="IsSearch_bytUserDisplayFlagConditions"]').get(0).checked;
                 }
             },
             // 表示ユーザーコード
             strUserDisplayCode: {
                 required: function () {
-                    return $('input[name="IsSearch_strUserDisplayCodeConditions"]').get(0).checked ;
+                    return $('input[name="IsSearch_strUserDisplayCodeConditions"]').get(0).checked;
                 }
             },
             // 表示ユーザー名
             strUserDisplayName: {
                 required: function () {
-                    return $('input[name="IsSearch_strUserDisplayNameConditions"]').get(0).checked ;
+                    return $('input[name="IsSearch_strUserDisplayNameConditions"]').get(0).checked;
                 }
             },
             // フルネーム
             strUserFullName: {
                 required: function () {
-                    return $('input[name="IsSearch_strUserFullNameConditions"]').get(0).checked ;
+                    return $('input[name="IsSearch_strUserFullNameConditions"]').get(0).checked;
                 }
             },
             // 会社
             lngCompanyCode: {
                 checkSelect: function () {
-                    return $('input[name="IsSearch_lngCompanyCodeConditions"]').get(0).checked ;
+                    return $('input[name="IsSearch_lngCompanyCodeConditions"]').get(0).checked;
                 }
             },
             // グループ
             lngGroupCode: {
                 checkSelect: function () {
-                    return $('input[name="IsSearch_lngGroupCodeConditions"]').get(0).checked ;
+                    return $('input[name="IsSearch_lngGroupCodeConditions"]').get(0).checked;
                 }
             },
             // 権限グループ
             lngAuthorityGroupCode: {
                 required: function () {
-                    return $('input[name="IsSearch_lngAuthorityGroupCodeConditions"]').get(0).checked ;
+                    return $('input[name="IsSearch_lngAuthorityGroupCodeConditions"]').get(0).checked;
                 }
             },
             // アクセスIPアドレス
             lngAccessIPAddressCode: {
                 required: function () {
-                    return $('input[name="IsSearch_lngAccessIPAddressCodeConditions"]').get(0).checked ;
+                    return $('input[name="IsSearch_lngAccessIPAddressCodeConditions"]').get(0).checked;
                 }
             }
         },

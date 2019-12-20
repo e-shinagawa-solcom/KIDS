@@ -1,4 +1,4 @@
-SELECT mu.struserdisplayname userdisplayname 
+SELECT distinct mu.struserdisplayname userdisplayname 
 FROM
   m_group mg
   , m_grouprelation mgr
@@ -9,9 +9,7 @@ WHERE
   AND mu.lngusercode = mgr.lngusercode 
   AND mg.lnggroupcode = mgr.lnggroupcode 
   AND mar.lngattributecode = 1 
-  AND mg.bytgroupdisplayflag = true 
-  AND mu.bytuserdisplayflag = true 
+  AND mg.bytgroupdisplayflag in ($2, $3) 
+  AND mu.bytuserdisplayflag in ($2, $3) 
   AND mu.struserdisplaycode = $1
-ORDER BY
-  mu.struserdisplaycode
-;
+  ;

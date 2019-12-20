@@ -11,8 +11,8 @@ WHERE
   and mg.lnggroupcode = mgr.lnggroupcode 
   and mgar.lnggroupcode = mg.lnggroupcode 
   AND mgar.lngattributecode = 1 
-  AND mg.bytgroupdisplayflag = true 
-  AND mu.bytuserdisplayflag = true
+  AND mg.bytgroupdisplayflag in ($4, $5) 
+  AND mu.bytuserdisplayflag in ($4, $5) 
   AND mg.strgroupdisplaycode LIKE '%' || $1 || '%'
   AND mu.struserdisplaycode = $2
   AND mu.struserdisplayname LIKE '%' || $3 || '%'

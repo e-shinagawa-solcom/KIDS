@@ -24,10 +24,10 @@
             $(this).val(y + "/" + m + "/" + d);
         }
 
-        var obj = $(this).attr('alt');
-        if ($('input[name="To_' + obj + '"]').val().length == 0) {
-            $('input[name="To_' + obj + '"]').val($(this).val());
-        }
+        // var obj = $(this).attr('alt');
+        // if ($('input[name="To_' + obj + '"]').val().length == 0) {
+        //     $('input[name="To_' + obj + '"]').val($(this).val());
+        // }
     });
 
     // 開始日時フォーカスを取ったときの処理

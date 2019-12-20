@@ -343,25 +343,40 @@
         var targetCssSelector = 'input[name="str' + $(invoker).attr('alt') + 'Name"]';
         // 索引結果0件の時のコード欄のCSSセレクタの作成
         var targetCodeCssSelector = 'input[name="lng' + $(invoker).attr('alt') + 'Code"]';
+        // 表示フラグ制限の取得
+        var displayFlagLimit = $(invoker).attr('displayFlagLimit');
+        if (displayFlagLimit == '0') {
+            displayFlagLimit0 = true;
+            displayFlagLimit1 = false;
+        } else {
+            displayFlagLimit0 = true;
+            displayFlagLimit1 = true;
+        } 
+
+        console.log(displayFlagLimit1);
         // 検索条件
         var condition = {
             data: {
                 QueryName: 'selectInputUserName',
                 Conditions: {
-                    UserDisplayName: $(invoker).val()
+                    UserDisplayName: $(invoker).val(),
+                    displayFlagLimit0: displayFlagLimit0,
+                    displayFlagLimit1: displayFlagLimit1
                 }
             }
         };
-
+        console.log(condition);
         // リクエスト送信
         $.ajax($.extend({}, searchMaster, condition))
             .done(function (response) {
                 console.log("担当者-表示ユーザコード->表示名 done");
+                console.log(response);
                 // 担当者-表示名に値をセット
                 $(targetCssSelector).val(response[0].userdisplayname);
             })
             .fail(function (response) {
                 console.log("担当者-表示ユーザコード->表示名 fail");
+                console.log(response);
                 console.log(response.responseText);
                 // 担当者-表示名の値をリセット
                 $(targetCssSelector).val('');
@@ -411,13 +426,24 @@
         console.log("担当者-表示ユーザコード->表示名 change");// 索引結果のセット先CSSセレクタの作成
         var targetCssSelector = 'input[name="str' + $(invoker).attr('alt') + 'Name"]';
         // 索引結果0件の時のコード欄のCSSセレクタの作成
-        var targetCodeCssSelector = 'input[name="lng' + $(invoker).attr('alt') + 'Code"]';
+        var targetCodeCssSelector = 'input[name="lng' + $(invoker).attr('alt') + 'Code"]';        
+        // 表示フラグ制限の取得
+        var displayFlagLimit = $(invoker).attr('displayFlagLimit');
+        if (displayFlagLimit == '0') {
+            displayFlagLimit0 = true;
+            displayFlagLimit1 = false;
+        } else {
+            displayFlagLimit0 = true;
+            displayFlagLimit1 = true;
+        } 
         // 検索条件
         var condition = {
             data: {
                 QueryName: 'selectInChargeUserName',
                 Conditions: {
-                    UserDisplayName: $(invoker).val()
+                    UserDisplayName: $(invoker).val(),
+                    displayFlagLimit0: displayFlagLimit0,
+                    displayFlagLimit1: displayFlagLimit1
                 }
             }
         };
@@ -448,14 +474,24 @@
         console.log("担当グループ-表示グループコード->表示名 change");
         var targetCssSelector = 'input[name="str' + $(invoker).attr('alt') + 'Name"]';
         // 索引結果0件の時のコード欄のCSSセレクタの作成
-        var targetCodeCssSelector = 'input[name="lng' + $(invoker).attr('alt') + 'Code"]';
-
+        var targetCodeCssSelector = 'input[name="lng' + $(invoker).attr('alt') + 'Code"]';        
+        // 表示フラグ制限の取得
+        var displayFlagLimit = $(invoker).attr('displayFlagLimit');
+        if (displayFlagLimit == '0') {
+            displayFlagLimit0 = true;
+            displayFlagLimit1 = false;
+        } else {
+            displayFlagLimit0 = true;
+            displayFlagLimit1 = true;
+        } 
         // 検索条件
         var condition = {
             data: {
                 QueryName: 'selectGroupName',
                 Conditions: {
-                    GroupDisplayName: $(invoker).val()
+                    GroupDisplayName: $(invoker).val(),
+                    displayFlagLimit0: displayFlagLimit0,
+                    displayFlagLimit1: displayFlagLimit1
                 }
             }
         };

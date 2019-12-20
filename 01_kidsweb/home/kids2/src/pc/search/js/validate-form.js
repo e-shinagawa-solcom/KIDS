@@ -37,7 +37,7 @@
     $.validator.addMethod(
         "checkStrProductCode",
         function (value, element, params) {
-            if (params && value!='') {
+            if (params && value != '') {
                 return this.optional(element) || /\d{5}(_\d{2})?$/.test(value);
             }
             return true;
@@ -48,7 +48,7 @@
     $.validator.addMethod(
         "checkAscii",
         function (value, element, params) {
-            if (params && value!='') {
+            if (params && value != '') {
                 return this.optional(element) || /\d{0,10}/.test(value);
             }
             return true;
@@ -59,7 +59,7 @@
     $.validator.addMethod(
         "checkDateFormat",
         function (value, element, params) {
-            if (params && value!='') {
+            if (params && value != '') {
                 if (/^[0-9]{8}$/.test(value)) {
                     var str = value.trim();
                     var y = str.substr(0, 4);
@@ -102,7 +102,14 @@
     $.validator.addMethod(
         "isLessThanToday",
         function (value, element, params) {
-            if (params && value!='') {
+            if (params && value != '') {
+                if (/^[0-9]{8}$/.test(value)) {
+                    var str = value.trim();
+                    var y = str.substr(0, 4);
+                    var m = str.substr(4, 2);
+                    var d = str.substr(6, 2);
+                    value = y + "/" + m + "/" + d;
+                }
                 var regResult = regDate.exec(value);
                 var yyyy = regResult[1];
                 var mm = regResult[2];
@@ -142,10 +149,25 @@
     $.validator.addMethod(
         "isGreaterThanFromDate",
         function (value, element, params) {
-            if (params[0] && value!='') {
+            if (params[0] && value != '') {
+                if (/^[0-9]{8}$/.test(value)) {
+                    var str = value.trim();
+                    var y = str.substr(0, 4);
+                    var m = str.substr(4, 2);
+                    var d = str.substr(6, 2);
+                    value = y + "/" + m + "/" + d;
+                }
+                var params1 = $(params[1]).val();
                 // FROM_XXXXが入力された場合、
                 if ($(params[1]).val() != "") {
-                    var regResult = regDate.exec($(params[1]).val());
+                    if (/^[0-9]{8}$/.test(params1)) {
+                        var str = params1.trim();
+                        var y = str.substr(0, 4);
+                        var m = str.substr(4, 2);
+                        var d = str.substr(6, 2);
+                        params1 = y + "/" + m + "/" + d;
+                    }
+                    var regResult = regDate.exec(params1);
                     var yyyy = regResult[1];
                     var mm = regResult[2];
                     var dd = regResult[3];
@@ -190,7 +212,7 @@
     $.validator.addMethod(
         "isGreaterThanFrom",
         function (value, element, params) {
-            if (params[0] && value!='') {
+            if (params[0] && value != '') {
                 console.log(value);
                 console.log(params[1]);
                 if (value < params[1]) {

@@ -12,13 +12,14 @@
         return false;
     });
 
+        
     // クリアボタン
     btnClear.on('click', function () {
         window.location.reload();
     });
-
     // 検索ボタン押下時の処理
     btnSearch.on('click', function () {
+
         if (workForm.valid()) {
             var windowName = 'searchResult';
             window.open("", windowName, "width=1011px, height=700px, scrollbars=yes, resizable=yes");

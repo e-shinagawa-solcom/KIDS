@@ -9,6 +9,6 @@ WHERE
   and mg.lnggroupcode = mgr.lnggroupcode 
   and mgar.lnggroupcode = mg.lnggroupcode 
   AND mgar.lngattributecode = 1 
-  AND mg.bytgroupdisplayflag = true 
-  AND mu.bytuserdisplayflag = true 
+  AND mg.bytgroupdisplayflag in ($2, $3) 
+  AND mu.bytuserdisplayflag in ($2, $3) 
   AND mu.struserdisplaycode = $1
