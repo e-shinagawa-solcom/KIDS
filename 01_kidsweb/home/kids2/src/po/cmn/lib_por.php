@@ -1134,12 +1134,12 @@ function fncUpdatePurchaseOrder($aryPurchaseOrder, $objDB, $objAuth)
     $aryQuery[] = "    lngusercode,";
     $aryQuery[] = "    strusername,";
     $aryQuery[] =     $lngcompanycode . ",";
-    $aryQuery[] = "    '" . mb_convert_encoding(urldecode($aryPurchaseOrder["strLocationName"]), "EUC-JP", "auto") . "',";
+    $aryQuery[] = "    '" . $aryPurchaseOrder["strLocationName"] . "',";
     $aryQuery[] = "    curtotalprice,";
     $aryQuery[] = "    CURRENT_TIMESTAMP,";
     $aryQuery[] =      $objAuth->UserCode . ",";
     $aryQuery[] = "    '" . $objAuth->UserDisplayName . "',";
-    $aryQuery[] = "    '" . mb_convert_encoding(urldecode($aryPurchaseOrder["strNote"]), "EUC-JP", "auto") . "',";
+    $aryQuery[] = "    '" . $aryPurchaseOrder["strNote"] . "',";
     $aryQuery[] =      0 . " ";
     $aryQuery[] = "FROM m_purchaseorder po";
     $aryQuery[] = "WHERE lngpurchaseorderno = " . $aryPurchaseOrder["lngPurchaseOrderNo"];
