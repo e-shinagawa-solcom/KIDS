@@ -1,6 +1,6 @@
 <?
 /**
- *    帳票出力 見積原価計算 印刷完了画面
+ *    帳票出力 見積原価計算 印刷プレビュー画面
  *
  *    @package   KIDS
  *    @copyright Copyright &copy; 2004, AntsBizShare
@@ -8,36 +8,37 @@
  *    @access    public
  *    @version   1.00
  */
-// 印刷プレビュー画面( * は指定帳票のファイル名 )
-// listoutput.php -> strSessionID       -> action.php
-// listoutput.php -> strReportKeyCode   -> action.php
-// listoutput.php -> lngReportCode      -> action.php
+// 見積原価 印刷プレビュー画面
+// frameset.php -> strSessionID     -> listoutput.php
+// frameset.php -> lngReportCode    -> listoutput.php
+// frameset.php -> lngReportKeyCode -> listoutput.php
+
+ini_set("default_charset", "UTF-8");
 
 // 設定読み込み
 include_once 'conf.inc';
 require LIB_DEBUGFILE;
 
-
 // ライブラリ読み込み
-require (LIB_FILE);
-require (SRC_ROOT . "list/cmn/lib_lo.php");
-require (SRC_ROOT . "list/result/estimate/estimate.php");
-require_once ( VENDOR_AUTOLOAD_FILE );
+require LIB_FILE;
+require SRC_ROOT . "list/cmn/lib_lo.php";
+require SRC_ROOT . "list/result/estimate/estimate.php";
+require_once VENDOR_AUTOLOAD_FILE;
 
-require_once (SRC_ROOT . "/estimate/cmn/estimateDB.php");
-require_once (SRC_ROOT . "/estimate/cmn/estimatePreviewController.php");
+require_once SRC_ROOT . "/estimate/cmn/estimateDB.php";
+require_once SRC_ROOT . "/estimate/cmn/estimatePreviewController.php";
 
-require_once ( SRC_ROOT . "estimate/cmn/estimateSheetController.php" );
-require_once ( SRC_ROOT . "estimate/cmn/makeHTML.php" );
+require_once SRC_ROOT . "estimate/cmn/estimateSheetController.php";
+require_once SRC_ROOT . "estimate/cmn/makeHTML.php";
 
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx as XlsxReader;
 use PhpOffice\PhpSpreadsheet\Writer\Html as HtmlWriter;
 
-$objDB   = new estimateDB();
+$objDB = new estimateDB();
 $objAuth = new clsAuth();
 
 $objDB->InputEncoding = 'UTF-8';
-$objDB->open( "", "", "", "" );
+$objDB->open("", "", "", "");
 
 //////////////////////////////////////////////////////////////////////////
 // POST(一部GET)データ取得
@@ -76,39 +77,42 @@ if ($lngResultNum === 1) {
     $objDB->freeResult($lngResultID);
     //echo "コピーファイル有り。";
 }
+
 // GETパラメータよりパラメータを取得
 $estimateNo = $aryData["strReportKeyCode"]; // 見積原価番号
 
 // リビジョン番号の取得
 if (isset($aryData['revisionNo'])) {
-	$revisionNo = $aryData['revisionNo'];
-	$estimate = $objDB->getEstimateDetail($estimateNo, $revisionNo);
+    $revisionNo = $aryData['revisionNo'];
+    $estimate = $objDB->getEstimateDetail($estimateNo, $revisionNo);
 } else {
-	// リビジョン番号がPOSTされなかった場合は最新のデータを取得する
-	$estimate = $objDB->getEstimateDetail($estimateNo);
+    // リビジョン番号がPOSTされなかった場合は最新のデータを取得する
+    $estimate = $objDB->getEstimateDetail($estimateNo);
 }
 
 $firstEstimateDetail = current($estimate);
 
 if (!isset($revisionNo)) {
-	$revisionNo = $firstEstimateDetail->lngrevisionno;
+    $revisionNo = $firstEstimateDetail->lngrevisionno;
 }
 
 // 最大のリビジョン番号の取得
 if (isset($_POST['maxRevisionNo'])) {
-	$maxRevisionNo = $_POST['maxRevisionNo'];
+    $maxRevisionNo = $_POST['maxRevisionNo'];
 } else {
-	$result = $objDB->getEstimateDetail($estimateNo);
-	if ($result) {
-		$firstRecord = current($result);
-		$maxRevisionNo = $firstRecord->lngrevisionno;
-	}
+    $result = $objDB->getEstimateDetail($estimateNo);
+    if ($result) {
+        $firstRecord = current($result);
+        $maxRevisionNo = $firstRecord->lngrevisionno;
+    }
 }
 $aryParts["lngestimateno"] = $firstEstimateDetail->lngestimateno;
 $aryParts["lngrevisionno"] = $maxRevisionNo;
-if ($lngResultNum === 1) {	
+$aryParts["lngprintcount"] = $firstEstimateDetail->lngprintcount;
+
+if ($lngResultNum === 1) {
     // 印刷回数を更新する
-	fncUpdatePrintCount(DEF_REPORT_ESTIMATE, $aryParts, $objDB);
+    fncUpdatePrintCount(DEF_REPORT_ESTIMATE, $aryParts, $objDB);
 // 帳票が存在しない場合、コピー帳票ファイルを生成、保存
 }
 // 帳票が存在しない場合、コピー帳票ファイルを生成、保存
@@ -185,7 +189,7 @@ elseif ($lngResultNum === 0) {
 
     $objWriter = new HtmlWriter($spreadSheet);
 
-// 置換文字列生成
+    // 置換文字列生成
     $time = new DateTime();
     $replace = '_%' . md5($time->format('YmdHisu')) . '%_';
 
@@ -199,7 +203,7 @@ elseif ($lngResultNum === 0) {
 
     $output .= $customCSS;
 
-	// 文字化け対策：エクセルの¥マークを置換文字列に置換(UTF-8 → EUC-JPの変換時に上手く変換できないため)
+    // 文字化け対策：エクセルの¥マークを置換文字列に置換(UTF-8 → EUC-JPの変換時に上手く変換できないため)
     $sheetData = str_replace('¥', $replace, $objWriter->generateSheetData());
 
     $output .= $sheetData;
@@ -208,7 +212,7 @@ elseif ($lngResultNum === 0) {
 
     $output = mb_convert_encoding($output, 'EUC-JP', 'UTF-8');
 
-    $strHtml = $output;
+    $strHtml = str_replace($replace, '&yen;', $output);
 
     $objDB->transactionBegin();
 
