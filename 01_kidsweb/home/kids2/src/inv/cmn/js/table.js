@@ -308,7 +308,7 @@ $(function () {
           if (sameId == true) { return; }
           temp.push(data[data_index]);
           // 該当データを data から削除
-          data.splice(data_index, 1);
+          //data.splice(data_index, 1);
         }
       }
     });

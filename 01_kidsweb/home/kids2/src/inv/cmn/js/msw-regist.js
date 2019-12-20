@@ -537,24 +537,24 @@
             for (var j = 0, collen = tableB_row[i].cells.length; j < collen; j++) {
                 if (!tableB_row[i].cells[j].innerText) continue;
 
-                if (tableB_row[i].cells[j].className == 'slipcode') {
+                if (tableB_row[i].cells[j].className.substr(0,'slipcode'.length) == 'slipcode') {
                     // Ç¼ÉÊ½ñNo
                     slipCodeList.push(tableB_row[i].cells[j].innerText);
                 }
-                if (tableB_row[i].cells[j].className == 'tax right' && !tax) {
+                if (tableB_row[i].cells[j].className.substr(0,'tax right'.length) == 'tax right' && !tax) {
                     // ¾ÃÈñÀÇ
                     tax = tableB_row[i].cells[j].innerText;
                     console.log('¾ÃÈñÀÇ¥»¥Ã¥È');
                 }
-                if (tableB_row[i].cells[j].className == 'taxclass' && !taxclass) {
+                if (tableB_row[i].cells[j].className.substr(0,'taxclass'.length) == 'taxclass' && !taxclass) {
                     // ÀÇÈ´¤­¶â³Û
                     taxclass = tableB_row[i].cells[j].innerText;
                 }
-                if (tableB_row[i].cells[j].className == 'deliverydate') {
+                if (tableB_row[i].cells[j].className.substr(0,'deliverydate'.length) == 'deliverydate') {
                     // Ç¼ÉÊÆü
                     deliveryDate.push(tableB_row[i].cells[j].innerText);
                 }
-                if (tableB_row[i].cells[j].className == 'tax right' && tax) {
+                if (tableB_row[i].cells[j].className.substr(0,'tax right'.length) == 'tax right' && tax) {
                     console.log('¾ÃÈñÀÇÎ¨¥Á¥§¥Ã¥¯');
                     if (tableB_row[i].cells[j].innerText != tax) {
                         console.log('¾ÃÈñÀÇNG');
