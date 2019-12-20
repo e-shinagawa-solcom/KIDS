@@ -29,6 +29,7 @@
     require (LIB_FILE);
     require (SRC_ROOT . "m/cmn/lib_m.php");
     require (SRC_ROOT . "inv/cmn/lib_regist.php");
+    require_once(LIB_DEBUGFILE);
 
     // オブジェクト生成
     $objDB   = new clsDB();
@@ -76,7 +77,7 @@
     $aryData["lngFunctionCode"] = DEF_FUNCTION_INV0;
 
     // ユーザーコード取得
-    $lngUserCode = $objAuth->UserCode;
+    $lngUserCode = $objAuth->UserID;
 
     // preview画面
     if(isset($aryData["strMode"]) && $aryData["strMode"] == 'prev')
@@ -122,7 +123,6 @@
         // *****************************************************
         // DB登録の為のデータ配列を返す
         $insertData = fncInvoiceInsertReturnArray($aryData, $aryResult, $objAuth, $objDB);
-
         // 出力明細が1件もない場合
         $slipCodeArray = $insertData['slipCodeArray'];
         if(count($slipCodeArray) < 0)
