@@ -83,6 +83,7 @@ if (!$strReportPathName || (!($aryData["lngReportCode"] || $aryData["bytCopyFlag
 // 帳票コードが真の場合、ファイルデータを取得
 ///////////////////////////////////////////////////////////////////////////
 if ($aryData["lngReportCode"]) {
+
     if (!$lngResultNum) {
         fncOutputError(9056, DEF_FATAL, "帳票コピーがありません。", true, "", $objDB);
     }
@@ -97,6 +98,7 @@ if ($aryData["lngReportCode"]) {
 // テンプレートと置き換えデータ取得
 ///////////////////////////////////////////////////////////////////////////
 else {
+    
     // データ取得クエリ
     $strQuery = fncGetListOutputQuery(DEF_REPORT_ORDER, $aryData["strReportKeyCode"], $objDB);
     $objMaster = new clsMaster();

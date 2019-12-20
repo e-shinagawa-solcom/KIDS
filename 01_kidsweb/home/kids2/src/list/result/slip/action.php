@@ -50,29 +50,26 @@ if (!fncCheckAuthority(DEF_FUNCTION_LO0, $objAuth)) {
 $strQuery = fncGetCopyFilePathQuery(DEF_REPORT_SLIP, $aryData["strReportKeyCode"], $aryData["lngReportCode"]);
 
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
-
+var_dump($lngResultNum);
 if ($lngResultNum === 1) {
     $objResult = $objDB->fetchObject($lngResultID, 0);
     $strListOutputPath = $objResult->strreportpathname;
     unset($objResult);
     $objDB->freeResult($lngResultID);
 }
-    // データ取得クエリ
-    $strQuery = fncGetListOutputQuery(DEF_REPORT_SLIP, $aryData["strReportKeyCode"], $objDB);
+// データ取得クエリ
+$strQuery = fncGetListOutputQuery(DEF_REPORT_SLIP, $aryData["strReportKeyCode"], $objDB);
 
-    $objMaster = new clsMaster();
-    $objMaster->setMasterTableData($strQuery, $objDB);
+$objMaster = new clsMaster();
+$objMaster->setMasterTableData($strQuery, $objDB);
 
-    $aryParts = &$objMaster->aryData[0];
-if ( $lngResultNum === 1 )
-{
+$aryParts = &$objMaster->aryData[0];
+if ($lngResultNum === 1) {
     // 印刷回数を更新する
-	fncUpdatePrintCount(DEF_REPORT_SLIP, $aryParts, $objDB);
+    fncUpdatePrintCount(DEF_REPORT_SLIP, $aryParts, $objDB);
 }
-
 // 帳票が存在しない場合、コピー帳票ファイルを生成、保存
 elseif ($lngResultNum === 0) {
-
 
     // 納品伝票種別取得
     $strQuery = fncGetSlipKindQuery($aryParts["lngcustomercode"]);
@@ -227,11 +224,11 @@ elseif ($lngResultNum === 0) {
     $strQuery = "INSERT INTO t_Report VALUES ( $lngSequence, " . DEF_REPORT_SLIP . ", " . $aryParts["lngslipno"] . ", '', '$lngSequence' )";
 
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
-    
+
     $objDB->freeResult($lngResultID);
 
     // 印刷回数の設定
-    fncUpdatePrintCount(DEF_REPORT_SLIP, $aryParts, $objDB); 
+    fncUpdatePrintCount(DEF_REPORT_SLIP, $aryParts, $objDB);
 
     // 帳票ファイルオープン
     if (!$fp = fopen(SRC_ROOT . "list/result/cash/" . $lngSequence . ".tmpl", "w")) {
@@ -250,10 +247,8 @@ elseif ($lngResultNum === 0) {
 
 $objDB->close();
 
-
-
 header("location: /list/result/slip/download.php?strSessionID=" . $aryData["strSessionID"]
-. "&strReportKeyCode=" . $aryData["strReportKeyCode"]
+    . "&strReportKeyCode=" . $aryData["strReportKeyCode"]
     . "&lngReportCode=" . $aryData["lngReportCode"]
     . "&reprintFlag=" . $aryData["reprintFlag"]);
 
