@@ -1491,6 +1491,15 @@ function fncSetBackBtnToTr($doc, $trBody, $bgcolor, $aryTableBackBtnName, $displ
                         $imgDelete->setAttribute("class", "delete button");
                         // td > img
                         $td->appendChild($imgDelete);
+                    } else if ($type == 'purchaseorder' and !$isadmin and $isMaxData and $record["lngorderstatuscode"] == DEF_ORDER_ORDER and $bgcolor != "background-color: #B3E0FF;") {
+                        // 削除ボタン
+                        $imgDelete = $doc->createElement("img");
+                        $imgDelete->setAttribute("src", "/img/type01/pc/delete_off_bt.gif");
+                        $imgDelete->setAttribute("lngpurchaseorderno", $record["lngpurchaseorderno"]);
+                        $imgDelete->setAttribute("revisionno", $record["lngrevisionno"]);
+                        $imgDelete->setAttribute("class", "delete button");
+                        // td > img
+                        $td->appendChild($imgDelete);
                     }
                     // tr > td
                     $trBody->appendChild($td);

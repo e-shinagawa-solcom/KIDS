@@ -3,7 +3,7 @@
     $('img.delete.button').on('click', function(){
         url = '/po/result2/index3.php';
         lngorderno = 'lngPurchaseOrderNo=' + $(this).attr('lngpurchaseorderno');
-        lngrevisionno = 'lngRevisionNo=' + $(this).attr('lngrevisionno');
+        lngrevisionno = 'lngRevisionNo=' + $(this).attr('revisionno');
         sessionID = 'strSessionID=' + getUrlVars()["strSessionID"];
 
         // 別ウィンドウで表示

@@ -177,15 +177,17 @@ if($_POST){
 			}
 	
 			// 発注書マスタを更新する
-			$aryOrder = fncGetPurchaseOrder2($aryPurchaseOrderDetail[0]["lngpurchaseorderno"], $aryPurchaseOrderDetail[0]["lngrevisionno"], $objDB);
-			$aryOrder["lngrevisionno"] = intval($aryPurchaseOrderDetail[0]["lngrevisionno"]) + 1;
+			$aryOrder_org = fncGetPurchaseOrder2($aryPurchaseOrderDetail[0]["lngpurchaseorderno"], $aryPurchaseOrderDetail[0]["lngrevisionno"], $objDB);
+			$aryOrder = $aryOrder_org;
+			$aryOrder["lngrevisionno"] = intval($aryOrder["lngrevisionno"]) + 1;
 			$aryOrder["lngprintcount"] = 0;
 			if(!fncInsertPurchaseOrder($aryOrder, $objDB)) { return false; }
 		}
 		else
 		{
 			// 残明細がない場合は発注書マスタも削除する。
-			$aryOrder = fncGetPurchaseOrder2($aryCancelOrderDetail["lngpurchaseorderno"], $aryCancelOrderDetail["lngrevisionno"], $objDB);
+			$aryOrder_org = fncGetPurchaseOrder2($aryCancelOrderDetail["lngpurchaseorderno"], $aryCancelOrderDetail["lngrevisionno"], $objDB);
+			$aryOrder = $aryOrder_org;
 			$orgRevision = $aryOrder["lngrevisionno"];
 			$aryOrder["lngrevisionno"] = -1;
 			$aryOrder["lngcustomercode"] = null;
@@ -233,7 +235,7 @@ if($_POST){
 		{
 			// 残明細がない場合
 			$aryHtml[] = "<p class=\"caption\">以下の発注の確定取消に伴い、該当の発注書を削除しました</p>";
-			$aryHtml[] = fncCancelPurchaseOrderHtml($aryOrder, $aryCancelOrderDetail, $aryData["strSessionID"], true);
+			$aryHtml[] = fncDeletePurchaseOrderHtml($aryOrder_org, $aryPurchaseOrderDetail, $aryData["strSessionID"]);
 			
 		}
 	}

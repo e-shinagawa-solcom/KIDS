@@ -28,8 +28,9 @@ include_once('conf.inc');
 
 // ライブラリ読み込み
 require (LIB_FILE);
-require (SRC_ROOT . "po/cmn/lib_pos.php");
 require (SRC_ROOT . "po/cmn/lib_pos1.php");
+require (SRC_ROOT . "list/cmn/lib_lo.php");
+require (SRC_ROOT . "po/cmn/lib_por.php");
 require (SRC_ROOT . "po/cmn/column.php");
 require_once (LIB_DEBUGFILE);
 
@@ -84,20 +85,24 @@ if ( !fncCheckAuthority( DEF_FUNCTION_PO13, $objAuth ) )
 $lngpurchaseorderno = $aryData["lngPurchaseOrderNo"];
 $lngrevisionno = $aryData["lngRevisionNo"];
 
-// echo $lngorderno . "-" . $lngrevisionno . "<br>";
 
 if($_POST){
+//echo "delete key:" . $lngpurchaseorderno . "-" . $lngrevisionno . "<br>";
 	
 	// 発注書に基づく発注書マスタの中に「納品済」が存在した場合はエラー
+	//if(
 	
-	
+	$aryCancelOrderDetail = fncGetDeletePurchaseOrderDetailByPo($lngpurchaseorderno, $lngrevisionno, $objDB);
+	$aryPurchaseOrder = fncGetPurchaseOrder2($lngpurchaseorderno, $lngrevisionno, $objDB);
+	$aryOrder = $aryPurchaseOrder;
 	$objDB->transactionBegin();
     // 削除対象となった発注書に基づく発注書マスタのステータスを「仮受注」に変更
-	//if(!fncCancelOrder($lngorderno, $lngrevisionno, $objDB)){ return false; }
-
+	if(!fncCancelOrderByPo($lngpurchaseorderno, $lngrevisionno, $objDB)){ return false; }
+    
 	// 削除対象の発注書マスタにリビジョン-1のデータを追加
 	//$aryOrder = fncGetPurchaseOrder2($lngpurchaseorderno, $alngrevisionno, $objDB);
-	$orgRevision = $aryOrder["lngrevisionno"];
+	//$orgRevision = $aryOrder["lngrevisionno"];
+	//$aryOrder["lngpurchaseorderno"] = $lngpurchaseorderno;
 	$aryOrder["lngrevisionno"] = -1;
 	$aryOrder["lngcustomercode"] = null;
 	$aryOrder["strcustomername"] = null;
@@ -129,11 +134,11 @@ if($_POST){
 
 	if(!fncInsertPurchaseOrder($aryOrder, $objDB, $objAuth)) { return false; }
 
-	// $objDB->transactionRollback();
+	//$objDB->transactionRollback();
 	$objDB->transactionCommit();
 
 	$aryHtml[] = "<p class=\"caption\">該当の発注書を削除しました</p>";
-	//$aryHtml[] = fncCancelPurchaseOrderHtml($aryOrder, $aryCancelOrderDetail, $aryData["strSessionID"], true);
+	$aryHtml[] = fncDeletePurchaseOrderHtml($aryPurchaseOrder, $aryCancelOrderDetail, $aryData["strSessionID"]);
 
 	if($aryHtml){
 		$aryResult["aryPurchaseOrder"] = implode("\n", $aryHtml);
@@ -151,47 +156,59 @@ if($_POST){
 	return true;
 }
 
+//echo "start key:" . $lngpurchaseorderno . "-" . $lngrevisionno . "<br>";
+
 // 発注書削除確認画面
 // 発注書マスタを取得
-$strQuery = fncGetPurchaseOrderSQL($lngpurchaseorderno, $lngrevisionno );
-list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
-if ( $lngResultNum == 1 )
-{
-	$aryPurchaseOrder = $objDB->fetchArray( $lngResultID, 0 );
-}
-$objDB->freeResult( $lngResultID );
+$aryResult = fncGetPurchaseOrderEdit($lngpurchaseorderno, $lngrevisionno, $objDB);
 
+// 取得データの調整
+$aryNewResult = fncSetPurchaseHeadTabelData($aryResult[0]);
 
+////////// 明細行の取得 ////////////////////
 // 発注書明細を取得
-$strQuery = fncGetPurchaseOrderDetailSQL($lngpurchaseorderno, $lngrevisionno );
+
+$strQuery = fncGetPurchaseOrderDetailSQL($lngpurchaseorderno, $lngrevisionno);
 list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 if ( $lngResultNum )
 {
 	for ( $i = 0; $i < $lngResultNum; $i++ )
 	{
-		$aryPurchaseOrderDetail[$i] = $objDB->fetchArray( $lngResultID, $i );
+		$aryDetailResult[$i] = $objDB->fetchArray( $lngResultID, $i );
 	}
 }
 $objDB->freeResult( $lngResultID );
+if(!is_array($aryDetailResult)){
+    $aryDetailResult[] = $aryDetailResult;
+}
+for ( $i = 0; $i < count($aryDetailResult); $i++)
+{
+	$aryNewDetailResult[$i] = fncSetPurchaseDetailTabelData ( $aryDetailResult[$i], $aryNewResult );
+
+	// テンプレート読み込み
+	$objTemplate = new clsTemplate();
+	$objTemplate->getTemplate( "po/result2/parts_detail.tmpl" );
+
+	// テンプレート生成
+	$objTemplate->replace( $aryNewDetailResult[$i] );
+	$objTemplate->complete();
+
+	// HTML出力
+	$aryDetailTable[] = $objTemplate->strTemplate;
+}
+
+$aryNewResult["strResult"] = implode ("\n", $aryDetailTable );
 
 
-$aryResult["strResult"] = fncCancelPurchaseOrderHtml2($aryPurchaseOrder, $aryPurchaseOrderDetail );
-$aryResult["lngOrderNo"] = $aryData["lngOrderNo"];
-$aryResult["strSessionID"] = $aryData["strSessionID"];
-//$aryResult["strResult"] = implode("\n", $aryHtml);
-//$aryResult["strOrderCode"] = implode(",", $aryOrderCode);
-//$aryResult["lngRevisionNo"] = implode(",", $aryRevisionNo);
-
-
+$aryNewResult["strAction"] = "index3.php";
+$aryNewResult["strMode"] = "detail";
+$aryNewResult["strSessionID"] = $aryData["strSessionID"];
 // テンプレート読み込み
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate( "po/result2/parts3.tmpl" );
 
 // テンプレート生成
-$objTemplate->replace( $aryResult );
-// $objTemplate->replace( $aryOrderResult );
-// $objTemplate->replace( $aryDetailResult );
-//$objTemplate->replace( $aryData );
+$objTemplate->replace( $aryNewResult );
 $objTemplate->complete();
 
 // HTML出力
@@ -199,6 +216,7 @@ echo $objTemplate->strTemplate;
 
 
 $objDB->close();
-return true;
+return true;// テンプレート読み込み
+
 
 ?>

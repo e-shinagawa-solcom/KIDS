@@ -229,79 +229,6 @@ function fncGetPurchaseDetailNoToInfo ( $lngOrderNo, $lngRevisionNo, $objDB )
 }
 
 /**
- * 取消を行った発注データのHTMLを作成
- * 
- * @param	Array	$aryOrder		発注データ
- * @param	Array	$aryOrderDetail	発注明細データ
- * @access	public
- * 
- */
-function fncDeletePurchaseOrderHtml($aryOrder, $aryOrderDetail){
-	$aryHtml[] = "<table cellpadding=\"5\" cellspacing=\"0\" border=\"0\" bgcolor=\"#6f8180\" align=\"center\">";
-	$aryHtml[] = "  <tr>";
-	$aryHtml[] = "    <td class=\"SegColumn\">登録日</td>";
-	$aryHtml[] = "    <td class=\"Segs\">" . $aryOrder["dtminsertdate"] . "</td>";
-	$aryHtml[] = "  </tr>";
-	$aryHtml[] = "  <tr>";
-	$aryHtml[] = "    <td class=\"SegColumn\">発注有効期限日</td>";
-	$aryHtml[] = "    <td class=\"Segs\">" . $aryOrder["dtmexpirationdate"] . "</td>";
-	$aryHtml[] = "  </tr>";
-	$aryHtml[] = "  <tr>";
-	$aryHtml[] = "    <td class=\"SegColumn\">発注NO.</td>";
-	$aryHtml[] = "    <td class=\"Segs\">" . $aryOrder["strordercode"] . "</td>";
-	$aryHtml[] = "  </tr>";
-	$aryHtml[] = "  <tr>";
-	$aryHtml[] = "    <td class=\"SegColumn\">製品コード</td>";
-	$aryHtml[] = "    <td class=\"Segs\">[" . $aryOrder["strproductcode"] . "]</td>";
-	$aryHtml[] = "  </tr>";
-	$aryHtml[] = "  <tr>";
-	$aryHtml[] = "    <td class=\"SegColumn\">製品名</td>";
-	$aryHtml[] = "    <td class=\"Segs\">" . $aryOrder["strproductname"] . "</td>";
-	$aryHtml[] = "  </tr>";
-	$aryHtml[] = "  <tr>";
-	$aryHtml[] = "    <td class=\"SegColumn\">営業部門</td>";
-	$aryHtml[] = "    <td class=\"Segs\">[" . $aryOrder["strinchargegroupdisplaycode"] . "] " . $aryOrder["strinchargegroupdisplayname"] . "</td>";
-	$aryHtml[] = "  </tr>";
-	$aryHtml[] = "  <tr>";
-	$aryHtml[] = "    <td class=\"SegColumn\">開発担当者</td>";
-	$aryHtml[] = "    <td class=\"Segs\">[" . $aryOrder["strinchargeuserdisplaycode"] . "] " . $aryOrder["strinchargeUserdisplayname"] . "</td>";
-	$aryHtml[] = "  </tr>";
-	$aryHtml[] = "  <tr>";
-	$aryHtml[] = "    <td class=\"SegColumn\">仕入部品</td>";
-	$aryHtml[] = "    <td class=\"Segs\">[" . $aryOrderDetail["lngstocksubjectcode"] . "] " . $aryOrderDetail["strstocksubjectname"] . "</td>";
-	$aryHtml[] = "  </tr>";
-	$aryHtml[] = "  <tr>";
-	$aryHtml[] = "    <td class=\"SegColumn\">仕入先</td>";
-	$aryHtml[] = "    <td class=\"Segs\">[" . $aryOrder["strcustomerdisplaycode"] . "] " . $aryOrder["strcustomerdisplayname"] . "</td>";
-	$aryHtml[] = "  </tr>";
-	$aryHtml[] = "  <tr>";
-	$aryHtml[] = "    <td class=\"SegColumn\">納期</td>";
-	$aryHtml[] = "    <td class=\"Segs\">" . $aryOrderDetail["dtmdeliverddate"] . "</td>";
-	$aryHtml[] = "  </tr>";
-	$aryHtml[] = "  <tr>";
-	$aryHtml[] = "    <td class=\"SegColumn\">単価</td>";
-	$aryHtml[] = "    <td class=\"Segs\">" . $aryOrder["strmonetaryunitsign"] . $aryOrderDetail["curproductprice"] . "</td>";
-	$aryHtml[] = "  </tr>";
-	$aryHtml[] = "  <tr>";
-	$aryHtml[] = "    <td class=\"SegColumn\">数量</td>";
-	$aryHtml[] = "    <td class=\"Segs\">" . $aryOrderDetail["lngproductquantity"] . "</td>";
-	$aryHtml[] = "  </tr>";
-	$aryHtml[] = "  <tr>";
-	$aryHtml[] = "    <td class=\"SegColumn\">税抜金額</td>";
-	$aryHtml[] = "    <td class=\"Segs\">" . $aryOrder["strmonetaryunitsign"] . $aryOrderDetail["cursubtotalprice"] . "</td>";
-	$aryHtml[] = "  </tr>";
-	$aryHtml[] = "  <tr>";
-	$aryHtml[] = "    <td class=\"SegColumn\">明細備考</td>";
-	$aryHtml[] = "    <td class=\"Segs\">" . $aryOrderDetail["strdetailnote"] . "</td>";
-	$aryHtml[] = "  </tr>";
-	$aryHtml[] = "</table>";
-	$aryHtml[] = "<br>";
-
-	$strHtml = implode("\n", $aryHtml);
-	return $strHtml;
-}
-
-/**
  * 詳細表示関数（ヘッダ用）
  *
  *	テーブル構成で発注データ詳細を出力する関数
@@ -917,9 +844,11 @@ function fncGetPurchaseOrder2($lngPurchaseOrderCode, $lngRevisionNo, $objDB){
 	$arySql[] = "  ,mp.lnggroupcode";
 	$arySql[] = "  ,mp.strgroupname";
 	$arySql[] = "  ,mp.txtsignaturefilename";
-	$arySql[] = "  ,mp.lngusercode";
+	$arySql[] = "  ,mp.lngusercode as lngusercode";
+	$arySql[] = "  ,mu.struserdisplaycode as strusercode";
 	$arySql[] = "  ,mp.strusername";
 	$arySql[] = "  ,mp.lngdeliveryplacecode";
+	$arySql[] = "  ,mc_deli.strcompanydisplaycode as strdisplaydeliveryplacecode";
 	$arySql[] = "  ,mp.strdeliveryplacename";
 	$arySql[] = "  ,mp.curtotalprice";
 	$arySql[] = "  ,TO_CHAR(mp.dtminsertdate, 'YYYY/MM/DD') AS dtminsertdate";
@@ -930,6 +859,8 @@ function fncGetPurchaseOrder2($lngPurchaseOrderCode, $lngRevisionNo, $objDB){
 	$arySql[] = "  ,mc.strcompanydisplaycode";
 	$arySql[] = "FROM m_purchaseorder mp";
 	$arySql[] = "LEFT JOIN m_company mc ON mp.lngcustomercode = mc.lngcompanycode";
+	$arySql[] = "LEFT JOIN m_company mc_deli ON mp.lngdeliveryplacecode = mc_deli.lngcompanycode";
+	$arySql[] = "LEFT JOIN m_user mu ON mu.lngusercode = mp.lngusercode";
 	$arySql[] = "WHERE lngpurchaseorderno = " . intval($lngPurchaseOrderCode);
 	$arySql[] = "AND   lngrevisionno = " . intval($lngRevisionNo);
 
@@ -1102,6 +1033,64 @@ function fncGetDeletePurchaseOrderDetail($lngOrderNo, $lngRevisionNo, $objDB){
 }
 
 /**
+ * 取消対象の発注書データ取得
+ * 
+ * @param	Integer		$lngOrderNo		発注番号
+ * @param	Integer		$lngRevisionNo	リビジョン番号
+ * @param	Object		$objDB					DBオブジェクト
+ * @access	public
+ *	
+ */
+function fncGetDeletePurchaseOrderDetailByPo($lngpurchaseorderno, $lngRevisionNo, $objDB){
+	$aryQuery[] = "SELECT";
+	$aryQuery[] = "    lngpurchaseorderno";
+	$aryQuery[] = "   ,lngpurchaseorderdetailno";
+	$aryQuery[] = "   ,lngrevisionno";
+	$aryQuery[] = "   ,lngorderno";
+	$aryQuery[] = "   ,lngorderdetailno";
+	$aryQuery[] = "   ,lngorderrevisionno";
+	$aryQuery[] = "   ,lngstocksubjectcode";
+	$aryQuery[] = "   ,lngstockitemcode";
+	$aryQuery[] = "   ,strstockitemname";
+	$aryQuery[] = "   ,lngdeliverymethodcode";
+	$aryQuery[] = "   ,strdeliverymethodname";
+	$aryQuery[] = "   ,curproductprice";
+	$aryQuery[] = "   ,lngproductquantity";
+	$aryQuery[] = "   ,lngproductunitcode";
+	$aryQuery[] = "   ,strproductunitname";
+	$aryQuery[] = "   ,cursubtotalprice";
+	$aryQuery[] = "   ,dtmdeliverydate";
+	$aryQuery[] = "   ,strnote";
+	$aryQuery[] = "   ,lngsortkey ";
+	$aryQuery[] = "from t_purchaseorderdetail ";
+	$aryQuery[] = "where lngpurchaseorderno = " . $lngpurchaseorderno;
+	$aryQuery[] = "    and lngrevisionno = " . $lngRevisionNo;
+	$aryQuery[] = " ORDER BY";
+	$aryQuery[] = " lngsortkey";
+
+	$strQuery = "";
+	$strQuery = implode("\n", $aryQuery);
+
+	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
+
+	if ( $lngResultNum )
+	{
+		for ( $i = 0; $i < $lngResultNum; $i++ )
+		{
+			$aryResult[] = $objDB->fetchArray( $lngResultID, $i );
+		}
+	}
+	else
+	{
+		$aryCode = FALSE;
+	}
+	$objDB->freeResult( $lngResultID );
+
+	return $aryResult;
+
+}
+
+/**
  * 発注取消
  * 
  * @param	Integer		$lngOrderNo		発注番号
@@ -1118,6 +1107,43 @@ function fncCancelOrder($lngOrderNo, $lngRevisionNo, $objDB){
 	$aryQuery[] = "AND   lngrevisionno = "  . $lngRevisionNo;
 
 	$strQuery = "";
+	$strQuery = implode("\n", $aryQuery );
+
+	if ( !$lngResultID = $objDB->execute( $strQuery ) )
+	{
+		fncOutputError ( 9051, DEF_ERROR, "発注マスタへの更新処理に失敗しました。", TRUE, "", $objDB );
+		return FALSE;
+	}
+	$objDB->freeResult( $lngResultID );
+
+	return true;
+}
+
+/**
+ * 発注取消
+ * 
+ * @param	Integer		$lngOrderNo		発注番号
+ * @param	Integer		$lngRevisionNo	リビジョン番号
+ * @param	Object		$objDB					DBオブジェクト
+ * @access	public
+ * 
+ */
+function fncCancelOrderByPo($lngPurchaseOrderNo, $lngRevisionNo, $objDB){
+
+	$aryQuery[] = "UPDATE m_order ";
+	$aryQuery[] = "SET ";
+	$aryQuery[] = "    lngorderstatuscode = 1 ";
+	$aryQuery[] = "   ,lngdeliveryplacecode = NULL ";
+	$aryQuery[] = "WHERE (lngorderno,lngrevisionno) IN (";
+	$aryQuery[] = "    SELECT ";
+	$aryQuery[] = "        lngorderno";
+	$aryQuery[] = "       ,lngorderrevisionno";
+	$aryQuery[] = "    FROM t_purchaseorderdetail";
+	$aryQuery[] = "    WHERE lngpurchaseorderno = " . $lngPurchaseOrderNo;
+	$aryQuery[] = "        AND lngrevisionno = " . $lngRevisionNo;
+	$aryQuery[] = ")";
+
+
 	$strQuery = implode("\n", $aryQuery );
 
 	if ( !$lngResultID = $objDB->execute( $strQuery ) )
@@ -1314,7 +1340,7 @@ function fncInsertPurchaseOrder($aryOrder, $objDB){
 
 	$strQuery = "";
 	$strQuery = implode("\n", $aryQuery );
-	
+
 	if ( !$lngResultID = $objDB->execute( $strQuery ) )
 	{
 		fncOutputError ( 9051, DEF_ERROR, "発注書マスタへの更新処理に失敗しました。", TRUE, "", $objDB );
@@ -1494,8 +1520,18 @@ function fncCancelPurchaseOrderHtml($aryOrder, $aryDetail, $strSessionID, $isDel
 		$aryHtml[] = "  <tr>";
 		$aryHtml[] = "    <th class=\"SegColumn\">発注NO.</th>";
 		$aryHtml[] = "    <td class=\"Segs\">" . sprintf("%s_%02d", $aryOrder["strordercode"], $aryOrder["lngrevisionno"]) . "</td>";
-		$aryHtml[] = "    <th class=\"SegColumn\">仕入部品</th>";
-		$aryHtml[] = "    <td class=\"Segs\">" . sprintf("[%s] %s", $aryDetail["lngstockitemcode"], $aryDetail["strstockitemname"]) . "</td>";
+		$aryHtml[] = "    <th class=\"SegColumn\">支払方法</th>";
+		$aryHtml[] = "    <td class=\"Segs\">". sprintf("%s", $aryOrder["strpayconditionname"]) . "</td>";
+		$aryHtml[] = "  </tr>";
+		$aryHtml[] = "  <tr>";
+		$aryHtml[] = "    <th class=\"SegColumn\">仕入先</th>";
+		$aryHtml[] = "    <td colspan=\"3\" class=\"Segs\">". sprintf("[%s] %s", $aryOrder["strcompanydisplaycode"], $aryOrder["strcustomername"]) . "</td>";
+		$aryHtml[] = "  </tr>";
+		$aryHtml[] = "  <tr>";
+		$aryHtml[] = "  </th>";
+		$aryHtml[] = "    <th class=\"SegColumn\">納品先</th>";
+		$aryHtml[] = "    <td colspan=\"3\" class=\"Segs\">". sprintf("[%s] %s", $aryOrder["strdisplaydeliveryplacecode"], $aryOrder["strdeliveryplacename"]) . "</td>";
+		$aryHtml[] = "  </th>";
 		$aryHtml[] = "  </tr>";
 		$aryHtml[] = "  <tr>";
 		$aryHtml[] = "    <th class=\"SegColumn\">製品名</th>";
@@ -1508,9 +1544,15 @@ function fncCancelPurchaseOrderHtml($aryOrder, $aryDetail, $strSessionID, $isDel
 		$aryHtml[] = "    <td class=\"Segs\">" . sprintf("[%s] %s", $aryOrder["lngusercode"], $aryOrder["strusername"]) . "</td>";
 		$aryHtml[] = "  </tr>";
 		$aryHtml[] = "  <tr>";
-		$aryHtml[] = "    <th class=\"SegColumn\">仕入先</th>";
-		$aryHtml[] = "    <td colspan=\"3\" class=\"Segs\">". sprintf("[%s] %s", $aryOrder["strcompanydisplaycode"], $aryOrder["strcustomername"]) . "</td>";
-		$aryHtml[] = "  </th>";
+		$aryHtml[] = "    <th class=\"SegColumn\">備考</th>";
+		$aryHtml[] = "    <td colspan=\"3\" class=\"Segs\">" . $aryOrder["strnote"] . "</td>";
+		$aryHtml[] = "  </tr>";
+		$aryHtml[] = "  <tr>";
+		$aryHtml[] = "    <th class=\"SegColumn\">仕入部品</th>";
+		$aryHtml[] = "    <td class=\"Segs\">" . sprintf("[%s] %s", $aryDetail["lngstockitemcode"], $aryDetail["strstockitemname"]) . "</td>";
+		$aryHtml[] = "    <th class=\"SegColumn\">運搬方法</th>";
+		$aryHtml[] = "    <td class=\"Segs\">" . sprintf("%s", $aryDetail["strdeliverymethodname"]) . "</td>";
+		$aryHtml[] = "  </tr>";
 		$aryHtml[] = "  <tr>";
 		$aryHtml[] = "    <th class=\"SegColumn\">納期</th>";
 		$aryHtml[] = "    <td class=\"Segs\">" . $aryDetail["dtmdeliverydate"] . "</td>";
@@ -1530,6 +1572,95 @@ function fncCancelPurchaseOrderHtml($aryOrder, $aryDetail, $strSessionID, $isDel
 		$aryHtml[] = "</table>";
 		$aryHtml[] = "<br>";
 //	}
+
+    $strHtml = "";
+    $strHtml = implode("\n", $aryHtml);
+
+    return $strHtml;
+}
+
+/**
+ * 発注書キャンセルデータHTML作成
+ * 
+ * @param	Array		$aryOrder		発注書データ
+ * @param	Array		$aryDetail		発注書明細データ
+ * @access	public
+ * 
+ */
+
+function fncDeletePurchaseOrderHtml($aryOrder, $aryDetail, $strSessionID){
+	$aryHtml[] = "<table class=\"ordercode\">";
+	$aryHtml[] = "  <tr>";
+	$aryHtml[] = "    <td class=\"ordercodetd\">" . sprintf("%s_%02d", $aryOrder["strordercode"], $aryOrder["lngrevisionno"]) . "</td>";
+	$aryHtml[] = "    <td class=\"orderbuttontd\"><a href=\"#\" onclick=\"window.opener.location.reload();window.close();return false;\"><img src=\"/img/type01/cmn/querybt/close_blown_off_ja_bt.gif\" alt=\"close\"></a></td>";
+	$aryHtml[] = "  </tr>";
+	$aryHtml[] = "</table>";
+	$aryHtml[] = "<p class=\"caption\">取消対象</p>";
+	$aryHtml[] = "<table class=\"orderdetail\">";
+	$aryHtml[] = "  <tr>";
+	$aryHtml[] = "    <th class=\"SegColumn\">登録日</th>";
+	$aryHtml[] = "    <td class=\"Segs\">" . $aryOrder["dtminsertdate"] . "</td>";
+	$aryHtml[] = "    <th class=\"SegColumn\">発注有効期限日</th>";
+	$aryHtml[] = "    <td class=\"Segs\">" . $aryOrder["dtmexpirationdate"] . "</td>";
+	$aryHtml[] = "  </tr>";
+	$aryHtml[] = "  <tr>";
+	$aryHtml[] = "    <th class=\"SegColumn\">発注NO.</th>";
+	$aryHtml[] = "    <td class=\"Segs\">" . sprintf("%s_%02d", $aryOrder["strordercode"], $aryOrder["lngrevisionno"]) . "</td>";
+	$aryHtml[] = "    <th class=\"SegColumn\">支払方法</th>";
+	$aryHtml[] = "    <td class=\"Segs\">". sprintf("%s", $aryOrder["strpayconditionname"]) . "</td>";
+	$aryHtml[] = "  </tr>";
+	$aryHtml[] = "  <tr>";
+	$aryHtml[] = "    <th class=\"SegColumn\">仕入先</th>";
+	$aryHtml[] = "    <td colspan=\"3\" class=\"Segs\">". sprintf("[%s] %s", $aryOrder["strcompanydisplaycode"], $aryOrder["strcustomername"]) . "</td>";
+	$aryHtml[] = "  </tr>";
+	$aryHtml[] = "  <tr>";
+	$aryHtml[] = "    <th class=\"SegColumn\">納品先</th>";
+	$aryHtml[] = "    <td colspan=\"3\" class=\"Segs\">". sprintf("[%s] %s", $aryOrder["strdisplaydeliveryplacecode"], $aryOrder["strdeliveryplacename"]) . "</td>";
+	$aryHtml[] = "  </tr>";
+	$aryHtml[] = "  <tr>";
+	$aryHtml[] = "    <th class=\"SegColumn\">製品名</th>";
+	$aryHtml[] = "    <td colspan=\"3\" class=\"Segs\">" . sprintf("[%s] %s", $aryOrder["strproductcode"], $aryOrder["strproductname"]) . "</td>";
+	$aryHtml[] = "  </tr>";
+	$aryHtml[] = "  <tr>";
+	$aryHtml[] = "    <th class=\"SegColumn\">営業部門</th>";
+	$aryHtml[] = "    <td class=\"Segs\">" . sprintf("[%s] %s", $aryOrder["lnggroupcode"], $aryOrder["strgroupname"]) . "</td>";
+	$aryHtml[] = "    <th class=\"SegColumn\">開発担当者</th>";
+	$aryHtml[] = "    <td class=\"Segs\">" . sprintf("[%s] %s", $aryOrder["strusercode"], $aryOrder["strusername"]) . "</td>";
+	$aryHtml[] = "  </tr>";
+	$aryHtml[] = "  <tr>";
+	$aryHtml[] = "    <th class=\"SegColumn\">備考</th>";
+	$aryHtml[] = "    <td colspan=\"3\" class=\"Segs\">" . sprintf("%s", $aryOrder["strnote"]) . "</td>";
+	$aryHtml[] = "  </tr>";
+	if( !is_array($aryDetail) )
+	{
+		$aryDetail[] = $aryDetail;
+	}
+	for($i = 0; $i < count($aryDetail); $i++) {
+		$aryHtml[] = "  <tr>";
+		$aryHtml[] = "    <th class=\"SegColumn\">仕入部品</th>";
+		$aryHtml[] = "    <td class=\"Segs\">" . sprintf("[%s] %s", $aryDetail[$i]["lngstockitemcode"], $aryDetail[$i]["strstockitemname"]) . "</td>";
+		$aryHtml[] = "    <th class=\"SegColumn\">運搬方法</th>";
+		$aryHtml[] = "    <td class=\"Segs\">" . sprintf("%s", $aryDetail[$i]["strdeliverymethodname"]) . "</td>";
+		$aryHtml[] = "  </tr>";
+		$aryHtml[] = "  <tr>";
+		$aryHtml[] = "    <th class=\"SegColumn\">納期</th>";
+		$aryHtml[] = "    <td class=\"Segs\">" . $aryDetail[$i]["dtmdeliverydate"] . "</td>";
+		$aryHtml[] = "    <th class=\"SegColumn\">単価</th>";
+		$aryHtml[] = "    <td class=\"Segs\">" . sprintf("%s %.4f", $aryOrder["strmonetaryunitsign"], $aryDetail[$i]["curproductprice"]) . "</td>";
+		$aryHtml[] = "  </tr>";
+		$aryHtml[] = "  <tr>";
+		$aryHtml[] = "    <th class=\"SegColumn\">数量</th>";
+		$aryHtml[] = "    <td class=\"Segs\">" . $aryDetail[$i]["lngproductquantity"] . "</td>";
+		$aryHtml[] = "    <th class=\"SegColumn\">税抜価格</th>";
+		$aryHtml[] = "    <td class=\"Segs\">" . sprintf("%s %.2f", $aryOrder["strmonetaryunitsign"], $aryDetail[$i]["cursubtotalprice"]) . "</td>";
+		$aryHtml[] = "  </tr>";
+		$aryHtml[] = "  <tr>";
+		$aryHtml[] = "    <th class=\"SegColumn\">明細備考</th>";
+		$aryHtml[] = "    <td colspan=\"3\" class=\"Segs\">" . $aryDetail[$i]["strnote"] . "</td>";
+		$aryHtml[] = "  </tr>";
+	}
+	$aryHtml[] = "</table>";
+	$aryHtml[] = "<br>";
 
     $strHtml = "";
     $strHtml = implode("\n", $aryHtml);
