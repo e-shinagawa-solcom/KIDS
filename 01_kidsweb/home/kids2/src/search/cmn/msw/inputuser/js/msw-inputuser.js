@@ -2,6 +2,7 @@
     var mswBox = $('.msw-box');
     var userCode = mswBox.find('.input-code');
     var userName = mswBox.find('.input-name');
+    var displayFlagLimit = mswBox.find('.display-flag-limit');
     var btnSearch = mswBox.find('.search-btn img');
 
     // TabKeyの制御
@@ -43,13 +44,24 @@
         }
     });
     var selectusers = function() {
+        if (displayFlagLimit.val() == '1') {
+            displayFlagLimit0 = true;
+            displayFlagLimit1 = true;
+        } else {
+            displayFlagLimit0 = true;
+            displayFlagLimit1 = false;
+        }
         $('select').find('option').remove();
         switch (isEmpty(userCode.val()) + isEmpty(userName.val())) {
             // どちらも未入力
             case '00':
                 var condition = {
                     data: {
-                        QueryName: 'selectInputUsers'
+                        QueryName: 'selectInputUsers',
+                        Conditions: {
+                            displayFlagLimit0: displayFlagLimit0,
+                            displayFlagLimit1: displayFlagLimit1
+                        }
                     }
                 };
                 break;
@@ -59,7 +71,9 @@
                     data: {
                         QueryName: 'selectInputUserByUserName',
                         Conditions: {
-                            userName: userName.val()
+                            userName: userName.val(),            
+                            displayFlagLimit0: displayFlagLimit0,
+                            displayFlagLimit1: displayFlagLimit1
                         }
                     }
                 };
@@ -70,7 +84,9 @@
                     data: {
                         QueryName: 'selectInputUserByUserCode',
                         Conditions: {
-                            userCode: userCode.val()
+                            userCode: userCode.val(),
+                            displayFlagLimit0: displayFlagLimit0,
+                            displayFlagLimit1: displayFlagLimit1
                         }
                     }
                 };
@@ -82,7 +98,9 @@
                         QueryName: 'selectInputUserByCodeAndName',
                         Conditions: {
                             userCode: userCode.val(),
-                            userName: userName.val()
+                            userName: userName.val(),
+                            displayFlagLimit0: displayFlagLimit0,
+                            displayFlagLimit1: displayFlagLimit1
                         }
                     }
                 };

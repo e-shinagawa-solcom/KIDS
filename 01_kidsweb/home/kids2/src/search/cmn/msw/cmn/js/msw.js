@@ -1,9 +1,5 @@
 (function() {
     var apply = function(handleName, docMsw){
-        // var code = $('input[name=' + handleName + ']');
-        // code.val(docMsw.find('select.result-select').find('option:selected').attr('code'));
-        
-        console.log(handleName);
         var code = $('input[name=' + handleName + ']');
         var val = docMsw.find('select.result-select').find('option:selected').attr('code');
         if (val.indexOf('_') > -1) {
@@ -26,7 +22,7 @@
     // Mボタン押下処理
     $('img.msw-button').on({
         'click': function() {
-
+            var displayFlagLimit = $(this).attr('displayFlagLimit');
             var mswName = $(this).attr('invokeMSWName');
             var ifmMsw = $('iframe.' + mswName);
             var docMsw = $(ifmMsw.get(0).contentWindow.document);
@@ -102,6 +98,10 @@
             docMsw.find('input[tabindex="1"]').focus();
             
             docMsw.find('input[tabindex="1"]').val($('input[name=' + handleName + ']').val());
+
+            if (displayFlagLimit == "0") {                
+                docMsw.find('input[class="display-flag-limit"]').val(displayFlagLimit);
+            }
         }
     });
 
@@ -139,6 +139,17 @@
                 mswUserGroupCode.val(groupCode);
             } else {
                 // 担当部署コードが空ならmsw-userの部署コード欄をクリア
+                mswUserGroupCode.val('');
+            }
+        } else if( handleName == "KuwagataUserCode" ) {
+            var groupCode = $('input[name="KuwagataGroupCode"]').val();
+            console.log(groupCode);
+            var mswUserGroupCode = $($('.msw-inchargeuser')[0].contentWindow.document).find('.dammy-input-code');
+            // KWG担当部署コードが入力されていればKWG担当者MSWにセットする
+            if( groupCode ){
+                mswUserGroupCode.val(groupCode);
+            } else {
+                // KWG担当部署コードが空ならmsw-userの部署コード欄をクリア
                 mswUserGroupCode.val('');
             }
         }

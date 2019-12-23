@@ -11,8 +11,8 @@ WHERE
   AND mu.lngusercode = mgr.lngusercode 
   AND mg.lnggroupcode = mgr.lnggroupcode 
   AND mar.lngattributecode = 1 
-  AND mg.bytgroupdisplayflag = true 
-  AND mu.bytuserdisplayflag = true 
+  AND mg.bytgroupdisplayflag in ($1, $2)
+  AND mu.bytuserdisplayflag in ($1, $2)  
 ORDER BY
   mu.struserdisplaycode
 ;

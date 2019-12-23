@@ -7,7 +7,7 @@ FROM
 WHERE
   mg.lnggroupcode = mgar.lnggroupcode 
   AND mgar.lngattributecode = 1 
-  AND mg.bytgroupdisplayflag = true 
+  AND mg.bytgroupdisplayflag in ($1, $2) 
 ORDER BY
   mg.strgroupdisplaycode
 ;

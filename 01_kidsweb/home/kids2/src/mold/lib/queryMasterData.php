@@ -39,7 +39,6 @@ if ((new clsAuth())->isLogin($_REQUEST["strSessionID"], $objDB))
 			{
 				$params[] = pg_escape_string($condition);
 			}
-
 			// クエリ実行
 			$result = pg_execute("", $params);
 		}

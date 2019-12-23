@@ -30,22 +30,26 @@
         "checkStrProductCode",
         function (value, element, params) {
             if (params && value != '') {
-                var codes = value.split(',');
+                var codeList = value.split(",");                
                 var result = true;
-                $.each(codes, function (ind, val) {
-                    if (val.indexOf('-') == -1) {
-                        result = /\d{5}(_\d{2})?$/.test(val);
-                        if (!result) {
-                            return result;
+                $.each(codeList, function (ind, val) {
+                    if (val.indexOf('-') !== -1) {
+                        var val1 = val.split("-")[0];
+                        var val2 = val.split("-")[1];
+                        if (!val1.match(/^\d{5}(_\d{2})?$/) || !val2.match(/^\d{5}(_\d{2})?$/)) {
+                            result = false;
+                            return false;
                         }
-                    } else {
-                        result = /\d{5}(-\d{5})/.test(val);
-                        if (!result) {
-                            return result;
+                    } else if (val.length) {
+                        if (!val.match(/^\d{5}(_\d{2})?$/)) {
+                            result = false;
+                            return false;
                         }
                     }
                 });
-                return result;
+                if (!result) {
+                    return false;
+                }
             }
             return true;
         },
@@ -112,7 +116,14 @@
     $.validator.addMethod(
         "isLessThanToday",
         function (value, element, params) {
-            if (params && value != '') {
+            if (params && value != '') {                
+                if (/^[0-9]{8}$/.test(value)) {
+                    var str = value.trim();
+                    var y = str.substr(0, 4);
+                    var m = str.substr(4, 2);
+                    var d = str.substr(6, 2);
+                    value = y + "/" + m + "/" + d;
+                }
                 var regResult = regDate.exec(value);
                 var yyyy = regResult[1];
                 var mm = regResult[2];
@@ -152,10 +163,25 @@
     $.validator.addMethod(
         "isGreaterThanFromDate",
         function (value, element, params) {
-            if (params[0] && value != '') {
+            if (params[0] && value != '') {                
+                if (/^[0-9]{8}$/.test(value)) {
+                    var str = value.trim();
+                    var y = str.substr(0, 4);
+                    var m = str.substr(4, 2);
+                    var d = str.substr(6, 2);
+                    value = y + "/" + m + "/" + d;
+                }
+                var params1 = $(params[1]).val();
                 // FROM_XXXXが入力された場合、
                 if ($(params[1]).val() != "") {
-                    var regResult = regDate.exec($(params[1]).val());
+                    if (/^[0-9]{8}$/.test(params1)) {
+                        var str = params1.trim();
+                        var y = str.substr(0, 4);
+                        var m = str.substr(4, 2);
+                        var d = str.substr(6, 2);
+                        params1 = y + "/" + m + "/" + d;
+                    }
+                    var regResult = regDate.exec(params1);
                     var yyyy = regResult[1];
                     var mm = regResult[2];
                     var dd = regResult[3];

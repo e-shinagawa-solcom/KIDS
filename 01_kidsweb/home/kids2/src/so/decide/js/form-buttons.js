@@ -86,9 +86,13 @@
                                 exit;
                             }
                             window.opener.$('input[name="strProductCode"]').val(strProductCode);
-                            window.opener.$('#tbl_detail tbody tr').remove();
-                            window.opener.$('#tbl_detail_chkbox tbody tr').remove();
+                            window.opener.$('#table_decide_body tr').remove();
+                            window.opener.$('#table_decide_no tr').remove();
                         }
+
+                        window.opener.$('input[name="allSel"]').prop('checked', false);
+                        window.opener.$('#tbl_detail tbody tr').remove();
+                        window.opener.$('#tbl_detail_chkbox tbody tr').remove();
 
                         var data = response.result;
                         var tblchkbox = window.opener.$("#tbl_detail_chkbox");
@@ -97,36 +101,26 @@
                         for (var i = 0; i < data.length; i++) {
                             var row = data[i];
                             var chkbox_id = row.lngreceiveno + "_" + row.lngreceivedetailno + "_" + row.lngrevisionno;
-                            var isInserted = false;
-                            tblchkbox.find('tr').each(function (i, e) {
-                                tmp_id = $(this).find('td').first().find('input:checkbox').attr('id');
-                                if (tmp_id == chkbox_id) {
-                                    isInserted = true;
-                                }
-                            });
                             var strProductName = row.strproductname;
-
-                            if (!isInserted) {
-                                var chkboxstr = '<tr><td style="width: 30px;">'
-                                    + '<input id="' + chkbox_id + '" style="width: 10px;" type="checkbox">'
-                                    + '</td></tr>';
-                                tblchkbox.append(chkboxstr);
-                                var detailstr = '<tr>'
-                                    + '<td style="width: 25px;"></td>'
-                                    + '<td style="width: 49px;">' + row.lngreceivedetailno + '</td>'
-                                    + '<td style="width: 249px;">[' + convertNull(row.strcustomerdisplaycode) + '] ' + convertNull(row.strcustomerdisplayname) + '</td>'
-                                    + '<td style="width: 119px;">[' + convertNull(row.lngsalesdivisioncode) + '] ' + convertNull(row.strsalesdivisionname) + '</td>'
-                                    + '<td style="width: 119px;">[' + convertNull(row.lngsalesclasscode) + '] ' + convertNull(row.strsalesclassname) + '</td>'
-                                    + '<td style="width: 119px;">' + convertNull(row.dtmdeliverydate) + '</td>'
-                                    + '</tr>';
-                                tbl.append(detailstr);
-                            }
+                            var chkboxstr = '<tr><td style="width: 30px;">'
+                                + '<input id="' + chkbox_id + '" style="width: 10px;" type="checkbox">'
+                                + '</td></tr>';
+                            tblchkbox.append(chkboxstr);
+                            var detailstr = '<tr>'
+                                + '<td style="width: 25px;"></td>'
+                                + '<td style="width: 49px;">' + row.lngreceivedetailno + '</td>'
+                                + '<td style="width: 249px;">[' + convertNull(row.strcustomerdisplaycode) + '] ' + convertNull(row.strcustomerdisplayname) + '</td>'
+                                + '<td style="width: 119px;">[' + convertNull(row.lngsalesdivisioncode) + '] ' + convertNull(row.strsalesdivisionname) + '</td>'
+                                + '<td style="width: 119px;">[' + convertNull(row.lngsalesclasscode) + '] ' + convertNull(row.strsalesclassname) + '</td>'
+                                + '<td style="width: 119px;">' + convertNull(row.dtmdeliverydate) + '</td>'
+                                + '</tr>';
+                            tbl.append(detailstr);
                         }
 
                         tbl.find('tr').each(function (i, e) {
                             $(this).find('td').first().html(i + 1);
                         });
-                        
+
                         window.opener.$('input[name="strProductName"]').val(strProductName);
                     })
                     .fail(function (response) {

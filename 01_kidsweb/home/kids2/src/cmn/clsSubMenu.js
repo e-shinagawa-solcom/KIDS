@@ -177,9 +177,8 @@
 						g_arySubMenu['list'][0]	= '¾¦ÉÊ²½´ë²è½ñ';
 						g_arySubMenu['list'][1]	= 'È¯Ãí½ñ';
 						g_arySubMenu['list'][2]	= '¸«ÀÑ¸¶²Á½ñ';
-						g_arySubMenu['list'][3]	= '¶â·¿°ÍÍê½ñ';
-						g_arySubMenu['list'][4]	= 'Ç¼ÉÊÅÁÉ¼';
-						g_arySubMenu['list'][5]	= 'ÀÁµá½ñ';
+						g_arySubMenu['list'][3]	= 'Ç¼ÉÊÅÁÉ¼';
+						g_arySubMenu['list'][4]	= 'ÀÁµá½ñ';
 
 						g_arySubMenu['mm'][0]	= '¶â·¿ÍúÎòÅĞÏ¿';
 						g_arySubMenu['mm'][1]	= '¶â·¿ÍúÎò¸¡º÷';

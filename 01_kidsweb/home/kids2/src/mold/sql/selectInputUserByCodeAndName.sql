@@ -11,8 +11,8 @@ WHERE
   AND mu.lngusercode = mgr.lngusercode 
   AND mg.lnggroupcode = mgr.lnggroupcode 
   AND mar.lngattributecode = 1 
-  AND mg.bytgroupdisplayflag = true 
-  AND mu.bytuserdisplayflag = true
+  AND mg.bytgroupdisplayflag in ($3, $4) 
+  AND mu.bytuserdisplayflag in ($3, $4) 
   AND mu.struserdisplaycode = $1
   AND mu.struserdisplayname LIKE '%' || $2 || '%'
 ORDER BY

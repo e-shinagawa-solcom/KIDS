@@ -2,6 +2,7 @@
     var mswBox = $('.msw-box');
     var groupCode = mswBox.find('.input-code');
     var groupName = mswBox.find('.input-name');
+    var displayFlagLimit = mswBox.find('.display-flag-limit');
     var btnSearch = mswBox.find('.search-btn img');
 
     // TabKeyの制御
@@ -44,12 +45,23 @@
     });
     var selectgroups = function() {
         $('select').find('option').remove();
+        if (displayFlagLimit.val() == '1') {
+            displayFlagLimit0 = true;
+            displayFlagLimit1 = true;
+        } else {
+            displayFlagLimit0 = true;
+            displayFlagLimit1 = false;
+        }
         switch (isEmpty(groupCode.val()) + isEmpty(groupName.val())) {
             // どちらも未入力
             case '00':
                 var condition = {
                     data: {
-                        QueryName: 'selectGroups'
+                        QueryName: 'selectGroups',
+                        Conditions: {
+                            displayFlagLimit0: displayFlagLimit0,
+                            displayFlagLimit1: displayFlagLimit1
+                        }
                     }
                 };
                 break;
@@ -59,7 +71,9 @@
                     data: {
                         QueryName: 'selectGroupByGroupName',
                         Conditions: {
-                            groupName: groupName.val()
+                            groupName: groupName.val(),
+                            displayFlagLimit0: displayFlagLimit0,
+                            displayFlagLimit1: displayFlagLimit1
                         }
                     }
                 };
@@ -70,7 +84,9 @@
                     data: {
                         QueryName: 'selectGroupByGroupCode',
                         Conditions: {
-                            groupCode: groupCode.val()
+                            groupCode: groupCode.val(),
+                            displayFlagLimit0: displayFlagLimit0,
+                            displayFlagLimit1: displayFlagLimit1
                         }
                     }
                 };
@@ -82,7 +98,9 @@
                         QueryName: 'selectGroupByCodeAndName',
                         Conditions: {
                             groupCode: groupCode.val(),
-                            groupName: groupName.val()
+                            groupName: groupName.val(),
+                            displayFlagLimit0: displayFlagLimit0,
+                            displayFlagLimit1: displayFlagLimit1
                         }
                     }
                 };

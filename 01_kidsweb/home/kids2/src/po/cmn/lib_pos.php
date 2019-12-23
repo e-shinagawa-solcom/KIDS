@@ -251,34 +251,65 @@ function fncGetSearchPurchaseSQL($displayColumns, $searchColumns, $from, $to, $s
     }
     // 発注Ｎｏ
     if (array_key_exists("strOrderCode", $searchColumns) &&
-        array_key_exists("strOrderCode", $from) && $from["strOrderCode"] != '') {
-        if (strpos($from["strOrderCode"], "-")) {
-            // リバイズコード付の発注Ｎｏのリバイズコードは検索結果では最新版を表示するため、無視する
-            $strNewOrderCode_from = preg_replace(strstr($from["strOrderCode"], "_"), "", $from["strOrderCode"]);
-        } else {
-            $strNewOrderCode_from = $from["strOrderCode"];
+        array_key_exists("strOrderCode", $searchValue)) {
+        $strOrdereCodeArray = explode(",", $searchValue["strOrderCode"]);
+        $aryQuery[] = " AND (";
+        $count = 0;
+        foreach ($strOrdereCodeArray as $strOrderCode) {
+            $count += 1;
+            if ($count != 1) {
+                $aryQuery[] = " OR ";
+            }
+            if (strpos($strOrderCode, '-') !== false) {
+                $aryQuery[] = "(o.strOrderCode" .
+                " between '" . explode("-", $strOrderCode)[0] . "'" .
+                " AND " . "'" . explode("-", $strOrderCode)[1] . "')";
+            } else {
+                if (strpos($strOrderCode, '_') !== false) {                    
+                    if (explode("_", $strOrderCode)[1] == '00') {
+                        $aryQuery[] = " o.strOrderCode = '" . explode("_", $strOrderCode)[0] . "'";
+                        $aryQuery[] = " AND o.lngrevisionno = 0 ";
+                    } else {                        
+                        $aryQuery[] = " o.strOrderCode = '" . explode("_", $strOrderCode)[0] . "'";
+                        $aryQuery[] = " AND o.lngrevisionno = " . ltrim(explode("_", $strOrderCode)[1], '0') . "";
+                    }
+                } else {
+                    $aryQuery[] = "o.strOrderCode = '" . $strOrderCode . "'";
+                }
+            }
         }
+        $aryQuery[] = ")";
     }
-    if (array_key_exists("strOrderCode", $searchColumns) &&
-        array_key_exists("strOrderCode", $to) && $to["strOrderCode"] != '') {
-        if (strpos($to["strOrderCode"], "-")) {
-            // リバイズコード付の発注Ｎｏのリバイズコードは検索結果では最新版を表示するため、無視する
-            $strNewOrderCode_to = preg_replace(strstr($to["strOrderCode"], "_"), "", $to["strOrderCode"]);
-        } else {
-            $strNewOrderCode_to = $to["strOrderCode"];
-        }
-    }
-    if (($strNewOrderCode_from && $strNewOrderCode_to) && ($strNewOrderCode_from == $strNewOrderCode_to)) {
-        // fromとtoが同じ値の場合は、範囲指定ではなく"="で指定"
-        $aryQuery[] = " AND o.strOrderCode = '" . $strNewOrderCode_to . "'";
-    } else {
-        if ($strNewOrderCode_from) {
-            $aryQuery[] = " AND o.strOrderCode >= '" . $strNewOrderCode_from . "'";
-        }
-        if ($strNewOrderCode_to) {
-            $aryQuery[] = " AND o.strOrderCode <= '" . $strNewOrderCode_to . "'";
-        }
-    }
+
+    // if (array_key_exists("strOrderCode", $searchColumns) &&
+    //     array_key_exists("strOrderCode", $from) && $from["strOrderCode"] != '') {
+    //     if (strpos($from["strOrderCode"], "-")) {
+    //         // リバイズコード付の発注Ｎｏのリバイズコードは検索結果では最新版を表示するため、無視する
+    //         $strNewOrderCode_from = preg_replace(strstr($from["strOrderCode"], "_"), "", $from["strOrderCode"]);
+    //     } else {
+    //         $strNewOrderCode_from = $from["strOrderCode"];
+    //     }
+    // }
+    // if (array_key_exists("strOrderCode", $searchColumns) &&
+    //     array_key_exists("strOrderCode", $to) && $to["strOrderCode"] != '') {
+    //     if (strpos($to["strOrderCode"], "-")) {
+    //         // リバイズコード付の発注Ｎｏのリバイズコードは検索結果では最新版を表示するため、無視する
+    //         $strNewOrderCode_to = preg_replace(strstr($to["strOrderCode"], "_"), "", $to["strOrderCode"]);
+    //     } else {
+    //         $strNewOrderCode_to = $to["strOrderCode"];
+    //     }
+    // }
+    // if (($strNewOrderCode_from && $strNewOrderCode_to) && ($strNewOrderCode_from == $strNewOrderCode_to)) {
+    //     // fromとtoが同じ値の場合は、範囲指定ではなく"="で指定"
+    //     $aryQuery[] = " AND o.strOrderCode = '" . $strNewOrderCode_to . "'";
+    // } else {
+    //     if ($strNewOrderCode_from) {
+    //         $aryQuery[] = " AND o.strOrderCode >= '" . $strNewOrderCode_from . "'";
+    //     }
+    //     if ($strNewOrderCode_to) {
+    //         $aryQuery[] = " AND o.strOrderCode <= '" . $strNewOrderCode_to . "'";
+    //     }
+    // }
     // 入力者
     if (array_key_exists("lngInputUserCode", $searchColumns) &&
         array_key_exists("lngInputUserCode", $searchValue)) {

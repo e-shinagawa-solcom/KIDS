@@ -36,9 +36,8 @@
 		$aryData["lngSubFlag_list_0"]	= 1;	// æ¶… ≤Ω¥Î≤ËΩÒ
 		$aryData["lngSubFlag_list_1"]	= 1;	// »Ø√ÌΩÒ
 		$aryData["lngSubFlag_list_2"]	= 1;	// ∏´¿—∏∂≤¡ΩÒ
-		$aryData["lngSubFlag_list_3"]	= 1;	// ∂‚∑ø∞ÕÕÍΩÒ
-		$aryData["lngSubFlag_list_4"]	= 1;	// «º… ≈¡…º
-		$aryData["lngSubFlag_list_5"]	= 1;	// ¿¡µ·ΩÒ
+		$aryData["lngSubFlag_list_3"]	= 1;	// «º… ≈¡…º
+		$aryData["lngSubFlag_list_4"]	= 1;	// ¿¡µ·ΩÒ
 
 		$aryData["lngSubFlag_mm_0"]		= 1;	// ∂‚∑øÕ˙ŒÚ≈–œø
 		$aryData["lngSubFlag_mm_1"]		= 1;	// ∂‚∑øÕ˙ŒÚ∏°∫˜
@@ -78,9 +77,8 @@
 		$aryData["lngSubRef_list_0"]	= '/list/index.php?strSessionID=' . $aryData["strSessionID"] . '&strListMode=p';
 		$aryData["lngSubRef_list_1"]	= '/list/index.php?strSessionID=' . $aryData["strSessionID"] . '&strListMode=po';
 		$aryData["lngSubRef_list_2"]	= '/list/index.php?strSessionID=' . $aryData["strSessionID"] . '&strListMode=es';
-		$aryData["lngSubRef_list_3"]	= '/list/index.php?strSessionID=' . $aryData["strSessionID"] . '&strListMode=mr';
-		$aryData["lngSubRef_list_4"]	= '/list/index.php?strSessionID=' . $aryData["strSessionID"] . '&strListMode=slp';
-		$aryData["lngSubRef_list_5"]	= '/list/index.php?strSessionID=' . $aryData["strSessionID"] . '&strListMode=inv';
+		$aryData["lngSubRef_list_3"]	= '/list/index.php?strSessionID=' . $aryData["strSessionID"] . '&strListMode=slp';
+		$aryData["lngSubRef_list_4"]	= '/list/index.php?strSessionID=' . $aryData["strSessionID"] . '&strListMode=inv';
 
 		// ∂‚∑ø¥…Õ˝
 		$aryData["lngSubRef_mm_0"]		= '/mm/regist/index.php?strSessionID=' . $aryData["strSessionID"];
@@ -254,6 +252,11 @@
 		}
 		// «º… ΩÒ
 		if( !fncCheckAuthority( DEF_FUNCTION_LO5, $objAuth ) )
+		{
+			$aryData["lngSubFlag_list_3"] = 0;
+		}
+		// ¿¡µ·ΩÒ
+		if( !fncCheckAuthority( DEF_FUNCTION_LO7, $objAuth ) )
 		{
 			$aryData["lngSubFlag_list_4"] = 0;
 		}
