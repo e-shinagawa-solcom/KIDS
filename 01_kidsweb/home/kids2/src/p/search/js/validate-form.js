@@ -30,22 +30,26 @@
         "checkStrProductCode",
         function (value, element, params) {
             if (params && value != '') {
-                var codes = value.split(',');
+                var codeList = value.split(",");                
                 var result = true;
-                $.each(codes, function (ind, val) {
-                    if (val.indexOf('-') == -1) {
-                        result = /\d{5}(_\d{2})?$/.test(val);
-                        if (!result) {
-                            return result;
+                $.each(codeList, function (ind, val) {
+                    if (val.indexOf('-') !== -1) {
+                        var val1 = val.split("-")[0];
+                        var val2 = val.split("-")[1];
+                        if (!val1.match(/^\d{5}(_\d{2})?$/) || !val2.match(/^\d{5}(_\d{2})?$/)) {
+                            result = false;
+                            return false;
                         }
-                    } else {
-                        result = /\d{5}(-\d{5})/.test(val);
-                        if (!result) {
-                            return result;
+                    } else if (val.length) {
+                        if (!val.match(/^\d{5}(_\d{2})?$/)) {
+                            result = false;
+                            return false;
                         }
                     }
                 });
-                return result;
+                if (!result) {
+                    return false;
+                }
             }
             return true;
         },

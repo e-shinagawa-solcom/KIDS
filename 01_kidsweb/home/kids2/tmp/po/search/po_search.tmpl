@@ -29,7 +29,7 @@
     <!-- フォームボタン css -->
     <link rel="stylesheet" href="/search/cmn/css/form-buttons.css">
     <!-- フォーム ボタン -->
-	<script src="/search/cmn/js/form-buttons.js" defer></script>
+	<script src="/po/search/form-buttons.js" defer></script>
     <!-- フォームバリデーション -->
     <script src="/search/cmn/js/validate-form.js" defer></script>
     <!-- マスタ検索呼び出し -->
@@ -38,8 +38,6 @@
 	<script src="/search/cmn/js/cookie-display-items.js" defer></script>
     <!-- キーバインド -->
 	<script src="/search/cmn/js/key-bind.js" defer></script>
-    <!-- バリデーション -->
-    <script src="/po/search/validate.js" defer></script>
     <link rel="stylesheet" href="/po/search/layout.css">
     <script src="/search/cmn/navigate/js/navigation.js" defer></script>
 </header3>
@@ -154,9 +152,8 @@
                     <input type="hidden" name="IsDisplay_strOrderCode" value="on">
                 </span>
 				<span class="regist-label">
-					<span class="regist-label__text">発注NO.</span>
-                    FROM <input class="TxtStyle05L" name="From_strOrderCode" type="text" maxlength="11" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCopyValue( this , document.all.To_strOrderCode );" tabindex="">
-                    TO <input class="TxtStyle05L" name="To_strOrderCode" type="text" maxlength="11" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="">
+					<span class="regist-label__text">発注NO.</span>                    
+                    <input class="Txt46L" name="strOrderCode" type="text" value="" tabindex="">
 				</span>
 			</div>
 			<div class="regist-line">
