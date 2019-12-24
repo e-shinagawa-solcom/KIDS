@@ -98,7 +98,7 @@ fnccheckの換算レートdisableからpostされてないのでこめんと
 		switch ( $lngProcessNo )
 		{
 			case 0:		// 通貨
-				$strPulldownMenu = fncGetPulldown3( "m_monetaryunit", "strmonetaryunitsign", "strmonetaryunitname", $lngValueCode, '', $objDB );
+				$strPulldownMenu = fncGetPulldown3( "m_monetaryunit", "strmonetaryunitsign", "strmonetaryunitname", $lngValueCode, $strWhere, $objDB );
 				break;
 			case 1:		// レートタイプ
 				$strPulldownMenu = fncGetPulldown( "m_monetaryrateclass", "lngmonetaryratecode", "strmonetaryratename", $lngValueCode, '', $objDB );
@@ -226,7 +226,7 @@ fnccheckの換算レートdisableからpostされてないのでこめんと
 			$strDisplayValue = "";
 			for ( $i = 1; $i < $lngFieldsCount; $i++ )
 			{
-				$strDisplayValue .= "$aryResult[$i]\t";
+				$strDisplayValue .= "$aryResult[$i]";
 			}
 
 			// HTML出力
@@ -727,6 +727,8 @@ fnccheckの換算レートdisableからpostされてないのでこめんと
 			for ($i = 0; $i < count( $aryData ); $i++ )
 			{
 				// 明細行番号
+				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][lngPurchaseOrderNo]\" value=\"".$aryData[$i]["lngPurchaseOrderNo"]."\">";
+				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][lngPurchaseOrderDetailNo]\" value=\"".$aryData[$i]["lngPurchaseOrderDetailNo"]."\">";
 				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][lngOrderNo]\" value=\"".$aryData[$i]["lngOrderNo"]."\">";
 				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][lngOrderDetailNo]\" value=\"".$aryData[$i]["lngOrderDetailNo"]."\">";
 				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][lngSortKey]\" value=\"".$aryData[$i]["lngSortKey"]."\">";

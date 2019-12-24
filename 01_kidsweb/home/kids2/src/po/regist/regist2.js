@@ -68,7 +68,7 @@ jQuery(function($){
         var expirationDate = $('input[name="dtmExpirationDate"]').val();
         result = validateDate(expirationDate);
 //        result = validateDelivery(selectedRows);
-        result = validatePayCondition();
+//        result = validatePayCondition();
 
         return result;
     }
@@ -131,15 +131,23 @@ jQuery(function($){
 
         return result;
     }
-    function getUpdateDetail(){
+    function getUpdateDetail(lngPurchaseOrderNo){
         var result = [];
 //        $.each(getSelectedRows(), function(i, tr){
         $('#DetailTableBody tr').each(function(i, tr){
             var param = {
+                lngPurchaseOrderNo: lngPurchaseOrderNo,
                 lngSortKey:               $(tr).find('td[name="rownum"]').text(),
                 lngPurchaseOrderDetailNo: $(tr).find('.detailPurchaseorderDetailNo').text(),
+                lngStockSubjectCode: $(tr).find('.detailStockSubjectCode').text().split("]")[0].replace("[",""),
+                lngStockItemCode:  $(tr).find('.detailStockItemCode').text().split("]")[0].replace("[",""),
                 lngDeliveryMethodCode:    $(tr).find('option:selected').val(),
                 strDeliveryMethodName:    $(tr).find('option:selected').text(),
+                curProductPrice: $(tr).find('.detailProductPrice').text().split(" ")[1],
+                lngProductQuantity: $(tr).find('.detailProductQuantity').text(),
+                curSubtotalPrice: $(tr).find('.detailSubtotalPrice').text().split(" ")[1],
+                dtmDeliveryDate: $(tr).find('.detailDeliveryDate').text(),
+                strDetailNote : $(tr).find('.detailDetailNote').text(),
             };
             result.push(param);
         });
@@ -191,7 +199,7 @@ jQuery(function($){
 
         $.ajax({
             type: 'POST',
-            url: 'renew.php',
+            url: '/po/confirm2/index.php?strSessionID=' + $('input[name="strSessionID"]').val(),
             scriptCharset: 'EUC-JP',
             data: {
                 strSessionID:        $('input[name="strSessionID"]').val(),
@@ -205,7 +213,14 @@ jQuery(function($){
                 strLocationName:     $('input[name="strLocationName"]').val(),
                 strNote:             $('input[name="strNote"]').val(),
                 strOrderCode:        $('input[name="strOrderCode"]').val(),
-                aryDetail:           getUpdateDetail(),
+                lngMonetaryUnitCode: $('select[name="lngMonetaryUnitCode"]').children('option:selected').val(),
+                strMonetaryUnitName: $('select[name="lngMonetaryUnitCode"]').children('option:selected').text(),
+                lngCustomerCompanyCode:  $('input[name="strCustomerCode"]').val(),
+                strProductCode : $('input[name="strProductCode"]').val(),
+                strProductName : $('input[name="strProductName"]').val(),
+
+
+                aryDetail:           getUpdateDetail($('input[name="lngPurchaseOrderNo"]').val()),
             }
         }).done(function(data){
             console.log("done");

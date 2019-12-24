@@ -84,19 +84,15 @@
 	{
 		fncOutputError ( 9052, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 	}
-fncDebug("kids2.log", "pass-1", __FILE__, __LINE__, "a" );
 
 	// check
 	if( $_POST["strMode"] == "check" || $_POST["strMode"] == "renew" )
 	{
 		$objDB->transactionBegin();
 		// 発注書マスタ更新
-fncDebug("kids2.log", "pass-2", __FILE__, __LINE__, "a" );
 		if(!fncUpdatePurchaseOrder($aryData, $objDB, $objAuth)) { return false; }
-fncDebug("kids2.log", "pass-3", __FILE__, __LINE__, "a" );
 		// 発注書明細更新
 		if(!fncUpdatePurchaseOrderDetail($aryData, $objDB)) { return false; }
-fncDebug("kids2.log", "pass-4", __FILE__, __LINE__, "a" );
 
 		// 更新後のデータを再度読み込む
 		$updatedPurchaseOrder = fncGetPurchaseOrderEdit($aryData["lngPurchaseOrderNo"], $aryData["lngRevisionNo"], $objDB);
@@ -134,8 +130,8 @@ fncDebug("kids2.log", "pass-4", __FILE__, __LINE__, "a" );
 	$aryNewResult["strProductCode"]           = $aryResult[0]["strproductcode"];
 //	$aryNewResult["lngPayConditionCode"]      = fncPulldownMenu(2, $aryResult[0]["lngpayconditioncode"], "", $objDB);
 	$aryNewResult["PayConditionDisabled"]     = "";
-	$aryNewResult["lngMonetaryUnitCode"]      = fncPulldownMenu(0, $aryResult[0]["lngmonetaryunitcode"], "", $objDB);
-	$aryNewResult["MonetaryUnitDisabled"]     = "disabled";
+	$aryNewResult["lngMonetaryUnitCode"]      = fncPulldownMenu(0, $aryResult[0]["lngmonetaryunitcode"], "where lngmonetaryunitcode =" . $aryResult[0]["lngmonetaryunitcode"] , $objDB);
+//	$aryNewResult["MonetaryUnitDisabled"]     = "disabled";
 	$aryNewResult["strCustomerCode"]          = $aryResult[0]["strcustomercode"];
 	$aryNewResult["strCustomerName"]          = $aryResult[0]["strcustomername"];
 	$aryNewResult["strGroupDisplayCode"]      = $aryResult[0]["strgroupdisplaycode"];
