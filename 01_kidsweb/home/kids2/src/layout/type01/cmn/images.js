@@ -122,8 +122,8 @@
 
 
 	///// SUBMIT¥Ü¥¿¥ó /////
-	var submit1 = '/img/type01/cmn/querybt/submit_off_bt.gif';
-	var submit2 = '/img/type01/cmn/querybt/submit_off_on_bt.gif';
+	var submit1 = '/img/type01/cmn/querybt/submit_off_bt_gold.gif';
+	var submit2 = '/img/type01/cmn/querybt/submit_off_on_bt_gold.gif';
 	var submit3 = '/img/type01/cmn/querybt/submit_on_bt.gif';
 
 
@@ -348,7 +348,7 @@
 	var datebt3 = '/img/type01/date/open_on_bt.gif';
 
 	///// BASE HEADER,FOOTER IMAGE /////
-	var headimage = '/img/type01/cmn/based/header.gif';
+	var headimage = '/img/type01/cmn/based/header_v3.gif';
 	var footimage = '/img/type01/cmn/based/footer.gif';
 
 	///// LOGOUT BT IMAGE /////

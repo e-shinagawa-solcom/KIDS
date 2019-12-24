@@ -1,6 +1,6 @@
 
 
-var KidsLogoImg = '<img src="/img/type01/cmn/kids_logo_center_gold.gif" width=182" height="26" border="0" alt="Kuwagata Integrated Dealing System">';
+var KidsLogoImg = '<img src="/img/type01/cmn/kids_logo_center-v3.gif" width=182" height="26" border="0" alt="Kuwagata Integrated Dealing System">';
 
 
 var loginBt1 = '<a href="#"><img name="loginbutton" onfocus="LoginOn(this);" onblur="LoginOff(this);" onmouseover="LoginOn(this);" onmouseout="LoginOff(this);fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + login1 + '" width="82" height="24" border="0" alt="LOGIN" tabindex="3"></a>';
