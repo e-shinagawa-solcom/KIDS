@@ -1455,7 +1455,7 @@ function fncCancelOrderHtml($aryOrder){
 		$aryHtml[] = "  </tr>";
 		$aryHtml[] = "  <tr>";
 		$aryHtml[] = "    <td class=\"SegColumn\">仕入部品</td>";
-		$aryHtml[] = "    <td class=\"Segs\">[" . $row["lngstocksubjectcode"] . "] " . $row["strstockitemname"] . "</td>";
+		$aryHtml[] = "    <td class=\"Segs\">[" . $row["lngstockitemcode"] . "] " . $row["strstockitemname"] . "</td>";
 		$aryHtml[] = "  </tr>";
 		$aryHtml[] = "  <tr>";
 		$aryHtml[] = "    <td class=\"SegColumn\">仕入先</td>";
