@@ -1395,13 +1395,13 @@ function fncSetHeadBtnToTr($doc, $trBody, $bgcolor, $aryTableHeadBtnName, $displ
                     $td->setAttribute("style", $bgcolor . "text-align: center;");
                     $isDecideObj = false;
                     if ($type == 'so') {
-                        if ($record["lngreceivestatuscode"] == DEF_RECEIVE_APPLICATE) {
+                        if( ($record["lngreceivestatuscode"] == DEF_RECEIVE_APPLICATE) && ( $record["strcompanydisplaycode"] != "0000") ){
                             $isDecideObj = true;
                         }
                         $id = $record["lngreceiveno"];
                     }
                     if ($type == 'po') {
-                        if ($record["lngorderstatuscode"] == DEF_ORDER_APPLICATE) {
+                        if( ($record["lngorderstatuscode"] == DEF_ORDER_APPLICATE) && ( $record["strcustomerdisplaycode"] != "0000") ) {
                             $isDecideObj = true;
                         }
                         $id = $record["lngorderno"];
