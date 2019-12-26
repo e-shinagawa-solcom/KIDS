@@ -156,7 +156,7 @@ define ("DEF_DEBUG_DIR",	PATH_HOME . "/log/");
 define ( "LOGIN_URL",	TOP_URL );
 
 // システムバージョン
-define ( "DEF_SYSTEM_VERSION",	"2.1" );
+define ( "DEF_SYSTEM_VERSION",	"3.1" );
 
 // 直接登録可能権限グループコード
 define ( "DEF_DIRECT_REGIST_AUTHORITY_CODE",	4 );
