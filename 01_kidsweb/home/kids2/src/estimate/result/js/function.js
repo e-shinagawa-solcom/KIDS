@@ -88,9 +88,7 @@ $(function () {
 	});
 
 	$('img.delete.button').on('click', function () {
-alert($(this).attr('action'));
 		var url = $(this).attr('action');
-alert($(this).attr('value'));
 		var value = $(this).attr('value');
 		var estimateNo = $(this).parent().parent().attr('id');
 		var sessionID = $('input[name="strSessionID"]').val();
