@@ -568,6 +568,7 @@ define ( "DEF_AREA_PARTS_COST_ORDER",  4);  // 部材費
 define ( "DEF_AREA_OTHER_COST_ORDER",  5);  // その他費用
 
 // 通貨レート区分
+define ( "DEF_MONETARY_RATE_CODE_NONE",          0); // -
 define ( "DEF_MONETARY_RATE_CODE_TTM",           1); // TTM
 define ( "DEF_MONETARY_RATE_CODE_COMPANY_LOCAL", 2); // 社内
 
