@@ -234,7 +234,7 @@ foreach ($aryOrderDetail as $orderDetail) {
     $trBody->appendChild($td);
 
     // Ã±°Ì
-    $td = $doc->createElement("td", toUTF8($orderDetail["strmonetaryunitname"]));
+    $td = $doc->createElement("td", toUTF8($orderDetail["strproductunitname"]));
     $td->setAttribute("class", "col7");
     $trBody->appendChild($td);
 
