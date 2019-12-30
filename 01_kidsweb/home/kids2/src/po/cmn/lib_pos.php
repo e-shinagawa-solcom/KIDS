@@ -435,7 +435,7 @@ function fncGetSearchPurcheseOrderSQL($aryViewColumn, $arySearchColumn, $arySear
 
         // г╪ий╬Л╫Й
         if ($strViewColumnName == "lngDeliveryPlaceCode") {
-            $arySelectQuery[] = "  ,mp.lngdeliveryplacecode as strdeliveryplacecode";
+            $arySelectQuery[] = "  ,mc_delivary.strcompanydisplaycode as strdeliveryplacecode";
             $arySelectQuery[] = "  ,mp.strdeliveryplacename as strDeliveryPlaceName";
         }
 
