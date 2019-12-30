@@ -189,7 +189,7 @@ if (!count($strErrorMessage)) {
 			CASE WHEN mp.lngproductionquantity = 0 THEN 0 ELSE me.curfixedcost / mp.lngproductionquantity END AS curfixedcostpieces,
 			me.curmanufacturingcost AS curmanufacturingcost,
 			CASE WHEN mp.lngproductionquantity = 0 THEN 0 ELSE me.curmanufacturingcost / mp.lngproductionquantity END AS curmanufacturingcostpieces,
-			CASE WHEN tsum.countofreceiveandorderdetail = tsum.countofaplicatedetail THEN TRUE ELSE FALSE END AS deleteflag,
+			CASE WHEN tsum.countofreceiveandorderdetail = tsum.countofaplicatedetail AND min_rev.lngrevisionno >= 0 THEN TRUE ELSE FALSE END AS deleteflag,
 			me.lngestimateno,
 			mp.strrevisecode,
 			me.lngrevisionno,
@@ -200,12 +200,12 @@ if (!count($strErrorMessage)) {
 		INNER JOIN m_product mp";
 
         // 管理者モードでない場合
-        if (!array_key_exists("admin", $optionColumns)) {
+//        if (!array_key_exists("admin", $optionColumns)) {
             $selectQuery = $selectQuery . " ON mp.strproductcode = me.strproductcode";
-        }
-        else{
-            $selectQuery = $selectQuery . " ON mp.strproductcode = substr(me.strproductcode, 1, 5)";
-        }
+//        }
+//        else{
+//            $selectQuery = $selectQuery . " ON mp.strproductcode = substr(me.strproductcode, 1, 5)";
+//        }
 		$selectQuery = $selectQuery . " AND mp.strrevisecode = me.strrevisecode
 			AND mp.lngrevisionno = me.lngproductrevisionno
 
@@ -267,7 +267,6 @@ if (!count($strErrorMessage)) {
 				MAX(lngrevisionno) AS lngrevisionno
 			FROM m_estimate
 			GROUP BY lngestimateno";
-
     // 管理者モードでない場合
     if (!array_key_exists("admin", $optionColumns)) {
         $selectQuery .=
@@ -281,7 +280,16 @@ if (!count($strErrorMessage)) {
 
 			ON maxrev.lngestimateno = me.lngestimateno
 			AND maxrev.lngrevisionno = me.lngrevisionno";
-
+    $selectQuery .= " INNER JOIN
+		(
+			SELECT
+				lngestimateno,
+				MIN(lngrevisionno) AS lngrevisionno
+			FROM m_estimate
+			GROUP BY lngestimateno
+        ) min_rev
+        	ON min_rev.lngestimateno = me.lngestimateno
+    ";
     // WHERE句生成
     $where = '';
 
@@ -524,7 +532,7 @@ for ($i = 0; $i < $resultNum; ++$i) {
             }
 
 		} else if ($column === 'btnDelete') { // 削除
-            if (!array_key_exists("admin", $optionColumns) and $result['deleteflag'] === 't') {
+            if (array_key_exists("admin", $optionColumns) and $result['deleteflag'] === 't') {
                 $body .= "<td align=\"center\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $resultNum . "_',1 );\">";
                 $body .= "<img src=\"/img/type01/pc/delete_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"DELETE\" class=\"delete button\" action=\"/estimate/delete/index.php\" value=\"" . $result['lngrevisionno'] . "\">";
 
