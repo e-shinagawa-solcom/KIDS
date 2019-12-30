@@ -514,10 +514,10 @@ function fncDeleteSales($lngSalesNo, $objDB, $objAuth)
  *	@return Boolean 	true			実行成功
  *						false			実行失敗 情報取得失敗
  */
-function fncDeleteSlip($strSlipCode, $objDB, $objAuth)
+function fncDeleteSlip($lngSlipNo, $objDB, $objAuth)
 {
 	// 納品書マスタのシーケンスを取得
-	$sequence_m_slip = fncGetSequence( 'm_Slip.lngSlipNo', $objDB );
+	//$sequence_m_slip = fncGetSequence( 'm_Slip.lngSlipNo', $objDB );
 
 	/*
 	// 最小リビジョン番号の取得
@@ -548,14 +548,12 @@ function fncDeleteSlip($strSlipCode, $objDB, $objAuth)
 	$aryQuery[] = "INSERT INTO m_slip (";
 	$aryQuery[] = " lngSlipNo,";					// 1:納品伝票番号
 	$aryQuery[] = " lngRevisionNo, ";				// 2:リビジョン番号
-	$aryQuery[] = " strSlipCode, ";    				// 3:納品伝票コード
-	$aryQuery[] = " strInsertUserCode, ";			// 4:入力者コード
+	$aryQuery[] = " lnginsertusercode, ";			// 4:入力者コード
 	$aryQuery[] = " bytInvalidFlag, "; 				// 5:無効フラグ
 	$aryQuery[] = " dtmInsertDate";					// 6:登録日
 	$aryQuery[] = ") values (";
-	$aryQuery[] = $sequence_m_slip . ", ";			// 1:納品伝票番号
-	$aryQuery[] = $lngMinRevisionNo . ", ";			// 2:リビジョン番号
-	$aryQuery[] = "'" . $strSlipCode . "', ";		// 3:納品伝票コード
+	$aryQuery[] = $lngSlipNo . ", ";			// 1:納品伝票番号
+	$aryQuery[] = "-1, ";			// 2:リビジョン番号
 	$aryQuery[] = "'" . $objAuth->UserCode . "', ";	// 4:入力者コード
 	$aryQuery[] = "false, ";						// 5:無効フラグ
 	$aryQuery[] = "now()";							// 6:登録日

@@ -1482,6 +1482,15 @@ function fncSetBackBtnToTr($doc, $trBody, $bgcolor, $aryTableBackBtnName, $displ
                         $imgDelete->setAttribute("class", "delete button");
                         // td > img
                         $td->appendChild($imgDelete);
+                    } else if ($type == 'slip' and !$isadmin and $isMaxData and $aryAuthority[$key] and $record["lngsalesstatuscode"] != DEF_SALES_CLOSED and $record["lnginvoiceno"] == null and $bgcolor != "background-color: #B3E0FF;") {
+                        // 削除ボタン
+                        $imgDelete = $doc->createElement("img");
+                        $imgDelete->setAttribute("src", "/img/type01/pc/delete_off_bt.gif");
+                        $imgDelete->setAttribute("id", $record["lngslipno"]);
+                        $imgDelete->setAttribute("revisionno", $record["lngrevisionno"]);
+                        $imgDelete->setAttribute("class", "delete button");
+                        // td > img
+                        $td->appendChild($imgDelete);
                     } else if ($type == 'inv' and !$isadmin and $isMaxData and $bgcolor != "background-color: #B3E0FF;") {
                         // 削除ボタン
                         $imgDelete = $doc->createElement("img");

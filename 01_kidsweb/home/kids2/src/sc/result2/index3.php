@@ -75,6 +75,7 @@ if ( !fncCheckAuthority( DEF_FUNCTION_SC6, $objAuth ) )
 $strQuery = fncGetSlipHeadNoToInfoSQL ( $aryData["lngSlipNo"], $aryData["lngRevisionNo"] );
 
 list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
+
 if ( $lngResultNum == 1 )
 {
 	$aryHeadResult = $objDB->fetchArray( $lngResultID, 0 );
@@ -96,10 +97,12 @@ if( $aryData["strSubmit"] )
 	$lngSlipNo = $aryHeadResult["lngslipno"];
 	$strCustomerCode = $aryHeadResult["strcustomercode"];
 
+
 	// --------------------------------
 	//    削除可能かどうかのチェック
 	// --------------------------------
 	// 顧客の国が日本で、かつ納品書ヘッダに紐づく請求書明細が存在する場合は削除不可
+/*
 	if (fncJapaneseInvoiceExists($strCustomerCode, $lngSalesNo, $objDB)){
 		MoveToErrorPage("請求書発行済みのため、削除できません");
 	}
@@ -109,7 +112,7 @@ if( $aryData["strSubmit"] )
 	{
 		MoveToErrorPage("締済みのため、削除できません");
 	}
-
+*/
 	// --------------------------------
 	//    削除処理
 	// --------------------------------
@@ -121,9 +124,8 @@ if( $aryData["strSubmit"] )
 	{
 		fncOutputError ( 9051, DEF_FATAL, "削除処理に伴う売上マスタ処理失敗", TRUE, "", $objDB );
 	}
-
 	// 納品書データの削除
-	if (!fncDeleteSlip($strSlipCode, $objDB, $objAuth))	
+	if (!fncDeleteSlip($lngSlipNo, $objDB, $objAuth))	
 	{
 		fncOutputError ( 9051, DEF_FATAL, "削除処理に伴う納品書マスタ処理失敗", TRUE, "", $objDB );
 	}
