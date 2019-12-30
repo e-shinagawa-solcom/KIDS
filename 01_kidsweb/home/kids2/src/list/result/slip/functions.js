@@ -6,7 +6,7 @@ function fncDownload(url) {
     // ページ遷移
     location.href = url;
     // ３０秒経過後、親画面クローズ
-    setTimeout("alert('30秒経過');parent.window.close();", 30000);
+//    setTimeout("alert('30秒経過');parent.window.close();", 30000);
 
     return false;
 
