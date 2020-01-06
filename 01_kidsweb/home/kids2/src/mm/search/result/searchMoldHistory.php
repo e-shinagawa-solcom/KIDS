@@ -182,7 +182,7 @@ $query[] = "            where";
 $query[] = "              s1.strStockCode = ims.strstockcode AND s1.lngRevisionNo < 0";
 $query[] = "          )";
 $query[] = "      ) s ";
-$query[] = "        on tsd.lngstockno = s.lngstockno ";
+$query[] = "        on tsd.lngstockno = s.lngstockno and tsd.lngrevisionno = s.lngrevisionno";
 $query[] = "        and ( ";
 $query[] = "          ( ";
 $query[] = "            tsd.lngStockSubjectCode = 433 ";
@@ -466,6 +466,7 @@ $query[] = ";";
 
 // クエリを平易な文字列に変換
 $query = implode("\n",$query);
+
 // クエリ実行
 $lngResultID = pg_query($query);
 
