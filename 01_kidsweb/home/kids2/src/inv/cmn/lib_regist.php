@@ -436,17 +436,16 @@ function fncGetCompanyPrintName( $companyDisplayCode ,$objDB)
             $printCustomerName = $result['strcompanydisplayname'];
         }
         else
-       {
+        {
            $organizationName = ($result['strorganizationname'] == '-') ? '' : $result['strorganizationname'];
             // ¸ÜµÒ¼ÒÌ¾
-            if($records['bytorganizationfront'] == 't')
+            if($result['bytorganizationfront'] != 't')
             {
-                $printCompanyName = $organizationName .$result['strcompanydisplayname'];
+               $printCompanyName  = $result['strcompanyname'] .$organizationName;
             }
             else
-
-           {
-               $printCompanyName  = $result['strcompanydisplayname'] .$organizationName;
+            {
+                $printCompanyName = $organizationName .$result['strcompanyname'];
             }
             // ¸ÜµÒÌ¾(ÀßÄê¤·¤Ê¤¤)
             $printCustomerName = "";
@@ -454,7 +453,7 @@ function fncGetCompanyPrintName( $companyDisplayCode ,$objDB)
         $objDB->freeResult($lngResultID);
     }
 
-    return [ $printCustomerName, $printCompanyName, $lngCustomerCode, $result['strcompanydisplayname'] ];
+    return [ $printCustomerName, $printCompanyName, $lngCustomerCode, $result['strcompanyname'] ];
 }
 
 
@@ -1074,12 +1073,41 @@ function fncInvoiceInsertReturnArray($aryData, $aryResult=null, $objAuth, $objDB
 
     // ¸ÜµÒ¥³¡¼¥É(DISPLAY)
     $insertAry['strcustomercode'] = $aryData['strcustomercode'];
+    
+    $lngcompanycode = fncGetMasterValue("m_company","strcompanydisplaycode","lngcompanycode",$aryData['strcustomercode'] . ":str", "", $objDB);
+    
+    $printname = fncGetMasterValue("m_companyprintname","lngcompanycode","strprintcompanyname",$lngcompanycode, "", $objDB);
+    $companyname = fncGetMasterValue("m_company","strcompanydisplaycode","strcompanyname",$aryData['strcustomercode'] . ":str", "", $objDB);
+    
+    if( strlen($printname) > 0 ){
+        // ¸ÜµÒÌ¾
+        $insertAry['strcustomername'] = $companyname;
 
-    // ¸ÜµÒÌ¾
-    $insertAry['strcustomername'] = $aryData['strcustomercompanyname'];
+        // ¸ÜµÒ¼ÒÌ¾
+        $insertAry['strcustomercompanyname'] = $printname;
+    }
+    else{
+        // ¸ÜµÒÌ¾
+        $insertAry['strcustomername'] = null;
 
-    // ¸ÜµÒ¼ÒÌ¾
-    $insertAry['strcustomercompanyname'] = $aryData['strcustomercompanyname'];
+        $organization = fncGetMasterValue("m_company","strcompanydisplaycode","lngorganizationcode",$aryData['strcustomercode'] . ":str", "", $objDB);
+        $isFront = fncGetMasterValue("m_company","strcompanydisplaycode","bytorganizationfront",$aryData['strcustomercode'] . ":str", "", $objDB);
+        if($organization > 0)
+        {
+            $organizationName = fncGetMasterValue("m_organization","lngorganizationcode","strorganizationname",$organization, "", $objDB);
+            if( $isFront != 't' )
+            {
+                $companyname = $companyname . $organizationName;
+            }
+            else
+            {
+                $companyname = $organizationName . $companyname;
+            }
+        }
+        
+        // ¸ÜµÒ¼ÒÌ¾
+        $insertAry['strcustomercompanyname'] = $companyname;
+    }
 
     // ÀÁµá´ü´Ö ¼«
     $insertAry['dtmchargeternstart'] = $aryData['dtmchargeternstart'];
