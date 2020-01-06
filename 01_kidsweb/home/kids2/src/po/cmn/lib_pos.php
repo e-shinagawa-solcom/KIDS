@@ -1454,7 +1454,7 @@ function fncSetPurchaseTable($aryResult, $arySearchColumn, $aryViewColumn, $aryD
             // 明細行数の調査
             $strDetailQuery = fncGetOrderToProductSQL($aryDetailViewColumn, $aryResult[$i]["lngorderno"], $aryResult[$i]["lngrevisionno"], $aryData, $objDB);
 //("kids2.log", $strDetailQuery , __FILE__, __LINE__, "a" );
-            echo $strDetailQuery;
+//echo $strDetailQuery;
             // クエリー実行
             if (!$lngDetailResultID = $objDB->execute($strDetailQuery)) {
                 $strMessage = fncOutputError(3, "DEF_FATAL", "クエリー実行エラー", true, "../po/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);

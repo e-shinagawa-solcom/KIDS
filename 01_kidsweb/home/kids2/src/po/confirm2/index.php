@@ -56,7 +56,7 @@ $UserDisplayCode = trim($objAuth->UserID);
 
 // 排他制御チェック
 if (fncCheckExclusiveControl(DEF_FUNCTION_E3, $_POST["strProductCode"], $_POST["strReviseCode"], $objDB)) {
-    echo "test";
+//    echo "test";
     fncOutputError(9213, DEF_ERROR, "", true, "../po/regist/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
 }
 
