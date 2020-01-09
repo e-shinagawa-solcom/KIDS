@@ -520,7 +520,7 @@ begin
            ,m_product.strrevisecode 
         from m_product
         inner join m_estimate
-        on m_estimate.strproductcode = m_product.strproductcode
+        on substr(m_estimate.strproductcode,1,5) = m_product.strproductcode
         where m_estimate.lngestimateno = me_r.lngestimateno
             and m_product.lngrevisionno = 0
             and m_estimate.lngrevisionno > 0;

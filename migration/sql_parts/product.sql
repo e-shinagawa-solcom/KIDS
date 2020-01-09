@@ -175,7 +175,9 @@ SELECT * FROM dblink('con111',
     'dtmrevisiondate,' ||
     'lnggoodsplanprogresscode,' ||
     'lnginputusercode' ||
-    ' from t_goodsplan'
+    ' from t_goodsplan' ||
+    'inner join ( select lngproductno, max(lngrevisionno) as lngrevisionno from t_goodsplan group by lngproductno ) rev_max' ||
+    ' on rev_max.lngproductno = t_goodsplan.lngproductno and rev_max.lngrevisionno = t_goodsplan.lngrevisionno'
     ) 
 AS T(
     lnggoodsplancode integer

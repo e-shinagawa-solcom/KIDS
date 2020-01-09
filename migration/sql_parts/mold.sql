@@ -443,7 +443,7 @@ begin
 
     update t_stockdetail
     set strmoldno = substring(strmoldno,1,5) || '_00-' || substring(strmoldno,7,2)
-    where strmoldno is not null;
+    where (strmoldno is not null) or (strmoldno = '');
     
     -- t_sequence‚Ì‹àŒ^”Ô†ˆÚs
     update t_sequence 
