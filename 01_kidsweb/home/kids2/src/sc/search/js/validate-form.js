@@ -314,7 +314,7 @@
             // ∏‹µ“ºı√Ì»÷πÊ
             strCustomerReceiveCode: {
                 required: function () {
-                    return $('input[name="strCustomerReceiveCode"]').get(0).checked;
+                    return $('input[name="IsSearch_strCustomerReceiveCode"]').get(0).checked;
                 }
             },
             // «º… ΩÒNO.
