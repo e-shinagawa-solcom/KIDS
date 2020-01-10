@@ -168,10 +168,6 @@ function fncGetSearchMSlipSQL ( $aryCondtition = array(), $renew = false, $objDB
         if($column == 'deliveryPlaceCode') {
             $aryOutQuery[] = " AND ms.lngdeliveryplacecode = ( SELECT lngcompanycode FROM m_company WHERE strcompanydisplaycode = '" .$value ."') ";
         }
-        // 納品場所名
-        if($column == 'deliveryPlaceName') {
-            $aryOutQuery[] = " AND ms.strdeliveryplacename LIKE '%" .$value ."%' " ;
-        }
         // 通貨
         if($column == 'moneyClassCode') {
             $aryOutQuery[] = " AND lngmonetaryunitcode = " .$value ." " ;
@@ -187,19 +183,9 @@ function fncGetSearchMSlipSQL ( $aryCondtition = array(), $renew = false, $objDB
             $aryOutQuery[] = " AND mu1.struserdisplaycode LIKE '%" .$value ."%' " ;
         }
 
-        // 担当者
-        if($column == 'inChargeUserName') {
-            $aryOutQuery[] = " AND strusername LIKE '%" .$value ."%' " ;
-        }
-
         // 作成者コード
         if($column == 'inputUserCode') {
             $aryOutQuery[] = " AND mu2.struserdisplaycode LIKE '%" .$value ."%' " ;
-        }
-
-        // 作成者
-        if($column == 'inputUserName') {
-            $aryOutQuery[] = " AND strinsertusername LIKE '%" .$value ."%' " ;
         }
     }
 
