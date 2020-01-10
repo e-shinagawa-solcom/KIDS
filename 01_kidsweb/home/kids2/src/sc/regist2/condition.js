@@ -33,7 +33,7 @@ jQuery(function($){
             strCompanyDisplayCode: $('input[name="lngCustomerCode"]').val(),
             strCompanyDisplayName: $('input[name="strCustomerName"]').val(),
             strCustomerReceiveCode: $('input[name="strCustomerReceiveCode"]').val(),
-            lngReceiveNo: $('input[name="lngReceiveNo"]').val(),
+            strReceiveCode: $('input[name="strReceiveCode"]').val(),
             strReceiveDetailProductCode: $('input[name="strReceiveDetailProductCode"]').val(),
             strGoodsCode: $('input[name="strGoodsCode"]').val(),
             lngInChargeGroupCode: $('input[name="lngInChargeGroupCode"]').val(),
@@ -72,8 +72,8 @@ jQuery(function($){
                 // 親画面の選択明細を全てクリア
                 window.opener.ClearAllEditDetail();
             }else{
-                //「キャンセル」が押下された場合は本画面を閉じる
-                window.close();
+                //「キャンセル」が押下された場合は何も処理しない
+                return false;
             }
         }
 

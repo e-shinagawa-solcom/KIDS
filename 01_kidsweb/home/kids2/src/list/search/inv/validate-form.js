@@ -13,7 +13,8 @@
     // 日付フォーマット yyyy/mm/dd形式
     var regDate = /(19[0-9]{2}|2[0-9]{3})\/(0[1-9]|1[0-2])\/([0-2][0-9]|3[0-1])/;
     // エラーメッセージ（書式誤り）
-    var msgSpecialFormat = "書式に誤りがあります。"
+    var msgSpecialFormat = "書式に誤りがあります。";
+    var msgLessThantToDate = "FROMにTOより未来の日付が指定されました。";
 
     // validationキック
     $('.hasDatepicker').on({
@@ -42,11 +43,13 @@
                     var d = str.substr(6, 2);
                     value = y + "/" + m + "/" + d;
                 } else if (/(19[0-9]{2}|2[0-9]{3})\/(0[1-9]|1[0-2])/.test(value)) {
-                    var str = value.trim();
-                    var y = str.substr(0, 4);
-                    var m = str.substr(5, 2);
-                    var d = '01';
-                    value = y + "/" + m + "/" + d;
+                    if (value.length == 7) {
+                        var str = value.trim();
+                        var y = str.substr(0, 4);
+                        var m = str.substr(5, 2);
+                        var d = '01';
+                        value = y + "/" + m + "/" + d;
+                    }
                 } else if (/(19[0-9]{2}|2[0-9]{3})(0[1-9]|1[0-2])/.test(value)) {
                     var str = value.trim();
                     var y = str.substr(0, 4);
@@ -68,10 +71,75 @@
                 // 日付の有効性チェック
                 if (di.getFullYear() == yyyy && di.getMonth() == mm - 1 && di.getDate() == dd) {
                     return true;
+                } else {
+                    return false;
                 }
             } return true;
         },
         msgDateFormat
+    );
+    
+    // FROM_XXXXがTO_XXXXより小さいか(同日不可)
+    $.validator.addMethod(
+        "isGreaterThanFromDate",
+        function (value, element, params) {
+            if (params[0] && value != '') {
+                if (/^[0-9]{8}$/.test(value)) {
+                    var str = value.trim();
+                    var y = str.substr(0, 4);
+                    var m = str.substr(4, 2);
+                    var d = str.substr(6, 2);
+                    value = y + "/" + m + "/" + d;
+                }
+                var params1 = $(params[1]).val();
+                // FROM_XXXXが入力された場合、
+                if ($(params[1]).val() != "") {
+                    if (/^[0-9]{8}$/.test(params1)) {
+                        var str = params1.trim();
+                        var y = str.substr(0, 4);
+                        var m = str.substr(4, 2);
+                        var d = str.substr(6, 2);
+                        params1 = y + "/" + m + "/" + d;
+                    }
+                    var regResult = regDate.exec(params1);
+                    var yyyy = regResult[1];
+                    var mm = regResult[2];
+                    var dd = regResult[3];
+                    var fromDate = new Date(yyyy, mm, dd); 
+                    regResult = regDate.exec(value);
+                    yyyy = regResult[1];
+                    mm = regResult[2];
+                    dd = regResult[3];
+                    var di = new Date(yyyy, mm, dd);
+                    // 入力した年がFROM_XXXXより小さければエラー
+                    if (fromDate.getFullYear() > di.getFullYear()) {
+                        return false;
+                        // 入力した年がFROM_XXXXより大きければ正
+                    } else if (fromDate.getFullYear() < di.getFullYear()) {
+                        return true;
+                        // 入力した年がFROM_XXXXと同じ場合
+                    } else if (fromDate.getFullYear() == di.getFullYear()) {
+                        // 入力した月がFROM_XXXXより小さければエラー
+                        if (fromDate.getMonth() > di.getMonth()) {
+                            return false;
+                            // 入力した月がFROM_XXXXより大きければ正
+                        } else if (fromDate.getMonth() < di.getMonth()) {
+                            return true;
+                            // 入力した月がFROM_XXXXと同じ場合
+                        } else if (fromDate.getMonth() == di.getMonth()) {
+                            // 入力した日がFROM_XXXXより小さければエラー
+                            if (fromDate.getDate() > di.getDate()) {
+                                return false;
+                            } else {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+            return true;
+        },
+        msgLessThantToDate
     );
 
     // 検証設定
@@ -166,6 +234,9 @@
                 },
                 checkDateFormat: function () {
                     return $('input[name="IsSearch_dtmInvoiceDate"]').get(0).checked;
+                },
+                isGreaterThanFromDate: function () {
+                    return [$('input[name="IsSearch_dtmInvoiceDate"]').get(0).checked, 'input[name="From_dtmInvoiceDate"]'];
                 }
                 
             },
@@ -184,6 +255,9 @@
                 },
                 checkDateFormat: function () {
                     return $('input[name="IsSearch_dtmInsertDate"]').get(0).checked;
+                },
+                isGreaterThanFromDate: function () {
+                    return [$('input[name="IsSearch_dtmInsertDate"]').get(0).checked, 'input[name="From_dtmInsertDate"]'];
                 }
                 
             },

@@ -98,6 +98,20 @@
                     var m = str.substr(4, 2);
                     var d = str.substr(6, 2);
                     value = y + "/" + m + "/" + d;
+                } else if (/(19[0-9]{2}|2[0-9]{3})\/(0[1-9]|1[0-2])/.test(value)) {
+                    if (value.length == 7) {
+                        var str = value.trim();
+                        var y = str.substr(0, 4);
+                        var m = str.substr(5, 2);
+                        var d = '01';
+                        value = y + "/" + m + "/" + d;
+                    }
+                } else if (/(19[0-9]{2}|2[0-9]{3})(0[1-9]|1[0-2])/.test(value)) {
+                    var str = value.trim();
+                    var y = str.substr(0, 4);
+                    var m = str.substr(4, 2);
+                    var d = '01';
+                    value = y + "/" + m + "/" + d;
                 }
                 // yyyy/mm/dd形式か
                 if (!(regDate.test(value))) {
@@ -112,6 +126,8 @@
                 // 日付の有効性チェック
                 if (di.getFullYear() == yyyy && di.getMonth() == mm - 1 && di.getDate() == dd) {
                     return true;
+                } else {
+                    return false;
                 }
             } return true;
         },

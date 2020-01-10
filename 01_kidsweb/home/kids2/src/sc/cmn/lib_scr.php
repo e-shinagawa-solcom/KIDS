@@ -425,7 +425,7 @@ function fncGetReceiveDetail($aryCondition, $objDB)
     }
 
     // 受注コード
-    if ($aryCondition["strreceivecode"]) {
+    if ($aryCondition["strReceiveCode"]) {
         $aryWhere[] = " AND r.strreceivecode = '" . $aryCondition["strReceiveCode"] . "'";
     }
 
@@ -496,7 +496,6 @@ function fncGetReceiveDetail($aryCondition, $objDB)
     $strQuery .= implode("\n", $aryWhere);
     $strQuery .= "\n";
     $strQuery .= implode("\n", $aryOrder);
-
     // -------------------
     // クエリ実行
     // -------------------
