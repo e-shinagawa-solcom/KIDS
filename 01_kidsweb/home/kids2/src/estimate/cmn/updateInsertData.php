@@ -86,22 +86,18 @@ class updateInsertData extends estimateInsertData {
             $previousDetailNo = $rowDataList[$i]['previousDetailNo'];
 
             if ($rowDataList[$i]['previousDetailNo'] != 0) {
-echo "from current: ". $rowDataList[$i]['previousDetailNo'] ." ";
                 $detailNoList[] = $rowDataList[$i]['previousDetailNo'];
                 $rowDataList[$i]['detailRevisionNo'] = (int)$this->getCurrentDetailRevision($rowDataList[$i]['previousDetailNo']);
-echo "current revision:" . $rowDataList[$i]['detailRevisionNo'] . "<br>";
                 // 受注マスタ、発注マスタいずれかに登録される明細行について、以前の見積原価明細行番号を取得する
                 if ($rowDataList[$i]['areaCode'] !== DEF_AREA_OTHER_COST_ORDER) {
 
                     if($rowDataList[$i]['salesOrder'] === DEF_ATTRIBUTE_CLIENT)
                     {
                         $rowDataList[$i]['receiveStatusCode'] = (int)$this->getReceiveStatus($rowDataList[$i]);
-echo "set rcv status to ". $rowDataList[$i]['receiveStatusCode'] . "<br>";
                     }
                     else
                     {
                         $rowDataList[$i]['orderStatusCode'] = (int)$this->getOrderStatus($rowDataList[$i]);
-echo "set order status to ". $rowDataList[$i]['orderStatusCode'] . "<br>";
                     }
                 }
             }
@@ -118,8 +114,6 @@ echo "set order status to ". $rowDataList[$i]['orderStatusCode'] . "<br>";
                 {
                     $rowDataList[$i]['orderStatusCode'] = DEF_ORDER_APPLICATE;
                 }
-echo "new " . $rowDataList[$i]['previousDetailNo'] . " ";
-echo "current revision:" . $rowDataList[$i]['detailRevisionNo'] . "<br>";
             }
         }
 
@@ -156,6 +150,8 @@ echo "current revision:" . $rowDataList[$i]['detailRevisionNo'] . "<br>";
         }
                 
         // 明細行の登録
+        $recvSortKey = 1;
+        $orderSortKey = 1;
         foreach ($rowDataList as $rowData) {
             if( is_null($rowData) )
             {
@@ -163,24 +159,21 @@ echo "current revision:" . $rowDataList[$i]['detailRevisionNo'] . "<br>";
             }
             // 見積原価明細番号のインクリメント
             ++$estimateDetailNo;
-echo $estimateDetailNo . "<br>";
-echo "regist " . $rowData['previousDetailNo'] . " to history<br>";
             // 見積原価履歴テーブルの登録処理
             $this->registTableEstimateHistory($estimateDetailNo, $rowData['previousDetailNo'], $rowData['detailRevisionNo']);
 
             $salesOrder = $rowData['salesOrder'];
             // 受注の場合
             if ($salesOrder === DEF_ATTRIBUTE_CLIENT) {
-echo "receiveStatusCode:" . $rowData['receiveStatusCode'] . "<br>";
                 // 仮受注の明細のみ、見積原価明細と受注明細、受注マスタを更新
                 if( $rowData['receiveStatusCode'] == DEF_RECEIVE_APPLICATE)
                 {
-echo "add as receive<br>";
                     // 見積原価明細テーブルの登録処理
                     $this->updateTableEstimateDetail($rowData, $estimateDetailNo);
                     
                     // 受注明細テーブル登録処理
-                    $this->updateTableReceiveDetail($rowData);
+                    $this->updateTableReceiveDetail($rowData, $recvSortKey);
+                    $recvSortKey++;
 
                     // 受注マスタ登録処理
                     $this->updateMasterReceive($rowData);
@@ -200,15 +193,14 @@ echo "add as receive<br>";
                 // 発注で経費以外の場合
                 if ($rowData['areaCode'] !== DEF_AREA_OTHER_COST_ORDER) {
 
-echo "orderStatusCode:" . $rowData['orderStatusCode'] . "<br>";
-echo "add as order(order)<br>";
                     // 仮発注の明細のみ、見積原価明細と発注明細、発注マスタを更新
                     if ($rowData['orderStatusCode'] == DEF_ORDER_APPLICATE){
                         // 見積原価明細テーブルの登録処理
                         $this->updateTableEstimateDetail($rowData, $estimateDetailNo);
 
                         // 発注明細テーブル登録処理
-                        $this->updateTableOrderDetail($rowData);
+                        $this->updateTableOrderDetail($rowData, $orderSortKey);
+                        $orderSortKey++;
 
                         // 発注マスタ登録処理
                         $this->updateMasterOrder($rowData);
@@ -216,8 +208,6 @@ echo "add as order(order)<br>";
                 }
                 else
                 {
-echo "orderStatusCode:" . $rowData['orderStatusCode'] . "<br>";
-echo "add as order(other)<br>";
                     // 見積原価明細テーブルの登録処理
                     $this->updateTableEstimateDetail($rowData, $estimateDetailNo);
                 }
@@ -541,7 +531,7 @@ echo "add as order(other)<br>";
     *   
     *	@return true
     */
-    protected function updateTableReceiveDetail(&$rowData) {
+    protected function updateTableReceiveDetail(&$rowData, $sortKey) {
         // テーブルの設定 
         $table = 't_receivedetail';
 
@@ -569,7 +559,7 @@ echo "add as order(other)<br>";
                 'lngunitquantity' => 'lngunitquantity',
                 'cursubtotalprice' => $rowData['subtotal'],
                 'strnote' => "'". $rowData['note']. "'",
-                'lngsortkey' => $estimateDetailNo,
+                'lngsortkey' => $sortKey,
                 'lngestimateno' => $this->estimateNo,
                 'lngestimatedetailno' => $estimateDetailNo,
                 'lngestimaterevisionno' => $rowData['detailRevisionNo'] + 1
@@ -621,7 +611,7 @@ echo "add as order(other)<br>";
                 'lngunitquantity' => 1,
                 'cursubtotalprice' => $rowData['subtotal'],
                 'strnote' => "'". $rowData['note']. "'",
-                'lngsortkey' => $estimateDetailNo,
+                'lngsortkey' => $sortKey,
                 'lngestimateno' => $this->estimateNo,
                 'lngestimatedetailno' => $estimateDetailNo,
                 'lngestimaterevisionno' => $rowData['detailRevisionNo'] + 1
@@ -746,7 +736,8 @@ echo "add as order(other)<br>";
     *   
     *	@return true
     */
-    protected function updateTableOrderDetail(&$rowData) {
+    protected function updateTableOrderDetail(&$rowData, $sortKey) {
+echo "sortKey:" . $sortKey . "<br>";
         // テーブルの設定
         $table = 't_orderdetail';
 
@@ -758,7 +749,7 @@ echo "add as order(other)<br>";
 //        $estimateDetailNo = $rowData['currentDetailNo'];  // 今回の見積原価明細番号（登録用)
         $estimateDetailNo = $rowData['previousDetailNo'];  // 今回の見積原価明細番号（登録用)←不変。見積原価明細番号は見積原価履歴マスタの見積原価行番号が担う
 
-        $sortKey = $orderSortKeyList[$previousDetailNo];
+//        $sortKey = $orderSortKeyList[$previousDetailNo];
 
         if ($rowData["detailRevisionNo"] >= 0) {
 
@@ -779,7 +770,7 @@ echo "add as order(other)<br>";
                 'cursubtotalprice' => $rowData['subtotal'],
                 'strnote' => "'". $rowData['note']. "'",
                 'strmoldno' => 'strmoldno',
-                'lngsortkey' => 'lngsortkey',
+                'lngsortkey' => (int)$sortKey,
                 'lngestimateno' => $this->estimateNo,
                 'lngestimatedetailno' => $estimateDetailNo,
                 'lngestimaterevisionno' => $rowData['detailRevisionNo'] + 1
@@ -795,7 +786,7 @@ echo "add as order(other)<br>";
 
             // クエリの生成
             $strQuery = $this->makeInsertSelectQuery($table, $data, $condition, $returning);
-    
+fncDebug("kids2.log", $strQuery, __FILE__, __LINE__, "a");
             // クエリの実行
             list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
 
@@ -833,7 +824,7 @@ echo "add as order(other)<br>";
                 'cursubtotalprice' => $rowData['subtotal'],
                 'strnote' => "'". $rowData['note']. "'",
                 'strmoldno' => 'NULL',
-                'lngsortkey' => $this->maxOrderDetailNo,
+                'lngsortkey' => (int)$sortKey,
                 'lngestimateno' => $this->estimateNo,
                 'lngestimatedetailno' => $estimateDetailNo,
                 'lngestimaterevisionno' => $rowData['detailRevisionNo'] + 1
@@ -1366,7 +1357,7 @@ echo "add as order(other)<br>";
         $strQuery .= " )";
         $strQuery .= ") sub";
         $strQuery .= " WHERE sub.lngreceiveno = mr.lngreceiveno"; // 受注番号を結合
-fncDebug("kids2.log", $strQuery, __FILE__, __LINE__, "a");
+//fncDebug("kids2.log", $strQuery, __FILE__, __LINE__, "a");
 
         // クエリの実行
         list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
@@ -1425,7 +1416,7 @@ fncDebug("kids2.log", $strQuery, __FILE__, __LINE__, "a");
         $strQuery .= " and mh1.lngrevisionno=". $previousRevisionNo;
         $strQuery .= " and mh2.lngestimateno is null";
         $strQuery .= " )";
-fncDebug("kids2.log", $strQuery, __FILE__, __LINE__, "a");
+//fncDebug("kids2.log", $strQuery, __FILE__, __LINE__, "a");
 
         // クエリの実行
         list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
@@ -1477,7 +1468,7 @@ fncDebug("kids2.log", $strQuery, __FILE__, __LINE__, "a");
         $strQuery .= " and mh1.lngrevisionno=". $previousRevisionNo;
         $strQuery .= " and mh2.lngestimateno is null";
         $strQuery .= " )";
-fncDebug("kids2.log", $strQuery, __FILE__, __LINE__, "a");
+//fncDebug("kids2.log", $strQuery, __FILE__, __LINE__, "a");
 
         // クエリの実行
         list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
