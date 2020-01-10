@@ -33,7 +33,7 @@ jQuery(function($){
             strCompanyDisplayCode: $('input[name="lngCustomerCode"]').val(),
             strCompanyDisplayName: $('input[name="strCustomerName"]').val(),
             strCustomerReceiveCode: $('input[name="strCustomerReceiveCode"]').val(),
-            lngReceiveNo: $('input[name="lngReceiveNo"]').val(),
+            strReceiveCode: $('input[name="strReceiveCode"]').val(),
             strReceiveDetailProductCode: $('input[name="strReceiveDetailProductCode"]').val(),
             strGoodsCode: $('input[name="strGoodsCode"]').val(),
             lngInChargeGroupCode: $('input[name="lngInChargeGroupCode"]').val(),
