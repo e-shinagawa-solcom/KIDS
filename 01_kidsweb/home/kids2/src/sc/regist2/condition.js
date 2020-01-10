@@ -72,8 +72,8 @@ jQuery(function($){
                 // 親画面の選択明細を全てクリア
                 window.opener.ClearAllEditDetail();
             }else{
-                //「キャンセル」が押下された場合は本画面を閉じる
-                window.close();
+                //「キャンセル」が押下された場合は何も処理しない
+                return false;
             }
         }
 
