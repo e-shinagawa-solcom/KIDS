@@ -737,7 +737,6 @@ class updateInsertData extends estimateInsertData {
     *	@return true
     */
     protected function updateTableOrderDetail(&$rowData, $sortKey) {
-echo "sortKey:" . $sortKey . "<br>";
         // テーブルの設定
         $table = 't_orderdetail';
 
@@ -786,7 +785,6 @@ echo "sortKey:" . $sortKey . "<br>";
 
             // クエリの生成
             $strQuery = $this->makeInsertSelectQuery($table, $data, $condition, $returning);
-fncDebug("kids2.log", $strQuery, __FILE__, __LINE__, "a");
             // クエリの実行
             list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
 
