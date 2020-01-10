@@ -57,6 +57,8 @@
                 // 日付の有効性チェック
                 if (di.getFullYear() == yyyy && di.getMonth() == mm - 1 && di.getDate() == dd) {
                     return true;
+                } else {
+                    return false;
                 }
             }return true;
         },
