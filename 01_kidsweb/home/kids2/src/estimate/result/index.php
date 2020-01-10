@@ -230,10 +230,12 @@ if (!count($strErrorMessage)) {
 				SUM(CASE WHEN msi.lngestimateareaclassno = 3 AND ted.bytpayofftargetflag = FALSE THEN ted.curconversionrate * ted.cursubtotalprice ELSE 0 END) AS curnotdepreciationcost,
 				count(mscdl.lngestimateareaclassno <> 0 OR msi.lngestimateareaclassno <> 5 OR NULL) AS countofreceiveandorderdetail,
 				count(mr.lngreceivestatuscode = 1 OR mo.lngorderstatuscode = 1 OR NULL) AS countofaplicatedetail
-			FROM t_estimatedetail ted
-			INNER JOIN m_estimate me
-				ON me.lngestimateno = ted.lngestimateno
-				AND me.lngrevisionno = ted.lngrevisionno
+			FROM m_estimate me
+			INNER JOIN m_estimatehistory meh on meh.lngestimateno = me.lngestimateno and meh.lngrevisionno = me.lngrevisionno
+			INNER JOIN t_estimatedetail ted
+				ON ted.lngestimateno = meh.lngestimateno
+				and ted.lngestimatedetailno = meh.lngestimatedetailno
+				AND ted.lngrevisionno = meh.lngestimatedetailrevisionno
 			LEFT OUTER JOIN  m_salesclassdivisonlink mscdl
 				ON mscdl.lngsalesclasscode = ted.lngsalesclasscode
 				AND mscdl.lngsalesdivisioncode = ted.lngsalesdivisioncode

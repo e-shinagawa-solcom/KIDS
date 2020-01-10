@@ -308,13 +308,14 @@ function fncGetEstimateDefaultValue($lngEstimateNo, $lngReceiveQuantity, $lngPro
     $aryQuery[] = " e.strNote AS strNote ";
 
     $aryQuery[] = "FROM t_EstimateDetail e";
+    $aryQuery[] = " INNER JOIN m_EstimateHistory esh ON ( e.lngEstimateNo = esh.lngEstimateNo and e.lngestimatedetailno = esh.lngestimatedetailno and e.lngrevisionno = esh.lngestimatedetailrevisionno )";
     $aryQuery[] = " LEFT JOIN m_Company c ON ( e.lngCustomerCompanyCode = c.lngCompanyCode )";
     $aryQuery[] = " INNER JOIN m_StockSubject ss ON ( e.lngStockSubjectCode = ss.lngStockSubjectCode )";
     $aryQuery[] = " INNER JOIN m_StockItem si ON ( e.lngStockItemCode = si.lngStockItemCode AND e.lngStockSubjectCode = si.lngStockSubjectCode)";
-    $aryQuery[] = " LEFT JOIN m_Estimate es ON ( e.lngEstimateNo = es.lngEstimateNo )";
+    $aryQuery[] = " LEFT JOIN m_Estimate es ON ( esh.lngEstimateNo = es.lngEstimateNo and esh.lngrevisionno = es.lngrevisionno )";
     $aryQuery[] = " LEFT JOIN m_EstimateDefault ed ON ( e.lngStockSubjectCode = ed.lngStockSubjectCode AND e.lngStockItemCode = ed.lngStockItemCode )";
-    $aryQuery[] = "WHERE e.lngEstimateNo = " . $lngEstimateNo;
-    $aryQuery[] = " AND e.lngRevisionNo = (SELECT MAX(e2.lngRevisionNo) FROM t_EstimateDetail e2 WHERE e.lngEstimateNo = e2.lngEstimateNo AND e.lngEstimateDetailNo = e2.lngEstimateDetailNo)";
+    $aryQuery[] = "WHERE eh.lngEstimateNo = " . $lngEstimateNo;
+    $aryQuery[] = " AND eh.lngRevisionNo = (SELECT MAX(e2.lngRevisionNo) FROM m_Estimate e2 WHERE e.lngEstimateNo = e2.lngEstimateNo)";
     $aryQuery[] = " AND ed.dtmApplyStartDate < es.dtmInsertDate AND ed.dtmApplyEndDate > es.dtmInsertDate ";
 
     list($lngResultID, $lngResultNum) = fncQuery(join(" ", $aryQuery), $objDB);
@@ -439,12 +440,13 @@ function fncGetEstimateDetail($lngEstimateNo, $strProductCode, $aryRate, $aryDef
     //////////////////////////////////////////////////////////
     $aryQuery[] = "SELECT *";
     $aryQuery[] = "FROM t_EstimateDetail e";
+    $aryQuery[] = " INNER JOIN m_EstimateHistory emh ON ( emh.lngestimateno = e.lngestimateno and emh.lngestimatedetailno = e.lngestimatedetailno and emh.lngestimatedetailrevisionno = e.lngrevisionno)";
     $aryQuery[] = " LEFT JOIN m_Company c ON ( e.lngCustomerCompanyCode = c.lngCompanyCode )";
     $aryQuery[] = " INNER JOIN m_StockSubject ss ON ( e.lngStockSubjectCode = ss.lngStockSubjectCode )";
     $aryQuery[] = " INNER JOIN m_StockItem si ON ( e.lngStockItemCode = si.lngStockItemCode AND e.lngStockSubjectCode = si.lngStockSubjectCode)";
     $aryQuery[] = "WHERE e.lngEstimateNo = " . $lngEstimateNo;
-    $aryQuery[] = " AND e.lngRevisionNo = (SELECT MAX(e2.lngRevisionNo) FROM t_EstimateDetail e2 WHERE e.lngEstimateNo = e2.lngEstimateNo)";
-    $aryQuery[] = " ORDER BY e.lngStockSubjectCode, e.lngEstimateDetailNo ";
+    $aryQuery[] = " AND emh.lngRevisionNo = (SELECT MAX(e2.lngRevisionNo) FROM m_EstimateHistory e2 WHERE e.lngEstimateNo = e2.lngEstimateNo)";
+    $aryQuery[] = " ORDER BY e.lngStockSubjectCode, emh.lngestimaterowno ";
 
     list($lngResultID, $lngResultNum) = fncQuery(join(" ", $aryQuery), $objDB);
     unset($aryQuery);

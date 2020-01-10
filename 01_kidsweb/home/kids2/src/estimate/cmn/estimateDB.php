@@ -626,10 +626,15 @@ class estimateDB extends clsDB {
             $strQuery .= " TO_CHAR(me.dtminsertdate, 'YYYY/MM/DD') AS dtminsertdate,";
             $strQuery .= " me.lngprintcount";
 
-            $strQuery .= " FROM t_estimatedetail ted";
-            $strQuery .= " INNER JOIN m_estimate me";
-            $strQuery .= " ON ted.lngestimateno = me.lngestimateno";
-            $strQuery .= " AND ted.lngrevisionno = me.lngrevisionno";
+            $strQuery .= " FROM m_estimate me";
+            $strQuery .= " INNER JOIN m_estimatehistory teh";
+            $strQuery .= " ON teh.lngestimateno = me.lngestimateno";
+            $strQuery .= " AND teh.lngrevisionno = me.lngrevisionno";
+
+            $strQuery .= " INNER JOIN t_estimatedetail ted";
+            $strQuery .= " ON ted.lngestimateno = teh.lngestimateno";
+            $strQuery .= " AND ted.lngestimatedetailno = teh.lngestimatedetailno";
+            $strQuery .= " AND ted.lngrevisionno = teh.lngestimatedetailrevisionno";
             $strQuery .= " INNER JOIN m_product mp";
             $strQuery .= " ON me.strproductcode = mp.strproductcode";
             $strQuery .= " AND me.strrevisecode = mp.strrevisecode";
@@ -672,7 +677,7 @@ class estimateDB extends clsDB {
             }
         }
 
-        $strQuery .= " ORDER BY lngestimatedetailno ASC";
+        $strQuery .= " ORDER BY teh.lngestimaterowno ASC";
 
         list ($resultID, $resultNumber) = fncQuery($strQuery, $this);
 

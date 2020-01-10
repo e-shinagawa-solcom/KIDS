@@ -1,6 +1,8 @@
 <?php
 
 require_once ('conf.inc');
+require_once (LIB_DEBUGFILE);
+
 require_once ( LIB_ROOT . "lib.php");
 
 require_once ( SRC_ROOT . "estimate/cmn/const/workSheetConst.php");
@@ -73,17 +75,51 @@ class updateInsertData extends estimateInsertData {
         $rowDataList = $this->rowDataList;
 
 
-        // 行の情報から以前の見積原価番号を取得する
+        // 行の情報から以前の見積原価明細番号を取得する
         $detailNoList = [];
-        foreach ($rowDataList as $rowData) {
-            $previousDetailNo = $rowData['previousDetailNo'];
+        $newDetailNo = $this->getNewDetailNo();
+        for($i = 0; $i <= count($rowDataList); $i++) {
+            if( is_null($rowDataList[$i]) )
+            {
+                continue;
+            }
+            $previousDetailNo = $rowDataList[$i]['previousDetailNo'];
 
-            if ($previousDetailNo) {
+            if ($rowDataList[$i]['previousDetailNo'] != 0) {
+echo "from current: ". $rowDataList[$i]['previousDetailNo'] ." ";
+                $detailNoList[] = $rowDataList[$i]['previousDetailNo'];
+                $rowDataList[$i]['detailRevisionNo'] = (int)$this->getCurrentDetailRevision($rowDataList[$i]['previousDetailNo']);
+echo "current revision:" . $rowDataList[$i]['detailRevisionNo'] . "<br>";
                 // 受注マスタ、発注マスタいずれかに登録される明細行について、以前の見積原価明細行番号を取得する
-                if ($rowData['areaCode'] !== DEF_AREA_OTHER_COST_ORDER) {
+                if ($rowDataList[$i]['areaCode'] !== DEF_AREA_OTHER_COST_ORDER) {
 
-                    $detailNoList[] = $previousDetailNo;
+                    if($rowDataList[$i]['salesOrder'] === DEF_ATTRIBUTE_CLIENT)
+                    {
+                        $rowDataList[$i]['receiveStatusCode'] = (int)$this->getReceiveStatus($rowDataList[$i]);
+echo "set rcv status to ". $rowDataList[$i]['receiveStatusCode'] . "<br>";
+                    }
+                    else
+                    {
+                        $rowDataList[$i]['orderStatusCode'] = (int)$this->getOrderStatus($rowDataList[$i]);
+echo "set order status to ". $rowDataList[$i]['orderStatusCode'] . "<br>";
+                    }
                 }
+            }
+            else{
+                // 見積原価明細番号を新規採番する。
+                $rowDataList[$i]['previousDetailNo'] = $newDetailNo;
+                $newDetailNo++;
+                $rowDataList[$i]['detailRevisionNo'] = -1;
+                if($rowDataList[$i]['salesOrder'] === DEF_ATTRIBUTE_CLIENT)
+                {
+                    $rowDataList[$i]['receiveStatusCode'] = DEF_RECEIVE_APPLICATE;
+                }
+                else
+                {
+                    $rowDataList[$i]['orderStatusCode'] = DEF_ORDER_APPLICATE;
+                }
+echo "new " . $rowDataList[$i]['previousDetailNo'] . " ";
+echo "current revision:" . $rowDataList[$i]['detailRevisionNo'] . "<br>";
             }
         }
 
@@ -98,11 +134,11 @@ class updateInsertData extends estimateInsertData {
 
 
         // 見積原価番号及び見積原価リビジョン番号に紐付く受注明細テーブル、発注明細テーブルの最大のリビジョン番号を取得する
-        $searchRevision = "WHERE lngestimateno = ". $this->estimateNo; // 検索条件クエリ
-        $searchRevision .= " AND lngestimaterevisionno = ". ((int)$this->revisionNo - 1);
+//        $searchRevision = "WHERE lngestimateno = ". $this->estimateNo; // 検索条件クエリ
+//        $searchRevision .= " AND lngestimaterevisionno = ". $rowData['detailRevisionNo'];
 
-        $this->preReceiveRevisionNo = $this->getFirstRecordValue($receiveTable, 'lngrevisionno', $searchRevision, 'max');
-        $this->preOrderRevisionNo = $this->getFirstRecordValue($orderTable, 'lngrevisionno', $searchRevision, 'max');
+//        $this->preReceiveRevisionNo = $this->getFirstRecordValue($receiveTable, 'lngrevisionno', $searchRevision, 'max');
+//        $this->preOrderRevisionNo = $this->getFirstRecordValue($orderTable, 'lngrevisionno', $searchRevision, 'max');
 
 
         // 見積原価番号に紐付く受注コード、発注コードを取得する。取得できなかった場合はシーケンス処理により採番する
@@ -121,41 +157,71 @@ class updateInsertData extends estimateInsertData {
                 
         // 明細行の登録
         foreach ($rowDataList as $rowData) {
+            if( is_null($rowData) )
+            {
+                continue;
+            }
             // 見積原価明細番号のインクリメント
             ++$estimateDetailNo;
-
-            // 見積原価明細テーブルの登録処理
-            $this->updateTableEstimateDetail($rowData, $estimateDetailNo);
+echo $estimateDetailNo . "<br>";
+echo "regist " . $rowData['previousDetailNo'] . " to history<br>";
+            // 見積原価履歴テーブルの登録処理
+            $this->registTableEstimateHistory($estimateDetailNo, $rowData['previousDetailNo'], $rowData['detailRevisionNo']);
 
             $salesOrder = $rowData['salesOrder'];
             // 受注の場合
             if ($salesOrder === DEF_ATTRIBUTE_CLIENT) {
+echo "receiveStatusCode:" . $rowData['receiveStatusCode'] . "<br>";
+                // 仮受注の明細のみ、見積原価明細と受注明細、受注マスタを更新
+                if( $rowData['receiveStatusCode'] == DEF_RECEIVE_APPLICATE)
+                {
+echo "add as receive<br>";
+                    // 見積原価明細テーブルの登録処理
+                    $this->updateTableEstimateDetail($rowData, $estimateDetailNo);
+                    
+                    // 受注明細テーブル登録処理
+                    $this->updateTableReceiveDetail($rowData);
 
-                // 受注明細テーブル登録処理
-                $this->updateTableReceiveDetail($rowData);
+                    // 受注マスタ登録処理
+                    $this->updateMasterReceive($rowData);
 
-                // 受注マスタ登録処理
-                $this->updateMasterReceive($rowData);
+                    /*
+                    if ($rowData['receiveStatusCode'] == DEF_RECEIVE_END
+                        || $rowData['receiveStatusCode'] == DEF_RECEIVE_CLOSED) {
+                        // 納品済、または締め済の場合
+                        $this->updateTableSalesDetail($rowData);
+                        $this->updateTableSlipDetail($rowData);
 
-                if ($rowData['receiveStatusCode'] == DEF_RECEIVE_END
-                    || $rowData['receiveStatusCode'] == DEF_RECEIVE_CLOSED) {
-                    // 納品済、または締め済の場合
-                    $this->updateTableSalesDetail($rowData);
-                    $this->updateTableSlipDetail($rowData);
-
+                    }
+                    */
                 }
-
             // 発注の場合
             } else if ($salesOrder === DEF_ATTRIBUTE_SUPPLIER) {
                 // 発注で経費以外の場合
                 if ($rowData['areaCode'] !== DEF_AREA_OTHER_COST_ORDER) {
 
-                    // 発注明細テーブル登録処理
-                    $this->updateTableOrderDetail($rowData);
+echo "orderStatusCode:" . $rowData['orderStatusCode'] . "<br>";
+echo "add as order(order)<br>";
+                    // 仮発注の明細のみ、見積原価明細と発注明細、発注マスタを更新
+                    if ($rowData['orderStatusCode'] == DEF_ORDER_APPLICATE){
+                        // 見積原価明細テーブルの登録処理
+                        $this->updateTableEstimateDetail($rowData, $estimateDetailNo);
 
-                    // 発注マスタ登録処理
-                    $this->updateMasterOrder($rowData);
+                        // 発注明細テーブル登録処理
+                        $this->updateTableOrderDetail($rowData);
+
+                        // 発注マスタ登録処理
+                        $this->updateMasterOrder($rowData);
+                    }
                 }
+                else
+                {
+echo "orderStatusCode:" . $rowData['orderStatusCode'] . "<br>";
+echo "add as order(other)<br>";
+                    // 見積原価明細テーブルの登録処理
+                    $this->updateTableEstimateDetail($rowData, $estimateDetailNo);
+                }
+                /*
                 if ($rowData['orderStatusCode'] == DEF_ORDER_ORDER) {
                     // 発注の場合
                     $this->updateTablePurchaseOrderDetail($rowData);
@@ -167,6 +233,7 @@ class updateInsertData extends estimateInsertData {
                     $this->updateTablePurchaseOrderDetail($rowData);
                     $this->updateTableStockDetail($rowData);
                 }
+                */
  
             }
         }
@@ -358,6 +425,43 @@ class updateInsertData extends estimateInsertData {
     /**
     * DB登録用関数
     *
+    *	見積原価履歴テーブルへの編集登録を行う
+    *
+    *   @param array $rowData 行のデータ
+    *   @param integer $rowNo 通しの行番号
+    *   @param integer $estimateDetailNo 見積原価明細番号
+    *   @param integer $revisionno 見積原価明細のリビジョン番号（新規は-1を指定する）
+    *
+    *	@return true
+    */
+    protected function registTableEstimateHistory($rowNo, $estimateDetailNo, $revisionno) {
+        // テーブル名の設定
+        $table = 'm_estimatehistory';
+
+        // 受注の場合
+
+        // 登録データの作成
+        $data = array(
+            'lngestimateno' => $this->estimateNo,
+            'lngrevisionno' => $this->revisionNo,
+            'lngestimaterowno' => $rowNo,
+            'lngestimatedetailno' => $estimateDetailNo,
+            'lngestimatedetailrevisionno' => $revisionno + 1
+        );
+
+        // クエリの生成
+        $strQuery = $this->makeInsertQuery($table, $data);
+        // クエリの実行
+        list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
+
+        $this->objDB->freeResult($resultID);
+
+        return true;
+    }
+
+    /**
+    * DB登録用関数
+    *
     *	見積原価明細テーブルへの編集登録を行う
     *
     *   @param array $rowData 行のデータ
@@ -390,8 +494,10 @@ class updateInsertData extends estimateInsertData {
         // 登録データの作成
         $data = array(
             'lngestimateno' => $this->estimateNo,
-            'lngestimatedetailno' => $estimateDetailNo,
-            'lngrevisionno' => $this->revisionNo,
+//            'lngestimatedetailno' => $estimateDetailNo,
+            'lngestimatedetailno' => $rowData['previousDetailNo'],
+//            'lngrevisionno' => $this->revisionNo,
+            'lngrevisionno' => $rowData['detailRevisionNo'] + 1,
             'lngstocksubjectcode'=> $stockSubjectCode,
             'lngstockitemcode' => $stockItemCode,
             'lngcustomercompanycode' => $this->companyCodeList[$rowData['customerCompany']],
@@ -439,18 +545,19 @@ class updateInsertData extends estimateInsertData {
         // テーブルの設定 
         $table = 't_receivedetail';
 
-        $previousRevisionNo = $this->revisionNo - 1;      // 1つ前の見積原価のリビジョン番号
+//        $previousRevisionNo = $this->revisionNo - 1;      // 1つ前の見積原価のリビジョン番号
 
         $revisionNo = $this->preReceiveRevisionNo + 1;    // 登録に使用する受注のリビジョン番号
 
         $previousDetailNo = $rowData['previousDetailNo']; // 以前の見積原価明細番号（検索用）
-        $estimateDetailNo = $rowData['currentDetailNo'];  // 今回の見積原価明細番号（登録用)
+//        $estimateDetailNo = $rowData['currentDetailNo'];  // 今回の見積原価明細番号（登録用)
+        $estimateDetailNo = $rowData['previousDetailNo'];  // 今回の見積原価明細番号（登録用)←不変。見積原価明細番号は見積原価履歴マスタの見積原価行番号が担う
 
-        if ($previousDetailNo) {
+        if ($rowData["detailRevisionNo"] >= 0) {
             $data = array(
                 'lngreceiveno' => 'lngreceiveno',
                 'lngreceivedetailno' => 'lngreceivedetailno',
-                'lngrevisionno' => $revisionNo,
+                'lngrevisionno' => $rowData['detailRevisionNo'] + 1,
                 'strproductcode' => "'". $this->productCode. "'",
                 'strrevisecode' => "'". $this->reviseCode. "'",
                 'lngsalesclasscode' => $rowData['classItem'],
@@ -465,12 +572,14 @@ class updateInsertData extends estimateInsertData {
                 'lngsortkey' => $estimateDetailNo,
                 'lngestimateno' => $this->estimateNo,
                 'lngestimatedetailno' => $estimateDetailNo,
-                'lngestimaterevisionno' => $this->revisionNo
+                'lngestimaterevisionno' => $rowData['detailRevisionNo'] + 1
+
             );
 
             $condition = "WHERE lngestimateno =". $this->estimateNo;
             $condition .= " AND lngestimatedetailno = ". $previousDetailNo;
-            $condition .= " AND lngestimaterevisionno = ". $previousRevisionNo;
+//            $condition .= " AND lngestimaterevisionno = ". $previousRevisionNo;
+            $condition .= " AND lngestimaterevisionno = ". $rowData['detailRevisionNo'];
 
             $returning = "lngreceiveno";
 
@@ -500,7 +609,7 @@ class updateInsertData extends estimateInsertData {
             $data = array(
                 'lngreceiveno' => $receiveNo,
                 'lngreceivedetailno' => $this->maxReceiveDetailNo,
-                'lngrevisionno' => $revisionNo,
+                'lngrevisionno' => $rowData['detailRevisionNo'] + 1,
                 'strproductcode' => "'". $this->productCode. "'",
                 'strrevisecode' => "'". $this->reviseCode. "'",
                 'lngsalesclasscode' => $rowData['classItem'],
@@ -515,7 +624,7 @@ class updateInsertData extends estimateInsertData {
                 'lngsortkey' => $estimateDetailNo,
                 'lngestimateno' => $this->estimateNo,
                 'lngestimatedetailno' => $estimateDetailNo,
-                'lngestimaterevisionno' => $this->revisionNo
+                'lngestimaterevisionno' => $rowData['detailRevisionNo'] + 1
             );        
     
             // クエリの生成
@@ -553,11 +662,11 @@ class updateInsertData extends estimateInsertData {
         $previousDetailNo = $rowData['previousDetailNo']; // 以前の見積原価明細番号
 
         // 登録データの作成
-        if ($previousDetailNo) { // 以前のリビジョンで見積原価明細行番号が存在する場合
+        if ($rowData["detailRevisionNo"] >= 0) {  // 以前のリビジョンで見積原価明細行番号が存在する場合
 
             $data = array(
                 'lngreceiveno' => 'lngreceiveno',
-                'lngrevisionno' => $revisionNo,
+                'lngrevisionno' => $rowData['detailRevisionNo'] + 1,
                 'strreceivecode' => "strreceivecode",
                 'strrevisecode' => "strrevisecode",
                 'dtmappropriationdate' => 'dtmappropriationdate',
@@ -575,7 +684,8 @@ class updateInsertData extends estimateInsertData {
             );
 
             $condition = "WHERE lngreceiveno =". $receiveNo;
-            $condition .= " AND lngrevisionno = ". $this->preReceiveRevisionNo;
+            $condition .= " AND lngrevisionno = ". $rowData['detailRevisionNo'];
+;
 
             $returning = "lngreceivestatuscode";
 
@@ -597,7 +707,7 @@ class updateInsertData extends estimateInsertData {
             // 登録データの作成
             $data = array(
                 'lngreceiveno' => $receiveNo,
-                'lngrevisionno' => $revisionNo,
+                'lngrevisionno' => $rowData['detailRevisionNo'] + 1,
                 'strreceivecode' => "'". $this->receiveCode. "'",
                 'strrevisecode' => "'". $this->reviseCode. "'",
                 'dtmappropriationdate' => 'NOW()',
@@ -645,16 +755,17 @@ class updateInsertData extends estimateInsertData {
         $revisionNo = $this->preOrderRevisionNo + 1;     // 登録に使用する発注のリビジョン番号
 
         $previousDetailNo = $rowData['previousDetailNo']; // 以前の見積原価明細番号（検索用）
-        $estimateDetailNo = $rowData['currentDetailNo'];  // 今回の見積原価明細番号（登録用)
+//        $estimateDetailNo = $rowData['currentDetailNo'];  // 今回の見積原価明細番号（登録用)
+        $estimateDetailNo = $rowData['previousDetailNo'];  // 今回の見積原価明細番号（登録用)←不変。見積原価明細番号は見積原価履歴マスタの見積原価行番号が担う
 
         $sortKey = $orderSortKeyList[$previousDetailNo];
 
-        if ($previousDetailNo) {
+        if ($rowData["detailRevisionNo"] >= 0) {
 
             $data = array(
                 'lngorderno' => 'lngorderno',
                 'lngorderdetailno' => 'lngorderdetailno',
-                'lngrevisionno' => $revisionNo,
+                'lngrevisionno' => $rowData['detailRevisionNo'] + 1,
                 'strproductcode' => "'". $this->productCode. "'",
                 'strrevisecode' => "'". $this->reviseCode. "'",
                 'lngstocksubjectcode' => $rowData['divisionSubject'],
@@ -671,12 +782,14 @@ class updateInsertData extends estimateInsertData {
                 'lngsortkey' => 'lngsortkey',
                 'lngestimateno' => $this->estimateNo,
                 'lngestimatedetailno' => $estimateDetailNo,
-                'lngestimaterevisionno' => $this->revisionNo
+                'lngestimaterevisionno' => $rowData['detailRevisionNo'] + 1
             );
+
+
 
             $condition = "WHERE lngestimateno =". $this->estimateNo;
             $condition .= " AND lngestimatedetailno = ". $previousDetailNo;
-            $condition .= " AND lngestimaterevisionno = ". $previousRevisionNo;
+            $condition .= " AND lngestimaterevisionno = ". $rowData['detailRevisionNo'];
 
             $returning = "lngorderno";
 
@@ -706,7 +819,7 @@ class updateInsertData extends estimateInsertData {
             $data = array(
                 'lngorderno' => $orderNo,
                 'lngorderdetailno' => $this->maxOrderDetailNo,
-                'lngrevisionno' => $this->revisionNo,
+                'lngrevisionno' => $rowData['detailRevisionNo'] + 1,
                 'strproductcode' => "'". $this->productCode. "'",
                 'strrevisecode' => "'". $this->reviseCode. "'",
                 'lngstocksubjectcode' => $rowData['divisionSubject'],
@@ -723,7 +836,8 @@ class updateInsertData extends estimateInsertData {
                 'lngsortkey' => $this->maxOrderDetailNo,
                 'lngestimateno' => $this->estimateNo,
                 'lngestimatedetailno' => $estimateDetailNo,
-                'lngestimaterevisionno' => $this->revisionNo
+                'lngestimaterevisionno' => $rowData['detailRevisionNo'] + 1
+
             );
             // クエリの生成
             $strQuery = $this->makeInsertSelectQuery($table, $data);
@@ -758,11 +872,11 @@ class updateInsertData extends estimateInsertData {
 
         $previousDetailNo = $rowData['previousDetailNo']; // 以前の見積原価明細番号
 
-        if ($previousDetailNo) {
+        if ($rowData["detailRevisionNo"] >= 0) {
             
             $data = array(
                 'lngorderno' => $orderNo,
-                'lngrevisionno' => $revisionNo,
+                'lngrevisionno' => $rowData['detailRevisionNo'] + 1,
                 'strordercode' => 'strordercode',
                 'dtmappropriationdate' => 'dtmappropriationdate',
                 'lngcustomercompanycode' => $this->companyCodeList[$rowData['customerCompany']],
@@ -780,7 +894,8 @@ class updateInsertData extends estimateInsertData {
             );
 
             $condition = "WHERE lngorderno =". $orderNo;
-            $condition .= " AND lngrevisionno = ". $this->preOrderRevisionNo;
+            $condition .= " AND lngrevisionno = ". $rowData['detailRevisionNo'];
+;
 
             $returning = "lngorderstatuscode";
     
@@ -802,7 +917,7 @@ class updateInsertData extends estimateInsertData {
         } else {
             $data = array(
                 'lngorderno' => $orderNo,
-                'lngrevisionno' => $revisionNo,
+                'lngrevisionno' => $rowData['detailRevisionNo'] + 1,
                 'strordercode' => "'". $this->orderCode. "'",
                 'dtmappropriationdate' => 'NOW()',
                 'lngcustomercompanycode' => $this->companyCodeList[$rowData['customerCompany']],
@@ -1118,9 +1233,104 @@ class updateInsertData extends estimateInsertData {
         return $ret;
     }
 
+    // 見積原価番号から新規明細番号を取得する
+    protected function getNewDetailNo() {
+        $strQuery = "SELECT";
+        $strQuery .= " MAX(lngestimatedetailno) + 1 as lngestimatedetailno";
+        $strQuery .= " FROM";
+        $strQuery .= " t_estimatedetail";
+        $strQuery .= " WHERE lngestimateno = ". $this->estimateNo;
+
+        list($resultID, $resuluNumber) = fncQuery($strQuery, $this->objDB);
+
+        // 最初のレコードの値を返却する
+        if ($resuluNumber > 0) {
+            $result = pg_fetch_object($resultID, 0);
+            $ret = $result->lngestimatedetailno;
+        } else {
+            $ret = false;
+        }
+
+        return $ret;
+    }
+
+    // 見積原価明細の最新リビジョンを取得する。
+    protected function getCurrentDetailRevision($detailNo)
+    {
+        $strQuery = "SELECT";
+        $strQuery .= " MAX(lngrevisionno) as lngrevisionno";
+        $strQuery .= " FROM";
+        $strQuery .= " t_estimatedetail";
+        $strQuery .= " WHERE lngestimateno = ". $this->estimateNo;
+        $strQuery .= " AND lngestimatedetailno = ". $detailNo;
+
+        list($resultID, $resuluNumber) = fncQuery($strQuery, $this->objDB);
+
+        // 最初のレコードの値を返却する
+        if ($resuluNumber > 0) {
+            $result = pg_fetch_object($resultID, 0);
+            $ret = $result->lngrevisionno;
+        } else {
+            $ret = false;
+        }
+        
+        return $ret;
+    }
+    
+
+    // 受注ステータス取得
+    protected function getReceiveStatus($rowData){
+        $strQuery =  "SELECT";
+        $strQuery .= " mr.lngreceivestatuscode";
+        $strQuery .= " FROM";
+        $strQuery .= " m_receive mr";
+        $strQuery .= " INNER JOIN t_receivedetail tr";
+        $strQuery .= " ON tr.lngreceiveno = mr.lngreceiveno";
+        $strQuery .= " AND tr.lngrevisionno = mr.lngrevisionno";
+        $strQuery .= " WHERE tr.lngestimateno = ". $this->estimateNo;
+        $strQuery .= " AND tr.lngestimatedetailno = ". $rowData["previousDetailNo"];
+        $strQuery .= " AND tr.lngestimaterevisionno = ". $rowData["detailRevisionNo"];
+        list($resultID, $resuluNumber) = fncQuery($strQuery, $this->objDB);
+
+        // 最初のレコードの値を返却する
+        if ($resuluNumber > 0) {
+            $result = pg_fetch_object($resultID, 0);
+            $ret = $result->lngreceivestatuscode;
+        } else {
+            $ret = false;
+        }
+        return $ret;
+    }
+    
+    // 発注ステータス取得
+    protected function getOrderStatus($rowData){
+        $strQuery = "SELECT";
+        $strQuery .= " mo.lngorderstatuscode";
+        $strQuery .= " FROM";
+        $strQuery .= " m_order mo";
+        $strQuery .= " INNER JOIN t_orderdetail tod";
+        $strQuery .= " ON tod.lngorderno = mo.lngorderno";
+        $strQuery .= " AND tod.lngrevisionno = mo.lngrevisionno";
+        $strQuery .= " WHERE tod.lngestimateno = ". $this->estimateNo;
+        $strQuery .= " AND tod.lngestimatedetailno = ". $rowData["previousDetailNo"];
+        $strQuery .= " AND tod.lngestimaterevisionno = ". $rowData["detailRevisionNo"];
+
+        list($resultID, $resuluNumber) = fncQuery($strQuery, $this->objDB);
+
+        // 最初のレコードの値を返却する
+        if ($resuluNumber > 0) {
+            $result = pg_fetch_object($resultID, 0);
+            $ret = $result->lngorderstatuscode;
+        } else {
+            $ret = false;
+        }
+        return $ret;
+    }
+
+
     // 削除対象明細の修正および論理削除用のレコードの追加を行う
     protected function insertDeleteRecord() {
-        $this->updateDeleteReceive();
+//        $this->updateDeleteReceive(); //受注コード更新は見積原価削除時に。
         $this->insertDeleteReceive();
         $this->insertDeleteOrder();
         return;
@@ -1133,7 +1343,7 @@ class updateInsertData extends estimateInsertData {
 
         $strQuery = "UPDATE m_receive mr";
         $strQuery .= " SET strreceivecode = CASE WHEN strreceivecode ~ '^\*.+\*$' THEN strreceivecode ELSE '*' || strreceivecode || '*' END";
-        // 以下、登録前のリビジョン番号が存在し、登録後のリビジョン番号が存在しない受注番号を取得する
+        // 以下、登録後のリビジョン番号が存在しない受注番号を取得する
         $strQuery .= " FROM";
         $strQuery .= " (";
         $strQuery .= "SELECT mr2.lngreceiveno";
@@ -1141,16 +1351,22 @@ class updateInsertData extends estimateInsertData {
         $strQuery .= " INNER JOIN m_receive mr2";
         $strQuery .= " ON mr2.lngreceiveno = trd.lngreceiveno";
         $strQuery .= " AND mr2.lngrevisionno = trd.lngrevisionno";
-        $strQuery .= " LEFT OUTER JOIN t_receivedetail trd2";
-        $strQuery .= " ON mr2.lngreceiveno = trd2.lngreceiveno";
-        $strQuery .= " AND trd.lngestimateno = trd2.lngestimateno";
-        $strQuery .= " AND trd2.lngestimaterevisionno = ". $this->revisionNo;
-        $strQuery .= " WHERE";
-        $strQuery .= " trd.lngestimateno = ". $this->estimateNo;
-        $strQuery .= " AND trd.lngestimaterevisionno = ". $previousRevisionNo;
-        $strQuery .= " AND trd2.lngreceiveno is NULL";
+        $strQuery .= " WHERE trd.lngestimateno = ". $this->estimateNo;
+        $strQuery .= " AND (trd.lngestimatedetailno, trd.lngestimaterevisionno) IN(";
+        $strQuery .= " select mh1.lngestimatedetailno, mh1.lngestimatedetailrevisionno";
+        $strQuery .= " from m_estimatehistory mh1";
+        $strQuery .= " left outer join m_estimatehistory mh2";
+        $strQuery .= "     on mh2.lngestimateno = mh1.lngestimateno";
+        $strQuery .= " and mh2.lngrevisionno = mh1.lngrevisionno +1";
+        $strQuery .= " and mh2.lngestimatedetailno = mh1.lngestimatedetailno";
+        $strQuery .= " and mh2.lngestimatedetailrevisionno = mh1.lngestimatedetailrevisionno +1";
+        $strQuery .= " where mh1.lngestimateno = ". $this->estimateNo;
+        $strQuery .= " and mh1.lngrevisionno=". $previousRevisionNo;
+        $strQuery .= " and mh2.lngestimateno is null";
+        $strQuery .= " )";
         $strQuery .= ") sub";
         $strQuery .= " WHERE sub.lngreceiveno = mr.lngreceiveno"; // 受注番号を結合
+fncDebug("kids2.log", $strQuery, __FILE__, __LINE__, "a");
 
         // クエリの実行
         list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
@@ -1182,7 +1398,7 @@ class updateInsertData extends estimateInsertData {
 
         $strQuery .= " mr.lngreceiveno,";
         $strQuery .= " -1,";
-        $strQuery .= " CASE WHEN mr.strreceivecode ~ '^\*.+\*$' THEN mr.strreceivecode ELSE '*' || mr.strreceivecode || '*' END,";
+        $strQuery .= " mr.strreceivecode,";
         $strQuery .= " ". $this->inputUserCode. ",";
         $strQuery .= " false,";
         $strQuery .= " now(),";
@@ -1195,16 +1411,21 @@ class updateInsertData extends estimateInsertData {
         $strQuery .= " ON mr.lngreceiveno = trd.lngreceiveno";
         $strQuery .= " AND mr.lngrevisionno = trd.lngrevisionno";
 
-        // 修正後のリビジョンの検索結果を結合
-        $strQuery .= " LEFT OUTER JOIN t_receivedetail trd2";
-        $strQuery .= " ON mr.lngreceiveno = trd2.lngreceiveno";
-        $strQuery .= " AND trd2.lngestimaterevisionno = ". $this->revisionNo;
-
         // 修正後のリビジョンが存在しないものだけを対象とするWHERE句
-        $strQuery .= " WHERE";
-        $strQuery .= " trd.lngestimateno = ". $this->estimateNo;
-        $strQuery .= " AND trd.lngestimaterevisionno = ". $previousRevisionNo;
-        $strQuery .= " AND trd2.lngreceiveno is NULL";
+        $strQuery .= " WHERE trd.lngestimateno = ". $this->estimateNo;
+        $strQuery .= " AND (trd.lngestimatedetailno, trd.lngestimaterevisionno) IN(";
+        $strQuery .= " select mh1.lngestimatedetailno, mh1.lngestimatedetailrevisionno";
+        $strQuery .= " from m_estimatehistory mh1";
+        $strQuery .= " left outer join m_estimatehistory mh2";
+        $strQuery .= "     on mh2.lngestimateno = mh1.lngestimateno";
+        $strQuery .= " and mh2.lngrevisionno = mh1.lngrevisionno +1";
+        $strQuery .= " and mh2.lngestimatedetailno = mh1.lngestimatedetailno";
+        $strQuery .= " and mh2.lngestimatedetailrevisionno = mh1.lngestimatedetailrevisionno +1";
+        $strQuery .= " where mh1.lngestimateno = ". $this->estimateNo;
+        $strQuery .= " and mh1.lngrevisionno=". $previousRevisionNo;
+        $strQuery .= " and mh2.lngestimateno is null";
+        $strQuery .= " )";
+fncDebug("kids2.log", $strQuery, __FILE__, __LINE__, "a");
 
         // クエリの実行
         list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
@@ -1243,14 +1464,20 @@ class updateInsertData extends estimateInsertData {
         $strQuery .= " INNER JOIN m_order mo";
         $strQuery .= " ON mo.lngorderno = tod.lngorderno";
         $strQuery .= " AND mo.lngrevisionno = tod.lngrevisionno";
-        $strQuery .= " LEFT OUTER JOIN t_orderdetail tod2";
-        $strQuery .= " ON mo.lngorderno = tod2.lngorderno";
-        $strQuery .= " AND tod.lngestimateno = tod2.lngestimateno";
-        $strQuery .= " AND tod2.lngestimaterevisionno = ". $this->revisionNo;
-        $strQuery .= " WHERE";
-        $strQuery .= " tod.lngestimateno = ". $this->estimateNo;
-        $strQuery .= " AND tod.lngestimaterevisionno = ". $previousRevisionNo;
-        $strQuery .= " AND tod2.lngorderno is NULL";
+        $strQuery .= " WHERE tod.lngestimateno = ". $this->estimateNo;
+        $strQuery .= " AND (tod.lngestimatedetailno, tod.lngestimaterevisionno) IN(";
+        $strQuery .= " select mh1.lngestimatedetailno, mh1.lngestimatedetailrevisionno";
+        $strQuery .= " from m_estimatehistory mh1";
+        $strQuery .= " left outer join m_estimatehistory mh2";
+        $strQuery .= "     on mh2.lngestimateno = mh1.lngestimateno";
+        $strQuery .= " and mh2.lngrevisionno = mh1.lngrevisionno +1";
+        $strQuery .= " and mh2.lngestimatedetailno = mh1.lngestimatedetailno";
+        $strQuery .= " and mh2.lngestimatedetailrevisionno = mh1.lngestimatedetailrevisionno +1";
+        $strQuery .= " where mh1.lngestimateno = ". $this->estimateNo;
+        $strQuery .= " and mh1.lngrevisionno=". $previousRevisionNo;
+        $strQuery .= " and mh2.lngestimateno is null";
+        $strQuery .= " )";
+fncDebug("kids2.log", $strQuery, __FILE__, __LINE__, "a");
 
         // クエリの実行
         list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);

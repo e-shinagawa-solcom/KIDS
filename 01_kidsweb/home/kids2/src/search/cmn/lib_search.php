@@ -887,9 +887,13 @@ function fncGetHistoryDataByPKSQL($type, $strCode, $lngRevisionNo, $lngDetailNo,
         $aryQuery[] = "      ) AS countofaplicatedetail ";
         $aryQuery[] = "    FROM";
         $aryQuery[] = "      t_estimatedetail ted ";
+        $aryQuery[] = "      INNER JOIN m_estimatehisory meh ";
+        $aryQuery[] = "        ON meh.lngestimateno = ted.lngestimateno ";
+        $aryQuery[] = "        AND meh.lngestimatedetailno = ted.lngestimatedetailno ";
+        $aryQuery[] = "        AND meh.lngestimatedetailrevisionno = ted.lngrevisionno ";
         $aryQuery[] = "      INNER JOIN m_estimate me ";
-        $aryQuery[] = "        ON me.lngestimateno = ted.lngestimateno ";
-        $aryQuery[] = "        AND me.lngrevisionno = ted.lngrevisionno ";
+        $aryQuery[] = "        ON me.lngestimateno = meh.lngestimateno ";
+        $aryQuery[] = "        AND me.lngrevisionno = meh.lngrevisionno ";
         $aryQuery[] = "      LEFT OUTER JOIN m_salesclassdivisonlink mscdl ";
         $aryQuery[] = "        ON mscdl.lngsalesclasscode = ted.lngsalesclasscode ";
         $aryQuery[] = "        AND mscdl.lngsalesdivisioncode = ted.lngsalesdivisioncode ";

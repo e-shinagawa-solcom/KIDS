@@ -136,7 +136,7 @@ class registInsertData extends estimateInsertData {
 
             // 見積原価明細テーブルの登録処理
             $this->registTableEstimateDetail($rowData, $estimateDetailNo);
-
+            $this->registTableEstimateHistory($estimateDetailNo);
             $salesOrder = $rowData['salesOrder'];
 
             // 受注の場合
@@ -325,6 +325,31 @@ class registInsertData extends estimateInsertData {
             'lngsortkey' => $estimateDetailNo,
             'lngsalesdivisioncode' => $salesDivisionCode,
             'lngsalesclasscode' => $salesClassCode
+        );
+
+        // クエリの生成
+        $strQuery = $this->makeInsertQuery($table, $data);
+        // クエリの実行
+        list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
+
+        $this->objDB->freeResult($resultID);
+
+        return true;
+    }
+
+    protected function registTableEstimateHistory($estimateDetailNo) {
+        // テーブル名の設定
+        $table = 'm_estimatehistory';
+
+        // 受注の場合
+
+        // 登録データの作成
+        $data = array(
+            'lngestimateno' => $this->estimateNo,
+            'lngrevisionno' => $this->revisionNo,
+            'lngestimaterowno' => $estimateDetailNo,
+            'lngestimatedetailno' => $estimateDetailNo,
+            'lngestimatedetailrevisionno' => $this->revisionNo,
         );
 
         // クエリの生成

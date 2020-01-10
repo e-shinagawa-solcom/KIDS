@@ -78,6 +78,7 @@ $aryQuery[] = " u1.strUserDisplayName AS strInchargeUserDisplayName,";
 $aryQuery[] = " u2.strUserDisplayCode AS strInputUserDisplayCode,";
 $aryQuery[] = " u2.strUserDisplayName AS strInputUserDisplayName";
 $aryQuery[] = "FROM m_Estimate e";
+$aryQuery[] = " INNER JOIN m_estimatehistory emh on emh.lngestimateno = e.lngestimateno and emh.lngrevisionno = e,lngrevisionno";
 $aryQuery[] = " INNER JOIN ( ";
 $aryQuery[] = " select p1.*  from m_product p1 ";
 $aryQuery[] = " inner join (select max(lngrevisionno) lngrevisionno, strproductcode,strrevisecode from m_Product group by strProductCode,strrevisecode) p2";
@@ -110,8 +111,9 @@ if (array_key_exists("dtmDeliveryLimitDate", $searchColumns) &&
     " <= " . "'" . pg_escape_string($to["dtmDeliveryLimitDate"]) . "'";
 }
 $aryQuery[] = "  ) ed ";
-$aryQuery[] = "    on e.lngestimateno = ed.lngestimateno ";
-$aryQuery[] = "    and e.lngrevisionno = ed.lngrevisionno ";
+$aryQuery[] = "    on emh.lngestimateno = ed.lngestimateno ";
+$aryQuery[] = "    and emh.lngestimatedetailno = ed.lngestimatedetailno ";
+$aryQuery[] = "    and emh.lngestimatedetailrevisionno = ed.lngrevisionno ";
 $aryQuery[] = " LEFT OUTER JOIN m_Group g   ON p.lngInChargeGroupCode = g.lngGroupCode";
 $aryQuery[] = " LEFT OUTER JOIN m_User u1   ON p.lngInChargeUserCode  = u1.lngUserCode";
 $aryQuery[] = " INNER JOIN m_User u2   ON e.lngInputUserCode     = u2.lngUserCode";
