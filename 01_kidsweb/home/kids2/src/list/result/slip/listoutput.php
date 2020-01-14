@@ -175,10 +175,10 @@ else {
     } else if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_DEBIT) {
 
         // ∏‹µ“≈≈œ√»÷πÊ
-        $aryParts["strcustomertel"] = "Tel:" . $aryParts["strcustomertel1"] . " " . $aryParts["strcustomertel2"];
+        $aryParts["strcustomertel"] = "Tel:" . $aryParts["strcustomerphoneno"];
 
         // ∏‹µ“FAX»÷πÊ
-        $aryParts["strcustomerfax"] = "Fax.:" . $aryParts["strcustomerfax1"] . " " . $aryParts["strcustomerfax2"];
+        $aryParts["strcustomerfax"] = "Fax.:" . $aryParts["strcustomerfaxno"];
 
         // πÁ∑◊∂‚≥€
         $curTotalPrice = ($aryParts["lngmonetaryunitcode"] == 1 ? "&yen; " : $aryParts["strmonetaryunitsign"]) . " " . $aryParts["curtotalprice"];

@@ -133,15 +133,6 @@ $aryCheck["dtmCreationDateTo"] = "date(/)";
 $aryCheck["dtmDeliveryLimitDateFrom"] = "date(/)";
 $aryCheck["dtmDeliveryLimitDateTo"] = "date(/)";
 
-$linkedProductCode = str_replace('-', ',', $aryData['strProductCode']);
-$productCodes = explode(',', $linkedProductCode);
-
-for ($i = 0; $i < count($productCodes); ++$i) {
-    $key = 'strProductCode' . $i;
-    $aryData[$key] = $productCodes[$i];
-    $aryCheck[$key] = "intstring(5)";
-}
-
 // 文字列チェック
 $aryCheckResult = fncAllCheck($aryData, $aryCheck);
 
@@ -316,22 +307,28 @@ if (!count($strErrorMessage)) {
 
             // 製品コード
             case 'strProductCode':
-                if (strlen($condition)) {
-                    $conditions = explode(',', $condition);
-                    foreach ($conditions as $value) {
-                        if (preg_match('/\A(\d+)-(\d+)\z/', $value, $matches)) {
-                            $rangeFlag = true;
-                            $searchs[] = "mp.strProductCode BETWEEN '" . $matches[1] . "' AND '" . $matches[2] . "'";
+                $strProductCodeArray = explode(",", $condition);
+                $search = " (";
+                $count = 0;
+                foreach ($strProductCodeArray as $strProductCode) {
+                    $count += 1;
+                    if ($count != 1) {
+                        $search .= " OR ";
+                    }
+                    if (strpos($strProductCode, '-') !== false) {
+                        $search .= "(mp.strProductCode" .
+                        " between '" . explode("-", $strProductCode)[0] . "'" .
+                        " AND " . "'" . explode("-", $strProductCode)[1] . "')";
+                    } else {
+                        if (strpos($strProductCode, '_') !== false) {
+                            $search .= "mp.strProductCode = '" . explode("_", $strProductCode)[0] . "'";
+                            $search .= " AND mp.strrevisecode = '" . explode("_", $strProductCode)[1] . "'";
                         } else {
-                            $searchNumber[] = "'" . $value . "'";
+                            $search .= "mp.strProductCode = '" . $strProductCode . "'";
                         }
                     }
-                    $numbers = implode(',', $searchNumber);
-                    if ($numbers) {
-                        $searchs[] = "mp.strProductCode IN (" . $numbers . ")";
-                    }
-                    $search = "(" . implode(' OR ', $searchs) . ")";
                 }
+                $search .= ")";
                 break;
 
             // 製品名称
@@ -407,7 +404,7 @@ if (!count($strErrorMessage)) {
     }
 
     $strQuery = $selectQuery . $where . $orderBy;
-
+    
     list($resultID, $resultNum) = fncQuery($strQuery, $objDB);
     if ($resultNum > 1000) {
         $strErrorMessage = fncOutputError(9057, DEF_WARNING, "1000", false, "/estimate/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);

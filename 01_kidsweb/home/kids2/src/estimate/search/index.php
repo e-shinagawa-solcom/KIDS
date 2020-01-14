@@ -62,6 +62,5 @@ $aryData["lngFunctionCode"] = DEF_FUNCTION_UC3;
 echo fncGetReplacedHtmlWithBase("search/base_search.html", "estimate/search/es_search.tmpl", $aryData ,$objAuth );
 
 
-
 return TRUE;
 ?>
