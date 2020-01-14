@@ -21,12 +21,13 @@
 <header3>
 	<!-- datepickerの要素指定 -->
 	<script src="/search/cmn/js/datepicker.js" defer></script>
+        <script src="/search/cmn/js/date.js" defer></script>
 	<!-- msw汎用スタイル -->
 	<link rel="stylesheet" href="/search/cmn/css/msw.css">
     <!-- フォームボタン css -->
     <link rel="stylesheet" href="/search/cmn/css/form-buttons.css">
     <!-- フォーム ボタン -->
-	<script src="/search/cmn/js/form-buttons.js" defer></script>
+	<script src="/estimate/search/form-buttons.js" defer></script>
     <!-- フォームバリデーション -->
     <script src="/search/cmn/js/validate-form.js" defer></script>
     <!-- マスタ検索呼び出し -->
@@ -105,8 +106,8 @@ Loading();
                 </span>
                 <span class="regist-label">
                     <span class="regist-label__text">作成日</span>
-                    FROM <input class="TxtStyle05L" name="From_dtmInsertDate" type="text" value="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this); fncCheckDate(this); fncCopyValue( this, document.all.To_dtmCreationDate );" tabindex="">
-                    TO <input class="TxtStyle05L" name="To_dtmInsertDate" type="text" value="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this); fncCheckDate(this);" tabindex="">
+                    FROM <input class="TxtStyle05L is-from-date" name="From_dtmInsertDate" type="text" value="" maxlength="10" tabindex="">
+                    TO <input class="TxtStyle05L is-date" name="To_dtmInsertDate" type="text" value="" maxlength="10" tabindex="">
                 </span>
             </div>
 			<div class="regist-line">
@@ -116,7 +117,7 @@ Loading();
                 </span>
 				<span class="regist-label">
 					<span class="regist-label__text">製品コード</span>
-                    <input class="Txt46L" name="strProductCode" type="text" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="">
+                    <input class="Txt46L" name="strProductCode" type="text" value="" tabindex="">
 				</span>
 			</div>
 			<div class="regist-line">
@@ -126,7 +127,7 @@ Loading();
                 </span>
 				<span class="regist-label">
 					<span class="regist-label__text">製品名称（日本語）</span>
-                    <input class="Txt46L" name="strProductName" type="text" value="" maxlength="80" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this );" tabindex="">
+                    <input class="Txt46L" name="strProductName" type="text" value="" maxlength="80" tabindex="">
 				</span>
             </div>
             <div class="regist-line">
@@ -136,7 +137,7 @@ Loading();
                 </span>
 				<span class="regist-label">
 					<span class="regist-label__text">製品名称（英語）</span>
-                    <input class="Txt46L" name="strProductEnglishName" type="text" value="" maxlength="80" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this );" tabindex="">
+                    <input class="Txt46L" name="strProductEnglishName" type="text" value="" maxlength="80" tabindex="">
 				</span>
 			</div>
             <div class="regist-line">
@@ -194,8 +195,8 @@ Loading();
                 </span>
                 <span class="regist-label">
                     <span class="regist-label__text">客先納品日</span>
-                    FROM <input name="From_dtmDeliveryLimitDate" class="TxtStyle05L" type="text" value="" maxlength="7" onfocus="chColorOn(this);" onblur="chColorOff(this); fncCheckDate(this,1); fncCopyValue( this, document.all.To_dtmDeliveryLimitDate );" tabindex="">
-                    TO <input name="To_dtmDeliveryLimitDate" class="TxtStyle05L" type="text" value="" maxlength="7" onfocus="chColorOn(this);" onblur="chColorOff(this); fncCheckDate(this,1);" tabindex="">
+                    FROM <input name="From_dtmDeliveryLimitDate" class="TxtStyle05L" type="text" value="" maxlength="7"  tabindex="">
+                    TO <input name="To_dtmDeliveryLimitDate" class="TxtStyle05L" type="text" value="" maxlength="7" tabindex="">
                 </span>
             </div> -->
             <div class="regist-line">

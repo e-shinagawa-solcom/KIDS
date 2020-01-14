@@ -402,10 +402,16 @@
                     return $('input[name="IsSearch_lngInChargeGroupCode"]').get(0).checked;
                 }
             },
-            // 開発担当者            
+            // 担当者            
             lngInChargeUserCode: {
                 required: function () {
                     return $('input[name="IsSearch_lngInChargeUserCode"]').get(0).checked;
+                }
+            },
+            // 開発担当者            
+            lngDevelopUserCode: {
+                required: function () {
+                    return $('input[name="IsSearch_lngDevelopUserCode"]').get(0).checked;
                 }
             },
             // 仕入先            
@@ -503,6 +509,9 @@
             lngStockItemCode: {
                 required: msgRequired
             },
+            strProductCode: {
+                required: msgRequired
+            },
             // 製品コード            
             From_strProductCode: {
                 required: msgRequired
@@ -512,6 +521,10 @@
             },
             // 営業部署            
             lngInChargeGroupCode: {
+                required: msgRequired
+            },
+            // 担当者            
+            lngDevelopUserCode: {
                 required: msgRequired
             },
             // 開発担当者            
