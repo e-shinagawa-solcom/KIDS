@@ -89,7 +89,7 @@ if (isset($_POST['maxRevisionNo'])) {
 	$result = $objDB->getEstimateDetail($estimateNo);
 	if ($result) {
 		$firstRecord = current($result);
-		$maxRevisionNo = $firstRecord->lngrevisionno;
+		$maxRevisionNo = $firstRecord->masterrevisionno;
 	}
 }
 

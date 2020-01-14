@@ -94,10 +94,20 @@ class updateInsertData extends estimateInsertData {
                     if($rowDataList[$i]['salesOrder'] === DEF_ATTRIBUTE_CLIENT)
                     {
                         $rowDataList[$i]['receiveStatusCode'] = (int)$this->getReceiveStatus($rowDataList[$i]);
+                        if( $rowDataList[$i]['receiveStatusCode'] != DEF_RECEIVE_APPLICATE)
+                        {
+                            // 仮受注ではないデータはリビジョンアップしないため、現リビジョンで履歴に登録
+                            $rowDataList[$i]['detailRevisionNo'] -= 1;
+                        }
                     }
                     else
                     {
                         $rowDataList[$i]['orderStatusCode'] = (int)$this->getOrderStatus($rowDataList[$i]);
+                        if( $rowDataList[$i]['orderStatusCode'] != DEF_ORDER_APPLICATE)
+                        {
+                            // 仮発注ではないデータはリビジョンアップしないため、現リビジョンで履歴に登録
+                            $rowDataList[$i]['detailRevisionNo'] -= 1;
+                        }
                     }
                 }
             }
@@ -1409,7 +1419,7 @@ class updateInsertData extends estimateInsertData {
         $strQuery .= "     on mh2.lngestimateno = mh1.lngestimateno";
         $strQuery .= " and mh2.lngrevisionno = mh1.lngrevisionno +1";
         $strQuery .= " and mh2.lngestimatedetailno = mh1.lngestimatedetailno";
-        $strQuery .= " and mh2.lngestimatedetailrevisionno = mh1.lngestimatedetailrevisionno +1";
+//        $strQuery .= " and mh2.lngestimatedetailrevisionno = mh1.lngestimatedetailrevisionno +1";
         $strQuery .= " where mh1.lngestimateno = ". $this->estimateNo;
         $strQuery .= " and mh1.lngrevisionno=". $previousRevisionNo;
         $strQuery .= " and mh2.lngestimateno is null";
@@ -1461,7 +1471,7 @@ class updateInsertData extends estimateInsertData {
         $strQuery .= "     on mh2.lngestimateno = mh1.lngestimateno";
         $strQuery .= " and mh2.lngrevisionno = mh1.lngrevisionno +1";
         $strQuery .= " and mh2.lngestimatedetailno = mh1.lngestimatedetailno";
-        $strQuery .= " and mh2.lngestimatedetailrevisionno = mh1.lngestimatedetailrevisionno +1";
+//        $strQuery .= " and mh2.lngestimatedetailrevisionno = mh1.lngestimatedetailrevisionno +1";
         $strQuery .= " where mh1.lngestimateno = ". $this->estimateNo;
         $strQuery .= " and mh1.lngrevisionno=". $previousRevisionNo;
         $strQuery .= " and mh2.lngestimateno is null";

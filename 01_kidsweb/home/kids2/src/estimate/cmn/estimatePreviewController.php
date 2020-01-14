@@ -155,7 +155,7 @@ class estimatePreviewController {
         
         foreach ($estimate as $key => $record) {
             if (!isset($this->revisionNo)) {
-                $this->revisionNo = $record->lngrevisionno;
+                $this->revisionNo = $record->masterrevisionno;
             }
             if (!isset($this->insertDate)) {
                 $this->insertDate = $record->dtminsertdate;

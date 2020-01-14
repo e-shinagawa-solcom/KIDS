@@ -2,6 +2,7 @@
 
 require_once ( 'conf.inc' );		// 設定読み込み
 require_once ( LIB_FILE );			// ライブラリ読み込み
+require_once ( LIB_DEBUGFILE );			// ライブラリ読み込み
 
 require_once (SRC_ROOT. "/estimate/cmn/const/workSheetConst.php"); // ワークシート処理用定数ファイル
 include_once (LIB_DEBUGFILE);
@@ -624,7 +625,8 @@ class estimateDB extends clsDB {
             $strQuery .= " mp.lngrevisionno AS lngproductrevisionno,";
             $strQuery .= " minRev.lngrevisionno AS minrevisionno,";
             $strQuery .= " TO_CHAR(me.dtminsertdate, 'YYYY/MM/DD') AS dtminsertdate,";
-            $strQuery .= " me.lngprintcount";
+            $strQuery .= " me.lngprintcount,";
+            $strQuery .= " me.lngrevisionno as masterrevisionno";
 
             $strQuery .= " FROM m_estimate me";
             $strQuery .= " INNER JOIN m_estimatehistory teh";
@@ -678,7 +680,6 @@ class estimateDB extends clsDB {
         }
 
         $strQuery .= " ORDER BY teh.lngestimaterowno ASC";
-
         list ($resultID, $resultNumber) = fncQuery($strQuery, $this);
 
         if ($resultNumber > 0) {
