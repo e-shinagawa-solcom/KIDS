@@ -142,17 +142,31 @@ if (array_key_exists("strOrderCode", $searchColumns) &&
     $aryQuery[] = " AND po.strOrderCode" .
     " <= " . "'" . pg_escape_string($to["strOrderCode"]) . "'";
 }
-// 製品コード_from
+// 製品コード
 if (array_key_exists("strProductCode", $searchColumns) &&
-    array_key_exists("strProductCode", $from) && $from["strProductCode"] != '') {
-    $aryQuery[] = " AND po.strProductCode" .
-    " >= '" . pg_escape_string($from["strProductCode"]) . "'";
-}
-// 製品コード_to
-if (array_key_exists("strProductCode", $searchColumns) &&
-    array_key_exists("strProductCode", $to) && $to["strProductCode"] != '') {
-    $aryQuery[] = " AND po.strProductCode" .
-    " <= " . "'" . pg_escape_string($to["strProductCode"]) . "'";
+    array_key_exists("strProductCode", $searchValue)) {
+    $strProductCodeArray = explode(",", $searchValue["strProductCode"]);
+    $aryQuery[] = " AND (";
+    $count = 0;
+    foreach ($strProductCodeArray as $strProductCode) {
+        $count += 1;
+        if ($count != 1) {
+            $aryQuery[] = " OR ";
+        }
+        if (strpos($strProductCode, '-') !== false) {
+            $aryQuery[] = "(po.strProductCode" .
+            " between '" . explode("-", $strProductCode)[0] . "'" .
+            " AND " . "'" . explode("-", $strProductCode)[1] . "')";
+        } else {
+            if (strpos($strProductCode, '_') !== false) {
+                $aryQuery[] = "po.strProductCode = '" . explode("_", $strProductCode)[0] . "'";
+                $aryQuery[] = " AND po.strrevisecode = '" . explode("_", $strProductCode)[1] . "'";
+            } else {
+                $aryQuery[] = "po.strProductCode = '" . $strProductCode . "'";
+            }
+        }
+    }
+    $aryQuery[] = ")";
 }
 // 入力者
 if (array_key_exists("lngInputUserCode", $searchColumns) &&

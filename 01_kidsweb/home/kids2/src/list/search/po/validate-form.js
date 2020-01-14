@@ -32,12 +32,32 @@
         },
         msgRequired
     );
-　　// 製品コードの書式チェック
+    
+    // 製品コードの書式チェック
     $.validator.addMethod(
         "checkStrProductCode",
         function (value, element, params) {
-            if (params && value!='') {
-                return this.optional(element) || /\d{5}(_\d{2})?$/.test(value);
+            if (params && value != '') {
+                var codeList = value.split(",");
+                var result = true;
+                $.each(codeList, function (ind, val) {
+                    if (val.indexOf('-') !== -1) {
+                        var val1 = val.split("-")[0];
+                        var val2 = val.split("-")[1];
+                        if (!val1.match(/^\d{5}(_\d{2})?$/) || !val2.match(/^\d{5}(_\d{2})?$/)) {
+                            result = false;
+                            return false;
+                        }
+                    } else if (val.length) {
+                        if (!val.match(/^\d{5}(_\d{2})?$/)) {
+                            result = false;
+                            return false;
+                        }
+                    }
+                });
+                if (!result) {
+                    return false;
+                }
             }
             return true;
         },
@@ -243,17 +263,9 @@
                 }
             },
             // 製品コード            
-            From_strProductCode: {
+            strProductCode: {
                 required: function () {
-                    return $('input[name="IsSearch_strProductCode"]').get(0).checked && $('input[name="To_strProductCode"]').val() == "";
-                },
-                checkStrProductCode: function() {
                     return $('input[name="IsSearch_strProductCode"]').get(0).checked;
-                }
-            },
-            To_strProductCode: {
-                required: function () {
-                    return $('input[name="IsSearch_strProductCode"]').get(0).checked && $('input[name="From_strProductCode"]').val() == "";
                 },
                 checkStrProductCode: function() {
                     return $('input[name="IsSearch_strProductCode"]').get(0).checked;
@@ -294,10 +306,7 @@
                 required: msgRequired
             },
             // 製品コード            
-            From_strProductCode: {
-                required: msgRequired
-            },
-            To_strProductCode: {
+            strProductCode: {
                 required: msgRequired
             },
             // 発注NO.            
