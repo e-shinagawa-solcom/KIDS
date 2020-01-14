@@ -291,7 +291,7 @@ function fncGetMaxSalesSQL($displayColumns, $searchColumns, $from, $to, $searchV
             if ($count != 1) {
                 $aryQuery[] = " OR ";
             }
-            if (strpos($strSalesCode, '-') !== false) {
+            if (strpos($strSlipCode, '-') !== false) {
                 $aryQuery[] = "(s.strSlipCode" .
                 " between '" . explode("-", $strSlipCode)[0] . "'" .
                 " AND " . "'" . explode("-", $strSlipCode)[1] . "')";
