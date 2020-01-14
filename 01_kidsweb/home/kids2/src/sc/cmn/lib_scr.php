@@ -1970,6 +1970,7 @@ function fncGenerateReportImage($strMode, $aryHeader, $aryDetail,
                 $aryParts["strcustomersalescode". ($i)] = $aryDetail[$i]["strcustomerreceivecode"];
                 $aryParts["strproductenglishname". ($i)] = $aryDetail[$i]["strproductenglishname"];
                 $aryParts["lngproductquantity". ($i)] = number_format($aryDetail[$i]["lngproductquantity"]);
+                $aryParts["strproductunitname". ($i)] = $aryDetail[$i]["strproductunitname"];
                 $aryParts["curproductprice". ($i)] = number_format($aryDetail[$i]["curproductprice"], 2, '.', ',');
                 $aryParts["cursubtotalprice". ($i)] = number_format($aryDetail[$i]["cursubtotalprice"], 2, '.', ',');
                 $aryParts["strsalesclassname". ($i)] = $aryDetail[$i]["strsalesclassname"];

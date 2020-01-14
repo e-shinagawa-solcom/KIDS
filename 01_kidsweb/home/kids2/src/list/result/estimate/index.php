@@ -204,7 +204,6 @@ if ($lngResultNum > 0) {
     $aryErrorMessage = "";
 }
 if ($errorFlag) {
-    
 
     $objDB->close();
     // エラー画面の戻り先
