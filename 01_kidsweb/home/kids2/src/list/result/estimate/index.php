@@ -204,8 +204,6 @@ if ($lngResultNum > 0) {
     $aryErrorMessage = "";
 }
 if ($errorFlag) {
-
-    $objDB->close();
     // エラー画面の戻り先
     // $strReturnPath = "../list/po/index.php?strSessionID=" . $aryData["strSessionID"];
 
@@ -224,6 +222,8 @@ if ($errorFlag) {
 
     // HTML出力
     echo $objTemplate->strTemplate;
+
+    $objDB->close();
 
     exit;
 }
