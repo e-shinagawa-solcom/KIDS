@@ -51,6 +51,8 @@ function fncGetMaxReceiveSQL($displayColumns, $searchColumns, $from, $to, $searc
     $aryQuery[] = "  , rd.curProductPrice";
     $aryQuery[] = "  , rd.lngProductUnitCode";
     $aryQuery[] = "  , rd.strproductunitname";
+    $aryQuery[] = "  , rd.lngEstimateNo";
+    $aryQuery[] = "  , rd.estimateRevisionNo";
     $aryQuery[] = "  , to_char(rd.lngProductQuantity, '9,999,999,990') as lngProductQuantity";
     $aryQuery[] = "  , rd.curSubTotalPrice";
     $aryQuery[] = "  , rd.strNote as strDetailNote";
@@ -72,14 +74,14 @@ function fncGetMaxReceiveSQL($displayColumns, $searchColumns, $from, $to, $searc
     $aryQuery[] = "  inner join ( ";
     $aryQuery[] = "    select";
     $aryQuery[] = "      max(lngrevisionno) lngrevisionno";
-    $aryQuery[] = "      , strReceiveCode ";
+    $aryQuery[] = "      , lngReceiveNo ";
     $aryQuery[] = "    from";
     $aryQuery[] = "      m_Receive ";
     $aryQuery[] = "    group by";
-    $aryQuery[] = "      strReceiveCode";
+    $aryQuery[] = "      lngReceiveNo";
     $aryQuery[] = "  ) r1 ";
     $aryQuery[] = "    on r.lngrevisionno = r1.lngrevisionno ";
-    $aryQuery[] = "    and r.strReceiveCode = r1.strReceiveCode ";
+    $aryQuery[] = "    and r.lngReceiveNo = r1.lngReceiveNo ";
     $aryQuery[] = "  LEFT JOIN m_User input_u ";
     $aryQuery[] = "    ON r.lngInputUserCode = input_u.lngUserCode ";
     $aryQuery[] = "  LEFT JOIN m_Company cust_c ";
@@ -92,7 +94,9 @@ function fncGetMaxReceiveSQL($displayColumns, $searchColumns, $from, $to, $searc
     $aryQuery[] = "      SELECT rd1.lngReceiveNo";
     $aryQuery[] = "        , rd1.lngReceiveDetailNo";
     $aryQuery[] = "        , rd1.lngRevisionNo";
+    $aryQuery[] = "        , rd1.lngEstimateNo";
     $aryQuery[] = "        , p.strProductCode";
+    $aryQuery[] = "        , p.lngRevisionNo as estimateRevisionNo";
     $aryQuery[] = "        , mg.strGroupDisplayCode";
     $aryQuery[] = "        , mg.strGroupDisplayName";
     $aryQuery[] = "        , mu.struserdisplaycode";
@@ -290,12 +294,12 @@ function fncGetMaxReceiveSQL($displayColumns, $searchColumns, $from, $to, $searc
     if (!array_key_exists("admin", $optionColumns)) {
         $aryQuery[] = "  AND not exists ( ";
         $aryQuery[] = "    select";
-        $aryQuery[] = "      strReceiveCode ";
+        $aryQuery[] = "      lngReceiveNo ";
         $aryQuery[] = "    FROM";
         $aryQuery[] = "      m_Receive r ";
         $aryQuery[] = "    where";
-        $aryQuery[] = "      r1.lngRevisionNo < 0 ";
-        $aryQuery[] = "      and r1.strReceiveCode = r.strReceiveCode";
+        $aryQuery[] = "      r.lngRevisionNo < 0 ";
+        $aryQuery[] = "      and r1.lngReceiveNo = r.lngReceiveNo";
         $aryQuery[] = "  ) ";
     } else {
         $aryQuery[] = " AND r.bytInvalidFlag = FALSE ";
@@ -381,10 +385,11 @@ function fncGetReceivesByStrReceiveCodeSQL($strReceiveCode, $lngReceiveDetailNo,
     $aryQuery[] = "        t_ReceiveDetail rd1 ";
     $aryQuery[] = "        LEFT JOIN (";
     $aryQuery[] = "            select p1.*  from m_product p1 ";
-    $aryQuery[] = "        	inner join (select max(lngRevisionNo) lngRevisionNo, strproductcode from m_Product group by strProductCode) p2";
-    $aryQuery[] = "            on p1.lngRevisionNo = p2.lngRevisionNo and p1.strproductcode = p2.strproductcode ";
+    $aryQuery[] = "        	inner join (select max(lngRevisionNo) lngRevisionNo, strproductcode, strrevisecode from m_Product group by strProductCode, strrevisecode) p2";
+    $aryQuery[] = "            on p1.lngRevisionNo = p2.lngRevisionNo and p1.strproductcode = p2.strproductcode and p1.strrevisecode = p2.strrevisecode";
     $aryQuery[] = "          ) p ";
     $aryQuery[] = "          ON rd1.strProductCode = p.strProductCode ";
+    $aryQuery[] = "          AND rd1.strrevisecode = p.strrevisecode ";
     $aryQuery[] = "        left join m_group mg ";
     $aryQuery[] = "          on p.lnginchargegroupcode = mg.lnggroupcode ";
     $aryQuery[] = "        left join m_user mu ";

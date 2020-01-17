@@ -113,20 +113,20 @@ FROM
 			SELECT r1.lngreceiveno, r1.strreceivecode, r1.lngrevisionno
 			FROM m_Receive r1
 			WHERE
-			r1.strreceivecode
+			r1.lngreceiveno
 				NOT IN 
 				(
-					SELECT r2.strreceivecode  FROM m_Receive r2
+					SELECT r2.lngreceiveno  FROM m_Receive r2
 					where r2.lngrevisionno < 0
-					group by r2.strreceivecode
+					group by r2.lngreceiveno
 				)
 			AND r1.lngrevisionno = (
 						SELECT MAX( rr1.lngRevisionNo ) FROM m_Receive rr1 
-							WHERE rr1.strReceiveCode = r1.strReceiveCode 
+							WHERE rr1.lngreceiveno = r1.lngreceiveno 
 							AND rr1.bytInvalidFlag = false
 							AND rr1.strReviseCode = (
 										SELECT MAX( rr2.strReviseCode ) FROM m_Receive rr2 
-											WHERE rr2.strReceiveCode = rr1.strReceiveCode 
+											WHERE rr2.lngreceiveno = rr1.lngreceiveno 
 											AND rr2.bytInvalidFlag = false
 										)
 						)

@@ -1586,6 +1586,9 @@ function fncIsSession( $strSessionID, $objAuth, $objDB )
 	// セッション確認
 	if ( !$objAuth->isLogin( $strSessionID, $objDB ) )
 	{
+        $objDB->transactionBegin();
+	    unlockExclusiveBySessionID($strSessionID, $objDB);
+        $objDB->transactionCommit();
 		fncOutputError ( 9052, DEF_WARNING, "タイムアウトになりました。再ログインして下さい。", TRUE, "/login/login.php", $objDB );
 	}
 	return $objAuth;
@@ -2458,5 +2461,23 @@ function convert_jpdt($str,$fmt='年n月j日',$kanji=true) {
 	}
 
 	return $name.$year.date($fmt,strtotime($str));
+}
+
+// 排他制御テーブルの解除
+function unlockExclusiveBySessionID($sessionID, $objDB){
+    $strQuery = "LOCK TABLE t_exclusivecontrol IN EXCLUSIVE MODE";
+    list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
+
+    $strQuery = "DELETE FROM t_exclusivecontrol WHERE strsessionid = '" . $sessionID . "'";
+    list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
+/*
+    if ( !$lngResultID )
+    {
+        return false;
+    }
+*/
+    $objDB->freeResult($lngResultID);
+    return true;
+
 }
 ?>

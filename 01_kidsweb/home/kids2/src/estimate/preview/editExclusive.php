@@ -6,7 +6,7 @@ require ( 'conf.inc' );										// 設定読み込み
 require ( LIB_DEBUGFILE );									// Debugモジュール
 
 require ( LIB_FILE );										// ライブラリ読み込み
-
+require ( LIB_EXCLUSIVEFILE );
 require_once ( SRC_ROOT . "/estimate/cmn/estimateDB.php");
 
 $objDB			= new estimateDB();
@@ -59,15 +59,13 @@ $mode = $aryData['processMode'];
 
 $functionCode = DEF_FUNCTION_E3;
 
+//$ret['result'] = true;
+
 switch($mode) {
     case 'cancel':
-        $strQuery = "DELETE";
-        $strQuery .= " FROM t_exclusivecontrol";
-        $strQuery .= " WHERE lngfunctioncode = ". $functionCode;
-        $strQuery .= " AND strexclusivekey1 = '". $productCode. "'";
-        $strQuery .= " AND strexclusivekey2 = '". $reviseCode. "'";
-    
-        $result = pg_query($objDB->ConnectID, $strQuery);
+        $objDB->transactionBegin();
+        $result = unlockExclusive($objAuth, $objDB);
+        $objDB->transactionCommit();
 
         if (!$result) {
             // エラー処理
@@ -75,94 +73,39 @@ switch($mode) {
             $ret['message'] = "編集画面のロック解除が正常に行われませんでした";
         } else {
             // 正常時
+            $objDB->transactionCommit();
             $ret['result'] = true;
             $ret['action'] = "/estimate/preview/index.php?strSessionID=". $sessionID. "&estimateNo=". $estimateNo;
         }
         break;
+        
     case 'close':
-        $strQuery = "DELETE";
-        $strQuery .= " FROM t_exclusivecontrol";
-        $strQuery .= " WHERE lngfunctioncode = ". $functionCode;
-        $strQuery .= " AND strexclusivekey1 = '". $productCode. "'";
-        $strQuery .= " AND strexclusivekey2 = '". $reviseCode. "'";
-
-        $result = pg_query($objDB->ConnectID, $strQuery);
-        
+        $objDB->transactionBegin();
+        $result = unlockExclusive($objAuth, $objDB);
+        $objDB->transactionCommit();
         break;
-    case 'edit':
-        $strQuery = "SELECT";
-        $strQuery .= " max(lngrevisionno) AS maxrevisionno,";
-        $strQuery .= " min(lngrevisionno) AS minrevisionno";
-        $strQuery .= " FROM m_estimate";
-        $strQuery .= " WHERE lngestimateno = ". $estimateNo;
-
-        $resultID = pg_query($objDB->ConnectID, $strQuery);
-
-        if (!pg_num_rows($resultID)) {
-            // 最大値と最小値を取得できなかった場合
-            $ret['result'] = false;
-            $ret['message'] = "見積原価情報を取得できませんでした";        
-        } else {
-            $result = pg_fetch_object($resultID, 0);
-
-            $max = $result->maxrevisionno;
-            $min = $result->minrevisionno;
-
-            if ($min < 0) {
-                $ret['result'] = false;
-                $ret['message'] = "他のユーザによって削除された見積原価明細です。";
-            } else if ($max !== $revisionNo) {
-                $ret['result'] = false;
-                $ret['message'] = "他のユーザによって編集された見積原価明細です。";
-            } else {
-                $check = $objDB->checkExclusiveStatus($functionCode, $productCode, $reviseCode);
-                if ($check === false) {
-                    $strQuery = "INSERT";
-                    $strQuery .= " INTO t_exclusivecontrol";
-                    $strQuery .= " (";
-                    $strQuery .= "lngfunctioncode,";
-                    $strQuery .= " strexclusivekey1,";
-                    $strQuery .= " strexclusivekey2,";
-                    $strQuery .= " strexclusivekey3,";
-                    $strQuery .= " lngusercode,";
-                    $strQuery .= " stripaddress";
-                    $strQuery .= ") VALUES (";
-                    $strQuery .= $functionCode. ",";
-                    $strQuery .= " '".$productCode. "',";
-                    $strQuery .= " '".$reviseCode. "',";
-                    $strQuery .= " '0',";
-                    $strQuery .= " ".$lngUserCode .",";
-                    $strQuery .= " '".$ipAddress. "'";
-                    $strQuery .= ")";
-            
-                    $resultID = pg_query($objDB->ConnectID, $strQuery);
-                    if (!$resultID) {
-                        // エラー処理
-                        $ret['result'] = false;
-                        $ret['message'] = "編集画面のロックが正常に行われませんでした";
-                    } else {
-                        $ret['result'] = true;
-                    }
-                } else {
-                    $getAddress = $check->stripaddress;
-                    $getUserCode = $check->lngusercode;
-                    if ($ipAddress === $getAddress && $lngUserCode === $getUserCode) {
-                        $ret['result'] = true;        
-                    } else {
-                        // 表示名取得
-                        $userDisplayName = $check->struserdisplayname;
         
-                        $ret['result'] = false;
-                        $ret['message'] = "ユーザ名：". $userDisplayName."が編集中です";
-                    }  
-                }
+    case 'edit':
+        $ret['result'] = true;
+        $objDB->transactionBegin();
+        if( !isEstimateModified($estimateNo, $revisionNo, $objDB) )
+        {
+            $ret['message'] = "他のユーザによって更新または削除されています。";
+            $ret['result'] = 0;
+        }
+        else{
+            if( !lockEstimateEdit($estimateNo, $functionCode, $objDB, $objAuth)){
+                $ret['result'] = 0;
+                $ret['message'] = "見積原価データは他ユーザーが編集中です。";
             }
         }
-        if ($ret['result'] === true) {
+        if ($ret['result'] == true) {
             // 正常時
+            $objDB->transactionCommit();
             $ret['action'] = "/estimate/preview/edit.php";   
         } else {
             // エラー発生時
+//            $objDB->transactionRollback();
             $ret['action'] = "/estimate/cmn/estimateError.php";
         }
 

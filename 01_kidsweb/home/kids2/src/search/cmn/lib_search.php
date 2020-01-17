@@ -389,10 +389,19 @@ function fncGetHistoryDataByPKSQL($type, $strCode, $lngRevisionNo, $lngDetailNo,
         $aryQuery[] = "        , od1.strNote as strDetailNote ";
         $aryQuery[] = "      from";
         $aryQuery[] = "        t_orderdetail od1 ";
-        $aryQuery[] = "        LEFT JOIN m_product mp ";
+        $aryQuery[] = "        LEFT JOIN (";
+        $aryQuery[] = "            SELECT m_product.* FROM m_product ";
+        $aryQuery[] = "            INNER JOIN (";
+        $aryQuery[] = "                SELECT ";
+        $aryQuery[] = "                    lngproductno,strrevisecode,MAX(lngrevisionno) as lngrevisionno ";
+        $aryQuery[] = "                FROM m_product GROUP BY lngproductno,strrevisecode";
+        $aryQuery[] = "            ) mp1 ON mp1.lngproductno = m_product.lngproductno";
+        $aryQuery[] = "            AND mp1.strrevisecode = m_product.strrevisecode";
+        $aryQuery[] = "            AND mp1.lngrevisionno = m_product.lngrevisionno";
+        $aryQuery[] = "        ) mp ";
         $aryQuery[] = "          on mp.strproductcode = od1.strproductcode ";
         $aryQuery[] = "          and mp.strrevisecode = od1.strrevisecode ";
-        $aryQuery[] = "          and mp.lngrevisionno = od1.lngrevisionno ";
+//        $aryQuery[] = "          and mp.lngrevisionno = od1.lngrevisionno ";
         $aryQuery[] = "        LEFT JOIN m_group mg ";
         $aryQuery[] = "          on mg.lnggroupcode = mp.lnginchargegroupcode ";
         $aryQuery[] = "        LEFT JOIN m_user mu ";
@@ -485,10 +494,10 @@ function fncGetHistoryDataByPKSQL($type, $strCode, $lngRevisionNo, $lngDetailNo,
         $aryQuery[] = "        t_ReceiveDetail rd1 ";
         $aryQuery[] = "        LEFT JOIN (";
         $aryQuery[] = "            select p1.*  from m_product p1 ";
-        $aryQuery[] = "        	inner join (select max(lngRevisionNo) lngRevisionNo, strproductcode from m_Product group by strProductCode) p2";
-        $aryQuery[] = "            on p1.lngRevisionNo = p2.lngRevisionNo and p1.strproductcode = p2.strproductcode ";
+        $aryQuery[] = "        	inner join (select max(lngRevisionNo) lngRevisionNo, strproductcode, strrevisecode from m_Product group by strProductCode,strrevisecode) p2";
+        $aryQuery[] = "            on p1.lngRevisionNo = p2.lngRevisionNo and p1.strproductcode = p2.strproductcode and p1.strrevisecode = p2.strrevisecode ";
         $aryQuery[] = "          ) p ";
-        $aryQuery[] = "          ON rd1.strProductCode = p.strProductCode ";
+        $aryQuery[] = "          ON rd1.strProductCode = p.strProductCode and rd1.strrevisecode = p.strrevisecode";
         $aryQuery[] = "        left join m_group mg ";
         $aryQuery[] = "          on p.lnginchargegroupcode = mg.lnggroupcode ";
         $aryQuery[] = "        left join m_user mu ";
@@ -1417,7 +1426,8 @@ function fncSetHeadBtnToTr($doc, $trBody, $bgcolor, $aryTableHeadBtnName, $displ
                         $imgDecide = $doc->createElement("img");
                         $imgDecide->setAttribute("src", "/img/type01/so/renew_off_bt.gif");
                         $imgDecide->setAttribute("id", $id);
-                        $imgDecide->setAttribute("revisionno", $record["lngrevisionno"]);
+                        $imgDecide->setAttribute("lngestimateno", $record["lngestimateno"]);
+                        $imgDecide->setAttribute("revisionno", $record["estimaterevisionno"]);
                         $imgDecide->setAttribute("class", "decide button");
                         // td > img
                         $td->appendChild($imgDecide);

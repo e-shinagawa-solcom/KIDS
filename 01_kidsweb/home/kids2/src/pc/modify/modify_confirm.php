@@ -143,7 +143,15 @@ for ($i = 0; $i < count($aryDetailData); $i++) {
     $aryQuery[] = "  ) mpo ";
     $aryQuery[] = "    on mpo.lngpurchaseorderno = pod.lngpurchaseorderno ";
     $aryQuery[] = "    and mpo.lngrevisionno = pod.lngrevisionno ";
-    $aryQuery[] = " LEFT JOIN m_product p on p.strproductcode = od.strproductcode and p.strrevisecode = od.strrevisecode and p.lngrevisionno = od.lngrevisionno";
+    $aryQuery[] = " LEFT JOIN (SELECT m_product.* FROM m_product ";
+    $aryQuery[] = "     INNER JOIN (";
+    $aryQuery[] = "         SELECT ";
+    $aryQuery[] = "             lngproductno,strrevisecode,MAX(lngrevisionno) as lngrevisionno ";
+    $aryQuery[] = "         FROM m_product GROUP BY lngproductno,strrevisecode";
+    $aryQuery[] = "     ) mp1 ON mp1.lngproductno = m_product.lngproductno
+    $aryQuery[] = "     AND mp1.strrevisecode = m_product.strrevisecode";
+    $aryQuery[] = "     AND mp1.lngrevisionno = m_product.lngrevisionno";
+    $aryQuery[] = " ) p on p.strproductcode = od.strproductcode and p.strrevisecode = od.strrevisecode";
     $aryQuery[] = " LEFT JOIN m_stocksubject ss on ss.lngstocksubjectcode = od.lngstocksubjectcode";
     $aryQuery[] = " LEFT JOIN m_stockitem si on si.lngstocksubjectcode = od.lngstocksubjectcode and si.lngstockitemcode = od.lngstockitemcode";
     $aryQuery[] = " LEFT JOIN m_monetaryunit mu on mu.lngmonetaryunitcode = o.lngmonetaryunitcode";

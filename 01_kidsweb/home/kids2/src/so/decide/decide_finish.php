@@ -14,6 +14,7 @@
 
 include 'conf.inc';
 require LIB_FILE;
+require LIB_EXCLUSIVEFILE;
 require SRC_ROOT . "so/cmn/lib_so.php";
 include 'JSON.php';
 
@@ -41,12 +42,12 @@ if (!fncCheckAuthority(DEF_FUNCTION_SO2, $objAuth)) {
 if (!fncCheckAuthority(DEF_FUNCTION_SO4, $objAuth)) {
     fncOutputError(9060, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
-
+/*
 // 排他制御チェック
 if (fncCheckExclusiveControl(DEF_FUNCTION_E3, $aryData["detailData"][0]["strProductCode_product"], $aryData["detailData"][0]["strReviseCode"], $objDB)) {
     fncOutputError(9213, DEF_ERROR, "", true, "../so/decide/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
 }
-
+*/
 $objDB->transactionBegin();
 
 // 確定処理
@@ -84,6 +85,8 @@ foreach ($aryData["detailData"] as $data) {
 
     $objDB->freeResult($lngResultID);
 }
+// 排他制御ロック解放
+$result = unlockExclusive($objAuth, $objDB);
 
 $objDB->transactionCommit();
 $objDB->close();

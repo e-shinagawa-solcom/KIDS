@@ -17,6 +17,8 @@ include_once 'conf.inc';
 
 // ライブラリ読み込み
 require LIB_FILE;
+require LIB_DEBUGFILE;
+require LIB_EXCLUSIVEFILE;
 require SRC_ROOT . "so/cmn/lib_so.php";
 // DB接続
 $objDB = new clsDB();
@@ -45,9 +47,41 @@ if (!fncCheckAuthority(DEF_FUNCTION_SO4, $objAuth)) {
 }
 //詳細画面の表示
 $lngReceiveNo = $aryData["lngReceiveNo"];
-$lngRevisionNo = $aryData["lngRevisionNo"];
+$lngRevisionNo = $aryData["revisionNo"];
+$lngestimateno = $aryData["estimateNo"];
+
+fncDebug("kids2.log", "lngReceiveNo=" . $lngReceiveNo, __FILE__, __LINE__, "a");
+fncDebug("kids2.log", "lngestimateno=" . $lngestimateno, __FILE__, __LINE__, "a");
+fncDebug("kids2.log", "lngRevisionNo=" . $lngRevisionNo, __FILE__, __LINE__, "a");
+
+if( !is_null($aryData["mode"] ) )
+{
+    // 排他ロックの解放
+    $objDB->transactionBegin();
+    $result = unlockExclusive($objAuth, $objDB);
+    $objDB->transactionCommit();
+    return true; 
+}
+
+//$lngestimateno = fucGetEstimateNo(explode(",", $lngReceiveNo)[0], $objDB);
+
+
+// 排他ロックの取得
+$objDB->transactionBegin();
+if( !isEstimateModified($lngestimateno, $lngRevisionNo, $objDB) )
+{
+    fncOutputError(501, DEF_ERROR,  "他のユーザによって更新または削除されています。", true, "../so/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
+}
+
+if(!lockReceiveFix($lngestimateno, DEF_FUNCTION_SO4, $objDB, $objAuth)){
+    fncOutputError(501, DEF_ERROR, "該当データがロックされています。", true, "../so/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
+}
+$objDB->transactionCommit();
+
+
 // 指定受注番号の受注データ取得用SQL文の作成
-$strQuery = fncGetReceiveHeadNoToInfoSQL($lngReceiveNo, $lngRevisionNo, DEF_RECEIVE_APPLICATE);
+$strQuery = fncGetReceiveHeadNoToInfoSQL($lngReceiveNo, "", DEF_RECEIVE_APPLICATE);
+
 // 詳細データの取得
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 if ($lngResultNum) {
@@ -65,10 +99,10 @@ $aryNewResult["strproductcode"] = $aryResult[0]["strproductcode"]. "_".$aryResul
 $aryNewResult["strproductname"] = $aryResult[0]["strproductname"];
 $aryNewResult["strreceivecode"] = $aryResult[0]["strreceivecode"];
 $aryNewResult["strnote"] = $aryResult[0]["strnote"];
-
+$aryNewResult["strSessionID"] = $aryData["strSessionID"];
 ////////// 明細行の取得 ////////////////////
 // 指定受注番号の受注明細データ取得用SQL文の作成
-$strQuery = fncGetReceiveDetailNoToInfoSQL($lngReceiveNo, $lngRevisionNo);
+$strQuery = fncGetReceiveDetailNoToInfoSQL($lngReceiveNo, "");
 // echo $strQuery;
 // 明細データの取得
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);

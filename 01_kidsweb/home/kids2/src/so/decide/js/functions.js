@@ -1,6 +1,9 @@
 (function () {
     var lockId = "lockId";
-
+    
+    // ウィンドウクローズ処理
+    window.onbeforeunload = unLock;
+    
     // チェックボックスの切り替え処理のバインド
     $('input[type="checkbox"][name="allSel"]').on({
         'click': function () {
@@ -40,7 +43,7 @@
             url: '/so/decide/decide.php',
             type: 'POST',
             data: {
-                'strSessionID': $.cookie('strSessionID'),
+                'strSessionID': $('input[type="hidden"][name="strSessionID"]').val(),
                 'strId': strId
             }
         })
@@ -228,7 +231,7 @@
         lockScreen(lockId);
 
         url = '/so/decide/search_init.php';
-        sessionID = 'strSessionID=' + $.cookie('strSessionID');
+        sessionID = 'strSessionID=' + $('input[type="hidden"][name="strSessionID"]').val();
         param = 'strproductcode=' + $('input[name="strProductCode"]').val();
         // 別ウィンドウで表示
         window.open(url + '?' + sessionID + '&' + param, '_blank', 'width=730, height=570, resizable=yes, scrollbars=yes, menubar=no');
@@ -415,7 +418,7 @@
             // dataType: 'json',
             type: 'POST',
             data: {
-                'strSessionID': $.cookie('strSessionID'),
+                'strSessionID': $('input[type="hidden"][name="strSessionID"]').val(),
                 'detailData': params
             }
         })
@@ -438,7 +441,7 @@
 
 function showProductInfo(objID) {
     url = '/p/detail/index.php';
-    sessionID = 'strSessionID=' + $.cookie('strSessionID');
+    sessionID = 'strSessionID=' + $('input[type="hidden"][name="strSessionID"]').val();
     lngProductNo = 'lngProductNo=' + objID.getAttribute('lngproductno');
     lngRevisionNo = 'lngRevisionNo=' + objID.getAttribute('lngrevisionno');
     // 別ウィンドウで表示
@@ -568,4 +571,25 @@ function unlockScreen(id) {
      * 画面を覆っているタグを削除する
      */
     $("#" + id).remove();
+}
+
+function unLock()
+{
+        $.ajax({
+            url: '/so/decide/index.php',
+            type: 'post',
+            // dataType: 'json',
+            type: 'POST',
+//            async: false,
+            data: {
+                'strSessionID': $('input[type="hidden"][name="strSessionID"]').val(),
+                'mode': 'cancel',
+            }
+        })
+            .done(function (response) {
+            })
+            .fail(function (response) {
+            });
+            
+        return false;
 }

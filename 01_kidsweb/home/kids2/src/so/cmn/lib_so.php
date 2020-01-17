@@ -78,17 +78,16 @@ function fncGetReceiveHeadNoToInfoSQL($lngReceiveNo, $lngRevisionNo, $lngreceive
         $aryQuery[] = "  inner join ( ";
         $aryQuery[] = "    select";
         $aryQuery[] = "      max(lngRevisionNo) lngRevisionNo";
-        $aryQuery[] = "      , strReceiveCode ";
+        $aryQuery[] = "      , lngReceiveNo ";
         $aryQuery[] = "    from";
         $aryQuery[] = "      m_Receive";
         $aryQuery[] = "    group by";
-        $aryQuery[] = "      strReceiveCode";
+        $aryQuery[] = "      lngReceiveNo";
         $aryQuery[] = "  ) r1";
         $aryQuery[] = "    on r.lngrevisionno = r1.lngRevisionNo ";
-        $aryQuery[] = "    and r.strreceivecode = r1.strReceiveCode ";
+        $aryQuery[] = "    and r.lngReceiveNo = r1.lngReceiveNo ";
     }
-    $aryQuery[] = "  LEFT JOIN t_ReceiveDetail rd ";
-    $aryQuery[] = "    USING (lngReceiveNo) ";
+    $aryQuery[] = "  LEFT JOIN t_ReceiveDetail rd on rd.lngreceiveno = r.lngreceiveno and rd.lngrevisionno = r.lngrevisionno ";
     $aryQuery[] = "  LEFT JOIN ( ";
     $aryQuery[] = "    select";
     $aryQuery[] = "      p1.strproductcode";

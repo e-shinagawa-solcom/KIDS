@@ -1,5 +1,6 @@
 (function () {
 
+
     // 登録ボタンのイベント
     $('img.regist').on('click', function () {
         var params = new Array();
@@ -38,7 +39,7 @@
             // dataType: 'json',
             type: 'POST',
             data: {
-                'strSessionID': $.cookie('strSessionID'),
+                'strSessionID': $('input[type="hidden"][name="strSessionID"]').val(),
                 'detailData': params
             }
         })
@@ -65,11 +66,11 @@
     });
 
     // ウィンドウを閉じる前のイベント
-    $(window).on("beforeunload", function(e) {
+    window.onbeforeunload = function(e) {
         // 親ウィンドウのロックを解除する
         if (window.opener.$('#lockId').length) {
             window.opener.$('#lockId').remove();
         }
-    });
+    };
 
 })();

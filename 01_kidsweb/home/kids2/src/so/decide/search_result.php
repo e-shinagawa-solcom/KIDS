@@ -93,7 +93,7 @@ $aryQuery[] = " ) r USING (lngReceiveNo, lngRevisionNo)";
 $aryQuery[] = "        LEFT JOIN (";
 $aryQuery[] = "            select p1.*  from m_product p1 ";
 $aryQuery[] = "        	inner join (select max(lngrevisionno) lngrevisionno, strproductcode, strrevisecode from m_Product group by strProductCode, strrevisecode) p2";
-$aryQuery[] = "            on p1.lngrevisionno = p2.lngrevisionno and p1.strproductcode = p2.strproductcode";
+$aryQuery[] = "            on p1.lngrevisionno = p2.lngrevisionno and p1.strproductcode = p2.strproductcode and p1.strrevisecode = p2.strrevisecode";
 $aryQuery[] = "          ) p ";
 $aryQuery[] = "          ON rd.strProductCode = p.strProductCode AND rd.strrevisecode = p.strrevisecode ";
 $aryQuery[] = " LEFT JOIN m_SalesClass ss on rd.lngSalesClassCode = ss.lngSalesClassCode";

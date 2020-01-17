@@ -116,10 +116,18 @@ function fncGetSearchPurchaseSQL($displayColumns, $searchColumns, $from, $to, $s
     $aryQuery[] = "        , od1.strNote as strDetailNote ";
     $aryQuery[] = "      from";
     $aryQuery[] = "        t_orderdetail od1 ";
-    $aryQuery[] = "        LEFT JOIN m_product mp ";
-    $aryQuery[] = "          on mp.strproductcode = od1.strproductcode ";
-    $aryQuery[] = "          and mp.strrevisecode = od1.strrevisecode ";
-    $aryQuery[] = "          and mp.lngrevisionno = od1.lngrevisionno ";
+    $aryQuery[] = "      LEFT JOIN (";
+    $aryQuery[] = "          SELECT m_product.* FROM m_product ";
+    $aryQuery[] = "          INNER JOIN (";
+    $aryQuery[] = "              SELECT ";
+    $aryQuery[] = "                 lngproductno,strrevisecode,MAX(lngrevisionno) as lngrevisionno ";
+    $aryQuery[] = "              FROM m_product GROUP BY lngproductno,strrevisecode";
+    $aryQuery[] = "          ) mp1 ON mp1.lngproductno = m_product.lngproductno";
+    $aryQuery[] = "              AND mp1.strrevisecode = m_product.strrevisecode";
+    $aryQuery[] = "              AND mp1.lngrevisionno = m_product.lngrevisionno";
+    $aryQuery[] = "      )mp ON  od1.strproductcode = mp.strproductcode ";
+    $aryQuery[] = "          AND mp.strrevisecode = od1.strrevisecode ";
+//    $aryQuery[] = "          and mp.lngrevisionno = od1.lngrevisionno ";
     $aryQuery[] = "        LEFT JOIN m_group mg ";
     $aryQuery[] = "          on mg.lnggroupcode = mp.lnginchargegroupcode ";
     $aryQuery[] = "        LEFT JOIN m_user mu ";
@@ -353,7 +361,7 @@ function fncGetSearchPurchaseSQL($displayColumns, $searchColumns, $from, $to, $s
         $aryQuery[] = "    from";
         $aryQuery[] = "      m_Order ";
         $aryQuery[] = "    where";
-        $aryQuery[] = "      strOrderCode = o.strOrderCode ";
+        $aryQuery[] = "      lngorderno = o.lngorderno ";
         $aryQuery[] = "      and lngrevisionno < 0";
         $aryQuery[] = "  ) ";
     } else {
@@ -828,7 +836,16 @@ function fncGetOrderToProductSQL($aryDetailViewColumn, $lngOrderNo, $lngRevision
     $aryFromQuery[] = " FROM t_OrderDetail od";
 
     // 追加表示用の参照マスタ対応
-    $aryFromQuery[] = "   LEFT JOIN m_Product p on p.strProductCode = od.strProductCode and p.strReviseCode = od.strReviseCode and p.lngrevisionno = od.lngrevisionno";
+    $aryFromQuery[] = " LEFT JOIN (";
+    $aryFromQuery[] = "     SELECT m_product.* FROM m_product ";
+    $aryFromQuery[] = "      INNER JOIN (";
+    $aryFromQuery[] = "          SELECT ";
+    $aryFromQuery[] = "              lngproductno,strrevisecode,MAX(lngrevisionno) as lngrevisionno ";
+    $aryFromQuery[] = "          FROM m_product GROUP BY lngproductno,strrevisecode";
+    $aryFromQuery[] = "      ) mp1 ON mp1.lngproductno = m_product.lngproductno";
+    $aryFromQuery[] = "      AND mp1.strrevisecode = m_product.strrevisecode";
+    $aryFromQuery[] = "      AND mp1.lngrevisionno = m_product.lngrevisionno";
+    $aryFromQuery[] = " ) p on p.strProductCode = od.strProductCode and p.strReviseCode = od.strReviseCode";
     $aryFromQuery[] = " left join m_group mg on mg.lnggroupcode = p.lnginchargegroupcode";
     $aryFromQuery[] = " left join m_user  mu on mu.lngusercode = p.lnginchargeusercode";
 

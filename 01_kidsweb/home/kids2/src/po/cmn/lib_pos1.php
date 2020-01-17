@@ -88,7 +88,16 @@ function fncGetPurchaseHeadNoToInfo ( $lngOrderNo, $lngRevisionNo, $objDB )
 	$aryQuery[] = ", p.strProductName as strProductName";
 
 	$aryQuery[] = " FROM m_Order o INNER JOIN t_OrderDetail ot on ot.lngOrderNo = o.lngorderno and ot.lngrevisionno = o.lngrevisionno";
-	$aryQuery[] = " LEFT JOIN m_Product p ON ot.strproductCode = p.strproductCode and ot.strrevisecode = p.strrevisecode and ot.lngrevisionno = p.lngrevisionno";
+    $aryQuery[] = " LEFT JOIN (";
+    $aryQuery[] = "     SELECT m_product.* FROM m_product ";
+    $aryQuery[] = "      INNER JOIN (";
+    $aryQuery[] = "          SELECT ";
+    $aryQuery[] = "              lngproductno,strrevisecode,MAX(lngrevisionno) as lngrevisionno ";
+    $aryQuery[] = "          FROM m_product GROUP BY lngproductno,strrevisecode";
+    $aryQuery[] = "      ) mp1 ON mp1.lngproductno = m_product.lngproductno";
+    $aryQuery[] = "      AND mp1.strrevisecode = m_product.strrevisecode";
+    $aryQuery[] = "      AND mp1.lngrevisionno = m_product.lngrevisionno";
+	$aryQuery[] = " )p ON ot.strproductCode = p.strproductCode and ot.strrevisecode = p.strrevisecode";
 	$aryQuery[] = " LEFT JOIN m_User input_u ON o.lngInputUserCode = input_u.lngUserCode";
 	$aryQuery[] = " LEFT JOIN m_Company cust_c ON o.lngCustomerCompanyCode = cust_c.lngCompanyCode";
 	$aryQuery[] = " LEFT JOIN m_Company delv_c ON o.lngDeliveryPlaceCode = delv_c.lngCompanyCode";
@@ -199,7 +208,17 @@ function fncGetPurchaseDetailNoToInfo ( $lngOrderNo, $lngRevisionNo, $objDB )
 	$aryQuery[] = ", od.lngOrderDetailNo as lngOrderDetailNo";
 
 	// 明細行を表示する場合
-	$aryQuery[] = " FROM t_OrderDetail od INNER JOIN m_Product p ON od.strproductCode = p.strproductCode and od.strrevisecode = p.strrevisecode and od.lngrevisionno = p.lngrevisionno";
+	$aryQuery[] = " FROM t_OrderDetail od ";
+	$aryQuery[] = " INNER JOIN ( ";
+    $aryQuery[] = "     SELECT m_product.* FROM m_product ";
+    $aryQuery[] = "      INNER JOIN (";
+    $aryQuery[] = "          SELECT ";
+    $aryQuery[] = "              lngproductno,strrevisecode,MAX(lngrevisionno) as lngrevisionno ";
+    $aryQuery[] = "          FROM m_product GROUP BY lngproductno,strrevisecode";
+    $aryQuery[] = "      ) mp1 ON mp1.lngproductno = m_product.lngproductno";
+    $aryQuery[] = "      AND mp1.strrevisecode = m_product.strrevisecode";
+    $aryQuery[] = "      AND mp1.lngrevisionno = m_product.lngrevisionno";
+	$aryQuery[] = " ) p ON od.strproductCode = p.strproductCode and od.strrevisecode = p.strrevisecode";
 	$aryQuery[] = " LEFT JOIN m_StockSubject ss USING (lngStockSubjectCode)";
 	//	$aryQuery[] = " LEFT JOIN m_StockItem si USING (lngStockItemCode)";
 	$aryQuery[] = " LEFT JOIN m_DeliveryMethod dm USING (lngDeliveryMethodCode)";
@@ -1392,7 +1411,16 @@ function fncGetOrder($lngOrderNo, $lngRevisionNo, $objDB){
 	$aryQuery[] = "LEFT JOIN t_orderdetail od ON mo.lngorderno = od.lngorderno AND mo.lngrevisionno = od.lngrevisionno";
 	$aryQuery[] = "LEFT JOIN t_purchaseorderdetail tp ON od.lngorderno = tp.lngorderno AND od.lngrevisionno = tp.lngorderrevisionno";
 	$aryQuery[] = "LEFT JOIN m_purchaseorder po ON tp.lngpurchaseorderno = po.lngpurchaseorderno AND tp.lngrevisionno = po.lngrevisionno";
-	$aryQuery[] = "LEFT JOIN m_product mp ON od.strproductcode = mp.strproductcode and od.lngrevisionno = mp.lngrevisionno and od.strrevisecode = mp.strrevisecode";
+	$aryQuery[] = "LEFT JOIN ( ";
+    $aryQuery[] = "     SELECT m_product.* FROM m_product ";
+    $aryQuery[] = "      INNER JOIN (";
+    $aryQuery[] = "          SELECT ";
+    $aryQuery[] = "              lngproductno,strrevisecode,MAX(lngrevisionno) as lngrevisionno ";
+    $aryQuery[] = "          FROM m_product GROUP BY lngproductno,strrevisecode";
+    $aryQuery[] = "      ) mp1 ON mp1.lngproductno = m_product.lngproductno";
+    $aryQuery[] = "      AND mp1.strrevisecode = m_product.strrevisecode";
+    $aryQuery[] = "      AND mp1.lngrevisionno = m_product.lngrevisionno";
+	$aryQuery[] = ") mp ON od.strproductcode = mp.strproductcode and od.lngrevisionno = mp.lngrevisionno";
 	$aryQuery[] = "LEFT JOIN m_group mg ON mo.lnggroupcode = mg.lnggroupcode";
 	$aryQuery[] = "LEFT JOIN m_user mu ON mo.lngusercode = mu.lngusercode";
 	$aryQuery[] = "LEFT JOIN m_stockitem ms ON od.lngstockitemcode = ms.lngstockitemcode and od.lngstocksubjectcode = ms.lngstocksubjectcode";

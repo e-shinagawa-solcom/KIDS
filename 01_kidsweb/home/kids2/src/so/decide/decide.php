@@ -82,9 +82,9 @@ $aryQuery[] = " LEFT JOIN m_Company cust_c ON r1.lngCustomerCompanyCode = cust_c
 $aryQuery[] = " ) r USING (lngReceiveNo, lngRevisionNo)";
 $aryQuery[] = " LEFT JOIN (";
 $aryQuery[] = "   select p1.*  from m_product p1 ";
-$aryQuery[] = "     inner join (select max(lngRevisionNo) lngRevisionNo, strproductcode from m_Product group by strProductCode) p2";
-$aryQuery[] = "     on p1.lngRevisionNo = p2.lngRevisionNo and p1.strproductcode = p2.strproductcode";
-$aryQuery[] = " ) p USING (strProductCode)";
+$aryQuery[] = "     inner join (select max(lngRevisionNo) lngRevisionNo, strproductcode, strrevisecode from m_Product group by strProductCode, strrevisecode) p2";
+$aryQuery[] = "     on p1.lngRevisionNo = p2.lngRevisionNo and p1.strproductcode = p2.strproductcode and p1.strrevisecode = p2.strrevisecode";
+$aryQuery[] = " ) p on p.strproductcode = rd.strproductcode AND p.strrevisecode = rd.strrevisecode";
 $aryQuery[] = "  LEFT JOIN t_estimatedetail me ";
 $aryQuery[] = "    on rd.lngestimateno = me.lngestimateno ";
 $aryQuery[] = "    and rd.lngestimatedetailno = me.lngestimatedetailno ";

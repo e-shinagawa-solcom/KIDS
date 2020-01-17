@@ -232,9 +232,10 @@ $(function(){
         var sessionID = $('input[name="strSessionID"]').val();
 
         var baseUrl = "/so/decide/index.php"
-        var numberKey = 'lngReceiveNo';
-
-        var actionUrl = baseUrl + "?" + numberKey + "=" + target + "&strSessionID=" + sessionID;
+        var estimateNo = 'estimateNo=';
+        var revisionNo = '&revisionNo=';
+        var numberKey = '&lngReceiveNo=';
+        var actionUrl = baseUrl + "?" + estimateNo + $('input[name="estimateNo"]').val() + revisionNo + $('input[name="revisionNo"]').val() + numberKey +  target + "&strSessionID=" + sessionID;
         var windowName = 'window_confirm';
         var win = window.open(actionUrl, windowName, 'scrollbars=yes, width=1000, height=700, resizable=0 location=0');
 
@@ -311,9 +312,11 @@ $(function(){
         var sessionID = $('input[name="strSessionID"]').val();
 
         var baseUrl = "/po/regist/index.php"
-        var numberKey = 'lngOrderNo';
+        var estimateNo = 'estimateNo=';
+        var revisionNo = '&revisionNo=';
+        var numberKey = '&lngOrderNo=';
 
-        var actionUrl = baseUrl + "?" + numberKey + "=" + target + "&strSessionID=" + sessionID;
+        var actionUrl = baseUrl + "?" + estimateNo + $('input[name="estimateNo"]').val() + revisionNo + $('input[name="revisionNo"]').val() + numberKey + target + "&strSessionID=" + sessionID;
         var windowName = 'window_confirm';
         var win = window.open(actionUrl, windowName, 'scrollbars=yes, width=1000, height=700, resizable=0 location=0');
         

@@ -159,7 +159,16 @@ function fncGetSalesDetailNoToInfoSQL ( $lngSalesNo )
 	$aryQuery[] = ", sd.strNote as strDetailNote";
 
 	// 明細行を表示する場合
-	$aryQuery[] = " FROM t_SalesDetail sd LEFT JOIN m_Product p USING (strProductCode)";
+	$aryQuery[] = " FROM t_SalesDetail sd LEFT JOIN (";
+    $aryQuery[] = "     SELECT m_product.* FROM m_product ";
+    $aryQuery[] = "      INNER JOIN (";
+    $aryQuery[] = "          SELECT ";
+    $aryQuery[] = "              lngproductno,strrevisecode,MAX(lngrevisionno) as lngrevisionno ";
+    $aryQuery[] = "          FROM m_product GROUP BY lngproductno,strrevisecode";
+    $aryQuery[] = "      ) mp1 ON mp1.lngproductno = m_product.lngproductno
+    $aryQuery[] = "      AND mp1.strrevisecode = m_product.strrevisecode";
+    $aryQuery[] = "      AND mp1.lngrevisionno = m_product.lngrevisionno";
+	$aryQuery[] = " ) p on p.strProductCode = sd.strProductCode AND p.strrevisecode = sd.strrevisecode";
 	$aryQuery[] = " LEFT JOIN m_SalesClass ss USING (lngSalesClassCode)";
 	$aryQuery[] = " LEFT JOIN m_ProductUnit pu ON sd.lngProductUnitCode = pu.lngProductUnitCode";
 	$aryQuery[] = " LEFT JOIN m_TaxClass tc USING (lngTaxClassCode)";

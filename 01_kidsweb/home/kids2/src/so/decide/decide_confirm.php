@@ -14,6 +14,7 @@
 
 include 'conf.inc';
 require LIB_FILE;
+require LIB_DEBUGFILE;
 require SRC_ROOT . "so/cmn/lib_so.php";
 include 'JSON.php';
 
@@ -44,12 +45,14 @@ if (!fncCheckAuthority(DEF_FUNCTION_SO4, $objAuth)) {
 }
 
 // 排他制御チェック
+/*
 if (fncCheckExclusiveControl(DEF_FUNCTION_E3, $aryData["detailData"][0]["strProductCode_product"], $aryData["detailData"][0]["strReviseCode"], $objDB)) {
     fncOutputError(9213, DEF_ERROR, "", true, "../so/decide/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
 }
-
+*/
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate("/so/decide/so_confirm_decide.html");
+$objTemplate->replace($aryData);
 // 検索結果テーブル生成の為DOMDocumentを使用
 $doc = new DOMDocument();
 // パースエラー抑制
@@ -165,3 +168,4 @@ $objDB->close();
 
 // HTML出力
 echo $doc->saveHTML();
+fncDebug("kids2.log", "end", __FILE__, __LINE__, "a");
