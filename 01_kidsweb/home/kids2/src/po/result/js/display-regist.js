@@ -6,10 +6,12 @@
         url='/po/regist/index.php';
         // lngorderno = 'lngOrderNo=' + $(this).attr('lngorderno') + ',4840';
         lngorderno = 'lngOrderNo=' + $(this).attr('id');
-        sessionID = 'strSessionID=' + getUrlVars()["strSessionID"];
+        var estimateNo = '&estimateNo=' + $(this).attr('lngestimateno');
+        var revisionNo = '&revisionNo=' + $(this).attr('revisionno');
+        sessionID = '&strSessionID=' + getUrlVars()["strSessionID"];
 
         // 別ウィンドウで表示
-        open(url + '?' + lngorderno + '&' + sessionID, 'display-regist', 'width=996, height=689, resizable=yes, scrollbars=yes, menubar=no');
+        open(url + '?' + lngorderno + estimateNo + revisionNo + sessionID, 'display-regist', 'width=996, height=689, resizable=yes, scrollbars=yes, menubar=no');
     });
 })();
 

@@ -2,6 +2,9 @@
 // regist.js
 //
 jQuery(function ($) {
+    // ウィンドウクローズ処理
+    window.onbeforeunload = unLock;
+
     $("#EditTableBody").sortable();
     $("#EditTableBody").on('sortstop', function () {
         changeRowNum();
@@ -387,9 +390,9 @@ jQuery(function ($) {
         }
         $.ajax({
             type: 'POST',
-            url: '/po/confirm/index.php?strSessionID=' + $('input[name="strSessionID"]').val(),
+            url: '/po/confirm/index.php?strSessionID=' + $('input[type="hidden"][name="strSessionID"]').val(),
             data: {
-                strSessionID: $('input[name="strSessionID"]').val(),
+                strSessionID: $('input[type="hidden"][name="strSessionID"]').val(),
                 lngOrderNo: $('input[name="lngOrderNo"]').val(),
                 strMode: $('input[name="strMode"]').val(),
                 lngRevisionNo: $('input[name="lngRevisionNo"]').val(),
@@ -418,4 +421,24 @@ jQuery(function ($) {
         $('input[name="strNote"]').val(''); //備考
         
     });
+    function unLock()
+    {
+            $.ajax({
+                url: '/po/regist/index.php',
+            type: 'post',
+            // dataType: 'json',
+            type: 'POST',
+//            async: false,
+            data: {
+                'strSessionID': $('input[type="hidden"][name="strSessionID"]').val(),
+                'strMode': 'cancel',
+            }
+        })
+            .done(function (response) {
+            })
+            .fail(function (response) {
+            });
+            
+        return false;
+    }
 });

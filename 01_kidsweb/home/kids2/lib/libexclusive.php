@@ -126,7 +126,7 @@ function isInvoiceModified($lnginvoiceno, $lngrevisionno, $objDB){
 }
 
 // 発注確定データロック取得
-function lockOrderFix($lngestimateno, $functioncode, $objDB, $objAuth, $lngcompanycode = 0, $lngmonetaryunitcode = 0){
+function lockOrderFix($lngestimateno, $lngOrderCode, $functioncode, $objDB, $objAuth){
     $strQuery  = "SELECT ";
     $strQuery .= "    tod.lngorderno, ";
     $strQuery .= "    tod.lngrevisionno ";
@@ -138,6 +138,17 @@ function lockOrderFix($lngestimateno, $functioncode, $objDB, $objAuth, $lngcompa
     $strQuery .= "INNER JOIN m_order mo ";
     $strQuery .= "    ON mo.lngorderno = tod.lngorderno ";
     $strQuery .= "    AND mo.lngrevisionno = tod.lngrevisionno ";
+    $strQuery .= "INNER JOIN (";
+    $strQuery .= "    SELECT ";
+    $strQuery .= "    lngcustomercompanycode,";
+    $strQuery .= "    lngmonetaryunitcode";
+    $strQuery .= "    FROM m_order ";
+    $strQuery .= "    WHERE lngorderno = " . $lngOrderCode;
+    $strQuery .= "    AND lngrevisionno =  ( ";
+    $strQuery .= "        SELECT MAX(lngrevisionno) FROM m_order WHERE lngorderno = " . $lngOrderCode;
+    $strQuery .= "    )";
+    $strQuery .= ") mo2 on mo2.lngcustomercompanycode = mo.lngcustomercompanycode";
+    $strQuery .= "    AND mo2.lngmonetaryunitcode = mo.lngmonetaryunitcode ";
     $strQuery .= "WHERE mo.lngorderstatuscode = 1 AND mhe.lngestimateno = " . $lngestimateno;
     if($lngcompanycode == 0){
         $strQuery .= "    AND mo.lngcustomercompanycode <> 0 ";

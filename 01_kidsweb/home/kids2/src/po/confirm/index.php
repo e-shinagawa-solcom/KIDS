@@ -26,6 +26,7 @@
 // 読み込み
 include 'conf.inc';
 require LIB_FILE;
+require_once LIB_EXCLUSIVEFILE;
 require SRC_ROOT . "po/cmn/lib_po.php";
 //2007.07.23 matsuki update start
 require SRC_ROOT . "po/cmn/lib_pop.php";
@@ -39,7 +40,7 @@ $objAuth = new clsAuth();
 
 $objDB->open("", "", "", "");
 
-$aryData["strSessionID"] = $_GET["strSessionID"];
+$aryData["strSessionID"] = $_POST["strSessionID"];
 //    aryData["lngLanguageCode"] = $_COOKIE["lngLanguageCode"];
 
 // 文字列チェック
@@ -53,11 +54,23 @@ $UserDisplayName = $objAuth->UserDisplayName;
 $UserDisplayCode = $objAuth->UserID;
 
 // 排他制御チェック
+/*
 if (fncCheckExclusiveControl(DEF_FUNCTION_E3, $_POST["strProductCode"], $_POST["strReviseCode"], $objDB)) {
 //    echo "test";
     fncOutputError(9213, DEF_ERROR, "", true, "../po/regist/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
 }
+*/
+if ($_POST["strMode"] == "cancel") {
+    // 排他制御ロック解放
+    $objDB->transactionBegin();
+    $result = unlockExclusive($objAuth, $objDB);
+    $objDB->transactionCommit();
+    return true;
+}
+
 // ここから追加ボタン押下処理
+
+
 if ($_POST["strMode"] == "insert") {
     // 更新データ取得
     $aryUpdate["lngorderno"] = $_POST["lngOrderNo"];
@@ -88,6 +101,9 @@ if ($_POST["strMode"] == "insert") {
     }
 
     $objDB->transactionBegin();
+
+    // リビジョンチェック
+
     // 発注マスタ更新
     if (!fncUpdateOrder($aryUpdate, $aryUpdateDetail, $objDB)) {return false;}
     // 発注明細更新
@@ -95,6 +111,10 @@ if ($_POST["strMode"] == "insert") {
     // 発注書マスタ更新
     //if(!fncUpdatePurchaseOrder($aryUpdate, $aryUpdateDetail, $objAuth, $objDB)){ return false; }
     $aryResult = fncInsertPurchaseOrderByDetail($aryUpdate, $aryUpdateDetail, $objAuth, $objDB);
+
+    // 排他制御ロック解放
+    $result = unlockExclusive($objAuth, $objDB);
+
     $objDB->transactionCommit();
 
     // 更新後発注書データ取得

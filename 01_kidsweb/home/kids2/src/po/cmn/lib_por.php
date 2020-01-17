@@ -72,14 +72,14 @@ function fncGetOrder_r($lngOrderNo, $objDB)
     $aryQuery[] = "  inner join ( ";
     $aryQuery[] = "    select";
     $aryQuery[] = "      max(lngRevisionNo) lngRevisionNo";
-    $aryQuery[] = "      , strordercode ";
+    $aryQuery[] = "      , lngorderno ";
     $aryQuery[] = "    from";
     $aryQuery[] = "      m_order";
     $aryQuery[] = "    group by";
-    $aryQuery[] = "      strordercode";
+    $aryQuery[] = "      lngorderno";
     $aryQuery[] = "  ) mo1";
     $aryQuery[] = "    on mo.lngrevisionno = mo1.lngRevisionNo ";
-    $aryQuery[] = "    and mo.strordercode = mo1.strordercode ";
+    $aryQuery[] = "    and mo.lngorderno = mo1.lngorderno ";
     $aryQuery[] = "INNER JOIN t_orderdetail od";
     $aryQuery[] = "  ON  mo.lngorderno = od.lngorderno";
     $aryQuery[] = "  AND mo.lngrevisionno = od.lngrevisionno";

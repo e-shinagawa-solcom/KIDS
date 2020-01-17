@@ -1,4 +1,6 @@
 <!--
+window.onbeforeunload = unLock;
+
 function RegistPO(){
     $.ajax({
         type: 'POST',
@@ -79,6 +81,26 @@ function getDetailName(name, rowno)
     var ret = 'input[name="' +itemBasename + rowno + '][' + name + ']"]';
 //    alert(ret);
     return ret;
+}
+
+function unLock()
+{
+    $.ajax({
+        url: '/po/confirm/index.php',
+        type: 'post',
+    // dataType: 'json',
+        type: 'POST',
+        data: {
+            'strSessionID': $('input[type="hidden"][name="strSessionID"]').val(),
+            'strMode': 'cancel',
+        }
+    })
+    .done(function (response) {
+    })
+    .fail(function (response) {
+    });
+        
+    return false;
 }
 
 //-->

@@ -45,6 +45,8 @@ function fncGetSearchPurchaseSQL($displayColumns, $searchColumns, $from, $to, $s
     $aryQuery[] = "  , o.lngRevisionNo as lngRevisionNo";
     $aryQuery[] = "  , od.lngOrderDetailNo";
     $aryQuery[] = "  , od.lngOrderDetailNo as lngdetailno";
+    $aryQuery[] = "  , od.lngestimateno as lngestimateno";
+    $aryQuery[] = "  , od.estimaterevisionno as estimaterevisionno";
     $aryQuery[] = "  , o.strOrderCode as strOrderCode";
     $aryQuery[] = "  , o.strOrderCode || '_' || to_char(o.lngRevisionNo, 'FM00') as strOrderCode_desc";
     $aryQuery[] = "  , to_char(o.dtmInsertDate, 'YYYY/MM/DD HH:MI:SS') as dtmInsertDate";
@@ -99,7 +101,9 @@ function fncGetSearchPurchaseSQL($displayColumns, $searchColumns, $from, $to, $s
     $aryQuery[] = "        , od1.lngorderDetailNo";
     $aryQuery[] = "        , od1.lngRevisionNo";
     $aryQuery[] = "        , od1.strProductCode || '_' || od1.strReviseCode as strProductCode";
+    $aryQuery[] = "        , od1.lngestimateno as lngestimateno";
     $aryQuery[] = "        , mp.strProductName as strProductName";
+    $aryQuery[] = "        , mp.lngrevisionno as estimaterevisionno";
     $aryQuery[] = "        , mp.strProductEnglishName as strProductEnglishName";
     $aryQuery[] = "        , mg.strgroupdisplaycode as lngInChargeGroupCode";
     $aryQuery[] = "        , mg.strgroupdisplayname as strInChargeGroupName";

@@ -32,6 +32,7 @@
 	require (SRC_ROOT."po/cmn/lib_pop.php");
 	require (SRC_ROOT."po/cmn/lib_por.php");
 	require_once (LIB_DEBUGFILE);
+    require_once ( LIB_EXCLUSIVEFILE );
 	
 	$objDB		= new clsDB();
 	$objAuth	= new clsAuth();
@@ -39,11 +40,15 @@
 	{
 		$aryData["strSessionID"] = $_GET["strSessionID"];
 		$aryData["lngOrderNo"]   = $_GET["lngOrderNo"];
+		$aryData["lngEstimateNo"]   = $_GET["estimateNo"];
+		$aryData["lngEstimateRevisionNo"]   = $_GET["revisionNo"];
 	}
 	else
 	{
 		$aryData["strSessionID"] = $_POST["strSessionID"];
 		$aryData["lngOrderNo"]   = $_POST["lngOrderNo"];
+		$aryData["lngEstimateNo"]   = $_POST["estimateNo"];
+		$aryData["lngEstimateRevisionNo"]   = $_POST["revisionNo"];
 	}
 	$aryData["lngLanguageCode"]	= $_COOKIE["lngLanguageCode"];
 //fncDebug("kids2.log", $aryData["lngOrderNo"], __FILE__, __LINE__, "a" );
@@ -78,6 +83,15 @@
 	{
 		$aryData["popenview"] = 'hidden';
 	}
+
+	if($_POST["strMode"] == "cancel"){
+        // 排他ロックの解放
+        $objDB->transactionBegin();
+        unlockExclusive($objAuth, $objDB);
+        $objDB->transactionCommit();
+        return true; 
+    }
+
 	// 更新モード
 	if($_POST["strMode"] == "update"){
 		// 更新データ取得
@@ -159,6 +173,18 @@
 			
 		return true;
 	}
+
+    $objDB->transactionBegin();
+    if( !isEstimateModified($aryData["lngEstimateNo"] , $aryData["lngEstimateRevisionNo"], $objDB) )
+    {
+        fncOutputError(501, DEF_ERROR,  "他のユーザによって更新または削除されています。", TRUE, "", $objDB );
+    }
+    else{
+        if( !lockOrderFix($aryData["lngEstimateNo"], $aryData["lngOrderNo"], DEF_FUNCTION_PO1, $objDB, $objAuth)){
+            fncOutputError(501, DEF_ERROR, "該当データがロックされています。", TRUE, "", $objDB );
+        }
+    }
+    $objDB->transactionCommit();
 	// ヘッダ・フッダ部
 	$aryOrderHeader = fncGetOrder_r($aryData["lngOrderNo"], $objDB);
 
