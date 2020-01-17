@@ -14,6 +14,7 @@
 
 include 'conf.inc';
 require LIB_FILE;
+require_once LIB_EXCLUSIVEFILE;
 require (SRC_ROOT . "so/cmn/lib_so.php");
 
 //////////////////////////////////////////////////////////////////////////
@@ -45,8 +46,20 @@ if (!fncCheckAuthority(DEF_FUNCTION_SO5, $objAuth)) {
 $lngReceiveNo = $aryData["lngReceiveNo"];
 $lngRevisionNo = $aryData["lngRevisionNo"];
 
+
+$objDB->transactionBegin();
+// 受注データロック
+if( !lockReceive($lngReceiveNo, $objDB)){
+	fncOutputError( 401, DEF_ERROR, "該当データのロックに失敗しました", TRUE, "../so/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+}
+
+// 受注データ更新有無チェック
+if( !isReceiveModified($lngReceiveNo, $lngRevisionNo, DEF_RECEIVE_ORDER, $objDB)){
+	fncOutputError( 404, DEF_ERROR, "", TRUE, "../so/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+}
+
 // 指定受注番号の受注データ取得用SQL文の作成
-$strQuery = fncGetReceiveHeadNoToInfoSQL($lngReceiveNo, $lngRevisionNo, DEF_RECEIVE_ORDER);
+$strQuery = fncGetReceiveHeadNoToInfoSQL($lngReceiveNo, $lngRevisionNo);
 
 // 詳細データの取得
 list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
@@ -80,6 +93,8 @@ $result = array();
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
 $objDB->freeResult($lngResultID);
+
+$objDB->transactionCommit();
 
 
 ////////// 明細行の取得 ////////////////////

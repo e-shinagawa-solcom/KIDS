@@ -96,13 +96,13 @@ function lockReceiveFix($lngestimateno, $functioncode, $objDB, $objAuth){
 
 
 // 受注データロック取得
-function lockReceive($lngreveiveno, $objDB){
-    return getLock("m_receive", "lngreveiveno", $lngreveiveno, $objDB);
+function lockReceive($lngreceiveno, $objDB){
+    return getLock("m_receive", "lngreceiveno", $lngreceiveno, $objDB);
 }
 
 // 受注データ更新有無チェック
-function isReceiveModified($lngreceiveno, $lngrevisionno, $objDB){
-    return isModified("m_receive", "lngreceiveno", $lngreceiveno, $lngrevisionno, $objDB);
+function isReceiveModified($lngreceiveno, $lngrevisionno, $statuscode, $objDB){
+    return isStatusModified("m_receive", "lngreceiveno", $lngreceiveno, $lngrevisionno, $statuscode, $objDB);
 }
 
 // 納品書（売上）データロック取得
@@ -181,14 +181,14 @@ function lockOrderFix($lngestimateno, $lngOrderCode, $functioncode, $objDB, $obj
     return true;
 }
 
-// 発注データロック取得
-function lockOrder($lngorderno, $objDB){
-    return getLock("m_order", "lngorderno", $lngorderno, $objDB);
+// 発注（正確には発注書）データロック取得
+function lockOrder($lngpurchaseorderno, $objDB){
+    return getLock("m_purchaseorder", "lngpurchaseorderno", $lngpurchaseorderno, $objDB);
 }
 
 // 発注データ更新有無チェック
-function isOrderModified($lngorderno, $lngrevisionno, $objDB){
-    return isModified("m_order", "lngorderno", $lngorderno, $lngrevisionno, $objDB);
+function isOrderModified($lngorderno, $lngrevisionno, $statuscode, $objDB){
+    return isStatusModified("m_order", "lngorderno", $lngorderno, $lngrevisionno, $statuscode, $objDB);
 }
 
 // 仕入データロック取得
@@ -294,6 +294,33 @@ function isModified($table, $keyname, $key, $lngrevisionno, $objDB){
     $aryResult[] = $objDB->fetchArray( $lngResultID, 0 );
     $objDB->freeResult($lngResultID);
     if(($aryResult[0]["min_revisionno"] < 0) || ($aryResult[0]["max_revisionno"] > $lngrevisionno))
+    {
+        return false;
+    }
+    return true;
+
+}
+
+/* ステータスチェック
+*	@param  string  $table          チェック対象テーブル名("m_order","m_receive","m_sales","m_stock"のいずれか)
+*	@param  string  $keyname        チェック対象キー項目名
+*	@param  int     $key            チェック対象キー
+*	@param  int     $lngrevisionno  チェック対象リビジョン番号
+*	@param  object  $objDB          DBオブジェクト
+*	@return boolean TRUE,FALSE
+*/
+function isStatusModified($table, $keyname, $key, $lngrevisionno, $statuscode, $objDB){
+    $columnName = "lng" . str_replace("m_", "", strtolower($table)) . "statuscode";
+    $strQuery = "SELECT " . $columnName . " FROM " . $table . " WHERE " . $keyname . " = " . $key . " AND lngrevisionno = " . $lngrevisionno;
+    list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
+
+    if ( !$lngResultNum )
+    {
+        return false;
+    }
+    $aryResult[] = $objDB->fetchArray( $lngResultID, 0 );
+    $objDB->freeResult($lngResultID);
+    if(($aryResult[0][$columnName] != $statuscode))
     {
         return false;
     }

@@ -50,9 +50,6 @@ $lngReceiveNo = $aryData["lngReceiveNo"];
 $lngRevisionNo = $aryData["revisionNo"];
 $lngestimateno = $aryData["estimateNo"];
 
-fncDebug("kids2.log", "lngReceiveNo=" . $lngReceiveNo, __FILE__, __LINE__, "a");
-fncDebug("kids2.log", "lngestimateno=" . $lngestimateno, __FILE__, __LINE__, "a");
-fncDebug("kids2.log", "lngRevisionNo=" . $lngRevisionNo, __FILE__, __LINE__, "a");
 
 if( !is_null($aryData["mode"] ) )
 {
@@ -76,11 +73,21 @@ if( !isEstimateModified($lngestimateno, $lngRevisionNo, $objDB) )
 if(!lockReceiveFix($lngestimateno, DEF_FUNCTION_SO4, $objDB, $objAuth)){
     fncOutputError(501, DEF_ERROR, "該当データがロックされています。", true, "../so/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
 }
+// 受注データロック
+if( !lockReceive($lngReceiveNo, $objDB)){
+	fncOutputError( 401, DEF_ERROR, "該当データのロックに失敗しました", TRUE, "../so/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+}
+
+// 受注データ更新有無チェック
+if( !isReceiveModified($lngReceiveNo, $lngRevisionNo, DEF_RECEIVE_APPLICATE, $objDB)){
+	fncOutputError( 404, DEF_ERROR, "", TRUE, "../so/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+}
+
 $objDB->transactionCommit();
 
 
 // 指定受注番号の受注データ取得用SQL文の作成
-$strQuery = fncGetReceiveHeadNoToInfoSQL($lngReceiveNo, "", DEF_RECEIVE_APPLICATE);
+$strQuery = fncGetReceiveHeadNoToInfoSQL($lngReceiveNo, $lngRevisionNo);
 
 // 詳細データの取得
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);

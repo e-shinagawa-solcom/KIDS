@@ -32,7 +32,7 @@ require (SRC_ROOT . "po/cmn/lib_pos.php");
 require (SRC_ROOT . "po/cmn/lib_pos1.php");
 require (SRC_ROOT . "po/cmn/column.php");
 require_once (LIB_DEBUGFILE);
-
+require_once (LIB_EXCLUSIVEFILE);
 // DB接続
 $objDB   = new clsDB();
 $objAuth = new clsAuth();
@@ -82,18 +82,36 @@ if ( !fncCheckAuthority( DEF_FUNCTION_PO6, $objAuth ) )
 $aryOrderNo = explode(",", $aryData["lngOrderNo"]);
 
 if($_POST){
-	for($i = 0; $i < count($aryOrderNo); $i++){
+    $objDB->transactionBegin();
+	for($i = 0; $i < count($aryOrderNo); $i++){  // 実際は1件のみ。
 		$lngorderno = intval(explode("_", $aryOrderNo[$i])[0]);
 		$lngrevisionno = fncGetLatestRevisionNo($lngorderno, $objDB);
-	// 確定取消対象となった発注明細に基づく発注書明細全件を取得
+	    
+	    // 確定取消対象となった発注明細に基づく発注書明細全件を取得
 		$aryPurchaseOrderDetail = fncGetDeletePurchaseOrderDetail($lngorderno, $lngrevisionno, $objDB);
-		$objDB->transactionBegin();
-		// 確定取り消しとなった発注明細に基づく発注マスタの発注ステータスを「仮発注」へ戻す
-		if(!fncCancelOrder($lngorderno, $lngrevisionno, $objDB)){ return false; }
+		if( is_null($aryPurchaseOrderDetail) )
+		{
+			fncOutputError ( 501, DEF_ERROR, "取消対象の発注は既に取消されています。", TRUE, "", $objDB );
+		}
 	
 		// 確定取り消しとなった発注明細を取得
 		$aryOrderDetail = fncGetDeleteOrderDetail($lngorderno, $lngrevisionno, $objDB);
-	
+
+        // 発注書明細から発注書Noを取得
+        $lngpurchaseorderno = $aryPurchaseOrderDetail[0]["lngpurchaseorderno"];
+        
+        // 発注書ロック
+        if(!lockOrder($lngpurchaseorderno, $objDB)){
+			fncOutputError ( 501, DEF_ERROR, "取消対象の発注の発注書が修正中です。", TRUE, "", $objDB );
+        }
+        
+        // 対象発注のステータスチェック
+		if(!isOrderModified($lngorderno, $lngrevisionno, DEF_ORDER_ORDER, $objDB)){
+			fncOutputError ( 505, DEF_ERROR, "", TRUE, "", $objDB );
+		}
+		// 確定取り消しとなった発注明細に基づく発注マスタの発注ステータスを「仮発注」へ戻す
+		if(!fncCancelOrder($lngorderno, $lngrevisionno, $objDB)){ return false; }
+
 		// 取得した発注書番号、リビジョン番号に該当し、かつ確定取消となった発注明細に該当しない発注書明細を
 		// 表示用ソートキーの昇順に取得した結果を基に、以下の仕様で新規の発注書明細を新規に登録する
 		$aryInsertPurchaseOrderDetail = [];
@@ -224,8 +242,6 @@ if($_POST){
 			
 		}
 	
-		// $objDB->transactionRollback();
-		$objDB->transactionCommit();
 
 		if(count($aryInsertPurchaseOrderDetail) > 0){
 			$aryHtml[] = "<p class=\"caption\">以下の発注の確定取消に伴い、該当の発注書を修正しました。</p>";
@@ -239,6 +255,8 @@ if($_POST){
 			
 		}
 	}
+	// $objDB->transactionRollback();
+	$objDB->transactionCommit();
 
 	if($aryHtml){
 		$aryResult["aryPurchaseOrder"] = implode("\n", $aryHtml);

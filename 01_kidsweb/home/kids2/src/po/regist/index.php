@@ -173,18 +173,17 @@
 			
 		return true;
 	}
+	$lngOrderNo = explode(",", $aryData["lngOrderNo"]);
 
     $objDB->transactionBegin();
     if( !isEstimateModified($aryData["lngEstimateNo"] , $aryData["lngEstimateRevisionNo"], $objDB) )
     {
         fncOutputError(501, DEF_ERROR,  "他のユーザによって更新または削除されています。", TRUE, "", $objDB );
     }
-    else{
-        if( !lockOrderFix($aryData["lngEstimateNo"], $aryData["lngOrderNo"], DEF_FUNCTION_PO1, $objDB, $objAuth)){
-            fncOutputError(501, DEF_ERROR, "該当データがロックされています。", TRUE, "", $objDB );
-        }
+    if( !lockOrderFix($aryData["lngEstimateNo"], $lngOrderNo[0], DEF_FUNCTION_PO1, $objDB, $objAuth)){
+        fncOutputError(501, DEF_ERROR, "該当データがロックされています。", TRUE, "", $objDB );
     }
-    $objDB->transactionCommit();
+    
 	// ヘッダ・フッダ部
 	$aryOrderHeader = fncGetOrder_r($aryData["lngOrderNo"], $objDB);
 
@@ -205,6 +204,7 @@
 	$aryData["strLocationName"]       = $aryOrderHeader[0]["strcompanydisplayname2"];
 	$aryData["lngRevisionNo"]         = $aryOrderHeader[0]["lngrevisionno"];
 	
+
 	if($aryOrderHeader[0]["lngcountrycode"] != 81){
 	    $aryData["inputPayCondition"] = "select";
 		$aryData["lngPayConditionCode"]      = fncPulldownMenu(2, 0, "", $objDB);
@@ -219,10 +219,21 @@
 	// for($i = 0; $i < count($aryOrderHeader); $i++){
 	// 	$aryDetail[] = fncGetOrderDetail($aryOrderHeader[$i], $objDB);
 	// }
-	$lngOrderNo = explode(",", $aryData["lngOrderNo"]);
 //fncDebug("kids2.log", $lngOrderNo[0], __FILE__, __LINE__, "a" );
 	//$aryDetail = fncGetOrderDetail($aryData["lngOrderNo"], $objDB);
 	$aryDetail = fncGetOrderDetail($aryData["lngOrderNo"], $aryData["lngRevisionNo"], $objDB);
+
+    $checkList = null;
+    foreach($aryDetail as $row){
+        if( in_array($row["lngorderno"], $lngOrderNo) ){
+            $checkList[] = array("lngorderno" => $row["lngorderno"], "lngrevisionno" => $row["lngrevisionno"] );
+        }
+    }
+    if( is_null($checkList) || count($checkList) != count($lngOrderNo) ){
+         fncOutputError(501, DEF_ERROR, "対象データの一部またはすべてが確定済みです。", TRUE, "", $objDB );
+    }
+    $objDB->transactionCommit();
+
 
 	// 通貨プルダウン
 	$strPulldownMonetaryUnit = fncPulldownMenu(0, $aryOrderHeader["lngmonetaryunitcode"], "", $objDB);

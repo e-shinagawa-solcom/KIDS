@@ -52,6 +52,7 @@ $objDB->transactionBegin();
 
 // 確定処理
 foreach ($aryData["detailData"] as $data) {
+// 受注データロック
     // 受注更新
     $aryQuery = array();
     $aryQuery[] = "UPDATE m_receive ";

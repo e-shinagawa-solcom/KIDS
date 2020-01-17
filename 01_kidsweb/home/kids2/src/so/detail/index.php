@@ -54,7 +54,7 @@ if ( !fncCheckAuthority( DEF_FUNCTION_SO3, $objAuth ) )
 $lngReceiveNo = $aryData["lngReceiveNo"];
 $lngRevisionNo = $aryData["lngRevisionNo"];
 // 指定受注番号の受注データ取得用SQL文の作成
-$strQuery = fncGetReceiveHeadNoToInfoSQL( $lngReceiveNo, $lngRevisionNo, null);
+$strQuery = fncGetReceiveHeadNoToInfoSQL( $lngReceiveNo, $lngRevisionNo);
 // 詳細データの取得
 list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 if ( $lngResultNum )

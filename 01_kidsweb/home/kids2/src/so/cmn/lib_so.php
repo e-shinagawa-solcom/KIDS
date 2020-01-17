@@ -28,7 +28,7 @@
  *    @return strQuery     $strQuery 検索用SQL文
  *    @access public
  */
-function fncGetReceiveHeadNoToInfoSQL($lngReceiveNo, $lngRevisionNo, $lngreceivestatuscode)
+function fncGetReceiveHeadNoToInfoSQL($lngReceiveNo, $lngRevisionNo)
 {
     // SQL文の作成
     $aryQuery[] = "SELECT distinct on (r.lngReceiveNo) r.lngReceiveNo as lngReceiveNo, r.lngRevisionNo as lngRevisionNo";
@@ -134,9 +134,6 @@ function fncGetReceiveHeadNoToInfoSQL($lngReceiveNo, $lngRevisionNo, $lngreceive
     $aryQuery[] = " WHERE r.lngReceiveNo in (" . $lngReceiveNo . ")";
     if ($lngRevisionNo != "") {
         $aryQuery[] = " AND r.lngRevisionNo = " . $lngRevisionNo . "";
-    }
-    if ($lngreceivestatuscode != null) {
-        $aryQuery[] = " and r.lngreceivestatuscode = " . $lngreceivestatuscode . " ";
     }
 
     $strQuery = implode("\n", $aryQuery);
