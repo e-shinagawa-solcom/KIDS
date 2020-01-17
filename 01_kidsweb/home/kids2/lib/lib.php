@@ -2470,12 +2470,7 @@ function unlockExclusiveBySessionID($sessionID, $objDB){
 
     $strQuery = "DELETE FROM t_exclusivecontrol WHERE strsessionid = '" . $sessionID . "'";
     list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
-/*
-    if ( !$lngResultID )
-    {
-        return false;
-    }
-*/
+
     $objDB->freeResult($lngResultID);
     return true;
 

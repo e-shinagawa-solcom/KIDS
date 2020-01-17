@@ -181,7 +181,7 @@ define ( "VENDOR_ROOT",	PATH_HOME . "/vendor/" );
 
 // クラス・ライブラリパス
 define ( "LIB_FILE",			LIB_ROOT . "lib.php" );
-define ( "LIB_EXCLUSIVEFILE",	LIB_ROOT . "libexclusive.php" );
+define ( "LIB_EXCLUSIVEFILE",	LIB_ROOT . "libexclusive.php" );    // 排他制御用ライブラリ
 define ( "LIB_DEBUGFILE",		LIB_ROOT . "libdebug.php" );			// added by saito 20051017
 define ( "LIB_EXCELPARSER_FILE",	LIB_ROOT . "excelparser/excelparser.php" );	// Excel Parser Module
 define ( "CLS_DB_FILE",			LIB_ROOT . "clsdb.php" );
