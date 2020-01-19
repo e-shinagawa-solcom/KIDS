@@ -194,7 +194,7 @@ $tbody = $table->getElementsByTagName("tbody")->item(0);
 $aryAuthority = fncGetAryAuthority('slip', $objAuth);
 
 // 管理者モードチェック
-$isadmin = !array_key_exists("admin", $optionColumns);
+$isadmin = array_key_exists("admin", $optionColumns);
 
 // テーブルヘッダ作成
 // -------------------------------------------------------
