@@ -353,7 +353,7 @@ function fncJapaneseInvoiceExists($lngCustomerCode, $lngSalesNo, $objDB)
 	$objDB->freeResult( $lngResultID );
 
 	// 請求書明細番号取得
-	$strSalesQuery = "SELECT lnginvoiceno FROM m_Sales WHERE lngSalesNo = " . $lngSalesNo;
+	$strSalesQuery = "SELECT lnginvoiceno FROM m_Sales WHERE lngSalesNo = " . $lngSalesNo . " FOR UPDATE";
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strSalesQuery, $objDB );
 	if ( $lngResultNum )
 	{
@@ -398,7 +398,7 @@ function fncReceiveStatusIsClosed($lngSlipNo, $objDB)
 		$lngReceiveNo = $aryDetailResult[$i]["lngreceiveno"];
 
 		// 受注マスタより受注状態コードを取得
-		$strReceiveCodeQuery = "SELECT lngreceivestatuscode FROM m_Receive WHERE lngReceiveNo = " . $lngReceiveNo;
+		$strReceiveCodeQuery = "SELECT lngreceivestatuscode FROM m_Receive WHERE lngReceiveNo = " . $lngReceiveNo . " FOR UPDATE";
 		list ( $lngResultID, $lngResultNum ) = fncQuery( $strReceiveCodeQuery, $objDB );
 		if ( $lngResultNum )
 		{

@@ -97,27 +97,38 @@ if( $aryData["strSubmit"] )
 	$lngSlipNo = $aryHeadResult["lngslipno"];
 	$strCustomerCode = $aryHeadResult["strcustomercode"];
 
-
-	// --------------------------------
-	//    削除可能かどうかのチェック
-	// --------------------------------
-	// 顧客の国が日本で、かつ納品書ヘッダに紐づく請求書明細が存在する場合は削除不可
-/*
-	if (fncJapaneseInvoiceExists($strCustomerCode, $lngSalesNo, $objDB)){
-		MoveToErrorPage("請求書発行済みのため、削除できません");
-	}
-
-	// 納品書明細に紐づく受注ステータスが「締済み」の場合は削除不可
-	if (fncReceiveStatusIsClosed($lngSlipNo, $objDB))
-	{
-		MoveToErrorPage("締済みのため、削除できません");
-	}
-*/
 	// --------------------------------
 	//    削除処理
 	// --------------------------------
 	// トランザクション開始
 	$objDB->transactionBegin();
+
+    
+
+	// --------------------------------
+	//    削除可能かどうかのチェック
+	// --------------------------------
+	// 顧客の国が日本で、かつ納品書ヘッダに紐づく請求書明細が存在する場合は削除不可
+	if (fncJapaneseInvoiceExists($strCustomerCode, $lngSalesNo, $objDB)){
+		MoveToErrorPage("請求書発行済みのため、削除できません");
+	}
+
+	// 納品書明細に紐づく受注ステータスが「締済み」の場合は削除不可
+	if (fncReceiveStatusIsClosed($aryData["lngSlipNo"], $objDB))
+	{
+		MoveToErrorPage("締済みのため、削除できません");
+	}
+	
+
+	if( !lockSlip($lngSlipNo, $objDB))
+	{
+		MoveToErrorPage("他ユーザーが納品書を編集中です。");
+	}
+	
+	if( isSlipModified($aryData["lngSlipNo"], $aryData["lngRevisionNo"], $objDB) )
+	{
+		MoveToErrorPage("納品書が他ユーザーにより更新または削除されています。");
+	}
 
 	// 売上データの削除
 	if (!fncDeleteSales($lngSalesNo, $objDB, $objAuth))

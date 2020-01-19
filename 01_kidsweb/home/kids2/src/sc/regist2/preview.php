@@ -186,23 +186,19 @@
 		if(!$isCreateNew)
 		{
 			// 発注書マスタロック
-			if( !lockSlip($lngRenewTargetSlipNo, $objDB, $objAuth))
+			if( !lockSlip($lngRenewTargetSlipNo, $objDB))
 			{
 				MoveToErrorPage("他ユーザーが納品書を編集中です。");
 			}
 			if( isSlipModified($lngRenewTargetSlipNo, $lngrevisionno, $objDB) )
 			{
-				MoveToErrorPage("納品書が他ユーザーにより更新されています。");
+				MoveToErrorPage("納品書が他ユーザーにより更新または削除されています。");
 			}
 			if( fncInvoiceIssued($lngRenewTargetSlipNo, $lngrevisionno, $objDB))
 			{
 				MoveToErrorPage("納品書は請求処理済みのため修正できません。");
 			}
 		}
-	    // 納品書明細に紐づく受注ステータスが「締済み」の場合は修正不可
-	    if (fncIsClosed($lngSlipNo, $objDB)) {
-	        MoveToErrorPage("締済みのため、修正できません");
-	    }
 		// 受注明細ロック
 	    foreach($aryDetail as $row){
 			if(!lockReceive($row["lngreceiveno"], $objDB)){

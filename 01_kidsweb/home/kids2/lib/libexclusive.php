@@ -106,7 +106,7 @@ function isReceiveModified($lngreceiveno, $statuscode, $objDB){
 }
 
 // 納品書（売上）データロック取得
-function lockSlip($lngslipno, $objDB, $objAuth){
+function lockSlip($lngslipno, $objDB){
     return getLock("m_slip", "lngslipno", $lngslipno, $objDB);
 }
 

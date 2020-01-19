@@ -302,6 +302,7 @@ function fncGetReceiveDetail($aryCondition, $objDB)
     $arySelect[] = "  rd.lngsortkey,"; //No.
     $arySelect[] = "  r.strcustomerreceivecode,"; //顧客受注番号
     $arySelect[] = "  r.strreceivecode,"; //受注番号
+    $arySelect[] = "  r.lngreceivestatuscode,"; //受注ステータス
     $arySelect[] = "  p.strgoodscode,"; //顧客品番
     $arySelect[] = "  rd.strproductcode,"; //製品コード
     $arySelect[] = "  rd.strrevisecode,"; //リバイズコード（再販コード）
@@ -2179,7 +2180,7 @@ function fncInvoiceIssued($lngSlipNo, $lngRevisisonNo, $objDB)
     $strQuery .= "    AND  mi_rev.max_lngrevisionno = mi.lngrevisionno ";
     $strQuery .= "    AND  mi_rev.min_lngrevisionno >= 0 ";
     $strQuery .= "WHERE tid.lngslipno = " . $lngSlipNo;
-    $strQuery .= "AND tid.lngsliprevisionno = " . $lngRevisisonNo . " FOR UPDATE";
+    $strQuery .= "AND tid.lngsliprevisionno = " . $lngRevisisonNo;
     
     list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
     if ( !$lngResultNum )
@@ -2189,56 +2190,5 @@ function fncInvoiceIssued($lngSlipNo, $lngRevisisonNo, $objDB)
     $objDB->freeResult($lngResultID);
     return true;
     
-}
-
-// 締済みチェック
-function fncIsClosed($lngSlipNo, $objDB)
-{
-	// 納品伝票明細データの取得
-	$strQuery = fncGetSlipDetailNoToInfoSQL ( $lngSlipNo, $lngRevisionNo );
-	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
-
-	if ( $lngResultNum )
-	{
-		for ( $i = 0; $i < $lngResultNum; $i++ )
-		{
-			$aryDetailResult[] = $objDB->fetchArray( $lngResultID, $i );
-		}
-	}
-	else
-	{
-		// 納品伝票番号に紐づく納品伝票明細が見つからない⇒DBエラー
-		fncOutputError ( 9501, DEF_FATAL, "削除前チェック処理に伴う納品伝票番号取得失敗", TRUE, "", $objDB );
-	}
-
-	// 納品伝票明細に紐づく受注のステータスが「締め済」かどうか
-	for ( $i = 0; $i < count($aryDetailResult); $i++)
-	{
-		// 受注番号
-		$lngReceiveNo = $aryDetailResult[$i]["lngreceiveno"];
-
-		// 受注マスタより受注状態コードを取得
-		$strReceiveCodeQuery = "SELECT lngreceivestatuscode FROM m_Receive WHERE lngReceiveNo = " . $lngReceiveNo . " FOR UPDATE";
-		list ( $lngResultID, $lngResultNum ) = fncQuery( $strReceiveCodeQuery, $objDB );
-		if ( $lngResultNum )
-		{
-			$objResult = $objDB->fetchObject( $lngResultID, 0 );
-			$lngReceiveStatusCode = $objResult->lngreceivestatuscode;
-		}
-		else
-		{
-			// 受注状態コード取得失敗⇒DBエラー
-			fncOutputError ( 9051, DEF_FATAL, "削除前チェック処理に伴う受注状態コード取得失敗", TRUE, "", $objDB );
-		}
-		$objDB->freeResult( $lngResultID );
-
-		if ($lngReceiveStatusCode == DEF_RECEIVE_CLOSED){
-			// 受注状態コードが「締め済」の明細が1件以上存在
-			return true;
-		}
-	}
-
-	// 受注状態コードが「締め済」の明細は1件も無い
-	return false;
 }
 
