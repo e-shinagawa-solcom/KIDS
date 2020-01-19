@@ -176,7 +176,7 @@
 	$lngOrderNo = explode(",", $aryData["lngOrderNo"]);
 
     $objDB->transactionBegin();
-    if( !isEstimateModified($aryData["lngEstimateNo"] , $aryData["lngEstimateRevisionNo"], $objDB) )
+    if( isEstimateModified($aryData["lngEstimateNo"] , $aryData["lngEstimateRevisionNo"], $objDB) )
     {
         fncOutputError(501, DEF_ERROR,  "他のユーザによって更新または削除されています。", TRUE, "", $objDB );
     }
@@ -222,15 +222,16 @@
 //fncDebug("kids2.log", $lngOrderNo[0], __FILE__, __LINE__, "a" );
 	//$aryDetail = fncGetOrderDetail($aryData["lngOrderNo"], $objDB);
 	$aryDetail = fncGetOrderDetail($aryData["lngOrderNo"], $aryData["lngRevisionNo"], $objDB);
-
-    $checkList = null;
-    foreach($aryDetail as $row){
-        if( in_array($row["lngorderno"], $lngOrderNo) ){
-            $checkList[] = array("lngorderno" => $row["lngorderno"], "lngrevisionno" => $row["lngrevisionno"] );
-        }
-    }
-    if( is_null($checkList) || count($checkList) != count($lngOrderNo) ){
+//var_dump($aryDetail);
+    if( $aryDetail == null || count($aryDetail) == 0 )
+    {
          fncOutputError(501, DEF_ERROR, "対象データの一部またはすべてが確定済みです。", TRUE, "", $objDB );
+    }
+    $checkList = null;
+    foreach($lngOrderNo as $row){
+        if( !isOrderModified($row, DEF_ORDER_APPLICATE, $objDB) ){
+         fncOutputError(501, DEF_ERROR, "対象データの一部またはすべてが確定済みです。", TRUE, "", $objDB );
+        }
     }
     $objDB->transactionCommit();
 

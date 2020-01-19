@@ -869,6 +869,7 @@ jQuery(function ($) {
             strMode: "display-preview",
             strSessionID: $('input[name="strSessionID"]').val(),
             lngRenewTargetSlipNo: $('input[name="lngSlipNo"]').val(),
+            lngRenewTargetRevisionNo: $('input[name="lngRevisionNo"]').val(),
             strRenewTargetSlipCode: $('input[name="strSlipCode"]').val(),
             lngRenewTargetSalesNo: $('input[name="lngSalesNo"]').val(),
             strRenewTargetSalesCode: $('input[name="strSalesCode"]').val(),

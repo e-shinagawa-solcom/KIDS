@@ -50,6 +50,7 @@ $lngReceiveNo = $aryData["lngReceiveNo"];
 $lngRevisionNo = $aryData["revisionNo"];
 $lngestimateno = $aryData["estimateNo"];
 
+$lngReceiveNoList = explode(",", $lngReceiveNo);
 
 if( !is_null($aryData["mode"] ) )
 {
@@ -65,22 +66,25 @@ if( !is_null($aryData["mode"] ) )
 
 // 排他ロックの取得
 $objDB->transactionBegin();
-if( !isEstimateModified($lngestimateno, $lngRevisionNo, $objDB) )
+if( isEstimateModified($lngestimateno, $lngRevisionNo, $objDB) )
 {
     fncOutputError(501, DEF_ERROR,  "他のユーザによって更新または削除されています。", true, "../so/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
 }
 
+// 受注データロック
 if(!lockReceiveFix($lngestimateno, DEF_FUNCTION_SO4, $objDB, $objAuth)){
     fncOutputError(501, DEF_ERROR, "該当データがロックされています。", true, "../so/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
 }
-// 受注データロック
-if( !lockReceive($lngReceiveNo, $objDB)){
-	fncOutputError( 401, DEF_ERROR, "該当データのロックに失敗しました", TRUE, "../so/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
-}
 
-// 受注データ更新有無チェック
-if( !isReceiveModified($lngReceiveNo, $lngRevisionNo, DEF_RECEIVE_APPLICATE, $objDB)){
-	fncOutputError( 404, DEF_ERROR, "", TRUE, "../so/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+foreach($lngReceiveNoList as $eachLngReceiveNo)
+{
+    if( !lockReceive($eachLngReceiveNo, $objDB)){
+	    fncOutputError( 401, DEF_ERROR, "該当データのロックに失敗しました", TRUE, "../so/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+    }
+    // 受注データ更新有無チェック
+    if( isReceiveModified($eachLngReceiveNo, DEF_RECEIVE_APPLICATE, $objDB)){
+	    fncOutputError( 404, DEF_ERROR, "", TRUE, "../so/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+    }
 }
 
 $objDB->transactionCommit();

@@ -24,6 +24,7 @@
 	//-------------------------------------------------------------------------
 	include('conf.inc');
 	require (LIB_FILE);
+    require_once (LIB_EXCLUSIVEFILE);
 	require (SRC_ROOT."sc/cmn/lib_scr.php");
 	require PATH_HOME . "/vendor/autoload.php";
 
@@ -91,11 +92,11 @@
 		$strRenewTargetSlipCode = $_POST["strRenewTargetSlipCode"];
 		$lngRenewTargetSalesNo = $_POST["lngRenewTargetSalesNo"];
 		$strRenewTargetSalesCode = $_POST["strRenewTargetSalesCode"];
+        $aryData["lngRevisionNo"] = $_POST["lngRenewTargetRevisionNo"];
 		$aryData["lngRenewTargetSlipNo"] = $lngRenewTargetSlipNo;
 		$aryData["strRenewTargetSlipCode"] = $strRenewTargetSlipCode;
 		$aryData["lngRenewTargetSalesNo"] = $lngRenewTargetSalesNo;
 		$aryData["strRenewTargetSalesCode"] = $strRenewTargetSalesCode;
-
 		// プレビュー表示後に登録/修正処理を行うため、入力データをjsonに変換して退避する
 		$aryHeader = $_POST["aryHeader"];
 		$aryDetail = $_POST["aryDetail"];
@@ -156,6 +157,7 @@
 		$lngRenewTargetSalesNo = $_POST["lngRenewTargetSalesNo"];
 		// 修正対象に紐づく売上コード（登録の場合は空）
 		$strRenewTargetSalesCode = $_POST["strRenewTargetSalesCode"];
+		$lngrevisionno = $_POST["lngRevisionNo"];
 
 		// 登録か修正か（true:登録、false:修正）
 		$isCreateNew = strlen($lngRenewTargetSlipNo) == 0;
@@ -172,22 +174,53 @@
 		$aryHeader = fncConvertArrayHeaderToEucjp($aryHeader);
 		$aryDetail = fncConvertArrayDetailToEucjp($aryDetail);
 
-		//DBG:一時コメントアウト対象
-		// --------------------------
-		//  登録/修正前バリデーション
-		// --------------------------
-		// 受注状態コードが2,4以外の明細が存在するならエラーとする
-		if(fncNotReceivedDetailExists($aryDetail, $objDB))
-		{
-			MoveToErrorPage("納品書が発行できない状態の明細が選択されています。");
-		}
-
-		//DBG:一時コメントアウト対象
 		// --------------------------
 		//  データベース処理
 		// --------------------------
 		// トランザクション開始
 		$objDB->transactionBegin();
+
+		// --------------------------
+		// 排他制御
+		// --------------------------
+		if(!$isCreateNew)
+		{
+			// 発注書マスタロック
+			if( !lockSlip($lngRenewTargetSlipNo, $objDB, $objAuth))
+			{
+				MoveToErrorPage("他ユーザーが納品書を編集中です。");
+			}
+			if( isSlipModified($lngRenewTargetSlipNo, $lngrevisionno, $objDB) )
+			{
+				MoveToErrorPage("納品書が他ユーザーにより更新されています。");
+			}
+			if( fncInvoiceIssued($lngRenewTargetSlipNo, $lngrevisionno, $objDB))
+			{
+				MoveToErrorPage("納品書は請求処理済みのため修正できません。");
+			}
+		}
+	    // 納品書明細に紐づく受注ステータスが「締済み」の場合は修正不可
+	    if (fncIsClosed($lngSlipNo, $objDB)) {
+	        MoveToErrorPage("締済みのため、修正できません");
+	    }
+		// 受注明細ロック
+	    foreach($aryDetail as $row){
+			if(!lockReceive($row["lngreceiveno"], $objDB)){
+				MoveToErrorPage("受注データが他ユーザーによりロックされています。");
+			}
+	    }
+
+		//DBG:一時コメントアウト対象
+		// --------------------------
+		//  登録/修正前バリデーション
+		// --------------------------
+		// 受注状態コードが2,4以外の明細が存在するならエラーとする
+		if(fncNotReceivedDetailExists($aryDetail, $objDB, $isCreateNew))
+		{
+			MoveToErrorPage("納品書が発行できない状態の明細が選択されています。");
+		}
+
+		//DBG:一時コメントアウト対象
 
 		// 受注マスタ更新
 		$updResult = fncUpdateReceiveMaster($aryDetail, $objDB);
@@ -207,19 +240,6 @@
 
 		// コミット
 		$objDB->transactionCommit();
-
-		// --------------------------
-		//  修正対象データのロック解除
-		// --------------------------
-		// 修正の場合、修正対象データにロックがかかっているので解除する
-		if (!$isCreateNew)
-		{
-			$unlocked = fncReleaseExclusiveLock(EXCLUSIVE_CONTROL_FUNCTION_CODE_SC_RENEW, $strRenewTargetSlipCode, $objDB);
-			if(!$unlocked)
-			{
-				MoveToErrorPage("納品書データの修正は成功しましたが、ロック解除に失敗しました");
-			}
-		}
 
 		// --------------------------
 		//  登録結果画面表示
@@ -275,7 +295,7 @@
 		$dtmInsertDate = fncGetInsertDateBySlipCode($strSlipCode, $objDB);
 
 		// 帳票テンプレートに設定する納品書データの読み込み（ヘッダ・フッタ部）
-		$aryHeader = fncGetHeaderBySlipNo($lngSlipNo, $objDB);
+		$aryHeader = fncGetHeaderBySlipNo($lngSlipNo, $lngRevisionNo, $objDB);
 		$lngRevisionNo = $aryHeader["lngrevisionno"];
 		// 帳票テンプレートに設定する納品書データの読み込み（明細部）
 		$aryDetail = fncGetDetailBySlipNo($lngSlipNo, $lngRevisionNo, $objDB);

@@ -88,7 +88,7 @@ switch($mode) {
     case 'edit':
         $ret['result'] = true;
         $objDB->transactionBegin();
-        if( !isEstimateModified($estimateNo, $revisionNo, $objDB) )
+        if( isEstimateModified($estimateNo, $revisionNo, $objDB) )
         {
             $ret['message'] = "他のユーザによって更新または削除されています。";
             $ret['result'] = 0;

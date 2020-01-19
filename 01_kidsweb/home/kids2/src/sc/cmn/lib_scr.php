@@ -20,8 +20,11 @@
  */
 // ----------------------------------------------------------------------------
 
+require_once (LIB_DEBUGFILE);
+require_once (LIB_EXCLUSIVEFILE);
 // 修正対象データに対してロックしている人を確認する
 // ロックしている人がいないなら空文字列を返す
+
 function fncGetExclusiveLockUser($lngFunctionCode, $strSlipCode, $objAuth, $objDB)
 {
     $lockUserName = "";
@@ -187,7 +190,7 @@ function fncGetTaxRatePullDown($dtmDeliveryDate, $curDefaultTax, $objDB)
 }
 
 // 納品伝票番号に紐づくヘッダ項目取得
-function fncGetHeaderBySlipNo($lngSlipNo, $objDB)
+function fncGetHeaderBySlipNo($lngSlipNo, $lngRevisionNo, $objDB)
 {
 
     $aryQuery = array();
@@ -219,9 +222,7 @@ function fncGetHeaderBySlipNo($lngSlipNo, $objDB)
     $aryQuery[] = "   LEFT JOIN m_company c_deli ON s.lngdeliveryplacecode = c_deli.lngcompanycode ";
     $aryQuery[] = " WHERE ";
     $aryQuery[] = "  s.lngslipno = " . $lngSlipNo;
-    $aryQuery[] = " and s.lngrevisionno = (SELECT MAX(lngrevisionno) FROM m_slip WHERE lngslipno = " . $lngSlipNo.")";
-    
-    // $aryQuery[] = "  AND s.lngrevisionNo = " . $lngRevisionNo;
+    $aryQuery[] = "  AND s.lngrevisionNo = " . $lngRevisionNo;
 
     $strQuery = "";
     $strQuery .= implode("\n", $aryQuery);
@@ -692,35 +693,26 @@ function fncIncrementPrintCountBySlipCode($strSlipCode, $objDB)
 }
 
 // 受注状態コードによるバリデーション
-function fncNotReceivedDetailExists($aryDetail, $objDB)
+function fncNotReceivedDetailExists($aryDetail, $objDB, $isNew)
 {
     for ($i = 0; $i < count($aryDetail); $i++) {
         $d = $aryDetail[$i];
 
         $lngReceiveNo = $d["lngreceiveno"];
         $lngRevisionNo = $d["lngreceiverevisionno"];
-
-        $strQuery = ""
-            . "SELECT"
-            . "  lngreceivestatuscode"
-            . " FROM"
-            . "  m_receive"
-            . " WHERE"
-            . "  lngreceivestatuscode not in (2, 4)"
-            . "  AND lngreceiveno = " . $lngReceiveNo
-            . "  AND lngrevisionno = " . $lngRevisionNo
-        ;
-        list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
-        if ($lngResultID) {
-            // 受注状態コードが2以外の明細が存在するならtrueを返して検索打ち切り
-            if ($lngResultNum > 0) {return true;}
-        } else {
-            fncOutputError(9501, DEF_FATAL, "受注状態コードの取得に失敗", true, "", $objDB);
+        // 更新で受注状態コードが2,4以外の明細が存在するならtrueを返して検索打ち切り
+        if(!$isNew){
+            if( isReceiveModified($lngReceiveNo, DEF_RECEIVE_ORDER, $objDB) 
+             && isReceiveModified($lngReceiveNo, DEF_RECEIVE_END, $objDB)){
+                return true;
+            }
         }
-        $objDB->freeResult($lngResultID);
+        // 新規で受注状態コードが2以外の明細が存在するならtrueを返して検索打ち切り
+        else if(isReceiveModified($lngReceiveNo, DEF_RECEIVE_ORDER, $objDB)){
+            return true;
+        }
+        
     }
-
-    // 受注状態コードが2以外の明細は存在しない
     return false;
 
 }
@@ -2171,3 +2163,82 @@ function fncGetRegisterResultTableBodyHtml($aryPerPage, $objDB)
     return $strHtml;
 
 }
+
+// 請求処理済みチェック
+function fncInvoiceIssued($lngSlipNo, $lngRevisisonNo, $objDB)
+{
+    $strQuery = "SELECT ";
+    $strQuery .= "FROM m_invoice mi ";
+    $strQuery .= "INNER JOIN  t_invoicedetail tid ";
+    $strQuery .= "ON tid.lnginvoiceno = mi.lnginvoiceno ";
+    $strQuery .= "AND tid.lngrevisionno = mi.lngrevisionno ";
+    $strQuery .= "INNER JOIN ( ";
+    $strQuery .= "    SELECT lnginvoiceno, MAX(lngrevisionno) AS max_lngrevisionno , MIN(lngrevisionno) AS min_lngrevisionno FROM m_invoice GROUP BY lnginvoiceno ";
+    $strQuery .= ") mi_rev ";
+    $strQuery .= "    ON mi_rev.lnginvoiceno = mi.lnginvoiceno ";
+    $strQuery .= "    AND  mi_rev.max_lngrevisionno = mi.lngrevisionno ";
+    $strQuery .= "    AND  mi_rev.min_lngrevisionno >= 0 ";
+    $strQuery .= "WHERE tid.lngslipno = " . $lngSlipNo;
+    $strQuery .= "AND tid.lngsliprevisionno = " . $lngRevisisonNo . " FOR UPDATE";
+    
+    list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
+    if ( !$lngResultNum )
+    {
+        return false;
+    }
+    $objDB->freeResult($lngResultID);
+    return true;
+    
+}
+
+// 締済みチェック
+function fncIsClosed($lngSlipNo, $objDB)
+{
+	// 納品伝票明細データの取得
+	$strQuery = fncGetSlipDetailNoToInfoSQL ( $lngSlipNo, $lngRevisionNo );
+	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
+
+	if ( $lngResultNum )
+	{
+		for ( $i = 0; $i < $lngResultNum; $i++ )
+		{
+			$aryDetailResult[] = $objDB->fetchArray( $lngResultID, $i );
+		}
+	}
+	else
+	{
+		// 納品伝票番号に紐づく納品伝票明細が見つからない⇒DBエラー
+		fncOutputError ( 9501, DEF_FATAL, "削除前チェック処理に伴う納品伝票番号取得失敗", TRUE, "", $objDB );
+	}
+
+	// 納品伝票明細に紐づく受注のステータスが「締め済」かどうか
+	for ( $i = 0; $i < count($aryDetailResult); $i++)
+	{
+		// 受注番号
+		$lngReceiveNo = $aryDetailResult[$i]["lngreceiveno"];
+
+		// 受注マスタより受注状態コードを取得
+		$strReceiveCodeQuery = "SELECT lngreceivestatuscode FROM m_Receive WHERE lngReceiveNo = " . $lngReceiveNo . " FOR UPDATE";
+		list ( $lngResultID, $lngResultNum ) = fncQuery( $strReceiveCodeQuery, $objDB );
+		if ( $lngResultNum )
+		{
+			$objResult = $objDB->fetchObject( $lngResultID, 0 );
+			$lngReceiveStatusCode = $objResult->lngreceivestatuscode;
+		}
+		else
+		{
+			// 受注状態コード取得失敗⇒DBエラー
+			fncOutputError ( 9051, DEF_FATAL, "削除前チェック処理に伴う受注状態コード取得失敗", TRUE, "", $objDB );
+		}
+		$objDB->freeResult( $lngResultID );
+
+		if ($lngReceiveStatusCode == DEF_RECEIVE_CLOSED){
+			// 受注状態コードが「締め済」の明細が1件以上存在
+			return true;
+		}
+	}
+
+	// 受注状態コードが「締め済」の明細は1件も無い
+	return false;
+}
+

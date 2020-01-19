@@ -54,7 +54,7 @@ if( !lockReceive($lngReceiveNo, $objDB)){
 }
 
 // 受注データ更新有無チェック
-if( !isReceiveModified($lngReceiveNo, $lngRevisionNo, DEF_RECEIVE_ORDER, $objDB)){
+if( isReceiveModified($lngReceiveNo, DEF_RECEIVE_ORDER, $objDB)){
 	fncOutputError( 404, DEF_ERROR, "", TRUE, "../so/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
 }
 

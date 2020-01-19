@@ -46,7 +46,7 @@ function lockEstimateEdit($lngestimateno, $functioncode, $objDB, $objAuth){
     }
     
     // 未確定発注データ排他取得
-    if(!lockOrderFix($lngestimateno, $functioncode, $objDB, $objAuth)){
+    if(!lockOrderFix($lngestimateno, 0, $functioncode, $objDB, $objAuth)){
         return false;
     }
     return true;
@@ -101,8 +101,8 @@ function lockReceive($lngreceiveno, $objDB){
 }
 
 // 受注データ更新有無チェック
-function isReceiveModified($lngreceiveno, $lngrevisionno, $statuscode, $objDB){
-    return isStatusModified("m_receive", "lngreceiveno", $lngreceiveno, $lngrevisionno, $statuscode, $objDB);
+function isReceiveModified($lngreceiveno, $statuscode, $objDB){
+    return isStatusModified("m_receive", "lngreceiveno", $lngreceiveno, $statuscode, $objDB);
 }
 
 // 納品書（売上）データロック取得
@@ -127,6 +127,7 @@ function isInvoiceModified($lnginvoiceno, $lngrevisionno, $objDB){
 
 // 発注確定データロック取得
 function lockOrderFix($lngestimateno, $lngOrderCode, $functioncode, $objDB, $objAuth){
+fncDebug("kids2.log", $lngOrderCode, __FILE__, __LINE__, "a");
     $strQuery  = "SELECT ";
     $strQuery .= "    tod.lngorderno, ";
     $strQuery .= "    tod.lngrevisionno ";
@@ -138,27 +139,20 @@ function lockOrderFix($lngestimateno, $lngOrderCode, $functioncode, $objDB, $obj
     $strQuery .= "INNER JOIN m_order mo ";
     $strQuery .= "    ON mo.lngorderno = tod.lngorderno ";
     $strQuery .= "    AND mo.lngrevisionno = tod.lngrevisionno ";
-    $strQuery .= "INNER JOIN (";
-    $strQuery .= "    SELECT ";
-    $strQuery .= "    lngcustomercompanycode,";
-    $strQuery .= "    lngmonetaryunitcode";
-    $strQuery .= "    FROM m_order ";
-    $strQuery .= "    WHERE lngorderno = " . $lngOrderCode;
-    $strQuery .= "    AND lngrevisionno =  ( ";
-    $strQuery .= "        SELECT MAX(lngrevisionno) FROM m_order WHERE lngorderno = " . $lngOrderCode;
-    $strQuery .= "    )";
-    $strQuery .= ") mo2 on mo2.lngcustomercompanycode = mo.lngcustomercompanycode";
-    $strQuery .= "    AND mo2.lngmonetaryunitcode = mo.lngmonetaryunitcode ";
+    if( (int)$lngOrderCode != 0){
+        $strQuery .= "INNER JOIN (";
+        $strQuery .= "    SELECT ";
+        $strQuery .= "    lngcustomercompanycode,";
+        $strQuery .= "    lngmonetaryunitcode";
+        $strQuery .= "    FROM m_order ";
+        $strQuery .= "    WHERE lngorderno = " . $lngOrderCode;
+        $strQuery .= "    AND lngrevisionno =  ( ";
+        $strQuery .= "        SELECT MAX(lngrevisionno) FROM m_order WHERE lngorderno = " . $lngOrderCode;
+        $strQuery .= "    )";
+        $strQuery .= ") mo2 on mo2.lngcustomercompanycode = mo.lngcustomercompanycode";
+        $strQuery .= "    AND mo2.lngmonetaryunitcode = mo.lngmonetaryunitcode ";
+    }
     $strQuery .= "WHERE mo.lngorderstatuscode = 1 AND mhe.lngestimateno = " . $lngestimateno;
-    if($lngcompanycode == 0){
-        $strQuery .= "    AND mo.lngcustomercompanycode <> 0 ";
-    }
-    else{
-        $strQuery .= "    AND mo.lngcustomercompanycode = " . $lngcompanycode;
-    }
-    if( $lngmonetaryunitcode != 0){
-        $strQuery .= "    AND mo.lngmonetaryunitcode = " . $lngmonetaryunitcode;
-    }
     $strQuery .= "    AND mhe.lngrevisionno = ( ";
     $strQuery .= "        SELECT MAX(lngrevisionno) AS lngrevisionno FROM m_estimatehistory WHERE lngestimateno = " . $lngestimateno;
     $strQuery .= "    ) ";
@@ -187,8 +181,8 @@ function lockOrder($lngpurchaseorderno, $objDB){
 }
 
 // 発注データ更新有無チェック
-function isOrderModified($lngorderno, $lngrevisionno, $statuscode, $objDB){
-    return isStatusModified("m_order", "lngorderno", $lngorderno, $lngrevisionno, $statuscode, $objDB);
+function isOrderModified($lngorderno, $statuscode, $objDB){
+    return isStatusModified("m_order", "lngorderno", $lngorderno, $statuscode, $objDB);
 }
 
 // 仕入データロック取得
@@ -289,15 +283,15 @@ function isModified($table, $keyname, $key, $lngrevisionno, $objDB){
 
     if ( !$lngResultNum )
     {
-        return false;
+        return true;
     }
     $aryResult[] = $objDB->fetchArray( $lngResultID, 0 );
     $objDB->freeResult($lngResultID);
     if(($aryResult[0]["min_revisionno"] < 0) || ($aryResult[0]["max_revisionno"] > $lngrevisionno))
     {
-        return false;
+        return true;
     }
-    return true;
+    return false;
 
 }
 
@@ -309,22 +303,23 @@ function isModified($table, $keyname, $key, $lngrevisionno, $objDB){
 *	@param  object  $objDB          DBオブジェクト
 *	@return boolean TRUE,FALSE
 */
-function isStatusModified($table, $keyname, $key, $lngrevisionno, $statuscode, $objDB){
+function isStatusModified($table, $keyname, $key, $statuscode, $objDB){
     $columnName = "lng" . str_replace("m_", "", strtolower($table)) . "statuscode";
-    $strQuery = "SELECT " . $columnName . " FROM " . $table . " WHERE " . $keyname . " = " . $key . " AND lngrevisionno = " . $lngrevisionno;
+    $strQuery = "SELECT " . $columnName . " FROM " . $table . " WHERE " . $keyname . " = " . $key;
+    $strQuery .= " AND lngrevisionno = (SELECT MAX(lngrevisionno) FROM " . $table . " WHERE " . $keyname . " = " . $key . " )";
     list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
     if ( !$lngResultNum )
     {
-        return false;
+        return true;
     }
     $aryResult[] = $objDB->fetchArray( $lngResultID, 0 );
     $objDB->freeResult($lngResultID);
     if(($aryResult[0][$columnName] != $statuscode))
     {
-        return false;
+        return true;
     }
-    return true;
+    return false;
 
 }
 

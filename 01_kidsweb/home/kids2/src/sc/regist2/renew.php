@@ -59,6 +59,8 @@ $strSalesCode = $_GET["strSalesCode"];
 // 顧客コード
 $strCustomerCode = $_GET["strCustomerCode"];
 
+$revisionNo = $_GET["lngRevisionNo"];
+
 //-------------------------------------------------------------------------
 // DBオープン
 //-------------------------------------------------------------------------
@@ -92,20 +94,6 @@ if (!fncCheckAuthority(DEF_FUNCTION_SC10, $objAuth)) {
     $aryData["adddelrowview"] = 'hidden';
 }
 
-if ($strMode == "") {    
-    // --------------------------------
-    //    修正可能かどうかのチェック
-    // --------------------------------
-    // 顧客の国が日本で、かつ納品書ヘッダに紐づく請求書明細が存在する場合は修正不可
-    if (fncJapaneseInvoiceExists($strCustomerCode, $lngSalesNo, $objDB)) {
-        MoveToErrorPage("請求書発行済みのため、修正できません");
-    }
-
-    // 納品書明細に紐づく受注ステータスが「締済み」の場合は修正不可
-    if (fncReceiveStatusIsClosed($lngSlipNo, $objDB)) {
-        MoveToErrorPage("締済みのため、修正できません");
-    }
-}
 
 //-------------------------------------------------------------------------
 // 【ajax】顧客に紐づく国コードを取得
@@ -173,6 +161,7 @@ if ($strMode == "change-deliverydate") {
 // 修正画面を閉じる時ロックを解除
 //-------------------------------------------------------------------------
 if ($strMode == "releaseLock") {
+/*
     // 他にロックしている人がいないか確認
     $aryLockInfo = fncGetExclusiveLockUser(EXCLUSIVE_CONTROL_FUNCTION_CODE_SC_RENEW, $strSlipCode, $objAuth, $objDB);
     if ($aryLockInfo["isLock"] != 0) {
@@ -181,6 +170,7 @@ if ($strMode == "releaseLock") {
     }
     // DB切断
     $objDB->close();
+*/
     // 処理終了
     return true;
 }
@@ -188,6 +178,7 @@ if ($strMode == "releaseLock") {
 // 修正対象データのロック取得
 //-------------------------------------------------------------------------
 // 他にロックしている人がいないか確認
+/*
 $aryLockInfo = fncGetExclusiveLockUser(EXCLUSIVE_CONTROL_FUNCTION_CODE_SC_RENEW, $strSlipCode, $objAuth, $objDB);
 if ($aryLockInfo["isLock"] == 1) {
     MoveToErrorPage("ユーザー" . $aryLockInfo["lockUserName"] . "が修正中です。");
@@ -197,12 +188,13 @@ if ($aryLockInfo["isLock"] == 1) {
         MoveToErrorPage("納品書データのロックに失敗しました。");
     }
 }
-
+*/
 //-------------------------------------------------------------------------
 // 修正対象データ取得
 //-------------------------------------------------------------------------
 // 納品伝票番号に紐づくヘッダ・フッタ部のデータ読み込み
-$aryHeader = fncGetHeaderBySlipNo($lngSlipNo, $objDB);
+ 
+$aryHeader = fncGetHeaderBySlipNo($lngSlipNo, $revisionNo, $objDB);
 $lngRevisionNo = $aryHeader["lngrevisionno"];
 // 納品伝票番号に紐づく受注明細情報を取得する
 $aryDetail = fncGetDetailBySlipNo($lngSlipNo, $lngRevisionNo, $objDB);
@@ -220,6 +212,7 @@ $strDetailHtml = fncGetReceiveDetailHtml($aryDetail, $isCreateNew);
 // -------------------------
 // 納品伝票番号（この値がセットされていたら修正とみなす）
 $aryData["lngSlipNo"] = $lngSlipNo;
+$aryData["lngRevisionNo"] = $lngRevisionNo;
 // 納品伝票コード
 $aryData["strSlipCode"] = $strSlipCode;
 // 売上番号
