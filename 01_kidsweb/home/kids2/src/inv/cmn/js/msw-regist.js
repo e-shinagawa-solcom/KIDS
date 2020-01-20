@@ -524,6 +524,8 @@
 
         // 納品書番号を取得する。slipcode
         var slipCodeList = [];
+        var slipNoList = [];
+        var revisionNoList = [];
         // 納品日を格納する
         var deliveryDate = [];
         // 最初の課税区分を取得する。
@@ -532,6 +534,11 @@
         var tax = false;
         // 税率が同じかをチェックするフラグ
         var isSameTax = true;
+        tableB_row.each( function(){
+            slipNoList.push($(this).attr('slipno'));
+            revisionNoList.push($(this).attr('revisionno'));
+        }
+        );
 
         for (var i = 0, rowlen = tableB_row.length; i < rowlen; i++) {
             for (var j = 0, collen = tableB_row[i].cells.length; j < collen; j++) {
@@ -625,6 +632,20 @@
                 delold[i].parentNode.removeChild(delold[i]);
             }
         }
+        delold = document.getElementsByName('slipNoList');
+        if( delold.length > 0 )
+        {
+            for( var i = 0; i < delold.length; i++ ){
+                delold[i].parentNode.removeChild(delold[i]);
+            }
+        }
+        delold = document.getElementsByName('revisionNoList');
+        if( delold.length > 0 )
+        {
+            for( var i = 0; i < delold.length; i++ ){
+                delold[i].parentNode.removeChild(delold[i]);
+            }
+        }
         delold = document.getElementsByName('mode');
         if( delold.length > 0 )
         {
@@ -678,6 +699,24 @@
         ele4.setAttribute('value', tax);
         // 要素を追加
         document.Invoice.appendChild(ele4);
+
+        // フォーム追加
+        var ele5 = document.createElement('input');
+        // データを設定
+        ele5.setAttribute('type', 'hidden');
+        ele5.setAttribute('name', 'slipNoList');
+        ele5.setAttribute('value', slipNoList);
+        // 要素を追加
+        document.Invoice.appendChild(ele5);
+
+        // フォーム追加
+        var ele6 = document.createElement('input');
+        // データを設定
+        ele6.setAttribute('type', 'hidden');
+        ele6.setAttribute('name', 'revisionNoList');
+        ele6.setAttribute('value', revisionNoList);
+        // 要素を追加
+        document.Invoice.appendChild(ele6);
 
         var invForm = $('form[name="Invoice"]');
 

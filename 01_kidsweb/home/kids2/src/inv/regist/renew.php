@@ -29,6 +29,7 @@
     require (LIB_FILE);
     require (SRC_ROOT . "m/cmn/lib_m.php");
     require (SRC_ROOT . "inv/cmn/lib_regist.php");
+    require (LIB_EXCLUSIVEFILE);
 
     // 固定エラーメッセージ ToDo DB登録
     define ("ERROR_NO_1", '' );
@@ -92,7 +93,8 @@
 
     // 指定請求書番号の請求書マスタ取得用SQL文の作成
     $lngInvoiceNo = $aryData["lngInvoiceNo"];
-    $strQuery     = fncGetInvoiceMSQL ( $lngInvoiceNo, null);
+    $lngrevisionno = $aryData["lngRevisionNo"];
+    $strQuery     = fncGetInvoiceMSQL ( $lngInvoiceNo, $lngrevisionno);
     // 詳細データの取得
     list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
@@ -102,18 +104,19 @@
     }
     else
     {
-        fncOutputError( 9061, DEF_ERROR, "データが異常です", TRUE, "../inv/regist/renew.php?strSessionID=".$aryData["strSessionID"], $objDB );
+        MoveToErrorPage( "データは削除済みです" );
     }
 
     $aryNewResult = fncSetInvoiceHeadTableData($aryResult);
     $aryNewResult['lngInvoiceNo'] = $aryData["lngInvoiceNo"];
     $aryNewResult['strSessionID'] = $aryData["strSessionID"];
     $aryNewResult['actionName']   = 'renew.php';
-
     // preview画面
     if(isset($aryData["strMode"]) && $aryData["strMode"] == 'renewPrev')
     {
         $aryNewResult['strMode']      = 'insertRenew';
+        $aryNewResult['slipNoList'] = $aryData["slipNoList"];
+        $aryNewResult['revisionNoList'] = $aryData["revisionNoList"];
 
         $aryPrevResult = array_merge($aryNewResult, fncSetPreviewTableData($aryData, $lngInvoiceNo, $objDB));
         // テンプレート読み込み
@@ -148,6 +151,18 @@
         //   UPDATE処理実行（Submit時）
         // *****************************************************
 
+        // トランザクション開始
+        $objDB->transactionBegin();
+
+        if( !lockInvoice($lngInvoiceNo, $objDB) )
+        {
+            MoveToErrorPage("請求書データのロックに失敗しました");
+        }
+
+        if( isInvoiceModified($lngInvoiceNo, $lngrevisionno, $objDB) )
+        {
+            MoveToErrorPage("請求書データが更新または削除されています");
+        }
         // --------------------------------
         //    修正可能かどうかのチェック
         // --------------------------------
@@ -161,14 +176,24 @@
 
         // 出力明細が1件もない場合
         $slipCodeArray = $insertData['slipCodeArray'];
-        if(count($slipCodeArray) < 0)
+        $slipNoArray = $insertData['slipNoArray'];
+        $revisionNoArray = $insertData['revisionNoArray'];
+        if(count($slipNoArray) < 0)
         {
             MoveToErrorPage("出力明細が選択されていません。");
         }
 
-        for( $i=0; $i<COUNT($slipCodeArray); $i++ ) {
+        for( $i=0; $i<COUNT($slipNoArray); $i++ ) {
+            if( !lockSlip($slipNoArray[$i], $objDB) ){
+                //fncOutputError ( 9051, DEF_ERROR, "登録対象納品書データのロックに失敗しました", TRUE, "", $objDB );
+                MoveToErrorPage("登録対象納品書データのロックに失敗しました");
+            }
+            if( isSlipModified($slipNoArray[$i], $revisionNoArray[$i], $objDB) ){
+                //fncOutputError ( 9051, DEF_ERROR, "登録対象納品書データが削除または更新されています", TRUE, "", $objDB );
+                MoveToErrorPage("登録対象納品書データが削除または更新されています");
+            }
             $condition['strSlipCode'] = $slipCodeArray[$i];
-            $strQuery = fncGetSearchMSlipSQL($condition, true, $objDB);
+            $strQuery = fncGetSearchMSlipSQL($condition, $lngInvoiceNo, $objDB);
             // 明細データの取得
             list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
             if ( $lngResultNum )
@@ -223,8 +248,6 @@
         // --------------------------------
         //    登録処理
         // --------------------------------
-        // トランザクション開始
-        $objDB->transactionBegin();
 
         // 請求書番号に紐づいている売上マスタの請求書番号を空にする
         if (!fncUpdateInvoicenoToMSales($lngInvoiceNo, $objDB))

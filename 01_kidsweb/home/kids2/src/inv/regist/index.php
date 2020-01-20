@@ -27,6 +27,7 @@
 
     // ライブラリ読み込み
     require (LIB_FILE);
+    require (LIB_EXCLUSIVEFILE);
     require (SRC_ROOT . "m/cmn/lib_m.php");
     require (SRC_ROOT . "inv/cmn/lib_regist.php");
     require_once(LIB_DEBUGFILE);
@@ -84,8 +85,13 @@
     {
         $aryNewResult = fncSetInvoiceHeadTableData($aryResult);
         $aryNewResult['strSessionID'] = $aryData["strSessionID"];
+        $aryNewResult['slipNoList'] = $aryData["slipNoList"];
+        $aryNewResult['revisionNoList'] = $aryData["revisionNoList"];
+        $aryNewResult['strSessionID'] = $aryData["strSessionID"];
         $aryNewResult['actionName']   = 'index.php';
         $aryNewResult['strMode']      = 'insert';
+//var_dump($aryNewResult['slipNoList']);
+//var_dump($aryNewResult['revisionNoList']);
 
         $aryPrevResult = array_merge($aryNewResult, fncSetPreviewTableData($aryData, null, $objDB));
 
@@ -121,18 +127,33 @@
         // *****************************************************
         //   INSERT処理実行（Submit時）
         // *****************************************************
+
+        // トランザクション開始
+        $objDB->transactionBegin();
+
         // DB登録の為のデータ配列を返す
         $insertData = fncInvoiceInsertReturnArray($aryData, $aryResult, $objAuth, $objDB);
         // 出力明細が1件もない場合
-        $slipCodeArray = $insertData['slipCodeArray'];
-        if(count($slipCodeArray) < 0)
+        $slipNoArray = $insertData['slipNoArray'];
+        $revisionNoArray = $insertData['revisionNoArray'];
+        if(count($slipNoArray) < 0)
         {
             MoveToErrorPage("出力明細が選択されていません。");
         }
+        $slipCodeArray = $insertData['slipCodeArray'];
 
-        for( $i=0; $i<COUNT($slipCodeArray); $i++ ) {
+
+        for( $i=0; $i<COUNT($slipNoArray); $i++ ) {
+            if( !lockSlip($slipNoArray[$i], $objDB) ){
+                //fncOutputError ( 9051, DEF_ERROR, "登録対象納品書データのロックに失敗しました", TRUE, "", $objDB );
+                MoveToErrorPage("登録対象納品書データのロックに失敗しました");
+            }
+            if( isSlipModified($slipNoArray[$i], $revisionNoArray[$i], $objDB) ){
+                //fncOutputError ( 9051, DEF_ERROR, "登録対象納品書データが削除または更新されています", TRUE, "", $objDB );
+                MoveToErrorPage("登録対象納品書データが削除または更新されています");
+            }
             $condition['strSlipCode'] = $slipCodeArray[$i];
-            $strQuery = fncGetSearchMSlipSQL($condition, false, $objDB);
+            $strQuery = fncGetSearchMSlipSQL($condition, null, $objDB);
             // 明細データの取得
             list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
             if ( $lngResultNum )
@@ -148,7 +169,8 @@
             }
             else
             {
-                $strMessage = fncOutputError( 603, DEF_WARNING, "納品伝票マスタが存在しません", FALSE, "../inv/regist/renew.php?strSessionID=".$aryData["strSessionID"], $objDB );
+                //fncOutputError( 9051, DEF_ERROR, "対象の納品書データに請求済データが含まれます", TRUE, "", $objDB );
+                MoveToErrorPage("対象の納品書データに請求済データが含まれます");
             }
         }
         // 消費税率が同じかチェック
@@ -197,8 +219,6 @@
         // --------------------------------
         //    登録処理
         // --------------------------------
-        // トランザクション開始
-        $objDB->transactionBegin();
 
         // 請求書マスタ・請求書明細・売上マスタを更新する
         $aryResult = fncInvoiceInsert( $insertData , $objDB, $objAuth);

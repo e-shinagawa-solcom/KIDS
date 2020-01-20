@@ -79,6 +79,8 @@ $(function () {
     if (data[0] === '') return;
     $.each(data, function (i, v) {
       var $target_row = $('tbody tr', $tableA).eq(i);
+      var slipno = v.lngslipno;
+      var revisionno = v.lngrevisionno;
       var slipcode = v.strslipcode;
       var customercode = v.lngdeliveryplacecode;
       var customername = v.strdeliveryplacename;
@@ -94,6 +96,8 @@ $(function () {
 
       // html 出力
       $target_row.attr('data-id', id);
+      $target_row.attr('slipno', slipno);
+      $target_row.attr('revisionno', revisionno);
       $('.slipcode', $target_row).html(slipcode);
       $('.customer .customercode', $target_row).html('[' + customercode + '] ');
       $('.customer .customername', $target_row).html(customername);
@@ -124,10 +128,14 @@ $(function () {
       var taxamount = (curtotalprice * (tax * 100)) / 100;
       if (taxclasscode == 1) taxamount = 0;
       var id = v.strslipcode;
+      var slipno = v.lngslipno;
+      var revisionno = v.lngrevisionno;
       var strnote = v.strnote;
 
       // html 出力
       $target_row.attr('data-id', id);
+      $target_row.attr('slipno', slipno);
+      $target_row.attr('revisionno', revisionno);
       $('.slipcode', $target_row).html(slipcode);
       $('.customer .customercode', $target_row).html('[' + customercode + '] ');
       $('.customer .customername', $target_row).html(customername);

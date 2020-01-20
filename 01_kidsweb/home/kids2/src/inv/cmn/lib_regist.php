@@ -35,7 +35,7 @@
 *    @return Array     $strSQL 検索用SQL文 OR Boolean FALSE
 *    @access public
 */
-function fncGetSearchMSlipSQL ( $aryCondtition = array(), $renew = false, $objDB)
+function fncGetSearchMSlipSQL ( $aryCondtition = array(), $lnginvoiceno, $objDB)
 {
     // -----------------------------
     //  検索条件の動的設定
@@ -120,7 +120,7 @@ function fncGetSearchMSlipSQL ( $aryCondtition = array(), $renew = false, $objDB
     $aryOutQuery[] = " LEFT JOIN m_user mu2 ON mu2.lngusercode = ms.lnginsertusercode ";
 
     // Where句
-    $aryOutQuery[] = " WHERE not exists (select lngslipno from m_slip ms1 where ms1.lngslipno = ms.lngslipno and lngslipno < 0) " ; // 削除済みは対象外
+    $aryOutQuery[] = " WHERE not exists (select lngslipno from m_slip ms1 where ms1.lngslipno = ms.lngslipno and ms1.lngrevisionno < 0) " ; // 削除済みは対象外
 
     foreach($aryCondtition as $column => $value) {
         $value = trim($value);
@@ -189,9 +189,13 @@ function fncGetSearchMSlipSQL ( $aryCondtition = array(), $renew = false, $objDB
         }
     }
 
-    if($renew == false)
+    if($lnginvoiceno == null)
     {
         $aryOutQuery[] = " AND  ms.lngsalesno NOT IN( SELECT m_sales.lngsalesno FROM m_sales WHERE lnginvoiceno IS NOT NULL) " ;
+    }
+    else
+    {
+        $aryOutQuery[] = " AND  ms.lngsalesno NOT IN( SELECT m_sales.lngsalesno FROM m_sales WHERE lnginvoiceno <> " . $lnginvoiceno .  ") " ;
     }
 
     // OrderBy句
@@ -1029,9 +1033,12 @@ function fncInvoiceInsertReturnArray($aryData, $aryResult=null, $objAuth, $objDB
 {
     $insertAry = [];
 
-    // 出力明細一覧の納品書番号
+    // 出力明細一覧の納品書コード
     $slipCodeArray = explode(',' ,$aryData['slipCodeList']);
     $insertAry['slipCodeArray']  = $slipCodeArray;
+
+    $insertAry['slipNoArray']  = explode(',' ,$aryData['slipNoList']);
+    $insertAry['revisionNoArray']  = explode(',' ,$aryData['revisionNoList']);
 
     // 請求書No
     // 登録時 : MAX(請求書番号内の請求書マスタ.請求書番号)+1
@@ -1249,7 +1256,7 @@ function fncInvoiceInsert( $insertAry ,$objDB, $objAuth)
     {
         $condtition = [];
         $condtition['strSlipCode'] = $strslipcode;
-        $strQuery = fncGetSearchMSlipSQL ($condtition, true, $objDB);
+        $strQuery = fncGetSearchMSlipSQL ($condtition, $insertAry['lnginvoiceno'], $objDB);
         if( !$lngResultID = $objDB->execute( $strQuery ) )
         {
             fncOutputError ( 9051, DEF_ERROR, "", TRUE, "", $objDB );

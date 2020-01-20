@@ -178,7 +178,7 @@ function fncGetSalesDetailNoToInfoSQL ( $lngSalesNo, $lngRevisionNo )
 	$aryQuery[] = " LEFT JOIN m_Tax t USING (lngTaxCode)";
 
 	$aryQuery[] = " WHERE sd.lngSalesNo = " . $lngSalesNo . "";
-	$aryQuery[] = " AND sd.lngRevisionNo = " . $lngRevisionNo . "";
+	$aryQuery[] = " AND sd.lngRevisionNo = " . (int)$lngRevisionNo . "";
 
 	$aryQuery[] = " ORDER BY sd.lngSortKey ASC ";
 

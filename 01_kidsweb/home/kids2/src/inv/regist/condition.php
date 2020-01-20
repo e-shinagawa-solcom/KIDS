@@ -78,7 +78,7 @@
                 $params[$key] = pg_escape_string($condition);
             }
             // SQL文取得
-            $strQuery = fncGetSearchMSlipSQL ($params, false, $objDB);
+            $strQuery = fncGetSearchMSlipSQL ($params, null, $objDB);
             // クエリ実行
             list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
             // 結果件数を取得

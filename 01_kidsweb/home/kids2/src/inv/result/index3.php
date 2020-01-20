@@ -30,6 +30,7 @@
     require (SRC_ROOT . "m/cmn/lib_m.php");
     require (SRC_ROOT . "inv/cmn/lib_regist.php");
     require (SRC_ROOT . "inv/cmn/column.php");
+    require (LIB_EXCLUSIVEFILE);
 
     // オブジェクト生成
     $objDB   = new clsDB();
@@ -93,7 +94,7 @@
     }
     else
     {
-        fncOutputError( 9061, DEF_ERROR, "データが異常です", TRUE, "../inv/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+        MoveToErrorPage( "データは削除済みです" );
     }
 
 
@@ -107,6 +108,20 @@
         // --------------------------------
         //    削除可能かどうかのチェック
         // --------------------------------
+
+        // トランザクション開始
+        $objDB->transactionBegin();
+
+        if( !lockInvoice($lngInvoiceNo, $objDB) )
+        {
+            MoveToErrorPage("請求書データのロックに失敗しました");
+        }
+
+        if( isInvoiceModified($lngInvoiceNo, $lngRevisionNo, $objDB) )
+        {
+            MoveToErrorPage("請求書データが更新または削除されています");
+        }
+        
         // 請求書明細に紐づ売上マスタの売上ステータスが締済みは削除不可
         if (fncSalesStatusIsClosed($lngInvoiceNo, $objDB))
         {
