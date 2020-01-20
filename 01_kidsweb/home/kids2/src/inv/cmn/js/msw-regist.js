@@ -617,6 +617,35 @@
 
         var strMode = $('input[name="strMode"]').val();
 
+        // 既存フォーム削除
+        var delold = document.getElementsByName('slipCodeList');
+        if( delold.length > 0 )
+        {
+            for( var i = 0; i < delold.length; i++ ){
+                delold[i].parentNode.removeChild(delold[i]);
+            }
+        }
+        delold = document.getElementsByName('mode');
+        if( delold.length > 0 )
+        {
+            for( var i = 0; i < delold.length; i++ ){
+                delold[i].parentNode.removeChild(delold[i]);
+            }
+        }
+        delold = document.getElementsByName('taxclass');
+        if( delold.length > 0 )
+        {
+            for( var i = 0; i < delold.length; i++ ){
+                delold[i].parentNode.removeChild(delold[i]);
+            }
+        }
+        delold = document.getElementsByName('tax');
+        if( delold.length > 0 )
+        {
+            for( var i = 0; i < delold.length; i++ ){
+                delold[i].parentNode.removeChild(delold[i]);
+            }
+        }
         // フォーム追加
         var ele1 = document.createElement('input');
         // データを設定
@@ -657,10 +686,10 @@
             var windowName = 'registPreview';
             if (strMode == 'renewPrev') {
                 // 修正
-                url = '/inv/regist/renew.php?strSessionID=' + $.cookie('strSessionID');
+                url = '/inv/regist/renew.php?strSessionID=' + $('input[name="strSessionID"]').val();
             } else {
                 // 登録
-                url = '/inv/regist/index.php?strSessionID=' + $.cookie('strSessionID');
+                url = '/inv/regist/index.php?strSessionID=' + $('input[name="strSessionID"]').val();
             }
 
             // フォーム設定
