@@ -106,7 +106,7 @@ reset($aryData);
 
 // 検索SQLを実行し検索（ヒット）件数を取得する
 $strQuery = fncGetSearchSlipSQL($arySearchColumn, $aryData, $objDB, "", 0, $aryData["strSessionID"]);
-
+fncDebug("kids2.log", $strQuery, __FILE__, __LINE__, "a");
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
 if ($lngResultNum) {

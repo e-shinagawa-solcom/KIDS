@@ -89,7 +89,7 @@ function fncGetSlipHeadNoToInfoSQL ( $lngSlipNo, $lngRevisionNo )
 *	@return strQuery 	$strQuery 	検索用SQL文
 *	@access public
 */
-function fncGetSlipDetailNoToInfoSQL ( $lngSlipNo)
+function fncGetSlipDetailNoToInfoSQL ( $lngSlipNo, $lngRevisionNo )
 {
 	// ソートキー
 	$aryQuery[] = "SELECT distinct on (sd.lngSortKey) sd.lngSortKey as lngrecordno, ";
@@ -128,7 +128,7 @@ function fncGetSlipDetailNoToInfoSQL ( $lngSlipNo)
 	$aryQuery[] = " FROM t_SlipDetail sd";
 
 	$aryQuery[] = " WHERE sd.lngSlipNo = " . $lngSlipNo . "";
-	$aryQuery[] = " AND sd.lngRevisionNo = (SELECT MAX( s.lngRevisionNo ) FROM m_slip s WHERE s.lngSlipNo = sd.lngSlipNo)";
+	$aryQuery[] = " AND sd.lngRevisionNo = " . (int)$lngRevisionNo . "";
 	
 	$aryQuery[] = " ORDER BY sd.lngSortKey ASC ";
 
@@ -581,10 +581,10 @@ function fncDeleteSlip($lngSlipNo, $objDB, $objAuth)
  *	@return Boolean 	true		実行成功
  *						false		実行失敗 情報取得失敗
  */
-function fncUpdateReceiveStatus($lngSlipNo, $objDB)
+function fncUpdateReceiveStatus($lngSlipNo, $lngRevisionNo, $objDB)
 {
 	// 納品伝票明細データの取得
-	$strQuery = fncGetSlipDetailNoToInfoSQL ( $lngSlipNo );
+	$strQuery = fncGetSlipDetailNoToInfoSQL ( $lngSlipNo, $lngRevisionNo );
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
 	if ( $lngResultNum )
