@@ -268,7 +268,7 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 	// 売上状態コード
 	$arySelectQuery[] = ", sa.lngSalesStatusCode as lngSalesStatusCode";
 	$arySelectQuery[] = ", ss.strSalesStatusName as strSalesStatusName";
-	$arySelectQuery[] = ", ti.lnginvoiceno as lnginvoiceno";
+	//$arySelectQuery[] = ", ti.lnginvoiceno as lnginvoiceno";
 	
 	// 通貨単位
 	$arySelectQuery[] = ", s.lngMonetaryUnitCode";
@@ -292,7 +292,7 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 	$aryFromQuery[] = " LEFT JOIN m_MonetaryUnit mu ON s.lngMonetaryUnitCode = mu.lngMonetaryUnitCode";
 	$aryFromQuery[] = " LEFT JOIN m_User u ON s.lngusercode = u.lngusercode";
 	$aryFromQuery[] = " LEFT JOIN m_Company delv_c ON s.lngDeliveryPlaceCode = delv_c.lngCompanyCode";
-	$aryFromQuery[] = " LEFT JOIN t_invoicedetail ti ON ti.lngslipno = s.lngslipno and ti.lngsliprevisionno = s.lngrevisionno";
+	//$aryFromQuery[] = " LEFT JOIN t_invoicedetail ti ON ti.lngslipno = s.lngslipno and ti.lngsliprevisionno = s.lngrevisionno";
 	// From句 クエリー連結
 	$aryOutQuery[] = implode("\n", $aryFromQuery);
 
