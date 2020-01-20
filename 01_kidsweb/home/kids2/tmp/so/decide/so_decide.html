@@ -24,9 +24,9 @@
 	<script src="/cmn/jquery/ui/jquery-ui-1.12.0.js"></script>
 	<!-- <script src="/so/decide/js/functions.js" defer></script> -->
 	<script src="/so/decide/js/decide-confirm.js" defer></script>
-    <link rel="stylesheet" href="/so/decide/css/forms-finish.css">
-    <!-- ボタン画像の共通の振る舞い CSS -->
-    <link rel="stylesheet" href="/cmn/css/base/button-behaivior.css">
+	<link rel="stylesheet" href="/so/decide/css/forms-finish.css">
+	<!-- ボタン画像の共通の振る舞い CSS -->
+	<link rel="stylesheet" href="/cmn/css/base/button-behaivior.css">
 	<link rel="stylesheet" type="text/css" media="screen" href="/so/decide/css/forms.css">
 	<link rel="stylesheet" type="text/css" media="screen" href="/so/decide/css/table.css">
 	<link rel="stylesheet" type="text/css" media="screen" href="/so/decide/css/table-decide.css">
@@ -38,188 +38,226 @@
 
 <body class="background">
 
-<!-- 入力フォーム -->
-<div class="form-box">
-	<!-- フォームヘッダ -->
-	<div class="form-box__header">
-		<p class="form-box__header__title">受注確定</p>
-	</div>
-	<!-- フォームコンテンツ -->
-	<div class="form-box__contents">
-		<form name="decideReceive" action="javascript:void(0);" method="post">
-			<input type="submit">
-			<div class="regist-tab-header">
-				<div class="regist-line">
-					<span class="regist-label">
-						<span class="regist-label__text">製品コード</span>
-						<input class="TxtStyle05L" name="strProductCode" readonly value="_%strproductcode%_">
-						<input class="disTxt46L" name="strProductName" readonly value="_%strproductname%_">
-					</span>
-				</div>
-				<div class="regist-line">
-					<table class="table-box" style="height: 205px;">
-						<tr>
-							<td width: 800px;>
-								<div class="regist-label div-table">
-									<table class="table-fix">
-										<thead>
-											<tr>
-												<th>選択
-													<br>
-													<input name="allSel" type="checkbox" style="width: 10px;">
-												</th>
-											</tr>
-										</thead>
-										<!-- 固定ヘッダ -->
-									</table>
-									<div id="header_h">
-										<table class="table-description" name="T">
+	<!-- 入力フォーム -->
+	<div class="form-box">
+		<!-- フォームヘッダ -->
+		<div class="form-box__header">
+			<p class="form-box__header__title">受注確定</p>
+		</div>
+		<!-- フォームコンテンツ -->
+		<div class="form-box__contents">
+			<form name="decideReceive" action="javascript:void(0);" method="post">
+				<input type="submit">
+				<div class="regist-tab-header">
+					<div class="regist-line">
+						<span class="regist-label">
+							<span class="regist-label__text">製品コード</span>
+							<input class="disTxt05L" name="strProductCode" readonly value="_%strProductCode%_">
+							<input class="disTxt46L" name="strProductName" readonly value="_%strProductName%_">
+							<input type="hidden" name="lngProductNo" value="_%lngProductNo%_">
+							<input type="hidden" name="lngProductRevisionNo" value="_%lngProductRevisionNo%_">
+							<input type="hidden" name="strReviseCode" value="_%strReviseCode%_">
+						</span>
+						<span class="regist-label">
+							<span class="regist-label__text">顧客品番</span>
+							<input class="TxtStyle05L" name="strGoodsCode" value="_%strGoodsCode%_">
+						</span>
+					</div>
+					<div class="regist-line">
+						<span class="regist-label">
+							<span class="regist-label__text">営業部署</span>
+							<input class="disTxt05L" name="lngInChargeGroupCode" readonly value="_%lngInChargeGroupCode%_">
+							<input class="disTxt46L" name="strInChargeGroupName" readonly value="_%strInChargeGroupName%_">
+						</span>
+					</div>
+					<div class="regist-line">
+						<span class="regist-label">
+							<span class="regist-label__text">担当者</span>
+							<input class="disTxt05L" name="lngInChargeUserCode" readonly value="_%lngInChargeUserCode%_">
+							<input class="disTxt46L" name="strInChargeUserName" readonly value="_%strInChargeUserName%_">
+						</span>
+					</div>
+					<div class="regist-line">
+						<span class="regist-label">
+							<span class="regist-label__text">開発担当者</span>
+							<input class="disTxt05L" name="lngDevelopUserCode" readonly value="_%lngDevelopUserCode%_">
+							<input class="disTxt46L" name="strDevelopUserName" readonly value="_%strDevelopUserName%_">
+						</span>
+					</div>
+					<div class="regist-line">
+						<table class="table-box" style="height: 205px;">
+							<tr>
+								<td width: 800px;>
+									<div class="regist-label div-table">
+										<table class="table-fix">
+											<thead id="tbl_detail_chkbox_head">
+												<tr>
+													<th>選択
+														<br>
+														<input name="allSel" type="checkbox" style="width: 10px;">
+													</th>
+												</tr>
+											</thead>
+											<!-- 固定ヘッダ -->
+										</table>
+										<div id="header_h">
+											<table class="table-decide-description" name="T" id="tbl_detail_head">
+												<thead>
+													<!-- 水平ヘッダ -->
+													<tr>
+														<th>No.</th>
+														<th>明細<br>行番号</th>
+														<th>◎顧客受注番号</th>
+														<th>顧客</th>
+														<th>納期</th>
+														<th>売上分類</th>
+														<th>売上区分</th>
+														<th>単価</th>
+														<th>単位</th>
+														<th>入数</th>
+														<th>数量</th>
+														<th>小計</th>
+														<th>明細備考</th>
+														<th style="display:none">受注番号</th>
+														<th style="display:none">リビジョン番号</th>
+														<th style="display:none">カートン入数</th>
+														<th style="display:none">製品数量</th>
+													</tr>
+												</thead>
+											</table>
+										</div>
+										<div id="header_v">
+											<table class="table-decide-description" name="TV" id="tbl_detail_chkbox">
+												<tbody>
+												</tbody>
+											</table>
+										</div>
+
+										<div id="data">
+											<table class="table-decide-description" name="T" id="tbl_detail">
+												<tbody>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</td>
+								<td style="width: 50px;"></td>
+								<td style="width: 100px;">
+									<img class="search button" src="/img/type01/so/conchange_off_ja_bt.gif" alt="form search">
+									<br>
+									<br>
+									<br>
+									<img class="add button" src="/img/type01/cmn/querybt/add_blown_off_ja_bt(2).gif" alt="form add">
+								</td>
+							</tr>
+						</table>
+					</div>
+					<div class="regist-line">
+						<table class="table-box">
+							<tr>
+								<td>
+									<div class="regist-label div-decide-table">
+										<table class="table-decide-fix">
 											<thead>
-												<!-- 水平ヘッダ -->
 												<tr>
 													<th>No.</th>
-													<th>明細行番号</th>
-													<th>顧客</th>
-													<th>売上分類</th>
-													<th>売上区分</th>
-													<th>納期</th>
 												</tr>
 											</thead>
+											<!-- 固定ヘッダ -->
 										</table>
-									</div>
-									<div id="header_v">
-										<table class="table-description" name="TV" id="tbl_detail_chkbox">
-											<tbody>
-											</tbody>
-										</table>
-									</div>
-
-									<div id="data">
-										<table class="table-description" name="T" id="tbl_detail">
-											<tbody>
-											</tbody>
-										</table>
-									</div>
-								</div>
-							</td>
-							<td style="width: 50px;"></td>
-							<td style="width: 100px;">
-								<img class="search button" src="/img/type01/so/conchange_off_ja_bt.gif" alt="form search">
-								<br>
-								<br>
-								<br>
-								<img class="decide button" src="/img/type01/so/decide_off_ja_bt.gif" alt="form decide">
-							</td>
-						</tr>
-					</table>
-				</div>
-				<div class="regist-line">
-					<table class="table-box">
-						<tr>
-							<td>
-								<div class="regist-label div-decide-table">
-									<table class="table-decide-fix">
-										<thead>
-											<tr>
-												<th>No.</th>
-											</tr>
-										</thead>
-										<!-- 固定ヘッダ -->
-									</table>
-									<div id="header_decide_h">
-										<table class="table-decide-description" name="DECIDE_T">
-											<thead>
-												<tr>
-													<th>明細
-														<br>行番号</th>
-													<th>◎顧客受注番号</th>
-													<th>顧客</th>
-													<th>顧客品番</th>
-													<th>納期</th>
-													<th>売上分類</th>
-													<th>売上区分</th>
-													<th>単価</th>
-													<th>単位</th>
-													<th>入数</th>
-													<th>製品情報</th>
-													<th>数量</th>
-													<th>小計</th>
-													<th>明細備考</th>
-													<th style="display:none">受注番号</th>
-													<th style="display:none">リビジョン番号</th>
-													<th style="display:none">カートン入数</th>
-													<th style="display:none">製品数量</th>
-												</tr>
-											</thead>
-										</table>
-									</div>
-									<div id="header_decide_v">
-										<table class="table-decide-description" name="DECIDE_TV">
-											<tbody id="table_decide_no">
-											</tbody>
-										</table>
-									</div>
-
-									<div id="decide_data">
-										<table class="table-decide-description" name="DECIDE_T">
-											<tbody id="table_decide_body">
-											</tbody>
-										</table>
-									</div>
-								</div>
-							</td>
-							<td style="text-align: center;">
-									<div style="height: 45px;">
+										<div id="header_decide_h">
+											<table class="table-decide-description" name="DECIDE_T">
+												<thead>
+													<tr>
+														<th style="display:none">No.</th>
+														<th>明細
+															<br>行番号</th>
+														<th>◎顧客受注番号</th>
+														<th>顧客</th>
+														<th>納期</th>
+														<th>売上分類</th>
+														<th>売上区分</th>
+														<th>単価</th>
+														<th>単位</th>
+														<th>入数</th>
+														<th>数量</th>
+														<th>小計</th>
+														<th>明細備考</th>
+														<th style="display:none">受注番号</th>
+														<th style="display:none">リビジョン番号</th>
+														<th style="display:none">カートン入数</th>
+														<th style="display:none">製品数量</th>
+													</tr>
+												</thead>
+											</table>
 										</div>
-								<div>
-									<img class="rowtop button" src="/img/type01/so/top.gif" alt="form row top">
-								</div>
-								<div>
-									<img class="rowup button" src="/img/type01/so/up.gif" alt="form row up">
-								</div>
-								<div style="height: 28px;"></div>
-								<div>
-									<img class="rowdown button" src="/img/type01/so/down.gif" alt="form row down">
-								</div>
-								<div>
-									<img class="rowbottom button" src="/img/type01/so/bottom.gif" alt="form row bottom">
-								</div>
-							</td>
-							<td>
-								<img class="delete button" src="/img/type01/so/del_off_ja_bt.gif" alt="form delete">
-								<br>
-								<br>
-								<br>
-								<img class="alldelete button" src="/img/type01/so/alldel_off_ja_bt.gif" alt="form allDelete">
-							</td>
-						</tr>
-					</table>
+										<div id="header_decide_v">
+											<table class="table-decide-description" name="DECIDE_TV" id="tbl_decide_no">
+												<tbody id="table_decide_no">
+												</tbody>
+											</table>
+										</div>
+
+										<div id="decide_data">
+											<table class="table-decide-description" name="DECIDE_T" id="tbl_decide_body">
+												<tbody id="table_decide_body">
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</td>
+								<td style="text-align: center;">
+									<div style="height: 45px;">
+									</div>
+									<div>
+										<img class="rowtop button" src="/img/type01/so/top.gif" alt="form row top">
+									</div>
+									<div>
+										<img class="rowup button" src="/img/type01/so/up.gif" alt="form row up">
+									</div>
+									<div style="height: 28px;"></div>
+									<div>
+										<img class="rowdown button" src="/img/type01/so/down.gif" alt="form row down">
+									</div>
+									<div>
+										<img class="rowbottom button" src="/img/type01/so/bottom.gif" alt="form row bottom">
+									</div>
+								</td>
+								<td>
+									<img class="delete button" src="/img/type01/cmn/querybt/delete_blown_off_ja_bt.gif" alt="form delete">
+									<br>
+									<br>
+									<br>
+									<img class="alldelete button" src="/img/type01/cmn/querybt/all_delete_blown_off_ja_bt.gif" alt="form allDelete">
+								</td>
+							</tr>
+						</table>
+					</div>
 				</div>
-			</div>
-			<input type="hidden" name="strSessionID" value="_%strSessionID%_">
-		</form>
+				<input type="hidden" name="strSessionID" value="_%strSessionID%_">
+			</form>
+		</div>
 	</div>
-</div>
 
-<!-- フォーム ボタン -->
-<div class="form-buttons">
-	<img class="decideRegist button" src="/img/type01/so/reg_off_ja_bt.gif" alt="form decideRegist">
-</div>
-<script type="text/javascript">
-	function $E(name) { return document.getElementById(name); }
-	function scroll() {
-		$E("header_h").scrollLeft = $E("data").scrollLeft;// データ部のスクロールをヘッダに反映
-		$E("header_v").scrollTop = $E("data").scrollTop;// データ部のスクロールをヘッダに反映
-	}
-	$E("data").onscroll = scroll;
+	<!-- フォーム ボタン -->
+	<div class="form-buttons">
+		<img class="decideRegist button" src="/img/type01/so/reg_off_ja_bt.gif" alt="form decideRegist">
+	</div>
+	<script type="text/javascript">
+		function $E(name) { return document.getElementById(name); }
+		function scroll() {
+			$E("header_h").scrollLeft = $E("data").scrollLeft;// データ部のスクロールをヘッダに反映
+			$E("header_v").scrollTop = $E("data").scrollTop;// データ部のスクロールをヘッダに反映
+		}
+		$E("data").onscroll = scroll;
 
 
-	function decide_scroll() {
-		$E("header_decide_h").scrollLeft = $E("decide_data").scrollLeft;// データ部のスクロールをヘッダに反映
-		$E("header_decide_v").scrollTop = $E("decide_data").scrollTop;// データ部のスクロールをヘッダに反映
-	}
-	$E("decide_data").onscroll = decide_scroll;
-</script>
+		function decide_scroll() {
+			$E("header_decide_h").scrollLeft = $E("decide_data").scrollLeft;// データ部のスクロールをヘッダに反映
+			$E("header_decide_v").scrollTop = $E("decide_data").scrollTop;// データ部のスクロールをヘッダに反映
+		}
+		$E("decide_data").onscroll = decide_scroll;
+	</script>
 </body>
 
 </html>

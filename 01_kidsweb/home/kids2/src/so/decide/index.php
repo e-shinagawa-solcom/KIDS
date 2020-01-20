@@ -45,6 +45,7 @@ if (!fncCheckAuthority(DEF_FUNCTION_SO2, $objAuth)) {
 if (!fncCheckAuthority(DEF_FUNCTION_SO4, $objAuth)) {
     fncOutputError(9060, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
+
 //詳細画面の表示
 $lngReceiveNo = $aryData["lngReceiveNo"];
 $lngRevisionNo = $aryData["revisionNo"];
@@ -61,19 +62,17 @@ if( !is_null($aryData["mode"] ) )
     return true; 
 }
 
-//$lngestimateno = fucGetEstimateNo(explode(",", $lngReceiveNo)[0], $objDB);
-
 
 // 排他ロックの取得
 $objDB->transactionBegin();
 if( isEstimateModified($lngestimateno, $lngRevisionNo, $objDB) )
 {
-    fncOutputError(501, DEF_ERROR,  "他のユーザによって更新または削除されています。", true, "../so/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
+    fncOutputError(401, DEF_ERROR,  "他のユーザによって更新または削除されています。", true, "../so/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
 }
 
 // 受注データロック
 if(!lockReceiveFix($lngestimateno, DEF_FUNCTION_SO4, $objDB, $objAuth)){
-    fncOutputError(501, DEF_ERROR, "該当データがロックされています。", true, "../so/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
+    fncOutputError(401, DEF_ERROR, "該当データがロックされています。", true, "../so/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
 }
 
 foreach($lngReceiveNoList as $eachLngReceiveNo)
@@ -89,9 +88,11 @@ foreach($lngReceiveNoList as $eachLngReceiveNo)
 
 $objDB->transactionCommit();
 
-
+//詳細画面の表示
+// $lngReceiveNo = $aryData["lngReceiveNo"];
+// $lngRevisionNo = $aryData["lngRevisionNo"];
 // 指定受注番号の受注データ取得用SQL文の作成
-$strQuery = fncGetReceiveHeadNoToInfoSQL($lngReceiveNo, $lngRevisionNo);
+$strQuery = fncGetReceiveHeadInfoSQL($aryData["lngReceiveNo"], $lngestimateno);
 
 // 詳細データの取得
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
@@ -106,14 +107,31 @@ if ($lngResultNum) {
 $objDB->freeResult($lngResultID);
 // 取得データの調整
 $aryNewResult = array();
-$aryNewResult["strproductcode"] = $aryResult[0]["strproductcode"]. "_".$aryResult[0]["strrevisecode"];
-$aryNewResult["strproductname"] = $aryResult[0]["strproductname"];
-$aryNewResult["strreceivecode"] = $aryResult[0]["strreceivecode"];
-$aryNewResult["strnote"] = $aryResult[0]["strnote"];
+$aryNewResult["strProductCode"] = $aryResult[0]["strproductcode"] . "_" . $aryResult[0]["strrevisecode"];
+$aryNewResult["strProductName"] = $aryResult[0]["strproductname"];
+$aryNewResult["strGoodsCode"] = $aryResult[0]["strgoodscode"];
+$aryNewResult["lngProductNo"] = $aryResult[0]["lngproductno"];
+$aryNewResult["lngProductRevisionNo"] = $aryResult[0]["lngproductrevisionno"];
+$aryNewResult["strReviseCode"] = $aryResult[0]["strrevisecode"];
+$aryNewResult["lngInChargeGroupCode"] = $aryResult[0]["strinchargegroupdisplaycode"];
+$aryNewResult["strInChargeGroupName"] = $aryResult[0]["strinchargegroupdisplayname"];
+$aryNewResult["lngInChargeUserCode"] = $aryResult[0]["strinchargeuserdisplaycode"];
+$aryNewResult["strInChargeUserName"] = $aryResult[0]["strinchargeuserdisplayname"];
+$aryNewResult["lngDevelopUserCode"] = $aryResult[0]["strdevelopuserdisplaycode"];
+$aryNewResult["strDevelopUserName"] = $aryResult[0]["strdevelopuserdisplayname"];
 $aryNewResult["strSessionID"] = $aryData["strSessionID"];
+
+for ($i = 0; $i < $lngResultNum; $i++) {
+    if ($i == 0) {
+        $lngReceiveNo = $aryResult[$i]["lngreceiveno"];
+    } else {
+        $lngReceiveNo .= "," . $aryResult[$i]["lngreceiveno"];
+    }
+}
+
 ////////// 明細行の取得 ////////////////////
 // 指定受注番号の受注明細データ取得用SQL文の作成
-$strQuery = fncGetReceiveDetailNoToInfoSQL($lngReceiveNo, "");
+$strQuery = fncGetReceiveDetailNoToInfoSQL($lngReceiveNo, $aryResult[0]["lngrevisionno"]);
 // echo $strQuery;
 // 明細データの取得
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
@@ -124,6 +142,18 @@ if ($lngResultNum) {
     }
 } else {
     fncOutputError(403, DEF_WARNING, "受注番号に対する明細情報が見つかりません。", true, "../so/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
+}
+
+$objDB->freeResult($lngResultID);
+
+$strQuery = "SELECT lngproductunitcode, strproductunitname FROM m_productunit";
+list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
+// 検索件数がありの場合
+if ($lngResultNum) {
+    // 指定数以内であれば通常処理
+    for ($i = 0; $i < $lngResultNum; $i++) {
+        $aryProductUnit[] = $objDB->fetchArray($lngResultID, $i);
+    }
 }
 
 $objDB->freeResult($lngResultID);
@@ -151,34 +181,90 @@ $tbodyChkBox = $tableChkBox->getElementsByTagName("tbody")->item(0);
 $tableDetail = $doc->getElementById("tbl_detail");
 $tbodyDetail = $tableDetail->getElementsByTagName("tbody")->item(0);
 
+$lngReceiveNos = explode(",", $aryData["lngReceiveNo"]);
+
+if ($lngReceiveNos) {
+    // 表示項目の抽出
+    foreach ($lngReceiveNos as $key) {
+        $lngReceiveNos[$key] = $key;
+    }
+}
+
+// 検索結果テーブルの取得
+$tabledecideno = $doc->getElementById("tbl_decide_no");
+$tbodyDecideNO = $tabledecideno->getElementsByTagName("tbody")->item(0);
+
+$tabledecidebody = $doc->getElementById("tbl_decide_body");
+$tbodyDecideBody = $tabledecidebody->getElementsByTagName("tbody")->item(0);
+
 // 明細情報の出力
-$num = 0;
+$detailNum = 0;
+$decideNum = 0;
 foreach ($aryDetailResult as $detailResult) {
-    $num += 1;
-    // tbody > tr要素作成
-    $trChkBox = $doc->createElement("tr");
-    // 選択チェックボックス
-    $chkBox = $doc->createElement("input");
-    $chkBox->setAttribute("type", "checkbox");
-    $id = $detailResult["lngreceiveno"] . "_" . $detailResult["lngreceivedetailno"] . "_" . $detailResult["lngrevisionno"];
-    $chkBox->setAttribute("id", $id);
-    $chkBox->setAttribute("style", "width: 10px;");
-    $tdChkBox = $doc->createElement("td");
-    $tdChkBox->setAttribute("style", "width: 30px;");
-    $tdChkBox->appendChild($chkBox);
-    $trChkBox->appendChild($tdChkBox);
-    // tbody > tr
-    $tbodyChkBox->appendChild($trChkBox);
+    $isdecideObj = false;
+    if (array_key_exists($detailResult["lngreceiveno"], $lngReceiveNos)) {
+        $isdecideObj = true;
+    }
+
+    if (!$isdecideObj) {
+        $detailNum += 1;
+        // tbody > tr要素作成
+        $trChkBox = $doc->createElement("tr");
+        // 選択チェックボックス
+        $chkBox = $doc->createElement("input");
+        $chkBox->setAttribute("type", "checkbox");
+        $id = $detailResult["lngreceiveno"] . "_" . $detailResult["lngreceivedetailno"] . "_" . $detailResult["lngrevisionno"];
+        $chkBox->setAttribute("id", $id);
+        $chkBox->setAttribute("style", "width: 10px;");
+        $tdChkBox = $doc->createElement("td");
+        $tdChkBox->setAttribute("style", "width: 20px;text-align:center;");
+        $tdChkBox->appendChild($chkBox);
+        $trChkBox->appendChild($tdChkBox);
+        // tbody > tr
+        $tbodyChkBox->appendChild($trChkBox);
+
+    } else {
+        $decideNum += 1;
+        // tbody > tr要素作成
+        $trBody = $doc->createElement("tr");
+        // No.
+        $td = $doc->createElement("td", $decideNum);
+        $td->setAttribute("style", "width: 25px;");
+        $trBody->appendChild($td);
+        // tbody > tr
+        $tbodyDecideNO->appendChild($trBody);
+    }
 
     // tbody > tr要素作成
     $trBody = $doc->createElement("tr");
-    // No.
-    $td = $doc->createElement("td", $num);
-    $td->setAttribute("style", "width: 25px;");
-    $trBody->appendChild($td);
+
+    // if (!$isdecideObj) {
+        // No.
+        $td = $doc->createElement("td", $detailNum);
+        $td->setAttribute("style", "width: 25px;");
+        if ($isdecideObj) {
+            $td->setAttribute("style", "display:none");
+        }
+        $trBody->appendChild($td);
+    // }
 
     // 明細行番号
     $td = $doc->createElement("td", $detailResult["lngreceivedetailno"]);
+    $td->setAttribute("id", "lngreceivedetailno");
+    $trBody->appendChild($td);
+
+    // 顧客受注番号
+    $td = $doc->createElement("td");
+    $td->setAttribute("id", "strcustomerreceivecode");
+    $text = $doc->createElement("input");
+    $text->setAttribute("type", "text");
+    $text->setAttribute("class", "form-control form-control-sm txt-kids");
+    $text->setAttribute("style", "width:90px;");
+    $text->setAttribute("value", $detailResult["strcustomerreceivecode"]);
+    $td->appendChild($text);
+    // if (!$isdecideObj) {
+    //     $td->setAttribute("style", "display:none");
+    // }
     $trBody->appendChild($td);
 
     // 顧客
@@ -188,24 +274,157 @@ foreach ($aryDetailResult as $detailResult) {
         $textContent = "";
     }
     $td = $doc->createElement("td", toUTF8($textContent));
+    $td->setAttribute("id", "strcompanydisplaycode");
+    $trBody->appendChild($td);
+
+    // 納期
+    $td = $doc->createElement("td", $detailResult["dtmdeliverydate"]);
+    $td->setAttribute("id", "dtmdeliverydate");
     $trBody->appendChild($td);
 
     // 売上分類
     $textContent = "[" . $detailResult["lngsalesdivisioncode"] . "]" . " " . $detailResult["strsalesdivisionname"];
     $td = $doc->createElement("td", toUTF8($textContent));
+    $td->setAttribute("id", "lngsalesdivisioncode");
     $trBody->appendChild($td);
 
     // 売上区分
     $textContent = "[" . $detailResult["lngsalesclasscode"] . "]" . " " . $detailResult["strsalesclassname"];
     $td = $doc->createElement("td", toUTF8($textContent));
+    $td->setAttribute("id", "lngsalesclasscode");
     $trBody->appendChild($td);
 
-    // 納期
-    $td = $doc->createElement("td", toUTF8($detailResult["dtmdeliverydate"]));
+    // 単価
+    $textContent = toMoneyFormat($aryResult[0]["lngmonetaryunitcode"], $aryResult[0]["strmonetaryunitsign"], $detailResult["curproductprice"]);
+    $td = $doc->createElement("td", $textContent);
+    $td->setAttribute("id", "curproductprice");
     $trBody->appendChild($td);
-    // tbody > tr
-    $tbodyDetail->appendChild($trBody);
 
+    // 単位
+    $td = $doc->createElement("td");
+    $td->setAttribute("id", "lngproductunitcode");
+    $select = $doc->createElement("select");
+    foreach ($aryProductUnit as $productunit) {
+        $option = $doc->createElement("option", $productunit["strproductunitname"]);
+        $option->setAttribute("value", $productunit["lngproductunitcode"]);
+        if ($productunit["lngproductunitcode"] == $detailResult["lngproductunitcode"]) {
+            $option->setAttribute("selected", "true");
+        }
+        $select->appendChild($option);
+    }
+    $td->appendChild($select);
+    $trBody->appendChild($td);
+
+    // 入数
+    $lngunitquantity = 1;
+    $detailResult["lngcartonquantity"] = $detailResult["lngcartonquantity"] == null ? 0 : $detailResult["lngcartonquantity"];
+    $detailResult["lngproductquantity"] = $detailResult["lngproductquantity_est"] == null ? 0 : $detailResult["lngproductquantity_est"];
+    $lngproductquantity = $detailResult["lngproductquantity"] / $lngunitquantity;
+    if ($detailResult["lngproductunitcode"] == 2) {
+        $lngunitquantity = $detailResult["lngcartonquantity"];
+        $lngproductquantity = $detailResult["lngproductquantity"] / $lngunitquantity;   
+        $td = $doc->createElement("td");
+        $text = $doc->createElement("input");
+        $text->setAttribute("type", "text");
+        $text->setAttribute("class", "form-control form-control-sm txt-kids");
+        $text->setAttribute("style", "width:90px;");
+        $text->setAttribute("value", $lngunitquantity);
+        $td->appendChild($text);
+    } else {
+        $td = $doc->createElement("td", $lngunitquantity);
+    }
+    $td->setAttribute("id", "lngunitquantity");
+    $td->setAttribute("style", "width:100px;");
+    $trBody->appendChild($td);
+
+
+    // 数量
+    $textContent = number_format($lngproductquantity);
+    $td = $doc->createElement("td", $textContent);
+    $td->setAttribute("id", "lngproductquantity_re");
+    $trBody->appendChild($td);
+
+    // 小計
+    $textContent = toMoneyFormat($aryResult[0]["lngmonetaryunitcode"], $aryResult[0]["strmonetaryunitsign"], $detailResult["cursubtotalprice"]);
+    $td = $doc->createElement("td", $textContent);
+    $td->setAttribute("id", "cursubtotalprice");
+    $trBody->appendChild($td);
+
+    // 備考
+    $td = $doc->createElement("td");
+    $td->setAttribute("id", "strdetailnote");
+    $text = $doc->createElement("input");
+    $text->setAttribute("type", "text");
+    $text->setAttribute("class", "form-control form-control-sm txt-kids");
+    $text->setAttribute("style", "width:240px;");
+    $text->setAttribute("value", toUTF8($detailResult["strdetailnote"]));
+    $td->appendChild($text);
+    $trBody->appendChild($td);
+
+    // 製品コード
+    $textContent = $detailResult["strproductcode"];
+    $td = $doc->createElement("td", toUTF8($textContent));
+    $td->setAttribute("id", "strproductcode");
+    $td->setAttribute("style", "display:none");
+    $trBody->appendChild($td);
+
+    // 製品名称
+    $textContent = "[" . $detailResult["strproductcode"] . "]" . " " . $detailResult["strproductname"];
+    $td = $doc->createElement("td", toUTF8($textContent));
+    $td->setAttribute("id", "strproductname");
+    $td->setAttribute("style", "display:none");
+    $trBody->appendChild($td);
+
+    // 受注番号
+    $textContent = $detailResult["lngreceiveno"];
+    $td = $doc->createElement("td", toUTF8($textContent));
+    $td->setAttribute("id", "lngreceiveno");
+    $td->setAttribute("style", "display:none");
+    $trBody->appendChild($td);
+
+    // 受注コード
+    $textContent = $aryResult[0]["strreceivecode"];
+    $td = $doc->createElement("td", toUTF8($textContent));
+    $td->setAttribute("id", "strreceivecode");
+    $td->setAttribute("style", "display:none");
+    $trBody->appendChild($td);
+
+    // リビジョン番号
+    $textContent = $detailResult["lngrevisionno"];
+    $td = $doc->createElement("td", toUTF8($textContent));
+    $td->setAttribute("id", "lngrevisionno");
+    $td->setAttribute("style", "display:none");
+    $trBody->appendChild($td);
+
+    // カートン入数
+    $textContent = $detailResult["lngcartonquantity"];
+    $td = $doc->createElement("td", toUTF8($textContent));
+    $td->setAttribute("id", "lngcartonquantity");
+    $td->setAttribute("style", "display:none");
+    $trBody->appendChild($td);
+
+    // 数量
+    $textContent = $detailResult["lngproductquantity"];
+    $td = $doc->createElement("td", toUTF8($textContent));
+    $td->setAttribute("id", "lngproductquantity");
+    $td->setAttribute("style", "display:none");
+    $trBody->appendChild($td);
+
+    // 製品リビジョン番号
+    $textContent = $detailResult["strrevisecode"];
+    $td = $doc->createElement("td", toUTF8($textContent));
+    $td->setAttribute("id", "strrevisecode");
+    $td->setAttribute("style", "display:none");
+    $trBody->appendChild($td);
+    
+    if (!$isdecideObj) {
+        // tbody > tr
+        $tbodyDetail->appendChild($trBody);
+    } else {
+        // tbody > tr
+        $tbodyDecideBody->appendChild($trBody);
+
+    }
 }
 
 $objDB->close();

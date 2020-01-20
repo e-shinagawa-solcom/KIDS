@@ -203,18 +203,18 @@ $(function(){
     for (var row = 1; row < keyLength; row++) {
       // 押下したボタンに対応する(エリアごと）かつチェック済のチェックボックスを取得
       if (cellValue[row][confirmCol].match(buttonMatch) && cellValue[row][confirmCol].match(checkedMatch)) {   
-        var companyCol = getColumnForRowAndClassName(row, companyClassName, searchList);
+        // var companyCol = getColumnForRowAndClassName(row, companyClassName, searchList);
 
-        if (beforeCompanyVal === '') {
-          beforeCompanyVal = cellValue[row][companyCol];
-        } else if (beforeCompanyVal !== cellValue[row][companyCol]) {
-          check = false;
-        }
+        // if (beforeCompanyVal === '') {
+        //   beforeCompanyVal = cellValue[row][companyCol];
+        // } else if (beforeCompanyVal !== cellValue[row][companyCol]) {
+        //   check = false;
+        // }
 
-        if (check === false) {
-          alert('複数の顧客先が指定されています。');
-          return false;
-        }
+        // if (check === false) {
+        //   alert('複数の顧客先が指定されています。');
+        //   return false;
+        // }
 
         ret.push(cellValue[row]);
       }
@@ -231,11 +231,12 @@ $(function(){
       if (result) {
         var sessionID = $('input[name="strSessionID"]').val();
 
-        var baseUrl = "/so/decide/index.php"
+        var baseUrl = "/so/decide/index.php";
         var estimateNo = 'estimateNo=';
         var revisionNo = '&revisionNo=';
         var numberKey = '&lngReceiveNo=';
         var actionUrl = baseUrl + "?" + estimateNo + $('input[name="estimateNo"]').val() + revisionNo + $('input[name="revisionNo"]').val() + numberKey +  target + "&strSessionID=" + sessionID;
+        
         var windowName = 'window_confirm';
         var win = window.open(actionUrl, windowName, 'scrollbars=yes, width=1000, height=700, resizable=0 location=0');
 
@@ -311,12 +312,14 @@ $(function(){
       if (result) {
         var sessionID = $('input[name="strSessionID"]').val();
 
-        var baseUrl = "/po/regist/index.php"
+        var baseUrl = "/po/regist/index.php";
+        
         var estimateNo = 'estimateNo=';
         var revisionNo = '&revisionNo=';
         var numberKey = '&lngOrderNo=';
 
         var actionUrl = baseUrl + "?" + estimateNo + $('input[name="estimateNo"]').val() + revisionNo + $('input[name="revisionNo"]').val() + numberKey + target + "&strSessionID=" + sessionID;
+
         var windowName = 'window_confirm';
         var win = window.open(actionUrl, windowName, 'scrollbars=yes, width=1000, height=700, resizable=0 location=0');
         

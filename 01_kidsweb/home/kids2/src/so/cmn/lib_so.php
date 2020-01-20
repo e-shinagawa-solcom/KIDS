@@ -137,10 +137,161 @@ function fncGetReceiveHeadNoToInfoSQL($lngReceiveNo, $lngRevisionNo)
     }
 
     $strQuery = implode("\n", $aryQuery);
-    
+
     return $strQuery;
 }
 
+/**
+ * 指定された受注番号から受注ヘッダ情報を取得するＳＱＬ文を作成
+ *
+ *    指定受注番号のヘッダ情報の取得用ＳＱＬ文作成関数
+ *
+ *    @param  Integer     $lngReceiveNo             取得する受注番号
+ *    @return strQuery     $strQuery 検索用SQL文
+ *    @access public
+ */
+function fncGetReceiveHeadInfoSQL($lngReceiveNo, $lngestimateno)
+{
+    // SQL文の作成
+    $aryQuery[] = "SELECT distinct on (r.lngReceiveNo) r.lngReceiveNo as lngReceiveNo, r.lngRevisionNo as lngRevisionNo";
+
+    // 登録日
+    $aryQuery[] = ", to_char( r.dtmInsertDate, 'YYYY/MM/DD HH24:MI:SS' ) as dtmInsertDate";
+    // 計上日
+    $aryQuery[] = ", to_char( r.dtmAppropriationDate, 'YYYY/MM/DD' ) as dtmReceiveAppDate";
+    // 顧客受注番号
+    $aryQuery[] = ", r.strCustomerReceiveCode as strCustomerReceiveCode";
+    // 受注コード
+    $aryQuery[] = ", r.strReceiveCode as strReceiveCode";
+    // 製品番号
+    $aryQuery[] = "  , p.lngProductNo";
+    $aryQuery[] = "  , p.lngRevisionNo as lngProductRevisionNo";
+    // 製品コード
+    $aryQuery[] = "  , p.strproductcode";
+    $aryQuery[] = "  , p.strproductname";
+    $aryQuery[] = "  , p.strrevisecode";
+    // 顧客品番
+    $aryQuery[] = ", p.strGoodsCode as strGoodsCode";
+    // 入力者
+    $aryQuery[] = ", r.lngInputUserCode as lngInputUserCode";
+    $aryQuery[] = ", input_u.strUserDisplayCode as strInputUserDisplayCode";
+    $aryQuery[] = ", input_u.strUserDisplayName as strInputUserDisplayName";
+    // 顧客
+    $aryQuery[] = ", r.lngCustomerCompanyCode as lngCustomerCode";
+    $aryQuery[] = ", cust_c.strCompanyDisplayCode as strCustomerDisplayCode";
+    $aryQuery[] = ", cust_c.strshortname as strCustomerDisplayName";
+    // 部門
+    $aryQuery[] = ", r.lngGroupCode as lngInChargeGroupCode";
+    $aryQuery[] = ", inchg_g.strGroupDisplayCode as strInChargeGroupDisplayCode";
+    $aryQuery[] = ", inchg_g.strGroupDisplayName as strInChargeGroupDisplayName";
+    // 担当者
+    $aryQuery[] = ", r.lngUserCode as lngInChargeUserCode";
+    $aryQuery[] = ", inchg_u.strUserDisplayCode as strInChargeUserDisplayCode";
+    $aryQuery[] = ", inchg_u.strUserDisplayName as strInChargeUserDisplayName";
+    // 開発担当者
+    $aryQuery[] = ", p.lngdevelopusercode as lngdevelopusercode";
+    $aryQuery[] = ", delp_u.strUserDisplayCode as strdevelopuserdisplaycode";
+    $aryQuery[] = ", delp_u.strUserDisplayName as strdevelopuserdisplayname";
+    // 通貨
+    $aryQuery[] = ", r.lngMonetaryUnitCode as lngMonetaryUnitCode";
+    $aryQuery[] = ", mu.strMonetaryUnitName as strMonetaryUnitName";
+    $aryQuery[] = ", mu.strMonetaryUnitSign as strMonetaryUnitSign";
+    // レートタイプ
+    $aryQuery[] = ", r.lngMonetaryRateCode as lngMonetaryRateCode";
+    $aryQuery[] = ", mr.strMonetaryRateName as strMonetaryRateName";
+    // 換算レート
+    $aryQuery[] = ", r.curConversionRate as curConversionRate";
+    // 状態
+    $aryQuery[] = ", r.lngReceiveStatusCode as lngReceiveStatusCode";
+    $aryQuery[] = ", rs.strReceiveStatusName as strReceiveStatusName";
+    $aryQuery[] = " FROM m_Receive r ";
+    $aryQuery[] = "  inner join ( ";
+    $aryQuery[] = "    select";
+    $aryQuery[] = "      max(lngRevisionNo) lngRevisionNo";
+    $aryQuery[] = "      , lngreceiveno ";
+    $aryQuery[] = "    from";
+    $aryQuery[] = "      m_Receive";
+    $aryQuery[] = "    group by";
+    $aryQuery[] = "      lngreceiveno";
+    $aryQuery[] = "  ) r1";
+    $aryQuery[] = "    on r.lngrevisionno = r1.lngRevisionNo ";
+    $aryQuery[] = "    and r.lngreceiveno = r1.lngreceiveno ";
+    $aryQuery[] = "  LEFT JOIN t_ReceiveDetail rd on rd.lngreceiveno = r.lngreceiveno and rd.lngrevisionno = r.lngrevisionno ";
+    $aryQuery[] = "  LEFT JOIN t_estimatedetail ed ";
+    $aryQuery[] = "    on rd.lngestimateno = ed.lngestimateno ";
+    $aryQuery[] = "    and rd.lngestimatedetailno = ed.lngestimatedetailno ";
+    $aryQuery[] = "    and rd.lngestimaterevisionno = ed.lngrevisionno ";
+    $aryQuery[] = "  LEFT JOIN ( ";
+    $aryQuery[] = "    select";
+    $aryQuery[] = "      p1.strproductcode";
+    $aryQuery[] = "      , p1.strproductname";
+    $aryQuery[] = "      , p1.lnginchargegroupcode";
+    $aryQuery[] = "      , p1.lnginchargeusercode";
+    $aryQuery[] = "      , p1.lngdevelopusercode";
+    $aryQuery[] = "      , p1.strgoodscode";
+    $aryQuery[] = "	     , p1.strrevisecode";
+    $aryQuery[] = "      , p1.lngProductNo";
+    $aryQuery[] = "	     , p1.lngRevisionNo";
+    $aryQuery[] = "    from";
+    $aryQuery[] = "      m_product p1 ";
+    $aryQuery[] = "      inner join ( ";
+    $aryQuery[] = "        select";
+    $aryQuery[] = "          max(p2.lngRevisionNo) lngRevisionNo";
+    $aryQuery[] = "          , p2.strproductcode";
+    $aryQuery[] = "          , p2.strrevisecode ";
+    $aryQuery[] = "        from";
+    $aryQuery[] = "          m_Product p2 ";
+    $aryQuery[] = "        where";
+    $aryQuery[] = "          p2.bytinvalidflag = false ";
+    $aryQuery[] = "          and not exists ( ";
+    $aryQuery[] = "            select";
+    $aryQuery[] = "              strproductcode ";
+    $aryQuery[] = "            from";
+    $aryQuery[] = "              m_product p3 ";
+    $aryQuery[] = "            where";
+    $aryQuery[] = "              p3.lngRevisionNo < 0 ";
+    $aryQuery[] = "              and p3.strproductcode = p2.strproductcode ";
+    $aryQuery[] = "              and p3.strrevisecode = p2.strrevisecode";
+    $aryQuery[] = "          ) ";
+    $aryQuery[] = "        group by";
+    $aryQuery[] = "          p2.strProductCode";
+    $aryQuery[] = "          , p2.strrevisecode";
+    $aryQuery[] = "      ) p4 ";
+    $aryQuery[] = "        on p1.lngRevisionNo = p4.lngRevisionNo ";
+    $aryQuery[] = "        and p1.strproductcode = p4.strproductcode ";
+    $aryQuery[] = "        and p1.strrevisecode = p4.strrevisecode";
+    $aryQuery[] = "  ) p ";
+    $aryQuery[] = "    ON rd.strProductCode = p.strProductCode ";
+    $aryQuery[] = "    and rd.strrevisecode = p.strrevisecode ";
+    $aryQuery[] = " LEFT JOIN m_User input_u ON r.lngInputUserCode = input_u.lngUserCode";
+    $aryQuery[] = " LEFT JOIN m_Company cust_c ON r.lngCustomerCompanyCode = cust_c.lngCompanyCode";
+    $aryQuery[] = " LEFT JOIN m_Group inchg_g ON p.lnginchargegroupcode = inchg_g.lngGroupCode";
+    $aryQuery[] = " LEFT JOIN m_User inchg_u ON p.lnginchargeusercode = inchg_u.lngUserCode";
+    $aryQuery[] = " LEFT JOIN m_User delp_u ON p.lngdevelopusercode = delp_u.lngUserCode";
+    $aryQuery[] = " LEFT JOIN m_ReceiveStatus rs USING (lngReceiveStatusCode)";
+    $aryQuery[] = " LEFT JOIN m_MonetaryUnit mu ON r.lngMonetaryUnitCode = mu.lngMonetaryUnitCode";
+    $aryQuery[] = " LEFT JOIN m_MonetaryRateClass mr ON r.lngMonetaryRateCode = mr.lngMonetaryRateCode";
+    $aryQuery[] = " WHERE";
+    $aryQuery[] = "  ed.lngsalesdivisioncode = ( ";
+    $aryQuery[] = "    select distinct";
+    $aryQuery[] = "      ed.lngsalesdivisioncode ";
+    $aryQuery[] = "    from";
+    $aryQuery[] = "      t_receivedetail rd ";
+    $aryQuery[] = "      left join t_estimatedetail ed ";
+    $aryQuery[] = "        on rd.lngestimateno = ed.lngestimateno ";
+    $aryQuery[] = "        and rd.lngestimaterevisionno = ed.lngrevisionno ";
+    $aryQuery[] = "        and rd.lngestimatedetailno = ed.lngestimatedetailno ";
+    $aryQuery[] = "    where";
+    $aryQuery[] = "      rd.lngreceiveno in (" . $lngReceiveNo . ")";
+    $aryQuery[] = "  ) ";
+    $aryQuery[] = " and r.lngreceivestatuscode = " . DEF_RECEIVE_APPLICATE .  " ";
+    $aryQuery[] = " and rd.lngestimateno = " .$lngestimateno . " ";
+    $aryQuery[] = " and r.lngcustomercompanycode != 0 ";
+
+    $strQuery = implode("\n", $aryQuery);
+
+    return $strQuery;
+}
 /**
  * 指定された受注番号から受注明細情報を取得するＳＱＬ文を作成
  *
@@ -160,6 +311,8 @@ function fncGetReceiveDetailNoToInfoSQL($lngReceiveNo, $lngRevisionNo)
     $aryQuery[] = ", rd.strProductCode as strProductCode";
     $aryQuery[] = ", p.strProductName as strProductName";
     $aryQuery[] = ", p.strproductenglishname as strproductenglishname";
+    $aryQuery[] = ", me.lngProductQuantity as lngProductQuantity_est";
+    $aryQuery[] = ", To_char( me.lngProductQuantity, '9,999,999,990' ) as lngProductQuantity_est2";
     // 売上区分
     $aryQuery[] = ", rd.lngSalesClassCode as lngSalesClassCode";
     $aryQuery[] = ", ss.strSalesClassName as strSalesClassName";
@@ -175,8 +328,15 @@ function fncGetReceiveDetailNoToInfoSQL($lngReceiveNo, $lngRevisionNo)
     // 単位
     $aryQuery[] = ", rd.lngProductUnitCode as lngProductUnitCode";
     $aryQuery[] = ", pu.strProductUnitName as strProductUnitName";
+    $aryQuery[] = ", p.lngcartonquantity";// カートン入数
     // 数量
-    $aryQuery[] = ", To_char( rd.lngProductQuantity, '9,999,999,990' )  as lngProductQuantity";
+    $aryQuery[] = ", rd.lngProductQuantity as lngProductQuantity_pre";
+    // 数量
+    $aryQuery[] = ", To_char( rd.lngProductQuantity, '9,999,999,990' ) as lngProductQuantity";
+    // 入数
+    $aryQuery[] = ", To_char( rd.lngunitquantity, '9,999,999,990' ) as lngunitquantity";
+    // 入数
+    $aryQuery[] = ", rd.lngunitquantity as lngunitquantity_pre";
     // 税抜金額
     $aryQuery[] = ", To_char( rd.curSubTotalPrice, '9,999,999,990.99' )  as curSubTotalPrice";
     // 明細備考

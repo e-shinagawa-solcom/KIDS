@@ -10,7 +10,7 @@
 /* 入力フォーム 確定テーブル */
 .table-decide-description
 {
-    table-layout: fixed;
+    /* table-layout: fixed; */
 
     border-collapse: collapse;
     width: 100%;
@@ -19,8 +19,8 @@
 }
 
 .table-decide-description {
-    width: 215%;
-    max-width: 215%;
+    width: 180%;
+    /* max-width: 180%; */
     margin-bottom: 0rem;
 }
 /* 入力フォーム 確定テーブル thead */
@@ -44,6 +44,8 @@
 .table-decide-description tbody
 {
     display: block;
+    
+    font-size: 9pt;
 
     /* height: 150px; */
 
@@ -65,17 +67,21 @@
 .table-decide-description td{
     border: 1px solid #798787;
 }
-.table-decide-description th:nth-of-type(1),
+/* .table-decide-description th:nth-of-type(1),
 .table-decide-description td:nth-of-type(1)
 {
     width: 50px;
-}
-.table-decide-description th:nth-of-type(2),
+} */
+/* .table-decide-description th:nth-of-type(2),
 .table-decide-description td:nth-of-type(2),
 .table-decide-description th:nth-of-type(4),
 .table-decide-description td:nth-of-type(4),
 .table-decide-description th:nth-of-type(5),
 .table-decide-description td:nth-of-type(5),
+.table-decide-description th:nth-of-type(6),
+.table-decide-description td:nth-of-type(6),
+.table-decide-description th:nth-of-type(7),
+.table-decide-description td:nth-of-type(7),
 .table-decide-description th:nth-of-type(9),
 .table-decide-description td:nth-of-type(9),
 .table-decide-description th:nth-of-type(13),
@@ -90,10 +96,6 @@
 {
     width: 250px;
 }
-.table-decide-description th:nth-of-type(6),
-.table-decide-description td:nth-of-type(6),
-.table-decide-description th:nth-of-type(7),
-.table-decide-description td:nth-of-type(7),
 .table-decide-description th:nth-of-type(10),
 .table-decide-description td:nth-of-type(10),
 .table-decide-description th:nth-of-type(12),
@@ -107,7 +109,7 @@
 .table-decide-description td:nth-of-type(11)
 {
     width: 100px;
-}
+} */
 .table-decide-fix
 {
     table-layout: fixed;
@@ -139,7 +141,7 @@
 }
 
 [name="DECIDE_T"] {
-    width: 215%;
+    width: 180%;
 }
 
 [name="DECIDE_TV"] th {

@@ -15,7 +15,7 @@
 include 'conf.inc';
 require LIB_FILE;
 require_once LIB_EXCLUSIVEFILE;
-require (SRC_ROOT . "so/cmn/lib_so.php");
+require SRC_ROOT . "so/cmn/lib_so.php";
 
 //////////////////////////////////////////////////////////////////////////
 // GETデータ取得
@@ -57,29 +57,22 @@ if( !lockReceive($lngReceiveNo, $objDB)){
 if( isReceiveModified($lngReceiveNo, DEF_RECEIVE_ORDER, $objDB)){
 	fncOutputError( 404, DEF_ERROR, "", TRUE, "../so/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
 }
-
 // 指定受注番号の受注データ取得用SQL文の作成
 $strQuery = fncGetReceiveHeadNoToInfoSQL($lngReceiveNo, $lngRevisionNo);
 
 // 詳細データの取得
-list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
-if ( $lngResultNum )
-{
-	if ( $lngResultNum == 1 )
-	{
-		$aryResult = $objDB->fetchArray( $lngResultID, 0 );
-	}
-	else
-	{
-		fncOutputError( 403, DEF_ERROR, "該当データの取得に失敗しました", TRUE, "../so/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
-	}
-}
-else
-{
-	fncOutputError( 403, DEF_ERROR, "データが異常です", TRUE, "../so/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
+if ($lngResultNum) {
+    if ($lngResultNum == 1) {
+        $aryResult = $objDB->fetchArray($lngResultID, 0);
+    } else {
+        fncOutputError(403, DEF_ERROR, "該当データの取得に失敗しました", true, "../so/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
+    }
+} else {
+    fncOutputError(403, DEF_ERROR, "データが異常です", true, "../so/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
 }
 
-$objDB->freeResult( $lngResultID );
+$objDB->freeResult($lngResultID);
 
 $aryQuery = array();
 $aryQuery[] = "UPDATE m_receive ";
@@ -94,49 +87,62 @@ list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
 $objDB->freeResult($lngResultID);
 
-$objDB->transactionCommit();
-
-
 ////////// 明細行の取得 ////////////////////
 // 指定受注番号の受注明細データ取得用SQL文の作成
-$strQuery = fncGetReceiveDetailNoToInfoSQL ($lngReceiveNo, $lngRevisionNo);
+$strQuery = fncGetReceiveDetailNoToInfoSQL($lngReceiveNo, $lngRevisionNo);
 
 // 明細データの取得
-list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
+list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
-if ( $lngResultNum )
-{
-	if ( $lngResultNum == 1 )
-	{
-		$aryDetailResult = $objDB->fetchArray( $lngResultID, 0);
-	}
-}
-else
-{
-	$strMessage = fncOutputError( 403, DEF_WARNING, "受注番号に対する明細情報が見つかりません。", FALSE, "../so/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+if ($lngResultNum) {
+    if ($lngResultNum == 1) {
+        $aryDetailResult = $objDB->fetchArray($lngResultID, 0);
+    }
+} else {
+    $strMessage = fncOutputError(403, DEF_WARNING, "受注番号に対する明細情報が見つかりません。", false, "../so/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
 }
 
-$objDB->freeResult( $lngResultID );
+$objDB->freeResult($lngResultID);
+
+// 受注明細更新
+unset($aryQuery);
+$aryDetailResult["lngproductunitcode"] = 1;
+$aryDetailResult["lngunitquantity"] = 1;
+
+$aryQuery[] = "UPDATE t_receivedetail ";
+$aryQuery[] = "set lngproductquantity = " . $aryDetailResult["lngproductquantity_est"] . " ";
+$aryQuery[] = ", lngproductunitcode = ". $aryDetailResult["lngproductunitcode"]." ";
+$aryQuery[] = ", lngunitquantity = ". $aryDetailResult["lngunitquantity"]." ";
+$aryQuery[] = "where lngreceiveno = " . $aryDetailResult["lngreceiveno"] . " ";
+$aryQuery[] = "and lngreceivedetailno = " . $aryDetailResult["lngreceivedetailno"] . " ";
+$aryQuery[] = "and lngrevisionno = " . $aryDetailResult["lngrevisionno"] . " ";
+$strQuery = implode("\n", $aryQuery);
+//結果配列
+$result = array();
+list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
+
+$objDB->freeResult($lngResultID);
 
 
-
+$objDB->transactionCommit();
 // 通貨記号の設定
 if ($aryResult["lngmonetaryunitcode"] == 1) {
     $aryResult["strmonetaryunitsign"] = "&yen;";
 }
 
+$aryDetailResult["lngproductquantity"] = $aryDetailResult["lngproductquantity_est2"];
+
 // テンプレート読み込み
 $objTemplate = new clsTemplate();
-$objTemplate->getTemplate( "so/cancel/so_finish_cancel.html" );
+$objTemplate->getTemplate("so/cancel/so_finish_cancel.html");
 
 // テンプレート生成
-$objTemplate->replace( $aryResult);
-$objTemplate->replace( $aryDetailResult);
+$objTemplate->replace($aryResult);
+$objTemplate->replace($aryDetailResult);
 $objTemplate->complete();
 
 // HTML出力
 echo $objTemplate->strTemplate;
-
 
 $objDB->close();
 return true;

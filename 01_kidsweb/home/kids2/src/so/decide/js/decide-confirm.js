@@ -1,6 +1,5 @@
 (function () {
 
-
     // 登録ボタンのイベント
     $('img.regist').on('click', function () {
         var params = new Array();
@@ -40,7 +39,11 @@
             type: 'POST',
             data: {
                 'strSessionID': $('input[type="hidden"][name="strSessionID"]').val(),
-                'detailData': params
+                'detailData': params,
+                'lngProductNo': $('input[name="lngProductNo"]').val(),
+                'lngProductRevisionNo': $('input[name="lngProductRevisionNo"]').val(),
+                'strReviseCode': $('input[name="strReviseCode"]').val(),
+                'strGoodsCode': $('input[name="strGoodsCode"]').val()
             }
         })
             .done(function (response) {
@@ -55,7 +58,7 @@
 
     
     // 閉じるボタンのイベント
-    $('img.close').on('click', function () {
+    $('img.return').on('click', function () {
                 
         // 親ウィンドウのロックを解除する
         if (window.opener.$('#lockId').length) {
@@ -66,11 +69,11 @@
     });
 
     // ウィンドウを閉じる前のイベント
-    window.onbeforeunload = function(e) {
+    $(window).on("beforeunload", function(e) {
         // 親ウィンドウのロックを解除する
         if (window.opener.$('#lockId').length) {
             window.opener.$('#lockId').remove();
         }
-    };
+    });
 
 })();

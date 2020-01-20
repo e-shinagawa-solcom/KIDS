@@ -45,14 +45,12 @@ if (!fncCheckAuthority(DEF_FUNCTION_SO4, $objAuth)) {
 /*
 // 排他制御チェック
 if (fncCheckExclusiveControl(DEF_FUNCTION_E3, $aryData["detailData"][0]["strProductCode_product"], $aryData["detailData"][0]["strReviseCode"], $objDB)) {
-    fncOutputError(9213, DEF_ERROR, "", true, "../so/decide/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
+fncOutputError(9213, DEF_ERROR, "", true, "../so/decide/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
 }
-*/
+ */
 $objDB->transactionBegin();
-
 // 確定処理
 foreach ($aryData["detailData"] as $data) {
-// 受注データロック
     // 受注更新
     $aryQuery = array();
     $aryQuery[] = "UPDATE m_receive ";
@@ -67,14 +65,13 @@ foreach ($aryData["detailData"] as $data) {
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
     $objDB->freeResult($lngResultID);
-    
+
     // 受注明細更新
-    // 受注更新
-    $aryQuery = array();
+    unset($aryQuery);
     $aryQuery[] = "UPDATE t_receivedetail ";
-    $aryQuery[] = "set lngproductquantity = " . $data["lngProductQuantity"] . " ";
+    $aryQuery[] = "set lngproductquantity = " . str_replace(",", "", $data["lngProductQuantity"]) . " ";
     $aryQuery[] = ", lngproductunitcode = '" . $data["lngProductUnitCode"] . "' ";
-    $aryQuery[] = ", lngunitquantity = '" . $data["lngUnitQuantity"] . "' ";
+    $aryQuery[] = ", lngunitquantity = '" . str_replace(",", "", $data["lngUnitQuantity"]) . "' ";
     $aryQuery[] = ", strnote = '" . mb_convert_encoding($data["strDetailNote"], "euc-jp", "UTF-8") . "' ";
     $aryQuery[] = "where lngreceiveno = " . $data["lngReceiveNo"] . " ";
     $aryQuery[] = "and lngreceivedetailno = " . $data["lngReceiveDetailNo"] . " ";
@@ -86,6 +83,24 @@ foreach ($aryData["detailData"] as $data) {
 
     $objDB->freeResult($lngResultID);
 }
+
+// 製品マスタ更新
+if ($aryData["strGoodsCode"] != "") {
+    unset($aryQuery);
+    $aryQuery[] = "UPDATE m_product ";
+    $aryQuery[] = "set strgoodscode = " . $aryData["strGoodsCode"] . " ";
+    $aryQuery[] = "where lngproductno = " . $aryData["lngProductNo"] . " ";
+    $aryQuery[] = "and lngrevisionno = " . $aryData["lngProductRevisionNo"] . " ";
+    $aryQuery[] = "and strrevisecode = '" . $aryData["strReviseCode"] . "' ";
+    $strQuery = implode("\n", $aryQuery);
+    //結果配列
+    $result = array();
+    list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
+    
+    $objDB->freeResult($lngResultID);
+
+}
+
 // 排他制御ロック解放
 $result = unlockExclusive($objAuth, $objDB);
 
@@ -174,4 +189,3 @@ foreach ($aryData["detailData"] as $data) {
 
 // HTML出力
 echo $doc->saveHTML();
-
