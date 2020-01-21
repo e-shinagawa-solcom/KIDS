@@ -243,13 +243,7 @@
 	function fncCheckDate(objObject, lngFormatNo)
 	{
 		lngFormat = 0;	// 0:YYYY/MM/DD でのフォーマット
-		
-		// 番号が指定されている場合
-		if( isNaN(lngFormatNo) == false )
-		{
-			lngFormat = lngFormatNo;	// 1:YYYY/MM でのフォーマット
-		}
-		
+			
 		// 対象オブジェクト名の取得
 		strObjectName = 'window.'+ objObject.form.name +'.'+ objObject.name;
 		
@@ -261,28 +255,55 @@
 	        return true;
 	    }
 		
-	    // 年/月/日の形式のみ許容する
-	    if(!strDate.match(/^\d{4}\/\d{1,2}\/\d{1,2}$/)){
-	        fncErrorMessage(2, strObjectName);
-	        return false;
+		// 番号が指定されている場合
+		if( isNaN(lngFormatNo) == false )
+		{
+	        // 年/月の形式のみ許容する
+	        if(!strDate.match(/^\d{4}\/\d{1,2}$/)){
+	            fncErrorMessage(2, strObjectName);
+	            return false;
+	        }
+	        // 日付変換された日付が入力値と同じ事を確認
+	        // new Date()の引数に不正な日付が入力された場合、相当する日付に変換されてしまうため
+	        // 
+	        var date = new Date(strDate);  
+	        if(date.getFullYear() !=  strDate.split("/")[0] 
+	            || date.getMonth() != strDate.split("/")[1] - 1 
+	        ){
+	            fncErrorMessage(2, strObjectName);
+	            return false;
+	        }
+
+	        if(date.getFullYear() <= 1600){
+	    	    var today = new Date();  
+	            objObject.value = today.getFullYear() + "/" + (today.getMonth() + 1);
+	        }
+		}
+		else
+		{
+	        // 年/月/日の形式のみ許容する
+	        if(!strDate.match(/^\d{4}\/\d{1,2}\/\d{1,2}$/)){
+	            fncErrorMessage(2, strObjectName);
+	            return false;
+	        }
+	        // 日付変換された日付が入力値と同じ事を確認
+	        // new Date()の引数に不正な日付が入力された場合、相当する日付に変換されてしまうため
+	        // 
+	        var date = new Date(strDate);  
+	        if(date.getFullYear() !=  strDate.split("/")[0] 
+	            || date.getMonth() != strDate.split("/")[1] - 1 
+	            || date.getDate() != strDate.split("/")[2]
+	        ){
+	            fncErrorMessage(2, strObjectName);
+	            return false;
+	        }
+
+	        if(date.getFullYear() <= 1600){
+	    	    var today = new Date();  
+	            objObject.value = today.getFullYear() + "/" + (today.getMonth() + 1) + "/" + today.getDate();
+	        }
 	    }
 
-	    // 日付変換された日付が入力値と同じ事を確認
-	    // new Date()の引数に不正な日付が入力された場合、相当する日付に変換されてしまうため
-	    // 
-	    var date = new Date(strDate);  
-	    if(date.getFullYear() !=  strDate.split("/")[0] 
-	        || date.getMonth() != strDate.split("/")[1] - 1 
-	        || date.getDate() != strDate.split("/")[2]
-	    ){
-	        fncErrorMessage(2, strObjectName);
-	        return false;
-	    }
-
-	    if(date.getFullYear() <= 1600){
-	    	var today = new Date();  
-	        objObject.value = today.getFullYear() + "/" + (today.getMonth() + 1) + "/" + today.getDate();
-	    }
 
 	    fncErrorMessage(0, strObjectName);
 	    return true;
