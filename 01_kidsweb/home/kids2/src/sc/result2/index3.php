@@ -114,46 +114,46 @@ fncDebug("kids2.log", "step-0", __FILE__, __LINE__, "a");
 	if (fncJapaneseInvoiceExists($strCustomerCode, $lngSalesNo, $objDB)){
 		MoveToErrorPage("請求書発行済みのため、削除できません");
 	}
-fncDebug("kids2.log", "step-1", __FILE__, __LINE__, "a");
+
 	// 納品書明細に紐づく受注ステータスが「締済み」の場合は削除不可
 	if (fncReceiveStatusIsClosed($aryData["lngSlipNo"], $objDB))
 	{
 		MoveToErrorPage("締済みのため、削除できません");
 	}
-fncDebug("kids2.log", "step-2", __FILE__, __LINE__, "a");
+
 	
 
 	if( !lockSlip($aryData["lngSlipNo"], $objDB))
 	{
 		MoveToErrorPage("他ユーザーが納品書を編集中です。");
 	}
-fncDebug("kids2.log", "step-3", __FILE__, __LINE__, "a");
+
 	
 	if( isSlipModified($aryData["lngSlipNo"], $aryData["lngRevisionNo"], $objDB) )
 	{
 		MoveToErrorPage("納品書が他ユーザーにより更新または削除されています。");
 	}
-fncDebug("kids2.log", "step-4", __FILE__, __LINE__, "a");
+
 
 	// 売上データの削除
 	if (!fncDeleteSales($lngSalesNo, $objDB, $objAuth))
 	{
 		fncOutputError ( 9051, DEF_FATAL, "削除処理に伴う売上マスタ処理失敗", TRUE, "", $objDB );
 	}
-fncDebug("kids2.log", "step-5", __FILE__, __LINE__, "a");
+
 	// 納品書データの削除
 	if (!fncDeleteSlip($lngSlipNo, $objDB, $objAuth))	
 	{
 		fncOutputError ( 9051, DEF_FATAL, "削除処理に伴う納品書マスタ処理失敗", TRUE, "", $objDB );
 	}
-fncDebug("kids2.log", "step-6", __FILE__, __LINE__, "a");
+
 
 	// 納品伝票明細に紐づく受注マスタの受注ステータスを「受注」に更新
 	if (!fncUpdateReceiveStatus($aryData["lngSlipNo"], $aryData["lngRevisionNo"], $objDB))
 	{
 		fncOutputError ( 9051, DEF_FATAL, "削除処理に伴う受注明細テーブル処理失敗", TRUE, "", $objDB );
 	}
-fncDebug("kids2.log", "step-7", __FILE__, __LINE__, "a");
+
 
 	// トランザクションコミット
 	$objDB->transactionCommit();
