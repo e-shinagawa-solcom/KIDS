@@ -12,7 +12,7 @@
     } else {
         $('input[name="strGoodsCode"]').attr('readonly',false);
     }
-
+    
     var lockId = "lockId";
     // ウィンドウクローズ処理
     window.onbeforeunload = unLock;
@@ -533,7 +533,7 @@ function unlockScreen(id) {
 }
 
 function resetAllTableColumnWidth() {
-    $(".table-decide-description").css('table-layout', '');
+    // $(".table-decide-description").css('table-layout', '');
     var row = $(".table-decide-description tbody tr");
     var columnNum = row.find('td').length;
     var thwidthArry = [];
@@ -551,7 +551,7 @@ function resetAllTableColumnWidth() {
             $(".table-decide-description tbody tr td:nth-child(" + i + ")").width(tdwidthArry[i - 1] + 10);
         }
     }
-    $(".table-decide-description").css('table-layout', 'fixed');
+    // $(".table-decide-description").css('table-layout', 'fixed');
 }
 
 function resetTableADisplayStyle() {

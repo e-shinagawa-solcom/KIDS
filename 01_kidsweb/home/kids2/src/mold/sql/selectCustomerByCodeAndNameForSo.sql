@@ -18,6 +18,7 @@ FROM
     ON mr.lngcustomercompanycode = mc.lngcompanycode 
 WHERE
   mr.bytinvalidflag = false 
+  and mr.lngcustomercompanycode != 0
   and not exists ( 
     select
       strReceiveCode 
