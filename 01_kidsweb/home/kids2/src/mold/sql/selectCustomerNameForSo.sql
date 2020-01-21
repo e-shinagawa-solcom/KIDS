@@ -17,7 +17,8 @@ FROM
   LEFT JOIN m_company mc 
     ON mr.lngcustomercompanycode = mc.lngcompanycode 
 WHERE
-  mr.bytinvalidflag = false 
+  mr.bytinvalidflag = false
+  and mr.lngcustomercompanycode != 0 
   and not exists ( 
     select
       strReceiveCode 
