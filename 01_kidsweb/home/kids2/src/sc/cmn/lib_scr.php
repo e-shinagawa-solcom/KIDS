@@ -701,6 +701,7 @@ function fncNotReceivedDetailExists($aryDetail, $objDB, $isNew)
 
         $lngReceiveNo = $d["lngreceiveno"];
         $lngRevisionNo = $d["lngreceiverevisionno"];
+        /* 更新前に締め済データ以外を2にリセットするため、一律2でチェック
         // 更新で受注状態コードが2,4以外の明細が存在するならtrueを返して検索打ち切り
         if(!$isNew){
             if( isReceiveModified($lngReceiveNo, DEF_RECEIVE_ORDER, $objDB) 
@@ -708,8 +709,9 @@ function fncNotReceivedDetailExists($aryDetail, $objDB, $isNew)
                 return true;
             }
         }
+        */
         // 新規で受注状態コードが2以外の明細が存在するならtrueを返して検索打ち切り
-        else if(isReceiveModified($lngReceiveNo, DEF_RECEIVE_ORDER, $objDB)){
+        if(isReceiveModified($lngReceiveNo, DEF_RECEIVE_ORDER, $objDB)){
             return true;
         }
         
@@ -2168,7 +2170,7 @@ function fncGetRegisterResultTableBodyHtml($aryPerPage, $objDB)
 // 請求処理済みチェック
 function fncInvoiceIssued($lngSlipNo, $lngRevisisonNo, $objDB)
 {
-    $strQuery = "SELECT ";
+    $strQuery = "SELECT *";
     $strQuery .= "FROM m_invoice mi ";
     $strQuery .= "INNER JOIN  t_invoicedetail tid ";
     $strQuery .= "ON tid.lnginvoiceno = mi.lnginvoiceno ";
@@ -2190,5 +2192,56 @@ function fncInvoiceIssued($lngSlipNo, $lngRevisisonNo, $objDB)
     $objDB->freeResult($lngResultID);
     return true;
     
+}
+
+// 更新前の明細に紐づく受注データのロック
+function fncLockReceiveByOldDetail($lngSlipNo, $lngRevisisonNo, $objDB)
+{
+    
+    $strQuery = "SELECT lngreceiveno, lngrevisionno ";
+    $strQuery .= "FROM m_receive";
+    $strQuery .= " WHERE (lngreceiveno, lngrevisionno) IN ( ";
+    $strQuery .= "SELECT tsd.lngreceiveno, tsd.lngreceiverevisionno ";
+    $strQuery .= "FROM m_slip ms ";
+    $strQuery .= "INNER JOIN t_slipdetail tsd ";
+    $strQuery .= "ON tsd.lngslipno = ms.lngslipno ";
+    $strQuery .= "AND tsd.lngrevisionno = ms.lngrevisionno ";
+    $strQuery .= "WHERE ms.lngslipno = " . (int)$lngSlipNo;
+    $strQuery .= " AND ms.lngrevisionno = " . (int)$lngRevisisonNo;
+    $strQuery .= ") ";
+    $strQuery .= "AND lngreceivestatuscode = " . DEF_RECEIVE_END;
+    $strQuery .= " FOR UPDATE";
+    list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
+    if ( !$lngResultNum )
+    {
+        return false;
+    }
+    $objDB->freeResult($lngResultID);
+    return true;
+}
+
+// 更新前の明細に紐づく受注データのステータスリセット（締め済は除外）
+function fncResetReceiveStatus($lngSlipNo, $lngRevisisonNo, $objDB)
+{
+    
+    $strQuery = "UPDATE m_receive ";
+    $strQuery .= "SET  lngreceivestatuscode = " . DEF_RECEIVE_ORDER;
+    $strQuery .= " WHERE (lngreceiveno, lngrevisionno) IN ( ";
+    $strQuery .= "SELECT tsd.lngreceiveno, tsd.lngreceiverevisionno ";
+    $strQuery .= "FROM m_slip ms ";
+    $strQuery .= "INNER JOIN t_slipdetail tsd ";
+    $strQuery .= "ON tsd.lngslipno = ms.lngslipno ";
+    $strQuery .= "AND tsd.lngrevisionno = ms.lngrevisionno ";
+    $strQuery .= "WHERE ms.lngslipno = " . (int)$lngSlipNo;
+    $strQuery .= " AND ms.lngrevisionno = " . (int)$lngRevisisonNo;
+    $strQuery .= ") ";
+    $strQuery .= "AND lngreceivestatuscode = " . DEF_RECEIVE_END;
+    $strQuery .= " ";
+    if ( !$objDB->execute($strQuery) )
+    {
+        return false;
+    }
+    $objDB->freeResult($lngResultID);
+    return true;
 }
 

@@ -185,7 +185,7 @@
 		// --------------------------
 		if(!$isCreateNew)
 		{
-			// 発注書マスタロック
+			// 納品書マスタロック
 			if( !lockSlip($lngRenewTargetSlipNo, $objDB))
 			{
 				MoveToErrorPage("他ユーザーが納品書を編集中です。");
@@ -197,6 +197,15 @@
 			if( fncInvoiceIssued($lngRenewTargetSlipNo, $lngrevisionno, $objDB))
 			{
 				MoveToErrorPage("納品書は請求処理済みのため修正できません。");
+			}
+			if(!fncLockReceiveByOldDetail($lngRenewTargetSlipNo, $lngrevisionno, $objDB))
+			{
+			    MoveToErrorPage("更新前受注データのロックに失敗しました。");
+			}
+			// 削除された明細のために、現リビジョンの納品書明細に紐づくの受注データのステータスを一旦元に戻す。
+			// （締め済は対象外）
+			if(!fncResetReceiveStatus($lngRenewTargetSlipNo, $lngrevisionno, $objDB)){
+			    MoveToErrorPage("更新前受注データのリセットに失敗しました。");
 			}
 		}
 		// 受注明細ロック
