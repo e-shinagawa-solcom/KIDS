@@ -33,6 +33,7 @@ require (SRC_ROOT . "list/cmn/lib_lo.php");
 require (SRC_ROOT . "po/cmn/lib_por.php");
 require (SRC_ROOT . "po/cmn/column.php");
 require_once (LIB_DEBUGFILE);
+require (LIB_EXCLUSIVEFILE);
 
 // DB接続
 $objDB   = new clsDB();
@@ -91,11 +92,31 @@ if($_POST){
 	
 	// 発注書に基づく発注書マスタの中に「納品済」が存在した場合はエラー
 	//if(
+	$objDB->transactionBegin();
+
+	// 発注書マスタロック
+    if( !lockOrder($lngpurchaseorderno, $objDB) )
+    {
+        fncOutputError(9051, DEF_ERROR, "発注書のロック取得に失敗しました。", true, "", $objDB);
+        return false;
+    }
+    
+    // 発注書更新有無チェック
+    if( isPurchaseOrderModified($lngpurchaseorderno, $lngrevisionno, $objDB) )
+    {
+        fncOutputError(9051, DEF_ERROR, "他ユーザーが発注書を更新または削除しています。", true, "", $objDB);
+        return false;
+    }
 	
+    // 発注データロック&ステータスチェック
+    if( !fncCanDeletePO($lngpurchaseorderno, $lngrevisionno, $objDB))
+    {
+        fncOutputError(9051, DEF_ERROR, "納品済または締め済の明細があるため削除できません。", true, "", $objDB);
+    }
+    
 	$aryCancelOrderDetail = fncGetDeletePurchaseOrderDetailByPo($lngpurchaseorderno, $lngrevisionno, $objDB);
 	$aryPurchaseOrder = fncGetPurchaseOrder2($lngpurchaseorderno, $lngrevisionno, $objDB);
 	$aryOrder = $aryPurchaseOrder;
-	$objDB->transactionBegin();
     // 削除対象となった発注書に基づく発注書マスタのステータスを「仮受注」に変更
 	if(!fncCancelOrderByPo($lngpurchaseorderno, $lngrevisionno, $objDB)){ return false; }
     

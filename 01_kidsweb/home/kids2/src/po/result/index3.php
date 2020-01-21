@@ -104,6 +104,13 @@ if($_POST){
         if(!lockOrder($lngpurchaseorderno, $objDB)){
 			fncOutputError ( 501, DEF_ERROR, "取消対象の発注の発注書が修正中です。", TRUE, "", $objDB );
         }
+
+        // 発注書更新有無チェック
+        if( isPurchaseOrderModified($lngpurchaseorderno, $lngrevisionno, $objDB) )
+        {
+            fncOutputError(9051, DEF_ERROR, "他ユーザーが発注書を更新または削除しています。", true, "", $objDB);
+            return false;
+        }
         
         // 対象発注のステータスチェック
 		if(isOrderModified($lngorderno, DEF_ORDER_ORDER, $objDB)){

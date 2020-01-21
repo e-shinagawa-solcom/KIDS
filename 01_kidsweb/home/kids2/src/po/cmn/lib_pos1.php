@@ -253,7 +253,7 @@ function fncGetPurchaseDetailNoToInfo ( $lngOrderNo, $lngRevisionNo, $objDB )
  *	テーブル構成で発注データ詳細を出力する関数
  *	ヘッダ行を表示する
  *
- *	@param  Array 	$aryResult 				ヘッダ行の検索結果が格納された配列
+ *	@param  Array 	$aryResult 	ヘッダ行の検索結果が格納された配列
  *	@access public
  */
 function fncSetPurchaseHeadTabelData ( $aryResult )
@@ -1724,5 +1724,100 @@ function fncGetLatestRevisionNo($lngOrderNo, $objDB)
 	return $revision;
 
 }
+
+// 発注書マスタに紐づく発注データを取得（汎用的に使用させるため全列取得）
+function fncGetOrderByPO($lngPurchaseOrderno, $lngRevisionNo, $objDB, $getLock=false)
+{
+	$aryOutQuery[] = "SELECT";
+	$aryOutQuery[] = "    mo.lngorderno,";
+	$aryOutQuery[] = "    mo.lngrevisionno,";
+	$aryOutQuery[] = "    mo.strordercode,";
+	$aryOutQuery[] = "    mo.dtmappropriationdate,";
+	$aryOutQuery[] = "    mo.lngcustomercompanycode,";
+	$aryOutQuery[] = "    mo.lnggroupcode,";
+	$aryOutQuery[] = "    mo.lngusercode,";
+	$aryOutQuery[] = "    mo.lngorderstatuscode,";
+	$aryOutQuery[] = "    mo.lngmonetaryunitcode,";
+	$aryOutQuery[] = "    mo.lngmonetaryratecode,";
+	$aryOutQuery[] = "    mo.curconversionrate,";
+	$aryOutQuery[] = "    mo.lngpayconditioncode,";
+	$aryOutQuery[] = "    mo.lngdeliveryplacecode,";
+	$aryOutQuery[] = "    mo.lnginputusercode,";
+	$aryOutQuery[] = "    mo.bytinvalidflag,";
+	$aryOutQuery[] = "    mo.dtminsertdate,";
+	$aryOutQuery[] = "    tod.lngorderdetailno,";
+	$aryOutQuery[] = "    tod.strproductcode,";
+	$aryOutQuery[] = "    tod.strrevisecode,";
+	$aryOutQuery[] = "    tod.lngstocksubjectcode,";
+	$aryOutQuery[] = "    tod.lngstockitemcode,";
+	$aryOutQuery[] = "    tod.dtmdeliverydate,";
+	$aryOutQuery[] = "    tod.lngdeliverymethodcode,";
+	$aryOutQuery[] = "    tod.lngconversionclasscode,";
+	$aryOutQuery[] = "    tod.curproductprice,";
+	$aryOutQuery[] = "    tod.lngproductquantity,";
+	$aryOutQuery[] = "    tod.lngproductunitcode,";
+	$aryOutQuery[] = "    tod.cursubtotalprice,";
+	$aryOutQuery[] = "    tod.strnote,";
+	$aryOutQuery[] = "    tod.strmoldno,";
+	$aryOutQuery[] = "    tod.lngsortkey,";
+	$aryOutQuery[] = "    tod.lngestimateno,";
+	$aryOutQuery[] = "    tod.lngestimatedetailno,";
+	$aryOutQuery[] = "    tod.lngestimaterevisionno";
+    $aryOutQuery[] = "FROM m_purchaseorder mpo";
+    $aryOutQuery[] = "INNER JOIN t_purchaseorderdetail tpod";
+    $aryOutQuery[] = "    ON tpod.lngpurchaseorderno = mpo.lngpurchaseorderno";
+    $aryOutQuery[] = "    AND  tpod.lngrevisionno = mpo.lngrevisionno";
+	$aryOutQuery[] = "INNER JOIN  t_orderdetail tod";
+	$aryOutQuery[] = "    ON tod.lngorderno = tpod.lngorderno";
+	$aryOutQuery[] = "    AND  tod.lngorderdetailno = tpod.lngorderdetailno";
+	$aryOutQuery[] = "    AND  tod.lngrevisionno = tpod.lngorderrevisionno";
+	$aryOutQuery[] = "INNER JOIN  m_order mo";
+    $aryOutQuery[] = "    ON mo.lngorderno = tod.lngorderno";
+    $aryOutQuery[] = "    AND mo.lngrevisionno = tod.lngrevisionno";
+    $aryOutQuery[] = "WHERE mpo.lngpurchaseorderno = " . intval($lngPurchaseOrderno);
+    $aryOutQuery[] = "    AND mpo.lngrevisionno = " . intval($lngRevisionNo);
+    if($getLock)
+    {
+        $aryOutQuery[] = "    FOR UPDATE";
+    }
+	$strQuery = implode("\n", $aryOutQuery);
+
+	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
+
+
+	if ( $lngResultNum )
+	{
+		for ( $i = 0; $i < $lngResultNum; $i++ )
+		{
+			$aryResult[] = $objDB->fetchArray( $lngResultID, $i );
+		}
+	}
+
+	$objDB->freeResult( $lngResultID );
+
+	return $aryResult;
+    
+}
+
+
+function fncCanDeletePO($lngPurchaseOrderno, $lngRevisionNo, $objDB)
+{
+    $orderList = fncGetOrderByPO($lngPurchaseOrderno, $lngRevisionNo, $objDB, true);
+    if( is_null($orderList) )
+    {
+        return false;
+    }
+    foreach($orderList as $order)
+    {
+        if($order["lngorderstatuscode"] != DEF_ORDER_ORDER)
+        {
+            return false;
+        }
+        
+    }
+    return true;
+}
+
+
 
 ?>

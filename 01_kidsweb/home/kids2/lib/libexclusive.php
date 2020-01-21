@@ -185,6 +185,11 @@ function isOrderModified($lngorderno, $statuscode, $objDB){
     return isStatusModified("m_order", "lngorderno", $lngorderno, $statuscode, $objDB);
 }
 
+// 発注書データ更新有無チェック
+function isPurchaseOrderModified($lngpurchaseorderno, $lngrevisionno, $objDB){
+    return isModified("m_purchaseorder", "lngpurchaseorderno", $lngpurchaseorderno, $lngrevisionno, $objDB);
+}
+
 // 仕入データロック取得
 function lockStock($lngstockno, $objDB){
     return getLock("m_stock", "lngstockno", $lngstockno, $objDB);

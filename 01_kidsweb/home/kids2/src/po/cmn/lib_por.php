@@ -1029,7 +1029,7 @@ function fncGetPurchaseOrderEdit($lngpurchaseorderno, $lngrevisionno, $objDB)
     $aryQuery[] = "LEFT JOIN m_stocksubject mss ON pd.lngstocksubjectcode = mss.lngstocksubjectcode";
     $aryQuery[] = "LEFT JOIN m_stockitem msi ON pd.lngstockitemcode = msi.lngstockitemcode AND pd.lngstocksubjectcode = msi.lngstocksubjectcode";
     $aryQuery[] = "WHERE mp.lngpurchaseorderno = " . $lngpurchaseorderno;
-    $aryQuery[] = "AND mp.lngrevisionno = (SELECT MAX( po1.lngRevisionNo ) FROM m_purchaseorder po1 WHERE po1.lngpurchaseorderno = mp.lngpurchaseorderno )";
+	$aryQuery[] = "AND   mp.lngrevisionno = " . intval($lngrevisionno);
     $aryQuery[] = " ORDER BY";
     $aryQuery[] = "   pd.lngsortkey";
 

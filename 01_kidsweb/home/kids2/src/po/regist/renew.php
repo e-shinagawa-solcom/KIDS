@@ -41,8 +41,8 @@
 	
 	$aryData["strSessionID"]        = $_REQUEST["strSessionID"];
 	$aryData["lngPurchaseOrderNo"]  = $_REQUEST["lngPurchaseOrderNo"];
-	$aryData["lngRevisionNo"]       = $_GET["lngRevisionNo"];
-	$aryData["dtmExpirationDate"]   = $_REQUEST["dtmExpirationDate"];
+	$aryData["lngRevisionNo"]       = $_REQUEST["lngRevisionNo"];
+//	$aryData["dtmExpirationDate"]   = $_REQUEST["dtmExpirationDate"];
 	$aryData["lngPayConditionCode"] = $_REQUEST["lngPayConditionCode"];
 //	$aryData["strPayConditionName"] = $_REQUEST["strPayConditionName"];
 	$aryData["strPayConditionName"] = mb_convert_encoding($_REQUEST["strPayConditionName"], "EUC-JP", "auto");
@@ -57,6 +57,8 @@
 	// $aryData["strCustomerCode"]     = $_REQUEST["strCustomerCode"];
 	// $aryData["strCustomerName"]     = $_REQUEST["strCustomerName"];
 	$aryData["aryDetail"]           = $_REQUEST["aryDetail"];
+
+//var_dump($_REQUEST);
 	
 	$objDB->open("", "", "", "");
 	
@@ -121,6 +123,7 @@
 
 	// 発注書
 	$aryResult = fncGetPurchaseOrderEdit($aryData["lngPurchaseOrderNo"], $aryData["lngRevisionNo"], $objDB);
+
 	if(!$aryResult) { return false; }
 
 	// ヘッダ
@@ -151,7 +154,7 @@
 	else{
 	    $aryNewResult["inputPayCondition"] = "select";
 //	    $aryNewResult["PayConditionDisabled"] = "readonly";
-		$aryNewResult["lngPayConditionCode"]      = fncPulldownMenu(2, $aryResult[0]["lngpayconditioncode"], "where lngPayConditionCode=" . $aryResult[0]["lngpayconditioncode"], $objDB);
+		$aryNewResult["lngPayConditionCode"]      = fncPulldownMenu(2, $aryResult[0]["lngpayconditioncode"], "where lngPayConditionCode=" . (int)$aryResult[0]["lngpayconditioncode"], $objDB);
 	}
 
 	// 明細

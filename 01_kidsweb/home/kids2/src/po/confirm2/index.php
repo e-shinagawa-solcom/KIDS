@@ -35,6 +35,7 @@ require SRC_ROOT . "po/cmn/column.php";
 require SRC_ROOT . "po/cmn/lib_por.php";
 // require SRC_ROOT . "so/cmn/lib_so.php";
 require_once(LIB_DEBUGFILE);
+require LIB_EXCLUSIVEFILE;
 
 $objDB = new clsDB();
 $objAuth = new clsAuth();
@@ -54,12 +55,6 @@ $objAuth = fncIsSession($_POST["strSessionID"], $objAuth, $objDB);
 $UserDisplayName = trim($objAuth->UserDisplayName);
 $UserDisplayCode = trim($objAuth->UserID);
 
-// 排他制御チェック
-if (fncCheckExclusiveControl(DEF_FUNCTION_E3, $_POST["strProductCode"], $_POST["strReviseCode"], $objDB)) {
-//    echo "test";
-    fncOutputError(9213, DEF_ERROR, "", true, "../po/regist/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
-}
-
 // ここから追加ボタン押下処理
 if ($_POST["strMode"] == "update") {
 
@@ -68,6 +63,22 @@ if ($_POST["strMode"] == "update") {
     $_POST["strNote"] = mb_convert_encoding($_POST["strNote"], "EUC-JP", "UTF-8");
 
 	$objDB->transactionBegin();
+	
+	// 発注書マスタロック
+    if( !lockOrder($_POST["lngPurchaseOrderNo"], $objDB) )
+    {
+        fncOutputError(9051, DEF_ERROR, "発注書のロック取得に失敗しました。", true, "", $objDB);
+        return false;
+    }
+    
+    // 発注書更新有無チェック
+    if( isPurchaseOrderModified($_POST["lngPurchaseOrderNo"], $_POST["lngRevisionNo"], $objDB) )
+    {
+        fncOutputError(9051, DEF_ERROR, "他ユーザーが発注書を更新または削除しています。", true, "", $objDB);
+        return false;
+    }
+    
+    
 	// 発注書マスタ更新
 fncDebug("kids2.log", "pass-2", __FILE__, __LINE__, "a" );
 	if(!fncUpdatePurchaseOrder($_POST, $objDB, $objAuth)) { return false; }
