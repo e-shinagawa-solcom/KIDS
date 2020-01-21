@@ -166,7 +166,7 @@ function fncGetSalesDetailNoToInfoSQL ( $lngSalesNo, $lngRevisionNo )
     $aryQuery[] = "          SELECT ";
     $aryQuery[] = "              lngproductno,strrevisecode,MAX(lngrevisionno) as lngrevisionno ";
     $aryQuery[] = "          FROM m_product GROUP BY lngproductno,strrevisecode";
-    $aryQuery[] = "      ) mp1 ON mp1.lngproductno = m_product.lngproductno
+    $aryQuery[] = "      ) mp1 ON mp1.lngproductno = m_product.lngproductno"
     $aryQuery[] = "      AND mp1.strrevisecode = m_product.strrevisecode";
     $aryQuery[] = "      AND mp1.lngrevisionno = m_product.lngrevisionno";
 	$aryQuery[] = " ) p on p.strProductCode = sd.strProductCode AND p.strrevisecode = sd.strrevisecode";
