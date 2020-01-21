@@ -106,7 +106,7 @@ if($_POST){
         }
         
         // 対象発注のステータスチェック
-		if(!isOrderModified($lngorderno, DEF_ORDER_ORDER, $objDB)){
+		if(isOrderModified($lngorderno, DEF_ORDER_ORDER, $objDB)){
 			fncOutputError ( 505, DEF_ERROR, "", TRUE, "", $objDB );
 		}
 		// 確定取り消しとなった発注明細に基づく発注マスタの発注ステータスを「仮発注」へ戻す
