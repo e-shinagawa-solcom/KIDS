@@ -62,10 +62,9 @@
 
                 var decideId = "";
                 window.opener.$('#table_decide_body tr').each(function (i, e) {
-                    console.log($(this).find('#lngreceiveno').text());
                     decideId += $(this).find('#lngreceiveno').text();
                 });
-                console.log(decideId);
+
                 $('input[name="lngReceiveNo"]').val(decideId);
 
                 var formData = workForm.serializeArray();
@@ -134,17 +133,12 @@
                         var tdwidthArry = [];
                         var columnNum = window.opener.$('#tbl_detail_head tr th').length;
                         for (var i = 1; i <= columnNum; i++) {
-                            // console.log(window.opener.$(".table-decide-description").eq(3).find('thead tr th:nth-child(' + i + ')').css('width'));
-                            // console.log(window.opener.$(".table-decide-description").eq(0).find('thead tr th:nth-child(' + i + ')').css('width'));
-                            // console.log(window.opener.$('#tbl_detail_head tr th:nth-child(' + i + ')').css('width'));
-
                             var thwidth = Number(window.opener.$(".table-decide-description").eq(3).find('thead tr th:nth-child(' + i + ')').css('width').replace('px', ''));
                             var tdwidth = window.opener.$('#tbl_detail tbody tr td:nth-child(' + i + ')').width();
                             thwidthArry.push(thwidth + 1);
                             tdwidthArry.push(tdwidth + 1);
                         }
-// console.log(thwidthArry);
-// console.log(tdwidthArry);
+
                         for (var i = 1; i <= columnNum; i++) {
                             if (thwidthArry[i - 1] > tdwidthArry[i - 1]) {
                                 window.opener.$(".table-decide-description thead tr th:nth-child(" + i + ")").width(thwidthArry[i - 1]);
@@ -154,11 +148,9 @@
                                 window.opener.$(".table-decide-description tbody tr td:nth-child(" + i + ")").width(tdwidthArry[i - 1]);
                             }
                         }
-                        // exit;
                         resetTableADisplayStyle();
                         resetTableAWidth();
                         resetTableBWidth();
-                        // exit;
                     })
                     .fail(function (response) {
                         console.log("処理結果：" + JSON.stringify(response));
@@ -206,8 +198,6 @@ function resetTableAWidth() {
     var columnNum = window.opener.$(".table-decide-description").eq(0).find("thead tr th").length;
     for (var i = 1; i <= columnNum; i++) {
         if (window.opener.$(".table-decide-description").eq(0).find("thead tr th:nth-child(" + i + ")").css('display') == "none") {
-            // $(".table-decide-description").eq(0).find("thead tr th:nth-child(" + i + ")").css('width', '');
-            // $(".table-decide-description").eq(2).find("tbody tr td:nth-child(" + i + ")").css('width', '');
         } else {
             width += window.opener.$(".table-decide-description").eq(0).find("thead tr th:nth-child(" + i + ")").width();
         }
@@ -222,8 +212,6 @@ function resetTableBWidth() {
     var columnNum = window.opener.$(".table-decide-description").eq(3).find("thead tr th").length;
     for (var i = 1; i <= columnNum; i++) {
         if (window.opener.$(".table-decide-description").eq(3).find("thead tr th:nth-child(" + i + ")").css('display') == "none") {
-            // $(".table-decide-description").eq(3).find("thead tr th:nth-child(" + i + ")").css('width', '');
-            // $(".table-decide-description").eq(5).find("tbody tr td:nth-child(" + i + ")").css('width', '');
         } else {
             width += window.opener.$(".table-decide-description").eq(3).find("thead tr th:nth-child(" + i + ")").width();
         }
