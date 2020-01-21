@@ -230,7 +230,7 @@ if ( $aryData["lngActionCode"] == DEF_CLOSED_RUN )
 			$aryDetail[] = $objTemplate->strTemplate;
 		}
 
-		if ( count($aryDetail) )
+		if ( $lngSalesCount > 0 )
 		{
 			$aryData["strMessageDetail"] .= implode ("\n", $aryDetail );
 		}
@@ -353,7 +353,7 @@ if ( $aryData["lngActionCode"] == DEF_CLOSED_RUN )
 			$aryDetail[] = $objTemplate->strTemplate;
 		}
 
-		if ( count($aryDetail) )
+		if ( $lngStockCount > 0 )
 		{
 			$aryData["strMessageDetail"] .= implode ("\n", $aryDetail );
 		}
@@ -508,7 +508,7 @@ else if ( $aryData["lngActionCode"] == DEF_CLOSED_RETURN )
 			$aryDetail[] = $objTemplate->strTemplate;
 		}
 
-		if ( count($aryDetail) )
+		if ( $lngSalesCount > 0 )
 		{
 			$aryData["strMessageDetail"] .= implode ("\n", $aryDetail );
 		}
@@ -631,7 +631,7 @@ else if ( $aryData["lngActionCode"] == DEF_CLOSED_RETURN )
 			$aryDetail[] = $objTemplate->strTemplate;
 		}
 
-		if ( count($aryDetail) )
+		if ( $lngStockCount > 0 )
 		{
 			$aryData["strMessageDetail"] .= implode ("\n", $aryDetail );
 		}
