@@ -147,15 +147,15 @@ if ( $aryData["lngActionCode"] == DEF_CLOSED_RUN )
 		// 締めた売上に紐づく受注マスタの行レベルロック
 		$strQuery = "select m_receive.lngreceiveno, m_receive.lngrevisionno "
 			. "from m_sales "
-			. "inner join ( "
-			. "select  "
-			. "    strsalescode "
-			. "   ,MAX(lngrevisionno) as lngrevisionno "
-			. "from m_sales "
-			. "group by m_sales.strsalescode "
-			. ") A "
-			. "on A.strsalescode = m_sales.strsalescode "
-			. "and A.lngrevisionno = m_sales.lngrevisionno "
+//			. "inner join ( "
+//			. "select  "
+//			. "    strsalescode "
+//			. "   ,MAX(lngrevisionno) as lngrevisionno "
+//			. "from m_sales "
+//			. "group by m_sales.strsalescode "
+//			. ") A "
+//			. "on A.strsalescode = m_sales.strsalescode "
+//			. "and A.lngrevisionno = m_sales.lngrevisionno "
 			. "inner join t_salesdetail "
 			. "on t_salesdetail.lngsalesno = m_sales.lngsalesno "
 			. "and t_salesdetail.lngrevisionno = m_sales.lngrevisionno "
@@ -269,15 +269,15 @@ if ( $aryData["lngActionCode"] == DEF_CLOSED_RUN )
 		$strQuery = "select "
 			. "m_order.lngorderno, m_order.lngrevisionno "
 			. "from m_stock "
-			. "inner join ( "
-			. "select  "
-			. "    strstockcode "
-			. "   ,MAX(lngrevisionno) as lngrevisionno "
-			. "from m_stock "
-			. "group by m_stock.strstockcode "
-			. ") A "
-			. "on A.strstockcode = m_stock.strstockcode "
-			. "and A.lngrevisionno = m_stock.lngrevisionno "
+//			. "inner join ( "
+//			. "select  "
+//			. "    strstockcode "
+//			. "   ,MAX(lngrevisionno) as lngrevisionno "
+//			. "from m_stock "
+//			. "group by m_stock.strstockcode "
+//			. ") A "
+//			. "on A.strstockcode = m_stock.strstockcode "
+//			. "and A.lngrevisionno = m_stock.lngrevisionno "
 			. "inner join t_stockdetail "
 			. "on t_stockdetail.lngstockno = m_stock.lngstockno "
 			. "and t_stockdetail.lngrevisionno = m_stock.lngrevisionno "
@@ -322,7 +322,7 @@ if ( $aryData["lngActionCode"] == DEF_CLOSED_RUN )
 		// ロックした発注マスタのステータスを更新
 		for ( $i = 0; $i < $lngOrderCount; $i++ )
 		{
-			$strQuery = "UPDATE m_order SET lngreceivestatuscode = " . DEF_ORDER_CLOSED 
+			$strQuery = "UPDATE m_order SET lngorderstatuscode = " . DEF_ORDER_CLOSED 
 			. "WHERE lngorderno = " . $aryOrderResult[$i]["lngorderno"] . " AND lngrevisionno = " . $aryOrderResult[$i]["lngrevisionno"];
 			if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
 			{
@@ -424,15 +424,15 @@ else if ( $aryData["lngActionCode"] == DEF_CLOSED_RETURN )
 		// 締めた売上に紐づく受注マスタの行レベルロック
 		$strQuery = "select m_receive.lngreceiveno, m_receive.lngrevisionno "
 			. "from m_sales "
-			. "inner join ( "
-			. "select  "
-			. "    strsalescode "
-			. "   ,MAX(lngrevisionno) as lngrevisionno "
-			. "from m_sales "
-			. "group by m_sales.strsalescode "
-			. ") A "
-			. "on A.strsalescode = m_sales.strsalescode "
-			. "and A.lngrevisionno = m_sales.lngrevisionno "
+//			. "inner join ( "
+//			. "select  "
+//			. "    strsalescode "
+//			. "   ,MAX(lngrevisionno) as lngrevisionno "
+//			. "from m_sales "
+//			. "group by m_sales.strsalescode "
+//			. ") A "
+//			. "on A.strsalescode = m_sales.strsalescode "
+//			. "and A.lngrevisionno = m_sales.lngrevisionno "
 			. "inner join t_salesdetail "
 			. "on t_salesdetail.lngsalesno = m_sales.lngsalesno "
 			. "and t_salesdetail.lngrevisionno = m_sales.lngrevisionno "
@@ -547,15 +547,15 @@ else if ( $aryData["lngActionCode"] == DEF_CLOSED_RETURN )
 		$strQuery = "select "
 			. "m_order.lngorderno, m_order.lngrevisionno "
 			. "from m_stock "
-			. "inner join ( "
-			. "select  "
-			. "    strstockcode "
-			. "   ,MAX(lngrevisionno) as lngrevisionno "
-			. "from m_stock "
-			. "group by m_stock.strstockcode "
-			. ") A "
-			. "on A.strstockcode = m_stock.strstockcode "
-			. "and A.lngrevisionno = m_stock.lngrevisionno "
+//			. "inner join ( "
+//			. "select  "
+//			. "    strstockcode "
+//			. "   ,MAX(lngrevisionno) as lngrevisionno "
+//			. "from m_stock "
+//			. "group by m_stock.strstockcode "
+//			. ") A "
+//			. "on A.strstockcode = m_stock.strstockcode "
+//			. "and A.lngrevisionno = m_stock.lngrevisionno "
 			. "inner join t_stockdetail "
 			. "on t_stockdetail.lngstockno = m_stock.lngstockno "
 			. "and t_stockdetail.lngrevisionno = m_stock.lngrevisionno "
@@ -600,7 +600,7 @@ else if ( $aryData["lngActionCode"] == DEF_CLOSED_RETURN )
 		// ロックした発注マスタのステータスを更新
 		for ( $i = 0; $i < $lngOrderCount; $i++ )
 		{
-			$strQuery = "UPDATE m_order SET lngreceivestatuscode = " . DEF_ORDER_END 
+			$strQuery = "UPDATE m_order SET lngorderstatuscode = " . DEF_ORDER_END 
 			. "WHERE lngorderno = " . $aryOrderResult[$i]["lngorderno"] . " AND lngrevisionno = " . $aryOrderResult[$i]["lngrevisionno"];
 			if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
 			{
