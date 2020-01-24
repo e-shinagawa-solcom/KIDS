@@ -27,6 +27,7 @@ include_once('conf.inc');
 // ライブラリ読み込み
 require (LIB_FILE);
 require (SRC_ROOT . "closed/cmn/lib_closed.php");
+require (LIB_DEBUGFILE);
 
 // DB接続
 $objDB   = new clsDB();
@@ -129,7 +130,7 @@ if ( $aryData["lngActionCode"] == DEF_CLOSED_RUN )
 			. " AND to_char( date_trunc( 'month', dtmAppropriationDate ), 'YYYY/MM' ) >= '" . $dtmUpdateFrom  
 			. "' AND to_char( date_trunc( 'month', dtmAppropriationDate ), 'YYYY/MM' ) <= '" . $dtmUpdateTo . "'"
 			. " FOR UPDATE";
-
+fncDebug("close.log", $strQuery, __FILE__, __LINE__, "a");
 		if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
 		{
 			fncOutputError ( 9061, DEF_ERROR, "売上データのロック処理に失敗しました。", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
@@ -147,15 +148,16 @@ if ( $aryData["lngActionCode"] == DEF_CLOSED_RUN )
 		// 締めた売上に紐づく受注マスタの行レベルロック
 		$strQuery = "select m_receive.lngreceiveno, m_receive.lngrevisionno "
 			. "from m_sales "
-//			. "inner join ( "
-//			. "select  "
-//			. "    strsalescode "
-//			. "   ,MAX(lngrevisionno) as lngrevisionno "
-//			. "from m_sales "
-//			. "group by m_sales.strsalescode "
-//			. ") A "
-//			. "on A.strsalescode = m_sales.strsalescode "
-//			. "and A.lngrevisionno = m_sales.lngrevisionno "
+			. "inner join ( "
+			. "select  "
+			. "    strsalescode "
+			. "   ,MAX(lngrevisionno) as lngrevisionno "
+			. "   ,MIN(lngrevisionno) as is_del "
+			. "from m_sales "
+			. "group by m_sales.strsalescode "
+			. ") A "
+			. "on A.strsalescode = m_sales.strsalescode "
+			. "and A.lngrevisionno = m_sales.lngrevisionno "
 			. "inner join t_salesdetail "
 			. "on t_salesdetail.lngsalesno = m_sales.lngsalesno "
 			. "and t_salesdetail.lngrevisionno = m_sales.lngrevisionno "
@@ -167,9 +169,11 @@ if ( $aryData["lngActionCode"] == DEF_CLOSED_RUN )
 			. "on m_receive.lngreceiveno = t_salesdetail.lngreceiveno "
 			. "and m_receive.lngrevisionno = t_salesdetail.lngreceiverevisionno "
 			. "where m_sales.lngSalesStatusCode = " . DEF_SALES_END
+			. " AND A.is_del >= 0"
 			. " AND to_char( date_trunc( 'month', m_sales.dtmAppropriationDate ), 'YYYY/MM' ) >= '" . $dtmUpdateFrom ."' "
 			. " AND to_char( date_trunc( 'month', m_sales.dtmAppropriationDate ), 'YYYY/MM' ) <= '" . $dtmUpdateTo . "'"
 			. " FOR UPDATE";
+fncDebug("close.log", $strQuery, __FILE__, __LINE__, "a");
 
 		if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
 		{
@@ -190,6 +194,7 @@ if ( $aryData["lngActionCode"] == DEF_CLOSED_RUN )
 			. " AND bytInvalidFlag = FALSE " 
 			. " AND to_char( date_trunc( 'month', dtmAppropriationDate ), 'YYYY/MM' ) >= '" . $dtmUpdateFrom  
 			. "' AND to_char( date_trunc( 'month', dtmAppropriationDate ), 'YYYY/MM' ) <= '" . $dtmUpdateTo . "'";
+fncDebug("close.log", $strQuery, __FILE__, __LINE__, "a");
 
 		if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
 		{
@@ -251,6 +256,7 @@ if ( $aryData["lngActionCode"] == DEF_CLOSED_RUN )
 			. "' AND to_char( date_trunc( 'month', dtmAppropriationDate ), 'YYYY/MM' ) <= '" . $dtmUpdateTo . "'"
 			. " FOR UPDATE";
 
+fncDebug("close.log", $strQuery, __FILE__, __LINE__, "a");
 		if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
 		{
 			fncOutputError ( 9061, DEF_ERROR, "仕入データのロック処理に失敗しました。", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
@@ -269,15 +275,16 @@ if ( $aryData["lngActionCode"] == DEF_CLOSED_RUN )
 		$strQuery = "select "
 			. "m_order.lngorderno, m_order.lngrevisionno "
 			. "from m_stock "
-//			. "inner join ( "
-//			. "select  "
-//			. "    strstockcode "
-//			. "   ,MAX(lngrevisionno) as lngrevisionno "
-//			. "from m_stock "
-//			. "group by m_stock.strstockcode "
-//			. ") A "
-//			. "on A.strstockcode = m_stock.strstockcode "
-//			. "and A.lngrevisionno = m_stock.lngrevisionno "
+			. "inner join ( "
+			. "select  "
+			. "    strstockcode "
+			. "   ,MAX(lngrevisionno) as lngrevisionno "
+			. "   ,MIN(lngrevisionno) as is_del  "
+			. "from m_stock "
+			. "group by m_stock.strstockcode "
+			. ") A "
+			. "on A.strstockcode = m_stock.strstockcode "
+			. "and A.lngrevisionno = m_stock.lngrevisionno "
 			. "inner join t_stockdetail "
 			. "on t_stockdetail.lngstockno = m_stock.lngstockno "
 			. "and t_stockdetail.lngrevisionno = m_stock.lngrevisionno "
@@ -289,10 +296,12 @@ if ( $aryData["lngActionCode"] == DEF_CLOSED_RUN )
 			. "on m_order.lngorderno = t_stockdetail.lngorderno "
 			. "and m_order.lngrevisionno = t_stockdetail.lngorderrevisionno "
 			. "where m_stock.lngStockStatusCode = " . DEF_STOCK_END
+			. " AND A.is_del >= 0"
 			. " AND to_char( date_trunc( 'month', m_stock.dtmAppropriationDate ), 'YYYY/MM' ) >= '" . $dtmUpdateFrom . "'"
 			. " AND to_char( date_trunc( 'month', m_stock.dtmAppropriationDate ), 'YYYY/MM' ) <= '" . $dtmUpdateTo . "'"
 			. " FOR UPDATE";
 
+fncDebug("close.log", $strQuery, __FILE__, __LINE__, "a");
 		if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
 		{
 			fncOutputError ( 9061, DEF_ERROR, "仕入分の発注データのロック処理に失敗しました。", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
@@ -313,6 +322,7 @@ if ( $aryData["lngActionCode"] == DEF_CLOSED_RUN )
 			. " AND to_char( date_trunc( 'month', dtmAppropriationDate ), 'YYYY/MM' ) >= '" . $dtmUpdateFrom  
 			. "' AND to_char( date_trunc( 'month', dtmAppropriationDate ), 'YYYY/MM' ) <= '" . $dtmUpdateTo . "'";
 
+fncDebug("close.log", $strQuery, __FILE__, __LINE__, "a");
 		if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
 		{
 			fncOutputError ( 9061, DEF_ERROR, "仕入データの締め処理状態への更新処理に失敗しました。", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
@@ -407,6 +417,7 @@ else if ( $aryData["lngActionCode"] == DEF_CLOSED_RETURN )
 			. "' AND to_char( date_trunc( 'month', dtmAppropriationDate ), 'YYYY/MM' ) <= '" . $dtmUpdateTo . "'"
 			. " FOR UPDATE";
 
+fncDebug("close.log", $strQuery, __FILE__, __LINE__, "a");
 		if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
 		{
 			fncOutputError ( 9061, DEF_ERROR, "売上データのロック処理に失敗しました。", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
@@ -424,15 +435,16 @@ else if ( $aryData["lngActionCode"] == DEF_CLOSED_RETURN )
 		// 締めた売上に紐づく受注マスタの行レベルロック
 		$strQuery = "select m_receive.lngreceiveno, m_receive.lngrevisionno "
 			. "from m_sales "
-//			. "inner join ( "
-//			. "select  "
-//			. "    strsalescode "
-//			. "   ,MAX(lngrevisionno) as lngrevisionno "
-//			. "from m_sales "
-//			. "group by m_sales.strsalescode "
-//			. ") A "
-//			. "on A.strsalescode = m_sales.strsalescode "
-//			. "and A.lngrevisionno = m_sales.lngrevisionno "
+			. "inner join ( "
+			. "select  "
+			. "    strsalescode "
+			. "   ,MAX(lngrevisionno) as lngrevisionno "
+			. "   ,MIN(lngrevisionno) as is_del "
+			. "from m_sales "
+			. "group by m_sales.strsalescode "
+			. ") A "
+			. "on A.strsalescode = m_sales.strsalescode "
+			. "and A.lngrevisionno = m_sales.lngrevisionno "
 			. "inner join t_salesdetail "
 			. "on t_salesdetail.lngsalesno = m_sales.lngsalesno "
 			. "and t_salesdetail.lngrevisionno = m_sales.lngrevisionno "
@@ -444,10 +456,12 @@ else if ( $aryData["lngActionCode"] == DEF_CLOSED_RETURN )
 			. "on m_receive.lngreceiveno = t_salesdetail.lngreceiveno "
 			. "and m_receive.lngrevisionno = t_salesdetail.lngreceiverevisionno "
 			. "where m_sales.lngSalesStatusCode = " . DEF_SALES_CLOSED
+			. " AND A.is_del >= 0 "
 			. " AND to_char( date_trunc( 'month', m_sales.dtmAppropriationDate ), 'YYYY/MM' ) >= '" . $dtmUpdateFrom ."' "
 			. " AND to_char( date_trunc( 'month', m_sales.dtmAppropriationDate ), 'YYYY/MM' ) <= '" . $dtmUpdateTo . "'"
 			. " FOR UPDATE";
 
+fncDebug("close.log", $strQuery, __FILE__, __LINE__, "a");
 		if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
 		{
 			fncOutputError ( 9061, DEF_ERROR, "売上分の受注データのロック処理に失敗しました。", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
@@ -468,6 +482,7 @@ else if ( $aryData["lngActionCode"] == DEF_CLOSED_RETURN )
 			. " AND to_char( date_trunc( 'month', dtmAppropriationDate ), 'YYYY/MM' ) >= '" . $dtmUpdateFrom  
 			. "' AND to_char( date_trunc( 'month', dtmAppropriationDate ), 'YYYY/MM' ) <= '" . $dtmUpdateTo . "'";
 
+fncDebug("close.log", $strQuery, __FILE__, __LINE__, "a");
 		if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
 		{
 			fncOutputError ( 9061, DEF_ERROR, "売上データの締め処理戻し状態への更新処理に失敗しました。", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
@@ -529,6 +544,7 @@ else if ( $aryData["lngActionCode"] == DEF_CLOSED_RETURN )
 			. "' AND to_char( date_trunc( 'month', dtmAppropriationDate ), 'YYYY/MM' ) <= '" . $dtmUpdateTo . "'"
 			. " FOR UPDATE";
 
+fncDebug("close.log", $strQuery, __FILE__, __LINE__, "a");
 		if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
 		{
 			fncOutputError ( 9061, DEF_ERROR, "仕入データのロック処理に失敗しました。", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
@@ -547,15 +563,16 @@ else if ( $aryData["lngActionCode"] == DEF_CLOSED_RETURN )
 		$strQuery = "select "
 			. "m_order.lngorderno, m_order.lngrevisionno "
 			. "from m_stock "
-//			. "inner join ( "
-//			. "select  "
-//			. "    strstockcode "
-//			. "   ,MAX(lngrevisionno) as lngrevisionno "
-//			. "from m_stock "
-//			. "group by m_stock.strstockcode "
-//			. ") A "
-//			. "on A.strstockcode = m_stock.strstockcode "
-//			. "and A.lngrevisionno = m_stock.lngrevisionno "
+			. "inner join ( "
+			. "select  "
+			. "    strstockcode "
+			. "   ,MAX(lngrevisionno) as lngrevisionno "
+			. "   ,MIN(lngrevisionno) as is_del "
+			. "from m_stock "
+			. "group by m_stock.strstockcode "
+			. ") A "
+			. "on A.strstockcode = m_stock.strstockcode "
+			. "and A.lngrevisionno = m_stock.lngrevisionno "
 			. "inner join t_stockdetail "
 			. "on t_stockdetail.lngstockno = m_stock.lngstockno "
 			. "and t_stockdetail.lngrevisionno = m_stock.lngrevisionno "
@@ -567,10 +584,12 @@ else if ( $aryData["lngActionCode"] == DEF_CLOSED_RETURN )
 			. "on m_order.lngorderno = t_stockdetail.lngorderno "
 			. "and m_order.lngrevisionno = t_stockdetail.lngorderrevisionno "
 			. "where m_stock.lngStockStatusCode = " . DEF_STOCK_CLOSED
+			. " AND A.is_del >= 0 "
 			. " AND to_char( date_trunc( 'month', m_stock.dtmAppropriationDate ), 'YYYY/MM' ) >= '" . $dtmUpdateFrom . "'"
 			. " AND to_char( date_trunc( 'month', m_stock.dtmAppropriationDate ), 'YYYY/MM' ) <= '" . $dtmUpdateTo . "'"
 			. " FOR UPDATE";
 
+fncDebug("close.log", $strQuery, __FILE__, __LINE__, "a");
 		if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
 		{
 			fncOutputError ( 9061, DEF_ERROR, "仕入分の発注データのロック処理に失敗しました。", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
@@ -591,6 +610,7 @@ else if ( $aryData["lngActionCode"] == DEF_CLOSED_RETURN )
 			. " AND to_char( date_trunc( 'month', dtmAppropriationDate ), 'YYYY/MM' ) >= '" . $dtmUpdateFrom  
 			. "' AND to_char( date_trunc( 'month', dtmAppropriationDate ), 'YYYY/MM' ) <= '" . $dtmUpdateTo . "'";
 
+fncDebug("close.log", $strQuery, __FILE__, __LINE__, "a");
 		if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
 		{
 			fncOutputError ( 9061, DEF_ERROR, "仕入データの締め処理戻し状態への更新処理に失敗しました。", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
